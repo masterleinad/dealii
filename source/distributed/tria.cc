@@ -4856,7 +4856,7 @@ namespace parallel
         }
 
       //finally call the base class for storing the periodicity information
-      Triangulation<dim, spacedim>::add_periodicity(periodicity_vector);
+      dealii::Triangulation<dim, spacedim>::add_periodicity(periodicity_vector);
 #else
       Assert(false, ExcMessage ("Need p4est version >= 0.3.4.1!"));
 #endif
