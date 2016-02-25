@@ -27,6 +27,7 @@
 #include <deal.II/grid/tria_iterator_selector.h>
 #include <deal.II/grid/tria_faces.h>
 #include <deal.II/grid/tria_levels.h>
+//#include <deal.II/grid/grid_tools.h>
 
 // Ignore deprecation warnings for auto_ptr.
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
@@ -47,6 +48,9 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, int spacedim> class Boundary;
 template <int dim, int spacedim> class StraightBoundary;
 template <int dim, int spacedim> class Manifold;
+
+namespace GridTools
+  {template<typename CellIterator>  struct PeriodicFacePair;}
 
 template <int, int, int> class TriaAccessor;
 template <int spacedim> class TriaAccessor<0,1,spacedim>;
@@ -1479,7 +1483,7 @@ public:
    * If add_periodicity() is called, this variable stores the active periodic face pairs.
    * The variable is updated on refinement.
    */
-  std::map<GridTools::PeriodicFacePair<cell_iterator>, GridTools::PeriodicFacePair<cell_iterator> > periodic_face_map;
+  std::map<std::pair<cell_iterator, unsigned int>, std::pair<cell_iterator, unsigned int> > periodic_face_map;
 
   /**
    * Make the dimension available in function templates.
