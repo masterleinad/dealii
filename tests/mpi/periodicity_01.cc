@@ -291,6 +291,20 @@ namespace Step40
                                      0.3, 0.03);
 
     triangulation.execute_coarsening_and_refinement ();
+
+    std::cout << "Size of periodic face map: " << triangulation.periodic_face_map.size()
+              << std::endl;
+
+    for (auto it = triangulation.periodic_face_map.begin();
+         it !=  triangulation.periodic_face_map.end(); ++it)
+    {
+      std::cout << "On process " << Utilities::MPI::this_mpi_process(mpi_communicator)
+                << " the cell with center " << it->first.first->center()
+                << " has on face " << it->first.second
+                << " as neighbor the cell with center " << it->second.first->center()
+                << " on face " << it->second.second
+                <<std::endl;
+    }     
   }
 
   template <int dim>

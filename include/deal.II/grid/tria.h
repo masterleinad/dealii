@@ -27,7 +27,6 @@
 #include <deal.II/grid/tria_iterator_selector.h>
 #include <deal.II/grid/tria_faces.h>
 #include <deal.II/grid/tria_levels.h>
-//#include <deal.II/grid/grid_tools.h>
 
 // Ignore deprecation warnings for auto_ptr.
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
@@ -2987,7 +2986,7 @@ public:
     * Declare the (coarse) face pairs given in the argument of this function
     * as periodic. This way it it possible to obtain neighbors across periodic
     * boundaries.
-    * This function initializes ActivePeriodicFacePairs and on refinement this
+    * This function initializes periodic_face_map that stores the active periodic faces.
     *
     * The vector can be filled by the function
     * GridTools::collect_periodic_faces.

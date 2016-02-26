@@ -11792,6 +11792,7 @@ Triangulation<dim, spacedim>::add_periodicity
   periodic_face_pairs_level_0.insert(periodic_face_pairs_level_0.end(),
                                      periodicity_vector.begin(),
                                      periodicity_vector.end());
+
   //Now initialize periodic_face_map
   typename std::vector<GridTools::PeriodicFacePair<cell_iterator> >::const_iterator it;
   for (it=periodicity_vector.begin(); it!=periodicity_vector.end(); ++it)
@@ -11851,7 +11852,9 @@ Triangulation<dim, spacedim>::execute_coarsening_and_refinement ()
   AssertThrow (cells_with_distorted_children.distorted_cells.size() == 0,
                cells_with_distorted_children);
 
-  //if the triangulation is parallel we need another SparsityPattern
+  // For parallel::distributed::Triangulations we update
+  // periodic_face_map later. At this point cells might be
+  // artificial which prevents us from storing the correct faces
   const parallel::Triangulation< dim, spacedim > *distributed_triangulation
     = dynamic_cast<const parallel::Triangulation< dim, spacedim > *> (this);
   if (!distributed_triangulation)
