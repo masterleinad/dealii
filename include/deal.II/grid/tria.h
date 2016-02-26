@@ -50,7 +50,9 @@ template <int dim, int spacedim> class StraightBoundary;
 template <int dim, int spacedim> class Manifold;
 
 namespace GridTools
-  {template<typename CellIterator>  struct PeriodicFacePair;}
+{
+  template<typename CellIterator>  struct PeriodicFacePair;
+}
 
 template <int, int, int> class TriaAccessor;
 template <int spacedim> class TriaAccessor<0,1,spacedim>;
