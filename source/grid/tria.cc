@@ -1011,29 +1011,11 @@ namespace
           {
             for (unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
               {
-                // Lookup the index for the second face
-//                unsigned int j = 0;
-//                switch (dim)
-//                  {
-//                  case 2:
-//                    j = lookup_table_2d[face_flip][i];
-//                    break;
-//                  case 3:
-//                    j = lookup_table_3d[face_orientation][face_flip][face_rotation][i];
-//                    break;
-//                  default:
-//                    AssertThrow(false, ExcNotImplemented());
-//                  }
-
                 // find subcell ids that belong to the subface indices
                 unsigned int child_cell_1
                   = GeometryInfo<dim>::child_cell_on_face(cell_1->refinement_case(), n_face_1, i, face_orientation,
                                                           face_flip, face_rotation, face_1->refinement_case());
-//                unsigned int child_cell_2
-//                  = GeometryInfo<dim>::child_cell_on_face(cell_2->refinement_case(), n_face_2, j, face_orientation,
-//                                                          face_flip, face_rotation, face_2->refinement_case());
-
-                // precondition: subcell has the same orientation as cell (so that the face numbers coincide)
+                
                 // recursive call
                 update_periodic_face_map_recursively<dim, spacedim>
                 (cell_1->child(child_cell_1), cell_2,
@@ -1048,57 +1030,28 @@ namespace
         // Otherwise at least one of the two faces is active and
         // we need to do some work and enter the periodic face pairs!
 
-        //Ignore artificial cells
+        //periodic boundary can only be on the boundary of the domain
+        Assert(cell_1->at_boundary(n_face_1), ExcInternalError());
+        Assert(cell_2->at_boundary(n_face_2), ExcInternalError());
+
+        //Ignore artificial cells, cell_2 may not be active
         if (!cell_1->is_artificial())
           {
+            // if cell_2 is active it must not be artificial
+          /*  if(!cell_2->has_children())
+              Assert(!cell_2->is_artificial(), ExcInternalError());*/
             // insert periodic face pair for both cells
             typedef std::pair<typename Triangulation<dim,spacedim>::cell_iterator, unsigned int> CellFace;
             const CellFace cell_face_1 (cell_1, n_face_1);
             const CellFace cell_face_2 (cell_2, n_face_2);
             const std::pair<CellFace, CellFace> periodic_faces (cell_face_1, cell_face_2);
 
+            // Only one periodic neighbor is allowed
+            Assert(periodic_face_map.count(cell_face_1) == 0, ExcInternalError());
             periodic_face_map.insert(periodic_faces);
           }
       }
   }
-
-
-  template <int spacedim>
-  void
-  update_periodic_face_map (Triangulation<1,spacedim> &)
-  {}
-
-
-  template <int dim, int spacedim>
-  void
-  update_periodic_face_map (Triangulation<dim,spacedim> &triangulation)
-  {
-    //first empty the currently stored objects
-    triangulation.periodic_face_map.clear();
-
-    typename std::vector<GridTools::PeriodicFacePair<typename Triangulation<dim,spacedim>::cell_iterator> >::const_iterator it;
-    for (it=triangulation.periodic_face_pairs_level_0.begin(); it!=triangulation.periodic_face_pairs_level_0.end(); ++it)
-      {
-        update_periodic_face_map_recursively<dim, spacedim>
-        (it->cell[0], it->cell[1], it->face_idx[0], it->face_idx[1],
-         it->orientation[0], it->orientation[1], it->orientation[2],
-         triangulation.periodic_face_map);
-        //for the other way, we need to invert the orientation
-        bool orientation, flip, rotation;
-        orientation = it->orientation[0];
-        rotation = it->orientation[2];
-        if (it->orientation[0] && it->orientation [2])
-          flip = !it->orientation[1];
-        else
-          flip = it->orientation[1];
-        update_periodic_face_map_recursively<dim, spacedim>
-        (it->cell[1], it->cell[0], it->face_idx[1], it->face_idx[0],
-         orientation, flip, rotation,
-         triangulation.periodic_face_map);
-      }
-  }
-
-
 
 }// end of anonymous namespace
 
@@ -11908,6 +11861,29 @@ Triangulation<dim,spacedim>::update_periodic_face_map ()
        orientation, flip, rotation,
        periodic_face_map);
     }
+ 
+  //check consistency
+  std::cout << "check consistency" << std::endl;
+  //cell->neighbor(neighbor)->neighbor_child_on_subface(face_no, subface_no)==cell. 
+  typename std::map<std::pair<cell_iterator, unsigned int>,
+                    std::pair<cell_iterator, unsigned int> >::const_iterator it_test;
+  for (it_test=periodic_face_map.begin(); it_test!=periodic_face_map.end(); ++it_test)
+  { 
+    if (!it_test->second.first->has_children())
+    {
+      if (!periodic_face_map[it_test->second].first->has_children())
+      {
+        std::cout<<it_test->first.first->center()<<std::endl;
+        std::cout<<it_test->second.first->center()<<std::endl;
+        std::cout<<periodic_face_map[it_test->second].first->center()
+                 <<std::endl<<std::endl;
+        // if the neighbor is active as well, the same pair
+        // order swapped has to be in the map
+        Assert(periodic_face_map[it_test->second] == it_test->first, 
+               ExcInternalError());
+      }
+    }
+  }
 }
 
 
