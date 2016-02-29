@@ -1015,7 +1015,7 @@ namespace
                 unsigned int child_cell_1
                   = GeometryInfo<dim>::child_cell_on_face(cell_1->refinement_case(), n_face_1, i, face_orientation,
                                                           face_flip, face_rotation, face_1->refinement_case());
-                
+
                 // recursive call
                 update_periodic_face_map_recursively<dim, spacedim>
                 (cell_1->child(child_cell_1), cell_2,
@@ -1038,17 +1038,24 @@ namespace
         if (!cell_1->is_artificial())
           {
             // if cell_2 is active it must not be artificial
-          /*  if(!cell_2->has_children())
-              Assert(!cell_2->is_artificial(), ExcInternalError());*/
-            // insert periodic face pair for both cells
-            typedef std::pair<typename Triangulation<dim,spacedim>::cell_iterator, unsigned int> CellFace;
-            const CellFace cell_face_1 (cell_1, n_face_1);
-            const CellFace cell_face_2 (cell_2, n_face_2);
-            const std::pair<CellFace, CellFace> periodic_faces (cell_face_1, cell_face_2);
+            if (!cell_2->has_children() && cell_2->is_artificial())
+              {
+                std::cout<<"The artificial neighbor of the cell with center " <<cell_1->center()
+                         <<" is the cell with center "<<cell_2->center()<<std::endl;
+                //Assert(!cell_2->is_artificial(), ExcInternalError());
+              }
+            if (cell_2->has_children() || !cell_2->is_artificial())
+              {
+                // insert periodic face pair for both cells
+                typedef std::pair<typename Triangulation<dim,spacedim>::cell_iterator, unsigned int> CellFace;
+                const CellFace cell_face_1 (cell_1, n_face_1);
+                const CellFace cell_face_2 (cell_2, n_face_2);
+                const std::pair<CellFace, CellFace> periodic_faces (cell_face_1, cell_face_2);
 
-            // Only one periodic neighbor is allowed
-            Assert(periodic_face_map.count(cell_face_1) == 0, ExcInternalError());
-            periodic_face_map.insert(periodic_faces);
+                // Only one periodic neighbor is allowed
+                Assert(periodic_face_map.count(cell_face_1) == 0, ExcInternalError());
+                periodic_face_map.insert(periodic_faces);
+              }
           }
       }
   }
@@ -11870,29 +11877,25 @@ Triangulation<dim,spacedim>::update_periodic_face_map ()
        orientation, flip, rotation,
        periodic_face_map);
     }
- 
+
   //check consistency
   std::cout << "check consistency" << std::endl;
-  //cell->neighbor(neighbor)->neighbor_child_on_subface(face_no, subface_no)==cell. 
+  //cell->neighbor(neighbor)->neighbor_child_on_subface(face_no, subface_no)==cell.
   typename std::map<std::pair<cell_iterator, unsigned int>,
-                    std::pair<cell_iterator, unsigned int> >::const_iterator it_test;
+           std::pair<cell_iterator, unsigned int> >::const_iterator it_test;
   for (it_test=periodic_face_map.begin(); it_test!=periodic_face_map.end(); ++it_test)
-  { 
-    if (!it_test->second.first->has_children())
     {
-      if (!periodic_face_map[it_test->second].first->has_children())
-      {
-        std::cout<<it_test->first.first->center()<<std::endl;
-        std::cout<<it_test->second.first->center()<<std::endl;
-        std::cout<<periodic_face_map[it_test->second].first->center()
-                 <<std::endl<<std::endl;
-        // if the neighbor is active as well, the same pair
-        // order swapped has to be in the map
-        Assert(periodic_face_map[it_test->second] == it_test->first, 
-               ExcInternalError());
-      }
+      if (!it_test->second.first->has_children())
+        {
+          if (!periodic_face_map[it_test->second].first->has_children())
+            {
+              // if the neighbor is active as well, the same pair
+              // order swapped has to be in the map
+              Assert(periodic_face_map[it_test->second] == it_test->first,
+                     ExcInternalError());
+            }
+        }
     }
-  }
 }
 
 
