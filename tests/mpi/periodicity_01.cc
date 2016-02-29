@@ -297,14 +297,14 @@ namespace Step40
 
     for (auto it = triangulation.periodic_face_map.begin();
          it !=  triangulation.periodic_face_map.end(); ++it)
-    {
-      std::cout << "On process " << Utilities::MPI::this_mpi_process(mpi_communicator)
-                << " the cell with center " << it->first.first->center()
-                << " has on face " << it->first.second
-                << " as neighbor the cell with center " << it->second.first->center()
-                << " on face " << it->second.second
-                <<std::endl;
-    }     
+      {
+        std::cout << "On process " << Utilities::MPI::this_mpi_process(mpi_communicator)
+                  << " the cell with center " << it->first.first->center()
+                  << " has on face " << it->first.second
+                  << " as neighbor the cell with center " << it->second.first->center()
+                  << " on face " << it->second.second
+                  <<std::endl;
+      }
   }
 
   template <int dim>
@@ -503,7 +503,7 @@ namespace Step40
                 /*direction*/ i, periodicity_vector);
 
             triangulation.add_periodicity(periodicity_vector);
-            triangulation.refine_global (1);
+            triangulation.refine_global (2);
           }
         else
           {
@@ -513,7 +513,7 @@ namespace Step40
         setup_system ();
         assemble_system ();
         solve ();
-        //output_results (cycle);
+        output_results (cycle);
         check_periodicity(cycle);
       }
   }
