@@ -301,8 +301,8 @@ namespace Step40
         std::cout << "On process " << Utilities::MPI::this_mpi_process(mpi_communicator)
                   << " the cell with center " << it->first.first->center()
                   << " has on face " << it->first.second
-                  << " as neighbor the cell with center " << it->second.first->center()
-                  << " on face " << it->second.second
+                  << " as neighbor the cell with center " << it->second.first.first->center()
+                  << " on face " << it->second.first.second
                   <<std::endl;
       }
   }

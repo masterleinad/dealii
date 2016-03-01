@@ -241,8 +241,8 @@ void check
   triangulation.execute_coarsening_and_refinement();
 
   typedef std::pair<typename Triangulation<dim>::cell_iterator, unsigned int> CellFace;
-  const typename std::map<CellFace, CellFace> &face_map = triangulation.periodic_face_map;
-  typename std::map<CellFace, CellFace>::const_iterator it;
+  const typename std::map<CellFace, std::pair<CellFace, std::bitset<3> > > &face_map = triangulation.periodic_face_map;
+  typename std::map<CellFace, std::pair<CellFace, std::bitset<3> > >::const_iterator it;
   int sum_of_pairs_local = face_map.size();
   int sum_of_pairs_global;
   MPI_Allreduce(&sum_of_pairs_local, &sum_of_pairs_global, 1, MPI_INT, MPI_SUM, triangulation.get_communicator());
@@ -251,8 +251,8 @@ void check
     {
       const typename Triangulation<dim>::cell_iterator cell_1 = it->first.first;
       const unsigned int face_no_1 = it->first.second;
-      const typename Triangulation<dim>::cell_iterator cell_2 = it->second.first;
-      const unsigned int face_no_2 = it->second.second;
+      const typename Triangulation<dim>::cell_iterator cell_2 = it->second.first.first;
+      const unsigned int face_no_2 = it->second.first.second;
       const Point<dim> face_center_1 = cell_1->face(face_no_1)->center();
       const Point<dim> face_center_2 = cell_2->face(face_no_2)->center();
       Assert(std::min(std::abs(face_center_1(dim-1)-3.), std::abs(face_center_1(dim-1)+3.))<1.e-8, ExcInternalError());
