@@ -39,6 +39,7 @@ DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 #include <vector>
 #include <list>
 #include <map>
+#include <bitset>
 
 
 DEAL_II_NAMESPACE_OPEN
@@ -1476,7 +1477,7 @@ public:
   /**
    * If add_periodicity() is called, this variable stores the active periodic face pairs.
    */
-  std::map<std::pair<cell_iterator, unsigned int>, std::pair<cell_iterator, unsigned int> > periodic_face_map;
+  std::map<std::pair<cell_iterator, unsigned int>, std::pair<std::pair<cell_iterator, unsigned int>, std::bitset<3> > > periodic_face_map;
 
   /**
    * Make the dimension available in function templates.
