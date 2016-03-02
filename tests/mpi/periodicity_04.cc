@@ -257,6 +257,23 @@ void check
       const Point<dim> face_center_2 = cell_2->face(face_no_2)->center();
       Assert(std::min(std::abs(face_center_1(dim-1)-3.), std::abs(face_center_1(dim-1)+3.))<1.e-8, ExcInternalError());
       Assert(std::min(std::abs(face_center_2(dim-1)-3.), std::abs(face_center_2(dim-1)+3.))<1.e-8, ExcInternalError());
+      if (cell_1->level()== cell_2->level())
+        for (unsigned int c = 0; c<dim-1; ++c)
+          if (std::abs(face_center_1(c)-face_center_2(c))>1.e-8)
+            {
+              std::cout << "face_center_1: " << face_center_1 << std::endl;
+              std::cout << "face_center_2: " << face_center_2 << std::endl;
+              for (auto it = triangulation.periodic_face_map.begin();
+                   it !=  triangulation.periodic_face_map.end(); ++it)
+                {
+                  std::cout << "The cell with center " << it->first.first->center()
+                            << " has on face " << it->first.second
+                            << " as neighbor the cell with center " << it->second.first.first->center()
+                            << " on face " << it->second.first.second
+                            << std::endl;
+                }
+              Assert(false, ExcInternalError());
+            }
     }
 }
 
