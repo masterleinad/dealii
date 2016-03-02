@@ -1,4 +1,4 @@
-// ---------------------------------------------------------------------
+﻿// ---------------------------------------------------------------------
 //
 // Copyright (C) 1998 - 2015 by the deal.II authors
 //
@@ -1864,6 +1864,144 @@ CellAccessor<dim, spacedim>::neighbor_of_coarser_neighbor (const unsigned int ne
                              numbers::invalid_unsigned_int);
     }
     }
+}
+
+
+
+template <int dim, int spacedim>
+bool
+CellAccessor<dim, spacedim>::has_periodic_neighbor (const unsigned int i_face) const
+{
+  typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
+  /* my_it : is the iterator to the current cell. */
+  cell_iterator my_it(*this);
+  if (this->tria->periodic_face_map.find(std::pair<cell_iterator, unsigned int>(my_it, i_face))
+      != this->tria->periodic_face_map.end())
+    return true;
+  return false;
+}
+
+
+
+template <int dim, int spacedim>
+TriaIterator<CellAccessor<dim,spacedim> >
+CellAccessor<dim, spacedim>::
+neighbor_or_periodic_neighbor (const unsigned int i_face) const
+{
+  typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
+  typedef std::pair<cell_iterator, unsigned int> cell_face_pair;
+  /* my_it        : the iterator to the current cell.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair being
+   *                the current cell_face.
+   */
+  cell_iterator my_it(*this);
+  typename std::map<const cell_face_pair, cell_face_pair>::const_iterator my_face_pair =
+    this->tria->periodic_face_map.find(std::pair<cell_iterator, unsigned int>(my_it, i_face));
+  if (my_face_pair != this->tria->periodic_face_map.end())
+  {
+    /*
+     * Some assertions might be required !
+     */
+    return my_face_pair->second.first;
+  }
+  else
+    return neighbor(i_face);
+}
+
+
+
+template <int dim, int spacedim>
+unsigned int
+CellAccessor<dim, spacedim>::periodic_neighbor_face_no (const unsigned int i_face) const
+{
+  typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
+  typedef std::pair<cell_iterator, unsigned int> cell_face_pair;
+  /* my_it        : the iterator to the current cell.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair being
+   *                the current cell_face.
+   */
+  cell_iterator my_it(*this);
+  typename std::map<const cell_face_pair, cell_face_pair>::const_iterator my_face_pair =
+    this->tria->periodic_face_map.find(std::pair<cell_iterator, unsigned int>(my_it, i_face));
+  /*
+   * There should be an assertion, which tells the user that this function should not be
+   * called for a cell which is not located at a periodic boundary !
+   */
+  assert(my_face_pair != this->tria->periodic_face_map.end());
+  return my_face_pair->second.second;
+}
+
+
+
+template <int dim, int spacedim>
+bool
+CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser (const unsigned int i_face) const
+{
+  /* Implementation note: Let p_nb_of_p_nb be the periodic neighbor of the periodic
+   * neighbor of the current cell. Also, let p_face_of_p_nb_of_p_nb be the periodic
+   * face of the p_nb_of_p_nb. If p_face_of_p_nb_of_p_nb has children , then the
+   * periodic neighbor of the current cell is coarser than itself. Although not tested,
+   * this implementation should work for anisotropic refinement as well. */
+  typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
+  typedef std::pair<cell_iterator, unsigned int> cell_face_pair;
+  /* my_it        : the iterator to the current cell.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair being
+   *                the current cell_face.
+   * nb_it        : the iterator to the periodic neighbor.
+   * nb_face_pair : the pair reported by periodic_face_map as its first pair being
+   *                the periodic neighbor cell_face.
+   */
+  cell_iterator my_it(*this);
+  typename std::map<const cell_face_pair, cell_face_pair>::const_iterator my_face_pair =
+    this->tria->periodic_face_map.find(std::pair<cell_iterator, unsigned int>(my_it, i_face));
+  /*
+   * There should be an assertion, which tells the user that this function should not be
+   * used for a cell which is not located at a periodic boundary ! Also, an assertion is
+   * required to check if the cell is active.
+   */
+  assert((this->active()) && !(this->is_artificial()));
+  assert(my_face_pair != this->tria->periodic_face_map.end());
+  cell_iterator nb_it = my_face_pair->second.first;
+  unsigned int face_num_of_nb = my_face_pair->second.second;
+  typename std::map<const cell_face_pair, cell_face_pair>::const_iterator nb_face_pair =
+    this->tria->periodic_face_map.find(std::pair<cell_iterator, unsigned int>(nb_it, face_num_of_nb));
+  /*
+   * If the periodic neighbor is not mapped to any other periodic cell_face pair, then
+   * it is not active cell, and should have children. So the active cell on the other
+   * side of the periodic boundary is not coarser.
+   */
+  if (nb_face_pair == this->tria->periodic_face_map.end())
+    return false;
+  else if (nb_face_pair->second.first->face(nb_face_pair->second.second)->has_children())
+    return true;
+  return false;
+}
+
+
+
+template <int dim, int spacedim>
+bool
+CellAccessor<dim, spacedim>::periodic_neighbor_is_refined (const unsigned int i_face) const
+{
+  typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
+  typedef std::pair<cell_iterator, unsigned int> cell_face_pair;
+  /* my_it        : the iterator to the current cell.
+   * my_face_pair : the pair reported by periodic_face_map as its first pair being
+   *                the current cell_face.
+   */
+  cell_iterator my_it(*this);
+  typename std::map<const cell_face_pair, cell_face_pair>::const_iterator my_face_pair =
+    this->tria->periodic_face_map.find(std::pair<cell_iterator, unsigned int>(my_it, i_face));
+  /*
+   * There should be an assertion, which tells the user that this function should not be
+   * used for a cell which is not located at a periodic boundary ! Also, an assertion is
+   * required to check if the cell is active.
+   */
+  assert((this->active()) && !(this->is_artificial()));
+  assert(my_face_pair != this->tria->periodic_face_map.end());
+  if (my_face_pair->second.first->face(my_face_pair->second.second)->has_children())
+    return true;
+  return false;
 }
 
 
