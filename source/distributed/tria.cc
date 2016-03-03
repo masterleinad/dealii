@@ -3207,7 +3207,7 @@ namespace parallel
       template <int dim, int spacedim>
       bool enforce_mesh_balance_over_periodic_boundaries
       (Triangulation<dim,spacedim> &tria,
-       const std::vector<GridTools::PeriodicFacePair<typename dealii::Triangulation<dim,spacedim>::cell_iterator> > periodic_face_pairs_level_0)
+       const std::vector<GridTools::PeriodicFacePair<typename dealii::Triangulation<dim,spacedim>::cell_iterator> > &periodic_face_pairs_level_0)
       {
         if (periodic_face_pairs_level_0.empty())
           return false;
@@ -3361,7 +3361,7 @@ namespace parallel
           if (this->smooth_grid &
               dealii::Triangulation<dim,spacedim>::limit_level_difference_at_vertices)
             mesh_changed = enforce_mesh_balance_over_periodic_boundaries(*this,
-                           periodic_face_pairs_level_0);
+                           this->periodic_face_pairs_level_0);
         }
       while (mesh_changed);
 
@@ -4690,8 +4690,8 @@ namespace parallel
               vertices_with_ghost_neighbors[cell->vertex_index(v)]
               .insert (cell->level_subdomain_id());
 
-      for (unsigned int i=0; i<periodic_face_pairs_level_0.size(); ++i)
-        set_periodic_ghost_neighbors_recursively(periodic_face_pairs_level_0[i],
+      for (unsigned int i=0; i<this->periodic_face_pairs_level_0.size(); ++i)
+        set_periodic_ghost_neighbors_recursively(this->periodic_face_pairs_level_0[i],
                                                  level, vertices_with_ghost_neighbors);
     }
 
@@ -4710,8 +4710,8 @@ namespace parallel
           for (unsigned int v=0; v<GeometryInfo<dim>::vertices_per_cell; ++v)
             marked_vertices[cell->vertex_index(v)] = true;
 
-      for (unsigned int i=0; i<periodic_face_pairs_level_0.size(); ++i)
-        mark_periodic_vertices_recursively(periodic_face_pairs_level_0[i],
+      for (unsigned int i=0; i<this->periodic_face_pairs_level_0.size(); ++i)
+        mark_periodic_vertices_recursively(this->periodic_face_pairs_level_0[i],
                                            level, marked_vertices);
 
       return marked_vertices;
