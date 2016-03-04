@@ -1,5 +1,4 @@
 // ---------------------------------------------------------------------
-
 //
 // Copyright (C) 1998 - 2016 by the deal.II authors
 //
@@ -11938,10 +11937,10 @@ Triangulation<dim, spacedim>::execute_coarsening_and_refinement ()
   // For parallel::distributed::Triangulations we update
   // periodic_face_map later. At this point cells might be
   // artificial which prevents us from storing the correct faces
-  const parallel::Triangulation< dim, spacedim > *distributed_triangulation
-    = dynamic_cast<const parallel::Triangulation< dim, spacedim > *> (this);
-  if (!distributed_triangulation)
-    update_periodic_face_map();
+  /*  const parallel::Triangulation< dim, spacedim > *distributed_triangulation
+      = dynamic_cast<const parallel::Triangulation< dim, spacedim > *> (this);
+    if (!distributed_triangulation)*/
+  update_periodic_face_map();
 }
 
 

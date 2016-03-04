@@ -3124,81 +3124,6 @@ namespace parallel
 
     namespace
     {
-      // this function combines vertices that have different locations (and
-      // thus, different vertex_index) but represent the same topological
-      // entity over periodic boundaries. The vector
-      // topological_vertex_numbering contains a linear map from 0 to
-      // n_vertices at input and at output relates periodic vertices with only
-      // one vertex index. The output is used to always identify the same
-      // vertex according to the periodicity, e.g. when finding the maximum
-      // cell level around a vertex.
-      //
-      // Example: On a 3D cell with vertices numbered from 0 to 7 and periodic
-      // boundary conditions in x direction, the vector
-      // topological_vertex_numbering will contain the numbers
-      // {0,0,2,2,4,4,6,6} (because the vertex pairs {0,1}, {2,3}, {4,5},
-      // {6,7} belong together, respectively). If periodicity is set in x and
-      // z direction, the output is {0,0,2,2,0,0,2,2}, and if periodicity is
-      // in all directions, the output is simply {0,0,0,0,0,0,0,0}.
-      template <typename ITERATOR>
-      void
-      identify_periodic_vertices_recursively(const GridTools::PeriodicFacePair<ITERATOR> &periodic,
-                                             std::vector<unsigned int> &topological_vertex_numbering)
-      {
-        const unsigned int dim = ITERATOR::AccessorType::dimension;
-
-        // for hanging nodes we will consider all necessary coupling already
-        // on the parent level, so we just need to consider neighbors of the
-        // same level
-        if (periodic.cell[0]->has_children() &&
-            periodic.cell[1]->has_children())
-          {
-            // copy orientations etc. from parent to child
-            GridTools::PeriodicFacePair<ITERATOR> periodic_child = periodic;
-
-            // find appropriate pairs of child elements
-            for (unsigned int cf=0; cf<periodic.cell[0]->face(periodic.face_idx[0])->n_children(); ++cf)
-              {
-                const unsigned int child_index_0 =
-                  GeometryInfo<dim>::child_cell_on_face(periodic.cell[0]->refinement_case(),
-                                                        periodic.face_idx[0], cf,
-                                                        periodic.orientation[0],
-                                                        periodic.orientation[1],
-                                                        periodic.orientation[2]);
-                periodic_child.cell[0] = periodic.cell[0]->child(child_index_0);
-                periodic_child.face_idx[0] = periodic.face_idx[0];
-
-                // the second face is in standard orientation in terms of the
-                // periodic face pair
-                const unsigned int child_index_1 =
-                  GeometryInfo<dim>::child_cell_on_face(periodic.cell[1]->refinement_case(),
-                                                        periodic.face_idx[1], cf);
-
-                periodic_child.cell[1] = periodic.cell[1]->child(child_index_1);
-                periodic_child.face_idx[1] = periodic.face_idx[1];
-
-                // recursive call into children
-                identify_periodic_vertices_recursively (periodic_child,
-                                                        topological_vertex_numbering);
-              }
-          }
-
-        for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
-          {
-            // take possible non-standard orientation of face on cell[0] into
-            // account
-            const unsigned int vface0 =
-              GeometryInfo<dim>::standard_to_real_face_vertex(v,periodic.orientation[0],
-                                                              periodic.orientation[1],
-                                                              periodic.orientation[2]);
-            const unsigned int vi0 = topological_vertex_numbering[periodic.cell[0]->face(periodic.face_idx[0])->vertex_index(vface0)];
-            const unsigned int vi1 = topological_vertex_numbering[periodic.cell[1]->face(periodic.face_idx[1])->vertex_index(v)];
-            const unsigned int min_index = std::min(vi0, vi1);
-            topological_vertex_numbering[periodic.cell[0]->face(periodic.face_idx[0])->vertex_index(vface0)]
-              = topological_vertex_numbering[periodic.cell[1]->face(periodic.face_idx[1])->vertex_index(v)]
-                = min_index;
-          }
-      }
 
 
 
@@ -3206,10 +3131,9 @@ namespace parallel
       // artificial cell layer (the active cells are taken care of by p4est)
       template <int dim, int spacedim>
       bool enforce_mesh_balance_over_periodic_boundaries
-      (Triangulation<dim,spacedim> &tria,
-       const std::vector<GridTools::PeriodicFacePair<typename dealii::Triangulation<dim,spacedim>::cell_iterator> > &periodic_face_pairs_level_0)
+      (Triangulation<dim,spacedim> &tria)
       {
-        if (periodic_face_pairs_level_0.empty())
+        if (tria.periodic_face_map.empty())
           return false;
 
         std::vector<bool> flags_before[2];
@@ -3219,10 +3143,51 @@ namespace parallel
         std::vector<unsigned int> topological_vertex_numbering(tria.n_vertices());
         for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
           topological_vertex_numbering[i] = i;
-        for (unsigned int i=0; i<periodic_face_pairs_level_0.size(); ++i)
+        // combine vertices that have different locations (and thus, different
+        // vertex_index) but represent the same topological entity over periodic
+        // boundaries. The vector topological_vertex_numbering contains a linear
+        // map from 0 to n_vertices at input and at output relates periodic
+        // vertices with only one vertex index. The output is used to always
+        // identify the same vertex according to the periodicity, e.g. when
+        // finding the maximum cell level around a vertex.
+        //
+        // Example: On a 3D cell with vertices numbered from 0 to 7 and periodic
+        // boundary conditions in x direction, the vector
+        // topological_vertex_numbering will contain the numbers
+        // {0,0,2,2,4,4,6,6} (because the vertex pairs {0,1}, {2,3}, {4,5},
+        // {6,7} belong together, respectively). If periodicity is set in x and
+        // z direction, the output is {0,0,2,2,0,0,2,2}, and if periodicity is
+        // in all directions, the output is simply {0,0,0,0,0,0,0,0}.
+        typedef typename Triangulation<dim, spacedim>::cell_iterator cell_iterator;
+        typename std::map<std::pair<cell_iterator, unsigned int>,
+                 std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
+        for (it = tria.periodic_face_map.begin(); it!= tria.periodic_face_map.end(); ++it)
           {
-            identify_periodic_vertices_recursively(periodic_face_pairs_level_0[i],
-                                                   topological_vertex_numbering);
+            const cell_iterator &cell_1 = it->first.first;
+            const unsigned int face_no_1 = it->first.second;
+            const cell_iterator &cell_2 = it->second.first.first;
+            const unsigned int face_no_2 = it->second.first.second;
+            const std::bitset<3> face_orientation = it->second.second;
+
+            if (!cell_1->has_children() &&
+                !cell_2->has_children())
+              {
+                for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
+                  {
+                    // take possible non-standard orientation of face on cell[0] into
+                    // account
+                    const unsigned int vface0 =
+                      GeometryInfo<dim>::standard_to_real_face_vertex(v,face_orientation[0],
+                                                                      face_orientation[1],
+                                                                      face_orientation[2]);
+                    const unsigned int vi0 = topological_vertex_numbering[cell_1->face(face_no_1)->vertex_index(vface0)];
+                    const unsigned int vi1 = topological_vertex_numbering[cell_2->face(face_no_2)->vertex_index(v)];
+                    const unsigned int min_index = std::min(vi0, vi1);
+                    topological_vertex_numbering[cell_1->face(face_no_1)->vertex_index(vface0)]
+                      = topological_vertex_numbering[cell_2->face(face_no_2)->vertex_index(v)]
+                        = min_index;
+                  }
+              }
           }
 
         // this code is replicated from grid/tria.cc but using an indirection
@@ -3360,8 +3325,7 @@ namespace parallel
           // enforce 2:1 mesh balance over periodic boundaries
           if (this->smooth_grid &
               dealii::Triangulation<dim,spacedim>::limit_level_difference_at_vertices)
-            mesh_changed = enforce_mesh_balance_over_periodic_boundaries(*this,
-                           this->periodic_face_pairs_level_0);
+            mesh_changed = enforce_mesh_balance_over_periodic_boundaries(*this);
         }
       while (mesh_changed);
 
@@ -3893,7 +3857,6 @@ namespace parallel
 
       refinement_in_progress = false;
       this->update_number_cache ();
-      Triangulation<dim, spacedim>::update_periodic_face_map();
     }
 
     template <int dim, int spacedim>
@@ -4461,167 +4424,6 @@ namespace parallel
 
 
 
-    namespace
-    {
-      /**
-       * ensures that if one of the two vertices on a periodic face is marked
-       * as active (i.e., belonging to an owned level cell), also the other
-       * one is active
-       */
-      template <typename ITERATOR>
-      void
-      mark_periodic_vertices_recursively(const GridTools::PeriodicFacePair<ITERATOR> &periodic,
-                                         const int target_level,
-                                         std::vector<bool> &active_vertices_on_level)
-      {
-        if (periodic.cell[0]->level() > target_level)
-          return;
-
-        const unsigned int dim = ITERATOR::AccessorType::dimension;
-        // for hanging nodes there is nothing to do since we are interested in
-        // the connections on the same level...
-        if (periodic.cell[0]->level() < target_level &&
-            periodic.cell[0]->has_children() &&
-            periodic.cell[1]->has_children())
-          {
-            // copy orientations etc. from parent to child
-            GridTools::PeriodicFacePair<ITERATOR> periodic_child = periodic;
-
-            // find appropriate pairs of child elements
-            for (unsigned int cf=0; cf<periodic.cell[0]->face(periodic.face_idx[0])->n_children(); ++cf)
-              {
-                const unsigned int child_index_0 =
-                  GeometryInfo<dim>::child_cell_on_face(periodic.cell[0]->refinement_case(),
-                                                        periodic.face_idx[0], cf,
-                                                        periodic.orientation[0],
-                                                        periodic.orientation[1],
-                                                        periodic.orientation[2]);
-                periodic_child.cell[0] = periodic.cell[0]->child(child_index_0);
-                periodic_child.face_idx[0] = periodic.face_idx[0];
-
-                // the second face is in standard orientation in terms of the
-                // periodic face pair
-                const unsigned int child_index_1 =
-                  GeometryInfo<dim>::child_cell_on_face(periodic.cell[1]->refinement_case(),
-                                                        periodic.face_idx[1], cf);
-
-                periodic_child.cell[1] = periodic.cell[1]->child(child_index_1);
-                periodic_child.face_idx[1] = periodic.face_idx[1];
-
-                // recursive call into children
-                mark_periodic_vertices_recursively (periodic_child, target_level,
-                                                    active_vertices_on_level);
-              }
-            return;
-          }
-
-        if (periodic.cell[0]->level() != target_level)
-          return;
-
-        for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
-          {
-            // take possible non-standard orientation of face on cell[0] into
-            // account
-            const unsigned int vface0 =
-              GeometryInfo<dim>::standard_to_real_face_vertex(v,periodic.orientation[0],
-                                                              periodic.orientation[1],
-                                                              periodic.orientation[2]);
-            if (active_vertices_on_level[periodic.cell[0]->face(periodic.face_idx[0])->vertex_index(vface0)] ||
-                active_vertices_on_level[periodic.cell[1]->face(periodic.face_idx[1])->vertex_index(v)])
-              active_vertices_on_level[periodic.cell[0]->face(periodic.face_idx[0])->vertex_index(vface0)]
-                = active_vertices_on_level[periodic.cell[1]->face(periodic.face_idx[1])->vertex_index(v)]
-                  = true;
-          }
-      }
-
-
-
-      /**
-       * ensures that always both vertices over a periodic face are identified
-       * together
-       */
-      template <typename ITERATOR>
-      void
-      set_periodic_ghost_neighbors_recursively(const GridTools::PeriodicFacePair<ITERATOR> &periodic,
-                                               const int target_level,
-                                               std::map<unsigned int, std::set<dealii::types::subdomain_id> > &vertices_with_ghost_neighbors)
-      {
-        if (periodic.cell[0]->level() > target_level)
-          return;
-
-        // for hanging nodes there is nothing to do since we are interested in
-        // the connections on the same level...
-        if (periodic.cell[0]->level() < target_level &&
-            periodic.cell[0]->has_children() &&
-            periodic.cell[1]->has_children())
-          {
-            // copy orientations etc. from parent to child
-            GridTools::PeriodicFacePair<ITERATOR> periodic_child = periodic;
-
-            // find appropriate pairs of child elements
-            for (unsigned int cf=0; cf<periodic.cell[0]->face(periodic.face_idx[0])->n_children(); ++cf)
-              {
-                unsigned int c=0;
-                for (; c<periodic.cell[0]->n_children(); ++c)
-                  {
-                    if (periodic.cell[0]->child(c)->face(periodic.face_idx[0]) ==
-                        periodic.cell[0]->face(periodic.face_idx[0])->child(cf))
-                      break;
-                  }
-                Assert(c < periodic.cell[0]->n_children(),
-                       ExcMessage("Face child not found"));
-                periodic_child.cell[0] = periodic.cell[0]->child(c);
-                periodic_child.face_idx[0] = periodic.face_idx[0];
-
-                c=0;
-                for (; c<periodic.cell[1]->n_children(); ++c)
-                  {
-                    if (periodic.cell[1]->child(c)->face(periodic.face_idx[1]) ==
-                        periodic.cell[1]->face(periodic.face_idx[1])->child(cf))
-                      break;
-                  }
-                Assert(c < periodic.cell[1]->n_children(),
-                       ExcMessage("Face child not found"));
-                periodic_child.cell[1] = periodic.cell[1]->child(c);
-                periodic_child.face_idx[1] = periodic.face_idx[1];
-
-                // recursive call into children
-                set_periodic_ghost_neighbors_recursively (periodic_child, target_level,
-                                                          vertices_with_ghost_neighbors);
-              }
-            return;
-          }
-
-        if (periodic.cell[0]->level() != target_level)
-          return;
-
-        // TODO: fix non-standard orientation
-        Assert(periodic.orientation[0] == true &&
-               periodic.orientation[1] == false &&
-               periodic.orientation[2] == false,
-               ExcNotImplemented());
-
-        for (unsigned int v=0; v<GeometryInfo<ITERATOR::AccessorType::dimension-1>::vertices_per_cell; ++v)
-          {
-            const unsigned int
-            idx0 = periodic.cell[0]->face(periodic.face_idx[0])->vertex_index(v),
-            idx1 = periodic.cell[1]->face(periodic.face_idx[1])->vertex_index(v);
-            if (vertices_with_ghost_neighbors.find(idx0) !=
-                vertices_with_ghost_neighbors.end())
-              vertices_with_ghost_neighbors[idx1].
-              insert(vertices_with_ghost_neighbors[idx0].begin(),
-                     vertices_with_ghost_neighbors[idx0].end());
-            if (vertices_with_ghost_neighbors.find(idx1) !=
-                vertices_with_ghost_neighbors.end())
-              vertices_with_ghost_neighbors[idx0].
-              insert(vertices_with_ghost_neighbors[idx1].begin(),
-                     vertices_with_ghost_neighbors[idx1].end());
-          }
-      }
-    }
-
-
-
     /**
      * Determine the neighboring subdomains that are adjacent to each vertex.
      * This is achieved via the p4est_iterate/p8est_iterate tool
@@ -4676,7 +4478,7 @@ namespace parallel
     void
     Triangulation<dim,spacedim>::
     fill_level_vertices_with_ghost_neighbors
-    (const unsigned int level,
+    (const int level,
      std::map<unsigned int, std::set<dealii::types::subdomain_id> >
      &vertices_with_ghost_neighbors)
     {
@@ -4690,9 +4492,41 @@ namespace parallel
               vertices_with_ghost_neighbors[cell->vertex_index(v)]
               .insert (cell->level_subdomain_id());
 
-      for (unsigned int i=0; i<this->periodic_face_pairs_level_0.size(); ++i)
-        set_periodic_ghost_neighbors_recursively(this->periodic_face_pairs_level_0[i],
-                                                 level, vertices_with_ghost_neighbors);
+      //now for the vertices on periodic faces
+      typename std::map<std::pair<cell_iterator, unsigned int>,
+               std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
+
+      for (it = this->periodic_face_map.begin(); it!= this->periodic_face_map.end(); ++it)
+        {
+          const cell_iterator &cell_1 = it->first.first;
+          const unsigned int face_no_1 = it->first.second;
+          const cell_iterator &cell_2 = it->second.first.first;
+          const unsigned int face_no_2 = it->second.first.second;
+          const std::bitset<3> face_orientation = it->second.second;
+
+          if (cell_1->level() == level &&
+              !cell_1->has_children() &&
+              !cell_2->has_children())
+            {
+              for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
+                {
+                  // take possible non-standard orientation of faces into account
+                  const unsigned int vface0 =
+                    GeometryInfo<dim>::standard_to_real_face_vertex(v,face_orientation[0],
+                                                                    face_orientation[1],
+                                                                    face_orientation[2]);
+                  const unsigned int idx0 = cell_1->face(face_no_1)->vertex_index(vface0);
+                  const unsigned int idx1 = cell_2->face(face_no_2)->vertex_index(v);
+                  if (vertices_with_ghost_neighbors.find(idx0) != vertices_with_ghost_neighbors.end())
+                    vertices_with_ghost_neighbors[idx1].insert(vertices_with_ghost_neighbors[idx0].begin(),
+                                                               vertices_with_ghost_neighbors[idx0].end());
+                  if (vertices_with_ghost_neighbors.find(idx1) != vertices_with_ghost_neighbors.end())
+                    vertices_with_ghost_neighbors[idx0].insert(vertices_with_ghost_neighbors[idx1].begin(),
+                                                               vertices_with_ghost_neighbors[idx1].end());
+                }
+            }
+        }
+
     }
 
 
@@ -4700,21 +4534,52 @@ namespace parallel
     template<int dim, int spacedim>
     std::vector<bool>
     Triangulation<dim,spacedim>
-    ::mark_locally_active_vertices_on_level (const unsigned int level) const
+    ::mark_locally_active_vertices_on_level (const int level) const
     {
       Assert (dim>1, ExcNotImplemented());
 
-      std::vector<bool> marked_vertices(this->n_vertices(), false);
+      std::vector<bool> active_vertices_on_level(this->n_vertices(), false);
       for (cell_iterator cell = this->begin(level); cell != this->end(level); ++cell)
         if (cell->level_subdomain_id() == this->locally_owned_subdomain())
           for (unsigned int v=0; v<GeometryInfo<dim>::vertices_per_cell; ++v)
-            marked_vertices[cell->vertex_index(v)] = true;
+            active_vertices_on_level[cell->vertex_index(v)] = true;
 
-      for (unsigned int i=0; i<this->periodic_face_pairs_level_0.size(); ++i)
-        mark_periodic_vertices_recursively(this->periodic_face_pairs_level_0[i],
-                                           level, marked_vertices);
+      /**
+       * ensure that if one of the two vertices on a periodic face is marked
+       * as active (i.e., belonging to an owned level cell), also the other
+       * one is active
+       */
+      typename std::map<std::pair<cell_iterator, unsigned int>,
+               std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
 
-      return marked_vertices;
+      for (it = this->periodic_face_map.begin(); it!= this->periodic_face_map.end(); ++it)
+        {
+          const cell_iterator &cell_1 = it->first.first;
+          const unsigned int face_no_1 = it->first.second;
+          const cell_iterator &cell_2 = it->second.first.first;
+          const unsigned int face_no_2 = it->second.first.second;
+          const std::bitset<3> &face_orientation = it->second.second;
+
+          if (cell_1->level() == level &&
+              !cell_1->has_children() &&
+              !cell_2->has_children())
+            {
+              for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
+                {
+                  // take possible non-standard orientation of faces into account
+                  const unsigned int vface0 =
+                    GeometryInfo<dim>::standard_to_real_face_vertex(v,face_orientation[0],
+                                                                    face_orientation[1],
+                                                                    face_orientation[2]);
+                  if (active_vertices_on_level[cell_1->face(face_no_1)->vertex_index(vface0)] ||
+                      active_vertices_on_level[cell_2->face(face_no_2)->vertex_index(v)])
+                    active_vertices_on_level[cell_1->face(face_no_1)->vertex_index(vface0)]
+                      = active_vertices_on_level[cell_2->face(face_no_2)->vertex_index(v)]
+                        = true;
+                }
+            }
+        }
+      return active_vertices_on_level;
     }
 
 
