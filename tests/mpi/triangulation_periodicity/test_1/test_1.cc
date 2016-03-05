@@ -14,19 +14,29 @@
 #include <string>
 
 /*
- * Test objectives:
+ * ====================
+ * [ Test objectives: ]
+ * ====================
  *
  * 1. To control if periodic faces have at most one level of refinement
  *    difference.
  *
  * 2. To test the following functions:
  *    - cell->has_periodic_neighbor(i_face)
- *    - cell->neighbor_or_periodic_neighbor(i_face)
+ *    - cell->periodic_neighbor(i_face)
  *    - cell->periodic_neighbor_is_coarser(i_face)
- *    - cell->periodic_neighbor_is_refined(i_face)
+ *    - cell->periodic_face_no(i_face)
+ *    - cell->periodic_neighbor_of_periodic_neighbor(i_face)
+ *    - cell->periodic_neighbor_of_coarser_periodic_neighbor(i_face)
+ *    - cell->periodic_neighbor_child_on_subface(i_face, i_subface)
  *
- * We start with a 4x4 mesh and refine a single element twice, to get the
- * following mesh:
+ *
+ * ===============
+ * [ Test Setup: ]
+ * ===============
+ *
+ * We start with a 4x4 mesh (in 2D) and 4x4x4 mesh (in 3D) and refine on of the
+ * top middle elements twice, to get the following mesh:
  *
  *
  *                      Top periodic boundary
@@ -64,6 +74,13 @@
  *       |           |     |     |     |     |           |
  *       -------------------------------------------------
  *                    Bottom periodic boundary
+ *
+ *
+ * =====================
+ * [ Passing criteria: ]
+ * =====================
+ *
+ * The test will be passed if the main three assertions are passed.
  */
 
 using namespace dealii;
@@ -93,15 +110,20 @@ periodicity_tests<dim>::periodicity_tests()
   comm_rank = Utilities::MPI::this_mpi_process(mpi_comm);
   comm_size = Utilities::MPI::n_mpi_processes(mpi_comm);
   std::vector<unsigned> repeats(dim, 2);
-  Point<dim> p1, p2;
+  Point<dim> p1, p2, periodic_transfer;
   if (dim == 2)
+  {
     p2 = { 16., 16. };
+    periodic_transfer = { 0.0, 16. };
+  }
   if (dim == 3)
+  {
     p2 = { 16., 16., 16. };
+    periodic_transfer = { 0.0, 16., 0.0 };
+  }
   GridGenerator::subdivided_hyper_rectangle(the_grid, repeats, p1, p2, true);
   std::vector<GridTools::PeriodicFacePair<cell_iterator>> periodic_faces;
-  GridTools::collect_periodic_faces(
-    the_grid, 2, 3, 0, periodic_faces, Tensor<1, dim>({ 0., 16. }));
+  GridTools::collect_periodic_faces(the_grid, 2, 3, 0, periodic_faces, periodic_transfer);
   the_grid.add_periodicity(periodic_faces);
 }
 
@@ -119,7 +141,7 @@ void periodicity_tests<dim>::refine_grid(const int &n = 1)
     if (dim == 2)
       refn_point = { 6.5, 15.5 };
     if (dim == 3)
-      refn_point = { 6.5, 6.5, 15.5 };
+      refn_point = { 6.5, 15.5, 6.5 };
     for (unsigned i_refn = 0; i_refn < n; ++i_refn)
     {
       for (cell_iterator &&cell_it : the_grid.active_cell_iterators())
@@ -201,10 +223,16 @@ void periodicity_tests<dim>::check_periodicity()
               /*
                * Now, we want to do the standard test of:
                *
-               * cell->
-               *   neighbor(i_face)->
-               *   periodic_neighbor_child_on_subface(face_nom subface_no)
+               * cell->neighbor(i_face)
+               *     ->periodic_neighbor_child_on_subface(face_no, subface_no)
                * == cell
+               *
+               * The other important test for coarser neighbors is:
+               * cell->periodic_neighbor(i_face)
+               *     ->face(face_no)->child(subface_no)
+               * == cell->face(i_face)
+               * But, this is not the case for periodic neighbors. Because, we
+               * are not talking about the exact same faces.
                */
               std::pair<unsigned, unsigned> face_subface =
                 cell_it->periodic_neighbor_of_coarser_periodic_neighbor(i_face);
@@ -248,26 +276,49 @@ int main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  periodicity_tests<2> test1;
-  /* Let us first check the periodicity of the simple case of uniformly refined
+  periodicity_tests<2> test_2D;
+  /*
+   * Let us first check the periodicity of the simple case of uniformly refined
    * mesh.
    */
   if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     std::cout
       << "First, we check the periodic faces on a uniformly refined mesh."
       << std::endl;
-  test1.refine_grid(1);
-  test1.write_grid();
-  test1.check_periodicity();
+  test_2D.refine_grid(1);
+  //  test_2D.write_grid();
+  test_2D.check_periodicity();
 
   /* Next, we want to check the case of nonuniform mesh */
   if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     std::cout
       << "Next, we check the periodic faces on an adaptively refined mesh."
       << std::endl;
-  test1.refine_grid(2);
-  test1.write_grid();
-  test1.check_periodicity();
+  test_2D.refine_grid(2);
+  //  test_2D.write_grid();
+  test_2D.check_periodicity();
+
+  periodicity_tests<3> test_3D;
+  /*
+   * Let us first check the periodicity of the simple case of uniformly refined
+   * mesh.
+   */
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    std::cout
+      << "First, we check the periodic faces on a uniformly refined mesh."
+      << std::endl;
+  test_3D.refine_grid(1);
+  //  test_3D.write_grid();
+  test_3D.check_periodicity();
+
+  /* Next, we want to check the case of nonuniform mesh */
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    std::cout
+      << "Next, we check the periodic faces on an adaptively refined mesh."
+      << std::endl;
+  test_3D.refine_grid(2);
+  //  test_3D.write_grid();
+  test_3D.check_periodicity();
 
   return 0;
 }
