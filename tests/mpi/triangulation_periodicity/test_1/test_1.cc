@@ -188,18 +188,49 @@ void periodicity_tests<dim>::check_periodicity()
         {
           if (cell_it->has_periodic_neighbor(i_face))
           {
-            const cell_iterator &nb_it =
-              cell_it->neighbor_or_periodic_neighbor(i_face);
-            unsigned i_nb_face = cell_it->periodic_neighbor_face_no(i_face);
-            std::cout << cell_it->face(i_face)->center()
+            const cell_iterator &nb_it = cell_it->periodic_neighbor(i_face);
+            unsigned nb_i_face = cell_it->periodic_neighbor_face_no(i_face);
+            const cell_iterator &nb_of_nb_it = nb_it->periodic_neighbor(nb_i_face);
+            unsigned nb_of_nb_i_face = nb_it->periodic_neighbor_face_no(nb_i_face);
+            std::cout << nb_it->face(nb_i_face)->center()
                       << " is a periodic neighbor of "
-                      << nb_it->face(i_nb_face)->center();
+                      << cell_it->face(i_face)->center();
             if (cell_it->periodic_neighbor_is_coarser(i_face))
+            {
               std::cout << ". And periodic neighbor is coarser." << std::endl;
-            else if (cell_it->periodic_neighbor_is_refined(i_face))
-              std::cout << ". And periodic neighbor is finer." << std::endl;
+              /*
+               * Now, we want to do the standard test of:
+               *
+               * cell->
+               *   neighbor(i_face)->
+               *   periodic_neighbor_child_on_subface(face_nom subface_no)
+               * == cell
+               */
+              std::pair<unsigned, unsigned> face_subface =
+                cell_it->periodic_neighbor_of_coarser_periodic_neighbor(i_face);
+              assert(nb_it->periodic_neighbor_child_on_subface(
+                       face_subface.first, face_subface.second) == cell_it);
+            }
+            else if (nb_it->face(nb_i_face)->has_children())
+            {
+              std::cout << ". And periodic neighbor is refined." << std::endl;
+            }
             else
               std::cout << ". And periodic neighbor has the same level." << std::endl;
+            std::cout << "If the periodic neighbor is not coarser, "
+                      << nb_of_nb_it->face(nb_of_nb_i_face)->center()
+                      << " should be equal to "
+                      << cell_it->face(i_face)->center() << std::endl;
+            std::cout
+              << "-------------------------------------------------------"
+              << std::endl;
+            assert((cell_it->face(i_face)->center() -
+                    nb_of_nb_it->face(nb_of_nb_i_face)->center())
+                       .norm() < 1e-10 ||
+                   cell_it->periodic_neighbor_is_coarser(i_face));
+
+            assert(cell_it == nb_of_nb_it ||
+                   cell_it->periodic_neighbor_is_coarser(i_face));
           }
         }
       }
@@ -237,7 +268,6 @@ int main(int argc, char *argv[])
   test1.refine_grid(2);
   test1.write_grid();
   test1.check_periodicity();
-
 
   return 0;
 }
