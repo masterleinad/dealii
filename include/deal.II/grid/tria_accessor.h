@@ -204,6 +204,13 @@ namespace TriaAccessorExceptions
    * @ingroup Exceptions
    */
   DeclException0 (ExcFacesHaveNoLevel);
+  /**
+   * Your are trying to get the periodic neighbor for a face, which does not
+   * have a periodic neighbor. For more information on this, refer to
+   * @ref GlossPeriodicConstraints "entry for periodic boundaries".
+   * @ingroup Exceptions
+   */
+  DeclException0 (ExcNoPeriodicNeighbor);
 //TODO: Write documentation!
   /**
    * @ingroup Exceptions
@@ -2535,29 +2542,68 @@ public:
   unsigned int neighbor_face_no (const unsigned int neighbor) const;
 
   /**
-   * If the cell has a periodic neighbor at the given face, this function
-   * returns true, otherwise, the returned value is false. This function
-   * is valid for locally owned cells and ghost cells. For artificial cells,
-   * we do not store the periodicity data.
+   * @}
+   */
+  /**
+   * @name Dealing with periodic neighbor
+   */
+  /**
+   * @{
+   */
+   /**
+   * If the cell has a periodic neighbor at its @c ith face, this function
+   * returns true, otherwise, the returned value is false.
    */
   bool has_periodic_neighbor(const unsigned int i) const;
 
   /**
-   * For the locally owned cells or ghost cells in the triangulation, which
-   * have a face on a periodic boundary
+   * For a cell which has its @c ith face, on a periodic boundary
    * (see @ref GlossPeriodicConstraints "the entry for periodic baoundaries")
-   * this function returns an iterator to the cell on the other side of the
-   * periodic boundary. Otherwise (i.e. the cell is artificial or not located
-   * next to a periodic boundary) this function returns the
-   * same cell iterator as @c neighbor() does. Similar to @c neighbor()
-   * function, the returned cell has at most the same level of refinement
-   * as the current cell. On distributed meshes, by calling
-   * Triangulation::add_periodicity(), one can make sure that the element
-   * on the other side of the periodic boundary exists in this rank as a
-   * ghost cell or a locally owned cell.
+   * this function returns an iterator to the cell on the other side
+   * of the periodic face. Otherwise, invalid iterator will be returned.
+   * In order to check if a cell has periodic neighbor on its @c ith face
+   * or not, one should first call @c has_periodic_neighbor() function.
+   * Similar to @c neighbor(), the returned cell
+   * has at most the same level of refinement as the current cell.
+   * On distributed meshes, by calling Triangulation::add_periodicity(),
+   * one can make sure that the element on the other side of the periodic
+   * boundary exists in this rank as a ghost cell or a locally owned cell.
    */
-  TriaIterator<CellAccessor<dim, spacedim>  >
-  neighbor_or_periodic_neighbor (const unsigned int i) const;
+  TriaIterator<CellAccessor<dim, spacedim> >
+  periodic_neighbor (const unsigned int i) const;
+
+  /**
+   *
+   */
+  TriaIterator<CellAccessor<dim, spacedim> >
+  periodic_neighbor_child_on_subface (const unsigned int face_no,
+                                      const unsigned int subface_no) const;
+
+  /**
+   *
+   */
+  std::pair<unsigned int, unsigned int>
+  periodic_neighbor_of_coarser_periodic_neighbor (const unsigned i) const;
+
+  /**
+   * This function returns the index of the periodic neighbor. If there is
+   * no periodic neighbor at the given face, the return value is -1.
+   */
+  int
+  periodic_neighbor_index (const unsigned int i) const;
+
+   /**
+   * This function returns the level of the periodic neighbor. If there is
+   * no periodic neighbor at the given face, the return value is -1.
+   */
+  int
+  periodic_neighbor_level (const unsigned int i) const;
+
+  /**
+   *
+   */
+  unsigned int
+  periodic_neighbor_of_periodic_neighbor (const unsigned int i) const;
 
   /**
    * If a cell has periodic neighbor, this function returns the face number
@@ -2574,16 +2620,6 @@ public:
    */
   bool
   periodic_neighbor_is_coarser (const unsigned int i) const;
-
-  /**
-   * This function returns true if the element on the other side of the
-   * periodic boundary is refined on the common periodic face with the
-   * current element. Otherwise, it returns false. The implementation
-   * allows this function to work, in the case of anisotropic
-   * refinement.
-   */
-  bool
-  periodic_neighbor_is_refined (const unsigned int i) const;
 
   /**
    * @}
