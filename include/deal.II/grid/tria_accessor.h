@@ -2502,7 +2502,7 @@ public:
   /**
    * @{
    */
-   /**
+  /**
    * If the cell has a periodic neighbor at its @c ith face, this function
    * returns true, otherwise, the returned value is false.
    */
@@ -2544,10 +2544,10 @@ public:
   int
   periodic_neighbor_index (const unsigned int i) const;
 
-   /**
-   * This function returns the level of the periodic neighbor. If there is
-   * no periodic neighbor at the given face, the return value is -1.
-   */
+  /**
+  * This function returns the level of the periodic neighbor. If there is
+  * no periodic neighbor at the given face, the return value is -1.
+  */
   int
   periodic_neighbor_level (const unsigned int i) const;
 

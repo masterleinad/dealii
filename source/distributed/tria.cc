@@ -3857,6 +3857,7 @@ namespace parallel
 
       refinement_in_progress = false;
       this->update_number_cache ();
+      Triangulation<dim, spacedim>::update_periodic_face_map();
     }
 
     template <int dim, int spacedim>

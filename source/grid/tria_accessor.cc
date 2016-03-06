@@ -1927,7 +1927,7 @@ periodic_neighbor (const unsigned int i_face) const
     this->tria->periodic_face_map.find(std::pair<cell_iterator, unsigned int>(my_it, i_face));
   // Assertion is required to check that we are actually on a periodic boundary.
   Assert (my_face_pair != this->tria->periodic_face_map.end(),
-         TriaAccessorExceptions::ExcNoPeriodicNeighbor());
+          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
   return my_face_pair->second.first.first;
 }
 
@@ -1967,8 +1967,7 @@ periodic_neighbor_child_on_subface (const unsigned int i_face,
           TriaAccessorExceptions::ExcNoPeriodicNeighbor());
   cell_iterator parent_nb_it = my_face_pair->second.first.first;
   unsigned int nb_face_num = my_face_pair->second.first.second;
-  TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> nb_parent_face_it =
-    parent_nb_it->face(nb_face_num);
+  TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> nb_parent_face_it = parent_nb_it->face(nb_face_num);
   /*
    * We should check if the parent face of the neighbor has at least the same number of
    * children as i_subface.
@@ -2030,8 +2029,7 @@ periodic_neighbor_of_coarser_periodic_neighbor (const unsigned int i_face) const
   Assert (nb_face_pair != this->tria->periodic_face_map.end(),
           TriaAccessorExceptions::ExcNoPeriodicNeighbor());
   cell_iterator p_nb_of_p_nb = nb_face_pair->second.first.first;
-  TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> parent_face_it =
-    p_nb_of_p_nb->face(nb_face_pair->second.first.second);
+  TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> parent_face_it = p_nb_of_p_nb->face(nb_face_pair->second.first.second);
   for (unsigned int i_subface = 0; i_subface < parent_face_it->n_children(); ++i_subface)
     if (parent_face_it->child_index(i_subface) == my_face_index)
       return (std::pair<unsigned int, unsigned int>(face_num_of_nb, i_subface));
@@ -2181,7 +2179,7 @@ CellAccessor<dim, spacedim>::periodic_neighbor_is_coarser (const unsigned int i_
    * the nb_face_pair should also be mapped to some cell_face pair. We assert this here.
    */
   Assert (nb_face_pair != this->tria->periodic_face_map.end(),
-         TriaAccessorExceptions::ExcNoPeriodicNeighbor());
+          TriaAccessorExceptions::ExcNoPeriodicNeighbor());
   if (nb_face_pair->second.first.first->face(nb_face_pair->second.first.second)->has_children())
     return true;
   return false;
