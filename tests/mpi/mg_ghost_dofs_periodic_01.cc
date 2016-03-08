@@ -23,6 +23,7 @@
 #include <deal.II/distributed/grid_refinement.h>
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/fe/fe_q.h>
+#include <deal.II/numerics/data_out.h>
 
 
 template <int dim>
@@ -70,6 +71,44 @@ void test()
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
   dof_handler.distribute_mg_dofs(fe);
+
+  std::string filename = "solution-";
+
+  dealii::DataOut<dim> data_out;
+  data_out.attach_dof_handler (dof_handler);
+  dealii::Vector<float> subdomain (tria.n_active_cells());
+  for (unsigned int i=0; i<subdomain.size(); ++i)
+    subdomain(i) = tria.locally_owned_subdomain();
+  data_out.add_data_vector (subdomain, "subdomain");
+
+  data_out.build_patches ();
+
+  const unsigned int n_proc = dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  if (n_proc >1)
+    {
+      const int n_digits = dealii::Utilities::needed_digits(n_proc);
+      std::ofstream output
+      ((filename + "."
+        + dealii::Utilities::int_to_string(tria.locally_owned_subdomain(),n_digits)
+        + ".vtu").c_str());
+      data_out.write_vtu (output);
+
+      if (dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+        {
+          std::vector<std::string> filenames;
+          for (unsigned int i=0; i<n_proc; i++)
+            filenames.push_back (filename + "."
+                                 + dealii::Utilities::int_to_string (i,n_digits) + ".vtu");
+          std::ofstream master_output ((filename + ".pvtu").c_str());
+          data_out.write_pvtu_record (master_output, filenames);
+        }
+    }
+  else
+    {
+      std::ofstream output ((filename + ".vtk").c_str());
+      data_out.write_vtk (output);
+    }
+
 
   std::vector<types::global_dof_index> dof_indices(fe.dofs_per_cell);
   for (unsigned int level=0; level<tria.n_global_levels(); ++level)

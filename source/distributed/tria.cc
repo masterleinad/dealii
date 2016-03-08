@@ -3277,7 +3277,7 @@ namespace parallel
 
         for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
         {
-          AssertThrow(topological_vertex_numbering[i] == topological_vertex_numbering_cmp[i], ExcInternalError());
+          Assert(topological_vertex_numbering[i] == topological_vertex_numbering_cmp[i], ExcInternalError());
          }
 
 
@@ -4767,8 +4767,7 @@ namespace parallel
           const std::bitset<3> face_orientation = it->second.second;
 
           if (cell_1->level() == level &&
-              !cell_1->has_children() &&
-              !cell_2->has_children())
+              cell_2->level() == level)
             {
               for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
                 {
@@ -4789,9 +4788,30 @@ namespace parallel
             }
         }
 
-    AssertThrow(vertices_with_ghost_neighbors.size() == vertices_with_ghost_neighbors_cmp.size(), 
-                ExcInternalError());
+      if (vertices_with_ghost_neighbors != vertices_with_ghost_neighbors_cmp)
+      {
+        std::cout << "Print vertices_with_ghost_neighbors: " << std::endl;
+        std::map<unsigned int, std::set<dealii::types::subdomain_id> >::const_iterator it;
+        for (it = vertices_with_ghost_neighbors.begin(); it!=vertices_with_ghost_neighbors.end(); ++it)
+        {         
+          std::cout << "Vertex " << it->first << " is on subdomains ";
+          std::set<dealii::types::subdomain_id>::const_iterator it2;
+          for (it2 = it->second.begin(); it2!=it->second.end(); ++it2)
+            std::cout << *it2 << " ";
+          std::cout << std::endl;
+        }
 
+        std::cout << "Print vertices_with_ghost_neighbors_cmp: " << std::endl;
+        for (it = vertices_with_ghost_neighbors_cmp.begin(); it!=vertices_with_ghost_neighbors_cmp.end(); ++it)
+        {         
+          std::cout << "Vertex " << it->first << " is on subdomains ";
+          std::set<dealii::types::subdomain_id>::const_iterator it2;
+          for (it2 = it->second.begin(); it2!=it->second.end(); ++it2)
+            std::cout << *it2 << " ";
+          std::cout << std::endl;
+        }  
+        Assert(false, ExcInternalError());
+      }
     }
 
 
@@ -4809,9 +4829,11 @@ namespace parallel
           for (unsigned int v=0; v<GeometryInfo<dim>::vertices_per_cell; ++v)
             marked_vertices[cell->vertex_index(v)] = true;
 
+      std::vector<bool> marked_vertices_cmp = marked_vertices;
+
       for (unsigned int i=0; i<this->periodic_face_pairs_level_0.size(); ++i)
         mark_periodic_vertices_recursively(this->periodic_face_pairs_level_0[i],
-                                           level, marked_vertices);
+                                           level, marked_vertices_cmp);
 
       /**
        * ensure that if one of the two vertices on a periodic face is marked
@@ -4830,8 +4852,7 @@ namespace parallel
           const std::bitset<3> &face_orientation = it->second.second;
 
           if (cell_1->level() == level &&
-              !cell_1->has_children() &&
-              !cell_2->has_children())
+              cell_2->level() == level)
             {
               for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
                 {
@@ -4848,6 +4869,8 @@ namespace parallel
                 }
             }
         }
+
+      Assert(marked_vertices == marked_vertices_cmp, ExcInternalError());
       return marked_vertices;
     }
 
