@@ -3209,7 +3209,7 @@ namespace parallel
       (Triangulation<dim,spacedim> &tria,
        const std::vector<GridTools::PeriodicFacePair<typename dealii::Triangulation<dim,spacedim>::cell_iterator> > &periodic_face_pairs_level_0)
       {
-        if (periodic_face_pairs_level_0.empty())
+        if (tria.periodic_face_map.size()==0)
           return false;
 
         std::vector<bool> flags_before[2];
@@ -3246,6 +3246,7 @@ namespace parallel
         typedef typename Triangulation<dim, spacedim>::cell_iterator cell_iterator;
         typename std::map<std::pair<cell_iterator, unsigned int>,
                  std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
+        std::cout << std::endl;
         for (it = tria.periodic_face_map.begin(); it!= tria.periodic_face_map.end(); ++it)
           {
             const cell_iterator &cell_1 = it->first.first;
@@ -3254,8 +3255,7 @@ namespace parallel
             const unsigned int face_no_2 = it->second.first.second;
             const std::bitset<3> face_orientation = it->second.second;
 
-            if (!cell_1->has_children() &&
-                !cell_2->has_children())
+            if (cell_1->level() == cell_2->level())
               {
                 for (unsigned int v=0; v<GeometryInfo<dim-1>::vertices_per_cell; ++v)
                   {
@@ -3271,14 +3271,27 @@ namespace parallel
                     topological_vertex_numbering[cell_1->face(face_no_1)->vertex_index(vface0)]
                       = topological_vertex_numbering[cell_2->face(face_no_2)->vertex_index(v)]
                         = min_index;
+/*                    std::cout << "Identified vertices " << cell_1->face(face_no_1)->vertex_index(vface0) 
+                              << " at "                 << cell_1->face(face_no_1)->vertex(vface0) 
+                              << " and "                << cell_2->face(face_no_2)->vertex_index(v)
+                              << " at "                 << cell_2->face(face_no_2)->vertex(v)
+                              << std::endl;*/
                   }
               }
           }
 
-        for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
+        if (topological_vertex_numbering != topological_vertex_numbering_cmp)
         {
-          Assert(topological_vertex_numbering[i] == topological_vertex_numbering_cmp[i], ExcInternalError());
-         }
+          for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
+          {
+            if (topological_vertex_numbering[i] != topological_vertex_numbering_cmp[i])
+              std::cout << i 
+                        << " old: " << topological_vertex_numbering_cmp[i]
+                        << " new: " << topological_vertex_numbering[i]
+                        << std::endl;
+          }
+          Assert( false, ExcInternalError());
+        }
 
 
         // this code is replicated from grid/tria.cc but using an indirection
