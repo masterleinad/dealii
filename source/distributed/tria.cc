@@ -3197,6 +3197,13 @@ namespace parallel
             topological_vertex_numbering[periodic.cell[0]->face(periodic.face_idx[0])->vertex_index(vface0)]
               = topological_vertex_numbering[periodic.cell[1]->face(periodic.face_idx[1])->vertex_index(v)]
                 = min_index;
+
+            /*  std::cout << "Old identified vertices " << periodic.cell[0]->face(periodic.face_idx[0])->vertex_index(vface0)
+                        << " at "                 << periodic.cell[0]->face(periodic.face_idx[0])->vertex(vface0)
+                        << " and "                << periodic.cell[1]->face(periodic.face_idx[1])->vertex_index(v)
+                        << " at "                 << periodic.cell[1]->face(periodic.face_idx[1])->vertex(v)
+                        << std::endl;*/
+
           }
       }
 
@@ -3219,10 +3226,11 @@ namespace parallel
         std::vector<unsigned int> topological_vertex_numbering(tria.n_vertices());
         std::vector<unsigned int> topological_vertex_numbering_cmp(tria.n_vertices());
         for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
-        {
-          topological_vertex_numbering[i] = i;
-          topological_vertex_numbering_cmp[i] = i;
-        }
+          {
+            topological_vertex_numbering[i] = i;
+            topological_vertex_numbering_cmp[i] = i;
+          }
+        //std::cout << std::endl;
         for (unsigned int i=0; i<periodic_face_pairs_level_0.size(); ++i)
           {
             identify_periodic_vertices_recursively(periodic_face_pairs_level_0[i],
@@ -3246,7 +3254,6 @@ namespace parallel
         typedef typename Triangulation<dim, spacedim>::cell_iterator cell_iterator;
         typename std::map<std::pair<cell_iterator, unsigned int>,
                  std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
-        std::cout << std::endl;
         for (it = tria.periodic_face_map.begin(); it!= tria.periodic_face_map.end(); ++it)
           {
             const cell_iterator &cell_1 = it->first.first;
@@ -3271,27 +3278,37 @@ namespace parallel
                     topological_vertex_numbering[cell_1->face(face_no_1)->vertex_index(vface0)]
                       = topological_vertex_numbering[cell_2->face(face_no_2)->vertex_index(v)]
                         = min_index;
-/*                    std::cout << "Identified vertices " << cell_1->face(face_no_1)->vertex_index(vface0) 
-                              << " at "                 << cell_1->face(face_no_1)->vertex(vface0) 
-                              << " and "                << cell_2->face(face_no_2)->vertex_index(v)
-                              << " at "                 << cell_2->face(face_no_2)->vertex(v)
-                              << std::endl;*/
+                    /*  std::cout << "Newly identified vertices " << cell_1->face(face_no_1)->vertex_index(vface0)
+                                << " at "                 << cell_1->face(face_no_1)->vertex(vface0)
+                                << " and "                << cell_2->face(face_no_2)->vertex_index(v)
+                                << " at "                 << cell_2->face(face_no_2)->vertex(v)
+                                << std::endl;*/
                   }
               }
           }
 
+        for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
+          if (topological_vertex_numbering[i] != i)
+            for (unsigned int j=0; j < topological_vertex_numbering.size(); ++j)
+              Assert(topological_vertex_numbering[j] != i, ExcInternalError());
+
+        for (unsigned int i=0; i<topological_vertex_numbering_cmp.size(); ++i)
+          if (topological_vertex_numbering_cmp[i] != i)
+            for (unsigned int j=0; j < topological_vertex_numbering_cmp.size(); ++j)
+              Assert(topological_vertex_numbering_cmp[j] != i, ExcInternalError());
+
         if (topological_vertex_numbering != topological_vertex_numbering_cmp)
-        {
-          for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
           {
-            if (topological_vertex_numbering[i] != topological_vertex_numbering_cmp[i])
-              std::cout << i 
-                        << " old: " << topological_vertex_numbering_cmp[i]
-                        << " new: " << topological_vertex_numbering[i]
-                        << std::endl;
+            for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
+              {
+                if (topological_vertex_numbering[i] != topological_vertex_numbering_cmp[i])
+                  std::cout << i
+                            << " old: " << topological_vertex_numbering_cmp[i]
+                            << " new: " << topological_vertex_numbering[i]
+                            << std::endl;
+              }
+            Assert( false, ExcInternalError());
           }
-          Assert( false, ExcInternalError());
-        }
 
 
         // this code is replicated from grid/tria.cc but using an indirection
@@ -4759,8 +4776,8 @@ namespace parallel
               vertices_with_ghost_neighbors[cell->vertex_index(v)]
               .insert (cell->level_subdomain_id());
 
-     std::map<unsigned int, std::set<dealii::types::subdomain_id> >
-     vertices_with_ghost_neighbors_cmp = vertices_with_ghost_neighbors;
+      std::map<unsigned int, std::set<dealii::types::subdomain_id> >
+      vertices_with_ghost_neighbors_cmp = vertices_with_ghost_neighbors;
 
 
       for (unsigned int i=0; i<this->periodic_face_pairs_level_0.size(); ++i)
@@ -4802,29 +4819,29 @@ namespace parallel
         }
 
       if (vertices_with_ghost_neighbors != vertices_with_ghost_neighbors_cmp)
-      {
-        std::cout << "Print vertices_with_ghost_neighbors: " << std::endl;
-        std::map<unsigned int, std::set<dealii::types::subdomain_id> >::const_iterator it;
-        for (it = vertices_with_ghost_neighbors.begin(); it!=vertices_with_ghost_neighbors.end(); ++it)
-        {         
-          std::cout << "Vertex " << it->first << " is on subdomains ";
-          std::set<dealii::types::subdomain_id>::const_iterator it2;
-          for (it2 = it->second.begin(); it2!=it->second.end(); ++it2)
-            std::cout << *it2 << " ";
-          std::cout << std::endl;
-        }
+        {
+          std::cout << "Print vertices_with_ghost_neighbors: " << std::endl;
+          std::map<unsigned int, std::set<dealii::types::subdomain_id> >::const_iterator it;
+          for (it = vertices_with_ghost_neighbors.begin(); it!=vertices_with_ghost_neighbors.end(); ++it)
+            {
+              std::cout << "Vertex " << it->first << " is on subdomains ";
+              std::set<dealii::types::subdomain_id>::const_iterator it2;
+              for (it2 = it->second.begin(); it2!=it->second.end(); ++it2)
+                std::cout << *it2 << " ";
+              std::cout << std::endl;
+            }
 
-        std::cout << "Print vertices_with_ghost_neighbors_cmp: " << std::endl;
-        for (it = vertices_with_ghost_neighbors_cmp.begin(); it!=vertices_with_ghost_neighbors_cmp.end(); ++it)
-        {         
-          std::cout << "Vertex " << it->first << " is on subdomains ";
-          std::set<dealii::types::subdomain_id>::const_iterator it2;
-          for (it2 = it->second.begin(); it2!=it->second.end(); ++it2)
-            std::cout << *it2 << " ";
-          std::cout << std::endl;
-        }  
-        Assert(false, ExcInternalError());
-      }
+          std::cout << "Print vertices_with_ghost_neighbors_cmp: " << std::endl;
+          for (it = vertices_with_ghost_neighbors_cmp.begin(); it!=vertices_with_ghost_neighbors_cmp.end(); ++it)
+            {
+              std::cout << "Vertex " << it->first << " is on subdomains ";
+              std::set<dealii::types::subdomain_id>::const_iterator it2;
+              for (it2 = it->second.begin(); it2!=it->second.end(); ++it2)
+                std::cout << *it2 << " ";
+              std::cout << std::endl;
+            }
+          Assert(false, ExcInternalError());
+        }
     }
 
 
