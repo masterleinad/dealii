@@ -3279,30 +3279,30 @@ namespace parallel
                       = topological_vertex_numbering[cell_2->face(face_no_2)->vertex_index(v)]
                         = min_index;
                     /*  std::cout << "Newly identified vertices " << cell_1->face(face_no_1)->vertex_index(vface0)
-                                << " at "                 << cell_1->face(face_no_1)->vertex(vface0)
-                                << " and "                << cell_2->face(face_no_2)->vertex_index(v)
-                                << " at "                 << cell_2->face(face_no_2)->vertex(v)
-                                << std::endl;*/
+                              << " at "                 << cell_1->face(face_no_1)->vertex(vface0)
+                              << " and "                << cell_2->face(face_no_2)->vertex_index(v)
+                              << " at "                 << cell_2->face(face_no_2)->vertex(v)
+                              << std::endl;*/
                   }
               }
           }
 
         // There must not be any chains!
         for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
-          if (topological_vertex_numbering[i] != i)
-            {
-              const unsigned int j = topological_vertex_numbering[i];
+          {
+            const unsigned int j = topological_vertex_numbering[i];
+            if (j != i)
               Assert(topological_vertex_numbering[j] == j,
                      ExcInternalError());
-            }
+          }
 
         for (unsigned int i=0; i<topological_vertex_numbering_cmp.size(); ++i)
-          if (topological_vertex_numbering_cmp[i] != i)
-            {
-              const unsigned int j = topological_vertex_numbering_cmp[i];
+          {
+            const unsigned int j = topological_vertex_numbering_cmp[i];
+            if (j != i)
               Assert(topological_vertex_numbering_cmp[j] == j,
                      ExcInternalError());
-            }
+          }
 
         if (topological_vertex_numbering != topological_vertex_numbering_cmp)
           {
