@@ -3287,15 +3287,22 @@ namespace parallel
               }
           }
 
+        // There must not be any chains!
         for (unsigned int i=0; i<topological_vertex_numbering.size(); ++i)
           if (topological_vertex_numbering[i] != i)
-            for (unsigned int j=0; j < topological_vertex_numbering.size(); ++j)
-              Assert(topological_vertex_numbering[j] != i, ExcInternalError());
+            {
+              const unsigned int j = topological_vertex_numbering[i];
+              Assert(topological_vertex_numbering[j] == j,
+                     ExcInternalError());
+            }
 
         for (unsigned int i=0; i<topological_vertex_numbering_cmp.size(); ++i)
           if (topological_vertex_numbering_cmp[i] != i)
-            for (unsigned int j=0; j < topological_vertex_numbering_cmp.size(); ++j)
-              Assert(topological_vertex_numbering_cmp[j] != i, ExcInternalError());
+            {
+              const unsigned int j = topological_vertex_numbering_cmp[i];
+              Assert(topological_vertex_numbering_cmp[j] == j,
+                     ExcInternalError());
+            }
 
         if (topological_vertex_numbering != topological_vertex_numbering_cmp)
           {
