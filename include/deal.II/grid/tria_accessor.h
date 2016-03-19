@@ -2509,50 +2509,80 @@ public:
   bool has_periodic_neighbor(const unsigned int i) const;
 
   /**
-   * For a cell which has its @c ith face, on a periodic boundary
+   * For a cell with its @c ith face at a periodic boundary,
    * (see @ref GlossPeriodicConstraints "the entry for periodic baoundaries")
    * this function returns an iterator to the cell on the other side
-   * of the periodic face. Otherwise, invalid iterator will be returned.
-   * In order to check if a cell has periodic neighbor on its @c ith face
-   * or not, one should first call @c has_periodic_neighbor() function.
-   * Similar to @c neighbor(), the returned cell
-   * has at most the same level of refinement as the current cell.
-   * On distributed meshes, by calling Triangulation::add_periodicity(),
-   * one can make sure that the element on the other side of the periodic
+   * of the periodic boundary. If there is no periodic boundary at the @c ith
+   * face, invalid iterator will be returned.
+   * In order to check if a cell has periodic neighbor on its @c ith face,
+   * one should first call the function @c has_periodic_neighbor().
+   * The behavior of @c periodic_neighbor() is similar to @c neighbor(), in
+   * the sence that the returned cell has at most the same level of refinement
+   * as the current cell. On distributed meshes, by calling
+   * Triangulation::add_periodicity(),
+   * we can make sure that the element on the other side of the periodic
    * boundary exists in this rank as a ghost cell or a locally owned cell.
    */
   TriaIterator<CellAccessor<dim, spacedim> >
   periodic_neighbor (const unsigned int i) const;
 
   /**
-   *
+   * Returns an iterator to the periodic neighbor of the cell at a given
+   * face and subface number. The general guidelines for using this function
+   * is similar to the function @c neighbor_child_on_subface. The
+   * implementation of this function is consistent with
+   * @c periodic_neighbor_of_coarser_periodic_neighbor. For instance,
+   * assume that we are sitting on a cell named @c cell1, which has a 1 level
+   * coarser neighbor at its @c ith face. Let us name this coarser neighbor
+   * @c cell2. Then, by calling
+   * @c periodic_neighbor_of_coarser_periodic_neighbor, from @c cell1, we get
+   * a @c face_num and a @c subface_num. Now, if we call
+   * @c periodic_neighbor_child_on_subface from cell2, with the above face_num
+   * and subface_num, we get an iterator to @c cell1.
    */
   TriaIterator<CellAccessor<dim, spacedim> >
   periodic_neighbor_child_on_subface (const unsigned int face_no,
                                       const unsigned int subface_no) const;
 
   /**
-   *
+   * This function is a generalization of
+   * @c periodic_neighbor_of_periodic_neighbor
+   * for those cells which have a coarser periodic neighbor. The returned
+   * pair of numbers can be used in @c periodic_neighbor_child_on_subface
+   * to get back to the current cell. In other words, the following
+   * assertion should be true, for a cell with coarser periodic neighbor:
+   * cell->periodic_neighbor(i)->periodic_neighbor_child_on_subface(face_no, subface_no)==cell
    */
   std::pair<unsigned int, unsigned int>
   periodic_neighbor_of_coarser_periodic_neighbor (const unsigned i) const;
 
   /**
    * This function returns the index of the periodic neighbor. If there is
-   * no periodic neighbor at the given face, the return value is -1.
+   * no periodic neighbor at the given face, the returned value is -1.
    */
   int
   periodic_neighbor_index (const unsigned int i) const;
 
   /**
    * This function returns the level of the periodic neighbor. If there is
-   * no periodic neighbor at the given face, the return value is -1.
+   * no periodic neighbor at the given face, the returned value is -1.
    */
   int
   periodic_neighbor_level (const unsigned int i) const;
 
   /**
-   *
+   * For a cell with a periodic neighbor at its @c ith face, this function
+   * returns the face number of that periodic neighbor such that, the
+   * current cell is the periodic neighbor of that neighbor. In other words
+   * the following assertion holds for those cells which have a periodic
+   * neighbor with the same or a higher level of refinement as the current
+   * cell:
+   * @c {cell->periodic_neighbor(i)->
+   *     periodic_neighbor(cell->periodic_neighbor_of_periodic_neighbor(i))==cell}
+   * For the cells with a coarser periodic neighbor, one should use
+   * @c periodic_neighbor_of_coarser_periodic_neighbor and
+   * @c periodic_neighbor_child_on_subface
+   * to get back to the current cell.
    */
   unsigned int
   periodic_neighbor_of_periodic_neighbor (const unsigned int i) const;
