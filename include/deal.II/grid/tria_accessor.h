@@ -2513,11 +2513,11 @@ public:
    * (see @ref GlossPeriodicConstraints "the entry for periodic baoundaries")
    * this function returns an iterator to the cell on the other side
    * of the periodic boundary. If there is no periodic boundary at the @c ith
-   * face, invalid iterator will be returned.
+   * face, an exception will be thrown.
    * In order to check if a cell has periodic neighbor on its @c ith face,
    * one should first call the function @c has_periodic_neighbor().
    * The behavior of @c periodic_neighbor() is similar to @c neighbor(), in
-   * the sence that the returned cell has at most the same level of refinement
+   * the sense that the returned cell has at most the same level of refinement
    * as the current cell. On distributed meshes, by calling
    * Triangulation::add_periodicity(),
    * we can make sure that the element on the other side of the periodic
