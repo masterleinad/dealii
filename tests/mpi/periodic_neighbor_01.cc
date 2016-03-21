@@ -106,6 +106,7 @@ template <int dim>
 struct periodicity_tests
 {
   typedef TriaIterator<CellAccessor<dim>> cell_iterator;
+  typedef typename Triangulation<dim>::active_cell_iterator active_cell_iterator;
   periodicity_tests();
   ~periodicity_tests();
 
@@ -161,7 +162,8 @@ void periodicity_tests<dim>::refine_grid(const unsigned &n)
         refn_point = { 6.5, 15.5, 6.5 };
       for (unsigned i_refn = 0; i_refn < n; ++i_refn)
         {
-          for (cell_iterator &&cell_it : the_grid.active_cell_iterators())
+          active_cell_iterator cell_it = the_grid.begin_active();
+          for (; cell_it != the_grid.end(); ++cell_it)
             {
               if (cell_it->is_locally_owned() && cell_it->point_inside(refn_point))
                 {
@@ -221,7 +223,8 @@ void periodicity_tests<dim>::check_periodicity()
         {
           deallog << "All of the cells with periodic neighbors on rank "
                   << comm_rank << std::endl;
-          for (const cell_iterator &cell_it : the_grid.active_cell_iterators())
+          active_cell_iterator cell_it = the_grid.begin_active();
+          for (; cell_it != the_grid.end(); ++cell_it)
             {
               for (unsigned i_face = 0; i_face < GeometryInfo<dim>::faces_per_cell; ++i_face)
                 {
@@ -365,3 +368,4 @@ int main(int argc, char *argv[])
     }
   return 0;
 }
+
