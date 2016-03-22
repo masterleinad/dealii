@@ -11784,12 +11784,7 @@ Triangulation<dim, spacedim>::execute_coarsening_and_refinement ()
   AssertThrow (cells_with_distorted_children.distorted_cells.size() == 0,
                cells_with_distorted_children);
 
-  // For parallel::distributed::Triangulations we update
-  // periodic_face_map later.
-  const parallel::Triangulation< dim, spacedim > *distributed_triangulation
-    = dynamic_cast<const parallel::Triangulation< dim, spacedim > *> (this);
-  if (!distributed_triangulation)
-    update_periodic_face_map();
+  update_periodic_face_map();
 }
 
 
