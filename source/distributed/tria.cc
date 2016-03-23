@@ -2244,7 +2244,7 @@ namespace parallel
         }
 
       this->update_number_cache ();
-      Triangulation<dim, spacedim>::update_periodic_face_map();
+      this->update_periodic_face_map();
     }
 
 
@@ -2773,7 +2773,7 @@ namespace parallel
         }
 
       this->update_number_cache ();
-      Triangulation<dim, spacedim>::update_periodic_face_map();
+      this->update_periodic_face_map();
     }
 
 
@@ -3863,7 +3863,7 @@ namespace parallel
 
       refinement_in_progress = false;
       this->update_number_cache ();
-      Triangulation<dim, spacedim>::update_periodic_face_map();
+      this->update_periodic_face_map();
     }
 
     template <int dim, int spacedim>
@@ -3933,7 +3933,7 @@ namespace parallel
 
       // update how many cells, edges, etc, we store locally
       this->update_number_cache ();
-      Triangulation<dim, spacedim>::update_periodic_face_map();
+      this->update_periodic_face_map();
     }
 
 
@@ -4829,7 +4829,7 @@ namespace parallel
         }
 
       this->update_number_cache ();
-      Triangulation<dim, spacedim>::update_periodic_face_map();
+      this->update_periodic_face_map();
     }
 
 

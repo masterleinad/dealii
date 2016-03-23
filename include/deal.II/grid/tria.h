@@ -2974,7 +2974,6 @@ public:
     * Declare the (coarse) face pairs given in the argument of this function
     * as periodic. This way it it possible to obtain neighbors across periodic
     * boundaries.
-    * This function initializes periodic_face_map that stores the active periodic faces.
     *
     * The vector can be filled by the function
     * GridTools::collect_periodic_faces.
