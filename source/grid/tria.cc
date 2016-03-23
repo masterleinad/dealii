@@ -11744,6 +11744,14 @@ Triangulation<dim, spacedim>::add_periodicity
   update_periodic_face_map();
 }
 
+template <int dim, int spacedim>
+const typename std::map<std::pair<typename Triangulation<dim, spacedim>::cell_iterator, unsigned int>,
+      std::pair<std::pair<typename Triangulation<dim, spacedim>::cell_iterator, unsigned int>, std::bitset<3> > > &
+      Triangulation<dim, spacedim>::get_periodic_face_map() const
+{
+  return periodic_face_map;
+}
+
 
 template <int dim, int spacedim>
 void
@@ -11814,7 +11822,7 @@ Triangulation<dim,spacedim>::update_periodic_face_map ()
   //first empty the currently stored objects
   periodic_face_map.clear();
 
-  typename std::vector<GridTools::PeriodicFacePair<typename Triangulation<dim,spacedim>::cell_iterator> >::const_iterator it;
+  typename std::vector<GridTools::PeriodicFacePair<cell_iterator> >::const_iterator it;
   for (it=periodic_face_pairs_level_0.begin(); it!=periodic_face_pairs_level_0.end(); ++it)
     {
       update_periodic_face_map_recursively<dim, spacedim>

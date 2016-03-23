@@ -1475,19 +1475,6 @@ public:
   };
 
   /**
-   * If add_periodicity() is called, this variable stores the given
-   * periodic face pairs on level 0 for later access during the
-   * identification of ghost cells for the multigrid hierarchy and for
-   * setting up the periodic_face_map.
-   */
-  std::vector<GridTools::PeriodicFacePair<cell_iterator> > periodic_face_pairs_level_0;
-
-  /**
-   * If add_periodicity() is called, this variable stores the active periodic face pairs.
-   */
-  std::map<std::pair<cell_iterator, unsigned int>, std::pair<std::pair<cell_iterator, unsigned int>, std::bitset<3> > > periodic_face_map;
-
-  /**
    * Make the dimension available in function templates.
    */
   static const unsigned int dimension = dim;
@@ -3003,6 +2990,12 @@ public:
   add_periodicity
   (const std::vector<GridTools::PeriodicFacePair<cell_iterator> > &);
 
+  /**
+    * Return the periodic_face_map.
+    */
+  const std::map<std::pair<cell_iterator, unsigned int>,std::pair<std::pair<cell_iterator, unsigned int>, std::bitset<3> > > &
+  get_periodic_face_map() const;
+
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 
@@ -3116,6 +3109,19 @@ protected:
 
 
 private:
+  /**
+    * If add_periodicity() is called, this variable stores the given
+    * periodic face pairs on level 0 for later access during the
+    * identification of ghost cells for the multigrid hierarchy and for
+    * setting up the periodic_face_map.
+    */
+  std::vector<GridTools::PeriodicFacePair<cell_iterator> > periodic_face_pairs_level_0;
+
+  /**
+   * If add_periodicity() is called, this variable stores the active periodic face pairs.
+   */
+  std::map<std::pair<cell_iterator, unsigned int>, std::pair<std::pair<cell_iterator, unsigned int>, std::bitset<3> > > periodic_face_map;
+
   /**
    * @name Cell iterator functions for internal use
    * @{

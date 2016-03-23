@@ -3128,10 +3128,9 @@ namespace parallel
       // artificial cell layer (the active cells are taken care of by p4est)
       template <int dim, int spacedim>
       bool enforce_mesh_balance_over_periodic_boundaries
-      (Triangulation<dim,spacedim> &tria,
-       const std::vector<GridTools::PeriodicFacePair<typename dealii::Triangulation<dim,spacedim>::cell_iterator> > &periodic_face_pairs_level_0)
+      (Triangulation<dim,spacedim> &tria)
       {
-        if (tria.periodic_face_map.size()==0)
+        if (tria.get_periodic_face_map().size()==0)
           return false;
 
         std::vector<bool> flags_before[2];
@@ -3159,7 +3158,7 @@ namespace parallel
         typedef typename Triangulation<dim, spacedim>::cell_iterator cell_iterator;
         typename std::map<std::pair<cell_iterator, unsigned int>,
                  std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
-        for (it = tria.periodic_face_map.begin(); it!= tria.periodic_face_map.end(); ++it)
+        for (it = tria.get_periodic_face_map().begin(); it!= tria.get_periodic_face_map().end(); ++it)
           {
             const cell_iterator &cell_1 = it->first.first;
             const unsigned int face_no_1 = it->first.second;
@@ -3332,8 +3331,7 @@ namespace parallel
           // enforce 2:1 mesh balance over periodic boundaries
           if (this->smooth_grid &
               dealii::Triangulation<dim,spacedim>::limit_level_difference_at_vertices)
-            mesh_changed = enforce_mesh_balance_over_periodic_boundaries(*this,
-                           this->periodic_face_pairs_level_0);
+            mesh_changed = enforce_mesh_balance_over_periodic_boundaries(*this);
         }
       while (mesh_changed);
 
@@ -4505,7 +4503,7 @@ namespace parallel
       typename std::map<std::pair<cell_iterator, unsigned int>,
                std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
 
-      for (it = this->periodic_face_map.begin(); it!= this->periodic_face_map.end(); ++it)
+      for (it = this->get_periodic_face_map().begin(); it!= this->get_periodic_face_map().end(); ++it)
         {
           const cell_iterator &cell_1 = it->first.first;
           const unsigned int face_no_1 = it->first.second;
@@ -4559,7 +4557,7 @@ namespace parallel
       typename std::map<std::pair<cell_iterator, unsigned int>,
                std::pair<std::pair<cell_iterator,unsigned int>, std::bitset<3> > >::const_iterator it;
 
-      for (it = this->periodic_face_map.begin(); it!= this->periodic_face_map.end(); ++it)
+      for (it = this->get_periodic_face_map().begin(); it!= this->get_periodic_face_map().end(); ++it)
         {
           const cell_iterator &cell_1 = it->first.first;
           const unsigned int face_no_1 = it->first.second;
