@@ -105,17 +105,16 @@ using namespace dealii;
 template <int dim>
 struct periodicity_tests
 {
-  typedef TriaIterator<CellAccessor<dim>> cell_iterator;
+  typedef TriaIterator<CellAccessor<dim> > cell_iterator;
   typedef typename Triangulation<dim>::active_cell_iterator active_cell_iterator;
   periodicity_tests();
-  ~periodicity_tests();
 
   unsigned refn_cycle;
   MPI_Comm mpi_comm;
   int comm_rank, comm_size;
   parallel::distributed::Triangulation<dim> the_grid;
 
-  void refine_grid(const unsigned &);
+  void refine_grid(const unsigned);
   void write_grid();
   void check_periodicity();
 };
@@ -131,22 +130,22 @@ periodicity_tests<dim>::periodicity_tests()
   Point<dim> p1, p2, periodic_transfer;
   if (dim == 2)
     {
-      p2 = { 16., 16. };
-      periodic_transfer = { 0.0, 16. };
+      p2 = Point<dim>( 16., 16. );
+      periodic_transfer = Point<dim>( 0.0, 16. );
     }
   if (dim == 3)
     {
-      p2 = { 16., 16., 16. };
-      periodic_transfer = { 0.0, 16., 0.0 };
+      p2 = Point<dim>( 16., 16., 16. );
+      periodic_transfer = Point<dim>( 0.0, 16., 0.0 );
     }
   GridGenerator::subdivided_hyper_rectangle(the_grid, repeats, p1, p2, true);
-  std::vector<GridTools::PeriodicFacePair<cell_iterator>> periodic_faces;
+  std::vector<GridTools::PeriodicFacePair<cell_iterator> > periodic_faces;
   GridTools::collect_periodic_faces(the_grid, 2, 3, 0, periodic_faces, periodic_transfer);
   the_grid.add_periodicity(periodic_faces);
 }
 
 template <int dim>
-void periodicity_tests<dim>::refine_grid(const unsigned &n)
+void periodicity_tests<dim>::refine_grid(const unsigned n)
 {
   if (n != 0 && refn_cycle == 0)
     {
@@ -157,9 +156,9 @@ void periodicity_tests<dim>::refine_grid(const unsigned &n)
     {
       Point<dim> refn_point;
       if (dim == 2)
-        refn_point = { 6.5, 15.5 };
+        refn_point = Point<dim>( 6.5, 15.5 );
       if (dim == 3)
-        refn_point = { 6.5, 15.5, 6.5 };
+        refn_point = Point<dim>( 6.5, 15.5, 6.5 );
       for (unsigned i_refn = 0; i_refn < n; ++i_refn)
         {
           active_cell_iterator cell_it = the_grid.begin_active();
@@ -288,19 +287,12 @@ void periodicity_tests<dim>::check_periodicity()
     }
 }
 
-template <int dim>
-periodicity_tests<dim>::~periodicity_tests()
-{
-}
-
 int main(int argc, char *argv[])
 {
   try
     {
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv ,1);
-      std::ofstream logfile("output");
-      deallog.attach(logfile, false);
-      deallog.threshold_double(1.e-10);
+      MPILogInitAll log;
 
       periodicity_tests<2> test_2D;
       /*
