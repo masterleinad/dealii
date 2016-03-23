@@ -111,6 +111,12 @@ inconvenience this causes.
 <h3>Specific improvements</h3>
 
 <ol>
+ <li> New: Triangulation::add_periodicity allows for accessing neighbors across
+ periodic boundaries via new functions in TriaAccessor.
+ <br>
+ (Daniel Arndt, Ali Samii, 2016/03/23)
+ </li>
+
  <li> Fixed: DoFHandler::locally_owned_dofs() could create a segmentation
  fault in cases where some processors do not own any cells. This was caused
  by an incorrect computation in DoFTools::locally_owned_dofs_per_subdomain().
