@@ -37,14 +37,14 @@ ENDIF()
 #
 # Are all dependencies fulfilled?
 #
-IF(NOT DEAL_II_WITH_PETSC OR NOT DEAL_II_WITH_SLEPC)
-  MESSAGE(FATAL_ERROR "
-Error! The deal.II library found at ${DEAL_II_PATH} was not configured with
-    DEAL_II_WITH_PETSC = ON
-    DEAL_II_WITH_SLEPC = ON
-One or all of these are OFF in your installation but are required for this tutorial step."
-    )
-ENDIF()
+#IF(NOT DEAL_II_WITH_PETSC OR NOT DEAL_II_WITH_SLEPC)
+#  MESSAGE(FATAL_ERROR "
+#Error! The deal.II library found at ${DEAL_II_PATH} was not configured with
+#    DEAL_II_WITH_PETSC = ON
+#    DEAL_II_WITH_SLEPC = ON
+#One or all of these are OFF in your installation but are required for this tutorial step."
+#    )
+#ENDIF()
 
 DEAL_II_INITIALIZE_CACHED_VARIABLES()
 PROJECT(${TARGET})
