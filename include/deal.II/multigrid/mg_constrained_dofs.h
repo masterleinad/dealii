@@ -65,7 +65,19 @@ public:
   template <int dim, int spacedim>
   void initialize(const DoFHandler<dim,spacedim> &dof,
                   const typename FunctionMap<dim>::type &function_map,
-                  const ComponentMask &component_mask = ComponentMask());
+                  const ComponentMask &component_mask = ComponentMask()) DEAL_II_DEPRECATED;
+
+  /**
+   * Fill the internal data structures with information about interface and boundary dofs.
+   *
+   * This function internally calls the initialize() function above and the
+   * constrains degrees on the external boundary of the domain by calling
+   * MGTools::make_boundary_list() with the given second and third argument.
+   */
+  template <int dim, int spacedim>
+  void set_zero_boundary_dofs(const DoFHandler<dim,spacedim> &dof,
+                              const std::vector<types::boundary_id> &boundary_indices,
+                              const ComponentMask &component_mask = ComponentMask());
 
   /**
    * Reset the data structures.
@@ -112,13 +124,13 @@ private:
   /**
    * The indices of boundary dofs for each level.
    */
-  std::vector<IndexSet> boundary_indices;
+  std::vector<IndexSet> boundary_dof_indices;
 
   /**
    * The degrees of freedom on a given level that live on the refinement edge
    * between the level and cells on a coarser level.
    */
-  std::vector<IndexSet> refinement_edge_indices;
+  std::vector<IndexSet> refinement_edge_dof_indices;
 };
 
 
@@ -127,15 +139,15 @@ inline
 void
 MGConstrainedDoFs::initialize(const DoFHandler<dim,spacedim> &dof)
 {
-  boundary_indices.clear();
+  boundary_dof_indices.clear();
 
   const unsigned int nlevels = dof.get_triangulation().n_global_levels();
 
-  refinement_edge_indices.resize(nlevels);
+  refinement_edge_dof_indices.resize(nlevels);
   for (unsigned int l=0; l<nlevels; ++l)
-    refinement_edge_indices[l] = IndexSet(dof.n_dofs(l));
+    refinement_edge_dof_indices[l] = IndexSet(dof.n_dofs(l));
 
-  MGTools::extract_inner_interface_dofs (dof, refinement_edge_indices);
+  MGTools::extract_inner_interface_dofs (dof, refinement_edge_dof_indices);
 }
 
 
@@ -151,11 +163,30 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim,spacedim> &dof,
   // allocate an IndexSet for each global level. Contents will be
   // overwritten inside make_boundary_list.
   const unsigned int n_levels = dof.get_triangulation().n_global_levels();
-  boundary_indices.resize(n_levels);
+  boundary_dof_indices.resize(n_levels);
 
   MGTools::make_boundary_list (dof,
                                function_map,
+                               boundary_dof_indices,
+                               component_mask);
+}
+
+
+template <int dim, int spacedim>
+inline
+void
+MGConstrainedDoFs::set_zero_boundary_dofs(const DoFHandler<dim,spacedim> &dof,
+                                          const std::vector<types::boundary_id> &boundary_indices,
+                                          const ComponentMask &component_mask)
+{
+  // allocate an IndexSet for each global level. Contents will be
+  // overwritten inside make_boundary_list.
+  const unsigned int n_levels = dof.get_triangulation().n_global_levels();
+  boundary_dof_indices.resize(n_levels);
+
+  MGTools::make_boundary_list (dof,
                                boundary_indices,
+                               boundary_dof_indices,
                                component_mask);
 }
 
@@ -164,8 +195,8 @@ inline
 void
 MGConstrainedDoFs::clear()
 {
-  boundary_indices.clear();
-  refinement_edge_indices.clear();
+  boundary_dof_indices.clear();
+  refinement_edge_dof_indices.clear();
 }
 
 
@@ -174,11 +205,11 @@ bool
 MGConstrainedDoFs::is_boundary_index (const unsigned int level,
                                       const types::global_dof_index index) const
 {
-  if (boundary_indices.size() == 0)
+  if (boundary_dof_indices.size() == 0)
     return false;
 
-  AssertIndexRange(level, boundary_indices.size());
-  return boundary_indices[level].is_element(index);
+  AssertIndexRange(level, boundary_dof_indices.size());
+  return boundary_dof_indices[level].is_element(index);
 }
 
 inline
@@ -186,9 +217,9 @@ bool
 MGConstrainedDoFs::at_refinement_edge (const unsigned int level,
                                        const types::global_dof_index index) const
 {
-  AssertIndexRange(level, refinement_edge_indices.size());
+  AssertIndexRange(level, refinement_edge_dof_indices.size());
 
-  return refinement_edge_indices[level].is_element(index);
+  return refinement_edge_dof_indices[level].is_element(index);
 }
 
 
@@ -198,8 +229,8 @@ inline
 const IndexSet &
 MGConstrainedDoFs::get_boundary_indices (const unsigned int level) const
 {
-  AssertIndexRange(level, boundary_indices.size());
-  return boundary_indices[level];
+  AssertIndexRange(level, boundary_dof_indices.size());
+  return boundary_dof_indices[level];
 }
 
 
@@ -208,8 +239,8 @@ inline
 const IndexSet &
 MGConstrainedDoFs::get_refinement_edge_indices (unsigned int level) const
 {
-  AssertIndexRange(level, refinement_edge_indices.size());
-  return refinement_edge_indices[level];
+  AssertIndexRange(level, refinement_edge_dof_indices.size());
+  return refinement_edge_dof_indices[level];
 }
 
 
@@ -219,7 +250,7 @@ inline
 bool
 MGConstrainedDoFs::have_boundary_indices () const
 {
-  return boundary_indices.size()!=0;
+  return boundary_dof_indices.size()!=0;
 }
 
 
