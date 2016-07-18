@@ -2009,6 +2009,16 @@ namespace GridGenerator
 
   template <>
   void
+  quarter_hyper_ball (Triangulation<1> &,
+                      const Point<1> &,
+                      const double)
+  {
+    Assert (false, ExcNotImplemented());
+  }
+
+
+  template <>
+  void
   half_hyper_ball (Triangulation<1> &,
                    const Point<1> &,
                    const double)
@@ -2386,6 +2396,65 @@ namespace GridGenerator
                        const unsigned int)
   {
     Assert (false, ExcNotImplemented());
+  }
+
+
+  template <>
+  void
+  quarter_hyper_ball (Triangulation<2> &tria,
+                      const Point<2>   &p,
+                      const double      radius)
+  {
+    // equilibrate cell sizes at
+    // transition from the inner part
+    // to the radial cells
+    const Point<dim> vertices[7]
+      = { p+Point<dim>(0,0) *radius,
+          p+Point<dim>(+1,0) *radius,
+          p+Point<dim>(+1,0) *(radius/2),
+          p+Point<dim>(0,+1) *(radius/2),
+          p+Point<dim>(+1,+1) *(radius/(2*sqrt(2.0))),
+          p+Point<dim>(0,+1) *radius,
+          p+Point<dim>(+1,+1) *(radius/std::sqrt(2.0))
+        };
+
+    const int cell_vertices[3][4]
+    = {{0, 2, 3, 4},
+      {1, 6, 2, 4},
+      {5, 3, 6, 4}
+    };
+
+    std::vector<CellData<dim> > cells (3, CellData<dim>());
+
+    for (unsigned int i=0; i<3; ++i)
+      {
+        for (unsigned int j=0; j<4; ++j)
+          cells[i].vertices[j] = cell_vertices[i][j];
+        cells[i].material_id = 0;
+      };
+
+    tria.create_triangulation (
+      std::vector<Point<dim> >(&vertices[0], &vertices[7]),
+      cells,
+      SubCellData());       // no boundary information
+
+    typename Triangulation<dim>::cell_iterator cell = tria.begin();
+    typename Triangulation<dim>::cell_iterator end = tria.end();
+
+    while (cell != end)
+      {
+        for (unsigned int i=0; i<GeometryInfo<dim>::faces_per_cell; ++i)
+          {
+            if (cell->face(i)->boundary_id() == numbers::internal_face_boundary_id)
+              continue;
+
+            // If x is zero, then this is part of the plane
+            if (cell->face(i)->center()(0) < p(0)+1.e-5 * radius
+                || cell->face(i)->center()(1) < p(1)+1.e-5 * radius)
+              cell->face(i)->set_boundary_id(1);
+          }
+        ++cell;
+      }
   }
 
 
@@ -3089,6 +3158,92 @@ namespace GridGenerator
           }
   }
 
+
+  template <>
+  void
+  quarter_hyper_ball (Triangulation<3> &tria,
+                   const Point<3> &center,
+                   const double radius)
+  {
+    // equilibrate cell sizes at
+    // transition from the inner part
+    // to the radial cells
+    const Point<dim> vertices[15]
+      = { p+Point<dim>(0,0,0) *radius,
+          p+Point<dim>(+1,0,0) *radius,
+          p+Point<dim>(+1,0,0) *(radius/2.),
+          p+Point<dim>(0,+1,0) *(radius/2.),
+          p+Point<dim>(+1,+1,0) *(radius/(2*sqrt(2.0))),
+          p+Point<dim>(0,+1,0) *radius,
+          p+Point<dim>(+1,+1,0) *(radius/std::sqrt(2.0)),
+          p+Point<dim>(0,0,1) *radius/2.,
+          p+Point<dim>(+1,0,1) *radius/std::sqrt(2.0),
+          p+Point<dim>(+1,0,1) *(radius/(2*std::sqrt(2.0))),
+          p+Point<dim>(0,+1,1) *(radius/(2*std::sqrt(2.0))),
+          p+Point<dim>(+1,+1,1) *(radius/(2*std::sqrt(3.0))),
+          p+Point<dim>(0,+1,1) *radius/std::sqrt(2.0),
+          p+Point<dim>(+1,+1,1) *(radius/(std::sqrt(3.0))),
+          p+Point<dim>(0,0,1) *radius
+        };
+    const int cell_vertices[4][8]
+    = {{0, 2, 3, 4,  7,  9, 10, 11},
+      {1, 6, 2, 4,  8, 13,  9, 11},
+      {5, 3, 6, 4, 12, 10, 13, 11},
+      {7,9,10,11,14,8,12,13}
+    };
+
+    std::vector<CellData<dim> > cells (4, CellData<dim>());
+
+    for (unsigned int i=0; i<4; ++i)
+      {
+        for (unsigned int j=0; j<8; ++j)
+          cells[i].vertices[j] = cell_vertices[i][j];
+        cells[i].material_id = 0;
+      };
+
+    tria.create_triangulation (
+      std::vector<Point<dim> >(&vertices[0], &vertices[15]),
+      cells,
+      SubCellData());       // no boundary information
+
+    typename Triangulation<dim>::cell_iterator cell = tria.begin();
+    typename Triangulation<dim>::cell_iterator end = tria.end();
+
+    while (cell != end)
+      {
+        for (unsigned int i=0; i<GeometryInfo<dim>::faces_per_cell; ++i)
+          {
+            if (cell->face(i)->boundary_id() == numbers::internal_face_boundary_id)
+              continue;
+
+            // If x,y or z is zero, then this is part of the plane
+            if (cell->face(i)->center()(0) < p(0)+1.e-5 * radius
+                || cell->face(i)->center()(1) < p(1)+1.e-5 * radius
+                || cell->face(i)->center()(2) < p(2)+1.e-5 * radius)
+              {
+                std::cout << "Face center: " << cell->face(i)->center() << std::endl;
+                cell->face(i)->set_boundary_id(1);
+                // also set the boundary indicators of the bounding lines,
+                // unless both vertices are on the perimeter
+                for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
+                  {
+                    const Point<3> line_vertices[2]
+                      = { cell->face(i)->line(j)->vertex(0),
+                          cell->face(i)->line(j)->vertex(1)
+                        };
+                    if ((std::fabs(line_vertices[0].distance(p)-radius) >
+                         1e-5*radius)
+                        ||
+                        (std::fabs(line_vertices[1].distance(p)-radius) >
+                         1e-5*radius))
+                      cell->face(i)->line(j)->set_boundary_id(1);
+                  }
+
+              }
+          }
+        ++cell;
+      }
+  }
 
 
 // Implementation for 3D only
