@@ -188,6 +188,13 @@ MGConstrainedDoFs::set_zero_boundary_dofs(const DoFHandler<dim,spacedim> &dof,
                                boundary_indicators,
                                boundary_indices,
                                component_mask);
+
+  for (unsigned int i=0; i<n_levels; ++i)
+    {
+      std::cout  << "Level: " << i << std::endl;
+      boundary_dof_indices[i].print(std::cout);
+    }
+  std::cout << std::endl;
 }
 
 
