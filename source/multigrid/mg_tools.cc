@@ -1274,9 +1274,7 @@ namespace MGTools
                      std::vector<IndexSet> &boundary_indices,
                      const ComponentMask &component_mask)
   {
-    Assert (boundary_indices.size() == dof.get_triangulation().n_global_levels(),
-            ExcDimensionMismatch (boundary_indices.size(),
-                                  dof.get_triangulation().n_global_levels()));
+    boundary_indices.resize(dof.get_triangulation().n_global_levels());
 
     // if for whatever reason we were passed an empty vector, return immediately
     if (boundary_indicators.size() == 0)
