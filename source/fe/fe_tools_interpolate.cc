@@ -1430,7 +1430,7 @@ namespace FETools
       endc=dof2.end(0);
       for (; cell!=endc; ++cell)
         {
-          if (dealii::internal::p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
+          if (dealii::internal::p4est::tree_exists_locally<dim> (tr->parallel_forest,
               tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
               == false)
             continue;
@@ -1634,7 +1634,7 @@ namespace FETools
 
           if ((trees.find (tree_index) == trees.end ())
               ||
-              (dealii::internal::p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
+              (dealii::internal::p4est::tree_exists_locally<dim> (tr->parallel_forest,
                   tree_index)
                == false))
             continue;
@@ -2004,7 +2004,7 @@ namespace FETools
       endc=dof2.end(0);
       for (; cell!=endc; ++cell)
         {
-          if (dealii::internal::p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
+          if (dealii::internal::p4est::tree_exists_locally<dim> (tr->parallel_forest,
               tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
               == false)
             continue;

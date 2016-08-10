@@ -30,6 +30,7 @@ SET(_inst
   tria.inst.in
   shared_tria.inst.in
   tria_base.inst.in
+  p4est_wrappers.inst.in
   )
 
 FILE(GLOB _header
