@@ -49,7 +49,7 @@ for (deal_II_dimension : DIMENSIONS)
 
     template
     bool
-    tree_exists_locally<deal_II_dimension> 
+    tree_exists_locally<deal_II_dimension>
     (const types<deal_II_dimension>::forest *parallel_forest,
      const types<deal_II_dimension>::topidx coarse_grid_cell);
 
