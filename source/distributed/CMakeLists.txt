@@ -21,6 +21,7 @@ SET(_src
   tria.cc
   tria_base.cc
   shared_tria.cc
+  p4est_wrappers.cc
   )
 
 SET(_inst

@@ -43,21 +43,10 @@
 
 #include <deal.II/base/index_set.h>
 
-#ifdef DEAL_II_WITH_P4EST
-#  include <p4est_bits.h>
-#  include <p4est_extended.h>
-#  include <p4est_vtk.h>
-#  include <p4est_ghost.h>
-#  include <p4est_communication.h>
-#  include <p4est_iterate.h>
-
-#  include <p8est_bits.h>
-#  include <p8est_extended.h>
-#  include <p8est_vtk.h>
-#  include <p8est_ghost.h>
-#  include <p8est_communication.h>
-#  include <p8est_iterate.h>
-#endif
+namespace
+{
+#include <deal.II/distributed/p4est_wrappers.h>
+}
 
 #include <iostream>
 
@@ -745,89 +734,89 @@ namespace FETools
 
   namespace internal
   {
-    namespace p4est
-    {
-      /**
-       * A structure whose explicit specializations contain pointers to the
-       * relevant p4est_* and p8est_* functions. Using this structure, for
-       * example by saying functions<dim>::quadrant_compare, we can write code
-       * in a dimension independent way, either calling p4est_quadrant_compare
-       * or p8est_quadrant_compare, depending on template argument.
-       */
-      template <int dim> struct functions;
+//    namespace p4est
+//    {
+    /**
+     * A structure whose explicit specializations contain pointers to the
+     * relevant p4est_* and p8est_* functions. Using this structure, for
+     * example by saying functions<dim>::quadrant_compare, we can write code
+     * in a dimension independent way, either calling p4est_quadrant_compare
+     * or p8est_quadrant_compare, depending on template argument.
+     */
+    /*      template <int dim> struct functions;
 
-      template <>
-      struct functions<2>
-      {
-        static
-        int (&quadrant_compare) (const void *v1, const void *v2);
+          template <>
+          struct functions<2>
+          {
+            static
+            int (&quadrant_compare) (const void *v1, const void *v2);
 
-        static
-        int (&quadrant_overlaps_tree) (dealii::internal::p4est::types<2>::tree *tree,
-                                       const dealii::internal::p4est::types<2>::quadrant *q);
+            static
+            int (&quadrant_overlaps_tree) (dealii::internal::p4est::types<2>::tree *tree,
+                                           const dealii::internal::p4est::types<2>::quadrant *q);
 
-        static
-        int (&comm_find_owner) (dealii::internal::p4est::types<2>::forest *p4est,
-                                const dealii::internal::p4est::types<2>::locidx which_tree,
-                                const dealii::internal::p4est::types<2>::quadrant *q,
-                                const int guess);
-      };
+            static
+            int (&comm_find_owner) (dealii::internal::p4est::types<2>::forest *p4est,
+                                    const dealii::internal::p4est::types<2>::locidx which_tree,
+                                    const dealii::internal::p4est::types<2>::quadrant *q,
+                                    const int guess);
+          };
 
-      int (&functions<2>::quadrant_compare) (const void *v1, const void *v2)
-        = p4est_quadrant_compare;
+          int (&functions<2>::quadrant_compare) (const void *v1, const void *v2)
+            = p4est_quadrant_compare;
 
-      int (&functions<2>::quadrant_overlaps_tree) (dealii::internal::p4est::types<2>::tree *tree,
-                                                   const dealii::internal::p4est::types<2>::quadrant *q)
-        = p4est_quadrant_overlaps_tree;
+          int (&functions<2>::quadrant_overlaps_tree) (dealii::internal::p4est::types<2>::tree *tree,
+                                                       const dealii::internal::p4est::types<2>::quadrant *q)
+            = p4est_quadrant_overlaps_tree;
 
-      int (&functions<2>::comm_find_owner) (dealii::internal::p4est::types<2>::forest *p4est,
-                                            const dealii::internal::p4est::types<2>::locidx which_tree,
-                                            const dealii::internal::p4est::types<2>::quadrant *q,
-                                            const int guess)
-        = p4est_comm_find_owner;
+          int (&functions<2>::comm_find_owner) (dealii::internal::p4est::types<2>::forest *p4est,
+                                                const dealii::internal::p4est::types<2>::locidx which_tree,
+                                                const dealii::internal::p4est::types<2>::quadrant *q,
+                                                const int guess)
+            = p4est_comm_find_owner;
 
-      template <>
-      struct functions<3>
-      {
-        static
-        int (&quadrant_compare) (const void *v1, const void *v2);
+          template <>
+          struct functions<3>
+          {
+            static
+            int (&quadrant_compare) (const void *v1, const void *v2);
 
-        static
-        int (&quadrant_overlaps_tree) (dealii::internal::p4est::types<3>::tree *tree,
-                                       const dealii::internal::p4est::types<3>::quadrant *q);
+            static
+            int (&quadrant_overlaps_tree) (dealii::internal::p4est::types<3>::tree *tree,
+                                           const dealii::internal::p4est::types<3>::quadrant *q);
 
-        static
-        int (&comm_find_owner) (dealii::internal::p4est::types<3>::forest *p4est,
-                                const dealii::internal::p4est::types<3>::locidx which_tree,
-                                const dealii::internal::p4est::types<3>::quadrant *q,
-                                const int guess);
-      };
+            static
+            int (&comm_find_owner) (dealii::internal::p4est::types<3>::forest *p4est,
+                                    const dealii::internal::p4est::types<3>::locidx which_tree,
+                                    const dealii::internal::p4est::types<3>::quadrant *q,
+                                    const int guess);
+          };
 
-      int (&functions<3>::quadrant_compare) (const void *v1, const void *v2)
-        = p8est_quadrant_compare;
+          int (&functions<3>::quadrant_compare) (const void *v1, const void *v2)
+            = p8est_quadrant_compare;
 
-      int (&functions<3>::quadrant_overlaps_tree) (dealii::internal::p4est::types<3>::tree *tree,
-                                                   const dealii::internal::p4est::types<3>::quadrant *q)
-        = p8est_quadrant_overlaps_tree;
+          int (&functions<3>::quadrant_overlaps_tree) (dealii::internal::p4est::types<3>::tree *tree,
+                                                       const dealii::internal::p4est::types<3>::quadrant *q)
+            = p8est_quadrant_overlaps_tree;
 
-      int (&functions<3>::comm_find_owner) (dealii::internal::p4est::types<3>::forest *p4est,
-                                            const dealii::internal::p4est::types<3>::locidx which_tree,
-                                            const dealii::internal::p4est::types<3>::quadrant *q,
-                                            const int guess)
-        = p8est_comm_find_owner;
+          int (&functions<3>::comm_find_owner) (dealii::internal::p4est::types<3>::forest *p4est,
+                                                const dealii::internal::p4est::types<3>::locidx which_tree,
+                                                const dealii::internal::p4est::types<3>::quadrant *q,
+                                                const int guess)
+            = p8est_comm_find_owner;
 
-      template <int dim, int spacedim>
-      bool
-      tree_exists_locally (const typename dealii::internal::p4est::types<dim>::forest *parallel_forest,
-                           const typename dealii::internal::p4est::types<dim>::topidx coarse_grid_cell)
-      {
-        Assert (coarse_grid_cell < parallel_forest->connectivity->num_trees,
-                ExcInternalError());
-        return ((coarse_grid_cell >= parallel_forest->first_local_tree)
-                &&
-                (coarse_grid_cell <= parallel_forest->last_local_tree));
-      }
-    }
+          template <int dim, int spacedim>
+          bool
+          tree_exists_locally (const typename dealii::internal::p4est::types<dim>::forest *parallel_forest,
+                               const typename dealii::internal::p4est::types<dim>::topidx coarse_grid_cell)
+          {
+            Assert (coarse_grid_cell < parallel_forest->connectivity->num_trees,
+                    ExcInternalError());
+            return ((coarse_grid_cell >= parallel_forest->first_local_tree)
+                    &&
+                    (coarse_grid_cell <= parallel_forest->last_local_tree));
+          }
+        }*/
 
     /**
      * Implementation of the @p extrapolate function
@@ -870,7 +859,7 @@ namespace FETools
 
         bool operator < (const CellData &rhs) const
         {
-          if (p4est::functions<dim>::quadrant_compare (&quadrant, &rhs.quadrant) < 0)
+          if (dealii::internal::p4est::functions<dim>::quadrant_compare (&quadrant, &rhs.quadrant) < 0)
             return true;
 
           return false;
@@ -1158,10 +1147,10 @@ namespace FETools
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
                                  &p4est_cell,
-                                 p4est::functions<dim>::quadrant_compare);
+                                 dealii::internal::p4est::functions<dim>::quadrant_compare);
 
       // this cell and none of it's children belongs to us
-      if (idx == -1 && (p4est::functions<dim>::
+      if (idx == -1 && (dealii::internal::p4est::functions<dim>::
                         quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                                 &p4est_cell)
                         == false))
@@ -1298,7 +1287,7 @@ namespace FETools
           bool found_child = true;
           for (unsigned int c=0; c<GeometryInfo<dim>::max_children_per_cell; ++c)
             {
-              if (p4est::functions<dim>::
+              if (dealii::internal::p4est::functions<dim>::
                   quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                           &p4est_child[c])
                   == false)
@@ -1441,8 +1430,8 @@ namespace FETools
       endc=dof2.end(0);
       for (; cell!=endc; ++cell)
         {
-          if (p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
-                                                        tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
+          if (dealii::internal::p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
+              tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
               == false)
             continue;
 
@@ -1460,7 +1449,7 @@ namespace FETools
           {
             int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree->quadrants),
                                        &p4est_coarse_cell,
-                                       p4est::functions<dim>::quadrant_compare);
+                                       dealii::internal::p4est::functions<dim>::quadrant_compare);
 
             AssertThrow (idx == -1, ExcGridNotRefinedAtLeastOnce ());
           }
@@ -1489,10 +1478,10 @@ namespace FETools
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
                                  &p4est_cell,
-                                 p4est::functions<dim>::quadrant_compare);
+                                 dealii::internal::p4est::functions<dim>::quadrant_compare);
 
       // this cell and none of it's children belongs to us
-      if (idx == -1 && (p4est::functions<dim>::
+      if (idx == -1 && (dealii::internal::p4est::functions<dim>::
                         quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                                 &p4est_cell)
                         == false))
@@ -1579,7 +1568,7 @@ namespace FETools
               // check if this child
               // is locally available
               // in the p4est
-              if (p4est::functions<dim>::
+              if (dealii::internal::p4est::functions<dim>::
                   quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                           &p4est_child[c])
                   == false)
@@ -1645,8 +1634,8 @@ namespace FETools
 
           if ((trees.find (tree_index) == trees.end ())
               ||
-              (p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
-                                                         tree_index)
+              (dealii::internal::p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
+                  tree_index)
                == false))
             continue;
 
@@ -1689,10 +1678,10 @@ namespace FETools
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
                                  &p4est_cell,
-                                 p4est::functions<dim>::quadrant_compare);
+                                 dealii::internal::p4est::functions<dim>::quadrant_compare);
 
       // this cell and none of it's children belongs to us
-      if (idx == -1 && (p4est::functions<dim>::
+      if (idx == -1 && (dealii::internal::p4est::functions<dim>::
                         quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                                 &p4est_cell)
                         == false))
@@ -1842,7 +1831,7 @@ namespace FETools
       CellData  cell_data (dofs_per_cell);
       cell_data.quadrant = p4est_cell;
       cell_data.tree_index = tree_index;
-      cell_data.receiver = p4est::functions<dim>::
+      cell_data.receiver = dealii::internal::p4est::functions<dim>::
                            comm_find_owner (const_cast<typename dealii::internal::p4est::types<dim>::forest *> (&forest),
                                             tree_index,
                                             &p4est_cell,
@@ -2015,8 +2004,8 @@ namespace FETools
       endc=dof2.end(0);
       for (; cell!=endc; ++cell)
         {
-          if (p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
-                                                        tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
+          if (dealii::internal::p4est::tree_exists_locally<dim,spacedim> (tr->parallel_forest,
+              tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
               == false)
             continue;
 
