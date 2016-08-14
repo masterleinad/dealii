@@ -714,23 +714,23 @@ namespace FETools
    * corresponding cell of `dof2` using the interpolation matrix of the finite
    * element spaces used on these cells and provided by the finite element
    * objects involved. This step is done using the FETools::interpolate()
-   * function. 
+   * function.
    * - It then performs a loop over all non-active cells of `dof2`.
    * If such a non-active cell has at least one active child, then we call the
    * children of this cell a "patch". We then interpolate from the children of
    * this patch to the patch, using the finite element space associated with
    * `dof2` and immediately interpolate back to the children. In essence, this
    * information throws away all information in the solution vector that lives
-   * on a scale smaller than the patch cell. 
-   * - Since we traverse non-active cells from the coarsest to the finest 
-   * levels, we may find patches that correspond to child cells of previously 
-   * treated patches if the mesh had been refined adaptively (this cannot 
-   * happen if the  mesh has been refined globally because there the children 
-   * of a patch are all active). We also perform the operation described above 
-   * on these patches, but it is easy to see that on patches that are children 
+   * on a scale smaller than the patch cell.
+   * - Since we traverse non-active cells from the coarsest to the finest
+   * levels, we may find patches that correspond to child cells of previously
+   * treated patches if the mesh had been refined adaptively (this cannot
+   * happen if the  mesh has been refined globally because there the children
+   * of a patch are all active). We also perform the operation described above
+   * on these patches, but it is easy to see that on patches that are children
    * of previously treated patches, the operation is now the identity operation
-   * (since it interpolates from the children of the current patch a function 
-   * that had previously been interpolated to these children from an even coarser 
+   * (since it interpolates from the children of the current patch a function
+   * that had previously been interpolated to these children from an even coarser
    * patch). Consequently, this does not alter the solution vector any more.
    *
    * The name of the function originates from the fact that it can be used to
@@ -782,6 +782,18 @@ namespace FETools
                     const DoFHandler<dim,spacedim> &dof2,
                     const ConstraintMatrix         &constraints,
                     OutVector                      &z2);
+
+  /*
+   * Same as above for parallel VectorTypes
+   * on a parallel::distributed::Triangulation
+   */
+  template <int dim, class VectorType, int spacedim>
+  void extrapolate_parallel(const DoFHandler<dim,spacedim> &dof1,
+                            const VectorType &u1,
+                            const DoFHandler<dim,spacedim> &dof2,
+                            const ConstraintMatrix &constraints2,
+                            VectorType &u2);
+
   //@}
   /**
    * The numbering of the degrees of freedom in continuous finite elements is

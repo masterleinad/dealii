@@ -90,11 +90,12 @@ namespace FETools
     Assert(u2.size()==dof2.n_dofs(),
            ExcDimensionMismatch(u2.size(), dof2.n_dofs()));
 
+
+    const IndexSet u2_elements = u2.locally_owned_elements();
 #ifdef DEBUG
     const IndexSet &dof1_local_dofs = dof1.locally_owned_dofs();
     const IndexSet &dof2_local_dofs = dof2.locally_owned_dofs();
     const IndexSet u1_elements = u1.locally_owned_elements();
-    const IndexSet u2_elements = u2.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
            ExcMessage("The provided vector and DoF handler should have the same"
                       " index sets."));
@@ -197,8 +198,13 @@ namespace FETools
 
           for (unsigned int i=0; i<dofs_per_cell2; ++i)
             {
-              u2(dofs[i])+=u2_local(i);
-              touch_count(dofs[i]) += 1;
+              // if dof is locally_owned
+              const types::global_dof_index gdi = dofs[i];
+              if (u2_elements.is_element(gdi))
+                {
+                  u2(dofs[i])+=u2_local(i);
+                  touch_count(dofs[i]) += 1;
+                }
             }
         }
     // cell1 is at the end, so should
@@ -1015,9 +1021,9 @@ namespace FETools
       {}
 
       template <class InVector,class OutVector>
-      void extrapolate_parallel (const InVector &u2_relevant,
-                                 const DoFHandler<1,1> &dof2,
-                                 OutVector &u2)
+      void extrapolate_parallel (const InVector &/*u2_relevant*/,
+                                 const DoFHandler<1,1> &/*dof2*/,
+                                 OutVector &/*u2*/)
       {}
     };
 
@@ -1035,9 +1041,9 @@ namespace FETools
       {}
 
       template <class InVector,class OutVector>
-      void extrapolate_parallel (const InVector &u2_relevant,
-                                 const DoFHandler<1,2> &dof2,
-                                 OutVector &u2)
+      void extrapolate_parallel (const InVector &/*u2_relevant*/,
+                                 const DoFHandler<1,2> &/*dof2*/,
+                                 OutVector &/*u2*/)
       {}
     };
 
@@ -1055,9 +1061,9 @@ namespace FETools
       {}
 
       template <class InVector,class OutVector>
-      void extrapolate_parallel (const InVector &u2_relevant,
-                                 const DoFHandler<1,3> &dof2,
-                                 OutVector &u2)
+      void extrapolate_parallel (const InVector &/*u2_relevant*/,
+                                 const DoFHandler<1,3> &/*dof2*/,
+                                 OutVector &/*u2*/)
       {}
     };
 
@@ -2111,82 +2117,28 @@ namespace FETools
 
 
 
-  // special version for PETSc
-#ifdef DEAL_II_WITH_PETSC
-  template <int dim,int spacedim>
-  void extrapolate(const DoFHandler<dim,spacedim> &dof1,
-                   const PETScWrappers::MPI::Vector &u1,
-                   const DoFHandler<dim,spacedim> &dof2,
-                   const ConstraintMatrix &constraints2,
-                   PETScWrappers::MPI::Vector &u2)
+  template <int dim, class VectorType, int spacedim>
+  void extrapolate_parallel(const DoFHandler<dim,spacedim> &dof1,
+                            const VectorType &u1,
+                            const DoFHandler<dim,spacedim> &dof2,
+                            const ConstraintMatrix &constraints2,
+                            VectorType &u2)
   {
     IndexSet  dof2_locally_owned_dofs = dof2.locally_owned_dofs();
     IndexSet  dof2_locally_relevant_dofs;
     DoFTools::extract_locally_relevant_dofs (dof2,
                                              dof2_locally_relevant_dofs);
 
-    PETScWrappers::MPI::Vector u3 (dof2_locally_owned_dofs,
-                                   u1.get_mpi_communicator ());
+    VectorType u3 (dof2_locally_owned_dofs, u1.get_mpi_communicator ());
     interpolate (dof1, u1, dof2, constraints2, u3);
-    PETScWrappers::MPI::Vector u3_relevant (dof2_locally_owned_dofs,
-                                            dof2_locally_relevant_dofs,
-                                            u1.get_mpi_communicator ());
+    VectorType u3_relevant (dof2_locally_owned_dofs,
+                            dof2_locally_relevant_dofs,
+                            u1.get_mpi_communicator ());
     u3_relevant = u3;
 
     internal::extrapolate_parallel (u3_relevant, dof2, u2);
-  }
-#endif
 
-
-
-  // special version for Trilinos
-#ifdef DEAL_II_WITH_TRILINOS
-  template <int dim,int spacedim>
-  void extrapolate(const DoFHandler<dim,spacedim> &dof1,
-                   const TrilinosWrappers::MPI::Vector &u1,
-                   const DoFHandler<dim,spacedim> &dof2,
-                   const ConstraintMatrix &constraints2,
-                   TrilinosWrappers::MPI::Vector &u2)
-  {
-    IndexSet  dof2_locally_owned_dofs = dof2.locally_owned_dofs();
-    IndexSet  dof2_locally_relevant_dofs;
-    DoFTools::extract_locally_relevant_dofs (dof2,
-                                             dof2_locally_relevant_dofs);
-
-    TrilinosWrappers::MPI::Vector u3 (dof2_locally_owned_dofs,
-                                      u1.get_mpi_communicator ());
-    interpolate (dof1, u1, dof2, constraints2, u3);
-    TrilinosWrappers::MPI::Vector u3_relevant (dof2_locally_relevant_dofs,
-                                               u1.get_mpi_communicator ());
-    u3_relevant = u3;
-
-    internal::extrapolate_parallel (u3_relevant, dof2, u2);
-  }
-#endif
-
-
-
-  // special version for LinearAlgebra::distributed::Vector
-  template <int dim,int spacedim,typename Number>
-  void extrapolate(const DoFHandler<dim,spacedim> &dof1,
-                   const parallel::distributed::Vector<Number> &u1,
-                   const DoFHandler<dim,spacedim> &dof2,
-                   const ConstraintMatrix &constraints2,
-                   parallel::distributed::Vector<Number> &u2)
-  {
-    IndexSet  dof2_locally_owned_dofs = dof2.locally_owned_dofs();
-    IndexSet  dof2_locally_relevant_dofs;
-    DoFTools::extract_locally_relevant_dofs (dof2,
-                                             dof2_locally_relevant_dofs);
-
-    LinearAlgebra::distributed::Vector<Number>  u3 (dof2_locally_owned_dofs,
-                                                    dof2_locally_relevant_dofs,
-                                                    u2.get_mpi_communicator ());
-
-    interpolate (dof1, u1, dof2, constraints2, u3);
-    u3.update_ghost_values ();
-
-    internal::extrapolate_parallel (u3, dof2, u2);
+    constraints2.distribute(u2);
   }
 
 } // end of namespace FETools
