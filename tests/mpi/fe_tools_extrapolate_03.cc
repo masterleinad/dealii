@@ -57,11 +57,11 @@ int main (int argc, char **argv)
   deallog.threshold_double(1.e-10);
 
   CHECK_ALL(Q,1,Q,1);
-  CHECK_ALL(Q,1,Q,2);
-  CHECK_ALL(Q,2,Q,2);
+  /*  CHECK_ALL(Q,1,Q,2);
+    CHECK_ALL(Q,2,Q,2);
 
-  CHECK_ALL(DGQ,0,DGQ,0);
-  CHECK_ALL(DGQ,0,DGQ,1);
-  CHECK_ALL(DGQ,1,DGQ,1);
+    CHECK_ALL(DGQ,0,DGQ,0);
+    CHECK_ALL(DGQ,0,DGQ,1);
+    CHECK_ALL(DGQ,1,DGQ,1);*/
 }
 

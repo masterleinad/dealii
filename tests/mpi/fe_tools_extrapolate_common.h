@@ -24,6 +24,7 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/numerics/data_out.h>
+#include <deal.II/numerics/vector_tools.h>
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/fe/fe_q.h>
@@ -38,16 +39,39 @@
 
 
 template <int dim>
+class  TestFunction : public Function<dim>
+{
+public:
+  TestFunction (unsigned int deg)
+    : Function<dim>(), degree(deg)
+  {}
+
+  virtual double value (const Point<dim>   &p,
+                        const unsigned int  component = 0) const
+  {
+    double return_value = 0.;
+    for (unsigned int d=0; d<dim; ++d)
+      return_value += std::pow(std::abs(.5-p(d)), degree);
+
+    return return_value;
+  }
+private:
+  const unsigned int degree;
+};
+
+
+
+template <int dim>
 parallel::distributed::Triangulation<dim> *make_tria ()
 {
   parallel::distributed::Triangulation<dim> *tria = new parallel::distributed::Triangulation<dim>(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(*tria, 0., 1.);
   tria->refine_global (1);
-  for (int i=0; i<2; ++i)
-    {
-      tria->begin_active()->set_refine_flag();
-      tria->execute_coarsening_and_refinement ();
-    }
+    for (int i=0; i<2; ++i)
+      {
+        tria->begin_active()->set_refine_flag();
+        tria->execute_coarsening_and_refinement ();
+      }
   return tria;
 }
 
@@ -69,10 +93,7 @@ template <unsigned int dim, typename VectorType>
 void
 output_vector (const VectorType &v, const std::string &output_name, const DoFHandler<dim> &dof_handler)
 {
-  deallog << v.l1_norm() << ' ' << v.l2_norm() << ' ' << v.linfty_norm()
-          << std::endl;
-
-  v.print(deallog.get_file_stream());
+  //v.print(deallog.get_file_stream());
 
   DataOut<dim> data_out;
   data_out.attach_dof_handler (dof_handler);
@@ -122,9 +143,12 @@ check_this (const FiniteElement<dim> &fe1,
 
   std_cxx11::unique_ptr<DoFHandler<dim> >    dof1(make_dof_handler (*tria, fe1));
   std_cxx11::unique_ptr<DoFHandler<dim> >    dof2(make_dof_handler (*tria, fe2));
-  ConstraintMatrix cm;
-  DoFTools::make_hanging_node_constraints (*dof2, cm);
-  cm.close ();
+  ConstraintMatrix cm1;
+  DoFTools::make_hanging_node_constraints (*dof1, cm1);
+  cm1.close ();
+  ConstraintMatrix cm2;
+  DoFTools::make_hanging_node_constraints (*dof2, cm2);
+  cm2.close ();
 
   IndexSet locally_owned_dofs1 = dof1->locally_owned_dofs();
   IndexSet locally_relevant_dofs1;
@@ -138,19 +162,59 @@ check_this (const FiniteElement<dim> &fe1,
   VectorType out_distributed (locally_owned_dofs2, MPI_COMM_WORLD);
   VectorType out_ghosted (locally_owned_dofs2, locally_relevant_dofs2, MPI_COMM_WORLD);
 
-  locally_owned_dofs1.print(std::cout);
-  in_ghosted.locally_owned_elements().print(std::cout);
-  locally_owned_dofs2.print(std::cout);
-  out_ghosted.locally_owned_elements().print(std::cout);
-
-  IndexSet::ElementIterator it = locally_owned_dofs1.begin();
-  for (unsigned int i=0; it != locally_owned_dofs1.end(); ++it, ++i)
-    in_distributed(*it) = i;
-  in_distributed.compress(VectorOperation::insert);
+  // Due to the fact that we refine at least once globally, a quadratic function can always
+  // be extrapolated exactly, if the target space is at least quadratic
+  TestFunction<dim> function (fe2.degree);
+  VectorTools::interpolate (*dof1, function, in_distributed);
+  cm1.distribute(in_distributed);
   in_ghosted = in_distributed;
 
-  output_vector<dim, VectorType> (in_ghosted, std::string("in"), *dof1);
-  FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm, out_distributed);
+  Vector<double> difference_before;
+  {
+    const QTrapez<1>     q_trapez;
+    const QIterated<dim> q_iterated (q_trapez, 5);
+    VectorTools::integrate_difference (*dof1, in_ghosted, function, difference_before,
+                                       q_iterated, VectorTools::L2_norm);
+  }
+  const double local_difference_before = difference_before.l2_norm();
+  const double global_difference_before
+    = std::sqrt(Utilities::MPI::sum(std::pow(local_difference_before,2.), MPI_COMM_WORLD));
+
+  output_vector<dim, VectorType> (in_ghosted,
+                                  Utilities::int_to_string(fe1.degree,1)+Utilities::int_to_string(dim,1)+std::string("in"),
+                                  *dof1);
+  deallog << in_distributed.l1_norm() << ' '
+          << in_distributed.l2_norm() << ' '
+          << in_distributed.linfty_norm() << std::endl;
+
+  FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_distributed);
+  out_distributed.compress(VectorOperation::insert);
   out_ghosted = out_distributed;
-  output_vector<dim, VectorType> (out_ghosted, std::string("out"), *dof2);
+
+  output_vector<dim, VectorType> (out_ghosted,
+                                  Utilities::int_to_string(fe2.degree,1)+Utilities::int_to_string(dim,1)+std::string("out"),
+                                  *dof2);
+  deallog << out_distributed.l1_norm() << ' '
+          << out_distributed.l2_norm() << ' '
+          << out_distributed.linfty_norm() << std::endl;
+
+  Vector<double> difference_after;
+  {
+    const QTrapez<1>     q_trapez;
+    const QIterated<dim> q_iterated (q_trapez, 5);
+    VectorTools::integrate_difference (*dof2, out_ghosted, function, difference_after,
+                                       q_iterated, VectorTools::L2_norm);
+  }
+  const double local_difference_after = difference_after.l2_norm();
+  const double global_difference_after
+    = std::sqrt(Utilities::MPI::sum(std::pow(local_difference_after,2.), MPI_COMM_WORLD));
+
+  std::cout << "global_max_difference_before: "
+            << global_difference_before << std::endl;
+  std::cout << "global_max_difference_after: "
+            << global_difference_after << std::endl;
+  if (fe2.degree > fe1.degree)
+    AssertThrow(global_difference_after < global_difference_before,
+                ExcInternalError());
+  deallog << "OK" << std::endl;
 }

@@ -43,11 +43,7 @@
 
 #include <deal.II/base/index_set.h>
 
-namespace
-{
 #include <deal.II/distributed/p4est_wrappers.h>
-}
-
 #include <iostream>
 
 
@@ -2137,6 +2133,7 @@ namespace FETools
     u3_relevant = u3;
 
     internal::extrapolate_parallel (u3_relevant, dof2, u2);
+    u2 = u3;
 
     constraints2.distribute(u2);
   }
