@@ -67,11 +67,11 @@ parallel::distributed::Triangulation<dim> *make_tria ()
   parallel::distributed::Triangulation<dim> *tria = new parallel::distributed::Triangulation<dim>(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(*tria, 0., 1.);
   tria->refine_global (1);
-    for (int i=0; i<2; ++i)
-      {
-        tria->begin_active()->set_refine_flag();
-        tria->execute_coarsening_and_refinement ();
-      }
+  for (int i=0; i<2; ++i)
+    {
+      tria->begin_active()->set_refine_flag();
+      tria->execute_coarsening_and_refinement ();
+    }
   return tria;
 }
 
@@ -187,7 +187,10 @@ check_this (const FiniteElement<dim> &fe1,
           << in_distributed.l2_norm() << ' '
           << in_distributed.linfty_norm() << std::endl;
 
-  FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_distributed);
+  if (Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)==1)
+    FETools::extrapolate (*dof1, in_ghosted, *dof2, cm2, out_distributed);
+  else
+    FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_distributed);
   out_distributed.compress(VectorOperation::insert);
   out_ghosted = out_distributed;
 
