@@ -65,11 +65,16 @@ template <int dim>
 parallel::distributed::Triangulation<dim> *make_tria ()
 {
   parallel::distributed::Triangulation<dim> *tria = new parallel::distributed::Triangulation<dim>(MPI_COMM_WORLD);
+  typename parallel::distributed::Triangulation<dim>::active_cell_iterator cell;
   GridGenerator::hyper_cube(*tria, 0., 1.);
-  tria->refine_global (1);
-  for (int i=0; i<2; ++i)
+  tria->refine_global (2);
+  for (int i=0; i<3; ++i)
     {
-      tria->begin_active()->set_refine_flag();
+      cell = tria->begin_active();
+      cell->set_refine_flag();
+      ++cell;
+      cell->set_refine_flag();
+
       tria->execute_coarsening_and_refinement ();
     }
   return tria;
@@ -93,7 +98,7 @@ template <unsigned int dim, typename VectorType>
 void
 output_vector (const VectorType &v, const std::string &output_name, const DoFHandler<dim> &dof_handler)
 {
-  //v.print(deallog.get_file_stream());
+  v.print(deallog.get_file_stream());
 
   DataOut<dim> data_out;
   data_out.attach_dof_handler (dof_handler);
@@ -161,28 +166,26 @@ check_this (const FiniteElement<dim> &fe1,
   VectorType in_distributed (locally_owned_dofs1, MPI_COMM_WORLD);
   VectorType out_distributed (locally_owned_dofs2, MPI_COMM_WORLD);
   VectorType out_ghosted (locally_owned_dofs2, locally_relevant_dofs2, MPI_COMM_WORLD);
+  VectorType out_reference (locally_owned_dofs2, MPI_COMM_WORLD);
 
-  // Due to the fact that we refine at least once globally, a quadratic function can always
-  // be extrapolated exactly, if the target space is at least quadratic
-  TestFunction<dim> function (fe2.degree);
+  // Choose some reference function of sufficiently high polynomial degree.
+  TestFunction<dim> function (std::max(fe1.degree,fe2.degree));
   VectorTools::interpolate (*dof1, function, in_distributed);
   cm1.distribute(in_distributed);
   in_ghosted = in_distributed;
+  VectorTools::interpolate (*dof2, function, out_reference);
+  cm2.distribute(out_reference);
 
   Vector<double> difference_before;
-  {
-    const QTrapez<1>     q_trapez;
-    const QIterated<dim> q_iterated (q_trapez, 5);
-    VectorTools::integrate_difference (*dof1, in_ghosted, function, difference_before,
-                                       q_iterated, VectorTools::L2_norm);
-  }
-  const double local_difference_before = difference_before.l2_norm();
-  const double global_difference_before
-    = std::sqrt(Utilities::MPI::sum(std::pow(local_difference_before,2.), MPI_COMM_WORLD));
+  VectorTools::integrate_difference (*dof1, in_ghosted, function, difference_before,
+                                     QGauss<dim>(fe1.degree+1), VectorTools::L2_norm);
+  const double local_error_before = difference_before.l2_norm();
+  const double global_error_before
+    = std::sqrt(Utilities::MPI::sum(std::pow(local_error_before,2.), MPI_COMM_WORLD));
 
-  output_vector<dim, VectorType> (in_ghosted,
+  /*output_vector<dim, VectorType> (in_ghosted,
                                   Utilities::int_to_string(fe1.degree,1)+Utilities::int_to_string(dim,1)+std::string("in"),
-                                  *dof1);
+                                  *dof1);*/
   deallog << in_distributed.l1_norm() << ' '
           << in_distributed.l2_norm() << ' '
           << in_distributed.linfty_norm() << std::endl;
@@ -193,6 +196,7 @@ check_this (const FiniteElement<dim> &fe1,
     FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_distributed);
   out_distributed.compress(VectorOperation::insert);
   out_ghosted = out_distributed;
+  out_ghosted.update_ghost_values();
 
   output_vector<dim, VectorType> (out_ghosted,
                                   Utilities::int_to_string(fe2.degree,1)+Utilities::int_to_string(dim,1)+std::string("out"),
@@ -202,22 +206,27 @@ check_this (const FiniteElement<dim> &fe1,
           << out_distributed.linfty_norm() << std::endl;
 
   Vector<double> difference_after;
-  {
-    const QTrapez<1>     q_trapez;
-    const QIterated<dim> q_iterated (q_trapez, 5);
-    VectorTools::integrate_difference (*dof2, out_ghosted, function, difference_after,
-                                       q_iterated, VectorTools::L2_norm);
-  }
-  const double local_difference_after = difference_after.l2_norm();
-  const double global_difference_after
-    = std::sqrt(Utilities::MPI::sum(std::pow(local_difference_after,2.), MPI_COMM_WORLD));
+  VectorTools::integrate_difference (*dof2, out_ghosted, function, difference_after,
+                                     QGauss<dim>(fe2.degree+1), VectorTools::L2_norm);
+  const double local_error_after = difference_after.l2_norm();
+  const double global_error_after
+    = std::sqrt(Utilities::MPI::sum(std::pow(local_error_after,2.), MPI_COMM_WORLD));
 
-  std::cout << "global_max_difference_before: "
-            << global_difference_before << std::endl;
-  std::cout << "global_max_difference_after: "
-            << global_difference_after << std::endl;
+  deallog << "global_error_before: "
+          << global_error_before << std::endl;
+  deallog << "global_error_after: "
+          << global_error_after << std::endl;
+  if (fe2.degree == fe1.degree)
+    {
+      out_distributed -= in_distributed;
+      AssertThrow(out_distributed.l2_norm()<1.e-8,
+                  ExcInternalError());
+
+    }
   if (fe2.degree > fe1.degree)
-    AssertThrow(global_difference_after < global_difference_before,
-                ExcInternalError());
+    {
+      AssertThrow(10.*global_error_after < global_error_before,
+                  ExcInternalError());
+    }
   deallog << "OK" << std::endl;
 }

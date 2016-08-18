@@ -148,7 +148,7 @@ for (deal_II_dimension : DIMENSIONS; deal_II_space_dimension :  SPACE_DIMENSIONS
     \{
 #if deal_II_dimension == deal_II_space_dimension
     template
-    void extrapolate_parallel <deal_II_dimension, LinearAlgebra::distributed::Vector<scalar>, deal_II_space_dimension>
+    void extrapolate_parallel <deal_II_dimension, deal_II_space_dimension, scalar>
     (const DoFHandler<deal_II_dimension,deal_II_space_dimension> &,
      const LinearAlgebra::distributed::Vector<scalar> &,
      const DoFHandler<deal_II_dimension,deal_II_space_dimension> &,

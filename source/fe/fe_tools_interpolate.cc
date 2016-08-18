@@ -1860,31 +1860,31 @@ namespace FETools
           computed_cells,
           cells_to_send;
 
-      // compute all the cells needed
-      // from other processes
+      // Compute all the cells needed
+      // from other processes.
       compute_needs (dof2, cells_we_need);
 
-      // send the cells needed to there
-      // owners and receive a list other
-      // processes need from us
+      // Send the cells needed to there
+      // owners and receive a list of cells other
+      // processes need from us.
       send_cells (cells_we_need, received_needs);
 
-      // the list of received needs can contain
-      // some cells more than ones because different
-      // processes may need data from the same cell
-      // to compute data only ones, generate a vector
-      // with unique entries and distribute computed
+      // The list of received needs can contain
+      // some cells more than once because different
+      // processes may need data from the same cell.
+      // To compute data only once, generate a vector
+      // with unique entries and distribute the computed
       // data afterwards back to a vector with correct
-      // receivers to send the data back
-      // computing cell_data can cause some new cells
-      // needed for this ones
-      // if a cell is computed send it back to
+      // receivers.
+      // Computing cell_data can cause a need for
+      // data from some new cells.
+      // If a cell is computed, send it back to
       // their senders, maybe receive new needs and
       // compute again, do not wait that all cells
-      // are computed or all needs are collected,
-      // otherwise we can run into a deadlock if
+      // are computed or all needs are collected.
+      // Otherwise we can run into a deadlock if
       // a cell needed from another process,
-      // itself needs some data from us
+      // itself needs some data from us.
       unsigned int ready = 0;
       do
         {
@@ -1954,7 +1954,8 @@ namespace FETools
         = (dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>*>
            (&dof2.get_tria()));
 
-      Assert (tr != 0, ExcMessage ("Exrapolate in parallel only works for parallel distributed triangulations!"));
+      Assert (tr != 0,
+              ExcMessage ("Extrapolate in parallel only works for parallel distributed triangulations!"));
 
       communicator = tr->get_communicator ();
 
@@ -2136,6 +2137,32 @@ namespace FETools
 
     constraints2.distribute(u2);
   }
+
+
+
+  template <int dim, int spacedim, typename Number>
+  void extrapolate_parallel(const DoFHandler<dim,spacedim> &dof1,
+                            const LinearAlgebra::distributed::Vector<Number> &u1,
+                            const DoFHandler<dim,spacedim> &dof2,
+                            const ConstraintMatrix &constraints2,
+                            LinearAlgebra::distributed::Vector<Number> &u2)
+  {
+    IndexSet  dof2_locally_owned_dofs = dof2.locally_owned_dofs();
+    IndexSet  dof2_locally_relevant_dofs;
+    DoFTools::extract_locally_relevant_dofs (dof2,
+                                             dof2_locally_relevant_dofs);
+
+    LinearAlgebra::distributed::Vector<Number> u3(dof2_locally_owned_dofs,
+                                                  dof2_locally_relevant_dofs,
+                                                  u1.get_mpi_communicator ());
+    interpolate (dof1, u1, dof2, constraints2, u3);
+    u3.update_ghost_values();
+
+    internal::extrapolate_parallel (u3, dof2, u2);
+
+    constraints2.distribute(u2);
+  }
+
 
 } // end of namespace FETools
 
