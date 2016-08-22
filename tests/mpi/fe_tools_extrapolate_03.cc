@@ -32,7 +32,7 @@ check (const FiniteElement<dim> &fe1,
             << std::endl;
 
   // call main function in .cc files
-  check_this<dim, LinearAlgebra::distributed::Vector<double> > (fe1, fe2);
+  check_this_dealii<dim, LinearAlgebra::distributed::Vector<double> > (fe1, fe2);
 }
 
 #define CHECK(EL1,deg1,EL2,deg2,dim)\
@@ -56,12 +56,14 @@ int main (int argc, char **argv)
   deallog.attach(logfile);
   deallog.threshold_double(1.e-10);
 
-  CHECK_ALL(Q,1,Q,1);
-  /*  CHECK_ALL(Q,1,Q,2);
-    CHECK_ALL(Q,2,Q,2);
+  CHECK(Q,2,Q,1,2);
 
-    CHECK_ALL(DGQ,0,DGQ,0);
-    CHECK_ALL(DGQ,0,DGQ,1);
-    CHECK_ALL(DGQ,1,DGQ,1);*/
+  /*CHECK_ALL(Q,1,Q,1);
+  CHECK_ALL(Q,1,Q,2);
+  CHECK_ALL(Q,2,Q,2);
+
+  CHECK_ALL(DGQ,0,DGQ,0);
+  CHECK_ALL(DGQ,0,DGQ,1);
+  CHECK_ALL(DGQ,1,DGQ,1);*/
 }
 

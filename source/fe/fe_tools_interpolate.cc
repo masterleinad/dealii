@@ -1116,7 +1116,7 @@ namespace FETools
                                  &p4est_cell,
                                  dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // this cell and none of it's children belongs to us
+      // if neither this cell nor one of it's children belongs to us, don't do anything
       if (idx == -1 && (dealii::internal::p4est::functions<dim>::
                         quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                                 &p4est_cell)
@@ -1215,6 +1215,8 @@ namespace FETools
               // if this is one of our cells,
               // get dof values from input vector
               dealii_cell->get_dof_values (u, interpolated_values);
+              std::cout << "get " << dealii_cell->center() << std::endl;
+              interpolated_values.print(std::cout);
             }
           else
             {
@@ -1262,7 +1264,7 @@ namespace FETools
                   // this is a cell this process needs
                   // data from another process
 
-                  // check if this cell
+                  // check if this cell is
                   // available from other
                   // computed patches
                   CellData  cell_data;
@@ -1292,7 +1294,7 @@ namespace FETools
               else
                 {
                   // get the values from the present child, if necessary by
-                  // interpolation itself either from its own children or
+                  // interpolation either from its own children or
                   // by interpolating from the finite element on an active
                   // child to the finite element space requested here
                   get_interpolated_dof_values (forest,
@@ -1312,10 +1314,13 @@ namespace FETools
 
                   // and add up or set them in the output vector
                   for (unsigned int i=0; i<dofs_per_cell; ++i)
-                    if (restriction_is_additive[i])
-                      interpolated_values(i) += tmp2(i);
-                    else if (tmp2(i) != number())
-                      interpolated_values(i) = tmp2(i);
+                    if (tmp2(i) != number())
+                      {
+                        if (restriction_is_additive[i])
+                          interpolated_values(i) += tmp2(i);
+                        else
+                          interpolated_values(i) = tmp2(i);
+                      }
                 }
             }
 
@@ -1335,20 +1340,52 @@ namespace FETools
                                      const Vector<number>                                          &local_values,
                                      OutVector                                                     &u)
     {
+      const FiniteElement<dim,spacedim> &fe            = dealii_cell->get_dof_handler().get_fe();
+      const unsigned int                 dofs_per_cell = fe.dofs_per_cell;
+
       if (!dealii_cell->has_children ())
         {
           if (dealii_cell->is_locally_owned ())
             {
               // if this is one of our cells,
-              // set dof values in output vector
-              dealii_cell->set_dof_values (local_values, u);
+              // set dof values in output vector if there isn't
+              // a more refined neighbor
+
+              std::vector<types::global_dof_index> indices;
+              std::vector<bool> exclude;
+
+              indices.resize(dofs_per_cell);
+              dealii_cell->get_dof_indices(indices);
+              exclude.resize(dofs_per_cell);
+
+              const unsigned int dpf = fe.dofs_per_face;
+              for (unsigned int face=0; face< GeometryInfo<dim>::faces_per_cell; ++face)
+                if (!dealii_cell->at_boundary(face))
+                  {
+                    typename DoFHandler<dim,spacedim>::cell_iterator neighbor
+                      = dealii_cell->neighbor(face);
+                    if (neighbor->has_children())
+                    {
+                      std::cout << "neighbor->center()" << neighbor->center() << std::endl;
+                      for (unsigned int i=0; i<dpf; ++i)
+                        exclude[fe.face_to_cell_index(i,face)] = true;
+                    }
+                  }
+              std::cout << "set " << dealii_cell->center() << std::endl;
+              // only exclude if the dof does not live on a vertex
+              for (unsigned int j=0; j<dofs_per_cell; ++j)
+                if (!exclude[j])
+                  {
+                    u(indices[j]) = local_values(j);
+                    std::cout << indices[j] << " " << local_values(j) << std::endl;
+                  }
+                else
+                  std::cout << indices[j] << "no " << std::endl;
+              std::cout << std::endl;
             }
         }
       else
         {
-          const FiniteElement<dim,spacedim> &fe            = dealii_cell->get_dof_handler().get_fe();
-          const unsigned int                 dofs_per_cell = fe.dofs_per_cell;
-
           Assert (&fe != 0,
                   ExcNotInitialized());
           Assert (local_values.size() == dofs_per_cell,
@@ -1447,7 +1484,7 @@ namespace FETools
                                  &p4est_cell,
                                  dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // this cell and none of it's children belongs to us
+      // if neither this cell nor one of it's children belongs to us, don't do anything
       if (idx == -1 && (dealii::internal::p4est::functions<dim>::
                         quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                                 &p4est_cell)
@@ -1540,8 +1577,8 @@ namespace FETools
                                           &p4est_child[c])
                   == false)
                 {
-                  // this is a cell this process needs
-                  // data from another process
+                  // this is a cell for which this process
+                  // needs data from another process
                   // so add the cell to the list
                   add_new_need (forest,
                                 tree_index,
@@ -1647,7 +1684,7 @@ namespace FETools
                                  &p4est_cell,
                                  dealii::internal::p4est::functions<dim>::quadrant_compare);
 
-      // this cell and none of it's children belongs to us
+      // if neither this cell nor one one of it's children belongs to us, don't do anything
       if (idx == -1 && (dealii::internal::p4est::functions<dim>::
                         quadrant_overlaps_tree (const_cast<typename dealii::internal::p4est::types<dim>::tree *>(&tree),
                                                 &p4est_cell)
@@ -2037,6 +2074,8 @@ namespace FETools
                   if (active_children)
                     {
                       cell->get_interpolated_dof_values(u3, dof_values);
+  std::cout << "get/set " << cell->center() << std::endl;
+              dof_values.print(std::cout);
                       cell->set_dof_values_by_interpolation(dof_values, u2);
                     }
                 }
@@ -2135,7 +2174,7 @@ namespace FETools
 
     internal::extrapolate_parallel (u3_relevant, dof2, u2);
 
-    constraints2.distribute(u2);
+//    constraints2.distribute(u2);
   }
 
 
@@ -2160,7 +2199,7 @@ namespace FETools
 
     internal::extrapolate_parallel (u3, dof2, u2);
 
-    constraints2.distribute(u2);
+//    constraints2.distribute(u2);
   }
 
 
