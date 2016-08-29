@@ -302,8 +302,6 @@ namespace FETools
           cell->set_dof_values(u1_int_local, u1_interpolated);
         }
 
-    // if we work on a parallel PETSc vector
-    // we have to finish the work
     u1_interpolated.compress(VectorOperation::insert);
   }
 
@@ -1111,6 +1109,8 @@ namespace FETools
                              const InVector                                                &u1,
                              OutVector                                                     &u2)
     {
+      std::cout << "Interpolating recursively cell: " << dealii_cell->center() << std::endl;
+      u1.print(std::cout);
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
                                  &p4est_cell,
@@ -1360,16 +1360,16 @@ namespace FETools
 
               const unsigned int dpf = fe.dofs_per_face;
               for (unsigned int face=0; face< GeometryInfo<dim>::faces_per_cell; ++face)
-                if (!dealii_cell->at_boundary(face))
+                if (0&&!dealii_cell->at_boundary(face))
                   {
                     typename DoFHandler<dim,spacedim>::cell_iterator neighbor
                       = dealii_cell->neighbor(face);
                     if (neighbor->has_children())
-                    {
-                      std::cout << "neighbor->center()" << neighbor->center() << std::endl;
-                      for (unsigned int i=0; i<dpf; ++i)
-                        exclude[fe.face_to_cell_index(i,face)] = true;
-                    }
+                      {
+                        std::cout << "neighbor->center()" << neighbor->center() << std::endl;
+                        for (unsigned int i=0; i<dpf; ++i)
+                          exclude[fe.face_to_cell_index(i,face)] = true;
+                      }
                   }
               std::cout << "set " << dealii_cell->center() << std::endl;
               // only exclude if the dof does not live on a vertex
@@ -2074,8 +2074,8 @@ namespace FETools
                   if (active_children)
                     {
                       cell->get_interpolated_dof_values(u3, dof_values);
-  std::cout << "get/set " << cell->center() << std::endl;
-              dof_values.print(std::cout);
+                      std::cout << "get/set " << cell->center() << std::endl;
+                      dof_values.print(std::cout);
                       cell->set_dof_values_by_interpolation(dof_values, u2);
                     }
                 }
@@ -2174,7 +2174,7 @@ namespace FETools
 
     internal::extrapolate_parallel (u3_relevant, dof2, u2);
 
-//    constraints2.distribute(u2);
+    constraints2.distribute(u2);
   }
 
 
@@ -2199,7 +2199,7 @@ namespace FETools
 
     internal::extrapolate_parallel (u3, dof2, u2);
 
-//    constraints2.distribute(u2);
+    constraints2.distribute(u2);
   }
 
 

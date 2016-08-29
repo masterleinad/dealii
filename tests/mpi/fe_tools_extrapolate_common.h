@@ -72,8 +72,8 @@ parallel::distributed::Triangulation<dim> *make_tria ()
     {
       cell = tria->begin_active();
       cell->set_refine_flag();
-            ++cell;
-            cell->set_refine_flag();
+      ++cell;
+      cell->set_refine_flag();
 
       tria->execute_coarsening_and_refinement ();
     }
@@ -190,10 +190,10 @@ check_this (const FiniteElement<dim> &fe1,
           << in_distributed.l2_norm() << ' '
           << in_distributed.linfty_norm() << std::endl;
 
-  if (Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)==1)
-    FETools::extrapolate (*dof1, in_ghosted, *dof2, cm2, out_distributed);
-  else
-    FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_distributed);
+//  if (Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)==1)
+//    FETools::extrapolate (*dof1, in_ghosted, *dof2, cm2, out_distributed);
+//  else
+  FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_distributed);
   out_distributed.compress(VectorOperation::insert);
   out_ghosted = out_distributed;
 
@@ -310,9 +310,9 @@ check_this_dealii (const FiniteElement<dim> &fe1,
   out_ghosted = out_ghosted;
   out_ghosted.update_ghost_values();
 
-  /*output_vector<dim, VectorType> (out_ghosted,
+  output_vector<dim, VectorType> (out_ghosted,
                                   Utilities::int_to_string(fe2.degree,1)+Utilities::int_to_string(dim,1)+std::string("out"),
-                                  *dof2);*/
+                                  *dof2);
   deallog << out_ghosted.l1_norm() << ' '
           << out_ghosted.l2_norm() << ' '
           << out_ghosted.linfty_norm() << std::endl;
