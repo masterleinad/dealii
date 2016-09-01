@@ -45,6 +45,7 @@
 
 #include <deal.II/distributed/p4est_wrappers.h>
 #include <iostream>
+#include <queue>
 
 
 DEAL_II_NAMESPACE_OPEN
@@ -1110,7 +1111,6 @@ namespace FETools
                              OutVector                                                     &u2)
     {
       std::cout << "Interpolating recursively cell: " << dealii_cell->center() << std::endl;
-      u1.print(std::cout);
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
                                  &p4est_cell,
@@ -1130,9 +1130,7 @@ namespace FETools
         {
           Assert (dealii_cell->has_children (), ExcInternalError ());
 
-          // check if at least one
-          // child is locally owned
-          // on our process
+          // check if at least one child is locally owned on our process
           for (unsigned int child_n=0; child_n<dealii_cell->n_children(); ++child_n)
             if (dealii_cell->child(child_n)->active())
               if (dealii_cell->child(child_n)->is_locally_owned())
@@ -1171,26 +1169,8 @@ namespace FETools
                                            u2);
         }
 
-      // traverse recursively over this tree
-      if (p4est_has_children)
-        {
-          typename dealii::internal::p4est::types<dim>::quadrant
-          p4est_child[GeometryInfo<dim>::max_children_per_cell];
 
-          dealii::internal::p4est::init_quadrant_children<dim> (p4est_cell,
-                                                                p4est_child);
 
-          for (unsigned int c=0; c<GeometryInfo<dim>::max_children_per_cell; ++c)
-            {
-              interpolate_recursively (forest,
-                                       tree,
-                                       tree_index,
-                                       dealii_cell->child(c),
-                                       p4est_child[c],
-                                       u1,
-                                       u2);
-            }
-        }
     }
 
 
@@ -1347,41 +1327,15 @@ namespace FETools
         {
           if (dealii_cell->is_locally_owned ())
             {
-              // if this is one of our cells,
-              // set dof values in output vector if there isn't
-              // a more refined neighbor
-
-              std::vector<types::global_dof_index> indices;
-              std::vector<bool> exclude;
-
-              indices.resize(dofs_per_cell);
+              std::vector<types::global_dof_index> indices(dofs_per_cell);
               dealii_cell->get_dof_indices(indices);
-              exclude.resize(dofs_per_cell);
-
-              const unsigned int dpf = fe.dofs_per_face;
-              for (unsigned int face=0; face< GeometryInfo<dim>::faces_per_cell; ++face)
-                if (0&&!dealii_cell->at_boundary(face))
-                  {
-                    typename DoFHandler<dim,spacedim>::cell_iterator neighbor
-                      = dealii_cell->neighbor(face);
-                    if (neighbor->has_children())
-                      {
-                        std::cout << "neighbor->center()" << neighbor->center() << std::endl;
-                        for (unsigned int i=0; i<dpf; ++i)
-                          exclude[fe.face_to_cell_index(i,face)] = true;
-                      }
-                  }
-              std::cout << "set " << dealii_cell->center() << std::endl;
-              // only exclude if the dof does not live on a vertex
               for (unsigned int j=0; j<dofs_per_cell; ++j)
-                if (!exclude[j])
-                  {
-                    u(indices[j]) = local_values(j);
-                    std::cout << indices[j] << " " << local_values(j) << std::endl;
-                  }
-                else
-                  std::cout << indices[j] << "no " << std::endl;
-              std::cout << std::endl;
+                {
+                  u(indices[j]) = local_values(j);
+                  std::cout << indices[j] << " " << local_values(j) << std::endl;
+                }
+
+              std::cout << std::endl << u(31) << " " << u(32) << " " << u(33) << " " <<  u(4) << std::endl;
             }
         }
       else
@@ -2003,33 +1957,130 @@ namespace FETools
       // are computed, start
       // the interpolation
       u2 = 0;
+      OutVector tmp(u2);
 
-      typename DoFHandler<dim,spacedim>::cell_iterator
-      cell=dof2.begin(0),
-      endc=dof2.end(0);
-      for (; cell!=endc; ++cell)
+      struct WorkPackage
+      {
+        const typename dealii::internal::p4est::types<dim>::forest    forest;
+        const typename dealii::internal::p4est::types<dim>::tree      tree;
+        const typename dealii::internal::p4est::types<dim>::locidx    tree_index;
+        const typename DoFHandler<dim,spacedim>::cell_iterator        dealii_cell;
+        const typename dealii::internal::p4est::types<dim>::quadrant  p4est_cell;
+
+        WorkPackage(const typename dealii::internal::p4est::types<dim>::forest    &forest_,
+                    const typename dealii::internal::p4est::types<dim>::tree      &tree_,
+                    const typename dealii::internal::p4est::types<dim>::locidx    &tree_index_,
+                    const typename DoFHandler<dim,spacedim>::cell_iterator        &dealii_cell_,
+                    const typename dealii::internal::p4est::types<dim>::quadrant  &p4est_cell_)
+          :
+          forest(forest_),
+          tree(tree_),
+          tree_index(tree_index_),
+          dealii_cell(dealii_cell_),
+          p4est_cell(p4est_cell_)
+        {}
+      };
+
+      std::queue<WorkPackage> queue;
+      {
+        typename DoFHandler<dim,spacedim>::cell_iterator
+        cell=dof2.begin(0),
+        endc=dof2.end(0);
+        for (; cell!=endc; ++cell)
+          {
+            if (dealii::internal::p4est::tree_exists_locally<dim> (tr->parallel_forest,
+                                                                   tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
+                == false)
+              continue;
+
+            typename dealii::internal::p4est::types<dim>::quadrant p4est_coarse_cell;
+            const unsigned int tree_index = tr->coarse_cell_to_p4est_tree_permutation[cell->index()];
+            typename dealii::internal::p4est::types<dim>::tree *tree = tr->init_tree(cell->index());
+
+            dealii::internal::p4est::init_coarse_quadrant<dim>(p4est_coarse_cell);
+
+            const WorkPackage data (*tr->parallel_forest, *tree,tree_index,cell,p4est_coarse_cell);
+
+            queue.push(data);
+            std::cout << "Initial cell center: " << cell->center() << std::endl;
+            std::cout << "Stored cell center: " << queue.front().dealii_cell->center() << std::endl;
+          }
+      }
+
+      while (!queue.empty())
         {
-          if (dealii::internal::p4est::tree_exists_locally<dim> (tr->parallel_forest,
-                                                                 tr->coarse_cell_to_p4est_tree_permutation[cell->index()])
-              == false)
-            continue;
+          std::cout << "Stored cell center: " << queue.front().dealii_cell->center() << std::endl;
+          const WorkPackage &data = queue.front();
+          std::cout << "Stored cell center: " << queue.front().dealii_cell->center() << std::endl;
 
-          typename dealii::internal::p4est::types<dim>::quadrant p4est_coarse_cell;
-          const unsigned int tree_index = tr->coarse_cell_to_p4est_tree_permutation[cell->index()];
-          typename dealii::internal::p4est::types<dim>::tree *tree = tr->init_tree(cell->index());
+          const typename dealii::internal::p4est::types<dim>::forest    &forest = data.forest;
+          const typename dealii::internal::p4est::types<dim>::tree      &tree = data.tree;
+          const typename dealii::internal::p4est::types<dim>::locidx    &tree_index= data.tree_index;
+          const typename DoFHandler<dim,spacedim>::cell_iterator        &dealii_cell = data.dealii_cell;
+          const typename dealii::internal::p4est::types<dim>::quadrant  &p4est_cell = data.p4est_cell;
 
-          dealii::internal::p4est::init_coarse_quadrant<dim>(p4est_coarse_cell);
+          std::cout << "Next cell center: " << dealii_cell->center() << std::endl;
 
-          interpolate_recursively (*tr->parallel_forest,
-                                   *tree,
-                                   tree_index,
-                                   cell,
-                                   p4est_coarse_cell,
-                                   u2_relevant,
-                                   u2);
+          interpolate_recursively (forest, tree, tree_index, dealii_cell, p4est_cell, u2_relevant, tmp);
+
+          // traverse recursively over this tree
+          int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
+                                     &p4est_cell,
+                                     dealii::internal::p4est::functions<dim>::quadrant_compare);
+
+          bool p4est_has_children = (idx == -1);
+          if (p4est_has_children)
+            {
+              typename dealii::internal::p4est::types<dim>::quadrant
+              p4est_child[GeometryInfo<dim>::max_children_per_cell];
+
+              dealii::internal::p4est::init_quadrant_children<dim> (p4est_cell,
+                                                                    p4est_child);
+
+              for (unsigned int c=0; c<GeometryInfo<dim>::max_children_per_cell; ++c)
+                queue.push(WorkPackage(forest, tree, tree_index, dealii_cell->child(c), p4est_child[c]));
+            }
+          queue.pop();
         }
 
+      // exclude dofs on more refined ghosted cells
+      IndexSet dofs_on_refined_neighbors(u2_relevant.size());
+      const FiniteElement<dim,spacedim> &fe  = dof2.get_fe();
+      const unsigned int dofs_per_face = fe.dofs_per_face;
+      if (dofs_per_face > 0)
+        {
+          const unsigned int dofs_per_cell = fe.dofs_per_cell;
+          std::vector<types::global_dof_index> indices (dofs_per_cell);
+          typename DoFHandler<dim,spacedim>::cell_iterator
+          cell=dof2.begin_active(),
+          endc=dof2.end();
+          for (; cell!=endc; ++cell)
+            if (cell->is_ghost())
+              {
+                cell->get_dof_indices(indices);
+                for (unsigned int face=0; face<GeometryInfo<dim>::faces_per_cell; ++face)
+                  {
+                    const typename DoFHandler<dim,spacedim>::cell_iterator neighbor = cell->neighbor(face);
+                    if (!neighbor->is_artificial() && neighbor->level() != cell->level())
+                      {
+                        for (unsigned int i=0; i<dofs_per_face; ++i)
+                          dofs_on_refined_neighbors.add_index(indices[fe.face_to_cell_index(i,face)]);
+                      }
+                  }
+              }
+        }
+      IndexSet dofs_to_set = dof2.locally_owned_dofs();
+      dofs_to_set.subtract_set(dofs_on_refined_neighbors);
+      IndexSet::ElementIterator it = dofs_to_set.begin(), it_end = dofs_to_set.end();
+      for (; it!=it_end; ++it)
+        u2(*it)=tmp(*it);
+
+      std::cout << "After interpolate_recursively" << std::endl;
+      std::cout << std::endl << u2(31) << " " << u2(32) << " " << u2(33) << " " <<  u2(4) << std::endl;
+
       u2.compress(VectorOperation::insert);
+      std::cout << "After compress" << std::endl;
+      std::cout << std::endl << u2(31) << " " << u2(32) << " " << u2(33) << " " <<  u2(4) << std::endl;
     }
 
 
