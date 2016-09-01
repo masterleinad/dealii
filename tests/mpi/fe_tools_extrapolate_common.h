@@ -68,7 +68,7 @@ parallel::distributed::Triangulation<dim> *make_tria ()
   typename parallel::distributed::Triangulation<dim>::active_cell_iterator cell;
   GridGenerator::hyper_cube(*tria, 0., 1.);
   tria->refine_global (2);
-  for (int i=0; i<1; ++i)
+  for (int i=0; i<2; ++i)
     {
       cell = tria->begin_active();
       cell->set_refine_flag();
@@ -194,14 +194,8 @@ check_this (const FiniteElement<dim> &fe1,
 //    FETools::extrapolate (*dof1, in_ghosted, *dof2, cm2, out_distributed);
 //  else
   FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_distributed);
-  std::cout << "After extrapolate" << std::endl;
-  std::cout << std::endl << out_distributed(31) << " " << out_distributed(32) << " " << out_distributed(33) << " " <<  out_distributed(4) << std::endl;
   out_distributed.compress(VectorOperation::insert);
-  std::cout << "After compressing" << std::endl;
-  std::cout << std::endl << out_distributed(31) << " " << out_distributed(32) << " " << out_distributed(33) << " " << out_distributed(4) << std::endl;
   out_ghosted = out_distributed;
-  std::cout << "After assigning" << std::endl;
-  std::cout << std::endl << out_ghosted(31) << " " << out_ghosted(32) << " " << out_ghosted(33) << " " <<  out_ghosted(4) << std::endl;
 
   output_vector<dim, VectorType> (out_ghosted,
                                   Utilities::int_to_string(fe2.degree,1)+Utilities::int_to_string(dim,1)+std::string("out"),
@@ -228,11 +222,11 @@ check_this (const FiniteElement<dim> &fe1,
                   ExcInternalError());
 
     }
-//  if (fe2.degree > fe1.degree)
-//    {
-//      AssertThrow(10.*global_error_after < global_error_before,
-//                  ExcInternalError());
-//    }
+  if (fe2.degree > fe1.degree)
+    {
+      AssertThrow(10.*global_error_after < global_error_before,
+                  ExcInternalError());
+    }
   deallog << "OK" << std::endl;
 }
 
@@ -312,12 +306,8 @@ check_this_dealii (const FiniteElement<dim> &fe1,
     FETools::extrapolate (*dof1, in_ghosted, *dof2, cm2, out_ghosted);
   else
     FETools::extrapolate_parallel (*dof1, in_ghosted, *dof2, cm2, out_ghosted);
-  std::cout << std::endl << out_ghosted(31) << " " << out_ghosted(32) << " " << out_ghosted(33) << " " <<  out_ghosted(4) << std::endl;
-  out_ghosted.compress(VectorOperation::insert);
-  std::cout << std::endl << out_ghosted(31) << " " << out_ghosted(32) << " " << out_ghosted(33) << " " <<  out_ghosted(4) << std::endl;
 
   out_ghosted.update_ghost_values();
-  std::cout << std::endl << out_ghosted(31) << " " << out_ghosted(32) << " " << out_ghosted(33) << " " <<  out_ghosted(4) << std::endl;
 
   output_vector<dim, VectorType> (out_ghosted,
                                   Utilities::int_to_string(fe2.degree,1)+Utilities::int_to_string(dim,1)+std::string("out"),
@@ -344,10 +334,10 @@ check_this_dealii (const FiniteElement<dim> &fe1,
                   ExcInternalError());
 
     }
-//  if (fe2.degree > fe1.degree)
-//    {
-//      AssertThrow(10.*global_error_after < global_error_before,
-//                  ExcInternalError());
-//    }
+  if (fe2.degree > fe1.degree)
+    {
+      AssertThrow(10.*global_error_after < global_error_before,
+                  ExcInternalError());
+    }
   deallog << "OK" << std::endl;
 }

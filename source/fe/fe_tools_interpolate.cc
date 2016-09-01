@@ -1334,8 +1334,6 @@ namespace FETools
                   u(indices[j]) = local_values(j);
                   std::cout << indices[j] << " " << local_values(j) << std::endl;
                 }
-
-              std::cout << std::endl << u(31) << " " << u(32) << " " << u(33) << " " <<  u(4) << std::endl;
             }
         }
       else
@@ -2024,13 +2022,9 @@ namespace FETools
           interpolate_recursively (forest, tree, tree_index, dealii_cell, p4est_cell, u2_relevant, tmp);
 
           // traverse recursively over this tree
-          int idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
-                                     &p4est_cell,
-                                     dealii::internal::p4est::functions<dim>::quadrant_compare);
-
-          bool p4est_has_children = (idx == -1);
-          if (p4est_has_children)
+          if (dealii_cell->has_children())
             {
+              Assert(dealii_cell->has_children(), ExcInternalError());
               typename dealii::internal::p4est::types<dim>::quadrant
               p4est_child[GeometryInfo<dim>::max_children_per_cell];
 
@@ -2045,13 +2039,14 @@ namespace FETools
 
       // exclude dofs on more refined ghosted cells
       IndexSet dofs_on_refined_neighbors(u2_relevant.size());
+      IndexSet dofs_to_set(u2_relevant.size());
       const FiniteElement<dim,spacedim> &fe  = dof2.get_fe();
       const unsigned int dofs_per_face = fe.dofs_per_face;
       if (dofs_per_face > 0)
         {
           const unsigned int dofs_per_cell = fe.dofs_per_cell;
           std::vector<types::global_dof_index> indices (dofs_per_cell);
-          typename DoFHandler<dim,spacedim>::cell_iterator
+          typename DoFHandler<dim,spacedim>::active_cell_iterator
           cell=dof2.begin_active(),
           endc=dof2.end();
           for (; cell!=endc; ++cell)
@@ -2059,28 +2054,32 @@ namespace FETools
               {
                 cell->get_dof_indices(indices);
                 for (unsigned int face=0; face<GeometryInfo<dim>::faces_per_cell; ++face)
-                  {
-                    const typename DoFHandler<dim,spacedim>::cell_iterator neighbor = cell->neighbor(face);
-                    if (!neighbor->is_artificial() && neighbor->level() != cell->level())
-                      {
-                        for (unsigned int i=0; i<dofs_per_face; ++i)
-                          dofs_on_refined_neighbors.add_index(indices[fe.face_to_cell_index(i,face)]);
-                      }
-                  }
+                  if (!cell->at_boundary(face))
+                    {
+                      const typename DoFHandler<dim,spacedim>::cell_iterator neighbor = cell->neighbor(face);
+                      if (neighbor->level() != cell->level())
+                        {
+                          for (unsigned int i=0; i<dofs_per_face; ++i)
+                            dofs_on_refined_neighbors.add_index(indices[fe.face_to_cell_index(i,face)]);
+                        }
+                    }
+              }
+            else if (cell->is_locally_owned())
+              {
+                cell->get_dof_indices(indices);
+                for (unsigned int i=0; i<dofs_per_cell; ++i)
+                  dofs_to_set.add_index(indices[i]);
               }
         }
-      IndexSet dofs_to_set = dof2.locally_owned_dofs();
       dofs_to_set.subtract_set(dofs_on_refined_neighbors);
       IndexSet::ElementIterator it = dofs_to_set.begin(), it_end = dofs_to_set.end();
       for (; it!=it_end; ++it)
         u2(*it)=tmp(*it);
 
       std::cout << "After interpolate_recursively" << std::endl;
-      std::cout << std::endl << u2(31) << " " << u2(32) << " " << u2(33) << " " <<  u2(4) << std::endl;
 
       u2.compress(VectorOperation::insert);
       std::cout << "After compress" << std::endl;
-      std::cout << std::endl << u2(31) << " " << u2(32) << " " << u2(33) << " " <<  u2(4) << std::endl;
     }
 
 
