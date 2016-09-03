@@ -203,6 +203,11 @@ inconvenience this causes.
 <h3>General</h3>
 
 <ol>
+ <li> New: FETools::extrapolate_parallel allows for using the
+ extrapolate algorithm on parallel::distributed::Triangulations.
+ <br>
+ (Daniel Arndt, Martin Steigemann, 2016/09/03)
+ </li>
 
  <li> Fixed: The build system now uses -fPIC instead of -fpic
  <br>
