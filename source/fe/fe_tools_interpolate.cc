@@ -722,10 +722,8 @@ namespace FETools
   namespace internal
   {
 #ifdef DEAL_II_WITH_P4EST
-    /**
-     * Implementation of the @p extrapolate function
-     * on parallel distributed grids.
-     */
+    // Implementation of the @p extrapolate function
+    // on parallel distributed grids.
     template <int dim,int spacedim>
     class ExtrapolateImplementation
     {
@@ -742,10 +740,8 @@ namespace FETools
 
     private:
 
-      /**
-       * A structure holding all data to
-       * set dofs recursively on cells of arbitrary level
-       */
+      // A structure holding all data to
+      // set dofs recursively on cells of arbitrary level
       struct WorkPackage
       {
         const typename dealii::internal::p4est::types<dim>::forest    forest;
@@ -768,11 +764,10 @@ namespace FETools
         {}
       };
 
-      /**
-       * A structure holding all data
-       * of cells needed from other processes
-       * for the extrapolate algorithm.
-       */
+
+      // A structure holding all data
+      // of cells needed from other processes
+      // for the extrapolate algorithm.
       struct CellData
       {
         CellData ();
