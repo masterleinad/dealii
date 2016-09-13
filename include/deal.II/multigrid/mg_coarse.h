@@ -78,7 +78,7 @@ private:
  *
  * @author Guido Kanschat, 1999, Ralf Hartmann, 2002.
  */
-template<typename SolverType, class VectorType = Vector<double> >
+template<typename SolverType, typename VectorType>
 class MGCoarseGridLACIteration :  public MGCoarseGridBase<VectorType>
 {
 public:
@@ -89,9 +89,10 @@ public:
 
   /**
    * Constructor. Store solver, matrix and preconditioning method for later
-   * use.
+   * use. This class will construct a PointerMatrix<T> pointing to the matrix
+   * and preconditioner.
    */
-  template<typename MatrixType, typename PreconditionerType>
+  template <typename MatrixType, typename PreconditionerType>
   MGCoarseGridLACIteration (SolverType &,
                             const MatrixType &,
                             const PreconditionerType &);
@@ -102,9 +103,10 @@ public:
   ~MGCoarseGridLACIteration ();
 
   /**
-   * Initialize new data.
+   * Initialize with new data, see the corresponding constructor for more
+   * details.
    */
-  template<typename MatrixType, typename PreconditionerType>
+  template <typename MatrixType, typename PreconditionerType>
   void initialize (SolverType &,
                    const MatrixType &,
                    const PreconditionerType &);
@@ -130,22 +132,78 @@ public:
   void set_matrix (const MatrixType &);
 
 private:
+  SmartPointer<MGCoarseGridBase<VectorType> > mg_coarse;
+};
+
+
+
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
+class MGCoarseGridLACIterationNew :  public MGCoarseGridBase<VectorType>
+{
+public:
+  /**
+   * Default constructor.
+   */
+  MGCoarseGridLACIterationNew ();
+
+  /**
+   * Constructor. Store solver, matrix and preconditioning method for later
+   * use. This class will construct a PointerMatrix<T> pointing to the matrix
+   * and preconditioner.
+   */
+  MGCoarseGridLACIterationNew (SolverType &,
+                               const MatrixType &,
+                               const PreconditionerType &);
+
+  /**
+   * Destructor freeing the pointers.
+   */
+  ~MGCoarseGridLACIterationNew ();
+
+  /**
+   * Initialize with new data, see the corresponding constructor for more
+   * details.
+   */
+  void initialize (SolverType &,
+                   const MatrixType &,
+                   const PreconditionerType &);
+
+  /**
+   * Clear all pointers.
+   */
+  void clear ();
+
+  /**
+   * Implementation of the abstract function. Calls the solver method with
+   * matrix, vectors and preconditioner.
+   */
+  void operator() (const unsigned int level,
+                   VectorType         &dst,
+                   const VectorType   &src) const;
+
+  /**
+   * Set the matrix. This gives the possibility to replace the matrix that
+   * was given to the constructor by a new matrix.
+   */
+  void set_matrix (const MatrixType &);
+
+private:
   /**
    * Reference to the solver.
    */
-  SmartPointer<SolverType,MGCoarseGridLACIteration<SolverType,VectorType> > solver;
+  SmartPointer<SolverType,MGCoarseGridLACIterationNew<SolverType,VectorType,MatrixType,PreconditionerType> > solver;
 
   /**
    * Reference to the matrix.
    */
-  PointerMatrixBase<VectorType> *matrix;
+  SmartPointer<const MatrixType> matrix;
 
   /**
    * Reference to the preconditioner.
    */
-  PointerMatrixBase<VectorType> *precondition;
-};
+  SmartPointer<const PreconditionerType> precondition;
 
+};
 
 
 /**
@@ -258,34 +316,29 @@ MGCoarseGridApplySmoother<VectorType>::operator() (const unsigned int level,
   coarse_smooth->smooth(level, dst, src);
 }
 
+
 /* ------------------ Functions for MGCoarseGridLACIteration ------------ */
 
 
-template<typename SolverType, class VectorType>
+template<typename SolverType, typename VectorType>
 MGCoarseGridLACIteration<SolverType, VectorType>
 ::MGCoarseGridLACIteration()
-  :
-  solver(0, typeid(*this).name()),
-  matrix(0),
-  precondition(0)
-{}
+{
+  mg_coarse = new MGCoarseGridBase<VectorType>();
+}
 
-
-template<typename SolverType, class VectorType>
+template<typename SolverType, typename VectorType>
 template<typename MatrixType, typename PreconditionerType>
 MGCoarseGridLACIteration<SolverType, VectorType>
 ::MGCoarseGridLACIteration (SolverType               &s,
                             const MatrixType         &m,
                             const PreconditionerType &p)
-  :
-  solver(&s, typeid(*this).name())
 {
-  matrix = new PointerMatrix<MatrixType, VectorType>(&m);
-  precondition = new PointerMatrix<PreconditionerType, VectorType>(&p);
+  mg_coarse = new MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>(s,m,p);
 }
 
 
-template<typename SolverType, class VectorType>
+template<typename SolverType, typename VectorType>
 MGCoarseGridLACIteration<SolverType, VectorType>
 ::~MGCoarseGridLACIteration()
 {
@@ -293,7 +346,7 @@ MGCoarseGridLACIteration<SolverType, VectorType>
 }
 
 
-template<typename SolverType, class VectorType>
+template<typename SolverType, typename VectorType>
 template<typename MatrixType, typename PreconditionerType>
 void
 MGCoarseGridLACIteration<SolverType, VectorType>
@@ -301,34 +354,102 @@ MGCoarseGridLACIteration<SolverType, VectorType>
               const MatrixType         &m,
               const PreconditionerType &p)
 {
-  solver = &s;
-  if (matrix)
-    delete matrix;
-  matrix = new PointerMatrix<MatrixType, VectorType>(&m);
-  if (precondition)
-    delete precondition;
-  precondition = new PointerMatrix<PreconditionerType, VectorType>(&p);
+  clear();
+  mg_coarse = new MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>(s,m,p);
 }
 
-
-template<typename SolverType, class VectorType>
+template<typename SolverType, typename VectorType>
 void
 MGCoarseGridLACIteration<SolverType, VectorType>
 ::clear()
 {
-  solver = 0;
-  if (matrix)
-    delete matrix;
-  matrix = 0;
-  if (precondition)
-    delete precondition;
-  precondition = 0;
+  delete mg_coarse;
 }
 
 
-template<typename SolverType, class VectorType>
+template<typename SolverType, typename VectorType>
 void
 MGCoarseGridLACIteration<SolverType, VectorType>
+::operator() (const unsigned int level,
+              VectorType         &dst,
+              const VectorType   &src) const
+{
+  mg_coarse->operator()(level, dst, src);
+}
+
+
+template<typename SolverType, typename VectorType>
+template<typename MatrixType>
+void
+MGCoarseGridLACIteration<SolverType, VectorType>
+::set_matrix(const MatrixType &m)
+{
+  AssertThrow(false, ExcNotImplemented());
+}
+
+//---------------------------------------------------------------------------
+
+
+/* ------------------ Functions for MGCoarseGridLACIterationNew ------------ */
+
+
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
+MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>
+::MGCoarseGridLACIterationNew()
+  :
+  solver(0, typeid(*this).name()),
+  matrix(0),
+  precondition(0)
+{}
+
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
+MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>
+::MGCoarseGridLACIterationNew (SolverType               &s,
+                               const MatrixType         &m,
+                               const PreconditionerType &p)
+  :
+  solver(&s, typeid(*this).name()),
+  matrix(&m),
+  precondition(&p)
+{
+}
+
+
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
+MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>
+::~MGCoarseGridLACIterationNew()
+{
+  clear();
+}
+
+
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
+void
+MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>
+::initialize (SolverType               &s,
+              const MatrixType         &m,
+              const PreconditionerType &p)
+{
+  clear();
+  solver = &s;
+  matrix(&m);
+  precondition(&p);
+}
+
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
+void
+MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>
+::clear()
+{
+  solver = nullptr;
+  matrix = nullptr;
+  precondition = nullptr;
+}
+
+
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
+void
+MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>
 ::operator() (const unsigned int /* level */,
               VectorType         &dst,
               const VectorType   &src) const
@@ -340,15 +461,12 @@ MGCoarseGridLACIteration<SolverType, VectorType>
 }
 
 
-template<typename SolverType, class VectorType>
-template<typename MatrixType>
+template<typename SolverType, typename VectorType, typename MatrixType, typename PreconditionerType>
 void
-MGCoarseGridLACIteration<SolverType, VectorType>
+MGCoarseGridLACIterationNew<SolverType, VectorType, MatrixType, PreconditionerType>
 ::set_matrix(const MatrixType &m)
 {
-  if (matrix)
-    delete matrix;
-  matrix = new PointerMatrix<MatrixType, VectorType>(&m);
+  matrix(&m);
 }
 
 //---------------------------------------------------------------------------
