@@ -44,13 +44,17 @@ template <int dim>
 class F : public Function<dim>
 {
 public:
+  F (unsigned int components=1)
+    : Function<dim>(components)
+  {}
+
   virtual double value (const Point<dim> &p,
-                        const unsigned int = 0) const
+                        const unsigned int component) const
   {
     double s = 1;
     for (unsigned int i=0; i<dim; ++i)
       s *= p[i];
-    return s;
+    return s*(component+1.);
   }
 };
 
@@ -64,7 +68,7 @@ void test()
   GridGenerator::hyper_cube (tria);
   tria.refine_global (2);
 
-  FE_Q<dim> fe(1);
+  FESystem<dim> fe (FE_Q<dim>(1), dim);
   DoFHandler<dim> dh (tria);
   dh.distribute_dofs (fe);
 
@@ -78,8 +82,8 @@ void test()
   ConstraintMatrix cm;
   cm.reinit(locally_relevant_dofs);
   cm.close ();
-  VectorTools::project_distributed<dim, TrilinosWrappers::MPI::Vector, dim, 1>
-  (dh, cm, QGauss<dim>(3), F<dim>(), v_distributed);
+  VectorTools::project_distributed<dim, TrilinosWrappers::MPI::Vector, dim, dim, 1>
+  (dh, cm, QGauss<dim>(3), F<dim>(dim), v_distributed);
 
   v_ghosted = v_distributed;
 
@@ -93,7 +97,7 @@ void test()
           // be zero since we project
           // and do not interpolate
           Assert (std::fabs (v_ghosted(cell->vertex_dof_index(i,0)) -
-                             F<dim>().value (cell->vertex(i)))
+                             F<dim>(dim).value (cell->vertex(i),0))
                   < 1e-4,
                   ExcInternalError());
           deallog << cell->vertex(i) << ' ' << v_ghosted(cell->vertex_dof_index(i,0))

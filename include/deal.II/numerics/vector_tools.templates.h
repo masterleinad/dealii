@@ -80,7 +80,7 @@ DEAL_II_NAMESPACE_OPEN
 
 namespace
 {
-  template <int dim, int fe_degree, typename number>
+  template <int dim, int fe_degree, int components, typename number>
   class MassOperator : public Subscriptor
   {
   public:
@@ -99,22 +99,22 @@ namespace
     const MatrixFree<dim,number>  &data;
   };
 
-  template <int dim, int fe_degree, typename number>
-  MassOperator<dim,fe_degree,number>::MassOperator (const MatrixFree<dim,double> &data_in)
+  template <int dim, int fe_degree, int components, typename number>
+  MassOperator<dim,fe_degree,components,number>::MassOperator (const MatrixFree<dim,double> &data_in)
     :
     Subscriptor(),
     data(data_in)
   {}
 
-  template <int dim, int fe_degree, typename number>
+  template <int dim, int fe_degree, int components, typename number>
   void
-  MassOperator<dim,fe_degree,number>::
+  MassOperator<dim,fe_degree,components,number>::
   local_apply (const MatrixFree<dim,number>                &data,
                LinearAlgebra::distributed::Vector<number>       &dst,
                const LinearAlgebra::distributed::Vector<number> &src,
                const std::pair<unsigned int,unsigned int>  &cell_range) const
   {
-    FEEvaluation<dim,fe_degree,fe_degree+1,1,number> phi (data);
+    FEEvaluation<dim,fe_degree,fe_degree+1,components,number> phi (data);
     for (unsigned int cell=cell_range.first; cell<cell_range.second; ++cell)
       {
         phi.reinit (cell);
@@ -127,19 +127,21 @@ namespace
       }
   }
 
-  template <int dim, int fe_degree, typename number>
+  template <int dim, int fe_degree, int components, typename number>
   void
-  MassOperator<dim,fe_degree,number>::vmult (LinearAlgebra::distributed::Vector<number>       &dst,
-                                             const LinearAlgebra::distributed::Vector<number> &src) const
+  MassOperator<dim,fe_degree,components,number>::
+  vmult (LinearAlgebra::distributed::Vector<number>       &dst,
+         const LinearAlgebra::distributed::Vector<number> &src) const
   {
     dst = 0;
     vmult_add (dst, src);
   }
 
-  template <int dim, int fe_degree, typename number>
+  template <int dim, int fe_degree, int components, typename number>
   void
-  MassOperator<dim,fe_degree,number>::vmult_add (LinearAlgebra::distributed::Vector<number>       &dst,
-                                                 const LinearAlgebra::distributed::Vector<number> &src) const
+  MassOperator<dim,fe_degree,components,number>::
+  vmult_add (LinearAlgebra::distributed::Vector<number>       &dst,
+             const LinearAlgebra::distributed::Vector<number> &src) const
   {
     data.cell_loop (&MassOperator::local_apply, this, dst, src);
     const std::vector<unsigned int> &
@@ -883,7 +885,7 @@ namespace VectorTools
     /**
      * Generic implementation for the project() function on distributed triangulations.
      */
-    template <int dim, int spacedim, typename VectorType, int fe_degree>
+    template <int dim, int spacedim, typename VectorType, int components, int fe_degree>
     void do_project_distributed (const Mapping<dim, spacedim>                              &mapping,
                                  const DoFHandler<dim, spacedim>                           &dof,
                                  const ConstraintMatrix                                    &constraints,
@@ -908,8 +910,10 @@ namespace VectorTools
                                    function.n_components));
       Assert (vec_result.size() == dof.n_dofs(),
               ExcDimensionMismatch (vec_result.size(), dof.n_dofs()));
-      Assert (fe_degree == dof.get_fe().degree,
+      Assert (dof.get_fe().degree == fe_degree,
               ExcDimensionMismatch(fe_degree, dof.get_fe().degree));
+      Assert (dof.get_fe().n_components() == components,
+              ExcDimensionMismatch(components, dof.get_fe().n_components()));
 
       // set up mass matrix and right hand side
       typename MatrixFree<dim,number>::AdditionalData additional_data;
@@ -920,7 +924,7 @@ namespace VectorTools
       MatrixFree<dim, number> matrix_free;
       matrix_free.reinit (mapping, dof, constraints,
                           QGauss<1>(fe_degree+1), additional_data);
-      MassOperator<dim, fe_degree, number> mass_matrix(matrix_free);
+      MassOperator<dim, fe_degree, components, number> mass_matrix(matrix_free);
 
       const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
       LinearAlgebra::distributed::Vector<number> vec, rhs;
@@ -1301,7 +1305,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim, int fe_degree>
+  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
   void project_distributed (const Mapping<dim, spacedim>   &mapping,
                             const DoFHandler<dim,spacedim> &dof,
                             const ConstraintMatrix         &constraints,
@@ -1312,14 +1316,14 @@ namespace VectorTools
                             const Quadrature<dim-1>        &q_boundary,
                             const bool                     project_to_boundary_first)
   {
-    do_project_distributed<dim, spacedim, VectorType, fe_degree>
+    do_project_distributed<dim, spacedim, VectorType, components, fe_degree>
     (mapping, dof, constraints, quadrature, function, vec_result,
      enforce_zero_boundary, q_boundary, project_to_boundary_first);
   }
 
 
 
-  template <int dim, typename VectorType, int spacedim, int fe_degree>
+  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
   void project_distributed (const DoFHandler<dim,spacedim> &dof,
                             const ConstraintMatrix         &constraints,
                             const Quadrature<dim>          &quadrature,
@@ -1329,7 +1333,7 @@ namespace VectorTools
                             const Quadrature<dim-1>        &q_boundary,
                             const bool                     project_to_boundary_first)
   {
-    project_distributed<dim, VectorType, spacedim, fe_degree>
+    project_distributed<dim, VectorType, spacedim, components, fe_degree>
     (MappingQGeneric<dim, spacedim>(1), dof, constraints, quadrature, function, vec_result,
      enforce_zero_boundary, q_boundary, project_to_boundary_first);
   }

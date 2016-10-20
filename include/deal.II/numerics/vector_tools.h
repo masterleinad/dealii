@@ -927,11 +927,13 @@ namespace VectorTools
 
   /**
    * The same as above  for distributed Triangulations.
-   * The underlying MatrixFree implementation requires an additional template parameter.
+   * The underlying MatrixFree implementation requires to specify the number
+   * of components and the degree of the used FiniteElement as additional
+   * template parameters.
    * Currently, the implementation only allows for @p enforce_zero_boundary
    * and @p project_to_boundary_first to be <tt>false</tt>.
    */
-  template <int dim, typename VectorType, int spacedim, int fe_degree>
+  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
   void project_distributed (const Mapping<dim, spacedim>   &mapping,
                             const DoFHandler<dim,spacedim> &dof,
                             const ConstraintMatrix         &constraints,
@@ -949,7 +951,7 @@ namespace VectorTools
   /**
    * The same as above using <tt>mapping=MappingQGeneric@<dim@>(1)</tt>.
    */
-  template <int dim, typename VectorType, int spacedim, int fe_degree>
+  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
   void project_distributed (const DoFHandler<dim,spacedim> &dof,
                             const ConstraintMatrix         &constraints,
                             const Quadrature<dim>          &quadrature,
