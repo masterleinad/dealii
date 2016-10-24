@@ -848,10 +848,12 @@ namespace VectorTools
       MatrixFree<dim, number> matrix_free;
       matrix_free.reinit (mapping, dof, constraints,
                           QGauss<1>(fe_degree+1), additional_data);
-      MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> mass_matrix(matrix_free);
+      typedef MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> MatrixType;
+      MatrixType mass_matrix(matrix_free);
 
       const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
-      LinearAlgebra::distributed::Vector<number> vec, rhs, inhomogeneities;
+      typedef LinearAlgebra::distributed::Vector<number> LocalVectorType;
+      LocalVectorType vec, rhs, inhomogeneities;
       matrix_free.initialize_dof_vector(vec);
       matrix_free.initialize_dof_vector(rhs);
       matrix_free.initialize_dof_vector(inhomogeneities);
@@ -865,8 +867,10 @@ namespace VectorTools
       //now invert the matrix
       ReductionControl     control(rhs.size(), 0., 1e-12, false, false);
       SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
-      PreconditionIdentity prec;
-      cg.solve (mass_matrix, vec, rhs, prec);
+      /*      PreconditionChebyshev<MatrixType, LocalVectorType> preconditioner;
+            preconditioner.initialize(mass_matrix);*/
+      PreconditionIdentity preconditioner;
+      cg.solve (mass_matrix, vec, rhs, preconditioner);
       vec+=inhomogeneities;
 
       constraints.distribute (vec);
