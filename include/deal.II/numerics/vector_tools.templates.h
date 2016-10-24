@@ -77,82 +77,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-namespace
-{
-  template <int dim, int fe_degree, int components, typename number>
-  class MassOperator : public Subscriptor
-  {
-  public:
-    MassOperator (const MatrixFree<dim,double> &data_in);
-    void vmult (LinearAlgebra::distributed::Vector<number>       &dst,
-                const LinearAlgebra::distributed::Vector<number> &src) const;
-    void vmult_add (LinearAlgebra::distributed::Vector<number>       &dst,
-                    const LinearAlgebra::distributed::Vector<number> &src) const;
-
-  private:
-    void local_apply (const MatrixFree<dim,number>                     &data,
-                      LinearAlgebra::distributed::Vector<number>       &dst,
-                      const LinearAlgebra::distributed::Vector<number> &src,
-                      const std::pair<unsigned int,unsigned int>  &cell_range) const;
-
-    const MatrixFree<dim,number>  &data;
-  };
-
-  template <int dim, int fe_degree, int components, typename number>
-  MassOperator<dim,fe_degree,components,number>::MassOperator (const MatrixFree<dim,double> &data_in)
-    :
-    Subscriptor(),
-    data(data_in)
-  {}
-
-  template <int dim, int fe_degree, int components, typename number>
-  void
-  MassOperator<dim,fe_degree,components,number>::
-  local_apply (const MatrixFree<dim,number>                &data,
-               LinearAlgebra::distributed::Vector<number>       &dst,
-               const LinearAlgebra::distributed::Vector<number> &src,
-               const std::pair<unsigned int,unsigned int>  &cell_range) const
-  {
-    FEEvaluation<dim,fe_degree,fe_degree+1,components,number> phi (data);
-    for (unsigned int cell=cell_range.first; cell<cell_range.second; ++cell)
-      {
-        phi.reinit (cell);
-        phi.read_dof_values(src);
-        phi.evaluate (true,false,false);
-        for (unsigned int q=0; q<phi.n_q_points; ++q)
-          phi.submit_value (phi.get_value(q), q);
-        phi.integrate (true,false);
-        phi.distribute_local_to_global (dst);
-      }
-  }
-
-  template <int dim, int fe_degree, int components, typename number>
-  void
-  MassOperator<dim,fe_degree,components,number>::
-  vmult (LinearAlgebra::distributed::Vector<number>       &dst,
-         const LinearAlgebra::distributed::Vector<number> &src) const
-  {
-    dst = 0;
-    vmult_add (dst, src);
-  }
-
-  template <int dim, int fe_degree, int components, typename number>
-  void
-  MassOperator<dim,fe_degree,components,number>::
-  vmult_add (LinearAlgebra::distributed::Vector<number>       &dst,
-             const LinearAlgebra::distributed::Vector<number> &src) const
-  {
-    data.cell_loop (&MassOperator::local_apply, this, dst, src);
-    const std::vector<unsigned int> &
-    constrained_dofs = data.get_constrained_dofs();
-    for (unsigned int i=0; i<constrained_dofs.size(); ++i)
-      dst(constrained_dofs[i]) += src(constrained_dofs[i]);
-  }
-}
-
-
-
 namespace VectorTools
 {
 
@@ -896,8 +820,8 @@ namespace VectorTools
                                  const Quadrature<dim-1>                                   &q_boundary,
                                  const bool                                                 project_to_boundary_first)
     {
-      const parallel::distributed::Triangulation<dim,spacedim> *parallel_tria =
-        dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>*>(&dof.get_tria());
+      const parallel::Triangulation<dim,spacedim> *parallel_tria =
+        dynamic_cast<const parallel::Triangulation<dim,spacedim>*>(&dof.get_tria());
       Assert (parallel_tria !=0, ExcNotImplemented());
       Assert (project_to_boundary_first == false, ExcNotImplemented());
       Assert (enforce_zero_boundary == false, ExcNotImplemented());
@@ -924,7 +848,7 @@ namespace VectorTools
       MatrixFree<dim, number> matrix_free;
       matrix_free.reinit (mapping, dof, constraints,
                           QGauss<1>(fe_degree+1), additional_data);
-      MassOperator<dim, fe_degree, components, number> mass_matrix(matrix_free);
+      MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> mass_matrix(matrix_free);
 
       const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
       LinearAlgebra::distributed::Vector<number> vec, rhs, inhomogeneities;
@@ -1390,7 +1314,7 @@ namespace VectorTools
                 const hp::QCollection<dim-1>               &q_boundary,
                 const bool                                  project_to_boundary_first)
   {
-    Assert((dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+    Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
            ExcNotImplemented());
     do_project (mapping, dof, constraints, quadrature,
                 function, vec_result,
