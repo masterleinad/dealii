@@ -927,11 +927,15 @@ namespace VectorTools
       MassOperator<dim, fe_degree, components, number> mass_matrix(matrix_free);
 
       const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
-      LinearAlgebra::distributed::Vector<number> vec, rhs;
+      LinearAlgebra::distributed::Vector<number> vec, rhs, inhomogeneities;
       matrix_free.initialize_dof_vector(vec);
       matrix_free.initialize_dof_vector(rhs);
+      matrix_free.initialize_dof_vector(inhomogeneities);
+      constraints.distribute(inhomogeneities);
+      inhomogeneities*=-1.;
 
       create_right_hand_side (mapping, dof, quadrature, function, rhs);
+      mass_matrix.vmult_add(rhs, inhomogeneities);
       constraints.condense(rhs);
 
       //now invert the matrix
@@ -939,6 +943,7 @@ namespace VectorTools
       SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
       PreconditionIdentity prec;
       cg.solve (mass_matrix, vec, rhs, prec);
+      vec+=inhomogeneities;
 
       constraints.distribute (vec);
       IndexSet::ElementIterator it = locally_owned_dofs.begin();
