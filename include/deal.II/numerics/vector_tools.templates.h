@@ -77,6 +77,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
 namespace VectorTools
 {
 
@@ -808,6 +809,7 @@ namespace VectorTools
 
     /**
      * Generic implementation for the project() function on distributed triangulations.
+     * @p vec_result is expected to not have any ghost entries.
      */
     template <int dim, int spacedim, typename VectorType, int components, int fe_degree>
     void do_project_distributed (const Mapping<dim, spacedim>                              &mapping,
@@ -1344,7 +1346,7 @@ namespace VectorTools
   }
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const Mapping<dim, spacedim>   &mapping,
                                const DoFHandler<dim,spacedim> &dof_handler,
                                const Quadrature<dim>          &quadrature,
@@ -1455,7 +1457,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const DoFHandler<dim,spacedim> &dof_handler,
                                const Quadrature<dim>          &quadrature,
                                const Function<spacedim>       &rhs_function,
@@ -1468,7 +1470,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const hp::MappingCollection<dim,spacedim> &mapping,
                                const hp::DoFHandler<dim,spacedim>        &dof_handler,
                                const hp::QCollection<dim>                &quadrature,
@@ -1595,7 +1597,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const hp::DoFHandler<dim,spacedim> &dof_handler,
                                const hp::QCollection<dim>         &quadrature,
                                const Function<spacedim>           &rhs_function,
@@ -1796,7 +1798,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void
   create_boundary_right_hand_side (const Mapping<dim, spacedim>       &mapping,
                                    const DoFHandler<dim,spacedim>     &dof_handler,
@@ -1919,7 +1921,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void
   create_boundary_right_hand_side (const DoFHandler<dim,spacedim>     &dof_handler,
                                    const Quadrature<dim-1>            &quadrature,
@@ -1935,7 +1937,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void
   create_boundary_right_hand_side (const hp::MappingCollection<dim,spacedim> &mapping,
                                    const hp::DoFHandler<dim,spacedim>        &dof_handler,
@@ -2070,7 +2072,7 @@ namespace VectorTools
 
 
 
-  template <int dim, typename VectorType, int spacedim>
+  template <int dim, int spacedim, typename VectorType>
   void
   create_boundary_right_hand_side (const hp::DoFHandler<dim,spacedim> &dof_handler,
                                    const hp::QCollection<dim-1>       &quadrature,

@@ -38,6 +38,13 @@ inconvenience this causes.
 </p>
 
 <ol>
+ <li> Changed: VectorTools::create_right_hand_side and 
+ VectorTools::create_boundary_right_hand_side now take an additional template
+ parameter VectorType.
+ <br>
+ (Daniel Arndt, 2016/10/25)
+ </li>
+
  <li> Deprecated: ParameterHandler::read_input,
  ParameterHandler::read_input_from_xml, and
  ParameterHandler::read_input_from_string are now deprecated in favor of
