@@ -935,9 +935,6 @@ public:
      * smoothing in a multigrid algorithm), but not the way the solver classes
      * expect a preconditioner to work (where one ignores the content in
      * <tt>dst</tt> for the preconditioner application).
-     *
-     * @deprecated For non-zero starting, use the step() and Tstep()
-     * interfaces, whereas vmult() provides the preconditioner interface.
      */
     bool nonzero_starting DEAL_II_DEPRECATED;
 
@@ -1007,18 +1004,6 @@ public:
                const VectorType &src) const;
 
   /**
-   * Perform one step of the preconditioned Richardson iteration.
-   */
-  void step (VectorType       &dst,
-             const VectorType &src) const;
-
-  /**
-   * Perform one transposed step of the preconditioned Richardson iteration.
-   */
-  void Tstep (VectorType       &dst,
-              const VectorType &src) const;
-
-  /**
    * Resets the preconditioner.
    */
   void clear ();
@@ -1079,28 +1064,12 @@ private:
    * been computed.
    */
   bool is_initialized;
-
-  /**
    * A mutex to avoid that multiple vmult() invocations by different threads
    * overwrite the temporary vectors.
    */
   mutable Threads::Mutex mutex;
 
   /**
-   * Runs the inner loop of the Chebyshev preconditioner that is the same for
-   * vmult() and step() methods.
-   */
-  void do_chebyshev_loop(VectorType       &dst,
-                         const VectorType &src) const;
-
-  /**
-   * Runs the inner loop of the Chebyshev preconditioner that is the same for
-   * vmult() and step() methods. Uses a separate function to not force users
-   * to provide both vmult() and Tvmult() in case only one variant is
-   * requested in subsequent calls.
-   */
-  void do_transpose_chebyshev_loop(VectorType       &dst,
-                                   const VectorType &src) const;
 
   /**
    * Initializes the factors theta and delta based on an eigenvalue
@@ -2103,30 +2072,24 @@ PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
     return;
 
   double rhok  = delta / theta,  sigma = theta / delta;
-  for (unsigned int k=0; k<data.degree; ++k)
+  if (data.nonzero_starting && !dst.all_zero())
     {
       matrix_ptr->vmult (update2, dst);
-      const double rhokp = 1./(2.*sigma-rhok);
-      const double factor1 = rhokp * rhok, factor2 = 2.*rhokp/delta;
-      rhok = rhokp;
       internal::PreconditionChebyshev::vector_updates
       (src, *data.preconditioner, false, factor1, factor2, update1, update2, update3, dst);
     }
-}
-
-
+  else
+    internal::PreconditionChebyshev::vector_updates
+    (src, data.matrix_diagonal_inverse, true, 0., 1./theta, update1,
+     update2, dst);
 
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
-inline
-void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::do_transpose_chebyshev_loop(VectorType       &dst,
                               const VectorType &src) const
-{
-  double rhok  = delta / theta,  sigma = theta / delta;
   for (unsigned int k=0; k<data.degree; ++k)
     {
-      matrix_ptr->Tvmult (update2, dst);
+      matrix_ptr->vmult (update2, dst);
       const double rhokp = 1./(2.*sigma-rhok);
       const double factor1 = rhokp * rhok, factor2 = 2.*rhokp/delta;
       rhok = rhokp;
@@ -2143,22 +2106,12 @@ void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::vmult (VectorType       &dst,
          const VectorType &src) const
-{
   Threads::Mutex::ScopedLock lock(mutex);
   if (is_initialized == false)
     estimate_eigenvalues(src);
 
-  internal::PreconditionChebyshev::vector_updates
   (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
-
-  do_chebyshev_loop(dst, src);
-}
-
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
-inline
-void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::Tvmult (VectorType       &dst,
           const VectorType &src) const
@@ -2167,52 +2120,15 @@ PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
   if (is_initialized == false)
     estimate_eigenvalues(src);
 
-  internal::PreconditionChebyshev::vector_updates
   (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
-
-  do_transpose_chebyshev_loop(dst, src);
-}
-
-
-
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
-inline
-void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::step (VectorType       &dst,
         const VectorType &src) const
-{
   Threads::Mutex::ScopedLock lock(mutex);
   if (is_initialized == false)
     estimate_eigenvalues(src);
 
-  if (!dst.all_zero())
-    {
-      matrix_ptr->vmult (update2, dst);
-      internal::PreconditionChebyshev::vector_updates
-      (src, *data.preconditioner, false, 0., 1./theta, update1, update2, update3, dst);
-    }
-  else
-    internal::PreconditionChebyshev::vector_updates
-    (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
-
-  do_chebyshev_loop(dst, src);
-}
-
-
-
-template <typename MatrixType, typename VectorType, typename PreconditionerType>
-inline
-void
-PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
-::Tstep (VectorType       &dst,
-         const VectorType &src) const
-{
-  Threads::Mutex::ScopedLock lock(mutex);
-  if (is_initialized == false)
-    estimate_eigenvalues(src);
-
-  if (!dst.all_zero())
     {
       matrix_ptr->Tvmult (update2, dst);
       internal::PreconditionChebyshev::vector_updates
@@ -2222,7 +2138,24 @@ PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
     internal::PreconditionChebyshev::vector_updates
     (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
 
-  do_transpose_chebyshev_loop(dst, src);
+  for (unsigned int k=0; k<data.degree; ++k)
+template <typename MatrixType, typename VectorType, typename PreconditionerType>
+PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
+::Tstep (VectorType       &dst,
+         const VectorType &src) const
+  Threads::Mutex::ScopedLock lock(mutex);
+  if (is_initialized == false)
+    estimate_eigenvalues(src);
+
+    {
+      matrix_ptr->Tvmult (update2, dst);
+      const double rhokp = 1./(2.*sigma-rhok);
+      const double factor1 = rhokp * rhok, factor2 = 2.*rhokp/delta;
+      rhok = rhokp;
+      internal::PreconditionChebyshev::vector_updates
+      (src, *data.preconditioner, false, 0., 1./theta, update1, update2, update3, dst);
+    }
+    (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
 }
 
 

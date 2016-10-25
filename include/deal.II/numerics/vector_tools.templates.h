@@ -865,11 +865,12 @@ namespace VectorTools
       constraints.condense(rhs);
 
       //now invert the matrix
-      ReductionControl     control(rhs.size(), 0., 1e-12, false, false);
+      ReductionControl     control(5*rhs.size(), 0., 1e-12, false, false);
       SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
-      /*      PreconditionChebyshev<MatrixType, LocalVectorType> preconditioner;
-            preconditioner.initialize(mass_matrix);*/
-      PreconditionIdentity preconditioner;
+      typename PreconditionChebyshev<MatrixType, LocalVectorType>::AdditionalData data;
+      data.matrix_diagonal_inverse = mass_matrix.get_matrix_diagonal_inverse();
+      PreconditionChebyshev<MatrixType, LocalVectorType> preconditioner;
+      preconditioner.initialize(mass_matrix, data);
       cg.solve (mass_matrix, vec, rhs, preconditioner);
       vec+=inhomogeneities;
 
