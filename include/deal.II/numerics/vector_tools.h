@@ -930,6 +930,7 @@ namespace VectorTools
    * template parameters.
    * Currently, the implementation only allows for @p enforce_zero_boundary
    * and @p project_to_boundary_first to be <tt>false</tt>.
+   * @p vec_result is assumed to not have a ghost elements.
    */
   template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
   void project_distributed (const Mapping<dim, spacedim>   &mapping,
