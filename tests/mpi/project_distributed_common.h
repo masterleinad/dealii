@@ -109,15 +109,16 @@ void do_project (const parallel::distributed::Triangulation<dim> &triangulation,
 
   deallog << "n_dofs=" << dof_handler.n_dofs() << std::endl;
 
-  ConstraintMatrix constraints;
-  DoFTools::make_hanging_node_constraints (dof_handler,
-                                           constraints);
-  constraints.close ();
-
   const MPI_Comm &mpi_communicator = triangulation.get_communicator();
   const IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
+
+  ConstraintMatrix constraints;
+  constraints.reinit(locally_relevant_dofs);
+  DoFTools::make_hanging_node_constraints (dof_handler,
+                                           constraints);
+  constraints.close ();
 
   TrilinosWrappers::MPI::Vector projection_tmp (locally_owned_dofs,
                                                 mpi_communicator);

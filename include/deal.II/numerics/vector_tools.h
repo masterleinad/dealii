@@ -1971,7 +1971,8 @@ namespace VectorTools
                                const DoFHandler<dim,spacedim>  &dof,
                                const Quadrature<dim>           &q,
                                const Function<spacedim,double> &rhs,
-                               VectorType                      &rhs_vector);
+                               VectorType                      &rhs_vector,
+                               const ConstraintMatrix          &constraints=ConstraintMatrix());
 
   /**
    * Call the create_right_hand_side() function, see above, with
@@ -1981,7 +1982,8 @@ namespace VectorTools
   void create_right_hand_side (const DoFHandler<dim,spacedim>  &dof,
                                const Quadrature<dim>           &q,
                                const Function<spacedim,double> &rhs,
-                               VectorType                      &rhs_vector);
+                               VectorType                      &rhs_vector,
+                               const ConstraintMatrix          &constraints=ConstraintMatrix());
 
   /**
    * Like the previous set of functions, but for hp objects.
@@ -1991,7 +1993,8 @@ namespace VectorTools
                                const hp::DoFHandler<dim,spacedim>        &dof,
                                const hp::QCollection<dim>                &q,
                                const Function<spacedim,double>           &rhs,
-                               VectorType                                &rhs_vector);
+                               VectorType                                &rhs_vector,
+                               const ConstraintMatrix                    &constraints=ConstraintMatrix());
 
   /**
    * Like the previous set of functions, but for hp objects.
@@ -2000,7 +2003,8 @@ namespace VectorTools
   void create_right_hand_side (const hp::DoFHandler<dim,spacedim> &dof,
                                const hp::QCollection<dim>         &q,
                                const Function<spacedim,double>    &rhs,
-                               VectorType                         &rhs_vector);
+                               VectorType                         &rhs_vector,
+                               const ConstraintMatrix             &constraints=ConstraintMatrix());
 
   /**
    * Create a right hand side vector for a point source at point @p p. In

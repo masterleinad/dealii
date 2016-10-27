@@ -828,6 +828,10 @@ namespace VectorTools
       Assert (project_to_boundary_first == false, ExcNotImplemented());
       Assert (enforce_zero_boundary == false, ExcNotImplemented());
 
+      const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
+      IndexSet locally_relevant_dofs;
+      DoFTools::extract_locally_relevant_dofs(dof, locally_relevant_dofs);
+
       const MPI_Comm &mpi_communicator = parallel_tria->get_communicator();
 
       typedef typename VectorType::value_type number;
@@ -853,18 +857,17 @@ namespace VectorTools
       typedef MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> MatrixType;
       MatrixType mass_matrix(matrix_free);
 
-      const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
       typedef LinearAlgebra::distributed::Vector<number> LocalVectorType;
-      LocalVectorType vec, rhs, inhomogeneities;
+      LocalVectorType vec, rhs, inhomogeneities, tmp;
       matrix_free.initialize_dof_vector(vec);
       matrix_free.initialize_dof_vector(rhs);
+      tmp.reinit(locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
       matrix_free.initialize_dof_vector(inhomogeneities);
       constraints.distribute(inhomogeneities);
       inhomogeneities*=-1.;
 
-      create_right_hand_side (mapping, dof, quadrature, function, rhs);
+      create_right_hand_side (mapping, dof, quadrature, function, rhs, constraints);
       mass_matrix.vmult_add(rhs, inhomogeneities);
-      constraints.condense(rhs);
 
       //now invert the matrix
       ReductionControl     control(5*rhs.size(), 0., 1e-12, false, false);
@@ -1351,7 +1354,8 @@ namespace VectorTools
                                const DoFHandler<dim,spacedim> &dof_handler,
                                const Quadrature<dim>          &quadrature,
                                const Function<spacedim>       &rhs_function,
-                               VectorType                     &rhs_vector)
+                               VectorType                     &rhs_vector,
+                               const ConstraintMatrix         &constraints)
   {
     const FiniteElement<dim,spacedim> &fe  = dof_handler.get_fe();
     Assert (fe.n_components() == rhs_function.n_components,
@@ -1398,8 +1402,7 @@ namespace VectorTools
 
               cell->get_dof_indices(dofs);
 
-              for (unsigned int i=0; i<dofs_per_cell; ++i)
-                rhs_vector(dofs[i]) += cell_vector(i);
+              constraints.distribute_local_to_global(cell_vector, dofs, rhs_vector);
             }
       }
     else
@@ -1449,8 +1452,7 @@ namespace VectorTools
                 }
               cell->get_dof_indices (dofs);
 
-              for (unsigned int i=0; i<dofs_per_cell; ++i)
-                rhs_vector(dofs[i]) += cell_vector(i);
+              constraints.distribute_local_to_global(cell_vector, dofs, rhs_vector);
             }
       }
   }
@@ -1461,10 +1463,11 @@ namespace VectorTools
   void create_right_hand_side (const DoFHandler<dim,spacedim> &dof_handler,
                                const Quadrature<dim>          &quadrature,
                                const Function<spacedim>       &rhs_function,
-                               VectorType                     &rhs_vector)
+                               VectorType                     &rhs_vector,
+                               const ConstraintMatrix         &constraints)
   {
     create_right_hand_side(StaticMappingQ1<dim,spacedim>::mapping, dof_handler, quadrature,
-                           rhs_function, rhs_vector);
+                           rhs_function, rhs_vector, constraints);
   }
 
 
@@ -1475,7 +1478,8 @@ namespace VectorTools
                                const hp::DoFHandler<dim,spacedim>        &dof_handler,
                                const hp::QCollection<dim>                &quadrature,
                                const Function<spacedim>                  &rhs_function,
-                               VectorType                                &rhs_vector)
+                               VectorType                                &rhs_vector,
+                               const ConstraintMatrix                    &constraints)
   {
     const hp::FECollection<dim,spacedim> &fe  = dof_handler.get_fe();
     Assert (fe.n_components() == rhs_function.n_components,
@@ -1528,8 +1532,7 @@ namespace VectorTools
 
               cell->get_dof_indices (dofs);
 
-              for (unsigned int i=0; i<dofs_per_cell; ++i)
-                rhs_vector(dofs[i]) += cell_vector(i);
+              constraints.distribute_local_to_global(cell_vector, dofs, rhs_vector);
             }
 
       }
@@ -1589,8 +1592,7 @@ namespace VectorTools
 
               cell->get_dof_indices (dofs);
 
-              for (unsigned int i=0; i<dofs_per_cell; ++i)
-                rhs_vector(dofs[i]) += cell_vector(i);
+              constraints.distribute_local_to_global(cell_vector, dofs, rhs_vector);
             }
       }
   }
@@ -1601,11 +1603,12 @@ namespace VectorTools
   void create_right_hand_side (const hp::DoFHandler<dim,spacedim> &dof_handler,
                                const hp::QCollection<dim>         &quadrature,
                                const Function<spacedim>           &rhs_function,
-                               VectorType                         &rhs_vector)
+                               VectorType                         &rhs_vector,
+                               const ConstraintMatrix                   &constraints)
   {
     create_right_hand_side(hp::StaticMappingQ1<dim,spacedim>::mapping_collection,
                            dof_handler, quadrature,
-                           rhs_function, rhs_vector);
+                           rhs_function, rhs_vector, constraints);
   }
 
 
