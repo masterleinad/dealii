@@ -855,7 +855,9 @@ namespace VectorTools
       matrix_free.reinit (mapping, dof, constraints,
                           QGauss<1>(fe_degree+1), additional_data);
       typedef MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> MatrixType;
-      MatrixType mass_matrix(matrix_free);
+      MatrixType mass_matrix;
+      mass_matrix.initialize(matrix_free);
+      mass_matrix.compute_diagonal();
 
       typedef LinearAlgebra::distributed::Vector<number> LocalVectorType;
       LocalVectorType vec, rhs, inhomogeneities, tmp;

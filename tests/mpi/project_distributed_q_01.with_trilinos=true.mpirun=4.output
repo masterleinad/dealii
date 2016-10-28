@@ -1,23 +1,59 @@
 
 DEAL::n_dofs=162
-DEAL::FESystem<2>[FE_Q<2>(1)^2], P_0, rel. error=5.57890e-15
-DEAL::FESystem<2>[FE_Q<2>(1)^2], P_1, rel. error=1.17439e-13
+DEAL:cg::Starting value 0.996909
+DEAL:cg::Failure step 8 value 0.000704095
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_0, rel. error=2.74210e-17
+DEAL:cg::Starting value 0.996909
+DEAL:cg::Failure step 8 value 0.000704095
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_1, rel. error=2.76165e-17
+DEAL:cg::Starting value 0.996909
+DEAL:cg::Failure step 8 value 0.000704095
 DEAL::FESystem<2>[FE_Q<2>(1)^2], P_2, rel. error=6.65062e-05
+DEAL:cg::Starting value 0.996909
+DEAL:cg::Failure step 8 value 0.000704095
 DEAL::FESystem<2>[FE_Q<2>(1)^2], P_3, rel. error=0.000153713
 DEAL::n_dofs=289
-DEAL::FESystem<2>[FE_Q<2>(2)], P_0, rel. error=7.99676e-14
-DEAL::FESystem<2>[FE_Q<2>(2)], P_1, rel. error=8.88322e-14
-DEAL::FESystem<2>[FE_Q<2>(2)], P_2, rel. error=5.58741e-14
+DEAL:cg::Starting value 0.998268
+DEAL:cg::Failure step 8 value 0.000256953
+DEAL::FESystem<2>[FE_Q<2>(2)], P_0, rel. error=1.67966e-17
+DEAL:cg::Starting value 0.998268
+DEAL:cg::Failure step 8 value 0.000256953
+DEAL::FESystem<2>[FE_Q<2>(2)], P_1, rel. error=1.81516e-17
+DEAL:cg::Starting value 0.998268
+DEAL:cg::Failure step 8 value 0.000256953
+DEAL::FESystem<2>[FE_Q<2>(2)], P_2, rel. error=3.52134e-17
+DEAL:cg::Starting value 0.998268
+DEAL:cg::Failure step 8 value 0.000256953
 DEAL::FESystem<2>[FE_Q<2>(2)], P_3, rel. error=2.41461e-06
+DEAL:cg::Starting value 0.998268
+DEAL:cg::Failure step 8 value 0.000256953
 DEAL::FESystem<2>[FE_Q<2>(2)], P_4, rel. error=6.79248e-06
 DEAL::n_dofs=1458
-DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=1.83079e-14
-DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=6.23930e-14
+DEAL:cg::Starting value 0.999657
+DEAL:cg::Failure step 8 value 0.00341620
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=6.07198e-18
+DEAL:cg::Starting value 0.999657
+DEAL:cg::Failure step 8 value 0.00341620
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=1.10333e-17
+DEAL:cg::Starting value 0.999657
+DEAL:cg::Failure step 8 value 0.00341620
 DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=2.01238e-05
+DEAL:cg::Starting value 0.999657
+DEAL:cg::Failure step 8 value 0.00341620
 DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=4.66822e-05
 DEAL::n_dofs=4913
-DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=3.79064e-14
-DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=2.46072e-14
-DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=3.22244e-14
+DEAL:cg::Starting value 0.999898
+DEAL:cg::Failure step 8 value 0.00288453
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=7.84918e-18
+DEAL:cg::Starting value 0.999898
+DEAL:cg::Failure step 8 value 0.00288453
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=7.67488e-18
+DEAL:cg::Starting value 0.999898
+DEAL:cg::Failure step 8 value 0.00288453
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=1.22475e-17
+DEAL:cg::Starting value 0.999898
+DEAL:cg::Failure step 8 value 0.00288453
 DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=5.05504e-07
+DEAL:cg::Starting value 0.999898
+DEAL:cg::Failure step 8 value 0.00288453
 DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=1.43736e-06
