@@ -21,7 +21,8 @@
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/qprojector.h>
-#include <deal.II/distributed/tria_base.h>
+#include <deal.II/distributed/tria.h>
+#include <deal.II/distributed/shared_tria.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/la_vector.h>
@@ -1292,6 +1293,12 @@ namespace VectorTools
                 const Quadrature<dim-1>        &q_boundary,
                 const bool                     project_to_boundary_first)
   {
+    Assert((dynamic_cast<const parallel::shared::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+           ExcMessage("Use project_distributed() for parallel Triangulations!"));
+    Assert((dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+           ExcMessage("Use project_distributed() for parallel Triangulations!"));
+
+
     do_project (mapping, dof, constraints, quadrature,
                 function, vec_result,
                 enforce_zero_boundary, q_boundary,
@@ -1326,8 +1333,11 @@ namespace VectorTools
                 const hp::QCollection<dim-1>               &q_boundary,
                 const bool                                  project_to_boundary_first)
   {
-    Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+    Assert((dynamic_cast<const parallel::shared::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
            ExcNotImplemented());
+    Assert((dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+           ExcNotImplemented());
+
     do_project (mapping, dof, constraints, quadrature,
                 function, vec_result,
                 enforce_zero_boundary, q_boundary,
