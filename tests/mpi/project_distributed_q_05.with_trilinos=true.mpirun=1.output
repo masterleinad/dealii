@@ -1,0 +1,88 @@
+
+DEAL::n_dofs=24
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 6.70901e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_0, rel. error=4.34621e-17
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 6.70901e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_1, rel. error=1.54998e-15
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 6.70901e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_2, rel. error=0.00544145
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 6.70901e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_3, rel. error=0.0123174
+DEAL::n_dofs=24
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 1.82362e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_0, rel. error=5.65722e-17
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 1.82362e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_1, rel. error=1.90250e-15
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 1.82362e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_2, rel. error=0.00479825
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 1.82362e-05
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_3, rel. error=0.0101146
+DEAL::n_dofs=24
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 0.000147371
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_0, rel. error=5.05265e-17
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 0.000147371
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_1, rel. error=5.57964e-16
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 0.000147371
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_2, rel. error=0.00315064
+DEAL:cg::Starting value 0.978945
+DEAL:cg::Failure step 8 value 0.000147371
+DEAL::FESystem<2>[FE_Q<2>(1)^2], P_3, rel. error=0.00683382
+DEAL::n_dofs=37
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000489749
+DEAL::FESystem<2>[FE_Q<2>(2)], P_0, rel. error=6.15963e-17
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000489749
+DEAL::FESystem<2>[FE_Q<2>(2)], P_1, rel. error=1.76493e-13
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000489749
+DEAL::FESystem<2>[FE_Q<2>(2)], P_2, rel. error=1.60797e-13
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000489749
+DEAL::FESystem<2>[FE_Q<2>(2)], P_3, rel. error=0.000777566
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000489749
+DEAL::FESystem<2>[FE_Q<2>(2)], P_4, rel. error=0.00214199
+DEAL::n_dofs=37
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000951759
+DEAL::FESystem<2>[FE_Q<2>(2)], P_0, rel. error=4.32194e-17
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000951759
+DEAL::FESystem<2>[FE_Q<2>(2)], P_1, rel. error=8.55557e-14
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000951759
+DEAL::FESystem<2>[FE_Q<2>(2)], P_2, rel. error=5.15604e-14
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000951759
+DEAL::FESystem<2>[FE_Q<2>(2)], P_3, rel. error=0.000621354
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000951759
+DEAL::FESystem<2>[FE_Q<2>(2)], P_4, rel. error=0.00166958
+DEAL::n_dofs=37
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000574368
+DEAL::FESystem<2>[FE_Q<2>(2)], P_0, rel. error=8.02098e-17
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000574368
+DEAL::FESystem<2>[FE_Q<2>(2)], P_1, rel. error=4.54285e-14
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000574368
+DEAL::FESystem<2>[FE_Q<2>(2)], P_2, rel. error=1.11101e-13
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000574368
+DEAL::FESystem<2>[FE_Q<2>(2)], P_3, rel. error=0.000395444
+DEAL:cg::Starting value 0.986394
+DEAL:cg::Failure step 8 value 0.000574368
+DEAL::FESystem<2>[FE_Q<2>(2)], P_4, rel. error=0.00105516

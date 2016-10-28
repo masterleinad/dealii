@@ -274,7 +274,7 @@ void test_with_2d_deformed_mesh (const FiniteElement<dim> &fe,
   cells[2].vertices[3] = 5;
   cells[2].material_id = 0;
 
-  parallel::distributed::Triangulation<dim> triangulation;
+  parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   triangulation.create_triangulation (points_glob, cells, SubCellData());
 
   do_project<dim, components, fe_degree> (triangulation, fe, order_difference);

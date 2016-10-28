@@ -1,0 +1,218 @@
+
+DEAL::n_dofs=70
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00153914
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=7.70884e-17
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00153914
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=0.000696905
+DEAL::Projection failed with relative error 0.000696905
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00153914
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=0.0118566
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00153914
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=0.0112784
+DEAL::n_dofs=70
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=5.07953e-17
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=0.000640612
+DEAL::Projection failed with relative error 0.000640612
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=0.0121427
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=0.0117417
+DEAL::n_dofs=70
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=5.32528e-17
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=0.000600690
+DEAL::Projection failed with relative error 0.000600690
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=0.00930370
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=0.00930422
+DEAL::n_dofs=70
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=4.99131e-17
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=0.000505761
+DEAL::Projection failed with relative error 0.000505761
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=0.0101154
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=0.00946358
+DEAL::n_dofs=70
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=8.60344e-17
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=0.000649853
+DEAL::Projection failed with relative error 0.000649853
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=0.00989076
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=0.00961250
+DEAL::n_dofs=70
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=9.56081e-17
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=0.000654193
+DEAL::Projection failed with relative error 0.000654193
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=0.0114873
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00438683
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=0.0109494
+DEAL::n_dofs=70
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_0, rel. error=6.21943e-17
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_1, rel. error=0.000558904
+DEAL::Projection failed with relative error 0.000558904
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_2, rel. error=0.0101671
+DEAL:cg::Starting value 0.992831
+DEAL:cg::Failure step 8 value 0.00528268
+DEAL::FESystem<3>[FE_Q<3>(1)^2], P_3, rel. error=0.00980525
+DEAL::n_dofs=195
+DEAL:cg::Starting value 0.997433
+DEAL:cg::Failure step 8 value 0.0108754
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=6.25794e-17
+DEAL:cg::Starting value 0.997433
+DEAL:cg::Failure step 8 value 0.0108754
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=4.09987e-14
+DEAL:cg::Starting value 0.997433
+DEAL:cg::Failure step 8 value 0.0108754
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=6.57180e-05
+DEAL::Projection failed with relative error 6.57180e-05
+DEAL:cg::Starting value 0.997433
+DEAL:cg::Failure step 8 value 0.0108754
+DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=0.00311906
+DEAL:cg::Starting value 0.997433
+DEAL:cg::Failure step 8 value 0.0108754
+DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=0.00304442
+DEAL::n_dofs=194
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=5.28221e-17
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=1.61381e-13
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=5.61115e-05
+DEAL::Projection failed with relative error 5.61115e-05
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=0.00316207
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=0.00294721
+DEAL::n_dofs=194
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=6.08619e-17
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=1.51123e-13
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=5.03180e-05
+DEAL::Projection failed with relative error 5.03180e-05
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=0.00234290
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=0.00227413
+DEAL::n_dofs=194
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=6.00058e-17
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=1.05158e-13
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=4.06323e-05
+DEAL::Projection failed with relative error 4.06323e-05
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=0.00210939
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=0.00203878
+DEAL::n_dofs=194
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=5.21225e-17
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=1.69661e-13
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=5.59602e-05
+DEAL::Projection failed with relative error 5.59602e-05
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=0.00267316
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=0.00253176
+DEAL::n_dofs=194
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=5.34824e-17
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=1.22847e-13
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=5.61403e-05
+DEAL::Projection failed with relative error 5.61403e-05
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=0.00288062
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0291682
+DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=0.00270013
+DEAL::n_dofs=194
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_0, rel. error=6.70161e-17
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_1, rel. error=9.29848e-14
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_2, rel. error=4.53419e-05
+DEAL::Projection failed with relative error 4.53419e-05
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_3, rel. error=0.00220686
+DEAL:cg::Starting value 0.997419
+DEAL:cg::Failure step 8 value 0.0288777
+DEAL::FESystem<3>[FE_Q<3>(2)], P_4, rel. error=0.00214479
