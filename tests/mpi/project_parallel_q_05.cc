@@ -20,12 +20,12 @@
 char logname[] = "output";
 
 
-#include "project_distributed_common.h"
+#include "project_parallel_common.h"
 
 
 template <int dim>
 void test ()
 {
- test_with_2d_deformed_refined_mesh <dim, 2, 1> (FESystem<dim>(FE_Q<dim>(1), 2));
- test_with_2d_deformed_refined_mesh <dim, 1, 2> (FESystem<dim>(FE_Q<dim>(2), 1));
+  test_with_2d_deformed_refined_mesh <dim, 2, 1> (FESystem<dim>(FE_Q<dim>(1), 2));
+  test_with_2d_deformed_refined_mesh <dim, 1, 2> (FESystem<dim>(FE_Q<dim>(2), 1));
 }

@@ -20,7 +20,7 @@
 char logname[] = "output";
 
 
-#include "project_distributed_common.h"
+#include "project_parallel_common.h"
 
 
 template <int dim>

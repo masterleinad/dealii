@@ -20,12 +20,12 @@
 char logname[] = "output";
 
 
-#include "project_distributed_common.h"
+#include "project_parallel_common.h"
 
 
 template <int dim>
 void test ()
 {
-  test_with_wrong_face_orientation<dim, 2, 1> (FESystem<dim>(FE_Q<dim>(1), 2));
-  test_with_wrong_face_orientation<dim, 1, 2> (FESystem<dim>(FE_Q<dim>(2), 1));
+  test_no_hanging_nodes<dim, 2, 1> (FESystem<dim>(FE_Q<dim>(1), 2));
+  test_no_hanging_nodes<dim, 1, 2> (FESystem<dim>(FE_Q<dim>(2), 1));
 }

@@ -35,7 +35,6 @@
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-#include <deal.II/numerics/vector_tools.templates.h>
 #include <deal.II/fe/fe_abf.h>
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgp_monomial.h>
@@ -129,7 +128,7 @@ void do_project (const parallel::distributed::Triangulation<dim> &triangulation,
   for (unsigned int q=0; q<=p+2-order_difference; ++q)
     {
       // project the function
-      VectorTools::project_distributed<dim, TrilinosWrappers::MPI::Vector, dim, components, fe_degree>
+      VectorTools::project_parallel<dim, TrilinosWrappers::MPI::Vector, dim, components, fe_degree>
       (dof_handler, constraints, QGauss<dim>(p+2),
        F<dim> (q, fe.n_components()), projection_tmp);
       // just to make sure it doesn't get
