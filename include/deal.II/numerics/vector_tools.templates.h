@@ -21,8 +21,7 @@
 #include <deal.II/base/function.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/qprojector.h>
-#include <deal.II/distributed/tria.h>
-#include <deal.II/distributed/shared_tria.h>
+#include <deal.II/distributed/tria_base.h>
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/la_vector.h>
@@ -1173,11 +1172,8 @@ namespace VectorTools
                 const Quadrature<dim-1>        &q_boundary,
                 const bool                     project_to_boundary_first)
   {
-    Assert((dynamic_cast<const parallel::shared::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+    Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
            ExcMessage("Use project_parallel() for parallel Triangulations!"));
-    Assert((dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
-           ExcMessage("Use project_parallel() for parallel Triangulations!"));
-
 
     do_project (mapping, dof, constraints, quadrature,
                 function, vec_result,
@@ -1213,9 +1209,7 @@ namespace VectorTools
                 const hp::QCollection<dim-1>               &q_boundary,
                 const bool                                  project_to_boundary_first)
   {
-    Assert((dynamic_cast<const parallel::shared::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
-           ExcNotImplemented());
-    Assert((dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+    Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
            ExcNotImplemented());
 
     do_project (mapping, dof, constraints, quadrature,
@@ -1245,7 +1239,7 @@ namespace VectorTools
   void create_right_hand_side (const Mapping<dim, spacedim>   &mapping,
                                const DoFHandler<dim,spacedim> &dof_handler,
                                const Quadrature<dim>          &quadrature,
-                               const Function<spacedim>       &rhs_function,
+                               const Function<spacedim, typename VectorType::value_type> &rhs_function,
                                VectorType                     &rhs_vector,
                                const ConstraintMatrix         &constraints)
   {
@@ -1276,7 +1270,7 @@ namespace VectorTools
 
     if (n_components==1)
       {
-        std::vector<double> rhs_values(n_q_points);
+        std::vector<Number> rhs_values(n_q_points);
 
         for (; cell!=endc; ++cell)
           if (cell->is_locally_owned())
@@ -1301,8 +1295,8 @@ namespace VectorTools
       }
     else
       {
-        std::vector<Vector<double> > rhs_values(n_q_points,
-                                                Vector<double>(n_components));
+        std::vector<Vector<Number> > rhs_values(n_q_points,
+                                                Vector<Number>(n_components));
 
         for (; cell!=endc; ++cell)
           if (cell->is_locally_owned())
@@ -1356,7 +1350,7 @@ namespace VectorTools
   template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const DoFHandler<dim,spacedim> &dof_handler,
                                const Quadrature<dim>          &quadrature,
-                               const Function<spacedim>       &rhs_function,
+                               const Function<spacedim, typename VectorType::value_type> &rhs_function,
                                VectorType                     &rhs_vector,
                                const ConstraintMatrix         &constraints)
   {
@@ -1371,7 +1365,7 @@ namespace VectorTools
   void create_right_hand_side (const hp::MappingCollection<dim,spacedim> &mapping,
                                const hp::DoFHandler<dim,spacedim>        &dof_handler,
                                const hp::QCollection<dim>                &quadrature,
-                               const Function<spacedim>                  &rhs_function,
+                               const Function<spacedim, typename VectorType::value_type> &rhs_function,
                                VectorType                                &rhs_vector,
                                const ConstraintMatrix                    &constraints)
   {
@@ -1498,9 +1492,9 @@ namespace VectorTools
   template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const hp::DoFHandler<dim,spacedim> &dof_handler,
                                const hp::QCollection<dim>         &quadrature,
-                               const Function<spacedim>           &rhs_function,
+                               const Function<spacedim, typename VectorType::value_type> &rhs_function,
                                VectorType                         &rhs_vector,
-                               const ConstraintMatrix                   &constraints)
+                               const ConstraintMatrix             &constraints)
   {
     create_right_hand_side(hp::StaticMappingQ1<dim,spacedim>::mapping_collection,
                            dof_handler, quadrature,

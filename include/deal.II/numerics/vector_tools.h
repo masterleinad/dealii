@@ -930,7 +930,7 @@ namespace VectorTools
                 VectorType &vec_result);
 
   /**
-   * The same as above  for distributed Triangulations.
+   * The same as above for parallel Triangulations.
    * The underlying MatrixFree implementation requires to specify the number
    * of components and the degree of the used FiniteElement as additional
    * template parameters.
@@ -938,7 +938,7 @@ namespace VectorTools
    * and @p project_to_boundary_first to be <tt>false</tt>.
    * @p vec_result is assumed to not have a ghost elements.
    */
-  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
+  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
   void project_parallel (const Mapping<dim, spacedim>   &mapping,
                          const DoFHandler<dim,spacedim> &dof,
                          const ConstraintMatrix         &constraints,
@@ -956,7 +956,7 @@ namespace VectorTools
   /**
    * The same as above using <tt>mapping=MappingQGeneric@<dim@>(1)</tt>.
    */
-  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
+  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
   void project_parallel (const DoFHandler<dim,spacedim> &dof,
                          const ConstraintMatrix         &constraints,
                          const Quadrature<dim>          &quadrature,
@@ -1976,7 +1976,7 @@ namespace VectorTools
   void create_right_hand_side (const Mapping<dim, spacedim>    &mapping,
                                const DoFHandler<dim,spacedim>  &dof,
                                const Quadrature<dim>           &q,
-                               const Function<spacedim,double> &rhs,
+                               const Function<spacedim,typename VectorType::value_type> &rhs,
                                VectorType                      &rhs_vector,
                                const ConstraintMatrix          &constraints=ConstraintMatrix());
 
@@ -1987,7 +1987,7 @@ namespace VectorTools
   template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const DoFHandler<dim,spacedim>  &dof,
                                const Quadrature<dim>           &q,
-                               const Function<spacedim,double> &rhs,
+                               const Function<spacedim,typename VectorType::value_type> &rhs,
                                VectorType                      &rhs_vector,
                                const ConstraintMatrix          &constraints=ConstraintMatrix());
 
@@ -1998,7 +1998,7 @@ namespace VectorTools
   void create_right_hand_side (const hp::MappingCollection<dim,spacedim> &mapping,
                                const hp::DoFHandler<dim,spacedim>        &dof,
                                const hp::QCollection<dim>                &q,
-                               const Function<spacedim,double>           &rhs,
+                               const Function<spacedim,typename VectorType::value_type> &rhs,
                                VectorType                                &rhs_vector,
                                const ConstraintMatrix                    &constraints=ConstraintMatrix());
 
@@ -2008,7 +2008,7 @@ namespace VectorTools
   template <int dim, int spacedim, typename VectorType>
   void create_right_hand_side (const hp::DoFHandler<dim,spacedim> &dof,
                                const hp::QCollection<dim>         &q,
-                               const Function<spacedim,double>    &rhs,
+                               const Function<spacedim,typename VectorType::value_type> &rhs,
                                VectorType                         &rhs_vector,
                                const ConstraintMatrix             &constraints=ConstraintMatrix());
 
@@ -2979,7 +2979,7 @@ namespace VectorTools
      * Generic implementation for the project() function on distributed triangulations.
      * @p vec_result is expected to not have any ghost entries.
      */
-    template <int dim, int spacedim, typename VectorType, int components, int fe_degree>
+    template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
     void do_project_parallel (const Mapping<dim, spacedim>                              &mapping,
                               const DoFHandler<dim, spacedim>                           &dof,
                               const ConstraintMatrix                                    &constraints,
@@ -2992,7 +2992,6 @@ namespace VectorTools
     {
       const parallel::Triangulation<dim,spacedim> *parallel_tria =
         dynamic_cast<const parallel::Triangulation<dim,spacedim>*>(&dof.get_tria());
-      Assert (parallel_tria !=0, ExcNotImplemented());
       Assert (project_to_boundary_first == false, ExcNotImplemented());
       Assert (enforce_zero_boundary == false, ExcNotImplemented());
 
@@ -3017,7 +3016,11 @@ namespace VectorTools
       typename MatrixFree<dim,number>::AdditionalData additional_data;
       additional_data.tasks_parallel_scheme =
         MatrixFree<dim,number>::AdditionalData::partition_color;
-      additional_data.mpi_communicator = mpi_communicator;
+      if (parallel_tria)
+        {
+          const MPI_Comm &mpi_communicator = parallel_tria->get_communicator();
+          additional_data.mpi_communicator = mpi_communicator;
+        }
       additional_data.mapping_update_flags = (update_values | update_JxW_values);
       MatrixFree<dim, number> matrix_free;
       matrix_free.reinit (mapping, dof, constraints,
@@ -3028,10 +3031,9 @@ namespace VectorTools
       mass_matrix.compute_diagonal();
 
       typedef LinearAlgebra::distributed::Vector<number> LocalVectorType;
-      LocalVectorType vec, rhs, inhomogeneities, tmp;
+      LocalVectorType vec, rhs, inhomogeneities;
       matrix_free.initialize_dof_vector(vec);
       matrix_free.initialize_dof_vector(rhs);
-      tmp.reinit(locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
       matrix_free.initialize_dof_vector(inhomogeneities);
       constraints.distribute(inhomogeneities);
       inhomogeneities*=-1.;
@@ -3057,7 +3059,7 @@ namespace VectorTools
     }
   }
 
-  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
+  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
   void project_parallel (const Mapping<dim, spacedim>   &mapping,
                          const DoFHandler<dim,spacedim> &dof,
                          const ConstraintMatrix         &constraints,
@@ -3068,14 +3070,14 @@ namespace VectorTools
                          const Quadrature<dim-1>        &q_boundary,
                          const bool                     project_to_boundary_first)
   {
-    do_project_parallel<dim, spacedim, VectorType, components, fe_degree>
+    do_project_parallel<components, fe_degree>
     (mapping, dof, constraints, quadrature, function, vec_result,
      enforce_zero_boundary, q_boundary, project_to_boundary_first);
   }
 
 
 
-  template <int dim, typename VectorType, int spacedim, int components, int fe_degree>
+  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
   void project_parallel (const DoFHandler<dim,spacedim> &dof,
                          const ConstraintMatrix         &constraints,
                          const Quadrature<dim>          &quadrature,
@@ -3085,7 +3087,7 @@ namespace VectorTools
                          const Quadrature<dim-1>        &q_boundary,
                          const bool                     project_to_boundary_first)
   {
-    project_parallel<dim, VectorType, spacedim, components, fe_degree>
+    project_parallel<components, fe_degree>
     (MappingQGeneric<dim, spacedim>(1), dof, constraints, quadrature, function, vec_result,
      enforce_zero_boundary, q_boundary, project_to_boundary_first);
   }
