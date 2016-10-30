@@ -1186,6 +1186,7 @@ namespace VectorTools
 
     Assert (fe_degree+1 == n_q_points_1d,
             ExcNotImplemented());
+    (void) n_q_points_1d;
 
     switch (fe_degree)
       {

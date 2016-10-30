@@ -1079,12 +1079,28 @@ private:
    * been computed.
    */
   bool is_initialized;
+
+  /**
    * A mutex to avoid that multiple vmult() invocations by different threads
    * overwrite the temporary vectors.
    */
   mutable Threads::Mutex mutex;
 
   /**
+   * Runs the inner loop of the Chebyshev preconditioner that is the same for
+   * vmult() and step() methods.
+   */
+  void do_chebyshev_loop(VectorType       &dst,
+                         const VectorType &src) const;
+
+  /**
+   * Runs the inner loop of the Chebyshev preconditioner that is the same for
+   * vmult() and step() methods. Uses a separate function to not force users
+   * to provide both vmult() and Tvmult() in case only one variant is
+   * requested in subsequent calls.
+   */
+  void do_transpose_chebyshev_loop(VectorType       &dst,
+                                   const VectorType &src) const;
 
   /**
    * Initializes the factors theta and delta based on an eigenvalue
@@ -1093,7 +1109,6 @@ private:
    * by the user is used.
    */
   void estimate_eigenvalues(const VectorType &src) const;
-                                   const VectorType &src) const;
 };
 
 
@@ -2099,11 +2114,14 @@ PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
     }
 }
 
+
+
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
+inline
+void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::do_transpose_chebyshev_loop(VectorType       &dst,
                               const VectorType &src) const
-    const VectorType &src) const
 {
   double rhok  = delta / theta,  sigma = theta / delta;
   for (unsigned int k=0; k<data.degree; ++k)
@@ -2125,38 +2143,49 @@ void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::vmult (VectorType       &dst,
          const VectorType &src) const
+{
   Threads::Mutex::ScopedLock lock(mutex);
   if (is_initialized == false)
     estimate_eigenvalues(src);
 
+  internal::PreconditionChebyshev::vector_updates
   (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
+
+  do_chebyshev_loop(dst, src);
+}
+
+
+
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
-PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
-::Tvmult (VectorType       &dst,
-
-
-template <typename MatrixType, class VectorType>
 inline
 void
+PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
+::Tvmult (VectorType       &dst,
           const VectorType &src) const
 {
   Threads::Mutex::ScopedLock lock(mutex);
   if (is_initialized == false)
     estimate_eigenvalues(src);
 
+  internal::PreconditionChebyshev::vector_updates
   (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
+
+  do_transpose_chebyshev_loop(dst, src);
+}
+
+
+
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
+inline
+void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::step (VectorType       &dst,
         const VectorType &src) const
+{
   Threads::Mutex::ScopedLock lock(mutex);
   if (is_initialized == false)
     estimate_eigenvalues(src);
 
-PreconditionChebyshev<MatrixType,VectorType>::step (VectorType       &dst,
-                                                    const VectorType &src) const
-{
-  Assert (is_initialized, ExcMessage("Preconditioner not initialized"));
   if (!dst.all_zero())
     {
       matrix_ptr->vmult (update2, dst);
@@ -2168,27 +2197,30 @@ PreconditionChebyshev<MatrixType,VectorType>::step (VectorType       &dst,
     (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
 
   do_chebyshev_loop(dst, src);
+}
+
+
+
 template <typename MatrixType, typename VectorType, typename PreconditionerType>
+inline
+void
 PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>
 ::Tstep (VectorType       &dst,
          const VectorType &src) const
+{
   Threads::Mutex::ScopedLock lock(mutex);
   if (is_initialized == false)
     estimate_eigenvalues(src);
 
-                                                     const VectorType &src) const
-{
-  Assert (is_initialized, ExcMessage("Preconditioner not initialized"));
   if (!dst.all_zero())
     {
       matrix_ptr->Tvmult (update2, dst);
       internal::PreconditionChebyshev::vector_updates
       (src, *data.preconditioner, false, 0., 1./theta, update1, update2, update3, dst);
     }
-    (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
+  else
     internal::PreconditionChebyshev::vector_updates
-    (src, data.matrix_diagonal_inverse, true, 0., 1./theta, update1,
-     update2, dst);
+    (src, *data.preconditioner, true, 0., 1./theta, update1, update2, update3, dst);
 
   do_transpose_chebyshev_loop(dst, src);
 }

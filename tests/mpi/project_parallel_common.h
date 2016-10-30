@@ -154,7 +154,7 @@ void do_project (const parallel::distributed::Triangulation<dim> &triangulation,
               << std::endl;
 
       if (q<=p-order_difference)
-        if (error.l2_norm() > 1e-10*projection_tmp.l2_norm())
+        if (L2_error > 1e-10*projection_l2_norm)
           deallog << "Projection failed with relative error "
                   << L2_error / projection_l2_norm
                   << std::endl;
