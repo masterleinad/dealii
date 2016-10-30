@@ -441,6 +441,12 @@ inconvenience this causes.
  (Denis Davydov, 2016/10/31)
  </li>
 
+ <li> New: VectorTools::project_parallel extends VectorTools to 
+ parallel Triangulations.
+ <br>
+ (Daniel Arndt, 2016/10/30)
+ </li>
+
  <li> New: Add MatrixFreeOperators::LaplaceOperator representing a Laplace matrix.
  <br>
  (Denis Davydov, 2016/10/30)

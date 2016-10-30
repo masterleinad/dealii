@@ -2462,6 +2462,8 @@ namespace internal
                        "compatible with the parallel partitioning in MatrixFree. "
                        "Use MatrixFree::initialize_dof_vector to get a "
                        "compatible vector."));
+    (void) vec;
+    (void) dof_info;
   }
 
   // A class to use the same code to read from and write to vector

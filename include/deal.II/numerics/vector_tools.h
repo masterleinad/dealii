@@ -931,14 +931,14 @@ namespace VectorTools
 
   /**
    * The same as above for parallel Triangulations.
-   * The underlying MatrixFree implementation requires to specify the number
-   * of components and the degree of the used FiniteElement as additional
-   * template parameters.
+   * If you use more than four components or the degree of the used
+   * FiniteElement is higher than eight, use project_parallel_generic() instead.
+   *
    * Currently, the implementation only allows for @p enforce_zero_boundary
    * and @p project_to_boundary_first to be <tt>false</tt>.
    * @p vec_result is assumed to not have a ghost elements.
    */
-  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
+  template <int dim, typename VectorType, int spacedim>
   void project_parallel (const Mapping<dim, spacedim>   &mapping,
                          const DoFHandler<dim,spacedim> &dof,
                          const ConstraintMatrix         &constraints,
@@ -956,7 +956,7 @@ namespace VectorTools
   /**
    * The same as above using <tt>mapping=MappingQGeneric@<dim@>(1)</tt>.
    */
-  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
+  template <int dim, typename VectorType, int spacedim>
   void project_parallel (const DoFHandler<dim,spacedim> &dof,
                          const ConstraintMatrix         &constraints,
                          const Quadrature<dim>          &quadrature,
@@ -968,7 +968,24 @@ namespace VectorTools
                              Quadrature<dim-1>(0)),
                          const bool                      project_to_boundary_first = false);
 
-
+  /**
+   * Generic implementation for the project_parallel() function on distributed triangulations.
+   * Use this function if you use more than four components or the degree of your FiniteElement
+   * is higher than eight. You have to specify the first template arguments yourself.
+   * @p vec_result is expected to not have any ghost entries.
+   */
+  template <int components, int fe_degree, int dim, typename VectorType, int spacedim>
+  void project_parallel_generic (const Mapping<dim, spacedim>                              &mapping,
+                                 const DoFHandler<dim, spacedim>                           &dof,
+                                 const ConstraintMatrix                                    &constraints,
+                                 const Quadrature<dim>                                     &quadrature,
+                                 const Function<spacedim, typename VectorType::value_type> &function,
+                                 VectorType                                                &vec_result,
+                                 const bool                                                 enforce_zero_boundary = false,
+                                 const Quadrature<dim-1>                                   &q_boundary = (dim > 1 ?
+                                     QGauss<dim-1>(2) :
+                                     Quadrature<dim-1>(0)),
+                                 const bool                      project_to_boundary_first = false);
 
   /**
    * Compute Dirichlet boundary conditions.  This function makes up a map of
@@ -2971,125 +2988,86 @@ namespace VectorTools
                     "locally owned by this processor.");
 
 #ifndef DOXYGEN
-  //--------------------definitions for project_parallel-------------------
+  //--------------------definitions for project_parallel_generic-------------------
 
-  namespace
+  template <int components, int fe_degree, int dim, typename VectorType, int spacedim>
+  void project_parallel_generic (const Mapping<dim, spacedim>                              &mapping,
+                                 const DoFHandler<dim, spacedim>                           &dof,
+                                 const ConstraintMatrix                                    &constraints,
+                                 const Quadrature<dim>                                     &quadrature,
+                                 const Function<spacedim, typename VectorType::value_type> &function,
+                                 VectorType                                                &vec_result,
+                                 const bool                                                 enforce_zero_boundary,
+                                 const Quadrature<dim-1>                                   &q_boundary,
+                                 const bool                                                 project_to_boundary_first)
   {
-    /**
-     * Generic implementation for the project() function on distributed triangulations.
-     * @p vec_result is expected to not have any ghost entries.
-     */
-    template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
-    void do_project_parallel (const Mapping<dim, spacedim>                              &mapping,
-                              const DoFHandler<dim, spacedim>                           &dof,
-                              const ConstraintMatrix                                    &constraints,
-                              const Quadrature<dim>                                     &quadrature,
-                              const Function<spacedim, typename VectorType::value_type> &function,
-                              VectorType                                                &vec_result,
-                              const bool                                                 enforce_zero_boundary,
-                              const Quadrature<dim-1>                                   &q_boundary,
-                              const bool                                                 project_to_boundary_first)
-    {
-      const parallel::Triangulation<dim,spacedim> *parallel_tria =
-        dynamic_cast<const parallel::Triangulation<dim,spacedim>*>(&dof.get_tria());
-      Assert (project_to_boundary_first == false, ExcNotImplemented());
-      Assert (enforce_zero_boundary == false, ExcNotImplemented());
+    const parallel::Triangulation<dim,spacedim> *parallel_tria =
+      dynamic_cast<const parallel::Triangulation<dim,spacedim>*>(&dof.get_tria());
+    Assert (project_to_boundary_first == false, ExcNotImplemented());
+    Assert (enforce_zero_boundary == false, ExcNotImplemented());
+    (void) enforce_zero_boundary;
+    (void) project_to_boundary_first;
+    (void) q_boundary;
 
-      const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
-      IndexSet locally_relevant_dofs;
-      DoFTools::extract_locally_relevant_dofs(dof, locally_relevant_dofs);
+    const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
+    IndexSet locally_relevant_dofs;
+    DoFTools::extract_locally_relevant_dofs(dof, locally_relevant_dofs);
 
-      const MPI_Comm &mpi_communicator = parallel_tria->get_communicator();
+    typedef typename VectorType::value_type number;
+    Assert (dof.get_fe().n_components() == function.n_components,
+            ExcDimensionMismatch(dof.get_fe().n_components(),
+                                 function.n_components));
+    Assert (vec_result.size() == dof.n_dofs(),
+            ExcDimensionMismatch (vec_result.size(), dof.n_dofs()));
+    Assert (dof.get_fe().degree == fe_degree,
+            ExcDimensionMismatch(fe_degree, dof.get_fe().degree));
+    Assert (dof.get_fe().n_components() == components,
+            ExcDimensionMismatch(components, dof.get_fe().n_components()));
 
-      typedef typename VectorType::value_type number;
-      Assert (dof.get_fe().n_components() == function.n_components,
-              ExcDimensionMismatch(dof.get_fe().n_components(),
-                                   function.n_components));
-      Assert (vec_result.size() == dof.n_dofs(),
-              ExcDimensionMismatch (vec_result.size(), dof.n_dofs()));
-      Assert (dof.get_fe().degree == fe_degree,
-              ExcDimensionMismatch(fe_degree, dof.get_fe().degree));
-      Assert (dof.get_fe().n_components() == components,
-              ExcDimensionMismatch(components, dof.get_fe().n_components()));
+    // set up mass matrix and right hand side
+    typename MatrixFree<dim,number>::AdditionalData additional_data;
+    additional_data.tasks_parallel_scheme =
+      MatrixFree<dim,number>::AdditionalData::partition_color;
+    if (parallel_tria)
+      {
+        const MPI_Comm &mpi_communicator = parallel_tria->get_communicator();
+        additional_data.mpi_communicator = mpi_communicator;
+      }
+    additional_data.mapping_update_flags = (update_values | update_JxW_values);
+    MatrixFree<dim, number> matrix_free;
+    matrix_free.reinit (mapping, dof, constraints,
+                        QGauss<1>(fe_degree+1), additional_data);
+    typedef MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> MatrixType;
+    MatrixType mass_matrix;
+    mass_matrix.initialize(matrix_free);
+    mass_matrix.compute_diagonal();
 
-      // set up mass matrix and right hand side
-      typename MatrixFree<dim,number>::AdditionalData additional_data;
-      additional_data.tasks_parallel_scheme =
-        MatrixFree<dim,number>::AdditionalData::partition_color;
-      if (parallel_tria)
-        {
-          const MPI_Comm &mpi_communicator = parallel_tria->get_communicator();
-          additional_data.mpi_communicator = mpi_communicator;
-        }
-      additional_data.mapping_update_flags = (update_values | update_JxW_values);
-      MatrixFree<dim, number> matrix_free;
-      matrix_free.reinit (mapping, dof, constraints,
-                          QGauss<1>(fe_degree+1), additional_data);
-      typedef MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> MatrixType;
-      MatrixType mass_matrix;
-      mass_matrix.initialize(matrix_free);
-      mass_matrix.compute_diagonal();
+    typedef LinearAlgebra::distributed::Vector<number> LocalVectorType;
+    LocalVectorType vec, rhs, inhomogeneities;
+    matrix_free.initialize_dof_vector(vec);
+    matrix_free.initialize_dof_vector(rhs);
+    matrix_free.initialize_dof_vector(inhomogeneities);
+    constraints.distribute(inhomogeneities);
+    inhomogeneities*=-1.;
 
-      typedef LinearAlgebra::distributed::Vector<number> LocalVectorType;
-      LocalVectorType vec, rhs, inhomogeneities;
-      matrix_free.initialize_dof_vector(vec);
-      matrix_free.initialize_dof_vector(rhs);
-      matrix_free.initialize_dof_vector(inhomogeneities);
-      constraints.distribute(inhomogeneities);
-      inhomogeneities*=-1.;
+    create_right_hand_side (mapping, dof, quadrature, function, rhs, constraints);
+    mass_matrix.vmult_add(rhs, inhomogeneities);
 
-      create_right_hand_side (mapping, dof, quadrature, function, rhs, constraints);
-      mass_matrix.vmult_add(rhs, inhomogeneities);
+    //now invert the matrix
+    ReductionControl     control(5*rhs.size(), 0., 1e-12, false, false);
+    SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
+    typename PreconditionChebyshev<MatrixType, LocalVectorType>::AdditionalData data;
+    data.matrix_diagonal_inverse = mass_matrix.get_matrix_diagonal_inverse();
+    PreconditionChebyshev<MatrixType, LocalVectorType> preconditioner;
+    preconditioner.initialize(mass_matrix, data);
+    cg.solve (mass_matrix, vec, rhs, preconditioner);
+    vec+=inhomogeneities;
 
-      //now invert the matrix
-      ReductionControl     control(5*rhs.size(), 0., 1e-12, false, false);
-      SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
-      typename PreconditionChebyshev<MatrixType, LocalVectorType>::AdditionalData data;
-      data.matrix_diagonal_inverse = mass_matrix.get_matrix_diagonal_inverse();
-      PreconditionChebyshev<MatrixType, LocalVectorType> preconditioner;
-      preconditioner.initialize(mass_matrix, data);
-      cg.solve (mass_matrix, vec, rhs, preconditioner);
-      vec+=inhomogeneities;
-
-      constraints.distribute (vec);
-      IndexSet::ElementIterator it = locally_owned_dofs.begin();
-      for (; it!=locally_owned_dofs.end(); ++it)
-        vec_result(*it) = vec(*it);
-      vec_result.compress(VectorOperation::insert);
-    }
-  }
-
-  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
-  void project_parallel (const Mapping<dim, spacedim>   &mapping,
-                         const DoFHandler<dim,spacedim> &dof,
-                         const ConstraintMatrix         &constraints,
-                         const Quadrature<dim>          &quadrature,
-                         const Function<spacedim, typename VectorType::value_type> &function,
-                         VectorType                     &vec_result,
-                         const bool                     enforce_zero_boundary,
-                         const Quadrature<dim-1>        &q_boundary,
-                         const bool                     project_to_boundary_first)
-  {
-    do_project_parallel<components, fe_degree>
-    (mapping, dof, constraints, quadrature, function, vec_result,
-     enforce_zero_boundary, q_boundary, project_to_boundary_first);
-  }
-
-
-
-  template <int components, int fe_degree, int dim, int spacedim, typename VectorType>
-  void project_parallel (const DoFHandler<dim,spacedim> &dof,
-                         const ConstraintMatrix         &constraints,
-                         const Quadrature<dim>          &quadrature,
-                         const Function<spacedim, typename VectorType::value_type> &function,
-                         VectorType                     &vec_result,
-                         const bool                     enforce_zero_boundary,
-                         const Quadrature<dim-1>        &q_boundary,
-                         const bool                     project_to_boundary_first)
-  {
-    project_parallel<components, fe_degree>
-    (MappingQGeneric<dim, spacedim>(1), dof, constraints, quadrature, function, vec_result,
-     enforce_zero_boundary, q_boundary, project_to_boundary_first);
+    constraints.distribute (vec);
+    IndexSet::ElementIterator it = locally_owned_dofs.begin();
+    for (; it!=locally_owned_dofs.end(); ++it)
+      vec_result(*it) = vec(*it);
+    vec_result.compress(VectorOperation::insert);
   }
 #endif
 }
