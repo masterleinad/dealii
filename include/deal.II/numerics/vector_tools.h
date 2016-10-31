@@ -745,7 +745,6 @@ namespace VectorTools
                                  const ConstraintMatrix              &constraints,
                                  VectorType                          &u2);
 
-
   /**
    * The same function as above, but takes an InterGridMap object directly as
    * a parameter. Useful for interpolating several vectors at the same time.
@@ -769,21 +768,24 @@ namespace VectorTools
    * values are disabled. The ordering of arguments to this function is such
    * that you need not give a second quadrature formula if you don't want to
    * project to the boundary first, but that you must if you want to do so.
+
+   * If the FiniteElement is supported by the MatrixFree class, neither
+   * @p enforce_zero_boundary nor @p project_to_boundary_first are requested,
+   * the FiniteElement has less than five components and its degree is less
+   * than nine, a MatrixFree implementation is used.
+   * Otherwise, only serial Triangulations are supported and this function needs
+   * the mass matrix of the finite element space on the present grid.
+   * To this end, the mass matrix is assembled exactly using
+   * MatrixTools::create_mass_matrix.
    *
-   * This function needs the mass matrix of the finite element space on the
-   * present grid. To this end, the mass matrix is assembled exactly using
-   * MatrixTools::create_mass_matrix. This function performs numerical
-   * quadrature using the given quadrature rule; you should therefore make
-   * sure that the given quadrature formula is also sufficient for the
-   * integration of the mass matrix.
+   * This function performs numerical quadrature using the given quadrature rule;
+   * you should therefore make sure that the given quadrature formula is also
+   * sufficient for the integration of the mass matrix.
    *
    * See the general documentation of this namespace for further information.
    *
    * In 1d, the default value of the boundary quadrature formula is an invalid
    * object since integration on the boundary doesn't happen in 1d.
-   *
-   * @note This function is not implemented for MPI parallel computations,
-   * see step-32 for a way to do a projection in parallel.
    *
    * @param[in] mapping The mapping object to use.
    * @param[in] dof The DoFHandler the describes the finite element space to
@@ -794,7 +796,8 @@ namespace VectorTools
    * mass matrix.
    * @param[in] function The function to project into the finite element space.
    * @param[out] vec The output vector where the projected function will be
-   * stored in. This vector is required to be already initialized.
+   * stored in. This vector is required to be already initialized and must not
+   * be ghosted.
    * @param[in] enforce_zero_boundary If true, @p vec will have zero boundary
    * conditions.
    * @param[in] q_boundary Quadrature rule to be used if @p project_to_boundary_first
@@ -930,62 +933,24 @@ namespace VectorTools
                 VectorType &vec_result);
 
   /**
-   * The same as above for parallel Triangulations.
-   * If you use more than four components or the degree of the used
-   * FiniteElement is higher than eight, use project_parallel_generic() instead.
-   *
-   * Currently, the implementation only allows for @p enforce_zero_boundary
-   * and @p project_to_boundary_first to be <tt>false</tt>.
-   * @p vec_result is assumed to not have a ghost elements.
-   */
-  template <int dim, typename VectorType, int spacedim>
-  void project_parallel (const Mapping<dim, spacedim>   &mapping,
-                         const DoFHandler<dim,spacedim> &dof,
-                         const ConstraintMatrix         &constraints,
-                         const Quadrature<dim>          &quadrature,
-                         const Function<spacedim, typename VectorType::value_type> &function,
-                         VectorType                     &vec_result,
-                         const bool                      enforce_zero_boundary = false,
-                         const Quadrature<dim-1>         &q_boundary = (dim > 1 ?
-                             QGauss<dim-1>(2) :
-                             Quadrature<dim-1>(0)),
-                         const bool                      project_to_boundary_first = false);
-
-
-
-  /**
-   * The same as above using <tt>mapping=MappingQGeneric@<dim@>(1)</tt>.
-   */
-  template <int dim, typename VectorType, int spacedim>
-  void project_parallel (const DoFHandler<dim,spacedim> &dof,
-                         const ConstraintMatrix         &constraints,
-                         const Quadrature<dim>          &quadrature,
-                         const Function<spacedim, typename VectorType::value_type> &function,
-                         VectorType                     &vec_result,
-                         const bool                      enforce_zero_boundary = false,
-                         const Quadrature<dim-1>         &q_boundary = (dim > 1 ?
-                             QGauss<dim-1>(2) :
-                             Quadrature<dim-1>(0)),
-                         const bool                      project_to_boundary_first = false);
-
-  /**
-   * Generic implementation for the project_parallel() function on distributed triangulations.
+   * Generic implementation for the project() function on parallel Triangulations with
+   * FiniteElements that are supported by the MatrixFree class.
    * Use this function if you use more than four components or the degree of your FiniteElement
    * is higher than eight. You have to specify the first template arguments yourself.
    * @p vec_result is expected to not have any ghost entries.
    */
   template <int components, int fe_degree, int dim, typename VectorType, int spacedim>
-  void project_parallel_generic (const Mapping<dim, spacedim>                              &mapping,
-                                 const DoFHandler<dim, spacedim>                           &dof,
-                                 const ConstraintMatrix                                    &constraints,
-                                 const Quadrature<dim>                                     &quadrature,
-                                 const Function<spacedim, typename VectorType::value_type> &function,
-                                 VectorType                                                &vec_result,
-                                 const bool                                                 enforce_zero_boundary = false,
-                                 const Quadrature<dim-1>                                   &q_boundary = (dim > 1 ?
-                                     QGauss<dim-1>(2) :
-                                     Quadrature<dim-1>(0)),
-                                 const bool                      project_to_boundary_first = false);
+  void project_generic (const Mapping<dim, spacedim>                              &mapping,
+                        const DoFHandler<dim, spacedim>                           &dof,
+                        const ConstraintMatrix                                    &constraints,
+                        const Quadrature<dim>                                     &quadrature,
+                        const Function<spacedim, typename VectorType::value_type> &function,
+                        VectorType                                                &vec_result,
+                        const bool                                                 enforce_zero_boundary = false,
+                        const Quadrature<dim-1>                                   &q_boundary = (dim > 1 ?
+                            QGauss<dim-1>(2) :
+                            Quadrature<dim-1>(0)),
+                        const bool                      project_to_boundary_first = false);
 
   /**
    * Compute Dirichlet boundary conditions.  This function makes up a map of
@@ -2988,18 +2953,18 @@ namespace VectorTools
                     "locally owned by this processor.");
 
 #ifndef DOXYGEN
-  //--------------------definitions for project_parallel_generic-------------------
+  //--------------------definitions for project_generic-------------------
 
   template <int components, int fe_degree, int dim, typename VectorType, int spacedim>
-  void project_parallel_generic (const Mapping<dim, spacedim>                              &mapping,
-                                 const DoFHandler<dim, spacedim>                           &dof,
-                                 const ConstraintMatrix                                    &constraints,
-                                 const Quadrature<dim>                                     &quadrature,
-                                 const Function<spacedim, typename VectorType::value_type> &function,
-                                 VectorType                                                &vec_result,
-                                 const bool                                                 enforce_zero_boundary,
-                                 const Quadrature<dim-1>                                   &q_boundary,
-                                 const bool                                                 project_to_boundary_first)
+  void project_generic (const Mapping<dim, spacedim>                              &mapping,
+                        const DoFHandler<dim, spacedim>                           &dof,
+                        const ConstraintMatrix                                    &constraints,
+                        const Quadrature<dim>                                     &quadrature,
+                        const Function<spacedim, typename VectorType::value_type> &function,
+                        VectorType                                                &vec_result,
+                        const bool                                                 enforce_zero_boundary,
+                        const Quadrature<dim-1>                                   &q_boundary,
+                        const bool                                                 project_to_boundary_first)
   {
     const parallel::Triangulation<dim,spacedim> *parallel_tria =
       dynamic_cast<const parallel::Triangulation<dim,spacedim>*>(&dof.get_tria());

@@ -19,6 +19,7 @@
 
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/function.h>
+#include <deal.II/base/polynomials_piecewise.h>
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/qprojector.h>
 #include <deal.II/distributed/tria_base.h>
@@ -47,6 +48,10 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/fe/fe.h>
+#include <deal.II/fe/fe_dgp.h>
+#include <deal.II/fe/fe_dgq.h>
+#include <deal.II/fe/fe_q.h>
+#include <deal.II/fe/fe_q_dg0.h>
 #include <deal.II/fe/fe_nedelec.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -74,84 +79,131 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-
-namespace
-{
-  /**
-   * Helper interface. After figuring out the number of components
-   * project_parallel, we call project_parallel_generic with the
-   * appropriate template arguments.
-   */
-  template <int components, int dim, typename VectorType, int spacedim>
-  void project_parallel_helper (const Mapping<dim, spacedim>                              &mapping,
-                                const DoFHandler<dim, spacedim>                           &dof,
-                                const ConstraintMatrix                                    &constraints,
-                                const Quadrature<dim>                                     &quadrature,
-                                const Function<spacedim, typename VectorType::value_type> &function,
-                                VectorType                                                &vec_result,
-                                const bool                                                 enforce_zero_boundary,
-                                const Quadrature<dim-1>                                   &q_boundary,
-                                const bool                                                 project_to_boundary_first)
-  {
-    switch (dof.get_fe().degree)
-      {
-      case 1:
-        VectorTools::project_parallel_generic<components, 1>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 2:
-        VectorTools::project_parallel_generic<components, 2>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 3:
-        VectorTools::project_parallel_generic<components, 3>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 4:
-        VectorTools::project_parallel_generic<components, 4>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 5:
-        VectorTools::project_parallel_generic<components, 5>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 6:
-        VectorTools::project_parallel_generic<components, 6>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 7:
-        VectorTools::project_parallel_generic<components, 7>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 8:
-        VectorTools::project_parallel_generic<components, 8>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      default:
-        ExcMessage("Call project_parallel_generic yourself specifying the "
-                   "appropriate template arguments!");
-      }
-  }
-}
-
 namespace VectorTools
 {
+  namespace implementation
+  {
+    /**
+     * Helper interface. After figuring out the number of components
+     * in project_parallel, we determine the degree of the FiniteElement
+     * and call project_generic with the appropriate template arguments.
+     */
+    template <int components, int dim, typename VectorType, int spacedim>
+    void project_parallel_helper (const Mapping<dim, spacedim>                              &mapping,
+                                  const DoFHandler<dim, spacedim>                           &dof,
+                                  const ConstraintMatrix                                    &constraints,
+                                  const Quadrature<dim>                                     &quadrature,
+                                  const Function<spacedim, typename VectorType::value_type> &function,
+                                  VectorType                                                &vec_result,
+                                  const bool                                                 enforce_zero_boundary,
+                                  const Quadrature<dim-1>                                   &q_boundary,
+                                  const bool                                                 project_to_boundary_first)
+    {
+      switch (dof.get_fe().degree)
+        {
+        case 1:
+          VectorTools::project_generic<components, 1>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 2:
+          VectorTools::project_generic<components, 2>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 3:
+          VectorTools::project_generic<components, 3>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 4:
+          VectorTools::project_generic<components, 4>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 5:
+          VectorTools::project_generic<components, 5>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 6:
+          VectorTools::project_generic<components, 6>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 7:
+          VectorTools::project_generic<components, 7>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 8:
+          VectorTools::project_generic<components, 8>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        default:
+          ExcMessage("Call project_generic yourself specifying the "
+                     "appropriate template arguments!");
+        }
+    }
+
+
+
+    // Helper interface for the matrix-free implementation of project().
+    // Used to determine the number of components.
+    template <int dim, typename VectorType, int spacedim>
+    void project_parallel (const Mapping<dim, spacedim>   &mapping,
+                           const DoFHandler<dim,spacedim> &dof,
+                           const ConstraintMatrix         &constraints,
+                           const Quadrature<dim>          &quadrature,
+                           const Function<spacedim, typename VectorType::value_type> &function,
+                           VectorType                     &vec_result,
+                           const bool                     enforce_zero_boundary,
+                           const Quadrature<dim-1>        &q_boundary,
+                           const bool                     project_to_boundary_first)
+    {
+      switch (dof.get_fe().n_components())
+        {
+        case 1:
+          project_parallel_helper<1>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 2:
+          project_parallel_helper<2>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 3:
+          project_parallel_helper<3>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        case 4:
+          project_parallel_helper<4>
+          (mapping, dof, constraints, quadrature, function, vec_result,
+           enforce_zero_boundary, q_boundary, project_to_boundary_first);
+          break;
+
+        default:
+          ExcMessage("Call project_generic yourself specifying the "
+                     "appropriate template arguments!");
+        }
+    }
+  }
+
+
 
   template <int dim, int spacedim, typename VectorType,
             template <int, int> class DoFHandlerType>
@@ -1235,8 +1287,6 @@ namespace VectorTools
   }
 
 
-
-
   template <int dim, typename VectorType, int spacedim>
   void project (const Mapping<dim, spacedim>   &mapping,
                 const DoFHandler<dim,spacedim> &dof,
@@ -1248,13 +1298,74 @@ namespace VectorTools
                 const Quadrature<dim-1>        &q_boundary,
                 const bool                     project_to_boundary_first)
   {
-    Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
-           ExcMessage("Use project_parallel() for parallel Triangulations!"));
+    if (dim==spacedim)
+      project<dim, VectorType>(mapping, dof, constraints, quadrature, function,
+                               vec_result, enforce_zero_boundary, q_boundary,
+                               project_to_boundary_first);
+    else
+      {
+        Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
+               ExcNotImplemented());
+        do_project (mapping, dof, constraints, quadrature,
+                    function, vec_result,
+                    enforce_zero_boundary, q_boundary,
+                    project_to_boundary_first);
+      }
+  }
 
-    do_project (mapping, dof, constraints, quadrature,
-                function, vec_result,
-                enforce_zero_boundary, q_boundary,
-                project_to_boundary_first);
+
+
+
+  template <int dim, typename VectorType>
+  void project (const Mapping<dim>   &mapping,
+                const DoFHandler<dim> &dof,
+                const ConstraintMatrix         &constraints,
+                const Quadrature<dim>          &quadrature,
+                const Function<dim, typename VectorType::value_type> &function,
+                VectorType                     &vec_result,
+                const bool                     enforce_zero_boundary,
+                const Quadrature<dim-1>        &q_boundary,
+                const bool                     project_to_boundary_first)
+  {
+    // If we can, use the matrix-free implementation
+    bool use_matrix_free = true;
+    // enforce_zero_boundary and project_to_boundary_first
+    // are not yet supported
+    if (enforce_zero_boundary || project_to_boundary_first)
+      use_matrix_free = false;
+    else
+      {
+        // Find out if the FiniteElement is supported
+        // This is copied from matrix_free/shape_info.templates.h
+        for (unsigned int i=0; i<dof.get_fe().n_base_elements(); ++i)
+          {
+            const FiniteElement<dim> *fe_ptr = &dof.get_fe().base_element(i);
+            if ((dynamic_cast<const FE_Poly<TensorProductPolynomials<dim>,dim,dim>*>(fe_ptr)==0)
+                && (dynamic_cast<const FE_Poly<TensorProductPolynomials<dim,
+                    Polynomials::PiecewisePolynomial<double> >,dim,dim>*>(fe_ptr)==0)
+                &&(dynamic_cast<const FE_DGP<dim>*>(fe_ptr)==0)
+                &&(dynamic_cast<const FE_Q_DG0<dim>*>(fe_ptr)==0)
+                &&(dynamic_cast<const FE_Q<dim>*>(fe_ptr)==0)
+                &&(dynamic_cast<const FE_DGQ<dim>*>(fe_ptr)==0))
+              use_matrix_free = false;
+            break;
+          }
+
+        if (use_matrix_free)
+          implementation::project_parallel (mapping, dof, constraints, quadrature,
+                                            function, vec_result,
+                                            enforce_zero_boundary, q_boundary,
+                                            project_to_boundary_first);
+        else
+          {
+            Assert((dynamic_cast<const parallel::Triangulation<dim>* > (&(dof.get_triangulation()))==0),
+                   ExcNotImplemented());
+            do_project (mapping, dof, constraints, quadrature,
+                        function, vec_result,
+                        enforce_zero_boundary, q_boundary,
+                        project_to_boundary_first);
+          }
+      }
   }
 
 
@@ -1308,68 +1419,6 @@ namespace VectorTools
     project(hp::StaticMappingQ1<dim,spacedim>::mapping_collection,
             dof, constraints, quadrature, function, vec,
             enforce_zero_boundary, q_boundary, project_to_boundary_first);
-  }
-
-
-
-  template <int dim, typename VectorType, int spacedim>
-  void project_parallel (const Mapping<dim, spacedim>   &mapping,
-                         const DoFHandler<dim,spacedim> &dof,
-                         const ConstraintMatrix         &constraints,
-                         const Quadrature<dim>          &quadrature,
-                         const Function<spacedim, typename VectorType::value_type> &function,
-                         VectorType                     &vec_result,
-                         const bool                     enforce_zero_boundary,
-                         const Quadrature<dim-1>        &q_boundary,
-                         const bool                     project_to_boundary_first)
-  {
-    switch (dof.get_fe().n_components())
-      {
-      case 1:
-        project_parallel_helper<1>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 2:
-        project_parallel_helper<2>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 3:
-        project_parallel_helper<3>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      case 4:
-        project_parallel_helper<4>
-        (mapping, dof, constraints, quadrature, function, vec_result,
-         enforce_zero_boundary, q_boundary, project_to_boundary_first);
-        break;
-
-      default:
-        ExcMessage("Call project_parallel_generic yourself specifying the "
-                   "appropriate template arguments!");
-      }
-  }
-
-
-
-  template <int dim, typename VectorType, int spacedim>
-  void project_parallel (const DoFHandler<dim,spacedim> &dof,
-                         const ConstraintMatrix         &constraints,
-                         const Quadrature<dim>          &quadrature,
-                         const Function<spacedim, typename VectorType::value_type> &function,
-                         VectorType                     &vec_result,
-                         const bool                     enforce_zero_boundary,
-                         const Quadrature<dim-1>        &q_boundary,
-                         const bool                     project_to_boundary_first)
-  {
-    project_parallel
-    (MappingQGeneric<dim, spacedim>(1), dof, constraints, quadrature, function, vec_result,
-     enforce_zero_boundary, q_boundary, project_to_boundary_first);
   }
 
 
