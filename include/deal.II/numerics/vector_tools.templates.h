@@ -39,6 +39,7 @@
 #include <deal.II/lac/vector_memory.h>
 #include <deal.II/lac/filtered_matrix.h>
 #include <deal.II/lac/constraint_matrix.h>
+#include <deal.II/matrix_free/fe_evaluation.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_boundary.h>
@@ -78,6 +79,7 @@
 #include <typeinfo>
 
 DEAL_II_NAMESPACE_OPEN
+
 
 namespace VectorTools
 {
@@ -1238,7 +1240,6 @@ namespace VectorTools
 
     Assert (fe_degree+1 == n_q_points_1d,
             ExcNotImplemented());
-    (void) n_q_points_1d;
 
     switch (fe_degree)
       {
@@ -1287,6 +1288,7 @@ namespace VectorTools
   }
 
 
+
   template <int dim, typename VectorType, int spacedim>
   void project (const Mapping<dim, spacedim>   &mapping,
                 const DoFHandler<dim,spacedim> &dof,
@@ -1312,7 +1314,6 @@ namespace VectorTools
                     project_to_boundary_first);
       }
   }
-
 
 
 
@@ -1688,7 +1689,6 @@ namespace VectorTools
                            dof_handler, quadrature,
                            rhs_function, rhs_vector, constraints);
   }
-
 
 
 
