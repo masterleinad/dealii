@@ -152,8 +152,9 @@ namespace VectorTools
           break;
 
         default:
-          ExcMessage("Call project_generic yourself specifying the "
-                     "appropriate template arguments!");
+          Assert(false,
+                 ExcMessage("Call project_generic yourself specifying the "
+                            "appropriate template arguments!"));
         }
     }
 
@@ -199,8 +200,9 @@ namespace VectorTools
           break;
 
         default:
-          ExcMessage("Call project_generic yourself specifying the "
-                     "appropriate template arguments!");
+          Assert(false,
+                 ExcMessage("Call project_generic yourself specifying the "
+                            "appropriate template arguments!"));
         }
     }
   }
@@ -1289,6 +1291,64 @@ namespace VectorTools
 
 
 
+  template <int dim, typename VectorType>
+  void project_matrix_free (const Mapping<dim>   &mapping,
+                    const DoFHandler<dim> &dof,
+                    const ConstraintMatrix         &constraints,
+                    const Quadrature<dim>          &quadrature,
+                    const Function<dim, typename VectorType::value_type> &function,
+                    VectorType                     &vec_result,
+                    const bool                     enforce_zero_boundary,
+                    const Quadrature<dim-1>        &q_boundary,
+                    const bool                     project_to_boundary_first)
+  {
+    // If we can, use the matrix-free implementation
+    bool use_matrix_free = true;
+    // enforce_zero_boundary and project_to_boundary_first
+    // are not yet supported
+    if (enforce_zero_boundary || project_to_boundary_first)
+      use_matrix_free = false;
+    else
+      {
+        // Find out if the FiniteElement is supported
+        // This is copied from matrix_free/shape_info.templates.h
+        // and matrix_free/matrix_free.templates.h
+        if (dof.get_fe().degree==0 || dof.get_fe().n_base_elements()!=1)
+          use_matrix_free = false;
+        else
+          {
+            const FiniteElement<dim> *fe_ptr = &dof.get_fe().base_element(0);
+            if (fe_ptr->n_components() != 1)
+              use_matrix_free = false;
+            else if ((dynamic_cast<const FE_Poly<TensorProductPolynomials<dim>,dim,dim>*>(fe_ptr)==0)
+                     && (dynamic_cast<const FE_Poly<TensorProductPolynomials<dim,
+                         Polynomials::PiecewisePolynomial<double> >,dim,dim>*>(fe_ptr)==0)
+                     &&(dynamic_cast<const FE_DGP<dim>*>(fe_ptr)==0)
+                     &&(dynamic_cast<const FE_Q_DG0<dim>*>(fe_ptr)==0)
+                     &&(dynamic_cast<const FE_Q<dim>*>(fe_ptr)==0)
+                     &&(dynamic_cast<const FE_DGQ<dim>*>(fe_ptr)==0))
+              use_matrix_free = false;
+          }
+      }
+
+    if (use_matrix_free)
+      implementation::project_parallel (mapping, dof, constraints, quadrature,
+                                        function, vec_result,
+                                        enforce_zero_boundary, q_boundary,
+                                        project_to_boundary_first);
+    else
+      {
+        Assert((dynamic_cast<const parallel::Triangulation<dim>* > (&(dof.get_triangulation()))==0),
+               ExcNotImplemented());
+        do_project (mapping, dof, constraints, quadrature,
+                    function, vec_result,
+                    enforce_zero_boundary, q_boundary,
+                    project_to_boundary_first);
+      }
+  }
+
+
+
   template <int dim, typename VectorType, int spacedim>
   void project (const Mapping<dim, spacedim>   &mapping,
                 const DoFHandler<dim,spacedim> &dof,
@@ -1301,9 +1361,17 @@ namespace VectorTools
                 const bool                     project_to_boundary_first)
   {
     if (dim==spacedim)
-      project<dim, VectorType>(mapping, dof, constraints, quadrature, function,
-                               vec_result, enforce_zero_boundary, q_boundary,
-                               project_to_boundary_first);
+    {
+      const Mapping<dim> *const mapping_ptr = dynamic_cast<const Mapping<dim>*> (&mapping);
+      const DoFHandler<dim> *const dof_ptr = dynamic_cast<const DoFHandler<dim>*> (&dof);
+      const Function<dim, typename VectorType::value_type> *const function_ptr
+        = dynamic_cast<const Function<dim, typename VectorType::value_type>*> (&function);
+      Assert (mapping_ptr!=0, ExcInternalError()); 
+      Assert (dof_ptr!=0, ExcInternalError());
+      project_matrix_free<dim, VectorType>(*mapping_ptr, *dof_ptr, constraints, quadrature, *function_ptr,
+                                   vec_result, enforce_zero_boundary, q_boundary,
+                                   project_to_boundary_first);
+    }
     else
       {
         Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
@@ -1315,59 +1383,6 @@ namespace VectorTools
       }
   }
 
-
-
-  template <int dim, typename VectorType>
-  void project (const Mapping<dim>   &mapping,
-                const DoFHandler<dim> &dof,
-                const ConstraintMatrix         &constraints,
-                const Quadrature<dim>          &quadrature,
-                const Function<dim, typename VectorType::value_type> &function,
-                VectorType                     &vec_result,
-                const bool                     enforce_zero_boundary,
-                const Quadrature<dim-1>        &q_boundary,
-                const bool                     project_to_boundary_first)
-  {
-    // If we can, use the matrix-free implementation
-    bool use_matrix_free = true;
-    // enforce_zero_boundary and project_to_boundary_first
-    // are not yet supported
-    if (enforce_zero_boundary || project_to_boundary_first)
-      use_matrix_free = false;
-    else
-      {
-        // Find out if the FiniteElement is supported
-        // This is copied from matrix_free/shape_info.templates.h
-        for (unsigned int i=0; i<dof.get_fe().n_base_elements(); ++i)
-          {
-            const FiniteElement<dim> *fe_ptr = &dof.get_fe().base_element(i);
-            if ((dynamic_cast<const FE_Poly<TensorProductPolynomials<dim>,dim,dim>*>(fe_ptr)==0)
-                && (dynamic_cast<const FE_Poly<TensorProductPolynomials<dim,
-                    Polynomials::PiecewisePolynomial<double> >,dim,dim>*>(fe_ptr)==0)
-                &&(dynamic_cast<const FE_DGP<dim>*>(fe_ptr)==0)
-                &&(dynamic_cast<const FE_Q_DG0<dim>*>(fe_ptr)==0)
-                &&(dynamic_cast<const FE_Q<dim>*>(fe_ptr)==0)
-                &&(dynamic_cast<const FE_DGQ<dim>*>(fe_ptr)==0))
-              use_matrix_free = false;
-            break;
-          }
-
-        if (use_matrix_free)
-          implementation::project_parallel (mapping, dof, constraints, quadrature,
-                                            function, vec_result,
-                                            enforce_zero_boundary, q_boundary,
-                                            project_to_boundary_first);
-        else
-          {
-            Assert((dynamic_cast<const parallel::Triangulation<dim>* > (&(dof.get_triangulation()))==0),
-                   ExcNotImplemented());
-            do_project (mapping, dof, constraints, quadrature,
-                        function, vec_result,
-                        enforce_zero_boundary, q_boundary,
-                        project_to_boundary_first);
-          }
-      }
-  }
 
 
   template <int dim, typename VectorType, int spacedim>
@@ -2972,7 +2987,7 @@ namespace VectorTools
   }
 
 
-  // ----- implementation for project_boundary_values with ConstraintMatrix -----
+// ----- implementation for project_boundary_values with ConstraintMatrix -----
 
 
 
