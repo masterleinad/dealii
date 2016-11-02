@@ -23,9 +23,9 @@
 template <int dim>
 void test ()
 {
-  test_no_hanging_nodes<1, 2,dim> (FE_Q<dim>(1), 1);
-  test_no_hanging_nodes<2, 3,dim> (FE_Q<dim>(2), 2);
-  test_no_hanging_nodes<3, 4,dim> (FE_Q<dim>(3), 3);
+  test_no_hanging_nodes<1, 3,dim> (FE_Q<dim>(1), 1);
+  test_no_hanging_nodes<2, 4,dim> (FE_Q<dim>(2), 2);
+  test_no_hanging_nodes<3, 5,dim> (FE_Q<dim>(3), 3);
 }
 
 int main(int argc, char *argv[])

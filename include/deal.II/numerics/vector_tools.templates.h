@@ -1240,34 +1240,34 @@ namespace VectorTools
     (void) n_q_points_1d;
     const unsigned int fe_degree = matrix_free.get_dof_handler().get_fe().degree;
 
-    Assert (fe_degree+1 == n_q_points_1d,
+    Assert (fe_degree+2 == n_q_points_1d,
             ExcNotImplemented());
 
     switch (fe_degree)
       {
       case 1:
-        project_parallel<dim,VectorType,dim,1,2> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,1,3> (matrix_free,constraints,func,vec_result);
         break;
       case 2:
-        project_parallel<dim,VectorType,dim,2,3> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,2,4> (matrix_free,constraints,func,vec_result);
         break;
       case 3:
-        project_parallel<dim,VectorType,dim,3,4> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,3,5> (matrix_free,constraints,func,vec_result);
         break;
       case 4:
-        project_parallel<dim,VectorType,dim,4,5> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,4,6> (matrix_free,constraints,func,vec_result);
         break;
       case 5:
-        project_parallel<dim,VectorType,dim,5,6> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,5,7> (matrix_free,constraints,func,vec_result);
         break;
       case 6:
-        project_parallel<dim,VectorType,dim,6,7> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,6,8> (matrix_free,constraints,func,vec_result);
         break;
       case 7:
-        project_parallel<dim,VectorType,dim,7,8> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,7,9> (matrix_free,constraints,func,vec_result);
         break;
       case 8:
-        project_parallel<dim,VectorType,dim,8,9> (matrix_free,constraints,func,vec_result);
+        project_parallel<dim,VectorType,dim,8,10> (matrix_free,constraints,func,vec_result);
         break;
       default:
         Assert (false, ExcNotImplemented());

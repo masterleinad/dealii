@@ -74,7 +74,7 @@ void test()
   tria.set_boundary (0, boundary);
 
 
-  FE_Q<dim> fe(2);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dh (tria);
   dh.distribute_dofs (fe);
 
