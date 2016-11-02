@@ -29,78 +29,92 @@ DEAL::FE_DGQ<3>(0), P_1, rel. error=0.0716
 DEAL::FE_DGQ<3>(0), P_2, rel. error=0.0670
 DEAL::n_dofs=112
 DEAL::FE_DGQ<3>(1), P_0, rel. error=0
-DEAL::FE_DGQ<3>(1), P_1, rel. error=0
-DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00962
-DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00993
+DEAL::FE_DGQ<3>(1), P_1, rel. error=0.000649
+DEAL::Projection failed with relative error 0.000649
+DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00968
+DEAL::FE_DGQ<3>(1), P_3, rel. error=0.0100
 DEAL::n_dofs=112
 DEAL::FE_DGQ<3>(1), P_0, rel. error=0
-DEAL::FE_DGQ<3>(1), P_1, rel. error=0
-DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00950
-DEAL::FE_DGQ<3>(1), P_3, rel. error=0.0102
+DEAL::FE_DGQ<3>(1), P_1, rel. error=0.000667
+DEAL::Projection failed with relative error 0.000667
+DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00957
+DEAL::FE_DGQ<3>(1), P_3, rel. error=0.0103
 DEAL::n_dofs=112
 DEAL::FE_DGQ<3>(1), P_0, rel. error=0
-DEAL::FE_DGQ<3>(1), P_1, rel. error=0
-DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00751
-DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00767
+DEAL::FE_DGQ<3>(1), P_1, rel. error=0.000569
+DEAL::Projection failed with relative error 0.000569
+DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00756
+DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00774
 DEAL::n_dofs=112
 DEAL::FE_DGQ<3>(1), P_0, rel. error=0
-DEAL::FE_DGQ<3>(1), P_1, rel. error=0
-DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00712
-DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00699
+DEAL::FE_DGQ<3>(1), P_1, rel. error=0.000479
+DEAL::Projection failed with relative error 0.000479
+DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00715
+DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00703
 DEAL::n_dofs=112
 DEAL::FE_DGQ<3>(1), P_0, rel. error=0
-DEAL::FE_DGQ<3>(1), P_1, rel. error=0
-DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00825
-DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00868
+DEAL::FE_DGQ<3>(1), P_1, rel. error=0.000635
+DEAL::Projection failed with relative error 0.000635
+DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00831
+DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00876
 DEAL::n_dofs=112
 DEAL::FE_DGQ<3>(1), P_0, rel. error=0
-DEAL::FE_DGQ<3>(1), P_1, rel. error=0
-DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00877
-DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00934
+DEAL::FE_DGQ<3>(1), P_1, rel. error=0.000657
+DEAL::Projection failed with relative error 0.000657
+DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00883
+DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00943
 DEAL::n_dofs=112
 DEAL::FE_DGQ<3>(1), P_0, rel. error=0
-DEAL::FE_DGQ<3>(1), P_1, rel. error=0
-DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00725
-DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00727
+DEAL::FE_DGQ<3>(1), P_1, rel. error=0.000527
+DEAL::Projection failed with relative error 0.000527
+DEAL::FE_DGQ<3>(1), P_2, rel. error=0.00729
+DEAL::FE_DGQ<3>(1), P_3, rel. error=0.00732
 DEAL::n_dofs=378
 DEAL::FE_DGQ<3>(2), P_0, rel. error=0
 DEAL::FE_DGQ<3>(2), P_1, rel. error=0
-DEAL::FE_DGQ<3>(2), P_2, rel. error=0
+DEAL::FE_DGQ<3>(2), P_2, rel. error=4.99e-05
+DEAL::Projection failed with relative error 4.99e-05
 DEAL::FE_DGQ<3>(2), P_3, rel. error=0.00166
 DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00164
 DEAL::n_dofs=378
 DEAL::FE_DGQ<3>(2), P_0, rel. error=0
 DEAL::FE_DGQ<3>(2), P_1, rel. error=0
-DEAL::FE_DGQ<3>(2), P_2, rel. error=0
+DEAL::FE_DGQ<3>(2), P_2, rel. error=4.52e-05
+DEAL::Projection failed with relative error 4.52e-05
 DEAL::FE_DGQ<3>(2), P_3, rel. error=0.00169
 DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00161
 DEAL::n_dofs=378
 DEAL::FE_DGQ<3>(2), P_0, rel. error=0
 DEAL::FE_DGQ<3>(2), P_1, rel. error=0
-DEAL::FE_DGQ<3>(2), P_2, rel. error=0
+DEAL::FE_DGQ<3>(2), P_2, rel. error=4.18e-05
+DEAL::Projection failed with relative error 4.18e-05
 DEAL::FE_DGQ<3>(2), P_3, rel. error=0.00126
 DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00124
 DEAL::n_dofs=378
 DEAL::FE_DGQ<3>(2), P_0, rel. error=0
 DEAL::FE_DGQ<3>(2), P_1, rel. error=0
-DEAL::FE_DGQ<3>(2), P_2, rel. error=0
+DEAL::FE_DGQ<3>(2), P_2, rel. error=3.46e-05
+DEAL::Projection failed with relative error 3.46e-05
 DEAL::FE_DGQ<3>(2), P_3, rel. error=0.00119
 DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00116
 DEAL::n_dofs=378
 DEAL::FE_DGQ<3>(2), P_0, rel. error=0
 DEAL::FE_DGQ<3>(2), P_1, rel. error=0
-DEAL::FE_DGQ<3>(2), P_2, rel. error=0
+DEAL::FE_DGQ<3>(2), P_2, rel. error=4.56e-05
+DEAL::Projection failed with relative error 4.56e-05
 DEAL::FE_DGQ<3>(2), P_3, rel. error=0.00142
 DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00138
 DEAL::n_dofs=378
 DEAL::FE_DGQ<3>(2), P_0, rel. error=0
 DEAL::FE_DGQ<3>(2), P_1, rel. error=0
-DEAL::FE_DGQ<3>(2), P_2, rel. error=0
+DEAL::FE_DGQ<3>(2), P_2, rel. error=4.55e-05
+DEAL::Projection failed with relative error 4.55e-05
 DEAL::FE_DGQ<3>(2), P_3, rel. error=0.00153
-DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00147
+DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00148
 DEAL::n_dofs=378
 DEAL::FE_DGQ<3>(2), P_0, rel. error=0
 DEAL::FE_DGQ<3>(2), P_1, rel. error=0
-DEAL::FE_DGQ<3>(2), P_2, rel. error=0
+DEAL::FE_DGQ<3>(2), P_2, rel. error=3.82e-05
+DEAL::Projection failed with relative error 3.82e-05
 DEAL::FE_DGQ<3>(2), P_3, rel. error=0.00121
 DEAL::FE_DGQ<3>(2), P_4, rel. error=0.00119

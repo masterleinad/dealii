@@ -3020,10 +3020,8 @@ namespace VectorTools
     //now invert the matrix
     ReductionControl     control(5*rhs.size(), 0., 1e-12, false, false);
     SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
-    typename PreconditionChebyshev<MatrixType, LocalVectorType>::AdditionalData data;
-    data.matrix_diagonal_inverse = mass_matrix.get_matrix_diagonal_inverse();
-    PreconditionChebyshev<MatrixType, LocalVectorType> preconditioner;
-    preconditioner.initialize(mass_matrix, data);
+    PreconditionJacobi<MatrixType> preconditioner;
+    preconditioner.initialize(mass_matrix, 1.);
     cg.solve (mass_matrix, vec, rhs, preconditioner);
     vec+=inhomogeneities;
 

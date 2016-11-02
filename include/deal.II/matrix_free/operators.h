@@ -949,7 +949,6 @@ namespace MatrixFreeOperators
     for (unsigned int i=0; i<local_size; ++i)
       inverse_diagonal_entries.local_element(i)
         =1./inverse_diagonal_entries.local_element(i);
-                ExcInternalError());
 
     inverse_diagonal_entries.compress(VectorOperation::insert);
     inverse_diagonal_entries.update_ghost_values();

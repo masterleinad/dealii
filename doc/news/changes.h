@@ -442,8 +442,7 @@ inconvenience this causes.
  </li>
 
  <li> New: VectorTools::project_parallel extends VectorTools to 
- parallel Triangulations. VectorTools::project uses a matrix-free
- implementation if possible.
+ parallel Triangulations. using a matrix-free implementation if possible.
  <br>
  (Daniel Arndt, 2016/10/30)
  </li>

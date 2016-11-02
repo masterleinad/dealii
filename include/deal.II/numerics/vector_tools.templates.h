@@ -1293,14 +1293,14 @@ namespace VectorTools
 
   template <int dim, typename VectorType>
   void project_matrix_free (const Mapping<dim>   &mapping,
-                    const DoFHandler<dim> &dof,
-                    const ConstraintMatrix         &constraints,
-                    const Quadrature<dim>          &quadrature,
-                    const Function<dim, typename VectorType::value_type> &function,
-                    VectorType                     &vec_result,
-                    const bool                     enforce_zero_boundary,
-                    const Quadrature<dim-1>        &q_boundary,
-                    const bool                     project_to_boundary_first)
+                            const DoFHandler<dim> &dof,
+                            const ConstraintMatrix         &constraints,
+                            const Quadrature<dim>          &quadrature,
+                            const Function<dim, typename VectorType::value_type> &function,
+                            VectorType                     &vec_result,
+                            const bool                     enforce_zero_boundary,
+                            const Quadrature<dim-1>        &q_boundary,
+                            const bool                     project_to_boundary_first)
   {
     // If we can, use the matrix-free implementation
     bool use_matrix_free = true;
@@ -1361,17 +1361,17 @@ namespace VectorTools
                 const bool                     project_to_boundary_first)
   {
     if (dim==spacedim)
-    {
-      const Mapping<dim> *const mapping_ptr = dynamic_cast<const Mapping<dim>*> (&mapping);
-      const DoFHandler<dim> *const dof_ptr = dynamic_cast<const DoFHandler<dim>*> (&dof);
-      const Function<dim, typename VectorType::value_type> *const function_ptr
-        = dynamic_cast<const Function<dim, typename VectorType::value_type>*> (&function);
-      Assert (mapping_ptr!=0, ExcInternalError()); 
-      Assert (dof_ptr!=0, ExcInternalError());
-      project_matrix_free<dim, VectorType>(*mapping_ptr, *dof_ptr, constraints, quadrature, *function_ptr,
-                                   vec_result, enforce_zero_boundary, q_boundary,
-                                   project_to_boundary_first);
-    }
+      {
+        const Mapping<dim> *const mapping_ptr = dynamic_cast<const Mapping<dim>*> (&mapping);
+        const DoFHandler<dim> *const dof_ptr = dynamic_cast<const DoFHandler<dim>*> (&dof);
+        const Function<dim, typename VectorType::value_type> *const function_ptr
+          = dynamic_cast<const Function<dim, typename VectorType::value_type>*> (&function);
+        Assert (mapping_ptr!=0, ExcInternalError());
+        Assert (dof_ptr!=0, ExcInternalError());
+        project_matrix_free<dim, VectorType>(*mapping_ptr, *dof_ptr, constraints, quadrature, *function_ptr,
+                                             vec_result, enforce_zero_boundary, q_boundary,
+                                             project_to_boundary_first);
+      }
     else
       {
         Assert((dynamic_cast<const parallel::Triangulation<dim,spacedim>* > (&(dof.get_triangulation()))==0),
