@@ -1200,7 +1200,8 @@ inline
 IndexSet::Range::Range ()
   :
   begin(numbers::invalid_dof_index),
-  end(numbers::invalid_dof_index)
+  end(numbers::invalid_dof_index),
+  n_th_index_in_set(numbers::invalid_dof_index)
 {}
 
 
