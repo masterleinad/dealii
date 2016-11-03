@@ -764,19 +764,24 @@ namespace VectorTools
    * that you need not give a second quadrature formula if you don't want to
    * project to the boundary first, but that you must if you want to do so.
 
-   * If the FiniteElement is supported by the MatrixFree class, neither
-   * @p enforce_zero_boundary nor @p project_to_boundary_first are requested,
-   * the FiniteElement has less than five components and its degree is less
-   * than nine, a MatrixFree implementation is used.
-   * Otherwise, only serial Triangulations are supported and this function needs
-   * the mass matrix of the finite element space on the present grid.
-   * To this end, the mass matrix is assembled exactly using
-   * MatrixTools::create_mass_matrix.
+   * A MatrixFree implementation is used if the following consitions are met:
+   * - @p enforce_zero_boundary is false,
+   * - @p project_to_boundary_first is false,
+   * - the FiniteElement is supported by the MatrixFree class,
+   * - the FiniteElement has less than five components
+   * - the degree of the FiniteElement is less than nine.
+   * - dim==spacedim
    *
-   * This function performs numerical quadrature for integration of the provided
-   * function while a QGauss(fe_degree+2) object is used for the masss matrix;
-   * you should therefore make sure that the given quadrature formula is also
-   * sufficient for creating the right-hand side.
+   * In this case, this function performs numerical quadrature for integration
+   * of the provided function while a QGauss(fe_degree+2) object is used for
+   * the mass operator. You should therefore make sure that the given quadrature
+   * formula is sufficient for creating the right-hand side.
+   *
+   * Otherwise, only serial Triangulations are supported and the mass matrix
+   * is assembled exactly using MatrixTools::create_mass_matrix and the same
+   * quadrature rule as for the right-hand side.
+   * You should therefore make sure that the given quadrature formula is also
+   * sufficient for creating the mass matrix.
    *
    * See the general documentation of this namespace for further information.
    *
@@ -929,11 +934,14 @@ namespace VectorTools
                 VectorType &vec_result);
 
   /**
-   * Generic implementation for the project() function on parallel Triangulations with
-   * FiniteElements that are supported by the MatrixFree class.
-   * Use this function if you use more than four components or the degree of your FiniteElement
-   * is higher than eight. You have to specify the first template arguments yourself.
+   * Generic implementation for the project() function with FiniteElements that
+   * are supported by the MatrixFree class.
+   * Use this function if you use more than four components or the degree of
+   * your FiniteElement is higher than eight. You have to specify the first
+   * template arguments yourself.
    * @p vec_result is expected to not have any ghost entries.
+   * @p project_to_boundary_first and @p enforce_zero_boundary are not yet
+   * implemented.
    */
   template <int components, int fe_degree, int dim, typename VectorType, int spacedim>
   void project_generic (const Mapping<dim, spacedim>                              &mapping,
