@@ -914,10 +914,10 @@ namespace VectorTools
                             const Vector<number>       &rhs,
                             Vector<number>             &solution)
     {
-      // The cg algorithm converges in less than rhs.size() steps.
-      // Since we are preconditioning the system, this should be sufficient
-      // also dealing with roundoff errors for badly conditioned matrices.
-      ReductionControl      control(rhs.size(), 0., 1e-12, false, false);
+      // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
+      // steps may not be sufficient, since roundoff errors may accumulate for
+      // badly conditioned matrices
+      ReductionControl      control(5*rhs.size(), 0., 1e-12, false, false);
       GrowingVectorMemory<Vector<number> > memory;
       SolverCG<Vector<number> >            cg(control,memory);
 
@@ -1050,8 +1050,8 @@ namespace VectorTools
       additional_data.mapping_update_flags = (update_values | update_JxW_values);
       MatrixFree<dim, Number> matrix_free;
       matrix_free.reinit (mapping, dof, constraints,
-                          QGauss<1>(fe_degree+2), additional_data);
-      typedef MatrixFreeOperators::MassOperator<dim, fe_degree, fe_degree+2, Number> MatrixType;
+                          QGauss<1>(fe_degree+1), additional_data);
+      typedef MatrixFreeOperators::MassOperator<dim, fe_degree, fe_degree+1, 1, Number> MatrixType;
       MatrixType mass_matrix;
       mass_matrix.initialize(matrix_free);
       mass_matrix.compute_diagonal();
@@ -1101,7 +1101,7 @@ namespace VectorTools
       mass_matrix.vmult_add(rhs, inhomogeneities);
 
       //now invert the matrix
-      ReductionControl     control(rhs.size(), 0., 1e-12, false, false);
+      ReductionControl     control(5.*rhs.size(), 0., 1e-12, false, false);
       SolverCG<LinearAlgebra::distributed::Vector<Number> > cg(control);
       typename PreconditionJacobi<MatrixType>::AdditionalData data(0.8);
       PreconditionJacobi<MatrixType> preconditioner;
@@ -1171,7 +1171,7 @@ namespace VectorTools
       mass_matrix.vmult_add(rhs, inhomogeneities);
 
       //now invert the matrix
-      ReductionControl     control(rhs.size(), 0., 1e-12, false, false);
+      ReductionControl     control(5.*rhs.size(), 0., 1e-12, false, false);
       SolverCG<LinearAlgebra::distributed::Vector<Number> > cg(control);
       typename PreconditionJacobi<MatrixType>::AdditionalData data(0.8);
       PreconditionJacobi<MatrixType> preconditioner;
@@ -1354,7 +1354,7 @@ namespace VectorTools
     mass_matrix.vmult_add(rhs, inhomogeneities);
 
     //now invert the matrix
-    ReductionControl     control(rhs.size(), 0., 1e-12, false, false);
+    ReductionControl     control(5.*rhs.size(), 0., 1e-12, false, false);
     SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
     PreconditionJacobi<MatrixType> preconditioner;
     preconditioner.initialize(mass_matrix, 1.);
@@ -2790,7 +2790,7 @@ namespace VectorTools
       // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
       // steps may not be sufficient, since roundoff errors may accumulate for
       // badly conditioned matrices
-      ReductionControl        control(rhs.size(), 0., 1.e-12, false, false);
+      ReductionControl        control(5.*rhs.size(), 0., 1.e-12, false, false);
       GrowingVectorMemory<Vector<number> > memory;
       SolverCG<Vector<number> >            cg(control,memory);
 
