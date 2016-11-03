@@ -79,7 +79,7 @@ void test ()
     mf_data.reinit (dof, constraints, quad, data);
   }
 
-  MatrixFreeOperators::MassOperator<dim,fe_degree, 1, number> mf;
+  MatrixFreeOperators::MassOperator<dim,fe_degree, fe_degree+2, 1, number> mf;
   mf.initialize(mf_data);
   mf.compute_diagonal();
   const LinearAlgebra::distributed::Vector<double> &diagonal
@@ -113,7 +113,7 @@ void test ()
     sparse_matrix.reinit (csp);
   }
   {
-    QGauss<dim>  quadrature_formula(fe_degree+1);
+    QGauss<dim>  quadrature_formula(fe_degree+2);
 
     FEValues<dim> fe_values (dof.get_fe(), quadrature_formula,
                              update_values    |  update_gradients |
