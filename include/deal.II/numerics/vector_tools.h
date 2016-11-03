@@ -27,10 +27,6 @@
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/hp/dof_handler.h>
 #include <deal.II/hp/mapping_collection.h>
-#include <deal.II/lac/solver_cg.h>
-#include <deal.II/lac/precondition.h>
-#include <deal.II/matrix_free/matrix_free.h>
-#include <deal.II/matrix_free/operators.h>
 
 #include <map>
 #include <vector>
@@ -2950,88 +2946,6 @@ namespace VectorTools
                     "The given point is inside a cell of a "
                     "parallel::distributed::Triangulation that is not "
                     "locally owned by this processor.");
-
-#ifndef DOXYGEN
-  //--------------------definitions for project_generic-------------------
-
-  template <int components, int fe_degree, int dim, typename VectorType, int spacedim>
-  void project_generic (const Mapping<dim, spacedim>                              &mapping,
-                        const DoFHandler<dim, spacedim>                           &dof,
-                        const ConstraintMatrix                                    &constraints,
-                        const Quadrature<dim>                                     &quadrature,
-                        const Function<spacedim, typename VectorType::value_type> &function,
-                        VectorType                                                &vec_result,
-                        const bool                                                 enforce_zero_boundary,
-                        const Quadrature<dim-1>                                   &q_boundary,
-                        const bool                                                 project_to_boundary_first)
-  {
-    const parallel::Triangulation<dim,spacedim> *parallel_tria =
-      dynamic_cast<const parallel::Triangulation<dim,spacedim>*>(&dof.get_tria());
-    Assert (project_to_boundary_first == false, ExcNotImplemented());
-    Assert (enforce_zero_boundary == false, ExcNotImplemented());
-    (void) enforce_zero_boundary;
-    (void) project_to_boundary_first;
-    (void) q_boundary;
-
-    const IndexSet locally_owned_dofs = dof.locally_owned_dofs();
-    IndexSet locally_relevant_dofs;
-    DoFTools::extract_locally_relevant_dofs(dof, locally_relevant_dofs);
-
-    typedef typename VectorType::value_type number;
-    Assert (dof.get_fe().n_components() == function.n_components,
-            ExcDimensionMismatch(dof.get_fe().n_components(),
-                                 function.n_components));
-    Assert (vec_result.size() == dof.n_dofs(),
-            ExcDimensionMismatch (vec_result.size(), dof.n_dofs()));
-    Assert (dof.get_fe().degree == fe_degree,
-            ExcDimensionMismatch(fe_degree, dof.get_fe().degree));
-    Assert (dof.get_fe().n_components() == components,
-            ExcDimensionMismatch(components, dof.get_fe().n_components()));
-
-    // set up mass matrix and right hand side
-    typename MatrixFree<dim,number>::AdditionalData additional_data;
-    additional_data.tasks_parallel_scheme =
-      MatrixFree<dim,number>::AdditionalData::partition_color;
-    if (parallel_tria)
-      {
-        const MPI_Comm &mpi_communicator = parallel_tria->get_communicator();
-        additional_data.mpi_communicator = mpi_communicator;
-      }
-    additional_data.mapping_update_flags = (update_values | update_JxW_values);
-    MatrixFree<dim, number> matrix_free;
-    matrix_free.reinit (mapping, dof, constraints,
-                        QGauss<1>(fe_degree+2), additional_data);
-    typedef MatrixFreeOperators::MassOperator<dim, fe_degree, components, number> MatrixType;
-    MatrixType mass_matrix;
-    mass_matrix.initialize(matrix_free);
-    mass_matrix.compute_diagonal();
-
-    typedef LinearAlgebra::distributed::Vector<number> LocalVectorType;
-    LocalVectorType vec, rhs, inhomogeneities;
-    matrix_free.initialize_dof_vector(vec);
-    matrix_free.initialize_dof_vector(rhs);
-    matrix_free.initialize_dof_vector(inhomogeneities);
-    constraints.distribute(inhomogeneities);
-    inhomogeneities*=-1.;
-
-    create_right_hand_side (mapping, dof, quadrature, function, rhs, constraints);
-    mass_matrix.vmult_add(rhs, inhomogeneities);
-
-    //now invert the matrix
-    ReductionControl     control(5*rhs.size(), 0., 1e-12, false, false);
-    SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
-    PreconditionJacobi<MatrixType> preconditioner;
-    preconditioner.initialize(mass_matrix, 1.);
-    cg.solve (mass_matrix, vec, rhs, preconditioner);
-    vec+=inhomogeneities;
-
-    constraints.distribute (vec);
-    IndexSet::ElementIterator it = locally_owned_dofs.begin();
-    for (; it!=locally_owned_dofs.end(); ++it)
-      vec_result(*it) = vec(*it);
-    vec_result.compress(VectorOperation::insert);
-  }
-#endif
 }
 
 
