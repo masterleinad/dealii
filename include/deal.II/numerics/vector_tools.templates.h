@@ -914,10 +914,10 @@ namespace VectorTools
                             const Vector<number>       &rhs,
                             Vector<number>             &solution)
     {
-      // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
-      // steps may not be sufficient, since roundoff errors may accumulate for
-      // badly conditioned matrices
-      ReductionControl      control(5*rhs.size(), 0., 1e-12, false, false);
+      // The cg algorithm converges in less than rhs.size() steps.
+      // Since we are preconditioning the system, this should be sufficient
+      // also dealing with roundoff errors for badly conditioned matrices.
+      ReductionControl      control(rhs.size(), 0., 1e-12, false, false);
       GrowingVectorMemory<Vector<number> > memory;
       SolverCG<Vector<number> >            cg(control,memory);
 
@@ -1332,10 +1332,7 @@ namespace VectorTools
     additional_data.tasks_parallel_scheme =
       MatrixFree<dim,number>::AdditionalData::partition_color;
     if (parallel_tria)
-      {
-        const MPI_Comm &mpi_communicator = parallel_tria->get_communicator();
-        additional_data.mpi_communicator = mpi_communicator;
-      }
+      additional_data.mpi_communicator = parallel_tria->get_communicator();
     additional_data.mapping_update_flags = (update_values | update_JxW_values);
     MatrixFree<dim, number> matrix_free;
     matrix_free.reinit (mapping, dof, constraints,
@@ -1357,7 +1354,7 @@ namespace VectorTools
     mass_matrix.vmult_add(rhs, inhomogeneities);
 
     //now invert the matrix
-    ReductionControl     control(5*rhs.size(), 0., 1e-12, false, false);
+    ReductionControl     control(rhs.size(), 0., 1e-12, false, false);
     SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
     PreconditionJacobi<MatrixType> preconditioner;
     preconditioner.initialize(mass_matrix, 1.);
@@ -2793,7 +2790,7 @@ namespace VectorTools
       // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
       // steps may not be sufficient, since roundoff errors may accumulate for
       // badly conditioned matrices
-      ReductionControl        control(5*rhs.size(), 0., 1.e-12, false, false);
+      ReductionControl        control(rhs.size(), 0., 1.e-12, false, false);
       GrowingVectorMemory<Vector<number> > memory;
       SolverCG<Vector<number> >            cg(control,memory);
 

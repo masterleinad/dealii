@@ -773,9 +773,10 @@ namespace VectorTools
    * To this end, the mass matrix is assembled exactly using
    * MatrixTools::create_mass_matrix.
    *
-   * This function performs numerical quadrature using the given quadrature rule;
+   * This function performs numerical quadrature for integration of the provided
+   * function while a QGauss(fe_degree+2) object is used for the masss matrix;
    * you should therefore make sure that the given quadrature formula is also
-   * sufficient for the integration of the mass matrix.
+   * sufficient for creating the right-hand side.
    *
    * See the general documentation of this namespace for further information.
    *
