@@ -38,7 +38,7 @@ inconvenience this causes.
 </p>
 
 <ol>
- <li> Changed: VectorTools::create_right_hand_side and 
+ <li> Changed: VectorTools::create_right_hand_side and
  VectorTools::create_boundary_right_hand_side now take an additional template
  parameter VectorType.
  <br>
@@ -441,8 +441,8 @@ inconvenience this causes.
  (Denis Davydov, 2016/10/31)
  </li>
 
- <li> New: VectorTools::project_parallel extends VectorTools to 
- parallel Triangulations. using a matrix-free implementation if possible.
+ <li> New: VectorTools::project can be used for parallel Triangulations in
+ specific cases.
  <br>
  (Daniel Arndt, 2016/10/30)
  </li>
@@ -462,7 +462,7 @@ inconvenience this causes.
  <br>
  (Rajat Arora, 2016/10/29)
  </li>
- 
+
 <li> New: Add MatrixFreeOperators::MassOperator representing a mass matrix.
  <br>
  (Daniel Arndt, 2016/10/27)

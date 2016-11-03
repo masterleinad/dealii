@@ -2101,7 +2101,7 @@ namespace VectorTools
   void create_boundary_right_hand_side (const Mapping<dim,spacedim>        &mapping,
                                         const DoFHandler<dim,spacedim>     &dof,
                                         const Quadrature<dim-1>            &q,
-                                        const Function<spacedim,double>    &rhs,
+                                        const Function<spacedim,typename VectorType::value_type> &rhs,
                                         VectorType                         &rhs_vector,
                                         const std::set<types::boundary_id> &boundary_ids = std::set<types::boundary_id>());
 
@@ -2116,7 +2116,7 @@ namespace VectorTools
   void create_boundary_right_hand_side
   (const DoFHandler<dim,spacedim>     &dof,
    const Quadrature<dim-1>            &q,
-   const Function<spacedim,double>    &rhs,
+   const Function<spacedim,typename VectorType::value_type> &rhs,
    VectorType                         &rhs_vector,
    const std::set<types::boundary_id> &boundary_ids = std::set<types::boundary_id>());
 
@@ -2131,7 +2131,7 @@ namespace VectorTools
   (const hp::MappingCollection<dim,spacedim> &mapping,
    const hp::DoFHandler<dim,spacedim>        &dof,
    const hp::QCollection<dim-1>              &q,
-   const Function<spacedim,double>           &rhs,
+   const Function<spacedim,typename VectorType::value_type> &rhs,
    VectorType                                &rhs_vector,
    const std::set<types::boundary_id>        &boundary_ids = std::set<types::boundary_id>());
 
@@ -2147,7 +2147,7 @@ namespace VectorTools
   void create_boundary_right_hand_side
   (const hp::DoFHandler<dim,spacedim> &dof,
    const hp::QCollection<dim-1>       &q,
-   const Function<spacedim,double>    &rhs,
+   const Function<spacedim,typename VectorType::value_type> &rhs,
    VectorType                         &rhs_vector,
    const std::set<types::boundary_id> &boundary_ids = std::set<types::boundary_id>());
 
