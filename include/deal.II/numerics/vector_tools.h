@@ -762,8 +762,8 @@ namespace VectorTools
    * values are disabled. The ordering of arguments to this function is such
    * that you need not give a second quadrature formula if you don't want to
    * project to the boundary first, but that you must if you want to do so.
-
-   * A MatrixFree implementation is used if the following consitions are met:
+   *
+   * A MatrixFree implementation is used if the following conditions are met:
    * - @p enforce_zero_boundary is false,
    * - @p project_to_boundary_first is false,
    * - the FiniteElement is supported by the MatrixFree class,
@@ -771,10 +771,11 @@ namespace VectorTools
    * - the degree of the FiniteElement is less than nine.
    * - dim==spacedim
    *
-   * In this case, this function performs numerical quadrature for integration
-   * of the provided function while a QGauss(fe_degree+2) object is used for
-   * the mass operator. You should therefore make sure that the given quadrature
-   * formula is sufficient for creating the right-hand side.
+   * In this case, this function performs numerical quadrature using the given
+   * quadrature formula for integration of the provided function while a
+   * QGauss(fe_degree+2) object is used for the mass operator. You should
+   * therefore make sure that the given quadrature formula is sufficient for
+   * creating the right-hand side.
    *
    * Otherwise, only serial Triangulations are supported and the mass matrix
    * is assembled exactly using MatrixTools::create_mass_matrix and the same
@@ -797,7 +798,7 @@ namespace VectorTools
    * @param[in] function The function to project into the finite element space.
    * @param[out] vec The output vector where the projected function will be
    * stored in. This vector is required to be already initialized and must not
-   * be ghosted.
+   * have ghost elements.
    * @param[in] enforce_zero_boundary If true, @p vec will have zero boundary
    * conditions.
    * @param[in] q_boundary Quadrature rule to be used if @p project_to_boundary_first
@@ -933,11 +934,15 @@ namespace VectorTools
                 VectorType &vec_result);
 
   /**
-   * Generic implementation for the project() function with FiniteElements that
-   * are supported by the MatrixFree class.
-   * Use this function if you use more than four components or the degree of
-   * your FiniteElement is higher than eight. You have to specify the first
-   * template arguments yourself.
+   * Implementation for the project() function with finite elements
+   * are supported by the MatrixFree class for arbitrary number of
+   * components and degree of the FiniteElement.
+   *
+   * This function should be used if you have more than four components
+   * or the degree of your FiniteElement is higher than eight. For all the
+   * other cases project() is already instantiated.
+   *
+   * The first two template arguments have to be specified explicitly.
    * @p vec_result is expected to not have any ghost entries.
    * @p project_to_boundary_first and @p enforce_zero_boundary are not yet
    * implemented.

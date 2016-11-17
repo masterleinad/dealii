@@ -14,8 +14,9 @@
 // ---------------------------------------------------------------------
 
 
-// common framework to check whether an element of polynomial order p can
-// represent functions of order q
+// Common framework to check the projection error for functions of order q
+// using an element of polynomial order p. Thereby, check if a function
+// is represented exactyly if this is expected.
 
 #include "../tests.h"
 #include <deal.II/base/function.h>

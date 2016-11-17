@@ -83,9 +83,9 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-namespace VectorTools
+namespace internal
 {
-  namespace implementation
+  namespace VectorTools
   {
     /**
      * Helper interface. After figuring out the number of components
@@ -207,10 +207,71 @@ namespace VectorTools
                             "appropriate template arguments!"));
         }
     }
+
+
+
+    template <int dim, typename VectorType>
+    void project_matrix_free (const Mapping<dim>   &mapping,
+                              const DoFHandler<dim> &dof,
+                              const ConstraintMatrix         &constraints,
+                              const Quadrature<dim>          &quadrature,
+                              const Function<dim, typename VectorType::value_type> &function,
+                              VectorType                     &vec_result,
+                              const bool                     enforce_zero_boundary,
+                              const Quadrature<dim-1>        &q_boundary,
+                              const bool                     project_to_boundary_first)
+    {
+      // If we can, use the matrix-free implementation
+      bool use_matrix_free = true;
+      // enforce_zero_boundary and project_to_boundary_first
+      // are not yet supported
+      if (enforce_zero_boundary || project_to_boundary_first)
+        use_matrix_free = false;
+      else
+        {
+          // Find out if the FiniteElement is supported
+          // This is copied from matrix_free/shape_info.templates.h
+          // and matrix_free/matrix_free.templates.h
+          if (dof.get_fe().degree==0 || dof.get_fe().n_base_elements()!=1)
+            use_matrix_free = false;
+          else
+            {
+              const FiniteElement<dim> *fe_ptr = &dof.get_fe().base_element(0);
+              if (fe_ptr->n_components() != 1)
+                use_matrix_free = false;
+              else if ((dynamic_cast<const FE_Poly<TensorProductPolynomials<dim>,dim,dim>*>(fe_ptr)==0)
+                       && (dynamic_cast<const FE_Poly<TensorProductPolynomials<dim,
+                           Polynomials::PiecewisePolynomial<double> >,dim,dim>*>(fe_ptr)==0)
+                       &&(dynamic_cast<const FE_DGP<dim>*>(fe_ptr)==0)
+                       &&(dynamic_cast<const FE_Q_DG0<dim>*>(fe_ptr)==0)
+                       &&(dynamic_cast<const FE_Q<dim>*>(fe_ptr)==0)
+                       &&(dynamic_cast<const FE_DGQ<dim>*>(fe_ptr)==0))
+                use_matrix_free = false;
+            }
+        }
+
+      if (use_matrix_free)
+        implementation::project_parallel (mapping, dof, constraints, quadrature,
+                                          function, vec_result,
+                                          enforce_zero_boundary, q_boundary,
+                                          project_to_boundary_first);
+      else
+        {
+          Assert((dynamic_cast<const parallel::Triangulation<dim>* > (&(dof.get_triangulation()))==0),
+                 ExcNotImplemented());
+          do_project (mapping, dof, constraints, quadrature,
+                      function, vec_result,
+                      enforce_zero_boundary, q_boundary,
+                      project_to_boundary_first);
+        }
+    }
   }
+}
 
 
 
+namespace VectorTools
+{
   template <int dim, int spacedim, typename VectorType,
             template <int, int> class DoFHandlerType>
   void interpolate (const Mapping<dim,spacedim>                               &mapping,
@@ -1100,7 +1161,11 @@ namespace VectorTools
 
       mass_matrix.vmult_add(rhs, inhomogeneities);
 
-      //now invert the matrix
+      // now invert the matrix
+      // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
+      // steps may not be sufficient, since roundoff errors may accumulate for
+      // badly conditioned matrices. This behavior can be observed, e.g. for
+      // FE_Q_Hierarchical for degree higher than three.
       ReductionControl     control(5.*rhs.size(), 0., 1e-12, false, false);
       SolverCG<LinearAlgebra::distributed::Vector<Number> > cg(control);
       typename PreconditionJacobi<MatrixType>::AdditionalData data(0.8);
@@ -1170,7 +1235,11 @@ namespace VectorTools
 
       mass_matrix.vmult_add(rhs, inhomogeneities);
 
-      //now invert the matrix
+      // now invert the matrix
+      // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
+      // steps may not be sufficient, since roundoff errors may accumulate for
+      // badly conditioned matrices. This behavior can be observed, e.g. for
+      // FE_Q_Hierarchical for degree higher than three.
       ReductionControl     control(5.*rhs.size(), 0., 1e-12, false, false);
       SolverCG<LinearAlgebra::distributed::Vector<Number> > cg(control);
       typename PreconditionJacobi<MatrixType>::AdditionalData data(0.8);
@@ -1353,7 +1422,11 @@ namespace VectorTools
     create_right_hand_side (mapping, dof, quadrature, function, rhs, constraints);
     mass_matrix.vmult_add(rhs, inhomogeneities);
 
-    //now invert the matrix
+    // now invert the matrix
+    // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
+    // steps may not be sufficient, since roundoff errors may accumulate for
+    // badly conditioned matrices. This behavior can be observed, e.g. for
+    // FE_Q_Hierarchical for degree higher than three.
     ReductionControl     control(5.*rhs.size(), 0., 1e-12, false, false);
     SolverCG<LinearAlgebra::distributed::Vector<number> > cg(control);
     PreconditionJacobi<MatrixType> preconditioner;
@@ -1366,64 +1439,6 @@ namespace VectorTools
     for (; it!=locally_owned_dofs.end(); ++it)
       vec_result(*it) = vec(*it);
     vec_result.compress(VectorOperation::insert);
-  }
-
-
-
-  template <int dim, typename VectorType>
-  void project_matrix_free (const Mapping<dim>   &mapping,
-                            const DoFHandler<dim> &dof,
-                            const ConstraintMatrix         &constraints,
-                            const Quadrature<dim>          &quadrature,
-                            const Function<dim, typename VectorType::value_type> &function,
-                            VectorType                     &vec_result,
-                            const bool                     enforce_zero_boundary,
-                            const Quadrature<dim-1>        &q_boundary,
-                            const bool                     project_to_boundary_first)
-  {
-    // If we can, use the matrix-free implementation
-    bool use_matrix_free = true;
-    // enforce_zero_boundary and project_to_boundary_first
-    // are not yet supported
-    if (enforce_zero_boundary || project_to_boundary_first)
-      use_matrix_free = false;
-    else
-      {
-        // Find out if the FiniteElement is supported
-        // This is copied from matrix_free/shape_info.templates.h
-        // and matrix_free/matrix_free.templates.h
-        if (dof.get_fe().degree==0 || dof.get_fe().n_base_elements()!=1)
-          use_matrix_free = false;
-        else
-          {
-            const FiniteElement<dim> *fe_ptr = &dof.get_fe().base_element(0);
-            if (fe_ptr->n_components() != 1)
-              use_matrix_free = false;
-            else if ((dynamic_cast<const FE_Poly<TensorProductPolynomials<dim>,dim,dim>*>(fe_ptr)==0)
-                     && (dynamic_cast<const FE_Poly<TensorProductPolynomials<dim,
-                         Polynomials::PiecewisePolynomial<double> >,dim,dim>*>(fe_ptr)==0)
-                     &&(dynamic_cast<const FE_DGP<dim>*>(fe_ptr)==0)
-                     &&(dynamic_cast<const FE_Q_DG0<dim>*>(fe_ptr)==0)
-                     &&(dynamic_cast<const FE_Q<dim>*>(fe_ptr)==0)
-                     &&(dynamic_cast<const FE_DGQ<dim>*>(fe_ptr)==0))
-              use_matrix_free = false;
-          }
-      }
-
-    if (use_matrix_free)
-      implementation::project_parallel (mapping, dof, constraints, quadrature,
-                                        function, vec_result,
-                                        enforce_zero_boundary, q_boundary,
-                                        project_to_boundary_first);
-    else
-      {
-        Assert((dynamic_cast<const parallel::Triangulation<dim>* > (&(dof.get_triangulation()))==0),
-               ExcNotImplemented());
-        do_project (mapping, dof, constraints, quadrature,
-                    function, vec_result,
-                    enforce_zero_boundary, q_boundary,
-                    project_to_boundary_first);
-      }
   }
 
 
@@ -2789,7 +2804,8 @@ namespace VectorTools
     {
       // Allow for a maximum of 5*n steps to reduce the residual by 10^-12. n
       // steps may not be sufficient, since roundoff errors may accumulate for
-      // badly conditioned matrices
+      // badly conditioned matrices. This behavior can be observed, e.g. for
+      // FE_Q_Hierarchical for degree higher than three.
       ReductionControl        control(5.*rhs.size(), 0., 1.e-12, false, false);
       GrowingVectorMemory<Vector<number> > memory;
       SolverCG<Vector<number> >            cg(control,memory);
