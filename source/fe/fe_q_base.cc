@@ -415,7 +415,7 @@ FE_Q_Base<PolynomialType,dim,spacedim>::FE_Q_Base
  const std::vector<bool>      &restriction_is_additive_flags)
   :
   FE_Poly<PolynomialType,dim,spacedim>(poly_space, fe_data, restriction_is_additive_flags,
-                                       std::vector<ComponentMask>(1, std::vector<bool>(1,true))),
+                                       std::vector<ComponentMask>(1, ComponentMask(1,true))),
   q_degree (types_are_equal<PolynomialType, TensorProductPolynomialsBubbles<dim> >::value
             ?this->degree-1
             :this->degree)

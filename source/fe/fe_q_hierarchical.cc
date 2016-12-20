@@ -59,7 +59,7 @@ FE_Q_Hierarchical<dim>::FE_Q_Hierarchical (const unsigned int degree)
     std::vector<bool> (FiniteElementData<dim>(
                          get_dpo_vector(degree),1, degree).dofs_per_cell, false),
     std::vector<ComponentMask>(FiniteElementData<dim>(
-                                 get_dpo_vector(degree),1, degree).dofs_per_cell, std::vector<bool>(1,true))),
+                                 get_dpo_vector(degree),1, degree).dofs_per_cell, ComponentMask(1,true))),
   face_renumber(face_fe_q_hierarchical_to_hierarchic_numbering (degree))
 {
   this->poly_space.set_numbering(

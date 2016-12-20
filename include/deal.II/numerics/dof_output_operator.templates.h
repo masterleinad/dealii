@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__dof_output_operator_templates_h
+#define dealii__dof_output_operator_templates_h
+
 
 #include <deal.II/numerics/dof_output_operator.h>
 
@@ -67,3 +70,5 @@ namespace Algorithms
 }
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

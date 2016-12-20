@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__fe_poly_face_templates_h
+#define dealii__fe_poly_face_templates_h
 
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/polynomial_space.h>
@@ -194,3 +196,5 @@ fill_fe_subface_values (const typename Triangulation<dim,spacedim>::cell_iterato
 }
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

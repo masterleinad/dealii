@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__integration_info_templates_h
+#define dealii__integration_info_templates_h
+
 #include <deal.II/meshworker/dof_info.h>
 #include <deal.II/meshworker/integration_info.h>
 #include <deal.II/base/quadrature_lib.h>
@@ -229,3 +232,5 @@ namespace MeshWorker
 
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

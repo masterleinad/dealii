@@ -368,7 +368,7 @@ component_mask (const FEValuesExtractors::Scalar &scalar) const
 
   std::vector<bool> mask (this->n_components(), false);
   mask[scalar.component] = true;
-  return mask;
+  return ComponentMask(mask);
 }
 
 
@@ -387,7 +387,7 @@ component_mask (const FEValuesExtractors::Vector &vector) const
   std::vector<bool> mask (this->n_components(), false);
   for (unsigned int c=vector.first_vector_component; c<vector.first_vector_component+dim; ++c)
     mask[c] = true;
-  return mask;
+  return ComponentMask(mask);
 }
 
 
@@ -409,7 +409,7 @@ component_mask (const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const
   for (unsigned int c=sym_tensor.first_tensor_component;
        c<sym_tensor.first_tensor_component+SymmetricTensor<2,dim>::n_independent_components; ++c)
     mask[c] = true;
-  return mask;
+  return ComponentMask(mask);
 }
 
 
@@ -431,7 +431,7 @@ component_mask (const BlockMask &block_mask) const
     if (block_mask[component_to_block_index(c)] == true)
       component_mask[c] = true;
 
-  return component_mask;
+  return ComponentMask(component_mask);
 }
 
 
@@ -517,7 +517,7 @@ block_mask (const ComponentMask &component_mask) const
     }
 
 
-  return block_mask;
+  return BlockMask(block_mask);
 }
 
 

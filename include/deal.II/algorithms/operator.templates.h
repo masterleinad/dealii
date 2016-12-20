@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__operator_templates_h
+#define dealii__operator_templates_h
+
 
 #include <deal.II/algorithms/operator.h>
 #include <deal.II/base/logstream.h>
@@ -73,3 +76,5 @@ namespace Algorithms
 }
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

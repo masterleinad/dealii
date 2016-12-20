@@ -137,7 +137,7 @@ public:
      * Set a new prefix for @p deallog, which will be removed when the
      * variable is destroyed.
      */
-    Prefix(const std::string &text);
+    explicit Prefix(const std::string &text);
 
     /**
      * Set a new prefix for the given stream, which will be removed when the

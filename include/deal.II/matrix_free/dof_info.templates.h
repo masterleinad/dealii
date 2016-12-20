@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__matrix_free_dof_info_templates_h
+#define dealii__matrix_free_dof_info_templates_h
+
 
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/multithread_info.h>
@@ -2008,3 +2011,5 @@ not_connect:
 } // end of namespace internal
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

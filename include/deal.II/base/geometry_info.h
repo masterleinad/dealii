@@ -69,7 +69,7 @@ public:
    * the dimensionality of the geometric object in question. This will usually
    * be a number between zero (a vertex) and three (a hexahedron).
    */
-  GeometryPrimitive (const unsigned int object_dimension);
+  explicit GeometryPrimitive (const unsigned int object_dimension);
 
   /**
    * Return the integral dimension of the object currently represented, i.e.

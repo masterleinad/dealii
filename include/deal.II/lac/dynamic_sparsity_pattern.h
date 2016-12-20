@@ -74,7 +74,7 @@ namespace DynamicSparsityPatternIterators
     /**
      * Constructor. Construct the end accessor for the given sparsity pattern.
      */
-    Accessor (const DynamicSparsityPattern *sparsity_pattern);
+    explicit Accessor (const DynamicSparsityPattern *sparsity_pattern);
 
     /**
      * Row number of the element represented by this object.
@@ -183,7 +183,7 @@ namespace DynamicSparsityPatternIterators
      * Constructor. Create an invalid (end) iterator into the sparsity pattern
      * @p sp.
      */
-    Iterator (const DynamicSparsityPattern *sp);
+    explicit Iterator (const DynamicSparsityPattern *sp);
 
     /**
      * Prefix increment.
@@ -346,12 +346,12 @@ public:
    * is given by the size of @p indexset and only rows corresponding to
    * indices in @p indexset are stored on the current processor.
    */
-  DynamicSparsityPattern (const IndexSet &indexset);
+  explicit DynamicSparsityPattern (const IndexSet &indexset);
 
   /**
    * Initialize a square pattern of dimension @p n.
    */
-  DynamicSparsityPattern (const size_type n);
+  explicit DynamicSparsityPattern (const size_type n);
 
   /**
    * Copy operator. For this the same holds as for the copy constructor: it is

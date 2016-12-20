@@ -106,9 +106,9 @@ public:
      * Default constructor. Set all elements of this structure to their
      * default values.
      */
-    Options (const bool         show_absolute_values = false,
-             const unsigned int block_size           = 1,
-             const bool         discontinuous        = false);
+    explicit Options (const bool         show_absolute_values = false,
+                      const unsigned int block_size           = 1,
+                      const bool         discontinuous        = false);
   };
 
   /**

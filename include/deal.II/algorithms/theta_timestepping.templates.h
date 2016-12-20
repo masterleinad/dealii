@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__theta_timestepping_templates_h
+#define dealii__theta_timestepping_templates_h
+
 
 #include <deal.II/algorithms/theta_timestepping.h>
 
@@ -145,3 +148,5 @@ namespace Algorithms
 }
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

@@ -74,12 +74,12 @@ namespace Algorithms
     /**
      * Constructor setting default values
      */
-    TimestepControl (double start = 0.,
-                     double final = 1.,
-                     double tolerance = 1.e-2,
-                     double start_step = 1.e-2,
-                     double print_step = -1.,
-                     double max_step = 1.);
+    explicit TimestepControl (double start = 0.,
+                              double final = 1.,
+                              double tolerance = 1.e-2,
+                              double start_step = 1.e-2,
+                              double print_step = -1.,
+                              double max_step = 1.);
 
     /**
      * Declare the control parameters for parameter handler.

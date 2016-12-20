@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__array_h
+#define dealii__array_h
+
 // this file is deprecated. simply include the one we use now
 #include "../std_cxx11/array.h"
 
@@ -20,3 +23,5 @@
 DEAL_II_NAMESPACE_OPEN
 namespace std_cxx1x = std_cxx11;
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

@@ -28,8 +28,8 @@ DEAL_II_NAMESPACE_OPEN
 
 SolverControl::SolverControl (const unsigned int maxiter,
                               const double tolerance,
-                              const bool m_log_history,
-                              const bool m_log_result)
+                              const bool log_history,
+                              const bool log_result)
   :
   maxsteps(maxiter),
   tol(tolerance),
@@ -40,9 +40,9 @@ SolverControl::SolverControl (const unsigned int maxiter,
   check_failure(false),
   relative_failure_residual(0),
   failure_residual(0),
-  m_log_history(m_log_history),
+  m_log_history(log_history),
   m_log_frequency(1),
-  m_log_result(m_log_result),
+  m_log_result(log_result),
   history_data_enabled(false)
 {}
 

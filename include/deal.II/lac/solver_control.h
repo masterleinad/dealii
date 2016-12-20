@@ -146,10 +146,10 @@ public:
    * specifies the whether the final result is logged to @p deallog. Default
    * is yes.
    */
-  SolverControl (const unsigned int n           = 100,
-                 const double       tol         = 1.e-10,
-                 const bool         log_history = false,
-                 const bool         log_result  = true);
+  explicit SolverControl (const unsigned int n           = 100,
+                          const double       tol         = 1.e-10,
+                          const bool         log_history = false,
+                          const bool         log_result  = true);
 
   /**
    * Virtual destructor is needed as there are virtual functions in this
@@ -406,17 +406,17 @@ public:
    * have the same meaning as those of the constructor of the SolverControl
    * constructor.
    */
-  ReductionControl (const unsigned int maxiter = 100,
-                    const double   tolerance   = 1.e-10,
-                    const double   reduce      = 1.e-2,
-                    const bool     log_history = false,
-                    const bool     log_result  = true);
+  explicit ReductionControl (const unsigned int maxiter = 100,
+                             const double   tolerance   = 1.e-10,
+                             const double   reduce      = 1.e-2,
+                             const bool     log_history = false,
+                             const bool     log_result  = true);
 
   /**
    * Initialize with a SolverControl object. The result will emulate
    * SolverControl by setting @p reduce to zero.
    */
-  ReductionControl (const SolverControl &c);
+  explicit ReductionControl (const SolverControl &c);
 
   /**
    * Assign a SolverControl object to ReductionControl. The result of the
@@ -490,16 +490,16 @@ public:
    * Constructor.  Provide exactly the same arguments as the constructor of
    * the SolverControl class.
    */
-  IterationNumberControl (const unsigned int maxiter = 100,
-                          const double       tolerance = 1e-12,
-                          const bool     log_history = false,
-                          const bool     log_result  = true);
+  explicit IterationNumberControl (const unsigned int maxiter = 100,
+                                   const double       tolerance = 1e-12,
+                                   const bool     log_history = false,
+                                   const bool     log_result  = true);
 
   /**
    * Initialize with a SolverControl object. The result will emulate
    * SolverControl by setting the reduction target to zero.
    */
-  IterationNumberControl (const SolverControl &c);
+  explicit IterationNumberControl (const SolverControl &c);
 
   /**
    * Assign a SolverControl object to ReductionControl. The result of the

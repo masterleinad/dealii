@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__std_cxx1x_function_h
+#define dealii__std_cxx1x_function_h
+
 // this file is deprecated. simply include the one we use now
 #include "../std_cxx11/function.h"
 
@@ -20,3 +23,5 @@
 DEAL_II_NAMESPACE_OPEN
 namespace std_cxx1x = std_cxx11;
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

@@ -35,7 +35,7 @@ FE_RannacherTurek<dim>::FE_RannacherTurek(const unsigned int order,
                            2,
                            FiniteElementData<dim>::L2),
     std::vector<bool>(4, false), // restriction not implemented
-    std::vector<ComponentMask>(4, std::vector<bool>(1, true))),
+    std::vector<ComponentMask>(4, ComponentMask(1, true))),
   order(order),
   n_face_support_points(n_face_support_points)
 {

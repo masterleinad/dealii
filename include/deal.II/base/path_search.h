@@ -102,8 +102,8 @@ public:
    *
    * The debug argument determines the verbosity of this class.
    */
-  PathSearch (const std::string &cls,
-              const unsigned int debug=0);
+  explicit PathSearch (const std::string &cls,
+                       const unsigned int debug=0);
 
   /**
    * Find a file in the class specified by the constructor and return its

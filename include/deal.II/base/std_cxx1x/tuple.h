@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__tuple_h
+#define dealii__tuple_h
+
 // this file is deprecated. simply include the one we use now
 #include "../std_cxx11/tuple.h"
 
@@ -20,3 +23,5 @@
 DEAL_II_NAMESPACE_OPEN
 namespace std_cxx1x = std_cxx11;
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

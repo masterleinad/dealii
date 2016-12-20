@@ -98,8 +98,8 @@ public:
    * This constructor is only available if the deal.II compiler is an MPI
    * compiler.
    */
-  Timer (MPI_Comm mpi_communicator,
-         const bool sync_wall_time = false);
+  explicit Timer (MPI_Comm mpi_communicator,
+                  const bool sync_wall_time = false);
 
   /**
    * Return a reference to the data structure with global timing information.

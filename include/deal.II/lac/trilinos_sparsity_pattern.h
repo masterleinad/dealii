@@ -420,8 +420,8 @@ namespace TrilinosWrappers
      *
      * @deprecated Use the respective method with IndexSet argument instead.
      */
-    SparsityPattern (const Epetra_Map &parallel_partitioning,
-                     const size_type   n_entries_per_row = 0) DEAL_II_DEPRECATED;
+    explicit SparsityPattern (const Epetra_Map &parallel_partitioning,
+                              const size_type   n_entries_per_row = 0) DEAL_II_DEPRECATED;
 
     /**
      * Same as before, but now use the exact number of nonzeros in each m row.
@@ -603,9 +603,9 @@ namespace TrilinosWrappers
      * will avoid repeated allocation of memory, which considerably increases
      * the performance when creating the sparsity pattern.
      */
-    SparsityPattern (const IndexSet  &parallel_partitioning,
-                     const MPI_Comm  &communicator = MPI_COMM_WORLD,
-                     const size_type  n_entries_per_row = 0);
+    explicit SparsityPattern (const IndexSet  &parallel_partitioning,
+                              const MPI_Comm  &communicator = MPI_COMM_WORLD,
+                              const size_type  n_entries_per_row = 0);
 
     /**
      * Same as before, but now use the exact number of nonzeros in each m row.

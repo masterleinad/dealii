@@ -98,7 +98,7 @@ namespace Threads
        * Constructor. Lock the mutex. Since this is a dummy mutex class, this
        * of course does nothing.
        */
-      ScopedLock (DummyThreadMutex &) {}
+      explicit ScopedLock (DummyThreadMutex &) {}
 
       /**
        * Destructor. Unlock the mutex. Since this is a dummy mutex class, this
@@ -191,9 +191,9 @@ namespace Threads
      * the number of threads to be synchronised is one, this constructor
      * raises an exception if the <code>count</code> argument is one.
      */
-    DummyBarrier (const unsigned int  count,
-                  const char         *name = 0,
-                  void               *arg  = 0);
+    explicit DummyBarrier (const unsigned int  count,
+                           const char         *name = 0,
+                           void               *arg  = 0);
 
     /**
      * Wait for all threads to reach this point. Since there may only be one
@@ -267,7 +267,7 @@ namespace Threads
       /**
        * Constructor. Lock the mutex.
        */
-      ScopedLock (Mutex &m) : mutex(m)
+      explicit ScopedLock (Mutex &m) : mutex(m)
       {
         mutex.acquire();
       }
@@ -406,9 +406,9 @@ namespace Threads
     /**
      * Constructor. Initialize the underlying POSIX barrier data structure.
      */
-    PosixThreadBarrier (const unsigned int  count,
-                        const char         *name = 0,
-                        void               *arg  = 0);
+    explicit PosixThreadBarrier (const unsigned int  count,
+                                 const char         *name = 0,
+                                 void               *arg  = 0);
 
     /**
      * Destructor. Release all resources.

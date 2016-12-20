@@ -72,7 +72,7 @@ public:
    * <tt>block_sizes[i]</tt>. The number of blocks will be the size of @p
    * block_sizes.
    */
-  BlockIndices (const std::vector<size_type> &block_sizes);
+  explicit BlockIndices (const std::vector<size_type> &block_sizes);
 
 #ifdef DEAL_II_WITH_CXX11
   /**

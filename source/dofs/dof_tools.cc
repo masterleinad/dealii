@@ -1502,7 +1502,7 @@ namespace DoFTools
     get_subdomain_association (dof_handler, subdomain_association);
 
     std::vector<unsigned char> component_association (dof_handler.n_dofs());
-    internal::get_component_association (dof_handler, std::vector<bool>(),
+    internal::get_component_association (dof_handler, ComponentMask(),
                                          component_association);
 
     for (unsigned int c=0; c<dof_handler.get_fe().n_components(); ++c)

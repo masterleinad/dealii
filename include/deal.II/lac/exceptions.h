@@ -53,7 +53,7 @@ namespace LACExceptions
   class ExcPETScError : public dealii::ExceptionBase
   {
   public:
-    ExcPETScError (const int error_code);
+    explicit ExcPETScError (const int error_code);
 
     virtual void print_info (std::ostream &out) const;
 

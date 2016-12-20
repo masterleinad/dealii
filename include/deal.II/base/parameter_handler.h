@@ -171,8 +171,8 @@ namespace Patterns
      * default values are chosen such that no bounds are enforced on
      * parameters.
      */
-    Integer (const int lower_bound = min_int_value,
-             const int upper_bound = max_int_value);
+    explicit Integer (const int lower_bound = min_int_value,
+                      const int upper_bound = max_int_value);
 
     /**
      * Return <tt>true</tt> if the string is an integer and its value is
@@ -263,8 +263,8 @@ namespace Patterns
      * implied. The default values are chosen such that no bounds are
      * enforced on parameters.
      */
-    Double (const double lower_bound = min_double_value,
-            const double upper_bound = max_double_value);
+    explicit Double (const double lower_bound = min_double_value,
+                     const double upper_bound = max_double_value);
 
     /**
      * Return <tt>true</tt> if the string is a number and its value is within
@@ -334,7 +334,7 @@ namespace Patterns
      * Constructor. Take the given parameter as the specification of valid
      * strings.
      */
-    Selection (const std::string &seq);
+    explicit Selection (const std::string &seq);
 
     /**
      * Return <tt>true</tt> if the string is an element of the description
@@ -408,10 +408,10 @@ namespace Patterns
      * allowable lengths of the list, and the string that is used as a
      * separator between elements of the list.
      */
-    List (const PatternBase  &base_pattern,
-          const unsigned int  min_elements = 0,
-          const unsigned int  max_elements = max_int_value,
-          const std::string  &separator = ",");
+    explicit List (const PatternBase  &base_pattern,
+                   const unsigned int  min_elements = 0,
+                   const unsigned int  max_elements = max_int_value,
+                   const std::string  &separator = ",");
 
     /**
      * Destructor.
@@ -624,7 +624,7 @@ namespace Patterns
     /**
      * Constructor. @p seq is a list of valid options separated by "|".
      */
-    MultipleSelection (const std::string &seq);
+    explicit MultipleSelection (const std::string &seq);
 
     /**
      * Return <tt>true</tt> if the string is an element of the description
@@ -797,7 +797,7 @@ namespace Patterns
      * Constructor.  The type of the file can be specified by choosing the
      * flag.
      */
-    FileName (const FileType type = input);
+    explicit FileName (const FileType type = input);
 
     /**
      * Return <tt>true</tt> if the string matches its constraints, i.e.

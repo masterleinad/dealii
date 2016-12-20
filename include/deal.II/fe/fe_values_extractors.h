@@ -70,7 +70,7 @@ namespace FEValuesExtractors
     /**
      * Constructor. Take the selected vector component as argument.
      */
-    Scalar (const unsigned int component);
+    explicit Scalar (const unsigned int component);
   };
 
 
@@ -120,7 +120,7 @@ namespace FEValuesExtractors
      * Constructor. Take the first component of the selected vector inside the
      * FEValues object as argument.
      */
-    Vector (const unsigned int first_vector_component);
+    explicit Vector (const unsigned int first_vector_component);
   };
 
 

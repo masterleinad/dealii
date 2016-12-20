@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__matrix_free_templates_h
+#define dealii__matrix_free_templates_h
 
 #include <deal.II/base/utilities.h>
 #include <deal.II/base/memory_consumption.h>
@@ -1093,3 +1095,5 @@ namespace internal
 
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

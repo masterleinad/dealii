@@ -61,7 +61,7 @@ namespace internal
      * <code>t</code>.
      */
     template <typename T>
-    TableEntry (const T &t);
+    explicit TableEntry (const T &t);
 
     /**
      * Return the value stored by this object. The template type T must be one

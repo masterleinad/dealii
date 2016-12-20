@@ -30,7 +30,7 @@ using namespace Manifolds;
 struct CompareWeights
 {
 public:
-  CompareWeights(const std::vector<double> &weights)
+  explicit CompareWeights(const std::vector<double> &weights)
     :
     compare_weights(&weights)
   {}

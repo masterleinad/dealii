@@ -42,7 +42,7 @@ FE_BDM<dim>::FE_BDM (const unsigned int deg)
                            dim, deg+1, FiniteElementData<dim>::Hdiv),
     get_ria_vector (deg),
     std::vector<ComponentMask>(PolynomialsBDM<dim>::compute_n_pols(deg),
-                               std::vector<bool>(dim,true)))
+                               ComponentMask(dim,true)))
 {
   Assert (dim >= 2, ExcImpossibleInDim(dim));
   Assert (deg > 0, ExcMessage("Lowest order BDM element are degree 1, but you asked for degree 0"));

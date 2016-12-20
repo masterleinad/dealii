@@ -13,6 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__vector_selector_templates_h
+#define dealii__vector_selector_templates_h
 
 #include <deal.II/meshworker/vector_selector.h>
 #include <deal.II/base/vector_slice.h>
@@ -244,3 +246,5 @@ namespace MeshWorker
 }
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif

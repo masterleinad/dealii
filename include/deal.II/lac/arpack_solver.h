@@ -138,7 +138,7 @@ public:
     const unsigned int number_of_arnoldi_vectors;
     const WhichEigenvalues eigenvalue_of_interest;
     const bool symmetric;
-    AdditionalData(
+    explicit AdditionalData(
       const unsigned int number_of_arnoldi_vectors = 15,
       const WhichEigenvalues eigenvalue_of_interest = largest_magnitude,
       const bool symmetric = false);
@@ -152,8 +152,8 @@ public:
   /**
    * Constructor.
    */
-  ArpackSolver(SolverControl &control,
-               const AdditionalData &data = AdditionalData());
+  explicit ArpackSolver(SolverControl &control,
+                        const AdditionalData &data = AdditionalData());
 
   /**
    * Set initial vector for building Krylov space.

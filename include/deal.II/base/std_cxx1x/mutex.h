@@ -13,10 +13,15 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii__mutex_h
+#define dealii__mutex_h
+
 // this file is deprecated. simply include the one we use now
 #include "../std_cxx11/mutex.h"
 
 // then allow using the old namespace name instead of the new one
 DEAL_II_NAMESPACE_OPEN
 namespace std_cxx1x = std_cxx11;
-DEAL_II_NAMESPACE_CLOSE
+iDEAL_II_NAMESPACE_CLOSE
+
+#endif

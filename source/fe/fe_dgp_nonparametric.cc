@@ -37,7 +37,7 @@ FE_DGPNonparametric<dim,spacedim>::FE_DGPNonparametric (const unsigned int degre
       FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,true),
     std::vector<ComponentMask>(
       FiniteElementData<dim>(get_dpo_vector(degree),1, degree).dofs_per_cell,
-      std::vector<bool>(1,true))),
+      ComponentMask(1,true))),
   polynomial_space (Polynomials::Legendre::generate_complete_basis(degree))
 {
   const unsigned int n_dofs = this->dofs_per_cell;

@@ -48,7 +48,7 @@ FE_RaviartThomas<dim>::FE_RaviartThomas (const unsigned int deg)
                            dim, deg+1, FiniteElementData<dim>::Hdiv),
     std::vector<bool>(PolynomialsRaviartThomas<dim>::compute_n_pols(deg), true),
     std::vector<ComponentMask>(PolynomialsRaviartThomas<dim>::compute_n_pols(deg),
-                               std::vector<bool>(dim,true)))
+                               ComponentMask(dim,true)))
 {
   Assert (dim >= 2, ExcImpossibleInDim(dim));
   const unsigned int n_dofs = this->dofs_per_cell;

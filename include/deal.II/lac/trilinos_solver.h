@@ -109,7 +109,7 @@ namespace TrilinosWrappers
     /**
      * Constructor. Takes the solver control object and creates the solver.
      */
-    SolverBase (SolverControl  &cn);
+    explicit SolverBase (SolverControl  &cn);
 
     /**
      * Second constructor. This constructor takes an enum object that
@@ -294,8 +294,8 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverCG (SolverControl        &cn,
-              const AdditionalData &data = AdditionalData());
+    explicit SolverCG (SolverControl        &cn,
+                       const AdditionalData &data = AdditionalData());
 
   protected:
     /**
@@ -340,8 +340,8 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverCGS (SolverControl        &cn,
-               const AdditionalData &data = AdditionalData());
+    explicit SolverCGS (SolverControl        &cn,
+                        const AdditionalData &data = AdditionalData());
 
   protected:
     /**
@@ -393,8 +393,8 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverGMRES (SolverControl        &cn,
-                 const AdditionalData &data = AdditionalData());
+    explicit SolverGMRES (SolverControl        &cn,
+                          const AdditionalData &data = AdditionalData());
 
   protected:
     /**
@@ -440,8 +440,8 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverBicgstab (SolverControl        &cn,
-                    const AdditionalData &data = AdditionalData());
+    explicit SolverBicgstab (SolverControl        &cn,
+                             const AdditionalData &data = AdditionalData());
 
   protected:
     /**
@@ -487,8 +487,8 @@ namespace TrilinosWrappers
      * The last argument takes a structure with additional, solver dependent
      * flags for tuning.
      */
-    SolverTFQMR (SolverControl        &cn,
-                 const AdditionalData &data = AdditionalData());
+    explicit SolverTFQMR (SolverControl        &cn,
+                          const AdditionalData &data = AdditionalData());
 
   protected:
     /**
@@ -559,8 +559,8 @@ namespace TrilinosWrappers
     /**
      * Constructor. Takes the solver control object and creates the solver.
      */
-    SolverDirect (SolverControl  &cn,
-                  const AdditionalData &data = AdditionalData());
+    explicit SolverDirect (SolverControl  &cn,
+                           const AdditionalData &data = AdditionalData());
 
     /**
      * Destructor.

@@ -71,7 +71,7 @@ namespace Utilities
        * Constructor with size argument. Creates an MPI_COMM_SELF structure
        * where there is no real parallel layout.
        */
-      Partitioner (const unsigned int size);
+      explicit Partitioner (const unsigned int size);
 
       /**
        * Constructor with index set arguments. This constructor creates a

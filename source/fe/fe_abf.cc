@@ -48,7 +48,7 @@ FE_ABF<dim>::FE_ABF (const unsigned int deg)
                            dim, deg+1, FiniteElementData<dim>::Hdiv),
     std::vector<bool>(PolynomialsABF<dim>::compute_n_pols(deg), true),
     std::vector<ComponentMask>(PolynomialsABF<dim>::compute_n_pols(deg),
-                               std::vector<bool>(dim,true))),
+                               ComponentMask(dim,true))),
   rt_order(deg)
 {
   Assert (dim >= 2, ExcImpossibleInDim(dim));

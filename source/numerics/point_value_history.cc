@@ -491,7 +491,7 @@ void PointValueHistory<dim>
 ::add_field_name(const std::string &vector_name, const unsigned int n_components)
 {
   std::vector <bool> temp_mask (n_components, true);
-  add_field_name (vector_name, temp_mask);
+  add_field_name (vector_name, ComponentMask(temp_mask));
 }
 
 

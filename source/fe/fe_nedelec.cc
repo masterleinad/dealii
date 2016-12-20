@@ -68,7 +68,7 @@ FE_Nedelec<dim>::FE_Nedelec (const unsigned int order)
    std::vector<bool> (PolynomialsNedelec<dim>::compute_n_pols (order), true),
    std::vector<ComponentMask>
    (PolynomialsNedelec<dim>::compute_n_pols (order),
-    std::vector<bool> (dim, true)))
+    ComponentMask (dim, true)))
 {
 #ifdef DEBUG_NEDELEC
   deallog << get_name() << std::endl;
