@@ -151,7 +151,7 @@ namespace Algorithms
           {
             (*inverse_derivative)(out2, src2);
           }
-        catch (SolverControl::NoConvergence &e)
+        catch (const SolverControl::NoConvergence &e)
           {
             deallog << "Inner iteration failed after "
                     << e.last_step << " steps with residual "

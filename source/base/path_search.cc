@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------
 //
-// Copyright (C) 2005 - 2014 by the deal.II authors
+// Copyright (C) 2005 - 2016 by the deal.II authors
 //
 // This file is part of the deal.II library.
 //
@@ -187,7 +187,7 @@ PathSearch::find (const std::string &filename,
         {
           return find(filename, *suffix, open_mode);
         }
-      catch (ExcFileNotFound)
+      catch (const ExcFileNotFound &)
         {
           continue;
         }

@@ -343,7 +343,7 @@ void FunctionParser<dim>::init_muparser() const
           // now use the transformed expression
           fp.get()[component].SetExpr(transformed_expression);
         }
-      catch (mu::ParserError &e)
+      catch (const mu::ParserError &e)
         {
           std::cerr << "Message:  <" << e.GetMsg() << ">\n";
           std::cerr << "Formula:  <" << e.GetExpr() << ">\n";
@@ -390,7 +390,7 @@ double FunctionParser<dim>::value (const Point<dim>  &p,
     {
       return fp.get()[component].Eval();
     }
-  catch (mu::ParserError &e)
+  catch (const mu::ParserError &e)
     {
       std::cerr << "Message:  <" << e.GetMsg() << ">\n";
       std::cerr << "Formula:  <" << e.GetExpr() << ">\n";

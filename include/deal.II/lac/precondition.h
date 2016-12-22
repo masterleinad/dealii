@@ -2101,7 +2101,7 @@ PreconditionChebyshev<MatrixType,VectorType,PreconditionerType>::estimate_eigenv
         {
           solver.solve(*matrix_ptr, update1, update2, *data.preconditioner);
         }
-      catch (SolverControl::NoConvergence &)
+      catch (const SolverControl::NoConvergence &)
         {
         }
 

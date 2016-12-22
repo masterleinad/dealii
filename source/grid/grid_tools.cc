@@ -1371,7 +1371,7 @@ next_cell:
                     best_cell     = std::make_pair(*cell, p_cell);
                   }
               }
-            catch (typename MappingQGeneric<dim,spacedim>::ExcTransformationFailed &)
+            catch (const typename MappingQGeneric<dim,spacedim>::ExcTransformationFailed &)
               {
                 // ok, the transformation
                 // failed presumably
@@ -1497,7 +1497,7 @@ next_cell:
                         best_cell     = std::make_pair(*cell, p_cell);
                       }
                   }
-                catch (typename MappingQGeneric<dim,spacedim>::ExcTransformationFailed &)
+                catch (const typename MappingQGeneric<dim,spacedim>::ExcTransformationFailed &)
                   {
                     // ok, the transformation
                     // failed presumably

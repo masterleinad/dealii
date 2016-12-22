@@ -1425,7 +1425,7 @@ namespace FETools
       {
         gim_forwarder (fe1, fe2, interpolation_matrix);
       }
-    catch (typename FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented &)
+    catch (const typename FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented &)
       {
         // too bad....
         fe_implements_interpolation = false;

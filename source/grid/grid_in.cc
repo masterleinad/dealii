@@ -868,7 +868,7 @@ void GridIn<dim, spacedim>::read_abaqus (std::istream                           
     {
       read_ucd(in_ucd, apply_all_indicators_to_manifolds);
     }
-  catch (std::exception &exc)
+  catch (const std::exception &exc)
     {
       std::cerr
           << "Exception on processing internal UCD data: " << std::endl
