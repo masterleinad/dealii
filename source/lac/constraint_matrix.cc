@@ -591,9 +591,6 @@ ConstraintMatrix::merge (const ConstraintMatrix &other_constraints,
 
 void ConstraintMatrix::shift (const size_type offset)
 {
-  //TODO: this doesn't work with IndexSets yet. [TH]
-  AssertThrow(local_lines.size()==0, ExcNotImplemented());
-
   lines_cache.insert (lines_cache.begin(), offset,
                       numbers::invalid_size_type);
 
