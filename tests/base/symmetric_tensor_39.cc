@@ -27,13 +27,18 @@ int main()
   SymmetricTensor<4,dim,VectorizedArray<double> > I;
   SymmetricTensor<2,dim,VectorizedArray<double> > A;
   SymmetricTensor<2,dim,VectorizedArray<double> > B;
+  SymmetricTensor<2,dim,VectorizedArray<double> > C;
 
   // I^sym = 0.5(d_ik*d_jl + d_il*d_jk) -> I^sym : A = A^sym
   for (unsigned int i = 0; i < dim; i++)
     for (unsigned int j = 0; j < dim; j++)
       for (unsigned int k = 0; k < dim; k++)
         for (unsigned int l = 0; l < dim; l++)
-          I[i][j][k][l] = ( (i == k && j== l && i == l && j == k) ? make_vectorized_array(1.0) : ( (i == k && j== l) || (i == l && j == k) ? make_vectorized_array(0.5) : make_vectorized_array(0.0)));
+          {
+            I[i][j][k][l] = ( (i == k && j== l && i == l && j == k) ? make_vectorized_array(1.0) : ( (i == k && j== l) || (i == l && j == k) ? make_vectorized_array(0.5) : make_vectorized_array(0.0)));
+            for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; v++)
+              deallog << "I[" << i << "][" << j << "][" << k << "]["  << l << "][" << v << "]= " << I[i][j][k][l][v] << std::endl;
+          }
 
   double counter = 0.0;
   for (unsigned int i = 0; i < dim; ++i)
@@ -42,9 +47,20 @@ int main()
         {
           A[i][j][v] = counter;
           counter += 1.0;
+          deallog << "A[" << i << "][" << j << "][" << v << "]= " << A[i][j][v] << std::endl;
         }
 
+//  double_contract(C, I, A);
   B = I*A;
+
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+        {
+          deallog << "B[" << i << "][" << j << "][" << v << "]= " << B[i][j][v] << std::endl;
+          deallog << "C[" << i << "][" << j << "][" << v << "]= " << C[i][j][v] << std::endl;
+        }
+
   B -= A;
 
   // Note that you cannot use B.norm() here even with something
@@ -52,8 +68,8 @@ int main()
   for (unsigned int i = 0; i < dim; ++i)
     for (unsigned int j = 0; j < dim; ++j)
       for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
-        if (B[i][j][v] != 0.0)
-          deallog<< "Not OK" << std::endl;
+        if (std::fabs(B[i][j][v]) >1.e-20)
+          deallog<< "Not OK: " << B[i][j][v] << std::endl;
 
   deallog << "OK" << std::endl;
 }
