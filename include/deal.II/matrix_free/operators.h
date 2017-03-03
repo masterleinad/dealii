@@ -37,23 +37,23 @@ namespace MatrixFreeOperators
 {
   /**
    * Abstract base class for matrix-free operators which can be used both at
-   * the finest mesh or at a certain level in geometric multigrid.
+   * the finest mesh or at a certain level in geometric multigrid. In contrast to
+   * Base, this class is used for operators that have multiple blocks.
    *
    * A derived class has to implement apply_add() method as well as
-   * compute_diagonal() to initialize the protected member inverse_diagonal_entries.
+   * compute_diagonal() to initialize the protected member
+   * inverse_diagonal_entries.
    * In case of a non-symmetric operator, Tapply_add() should be additionally
    * implemented.
    *
-   * Currently, the only supported vector is LinearAlgebra::distributed::Vector.
-   *
-   * @author Denis Davydov, 2016
+   * @author Daniel Arndt, 2017
    */
-  template <int dim, typename VectorType = LinearAlgebra::distributed::Vector<double> >
+  template <int dim, typename VectorType = LinearAlgebra::distributed::BlockVector<double> >
   class Base : public Subscriptor
   {
   public:
     /**
-     * Number typedef.
+     * value_type typedef.
      */
     typedef typename VectorType::value_type value_type;
 
@@ -65,7 +65,7 @@ namespace MatrixFreeOperators
     /**
      * Default constructor.
      */
-    Base ();
+    Base();
 
     /**
      * Virtual destructor.
@@ -81,77 +81,80 @@ namespace MatrixFreeOperators
     /**
      * Initialize operator on fine scale.
      */
-    void initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data);
+    void
+    initialize(std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_);
 
     /**
-     * Initialize operator on a level @p level.
+        * Initialize operator on a level @p level for a single FiniteElement.
+        */
+    void
+    initialize(std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
+               const MGConstrainedDoFs &mg_constrained_dofs,
+               const unsigned int level);
+
+    /**
+     * Initialize operator on a level @p level for multiple FiniteElements.
      */
-    void initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data,
-                     const MGConstrainedDoFs &mg_constrained_dofs,
-                     const unsigned int level);
+    void
+    initialize(std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
+               const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
+               const unsigned int level);
 
     /**
      * Return the dimension of the codomain (or range) space.
      */
-    size_type m () const;
+    size_type m() const;
 
     /**
      * Return the dimension of the domain space.
      */
-    size_type n () const;
+    size_type n() const;
 
     /**
-     * vmult operator for interface.
+     * vmult operator for interface for multiple FiniteElements.
      */
-    void vmult_interface_down(VectorType &dst,
-                              const VectorType &src) const;
+    void vmult_interface_down(VectorType &dst, const VectorType &src) const;
 
     /**
-     * vmult operator for interface.
+     * vmult operator for interface for multiple FiniteElements.
      */
-    void vmult_interface_up(VectorType &dst,
-                            const VectorType &src) const;
+    void vmult_interface_up(VectorType &dst, const VectorType &src) const;
 
     /**
-     * Matrix-vector multiplication.
+     * Matrix-vector multiplication for multiple FiniteElements.
      */
-    void vmult (VectorType &dst,
-                const VectorType &src) const;
+    void vmult(VectorType &dst, const VectorType &src) const;
 
     /**
-     * Transpose matrix-vector multiplication.
+     * Transpose matrix-vector multiplication for multiple FiniteElements.
      */
-    void Tvmult (VectorType &dst,
-                 const VectorType &src) const;
+    void Tvmult(VectorType &dst, const VectorType &src) const;
 
     /**
-     * Adding Matrix-vector multiplication.
+     * Adding Matrix-vector multiplication for multiple FiniteElements.
      */
-    void vmult_add (VectorType &dst,
-                    const VectorType &src) const;
+    void vmult_add(VectorType &dst, const VectorType &src) const;
 
     /**
-     * Adding transpose matrix-vector multiplication.
+     * Adding transpose matrix-vector multiplication for multiple FiniteElements.
      */
-    void Tvmult_add (VectorType &dst,
-                     const VectorType &src) const;
+    void Tvmult_add(VectorType &dst, const VectorType &src) const;
 
     /**
      * Returns the value of the matrix entry (row,col). In matrix-free context
      * this function is valid only for row==col when diagonal is initialized.
      */
-    value_type el (const unsigned int row,
-                   const unsigned int col) const;
+    value_type el(const unsigned int row, const unsigned int col) const;
 
     /**
      * Determine an estimate for the memory consumption (in bytes) of this object.
      */
-    virtual std::size_t memory_consumption () const;
+    virtual std::size_t memory_consumption() const;
 
     /**
      * A wrapper for initialize_dof_vector() of MatrixFree object.
      */
-    void initialize_dof_vector (VectorType &vec) const;
+    void initialize_dof_vector(VectorType &vec) const;
 
     /**
      * Compute diagonal of this operator.
@@ -159,73 +162,66 @@ namespace MatrixFreeOperators
      * A derived class needs to implement this function and resize and fill
      * the protected member inverse_diagonal_entries accordingly.
      */
-    virtual void compute_diagonal () = 0;
+    virtual void compute_diagonal() = 0;
 
     /**
      * Get read access to the MatrixFree object stored with this operator.
      */
-    std_cxx11::shared_ptr<const MatrixFree<dim,value_type> >
-    get_matrix_free () const;
+    std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > get_matrix_free() const;
 
     /**
      * Get read access to the inverse diagonal of this operator.
      */
-    const std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > &
-    get_matrix_diagonal_inverse() const;
+    const std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > &get_matrix_diagonal_inverse() const;
 
     /**
      * Apply the Jacobi preconditioner, which multiplies every element of the
      * <tt>src</tt> vector by the inverse of the respective diagonal element and
      * multiplies the result with the relaxation factor <tt>omega</tt>.
      */
-    void precondition_Jacobi(VectorType &dst,
-                             const VectorType &src,
+    void precondition_Jacobi(VectorType &dst, const VectorType &src,
                              const value_type omega) const;
 
   protected:
-
     /**
      * Set constrained entries (both from hanging nodes and edge constraints)
      * of @p dst to one.
      */
-    void set_constrained_entries_to_one (VectorType &dst) const;
+    void set_constrained_entries_to_one(VectorType &dst) const;
 
     /**
      * Apply operator to @p src and add result in @p dst.
      */
-    virtual void apply_add(VectorType &dst,
-                           const VectorType &src) const = 0;
+    virtual void apply_add(VectorType &dst, const VectorType &src) const = 0;
 
     /**
      * Apply transpose operator to @p src and add result in @p dst.
      *
      * Default implementation is to call apply_add().
      */
-    virtual void Tapply_add(VectorType &dst,
-                            const VectorType &src) const;
+    virtual void Tapply_add(VectorType &dst, const VectorType &src) const;
 
     /**
      * MatrixFree object to be used with this operator.
      */
-    std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data;
+    std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data;
 
     /**
      * A shared pointer to a diagonal matrix that stores the inverse of
      * diagonal elements as a vector.
      */
-    std_cxx11::shared_ptr<DiagonalMatrix<VectorType > > inverse_diagonal_entries;
+    std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > inverse_diagonal_entries;
 
   private:
-
     /**
      * Indices of DoFs on edge in case the operator is used in GMG context.
      */
-    std::vector<unsigned int> edge_constrained_indices;
+    std::vector<std::vector<unsigned int> > edge_constrained_indices;
 
     /**
      * Auxiliary vector.
      */
-    mutable std::vector<std::pair<value_type,value_type> > edge_constrained_values;
+    mutable std::vector<std::vector<std::pair<value_type, value_type> >> edge_constrained_values;
 
     /**
      * A flag which determines whether or not this operator has interface
@@ -237,9 +233,7 @@ namespace MatrixFreeOperators
      * Function which implements vmult_add (@p transpose = false) and
      * Tvmult_add (@p transpose = true).
      */
-    void mult_add (VectorType &dst,
-                   const VectorType &src,
-                   const bool transpose) const;
+    void mult_add(VectorType &dst, const VectorType &src, const bool transpose) const;
 
     /**
      * Adjust the ghost range of the vectors to the storage requirements of
@@ -248,10 +242,8 @@ namespace MatrixFreeOperators
      * order to ensure that the cell loops will be able to access the ghost
      * indices with the correct local indices.
      */
-    void adjust_ghost_range_if_necessary(const VectorType &vec) const;
+    void adjust_ghost_range_if_necessary(const VectorType &src) const;
   };
-
-
 
   /**
    * Auxiliary class to provide interface vmult/Tvmult methods required in
@@ -688,38 +680,34 @@ namespace MatrixFreeOperators
       }
   }
 
-  //----------------- Base operator -----------------------------
+//----------------- Base operator -----------------------------
+
   template <int dim, typename VectorType>
-  Base<dim,VectorType>::~Base ()
+  Base<dim, VectorType>::~Base() {}
+
+
+
+  template <int dim, typename VectorType>
+  Base<dim, VectorType>::Base() : Subscriptor(), data(NULL) {}
+
+
+
+  template <int dim, typename VectorType>
+  typename Base<dim, VectorType>::size_type
+  Base<dim, VectorType>::m() const
   {
+    Assert(data != NULL, ExcNotInitialized());
+    typename Base<dim, VectorType>::size_type total_size = 0;
+    for (unsigned int i=0; i<data->n_components(); ++i)
+      total_size += data->get_vector_partitioner(i)->size();
+    return total_size;
   }
 
 
 
   template <int dim, typename VectorType>
-  Base<dim,VectorType>::Base ()
-    :
-    Subscriptor(),
-    have_interface_matrices(false)
-  {
-  }
-
-
-
-  template <int dim, typename VectorType>
-  typename Base<dim,VectorType>::size_type
-  Base<dim,VectorType>::m () const
-  {
-    Assert(data.get() != NULL,
-           ExcNotInitialized());
-    return data->get_vector_partitioner()->size();
-  }
-
-
-
-  template <int dim, typename VectorType>
-  typename Base<dim,VectorType>::size_type
-  Base<dim,VectorType>::n () const
+  typename Base<dim, VectorType>::size_type
+  Base<dim, VectorType>::n() const
   {
     return m();
   }
@@ -727,307 +715,560 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::clear ()
+  void Base<dim, VectorType>::clear()
   {
-    data.reset();
+    data = NULL;
     inverse_diagonal_entries.reset();
   }
 
 
 
   template <int dim, typename VectorType>
-  typename Base<dim,VectorType>::value_type
-  Base<dim,VectorType>::el (const unsigned int row,
+  typename Base<dim, VectorType>::value_type
+  Base<dim, VectorType>::el(const unsigned int row,
                             const unsigned int col) const
   {
-    (void) col;
-    Assert (row == col, ExcNotImplemented());
-    Assert (inverse_diagonal_entries.get() != NULL &&
-            inverse_diagonal_entries->m() > 0, ExcNotInitialized());
-    return 1.0/(*inverse_diagonal_entries)(row,row);
+    Assert(row == col, ExcNotImplemented());
+    Assert(inverse_diagonal_entries.get() != NULL &&
+           inverse_diagonal_entries->m() > 0,
+           ExcNotInitialized());
+    return 1.0 / (*inverse_diagonal_entries)(row, row);
+  }
+
+
+
+
+  template <int dim, typename VectorType>
+  typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
+  external_initialize_dof_vector(const MatrixFree<dim, typename VectorType::value_type> &mf,
+                                 VectorType &vec)
+  {
+    for (unsigned int i = 0; i < vec.n_blocks(); ++i)
+      {
+        if (!vec.block(i).partitioners_are_compatible(*mf.get_dof_info(i).vector_partitioner))
+          mf.initialize_dof_vector(vec.block(i));
+        Assert(vec.block(i).partitioners_are_globally_compatible
+               (*mf.get_dof_info(i).vector_partitioner),
+               ExcInternalError());
+      }
+    vec.collect_sizes();
   }
 
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::initialize_dof_vector (VectorType &vec) const
+  typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
+  external_initialize_dof_vector(const MatrixFree<dim, typename VectorType::value_type> &mf,
+                                 VectorType &vec)
   {
-    Assert(data.get() != NULL,
-           ExcNotInitialized());
-    if (!vec.partitioners_are_compatible(*data->get_dof_info(0).vector_partitioner))
-      data->initialize_dof_vector(vec);
-    Assert(vec.partitioners_are_globally_compatible(*data->get_dof_info(0).vector_partitioner),
+    if (!vec.partitioners_are_compatible(*mf.get_dof_info(0).vector_partitioner))
+      mf.initialize_dof_vector(vec);
+    Assert(vec.partitioners_are_globally_compatible
+           (*mf.get_dof_info(0).vector_partitioner),
            ExcInternalError());
   }
 
+  template <int dim, typename VectorType>
+  void
+  Base<dim, VectorType>::initialize_dof_vector(VectorType &vec) const
+  {
+    Assert(data != NULL, ExcNotInitialized());
+    external_initialize_dof_vector(*data, vec);
+  }
+
+
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::
-  initialize (std_cxx11::shared_ptr<const MatrixFree<dim,Base<dim,VectorType>::value_type> > data_)
+  void Base<dim, VectorType>::initialize
+  (std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_)
   {
     data = data_;
     edge_constrained_indices.clear();
+    edge_constrained_indices.resize(data->n_components());
+    edge_constrained_values.clear();
+    edge_constrained_values.resize(data->n_components());
     have_interface_matrices = false;
   }
 
+  template <int dim, typename VectorType>
+  void Base<dim, VectorType>::initialize
+  (std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
+   const MGConstrainedDoFs &mg_constrained_dofs,
+   const unsigned int level)
+  {
+    std::vector<MGConstrainedDoFs> mg_constrained_dofs_(1, mg_constrained_dofs);
+    initialize(data_, mg_constrained_dofs_, level);
+  }
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::
-  initialize (std_cxx11::shared_ptr<const MatrixFree<dim,Base<dim,VectorType>::value_type> > data_,
-              const MGConstrainedDoFs      &mg_constrained_dofs,
-              const unsigned int            level)
+  void Base<dim, VectorType>::initialize
+  (std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
+   const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
+   const unsigned int level)
   {
-    AssertThrow (level != numbers::invalid_unsigned_int,
-                 ExcMessage("level is not set"));
+    AssertThrow(level != numbers::invalid_unsigned_int,
+                ExcMessage("level is not set"));
+    AssertDimension(mg_constrained_dofs.size(), data_->n_components());
+    edge_constrained_indices.resize(data_->n_components());
+    edge_constrained_values.resize(data_->n_components());
     if (data_->n_macro_cells() > 0)
-      {
+      for (unsigned int i=0; i<data_->n_components(); ++i)
         AssertDimension(static_cast<int>(level),
-                        data_->get_cell_iterator(0,0)->level());
-      }
+                        data_->get_cell_iterator(0, 0, i)->level());
 
     data = data_;
 
-    // setup edge_constrained indices
-    std::vector<types::global_dof_index> interface_indices;
-    mg_constrained_dofs.get_refinement_edge_indices(level).fill_index_vector(interface_indices);
-    edge_constrained_indices.clear();
-    edge_constrained_indices.reserve(interface_indices.size());
-    edge_constrained_values.resize(interface_indices.size());
-    const IndexSet &locally_owned = data->get_dof_handler().locally_owned_mg_dofs(level);
-    for (unsigned int i=0; i<interface_indices.size(); ++i)
-      if (locally_owned.is_element(interface_indices[i]))
-        edge_constrained_indices.push_back(locally_owned.index_within_set(interface_indices[i]));
-    have_interface_matrices = Utilities::MPI::max((unsigned int)edge_constrained_indices.size(),
-                                                  data->get_vector_partitioner()->get_mpi_communicator()) > 0;
+    for (unsigned int i = 0; i < data->n_components(); ++i)
+      {
+        // setup edge_constrained indices
+        std::vector<types::global_dof_index> interface_indices;
+        mg_constrained_dofs[i].get_refinement_edge_indices(level).fill_index_vector(interface_indices);
+        edge_constrained_indices[i].clear();
+        edge_constrained_indices[i].reserve(interface_indices.size());
+        edge_constrained_values[i].resize(interface_indices.size());
+        const IndexSet &locally_owned =
+          data->get_dof_handler(i).locally_owned_mg_dofs(level);
+        for (unsigned int i=0; i<interface_indices.size(); ++i)
+          {
+            if (locally_owned.is_element(interface_indices[i]))
+              edge_constrained_indices[i].push_back
+              (locally_owned.index_within_set(interface_indices[i]));
+          }
+        have_interface_matrices |=
+          Utilities::MPI::max (static_cast<unsigned int>(edge_constrained_indices[i].size()),
+                               data_->get_vector_partitioner(i)->get_mpi_communicator()) > 0;
+      }
   }
 
 
-
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::set_constrained_entries_to_one (VectorType &dst) const
+  typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
+  external_set_constrained_entries_to_one
+  (const MatrixFree<dim, typename VectorType::value_type> &mf,
+   const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &dst)
   {
-    const std::vector<unsigned int> &
-    constrained_dofs = data->get_constrained_dofs();
+    Assert(edge_constrained_indices.size()==1, ExcInternalError());
+    const std::vector<unsigned int> &constrained_dofs = mf.get_constrained_dofs(0);
     for (unsigned int i=0; i<constrained_dofs.size(); ++i)
       dst.local_element(constrained_dofs[i]) = 1.;
-    for (unsigned int i=0; i<edge_constrained_indices.size(); ++i)
-      dst.local_element(edge_constrained_indices[i]) = 1.;
+    for (unsigned int i=0; i<edge_constrained_indices[0].size(); ++i)
+      dst.local_element(edge_constrained_indices[0][i]) = 1.;
   }
 
-
-
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::vmult (VectorType       &dst,
-                               const VectorType &src) const
+  typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
+  external_set_constrained_entries_to_one
+  (const MatrixFree<dim, typename VectorType::value_type> &mf,
+   const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &dst)
   {
-    typedef typename Base<dim,VectorType>::value_type Number;
-    dst = Number(0.);
-    vmult_add (dst, src);
+    AssertDimension(edge_constrained_indices.size(), dst.n_blocks());
+    for (unsigned int j = 0; j < dst.n_blocks; ++j)
+      {
+        const std::vector<unsigned int> &constrained_dofs = mf.get_constrained_dofs(j);
+        for (unsigned int i=0; i<constrained_dofs.size(); ++i)
+          dst.block(j).local_element(constrained_dofs[i]) = 1.;
+        for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
+          dst.block(j).local_element(edge_constrained_indices[j][i]) = 1.;
+      }
   }
 
-
-
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::vmult_add (VectorType &dst,
-                                   const VectorType &src) const
+  void Base<dim, VectorType>::set_constrained_entries_to_one
+  (VectorType &dst) const
   {
-    mult_add (dst, src, false);
+    external_set_constrained_entries_to_one(*data, edge_constrained_indices, dst);
   }
 
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::Tvmult_add (VectorType &dst,
+  void Base<dim, VectorType>::vmult(VectorType &dst,
                                     const VectorType &src) const
   {
-    mult_add (dst, src, true);
+    dst = 0.;
+    vmult_add(dst, src);
   }
 
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::adjust_ghost_range_if_necessary(const VectorType &src) const
+  void Base<dim, VectorType>::vmult_add(VectorType &dst,
+                                        const VectorType &src) const
   {
-    typedef typename Base<dim,VectorType>::value_type Number;
+    mult_add(dst, src, false);
+  }
+
+
+
+  template <int dim, typename VectorType>
+  void Base<dim, VectorType>::Tvmult_add(VectorType &dst,
+                                         const VectorType &src) const
+  {
+    mult_add(dst, src, true);
+  }
+
+  template <typename VectorType>
+  typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
+  external_set_dirichlet_zero
+  (std::vector<std::vector<std::pair<typename VectorType::value_type, typename VectorType::value_type> >> &edge_constrained_values,
+   const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &src,
+   const VectorType &dst)
+  {
+    AssertDimension(src.n_blocks(), src.n_blocks())
+    AssertDimension(edge_constrained_values.size(), src.n_blocks());
+    AssertDimension(edge_constrained_indices.size(), src.n_blocks());
+    for (unsigned int i = 0; i < src.n_blocks(); ++i)
+      {
+        for (unsigned int j = 0; j < edge_constrained_indices[i].size(); ++j)
+          {
+            edge_constrained_values[i][j] = std::pair<typename VectorType::value_type, typename VectorType::value_type>
+                                            (src.block(i).local_element(edge_constrained_indices[i][j]),
+                                             dst.block(i).local_element(edge_constrained_indices[i][j]));
+            src.block(i).local_element (edge_constrained_indices[i][j]) = 0.;
+          }
+      }
+
+  }
+
+  template <typename VectorType>
+  typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
+  external_set_dirichlet_zero
+  (std::vector<std::vector<std::pair<typename VectorType::value_type,
+   typename VectorType::value_type> >> &edge_constrained_values,
+   const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &src,
+   const VectorType &dst)
+  {
+    AssertDimension(edge_constrained_values.size(), 1);
+    AssertDimension(edge_constrained_indices.size(), 1);
+    for (unsigned int j = 0; j < edge_constrained_indices[0].size(); ++j)
+      {
+        edge_constrained_values[0][j] = std::pair<typename VectorType::value_type, typename VectorType::value_type>
+                                        (src.local_element(edge_constrained_indices[0][j]),
+                                         dst.local_element(edge_constrained_indices[0][j]));
+        src.local_element(edge_constrained_indices[0][j]) = 0.;
+      }
+  }
+
+
+  template <int dim, typename VectorType>
+  typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
+  external_set_constrained_dofs_and_restore_edge_constraints
+  (const MatrixFree<dim, typename VectorType::value_type> &mf,
+   const std::vector<std::vector<std::pair<typename VectorType::value_type, typename VectorType::value_type> >> &edge_constrained_values,
+   const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &dst,
+   VectorType &src)
+  {
+    for (unsigned int i = 0; i < dst.n_blocks(); ++i)
+      {
+        const std::vector<unsigned int> &constrained_dofs =
+          mf.get_constrained_dofs(i);
+        for (unsigned int j=0; j<constrained_dofs.size(); ++j)
+          {
+            dst.block(i).local_element(constrained_dofs[j]) +=
+              src.block(i).local_element(constrained_dofs[j]);
+          }
+      }
+
+    // reset edge constrained values, multiply by unit matrix and add into
+    // destination
+    for (unsigned int i = 0; i < dst.n_blocks(); ++i)
+      {
+        for (unsigned int j = 0; j < edge_constrained_indices[i].size(); ++j)
+          {
+            const_cast<VectorType &>(src).block(i).local_element
+            (edge_constrained_indices[i][j]) = edge_constrained_values[i][j].first;
+            dst.block(i).local_element(edge_constrained_indices[i][j]) =
+              edge_constrained_values[i][j].second +
+              edge_constrained_values[i][j].first;
+          }
+      }
+  }
+
+  template <int dim, typename VectorType>
+  typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
+  external_set_constrained_dofs_and_restore_edge_constraints
+  (const MatrixFree<dim, typename VectorType::value_type> &mf,
+   std::vector<std::vector<std::pair<typename VectorType::value_type,
+   typename VectorType::value_type> >> &edge_constrained_values,
+   const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &dst,
+   VectorType &src)
+  {
+    const std::vector<unsigned int> &constrained_dofs =
+      mf.get_constrained_dofs(0);
+    for (unsigned int j=0; j<constrained_dofs.size(); ++j)
+      {
+        dst.local_element(constrained_dofs[j]) +=
+          src.local_element(constrained_dofs[j]);
+      }
+
+    // reset edge constrained values, multiply by unit matrix and add into
+    // destination
+    for (unsigned int j = 0; j < edge_constrained_indices[0].size(); ++j)
+      {
+        src.local_element(edge_constrained_indices[0][j])
+          = edge_constrained_values[0][j].first;
+        dst.local_element(edge_constrained_indices[0][j])
+          = edge_constrained_values[0][j].second +
+            edge_constrained_values[0][j].first;
+      }
+  }
+
+
+  template <int dim, typename VectorType>
+  void Base<dim, VectorType>::mult_add(VectorType &dst,
+                                       const VectorType &src,
+                                       const bool transpose) const
+  {
+    AssertDimension(dst.size(), src.size());
+    adjust_ghost_range_if_necessary(src);
+    adjust_ghost_range_if_necessary(dst);
+
+    // set zero Dirichlet values on the input vector (and remember the src and
+    // dst values because we need to reset them at the end)
+    external_set_dirichlet_zero(edge_constrained_values,
+                                edge_constrained_indices,
+                                const_cast<VectorType &> (src), dst);
+
+    if (transpose)
+      Tapply_add(dst, src);
+    else
+      apply_add(dst, src);
+
+    external_set_constrained_dofs_and_restore_edge_constraints
+    (*data, edge_constrained_values, edge_constrained_indices, dst, const_cast<VectorType &>(src));
+  }
+
+  template <int dim, typename VectorType>
+  typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
+  external_adjust_ghost_range_if_necessary
+  (const MatrixFree<dim, typename VectorType::value_type> &mf,
+   const VectorType &src)
+  {
+    for (unsigned int i = 0; i < src.n_blocks(); ++i)
+      {
+        // If both vectors use the same partitioner -> done
+        if (src.block(i).get_partitioner().get() == mf.get_dof_info(i).vector_partitioner.get())
+          return;
+
+        // If not, assert that the local ranges are the same and reset to the
+        // current partitioner
+        Assert(src.block(i).get_partitioner()->local_size() ==
+               mf.get_dof_info(i).vector_partitioner->local_size(),
+               ExcMessage("The vector passed to the vmult() function does not have "
+                          "the correct size for compatibility with MatrixFree."));
+
+        // copy the vector content to a temporary vector so that it does not get
+        // lost
+        VectorView<typename VectorType::value_type> view_src_in(src.block(i).local_size(),
+                                                                src.block(i).begin());
+        const Vector<typename VectorType::value_type> &copy_vec = view_src_in;
+        const_cast<VectorType &>(src).block(i).reinit(mf.get_dof_info(i).vector_partitioner);
+        VectorView<typename VectorType::value_type> view_src_out(src.block(i).local_size(),
+                                                                 src.block(i).begin());
+        static_cast<Vector<typename VectorType::value_type> &>(view_src_out) = copy_vec;
+      }
+  }
+
+  template <int dim, typename VectorType>
+  typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
+  external_adjust_ghost_range_if_necessary
+  (const MatrixFree<dim, typename VectorType::value_type> &mf,
+   const VectorType &src)
+  {
     // If both vectors use the same partitioner -> done
-    if (src.get_partitioner().get() ==
-        data->get_dof_info(0).vector_partitioner.get())
+    if (src.get_partitioner().get() == mf.get_dof_info(0).vector_partitioner.get())
       return;
 
     // If not, assert that the local ranges are the same and reset to the
     // current partitioner
     Assert(src.get_partitioner()->local_size() ==
-           data->get_dof_info(0).vector_partitioner->local_size(),
+           mf.get_dof_info(0).vector_partitioner->local_size(),
            ExcMessage("The vector passed to the vmult() function does not have "
                       "the correct size for compatibility with MatrixFree."));
 
     // copy the vector content to a temporary vector so that it does not get
     // lost
-    VectorView<Number> view_src_in(src.local_size(), src.begin());
-    Vector<Number> copy_vec = view_src_in;
-    const_cast<VectorType &>(src).
-    reinit(data->get_dof_info(0).vector_partitioner);
-    VectorView<Number> view_src_out(src.local_size(), src.begin());
-    static_cast<Vector<Number>&>(view_src_out) = copy_vec;
+    VectorView<typename VectorType::value_type> view_src_in(src.local_size(),
+                                                            src.begin());
+    const Vector<typename VectorType::value_type> &copy_vec = view_src_in;
+    const_cast<VectorType &>(src).reinit(mf.get_dof_info(0).vector_partitioner);
+    VectorView<typename VectorType::value_type> view_src_out(src.local_size(),
+                                                             src.begin());
+    static_cast<Vector<typename VectorType::value_type> &>(view_src_out) = copy_vec;
   }
 
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::mult_add (VectorType &dst,
-                                  const VectorType &src,
-                                  const bool transpose) const
+  void Base<dim, VectorType>::adjust_ghost_range_if_necessary
+  (const VectorType &src) const
   {
-    typedef typename Base<dim,VectorType>::value_type Number;
-    adjust_ghost_range_if_necessary(src);
-    adjust_ghost_range_if_necessary(dst);
+    external_adjust_ghost_range_if_necessary(*data, src);
+  }
 
-    // set zero Dirichlet values on the input vector (and remember the src and
-    // dst values because we need to reset them at the end)
-    for (unsigned int i=0; i<edge_constrained_indices.size(); ++i)
+  template <typename VectorType>
+  typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
+  external_set_level_dirichlet_zero_and_restore
+  (const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   const std::vector<std::vector<std::pair<typename VectorType::value_type, typename VectorType::value_type> >> &edge_constrained_values,
+   VectorType &dst,
+   VectorType &src,
+   const bool restore = false)
+  {
+    for (unsigned int i = 0; i < dst.size(); ++i)
       {
-        edge_constrained_values[i] =
-          std::pair<Number,Number>(src.local_element(edge_constrained_indices[i]),
-                                   dst.local_element(edge_constrained_indices[i]));
-        const_cast<VectorType &>(src).local_element(edge_constrained_indices[i]) = 0.;
-      }
+        for (unsigned int c = 0, j = 0;
+             static_cast<size_t>(j) < edge_constrained_indices.size(); ++j)
+          {
+            for (; c < edge_constrained_indices[i][j]; ++c)
+              dst.block(i).local_element(c) = 0.;
+            ++c;
 
-    if (transpose)
-      Tapply_add(dst,src);
-    else
-      apply_add(dst,src);
+            // reset the src values
+            if (restore)
+              const_cast<VectorType &>(src.block(i)).local_element(edge_constrained_indices[i][j]) =
+                edge_constrained_values[i][j].first;
 
-    const std::vector<unsigned int> &
-    constrained_dofs = data->get_constrained_dofs();
-    for (unsigned int i=0; i<constrained_dofs.size(); ++i)
-      dst.local_element(constrained_dofs[i]) += src.local_element(constrained_dofs[i]);
-
-    // reset edge constrained values, multiply by unit matrix and add into
-    // destination
-    for (unsigned int i=0; i<edge_constrained_indices.size(); ++i)
-      {
-        const_cast<VectorType &>(src).local_element(edge_constrained_indices[i]) = edge_constrained_values[i].first;
-        dst.local_element(edge_constrained_indices[i]) = edge_constrained_values[i].second + edge_constrained_values[i].first;
+            for (; static_cast<size_t>(c) < dst.local_size(); ++c)
+              dst.block(i).local_element(c) = 0.;
+          }
       }
   }
 
-
-
-  template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::
-  vmult_interface_down(VectorType &dst,
-                       const VectorType &src) const
+  template <typename VectorType>
+  typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
+  external_set_level_dirichlet_zero_and_restore
+  (const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   const std::vector<std::vector<std::pair<typename VectorType::value_type, typename VectorType::value_type> >> &edge_constrained_values,
+   VectorType &dst,
+   VectorType &src,
+   const bool restore = false)
   {
-    typedef typename Base<dim,VectorType>::value_type Number;
-    adjust_ghost_range_if_necessary(src);
-    adjust_ghost_range_if_necessary(dst);
-
-    dst = Number(0.);
-
-    if (!have_interface_matrices)
-      return;
-
-    // set zero Dirichlet values on the input vector (and remember the src and
-    // dst values because we need to reset them at the end)
-    for (unsigned int i=0; i<edge_constrained_indices.size(); ++i)
+    for (unsigned int c = 0, j = 0; j < edge_constrained_indices.size(); ++j)
       {
-        edge_constrained_values[i] =
-          std::pair<Number,Number>(src.local_element(edge_constrained_indices[i]),
-                                   dst.local_element(edge_constrained_indices[i]));
-        const_cast<VectorType &>(src).local_element(edge_constrained_indices[i]) = 0.;
-      }
-
-    apply_add(dst,src);
-
-    unsigned int c=0;
-    for (unsigned int i=0; i<edge_constrained_indices.size(); ++i)
-      {
-        for ( ; c<edge_constrained_indices[i]; ++c)
+        for (; c < edge_constrained_indices[0][j]; ++c)
           dst.local_element(c) = 0.;
         ++c;
 
         // reset the src values
-        const_cast<VectorType &>(src).local_element(edge_constrained_indices[i]) = edge_constrained_values[i].first;
+        if (restore)
+          src.local_element(edge_constrained_indices[0][j])
+            = edge_constrained_values[0][j].first;
+
+        for (; static_cast<size_t>(c) < dst.local_size(); ++c)
+          dst.local_element(c) = 0.;
       }
-    for ( ; c<dst.local_size(); ++c)
-      dst.local_element(c) = 0.;
   }
 
 
 
+
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::
-  vmult_interface_up(VectorType &dst,
-                     const VectorType &src) const
+  void Base<dim, VectorType>::vmult_interface_down
+  (VectorType &dst, const VectorType &src) const
   {
-    typedef typename Base<dim,VectorType>::value_type Number;
+    AssertDimension(dst.size(), src.size());
     adjust_ghost_range_if_necessary(src);
     adjust_ghost_range_if_necessary(dst);
 
-    dst = Number(0.);
+    dst = 0;
 
     if (!have_interface_matrices)
       return;
 
-    VectorType src_cpy (src);
-    unsigned int c=0;
-    for (unsigned int i=0; i<edge_constrained_indices.size(); ++i)
-      {
-        for ( ; c<edge_constrained_indices[i]; ++c)
-          src_cpy.local_element(c) = 0.;
-        ++c;
-      }
-    for ( ; c<src_cpy.local_size(); ++c)
-      src_cpy.local_element(c) = 0.;
+    // set zero Dirichlet values on the input vector (and remember the src and
+    // dst values because we need to reset them at the end)
+    external_set_dirichlet_zero(edge_constrained_values,
+                                edge_constrained_indices,
+                                const_cast<VectorType &> (src), dst);
 
-    apply_add(dst,src_cpy);
+    apply_add(dst, src);
 
-    for (unsigned int i=0; i<edge_constrained_indices.size(); ++i)
-      {
-        dst.local_element(edge_constrained_indices[i]) = 0.;
-      }
+    external_set_level_dirichlet_zero_and_restore
+    (edge_constrained_indices, edge_constrained_values, dst, const_cast<VectorType &>(src), true);
   }
 
-
-
-  template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::Tvmult (VectorType       &dst,
-                                const VectorType &src) const
+  template <typename VectorType>
+  typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
+  external_zero_edge_constrained_indices
+  (const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &dst)
   {
-    typedef typename Base<dim,VectorType>::value_type Number;
-    dst = Number(0.);
-    Tvmult_add (dst,src);
+    for (unsigned int i = 0; i < dst.n_blocks(); ++i)
+      {
+        for (unsigned int j = 0; j < edge_constrained_indices[i].size(); ++j)
+          dst.block(i).local_element(edge_constrained_indices[i][j]) = 0.;
+      }
   }
 
-
-
-  template <int dim, typename VectorType>
-  std::size_t
-  Base<dim,VectorType>::memory_consumption () const
+  template <typename VectorType>
+  typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
+  external_zero_edge_constrained_indices
+  (const std::vector<std::vector<unsigned int> > &edge_constrained_indices,
+   VectorType &dst)
   {
-    return inverse_diagonal_entries.get() != NULL ? inverse_diagonal_entries->memory_consumption() : sizeof(*this);
+    for (unsigned int j = 0; j < edge_constrained_indices[0].size(); ++j)
+      dst.local_element(edge_constrained_indices[0][j]) = 0.;
   }
 
 
 
   template <int dim, typename VectorType>
-  std_cxx11::shared_ptr<const MatrixFree<dim,typename Base<dim,VectorType>::value_type> >
-  Base<dim,VectorType>::get_matrix_free() const
+  void Base<dim, VectorType>::vmult_interface_up
+  (VectorType &dst, const VectorType &src) const
+  {
+    AssertDimension(dst.size(), src.size());
+    adjust_ghost_range_if_necessary(src);
+    adjust_ghost_range_if_necessary(dst);
+
+    dst = 0;
+
+    if (!have_interface_matrices)
+      return;
+
+    VectorType src_cpy = src;
+
+    external_set_level_dirichlet_zero_and_restore
+    (edge_constrained_indices,edge_constrained_values,src_cpy,src_cpy);
+
+    apply_add(dst, src_cpy);
+
+    external_zero_edge_constrained_indices(edge_constrained_indices, dst);
+  }
+
+
+
+  template <int dim, typename VectorType>
+  void Base<dim, VectorType>::Tvmult(VectorType &dst,
+                                     const VectorType &src) const
+  {
+    dst = 0;
+    Tvmult_add(dst, src);
+  }
+
+
+
+  template <int dim, typename VectorType>
+  std::size_t Base<dim, VectorType>::memory_consumption() const
+  {
+    return inverse_diagonal_entries != NULL
+           ? inverse_diagonal_entries->memory_consumption()
+           : sizeof(*this);
+  }
+
+
+
+  template <int dim, typename VectorType>
+  std_cxx11::shared_ptr< const MatrixFree<dim, typename Base<dim, VectorType>::value_type> >
+  Base<dim, VectorType>::get_matrix_free() const
   {
     return data;
   }
@@ -1036,40 +1277,36 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   const std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > &
-  Base<dim,VectorType>::get_matrix_diagonal_inverse() const
+  Base<dim, VectorType>::get_matrix_diagonal_inverse() const
   {
     Assert(inverse_diagonal_entries.get() != NULL &&
-           inverse_diagonal_entries->m() > 0, ExcNotInitialized());
+           inverse_diagonal_entries->m() > 0,
+           ExcNotInitialized());
     return inverse_diagonal_entries;
   }
 
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::Tapply_add(VectorType &dst,
-                                   const VectorType &src) const
+  void Base<dim, VectorType>::Tapply_add(VectorType &dst,
+                                         const VectorType &src) const
   {
-    apply_add(dst,src);
+    apply_add(dst, src);
   }
 
 
 
   template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::precondition_Jacobi(VectorType &dst,
-                                            const VectorType &src,
-                                            const typename Base<dim,VectorType>::value_type omega) const
+  void Base<dim, VectorType>::precondition_Jacobi
+  (VectorType &dst, const VectorType &src, const value_type omega) const
   {
-    Assert(inverse_diagonal_entries.get() &&
-           inverse_diagonal_entries->m() > 0, ExcNotInitialized());
-    inverse_diagonal_entries->vmult(dst,src);
+    Assert(inverse_diagonal_entries.get() && inverse_diagonal_entries->m() > 0,
+           ExcNotInitialized());
+    inverse_diagonal_entries->vmult(dst, src);
     dst *= omega;
   }
 
-
-
-  //------------------------- MGInterfaceOperator ------------------------------
+//------------------------- MGInterfaceOperator ------------------------------
 
   template <typename OperatorType>
   MGInterfaceOperator<OperatorType>::MGInterfaceOperator ()
@@ -1143,7 +1380,7 @@ namespace MatrixFreeOperators
 
 
 
-  //-----------------------------MassOperator----------------------------------
+//-----------------------------MassOperator----------------------------------
 
   template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename VectorType>
   MassOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
@@ -1218,7 +1455,7 @@ namespace MatrixFreeOperators
   }
 
 
-  //-----------------------------LaplaceOperator----------------------------------
+//-----------------------------LaplaceOperator----------------------------------
 
   template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename VectorType>
   LaplaceOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
