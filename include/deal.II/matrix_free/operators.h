@@ -285,12 +285,12 @@ namespace MatrixFreeOperators
     /**
      * Indices of DoFs on edge in case the operator is used in GMG context.
      */
-    std::vector<std::vector<unsigned int>> edge_constrained_indices;
+    std::vector<std::vector<unsigned int> > edge_constrained_indices;
 
     /**
      * Auxiliary vector.
      */
-    mutable std::vector<std::vector<std::pair<value_type, value_type> > >
+    mutable std::vector<std::vector<std::pair<value_type,value_type> > >
     edge_constrained_values;
 
     /**
@@ -774,8 +774,8 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  typename Base<dim, VectorType>::size_type
-  Base<dim, VectorType>::m() const
+  typename Base<dim,VectorType>::size_type
+  Base<dim,VectorType>::m () const
   {
     Assert(data.get() != NULL,
            ExcNotInitialized());
@@ -828,11 +828,11 @@ namespace MatrixFreeOperators
            ExcNotInitialized());
     for (unsigned int i = 0; i < n_blocks(vec); ++i)
       {
-        if (!subblock(vec,i).partitioners_are_compatible(
-              *data->get_dof_info(i).vector_partitioner))
+        if (!subblock(vec,i).partitioners_are_compatible
+            (*data->get_dof_info(i).vector_partitioner))
           data->initialize_dof_vector(subblock(vec,i));
-        Assert(subblock(vec,i).partitioners_are_globally_compatible(
-                 *data->get_dof_info(0).vector_partitioner),
+        Assert(subblock(vec,i).partitioners_are_globally_compatible
+               (*data->get_dof_info(0).vector_partitioner),
                ExcInternalError());
       }
     collect_sizes(vec);
@@ -846,9 +846,9 @@ namespace MatrixFreeOperators
   initialize (std_cxx11::shared_ptr<const MatrixFree<dim,typename Base<dim,VectorType>::value_type> > data_)
   {
     data = data_;
-    edge_constrained_values.clear();
-    edge_constrained_indices.resize(data->n_components());
     edge_constrained_indices.clear();
+    edge_constrained_indices.resize(data->n_components());
+    edge_constrained_values.clear();
     edge_constrained_values.resize(data->n_components());
     have_interface_matrices = false;
   }
@@ -869,44 +869,45 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::initialize(
-    std_cxx11::shared_ptr<const MatrixFree<dim, value_type>> data_,
-    const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
-    const unsigned int level)
+  void
+  Base<dim, VectorType>::
+  initialize (std_cxx11::shared_ptr<const MatrixFree<dim, value_type>> data_,
+              const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
+              const unsigned int level)
   {
-    AssertThrow(level != numbers::invalid_unsigned_int,
-                ExcMessage("level is not set"));
+    AssertThrow (level != numbers::invalid_unsigned_int,
+                 ExcMessage("level is not set"));
     AssertDimension(mg_constrained_dofs.size(), data_->n_components());
     edge_constrained_indices.resize(data_->n_components());
     edge_constrained_values.resize(data_->n_components());
     if (data_->n_macro_cells() > 0)
-      AssertDimension(static_cast<int>(level),
-                      data_->get_cell_iterator(0, 0)->level());
+      {
+        AssertDimension(static_cast<int>(level),
+                        data_->get_cell_iterator(0,0)->level());
+      }
 
     data = data_;
 
-    for (unsigned int i = 0; i < data->n_components(); ++i)
+    for (unsigned int j = 0; j < data->n_components(); ++j)
       {
         // setup edge_constrained indices
         std::vector<types::global_dof_index> interface_indices;
-        mg_constrained_dofs[i]
-        .get_refinement_edge_indices(level)
+        mg_constrained_dofs[j].get_refinement_edge_indices(level)
         .fill_index_vector(interface_indices);
-        edge_constrained_indices[i].clear();
-        edge_constrained_indices[i].reserve(interface_indices.size());
-        edge_constrained_values[i].resize(interface_indices.size());
-        const IndexSet &locally_owned =
-          data->get_dof_handler(i).locally_owned_mg_dofs(level);
-        for (unsigned int j=0; j<interface_indices.size(); ++j)
+        edge_constrained_indices[j].clear();
+        edge_constrained_indices[j].reserve(interface_indices.size());
+        edge_constrained_values[j].resize(interface_indices.size());
+        const IndexSet &locally_owned = data->get_dof_handler(j).locally_owned_mg_dofs(level);
+        for (unsigned int i=0; i<interface_indices.size(); ++i)
           {
             if (locally_owned.is_element(interface_indices[j]))
-              edge_constrained_indices[i].push_back(
-                locally_owned.index_within_set(interface_indices[j]));
+              edge_constrained_indices[j].push_back(
+                locally_owned.index_within_set(interface_indices[i]));
           }
         have_interface_matrices |=
           Utilities::MPI::max(
-            static_cast<unsigned int>(edge_constrained_indices[i].size()),
-            data_->get_vector_partitioner()->get_mpi_communicator()) > 0;
+            static_cast<unsigned int>(edge_constrained_indices[j].size()),
+            data->get_vector_partitioner()->get_mpi_communicator()) > 0;
       }
   }
 
@@ -918,8 +919,8 @@ namespace MatrixFreeOperators
   {
     for (unsigned int j = 0; j < n_blocks(dst); ++j)
       {
-        const std::vector<unsigned int> &constrained_dofs =
-          data->get_constrained_dofs(j);
+        const std::vector<unsigned int> &
+        constrained_dofs = data->get_constrained_dofs(j);
         for (unsigned int i=0; i<constrained_dofs.size(); ++i)
           subblock(dst,j).local_element(constrained_dofs[i]) = 1.;
         for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
@@ -962,12 +963,15 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::adjust_ghost_range_if_necessary(const VectorType &src) const
+  void
+  Base<dim,VectorType>::adjust_ghost_range_if_necessary(const VectorType &src) const
   {
+    typedef typename Base<dim,VectorType>::value_type Number;
     for (unsigned int i = 0; i < n_blocks(src); ++i)
       {
         // If both vectors use the same partitioner -> done
-        if (subblock(src,i).get_partitioner().get() == data->get_dof_info(i).vector_partitioner.get())
+        if (subblock(src,i).get_partitioner().get() ==
+            data->get_dof_info(i).vector_partitioner.get())
           return;
 
         // If not, assert that the local ranges are the same and reset to the
@@ -979,14 +983,14 @@ namespace MatrixFreeOperators
 
         // copy the vector content to a temporary vector so that it does not get
         // lost
-        VectorView<value_type> view_src_in(subblock(src,i).local_size(),
-                                           subblock(src,i).begin());
-        const Vector<value_type> &copy_vec = view_src_in;
-        subblock(const_cast<VectorType &>(src),i).reinit(
-          data->get_dof_info(i).vector_partitioner);
-        VectorView<value_type> view_src_out(subblock(src,i).local_size(),
-                                            subblock(src,i).begin());
-        static_cast<Vector<value_type> &>(view_src_out) = copy_vec;
+        VectorView<Number> view_src_in(subblock(src,i).local_size(),
+                                       subblock(src,i).begin());
+        const Vector<Number> copy_vec = view_src_in;
+        subblock(const_cast<VectorType &>(src),i).
+        reinit(data->get_dof_info(i).vector_partitioner);
+        VectorView<Number> view_src_out(subblock(src,i).local_size(),
+                                        subblock(src,i).begin());
+        static_cast<Vector<Number>&>(view_src_out) = copy_vec;
       }
   }
 
@@ -994,59 +998,62 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::mult_add(VectorType &dst,
+  Base<dim,VectorType>::mult_add (VectorType &dst,
                                   const VectorType &src,
                                   const bool transpose) const
   {
     AssertDimension(dst.size(), src.size());
     AssertDimension(n_blocks(dst), n_blocks(src));
+    typedef typename Base<dim,VectorType>::value_type Number;
     adjust_ghost_range_if_necessary(src);
     adjust_ghost_range_if_necessary(dst);
 
     // set zero Dirichlet values on the input vector (and remember the src and
     // dst values because we need to reset them at the end)
-    for (size_t i = 0; i < n_blocks(dst); ++i)
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
       {
-        for (size_t j = 0; j < edge_constrained_indices[i].size(); ++j)
+        for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
           {
-            edge_constrained_values[i][j] = std::pair<value_type, value_type>(
-                                              subblock(src,i).local_element(edge_constrained_indices[i][j]),
-                                              subblock(dst,i).local_element(edge_constrained_indices[i][j]));
-            subblock(const_cast<VectorType &>(src),i).local_element(
-              edge_constrained_indices[i][j]) = 0.;
+            edge_constrained_values[j][i] =
+              std::pair<Number,Number>
+              (subblock(src,j).local_element(edge_constrained_indices[j][i]),
+               subblock(dst,j).local_element(edge_constrained_indices[j][i]));
+            subblock(const_cast<VectorType &>(src),j).local_element(edge_constrained_indices[j][i]) = 0.;
           }
       }
 
     if (transpose)
-      Tapply_add(dst, src);
+      Tapply_add(dst,src);
     else
-      apply_add(dst, src);
+      apply_add(dst,src);
 
-    for (unsigned int i = 0; i < n_blocks(dst); ++i)
-      {
-        const std::vector<unsigned int> &constrained_dofs =
-          data->get_constrained_dofs(i);
-        for (unsigned int j=0; j<constrained_dofs.size(); ++j)
+    for (unsigned int j=0; j<n_blocks(dst); ++j
+    {
+      const std::vector<unsigned int> &
+      constrained_dofs = data->get_constrained_dofs(j);
+        for (unsigned int i=0; i<constrained_dofs.size(); ++i)
           {
-            subblock(dst,i).local_element(constrained_dofs[j]) +=
-              subblock(src,i).local_element(constrained_dofs[j]);
+            subblock(dst,j).local_element(constrained_dofs[i]) +=
+            subblock(src,j).local_element(constrained_dofs[i]);
           }
       }
 
     // reset edge constrained values, multiply by unit matrix and add into
     // destination
-    for (size_t i = 0; i < n_blocks(dst); ++i)
-      {
-        for (size_t j = 0; j < edge_constrained_indices[i].size(); ++j)
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
+    {
+      for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
           {
-            subblock(const_cast<VectorType &>(src),i).local_element(
-              edge_constrained_indices[i][j]) = edge_constrained_values[i][j].first;
-            subblock(dst,i).local_element(edge_constrained_indices[i][j]) =
-              edge_constrained_values[i][j].second +
-              edge_constrained_values[i][j].first;
+            subblock(const_cast<VectorType &>(src),j).local_element
+            (edge_constrained_indices[j][i])
+              = edge_constrained_values[j][i].first;
+            subblock(dst,j).local_element(edge_constrained_indices[j][i])
+              = edge_constrained_values[j][i].second +
+                edge_constrained_values[j][i].first;
           }
       }
   }
+
 
 
   template <int dim, typename VectorType>
@@ -1055,11 +1062,11 @@ namespace MatrixFreeOperators
   vmult_interface_down(VectorType &dst,
                        const VectorType &src) const
   {
+    typedef typename Base<dim,VectorType>::value_type Number;
     AssertDimension(dst.size(), src.size());
     adjust_ghost_range_if_necessary(src);
     adjust_ghost_range_if_necessary(dst);
 
-    typedef typename Base<dim,VectorType>::value_type Number;
     dst = Number(0.);
 
     if (!have_interface_matrices)
@@ -1067,37 +1074,37 @@ namespace MatrixFreeOperators
 
     // set zero Dirichlet values on the input vector (and remember the src and
     // dst values because we need to reset them at the end)
-    for (size_t i = 0; i < n_blocks(dst); ++i)
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
       {
-        for (size_t j = 0; j < edge_constrained_indices.size(); ++j)
+        for (unsigned int i = 0; i < edge_constrained_indices[j].size(); ++i)
           {
-            edge_constrained_values[i][j] = std::pair<value_type, value_type>(
-                                              subblock(src,i).local_element(edge_constrained_indices[i][j]),
-                                              subblock(dst,i).local_element(edge_constrained_indices[i][j]));
-            subblock(const_cast<VectorType &>(src),i)
-            .local_element(edge_constrained_indices[i][j]) = 0.;
+            edge_constrained_values[j][i] =
+              std::pair<Number,Number>
+              (subblock(src,j).local_element(edge_constrained_indices[j][i]),
+               subblock(dst,j).local_element(edge_constrained_indices[j][i]));
+            subblock(const_cast<VectorType &>(src),j)
+            .local_element(edge_constrained_indices[j][i]) = 0.;
           }
       }
 
     apply_add(dst,src);
 
-    for (unsigned int i = 0; i < n_blocks(dst); ++i)
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
       {
-        for (unsigned int c = 0, j = 0;
-             j < edge_constrained_indices.size(); ++j)
+        unsigned int c=0;
+        for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
           {
-            for (; c < edge_constrained_indices[i][j]; ++c)
-              subblock(dst,i).local_element(c) = 0.;
+            for ( ; c<edge_constrained_indices[j][i]; ++c)
+              subblock(dst,j).local_element(c) = 0.;
             ++c;
 
             // reset the src values
-            subblock(const_cast<VectorType &>(src),i)
-            .local_element(edge_constrained_indices[i][j]) =
-              edge_constrained_values[i][j].first;
-
-            for (; c < dst.local_size(); ++c)
-              subblock(dst,i).local_element(c) = 0.;
+            subblock(const_cast<VectorType &>(src),j)
+            .local_element(edge_constrained_indices[j][i])
+              = edge_constrained_values[j][i].first;
           }
+        for ( ; c<dst.local_size(); ++c)
+          subblock(dst,j).local_element(c) = 0.;
       }
   }
 
@@ -1120,28 +1127,25 @@ namespace MatrixFreeOperators
       return;
 
     VectorType src_cpy (src);
-
-    for (unsigned int i = 0; i < n_blocks(dst); ++i)
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
       {
-        unsigned int c = 0;
-
-        for (unsigned int j = 0; j < edge_constrained_indices[i].size();
-             ++j)
+        unsigned int c=0;
+        for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
           {
-            for (; c < edge_constrained_indices[i][j]; ++c)
-              subblock(src_cpy,i).local_element(c) = 0.;
+            for ( ; c<edge_constrained_indices[j][i]; ++c)
+              subblock(src_cpy,j).local_element(c) = 0.;
             ++c;
           }
-        for (; c < subblock(src_cpy,i).local_size(); ++c)
-          subblock(src_cpy,i).local_element(c) = 0.;
+        for ( ; c<subblock(src_cpy,j).local_size(); ++c)
+          subblock(src_cpy,j).local_element(c) = 0.;
       }
 
     apply_add(dst,src_cpy);
 
-    for (unsigned i=0; i < n_blocks(dst); ++i)
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
       {
-        for (unsigned int j = 0; j < edge_constrained_indices[i].size(); ++j)
-          subblock(dst,i).local_element(edge_constrained_indices[i][j]) = 0.;
+        for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
+          subblock(dst,j).local_element(edge_constrained_indices[j][i]) = 0.;
       }
   }
 
