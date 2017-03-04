@@ -37,23 +37,21 @@ namespace MatrixFreeOperators
 {
   /**
    * Abstract base class for matrix-free operators which can be used both at
-   * the finest mesh or at a certain level in geometric multigrid. In contrast to
-   * Base, this class is used for operators that have multiple blocks.
+   * the finest mesh or at a certain level in geometric multigrid.
    *
    * A derived class has to implement apply_add() method as well as
-   * compute_diagonal() to initialize the protected member
-   * inverse_diagonal_entries.
+   * compute_diagonal() to initialize the protected member inverse_diagonal_entries.
    * In case of a non-symmetric operator, Tapply_add() should be additionally
    * implemented.
    *
-   * @author Daniel Arndt, 2017
+   * @author Denis Davydov, Daniel Arndt, 2016, 2017
    */
-  template <int dim, typename VectorType = LinearAlgebra::distributed::BlockVector<double> >
+  template <int dim, typename VectorType = LinearAlgebra::distributed::Vector<double> >
   class Base : public Subscriptor
   {
   public:
     /**
-     * value_type typedef.
+     * Number typedef.
      */
     typedef typename VectorType::value_type value_type;
 
@@ -65,7 +63,7 @@ namespace MatrixFreeOperators
     /**
      * Default constructor.
      */
-    Base();
+    Base ();
 
     /**
      * Virtual destructor.
@@ -81,80 +79,86 @@ namespace MatrixFreeOperators
     /**
      * Initialize operator on fine scale.
      */
-    void
-    initialize(std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_);
+    void initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data);
 
     /**
-        * Initialize operator on a level @p level for a single FiniteElement.
-        */
+     * Initialize operator on a level @p level for a single FiniteElement.
+     */
     void
-    initialize(std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
-               const MGConstrainedDoFs &mg_constrained_dofs,
-               const unsigned int level);
+    initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data,
+                const MGConstrainedDoFs &mg_constrained_dofs,
+                const unsigned int level);
 
     /**
      * Initialize operator on a level @p level for multiple FiniteElements.
      */
     void
-    initialize(std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
-               const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
-               const unsigned int level);
+    initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data,
+                const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
+                const unsigned int level);
 
     /**
      * Return the dimension of the codomain (or range) space.
      */
-    size_type m() const;
+    size_type m () const;
 
     /**
      * Return the dimension of the domain space.
      */
-    size_type n() const;
+    size_type n () const;
 
     /**
-     * vmult operator for interface for multiple FiniteElements.
+     * vmult operator for interface.
      */
-    void vmult_interface_down(VectorType &dst, const VectorType &src) const;
+    void vmult_interface_down(VectorType &dst,
+                              const VectorType &src) const;
 
     /**
-     * vmult operator for interface for multiple FiniteElements.
+     * vmult operator for interface.
      */
-    void vmult_interface_up(VectorType &dst, const VectorType &src) const;
+    void vmult_interface_up(VectorType &dst,
+                            const VectorType &src) const;
 
     /**
-     * Matrix-vector multiplication for multiple FiniteElements.
+     * Matrix-vector multiplication.
      */
-    void vmult(VectorType &dst, const VectorType &src) const;
+    void vmult (VectorType &dst,
+                const VectorType &src) const;
 
     /**
-     * Transpose matrix-vector multiplication for multiple FiniteElements.
+     * Transpose matrix-vector multiplication.
      */
-    void Tvmult(VectorType &dst, const VectorType &src) const;
+    void Tvmult (VectorType &dst,
+                 const VectorType &src) const;
 
     /**
-     * Adding Matrix-vector multiplication for multiple FiniteElements.
+     * Adding Matrix-vector multiplication.
      */
-    void vmult_add(VectorType &dst, const VectorType &src) const;
+    void vmult_add (VectorType &dst,
+                    const VectorType &src) const;
 
     /**
-     * Adding transpose matrix-vector multiplication for multiple FiniteElements.
+     * Adding transpose matrix-vector multiplication.
      */
-    void Tvmult_add(VectorType &dst, const VectorType &src) const;
+    void Tvmult_add (VectorType &dst,
+                     const VectorType &src) const;
 
     /**
      * Returns the value of the matrix entry (row,col). In matrix-free context
      * this function is valid only for row==col when diagonal is initialized.
      */
-    value_type el(const unsigned int row, const unsigned int col) const;
+    value_type el (const unsigned int row,
+                   const unsigned int col) const;
 
     /**
      * Determine an estimate for the memory consumption (in bytes) of this object.
      */
-    virtual std::size_t memory_consumption() const;
+    virtual std::size_t memory_consumption () const;
 
     /**
      * A wrapper for initialize_dof_vector() of MatrixFree object.
      */
-    void initialize_dof_vector(VectorType &vec) const;
+    void initialize_dof_vector (VectorType &vec) const;
 
     /**
      * Compute diagonal of this operator.
@@ -162,66 +166,73 @@ namespace MatrixFreeOperators
      * A derived class needs to implement this function and resize and fill
      * the protected member inverse_diagonal_entries accordingly.
      */
-    virtual void compute_diagonal() = 0;
+    virtual void compute_diagonal () = 0;
 
     /**
      * Get read access to the MatrixFree object stored with this operator.
      */
-    std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > get_matrix_free() const;
+    std_cxx11::shared_ptr<const MatrixFree<dim,value_type> >
+    get_matrix_free () const;
 
     /**
      * Get read access to the inverse diagonal of this operator.
      */
-    const std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > &get_matrix_diagonal_inverse() const;
+    const std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > &
+    get_matrix_diagonal_inverse() const;
 
     /**
      * Apply the Jacobi preconditioner, which multiplies every element of the
      * <tt>src</tt> vector by the inverse of the respective diagonal element and
      * multiplies the result with the relaxation factor <tt>omega</tt>.
      */
-    void precondition_Jacobi(VectorType &dst, const VectorType &src,
+    void precondition_Jacobi(VectorType &dst,
+                             const VectorType &src,
                              const value_type omega) const;
 
   protected:
+
     /**
      * Set constrained entries (both from hanging nodes and edge constraints)
      * of @p dst to one.
      */
-    void set_constrained_entries_to_one(VectorType &dst) const;
+    void set_constrained_entries_to_one (VectorType &dst) const;
 
     /**
      * Apply operator to @p src and add result in @p dst.
      */
-    virtual void apply_add(VectorType &dst, const VectorType &src) const = 0;
+    virtual void apply_add(VectorType &dst,
+                           const VectorType &src) const = 0;
 
     /**
      * Apply transpose operator to @p src and add result in @p dst.
      *
      * Default implementation is to call apply_add().
      */
-    virtual void Tapply_add(VectorType &dst, const VectorType &src) const;
+    virtual void Tapply_add(VectorType &dst,
+                            const VectorType &src) const;
 
     /**
      * MatrixFree object to be used with this operator.
      */
-    std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data;
+    std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data;
 
     /**
      * A shared pointer to a diagonal matrix that stores the inverse of
      * diagonal elements as a vector.
      */
-    std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > inverse_diagonal_entries;
+    std_cxx11::shared_ptr<DiagonalMatrix<VectorType > > inverse_diagonal_entries;
 
   private:
+
     /**
      * Indices of DoFs on edge in case the operator is used in GMG context.
      */
-    std::vector<std::vector<unsigned int> > edge_constrained_indices;
+    std::vector<std::vector<unsigned int>  > edge_constrained_indices;
 
     /**
      * Auxiliary vector.
      */
-    mutable std::vector<std::vector<std::pair<value_type, value_type> >> edge_constrained_values;
+    mutable std::vector<std::vector<std::pair<value_type,value_type> > > edge_constrained_values;
 
     /**
      * A flag which determines whether or not this operator has interface
@@ -233,7 +244,9 @@ namespace MatrixFreeOperators
      * Function which implements vmult_add (@p transpose = false) and
      * Tvmult_add (@p transpose = true).
      */
-    void mult_add(VectorType &dst, const VectorType &src, const bool transpose) const;
+    void mult_add (VectorType &dst,
+                   const VectorType &src,
+                   const bool transpose) const;
 
     /**
      * Adjust the ghost range of the vectors to the storage requirements of
@@ -242,8 +255,10 @@ namespace MatrixFreeOperators
      * order to ensure that the cell loops will be able to access the ghost
      * indices with the correct local indices.
      */
-    void adjust_ghost_range_if_necessary(const VectorType &src) const;
+    void adjust_ghost_range_if_necessary(const VectorType &vec) const;
   };
+
+
 
   /**
    * Auxiliary class to provide interface vmult/Tvmult methods required in
@@ -680,23 +695,31 @@ namespace MatrixFreeOperators
       }
   }
 
-//----------------- Base operator -----------------------------
-
+  //----------------- Base operator -----------------------------
   template <int dim, typename VectorType>
-  Base<dim, VectorType>::~Base() {}
-
-
-
-  template <int dim, typename VectorType>
-  Base<dim, VectorType>::Base() : Subscriptor(), data(NULL) {}
-
-
-
-  template <int dim, typename VectorType>
-  typename Base<dim, VectorType>::size_type
-  Base<dim, VectorType>::m() const
+  Base<dim,VectorType>::~Base ()
   {
-    Assert(data != NULL, ExcNotInitialized());
+  }
+
+
+
+  template <int dim, typename VectorType>
+  Base<dim,VectorType>::Base ()
+    :
+    Subscriptor(),
+    have_interface_matrices(false),
+    data(NULL)
+  {
+  }
+
+
+
+  template <int dim, typename VectorType>
+  typename Base<dim,VectorType>::size_type
+  Base<dim,VectorType>::m () const
+  {
+    Assert(data != NULL,
+           ExcNotInitialized());
     typename Base<dim, VectorType>::size_type total_size = 0;
     for (unsigned int i=0; i<data->n_components(); ++i)
       total_size += data->get_vector_partitioner(i)->size();
@@ -706,8 +729,8 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  typename Base<dim, VectorType>::size_type
-  Base<dim, VectorType>::n() const
+  typename Base<dim,VectorType>::size_type
+  Base<dim,VectorType>::n () const
   {
     return m();
   }
@@ -715,26 +738,26 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::clear()
+  void
+  Base<dim,VectorType>::clear ()
   {
-    data = NULL;
+    data.reset();
     inverse_diagonal_entries.reset();
   }
 
 
 
   template <int dim, typename VectorType>
-  typename Base<dim, VectorType>::value_type
-  Base<dim, VectorType>::el(const unsigned int row,
+  typename Base<dim,VectorType>::value_type
+  Base<dim,VectorType>::el (const unsigned int row,
                             const unsigned int col) const
   {
-    Assert(row == col, ExcNotImplemented());
-    Assert(inverse_diagonal_entries.get() != NULL &&
-           inverse_diagonal_entries->m() > 0,
-           ExcNotInitialized());
-    return 1.0 / (*inverse_diagonal_entries)(row, row);
+    (void) col;
+    Assert (row == col, ExcNotImplemented());
+    Assert (inverse_diagonal_entries.get() != NULL &&
+            inverse_diagonal_entries->m() > 0, ExcNotInitialized());
+    return 1.0/(*inverse_diagonal_entries)(row,row);
   }
-
 
 
 
@@ -768,6 +791,8 @@ namespace MatrixFreeOperators
            ExcInternalError());
   }
 
+
+
   template <int dim, typename VectorType>
   void
   Base<dim, VectorType>::initialize_dof_vector(VectorType &vec) const
@@ -775,7 +800,6 @@ namespace MatrixFreeOperators
     Assert(data != NULL, ExcNotInitialized());
     external_initialize_dof_vector(*data, vec);
   }
-
 
 
 
@@ -791,6 +815,8 @@ namespace MatrixFreeOperators
     have_interface_matrices = false;
   }
 
+
+
   template <int dim, typename VectorType>
   void Base<dim, VectorType>::initialize
   (std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
@@ -800,6 +826,7 @@ namespace MatrixFreeOperators
     std::vector<MGConstrainedDoFs> mg_constrained_dofs_(1, mg_constrained_dofs);
     initialize(data_, mg_constrained_dofs_, level);
   }
+
 
 
   template <int dim, typename VectorType>
@@ -843,6 +870,7 @@ namespace MatrixFreeOperators
   }
 
 
+
   template <int dim, typename VectorType>
   typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
   external_set_constrained_entries_to_one
@@ -857,6 +885,8 @@ namespace MatrixFreeOperators
     for (unsigned int i=0; i<edge_constrained_indices[0].size(); ++i)
       dst.local_element(edge_constrained_indices[0][i]) = 1.;
   }
+
+
 
   template <int dim, typename VectorType>
   typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
@@ -875,6 +905,8 @@ namespace MatrixFreeOperators
           dst.block(j).local_element(edge_constrained_indices[j][i]) = 1.;
       }
   }
+
+
 
   template <int dim, typename VectorType>
   void Base<dim, VectorType>::set_constrained_entries_to_one
@@ -911,6 +943,8 @@ namespace MatrixFreeOperators
     mult_add(dst, src, true);
   }
 
+
+
   template <typename VectorType>
   typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
   external_set_dirichlet_zero
@@ -935,6 +969,8 @@ namespace MatrixFreeOperators
 
   }
 
+
+
   template <typename VectorType>
   typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
   external_set_dirichlet_zero
@@ -954,6 +990,7 @@ namespace MatrixFreeOperators
         src.local_element(edge_constrained_indices[0][j]) = 0.;
       }
   }
+
 
 
   template <int dim, typename VectorType>
@@ -991,6 +1028,8 @@ namespace MatrixFreeOperators
       }
   }
 
+
+
   template <int dim, typename VectorType>
   typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
   external_set_constrained_dofs_and_restore_edge_constraints
@@ -1022,6 +1061,7 @@ namespace MatrixFreeOperators
   }
 
 
+
   template <int dim, typename VectorType>
   void Base<dim, VectorType>::mult_add(VectorType &dst,
                                        const VectorType &src,
@@ -1046,12 +1086,15 @@ namespace MatrixFreeOperators
     (*data, edge_constrained_values, edge_constrained_indices, dst, const_cast<VectorType &>(src));
   }
 
+
+
   template <int dim, typename VectorType>
   typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
   external_adjust_ghost_range_if_necessary
   (const MatrixFree<dim, typename VectorType::value_type> &mf,
    const VectorType &src)
   {
+    typedef typename Base<dim,VectorType>::value_type Number;
     for (unsigned int i = 0; i < src.n_blocks(); ++i)
       {
         // If both vectors use the same partitioner -> done
@@ -1067,15 +1110,17 @@ namespace MatrixFreeOperators
 
         // copy the vector content to a temporary vector so that it does not get
         // lost
-        VectorView<typename VectorType::value_type> view_src_in(src.block(i).local_size(),
-                                                                src.block(i).begin());
-        const Vector<typename VectorType::value_type> &copy_vec = view_src_in;
+        VectorView<Number> view_src_in(src.block(i).local_size(),
+                                       src.block(i).begin());
+        const Vector<Number> &copy_vec = view_src_in;
         const_cast<VectorType &>(src).block(i).reinit(mf.get_dof_info(i).vector_partitioner);
-        VectorView<typename VectorType::value_type> view_src_out(src.block(i).local_size(),
-                                                                 src.block(i).begin());
-        static_cast<Vector<typename VectorType::value_type> &>(view_src_out) = copy_vec;
+        VectorView<Number> view_src_out(src.block(i).local_size(),
+                                        src.block(i).begin());
+        static_cast<Vector<Number> &>(view_src_out) = copy_vec;
       }
   }
+
+
 
   template <int dim, typename VectorType>
   typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
@@ -1083,6 +1128,7 @@ namespace MatrixFreeOperators
   (const MatrixFree<dim, typename VectorType::value_type> &mf,
    const VectorType &src)
   {
+    typedef typename Base<dim,VectorType>::value_type Number;
     // If both vectors use the same partitioner -> done
     if (src.get_partitioner().get() == mf.get_dof_info(0).vector_partitioner.get())
       return;
@@ -1096,23 +1142,24 @@ namespace MatrixFreeOperators
 
     // copy the vector content to a temporary vector so that it does not get
     // lost
-    VectorView<typename VectorType::value_type> view_src_in(src.local_size(),
-                                                            src.begin());
-    const Vector<typename VectorType::value_type> &copy_vec = view_src_in;
+    VectorView<Number> view_src_in(src.local_size(), src.begin());
+    const Vector<Number> &copy_vec = view_src_in;
     const_cast<VectorType &>(src).reinit(mf.get_dof_info(0).vector_partitioner);
-    VectorView<typename VectorType::value_type> view_src_out(src.local_size(),
-                                                             src.begin());
-    static_cast<Vector<typename VectorType::value_type> &>(view_src_out) = copy_vec;
+    VectorView<Number> view_src_out(src.local_size(), src.begin());
+    static_cast<Vector<Number>&>(view_src_out) = copy_vec;
   }
 
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::adjust_ghost_range_if_necessary
+  void
+  Base<dim,VectorType>::adjust_ghost_range_if_necessary
   (const VectorType &src) const
   {
     external_adjust_ghost_range_if_necessary(*data, src);
   }
+
+
 
   template <typename VectorType>
   typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
@@ -1143,6 +1190,8 @@ namespace MatrixFreeOperators
       }
   }
 
+
+
   template <typename VectorType>
   typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
   external_set_level_dirichlet_zero_and_restore
@@ -1170,16 +1219,18 @@ namespace MatrixFreeOperators
 
 
 
-
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::vmult_interface_down
-  (VectorType &dst, const VectorType &src) const
+  void
+  Base<dim,VectorType>::
+  vmult_interface_down(VectorType &dst,
+                       const VectorType &src) const
   {
+    typedef typename Base<dim,VectorType>::value_type Number;
     AssertDimension(dst.size(), src.size());
     adjust_ghost_range_if_necessary(src);
     adjust_ghost_range_if_necessary(dst);
 
-    dst = 0;
+    dst = Number(0.);
 
     if (!have_interface_matrices)
       return;
@@ -1190,11 +1241,13 @@ namespace MatrixFreeOperators
                                 edge_constrained_indices,
                                 const_cast<VectorType &> (src), dst);
 
-    apply_add(dst, src);
+    apply_add(dst,src);
 
     external_set_level_dirichlet_zero_and_restore
     (edge_constrained_indices, edge_constrained_values, dst, const_cast<VectorType &>(src), true);
   }
+
+
 
   template <typename VectorType>
   typename std_cxx11::enable_if<IsBlockVector<VectorType>::value, void>::type
@@ -1208,6 +1261,8 @@ namespace MatrixFreeOperators
           dst.block(i).local_element(edge_constrained_indices[i][j]) = 0.;
       }
   }
+
+
 
   template <typename VectorType>
   typename std_cxx11::enable_if<!IsBlockVector<VectorType>::value, void>::type
@@ -1225,21 +1280,22 @@ namespace MatrixFreeOperators
   void Base<dim, VectorType>::vmult_interface_up
   (VectorType &dst, const VectorType &src) const
   {
+    typedef typename Base<dim,VectorType>::value_type Number;
     AssertDimension(dst.size(), src.size());
     adjust_ghost_range_if_necessary(src);
     adjust_ghost_range_if_necessary(dst);
 
-    dst = 0;
+    dst = Number(0.);
 
     if (!have_interface_matrices)
       return;
 
-    VectorType src_cpy = src;
+    VectorType src_cpy (src);
 
     external_set_level_dirichlet_zero_and_restore
     (edge_constrained_indices,edge_constrained_values,src_cpy,src_cpy);
 
-    apply_add(dst, src_cpy);
+    apply_add(dst,src_cpy);
 
     external_zero_edge_constrained_indices(edge_constrained_indices, dst);
   }
@@ -1247,28 +1303,29 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::Tvmult(VectorType &dst,
-                                     const VectorType &src) const
+  void
+  Base<dim,VectorType>::Tvmult (VectorType       &dst,
+                                const VectorType &src) const
   {
-    dst = 0;
-    Tvmult_add(dst, src);
+    typedef typename Base<dim,VectorType>::value_type Number;
+    dst = Number(0.);
+    Tvmult_add (dst,src);
   }
 
 
 
   template <int dim, typename VectorType>
-  std::size_t Base<dim, VectorType>::memory_consumption() const
+  std::size_t
+  Base<dim,VectorType>::memory_consumption () const
   {
-    return inverse_diagonal_entries != NULL
-           ? inverse_diagonal_entries->memory_consumption()
-           : sizeof(*this);
+    return inverse_diagonal_entries.get() != NULL ? inverse_diagonal_entries->memory_consumption() : sizeof(*this);
   }
 
 
 
   template <int dim, typename VectorType>
-  std_cxx11::shared_ptr< const MatrixFree<dim, typename Base<dim, VectorType>::value_type> >
-  Base<dim, VectorType>::get_matrix_free() const
+  std_cxx11::shared_ptr<const MatrixFree<dim,typename Base<dim,VectorType>::value_type> >
+  Base<dim,VectorType>::get_matrix_free() const
   {
     return data;
   }
@@ -1277,36 +1334,40 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   const std_cxx11::shared_ptr<DiagonalMatrix<VectorType> > &
-  Base<dim, VectorType>::get_matrix_diagonal_inverse() const
+  Base<dim,VectorType>::get_matrix_diagonal_inverse() const
   {
     Assert(inverse_diagonal_entries.get() != NULL &&
-           inverse_diagonal_entries->m() > 0,
-           ExcNotInitialized());
+           inverse_diagonal_entries->m() > 0, ExcNotInitialized());
     return inverse_diagonal_entries;
   }
 
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::Tapply_add(VectorType &dst,
-                                         const VectorType &src) const
+  void
+  Base<dim,VectorType>::Tapply_add(VectorType &dst,
+                                   const VectorType &src) const
   {
-    apply_add(dst, src);
+    apply_add(dst,src);
   }
 
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::precondition_Jacobi
-  (VectorType &dst, const VectorType &src, const value_type omega) const
+  void
+  Base<dim,VectorType>::precondition_Jacobi(VectorType &dst,
+                                            const VectorType &src,
+                                            const typename Base<dim,VectorType>::value_type omega) const
   {
-    Assert(inverse_diagonal_entries.get() && inverse_diagonal_entries->m() > 0,
-           ExcNotInitialized());
-    inverse_diagonal_entries->vmult(dst, src);
+    Assert(inverse_diagonal_entries.get() &&
+           inverse_diagonal_entries->m() > 0, ExcNotInitialized());
+    inverse_diagonal_entries->vmult(dst,src);
     dst *= omega;
   }
 
-//------------------------- MGInterfaceOperator ------------------------------
+
+
+  //------------------------- MGInterfaceOperator ------------------------------
 
   template <typename OperatorType>
   MGInterfaceOperator<OperatorType>::MGInterfaceOperator ()
@@ -1380,7 +1441,7 @@ namespace MatrixFreeOperators
 
 
 
-//-----------------------------MassOperator----------------------------------
+  //-----------------------------MassOperator----------------------------------
 
   template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename VectorType>
   MassOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
@@ -1455,7 +1516,7 @@ namespace MatrixFreeOperators
   }
 
 
-//-----------------------------LaplaceOperator----------------------------------
+  //-----------------------------LaplaceOperator----------------------------------
 
   template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename VectorType>
   LaplaceOperator<dim, fe_degree, n_q_points_1d, n_components, VectorType>::
