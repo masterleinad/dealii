@@ -917,14 +917,17 @@ namespace MatrixFreeOperators
   void
   Base<dim,VectorType>::set_constrained_entries_to_one (VectorType &dst) const
   {
-    for (unsigned int j = 0; j < n_blocks(dst); ++j)
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
       {
         const std::vector<unsigned int> &
         constrained_dofs = data->get_constrained_dofs(j);
         for (unsigned int i=0; i<constrained_dofs.size(); ++i)
           subblock(dst,j).local_element(constrained_dofs[i]) = 1.;
         for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
-          subblock(dst,j).local_element(edge_constrained_indices[j][i]) = 1.;
+          {
+            std::cout << edge_constrained_indices[j][i] << std::endl;
+            subblock(dst,j).local_element(edge_constrained_indices[j][i]) = 1.;
+          }
       }
   }
 
@@ -1027,22 +1030,22 @@ namespace MatrixFreeOperators
     else
       apply_add(dst,src);
 
-    for (unsigned int j=0; j<n_blocks(dst); ++j
-    {
-      const std::vector<unsigned int> &
-      constrained_dofs = data->get_constrained_dofs(j);
+    for (unsigned int j=0; j<n_blocks(dst); ++j)
+      {
+        const std::vector<unsigned int> &
+        constrained_dofs = data->get_constrained_dofs(j);
         for (unsigned int i=0; i<constrained_dofs.size(); ++i)
           {
             subblock(dst,j).local_element(constrained_dofs[i]) +=
-            subblock(src,j).local_element(constrained_dofs[i]);
+              subblock(src,j).local_element(constrained_dofs[i]);
           }
       }
 
     // reset edge constrained values, multiply by unit matrix and add into
     // destination
     for (unsigned int j=0; j<n_blocks(dst); ++j)
-    {
-      for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
+      {
+        for (unsigned int i=0; i<edge_constrained_indices[j].size(); ++i)
           {
             subblock(const_cast<VectorType &>(src),j).local_element
             (edge_constrained_indices[j][i])
