@@ -232,7 +232,7 @@ namespace MatrixFreeOperators
     (const MatrixFree<dim, typename VectorType::value_type> &mf,
      const VectorType &src)
     {
-      typedef typename Base<dim,VectorType>::value_type Number;
+      typedef typename VectorType::value_type Number;
       for (unsigned int i = 0; i < src.n_blocks(); ++i)
         {
           // If both vectors use the same partitioner -> done
@@ -266,7 +266,7 @@ namespace MatrixFreeOperators
     (const MatrixFree<dim, typename VectorType::value_type> &mf,
      const VectorType &src)
     {
-      typedef typename Base<dim,VectorType>::value_type Number;
+      typedef typename VectorType::value_type Number;
       // If both vectors use the same partitioner -> done
       if (src.get_partitioner().get() == mf.get_dof_info(0).vector_partitioner.get())
         return;
@@ -423,18 +423,16 @@ namespace MatrixFreeOperators
     /**
      * Initialize operator on a level @p level for a single FiniteElement.
      */
-    void
-    initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data,
-                const MGConstrainedDoFs &mg_constrained_dofs,
-                const unsigned int level);
+    void initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data,
+                     const MGConstrainedDoFs &mg_constrained_dofs,
+                     const unsigned int level);
 
     /**
      * Initialize operator on a level @p level for multiple FiniteElements.
      */
-    void
-    initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data,
-                const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
-                const unsigned int level);
+    void initialize (std_cxx11::shared_ptr<const MatrixFree<dim,value_type> > data,
+                     const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
+                     const unsigned int level);
 
     /**
      * Return the dimension of the codomain (or range) space.
@@ -566,7 +564,7 @@ namespace MatrixFreeOperators
     /**
      * Indices of DoFs on edge in case the operator is used in GMG context.
      */
-    std::vector<std::vector<unsigned int>  > edge_constrained_indices;
+    std::vector<std::vector<unsigned int> > edge_constrained_indices;
 
     /**
      * Auxiliary vector.
@@ -1046,8 +1044,8 @@ namespace MatrixFreeOperators
   Base<dim,VectorType>::Base ()
     :
     Subscriptor(),
-    have_interface_matrices(false),
-    data(NULL)
+    data(NULL),
+    have_interface_matrices(false)
   {
   }
 
@@ -1057,7 +1055,7 @@ namespace MatrixFreeOperators
   typename Base<dim,VectorType>::size_type
   Base<dim,VectorType>::m () const
   {
-    Assert(data != NULL,
+    Assert(data.get() != NULL,
            ExcNotInitialized());
     typename Base<dim, VectorType>::size_type total_size = 0;
     for (unsigned int i=0; i<data->n_components(); ++i)
@@ -1102,17 +1100,19 @@ namespace MatrixFreeOperators
 
   template <int dim, typename VectorType>
   void
-  Base<dim, VectorType>::initialize_dof_vector(VectorType &vec) const
+  Base<dim,VectorType>::initialize_dof_vector (VectorType &vec) const
   {
-    Assert(data != NULL, ExcNotInitialized());
+    Assert(data.get() != NULL,
+           ExcNotInitialized());
     external_initialize_dof_vector(*data, vec);
   }
 
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::initialize
-  (std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_)
+  void
+  Base<dim,VectorType>::
+  initialize (std_cxx11::shared_ptr<const MatrixFree<dim,Base<dim,VectorType>::value_type> > data_)
   {
     data = data_;
     edge_constrained_indices.clear();
@@ -1125,10 +1125,11 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::initialize
-  (std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
-   const MGConstrainedDoFs &mg_constrained_dofs,
-   const unsigned int level)
+  void
+  Base<dim,VectorType>::
+  initialize (std_cxx11::shared_ptr<const MatrixFree<dim,Base<dim,VectorType>::value_type> > data_,
+              const MGConstrainedDoFs      &mg_constrained_dofs,
+              const unsigned int            level)
   {
     std::vector<MGConstrainedDoFs> mg_constrained_dofs_(1, mg_constrained_dofs);
     initialize(data_, mg_constrained_dofs_, level);
@@ -1137,10 +1138,11 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::initialize
-  (std_cxx11::shared_ptr<const MatrixFree<dim, value_type> > data_,
-   const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
-   const unsigned int level)
+  void
+  Base<dim,VectorType>::
+  initialize (std_cxx11::shared_ptr<const MatrixFree<dim,Base<dim,VectorType>::value_type> > data_,
+              const std::vector<MGConstrainedDoFs> &mg_constrained_dofs,
+              const unsigned int level)
   {
     AssertThrow(level != numbers::invalid_unsigned_int,
                 ExcMessage("level is not set"));
@@ -1179,8 +1181,8 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::set_constrained_entries_to_one
-  (VectorType &dst) const
+  void
+  Base<dim,VectorType>::set_constrained_entries_to_one (VectorType &dst) const
   {
     external_set_constrained_entries_to_one(*data, edge_constrained_indices, dst);
   }
@@ -1188,8 +1190,9 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::vmult(VectorType &dst,
-                                    const VectorType &src) const
+  void
+  Base<dim,VectorType>::vmult (VectorType       &dst,
+                               const VectorType &src) const
   {
     dst = 0.;
     vmult_add(dst, src);
@@ -1198,8 +1201,9 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::vmult_add(VectorType &dst,
-                                        const VectorType &src) const
+  void
+  Base<dim,VectorType>::vmult_add(VectorType       &dst,
+                                  const VectorType &src) const
   {
     mult_add(dst, src, false);
   }
@@ -1207,8 +1211,9 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::Tvmult_add(VectorType &dst,
-                                         const VectorType &src) const
+  void
+  Base<dim,VectorType>::Tvmult_add (VectorType       &dst,
+                                    const VectorType &src) const
   {
     mult_add(dst, src, true);
   }
@@ -1216,9 +1221,19 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::mult_add(VectorType &dst,
-                                       const VectorType &src,
-                                       const bool transpose) const
+  void
+  Base<dim,VectorType>::adjust_ghost_range_if_necessary(const VectorType &src) const
+  {
+    external_adjust_ghost_range_if_necessary(*data, src);
+  }
+
+
+
+  template <int dim, typename VectorType>
+  void
+  Base<dim,VectorType>::mult_add (VectorType &dst,
+                                  const VectorType &src,
+                                  const bool transpose) const
   {
     AssertDimension(dst.size(), src.size());
     adjust_ghost_range_if_necessary(src);
@@ -1237,16 +1252,6 @@ namespace MatrixFreeOperators
 
     external_set_constrained_dofs_and_restore_edge_constraints
     (*data, edge_constrained_values, edge_constrained_indices, dst, const_cast<VectorType &>(src));
-  }
-
-
-
-  template <int dim, typename VectorType>
-  void
-  Base<dim,VectorType>::adjust_ghost_range_if_necessary
-  (const VectorType &src) const
-  {
-    external_adjust_ghost_range_if_necessary(*data, src);
   }
 
 
@@ -1282,8 +1287,10 @@ namespace MatrixFreeOperators
 
 
   template <int dim, typename VectorType>
-  void Base<dim, VectorType>::vmult_interface_up
-  (VectorType &dst, const VectorType &src) const
+  void
+  Base<dim,VectorType>::
+  vmult_interface_up(VectorType &dst,
+                     const VectorType &src) const
   {
     typedef typename Base<dim,VectorType>::value_type Number;
     AssertDimension(dst.size(), src.size());
