@@ -22,3 +22,8 @@
 
 const int global_symbol_42 = 42;
 
+// need this to silence warning about unused variable in clang
+void use_global_symbol_42()
+{
+  (void) global_symbol_42;
+}
