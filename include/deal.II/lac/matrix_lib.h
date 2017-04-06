@@ -239,7 +239,7 @@ void
 ScaledMatrix<VectorType>::clear()
 {
   if (m) delete m;
-  m = 0;
+  m = nullptr;
 }
 
 
