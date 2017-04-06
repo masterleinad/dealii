@@ -112,7 +112,7 @@ namespace MeshWorker
                     const Mapping<dim,spacedim> &mapping,
                     const Quadrature<FEVALUES::integral_dimension> &quadrature,
                     const UpdateFlags flags,
-                    const BlockInfo *local_block_info = 0);
+                    const BlockInfo *local_block_info = nullptr);
 
     /**
      * Initialize the data vector and cache the selector.
@@ -301,7 +301,7 @@ namespace MeshWorker
      */
     void initialize(const FiniteElement<dim, spacedim> &el,
                     const Mapping<dim, spacedim> &mapping,
-                    const BlockInfo *block_info = 0);
+                    const BlockInfo *block_info = nullptr);
 
     /**
      * Initialize the IntegrationInfo objects contained.
@@ -315,7 +315,7 @@ namespace MeshWorker
                     const Mapping<dim, spacedim>       &mapping,
                     const AnyData                      &data,
                     const VectorType                   &dummy,
-                    const BlockInfo                    *block_info = 0);
+                    const BlockInfo                    *block_info = nullptr);
     /**
      * Initialize the IntegrationInfo objects contained.
      *
@@ -328,7 +328,7 @@ namespace MeshWorker
                     const Mapping<dim, spacedim>       &mapping,
                     const AnyData                      &data,
                     const MGLevelObject<VectorType>    &dummy,
-                    const BlockInfo                    *block_info = 0);
+                    const BlockInfo                    *block_info = nullptr);
     /**
      * @name FEValues setup
      */
@@ -581,14 +581,14 @@ namespace MeshWorker
         const FEFaceValues<dim,sdim> *pf = dynamic_cast<const FEFaceValues<dim,sdim>*>(&p);
         const FESubfaceValues<dim,sdim> *ps = dynamic_cast<const FESubfaceValues<dim,sdim>*>(&p);
 
-        if (pc != 0)
+        if (pc != nullptr)
           fevalv[i] = std_cxx11::shared_ptr<FEValuesBase<dim,sdim> > (
                         new FEValues<dim,sdim> (pc->get_mapping(), pc->get_fe(),
                                                 pc->get_quadrature(), pc->get_update_flags()));
-        else if (pf != 0)
+        else if (pf != nullptr)
           fevalv[i] = std_cxx11::shared_ptr<FEValuesBase<dim,sdim> > (
                         new FEFaceValues<dim,sdim> (pf->get_mapping(), pf->get_fe(), pf->get_quadrature(), pf->get_update_flags()));
-        else if (ps != 0)
+        else if (ps != nullptr)
           fevalv[i] = std_cxx11::shared_ptr<FEValuesBase<dim,sdim> > (
                         new FESubfaceValues<dim,sdim> (ps->get_mapping(), ps->get_fe(), ps->get_quadrature(), ps->get_update_flags()));
         else
@@ -609,7 +609,7 @@ namespace MeshWorker
     const BlockInfo *block_info)
   {
     fe_pointer = &el;
-    if (block_info == 0 || block_info->local().size() == 0)
+    if (block_info == nullptr || block_info->local().size() == 0)
       {
         fevalv.resize(1);
         fevalv[0] = std_cxx11::shared_ptr<FEValuesBase<dim,sdim> > (
@@ -632,7 +632,7 @@ namespace MeshWorker
   inline const FiniteElement<dim, spacedim> &
   IntegrationInfo<dim,spacedim>::finite_element() const
   {
-    Assert (fe_pointer !=0, ExcNotInitialized());
+    Assert (fe_pointer !=nullptr, ExcNotInitialized());
     return *fe_pointer;
   }
 
@@ -682,7 +682,7 @@ namespace MeshWorker
           }
       }
 
-    const bool split_fevalues = info.block_info != 0;
+    const bool split_fevalues = info.block_info != nullptr;
     if (!global_data->empty())
       fill_local_data(info, split_fevalues);
   }

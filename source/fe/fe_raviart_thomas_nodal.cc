@@ -452,7 +452,7 @@ FE_RaviartThomasNodal<dim>::hp_vertex_dof_identities (
   // FE_RaviartThomasNodals. in that case, no
   // dofs are assigned on the vertex, so we
   // shouldn't be getting here at all.
-  if (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other)!=0)
+  if (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other)!=nullptr)
     return std::vector<std::pair<unsigned int, unsigned int> > ();
   else
     {
@@ -615,7 +615,7 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix (
   // RaviartThomasNodal element
   AssertThrow ((x_source_fe.get_name().find ("FE_RaviartThomasNodal<") == 0)
                ||
-               (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&x_source_fe) != 0),
+               (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&x_source_fe) != nullptr),
                typename FiniteElement<dim>::
                ExcInterpolationNotImplemented());
 
@@ -722,7 +722,7 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix (
   // RaviartThomasNodal element
   AssertThrow ((x_source_fe.get_name().find ("FE_RaviartThomasNodal<") == 0)
                ||
-               (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&x_source_fe) != 0),
+               (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&x_source_fe) != nullptr),
                typename FiniteElement<dim>::
                ExcInterpolationNotImplemented());
 

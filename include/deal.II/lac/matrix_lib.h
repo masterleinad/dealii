@@ -552,7 +552,7 @@ void
 ScaledMatrix<VectorType>::clear()
 {
   if (m) delete m;
-  m = 0;
+  m = nullptr;
 }
 
 
@@ -589,13 +589,13 @@ ScaledMatrix<VectorType>::Tvmult (VectorType &w, const VectorType &v) const
 
 template<typename VectorType>
 ProductMatrix<VectorType>::ProductMatrix ()
-  : m1(0), m2(0), mem(0)
+  : m1(nullptr), m2(nullptr), mem(nullptr)
 {}
 
 
 template<typename VectorType>
 ProductMatrix<VectorType>::ProductMatrix (VectorMemory<VectorType> &m)
-  : m1(0), m2(0), mem(&m)
+  : m1(nullptr), m2(nullptr), mem(&m)
 {}
 
 
@@ -651,9 +651,9 @@ void
 ProductMatrix<VectorType>::clear ()
 {
   if (m1) delete m1;
-  m1 = 0;
+  m1 = nullptr;
   if (m2) delete m2;
-  m2 = 0;
+  m2 = nullptr;
 }
 
 
@@ -661,9 +661,9 @@ template<typename VectorType>
 void
 ProductMatrix<VectorType>::vmult (VectorType &dst, const VectorType &src) const
 {
-  Assert (mem != 0, ExcNotInitialized());
-  Assert (m1 != 0, ExcNotInitialized());
-  Assert (m2 != 0, ExcNotInitialized());
+  Assert (mem != nullptr, ExcNotInitialized());
+  Assert (m1 != nullptr, ExcNotInitialized());
+  Assert (m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(dst);
@@ -677,9 +677,9 @@ template<typename VectorType>
 void
 ProductMatrix<VectorType>::vmult_add (VectorType &dst, const VectorType &src) const
 {
-  Assert (mem != 0, ExcNotInitialized());
-  Assert (m1 != 0, ExcNotInitialized());
-  Assert (m2 != 0, ExcNotInitialized());
+  Assert (mem != nullptr, ExcNotInitialized());
+  Assert (m1 != nullptr, ExcNotInitialized());
+  Assert (m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(dst);
@@ -693,9 +693,9 @@ template<typename VectorType>
 void
 ProductMatrix<VectorType>::Tvmult (VectorType &dst, const VectorType &src) const
 {
-  Assert (mem != 0, ExcNotInitialized());
-  Assert (m1 != 0, ExcNotInitialized());
-  Assert (m2 != 0, ExcNotInitialized());
+  Assert (mem != nullptr, ExcNotInitialized());
+  Assert (m1 != nullptr, ExcNotInitialized());
+  Assert (m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(dst);
@@ -709,9 +709,9 @@ template<typename VectorType>
 void
 ProductMatrix<VectorType>::Tvmult_add (VectorType &dst, const VectorType &src) const
 {
-  Assert (mem != 0, ExcNotInitialized());
-  Assert (m1 != 0, ExcNotInitialized());
-  Assert (m2 != 0, ExcNotInitialized());
+  Assert (mem != nullptr, ExcNotInitialized());
+  Assert (m1 != nullptr, ExcNotInitialized());
+  Assert (m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(dst);

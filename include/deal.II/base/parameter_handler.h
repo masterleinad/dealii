@@ -289,7 +289,7 @@ namespace Patterns
     /**
      * Creates a new object on the heap using @p new if the given
      * @p description is a valid format (for example created by calling
-     * description() on an existing object), or NULL otherwise. Ownership of
+     * description() on an existing object), ornullptrotherwise. Ownership of
      * the returned object is transferred to the caller of this function,
      * which should be freed using @p delete.
      */

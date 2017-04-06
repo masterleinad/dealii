@@ -41,9 +41,9 @@ ProductSparseMatrix<number, vnumber>::ProductSparseMatrix(
 template<typename number, typename vnumber>
 ProductSparseMatrix<number, vnumber>::ProductSparseMatrix()
   :
-  m1(0, typeid(*this).name()),
-  m2(0, typeid(*this).name()),
-  mem(0, typeid(*this).name())
+  m1(nullptr, typeid(*this).name()),
+  m2(nullptr, typeid(*this).name()),
+  mem(nullptr, typeid(*this).name())
 {}
 
 
@@ -65,8 +65,8 @@ template<typename number, typename vnumber>
 void
 ProductSparseMatrix<number, vnumber>::clear()
 {
-  m1 = 0;
-  m2 = 0;
+  m1 = nullptr;
+  m2 = nullptr;
 }
 
 
@@ -74,9 +74,9 @@ template<typename number, typename vnumber>
 void
 ProductSparseMatrix<number, vnumber>::vmult (VectorType &dst, const VectorType &src) const
 {
-  Assert(mem != 0, ExcNotInitialized());
-  Assert(m1 != 0, ExcNotInitialized());
-  Assert(m2 != 0, ExcNotInitialized());
+  Assert(mem != nullptr, ExcNotInitialized());
+  Assert(m1 != nullptr, ExcNotInitialized());
+  Assert(m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(m1->n());
@@ -90,9 +90,9 @@ template<typename number, typename vnumber>
 void
 ProductSparseMatrix<number, vnumber>::vmult_add (VectorType &dst, const VectorType &src) const
 {
-  Assert(mem != 0, ExcNotInitialized());
-  Assert(m1 != 0, ExcNotInitialized());
-  Assert(m2 != 0, ExcNotInitialized());
+  Assert(mem != nullptr, ExcNotInitialized());
+  Assert(m1 != nullptr, ExcNotInitialized());
+  Assert(m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(m1->n());
@@ -106,9 +106,9 @@ template<typename number, typename vnumber>
 void
 ProductSparseMatrix<number, vnumber>::Tvmult (VectorType &dst, const VectorType &src) const
 {
-  Assert(mem != 0, ExcNotInitialized());
-  Assert(m1 != 0, ExcNotInitialized());
-  Assert(m2 != 0, ExcNotInitialized());
+  Assert(mem != nullptr, ExcNotInitialized());
+  Assert(m1 != nullptr, ExcNotInitialized());
+  Assert(m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(m1->n());
@@ -122,9 +122,9 @@ template<typename number, typename vnumber>
 void
 ProductSparseMatrix<number, vnumber>::Tvmult_add (VectorType &dst, const VectorType &src) const
 {
-  Assert(mem != 0, ExcNotInitialized());
-  Assert(m1 != 0, ExcNotInitialized());
-  Assert(m2 != 0, ExcNotInitialized());
+  Assert(mem != nullptr, ExcNotInitialized());
+  Assert(m1 != nullptr, ExcNotInitialized());
+  Assert(m2 != nullptr, ExcNotInitialized());
 
   VectorType *v = mem->alloc();
   v->reinit(m1->n());

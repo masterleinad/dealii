@@ -314,8 +314,8 @@ LaplaceProblem<dim>::output_gpl(const DoFHandler<dim> &dof,
         dof.begin_mg(l), dof.end_mg(l),
         dof_info, info_box,
         std_cxx11::bind(&OutputCreator<dim>::cell, &matrix_integrator, std_cxx11::_1, std_cxx11::_2),
-        0,
-        0,
+        nullptr,
+        nullptr,
         assembler);
     }
 }

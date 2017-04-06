@@ -6292,10 +6292,10 @@ namespace internal
                     case RefinementCase<dim>::cut_x:
                     {
                       const typename Triangulation<dim,spacedim>::raw_line_iterator
-                      *lines = NULL;
-                      const unsigned int *line_indices     = NULL;
-                      const bool         *line_orientation = NULL;
-                      const int          *quad_indices     = NULL;
+                      *lines = nullptr;
+                      const unsigned int *line_indices     = nullptr;
+                      const bool         *line_orientation = nullptr;
+                      const int          *quad_indices     = nullptr;
 
                       //////////////////////////////
                       //
@@ -6495,10 +6495,10 @@ namespace internal
                     case RefinementCase<dim>::cut_y:
                     {
                       const typename Triangulation<dim,spacedim>::raw_line_iterator
-                      *lines = NULL;
-                      const unsigned int *line_indices     = NULL;
-                      const bool         *line_orientation = NULL;
-                      const int          *quad_indices     = NULL;
+                      *lines = nullptr;
+                      const unsigned int *line_indices     = nullptr;
+                      const bool         *line_orientation = nullptr;
+                      const int          *quad_indices     = nullptr;
 
                       //////////////////////////////
                       //
@@ -6702,10 +6702,10 @@ namespace internal
                     case RefinementCase<dim>::cut_z:
                     {
                       const typename Triangulation<dim,spacedim>::raw_line_iterator
-                      *lines = NULL;
-                      const unsigned int *line_indices     = NULL;
-                      const bool         *line_orientation = NULL;
-                      const int          *quad_indices     = NULL;
+                      *lines = nullptr;
+                      const unsigned int *line_indices     = nullptr;
+                      const bool         *line_orientation = nullptr;
+                      const int          *quad_indices     = nullptr;
 
                       //////////////////////////////
                       //
@@ -6911,10 +6911,10 @@ namespace internal
                     case RefinementCase<dim>::cut_xy:
                     {
                       const typename Triangulation<dim,spacedim>::raw_line_iterator
-                      *lines = NULL;
-                      const unsigned int *line_indices     = NULL;
-                      const bool         *line_orientation = NULL;
-                      const int          *quad_indices     = NULL;
+                      *lines = nullptr;
+                      const unsigned int *line_indices     = nullptr;
+                      const bool         *line_orientation = nullptr;
+                      const int          *quad_indices     = nullptr;
 
                       //////////////////////////////
                       //
@@ -7260,10 +7260,10 @@ namespace internal
                     case RefinementCase<dim>::cut_xz:
                     {
                       const typename Triangulation<dim,spacedim>::raw_line_iterator
-                      *lines = NULL;
-                      const unsigned int *line_indices     = NULL;
-                      const bool         *line_orientation = NULL;
-                      const int          *quad_indices     = NULL;
+                      *lines = nullptr;
+                      const unsigned int *line_indices     = nullptr;
+                      const bool         *line_orientation = nullptr;
+                      const int          *quad_indices     = nullptr;
 
                       //////////////////////////////
                       //
@@ -7619,10 +7619,10 @@ namespace internal
                     case RefinementCase<dim>::cut_yz:
                     {
                       const typename Triangulation<dim,spacedim>::raw_line_iterator
-                      *lines = NULL;
-                      const unsigned int *line_indices     = NULL;
-                      const bool         *line_orientation = NULL;
-                      const int          *quad_indices     = NULL;
+                      *lines = nullptr;
+                      const unsigned int *line_indices     = nullptr;
+                      const bool         *line_orientation = nullptr;
+                      const int          *quad_indices     = nullptr;
 
                       //////////////////////////////
                       //
@@ -7965,11 +7965,11 @@ namespace internal
                     case RefinementCase<dim>::cut_xyz:
                     {
                       const typename Triangulation<dim,spacedim>::raw_line_iterator
-                      *lines = NULL;
-                      const unsigned int *vertex_indices   = NULL;
-                      const unsigned int *line_indices     = NULL;
-                      const bool         *line_orientation = NULL;
-                      const int          *quad_indices     = NULL;
+                      *lines = nullptr;
+                      const unsigned int *vertex_indices   = nullptr;
+                      const unsigned int *line_indices     = nullptr;
+                      const bool         *line_orientation = nullptr;
+                      const int          *quad_indices     = nullptr;
 
                       //////////////////////////////
                       //
@@ -9053,7 +9053,7 @@ Triangulation<dim, spacedim>::~Triangulation ()
     if (levels[i])
       {
         delete levels[i];
-        levels[i] = 0;
+        levels[i] = nullptr;
       }
   levels.clear ();
 
@@ -9063,14 +9063,14 @@ Triangulation<dim, spacedim>::~Triangulation ()
   // this object makes sense
   Assert ((dim == 1)
           ||
-          (vertex_to_boundary_id_map_1d == 0),
+          (vertex_to_boundary_id_map_1d == nullptr),
           ExcInternalError());
 
   // the vertex_to_manifold_id_map_1d field should be also unused
   // except in 1d. check this as well
   Assert ((dim == 1)
           ||
-          (vertex_to_manifold_id_map_1d == 0),
+          (vertex_to_manifold_id_map_1d == nullptr),
           ExcInternalError());
 }
 
@@ -9224,7 +9224,7 @@ Triangulation<dim, spacedim>::get_boundary (const types::manifold_id m_number) c
 {
   const Boundary<dim, spacedim> *man =
     dynamic_cast<const Boundary<dim, spacedim> *>(&get_manifold(m_number));
-  Assert(man != NULL,
+  Assert(man != nullptr,
          ExcMessage("You tried to get a Boundary, but I only have a Manifold."));
 
   return *man;
@@ -9316,11 +9316,11 @@ copy_triangulation (const Triangulation<dim, spacedim> &other_tria)
 {
   Assert ((vertices.size() == 0) &&
           (levels.size () == 0) &&
-          (faces == NULL),
+          (faces == nullptr),
           ExcTriangulationNotEmpty(vertices.size(), levels.size()));
   Assert ((other_tria.levels.size() != 0) &&
           (other_tria.vertices.size() != 0) &&
-          (dim == 1 || other_tria.faces != NULL),
+          (dim == 1 || other_tria.faces != nullptr),
           ExcMessage("When calling Triangulation::copy_triangulation(), "
                      "the target triangulation must be empty but the source "
                      "triangulation (the argument to this function) must contain "
@@ -9404,7 +9404,7 @@ create_triangulation (const std::vector<Point<spacedim> >    &v,
 {
   Assert ((vertices.size() == 0) &&
           (levels.size () == 0) &&
-          (faces == NULL),
+          (faces == nullptr),
           ExcTriangulationNotEmpty(vertices.size(), levels.size()));
   // check that no forbidden arrays
   // are used
@@ -10438,7 +10438,7 @@ namespace
   void *get_user_pointer (const TriaIterator<InvalidAccessor<structdim,dim,spacedim> > &)
   {
     Assert (false, ExcInternalError());
-    return 0;
+    return nullptr;
   }
 
 
@@ -10529,7 +10529,7 @@ void Triangulation<dim, spacedim>::load_user_pointers (const std::vector<void *>
 template <int dim, int spacedim>
 void Triangulation<dim, spacedim>::save_user_pointers_line (std::vector<void *> &v) const
 {
-  v.resize (n_lines(), 0);
+  v.resize (n_lines(), nullptr);
   std::vector<void *>::iterator  i = v.begin();
   line_iterator line = begin_line(),
                 endl = end_line();
@@ -10556,7 +10556,7 @@ void Triangulation<dim, spacedim>::load_user_pointers_line (const std::vector<vo
 template <int dim, int spacedim>
 void Triangulation<dim, spacedim>::save_user_pointers_quad (std::vector<void *> &v) const
 {
-  v.resize (n_quads(), 0);
+  v.resize (n_quads(), nullptr);
 
   if (dim >= 2)
     {
@@ -10589,7 +10589,7 @@ void Triangulation<dim, spacedim>::load_user_pointers_quad (const std::vector<vo
 template <int dim, int spacedim>
 void Triangulation<dim, spacedim>::save_user_pointers_hex (std::vector<void *> &v) const
 {
-  v.resize (n_hexs(), 0);
+  v.resize (n_hexs(), nullptr);
 
   if (dim >= 3)
     {

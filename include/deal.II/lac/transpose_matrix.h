@@ -141,7 +141,7 @@ template<typename MatrixType, typename VectorType>
 inline void
 TransposeMatrix<MatrixType, VectorType>::clear ()
 {
-  m = 0;
+  m = nullptr;
 }
 
 
@@ -168,7 +168,7 @@ inline void
 TransposeMatrix<MatrixType, VectorType>::vmult (VectorType       &dst,
                                                 const VectorType &src) const
 {
-  Assert (m != 0, ExcNotInitialized());
+  Assert (m != nullptr, ExcNotInitialized());
   m->Tvmult (dst, src);
 }
 
@@ -178,7 +178,7 @@ inline void
 TransposeMatrix<MatrixType, VectorType>::Tvmult (VectorType       &dst,
                                                  const VectorType &src) const
 {
-  Assert (m != 0, ExcNotInitialized());
+  Assert (m != nullptr, ExcNotInitialized());
   m->vmult (dst, src);
 }
 
@@ -188,7 +188,7 @@ inline void
 TransposeMatrix<MatrixType, VectorType>::vmult_add (VectorType       &dst,
                                                     const VectorType &src) const
 {
-  Assert (m != 0, ExcNotInitialized());
+  Assert (m != nullptr, ExcNotInitialized());
   m->Tvmult_add (dst, src);
 }
 
@@ -198,7 +198,7 @@ inline void
 TransposeMatrix<MatrixType, VectorType>::Tvmult_add (VectorType       &dst,
                                                      const VectorType &src) const
 {
-  Assert (m != 0, ExcNotInitialized());
+  Assert (m != nullptr, ExcNotInitialized());
   m->vmult_add (dst, src);
 }
 

@@ -129,16 +129,16 @@ InverseMatrixRichardson<VectorType>::InverseMatrixRichardson(
   :
   mem(m),
   solver(c,m),
-  matrix(0),
-  precondition(0)
+  matrix(nullptr),
+  precondition(nullptr)
 {}
 
 
 template <typename VectorType>
 InverseMatrixRichardson<VectorType>::~InverseMatrixRichardson()
 {
-  if (matrix != 0) delete matrix;
-  if (precondition != 0) delete precondition;
+  if (matrix != nullptr) delete matrix;
+  if (precondition != nullptr) delete precondition;
 }
 
 
@@ -146,8 +146,8 @@ template <typename VectorType>
 void
 InverseMatrixRichardson<VectorType>::vmult(VectorType &dst, const VectorType &src) const
 {
-  Assert (matrix != 0, ExcNotInitialized());
-  Assert (precondition != 0, ExcNotInitialized());
+  Assert (matrix != nullptr, ExcNotInitialized());
+  Assert (precondition != nullptr, ExcNotInitialized());
   dst = 0.;
   solver.solve(*matrix, dst, src, *precondition);
 }
@@ -158,8 +158,8 @@ template <typename VectorType>
 void
 InverseMatrixRichardson<VectorType>::vmult_add(VectorType &dst, const VectorType &src) const
 {
-  Assert (matrix != 0, ExcNotInitialized());
-  Assert (precondition != 0, ExcNotInitialized());
+  Assert (matrix != nullptr, ExcNotInitialized());
+  Assert (precondition != nullptr, ExcNotInitialized());
   VectorType *aux = mem.alloc();
   aux->reinit(dst);
 
@@ -175,8 +175,8 @@ template <typename VectorType>
 void
 InverseMatrixRichardson<VectorType>::Tvmult(VectorType &dst, const VectorType &src) const
 {
-  Assert (matrix != 0, ExcNotInitialized());
-  Assert (precondition != 0, ExcNotInitialized());
+  Assert (matrix != nullptr, ExcNotInitialized());
+  Assert (precondition != nullptr, ExcNotInitialized());
   dst = 0.;
   solver.Tsolve(*matrix, dst, src, *precondition);
 }
@@ -187,8 +187,8 @@ template <typename VectorType>
 void
 InverseMatrixRichardson<VectorType>::Tvmult_add(VectorType &dst, const VectorType &src) const
 {
-  Assert (matrix != 0, ExcNotInitialized());
-  Assert (precondition != 0, ExcNotInitialized());
+  Assert (matrix != nullptr, ExcNotInitialized());
+  Assert (precondition != nullptr, ExcNotInitialized());
   VectorType *aux = mem.alloc();
   aux->reinit(dst);
 
