@@ -2062,7 +2062,7 @@ namespace TrilinosWrappers
 
     // Reinit a temporary vector with fast argument set, which does not
     // overwrite the content (to save time). However, the
-    // TrilinosWrappers::Vector classes do not support this, so create a
+    // TrilinosWrappers::VectorBase classes do not support this, so create a
     // deal.II local vector that has this fast setting. It will be accepted in
     // vmult because it only checks the local size.
     dealii::Vector<TrilinosScalar> temp_vector;
@@ -2087,7 +2087,7 @@ namespace TrilinosWrappers
 
     // Reinit a temporary vector with fast argument set, which does not
     // overwrite the content (to save time). However, the
-    // TrilinosWrappers::Vector classes do not support this, so create a
+    // TrilinosWrappers::VectorBase classes do not support this, so create a
     // deal.II local vector that has this fast setting. It will be accepted in
     // vmult because it only checks the local size.
     dealii::Vector<TrilinosScalar> temp_vector;
@@ -3446,9 +3446,6 @@ namespace TrilinosWrappers
   SparseMatrix::vmult (VectorBase &,
                        const VectorBase &) const;
   template void
-  SparseMatrix::vmult (Vector &,
-                       const Vector &) const;
-  template void
   SparseMatrix::vmult (MPI::Vector &,
                        const MPI::Vector &) const;
   template void
@@ -3465,9 +3462,6 @@ namespace TrilinosWrappers
   template void
   SparseMatrix::Tvmult (VectorBase &,
                         const VectorBase &) const;
-  template void
-  SparseMatrix::Tvmult (Vector &,
-                        const Vector &) const;
   template void
   SparseMatrix::Tvmult (MPI::Vector &,
                         const MPI::Vector &) const;
@@ -3486,9 +3480,6 @@ namespace TrilinosWrappers
   SparseMatrix::vmult_add (VectorBase &,
                            const VectorBase &) const;
   template void
-  SparseMatrix::vmult_add (Vector &,
-                           const Vector &) const;
-  template void
   SparseMatrix::vmult_add (MPI::Vector &,
                            const MPI::Vector &) const;
   template void
@@ -3505,9 +3496,6 @@ namespace TrilinosWrappers
   template void
   SparseMatrix::Tvmult_add (VectorBase &,
                             const VectorBase &) const;
-  template void
-  SparseMatrix::Tvmult_add (Vector &,
-                            const Vector &) const;
   template void
   SparseMatrix::Tvmult_add (MPI::Vector &,
                             const MPI::Vector &) const;
