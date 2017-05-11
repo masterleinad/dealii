@@ -142,8 +142,8 @@ namespace Step15
   public:
     BoundaryValues () : Function<dim>() {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component = 0) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component = 0) const override;
   };
 
 

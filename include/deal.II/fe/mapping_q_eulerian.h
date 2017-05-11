@@ -113,23 +113,23 @@ public:
    * cell but instead evaluates an externally given displacement field in
    * addition to the geometry of the cell.
    */
-  virtual
+
   std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
-  get_vertices (const typename Triangulation<dim,spacedim>::cell_iterator &cell) const;
+  get_vertices (const typename Triangulation<dim,spacedim>::cell_iterator &cell) const override;
 
   /**
    * Return a pointer to a copy of the present object. The caller of this copy
    * then assumes ownership of it.
    */
-  virtual
-  Mapping<dim,spacedim> *clone () const;
+
+  Mapping<dim,spacedim> *clone () const override;
 
   /**
    * Always returns @p false because MappingQ1Eulerian does not in general
    * preserve vertex locations (unless the translation vector happens to
    * provide for zero displacements at vertex locations).
    */
-  bool preserves_vertex_locations () const;
+  bool preserves_vertex_locations () const override;
 
   /**
    * Exception
@@ -145,13 +145,13 @@ protected:
    * This function overrides the function in the base class since we cannot
    * use any cell similarity for this class.
    */
-  virtual
+
   CellSimilarity::Similarity
   fill_fe_values (const typename Triangulation<dim,spacedim>::cell_iterator &cell,
                   const CellSimilarity::Similarity                           cell_similarity,
                   const Quadrature<dim>                                     &quadrature,
                   const typename Mapping<dim,spacedim>::InternalDataBase    &internal_data,
-                  internal::FEValues::MappingRelatedData<dim,spacedim>      &output_data) const;
+                  internal::FEValues::MappingRelatedData<dim,spacedim>      &output_data) const override;
 
   /**
    * Reference to the vector of shifts.
@@ -187,18 +187,18 @@ private:
      * current cell but instead evaluates an externally given displacement
      * field in addition to the geometry of the cell.
      */
-    virtual
+
     std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
-    get_vertices (const typename Triangulation<dim,spacedim>::cell_iterator &cell) const;
+    get_vertices (const typename Triangulation<dim,spacedim>::cell_iterator &cell) const override;
 
     /**
      * Compute the positions of the support points in the current
      * configuration. See the documentation of
      * MappingQGeneric::compute_mapping_support_points() for more information.
      */
-    virtual
+
     std::vector<Point<spacedim> >
-    compute_mapping_support_points(const typename Triangulation<dim,spacedim>::cell_iterator &cell) const;
+    compute_mapping_support_points(const typename Triangulation<dim,spacedim>::cell_iterator &cell) const override;
 
   private:
     /**

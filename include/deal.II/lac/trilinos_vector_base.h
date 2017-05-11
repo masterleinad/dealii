@@ -255,7 +255,7 @@ namespace TrilinosWrappers
     /**
      * Destructor
      */
-    virtual ~VectorBase ();
+    ~VectorBase () override;
 
     /**
      * Release all memory and return to a state just like after having called

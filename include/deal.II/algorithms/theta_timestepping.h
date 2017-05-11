@@ -209,12 +209,12 @@ namespace Algorithms
      * instance, which contains the initial value when the operator is called.
      * It contains the final value when the operator returns.
      */
-    virtual void operator() (AnyData &out, const AnyData &in);
+    void operator() (AnyData &out, const AnyData &in) override;
 
     /**
      * Register an event triggered by an outer iteration.
      */
-    virtual void notify(const Event &);
+    void notify(const Event &) override;
 
     /**
      * Define an operator which will output the result in each step. Note that

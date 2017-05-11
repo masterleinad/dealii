@@ -167,7 +167,7 @@ public:
   /**
    * Destructor.
    */
-  ~LogStream();
+  ~LogStream() override;
 
 
   /**

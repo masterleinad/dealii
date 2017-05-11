@@ -69,12 +69,12 @@ namespace mg
      */
     const PointerMatrixBase<VectorType> &operator[] (unsigned int level) const;
 
-    virtual void vmult (const unsigned int level, VectorType &dst, const VectorType &src) const;
-    virtual void vmult_add (const unsigned int level, VectorType &dst, const VectorType &src) const;
-    virtual void Tvmult (const unsigned int level, VectorType &dst, const VectorType &src) const;
-    virtual void Tvmult_add (const unsigned int level, VectorType &dst, const VectorType &src) const;
-    virtual unsigned int get_minlevel() const;
-    virtual unsigned int get_maxlevel() const;
+    void vmult (const unsigned int level, VectorType &dst, const VectorType &src) const override;
+    void vmult_add (const unsigned int level, VectorType &dst, const VectorType &src) const override;
+    void Tvmult (const unsigned int level, VectorType &dst, const VectorType &src) const override;
+    void Tvmult_add (const unsigned int level, VectorType &dst, const VectorType &src) const override;
+    unsigned int get_minlevel() const override;
+    unsigned int get_maxlevel() const override;
 
     /**
      * Memory used by this object.

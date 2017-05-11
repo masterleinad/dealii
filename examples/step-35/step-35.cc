@@ -312,12 +312,12 @@ namespace Step35
     public:
       Velocity (const double initial_time = 0.0);
 
-      virtual double value (const Point<dim> &p,
-                            const unsigned int component = 0) const;
+      double value (const Point<dim> &p,
+                    const unsigned int component = 0) const override;
 
-      virtual void value_list (const std::vector< Point<dim> > &points,
-                               std::vector<double> &values,
-                               const unsigned int component = 0) const;
+      void value_list (const std::vector< Point<dim> > &points,
+                       std::vector<double> &values,
+                       const unsigned int component = 0) const override;
     };
 
 
@@ -363,12 +363,12 @@ namespace Step35
     public:
       Pressure (const double initial_time = 0.0);
 
-      virtual double value (const Point<dim> &p,
-                            const unsigned int component = 0) const;
+      double value (const Point<dim> &p,
+                    const unsigned int component = 0) const override;
 
-      virtual void value_list (const std::vector< Point<dim> > &points,
-                               std::vector<double> &values,
-                               const unsigned int component = 0) const;
+      void value_list (const std::vector< Point<dim> > &points,
+                       std::vector<double> &values,
+                       const unsigned int component = 0) const override;
     };
 
     template <int dim>

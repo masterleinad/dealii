@@ -110,7 +110,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~PreconditionSelector();
+  ~PreconditionSelector() override;
 
   /**
    * Takes the matrix that is needed for preconditionings that involves a

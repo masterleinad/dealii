@@ -56,7 +56,7 @@ namespace Functions
     /**
      * Virtual destructor.
      */
-    virtual ~FlowFunction();
+    ~FlowFunction() override;
 
     /**
      * Store an adjustment for the pressure function, such that its mean value
@@ -69,15 +69,15 @@ namespace Functions
      * outer vector is indexed by solution component, the inner by quadrature
      * point.
      */
-    virtual void vector_values (const std::vector<Point<dim> > &points,
-                                std::vector<std::vector<double> > &values) const = 0;
+    void vector_values (const std::vector<Point<dim> > &points,
+                        std::vector<std::vector<double> > &values) const override = 0;
     /**
      * Gradients in a structure more suitable for vector valued functions. The
      * outer vector is indexed by solution component, the inner by quadrature
      * point.
      */
-    virtual void vector_gradients (const std::vector<Point<dim> >            &points,
-                                   std::vector<std::vector<Tensor<1,dim> > > &gradients) const = 0;
+    void vector_gradients (const std::vector<Point<dim> >            &points,
+                           std::vector<std::vector<Tensor<1,dim> > > &gradients) const override = 0;
     /**
      * Force terms in a structure more suitable for vector valued functions.
      * The outer vector is indexed by solution component, the inner by
@@ -89,17 +89,17 @@ namespace Functions
     virtual void vector_laplacians (const std::vector<Point<dim> > &points,
                                     std::vector<std::vector<double> >   &values) const = 0;
 
-    virtual void vector_value (const Point<dim> &points, Vector<double> &value) const;
-    virtual double value (const Point<dim> &points, const unsigned int component) const;
-    virtual void vector_value_list (const std::vector<Point<dim> > &points,
-                                    std::vector<Vector<double> >   &values) const;
-    virtual void vector_gradient_list (const std::vector<Point<dim> >            &points,
-                                       std::vector<std::vector<Tensor<1,dim> > > &gradients) const;
+    void vector_value (const Point<dim> &points, Vector<double> &value) const override;
+    double value (const Point<dim> &points, const unsigned int component) const override;
+    void vector_value_list (const std::vector<Point<dim> > &points,
+                            std::vector<Vector<double> >   &values) const override;
+    void vector_gradient_list (const std::vector<Point<dim> >            &points,
+                               std::vector<std::vector<Tensor<1,dim> > > &gradients) const override;
     /**
      * The force term in the momentum equation.
      */
-    virtual void vector_laplacian_list (const std::vector<Point<dim> > &points,
-                                        std::vector<Vector<double> >   &values) const;
+    void vector_laplacian_list (const std::vector<Point<dim> > &points,
+                                std::vector<Vector<double> >   &values) const override;
 
     std::size_t memory_consumption () const;
 
@@ -145,14 +145,14 @@ namespace Functions
      */
     PoisseuilleFlow<dim> (const double r,
                           const double Re);
-    virtual ~PoisseuilleFlow();
+    ~PoisseuilleFlow() override;
 
-    virtual void vector_values (const std::vector<Point<dim> > &points,
-                                std::vector<std::vector<double> > &values) const;
-    virtual void vector_gradients (const std::vector<Point<dim> > &points,
-                                   std::vector<std::vector<Tensor<1,dim> > > &gradients) const;
-    virtual void vector_laplacians (const std::vector<Point<dim> > &points,
-                                    std::vector<std::vector<double> >   &values) const;
+    void vector_values (const std::vector<Point<dim> > &points,
+                        std::vector<std::vector<double> > &values) const override;
+    void vector_gradients (const std::vector<Point<dim> > &points,
+                           std::vector<std::vector<Tensor<1,dim> > > &gradients) const override;
+    void vector_laplacians (const std::vector<Point<dim> > &points,
+                            std::vector<std::vector<double> >   &values) const override;
 
   private:
     const double radius;
@@ -187,14 +187,14 @@ namespace Functions
      * Change the viscosity and the reaction parameter.
      */
     void set_parameters (const double viscosity, const double reaction);
-    virtual ~StokesCosine();
+    ~StokesCosine() override;
 
-    virtual void vector_values (const std::vector<Point<dim> > &points,
-                                std::vector<std::vector<double> > &values) const;
-    virtual void vector_gradients (const std::vector<Point<dim> > &points,
-                                   std::vector<std::vector<Tensor<1,dim> > > &gradients) const;
-    virtual void vector_laplacians (const std::vector<Point<dim> > &points,
-                                    std::vector<std::vector<double> >   &values) const;
+    void vector_values (const std::vector<Point<dim> > &points,
+                        std::vector<std::vector<double> > &values) const override;
+    void vector_gradients (const std::vector<Point<dim> > &points,
+                           std::vector<std::vector<Tensor<1,dim> > > &gradients) const override;
+    void vector_laplacians (const std::vector<Point<dim> > &points,
+                            std::vector<std::vector<double> >   &values) const override;
 
   private:
     /// The viscosity
@@ -218,12 +218,12 @@ namespace Functions
     /// Constructor setting up some data.
     StokesLSingularity();
 
-    virtual void vector_values (const std::vector<Point<2> > &points,
-                                std::vector<std::vector<double> > &values) const;
-    virtual void vector_gradients (const std::vector<Point<2> > &points,
-                                   std::vector<std::vector<Tensor<1,2> > > &gradients) const;
-    virtual void vector_laplacians (const std::vector<Point<2> > &points,
-                                    std::vector<std::vector<double> >   &values) const;
+    void vector_values (const std::vector<Point<2> > &points,
+                        std::vector<std::vector<double> > &values) const override;
+    void vector_gradients (const std::vector<Point<2> > &points,
+                           std::vector<std::vector<Tensor<1,2> > > &gradients) const override;
+    void vector_laplacians (const std::vector<Point<2> > &points,
+                            std::vector<std::vector<double> >   &values) const override;
   private:
     /// The auxiliary function Psi.
     double Psi(double phi) const;
@@ -266,14 +266,14 @@ namespace Functions
      * Stokes problem.
      */
     Kovasznay (const double Re, bool Stokes = false);
-    virtual ~Kovasznay();
+    ~Kovasznay() override;
 
-    virtual void vector_values (const std::vector<Point<2> > &points,
-                                std::vector<std::vector<double> > &values) const;
-    virtual void vector_gradients (const std::vector<Point<2> > &points,
-                                   std::vector<std::vector<Tensor<1,2> > > &gradients) const;
-    virtual void vector_laplacians (const std::vector<Point<2> > &points,
-                                    std::vector<std::vector<double> >   &values) const;
+    void vector_values (const std::vector<Point<2> > &points,
+                        std::vector<std::vector<double> > &values) const override;
+    void vector_gradients (const std::vector<Point<2> > &points,
+                           std::vector<std::vector<Tensor<1,2> > > &gradients) const override;
+    void vector_laplacians (const std::vector<Point<2> > &points,
+                            std::vector<std::vector<double> >   &values) const override;
 
     /// The value of lambda.
     double lambda () const;

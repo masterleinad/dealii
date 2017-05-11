@@ -250,7 +250,7 @@ namespace hp
     /**
      * Destructor.
      */
-    virtual ~DoFHandler ();
+    ~DoFHandler () override;
 
     /**
      * Go through the triangulation and "distribute" the degrees of freedoms

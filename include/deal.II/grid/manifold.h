@@ -325,7 +325,7 @@ public:
    * Destructor. Does nothing here, but needs to be declared virtual to make
    * class hierarchies derived from this class possible.
    */
-  virtual ~Manifold ();
+  ~Manifold () override;
 
   /**
    * @name Computing the location of points.
@@ -702,10 +702,10 @@ public:
    * the manifold mid point, i.e., as long as the coarse mesh size is small
    * enough.
    */
-  virtual
+
   Point<spacedim>
   get_new_point(const std::vector<Point<spacedim> > &surrounding_points,
-                const std::vector<double>           &weights) const;
+                const std::vector<double>           &weights) const override;
 
   /**
    * Compute a new set of points that interpolate between the given points
@@ -720,11 +720,11 @@ public:
    * @p surrounding_points according to the @p weights is simply performed in
    * Cartesian space.
    */
-  virtual
+
   void
   add_new_points (const std::vector<Point<spacedim> > &surrounding_points,
                   const Table<2,double>               &weights,
-                  std::vector<Point<spacedim> >       &new_points) const;
+                  std::vector<Point<spacedim> >       &new_points) const override;
 
   /**
    * Project to FlatManifold. This is the identity function for flat,
@@ -733,10 +733,10 @@ public:
    * get_new_point() function which are often very similar (if not identical) to
    * the one implemented in this class.
    */
-  virtual
+
   Point<spacedim>
   project_to_manifold (const std::vector<Point<spacedim> > &points,
-                       const Point<spacedim> &candidate) const;
+                       const Point<spacedim> &candidate) const override;
 
   /**
    * Return a vector that, at $\mathbf x_1$, is tangential to
@@ -759,10 +759,10 @@ public:
    *   the domain as set in the constructor, to use the "shortest" connection
    *   between the points through the periodic boundary as necessary.
    */
-  virtual
+
   Tensor<1,spacedim>
   get_tangent_vector (const Point<spacedim> &x1,
-                      const Point<spacedim> &x2) const;
+                      const Point<spacedim> &x2) const override;
 
   /**
    * Return the periodicity of this Manifold.
@@ -914,16 +914,16 @@ public:
    * Destructor. Does nothing here, but needs to be declared to make it
    * virtual.
    */
-  virtual ~ChartManifold ();
+  ~ChartManifold () override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
    * the base class for more information.
    */
-  virtual
+
   Point<spacedim>
   get_new_point(const std::vector<Point<spacedim> > &surrounding_points,
-                const std::vector<double>           &weights) const;
+                const std::vector<double>           &weights) const override;
 
   /**
    * Compute a new set of points that interpolate between the given points
@@ -949,11 +949,11 @@ public:
    * because the former might involve some kind of Newton iteration in
    * non-trivial manifolds.
    */
-  virtual
+
   void
   add_new_points (const std::vector<Point<spacedim> > &surrounding_points,
                   const Table<2,double>               &weights,
-                  std::vector<Point<spacedim> >       &new_points) const;
+                  std::vector<Point<spacedim> >       &new_points) const override;
 
   /**
    * Pull back the given point in spacedim to the Euclidean chartdim
@@ -1050,10 +1050,10 @@ public:
    * @param x2 The second point that describes the geodesic.
    * @return A "direction" vector tangential to the geodesic.
    */
-  virtual
+
   Tensor<1,spacedim>
   get_tangent_vector (const Point<spacedim> &x1,
-                      const Point<spacedim> &x2) const;
+                      const Point<spacedim> &x2) const override;
 
   /**
    * Return the periodicity associated with the submanifold.

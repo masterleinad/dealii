@@ -94,16 +94,16 @@ namespace Step37
   public:
     Coefficient ()  : Function<dim>() {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component = 0) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component = 0) const override;
 
     template <typename number>
     number value (const Point<dim,number> &p,
                   const unsigned int component = 0) const;
 
-    virtual void value_list (const std::vector<Point<dim> > &points,
-                             std::vector<double>            &values,
-                             const unsigned int              component = 0) const;
+    void value_list (const std::vector<Point<dim> > &points,
+                     std::vector<double>            &values,
+                     const unsigned int              component = 0) const override;
   };
 
 
@@ -248,15 +248,15 @@ namespace Step37
 
     LaplaceOperator ();
 
-    void clear();
+    void clear() override;
 
     void evaluate_coefficient(const Coefficient<dim> &coefficient_function);
 
-    virtual void compute_diagonal();
+    void compute_diagonal() override;
 
   private:
-    virtual void apply_add(LinearAlgebra::distributed::Vector<number> &dst,
-                           const LinearAlgebra::distributed::Vector<number> &src) const;
+    void apply_add(LinearAlgebra::distributed::Vector<number> &dst,
+                   const LinearAlgebra::distributed::Vector<number> &src) const override;
 
     void local_apply (const MatrixFree<dim,number>                     &data,
                       LinearAlgebra::distributed::Vector<number>       &dst,

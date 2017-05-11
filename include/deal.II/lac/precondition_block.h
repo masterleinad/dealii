@@ -155,7 +155,7 @@ public:
   /**
    * Destructor.
    */
-  ~PreconditionBlock();
+  ~PreconditionBlock() override;
 
   /**
    * Initialize matrix and block size.  We store the matrix and the block size

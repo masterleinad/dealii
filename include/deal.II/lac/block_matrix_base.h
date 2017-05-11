@@ -374,7 +374,7 @@ public:
   /**
    * Destructor.
    */
-  ~BlockMatrixBase ();
+  ~BlockMatrixBase () override;
 
   /**
    * Copy the matrix given as argument into the current object.

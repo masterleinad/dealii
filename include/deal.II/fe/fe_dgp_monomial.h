@@ -294,7 +294,7 @@ public:
    * returns <tt>FE_DGPMonomial<dim>(degree)</tt>, with <tt>dim</tt> and
    * <tt>p</tt> replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
   /**
    * @name Functions to support hp
@@ -319,9 +319,9 @@ public:
    * This being a discontinuous element, the set of such constraints is of
    * course empty.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_vertex_dof_identities (const FiniteElement<dim> &fe_other) const;
+  hp_vertex_dof_identities (const FiniteElement<dim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -330,9 +330,9 @@ public:
    * This being a discontinuous element, the set of such constraints is of
    * course empty.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_line_dof_identities (const FiniteElement<dim> &fe_other) const;
+  hp_line_dof_identities (const FiniteElement<dim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -341,9 +341,9 @@ public:
    * This being a discontinuous element, the set of such constraints is of
    * course empty.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_quad_dof_identities (const FiniteElement<dim> &fe_other) const;
+  hp_quad_dof_identities (const FiniteElement<dim> &fe_other) const override;
 
   /**
    * Return whether this element implements its hanging node constraints in
@@ -353,7 +353,7 @@ public:
    * the degree of the element), as it has no hanging nodes (being a
    * discontinuous element).
    */
-  virtual bool hp_constraints_are_implemented () const;
+  bool hp_constraints_are_implemented () const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -364,9 +364,9 @@ public:
    * and in particular the
    * @ref hp_paper "hp paper".
    */
-  virtual
+
   FiniteElementDomination::Domination
-  compare_for_face_domination (const FiniteElement<dim> &fe_other) const;
+  compare_for_face_domination (const FiniteElement<dim> &fe_other) const override;
 
   /**
    * @}
@@ -381,9 +381,9 @@ public:
    * element. Otherwise, an exception of type
    * FiniteElement<dim>::ExcInterpolationNotImplemented is thrown.
    */
-  virtual void
+  void
   get_interpolation_matrix (const FiniteElement<dim> &source,
-                            FullMatrix<double>           &matrix) const;
+                            FullMatrix<double>           &matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of of one element to the face
@@ -396,9 +396,9 @@ public:
    * from a given element, then they must throw an exception of type
    * FiniteElement<dim>::ExcInterpolationNotImplemented.
    */
-  virtual void
+  void
   get_face_interpolation_matrix (const FiniteElement<dim> &source,
-                                 FullMatrix<double>       &matrix) const;
+                                 FullMatrix<double>       &matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of of one element to the face
@@ -411,17 +411,17 @@ public:
    * from a given element, then they must throw an exception of type
    * FiniteElement<dim>::ExcInterpolationNotImplemented.
    */
-  virtual void
+  void
   get_subface_interpolation_matrix (const FiniteElement<dim> &source,
                                     const unsigned int        subface,
-                                    FullMatrix<double>       &matrix) const;
+                                    FullMatrix<double>       &matrix) const override;
 
   /**
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  bool has_support_on_face (const unsigned int shape_index,
+                            const unsigned int face_index) const override;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -431,7 +431,7 @@ public:
    * accessed through pointers to their base class, rather than the class
    * itself.
    */
-  virtual std::size_t memory_consumption () const;
+  std::size_t memory_consumption () const override;
 
 protected:
 
@@ -440,7 +440,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim> *clone() const;
+  FiniteElement<dim> *clone() const override;
 
 private:
 

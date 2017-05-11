@@ -170,7 +170,7 @@ public:
   /**
    * Virtual destructor.
    */
-  virtual ~SolverCG ();
+  ~SolverCG () override;
 
   /**
    * Solve the linear system $Ax=b$ for x.

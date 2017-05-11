@@ -122,8 +122,8 @@ namespace Step41
   public:
     RightHandSide () : Function<dim>() {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component = 0) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component = 0) const override;
   };
 
   template <int dim>
@@ -144,8 +144,8 @@ namespace Step41
   public:
     BoundaryValues () : Function<dim>() {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component = 0) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component = 0) const override;
   };
 
   template <int dim>
@@ -168,8 +168,8 @@ namespace Step41
   public:
     Obstacle () : Function<dim>() {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component = 0) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component = 0) const override;
   };
 
   template <int dim>

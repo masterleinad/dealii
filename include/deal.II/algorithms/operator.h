@@ -73,7 +73,7 @@ namespace Algorithms
     /**
      * The virtual destructor.
      */
-    ~OperatorBase();
+    ~OperatorBase() override;
 
     /**
      * The actual operation, which is implemented in a derived class.
@@ -112,7 +112,7 @@ namespace Algorithms
     /**
      * Empty virtual destructor.
      */
-    virtual ~OutputOperator();
+    ~OutputOperator() override;
 
     /**
      * Set the stream @p os to which data is written. If no stream is selected

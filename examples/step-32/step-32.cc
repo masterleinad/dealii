@@ -155,11 +155,11 @@ namespace Step32
     public:
       TemperatureInitialValues () : Function<dim>(1) {}
 
-      virtual double value (const Point<dim>   &p,
-                            const unsigned int  component = 0) const;
+      double value (const Point<dim>   &p,
+                    const unsigned int  component = 0) const override;
 
-      virtual void vector_value (const Point<dim> &p,
-                                 Vector<double>   &value) const;
+      void vector_value (const Point<dim> &p,
+                         Vector<double>   &value) const override;
     };
 
 
@@ -3150,19 +3150,19 @@ namespace Step32
     Postprocessor (const unsigned int partition,
                    const double       minimal_pressure);
 
-    virtual
+
     void
     evaluate_vector_field
     (const DataPostprocessorInputs::Vector<dim> &inputs,
-     std::vector<Vector<double> >               &computed_quantities) const;
+     std::vector<Vector<double> >               &computed_quantities) const override;
 
-    virtual std::vector<std::string> get_names () const;
+    std::vector<std::string> get_names () const override;
 
-    virtual
+
     std::vector<DataComponentInterpretation::DataComponentInterpretation>
-    get_data_component_interpretation () const;
+    get_data_component_interpretation () const override;
 
-    virtual UpdateFlags get_needed_update_flags () const;
+    UpdateFlags get_needed_update_flags () const override;
 
   private:
     const unsigned int partition;

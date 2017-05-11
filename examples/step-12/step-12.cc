@@ -89,9 +89,9 @@ namespace Step12
   {
   public:
     BoundaryValues () {};
-    virtual void value_list (const std::vector<Point<dim> > &points,
-                             std::vector<double> &values,
-                             const unsigned int component=0) const;
+    void value_list (const std::vector<Point<dim> > &points,
+                     std::vector<double> &values,
+                     const unsigned int component=0) const override;
   };
 
   // Given the flow direction, the inflow boundary of the unit square

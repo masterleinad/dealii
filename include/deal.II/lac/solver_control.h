@@ -99,9 +99,9 @@ public:
       : last_step (last_step), last_residual(last_residual)
     {}
 
-    virtual ~NoConvergence () noexcept {}
+    ~NoConvergence () noexcept override {}
 
-    virtual void print_info (std::ostream &out) const
+    void print_info (std::ostream &out) const override
     {
       out << "Iterative method reported convergence failure in step "
           << last_step << ". The residual in the last step was " << last_residual
@@ -155,7 +155,7 @@ public:
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~SolverControl();
+  ~SolverControl() override;
 
   /**
    * Interface to parameter file.
@@ -433,7 +433,7 @@ public:
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~ReductionControl();
+  ~ReductionControl() override;
 
   /**
    * Interface to parameter file.
@@ -450,8 +450,8 @@ public:
    * one in the base class, but sets the tolerance to <tt>reduction * initial
    * value</tt> upon the first iteration.
    */
-  virtual State check (const unsigned int step,
-                       const double   check_value);
+  State check (const unsigned int step,
+               const double   check_value) override;
 
   /**
    * Reduction factor.
@@ -517,15 +517,15 @@ public:
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~IterationNumberControl();
+  ~IterationNumberControl() override;
 
   /**
    * Decide about success or failure of an iteration. This function bases
    * success solely on the fact if a given number of iterations was reached or
    * the check value reached exactly zero.
    */
-  virtual State check (const unsigned int step,
-                       const double   check_value);
+  State check (const unsigned int step,
+               const double   check_value) override;
 };
 
 /*@}*/

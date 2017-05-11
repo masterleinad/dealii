@@ -168,7 +168,7 @@ public:
   /**
    * Destructor. Clears memory
    */
-  ~BlockVector ();
+  ~BlockVector () override;
 
   /**
    * Call the compress() function on all the subblocks.

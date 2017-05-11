@@ -71,15 +71,15 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual Point<spacedim>
-  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const;
+  Point<spacedim>
+  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual Point<spacedim>
-  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const;
+  Point<spacedim>
+  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -87,9 +87,9 @@ public:
    *
    * Calls @p get_intermediate_points_between_points.
    */
-  virtual void
+  void
   get_intermediate_points_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line,
-                                   std::vector<Point<spacedim> > &points) const;
+                                   std::vector<Point<spacedim> > &points) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -97,9 +97,9 @@ public:
    *
    * Only implemented for <tt>dim=3</tt> and for <tt>points.size()==1</tt>.
    */
-  virtual void
+  void
   get_intermediate_points_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad,
-                                   std::vector<Point<spacedim> > &points) const;
+                                   std::vector<Point<spacedim> > &points) const override;
 
   /**
    * Compute the normals to the boundary at the vertices of the given face.
@@ -107,9 +107,9 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual void
+  void
   get_normals_at_vertices (const typename Triangulation<dim,spacedim>::face_iterator &face,
-                           typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const;
+                           typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const override;
 
   /**
    * Return the radius of the cylinder.
@@ -217,17 +217,17 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   Point<dim>
-  get_new_point_on_line (const typename Triangulation<dim>::line_iterator &line) const;
+  get_new_point_on_line (const typename Triangulation<dim>::line_iterator &line) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   Point<dim>
-  get_new_point_on_quad (const typename Triangulation<dim>::quad_iterator &quad) const;
+  get_new_point_on_quad (const typename Triangulation<dim>::quad_iterator &quad) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -235,10 +235,10 @@ public:
    *
    * Calls @p get_intermediate_points_between_points.
    */
-  virtual
+
   void
   get_intermediate_points_on_line (const typename Triangulation<dim>::line_iterator &line,
-                                   std::vector<Point<dim> > &points) const;
+                                   std::vector<Point<dim> > &points) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -246,10 +246,10 @@ public:
    *
    * Only implemented for <tt>dim=3</tt> and for <tt>points.size()==1</tt>.
    */
-  virtual
+
   void
   get_intermediate_points_on_quad (const typename Triangulation<dim>::quad_iterator &quad,
-                                   std::vector<Point<dim> > &points) const;
+                                   std::vector<Point<dim> > &points) const override;
 
   /**
    * Compute the normals to the boundary at the vertices of the given face.
@@ -257,10 +257,10 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   void
   get_normals_at_vertices (const typename Triangulation<dim>::face_iterator &face,
-                           typename Boundary<dim>::FaceVertexNormals &face_vertex_normals) const;
+                           typename Boundary<dim>::FaceVertexNormals &face_vertex_normals) const override;
 
 protected:
   /**
@@ -330,17 +330,17 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   Point<spacedim>
-  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const;
+  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   Point<spacedim>
-  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const;
+  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -348,10 +348,10 @@ public:
    *
    * Calls @p get_intermediate_points_between_points.
    */
-  virtual
+
   void
   get_intermediate_points_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line,
-                                   std::vector<Point<spacedim> > &points) const;
+                                   std::vector<Point<spacedim> > &points) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -359,10 +359,10 @@ public:
    *
    * Only implemented for <tt>dim=3</tt> and for <tt>points.size()==1</tt>.
    */
-  virtual
+
   void
   get_intermediate_points_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad,
-                                   std::vector<Point<spacedim> > &points) const;
+                                   std::vector<Point<spacedim> > &points) const override;
 
   /**
    * Implementation of the function declared in the base class.
@@ -370,10 +370,10 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   Tensor<1,spacedim>
   normal_vector (const typename Triangulation<dim,spacedim>::face_iterator &face,
-                 const Point<spacedim> &p) const;
+                 const Point<spacedim> &p) const override;
 
   /**
    * Compute the normals to the boundary at the vertices of the given face.
@@ -381,10 +381,10 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   void
   get_normals_at_vertices (const typename Triangulation<dim,spacedim>::face_iterator &face,
-                           typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const;
+                           typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const override;
 
   /**
    * Return the center of the ball.
@@ -467,14 +467,14 @@ public:
   /**
    * Check if on the line <tt>x==0</tt>, otherwise pass to the base class.
    */
-  virtual Point<dim>
-  get_new_point_on_line (const typename Triangulation<dim>::line_iterator &line) const;
+  Point<dim>
+  get_new_point_on_line (const typename Triangulation<dim>::line_iterator &line) const override;
 
   /**
    * Check if on the line <tt>x==0</tt>, otherwise pass to the base class.
    */
-  virtual Point<dim>
-  get_new_point_on_quad (const typename Triangulation<dim>::quad_iterator &quad) const;
+  Point<dim>
+  get_new_point_on_quad (const typename Triangulation<dim>::quad_iterator &quad) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -482,9 +482,9 @@ public:
    *
    * Calls @p get_intermediate_points_between_points.
    */
-  virtual void
+  void
   get_intermediate_points_on_line (const typename Triangulation<dim>::line_iterator &line,
-                                   std::vector<Point<dim> > &points) const;
+                                   std::vector<Point<dim> > &points) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -492,9 +492,9 @@ public:
    *
    * Only implemented for <tt>dim=3</tt> and for <tt>points.size()==1</tt>.
    */
-  virtual void
+  void
   get_intermediate_points_on_quad (const typename Triangulation<dim>::quad_iterator &quad,
-                                   std::vector<Point<dim> > &points) const;
+                                   std::vector<Point<dim> > &points) const override;
 
   /**
    * Compute the normals to the boundary at the vertices of the given face.
@@ -502,9 +502,9 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual void
+  void
   get_normals_at_vertices (const typename Triangulation<dim>::face_iterator &face,
-                           typename Boundary<dim>::FaceVertexNormals &face_vertex_normals) const;
+                           typename Boundary<dim>::FaceVertexNormals &face_vertex_normals) const override;
 };
 
 
@@ -563,14 +563,14 @@ public:
   /**
    * Construct a new point on a line.
    */
-  virtual Point<dim>
-  get_new_point_on_line (const typename Triangulation<dim>::line_iterator &line) const;
+  Point<dim>
+  get_new_point_on_line (const typename Triangulation<dim>::line_iterator &line) const override;
 
   /**
    * Construct a new point on a quad.
    */
-  virtual Point<dim>
-  get_new_point_on_quad (const typename Triangulation<dim>::quad_iterator &quad) const;
+  Point<dim>
+  get_new_point_on_quad (const typename Triangulation<dim>::quad_iterator &quad) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -578,9 +578,9 @@ public:
    *
    * Calls @p get_intermediate_points_between_points.
    */
-  virtual void
+  void
   get_intermediate_points_on_line (const typename Triangulation<dim>::line_iterator &line,
-                                   std::vector<Point<dim> > &points) const;
+                                   std::vector<Point<dim> > &points) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -588,9 +588,9 @@ public:
    *
    * Only implemented for <tt>dim=3</tt> and for <tt>points.size()==1</tt>.
    */
-  virtual void
+  void
   get_intermediate_points_on_quad (const typename Triangulation<dim>::quad_iterator &quad,
-                                   std::vector<Point<dim> > &points) const;
+                                   std::vector<Point<dim> > &points) const override;
 
   /**
    * Compute the normals to the boundary at the vertices of the given face.
@@ -598,9 +598,9 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual void
+  void
   get_normals_at_vertices (const typename Triangulation<dim>::face_iterator &face,
-                           typename Boundary<dim>::FaceVertexNormals &face_vertex_normals) const;
+                           typename Boundary<dim>::FaceVertexNormals &face_vertex_normals) const override;
 
 private:
   /**
@@ -632,36 +632,36 @@ public:
   /**
    * Construct a new point on a line.
    */
-  virtual Point<spacedim>
-  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const;
+  Point<spacedim>
+  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const override;
 
   /**
    * Construct a new point on a quad.
    */
-  virtual Point<spacedim>
-  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const;
+  Point<spacedim>
+  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const override;
 
   /**
    * Construct a new points on a line.
    */
-  virtual void   get_intermediate_points_on_line (
+  void   get_intermediate_points_on_line (
     const typename Triangulation< dim, spacedim >::line_iterator   &line,
-    std::vector< Point< spacedim > >         &points) const;
+    std::vector< Point< spacedim > >         &points) const override;
 
   /**
    * Construct a new points on a quad.
    */
-  virtual void  get_intermediate_points_on_quad (
+  void  get_intermediate_points_on_quad (
     const typename Triangulation< dim, spacedim >::quad_iterator &quad,
-    std::vector< Point< spacedim > >         &points ) const;
+    std::vector< Point< spacedim > >         &points ) const override;
 
   /**
    * Get the normal from cartesian coordinates. This normal does not have unit
    * length.
    */
-  virtual void get_normals_at_vertices (
+  void get_normals_at_vertices (
     const typename Triangulation< dim, spacedim >::face_iterator &face,
-    typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const;
+    typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const override;
 
 private:
   //Handy functions

@@ -452,7 +452,7 @@ public:
   /**
    * Destructor. Free allocated memory.
    */
-  ~TableBase ();
+  ~TableBase () override;
 
   /**
    * Assignment operator. Copy all elements of <tt>src</tt> into the matrix.

@@ -215,14 +215,14 @@ namespace mg
     /**
      * Empty all vectors.
      */
-    void clear ();
+    void clear () override;
 
     /**
      * The actual smoothing method.
      */
-    virtual void smooth (const unsigned int level,
-                         VectorType         &u,
-                         const VectorType   &rhs) const;
+    void smooth (const unsigned int level,
+                 VectorType         &u,
+                 const VectorType   &rhs) const override;
 
     /**
      * Memory used by this object.
@@ -465,14 +465,14 @@ public:
   /**
    * Empty all vectors.
    */
-  void clear ();
+  void clear () override;
 
   /**
    * The actual smoothing method.
    */
-  virtual void smooth (const unsigned int level,
-                       VectorType         &u,
-                       const VectorType   &rhs) const;
+  void smooth (const unsigned int level,
+               VectorType         &u,
+               const VectorType   &rhs) const override;
 
   /**
    * Object containing relaxation methods.

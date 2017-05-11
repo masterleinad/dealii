@@ -61,14 +61,14 @@ public:
   FE_DGVector (const unsigned int p, MappingType m);
 public:
 
-  FiniteElement<dim, spacedim> *clone() const;
+  FiniteElement<dim, spacedim> *clone() const override;
 
   /**
    * Return a string that uniquely identifies a finite element. This class
    * returns <tt>FE_RaviartThomas<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
 
   /**
@@ -77,10 +77,10 @@ public:
    *
    * For this element, we always return @p true.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  bool has_support_on_face (const unsigned int shape_index,
+                            const unsigned int face_index) const override;
 
-  virtual std::size_t memory_consumption () const;
+  std::size_t memory_consumption () const override;
 
 private:
   /**
@@ -171,7 +171,7 @@ public:
    * returns <tt>FE_DGNedelec<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 };
 
 
@@ -198,7 +198,7 @@ public:
    * returns <tt>FE_DGRaviartThomas<dim>(degree)</tt>, with @p dim and @p
    * degree replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 };
 
 
@@ -224,7 +224,7 @@ public:
    * returns <tt>FE_DGBDM<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 };
 
 

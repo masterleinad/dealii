@@ -86,7 +86,7 @@ public:
    * Destructor. Does nothing here, but needs to be declared to make it
    * virtual.
    */
-  virtual ~Boundary ();
+  ~Boundary () override;
 
 
   /**
@@ -249,8 +249,8 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class for more information.
    */
-  virtual Point<spacedim>
-  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const;
+  Point<spacedim>
+  get_new_point_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line) const override;
 
   /**
    * Let the new point be the arithmetic mean of the four vertices of this
@@ -260,9 +260,9 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class for more information.
    */
-  virtual
+
   Point<spacedim>
-  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const;
+  get_new_point_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad) const override;
 
   /**
    * Gives <tt>n=points.size()</tt> points that splits the StraightBoundary
@@ -271,10 +271,10 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   void
   get_intermediate_points_on_line (const typename Triangulation<dim,spacedim>::line_iterator &line,
-                                   std::vector<Point<spacedim> > &points) const;
+                                   std::vector<Point<spacedim> > &points) const override;
 
   /**
    * Gives <tt>n=points.size()=m*m</tt> points that splits the
@@ -283,10 +283,10 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   void
   get_intermediate_points_on_quad (const typename Triangulation<dim,spacedim>::quad_iterator &quad,
-                                   std::vector<Point<spacedim> > &points) const;
+                                   std::vector<Point<spacedim> > &points) const override;
 
   /**
    * Implementation of the function declared in the base class.
@@ -294,10 +294,10 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   Tensor<1,spacedim>
   normal_vector (const typename Triangulation<dim,spacedim>::face_iterator &face,
-                 const Point<spacedim> &p) const;
+                 const Point<spacedim> &p) const override;
 
   /**
    * Compute the normals to the boundary at the vertices of the given face.
@@ -305,10 +305,10 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class.
    */
-  virtual
+
   void
   get_normals_at_vertices (const typename Triangulation<dim,spacedim>::face_iterator &face,
-                           typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const;
+                           typename Boundary<dim,spacedim>::FaceVertexNormals &face_vertex_normals) const override;
 
   /**
    * Given a candidate point and a line segment characterized by the iterator,
@@ -324,10 +324,10 @@ public:
    * entire space (i.e. it is a cell, not a part of the boundary), and the
    * returned point equals the given input point.
    */
-  virtual
+
   Point<spacedim>
   project_to_surface (const typename Triangulation<dim,spacedim>::line_iterator &line,
-                      const Point<spacedim> &candidate) const;
+                      const Point<spacedim> &candidate) const override;
 
   /**
    * Same function as above but for a point that is to be projected onto the
@@ -340,10 +340,10 @@ public:
    * entire space (i.e. it is a cell, not a part of the boundary), and the
    * returned point equals the given input point.
    */
-  virtual
+
   Point<spacedim>
   project_to_surface (const typename Triangulation<dim,spacedim>::quad_iterator &quad,
-                      const Point<spacedim> &candidate) const;
+                      const Point<spacedim> &candidate) const override;
 
   /**
    * Same function as above but for a point that is to be projected onto the
@@ -357,10 +357,10 @@ public:
    * entire space (i.e. it is a cell, not a part of the boundary), and the
    * returned point equals the given input point.
    */
-  virtual
+
   Point<spacedim>
   project_to_surface (const typename Triangulation<dim,spacedim>::hex_iterator &hex,
-                      const Point<spacedim> &candidate) const;
+                      const Point<spacedim> &candidate) const override;
 };
 
 

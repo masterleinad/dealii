@@ -62,8 +62,8 @@ public:
   MappingQ1 ();
 
   // for documentation, see the Mapping base class
-  virtual
-  MappingQ1<dim,spacedim> *clone () const;
+
+  MappingQ1<dim,spacedim> *clone () const override;
 };
 
 

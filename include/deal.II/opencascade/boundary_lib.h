@@ -86,9 +86,9 @@ namespace OpenCASCADE
      * The projected point is computed using OpenCASCADE normal projection
      * algorithms.
      */
-    virtual Point<spacedim>
+    Point<spacedim>
     project_to_manifold (const std::vector<Point<spacedim> > &surrounding_points,
-                         const Point<spacedim> &candidate) const;
+                         const Point<spacedim> &candidate) const override;
 
 
   private:
@@ -148,9 +148,9 @@ namespace OpenCASCADE
      * The projected point is computed using OpenCASCADE directional
      * projection algorithms.
      */
-    virtual Point<spacedim>
+    Point<spacedim>
     project_to_manifold (const std::vector<Point<spacedim> > &surrounding_points,
-                         const Point<spacedim> &candidate) const;
+                         const Point<spacedim> &candidate) const override;
 
   private:
     /**
@@ -235,9 +235,9 @@ namespace OpenCASCADE
      * tolerance from the given TopoDS_Shape. If this is not the case, an
      * exception is thrown.
      */
-    virtual Point<spacedim>
+    Point<spacedim>
     project_to_manifold (const std::vector<Point<spacedim> > &surrounding_points,
-                         const Point<spacedim> &candidate) const;
+                         const Point<spacedim> &candidate) const override;
 
   private:
     /**
@@ -293,14 +293,14 @@ namespace OpenCASCADE
      * error in debug mode, if the point is not on the TopoDS_Edge given at
      * construction time.
      */
-    virtual Point<1>
-    pull_back(const Point<spacedim> &space_point) const;
+    Point<1>
+    pull_back(const Point<spacedim> &space_point) const override;
 
     /**
      * Given an arclength parameter, find its image in real space.
      */
-    virtual Point<spacedim>
-    push_forward(const Point<1> &chart_point) const;
+    Point<spacedim>
+    push_forward(const Point<1> &chart_point) const override;
 
   private:
     /**
@@ -343,15 +343,15 @@ namespace OpenCASCADE
      * Pull back the given point from the Euclidean space. Will return the uv
      * coordinates associated with the point @p space_point.
      */
-    virtual Point<2>
-    pull_back(const Point<spacedim> &space_point) const;
+    Point<2>
+    pull_back(const Point<spacedim> &space_point) const override;
 
     /**
      * Given a @p chart_point in the uv coordinate system, this method returns the
      * Euclidean coordinates associated.
      */
-    virtual Point<spacedim>
-    push_forward(const Point<2> &chart_point) const;
+    Point<spacedim>
+    push_forward(const Point<2> &chart_point) const override;
 
     /**
      * Given a point in the spacedim dimensional Euclidean space, this
@@ -365,9 +365,9 @@ namespace OpenCASCADE
      *
      * Refer to the general documentation of this class for more information.
      */
-    virtual
+
     DerivativeForm<1,2,spacedim>
-    push_forward_gradient(const Point<2> &chart_point) const;
+    push_forward_gradient(const Point<2> &chart_point) const override;
 
   private:
     /**

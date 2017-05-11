@@ -190,11 +190,11 @@ namespace Step17
   public:
     RightHandSide ();
 
-    virtual void vector_value (const Point<dim> &p,
-                               Vector<double>   &values) const;
+    void vector_value (const Point<dim> &p,
+                       Vector<double>   &values) const override;
 
-    virtual void vector_value_list (const std::vector<Point<dim> > &points,
-                                    std::vector<Vector<double> >   &value_list) const;
+    void vector_value_list (const std::vector<Point<dim> > &points,
+                            std::vector<Vector<double> >   &value_list) const override;
   };
 
 

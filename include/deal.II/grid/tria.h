@@ -1535,7 +1535,7 @@ public:
      * automatically generated destructor would have a different one due to
      * member objects.
      */
-    virtual ~DistortedCellList () noexcept;
+    ~DistortedCellList () noexcept override;
 
     /**
      * A list of those cells among the coarse mesh cells that are deformed or
@@ -1605,7 +1605,7 @@ public:
   /**
    * Delete the object and all levels of the hierarchy.
    */
-  virtual ~Triangulation ();
+  ~Triangulation () override;
 
   /**
    * Reset this triangulation into a virgin state by deleting all data.

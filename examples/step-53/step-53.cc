@@ -212,13 +212,13 @@ namespace Step53
   class AfricaGeometry : public ChartManifold<3,3>
   {
   public:
-    virtual
-    Point<3>
-    pull_back(const Point<3> &space_point) const;
 
-    virtual
     Point<3>
-    push_forward(const Point<3> &chart_point) const;
+    pull_back(const Point<3> &space_point) const override;
+
+
+    Point<3>
+    push_forward(const Point<3> &chart_point) const override;
 
   private:
     static const double    R;

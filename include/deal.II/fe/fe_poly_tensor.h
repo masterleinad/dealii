@@ -151,9 +151,9 @@ public:
                  const std::vector<ComponentMask> &nonzero_components);
 
   // for documentation, see the FiniteElement base class
-  virtual
+
   UpdateFlags
-  requires_update_flags (const UpdateFlags update_flags) const;
+  requires_update_flags (const UpdateFlags update_flags) const override;
 
   /**
    * Compute the (scalar) value of shape function @p i at the given quadrature
@@ -161,13 +161,13 @@ public:
    * valued, there is no such scalar value and the function therefore throws
    * an exception.
    */
-  virtual double shape_value (const unsigned int i,
-                              const Point<dim> &p) const;
+  double shape_value (const unsigned int i,
+                      const Point<dim> &p) const override;
 
   // documentation inherited from the base class
-  virtual double shape_value_component (const unsigned int i,
-                                        const Point<dim> &p,
-                                        const unsigned int component) const;
+  double shape_value_component (const unsigned int i,
+                                const Point<dim> &p,
+                                const unsigned int component) const override;
 
   /**
    * Compute the gradient of (scalar) shape function @p i at the given
@@ -175,13 +175,13 @@ public:
    * vector valued, there is no such scalar value and the function therefore
    * throws an exception.
    */
-  virtual Tensor<1,dim> shape_grad (const unsigned int  i,
-                                    const Point<dim>   &p) const;
+  Tensor<1,dim> shape_grad (const unsigned int  i,
+                            const Point<dim>   &p) const override;
 
   // documentation inherited from the base class
-  virtual Tensor<1,dim> shape_grad_component (const unsigned int i,
-                                              const Point<dim> &p,
-                                              const unsigned int component) const;
+  Tensor<1,dim> shape_grad_component (const unsigned int i,
+                                      const Point<dim> &p,
+                                      const unsigned int component) const override;
 
   /**
    * Compute the Hessian of (scalar) shape function @p i at the given
@@ -189,13 +189,13 @@ public:
    * vector valued, there is no such scalar value and the function therefore
    * throws an exception.
    */
-  virtual Tensor<2,dim> shape_grad_grad (const unsigned int  i,
-                                         const Point<dim> &p) const;
+  Tensor<2,dim> shape_grad_grad (const unsigned int  i,
+                                 const Point<dim> &p) const override;
 
   // documentation inherited from the base class
-  virtual Tensor<2,dim> shape_grad_grad_component (const unsigned int i,
-                                                   const Point<dim> &p,
-                                                   const unsigned int component) const;
+  Tensor<2,dim> shape_grad_grad_component (const unsigned int i,
+                                           const Point<dim> &p,
+                                           const unsigned int component) const override;
 
 protected:
   /**
@@ -207,12 +207,12 @@ protected:
 
   /* NOTE: The following function has its definition inlined into the class declaration
      because we otherwise run into a compiler error with MS Visual Studio. */
-  virtual
+
   typename FiniteElement<dim,spacedim>::InternalDataBase *
   get_data(const UpdateFlags                                                    update_flags,
            const Mapping<dim,spacedim>                                         &/*mapping*/,
            const Quadrature<dim>                                               &quadrature,
-           dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &/*output_data*/) const
+           dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &/*output_data*/) const override
   {
     // generate a new data object and
     // initialize some fields
@@ -331,7 +331,7 @@ protected:
     return data;
   }
 
-  virtual
+
   void
   fill_fe_values (const typename Triangulation<dim,spacedim>::cell_iterator           &cell,
                   const CellSimilarity::Similarity                                     cell_similarity,
@@ -340,9 +340,9 @@ protected:
                   const typename Mapping<dim,spacedim>::InternalDataBase              &mapping_internal,
                   const dealii::internal::FEValues::MappingRelatedData<dim, spacedim> &mapping_data,
                   const typename FiniteElement<dim,spacedim>::InternalDataBase        &fe_internal,
-                  dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const;
+                  dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const override;
 
-  virtual
+
   void
   fill_fe_face_values (const typename Triangulation<dim,spacedim>::cell_iterator           &cell,
                        const unsigned int                                                   face_no,
@@ -351,9 +351,9 @@ protected:
                        const typename Mapping<dim,spacedim>::InternalDataBase              &mapping_internal,
                        const dealii::internal::FEValues::MappingRelatedData<dim, spacedim> &mapping_data,
                        const typename FiniteElement<dim,spacedim>::InternalDataBase        &fe_internal,
-                       dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const;
+                       dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const override;
 
-  virtual
+
   void
   fill_fe_subface_values (const typename Triangulation<dim,spacedim>::cell_iterator           &cell,
                           const unsigned int                                                   face_no,
@@ -363,7 +363,7 @@ protected:
                           const typename Mapping<dim,spacedim>::InternalDataBase              &mapping_internal,
                           const dealii::internal::FEValues::MappingRelatedData<dim, spacedim> &mapping_data,
                           const typename FiniteElement<dim,spacedim>::InternalDataBase        &fe_internal,
-                          dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const;
+                          dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const override;
 
   /**
    * Fields of cell-independent data for FE_PolyTensor. Stores the values of

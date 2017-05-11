@@ -150,7 +150,7 @@ namespace parallel
       /**
        * Destructor.
        */
-      virtual ~Triangulation ();
+      ~Triangulation () override;
 
       /**
        * Coarsen and refine the mesh according to refinement and coarsening
@@ -160,7 +160,7 @@ namespace parallel
        * addition of calling dealii::GridTools::partition_triangulation() at
        * the end.
        */
-      virtual void execute_coarsening_and_refinement ();
+      void execute_coarsening_and_refinement () override;
 
       /**
        * Create a triangulation.
@@ -168,9 +168,9 @@ namespace parallel
        * This function also partitions triangulation based on the MPI
        * communicator provided to the constructor.
        */
-      virtual void create_triangulation (const std::vector< Point< spacedim > > &vertices,
-                                         const std::vector< CellData< dim > > &cells,
-                                         const SubCellData &subcelldata);
+      void create_triangulation (const std::vector< Point< spacedim > > &vertices,
+                                 const std::vector< CellData< dim > > &cells,
+                                 const SubCellData &subcelldata) override;
 
       /**
        * Copy @p other_tria to this triangulation.
@@ -182,7 +182,7 @@ namespace parallel
        * since it only stores those cells that it owns, one layer of ghost cells around
        * the ones it locally owns, and a number of artificial cells.
        */
-      virtual void copy_triangulation (const dealii::Triangulation<dim, spacedim> &other_tria);
+      void copy_triangulation (const dealii::Triangulation<dim, spacedim> &other_tria) override;
 
       /**
        * Read the data of this object from a stream for the purpose of

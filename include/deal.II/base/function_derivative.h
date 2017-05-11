@@ -84,15 +84,15 @@ public:
    */
   void set_h (const double h);
 
-  virtual double value (const Point<dim> &p,
-                        const unsigned int component = 0) const;
+  double value (const Point<dim> &p,
+                const unsigned int component = 0) const override;
 
-  virtual void vector_value(const Point<dim> &p,
-                            Vector<double> &value) const;
+  void vector_value(const Point<dim> &p,
+                    Vector<double> &value) const override;
 
-  virtual void value_list (const std::vector<Point<dim> > &points,
-                           std::vector<double>            &values,
-                           const unsigned int              component = 0) const;
+  void value_list (const std::vector<Point<dim> > &points,
+                   std::vector<double>            &values,
+                   const unsigned int              component = 0) const override;
 
   /**
    * Return an estimate for the memory consumption, in bytes, of this object.

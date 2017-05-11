@@ -421,7 +421,7 @@ public:
    * virtual to ensure that data postprocessors can be destroyed through
    * pointers to the base class.
    */
-  virtual ~DataPostprocessor ();
+  ~DataPostprocessor () override;
 
   /**
    * This is the main function which actually performs the postprocessing. The
@@ -543,7 +543,7 @@ public:
    * quantities. Given the purpose of this class, this is a vector with a
    * single entry equal to the name given to the constructor.
    */
-  virtual std::vector<std::string> get_names () const;
+  std::vector<std::string> get_names () const override;
 
   /**
    * This functions returns information about how the individual components of
@@ -552,16 +552,16 @@ public:
    * scalar result variable, the returned value is obviously
    * DataComponentInterpretation::component_is_scalar.
    */
-  virtual
+
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
-  get_data_component_interpretation () const;
+  get_data_component_interpretation () const override;
 
   /**
    * Return, which data has to be provided to compute the derived quantities.
    * The flags returned here are the ones passed to the constructor of this
    * class.
    */
-  virtual UpdateFlags get_needed_update_flags () const;
+  UpdateFlags get_needed_update_flags () const override;
 
 private:
   /**
@@ -618,7 +618,7 @@ public:
    * quantities. Given the purpose of this class, this is a vector with dim
    * entries all equal to the name given to the constructor.
    */
-  virtual std::vector<std::string> get_names () const;
+  std::vector<std::string> get_names () const override;
 
   /**
    * This functions returns information about how the individual components of
@@ -627,16 +627,16 @@ public:
    * vector result variable, the returned value is obviously
    * DataComponentInterpretation::component_is_part repeated dim times.
    */
-  virtual
+
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
-  get_data_component_interpretation () const;
+  get_data_component_interpretation () const override;
 
   /**
    * Return which data has to be provided to compute the derived quantities.
    * The flags returned here are the ones passed to the constructor of this
    * class.
    */
-  virtual UpdateFlags get_needed_update_flags () const;
+  UpdateFlags get_needed_update_flags () const override;
 
 private:
   /**

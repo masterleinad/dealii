@@ -101,22 +101,22 @@ public:
    * class, need to make copied of finite elements without knowing their exact
    * type. They do so through this function.
    */
-  virtual
+
   FiniteElement<dim,spacedim> *
-  clone() const;
+  clone() const override;
 
   /**
    * Return a string that uniquely identifies a finite element. In this case
    * it is <code>FE_Nothing@<dim@></code>.
    */
-  virtual
+
   std::string
-  get_name() const;
+  get_name() const override;
 
   // for documentation, see the FiniteElement base class
-  virtual
+
   UpdateFlags
-  requires_update_flags (const UpdateFlags update_flags) const;
+  requires_update_flags (const UpdateFlags update_flags) const override;
 
   /**
    * Return the value of the @p ith shape function at the point @p p. @p p is
@@ -125,11 +125,11 @@ public:
    * practice.  All this function really does, therefore, is trigger an
    * exception.
    */
-  virtual
-  double
-  shape_value (const unsigned int i, const Point<dim> &p) const;
 
-  virtual
+  double
+  shape_value (const unsigned int i, const Point<dim> &p) const override;
+
+
   void
   fill_fe_values (const typename Triangulation<dim,spacedim>::cell_iterator           &cell,
                   const CellSimilarity::Similarity                                     cell_similarity,
@@ -138,9 +138,9 @@ public:
                   const typename Mapping<dim,spacedim>::InternalDataBase              &mapping_internal,
                   const dealii::internal::FEValues::MappingRelatedData<dim, spacedim> &mapping_data,
                   const typename FiniteElement<dim,spacedim>::InternalDataBase        &fe_internal,
-                  dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const;
+                  dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const override;
 
-  virtual
+
   void
   fill_fe_face_values (const typename Triangulation<dim,spacedim>::cell_iterator           &cell,
                        const unsigned int                                                   face_no,
@@ -149,9 +149,9 @@ public:
                        const typename Mapping<dim,spacedim>::InternalDataBase              &mapping_internal,
                        const dealii::internal::FEValues::MappingRelatedData<dim, spacedim> &mapping_data,
                        const typename FiniteElement<dim,spacedim>::InternalDataBase        &fe_internal,
-                       dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const;
+                       dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const override;
 
-  virtual
+
   void
   fill_fe_subface_values (const typename Triangulation<dim,spacedim>::cell_iterator           &cell,
                           const unsigned int                                                   face_no,
@@ -161,7 +161,7 @@ public:
                           const typename Mapping<dim,spacedim>::InternalDataBase              &mapping_internal,
                           const dealii::internal::FEValues::MappingRelatedData<dim, spacedim> &mapping_data,
                           const typename FiniteElement<dim,spacedim>::InternalDataBase        &fe_internal,
-                          dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const;
+                          dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const override;
 
   /**
    * Prepare internal data structures and fill in values independent of the
@@ -172,12 +172,12 @@ public:
    * In the current case, this function just returns a default pointer, since
    * no meaningful data exists for this element.
    */
-  virtual
+
   typename FiniteElement<dim,spacedim>::InternalDataBase *
   get_data (const UpdateFlags                                                    update_flags,
             const Mapping<dim,spacedim>                                         &mapping,
             const Quadrature<dim>                                               &quadrature,
-            dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const;
+            dealii::internal::FEValues::FiniteElementRelatedData<dim, spacedim> &output_data) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -193,37 +193,37 @@ public:
    * false and @p fe_other is also of type FE_Nothing(), either element can
    * dominate. Otherwise there are no_requirements.
    */
-  virtual
+
   FiniteElementDomination::Domination
-  compare_for_face_domination (const FiniteElement<dim,spacedim> &fe_other) const;
+  compare_for_face_domination (const FiniteElement<dim,spacedim> &fe_other) const override;
 
 
 
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_vertex_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const;
+  hp_vertex_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const override;
 
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_line_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const;
+  hp_line_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const override;
 
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_quad_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const;
+  hp_quad_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const override;
 
-  virtual
+
   bool
-  hp_constraints_are_implemented () const;
+  hp_constraints_are_implemented () const override;
 
   /**
    * Return the matrix interpolating from the given finite element to the
    * present one. Since the current finite element has no degrees of freedom, the
    * interpolation matrix is necessarily empty.
    */
-  virtual
+
   void
   get_interpolation_matrix (const FiniteElement<dim,spacedim> &source_fe,
-                            FullMatrix<double>       &interpolation_matrix) const;
+                            FullMatrix<double>       &interpolation_matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of of one element to the face
@@ -234,10 +234,10 @@ public:
    * interpolation matrix is necessarily empty.
    */
 
-  virtual
+
   void
   get_face_interpolation_matrix (const FiniteElement<dim,spacedim> &source_fe,
-                                 FullMatrix<double>       &interpolation_matrix) const;
+                                 FullMatrix<double>       &interpolation_matrix) const override;
 
 
   /**
@@ -249,11 +249,11 @@ public:
    * interpolation matrix is necessarily empty.
    */
 
-  virtual
+
   void
   get_subface_interpolation_matrix (const FiniteElement<dim,spacedim> &source_fe,
                                     const unsigned int index,
-                                    FullMatrix<double>  &interpolation_matrix) const;
+                                    FullMatrix<double>  &interpolation_matrix) const override;
 
   /**
    * @return true if the FE dominates any other.

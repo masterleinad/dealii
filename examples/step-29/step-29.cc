@@ -101,11 +101,11 @@ namespace Step29
   public:
     DirichletBoundaryValues() : Function<dim> (2) {};
 
-    virtual void vector_value (const Point<dim> &p,
-                               Vector<double>   &values) const;
+    void vector_value (const Point<dim> &p,
+                       Vector<double>   &values) const override;
 
-    virtual void vector_value_list (const std::vector<Point<dim> > &points,
-                                    std::vector<Vector<double> >   &value_list) const;
+    void vector_value_list (const std::vector<Point<dim> > &points,
+                            std::vector<Vector<double> >   &value_list) const override;
   };
 
 
@@ -298,11 +298,11 @@ namespace Step29
   public:
     ComputeIntensity ();
 
-    virtual
+
     void
     evaluate_vector_field
     (const DataPostprocessorInputs::Vector<dim> &inputs,
-     std::vector<Vector<double> >               &computed_quantities) const;
+     std::vector<Vector<double> >               &computed_quantities) const override;
   };
 
   // In the constructor, we need to call the constructor of the base class

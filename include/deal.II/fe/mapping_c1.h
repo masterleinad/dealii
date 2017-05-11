@@ -52,8 +52,8 @@ public:
    * Return a pointer to a copy of the present object. The caller of this copy
    * then assumes ownership of it.
    */
-  virtual
-  Mapping<dim,spacedim> *clone () const;
+
+  Mapping<dim,spacedim> *clone () const override;
 
 protected:
 
@@ -83,9 +83,9 @@ protected:
      * interpolating the boundary (as does the base class), but rather such
      * that the resulting cubic mapping is a continuous one.
      */
-    virtual void
+    void
     add_line_support_points (const typename Triangulation<dim>::cell_iterator &cell,
-                             std::vector<Point<dim> > &a) const;
+                             std::vector<Point<dim> > &a) const override;
 
     /**
      * For <tt>dim=3</tt>. Append the support points of all shape functions
@@ -99,9 +99,9 @@ protected:
      * interpolating the boundary (as does the base class), but rather such
      * that the resulting cubic mapping is a continuous one.
      */
-    virtual void
+    void
     add_quad_support_points(const typename Triangulation<dim>::cell_iterator &cell,
-                            std::vector<Point<dim> > &a) const;
+                            std::vector<Point<dim> > &a) const override;
   };
 };
 

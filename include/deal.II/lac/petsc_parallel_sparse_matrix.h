@@ -151,7 +151,7 @@ namespace PETScWrappers
       /**
        * Destructor to free the PETSc object.
        */
-      ~SparseMatrix ();
+      ~SparseMatrix () override;
 
       /**
        * Create a sparse matrix of dimensions @p m times @p n, with an initial
@@ -348,7 +348,7 @@ namespace PETScWrappers
        * Return a reference to the MPI communicator object in use with this
        * matrix.
        */
-      virtual const MPI_Comm &get_mpi_communicator () const;
+      const MPI_Comm &get_mpi_communicator () const override;
 
       /**
        * @addtogroup Exceptions

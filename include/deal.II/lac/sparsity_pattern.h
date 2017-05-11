@@ -484,7 +484,7 @@ public:
   /**
    * Destructor.
    */
-  ~SparsityPattern ();
+  ~SparsityPattern () override;
 
   /**
    * Copy operator. For this the same holds as for the copy constructor: it is

@@ -295,7 +295,7 @@ public:
   /**
    * Destructor.
    */
-  ~MatrixFree();
+  ~MatrixFree() override;
 
   /**
    * Extracts the information needed to perform loops over cells. The
@@ -2106,7 +2106,7 @@ namespace internal
         task_info (task_info_in),
         is_blocked (is_blocked_in)
       {};
-      tbb::task *execute ()
+      tbb::task *execute () override
       {
         std::pair<unsigned int, unsigned int> cell_range
         (task_info.partition_color_blocks_data[partition],
@@ -2143,7 +2143,7 @@ namespace internal
         task_info (task_info_in),
         is_blocked (is_blocked_in)
       {};
-      tbb::task *execute ()
+      tbb::task *execute () override
       {
         tbb::empty_task *root = new( tbb::task::allocate_root() )
         tbb::empty_task;
@@ -2271,7 +2271,7 @@ namespace internal
         task_info (task_info_in),
         is_blocked (is_blocked_in)
       {};
-      tbb::task *execute ()
+      tbb::task *execute () override
       {
         unsigned int lower = task_info.partition_color_blocks_data[partition],
                      upper = task_info.partition_color_blocks_data[partition+1];
@@ -2303,7 +2303,7 @@ namespace internal
       src(src_in)
     {};
 
-    tbb::task *execute ()
+    tbb::task *execute () override
     {
       internal::update_ghost_values_finish(src);
       return nullptr;
@@ -2324,7 +2324,7 @@ namespace internal
       dst(dst_in)
     {};
 
-    tbb::task *execute ()
+    tbb::task *execute () override
     {
       internal::compress_start(dst);
       return nullptr;

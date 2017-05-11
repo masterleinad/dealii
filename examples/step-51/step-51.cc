@@ -141,11 +141,11 @@ namespace Step51
   public:
     Solution () : Function<dim>() {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component = 0) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component = 0) const override;
 
-    virtual Tensor<1,dim> gradient (const Point<dim>   &p,
-                                    const unsigned int  component = 0) const;
+    Tensor<1,dim> gradient (const Point<dim>   &p,
+                            const unsigned int  component = 0) const override;
   };
 
 
@@ -201,8 +201,8 @@ namespace Step51
   public:
     SolutionAndGradient () : Function<dim>(dim) {}
 
-    virtual void vector_value (const Point<dim>   &p,
-                               Vector<double>     &v) const;
+    void vector_value (const Point<dim>   &p,
+                       Vector<double>     &v) const override;
   };
 
   template <int dim>
@@ -228,7 +228,7 @@ namespace Step51
   public:
     ConvectionVelocity() : TensorFunction<1,dim>() {}
 
-    virtual Tensor<1,dim> value (const Point<dim> &p) const;
+    Tensor<1,dim> value (const Point<dim> &p) const override;
   };
 
 
@@ -272,8 +272,8 @@ namespace Step51
   public:
     RightHandSide () : Function<dim>() {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component = 0) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component = 0) const override;
 
   private:
     const ConvectionVelocity<dim> convection_velocity;

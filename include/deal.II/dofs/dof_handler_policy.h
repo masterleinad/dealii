@@ -109,27 +109,27 @@ namespace internal
         /**
          * Distribute degrees of freedom on the object given as last argument.
          */
-        virtual
+
         void
         distribute_dofs (dealii::DoFHandler<dim,spacedim> &dof_handler,
-                         NumberCache &number_cache) const;
+                         NumberCache &number_cache) const override;
 
         /**
          * Distribute multigrid DoFs.
          */
-        virtual
+
         void
         distribute_mg_dofs (dealii::DoFHandler<dim,spacedim> &dof_handler,
-                            std::vector<NumberCache> &number_caches) const;
+                            std::vector<NumberCache> &number_caches) const override;
 
         /**
          * Renumber degrees of freedom as specified by the first argument.
          */
-        virtual
+
         void
         renumber_dofs (const std::vector<types::global_dof_index>  &new_numbers,
                        dealii::DoFHandler<dim,spacedim> &dof_handler,
-                       NumberCache &number_cache) const;
+                       NumberCache &number_cache) const override;
       };
 
       /**
@@ -149,18 +149,18 @@ namespace internal
          * number_cache.n_locally_owned_dofs_per_processor[i] and
          * number_cache.locally_owned_dofs are updated consistently.
          */
-        virtual
+
         void
         distribute_dofs (dealii::DoFHandler<dim,spacedim> &dof_handler,
-                         NumberCache &number_cache) const;
+                         NumberCache &number_cache) const override;
 
         /**
          * This function is not yet implemented.
          */
-        virtual
+
         void
         distribute_mg_dofs (dealii::DoFHandler<dim,spacedim> &dof_handler,
-                            std::vector<NumberCache> &number_caches) const;
+                            std::vector<NumberCache> &number_caches) const override;
 
         /**
          * Renumber degrees of freedom as specified by the first argument.
@@ -171,11 +171,11 @@ namespace internal
          * be utilised with renumbering functions implemented for the
          * parallel::distributed case.
          */
-        virtual
+
         void
         renumber_dofs (const std::vector<types::global_dof_index>  &new_numbers,
                        dealii::DoFHandler<dim,spacedim> &dof_handler,
-                       NumberCache &number_cache) const;
+                       NumberCache &number_cache) const override;
       private:
 
       };
@@ -192,27 +192,27 @@ namespace internal
         /**
          * Distribute degrees of freedom on the object given as last argument.
          */
-        virtual
+
         void
         distribute_dofs (dealii::DoFHandler<dim,spacedim> &dof_handler,
-                         NumberCache &number_cache) const;
+                         NumberCache &number_cache) const override;
 
         /**
          * Distribute multigrid DoFs.
          */
-        virtual
+
         void
         distribute_mg_dofs (dealii::DoFHandler<dim,spacedim> &dof_handler,
-                            std::vector<NumberCache> &number_caches) const;
+                            std::vector<NumberCache> &number_caches) const override;
 
         /**
          * Renumber degrees of freedom as specified by the first argument.
          */
-        virtual
+
         void
         renumber_dofs (const std::vector<types::global_dof_index>  &new_numbers,
                        dealii::DoFHandler<dim,spacedim> &dof_handler,
-                       NumberCache &number_cache) const;
+                       NumberCache &number_cache) const override;
       };
     }
   }

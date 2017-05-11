@@ -584,7 +584,7 @@ public:
    * returns <tt>FE_Q<dim>(degree)</tt>, with @p dim and @p degree replaced by
    * appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
   /**
    * Implementation of the corresponding function in the FiniteElement
@@ -593,10 +593,10 @@ public:
    * the current element is scalar, the support point values need to
    * be vectors of length 1.
    */
-  virtual
+
   void
   convert_generalized_support_point_values_to_nodal_values (const std::vector<Vector<double> > &support_point_values,
-                                                            std::vector<double>                &nodal_values) const;
+                                                            std::vector<double>                &nodal_values) const override;
 
 protected:
 
@@ -605,7 +605,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim,spacedim> *clone() const;
+  FiniteElement<dim,spacedim> *clone() const override;
 };
 
 

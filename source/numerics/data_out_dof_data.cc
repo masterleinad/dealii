@@ -404,83 +404,83 @@ namespace internal
        * Assuming that the stored vector is a cell vector, extract the given
        * element from it.
        */
-      virtual
+
       double
-      get_cell_data_value (const unsigned int cell_number) const;
+      get_cell_data_value (const unsigned int cell_number) const override;
 
       /**
        * Given a FEValuesBase object, extract the values on the present cell
        * from the vector we actually store.
        */
-      virtual
+
       void
       get_function_values
       (const FEValuesBase<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &fe_patch_values,
-       std::vector<double> &patch_values) const;
+       std::vector<double> &patch_values) const override;
 
       /**
        * Given a FEValuesBase object, extract the values on the present cell
        * from the vector we actually store. This function does the same as the
        * one above but for vector-valued finite elements.
        */
-      virtual
+
       void
       get_function_values
       (const FEValuesBase<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &fe_patch_values,
-       std::vector<dealii::Vector<double> > &patch_values_system) const;
+       std::vector<dealii::Vector<double> > &patch_values_system) const override;
 
       /**
        * Given a FEValuesBase object, extract the gradients on the present
        * cell from the vector we actually store.
        */
-      virtual
+
       void
       get_function_gradients
       (const FEValuesBase<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &fe_patch_values,
-       std::vector<Tensor<1,DoFHandlerType::space_dimension> > &patch_gradients) const;
+       std::vector<Tensor<1,DoFHandlerType::space_dimension> > &patch_gradients) const override;
 
       /**
        * Given a FEValuesBase object, extract the gradients on the present
        * cell from the vector we actually store. This function does the same
        * as the one above but for vector-valued finite elements.
        */
-      virtual
+
       void
       get_function_gradients
       (const FEValuesBase<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &fe_patch_values,
-       std::vector<std::vector<Tensor<1,DoFHandlerType::space_dimension> > > &patch_gradients_system) const;
+       std::vector<std::vector<Tensor<1,DoFHandlerType::space_dimension> > > &patch_gradients_system) const override;
 
       /**
        * Given a FEValuesBase object, extract the second derivatives on the
        * present cell from the vector we actually store.
        */
-      virtual
+
       void
       get_function_hessians
       (const FEValuesBase<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &fe_patch_values,
-       std::vector<Tensor<2,DoFHandlerType::space_dimension> > &patch_hessians) const;
+       std::vector<Tensor<2,DoFHandlerType::space_dimension> > &patch_hessians) const override;
 
       /**
        * Given a FEValuesBase object, extract the second derivatives on the
        * present cell from the vector we actually store. This function does
        * the same as the one above but for vector-valued finite elements.
        */
-      virtual
+
       void
       get_function_hessians
       (const FEValuesBase<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &fe_patch_values,
-       std::vector<std::vector< Tensor<2,DoFHandlerType::space_dimension> > > &patch_hessians_system) const;
+       std::vector<std::vector< Tensor<2,DoFHandlerType::space_dimension> > > &patch_hessians_system) const override;
 
       /**
        * Clear all references to the vectors.
        */
-      virtual void clear ();
+      void clear () override;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      virtual std::size_t memory_consumption () const;
+      std::size_t memory_consumption () const override;
 
     private:
       /**

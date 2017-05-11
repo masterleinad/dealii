@@ -172,7 +172,7 @@ public:
    * Nonetheless, since derived classes want to call the destructor of a base
    * class, this destructor is implemented (despite it being pure virtual).
    */
-  virtual ~Function () = 0;
+  ~Function () override = 0;
 
   /**
    * Assignment operator. This is here only so that you can have objects of
@@ -373,33 +373,33 @@ public:
    * Virtual destructor; absolutely necessary in this case.
    *
    */
-  virtual ~ZeroFunction ();
+  ~ZeroFunction () override;
 
-  virtual Number value (const Point<dim>   &p,
-                        const unsigned int  component) const;
+  Number value (const Point<dim>   &p,
+                const unsigned int  component) const override;
 
-  virtual void vector_value (const Point<dim> &p,
-                             Vector<Number>   &return_value) const;
+  void vector_value (const Point<dim> &p,
+                     Vector<Number>   &return_value) const override;
 
-  virtual void value_list (const std::vector<Point<dim> > &points,
-                           std::vector<Number>            &values,
-                           const unsigned int              component = 0) const;
+  void value_list (const std::vector<Point<dim> > &points,
+                   std::vector<Number>            &values,
+                   const unsigned int              component = 0) const override;
 
-  virtual void vector_value_list (const std::vector<Point<dim> > &points,
-                                  std::vector<Vector<Number> >   &values) const;
+  void vector_value_list (const std::vector<Point<dim> > &points,
+                          std::vector<Vector<Number> >   &values) const override;
 
-  virtual Tensor<1,dim, Number> gradient (const Point<dim> &p,
-                                          const unsigned int component = 0) const;
+  Tensor<1,dim, Number> gradient (const Point<dim> &p,
+                                  const unsigned int component = 0) const override;
 
-  virtual void vector_gradient (const Point<dim>            &p,
-                                std::vector<Tensor<1,dim, Number> > &gradients) const;
+  void vector_gradient (const Point<dim>            &p,
+                        std::vector<Tensor<1,dim, Number> > &gradients) const override;
 
-  virtual void gradient_list (const std::vector<Point<dim> > &points,
-                              std::vector<Tensor<1,dim, Number> >    &gradients,
-                              const unsigned int              component = 0) const;
+  void gradient_list (const std::vector<Point<dim> > &points,
+                      std::vector<Tensor<1,dim, Number> >    &gradients,
+                      const unsigned int              component = 0) const override;
 
-  virtual void vector_gradient_list (const std::vector<Point<dim> >            &points,
-                                     std::vector<std::vector<Tensor<1,dim, Number> > > &gradients) const;
+  void vector_gradient_list (const std::vector<Point<dim> >            &points,
+                             std::vector<std::vector<Tensor<1,dim, Number> > > &gradients) const override;
 };
 
 
@@ -453,20 +453,20 @@ public:
   /**
    * Virtual destructor; absolutely necessary in this case.
    */
-  virtual ~ConstantFunction ();
+  ~ConstantFunction () override;
 
-  virtual Number value (const Point<dim>   &p,
-                        const unsigned int  component) const;
+  Number value (const Point<dim>   &p,
+                const unsigned int  component) const override;
 
-  virtual void vector_value (const Point<dim> &p,
-                             Vector<Number>   &return_value) const;
+  void vector_value (const Point<dim> &p,
+                     Vector<Number>   &return_value) const override;
 
-  virtual void value_list (const std::vector<Point<dim> > &points,
-                           std::vector<Number>            &return_values,
-                           const unsigned int              component = 0) const;
+  void value_list (const std::vector<Point<dim> > &points,
+                   std::vector<Number>            &return_values,
+                   const unsigned int              component = 0) const override;
 
-  virtual void vector_value_list (const std::vector<Point<dim> > &points,
-                                  std::vector<Vector<Number> >   &return_values) const;
+  void vector_value_list (const std::vector<Point<dim> > &points,
+                          std::vector<Vector<Number> >   &return_values) const override;
 
   std::size_t memory_consumption () const;
 
@@ -541,8 +541,8 @@ public:
   /**
    * Return the value of the function at the given point for all components.
    */
-  virtual void vector_value (const Point<dim> &p,
-                             Vector<Number>   &return_value) const;
+  void vector_value (const Point<dim> &p,
+                     Vector<Number>   &return_value) const override;
 
   /**
    * Set <tt>values</tt> to the point values of the function at the
@@ -550,8 +550,8 @@ public:
    * already has the right size, i.e. the same size as the <tt>points</tt>
    * array.
    */
-  virtual void vector_value_list (const std::vector<Point<dim> > &points,
-                                  std::vector<Vector<Number> >   &values) const;
+  void vector_value_list (const std::vector<Point<dim> > &points,
+                          std::vector<Vector<Number> >   &values) const override;
 
   /**
    * Return an estimate for the memory consumption, in bytes, of this object.
@@ -661,8 +661,8 @@ public:
    * Return the value of the function at the given point. Returns the value
    * the function given to the constructor produces for this point.
    */
-  virtual Number value (const Point<dim>   &p,
-                        const unsigned int  component = 0) const;
+  Number value (const Point<dim>   &p,
+                const unsigned int  component = 0) const override;
 
 private:
   /**
@@ -730,16 +730,16 @@ public:
    * Return the value of the function at the given point. Returns the value
    * the function given to the constructor produces for this point.
    */
-  virtual Number value (const Point<dim>   &p,
-                        const unsigned int  component = 0) const;
+  Number value (const Point<dim>   &p,
+                const unsigned int  component = 0) const override;
 
   /**
    * Return all components of a vector-valued function at a given point.
    *
    * <tt>values</tt> shall have the right size beforehand, i.e. #n_components.
    */
-  virtual void vector_value (const Point<dim>   &p,
-                             Vector<Number>     &values) const;
+  void vector_value (const Point<dim>   &p,
+                     Vector<Number>     &values) const override;
 
 private:
   /**
@@ -818,21 +818,21 @@ public:
    * This destructor is defined as virtual so as to coincide with all other
    * aspects of class.
    */
-  virtual ~VectorFunctionFromTensorFunction();
+  ~VectorFunctionFromTensorFunction() override;
 
   /**
    * Return a single component of a vector-valued function at a given point.
    */
-  virtual Number value (const Point<dim> &p,
-                        const unsigned int component = 0) const;
+  Number value (const Point<dim> &p,
+                const unsigned int component = 0) const override;
 
   /**
    * Return all components of a vector-valued function at a given point.
    *
    * <tt>values</tt> shall have the right size beforehand, i.e. #n_components.
    */
-  virtual void vector_value (const Point<dim> &p,
-                             Vector<Number>   &values) const;
+  void vector_value (const Point<dim> &p,
+                     Vector<Number>   &values) const override;
 
   /**
    * Return all components of a vector-valued function at a list of points.
@@ -841,8 +841,8 @@ public:
    * element of the vector will be passed to vector_value() to evaluate the
    * function
    */
-  virtual void vector_value_list (const std::vector<Point<dim> > &points,
-                                  std::vector<Vector<Number> >   &value_list) const;
+  void vector_value_list (const std::vector<Point<dim> > &points,
+                          std::vector<Vector<Number> >   &value_list) const override;
 
 private:
   /**

@@ -74,16 +74,16 @@ public:
    * coordinates associated with the point @p space_point. Only used when
    * spacedim = 2.
    */
-  virtual Point<spacedim>
-  pull_back(const Point<spacedim> &space_point) const;
+  Point<spacedim>
+  pull_back(const Point<spacedim> &space_point) const override;
 
   /**
    * Given a point in the spherical coordinate system, this method returns the
    * Euclidean coordinates associated to the polar coordinates @p chart_point.
    * Only used when spacedim = 3.
    */
-  virtual Point<spacedim>
-  push_forward(const Point<spacedim> &chart_point) const;
+  Point<spacedim>
+  push_forward(const Point<spacedim> &chart_point) const override;
 
   /**
    * Given a point in the spacedim dimensional Euclidean space, this
@@ -97,9 +97,9 @@ public:
    *
    * Refer to the general documentation of this class for more information.
    */
-  virtual
+
   DerivativeForm<1,spacedim,spacedim>
-  push_forward_gradient(const Point<spacedim> &chart_point) const;
+  push_forward_gradient(const Point<spacedim> &chart_point) const override;
 
   /**
    * The center of the spherical coordinate system.
@@ -212,29 +212,29 @@ public:
    * radius so that the resulting one is the convex combination of the
    * starting radii.
    */
-  virtual
+
   Point<spacedim>
   get_intermediate_point(const Point<spacedim> &p1,
                          const Point<spacedim> &p2,
-                         const double w) const;
+                         const double w) const override;
 
   /**
    * Compute the derivative of the get_intermediate_point() function
    * with parameter w equal to zero.
    */
-  virtual
+
   Tensor<1,spacedim>
   get_tangent_vector (const Point<spacedim> &x1,
-                      const Point<spacedim> &x2) const;
+                      const Point<spacedim> &x2) const override;
 
   /**
    * Return a point on the spherical manifold which is intermediate
    * with respect to the surrounding points.
    */
-  virtual
+
   Point<spacedim>
   get_new_point (const std::vector<Point<spacedim> > &vertices,
-                 const std::vector<double> &weights) const;
+                 const std::vector<double> &weights) const override;
 
   /**
    * The center of the spherical coordinate system.
@@ -286,9 +286,9 @@ public:
    * Compute new points on the CylindricalManifold. See the documentation of
    * the base class for a detailed description of what this function does.
    */
-  virtual Point<spacedim>
+  Point<spacedim>
   get_new_point(const std::vector<Point<spacedim> > &surrounding_points,
-                const std::vector<double>           &weights) const;
+                const std::vector<double>           &weights) const override;
 
 protected:
   /**
@@ -374,15 +374,15 @@ public:
   /**
    * If needed, we delete the pointers we own.
    */
-  ~FunctionManifold();
+  ~FunctionManifold() override;
 
   /**
    * Given a point in the @p chartdim coordinate system, uses the
    * push_forward_function to compute the push_forward of points in @p
    * chartdim space dimensions to @p spacedim space dimensions.
    */
-  virtual Point<spacedim>
-  push_forward(const Point<chartdim> &chart_point) const;
+  Point<spacedim>
+  push_forward(const Point<chartdim> &chart_point) const override;
 
   /**
    * Given a point in the chartdim dimensional Euclidean space, this
@@ -404,17 +404,17 @@ public:
    *
    * Refer to the general documentation of this class for more information.
    */
-  virtual
+
   DerivativeForm<1,chartdim,spacedim>
-  push_forward_gradient(const Point<chartdim> &chart_point) const;
+  push_forward_gradient(const Point<chartdim> &chart_point) const override;
 
   /**
    * Given a point in the spacedim coordinate system, uses the
    * pull_back_function to compute the pull_back of points in @p spacedim
    * space dimensions to @p chartdim space dimensions.
    */
-  virtual Point<chartdim>
-  pull_back(const Point<spacedim> &space_point) const;
+  Point<chartdim>
+  pull_back(const Point<spacedim> &space_point) const override;
 
 private:
   /**
@@ -483,21 +483,21 @@ public:
   /**
    * Pull back operation.
    */
-  virtual Point<3>
-  pull_back(const Point<3> &p) const;
+  Point<3>
+  pull_back(const Point<3> &p) const override;
 
   /**
    * Push forward operation.
    */
-  virtual Point<3>
-  push_forward(const Point<3> &chart_point) const;
+  Point<3>
+  push_forward(const Point<3> &chart_point) const override;
 
   /**
    * Gradient.
    */
-  virtual
+
   DerivativeForm<1,3,3>
-  push_forward_gradient(const Point<3> &chart_point) const;
+  push_forward_gradient(const Point<3> &chart_point) const override;
 
 private:
   double r, R;

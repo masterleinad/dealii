@@ -118,7 +118,7 @@ public:
    * returns <tt>FE_DGQ<dim>(degree)</tt>, with <tt>dim</tt> and
    * <tt>degree</tt> replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
   /**
    * Return the matrix interpolating from the given finite element to the
@@ -129,9 +129,9 @@ public:
    * FE_DGQ element. Otherwise, an exception of type
    * FiniteElement<dim>::ExcInterpolationNotImplemented is thrown.
    */
-  virtual void
+  void
   get_interpolation_matrix (const FiniteElement<dim, spacedim> &source,
-                            FullMatrix<double>           &matrix) const;
+                            FullMatrix<double>           &matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of of one element to the face
@@ -144,9 +144,9 @@ public:
    * from a given element, then they must throw an exception of type
    * FiniteElement<dim>::ExcInterpolationNotImplemented.
    */
-  virtual void
+  void
   get_face_interpolation_matrix (const FiniteElement<dim, spacedim> &source,
-                                 FullMatrix<double>       &matrix) const;
+                                 FullMatrix<double>       &matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of of one element to the face
@@ -159,10 +159,10 @@ public:
    * from a given element, then they must throw an exception of type
    * FiniteElement<dim>::ExcInterpolationNotImplemented.
    */
-  virtual void
+  void
   get_subface_interpolation_matrix (const FiniteElement<dim, spacedim> &source,
                                     const unsigned int        subface,
-                                    FullMatrix<double>       &matrix) const;
+                                    FullMatrix<double>       &matrix) const override;
 
   /**
    * Projection from a fine grid space onto a coarse grid space. Overrides the
@@ -181,9 +181,9 @@ public:
    * Row and column indices are related to coarse grid and fine grid spaces,
    * respectively, consistent with the definition of the associated operator.
    */
-  virtual const FullMatrix<double> &
+  const FullMatrix<double> &
   get_restriction_matrix (const unsigned int child,
-                          const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const;
+                          const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
    * Embedding matrix between grids. Overrides the respective method in
@@ -206,9 +206,9 @@ public:
    * cells using this matrix array, zero elements in the prolongation matrix
    * are discarded and will not fill up the transfer matrix.
    */
-  virtual const FullMatrix<double> &
+  const FullMatrix<double> &
   get_prolongation_matrix (const unsigned int child,
-                           const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const;
+                           const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
    * @name Functions to support hp
@@ -233,9 +233,9 @@ public:
    * This being a discontinuous element, the set of such constraints is of
    * course empty.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_vertex_dof_identities (const FiniteElement<dim, spacedim> &fe_other) const;
+  hp_vertex_dof_identities (const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -244,9 +244,9 @@ public:
    * This being a discontinuous element, the set of such constraints is of
    * course empty.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_line_dof_identities (const FiniteElement<dim, spacedim> &fe_other) const;
+  hp_line_dof_identities (const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -255,9 +255,9 @@ public:
    * This being a discontinuous element, the set of such constraints is of
    * course empty.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_quad_dof_identities (const FiniteElement<dim, spacedim> &fe_other) const;
+  hp_quad_dof_identities (const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * Return whether this element implements its hanging node constraints in
@@ -267,7 +267,7 @@ public:
    * of the element), as it has no hanging nodes (being a discontinuous
    * element).
    */
-  virtual bool hp_constraints_are_implemented () const;
+  bool hp_constraints_are_implemented () const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -278,9 +278,9 @@ public:
    * and in particular the
    * @ref hp_paper "hp paper".
    */
-  virtual
+
   FiniteElementDomination::Domination
-  compare_for_face_domination (const FiniteElement<dim, spacedim> &fe_other) const;
+  compare_for_face_domination (const FiniteElement<dim, spacedim> &fe_other) const override;
 
   /**
    * @}
@@ -290,15 +290,15 @@ public:
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  bool has_support_on_face (const unsigned int shape_index,
+                            const unsigned int face_index) const override;
 
   /**
    * Return a list of constant modes of the element. For this element, it
    * simply returns one row with all entries set to true.
    */
-  virtual std::pair<Table<2,bool>, std::vector<unsigned int> >
-  get_constant_modes () const;
+  std::pair<Table<2,bool>, std::vector<unsigned int> >
+  get_constant_modes () const override;
 
   /**
    * Implementation of the corresponding function in the FiniteElement
@@ -307,10 +307,10 @@ public:
    * the current element is scalar, the support point values need to
    * be vectors of length 1.
    */
-  virtual
+
   void
   convert_generalized_support_point_values_to_nodal_values (const std::vector<Vector<double> > &support_point_values,
-                                                            std::vector<double>                &nodal_values) const;
+                                                            std::vector<double>                &nodal_values) const override;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -320,7 +320,7 @@ public:
    * accessed through pointers to their base class, rather than the class
    * itself.
    */
-  virtual std::size_t memory_consumption () const;
+  std::size_t memory_consumption () const override;
 
 
 protected:
@@ -339,7 +339,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim, spacedim> *clone() const;
+  FiniteElement<dim, spacedim> *clone() const override;
 
 private:
   /**
@@ -419,7 +419,7 @@ public:
    * returns <tt>FE_DGQArbitraryNodes<dim>(degree)</tt>, with <tt>dim</tt> and
    * <tt>degree</tt> replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
   /**
    * Implementation of the corresponding function in the FiniteElement
@@ -428,10 +428,10 @@ public:
    * the current element is scalar, the support point values need to
    * be vectors of length 1.
    */
-  virtual
+
   void
   convert_generalized_support_point_values_to_nodal_values (const std::vector<Vector<double> > &support_point_values,
-                                                            std::vector<double>                &nodal_values) const;
+                                                            std::vector<double>                &nodal_values) const override;
 
 protected:
   /**
@@ -439,7 +439,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim,spacedim> *clone() const;
+  FiniteElement<dim,spacedim> *clone() const override;
 };
 
 
@@ -469,8 +469,8 @@ public:
    * it returns one row where the first element (corresponding to the constant
    * mode) is set to true and all other elements are set to false.
    */
-  virtual std::pair<Table<2,bool>, std::vector<unsigned int> >
-  get_constant_modes () const;
+  std::pair<Table<2,bool>, std::vector<unsigned int> >
+  get_constant_modes () const override;
 
   /**
    * Return a string that uniquely identifies a finite element. This class
@@ -478,7 +478,7 @@ public:
    * <tt>degree</tt> replaced by the values given by the template parameter
    * and the argument passed to the constructor, respectively.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
 protected:
   /**
@@ -486,7 +486,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim,spacedim> *clone() const;
+  FiniteElement<dim,spacedim> *clone() const override;
 };
 
 
@@ -520,8 +520,8 @@ public:
    * (corresponding to the value left and the value at the right) are set to
    * true and all other elements are set to false.
    */
-  virtual std::pair<Table<2,bool>, std::vector<unsigned int> >
-  get_constant_modes () const;
+  std::pair<Table<2,bool>, std::vector<unsigned int> >
+  get_constant_modes () const override;
 
   /**
    * Return a string that uniquely identifies a finite element. This class
@@ -529,7 +529,7 @@ public:
    * <tt>degree</tt> replaced by the values given by the template parameter
    * and the argument passed to the constructor, respectively.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
 protected:
   /**
@@ -537,7 +537,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim,spacedim> *clone() const;
+  FiniteElement<dim,spacedim> *clone() const override;
 };
 
 

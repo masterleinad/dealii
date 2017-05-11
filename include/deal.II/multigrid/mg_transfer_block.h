@@ -199,7 +199,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~MGTransferBlock ();
+  ~MGTransferBlock () override;
 
   /**
    * Initialize additional #factors and #memory if the restriction of the
@@ -219,13 +219,13 @@ public:
                        const DoFHandler<dim,spacedim> &mg_dof,
                        const std::vector<bool> &selected);
 
-  virtual void prolongate (const unsigned int    to_level,
-                           BlockVector<number>       &dst,
-                           const BlockVector<number> &src) const;
+  void prolongate (const unsigned int    to_level,
+                   BlockVector<number>       &dst,
+                   const BlockVector<number> &src) const override;
 
-  virtual void restrict_and_add (const unsigned int    from_level,
-                                 BlockVector<number>       &dst,
-                                 const BlockVector<number> &src) const;
+  void restrict_and_add (const unsigned int    from_level,
+                         BlockVector<number>       &dst,
+                         const BlockVector<number> &src) const override;
 
   /**
    * Transfer from a vector on the global grid to a multilevel vector.
@@ -322,7 +322,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~MGTransferBlockSelect ();
+  ~MGTransferBlockSelect () override;
 
   /**
    * Actually build the prolongation matrices for grouped blocks.
@@ -346,13 +346,13 @@ public:
    */
   void select (const unsigned int block);
 
-  virtual void prolongate (const unsigned int    to_level,
-                           Vector<number>       &dst,
-                           const Vector<number> &src) const;
+  void prolongate (const unsigned int    to_level,
+                   Vector<number>       &dst,
+                   const Vector<number> &src) const override;
 
-  virtual void restrict_and_add (const unsigned int    from_level,
-                                 Vector<number>       &dst,
-                                 const Vector<number> &src) const;
+  void restrict_and_add (const unsigned int    from_level,
+                         Vector<number>       &dst,
+                         const Vector<number> &src) const override;
 
   /**
    * Transfer a single block from a vector on the global grid to a multilevel

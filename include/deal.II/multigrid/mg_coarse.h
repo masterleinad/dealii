@@ -57,7 +57,7 @@ public:
    */
   void operator() (const unsigned int level,
                    VectorType         &dst,
-                   const VectorType   &src) const;
+                   const VectorType   &src) const override;
 
 private:
   /**
@@ -101,7 +101,7 @@ public:
   /**
    * Destructor freeing the pointers.
    */
-  ~MGCoarseGridLACIteration ();
+  ~MGCoarseGridLACIteration () override;
 
   /**
    * Initialize new data.
@@ -122,7 +122,7 @@ public:
    */
   void operator() (const unsigned int level,
                    VectorType         &dst,
-                   const VectorType   &src) const;
+                   const VectorType   &src) const override;
 
   /**
    * Set the matrix. This gives the possibility to replace the matrix that
@@ -254,7 +254,7 @@ public:
 
   void operator() (const unsigned int level,
                    VectorType         &dst,
-                   const VectorType   &src) const;
+                   const VectorType   &src) const override;
 
 private:
   /**

@@ -574,7 +574,7 @@ public:
    * Destructor. Free all memory, but do not release the memory of the
    * sparsity structure.
    */
-  virtual ~SparseMatrix ();
+  ~SparseMatrix () override;
 
   /**
    * Copy operator. Since copying entire sparse matrices is a very expensive

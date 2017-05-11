@@ -128,7 +128,7 @@ public:
   /**
    * Destructor. Only declared to make it @p virtual.
    */
-  virtual ~DataOutStack ();
+  ~DataOutStack () override;
 
   /**
    * Start the next set of data for a specific parameter value. The argument
@@ -344,14 +344,14 @@ private:
    * data in the form of Patch structures (declared in the base class
    * DataOutBase) to the actual output function.
    */
-  virtual const std::vector< dealii::DataOutBase::Patch<dim+1,dim+1> > & get_patches () const;
+  const std::vector< dealii::DataOutBase::Patch<dim+1,dim+1> > & get_patches () const override;
 
 
   /**
    * Virtual function through which the names of data sets are obtained by the
    * output functions of the base class.
    */
-  virtual std::vector<std::string> get_dataset_names () const;
+  std::vector<std::string> get_dataset_names () const override;
 };
 
 

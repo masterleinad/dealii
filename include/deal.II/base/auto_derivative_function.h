@@ -132,7 +132,7 @@ public:
   /**
    * Virtual destructor; absolutely necessary in this case.
    */
-  virtual ~AutoDerivativeFunction ();
+  ~AutoDerivativeFunction () override;
 
   /**
    * Choose the difference formula. See the enum #DifferenceFormula for
@@ -157,8 +157,8 @@ public:
    * Compute numerical difference quotients using the preset
    * #DifferenceFormula.
    */
-  virtual Tensor<1,dim> gradient (const Point<dim>   &p,
-                                  const unsigned int  component = 0) const;
+  Tensor<1,dim> gradient (const Point<dim>   &p,
+                          const unsigned int  component = 0) const override;
 
   /**
    * Return the gradient of all components of the function at the given point.
@@ -166,8 +166,8 @@ public:
    * Compute numerical difference quotients using the preset
    * #DifferenceFormula.
    */
-  virtual void vector_gradient (const Point<dim>            &p,
-                                std::vector<Tensor<1,dim> > &gradients) const;
+  void vector_gradient (const Point<dim>            &p,
+                        std::vector<Tensor<1,dim> > &gradients) const override;
 
   /**
    * Set <tt>gradients</tt> to the gradients of the specified component of the
@@ -178,9 +178,9 @@ public:
    * Compute numerical difference quotients using the preset
    * #DifferenceFormula.
    */
-  virtual void gradient_list (const std::vector<Point<dim> > &points,
-                              std::vector<Tensor<1,dim> >    &gradients,
-                              const unsigned int              component = 0) const;
+  void gradient_list (const std::vector<Point<dim> > &points,
+                      std::vector<Tensor<1,dim> >    &gradients,
+                      const unsigned int              component = 0) const override;
 
   /**
    * Set <tt>gradients</tt> to the gradients of the function at the
@@ -194,8 +194,8 @@ public:
    * Compute numerical difference quotients using the preset
    * #DifferenceFormula.
    */
-  virtual void vector_gradient_list (const std::vector<Point<dim> > &points,
-                                     std::vector<std::vector<Tensor<1,dim> > > &gradients) const;
+  void vector_gradient_list (const std::vector<Point<dim> > &points,
+                             std::vector<std::vector<Tensor<1,dim> > > &gradients) const override;
 
   /**
    * Return a #DifferenceFormula of the order <tt>ord</tt> at minimum.

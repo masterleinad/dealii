@@ -138,8 +138,8 @@ namespace Step27
   public:
     RightHandSide () : Function<dim> () {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component) const override;
   };
 
 

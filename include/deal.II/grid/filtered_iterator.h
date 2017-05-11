@@ -727,13 +727,13 @@ private:
     /**
      * Evaluate the iterator with the stored copy of the predicate.
      */
-    virtual bool operator () (const BaseIterator &bi) const;
+    bool operator () (const BaseIterator &bi) const override;
 
     /**
      * Generate a copy of this object, i.e. of the actual type of this
      * pointer.
      */
-    virtual PredicateBase *clone () const;
+    PredicateBase *clone () const override;
 
   private:
     /**

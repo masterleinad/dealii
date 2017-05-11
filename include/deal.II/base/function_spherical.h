@@ -64,8 +64,8 @@ namespace Functions
      * This function converts the given point to spherical coordinates,
      * calls svalue() with it, and returns the result.
      */
-    virtual double value (const Point<dim> &point,
-                          const unsigned int component = 0) const;
+    double value (const Point<dim> &point,
+                  const unsigned int component = 0) const override;
 
     /**
      * Return the gradient with respect to the Cartesian coordinates at point @p p.
@@ -74,8 +74,8 @@ namespace Functions
      * calls sgradient() with it, and converts the result into Cartesian
      * coordinates.
      */
-    virtual Tensor<1,dim> gradient (const Point<dim>   &p,
-                                    const unsigned int  component = 0) const;
+    Tensor<1,dim> gradient (const Point<dim>   &p,
+                            const unsigned int  component = 0) const override;
 
     /**
      * Return the Hessian with respect to the Cartesian coordinates at point @p p.
@@ -84,8 +84,8 @@ namespace Functions
      * calls sgradient and shessian() with it, and converts the result into
      * Cartesian coordinates.
      */
-    virtual SymmetricTensor<2,dim> hessian (const Point<dim> &p,
-                                            const unsigned int component=0) const;
+    SymmetricTensor<2,dim> hessian (const Point<dim> &p,
+                                    const unsigned int component=0) const override;
 
     std::size_t memory_consumption () const;
 

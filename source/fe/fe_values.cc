@@ -1840,8 +1840,8 @@ public:
    * we have to have a
    * conversion operator.
    */
-  virtual
-  operator typename Triangulation<dim,spacedim>::cell_iterator () const;
+
+  operator typename Triangulation<dim,spacedim>::cell_iterator () const override;
 
   /**
    * Return the number of
@@ -1850,9 +1850,9 @@ public:
    * which the iterator belongs
    * to.
    */
-  virtual
+
   types::global_dof_index
-  n_dofs_for_dof_handler () const;
+  n_dofs_for_dof_handler () const override;
 
 #include "fe_values.decl.2.inst"
 
@@ -1860,10 +1860,10 @@ public:
   /// @p get_interpolated_dof_values
   /// of the iterator with the
   /// given arguments.
-  virtual
+
   void
   get_interpolated_dof_values (const IndexSet &in,
-                               Vector<IndexSet::value_type> &out) const;
+                               Vector<IndexSet::value_type> &out) const override;
 
 private:
   /**
@@ -1943,8 +1943,8 @@ public:
    * the conversion is trivial,
    * from and to the same time.
    */
-  virtual
-  operator typename Triangulation<dim,spacedim>::cell_iterator () const;
+
+  operator typename Triangulation<dim,spacedim>::cell_iterator () const override;
 
   /**
    * Implement the respective
@@ -1953,9 +1953,9 @@ public:
    * possible, we just raise an
    * error.
    */
-  virtual
+
   types::global_dof_index
-  n_dofs_for_dof_handler () const;
+  n_dofs_for_dof_handler () const override;
 
 #include "fe_values.decl.2.inst"
 
@@ -1963,10 +1963,10 @@ public:
   /// @p get_interpolated_dof_values
   /// of the iterator with the
   /// given arguments.
-  virtual
+
   void
   get_interpolated_dof_values (const IndexSet &in,
-                               Vector<IndexSet::value_type> &out) const;
+                               Vector<IndexSet::value_type> &out) const override;
 
 private:
   /**

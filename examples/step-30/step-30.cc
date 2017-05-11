@@ -60,9 +60,9 @@ namespace Step30
   class RHS:  public Function<dim>
   {
   public:
-    virtual void value_list (const std::vector<Point<dim> > &points,
-                             std::vector<double> &values,
-                             const unsigned int component=0) const;
+    void value_list (const std::vector<Point<dim> > &points,
+                     std::vector<double> &values,
+                     const unsigned int component=0) const override;
   };
 
 
@@ -70,9 +70,9 @@ namespace Step30
   class BoundaryValues:  public Function<dim>
   {
   public:
-    virtual void value_list (const std::vector<Point<dim> > &points,
-                             std::vector<double> &values,
-                             const unsigned int component=0) const;
+    void value_list (const std::vector<Point<dim> > &points,
+                     std::vector<double> &values,
+                     const unsigned int component=0) const override;
   };
 
 

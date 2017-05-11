@@ -183,8 +183,8 @@ namespace Functions
      * Return all components of a vector-valued function at the given point @p
      * p.
      */
-    virtual void vector_value (const Point<dim> &p,
-                               Vector<double>   &values) const;
+    void vector_value (const Point<dim> &p,
+                       Vector<double>   &values) const override;
 
     /**
      * Return the value of the function at the given point. Unless there is
@@ -192,8 +192,8 @@ namespace Functions
      * component you want to have evaluated; it defaults to zero, i.e. the
      * first component.
      */
-    virtual double value (const Point< dim >     &p,
-                          const unsigned int  component = 0)    const;
+    double value (const Point< dim >     &p,
+                  const unsigned int  component = 0)    const override;
 
     /**
      * Set the time to a specific value for time-dependent functions.
@@ -201,7 +201,7 @@ namespace Functions
      * We need to overwrite this to set the time also in the accessor
      * FunctionParser<dim>.
      */
-    virtual void set_time(const double newtime);
+    void set_time(const double newtime) override;
 
   private:
     /**

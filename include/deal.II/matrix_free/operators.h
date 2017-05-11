@@ -182,7 +182,7 @@ namespace MatrixFreeOperators
     /**
      * Virtual destructor.
      */
-    virtual ~Base();
+    ~Base() override;
 
     /**
      * Release all memory and return to a state just like after having called
@@ -602,7 +602,7 @@ namespace MatrixFreeOperators
     /**
      * For preconditioning, we store a lumped mass matrix at the diagonal entries.
      */
-    virtual void compute_diagonal ();
+    void compute_diagonal () override;
 
   private:
     /**
@@ -610,8 +610,8 @@ namespace MatrixFreeOperators
      * assumed that the passed input and output vector are correctly initialized
      * using initialize_dof_vector().
      */
-    virtual void apply_add (VectorType       &dst,
-                            const VectorType &src) const;
+    void apply_add (VectorType       &dst,
+                    const VectorType &src) const override;
 
     /**
      * For this operator, there is just a cell contribution.

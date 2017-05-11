@@ -570,7 +570,7 @@ namespace TrilinosWrappers
     /**
      * Destructor. Made virtual so that one can use pointers to this class.
      */
-    virtual ~SparseMatrix ();
+    ~SparseMatrix () override;
 
     /**
      * This function initializes the Trilinos matrix with a deal.II sparsity
@@ -2196,7 +2196,7 @@ namespace TrilinosWrappers
         /**
          * Destructor
          */
-        virtual ~TrilinosPayload();
+        ~TrilinosPayload() override;
 
         /**
          * Returns a payload configured for identity operations
@@ -2346,8 +2346,8 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual bool
-        UseTranspose () const;
+        bool
+        UseTranspose () const override;
 
         /**
          * Sets an internal flag so that all operations performed by the matrix,
@@ -2364,8 +2364,8 @@ namespace TrilinosWrappers
          * the underlying Trilinos object remain synchronized throughout all
          * operations that may occur on different threads simultaneously.
          */
-        virtual int
-        SetUseTranspose (bool UseTranspose);
+        int
+        SetUseTranspose (bool UseTranspose) override;
 
         /**
          * Apply the vmult operation on a vector @p X (of internally defined
@@ -2378,9 +2378,9 @@ namespace TrilinosWrappers
          * transpose flag. If this flag is set to true, the result will be
          * the equivalent of performing a Tvmult operation.
          */
-        virtual int
+        int
         Apply(const VectorType &X,
-              VectorType       &Y) const;
+              VectorType       &Y) const override;
 
         /**
          * Apply the vmult inverse operation on a vector @p X (of internally
@@ -2399,9 +2399,9 @@ namespace TrilinosWrappers
          * transpose flag. If this flag is set to true, the result will be
          * the equivalent of performing a Tvmult operation.
          */
-        virtual int
+        int
         ApplyInverse(const VectorType &Y,
-                     VectorType       &X) const;
+                     VectorType       &X) const override;
 //@}
 
         /**
@@ -2415,8 +2415,8 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const char *
-        Label () const;
+        const char *
+        Label () const override;
 
         /**
          * Returns a reference to the underlying MPI communicator for
@@ -2425,8 +2425,8 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const Epetra_Comm &
-        Comm () const;
+        const Epetra_Comm &
+        Comm () const override;
 
         /**
          * Return the partitioning of the domain space of this matrix, i.e., the
@@ -2435,8 +2435,8 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const Epetra_Map &
-        OperatorDomainMap () const;
+        const Epetra_Map &
+        OperatorDomainMap () const override;
 
         /**
          * Return the partitioning of the range space of this matrix, i.e., the
@@ -2446,8 +2446,8 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const Epetra_Map &
-        OperatorRangeMap () const;
+        const Epetra_Map &
+        OperatorRangeMap () const override;
 //@}
 
       private:
@@ -2488,8 +2488,8 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual bool
-        HasNormInf () const;
+        bool
+        HasNormInf () const override;
 
         /**
          * Returns the infinity norm of this operator.
@@ -2498,8 +2498,8 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual double
-        NormInf () const;
+        double
+        NormInf () const override;
       };
 
       /**

@@ -492,7 +492,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~MGTransferPrebuilt ();
+  ~MGTransferPrebuilt () override;
 
   /**
    * Initialize the constraints to be used in build_matrices().
@@ -529,9 +529,9 @@ public:
    * @arg dst has as many elements as there are degrees of freedom on the
    * finer level.
    */
-  virtual void prolongate (const unsigned int to_level,
-                           VectorType         &dst,
-                           const VectorType   &src) const;
+  void prolongate (const unsigned int to_level,
+                   VectorType         &dst,
+                   const VectorType   &src) const override;
 
   /**
    * Restrict a vector from level <tt>from_level</tt> to level
@@ -548,9 +548,9 @@ public:
    * @arg dst has as many elements as there are degrees of freedom on the
    * coarser level.
    */
-  virtual void restrict_and_add (const unsigned int from_level,
-                                 VectorType         &dst,
-                                 const VectorType   &src) const;
+  void restrict_and_add (const unsigned int from_level,
+                         VectorType         &dst,
+                         const VectorType   &src) const override;
 
   /**
    * Finite element does not provide prolongation matrices.

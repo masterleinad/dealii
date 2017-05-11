@@ -114,7 +114,7 @@ public:
   /**
    * Destructor. Declared in order to make it virtual.
    */
-  virtual ~MatrixOut ();
+  ~MatrixOut () override;
 
   /**
    * Generate a list of patches from the given matrix and use the given string
@@ -162,14 +162,14 @@ private:
    * Function by which the base class's functions get to know what patches
    * they shall write to a file.
    */
-  virtual const std::vector<Patch> &
-  get_patches () const;
+  const std::vector<Patch> &
+  get_patches () const override;
 
   /**
    * Virtual function through which the names of data sets are obtained by the
    * output functions of the base class.
    */
-  virtual std::vector<std::string> get_dataset_names () const;
+  std::vector<std::string> get_dataset_names () const override;
 
   /**
    * Get the value of the matrix at gridpoint <tt>(i,j)</tt>. Depending on the

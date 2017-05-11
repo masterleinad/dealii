@@ -279,13 +279,13 @@ namespace Step42
     public:
       BoundaryForce ();
 
-      virtual
-      double value (const Point<dim> &p,
-                    const unsigned int component = 0) const;
 
-      virtual
+      double value (const Point<dim> &p,
+                    const unsigned int component = 0) const override;
+
+
       void vector_value (const Point<dim> &p,
-                         Vector<double> &values) const;
+                         Vector<double> &values) const override;
     };
 
     template <int dim>
@@ -320,12 +320,12 @@ namespace Step42
     public:
       BoundaryValues ();
 
-      virtual double value (const Point<dim> &p,
-                            const unsigned int component = 0) const;
+      double value (const Point<dim> &p,
+                    const unsigned int component = 0) const override;
 
-      virtual
+
       void vector_value (const Point<dim> &p,
-                         Vector<double> &values) const;
+                         Vector<double> &values) const override;
     };
 
 
@@ -371,13 +371,13 @@ namespace Step42
     public:
       SphereObstacle (const double z_surface);
 
-      virtual
-      double value (const Point<dim> &p,
-                    const unsigned int component = 0) const;
 
-      virtual
+      double value (const Point<dim> &p,
+                    const unsigned int component = 0) const override;
+
+
       void vector_value (const Point<dim> &p,
-                         Vector<double> &values) const;
+                         Vector<double> &values) const override;
 
     private:
       const double z_surface;
@@ -559,13 +559,13 @@ namespace Step42
       ChineseObstacle(const std::string &filename,
                       const double z_surface);
 
-      virtual
-      double value (const Point<dim> &p,
-                    const unsigned int component = 0) const;
 
-      virtual
+      double value (const Point<dim> &p,
+                    const unsigned int component = 0) const override;
+
+
       void vector_value (const Point<dim> &p,
-                         Vector<double> &values) const;
+                         Vector<double> &values) const override;
 
     private:
       const BitmapFile<dim> input_obstacle;

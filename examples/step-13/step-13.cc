@@ -181,8 +181,8 @@ namespace Step13
       PointValueEvaluation (const Point<dim>   &evaluation_point,
                             TableHandler       &results_table);
 
-      virtual void operator () (const DoFHandler<dim> &dof_handler,
-                                const Vector<double>  &solution) const;
+      void operator () (const DoFHandler<dim> &dof_handler,
+                        const Vector<double>  &solution) const override;
 
       DeclException1 (ExcEvaluationPointNotFound,
                       Point<dim>,
@@ -374,8 +374,8 @@ namespace Step13
       SolutionOutput (const std::string               &output_name_base,
                       const DataOutBase::OutputFormat  output_format);
 
-      virtual void operator () (const DoFHandler<dim> &dof_handler,
-                                const Vector<double>  &solution) const;
+      void operator () (const DoFHandler<dim> &dof_handler,
+                        const Vector<double>  &solution) const override;
     private:
       const std::string               output_name_base;
       const DataOutBase::OutputFormat output_format;
@@ -587,20 +587,20 @@ namespace Step13
               const FiniteElement<dim> &fe,
               const Quadrature<dim>    &quadrature,
               const Function<dim>      &boundary_values);
-      virtual
-      ~Solver ();
 
-      virtual
+      ~Solver () override;
+
+
       void
-      solve_problem ();
+      solve_problem () override;
 
-      virtual
+
       void
-      postprocess (const Evaluation::EvaluationBase<dim> &postprocessor) const;
+      postprocess (const Evaluation::EvaluationBase<dim> &postprocessor) const override;
 
-      virtual
+
       unsigned int
-      n_dofs () const;
+      n_dofs () const override;
 
       // In the protected section of this class, we first have a number of
       // member variables, of which the use should be clear from the previous
@@ -1109,7 +1109,7 @@ namespace Step13
                     const Function<dim>      &boundary_values);
     protected:
       const SmartPointer<const Function<dim> > rhs_function;
-      virtual void assemble_rhs (Vector<double> &rhs) const;
+      void assemble_rhs (Vector<double> &rhs) const override;
     };
 
 
@@ -1202,7 +1202,7 @@ namespace Step13
                         const Function<dim>      &rhs_function,
                         const Function<dim>      &boundary_values);
 
-      virtual void refine_grid ();
+      void refine_grid () override;
     };
 
 
@@ -1251,7 +1251,7 @@ namespace Step13
                        const Function<dim>      &rhs_function,
                        const Function<dim>      &boundary_values);
 
-      virtual void refine_grid ();
+      void refine_grid () override;
     };
 
 
@@ -1318,8 +1318,8 @@ namespace Step13
   public:
     Solution () : Function<dim> () {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component) const override;
   };
 
 
@@ -1343,8 +1343,8 @@ namespace Step13
   public:
     RightHandSide () : Function<dim> () {}
 
-    virtual double value (const Point<dim>   &p,
-                          const unsigned int  component) const;
+    double value (const Point<dim>   &p,
+                  const unsigned int  component) const override;
   };
 
 

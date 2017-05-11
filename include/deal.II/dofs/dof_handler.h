@@ -312,7 +312,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~DoFHandler ();
+  ~DoFHandler () override;
 
   /**
    * Assign a Triangulation and a FiniteElement to the DoFHandler and compute

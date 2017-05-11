@@ -186,7 +186,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~MGTransferSelect ();
+  ~MGTransferSelect () override;
 
 //TODO: rewrite docs; make sure defaulted args are actually allowed
   /**
@@ -233,13 +233,13 @@ public:
   void select (const unsigned int component,
                const unsigned int mg_component = numbers::invalid_unsigned_int);
 
-  virtual void prolongate (const unsigned int    to_level,
-                           Vector<number>       &dst,
-                           const Vector<number> &src) const;
+  void prolongate (const unsigned int    to_level,
+                   Vector<number>       &dst,
+                   const Vector<number> &src) const override;
 
-  virtual void restrict_and_add (const unsigned int    from_level,
-                                 Vector<number>       &dst,
-                                 const Vector<number> &src) const;
+  void restrict_and_add (const unsigned int    from_level,
+                         Vector<number>       &dst,
+                         const Vector<number> &src) const override;
 
   /**
    * Transfer from a vector on the global grid to a multilevel vector.

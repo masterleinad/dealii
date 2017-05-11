@@ -160,7 +160,7 @@ public:
    * This destructor will only reset the internal sizes and the internal
    * pointers, but it will NOT clear the memory.
    */
-  ~VectorView();
+  ~VectorView() override;
 
   /**
    * The reinit function of this object has a behavior which is different from
@@ -202,8 +202,8 @@ public:
    * In any case, you should not rely on this behavior, and you should only
    * call this reinit function if you really know what you are doing.
    */
-  virtual void reinit (const size_type N,
-                       const bool         omit_zeroing_entries=false);
+  void reinit (const size_type N,
+               const bool         omit_zeroing_entries=false) override;
 
   /**
    * This reinit function is equivalent to constructing a new object with the
@@ -222,7 +222,7 @@ public:
    * This function is here to prevent memory corruption. It should never be
    * called, and will throw an exception if you try to do so.
    */
-  virtual void swap (Vector<Number> &v);
+  void swap (Vector<Number> &v) override;
 };
 
 

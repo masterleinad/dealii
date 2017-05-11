@@ -285,7 +285,7 @@ namespace TrilinosWrappers
       /**
        * Destructor.
        */
-      ~Vector ();
+      ~Vector () override;
 
       /**
        * Reinit functionality. This function sets the calling vector to the

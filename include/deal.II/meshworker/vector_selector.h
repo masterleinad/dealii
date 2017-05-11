@@ -199,7 +199,7 @@ namespace MeshWorker
     /**
      * Virtual, but empty destructor.
      */
-    virtual ~VectorDataBase();
+    ~VectorDataBase() override;
 
     /**
      * The only function added to VectorSelector is an abstract virtual
@@ -313,7 +313,7 @@ namespace MeshWorker
      */
     void initialize(const VectorType *, const std::string &name);
 
-    virtual void fill(
+    void fill(
       std::vector<std::vector<std::vector<typename VectorType::value_type> > > &values,
       std::vector<std::vector<std::vector<Tensor<1,spacedim,typename VectorType::value_type> > > > &gradients,
       std::vector<std::vector<std::vector<Tensor<2,spacedim,typename VectorType::value_type> > > > &hessians,
@@ -322,9 +322,9 @@ namespace MeshWorker
       const unsigned int component,
       const unsigned int n_comp,
       const unsigned int start,
-      const unsigned int size) const;
+      const unsigned int size) const override;
 
-    virtual void mg_fill(
+    void mg_fill(
       std::vector<std::vector<std::vector<typename VectorType::value_type> > > &values,
       std::vector<std::vector<std::vector<Tensor<1,spacedim,typename VectorType::value_type> > > > &gradients,
       std::vector<std::vector<std::vector<Tensor<2,spacedim,typename VectorType::value_type> > > > &hessians,
@@ -334,7 +334,7 @@ namespace MeshWorker
       const unsigned int component,
       const unsigned int n_comp,
       const unsigned int start,
-      const unsigned int size) const;
+      const unsigned int size) const override;
 
     /**
      * The memory used by this object.

@@ -694,7 +694,7 @@ public:
    * Virtual destructor. Makes sure that pointers to this class are deleted
    * properly.
    */
-  virtual ~FiniteElement ();
+  ~FiniteElement () override;
 
   /**
    * A sort of virtual copy constructor. Some places in the library, for

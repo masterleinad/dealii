@@ -55,7 +55,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~ExceptionBase () noexcept;
+  ~ExceptionBase () noexcept override;
 
   /**
    * Set the file name and line of where the exception appeared as well as the
@@ -72,7 +72,7 @@ public:
   /**
    * Override the standard function that returns the description of the error.
    */
-  virtual const char *what() const noexcept;
+  const char *what() const noexcept override;
 
   /**
    * Get exception name.
@@ -1125,7 +1125,7 @@ namespace StandardExceptions
   public:
     ExcMPI (const int error_code);
 
-    virtual void print_info (std::ostream &out) const;
+    void print_info (std::ostream &out) const override;
 
     const int error_code;
   };

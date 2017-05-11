@@ -111,7 +111,7 @@ public:
    * returns <tt>FE_ABF<dim>(degree)</tt>, with @p dim and @p degree replaced
    * by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
   /**
    * This function returns @p true, if the shape function @p shape_index has
@@ -120,17 +120,17 @@ public:
    * Right now, this is only implemented for RT0 in 1D. Otherwise, returns
    * always @p true.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  bool has_support_on_face (const unsigned int shape_index,
+                            const unsigned int face_index) const override;
 
   // documentation inherited from the base class
-  virtual
+
   void
   convert_generalized_support_point_values_to_nodal_values (const std::vector<Vector<double> > &support_point_values,
-                                                            std::vector<double>                &nodal_values) const;
+                                                            std::vector<double>                &nodal_values) const override;
 
-  virtual std::size_t memory_consumption () const;
-  virtual FiniteElement<dim> *clone() const;
+  std::size_t memory_consumption () const override;
+  FiniteElement<dim> *clone() const override;
 
 private:
   /**

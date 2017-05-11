@@ -551,7 +551,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~DataOut_DoFData ();
+  ~DataOut_DoFData () override;
 
   /**
    * Designate a dof handler to be used to extract geometry data and the
@@ -844,15 +844,15 @@ protected:
    * Function by which the base class's functions get to know what patches
    * they shall write to a file.
    */
-  virtual
-  const std::vector<Patch> &get_patches () const;
+
+  const std::vector<Patch> &get_patches () const override;
 
   /**
    * Virtual function through which the names of data sets are obtained by the
    * output functions of the base class.
    */
-  virtual
-  std::vector<std::string> get_dataset_names () const;
+
+  std::vector<std::string> get_dataset_names () const override;
 
   /**
    * Extracts the finite elements stored in the dof_data object, including a
@@ -865,9 +865,9 @@ protected:
    * Overload of the respective DataOutInterface::get_vector_data_ranges()
    * function. See there for a more extensive documentation.
    */
-  virtual
+
   std::vector<std::tuple<unsigned int, unsigned int, std::string> >
-  get_vector_data_ranges () const;
+  get_vector_data_ranges () const override;
 
   /**
    * Make all template siblings friends. Needed for the merge_patches()

@@ -56,34 +56,34 @@ public:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim,spacedim> *clone() const;
+  FiniteElement<dim,spacedim> *clone() const override;
 
   /**
    * Return a string that uniquely identifies a finite element. This class
    * returns <tt>FE_DGQ<dim>(degree)</tt>, with <tt>dim</tt> and
    * <tt>degree</tt> replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
   /**
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  bool has_support_on_face (const unsigned int shape_index,
+                            const unsigned int face_index) const override;
 
   /**
    * Return a list of constant modes of the element. For this element, it
    * simply returns one row with all entries set to true.
    */
-  virtual std::pair<Table<2,bool>, std::vector<unsigned int> >
-  get_constant_modes () const;
+  std::pair<Table<2,bool>, std::vector<unsigned int> >
+  get_constant_modes () const override;
 
   /**
    * Return whether this element implements its hanging node constraints in
    * the new way, which has to be used to make elements "hp compatible".
    */
-  virtual bool hp_constraints_are_implemented () const;
+  bool hp_constraints_are_implemented () const override;
 
   /**
    * Return the matrix interpolating from a face of of one element to the face
@@ -93,9 +93,9 @@ public:
    * type and FE_Nothing. For all other elements, an exception of type
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
-  virtual void
+  void
   get_face_interpolation_matrix (const FiniteElement<dim,spacedim> &source,
-                                 FullMatrix<double>       &matrix) const;
+                                 FullMatrix<double>       &matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of of one element to the face
@@ -105,10 +105,10 @@ public:
    * type and FE_Nothing. For all other elements, an exception of type
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
-  virtual void
+  void
   get_subface_interpolation_matrix (const FiniteElement<dim,spacedim> &source,
                                     const unsigned int        subface,
-                                    FullMatrix<double>       &matrix) const;
+                                    FullMatrix<double>       &matrix) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -119,9 +119,9 @@ public:
    * and in particular the
    * @ref hp_paper "hp paper".
    */
-  virtual
+
   FiniteElementDomination::Domination
-  compare_for_face_domination (const FiniteElement<dim,spacedim> &fe_other) const;
+  compare_for_face_domination (const FiniteElement<dim,spacedim> &fe_other) const override;
 
 private:
   /**
@@ -152,7 +152,7 @@ public:
   /**
    * Return the name of the element
    */
-  std::string get_name() const;
+  std::string get_name() const override;
 };
 
 

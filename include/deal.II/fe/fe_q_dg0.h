@@ -256,13 +256,13 @@ public:
    * returns <tt>FE_Q_DG0<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
   // documentation inherited from the base class
-  virtual
+
   void
   convert_generalized_support_point_values_to_nodal_values (const std::vector<Vector<double> > &support_point_values,
-                                                            std::vector<double>                &nodal_values) const;
+                                                            std::vector<double>                &nodal_values) const override;
 
   /**
    * Return the matrix interpolating from the given finite element to the
@@ -273,17 +273,17 @@ public:
    * FE_Q_DG0 element. Otherwise, an exception of type
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
-  virtual void
+  void
   get_interpolation_matrix (const FiniteElement<dim,spacedim> &source,
-                            FullMatrix<double>       &matrix) const;
+                            FullMatrix<double>       &matrix) const override;
 
 
   /**
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  bool has_support_on_face (const unsigned int shape_index,
+                            const unsigned int face_index) const override;
 
   /**
    * Return a list of constant modes of the element. For this element, there
@@ -291,8 +291,8 @@ public:
    * mode is all ones for the usual FE_Q basis and the second one only using
    * the discontinuous part.
    */
-  virtual std::pair<Table<2,bool>, std::vector<unsigned int> >
-  get_constant_modes () const;
+  std::pair<Table<2,bool>, std::vector<unsigned int> >
+  get_constant_modes () const override;
 
 protected:
   /**
@@ -300,7 +300,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim,spacedim> *clone() const;
+  FiniteElement<dim,spacedim> *clone() const override;
 
 private:
 

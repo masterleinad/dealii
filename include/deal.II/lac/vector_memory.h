@@ -76,7 +76,7 @@ public:
    * Virtual destructor is needed as there are virtual functions in this
    * class.
    */
-  virtual ~VectorMemory () {}
+  ~VectorMemory () override {}
 
   /**
    * Return a pointer to a new vector. The number of elements or their
@@ -187,7 +187,7 @@ public:
    * For the present class, calling this function will allocate a new vector
    * on the heap and returning a pointer to it.
    */
-  virtual VectorType *alloc ()
+  VectorType *alloc () override
   {
     return new VectorType();
   }
@@ -200,7 +200,7 @@ public:
    * For the present class, this means that the vector is returned to the
    * global heap.
    */
-  virtual void free (const VectorType *const v)
+  void free (const VectorType *const v) override
   {
     delete v;
   }
@@ -255,7 +255,7 @@ public:
    * The log file will also contain a warning message, if there are allocated
    * vectors left.
    */
-  virtual ~GrowingVectorMemory();
+  ~GrowingVectorMemory() override;
 
   /**
    * Return a pointer to a new vector. The number of elements or their
@@ -263,7 +263,7 @@ public:
    * function should reset vectors to their proper size. The same holds for
    * the contents of vectors: they are unspecified.
    */
-  virtual VectorType *alloc ();
+  VectorType *alloc () override;
 
   /**
    * Return a vector and indicate that it is not going to be used any further
@@ -272,7 +272,7 @@ public:
    * For the present class, this means retaining the vector for later reuse by
    * the alloc() method.
    */
-  virtual void free (const VectorType *const);
+  void free (const VectorType *const) override;
 
   /**
    * Release all vectors that are not currently in use.

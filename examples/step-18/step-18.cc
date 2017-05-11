@@ -563,15 +563,15 @@ namespace Step18
   public:
     BodyForce ();
 
-    virtual
+
     void
     vector_value (const Point<dim> &p,
-                  Vector<double>   &values) const;
+                  Vector<double>   &values) const override;
 
-    virtual
+
     void
     vector_value_list (const std::vector<Point<dim> > &points,
-                       std::vector<Vector<double> >   &value_list) const;
+                       std::vector<Vector<double> >   &value_list) const override;
   };
 
 
@@ -651,15 +651,15 @@ namespace Step18
     IncrementalBoundaryValues (const double present_time,
                                const double present_timestep);
 
-    virtual
+
     void
     vector_value (const Point<dim> &p,
-                  Vector<double>   &values) const;
+                  Vector<double>   &values) const override;
 
-    virtual
+
     void
     vector_value_list (const std::vector<Point<dim> > &points,
-                       std::vector<Vector<double> >   &value_list) const;
+                       std::vector<Vector<double> >   &value_list) const override;
 
   private:
     const double velocity;

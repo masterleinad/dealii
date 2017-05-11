@@ -77,9 +77,9 @@ public:
    *
    * Overrides the implementation from FE_Q_Base.
    */
-  virtual void
+  void
   get_interpolation_matrix (const FiniteElement<dim,spacedim> &source,
-                            FullMatrix<double>       &matrix) const;
+                            FullMatrix<double>       &matrix) const override;
 
   /**
    * FE_Bernstein is not interpolatory in the element interior, which prevents
@@ -88,9 +88,9 @@ public:
    *
    * Overrides the implementation from FE_Q_Base.
    */
-  virtual const FullMatrix<double> &
+  const FullMatrix<double> &
   get_restriction_matrix (const unsigned int child,
-                          const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const;
+                          const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
    * FE_Bernstein is not interpolatory in the element interior, which prevents
@@ -99,9 +99,9 @@ public:
    *
    * Overrides the implementation from FE_Q_Base.
    */
-  virtual const FullMatrix<double> &
+  const FullMatrix<double> &
   get_prolongation_matrix (const unsigned int child,
-                           const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const;
+                           const RefinementCase<dim> &refinement_case=RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face of
@@ -112,9 +112,9 @@ public:
    * exception of type
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
-  virtual void
+  void
   get_face_interpolation_matrix (const FiniteElement<dim,spacedim> &source,
-                                 FullMatrix<double>       &matrix) const;
+                                 FullMatrix<double>       &matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face of
@@ -125,16 +125,16 @@ public:
    * exception of type
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
-  virtual void
+  void
   get_subface_interpolation_matrix (const FiniteElement<dim,spacedim> &source,
                                     const unsigned int        subface,
-                                    FullMatrix<double>       &matrix) const;
+                                    FullMatrix<double>       &matrix) const override;
 
   /**
    * Return whether this element implements its hanging node constraints in
    * the new way, which has to be used to make elements "hp compatible".
    */
-  virtual bool hp_constraints_are_implemented () const;
+  bool hp_constraints_are_implemented () const override;
 
   /**
    * If, on a vertex, several finite elements are active, the hp code first
@@ -151,25 +151,25 @@ public:
    * the vertex dofs of the present element, whereas the second is the
    * corresponding index of the other finite element.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_vertex_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const;
+  hp_vertex_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
    * of freedom on lines.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_line_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const;
+  hp_line_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
    * of freedom on quads.
    */
-  virtual
+
   std::vector<std::pair<unsigned int, unsigned int> >
-  hp_quad_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const;
+  hp_quad_dof_identities (const FiniteElement<dim,spacedim> &fe_other) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -180,9 +180,9 @@ public:
    * and in particular the
    * @ref hp_paper "hp paper".
    */
-  virtual
+
   FiniteElementDomination::Domination
-  compare_for_face_domination (const FiniteElement<dim,spacedim> &fe_other) const;
+  compare_for_face_domination (const FiniteElement<dim,spacedim> &fe_other) const override;
 
 
   /**
@@ -190,7 +190,7 @@ public:
    * returns <tt>FE_Bernstein<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  std::string get_name () const override;
 
 protected:
 
@@ -199,7 +199,7 @@ protected:
    *
    * This function is needed by the constructors of @p FESystem.
    */
-  virtual FiniteElement<dim,spacedim> *clone() const;
+  FiniteElement<dim,spacedim> *clone() const override;
 
   /**
    * Only for internal use. Its full name is @p get_dofs_per_object_vector

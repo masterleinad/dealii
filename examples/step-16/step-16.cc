@@ -109,7 +109,7 @@ namespace Step16
   {
   public:
     LaplaceIntegrator();
-    virtual void cell(MeshWorker::DoFInfo<dim> &dinfo, MeshWorker::IntegrationInfo<dim> &info) const;
+    void cell(MeshWorker::DoFInfo<dim> &dinfo, MeshWorker::IntegrationInfo<dim> &info) const override;
   };
 
 

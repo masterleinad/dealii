@@ -157,7 +157,7 @@ public:
   /**
    * Virtual destructor.
    */
-  virtual ~Quadrature ();
+  ~Quadrature () override;
 
   /**
    * Assignment operator. Copies contents of #weights and #quadrature_points

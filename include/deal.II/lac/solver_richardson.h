@@ -103,7 +103,7 @@ public:
   /**
    * Virtual destructor.
    */
-  virtual ~SolverRichardson ();
+  ~SolverRichardson () override;
 
   /**
    * Solve the linear system $Ax=b$ for x.

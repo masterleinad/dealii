@@ -291,7 +291,7 @@ public:
   /**
    * Virtual destructor.
    */
-  virtual ~Mapping ();
+  ~Mapping () override;
 
   /**
    * Return a pointer to a copy of the present object. The caller of this copy
