@@ -458,8 +458,7 @@ int main ()
 {
   using namespace Maxwell;
 
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
 
   for (unsigned int p=0; p<3; ++p)
     {

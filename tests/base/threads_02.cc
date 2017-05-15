@@ -2455,8 +2455,7 @@ struct U
 };
 int main ()
 {
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
   using namespace Threads;
   ThreadGroup<X<0> > tg;
   ThreadGroup<X<0>&> tgr;

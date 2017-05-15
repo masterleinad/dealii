@@ -307,8 +307,7 @@ int main ()
 {
   const unsigned int dim(2);
 
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
 
   for (unsigned int p=0; p<3; ++p)
     {

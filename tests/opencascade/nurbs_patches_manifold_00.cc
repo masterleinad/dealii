@@ -26,8 +26,7 @@ using namespace OpenCASCADE;
 
 int main ()
 {
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
 
   std::vector<TopoDS_Face> faces;
   std::vector<TopoDS_Edge> edges;

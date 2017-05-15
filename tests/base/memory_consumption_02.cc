@@ -52,8 +52,7 @@ struct EqualityWithSizeofTest<T *>
 
 int main()
 {
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
 
   // do not test value type (just pointers) with void
   EqualityWithSizeofTest<void *> a;

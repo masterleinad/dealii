@@ -43,8 +43,7 @@ using namespace OpenCASCADE;
 
 int main()
 {
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
 
   // Create a sphere
   gp_Pnt center(.5,.5,.5);

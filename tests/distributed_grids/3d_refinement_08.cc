@@ -103,8 +103,7 @@ int main(int argc, char *argv[])
   (void)argv;
 #endif
 
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
   deallog.threshold_double(1.e-10);
 
   test<3>(logfile);

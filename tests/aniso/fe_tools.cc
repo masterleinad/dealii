@@ -170,8 +170,7 @@ void test_projection (std::ostream &out)
 
 int main()
 {
-  std::ofstream logfile("output");
-  deallog.attach(logfile);
+  initlog();
   deallog << std::setprecision(8);
   deallog.threshold_double(1.e-8);
 
