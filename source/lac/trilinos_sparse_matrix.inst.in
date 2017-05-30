@@ -47,3 +47,104 @@ for (S : REAL_SCALARS)
                           const dealii::SparsityPattern *);
     \}
 }
+
+for (D : DUMMY)
+{
+    namespace TrilinosWrappers
+    \{
+    template void
+    SparseMatrix::reinit (const dealii::SparsityPattern &);
+
+    template void
+    SparseMatrix::reinit (const DynamicSparsityPattern &);
+
+    template void
+    SparseMatrix::reinit (const Epetra_Map &,
+                          const dealii::SparsityPattern &,
+                          const bool);
+    template void
+    SparseMatrix::reinit (const Epetra_Map &,
+                          const DynamicSparsityPattern &,
+                          const bool);
+    template void
+    SparseMatrix::reinit (const Epetra_Map &,
+                          const Epetra_Map &,
+                          const dealii::SparsityPattern &,
+                          const bool);
+    template void
+    SparseMatrix::reinit (const Epetra_Map &,
+                          const Epetra_Map &,
+                          const DynamicSparsityPattern &,
+                          const bool);
+    template void
+    SparseMatrix::reinit (const IndexSet &,
+                          const IndexSet &,
+                          const dealii::SparsityPattern &,
+                          const MPI_Comm &,
+                          const bool);
+    template void
+    SparseMatrix::reinit (const IndexSet &,
+                          const IndexSet &,
+                          const DynamicSparsityPattern &,
+                          const MPI_Comm &,
+                          const bool);
+
+    template void
+    SparseMatrix::vmult (MPI::Vector &,
+                         const MPI::Vector &) const;
+    template void
+    SparseMatrix::vmult (dealii::Vector<double> &,
+                         const dealii::Vector<double> &) const;
+    template void
+    SparseMatrix::vmult (dealii::LinearAlgebra::distributed::Vector<double> &,
+                         const dealii::LinearAlgebra::distributed::Vector<double> &) const;
+#ifdef DEAL_II_WITH_MPI
+    template void
+    SparseMatrix::vmult (dealii::LinearAlgebra::EpetraWrappers::Vector &,
+                         const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
+#endif
+    template void
+    SparseMatrix::Tvmult (MPI::Vector &,
+                          const MPI::Vector &) const;
+    template void
+    SparseMatrix::Tvmult (dealii::Vector<double> &,
+                          const dealii::Vector<double> &) const;
+    template void
+    SparseMatrix::Tvmult (dealii::LinearAlgebra::distributed::Vector<double> &,
+                          const dealii::LinearAlgebra::distributed::Vector<double> &) const;
+#ifdef DEAL_II_WITH_MPI
+    template void
+    SparseMatrix::Tvmult (dealii::LinearAlgebra::EpetraWrappers::Vector &,
+                          const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
+#endif
+    template void
+    SparseMatrix::vmult_add (MPI::Vector &,
+                             const MPI::Vector &) const;
+    template void
+    SparseMatrix::vmult_add (dealii::Vector<double> &,
+                             const dealii::Vector<double> &) const;
+    template void
+    SparseMatrix::vmult_add (dealii::LinearAlgebra::distributed::Vector<double> &,
+                             const dealii::LinearAlgebra::distributed::Vector<double> &) const;
+#ifdef DEAL_II_WITH_MPI
+    template void
+    SparseMatrix::vmult_add (dealii::LinearAlgebra::EpetraWrappers::Vector &,
+                             const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
+#endif
+    template void
+    SparseMatrix::Tvmult_add (MPI::Vector &,
+                              const MPI::Vector &) const;
+    template void
+    SparseMatrix::Tvmult_add (dealii::Vector<double> &,
+                              const dealii::Vector<double> &) const;
+    template void
+    SparseMatrix::Tvmult_add (dealii::LinearAlgebra::distributed::Vector<double> &,
+                              const dealii::LinearAlgebra::distributed::Vector<double> &) const;
+#ifdef DEAL_II_WITH_MPI
+    template void
+    SparseMatrix::Tvmult_add (dealii::LinearAlgebra::EpetraWrappers::Vector &,
+                              const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
+#endif
+    \}
+}
+

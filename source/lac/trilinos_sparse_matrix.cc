@@ -2061,19 +2061,11 @@ namespace TrilinosWrappers
     Assert (&src != &dst, ExcSourceEqualsDestination());
 
     // Reinit a temporary vector with fast argument set, which does not
-    // overwrite the content (to save time). However, the
-    // TrilinosWrappers::VectorBase classes do not support this, so create a
-    // deal.II local vector that has this fast setting. It will be accepted in
-    // vmult because it only checks the local size.
-    dealii::Vector<TrilinosScalar> temp_vector;
-    temp_vector.reinit(internal::end(dst)-internal::begin(dst), true);
-    dealii::VectorView<TrilinosScalar> src_view(internal::end(src)-internal::begin(src),
-                                                internal::begin(src));
-    dealii::VectorView<TrilinosScalar> dst_view(internal::end(dst)-internal::begin(dst),
-                                                internal::begin(dst));
-    vmult (temp_vector, static_cast<const dealii::Vector<TrilinosScalar>&>(src_view));
-    if (dst_view.size() > 0)
-      dst_view += temp_vector;
+    // overwrite the content (to save time).
+    VectorType tmp_vector;
+    tmp_vector.reinit(dst, true);
+    vmult (tmp_vector, src);
+    dst += tmp_vector;
   }
 
 
@@ -2086,19 +2078,11 @@ namespace TrilinosWrappers
     Assert (&src != &dst, ExcSourceEqualsDestination());
 
     // Reinit a temporary vector with fast argument set, which does not
-    // overwrite the content (to save time). However, the
-    // TrilinosWrappers::VectorBase classes do not support this, so create a
-    // deal.II local vector that has this fast setting. It will be accepted in
-    // vmult because it only checks the local size.
-    dealii::Vector<TrilinosScalar> temp_vector;
-    temp_vector.reinit(internal::end(dst)-internal::begin(dst), true);
-    dealii::VectorView<TrilinosScalar> src_view(internal::end(src)-internal::begin(src),
-                                                internal::begin(src));
-    dealii::VectorView<TrilinosScalar> dst_view(internal::end(dst)-internal::begin(dst),
-                                                internal::begin(dst));
-    Tvmult (temp_vector, static_cast<const dealii::Vector<TrilinosScalar>&>(src_view));
-    if (dst_view.size() > 0)
-      dst_view += temp_vector;
+    // overwrite the content (to save time).
+    VectorType tmp_vector;
+    tmp_vector.reinit(dst, true);
+    Tvmult (tmp_vector, src);
+    dst += tmp_vector;
   }
 
 
@@ -3400,117 +3384,6 @@ namespace TrilinosWrappers
 
 // explicit instantiations
 #include "trilinos_sparse_matrix.inst"
-
-
-// TODO: put these instantiations into generic file
-namespace TrilinosWrappers
-{
-  template void
-  SparseMatrix::reinit (const dealii::SparsityPattern &);
-
-  template void
-  SparseMatrix::reinit (const DynamicSparsityPattern &);
-
-  template void
-  SparseMatrix::reinit (const Epetra_Map &,
-                        const dealii::SparsityPattern &,
-                        const bool);
-  template void
-  SparseMatrix::reinit (const Epetra_Map &,
-                        const DynamicSparsityPattern &,
-                        const bool);
-  template void
-  SparseMatrix::reinit (const Epetra_Map &,
-                        const Epetra_Map &,
-                        const dealii::SparsityPattern &,
-                        const bool);
-  template void
-  SparseMatrix::reinit (const Epetra_Map &,
-                        const Epetra_Map &,
-                        const DynamicSparsityPattern &,
-                        const bool);
-  template void
-  SparseMatrix::reinit (const IndexSet &,
-                        const IndexSet &,
-                        const dealii::SparsityPattern &,
-                        const MPI_Comm &,
-                        const bool);
-  template void
-  SparseMatrix::reinit (const IndexSet &,
-                        const IndexSet &,
-                        const DynamicSparsityPattern &,
-                        const MPI_Comm &,
-                        const bool);
-
-  template void
-  SparseMatrix::vmult (VectorBase &,
-                       const VectorBase &) const;
-  template void
-  SparseMatrix::vmult (MPI::Vector &,
-                       const MPI::Vector &) const;
-  template void
-  SparseMatrix::vmult (dealii::Vector<double> &,
-                       const dealii::Vector<double> &) const;
-  template void
-  SparseMatrix::vmult (dealii::LinearAlgebra::distributed::Vector<double> &,
-                       const dealii::LinearAlgebra::distributed::Vector<double> &) const;
-#ifdef DEAL_II_WITH_MPI
-  template void
-  SparseMatrix::vmult (dealii::LinearAlgebra::EpetraWrappers::Vector &,
-                       const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
-#endif
-  template void
-  SparseMatrix::Tvmult (VectorBase &,
-                        const VectorBase &) const;
-  template void
-  SparseMatrix::Tvmult (MPI::Vector &,
-                        const MPI::Vector &) const;
-  template void
-  SparseMatrix::Tvmult (dealii::Vector<double> &,
-                        const dealii::Vector<double> &) const;
-  template void
-  SparseMatrix::Tvmult (dealii::LinearAlgebra::distributed::Vector<double> &,
-                        const dealii::LinearAlgebra::distributed::Vector<double> &) const;
-#ifdef DEAL_II_WITH_MPI
-  template void
-  SparseMatrix::Tvmult (dealii::LinearAlgebra::EpetraWrappers::Vector &,
-                        const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
-#endif
-  template void
-  SparseMatrix::vmult_add (VectorBase &,
-                           const VectorBase &) const;
-  template void
-  SparseMatrix::vmult_add (MPI::Vector &,
-                           const MPI::Vector &) const;
-  template void
-  SparseMatrix::vmult_add (dealii::Vector<double> &,
-                           const dealii::Vector<double> &) const;
-  template void
-  SparseMatrix::vmult_add (dealii::LinearAlgebra::distributed::Vector<double> &,
-                           const dealii::LinearAlgebra::distributed::Vector<double> &) const;
-#ifdef DEAL_II_WITH_MPI
-  template void
-  SparseMatrix::vmult_add (dealii::LinearAlgebra::EpetraWrappers::Vector &,
-                           const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
-#endif
-  template void
-  SparseMatrix::Tvmult_add (VectorBase &,
-                            const VectorBase &) const;
-  template void
-  SparseMatrix::Tvmult_add (MPI::Vector &,
-                            const MPI::Vector &) const;
-  template void
-  SparseMatrix::Tvmult_add (dealii::Vector<double> &,
-                            const dealii::Vector<double> &) const;
-  template void
-  SparseMatrix::Tvmult_add (dealii::LinearAlgebra::distributed::Vector<double> &,
-                            const dealii::LinearAlgebra::distributed::Vector<double> &) const;
-#ifdef DEAL_II_WITH_MPI
-  template void
-  SparseMatrix::Tvmult_add (dealii::LinearAlgebra::EpetraWrappers::Vector &,
-                            const dealii::LinearAlgebra::EpetraWrappers::Vector &) const;
-#endif
-}
 
 DEAL_II_NAMESPACE_CLOSE
 
