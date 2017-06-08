@@ -48,9 +48,9 @@ void check ()
       if (test == 0 && types_are_equal<number,double>::value)
         {
           deallog << "Vector add reference:   ";
-          v1.print(deallog);
+          v1.print(deallog.get_file_stream());
           deallog << "Vector check reference: ";
-          check.print(deallog);
+          check.print(deallog.get_file_stream());
         }
 
       deallog << "Add and dot should be " << prod/static_cast<number>(size)

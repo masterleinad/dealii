@@ -673,35 +673,6 @@ public:
              const Vector<Number> &V);
 
   /**
-   * Scaling and multiple addition.
-   *
-   * This function is deprecated.
-   *
-   * @dealiiOperationIsMultithreaded
-   */
-  void sadd (const Number          s,
-             const Number          a,
-             const Vector<Number> &V,
-             const Number          b,
-             const Vector<Number> &W) DEAL_II_DEPRECATED;
-
-  /**
-   * Scaling and multiple addition.  <tt>*this = s*(*this)+a*V + b*W +
-   * c*X</tt>.
-   *
-   * This function is deprecated.
-   *
-   * @dealiiOperationIsMultithreaded
-   */
-  void sadd (const Number          s,
-             const Number          a,
-             const Vector<Number> &V,
-             const Number          b,
-             const Vector<Number> &W,
-             const Number          c,
-             const Vector<Number> &X) DEAL_II_DEPRECATED;
-
-  /**
    * Scale each element of the vector by a constant value.
    *
    * @dealiiOperationIsMultithreaded
@@ -744,27 +715,6 @@ public:
    */
   template <typename Number2>
   void equ (const Number a, const Vector<Number2> &u);
-
-  /**
-   * Assignment <tt>*this = a*u + b*v</tt>.
-   *
-   * This function is deprecated.
-   *
-   * @dealiiOperationIsMultithreaded
-   */
-  void equ (const Number a, const Vector<Number> &u,
-            const Number b, const Vector<Number> &v) DEAL_II_DEPRECATED;
-
-  /**
-   * Assignment <tt>*this = a*u + b*v + b*w</tt>.
-   *
-   * This function is deprecated.
-   *
-   * @dealiiOperationIsMultithreaded
-   */
-  void equ (const Number a, const Vector<Number> &u,
-            const Number b, const Vector<Number> &v,
-            const Number c, const Vector<Number> &w) DEAL_II_DEPRECATED;
 
   /**
    * Compute the elementwise ratio of the two given vectors, that is let
@@ -811,18 +761,6 @@ public:
               const unsigned int precision  = 3,
               const bool scientific = true,
               const bool across     = true) const;
-
-  /**
-   * Print to a LogStream. <tt>width</tt> is used as argument to the std::setw
-   * manipulator, if printing across.  If @p across is @p true then the vector
-   * is printed in a line, while if @p false then the elements are printed on
-   * a separate line each.
-   *
-   * This function is deprecated.
-   */
-  void print (LogStream &out,
-              const unsigned int width = 6,
-              const bool across = true) const DEAL_II_DEPRECATED;
 
   /**
    * Write the vector en bloc to a file. This is done in a binary mode, so the
@@ -1349,18 +1287,6 @@ template <typename number>
 inline
 std::ostream &
 operator << (std::ostream &os, const Vector<number> &v)
-{
-  v.print(os);
-  return os;
-}
-
-/**
- * Output operator writing a vector to a LogStream.
- */
-template <typename number>
-inline
-LogStream &
-operator << (LogStream &os, const Vector<number> &v)
 {
   v.print(os);
   return os;
