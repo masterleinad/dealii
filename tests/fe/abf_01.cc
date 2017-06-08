@@ -635,7 +635,7 @@ int main (int /*argc*/, char **/*argv*/)
            solution);
 
   EvaluateDerivative (dof_handler, solution);
-  solution.print (deallog);
+  deallog << solution << std::endl;
 
   DataOut<2> *data_out = new DataOut<2>;
   data_out->attach_dof_handler (*dof_handler);

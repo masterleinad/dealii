@@ -47,10 +47,8 @@ void check ()
       const number prod_check = check.add_and_dot(factor, v2, v3);
       if (test == 0 && types_are_equal<number,double>::value)
         {
-          deallog << "Vector add reference:   ";
-          v1.print(deallog);
-          deallog << "Vector check reference: ";
-          check.print(deallog);
+          deallog << "Vector add reference:   " << v1 << std::endl;
+          deallog << "Vector check reference: " << check << std::endl;
         }
 
       deallog << "Add and dot should be " << prod/static_cast<number>(size)

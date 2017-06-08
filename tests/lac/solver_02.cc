@@ -54,7 +54,7 @@ void test()
 
   PreconditionIdentity precond;
   solver.solve(mat, solvec, rhs, precond);
-  solvec.print(deallog);
+  deallog << solvec << std::endl;
 }
 
 int main()

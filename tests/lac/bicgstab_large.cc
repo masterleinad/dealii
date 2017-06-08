@@ -56,7 +56,7 @@ int main()
     bicgstab.solve (M, solution, rhs, PreconditionIdentity());
   }
 
-  solution.print(deallog);
+  deallog << solution << std::endl;
 
   Vector<double> res (4);
   M.residual (res, solution, rhs);
@@ -75,7 +75,7 @@ int main()
     SolverBicgstab<> bicgstab(control);
     bicgstab.solve (M1, solution, rhs, PreconditionIdentity());
   }
-  solution.print(deallog);
+  deallog << solution << std::endl;
   M1.residual (res, solution, rhs);
   deallog << "residual=" << res.l2_norm()
           << std::endl;
