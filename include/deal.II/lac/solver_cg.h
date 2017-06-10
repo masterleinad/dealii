@@ -137,17 +137,6 @@ public:
     bool compute_eigenvalues;
 
     /**
-     * Constructor. Initialize data fields.  Confer the description of those.
-     * @deprecated Instead use: connect_coefficients_slot,
-     * connect_condition_number_slot, and connect_eigenvalues_slot.
-     */
-    explicit
-    AdditionalData (const bool log_coefficients,
-                    const bool compute_condition_number = false,
-                    const bool compute_all_condition_numbers = false,
-                    const bool compute_eigenvalues = false) DEAL_II_DEPRECATED;
-
-    /**
      * Constructor. Initializes all data fields to false.
      */
     AdditionalData();
@@ -291,22 +280,6 @@ private:
 /*------------------------- Implementation ----------------------------*/
 
 #ifndef DOXYGEN
-
-template <typename VectorType>
-inline
-SolverCG<VectorType>::AdditionalData::
-AdditionalData (const bool log_coefficients,
-                const bool compute_condition_number,
-                const bool compute_all_condition_numbers,
-                const bool compute_eigenvalues)
-  :
-  log_coefficients (log_coefficients),
-  compute_condition_number(compute_condition_number),
-  compute_all_condition_numbers(compute_all_condition_numbers),
-  compute_eigenvalues(compute_eigenvalues)
-{}
-
-
 
 template <typename VectorType>
 inline

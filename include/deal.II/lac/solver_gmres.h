@@ -199,17 +199,6 @@ public:
                     const bool force_re_orthogonalization = false);
 
     /**
-     * Constructor.
-     * @deprecated To obtain the estimated eigenvalues instead use:
-     * connect_eigenvalues_slot
-     */
-    AdditionalData (const unsigned int max_n_tmp_vectors,
-                    const bool right_preconditioning,
-                    const bool use_default_residual,
-                    const bool force_re_orthogonalization,
-                    const bool compute_eigenvalues) DEAL_II_DEPRECATED;
-
-    /**
      * Maximum number of temporary vectors. This parameter controls the size
      * of the Arnoldi basis, which for historical reasons is
      * #max_n_tmp_vectors-2.
@@ -618,24 +607,6 @@ AdditionalData (const unsigned int max_n_tmp_vectors,
   use_default_residual(use_default_residual),
   force_re_orthogonalization(force_re_orthogonalization),
   compute_eigenvalues(false)
-{}
-
-
-
-template <class VectorType>
-inline
-SolverGMRES<VectorType>::AdditionalData::
-AdditionalData (const unsigned int max_n_tmp_vectors,
-                const bool         right_preconditioning,
-                const bool         use_default_residual,
-                const bool         force_re_orthogonalization,
-                const bool         compute_eigenvalues)
-  :
-  max_n_tmp_vectors(max_n_tmp_vectors),
-  right_preconditioning(right_preconditioning),
-  use_default_residual(use_default_residual),
-  force_re_orthogonalization(force_re_orthogonalization),
-  compute_eigenvalues(compute_eigenvalues)
 {}
 
 
