@@ -22,7 +22,16 @@
 #include <deal.II/lac/solver_gmres.h>
 #include <deal.II/lac/precondition.h>
 
-
+template<class NUMBER>
+void output_eigenvalues(const std::vector<NUMBER> &eigenvalues,const std::string &text)
+{
+  deallog<< text;
+  for (unsigned int j = 0; j < eigenvalues.size(); ++j)
+    {
+      deallog<< ' ' << eigenvalues.at(j);
+    }
+  deallog << std::endl;
+}
 
 template <typename number>
 void test (unsigned int variant)
@@ -73,9 +82,9 @@ void test (unsigned int variant)
 
   if (variant == 0)
     {
-      typename SolverCG<Vector<number> >::AdditionalData cg_data;
-      cg_data.compute_eigenvalues = true;
-      SolverCG<Vector<number> > solver_cg(control, cg_data);
+      SolverCG<Vector<number> > solver_cg(control);
+      solver_cg.connect_eigenvalues_slot(
+        std::bind(output_eigenvalues<double>,std::placeholders::_1,"Final Eigenvalues: "));
       sol = 0;
       solver_cg.solve(matrix, sol, rhs, PreconditionIdentity());
     }

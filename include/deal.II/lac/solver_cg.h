@@ -45,11 +45,6 @@ class PreconditionIdentity;
  * solution vector must be passed as template argument, and defaults to
  * dealii::Vector<double>.
  *
- * Like all other solver classes, this class has a local structure called @p
- * AdditionalData which is used to pass additional parameters to the solver.
- * For this class, there is (among other things) a switch allowing for
- * additional output for the computation of eigenvalues of the matrix.
- *
  * @note This version of CG is taken from D. Braess's book "Finite Elements".
  * It requires a symmetric preconditioner (i.e., for example, SOR is not a
  * possible choice).
@@ -83,9 +78,6 @@ class PreconditionIdentity;
  * connect_condition_number_slot. These slots will then be called from the
  * solver with the estimates as argument.
  *
- * @deprecated Alternatively these estimates can be written to deallog by
- * setting flags in @p AdditionalData.
- *
  * <h3>Observing the progress of linear solver iterations</h3>
  *
  * The solve() function of this class uses the mechanism described in the
@@ -106,40 +98,15 @@ public:
 
   /**
    * Standardized data struct to pipe additional data to the solver.
+   * Here, it doesn't store anything but just exists for consistency
+   * with the other solver classes.
    */
   struct AdditionalData
   {
     /**
-     * Write coefficients alpha and beta to the log file for later use in
-     * eigenvalue estimates.
+     * Constructor.
      */
-    bool log_coefficients;
-
-    /**
-     * Compute the condition number of the projected matrix.
-     *
-     * @note Requires LAPACK support.
-     */
-    bool compute_condition_number;
-
-    /**
-     * Compute the condition number of the projected matrix in each step.
-     *
-     * @note Requires LAPACK support.
-     */
-    bool compute_all_condition_numbers;
-
-    /**
-     * Compute all eigenvalues of the projected matrix.
-     *
-     * @note Requires LAPACK support.
-     */
-    bool compute_eigenvalues;
-
-    /**
-     * Constructor. Initializes all data fields to false.
-     */
-    AdditionalData();
+    AdditionalData() = default;
   };
 
   /**
@@ -225,9 +192,7 @@ protected:
     const std::vector<double> &diagonal,
     const std::vector<double> &offdiagonal,
     const boost::signals2::signal<void (const std::vector<double> &)> &eigenvalues_signal,
-    const boost::signals2::signal<void (double)> &cond_signal,
-    const bool log_eigenvalues,
-    const bool log_cond);
+    const boost::signals2::signal<void (double)> &cond_signal);
 
   /**
    * Temporary vectors, allocated through the @p VectorMemory object at the
@@ -280,19 +245,6 @@ private:
 /*------------------------- Implementation ----------------------------*/
 
 #ifndef DOXYGEN
-
-template <typename VectorType>
-inline
-SolverCG<VectorType>::AdditionalData::
-AdditionalData ()
-  :
-  log_coefficients (false),
-  compute_condition_number(false),
-  compute_all_condition_numbers(false),
-  compute_eigenvalues(false)
-{}
-
-
 
 template <typename VectorType>
 SolverCG<VectorType>::SolverCG (SolverControl        &cn,
@@ -355,13 +307,10 @@ SolverCG<VectorType>::compute_eigs_and_cond
 (const std::vector<double> &diagonal,
  const std::vector<double> &offdiagonal,
  const boost::signals2::signal<void (const std::vector<double> &)> &eigenvalues_signal,
- const boost::signals2::signal<void (double)>                      &cond_signal,
- const bool                log_eigenvalues,
- const bool                log_cond)
+ const boost::signals2::signal<void (double)>                      &cond_signal)
 {
   //Avoid computing eigenvalues unless they are needed.
-  if (!cond_signal.empty()|| !eigenvalues_signal.empty()  || log_cond ||
-      log_eigenvalues)
+  if (!cond_signal.empty()|| !eigenvalues_signal.empty())
     {
       TridiagonalMatrix<double> T(diagonal.size(), true);
       for (size_type i=0; i<diagonal.size(); ++i)
@@ -376,12 +325,6 @@ SolverCG<VectorType>::compute_eigs_and_cond
         {
           double condition_number=T.eigenvalue(T.n()-1)/T.eigenvalue(0);
           cond_signal(condition_number);
-          //Send to deallog
-          if (log_cond)
-            {
-              deallog << "Condition number estimate: " <<
-                      condition_number << std::endl;
-            }
         }
       //Avoid copying the eigenvalues of T to a vector unless a signal is
       //connected.
@@ -393,12 +336,6 @@ SolverCG<VectorType>::compute_eigs_and_cond
               eigenvalues.at(j)=T.eigenvalue(j);
             }
           eigenvalues_signal(eigenvalues);
-        }
-      if (log_eigenvalues)
-        {
-          for (size_type i=0; i<T.n(); ++i)
-            deallog << ' ' << T.eigenvalue(i);
-          deallog << std::endl;
         }
     }
 
@@ -427,10 +364,7 @@ SolverCG<VectorType>::solve (const MatrixType         &A,
   const bool do_eigenvalues = !condition_number_signal.empty()
                               ||!all_condition_numbers_signal.empty()
                               ||!eigenvalues_signal.empty()
-                              ||!all_eigenvalues_signal.empty()
-                              || additional_data.compute_condition_number
-                              || additional_data.compute_all_condition_numbers
-                              || additional_data.compute_eigenvalues;
+                              ||!all_eigenvalues_signal.empty();
 
   // vectors used for eigenvalue
   // computations
@@ -528,8 +462,6 @@ SolverCG<VectorType>::solve (const MatrixType         &A,
             }
 
           this->coefficients_signal(alpha,beta);
-          if (additional_data.log_coefficients)
-            deallog << "alpha-beta:" << alpha << '\t' << beta << std::endl;
           // set up the vectors
           // containing the diagonal
           // and the off diagonal of
@@ -541,8 +473,7 @@ SolverCG<VectorType>::solve (const MatrixType         &A,
               offdiagonal.push_back(std::sqrt(beta)/alpha);
             }
           compute_eigs_and_cond(diagonal,offdiagonal,all_eigenvalues_signal,
-                                all_condition_numbers_signal,false,
-                                additional_data.compute_all_condition_numbers);
+                                all_condition_numbers_signal);
         }
     }
   catch (...)
@@ -551,10 +482,7 @@ SolverCG<VectorType>::solve (const MatrixType         &A,
       throw;
     }
   compute_eigs_and_cond(diagonal,offdiagonal,eigenvalues_signal,
-                        condition_number_signal,
-                        additional_data.compute_eigenvalues,
-                        (additional_data.compute_condition_number &&
-                         !additional_data.compute_all_condition_numbers));
+                        condition_number_signal);
 
   // Deallocate Memory
   cleanup();
