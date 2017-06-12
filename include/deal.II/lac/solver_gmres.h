@@ -226,17 +226,6 @@ public:
      * if necessary.
      */
     bool force_re_orthogonalization;
-
-    /**
-     * Compute all eigenvalues of the Hessenberg matrix generated while
-     * solving, i.e., the projected system matrix. This gives an approximation
-     * of the eigenvalues of the (preconditioned) system matrix. Since the
-     * Hessenberg matrix is thrown away at restart, the eigenvalues are
-     * printed for every 30 iterations.
-     *
-     * @note Requires LAPACK support.
-     */
-    bool compute_eigenvalues;
   };
 
   /**
@@ -405,8 +394,7 @@ protected:
     const unsigned int dim,
     const boost::signals2::signal<void (const std::vector<std::complex<double> > &)> &eigenvalues_signal,
     const boost::signals2::signal<void (const FullMatrix<double> &)> &hessenberg_signal,
-    const boost::signals2::signal<void(double)> &cond_signal,
-    const bool log_eigenvalues);
+    const boost::signals2::signal<void(double)> &cond_signal);
 
   /**
    * Projected system matrix
@@ -605,8 +593,7 @@ AdditionalData (const unsigned int max_n_tmp_vectors,
   max_n_tmp_vectors(max_n_tmp_vectors),
   right_preconditioning(right_preconditioning),
   use_default_residual(use_default_residual),
-  force_re_orthogonalization(force_re_orthogonalization),
-  compute_eigenvalues(false)
+  force_re_orthogonalization(force_re_orthogonalization)
 {}
 
 
@@ -729,12 +716,11 @@ SolverGMRES<VectorType>::compute_eigs_and_cond
  const unsigned int                           dim,
  const boost::signals2::signal<void (const std::vector<std::complex<double> > &)> &eigenvalues_signal,
  const boost::signals2::signal<void (const FullMatrix<double> &)> &hessenberg_signal,
- const boost::signals2::signal<void (double)> &cond_signal,
- const bool                                   log_eigenvalues)
+ const boost::signals2::signal<void (double)> &cond_signal)
 {
   //Avoid copying the Hessenberg matrix if it isn't needed.
   if (!eigenvalues_signal.empty() || !hessenberg_signal.empty()
-      || !cond_signal.empty() || log_eigenvalues )
+      || !cond_signal.empty())
     {
       LAPACKFullMatrix<double> mat(dim,dim);
       for (unsigned int i=0; i<dim; ++i)
@@ -742,7 +728,7 @@ SolverGMRES<VectorType>::compute_eigs_and_cond
           mat(i,j) = H_orig(i,j);
       hessenberg_signal(H_orig);
       //Avoid computing eigenvalues if they are not needed.
-      if (!eigenvalues_signal.empty() || log_eigenvalues )
+      if (!eigenvalues_signal.empty())
         {
           //Copy mat so that we can compute svd below. Necessary since
           //compute_eigenvalues will leave mat in state LAPACKSupport::unusable.
@@ -755,13 +741,6 @@ SolverGMRES<VectorType>::compute_eigs_and_cond
           std::sort(eigenvalues.begin(), eigenvalues.end(),
                     internal::SolverGMRES::complex_less_pred);
           eigenvalues_signal(eigenvalues);
-          if (log_eigenvalues)
-            {
-              deallog << "Eigenvalue estimate: ";
-              for (unsigned int i=0; i<mat_eig.n(); ++i)
-                deallog << ' ' << eigenvalues[i];
-              deallog << std::endl;
-            }
         }
       //Calculate condition number, avoid calculating the svd if a slot
       //isn't connected. Need at least a 2-by-2 matrix to do the estimate.
@@ -808,8 +787,7 @@ SolverGMRES<VectorType>::solve (const MatrixType         &A,
     ||!eigenvalues_signal.empty()
     ||!all_eigenvalues_signal.empty()
     ||!hessenberg_signal.empty()
-    ||!all_hessenberg_signal.empty()
-    ||additional_data.compute_eigenvalues;
+    ||!all_hessenberg_signal.empty();
   // for eigenvalue computation, need to collect the Hessenberg matrix (before
   // applying Givens rotations)
   FullMatrix<double> H_orig;
@@ -1035,9 +1013,7 @@ SolverGMRES<VectorType>::solve (const MatrixType         &A,
           H1(i,j) = H(i,j);
 
       compute_eigs_and_cond(H_orig,dim,all_eigenvalues_signal,
-                            all_hessenberg_signal,
-                            all_condition_numbers_signal,
-                            additional_data.compute_eigenvalues);
+                            all_hessenberg_signal, condition_number_signal);
 
       H1.backward(h,gamma);
 
@@ -1058,8 +1034,7 @@ SolverGMRES<VectorType>::solve (const MatrixType         &A,
   while (iteration_state == SolverControl::iterate);
 
   compute_eigs_and_cond(H_orig,dim,eigenvalues_signal,hessenberg_signal,
-                        condition_number_signal,
-                        false);
+                        condition_number_signal);
 
   if (!krylov_space_signal.empty())
     krylov_space_signal(tmp_vectors);
