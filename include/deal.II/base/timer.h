@@ -95,24 +95,37 @@ public:
    * time for the MPI operations are not included in the timing but may slow
    * down your program.
    *
-   * This constructor is only available if the deal.II compiler is an MPI
-   * compiler.
+   * This constructor is only available if deal.II is compiled with MPI support.
    */
   Timer (MPI_Comm mpi_communicator,
          const bool sync_wall_time = false);
 
   /**
-   * Return a reference to the data structure with global timing information.
-   * Filled after calling stop().
+   * Return a reference to the data structure with global timing information
+   * for the last lap. Filled after calling stop().
    */
-  const Utilities::MPI::MinMaxAvg &get_data() const;
+  Utilities::MPI::MinMaxAvg get_data() const;
 
   /**
-   * Prints the data to the given stream.
+   * Return a reference to the data structure with global timing information
+   * for the total run.
+   * Filled after calling stop().
+   */
+  Utilities::MPI::MinMaxAvg get_total_data() const;
+
+  /**
+   * Prints the data returned by get_data(), i.e. for the last lap,
+   * to the given stream.
    */
   template <class StreamType>
   void print_data(StreamType &stream) const;
 
+  /**
+   * Prints the data returned by get_total_data(), i.e. for the total run,
+   * to the given stream.
+   */
+  template <class StreamType>
+  void print_total_data(StreamType &stream) const;
 
 #endif
 
@@ -140,20 +153,45 @@ public:
   void restart();
 
   /**
-   * Access to the current CPU time without disturbing time measurement. The
-   * elapsed time is returned in units of seconds.
+   * Access to the current CPU time without stopping the timer.
+   * The elapsed time is returned in units of seconds.
+   *
+   * @deprecated Use cpu_time() instead.
    */
-  double operator() () const;
+  double operator() () const DEAL_II_DEPRECATED;
 
   /**
-   * Access to the current wall time without disturbing time measurement. The
-   * elapsed time is returned in units of seconds.
+   * Access to the current total wall time without stopping the timer.
+   * The elapsed time is returned in units of seconds.
    */
   double wall_time () const;
 
   /**
-   * Return the last lap time; the time taken between the last start()/stop()
+   * Access to the wall time for the currently running lap without stopping
+   * the timer.
+   * The elapsed time is returned in units of seconds.
+   */
+  double last_wall_time() const;
+
+  /**
+   * Access to the current total wall time without stopping the timer.
+   * The elapsed time is returned in units of seconds.
+   */
+  double cpu_time() const;
+
+  /**
+   * Access to the wall time for the currently running lap without stopping
+   * the timer.
+   * The elapsed time is returned in units of seconds.
+   */
+  double last_cpu_time() const;
+
+  /**
+   * Return the last lap time; the time taken between the last
+   * start()/stop()
    * call.
+   *
+   * @deprecated Use last_wall_time() instead.
    */
   double get_lap_time () const;
 
@@ -724,10 +762,19 @@ void Timer::restart ()
 #ifdef DEAL_II_WITH_MPI
 
 inline
-const Utilities::MPI::MinMaxAvg &
+Utilities::MPI::MinMaxAvg
 Timer::get_data() const
 {
-  return mpi_data;
+  return Utilities::MPI::min_max_avg(last_lap_time, mpi_communicator);
+}
+
+
+
+inline
+Utilities::MPI::MinMaxAvg
+Timer::get_total_data() const
+{
+  return Utilities::MPI::min_max_avg(cumulative_time, mpi_communicator);
 }
 
 
@@ -737,13 +784,23 @@ inline
 void
 Timer::print_data(StreamType &stream) const
 {
-  unsigned int my_id = dealii::Utilities::MPI::this_mpi_process(mpi_communicator);
-  if (my_id==0)
-    stream << mpi_data.max << " wall,"
-           << " max @" << mpi_data.max_index
-           << ", min=" << mpi_data.min << " @" << mpi_data.min_index
-           << ", avg=" << mpi_data.avg
-           << std::endl;
+  const Utilities::MPI::MinMaxAvg statistic = get_data();
+  stream << statistic.max << " wall,"
+         << " max @" << statistic.max_index << ", min=" << statistic.min << " @"
+         << statistic.min_index << ", avg=" << statistic.avg << std::endl;
+}
+
+
+
+template <class StreamType>
+inline
+void
+Timer::print_total_data(StreamType &stream) const
+{
+  const Utilities::MPI::MinMaxAvg statistic = get_total_data();
+  stream << statistic.max << " wall,"
+         << " max @" << statistic.max_index << ", min=" << statistic.min << " @"
+         << statistic.min_index << ", avg=" << statistic.avg << std::endl;
 }
 
 #endif
