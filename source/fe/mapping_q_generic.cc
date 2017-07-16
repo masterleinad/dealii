@@ -1561,24 +1561,8 @@ namespace internal
               inverse_renumber[renumber[i]] = i;
 
             for (unsigned int i=0; i<n_shape_values; ++i)
-              {
-                std::cout << "normal\t" << i << ": " << data.mapping_support_points[i] << std::endl;
-                std::cout << "htl\t"    << i << ": " << data.mapping_support_points[renumber[i]] << std::endl;
-                std::cout << "htli\t"   << i << ": " << data.mapping_support_points[inverse_renumber[i]] << std::endl;
-
-                for (unsigned int d=0; d<dim; ++d)
-                  values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
-              }
-
-            for (unsigned int i=0; i<n_shape_values; ++i)
               for (unsigned int d=0; d<dim; ++d)
-                std::cout << "d=" << d << ", " << "i=" << i << ": "
-                          << values_dofs[d*n_shape_values+i] << std::endl;
-
-            for (unsigned int q=0; q<n_q_points_1d; ++q)
-              for (unsigned int i=0; i<n_shape_values_1d; ++i)
-                std::cout << "i=" << i << ", " << "q=" << q << ": "
-                          << value_1d[i*(n_shape_values_1d)+q] << std::endl;
+                values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
 
             for (unsigned int d=0; d<dim; ++d)
               {
@@ -1592,8 +1576,6 @@ namespace internal
                   case 2:
                     eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
                                                         &(temp1[0]));
-                    for (unsigned int i=0; i<temp1.size(); ++i)
-                      std::cout << i << ": " << temp1[i] << std::endl;
                     eval.template values<1,true,false> (&(temp1[0]),
                                                         &(values_quad[d*n_q_points]));
                     break;
@@ -1614,15 +1596,6 @@ namespace internal
             for (unsigned int d=0; d<dim; ++d)
               for (unsigned int i=0; i<n_q_points; ++i)
                 quadrature_points[i][d] = values_quad[d*n_q_points+i];
-
-            /*for (unsigned int point=0; point<n_q_points; ++point)
-              {
-                //std::cout << point << ": ";
-                Point<spacedim> ref = quadrature_points[point];
-                for (unsigned int d=0; d<dim; ++d)
-                std::cout << ref[d] << " ";
-                std::cout << std::endl;
-              }*/
           }
       }
 
