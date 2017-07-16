@@ -1527,18 +1527,106 @@ namespace internal
 
         if (update_flags & update_quadrature_points)
           {
-            for (unsigned int point=0; point<quadrature_points.size(); ++point)
+            QGauss<1> qgauss(data.polynomial_degree+1);
+            FE_Q<dim> fe(data.polynomial_degree);
+            FE_Q<1> fe_1d(data.polynomial_degree);
+
+            const unsigned int n_shape_values_1d = data.polynomial_degree+1;
+            const unsigned int n_q_points_1d = data.polynomial_degree+1;
+            const unsigned int n_shape_values = data.n_shape_functions;
+            const unsigned int n_q_points = quadrature_points.size();
+
+            std::vector<unsigned int> renumber_1d(n_shape_values_1d);
+            FETools::hierarchic_to_lexicographic_numbering<1> (data.polynomial_degree, renumber_1d);
+            std::vector<unsigned int> inverse_renumber_1d(n_shape_values_1d);
+            for (unsigned int i=0; i<n_shape_values_1d; ++i)
+              inverse_renumber_1d[renumber_1d[i]] = i;
+
+            AlignedVector<double> value_1d(n_shape_values_1d*n_q_points_1d);
+            for (unsigned int i=0; i<n_shape_values_1d; ++i)
+              for (unsigned int q=0; q<n_q_points_1d; ++q)
+                value_1d[i*(n_shape_values_1d)+q] = fe_1d.shape_value(renumber_1d[i], qgauss.point(q));
+
+            internal::EvaluatorTensorProduct<internal::evaluate_general,dim,-1,0,double>
+            eval(value_1d, value_1d, value_1d,
+                 data.polynomial_degree, n_q_points_1d);
+
+            std::vector<double> temp1(n_q_points), temp2(n_q_points);
+            std::vector<double> values_dofs(dim*n_shape_values);
+            std::vector<double> values_quad(dim*n_q_points);
+
+            std::vector<unsigned int> renumber(n_shape_values);
+            FETools::hierarchic_to_lexicographic_numbering<dim> (data.polynomial_degree, renumber);
+            std::vector<unsigned int> inverse_renumber(n_shape_values);
+            for (unsigned int i=0; i<n_shape_values; ++i)
+              inverse_renumber[renumber[i]] = i;
+
+            for (unsigned int i=0; i<n_shape_values; ++i)
               {
-                const double *shape = &data.shape(point+data_set,0);
-                Point<spacedim> result = (shape[0] *
-                                          data.mapping_support_points[0]);
-                for (unsigned int k=1; k<data.n_shape_functions; ++k)
-                  for (unsigned int i=0; i<spacedim; ++i)
-                    result[i] += shape[k] * data.mapping_support_points[k][i];
-                quadrature_points[point] = result;
+                std::cout << "normal\t" << i << ": " << data.mapping_support_points[i] << std::endl;
+                std::cout << "htl\t"    << i << ": " << data.mapping_support_points[renumber[i]] << std::endl;
+                std::cout << "htli\t"   << i << ": " << data.mapping_support_points[inverse_renumber[i]] << std::endl;
+
+                for (unsigned int d=0; d<dim; ++d)
+                  values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
               }
+
+            for (unsigned int i=0; i<n_shape_values; ++i)
+              for (unsigned int d=0; d<dim; ++d)
+                std::cout << "d=" << d << ", " << "i=" << i << ": "
+                          << values_dofs[d*n_shape_values+i] << std::endl;
+
+            for (unsigned int q=0; q<n_q_points_1d; ++q)
+              for (unsigned int i=0; i<n_shape_values_1d; ++i)
+                std::cout << "i=" << i << ", " << "q=" << q << ": "
+                          << value_1d[i*(n_shape_values_1d)+q] << std::endl;
+
+            for (unsigned int d=0; d<dim; ++d)
+              {
+                switch (dim)
+                  {
+                  case 1:
+                    eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
+                                                        &(values_quad[d*n_q_points]));
+                    break;
+
+                  case 2:
+                    eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
+                                                        &(temp1[0]));
+                    for (unsigned int i=0; i<temp1.size(); ++i)
+                      std::cout << i << ": " << temp1[i] << std::endl;
+                    eval.template values<1,true,false> (&(temp1[0]),
+                                                        &(values_quad[d*n_q_points]));
+                    break;
+
+                  case 3:
+                    eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
+                                                        &(temp1[0]));
+                    eval.template values<1,true,false> (&(temp1[0]), &(temp2[0]));
+                    eval.template values<2,true,false> (&(temp2[0]),
+                                                        &(values_quad[d*n_q_points]));
+                    break;
+
+                  default:
+                    Assert(false, ExcNotImplemented());
+                  }
+              }
+
+            for (unsigned int d=0; d<dim; ++d)
+              for (unsigned int i=0; i<n_q_points; ++i)
+                quadrature_points[i][d] = values_quad[d*n_q_points+i];
+
+            /*for (unsigned int point=0; point<n_q_points; ++point)
+              {
+                //std::cout << point << ": ";
+                Point<spacedim> ref = quadrature_points[point];
+                for (unsigned int d=0; d<dim; ++d)
+                std::cout << ref[d] << " ";
+                std::cout << std::endl;
+              }*/
           }
       }
+
 
 
       /**
