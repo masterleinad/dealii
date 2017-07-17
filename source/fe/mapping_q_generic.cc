@@ -1535,13 +1535,8 @@ namespace internal
             const unsigned int n_shape_values = data.n_shape_functions;
             const unsigned int n_q_points = quadrature_points.size();
 
-            internal::MatrixFreeFunctions::ShapeInfo<double> shape_info (qgauss, fe);
-
-            internal::EvaluatorTensorProduct<internal::evaluate_general,dim,-1,0,VectorizedArray<double> >
-            eval(shape_info.shape_values, shape_info.shape_values, shape_info.shape_values,
-                 data.polynomial_degree, n_q_points_1d);
-
-            std::vector<VectorizedArray<double> > scratch((dim-1)*n_q_points);
+            const unsigned int max_size = std::max(n_q_points,n_shape_values);
+            std::vector<VectorizedArray<double> > scratch((dim-1)*max_size);
             std::vector<VectorizedArray<double> > values_dofs(dim*n_shape_values);
             VectorizedArray<double> *values_dofs_ptr[dim];
             std::vector<VectorizedArray<double> > values_quad(dim*n_q_points);
@@ -1563,45 +1558,15 @@ namespace internal
               for (unsigned int d=0; d<dim; ++d)
                 values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
 
-            for (unsigned int d=0; d<dim; ++d)
-              {
-                switch (dim)
-                  {
-                  case 1:
-                    eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
-                                                        &(values_quad[d*n_q_points]));
-                    break;
+            internal::MatrixFreeFunctions::ShapeInfo<double> shape_info (qgauss, fe);
 
-                  case 2:
-                    eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
-                                                        &(scratch[0]));
-                    eval.template values<1,true,false> (&(scratch[0]),
-                                                        &(values_quad[d*n_q_points]));
-                    break;
-
-                  case 3:
-                    eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
-                                                        &(scratch[0]));
-                    eval.template values<1,true,false> (&(scratch[0]), &(scratch[n_q_points]));
-                    eval.template values<2,true,false> (&(scratch[n_q_points]),
-                                                        &(values_quad[d*n_q_points]));
-                    break;
-
-                  default:
-                    Assert(false, ExcNotImplemented());
-                  }
-              }
-
-            /*            internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, 0, double>::evaluate
-                        (shape_info, &(values_dofs_ptr[0]),
-                         &(values_quad_ptr[0]), nullptr, nullptr, &(scratch[0]),
-                         true, false, false);*/
+            internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, dim, double>::evaluate
+            (shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
+             &(scratch[0]), true, false, false);
 
             for (unsigned int d=0; d<dim; ++d)
               for (unsigned int i=0; i<n_q_points; ++i)
-                {
-                  quadrature_points[i][d] = values_quad[d*n_q_points+i][0];
-                }
+                quadrature_points[i][d] = values_quad[d*n_q_points+i][0];
           }
       }
 
