@@ -46,6 +46,9 @@ public:
   QGauss (const unsigned int n);
 };
 
+template <int dim>
+struct is_tensor_product<QGauss<dim> > : std::true_type
+{};
 
 /**
  * The Gauss-Lobatto family of quadrature rules for numerical integration.
@@ -124,7 +127,9 @@ protected:
   static long double gamma(const unsigned int n);
 };
 
-
+template <int dim>
+struct is_tensor_product<QGaussLobatto<dim> > : std::true_type
+{};
 
 /**
  * The midpoint rule for numerical quadrature. This one-point formula is exact
@@ -137,6 +142,9 @@ public:
   QMidpoint ();
 };
 
+template <int dim>
+struct is_tensor_product<QMidpoint<dim> > : std::true_type
+{};
 
 /**
  * The Simpson rule for numerical quadrature. This formula with 3 quadrature
@@ -149,7 +157,9 @@ public:
   QSimpson ();
 };
 
-
+template <int dim>
+struct is_tensor_product<QSimpson<dim> > : std::true_type
+{};
 
 /**
  * The trapezoidal rule for numerical quadrature. This formula with two
@@ -170,7 +180,9 @@ public:
   QTrapez ();
 };
 
-
+template <int dim>
+struct is_tensor_product<QTrapez<dim> > : std::true_type
+{};
 
 /**
  * The Milne rule for numerical quadrature formula. The Milne rule is a closed
@@ -185,6 +197,9 @@ public:
   QMilne ();
 };
 
+template <int dim>
+struct is_tensor_product<QMilne<dim> > : std::true_type
+{};
 
 /**
  * The Weddle rule for numerical quadrature. The Weddle rule is a closed
@@ -199,7 +214,9 @@ public:
   QWeddle ();
 };
 
-
+template <int dim>
+struct is_tensor_product<QWeddle<dim> > : std::true_type
+{};
 
 /**
  * A class for Gauss quadrature with logarithmic weighting function. This
@@ -496,9 +513,9 @@ private:
  * quadrature formula are much easier to compute with respect to other
  * singular integration techniques as Lachat-Watson.
  *
- * We have implemented the case for $dim = 1$. When we deal the case $dim >1$
- * we have computed the quadrature formula has a tensorial product of one
- * dimensional Telles' quadrature formulas considering the different
+ * We have implemented the case for $dim = 1$. When we deal with the case
+ * $dim >1$ we have computed the quadrature formula has a tensorial product of
+ * one dimensional Telles' quadrature formulas considering the different
  * components of the singularity.
  *
  * The weights and functions for Gauss Legendre formula have been tabulated up
@@ -556,8 +573,11 @@ private:
   /// Computes the weights of the quadrature formula.
   static std::vector<double>
   get_quadrature_weights(const unsigned int n);
-
 };
+
+template <int dim>
+struct is_tensor_product<QGaussChebyshev<dim> > : std::true_type
+{};
 
 
 /**
@@ -616,6 +636,10 @@ private:
 
 };
 
+template <int dim>
+struct is_tensor_product<QGaussRadauChebyshev<dim> > : std::true_type
+{};
+
 /**
  * Gauss-Lobatto-Chebyshev quadrature rules integrate the weighted product
  * $\int_{-1}^1 f(x) w(x) dx$ with weight given by: $w(x) = 1/\sqrt{1-x^2}$,
@@ -648,6 +672,10 @@ private:
   get_quadrature_weights(const unsigned int n);
 
 };
+
+template <int dim>
+struct is_tensor_product<QGaussLobattoChebyshev<dim> > : std::true_type
+{};
 
 /* -------------- declaration of explicit specializations ------------- */
 
