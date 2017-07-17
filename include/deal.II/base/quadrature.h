@@ -21,8 +21,13 @@
 #include <deal.II/base/point.h>
 #include <deal.II/base/subscriptor.h>
 #include <vector>
+#include <type_traits>
 
 DEAL_II_NAMESPACE_OPEN
+
+template <class QuadratureType>
+struct is_tensor_product : std::false_type
+{};
 
 /*!@addtogroup Quadrature */
 /*@{*/
@@ -235,6 +240,14 @@ protected:
   std::vector<double>      weights;
 };
 
+template <int dim>
+struct is_tensor_product<Quadrature<dim>> : std::false_type
+{};
+
+template <template <int> class QuadratureType, int dim>
+struct is_tensor_product<std::is_base_of<Quadrature<dim>,
+  QuadratureType<dim>>> : std::false_type
+{};
 
 /**
  * Quadrature formula implementing anisotropic distributions of quadrature
@@ -322,7 +335,9 @@ private:
   uses_both_endpoints (const Quadrature<1> &base_quadrature);
 };
 
-
+template <int dim>
+struct is_tensor_product<QIterated<dim> > : std::true_type
+{};
 
 /*@}*/
 
