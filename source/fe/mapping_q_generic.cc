@@ -34,6 +34,8 @@
 #include <deal.II/fe/mapping_q_generic.h>
 #include <deal.II/fe/mapping_q1.h>
 #include <deal.II/matrix_free/tensor_product_kernels.h>
+#include <deal.II/matrix_free/shape_info.h>
+#include <deal.II/matrix_free/evaluation_kernels.h>
 
 #include <cmath>
 #include <algorithm>
@@ -1528,31 +1530,28 @@ namespace internal
           {
             QGauss<1> qgauss(data.polynomial_degree+1);
             FE_Q<dim> fe(data.polynomial_degree);
-            FE_Q<1> fe_1d(data.polynomial_degree);
 
-            const unsigned int n_shape_values_1d = data.polynomial_degree+1;
-            const unsigned int n_q_points_1d = data.polynomial_degree+1;
+            const unsigned int n_q_points_1d = qgauss.size();
             const unsigned int n_shape_values = data.n_shape_functions;
             const unsigned int n_q_points = quadrature_points.size();
 
-            std::vector<unsigned int> renumber_1d(n_shape_values_1d);
-            FETools::hierarchic_to_lexicographic_numbering<1> (data.polynomial_degree, renumber_1d);
-            std::vector<unsigned int> inverse_renumber_1d(n_shape_values_1d);
-            for (unsigned int i=0; i<n_shape_values_1d; ++i)
-              inverse_renumber_1d[renumber_1d[i]] = i;
+            internal::MatrixFreeFunctions::ShapeInfo<double> shape_info (qgauss, fe);
 
-            AlignedVector<double> value_1d(n_shape_values_1d*n_q_points_1d);
-            for (unsigned int i=0; i<n_shape_values_1d; ++i)
-              for (unsigned int q=0; q<n_q_points_1d; ++q)
-                value_1d[i*(n_shape_values_1d)+q] = fe_1d.shape_value(renumber_1d[i], qgauss.point(q));
-
-            internal::EvaluatorTensorProduct<internal::evaluate_general,dim,-1,0,double>
-            eval(value_1d, value_1d, value_1d,
+            internal::EvaluatorTensorProduct<internal::evaluate_general,dim,-1,0,VectorizedArray<double> >
+            eval(shape_info.shape_values, shape_info.shape_values, shape_info.shape_values,
                  data.polynomial_degree, n_q_points_1d);
 
-            std::vector<double> temp1(n_q_points), temp2(n_q_points);
-            std::vector<double> values_dofs(dim*n_shape_values);
-            std::vector<double> values_quad(dim*n_q_points);
+            std::vector<VectorizedArray<double> > scratch((dim-1)*n_q_points);
+            std::vector<VectorizedArray<double> > values_dofs(dim*n_shape_values);
+            VectorizedArray<double> *values_dofs_ptr[dim];
+            std::vector<VectorizedArray<double> > values_quad(dim*n_q_points);
+            VectorizedArray<double> *values_quad_ptr[dim];
+
+            for (unsigned int d=0; d<dim; ++d)
+              {
+                values_dofs_ptr[d] = &(values_dofs[d*n_shape_values]);
+                values_quad_ptr[d] = &(values_quad[d*n_q_points]);
+              }
 
             std::vector<unsigned int> renumber(n_shape_values);
             FETools::hierarchic_to_lexicographic_numbering<dim> (data.polynomial_degree, renumber);
@@ -1575,16 +1574,16 @@ namespace internal
 
                   case 2:
                     eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
-                                                        &(temp1[0]));
-                    eval.template values<1,true,false> (&(temp1[0]),
+                                                        &(scratch[0]));
+                    eval.template values<1,true,false> (&(scratch[0]),
                                                         &(values_quad[d*n_q_points]));
                     break;
 
                   case 3:
                     eval.template values<0,true,false> (&(values_dofs[d*n_shape_values]),
-                                                        &(temp1[0]));
-                    eval.template values<1,true,false> (&(temp1[0]), &(temp2[0]));
-                    eval.template values<2,true,false> (&(temp2[0]),
+                                                        &(scratch[0]));
+                    eval.template values<1,true,false> (&(scratch[0]), &(scratch[n_q_points]));
+                    eval.template values<2,true,false> (&(scratch[n_q_points]),
                                                         &(values_quad[d*n_q_points]));
                     break;
 
@@ -1593,9 +1592,16 @@ namespace internal
                   }
               }
 
+            /*            internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, 0, double>::evaluate
+                        (shape_info, &(values_dofs_ptr[0]),
+                         &(values_quad_ptr[0]), nullptr, nullptr, &(scratch[0]),
+                         true, false, false);*/
+
             for (unsigned int d=0; d<dim; ++d)
               for (unsigned int i=0; i<n_q_points; ++i)
-                quadrature_points[i][d] = values_quad[d*n_q_points+i];
+                {
+                  quadrature_points[i][d] = values_quad[d*n_q_points+i][0];
+                }
           }
       }
 
