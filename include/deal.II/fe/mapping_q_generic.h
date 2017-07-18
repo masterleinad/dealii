@@ -449,7 +449,17 @@ public:
      */
     QGaussLobatto<1> line_support_points;
 
+    /**
+      * In case the quadrature rule given represents a tensor product
+      * we need to store the evaluations of the 1d polynomials at the
+      * the 1d quadrature quadrature points. That is what this variable is for.
+      */
     internal::MatrixFreeFunctions::ShapeInfo<double> shape_info;
+
+    /**
+     * Indicates whether the given Quadrature object is a tensor product.
+     */
+    bool tensor_product_quadrature;
 
     /**
      * Tensors of covariant transformation at each of the quadrature points.
