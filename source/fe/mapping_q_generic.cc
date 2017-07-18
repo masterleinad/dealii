@@ -686,7 +686,9 @@ initialize (const UpdateFlags      update_flags,
   // now also fill the various fields with their correct values
   compute_shape_function_values (ref_q_points);
 
-  if (q.is_tensor_product())
+  tensor_product_quadrature = q.is_tensor_product();
+
+  if (tensor_product_quadrature)
     {
       const FE_Q<dim> fe(polynomial_degree);
       shape_info.reinit(q.get_tensor_basis(), fe);
@@ -1536,41 +1538,58 @@ namespace internal
 
         if (update_flags & update_quadrature_points)
           {
-            Assert(data.shape_info.n_q_points > 0, ExcInternalError());
-
-            const unsigned int n_shape_values = data.n_shape_functions;
-            const unsigned int n_q_points = quadrature_points.size();
-
-            const unsigned int max_size = std::max(n_q_points,n_shape_values);
-            std::vector<VectorizedArray<double> > scratch((dim-1)*max_size);
-            std::vector<VectorizedArray<double> > values_dofs(dim*n_shape_values);
-            VectorizedArray<double> *values_dofs_ptr[dim];
-            std::vector<VectorizedArray<double> > values_quad(dim*n_q_points);
-            VectorizedArray<double> *values_quad_ptr[dim];
-
-            for (unsigned int d=0; d<dim; ++d)
+            if (data.tensor_product_quadrature)
               {
-                values_dofs_ptr[d] = &(values_dofs[d*n_shape_values]);
-                values_quad_ptr[d] = &(values_quad[d*n_q_points]);
+                std::cout << "New function" << std::endl;
+                Assert(data.shape_info.n_q_points > 0, ExcInternalError());
+
+                const unsigned int n_shape_values = data.n_shape_functions;
+                const unsigned int n_q_points = quadrature_points.size();
+
+                const unsigned int max_size = std::max(n_q_points,n_shape_values);
+                std::vector<VectorizedArray<double> > scratch((dim-1)*max_size);
+                std::vector<VectorizedArray<double> > values_dofs(dim*n_shape_values);
+                VectorizedArray<double> *values_dofs_ptr[dim];
+                std::vector<VectorizedArray<double> > values_quad(dim*n_q_points);
+                VectorizedArray<double> *values_quad_ptr[dim];
+
+                for (unsigned int d=0; d<dim; ++d)
+                  {
+                    values_dofs_ptr[d] = &(values_dofs[d*n_shape_values]);
+                    values_quad_ptr[d] = &(values_quad[d*n_q_points]);
+                  }
+
+                std::vector<unsigned int> renumber(n_shape_values);
+                FETools::hierarchic_to_lexicographic_numbering<dim> (data.polynomial_degree, renumber);
+                std::vector<unsigned int> inverse_renumber(n_shape_values);
+                for (unsigned int i=0; i<n_shape_values; ++i)
+                  inverse_renumber[renumber[i]] = i;
+
+                for (unsigned int i=0; i<n_shape_values; ++i)
+                  for (unsigned int d=0; d<dim; ++d)
+                    values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
+
+                internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, dim, double>::evaluate
+                (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
+                 &(scratch[0]), true, false, false);
+
+                for (unsigned int d=0; d<dim; ++d)
+                  for (unsigned int i=0; i<n_q_points; ++i)
+                    quadrature_points[i][d] = values_quad[d*n_q_points+i][0];
               }
-
-            std::vector<unsigned int> renumber(n_shape_values);
-            FETools::hierarchic_to_lexicographic_numbering<dim> (data.polynomial_degree, renumber);
-            std::vector<unsigned int> inverse_renumber(n_shape_values);
-            for (unsigned int i=0; i<n_shape_values; ++i)
-              inverse_renumber[renumber[i]] = i;
-
-            for (unsigned int i=0; i<n_shape_values; ++i)
-              for (unsigned int d=0; d<dim; ++d)
-                values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
-
-            internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, dim, double>::evaluate
-            (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
-             &(scratch[0]), true, false, false);
-
-            for (unsigned int d=0; d<dim; ++d)
-              for (unsigned int i=0; i<n_q_points; ++i)
-                quadrature_points[i][d] = values_quad[d*n_q_points+i][0];
+            else
+              {
+                for (unsigned int point=0; point<quadrature_points.size(); ++point)
+                  {
+                    const double *shape = &data.shape(point+data_set,0);
+                    Point<spacedim> result = (shape[0] *
+                                              data.mapping_support_points[0]);
+                    for (unsigned int k=1; k<data.n_shape_functions; ++k)
+                      for (unsigned int i=0; i<spacedim; ++i)
+                        result[i] += shape[k] * data.mapping_support_points[k][i];
+                    quadrature_points[point] = result;
+                  }
+              }
           }
       }
 
