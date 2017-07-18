@@ -1545,18 +1545,20 @@ namespace internal
 
                 const unsigned int n_shape_values = data.n_shape_functions;
                 const unsigned int n_q_points = quadrature_points.size();
+                const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
+                const unsigned int n_comp = 1+ (dim-1)/vec_length;
 
                 const unsigned int max_size = std::max(n_q_points,n_shape_values);
                 std::vector<VectorizedArray<double> > scratch((dim-1)*max_size);
-                std::vector<VectorizedArray<double> > values_dofs(dim*n_shape_values);
+                std::vector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
                 VectorizedArray<double> *values_dofs_ptr[dim];
-                std::vector<VectorizedArray<double> > values_quad(dim*n_q_points);
+                std::vector<VectorizedArray<double> > values_quad(n_comp*n_q_points);
                 VectorizedArray<double> *values_quad_ptr[dim];
 
-                for (unsigned int d=0; d<dim; ++d)
+                for (unsigned int c=0; c<n_comp; ++c)
                   {
-                    values_dofs_ptr[d] = &(values_dofs[d*n_shape_values]);
-                    values_quad_ptr[d] = &(values_quad[d*n_q_points]);
+                    values_dofs_ptr[c] = &(values_dofs[c*n_shape_values]);
+                    values_quad_ptr[c] = &(values_quad[c*n_q_points]);
                   }
 
                 std::vector<unsigned int> renumber(n_shape_values);
@@ -1567,15 +1569,27 @@ namespace internal
 
                 for (unsigned int i=0; i<n_shape_values; ++i)
                   for (unsigned int d=0; d<dim; ++d)
-                    values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
+                    {
+                      const unsigned int in_comp = d%vec_length;
+                      const unsigned int out_comp = d/vec_length;
+                      values_dofs[out_comp*n_shape_values+i][in_comp]
+                        = data.mapping_support_points[inverse_renumber[i]][d];
+                    }
 
-                internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, dim, double>::evaluate
+                internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate
                 (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
                  &(scratch[0]), true, false, false);
 
-                for (unsigned int d=0; d<dim; ++d)
+                for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
                   for (unsigned int i=0; i<n_q_points; ++i)
-                    quadrature_points[i][d] = values_quad[d*n_q_points+i][0];
+                    for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
+                      quadrature_points[i][out_comp*vec_length+in_comp]
+                        = values_quad[out_comp*n_q_points+i][in_comp];
+                // Treat the last compoennt special as it might not be full.
+                for (unsigned int i=0; i<n_q_points; ++i)
+                  for (unsigned int in_comp=0; in_comp<dim-(n_comp-1)*vec_length; ++in_comp)
+                    quadrature_points[i][(n_comp-1)*vec_length+in_comp]
+                      = values_quad[(n_comp-1)*n_q_points+i][in_comp];
               }
             else
               {
