@@ -25,10 +25,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-template <class QuadratureType>
-struct is_tensor_product : std::false_type
-{};
-
 /*!@addtogroup Quadrature */
 /*@{*/
 
@@ -226,6 +222,17 @@ public:
   template <class Archive>
   void serialize (Archive &ar, const unsigned int version);
 
+  /**
+   * Returns is_tensor_product_flag;
+   */
+  bool is_tensor_product() const;
+
+  /**
+   * In case the quadrature formula is a tensor product, this returns the one-dimensional
+   * basis object
+   */
+  Quadrature<1> get_tensor_basis() const;
+
 protected:
   /**
    * List of quadrature points. To be filled by the constructors of derived
@@ -238,16 +245,14 @@ protected:
    * constructors of derived classes.
    */
   std::vector<double>      weights;
+
+  /**
+   * This quadrature object is a tensor product in case the tensor product
+   * is formed by the first $size^(1/dim)$ quadrature points
+   */
+  bool is_tensor_product_flag;
 };
 
-template <int dim>
-struct is_tensor_product<Quadrature<dim>> : std::false_type
-{};
-
-template <template <int> class QuadratureType, int dim>
-struct is_tensor_product<std::is_base_of<Quadrature<dim>,
-  QuadratureType<dim>>> : std::false_type
-{};
 
 /**
  * Quadrature formula implementing anisotropic distributions of quadrature
@@ -335,10 +340,6 @@ private:
   uses_both_endpoints (const Quadrature<1> &base_quadrature);
 };
 
-template <int dim>
-struct is_tensor_product<QIterated<dim> > : std::true_type
-{};
-
 /*@}*/
 
 #ifndef DOXYGEN
@@ -392,6 +393,16 @@ const std::vector<double> &
 Quadrature<dim>::get_weights () const
 {
   return weights;
+}
+
+
+
+template <int dim>
+inline
+bool
+Quadrature<dim>::is_tensor_product () const
+{
+  return is_tensor_product_flag;
 }
 
 

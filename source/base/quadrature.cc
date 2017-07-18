@@ -30,7 +30,8 @@ template <>
 Quadrature<0>::Quadrature (const unsigned int n_q)
   :
   quadrature_points (n_q),
-  weights (n_q, 0)
+  weights (n_q, 0),
+  is_tensor_product_flag (false)
 {}
 
 
@@ -45,7 +46,8 @@ template <int dim>
 Quadrature<dim>::Quadrature (const unsigned int n_q)
   :
   quadrature_points (n_q, Point<dim>()),
-  weights (n_q, 0)
+  weights (n_q, 0),
+  is_tensor_product_flag (dim==1)
 {}
 
 
@@ -67,7 +69,8 @@ Quadrature<dim>::Quadrature (const std::vector<Point<dim> > &points,
                              const std::vector<double>      &weights)
   :
   quadrature_points(points),
-  weights(weights)
+  weights(weights),
+  is_tensor_product_flag (dim==1)
 {
   Assert (weights.size() == points.size(),
           ExcDimensionMismatch(weights.size(), points.size()));
@@ -79,7 +82,8 @@ template <int dim>
 Quadrature<dim>::Quadrature (const std::vector<Point<dim> > &points)
   :
   quadrature_points(points),
-  weights(points.size(), std::atof("Inf"))
+  weights(points.size(), std::atof("Inf")),
+  is_tensor_product_flag (dim==1)
 {
   Assert(weights.size() == points.size(),
          ExcDimensionMismatch(weights.size(), points.size()));
@@ -91,7 +95,8 @@ template <int dim>
 Quadrature<dim>::Quadrature (const Point<dim> &point)
   :
   quadrature_points(std::vector<Point<dim> > (1, point)),
-  weights(std::vector<double> (1, 1.))
+  weights(std::vector<double> (1, 1.)),
+  is_tensor_product_flag (dim==1)
 {}
 
 
@@ -109,7 +114,8 @@ Quadrature<dim>::Quadrature (const SubQuadrature &q1,
                              const Quadrature<1> &q2)
   :
   quadrature_points (q1.size() * q2.size()),
-  weights (q1.size() * q2.size())
+  weights (q1.size() * q2.size()),
+  is_tensor_product_flag (true)
 {
   unsigned int present_index = 0;
   for (unsigned int i2=0; i2<q2.size(); ++i2)
@@ -138,6 +144,7 @@ Quadrature<dim>::Quadrature (const SubQuadrature &q1,
       // we cannot guarantee the sum of weights
       // to be exactly one, but it should be
       // near that.
+      std::cout << sum << std::endl;
       Assert ((sum>0.999999) && (sum<1.000001), ExcInternalError());
     }
 #endif
@@ -150,7 +157,8 @@ Quadrature<1>::Quadrature (const SubQuadrature &,
                            const Quadrature<1> &q2)
   :
   quadrature_points (q2.size()),
-  weights (q2.size())
+  weights (q2.size()),
+  is_tensor_product_flag (true)
 {
   unsigned int present_index = 0;
   for (unsigned int i2=0; i2<q2.size(); ++i2)
@@ -187,7 +195,8 @@ Quadrature<0>::Quadrature (const Quadrature<1> &)
   :
   Subscriptor(),
 //              quadrature_points(1),
-  weights(1,1.)
+  weights(1,1.),
+  is_tensor_product_flag (false)
 {}
 
 
@@ -209,7 +218,8 @@ Quadrature<dim>::Quadrature (const Quadrature<dim != 1 ? 1 : 0> &q)
 :
 Subscriptor(),
             quadrature_points (Utilities::fixed_power<dim>(q.size())),
-            weights (Utilities::fixed_power<dim>(q.size()))
+            weights (Utilities::fixed_power<dim>(q.size())),
+            is_tensor_product_flag(true)
 {
   Assert (dim <= 3, ExcNotImplemented());
 
@@ -243,7 +253,8 @@ Quadrature<dim>::Quadrature (const Quadrature<dim> &q)
   :
   Subscriptor(),
   quadrature_points (q.quadrature_points),
-  weights (q.weights)
+  weights (q.weights),
+  is_tensor_product_flag (q.is_tensor_product_flag)
 {}
 
 
@@ -253,6 +264,7 @@ Quadrature<dim>::operator= (const Quadrature<dim> &q)
 {
   weights = q.weights;
   quadrature_points = q.quadrature_points;
+  is_tensor_product_flag = q.is_tensor_product_flag;
   return *this;
 }
 
@@ -282,6 +294,34 @@ Quadrature<dim>::memory_consumption () const
   return (MemoryConsumption::memory_consumption (quadrature_points) +
           MemoryConsumption::memory_consumption (weights));
 }
+
+
+
+template <int dim>
+Quadrature<1>
+Quadrature<dim>::get_tensor_basis () const
+{
+  Assert (this->is_tensor_product_flag == true,
+          ExcMessage("This function only makes sense if this object represents a tensor product!"));
+
+  // Just take the first components of the first quadrature points
+  // and rescale the weights accordingly.
+  const unsigned int n_q_points_1d = std::round(std::pow(this->size(), 1./dim));
+  std::vector<Point<1> > q_points_1d (n_q_points_1d);
+  std::vector<double> weights_1d (n_q_points_1d);
+
+  double sum = 0.;
+  for (unsigned int i=0; i<n_q_points_1d; ++i)
+    sum += this->weight(i);
+  for (unsigned int i=0; i<n_q_points_1d; ++i)
+    {
+      q_points_1d[i](0) = this->point(i)(0);
+      weights_1d[i] = this->weight(i)/sum;
+    }
+
+  return Quadrature<1> (q_points_1d, weights_1d);
+}
+
 
 
 //---------------------------------------------------------------------------

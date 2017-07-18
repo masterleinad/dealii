@@ -685,15 +685,11 @@ initialize (const UpdateFlags      update_flags,
   // now also fill the various fields with their correct values
   compute_shape_function_values (ref_q_points);
 
-  // the quadrature formula is a tensor product. Hence it is sufficient to just take
-  // the first components of the first quadrature points.
-  const unsigned int n_q_points_1d = std::round(std::pow(n_q_points, 1./dim));
-  std::vector<Point<1> > ref_q_points_1d (n_q_points_1d);
-  for (unsigned int i=0; i<n_q_points_1d; ++i)
-    ref_q_points_1d[i](0) = ref_q_points[i](0);
-  const Quadrature<1> q_1d (ref_q_points_1d);
-  const FE_Q<dim> fe(polynomial_degree);
-  shape_info.reinit(q_1d, fe);
+  if (q.is_tensor_product())
+    {
+      const FE_Q<dim> fe(polynomial_degree);
+      shape_info.reinit(q.get_tensor_basis(), fe);
+    }
 }
 
 
