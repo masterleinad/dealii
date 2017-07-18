@@ -24,6 +24,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/fe/mapping.h>
 #include <deal.II/fe/fe_q.h>
+#include <deal.II/matrix_free/shape_info.h>
 
 #include <array>
 #include <cmath>
@@ -447,6 +448,8 @@ public:
      * FE_Q<1>(this->degree).
      */
     QGaussLobatto<1> line_support_points;
+
+    internal::MatrixFreeFunctions::ShapeInfo<double> shape_info;
 
     /**
      * Tensors of covariant transformation at each of the quadrature points.

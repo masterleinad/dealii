@@ -682,8 +682,19 @@ initialize (const UpdateFlags      update_flags,
       (update_jacobian_3rd_derivatives | update_jacobian_pushed_forward_3rd_derivatives) )
     shape_fourth_derivatives.resize(n_shape_functions * n_q_points);
 
+  const std::vector<Point<dim> > &ref_q_points = q.get_points();
   // now also fill the various fields with their correct values
-  compute_shape_function_values (q.get_points());
+  compute_shape_function_values (ref_q_points);
+
+  // the quadrature formula is a tensor product. Hence it is sufficient to just take
+  // the first components of the first quadrature points.
+  const unsigned int n_q_points_1d = std::round(std::pow(n_q_points, 1./dim));
+  std::vector<Point<1> > ref_q_points_1d (n_q_points_1d);
+  for (unsigned int i=0; i<n_q_points_1d; ++i)
+    ref_q_points_1d[i](0) = ref_q_points[i](0);
+  const Quadrature<1> q_1d (ref_q_points_1d);
+  const FE_Q<dim> fe(polynomial_degree);
+  shape_info.reinit(q_1d, fe);
 }
 
 
@@ -1529,10 +1540,8 @@ namespace internal
 
         if (update_flags & update_quadrature_points)
           {
-            QGauss<1> qgauss(data.polynomial_degree+1);
-            FE_Q<dim> fe(data.polynomial_degree);
+            Assert(data.shape_info.n_q_points > 0, ExcInternalError());
 
-            const unsigned int n_q_points_1d = qgauss.size();
             const unsigned int n_shape_values = data.n_shape_functions;
             const unsigned int n_q_points = quadrature_points.size();
 
@@ -1559,10 +1568,8 @@ namespace internal
               for (unsigned int d=0; d<dim; ++d)
                 values_dofs[d*n_shape_values+i] = data.mapping_support_points[inverse_renumber[i]][d];
 
-            internal::MatrixFreeFunctions::ShapeInfo<double> shape_info (qgauss, fe);
-
             internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, dim, double>::evaluate
-            (shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
+            (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
              &(scratch[0]), true, false, false);
 
             for (unsigned int d=0; d<dim; ++d)
