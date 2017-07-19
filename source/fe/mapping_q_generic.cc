@@ -687,10 +687,17 @@ initialize (const UpdateFlags      update_flags,
 
   tensor_product_quadrature = q.is_tensor_product();
 
-  if (tensor_product_quadrature)
+  if (tensor_product_quadrature && dim>1)
     {
       const FE_Q<dim> fe(polynomial_degree);
       shape_info.reinit(q.get_tensor_basis(), fe);
+
+      const unsigned int n_shape_values = fe.n_dofs_per_cell();
+      inverse_renumber.resize(n_shape_values);
+      std::vector<unsigned int> renumber(n_shape_values);
+      FETools::hierarchic_to_lexicographic_numbering<dim> (polynomial_degree, renumber);
+      for (unsigned int i=0; i<n_shape_values; ++i)
+        inverse_renumber[renumber[i]] = i;
     }
 }
 
@@ -1548,11 +1555,11 @@ namespace internal
                 const unsigned int n_comp = 1+ (dim-1)/vec_length;
 
                 const unsigned int max_size = std::max(n_q_points,n_shape_values);
-                std::vector<VectorizedArray<double> > scratch((dim-1)*max_size);
-                std::vector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
-                VectorizedArray<double> *values_dofs_ptr[dim];
-                std::vector<VectorizedArray<double> > values_quad(n_comp*n_q_points);
-                VectorizedArray<double> *values_quad_ptr[dim];
+                AlignedVector<VectorizedArray<double> > scratch((dim-1)*max_size);
+                AlignedVector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
+                VectorizedArray<double> *values_dofs_ptr[n_comp];
+                AlignedVector<VectorizedArray<double> > values_quad(n_comp*n_q_points);
+                VectorizedArray<double> *values_quad_ptr[n_comp];
 
                 for (unsigned int c=0; c<n_comp; ++c)
                   {
@@ -1560,19 +1567,13 @@ namespace internal
                     values_quad_ptr[c] = &(values_quad[c*n_q_points]);
                   }
 
-                std::vector<unsigned int> renumber(n_shape_values);
-                FETools::hierarchic_to_lexicographic_numbering<dim> (data.polynomial_degree, renumber);
-                std::vector<unsigned int> inverse_renumber(n_shape_values);
-                for (unsigned int i=0; i<n_shape_values; ++i)
-                  inverse_renumber[renumber[i]] = i;
-
                 for (unsigned int i=0; i<n_shape_values; ++i)
                   for (unsigned int d=0; d<dim; ++d)
                     {
                       const unsigned int in_comp = d%vec_length;
                       const unsigned int out_comp = d/vec_length;
                       values_dofs[out_comp*n_shape_values+i][in_comp]
-                        = data.mapping_support_points[inverse_renumber[i]][d];
+                        = data.mapping_support_points[data.inverse_renumber[i]][d];
                     }
 
                 internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate

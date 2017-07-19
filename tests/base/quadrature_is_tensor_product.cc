@@ -65,12 +65,12 @@ print_is_tensor_product()
           << q_8.is_tensor_product() << std::endl;
 
   QGaussChebyshev<dim> q_9(3);
-    deallog << "QGaussChebyshev<"        << dim << ">: "
-            << q_9.is_tensor_product() << std::endl;
+  deallog << "QGaussChebyshev<"        << dim << ">: "
+          << q_9.is_tensor_product() << std::endl;
 
   QGaussRadauChebyshev<dim> q_10(1);
-    deallog << "QGaussRadauChebyshev<" << dim << ">: "
-            << q_10.is_tensor_product() << std::endl;
+  deallog << "QGaussRadauChebyshev<" << dim << ">: "
+          << q_10.is_tensor_product() << std::endl;
 
   QGaussLobattoChebyshev<dim> q_11(2);
   deallog << "QGaussLobattoChebyshev<" << dim << ">: "
