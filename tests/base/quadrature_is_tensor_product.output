@@ -8,6 +8,9 @@ DEAL::QSimpson<1>: true
 DEAL::QTrapez<1>: true
 DEAL::QMilne<1>: true
 DEAL::QWeddle<1>: true
+DEAL::QGaussChebyshev<1>: true
+DEAL::QGaussRadauChebyshev<1>: true
+DEAL::QGaussLobattoChebyshev<1>: true
 DEAL::QSorted<1>: true
 DEAL::QTelles<1>: true
 DEAL::QAnisotropic<1>: true
@@ -22,6 +25,9 @@ DEAL::QSimpson<2>: true
 DEAL::QTrapez<2>: true
 DEAL::QMilne<2>: true
 DEAL::QWeddle<2>: true
+DEAL::QGaussChebyshev<2>: true
+DEAL::QGaussRadauChebyshev<2>: true
+DEAL::QGaussLobattoChebyshev<2>: true
 DEAL::QSorted<2>: false
 DEAL::QTelles<2>: false
 DEAL::QAnisotropic<2>: false
@@ -35,6 +41,9 @@ DEAL::QSimpson<3>: true
 DEAL::QTrapez<3>: true
 DEAL::QMilne<3>: true
 DEAL::QWeddle<3>: true
+DEAL::QGaussChebyshev<3>: true
+DEAL::QGaussRadauChebyshev<3>: true
+DEAL::QGaussLobattoChebyshev<3>: true
 DEAL::QSorted<3>: false
 DEAL::QTelles<3>: false
 DEAL::QAnisotropic<3>: false

@@ -64,17 +64,17 @@ print_is_tensor_product()
   deallog << "QWeddle<"                << dim << ">: "
           << q_8.is_tensor_product() << std::endl;
 
-  /*  QGaussChebyshev<dim> q_9(3);
+  QGaussChebyshev<dim> q_9(3);
     deallog << "QGaussChebyshev<"        << dim << ">: "
-            << q_9.is_tensor_product() << std::endl;*/
+            << q_9.is_tensor_product() << std::endl;
 
-  /*  QGaussRadauChebyshev<dim> q_10(1);
+  QGaussRadauChebyshev<dim> q_10(1);
     deallog << "QGaussRadauChebyshev<" << dim << ">: "
-            << q_10.is_tensor_product() << std::endl;*/
+            << q_10.is_tensor_product() << std::endl;
 
-  /*QGaussLobattoChebyshev<dim> q_11(2);
+  QGaussLobattoChebyshev<dim> q_11(2);
   deallog << "QGaussLobattoChebyshev<" << dim << ">: "
-          << q_11.is_tensor_product() << std::endl;*/
+          << q_11.is_tensor_product() << std::endl;
 
   QSorted<dim> q_16(q_0);
   deallog << "QSorted<" << dim << ">: "
