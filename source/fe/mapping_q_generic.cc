@@ -1577,6 +1577,19 @@ namespace internal
                         = data.mapping_support_points[data.inverse_renumber[i]][d];
                     }
 
+                Assert (data.shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric,
+                        ExcInternalError());
+
+                /*                if (n_shape_values == n_q_points)
+                                  internal::FEEvaluationImplTransformToCollocation<dim, -1, n_comp, double>::evaluate
+                                  (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
+                                   &(scratch[0]), true, false, false);
+                                else
+                                  internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_symmetric,
+                                           dim, -1, 0, n_comp, double>::evaluate
+                                           (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
+                                            &(scratch[0]), true, false, false);*/
+
                 internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate
                 (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
                  &(scratch[0]), true, false, false);
@@ -1586,7 +1599,7 @@ namespace internal
                     for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
                       quadrature_points[i][out_comp*vec_length+in_comp]
                         = values_quad[out_comp*n_q_points+i][in_comp];
-                // Treat the last compoennt special as it might not be full.
+                // Treat the last component special as it might not be full.
                 for (unsigned int i=0; i<n_q_points; ++i)
                   for (unsigned int in_comp=0; in_comp<dim-(n_comp-1)*vec_length; ++in_comp)
                     quadrature_points[i][(n_comp-1)*vec_length+in_comp]
