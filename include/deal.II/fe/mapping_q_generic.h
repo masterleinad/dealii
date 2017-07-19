@@ -457,6 +457,13 @@ public:
     internal::MatrixFreeFunctions::ShapeInfo<double> shape_info;
 
     /**
+     * In case the quadrature rule given represents a tensor product
+     * this object stores the renumbering from hierarchical to
+     * lexicographic ordering.
+     */
+    std::vector<unsigned int> inverse_renumber;
+
+    /**
      * Indicates whether the given Quadrature object is a tensor product.
      */
     bool tensor_product_quadrature;
