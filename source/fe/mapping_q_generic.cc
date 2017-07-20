@@ -1653,7 +1653,7 @@ namespace internal
               Assert (data.n_shape_functions > 0, ExcInternalError());
 
               const unsigned int n_shape_values = data.n_shape_functions;
-              const unsigned int vec_length = 1;//VectorizedArray<double>::n_array_elements;
+              const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
               const unsigned int n_comp = 1+ (dim-1)/vec_length;
 
               const unsigned int max_size = std::max(n_q_points,n_shape_values);
@@ -1687,7 +1687,7 @@ namespace internal
               (data.shape_info, &(values_dofs_ptr[0]), nullptr, &(gradients_quad_ptr[0]), nullptr,
                &(scratch[0]), false, true, false);
 
-              for (unsigned int out_comp=0; out_comp<n_comp; ++out_comp)
+              for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
                 for (unsigned int point=0; point<n_q_points; ++point)
                   for (unsigned int j=0; j<dim; ++j)
                     for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
@@ -1695,14 +1695,26 @@ namespace internal
                         const unsigned int total_number = point*dim+j;
                         const unsigned int new_comp = total_number/n_q_points;
                         const unsigned int new_point = total_number % n_q_points;
-//                        data.contravariant[point][out_comp*vec_length+in_comp][j]
                         data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp]
                           = gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
                         std::cout << "out " << new_point << " " << out_comp *vec_length+in_comp << " "  << new_comp << " "
                                   << (out_comp*n_q_points+point)*dim+j << " "
                                   << data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp] << std::endl;
                       }
-
+// treat last component special
+              for (unsigned int point=0; point<n_q_points; ++point)
+                for (unsigned int j=0; j<dim; ++j)
+                  for (unsigned int in_comp=0; in_comp<dim-(n_comp-1)*vec_length; ++in_comp)
+                    {
+                      const unsigned int total_number = point*dim+j;
+                      const unsigned int new_comp = total_number/n_q_points;
+                      const unsigned int new_point = total_number % n_q_points;
+                      data.contravariant[new_point][(n_comp-1)*vec_length+in_comp][new_comp]
+                        = gradients_quad[((n_comp-1)*n_q_points+point)*dim+j][in_comp];
+                      std::cout << "out " << new_point << " " << (n_comp-1) *vec_length+in_comp << " "  << new_comp << " "
+                                << ((n_comp-1)*n_q_points+point)*dim+j << " "
+                                << data.contravariant[new_point][(n_comp-1)*vec_length+in_comp][new_comp] << std::endl;
+                    }
             }
 
         if (update_flags & update_covariant_transformation)
