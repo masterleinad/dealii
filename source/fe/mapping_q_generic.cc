@@ -1645,6 +1645,7 @@ namespace internal
           // need to recompute jacobians...
           if (cell_similarity != CellSimilarity::translation)
             {
+              std::cout << "New function" << std::endl;
               const unsigned int n_q_points = data.contravariant.size();
 
               std::fill(data.contravariant.begin(), data.contravariant.end(),
@@ -1669,8 +1670,6 @@ namespace internal
                     const unsigned int out_comp = d/vec_length;
                     values_dofs[out_comp*n_shape_values+i][in_comp]
                       = data.mapping_support_points[data.inverse_renumber[i]][d];
-                    /*                    std::cout << "in " << data.inverse_renumber[i] << " " << d << " "
-                                                  << values_dofs[out_comp*n_shape_values+i][in_comp] << std::endl;*/
                   }
 
               AlignedVector<VectorizedArray<double> > gradients_quad (n_comp*n_shape_values*dim);
@@ -1687,6 +1686,7 @@ namespace internal
               (data.shape_info, &(values_dofs_ptr[0]), nullptr, &(gradients_quad_ptr[0]), nullptr,
                &(scratch[0]), false, true, false);
 
+              // We need to reinterpret the data after evaluate has been applied.
               for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
                 for (unsigned int point=0; point<n_q_points; ++point)
                   for (unsigned int j=0; j<dim; ++j)
@@ -1697,11 +1697,8 @@ namespace internal
                         const unsigned int new_point = total_number % n_q_points;
                         data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp]
                           = gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
-                        std::cout << "out " << new_point << " " << out_comp *vec_length+in_comp << " "  << new_comp << " "
-                                  << (out_comp*n_q_points+point)*dim+j << " "
-                                  << data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp] << std::endl;
                       }
-// treat last component special
+              // treat last component special as it might not be full
               for (unsigned int point=0; point<n_q_points; ++point)
                 for (unsigned int j=0; j<dim; ++j)
                   for (unsigned int in_comp=0; in_comp<dim-(n_comp-1)*vec_length; ++in_comp)
@@ -1711,9 +1708,6 @@ namespace internal
                       const unsigned int new_point = total_number % n_q_points;
                       data.contravariant[new_point][(n_comp-1)*vec_length+in_comp][new_comp]
                         = gradients_quad[((n_comp-1)*n_q_points+point)*dim+j][in_comp];
-                      std::cout << "out " << new_point << " " << (n_comp-1) *vec_length+in_comp << " "  << new_comp << " "
-                                << ((n_comp-1)*n_q_points+point)*dim+j << " "
-                                << data.contravariant[new_point][(n_comp-1)*vec_length+in_comp][new_comp] << std::endl;
                     }
             }
 
