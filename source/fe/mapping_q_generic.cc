@@ -688,7 +688,7 @@ initialize (const UpdateFlags      update_flags,
 
   tensor_product_quadrature = q.is_tensor_product();
 
-  if (tensor_product_quadrature && dim>1)
+  if (tensor_product_quadrature)
     {
       const FE_Q<dim> fe(polynomial_degree);
       shape_info.reinit(q.get_tensor_basis(), fe);
@@ -1653,14 +1653,13 @@ namespace internal
               Assert (data.n_shape_functions > 0, ExcInternalError());
 
               const unsigned int n_shape_values = data.n_shape_functions;
-              const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
+              const unsigned int vec_length = 1;//VectorizedArray<double>::n_array_elements;
               const unsigned int n_comp = 1+ (dim-1)/vec_length;
 
               const unsigned int max_size = std::max(n_q_points,n_shape_values);
               AlignedVector<VectorizedArray<double> > scratch((dim-1)*max_size);
               AlignedVector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
               VectorizedArray<double> *values_dofs_ptr[n_comp];
-
 
               // transform data appropriately
               for (unsigned int i=0; i<n_shape_values; ++i)
@@ -1670,6 +1669,8 @@ namespace internal
                     const unsigned int out_comp = d/vec_length;
                     values_dofs[out_comp*n_shape_values+i][in_comp]
                       = data.mapping_support_points[data.inverse_renumber[i]][d];
+                    /*                    std::cout << "in " << data.inverse_renumber[i] << " " << d << " "
+                                                  << values_dofs[out_comp*n_shape_values+i][in_comp] << std::endl;*/
                   }
 
               AlignedVector<VectorizedArray<double> > gradients_quad (n_comp*n_shape_values*dim);
@@ -1686,12 +1687,17 @@ namespace internal
               (data.shape_info, &(values_dofs_ptr[0]), nullptr, &(gradients_quad_ptr[0]), nullptr,
                &(scratch[0]), false, true, false);
 
-              for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
+              for (unsigned int out_comp=0; out_comp<n_comp; ++out_comp)
                 for (unsigned int point=0; point<n_q_points; ++point)
                   for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
                     for (unsigned int j=0; j<dim; ++j)
-                      data.contravariant[point][out_comp*vec_length+in_comp][j]
-                        = gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
+                      {
+                        data.contravariant[point][out_comp*vec_length+in_comp][j]
+                          = gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
+                        std::cout << "out " << point << " " << out_comp *vec_length+in_comp << " "  << j << " "
+                                  << (out_comp*n_q_points+point)*dim+j << " "
+                                  << data.contravariant[point][out_comp*vec_length+in_comp][j] << std::endl;
+                      }
 
             }
 
