@@ -1688,14 +1688,18 @@ namespace internal
 
               for (unsigned int out_comp=0; out_comp<n_comp; ++out_comp)
                 for (unsigned int point=0; point<n_q_points; ++point)
-                  for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
-                    for (unsigned int j=0; j<dim; ++j)
+                  for (unsigned int j=0; j<dim; ++j)
+                    for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
                       {
-                        data.contravariant[point][out_comp*vec_length+in_comp][j]
+                        const unsigned int total_number = point*dim+j;
+                        const unsigned int new_comp = total_number/n_q_points;
+                        const unsigned int new_point = total_number % n_q_points;
+//                        data.contravariant[point][out_comp*vec_length+in_comp][j]
+                        data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp]
                           = gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
-                        std::cout << "out " << point << " " << out_comp *vec_length+in_comp << " "  << j << " "
+                        std::cout << "out " << new_point << " " << out_comp *vec_length+in_comp << " "  << new_comp << " "
                                   << (out_comp*n_q_points+point)*dim+j << " "
-                                  << data.contravariant[point][out_comp*vec_length+in_comp][j] << std::endl;
+                                  << data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp] << std::endl;
                       }
 
             }
