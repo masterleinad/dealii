@@ -1553,7 +1553,7 @@ namespace internal
                 const unsigned int n_shape_values = data.n_shape_functions;
                 const unsigned int n_q_points = quadrature_points.size();
                 const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
-                const unsigned int n_comp = 1+ (dim-1)/vec_length;
+                const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
 
                 const unsigned int max_size = std::max(n_q_points,n_shape_values);
                 AlignedVector<VectorizedArray<double> > scratch(std::max(1,dim-1)*max_size);
@@ -1601,7 +1601,7 @@ namespace internal
                         = values_quad[out_comp*n_q_points+i][in_comp];
                 // Treat the last component special as it might not be full.
                 for (unsigned int i=0; i<n_q_points; ++i)
-                  for (unsigned int in_comp=0; in_comp<dim-(n_comp-1)*vec_length; ++in_comp)
+                  for (unsigned int in_comp=0; in_comp<spacedim-(n_comp-1)*vec_length; ++in_comp)
                     quadrature_points[i][(n_comp-1)*vec_length+in_comp]
                       = values_quad[(n_comp-1)*n_q_points+i][in_comp];
               }
@@ -1657,7 +1657,7 @@ namespace internal
                   std::cout << "New function" << std::endl;
                   const unsigned int n_shape_values = data.n_shape_functions;
                   const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
-                  const unsigned int n_comp = 1+ (dim-1)/vec_length;
+                  const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
 
                   const unsigned int max_size = std::max(n_q_points,n_shape_values);
                   AlignedVector<VectorizedArray<double> > scratch(std::max(1,dim-1)*max_size);
@@ -1703,7 +1703,7 @@ namespace internal
                   // treat last component special as it might not be full
                   for (unsigned int point=0; point<n_q_points; ++point)
                     for (unsigned int j=0; j<dim; ++j)
-                      for (unsigned int in_comp=0; in_comp<dim-(n_comp-1)*vec_length; ++in_comp)
+                      for (unsigned int in_comp=0; in_comp<spacedim-(n_comp-1)*vec_length; ++in_comp)
                         {
                           const unsigned int total_number = point*dim+j;
                           const unsigned int new_comp = total_number/n_q_points;
@@ -1793,7 +1793,7 @@ namespace internal
                     std::cout << "New function" << std::endl;
                     const unsigned int n_shape_values = data.n_shape_functions;
                     const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
-                    const unsigned int n_comp = 1+ (dim-1)/vec_length;
+                    const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
 
                     const unsigned int max_size = std::max(n_q_points,n_shape_values);
                     AlignedVector<VectorizedArray<double> > scratch(std::max(1,dim-1)*max_size);
