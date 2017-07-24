@@ -699,6 +699,7 @@ initialize (const UpdateFlags      update_flags,
       FETools::hierarchic_to_lexicographic_numbering<dim> (polynomial_degree, renumber);
       for (unsigned int i=0; i<n_shape_values; ++i)
         inverse_renumber[renumber[i]] = i;
+
     }
 }
 
@@ -712,6 +713,21 @@ initialize_face (const UpdateFlags      update_flags,
                  const unsigned int     n_original_q_points)
 {
   initialize (update_flags, q, n_original_q_points);
+
+  if (tensor_product_quadrature)
+    {
+      const unsigned int facedim = dim > 1 ? dim-1 : 1;
+      const FE_Q<facedim> fe(polynomial_degree);
+      shape_info.reinit(q.get_tensor_basis(), fe);
+
+      const unsigned int n_shape_values = fe.n_dofs_per_cell();
+      inverse_renumber.resize(n_shape_values);
+      std::vector<unsigned int> renumber(n_shape_values);
+      FETools::hierarchic_to_lexicographic_numbering<facedim> (polynomial_degree, renumber);
+      for (unsigned int i=0; i<n_shape_values; ++i)
+        inverse_renumber[renumber[i]] = i;
+
+    }
 
   if (dim > 1)
     {
@@ -1545,9 +1561,8 @@ namespace internal
 
         if (update_flags & update_quadrature_points)
           {
-            if (data.tensor_product_quadrature)
+            if (dim>1 && data.tensor_product_quadrature)
               {
-                std::cout << "New function" << std::endl;
                 Assert(data.shape_info.n_q_points > 0, ExcInternalError());
 
                 const unsigned int n_shape_values = data.n_shape_functions;
@@ -1559,6 +1574,8 @@ namespace internal
                 AlignedVector<VectorizedArray<double> > scratch(std::max(1,dim-1)*max_size);
                 AlignedVector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
                 VectorizedArray<double> *values_dofs_ptr[n_comp];
+                Assert (data.shape_info.n_q_points == quadrature_points.size(),
+                        ExcDimensionMismatch(data.shape_info.n_q_points, quadrature_points.size()));
                 AlignedVector<VectorizedArray<double> > values_quad(n_comp*n_q_points);
                 VectorizedArray<double> *values_quad_ptr[n_comp];
 
@@ -1569,7 +1586,7 @@ namespace internal
                   }
 
                 for (unsigned int i=0; i<n_shape_values; ++i)
-                  for (unsigned int d=0; d<dim; ++d)
+                  for (unsigned int d=0; d<spacedim; ++d)
                     {
                       const unsigned int in_comp = d%vec_length;
                       const unsigned int out_comp = d/vec_length;
@@ -1652,9 +1669,8 @@ namespace internal
 
               Assert (data.n_shape_functions > 0, ExcInternalError());
 
-              if (0&&data.tensor_product_quadrature)
+              if (dim>1 && data.tensor_product_quadrature)
                 {
-                  std::cout << "New function" << std::endl;
                   const unsigned int n_shape_values = data.n_shape_functions;
                   const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
                   const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
@@ -1666,7 +1682,7 @@ namespace internal
 
                   // transform data appropriately
                   for (unsigned int i=0; i<n_shape_values; ++i)
-                    for (unsigned int d=0; d<dim; ++d)
+                    for (unsigned int d=0; d<spacedim; ++d)
                       {
                         const unsigned int in_comp = d%vec_length;
                         const unsigned int out_comp = d/vec_length;
@@ -1674,7 +1690,7 @@ namespace internal
                           = data.mapping_support_points[data.inverse_renumber[i]][d];
                       }
 
-                  AlignedVector<VectorizedArray<double> > gradients_quad (n_comp*n_shape_values*dim);
+                  AlignedVector<VectorizedArray<double> > gradients_quad (n_comp*n_q_points*dim);
                   VectorizedArray<double> *gradients_quad_ptr[n_comp][dim];
 
                   for (unsigned int c=0; c<n_comp; ++c)
@@ -1788,9 +1804,8 @@ namespace internal
 
             if (cell_similarity != CellSimilarity::translation)
               {
-                if (0&&data.tensor_product_quadrature)
+                if (0 && dim>1 && data.tensor_product_quadrature)
                   {
-                    std::cout << "New function" << std::endl;
                     const unsigned int n_shape_values = data.n_shape_functions;
                     const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
                     const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
@@ -1802,7 +1817,7 @@ namespace internal
 
                     // transform data appropriately
                     for (unsigned int i=0; i<n_shape_values; ++i)
-                      for (unsigned int d=0; d<dim; ++d)
+                      for (unsigned int d=0; d<spacedim; ++d)
                         {
                           const unsigned int in_comp = d%vec_length;
                           const unsigned int out_comp = d/vec_length;
@@ -1842,7 +1857,7 @@ namespace internal
                                         // treat last component special as it might not be full
                                         for (unsigned int point=0; point<n_q_points; ++point)
                                           for (unsigned int j=0; j<n_hessians; ++j)
-                                            for (unsigned int in_comp=0; in_comp<dim-(n_comp-1)*vec_length; ++in_comp)
+                                            for (unsigned int in_comp=0; in_comp<spacedim-(n_comp-1)*vec_length; ++in_comp)
                                               {
                                                 const unsigned int total_number = point*dim+j;
                                                 const unsigned int new_hessian_comp = total_number/n_q_points;
