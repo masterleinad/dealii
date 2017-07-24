@@ -144,7 +144,6 @@ Quadrature<dim>::Quadrature (const SubQuadrature &q1,
       // we cannot guarantee the sum of weights
       // to be exactly one, but it should be
       // near that.
-      std::cout << sum << std::endl;
       Assert ((sum>0.999999) && (sum<1.000001), ExcInternalError());
     }
 #endif
@@ -312,12 +311,17 @@ Quadrature<dim>::get_tensor_basis () const
 
   double sum = 0.;
   for (unsigned int i=0; i<n_q_points_1d; ++i)
-    sum += this->weight(i);
-  for (unsigned int i=0; i<n_q_points_1d; ++i)
     {
+      sum += this->weight(i);
       q_points_1d[i](0) = this->point(i)(0);
-      weights_1d[i] = this->weight(i)/sum;
     }
+
+  if (!std::isinf(sum))
+    for (unsigned int i=0; i<n_q_points_1d; ++i)
+      weights_1d[i] = this->weight(i)/sum;
+  else
+    for (unsigned int i=0; i<n_q_points_1d; ++i)
+      weights_1d[i] = this->weight(i);
 
   return Quadrature<1> (q_points_1d, weights_1d);
 }
