@@ -688,12 +688,20 @@ initialize (const UpdateFlags      update_flags,
 
   tensor_product_quadrature = q.is_tensor_product();
 
-  if (tensor_product_quadrature)
+  if (dim>1 && tensor_product_quadrature)
     {
       const FE_Q<dim> fe(polynomial_degree);
       shape_info.reinit(q.get_tensor_basis(), fe);
 
       const unsigned int n_shape_values = fe.n_dofs_per_cell();
+      const unsigned int max_size = std::max(n_q_points,n_shape_values);
+      const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
+      const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
+
+      scratch.resize((dim-1)*max_size);
+      values_dofs.resize(n_comp*n_shape_values);
+      values_quad.resize(n_comp*n_q_points);
+
       inverse_renumber.resize(n_shape_values);
       std::vector<unsigned int> renumber(n_shape_values);
       FETools::hierarchic_to_lexicographic_numbering<dim> (polynomial_degree, renumber);
@@ -714,13 +722,23 @@ initialize_face (const UpdateFlags      update_flags,
 {
   initialize (update_flags, q, n_original_q_points);
 
-  if (tensor_product_quadrature)
+  if (dim>1 && tensor_product_quadrature)
     {
       const unsigned int facedim = dim > 1 ? dim-1 : 1;
       const FE_Q<facedim> fe(polynomial_degree);
       shape_info.reinit(q.get_tensor_basis(), fe);
 
       const unsigned int n_shape_values = fe.n_dofs_per_cell();
+      const unsigned int n_q_points = q.size();
+      const unsigned int max_size = std::max(n_q_points,n_shape_values);
+      const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
+      const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
+
+      scratch.resize((dim-1)*max_size);
+      values_dofs.resize(n_comp*n_shape_values);
+      values_quad.resize(n_comp*n_q_points);
+      gradients_quad.resize(n_comp*n_q_points*dim);
+
       inverse_renumber.resize(n_shape_values);
       std::vector<unsigned int> renumber(n_shape_values);
       FETools::hierarchic_to_lexicographic_numbering<facedim> (polynomial_degree, renumber);
@@ -1570,19 +1588,18 @@ namespace internal
                 const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
                 const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
 
-                const unsigned int max_size = std::max(n_q_points,n_shape_values);
-                AlignedVector<VectorizedArray<double> > scratch(std::max(1,dim-1)*max_size);
-                AlignedVector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
-                VectorizedArray<double> *values_dofs_ptr[n_comp];
                 Assert (data.shape_info.n_q_points == quadrature_points.size(),
                         ExcDimensionMismatch(data.shape_info.n_q_points, quadrature_points.size()));
-                AlignedVector<VectorizedArray<double> > values_quad(n_comp*n_q_points);
+
+                data.values_dofs.resize(n_comp*n_shape_values);
+                VectorizedArray<double> *values_dofs_ptr[n_comp];
+                data.values_quad.resize(n_comp*n_q_points);
                 VectorizedArray<double> *values_quad_ptr[n_comp];
 
                 for (unsigned int c=0; c<n_comp; ++c)
                   {
-                    values_dofs_ptr[c] = &(values_dofs[c*n_shape_values]);
-                    values_quad_ptr[c] = &(values_quad[c*n_q_points]);
+                    values_dofs_ptr[c] = &(data.values_dofs[c*n_shape_values]);
+                    values_quad_ptr[c] = &(data.values_quad[c*n_q_points]);
                   }
 
                 for (unsigned int i=0; i<n_shape_values; ++i)
@@ -1590,37 +1607,24 @@ namespace internal
                     {
                       const unsigned int in_comp = d%vec_length;
                       const unsigned int out_comp = d/vec_length;
-                      values_dofs[out_comp*n_shape_values+i][in_comp]
+                      data.values_dofs[out_comp*n_shape_values+i][in_comp]
                         = data.mapping_support_points[data.inverse_renumber[i]][d];
                     }
 
-                /*                Assert (data.shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric,
-                                        ExcInternalError());*/
-
-                /*                if (n_shape_values == n_q_points)
-                                  internal::FEEvaluationImplTransformToCollocation<dim, -1, n_comp, double>::evaluate
-                                  (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
-                                   &(scratch[0]), true, false, false);
-                                else
-                                  internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_symmetric,
-                                           dim, -1, 0, n_comp, double>::evaluate
-                                           (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
-                                            &(scratch[0]), true, false, false);*/
-
                 internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate
                 (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
-                 &(scratch[0]), true, false, false);
+                 &(data.scratch[0]), true, false, false);
 
                 for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
                   for (unsigned int i=0; i<n_q_points; ++i)
                     for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
                       quadrature_points[i][out_comp*vec_length+in_comp]
-                        = values_quad[out_comp*n_q_points+i][in_comp];
+                        = data.values_quad[out_comp*n_q_points+i][in_comp];
                 // Treat the last component special as it might not be full.
                 for (unsigned int i=0; i<n_q_points; ++i)
                   for (unsigned int in_comp=0; in_comp<spacedim-(n_comp-1)*vec_length; ++in_comp)
                     quadrature_points[i][(n_comp-1)*vec_length+in_comp]
-                      = values_quad[(n_comp-1)*n_q_points+i][in_comp];
+                      = data.values_quad[(n_comp-1)*n_q_points+i][in_comp];
               }
             else
               {
@@ -1675,10 +1679,13 @@ namespace internal
                   const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
                   const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
 
-                  const unsigned int max_size = std::max(n_q_points,n_shape_values);
-                  AlignedVector<VectorizedArray<double> > scratch(std::max(1,dim-1)*max_size);
-                  AlignedVector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
+                  Assert (data.shape_info.n_q_points == data.contravariant.size(),
+                          ExcDimensionMismatch(data.shape_info.n_q_points, data.contravariant.size()));
+
+                  data.values_dofs.resize(n_comp*n_shape_values);
                   VectorizedArray<double> *values_dofs_ptr[n_comp];
+                  data.gradients_quad.resize (n_comp*n_q_points*dim);
+                  VectorizedArray<double> *gradients_quad_ptr[n_comp][dim];
 
                   // transform data appropriately
                   for (unsigned int i=0; i<n_shape_values; ++i)
@@ -1686,23 +1693,20 @@ namespace internal
                       {
                         const unsigned int in_comp = d%vec_length;
                         const unsigned int out_comp = d/vec_length;
-                        values_dofs[out_comp*n_shape_values+i][in_comp]
+                        data.values_dofs[out_comp*n_shape_values+i][in_comp]
                           = data.mapping_support_points[data.inverse_renumber[i]][d];
                       }
 
-                  AlignedVector<VectorizedArray<double> > gradients_quad (n_comp*n_q_points*dim);
-                  VectorizedArray<double> *gradients_quad_ptr[n_comp][dim];
-
                   for (unsigned int c=0; c<n_comp; ++c)
                     {
-                      values_dofs_ptr[c] = &(values_dofs[c*n_shape_values]);
+                      values_dofs_ptr[c] = &(data.values_dofs[c*n_shape_values]);
                       for (unsigned int j=0; j<dim; ++j)
-                        gradients_quad_ptr[c][j] = &(gradients_quad[(c*dim+j)*n_q_points]);
+                        gradients_quad_ptr[c][j] = &(data.gradients_quad[(c*dim+j)*n_q_points]);
                     }
 
                   internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate
                   (data.shape_info, &(values_dofs_ptr[0]), nullptr, &(gradients_quad_ptr[0]), nullptr,
-                   &(scratch[0]), false, true, false);
+                   &(data.scratch[0]), false, true, false);
 
                   // We need to reinterpret the data after evaluate has been applied.
                   for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
@@ -1714,7 +1718,7 @@ namespace internal
                             const unsigned int new_comp = total_number/n_q_points;
                             const unsigned int new_point = total_number % n_q_points;
                             data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp]
-                              = gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
+                              = data.gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
                           }
                   // treat last component special as it might not be full
                   for (unsigned int point=0; point<n_q_points; ++point)
@@ -1725,7 +1729,7 @@ namespace internal
                           const unsigned int new_comp = total_number/n_q_points;
                           const unsigned int new_point = total_number % n_q_points;
                           data.contravariant[new_point][(n_comp-1)*vec_length+in_comp][new_comp]
-                            = gradients_quad[((n_comp-1)*n_q_points+point)*dim+j][in_comp];
+                            = data.gradients_quad[((n_comp-1)*n_q_points+point)*dim+j][in_comp];
                         }
                 }
               else // no tensor product
@@ -1809,11 +1813,15 @@ namespace internal
                     const unsigned int n_shape_values = data.n_shape_functions;
                     const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
                     const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
+                    const unsigned int n_hessians = (dim*(dim+1))/2;
 
-                    const unsigned int max_size = std::max(n_q_points,n_shape_values);
-                    AlignedVector<VectorizedArray<double> > scratch(std::max(1,dim-1)*max_size);
-                    AlignedVector<VectorizedArray<double> > values_dofs(n_comp*n_shape_values);
+                    Assert (data.shape_info.n_q_points == jacobian_grads.size(),
+                            ExcDimensionMismatch(data.shape_info.n_q_points, jacobian_grads.size()));
+
+                    data.values_dofs.resize(n_comp*n_shape_values);
                     VectorizedArray<double> *values_dofs_ptr[n_comp];
+                    data.hessians_quad.resize(n_comp*n_q_points*n_hessians);
+                    VectorizedArray<double> *hessians_quad_ptr[n_comp][n_hessians];
 
                     // transform data appropriately
                     for (unsigned int i=0; i<n_shape_values; ++i)
@@ -1821,27 +1829,23 @@ namespace internal
                         {
                           const unsigned int in_comp = d%vec_length;
                           const unsigned int out_comp = d/vec_length;
-                          values_dofs[out_comp*n_shape_values+i][in_comp]
+                          data.values_dofs[out_comp*n_shape_values+i][in_comp]
                             = data.mapping_support_points[data.inverse_renumber[i]][d];
                         }
 
-                    const unsigned int n_hessians = (dim*(dim+1))/2;
-                    AlignedVector<VectorizedArray<double> > hessians_quad (n_comp*n_q_points*n_hessians);
-                    VectorizedArray<double> *hessians_quad_ptr[n_comp][n_hessians];
-
                     for (unsigned int c=0; c<n_comp; ++c)
                       {
-                        values_dofs_ptr[c] = &(values_dofs[c*n_shape_values]);
+                        values_dofs_ptr[c] = &(data.values_dofs[c*n_shape_values]);
                         for (unsigned int j=0; j<n_hessians; ++j)
-                          hessians_quad_ptr[c][j] = &(hessians_quad[(c*n_hessians+j)*n_q_points]);
+                          hessians_quad_ptr[c][j] = &(data.hessians_quad[(c*n_hessians+j)*n_q_points]);
                       }
 
                     internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate
                     (data.shape_info, &(values_dofs_ptr[0]), nullptr, nullptr, &(hessians_quad_ptr[0]),
-                     &(scratch[0]), false, false, true);
+                     &(data.scratch[0]), false, false, true);
 
-                    const int desymmetrize_3d [6][2] = {{0,0},{1,1},{2,2},{0,1},{0,2},{1,2}};
-                    const int desymmetrize_2d [3][2] = {{0,0},{1,1},{0,1}};
+                    constexpr int desymmetrize_3d [6][2] = {{0,0},{1,1},{2,2},{0,1},{0,2},{1,2}};
+                    constexpr int desymmetrize_2d [3][2] = {{0,0},{1,1},{0,1}};
 
                     // We need to reinterpret the data after evaluate has been applied.
                     for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
@@ -1856,7 +1860,7 @@ namespace internal
                                                                       : desymmetrize_3d[new_hessian_comp][0];
                               const unsigned int new_hessian_comp_j = dim==2 ? desymmetrize_2d[new_hessian_comp][1]
                                                                       : desymmetrize_3d[new_hessian_comp][1];
-                              const double value = hessians_quad[(out_comp*n_q_points+point)*n_hessians+j][in_comp];
+                              const double value = data.hessians_quad[(out_comp*n_q_points+point)*n_hessians+j][in_comp];
                               jacobian_grads[new_point][out_comp*vec_length+in_comp][new_hessian_comp_i][new_hessian_comp_j] = value;
                               jacobian_grads[new_point][out_comp*vec_length+in_comp][new_hessian_comp_j][new_hessian_comp_i] = value;
                             }
@@ -1872,7 +1876,7 @@ namespace internal
                                                                     : desymmetrize_3d[new_hessian_comp][0];
                             const unsigned int new_hessian_comp_j = dim==2 ? desymmetrize_2d[new_hessian_comp][1]
                                                                     : desymmetrize_3d[new_hessian_comp][1];
-                            const double value = hessians_quad[((n_comp-1)*n_q_points+point)*n_hessians+j][in_comp];
+                            const double value = data.hessians_quad[((n_comp-1)*n_q_points+point)*n_hessians+j][in_comp];
                             jacobian_grads[new_point][(n_comp-1)*vec_length+in_comp][new_hessian_comp_i][new_hessian_comp_j] = value;
                             jacobian_grads[new_point][(n_comp-1)*vec_length+in_comp][new_hessian_comp_j][new_hessian_comp_i] = value;
                           }
