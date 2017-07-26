@@ -458,6 +458,36 @@ public:
 
     /**
      * In case the quadrature rule given represents a tensor product
+     * we need to store temporary data in this object.
+     */
+    mutable AlignedVector<VectorizedArray<double> > scratch;
+
+    /**
+     * In case the quadrature rule given represents a tensor product
+     * the values at the mapped support points are stored in this object.
+     */
+    mutable AlignedVector<VectorizedArray<double> > values_dofs;
+
+    /**
+     * In case the quadrature rule given represents a tensor product
+     * the values at the quadrature points are stored in this object.
+     */
+    mutable AlignedVector<VectorizedArray<double> > values_quad;
+
+    /**
+     * In case the quadrature rule given represents a tensor product
+     * the gradients at the quadrature points are stored in this object.
+     */
+    mutable AlignedVector<VectorizedArray<double> > gradients_quad;
+
+    /**
+     * In case the quadrature rule given represents a tensor product
+     * the hessians at the quadrature points are stored in this object.
+     */
+    mutable AlignedVector<VectorizedArray<double> > hessians_quad;
+
+    /**
+     * In case the quadrature rule given represents a tensor product
      * this object stores the renumbering from hierarchical to
      * lexicographic ordering.
      */
