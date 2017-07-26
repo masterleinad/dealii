@@ -46,6 +46,7 @@ public:
   QGauss (const unsigned int n);
 };
 
+
 /**
  * The Gauss-Lobatto family of quadrature rules for numerical integration.
  *
@@ -123,6 +124,8 @@ protected:
   static long double gamma(const unsigned int n);
 };
 
+
+
 /**
  * The midpoint rule for numerical quadrature. This one-point formula is exact
  * for linear polynomials.
@@ -134,6 +137,7 @@ public:
   QMidpoint ();
 };
 
+
 /**
  * The Simpson rule for numerical quadrature. This formula with 3 quadrature
  * points is exact for polynomials of degree 3.
@@ -144,6 +148,8 @@ class QSimpson : public Quadrature<dim>
 public:
   QSimpson ();
 };
+
+
 
 /**
  * The trapezoidal rule for numerical quadrature. This formula with two
@@ -164,6 +170,8 @@ public:
   QTrapez ();
 };
 
+
+
 /**
  * The Milne rule for numerical quadrature formula. The Milne rule is a closed
  * Newton-Cotes formula and is exact for polynomials of degree 5.
@@ -177,6 +185,7 @@ public:
   QMilne ();
 };
 
+
 /**
  * The Weddle rule for numerical quadrature. The Weddle rule is a closed
  * Newton-Cotes formula and is exact for polynomials of degree 7.
@@ -189,6 +198,8 @@ class QWeddle : public Quadrature<dim>
 public:
   QWeddle ();
 };
+
+
 
 /**
  * A class for Gauss quadrature with logarithmic weighting function. This
@@ -485,9 +496,9 @@ private:
  * quadrature formula are much easier to compute with respect to other
  * singular integration techniques as Lachat-Watson.
  *
- * We have implemented the case for $dim = 1$. When we deal with the case
- * $dim >1$ we have computed the quadrature formula has a tensorial product of
- * one dimensional Telles' quadrature formulas considering the different
+ * We have implemented the case for $dim = 1$. When we deal the case $dim >1$
+ * we have computed the quadrature formula has a tensorial product of one
+ * dimensional Telles' quadrature formulas considering the different
  * components of the singularity.
  *
  * The weights and functions for Gauss Legendre formula have been tabulated up
@@ -545,7 +556,9 @@ private:
   /// Computes the weights of the quadrature formula.
   static std::vector<double>
   get_quadrature_weights(const unsigned int n);
+
 };
+
 
 /**
  * Gauss-Radau-Chebyshev quadrature rules integrate the weighted product
