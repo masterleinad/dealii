@@ -159,7 +159,6 @@ QGauss<1>::QGauss (const unsigned int n)
       this->weights[i-1] = w;
       this->weights[n-i] = w;
     }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -180,7 +179,6 @@ QGaussLobatto<1>::QGaussLobatto (const unsigned int n)
       this->quadrature_points[i] = Point<1>(0.5 + 0.5*static_cast<double>(points[i]));
       this->weights[i]           = 0.5*w[i];
     }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -338,7 +336,6 @@ QMidpoint<1>::QMidpoint ()
 {
   this->quadrature_points[0] = Point<1>(0.5);
   this->weights[0] = 1.0;
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -356,7 +353,6 @@ QTrapez<1>::QTrapez ()
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i] = wts[i];
     };
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -374,7 +370,6 @@ QSimpson<1>::QSimpson ()
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i] = wts[i];
     };
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -392,7 +387,6 @@ QMilne<1>::QMilne ()
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i] = wts[i];
     };
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -412,7 +406,6 @@ QWeddle<1>::QWeddle ()
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i] = wts[i];
     };
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -433,7 +426,6 @@ QGaussLog<1>::QGaussLog(const unsigned int n,
       this->quadrature_points[i] = revert ? Point<1>(1-p[n-1-i]) : Point<1>(p[i]);
       this->weights[i]           = revert ? w[n-1-i] : w[i];
     }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 template <>
@@ -770,7 +762,6 @@ QGaussLogR<1>::QGaussLogR(const unsigned int n,
                            "factor out the singularity, which is zero at one point."));
         this->weights[i] /= denominator;
       }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -1129,7 +1120,6 @@ QTelles<1>::QTelles (
       weights[q] = J * weights[q];
 
     }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -1184,7 +1174,6 @@ QGaussChebyshev<1>::QGaussChebyshev(const unsigned int n)
       this->quadrature_points[i] = Point<1>(p[i]);
       this->weights[i]           = w[i];
     }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -1274,7 +1263,6 @@ QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n,
       this->quadrature_points[i] = Point<1>(p[i]);
       this->weights[i]           = w[i];
     }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
@@ -1339,7 +1327,6 @@ QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n)
       this->quadrature_points[i] = Point<1>(p[i]);
       this->weights[i]           = w[i];
     }
-  this->tensor_basis = std::vector<Quadrature<1> >(1, *this);
 }
 
 
