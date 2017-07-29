@@ -18,6 +18,7 @@
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/utilities.h>
+#include <deal.II/base/std_cxx14/memory.h>
 
 #include <cmath>
 #include <cstdlib>
@@ -84,7 +85,7 @@ template <int dim>
 Quadrature<dim>::Quadrature (const std::vector<Point<dim> > &points)
   :
   quadrature_points(points),
-  weights(points.size(), std::numeric_limits<double>::infinity()),
+  weights(points.size(), 0/*std::numeric_limits<double>::infinity()*/),
   is_tensor_product_flag (dim==1)
 {
   Assert(weights.size() == points.size(),
@@ -156,8 +157,8 @@ Quadrature<dim>::Quadrature (const SubQuadrature &q1,
   if (is_tensor_product_flag)
     {
       for (unsigned int i=0; i<dim-1; ++i)
-        tensor_basis[i] = q1.get_tensor_basis()[i];
-      tensor_basis[dim] = q2;
+        (*tensor_basis)[i] = q1.get_tensor_basis()[i];
+      (*tensor_basis)[dim] = q2;
     }
 }
 
@@ -257,7 +258,7 @@ Subscriptor(),
           ++k;
         }
   for (unsigned int i=0; i<dim; ++i)
-    tensor_basis[i] = q;
+    (*tensor_basis)[i] = q;
 }
 
 
@@ -269,7 +270,7 @@ Quadrature<dim>::Quadrature (const Quadrature<dim> &q)
   quadrature_points (q.quadrature_points),
   weights (q.weights),
   is_tensor_product_flag (q.is_tensor_product_flag),
-  tensor_basis (q.tensor_basis)
+  tensor_basis (std_cxx14::make_unique<std::array<Quadrature<1>, dim>>(*q.tensor_basis))
 {}
 
 
@@ -293,7 +294,7 @@ Quadrature<dim>::operator= (const Quadrature<dim> &q)
   quadrature_points = q.quadrature_points;
   is_tensor_product_flag = q.is_tensor_product_flag;
   if (dim!=1)
-    tensor_basis = q.tensor_basis;
+    tensor_basis = std_cxx14::make_unique<std::array<Quadrature<1>, dim>>(*q.tensor_basis);
   return *this;
 }
 
@@ -334,7 +335,7 @@ Quadrature<dim>::get_tensor_basis () const
           ExcMessage("This function only makes sense if "
                      "this object represents a tensor product!"));
 
-  return tensor_basis;
+  return *tensor_basis;
 }
 
 
@@ -394,8 +395,8 @@ QAnisotropic<2>::QAnisotropic(const Quadrature<1> &qx,
       }
   Assert (k==this->size(), ExcInternalError());
   this->is_tensor_product_flag = true;
-  this->tensor_basis[0] = qx;
-  this->tensor_basis[1] = qy;
+  (*this->tensor_basis)[0] = qx;
+  (*this->tensor_basis)[1] = qy;
 }
 
 
@@ -429,9 +430,9 @@ QAnisotropic<3>::QAnisotropic(const Quadrature<1> &qx,
         }
   Assert (k==this->size(), ExcInternalError());
   this->is_tensor_product_flag = true;
-  this->tensor_basis[0] = qx;
-  this->tensor_basis[1] = qy;
-  this->tensor_basis[2] = qz;
+  (*this->tensor_basis)[0] = qx;
+  (*this->tensor_basis)[1] = qy;
+  (*this->tensor_basis)[2] = qz;
 }
 
 
