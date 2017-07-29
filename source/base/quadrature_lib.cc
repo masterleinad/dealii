@@ -939,6 +939,10 @@ QSorted<dim>::QSorted(const Quadrature<dim> &quad) :
                       std::placeholders::_1,
                       std::placeholders::_2));
 
+  this->quadrature_points = quad.get_points();
+  Assert (quad.size() == quad.get_points().size(), ExcInternalError());
+  Assert (quad.size() == quad.get_weights().size(), ExcInternalError());
+  Assert (this->quadrature_points.size()==quad.size(), ExcInternalError());
   for (unsigned int i=0; i<quad.size(); ++i)
     {
       this->weights[i]           = quad.weight(permutation[i]);

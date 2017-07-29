@@ -18,7 +18,6 @@
 #include <deal.II/base/qprojector.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/utilities.h>
-#include <deal.II/base/std_cxx14/memory.h>
 
 #include <cmath>
 #include <cstdlib>
@@ -33,7 +32,7 @@ Quadrature<0>::Quadrature (const unsigned int n_q)
   quadrature_points (n_q),
   weights (n_q, 0),
   is_tensor_product_flag (false),
-  tensor_basis{}
+  tensor_basis {}
 {}
 
 
@@ -49,7 +48,8 @@ Quadrature<dim>::Quadrature (const unsigned int n_q)
   :
   quadrature_points (n_q, Point<dim>()),
   weights (n_q, 0),
-  is_tensor_product_flag (dim==1)
+  is_tensor_product_flag (dim==1),
+  tensor_basis {}
 {
 }
 
@@ -73,10 +73,11 @@ Quadrature<dim>::Quadrature (const std::vector<Point<dim> > &points,
   :
   quadrature_points(points),
   weights(weights),
-  is_tensor_product_flag (dim==1)
+  is_tensor_product_flag (dim==1),
+  tensor_basis {}
 {
   Assert (weights.size() == points.size(),
-          ExcDimensionMismatch(weights.size(), points.size()));
+  ExcDimensionMismatch(weights.size(), points.size()));
 }
 
 
@@ -86,10 +87,11 @@ Quadrature<dim>::Quadrature (const std::vector<Point<dim> > &points)
   :
   quadrature_points(points),
   weights(points.size(), 0/*std::numeric_limits<double>::infinity()*/),
-  is_tensor_product_flag (dim==1)
+  is_tensor_product_flag (dim==1),
+  tensor_basis {}
 {
   Assert(weights.size() == points.size(),
-         ExcDimensionMismatch(weights.size(), points.size()));
+  ExcDimensionMismatch(weights.size(), points.size()));
 }
 
 
@@ -99,7 +101,8 @@ Quadrature<dim>::Quadrature (const Point<dim> &point)
   :
   quadrature_points(std::vector<Point<dim> > (1, point)),
   weights(std::vector<double> (1, 1.)),
-  is_tensor_product_flag (dim==1)
+  is_tensor_product_flag (dim==1),
+  tensor_basis {}
 {
 }
 
@@ -108,7 +111,7 @@ template <>
 Quadrature<0>::Quadrature (const SubQuadrature &,
                            const Quadrature<1> &)
   :
- tensor_basis{}
+  tensor_basis {}
 {
   Assert(false, ExcImpossibleInDim(0));
 }
@@ -121,7 +124,8 @@ Quadrature<dim>::Quadrature (const SubQuadrature &q1,
   :
   quadrature_points (q1.size() * q2.size()),
   weights (q1.size() * q2.size()),
-  is_tensor_product_flag (q1.is_tensor_product())
+  is_tensor_product_flag (q1.is_tensor_product()),
+  tensor_basis {}
 {
   unsigned int present_index = 0;
   for (unsigned int i2=0; i2<q2.size(); ++i2)
@@ -132,9 +136,9 @@ Quadrature<dim>::Quadrature (const SubQuadrature &q1,
         // product in the last component
         for (unsigned int d=0; d<dim-1; ++d)
           quadrature_points[present_index](d)
-            = q1.point(i1)(d);
+          = q1.point(i1)(d);
         quadrature_points[present_index](dim-1)
-          = q2.point(i2)(0);
+        = q2.point(i2)(0);
 
         weights[present_index] = q1.weight(i1) * q2.weight(i2);
 
@@ -157,8 +161,8 @@ Quadrature<dim>::Quadrature (const SubQuadrature &q1,
   if (is_tensor_product_flag)
     {
       for (unsigned int i=0; i<dim-1; ++i)
-        (*tensor_basis)[i] = q1.get_tensor_basis()[i];
-      (*tensor_basis)[dim] = q2;
+        tensor_basis[i] = q1.get_tensor_basis()[i];
+      tensor_basis[dim] = q2;
     }
 }
 
@@ -170,7 +174,8 @@ Quadrature<1>::Quadrature (const SubQuadrature &,
   :
   quadrature_points (q2.size()),
   weights (q2.size()),
-  is_tensor_product_flag (true)
+  is_tensor_product_flag (true),
+  tensor_basis {}
 {
   unsigned int present_index = 0;
   for (unsigned int i2=0; i2<q2.size(); ++i2)
@@ -179,7 +184,7 @@ Quadrature<1>::Quadrature (const SubQuadrature &,
       // new quadrature point by tensor
       // product in the last component
       quadrature_points[present_index](0)
-        = q2.point(i2)(0);
+      = q2.point(i2)(0);
 
       weights[present_index] = q2.weight(i2);
 
@@ -209,7 +214,7 @@ Quadrature<0>::Quadrature (const Quadrature<1> &)
 //              quadrature_points(1),
   weights(1,1.),
   is_tensor_product_flag (false),
-  tensor_basis{}
+  tensor_basis {}
 {}
 
 
@@ -258,7 +263,7 @@ Subscriptor(),
           ++k;
         }
   for (unsigned int i=0; i<dim; ++i)
-    (*tensor_basis)[i] = q;
+    tensor_basis[i] = q;
 }
 
 
@@ -266,12 +271,19 @@ Subscriptor(),
 template <int dim>
 Quadrature<dim>::Quadrature (const Quadrature<dim> &q)
   :
-  Subscriptor(),
-  quadrature_points (q.quadrature_points),
+  Subscriptor()
+/*  quadrature_points (q.quadrature_points),
   weights (q.weights),
-  is_tensor_product_flag (q.is_tensor_product_flag),
-  tensor_basis (std_cxx14::make_unique<std::array<Quadrature<1>, dim>>(*q.tensor_basis))
-{}
+  is_tensor_product_flag (q.is_tensor_product_flag)*/,
+  tensor_basis {}
+{
+  quadrature_points = q.quadrature_points;
+  weights =q.weights;
+  is_tensor_product_flag =q.is_tensor_product_flag;
+
+  if (is_tensor_product_flag)
+    tensor_basis = q.tensor_basis;
+}
 
 
 
@@ -281,7 +293,8 @@ Quadrature<1>::Quadrature (const Quadrature<1> &q)
   Subscriptor(),
   quadrature_points (q.quadrature_points),
   weights (q.weights),
-  is_tensor_product_flag (q.is_tensor_product_flag)
+  is_tensor_product_flag (q.is_tensor_product_flag),
+  tensor_basis {}
 {}
 
 
@@ -294,7 +307,7 @@ Quadrature<dim>::operator= (const Quadrature<dim> &q)
   quadrature_points = q.quadrature_points;
   is_tensor_product_flag = q.is_tensor_product_flag;
   if (dim!=1)
-    tensor_basis = std_cxx14::make_unique<std::array<Quadrature<1>, dim>>(*q.tensor_basis);
+    tensor_basis = q.tensor_basis;
   return *this;
 }
 
@@ -335,7 +348,7 @@ Quadrature<dim>::get_tensor_basis () const
           ExcMessage("This function only makes sense if "
                      "this object represents a tensor product!"));
 
-  return *tensor_basis;
+  return tensor_basis;
 }
 
 
@@ -395,8 +408,8 @@ QAnisotropic<2>::QAnisotropic(const Quadrature<1> &qx,
       }
   Assert (k==this->size(), ExcInternalError());
   this->is_tensor_product_flag = true;
-  (*this->tensor_basis)[0] = qx;
-  (*this->tensor_basis)[1] = qy;
+  this->tensor_basis[0] = qx;
+  this->tensor_basis[1] = qy;
 }
 
 
@@ -430,9 +443,9 @@ QAnisotropic<3>::QAnisotropic(const Quadrature<1> &qx,
         }
   Assert (k==this->size(), ExcInternalError());
   this->is_tensor_product_flag = true;
-  (*this->tensor_basis)[0] = qx;
-  (*this->tensor_basis)[1] = qy;
-  (*this->tensor_basis)[2] = qz;
+  this->tensor_basis[0] = qx;
+  this->tensor_basis[1] = qy;
+  this->tensor_basis[2] = qz;
 }
 
 

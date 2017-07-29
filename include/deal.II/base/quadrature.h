@@ -25,9 +25,6 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-template <int dim>
-class Quadrature;
-
 /*!@addtogroup Quadrature */
 /*@{*/
 
@@ -264,7 +261,7 @@ protected:
    * Stores the one-dimensional tensor basis objects in case this object
    * can be represented by a tensor product.
    */
-  std::unique_ptr<std::array<Quadrature<1>, dim> > tensor_basis;
+  std::array<Quadrature<dim==1?0:1>, dim> tensor_basis;
 };
 
 
