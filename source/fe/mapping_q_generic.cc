@@ -37,6 +37,7 @@
 #include <deal.II/matrix_free/tensor_product_kernels.h>
 #include <deal.II/matrix_free/shape_info.h>
 #include <deal.II/matrix_free/evaluation_kernels.h>
+#include <deal.II/matrix_free/evaluation_selector.h>
 
 #include <cmath>
 #include <algorithm>
@@ -1645,7 +1646,7 @@ namespace internal
                         = data.mapping_support_points[data.inverse_renumber[i]][d];
                     }
 
-                internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate
+                SelectEvaluator<dim, -1, 0, n_comp, double>::evaluate
                 (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
                  &(data.scratch[0]), true, false, false);
 
