@@ -137,8 +137,8 @@ SelectEvaluator<dim, -1, dummy, n_components, Number>::evaluate
  const bool               evaluate_gradients,
  const bool               evaluate_hessians)
 {
-  /*const unsigned int fe_degree = shape_info.fe_degree;
-  const unsigned int n_q_points_1d = shape_info.n_q_points;*/
+  const unsigned int fe_degree = shape_info.fe_degree;
+  const unsigned int n_q_points_1d = shape_info.n_q_points_1d;
 
   if (shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric_plus_dg0)
     {
@@ -162,6 +162,22 @@ SelectEvaluator<dim, -1, dummy, n_components, Number>::evaluate
              ::evaluate(shape_info, values_dofs_actual, values_quad,
                         gradients_quad, hessians_quad, scratch_data,
                         evaluate_values, evaluate_gradients, evaluate_hessians);
+  else if (fe_degree==6 && n_q_points_1d==7 &&
+           shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric)
+    {
+      internal::FEEvaluationImplTransformToCollocation<dim, 6, n_components, Number>
+      ::evaluate(shape_info, values_dofs_actual, values_quad,
+                 gradients_quad, hessians_quad, scratch_data,
+                 evaluate_values, evaluate_gradients, evaluate_hessians);
+    }
+  else if (fe_degree==6 && n_q_points_1d==7 &&
+           shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric)
+    {
+      internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_symmetric, dim, 6, 7, n_components, Number>
+      ::evaluate(shape_info, values_dofs_actual, values_quad,
+                 gradients_quad, hessians_quad, scratch_data,
+                 evaluate_values, evaluate_gradients, evaluate_hessians);
+    }
   else
     AssertThrow(false, ExcNotImplemented());
 }
