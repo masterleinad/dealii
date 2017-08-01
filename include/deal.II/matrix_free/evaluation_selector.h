@@ -21,6 +21,118 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+template <int dim, int n_components, typename Number>
+struct Default
+{
+  static inline void create (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+                             VectorizedArray<Number> *values_dofs_actual[],
+                             VectorizedArray<Number> *values_quad[],
+                             VectorizedArray<Number> *gradients_quad[][dim],
+                             VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
+                             VectorizedArray<Number> *scratch_data,
+                             const bool               evaluate_values,
+                             const bool               evaluate_gradients,
+                             const bool               evaluate_hessians)
+  {
+    internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general,
+             dim, -1, 0, n_components, Number>
+             ::evaluate(shape_info, values_dofs_actual, values_quad,
+                        gradients_quad, hessians_quad, scratch_data,
+                        evaluate_values, evaluate_gradients, evaluate_hessians);
+  }
+};
+
+template<int DEPTH , int degree, int n_q_points_1d, int dim, int n_components, typename Number>
+struct Factory : Default<dim, n_components, Number> {};
+
+template<int n_q_points_1d, int dim, int n_components, typename Number>
+struct Factory<0, 10, n_q_points_1d, dim, n_components, Number> : Default<dim, n_components, Number> {};
+
+template<int degree, int dim, int n_components, typename Number>
+struct Factory<1, degree, 10, dim, n_components, Number> : Default<dim, n_components, Number> {};
+
+template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
+struct Factory<0, degree, n_q_points_1d, dim, n_components, Number>
+{
+  static inline void create (
+    const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    VectorizedArray<Number> *values_dofs_actual[],
+    VectorizedArray<Number> *values_quad[],
+    VectorizedArray<Number> *gradients_quad[][dim],
+    VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
+    VectorizedArray<Number> *scratch_data,
+    const bool               evaluate_values,
+    const bool               evaluate_gradients,
+    const bool               evaluate_hessians)
+  {
+    const unsigned int runtime_degree = shape_info.fe_degree;
+    if (runtime_degree == degree)
+      Factory<1, degree, 0, dim, n_components, Number>::create (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad, scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
+    else
+      Factory<0, degree + 1, n_q_points_1d, dim, n_components, Number>::create (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad, scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
+  }
+};
+
+template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
+struct Factory<1, degree, n_q_points_1d, dim, n_components, Number>
+{
+  static inline void create (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+                             VectorizedArray<Number> *values_dofs_actual[],
+                             VectorizedArray<Number> *values_quad[],
+                             VectorizedArray<Number> *gradients_quad[][dim],
+                             VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
+                             VectorizedArray<Number> *scratch_data,
+                             const bool               evaluate_values,
+                             const bool               evaluate_gradients,
+                             const bool               evaluate_hessians)
+  {
+    const unsigned int runtime_n_q_points_1d = shape_info.n_q_points_1d;
+    if (runtime_n_q_points_1d == n_q_points_1d)
+      {
+        if (n_q_points_1d == degree+1)
+          {
+            if (shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric_collocation)
+              internal::FEEvaluationImplCollocation<dim, degree, n_components, Number>
+              ::evaluate(shape_info, values_dofs_actual, values_quad,
+                         gradients_quad, hessians_quad, scratch_data,
+                         evaluate_values, evaluate_gradients, evaluate_hessians);
+            else
+              internal::FEEvaluationImplTransformToCollocation<dim, degree, n_components, Number>
+              ::evaluate(shape_info, values_dofs_actual, values_quad,
+                         gradients_quad, hessians_quad, scratch_data,
+                         evaluate_values, evaluate_gradients, evaluate_hessians);
+          }
+        else
+          internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_symmetric, dim, degree, n_q_points_1d, n_components, Number>
+          ::evaluate(shape_info, values_dofs_actual, values_quad,
+                     gradients_quad, hessians_quad, scratch_data,
+                     evaluate_values, evaluate_gradients, evaluate_hessians);
+      }
+    else
+      Factory<1, degree, n_q_points_1d + 1, dim, n_components, Number>::create (shape_info, values_dofs_actual, values_quad,
+          gradients_quad, hessians_quad, scratch_data,
+          evaluate_values, evaluate_gradients, evaluate_hessians);
+  }
+};
+
+template<int dim, int n_components, typename Number>
+void symmetric_selector_evaluate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+                                  VectorizedArray<Number> *values_dofs_actual[],
+                                  VectorizedArray<Number> *values_quad[],
+                                  VectorizedArray<Number> *gradients_quad[][dim],
+                                  VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
+                                  VectorizedArray<Number> *scratch_data,
+                                  const bool               evaluate_values,
+                                  const bool               evaluate_gradients,
+                                  const bool               evaluate_hessians)
+{
+  Assert(shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric||
+         shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric_collocation,
+         ExcInternalError());
+  Factory<0,0,0, dim, n_components, Number>::create (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad, scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
+}
+
+
 
 template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename Number>
 struct SelectEvaluator
@@ -137,9 +249,6 @@ SelectEvaluator<dim, -1, dummy, n_components, Number>::evaluate
  const bool               evaluate_gradients,
  const bool               evaluate_hessians)
 {
-  const unsigned int fe_degree = shape_info.fe_degree;
-  const unsigned int n_q_points_1d = shape_info.n_q_points_1d;
-
   if (shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric_plus_dg0)
     {
       internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_symmetric_plus_dg0,
@@ -162,24 +271,11 @@ SelectEvaluator<dim, -1, dummy, n_components, Number>::evaluate
              ::evaluate(shape_info, values_dofs_actual, values_quad,
                         gradients_quad, hessians_quad, scratch_data,
                         evaluate_values, evaluate_gradients, evaluate_hessians);
-  else if (fe_degree==6 && n_q_points_1d==7 &&
-           shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric)
-    {
-      internal::FEEvaluationImplTransformToCollocation<dim, 6, n_components, Number>
-      ::evaluate(shape_info, values_dofs_actual, values_quad,
-                 gradients_quad, hessians_quad, scratch_data,
-                 evaluate_values, evaluate_gradients, evaluate_hessians);
-    }
-  else if (fe_degree==6 && n_q_points_1d==7 &&
-           shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric)
-    {
-      internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_symmetric, dim, 6, 7, n_components, Number>
-      ::evaluate(shape_info, values_dofs_actual, values_quad,
-                 gradients_quad, hessians_quad, scratch_data,
-                 evaluate_values, evaluate_gradients, evaluate_hessians);
-    }
   else
-    AssertThrow(false, ExcNotImplemented());
+    symmetric_selector_evaluate<dim, n_components, Number>
+    (shape_info, values_dofs_actual, values_quad,
+     gradients_quad, hessians_quad, scratch_data,
+     evaluate_values, evaluate_gradients, evaluate_hessians);
 }
 
 DEAL_II_NAMESPACE_CLOSE
