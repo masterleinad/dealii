@@ -8,11 +8,11 @@ DEAL:0::computed: 2.70821 expected: 2.70801 difference: 0.000192324
 DEAL:0::H1_norm:
 DEAL:0::computed: 3.33947 expected: 3.33916 difference: 0.000311941
 DEAL:0::L1_norm:
-DEAL:0::computed: 2.91688 expected: 2.91667 difference: 0.000208333
+DEAL:0::computed: 2.91687 expected: 2.91667 difference: 0.000208333
 DEAL:0::Linfty_norm:
 DEAL:0::computed: 3.00000 expected: 3.00000 difference: 0.00000
 DEAL:0::mean:
-DEAL:0::computed: -2.91688 expected: -2.91667 difference: 0.000208333
+DEAL:0::computed: -2.91687 expected: -2.91667 difference: 0.000208333
 DEAL:0::Lp_norm:
 DEAL:0::computed: 1.80879 expected: 1.80849 difference: 0.000304641
 DEAL:0::W1p_seminorm:
@@ -28,11 +28,11 @@ DEAL:1::computed: 2.70821 expected: 2.70801 difference: 0.000192324
 DEAL:1::H1_norm:
 DEAL:1::computed: 3.33947 expected: 3.33916 difference: 0.000311941
 DEAL:1::L1_norm:
-DEAL:1::computed: 2.91688 expected: 2.91667 difference: 0.000208333
+DEAL:1::computed: 2.91687 expected: 2.91667 difference: 0.000208333
 DEAL:1::Linfty_norm:
 DEAL:1::computed: 3.00000 expected: 3.00000 difference: 0.00000
 DEAL:1::mean:
-DEAL:1::computed: -2.91688 expected: -2.91667 difference: 0.000208333
+DEAL:1::computed: -2.91687 expected: -2.91667 difference: 0.000208333
 DEAL:1::Lp_norm:
 DEAL:1::computed: 1.80879 expected: 1.80849 difference: 0.000304641
 DEAL:1::W1p_seminorm:
@@ -49,11 +49,11 @@ DEAL:2::computed: 2.70821 expected: 2.70801 difference: 0.000192324
 DEAL:2::H1_norm:
 DEAL:2::computed: 3.33947 expected: 3.33916 difference: 0.000311941
 DEAL:2::L1_norm:
-DEAL:2::computed: 2.91688 expected: 2.91667 difference: 0.000208333
+DEAL:2::computed: 2.91687 expected: 2.91667 difference: 0.000208333
 DEAL:2::Linfty_norm:
 DEAL:2::computed: 3.00000 expected: 3.00000 difference: 0.00000
 DEAL:2::mean:
-DEAL:2::computed: -2.91688 expected: -2.91667 difference: 0.000208333
+DEAL:2::computed: -2.91687 expected: -2.91667 difference: 0.000208333
 DEAL:2::Lp_norm:
 DEAL:2::computed: 1.80879 expected: 1.80849 difference: 0.000304641
 DEAL:2::W1p_seminorm:

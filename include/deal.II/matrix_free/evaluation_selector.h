@@ -49,7 +49,7 @@ template<int n_q_points_1d, int dim, int n_components, typename Number>
 struct Factory<0, 10, n_q_points_1d, dim, n_components, Number> : Default<dim, n_components, Number> {};
 
 template<int degree, int dim, int n_components, typename Number>
-struct Factory<1, degree, 10, dim, n_components, Number> : Default<dim, n_components, Number> {};
+struct Factory<1, degree, 11, dim, n_components, Number> : Default<dim, n_components, Number> {};
 
 template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
 struct Factory<0, degree, n_q_points_1d, dim, n_components, Number>
