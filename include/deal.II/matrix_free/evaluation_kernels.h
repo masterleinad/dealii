@@ -377,6 +377,8 @@ namespace internal
                                       Eval::dofs_per_cell : Eval::n_q_points);
     const unsigned int max_stack_size = 100;
     VectorizedArray<Number>  temp_data[(temp_size > 0 && temp_size < max_stack_size) ? 2*temp_size : 1];
+    for (unsigned int i=0; i<((temp_size > 0 && temp_size < max_stack_size) ? 2*temp_size : 1)-1; ++i)
+      temp_data[i] = std::numeric_limits<Number>::signaling_NaN();
     VectorizedArray<Number> *temp1;
     VectorizedArray<Number> *temp2;
     if (temp_size == 0)
