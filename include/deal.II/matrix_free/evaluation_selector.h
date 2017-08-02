@@ -57,14 +57,15 @@ struct Default
   }
 };
 
-template<int DEPTH , int degree, int n_q_points_1d, int dim, int n_components, typename Number>
+template<int DEPTH , int degree, int n_q_points_1d, int dim, int n_components, typename Number, class Enable = void>
 struct Factory : Default<dim, n_components, Number> {};
 
 template<int n_q_points_1d, int dim, int n_components, typename Number>
 struct Factory<0, 10, n_q_points_1d, dim, n_components, Number> : Default<dim, n_components, Number> {};
 
-template<int degree, int dim, int n_components, typename Number>
-struct Factory<1, degree, 11, dim, n_components, Number> : Default<dim, n_components, Number> {};
+template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
+struct Factory<1, degree, n_q_points_1d, dim, n_components, Number,
+  typename std::enable_if<n_q_points_1d==degree+2>::type> : Default<dim, n_components, Number> {};
 
 template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
 struct Factory<0, degree, n_q_points_1d, dim, n_components, Number>
@@ -81,10 +82,15 @@ struct Factory<0, degree, n_q_points_1d, dim, n_components, Number>
     const bool               evaluate_hessians)
   {
     const unsigned int runtime_degree = shape_info.fe_degree;
+    constexpr unsigned int nonnegative_start_n_q_points = (degree>0)?0:degree-1;
     if (runtime_degree == degree)
-      Factory<1, degree, 0, dim, n_components, Number>::evaluate (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad, scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
+      Factory<1, degree, nonnegative_start_n_q_points, dim, n_components, Number>::evaluate
+      (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad,
+       scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
     else
-      Factory<0, degree + 1, n_q_points_1d, dim, n_components, Number>::evaluate (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad, scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
+      Factory<0, degree + 1, n_q_points_1d, dim, n_components, Number>::evaluate
+      (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad,
+       scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
   }
 
   static inline void integrate (
@@ -96,16 +102,21 @@ struct Factory<0, degree, n_q_points_1d, dim, n_components, Number>
     const bool               integrate_values,
     const bool               integrate_gradients)
   {
-    const unsigned int runtime_degree = shape_info.fe_degree;
+    const int runtime_degree = shape_info.fe_degree;
     if (runtime_degree == degree)
-      Factory<1, degree, 0, dim, n_components, Number>::integrate (shape_info, values_dofs_actual, values_quad, gradients_quad, scratch_data, integrate_values, integrate_gradients);
+      Factory<1, degree, 0, dim, n_components, Number>::integrate
+      (shape_info, values_dofs_actual, values_quad, gradients_quad,
+       scratch_data, integrate_values, integrate_gradients);
     else
-      Factory<0, degree + 1, n_q_points_1d, dim, n_components, Number>::integrate (shape_info, values_dofs_actual, values_quad, gradients_quad, scratch_data, integrate_values, integrate_gradients);
+      Factory<0, degree + 1, n_q_points_1d, dim, n_components, Number>::integrate
+      (shape_info, values_dofs_actual, values_quad, gradients_quad,
+       scratch_data, integrate_values, integrate_gradients);
   }
 };
 
 template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
-struct Factory<1, degree, n_q_points_1d, dim, n_components, Number>
+struct Factory<1, degree, n_q_points_1d, dim, n_components, Number,
+  typename std::enable_if<n_q_points_1d<degree+2>::type>
 {
   static inline void evaluate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
                                VectorizedArray<Number> *values_dofs_actual[],
@@ -117,7 +128,7 @@ struct Factory<1, degree, n_q_points_1d, dim, n_components, Number>
                                const bool               evaluate_gradients,
                                const bool               evaluate_hessians)
   {
-    const unsigned int runtime_n_q_points_1d = shape_info.n_q_points_1d;
+    const int runtime_n_q_points_1d = shape_info.n_q_points_1d;
     if (runtime_n_q_points_1d == n_q_points_1d)
       {
         if (n_q_points_1d == degree+1)
@@ -196,7 +207,9 @@ void symmetric_selector_evaluate (const internal::MatrixFreeFunctions::ShapeInfo
   Assert(shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric||
          shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric_collocation,
          ExcInternalError());
-  Factory<0,0,0, dim, n_components, Number>::evaluate (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad, scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
+  Factory<0,0,0, dim, n_components, Number>::evaluate
+  (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad,
+   scratch_data, evaluate_values, evaluate_gradients, evaluate_hessians);
 }
 
 
@@ -212,7 +225,9 @@ void symmetric_selector_integrate (const internal::MatrixFreeFunctions::ShapeInf
   Assert(shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric||
          shape_info.element_type == internal::MatrixFreeFunctions::tensor_symmetric_collocation,
          ExcInternalError());
-  Factory<0,0,0, dim, n_components, Number>::integrate (shape_info, values_dofs_actual, values_quad, gradients_quad, scratch_data, integrate_values, integrate_gradients);
+  Factory<0,0,0, dim, n_components, Number>::integrate
+  (shape_info, values_dofs_actual, values_quad, gradients_quad,
+   scratch_data, integrate_values, integrate_gradients);
 }
 
 
@@ -253,10 +268,6 @@ SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate
  const bool               evaluate_gradients,
  const bool               evaluate_hessians)
 {
-  // Run time selection of algorithm matching the element type. Since some
-  // template combinations do not work for fe_degree==-1, create safe template
-  // values for the calls below.
-
   Assert(fe_degree>=0  && n_q_points_1d>0, ExcInternalError());
 
   if (fe_degree+1 == n_q_points_1d &&
@@ -323,10 +334,6 @@ SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::integrate
  const bool               integrate_values,
  const bool               integrate_gradients)
 {
-  // Run time selection of algorithm matching the element type. Since some
-  // template combinations do not work for fe_degree==-1, create safe template
-  // values for the calls below.
-
   Assert(fe_degree>=0  && n_q_points_1d>0, ExcInternalError());
 
   if (fe_degree+1 == n_q_points_1d &&
