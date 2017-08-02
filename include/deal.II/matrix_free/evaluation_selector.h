@@ -85,7 +85,7 @@ struct Factory<dim, n_components, Number, 0, degree, n_q_points_1d>
     const bool               evaluate_hessians)
   {
     const unsigned int runtime_degree = shape_info.fe_degree;
-    constexpr unsigned int nonnegative_start_n_q_points = (degree>0)?0:degree-1;
+    constexpr unsigned int nonnegative_start_n_q_points = (degree>0)?degree-1:0;
     if (runtime_degree == degree)
       Factory<dim, n_components, Number, 1, degree, nonnegative_start_n_q_points>::evaluate
       (shape_info, values_dofs_actual, values_quad, gradients_quad, hessians_quad,
@@ -106,7 +106,7 @@ struct Factory<dim, n_components, Number, 0, degree, n_q_points_1d>
     const bool               integrate_gradients)
   {
     const int runtime_degree = shape_info.fe_degree;
-    constexpr unsigned int nonnegative_start_n_q_points = (degree>0)?0:degree-1;
+    constexpr unsigned int nonnegative_start_n_q_points = (degree>0)?degree-1:0;
     if (runtime_degree == degree)
       Factory<dim, n_components, Number, 1, degree, nonnegative_start_n_q_points>::integrate
       (shape_info, values_dofs_actual, values_quad, gradients_quad,
