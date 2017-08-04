@@ -21,6 +21,7 @@
 #include <deal.II/base/derivative_form.h>
 #include <deal.II/base/table.h>
 #include <deal.II/base/quadrature_lib.h>
+#include <deal.II/base/vectorization.h>
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/fe/mapping.h>
 #include <deal.II/fe/fe_q.h>
@@ -454,7 +455,7 @@ public:
       * we need to store the evaluations of the 1d polynomials at the
       * the 1d quadrature quadrature points. That is what this variable is for.
       */
-    internal::MatrixFreeFunctions::ShapeInfo<double> shape_info;
+    internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<double>> shape_info;
 
     /**
      * In case the quadrature rule given represents a tensor product
