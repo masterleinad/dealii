@@ -688,26 +688,60 @@ initialize (const UpdateFlags      update_flags,
 
   tensor_product_quadrature = q.is_tensor_product();
 
-  if (dim>1 && tensor_product_quadrature)
+  if (dim>1)
     {
-      const FE_Q<dim> fe(polynomial_degree);
-      shape_info.reinit(q.get_tensor_basis(), fe);
+      tensor_product_quadrature = q.is_tensor_product();
 
-      const unsigned int n_shape_values = fe.n_dofs_per_cell();
-      const unsigned int max_size = std::max(n_q_points,n_shape_values);
-      const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
-      const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
+      const std::array<Quadrature<1>, dim> quad_array = q.get_tensor_basis();
 
-      scratch.resize((dim-1)*max_size);
-      values_dofs.resize(n_comp*n_shape_values);
-      values_quad.resize(n_comp*n_q_points);
+      // find out if the one-dimensional formula is the same
+      // in all directions
+      if (tensor_product_quadrature)
+        {
+          for (unsigned int i=1; i<dim && tensor_product_quadrature; ++i)
+            {
+              if (quad_array[i-1].size() != quad_array[i].size())
+                {
+                  tensor_product_quadrature = false;
+                  break;
+                }
+              else
+                {
+                  const std::vector<Point<1>> &points_1 = quad_array[i-1].get_points();
+                  const std::vector<Point<1>> &points_2 = quad_array[i].get_points();
+                  const std::vector<double> &weights_1 = quad_array[i-1].get_weights();
+                  const std::vector<double> &weights_2 = quad_array[i].get_weights();
+                  for (unsigned int j=0; j<quad_array[i].size(); ++j)
+                    {
+                      if (std::abs(points_1[j][0]-points_2[j][0])>1.e-10
+                          || std::abs(weights_1[j]-weights_2[j])>1.e-10)
+                        tensor_product_quadrature = false;
+                      break;
+                    }
+                }
+            }
 
-      inverse_renumber.resize(n_shape_values);
-      std::vector<unsigned int> renumber(n_shape_values);
-      FETools::hierarchic_to_lexicographic_numbering<dim> (polynomial_degree, renumber);
-      for (unsigned int i=0; i<n_shape_values; ++i)
-        inverse_renumber[renumber[i]] = i;
+          if (tensor_product_quadrature)
+            {
+              const FE_Q<dim> fe(polynomial_degree);
+              shape_info.reinit(q.get_tensor_basis()[0], fe);
 
+              const unsigned int n_shape_values = fe.n_dofs_per_cell();
+              const unsigned int max_size = std::max(n_q_points,n_shape_values);
+              const unsigned int vec_length = VectorizedArray<double>::n_array_elements;
+              const unsigned int n_comp = 1+ (spacedim-1)/vec_length;
+
+              scratch.resize((dim-1)*max_size);
+              values_dofs.resize(n_comp*n_shape_values);
+              values_quad.resize(n_comp*n_q_points);
+
+              inverse_renumber.resize(n_shape_values);
+              std::vector<unsigned int> renumber(n_shape_values);
+              FETools::hierarchic_to_lexicographic_numbering<dim> (polynomial_degree, renumber);
+              for (unsigned int i=0; i<n_shape_values; ++i)
+                inverse_renumber[renumber[i]] = i;
+            }
+        }
     }
 }
 
@@ -726,7 +760,7 @@ initialize_face (const UpdateFlags      update_flags,
     {
       const unsigned int facedim = dim > 1 ? dim-1 : 1;
       const FE_Q<facedim> fe(polynomial_degree);
-      shape_info.reinit(q.get_tensor_basis(), fe);
+      shape_info.reinit(q.get_tensor_basis()[0], fe);
 
       const unsigned int n_shape_values = fe.n_dofs_per_cell();
       const unsigned int n_q_points = q.size();
