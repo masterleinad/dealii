@@ -24,7 +24,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, int n_components, typename Number>
 struct Default
 {
-  static inline void evaluate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static inline void evaluate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                VectorizedArray<Number> *values_dofs_actual[],
                                VectorizedArray<Number> *values_quad[],
                                VectorizedArray<Number> *gradients_quad[][dim],
@@ -41,7 +41,7 @@ struct Default
                         evaluate_values, evaluate_gradients, evaluate_hessians);
   }
 
-  static inline void integrate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static inline void integrate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                 VectorizedArray<Number> *values_dofs_actual[],
                                 VectorizedArray<Number> *values_quad[],
                                 VectorizedArray<Number> *gradients_quad[][dim],
@@ -74,7 +74,7 @@ template<int degree, int n_q_points_1d, int dim, int n_components, typename Numb
 struct Factory<dim, n_components, Number, 0, degree, n_q_points_1d>
 {
   static inline void evaluate (
-    const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
     VectorizedArray<Number> *values_dofs_actual[],
     VectorizedArray<Number> *values_quad[],
     VectorizedArray<Number> *gradients_quad[][dim],
@@ -97,7 +97,7 @@ struct Factory<dim, n_components, Number, 0, degree, n_q_points_1d>
   }
 
   static inline void integrate (
-    const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
     VectorizedArray<Number> *values_dofs_actual[],
     VectorizedArray<Number> *values_quad[],
     VectorizedArray<Number> *gradients_quad[][dim],
@@ -122,7 +122,7 @@ template<int degree, int n_q_points_1d, int dim, int n_components, typename Numb
 struct Factory<dim, n_components, Number, 1, degree, n_q_points_1d,
   typename std::enable_if<n_q_points_1d<degree+2>::type>
 {
-  static inline void evaluate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static inline void evaluate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                VectorizedArray<Number> *values_dofs_actual[],
                                VectorizedArray<Number> *values_quad[],
                                VectorizedArray<Number> *gradients_quad[][dim],
@@ -160,7 +160,7 @@ struct Factory<dim, n_components, Number, 1, degree, n_q_points_1d,
           evaluate_values, evaluate_gradients, evaluate_hessians);
   }
 
-  static inline void integrate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static inline void integrate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                 VectorizedArray<Number> *values_dofs_actual[],
                                 VectorizedArray<Number> *values_quad[],
                                 VectorizedArray<Number> *gradients_quad[][dim],
@@ -199,7 +199,7 @@ struct Factory<dim, n_components, Number, 1, degree, n_q_points_1d,
 
 
 template<int dim, int n_components, typename Number>
-void symmetric_selector_evaluate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+void symmetric_selector_evaluate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                   VectorizedArray<Number> *values_dofs_actual[],
                                   VectorizedArray<Number> *values_quad[],
                                   VectorizedArray<Number> *gradients_quad[][dim],
@@ -220,7 +220,7 @@ void symmetric_selector_evaluate (const internal::MatrixFreeFunctions::ShapeInfo
 
 
 template<int dim, int n_components, typename Number>
-void symmetric_selector_integrate (const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+void symmetric_selector_integrate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                    VectorizedArray<Number> *values_dofs_actual[],
                                    VectorizedArray<Number> *values_quad[],
                                    VectorizedArray<Number> *gradients_quad[][dim],
@@ -241,7 +241,7 @@ void symmetric_selector_integrate (const internal::MatrixFreeFunctions::ShapeInf
 template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename Number>
 struct SelectEvaluator
 {
-  static void evaluate(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static void evaluate(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                        VectorizedArray<Number> *values_dofs_actual[],
                        VectorizedArray<Number> *values_quad[],
                        VectorizedArray<Number> *gradients_quad[][dim],
@@ -251,7 +251,7 @@ struct SelectEvaluator
                        const bool               evaluate_gradients,
                        const bool               evaluate_hessians);
 
-  static void integrate(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static void integrate(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                         VectorizedArray<Number> *values_dofs_actual[],
                         VectorizedArray<Number> *values_quad[],
                         VectorizedArray<Number> *gradients_quad[][dim],
@@ -264,7 +264,7 @@ template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename 
 inline
 void
 SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate
-(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
  VectorizedArray<Number> *values_dofs_actual[],
  VectorizedArray<Number> *values_quad[],
  VectorizedArray<Number> *gradients_quad[][dim],
@@ -332,7 +332,7 @@ template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename 
 inline
 void
 SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::integrate
-(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
  VectorizedArray<Number> *values_dofs_actual[],
  VectorizedArray<Number> *values_quad[],
  VectorizedArray<Number> *gradients_quad[][dim],
@@ -399,7 +399,7 @@ SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::integrate
 template <int dim, int n_q_points_1d, int n_components, typename Number>
 struct SelectEvaluator<dim, -1, n_q_points_1d, n_components, Number>
 {
-  static void evaluate(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static void evaluate(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                        VectorizedArray<Number> *values_dofs_actual[],
                        VectorizedArray<Number> *values_quad[],
                        VectorizedArray<Number> *gradients_quad[][dim],
@@ -409,7 +409,7 @@ struct SelectEvaluator<dim, -1, n_q_points_1d, n_components, Number>
                        const bool               evaluate_gradients,
                        const bool               evaluate_hessians);
 
-  static void integrate(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  static void integrate(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                         VectorizedArray<Number> *values_dofs_actual[],
                         VectorizedArray<Number> *values_quad[],
                         VectorizedArray<Number> *gradients_quad[][dim],
@@ -422,7 +422,7 @@ template <int dim, int dummy, int n_components, typename Number>
 inline
 void
 SelectEvaluator<dim, -1, dummy, n_components, Number>::evaluate
-(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
  VectorizedArray<Number> *values_dofs_actual[],
  VectorizedArray<Number> *values_quad[],
  VectorizedArray<Number> *gradients_quad[][dim],
@@ -465,7 +465,7 @@ template <int dim, int dummy, int n_components, typename Number>
 inline
 void
 SelectEvaluator<dim, -1, dummy, n_components, Number>::integrate
-(const internal::MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+(const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
  VectorizedArray<Number> *values_dofs_actual[],
  VectorizedArray<Number> *values_quad[],
  VectorizedArray<Number> *gradients_quad[][dim],

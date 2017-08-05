@@ -60,9 +60,14 @@ test ()
 
 
   // Sadly hdf5 is binary and we can not use hd5dump because it might
-  // not be in the path. At least we can look at the xdmf:
+  // not be in the path. At least we can look at the xdmf
+  // and make sure that the h5 file is created:
   if (0==Utilities::MPI::this_mpi_process (MPI_COMM_WORLD))
-    cat_file("out.xdmf");
+    {
+      cat_file("out.xdmf");
+      std::ifstream f("out.h5");
+      AssertThrow(f.good(), ExcIO());
+    }
 }
 
 

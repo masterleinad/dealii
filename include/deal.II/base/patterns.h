@@ -24,7 +24,7 @@
 #include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/base/subscriptor.h>
 #include <deal.II/base/utilities.h>
-
+#include <deal.II/base/std_cxx14/algorithm.h>
 
 #include <boost/archive/basic_archive.hpp>
 #include <boost/core/demangle.hpp>
@@ -1270,12 +1270,12 @@ namespace Patterns
       struct RankInfo<T, typename std::enable_if<is_map_compatible<T>::value>::type>
       {
         static constexpr int list_rank =
-          std::max(internal::RankInfo<typename T::key_type>::list_rank,
-                   RankInfo<typename T::mapped_type>::list_rank) +
+          std_cxx14::max(internal::RankInfo<typename T::key_type>::list_rank,
+                         RankInfo<typename T::mapped_type>::list_rank) +
           1;
         static constexpr int map_rank =
-          std::max(internal::RankInfo<typename T::key_type>::map_rank,
-                   RankInfo<typename T::mapped_type>::map_rank) +
+          std_cxx14::max(internal::RankInfo<typename T::key_type>::map_rank,
+                         RankInfo<typename T::mapped_type>::map_rank) +
           1;
       };
 
@@ -1303,8 +1303,8 @@ namespace Patterns
       template <class Key, class Value>
       struct RankInfo<std::pair<Key,Value>>
       {
-        static constexpr int list_rank = std::max(RankInfo<Key>::list_rank, RankInfo<Value>::list_rank);
-        static constexpr int map_rank = std::max(RankInfo<Key>::map_rank, RankInfo<Value>::map_rank)+1;
+        static constexpr int list_rank = std_cxx14::max(RankInfo<Key>::list_rank, RankInfo<Value>::list_rank);
+        static constexpr int map_rank = std_cxx14::max(RankInfo<Key>::map_rank, RankInfo<Value>::map_rank)+1;
       };
     }
 

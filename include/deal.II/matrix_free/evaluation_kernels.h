@@ -100,7 +100,7 @@ namespace internal
   struct FEEvaluationImpl
   {
     static
-    void evaluate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    void evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                    VectorizedArray<Number> *values_dofs_actual[],
                    VectorizedArray<Number> *values_quad[],
                    VectorizedArray<Number> *gradients_quad[][dim],
@@ -111,7 +111,7 @@ namespace internal
                    const bool               evaluate_hessians);
 
     static
-    void integrate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    void integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                     VectorizedArray<Number> *values_dofs_actual[],
                     VectorizedArray<Number> *values_quad[],
                     VectorizedArray<Number> *gradients_quad[][dim],
@@ -126,7 +126,7 @@ namespace internal
   inline
   void
   FEEvaluationImpl<type,dim,fe_degree,n_q_points_1d,n_components,Number>
-  ::evaluate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  ::evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
               VectorizedArray<Number> *values_dofs_actual[],
               VectorizedArray<Number> *values_quad[],
               VectorizedArray<Number> *gradients_quad[][dim],
@@ -155,8 +155,6 @@ namespace internal
     const unsigned int temp_size = Eval::dofs_per_cell == numbers::invalid_unsigned_int ? 0
                                    : (Eval::dofs_per_cell > Eval::n_q_points ?
                                       Eval::dofs_per_cell : Eval::n_q_points);
-    const unsigned int max_stack_size = 100;
-    VectorizedArray<Number>  temp_data[(temp_size > 0 && temp_size < max_stack_size) ? 2*temp_size : 1];
     VectorizedArray<Number> *temp1;
     VectorizedArray<Number> *temp2;
     if (temp_size == 0)
@@ -164,11 +162,6 @@ namespace internal
         temp1 = scratch_data;
         temp2 = temp1 + std::max(Utilities::fixed_power<dim>(shape_info.fe_degree+1),
                                  Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
-      }
-    else if (temp_size < max_stack_size)
-      {
-        temp1 = &temp_data[0];
-        temp2 = temp1 + temp_size;
       }
     else
       {
@@ -351,7 +344,7 @@ namespace internal
   inline
   void
   FEEvaluationImpl<type,dim,fe_degree,n_q_points_1d,n_components,Number>
-  ::integrate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  ::integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                VectorizedArray<Number> *values_dofs_actual[],
                VectorizedArray<Number> *values_quad[],
                VectorizedArray<Number> *gradients_quad[][dim],
@@ -375,9 +368,6 @@ namespace internal
     const unsigned int temp_size = Eval::dofs_per_cell == numbers::invalid_unsigned_int ? 0
                                    : (Eval::dofs_per_cell > Eval::n_q_points ?
                                       Eval::dofs_per_cell : Eval::n_q_points);
-    const unsigned int max_stack_size = 100;
-    AlignedVector<VectorizedArray<Number>>  temp_data;
-    temp_data.resize_fast((temp_size > 0 && temp_size < max_stack_size) ? 2*temp_size : 1);
     VectorizedArray<Number> *temp1;
     VectorizedArray<Number> *temp2;
     if (temp_size == 0)
@@ -385,11 +375,6 @@ namespace internal
         temp1 = scratch_data;
         temp2 = temp1 + std::max(Utilities::fixed_power<dim>(shape_info.fe_degree+1),
                                  Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
-      }
-    else if (temp_size < max_stack_size)
-      {
-        temp1 = &temp_data[0];
-        temp2 = temp1 + temp_size;
       }
     else
       {
@@ -555,7 +540,7 @@ namespace internal
   struct FEEvaluationImplTransformToCollocation
   {
     static
-    void evaluate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    void evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                    VectorizedArray<Number> *values_dofs[],
                    VectorizedArray<Number> *values_quad[],
                    VectorizedArray<Number> *gradients_quad[][dim],
@@ -566,7 +551,7 @@ namespace internal
                    const bool               evaluate_hessians);
 
     static
-    void integrate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    void integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                     VectorizedArray<Number> *values_dofs[],
                     VectorizedArray<Number> *values_quad[],
                     VectorizedArray<Number> *gradients_quad[][dim],
@@ -579,7 +564,7 @@ namespace internal
   inline
   void
   FEEvaluationImplTransformToCollocation<dim, fe_degree, n_components, Number>
-  ::evaluate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  ::evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
               VectorizedArray<Number> *values_dofs[],
               VectorizedArray<Number> *values_quad[],
               VectorizedArray<Number> *gradients_quad[][dim],
@@ -663,7 +648,7 @@ namespace internal
   inline
   void
   FEEvaluationImplTransformToCollocation<dim, fe_degree, n_components, Number>
-  ::integrate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  ::integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                VectorizedArray<Number> *values_dofs[],
                VectorizedArray<Number> *values_quad[],
                VectorizedArray<Number> *gradients_quad[][dim],
@@ -742,7 +727,7 @@ namespace internal
   struct FEEvaluationImplCollocation
   {
     static
-    void evaluate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    void evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                    VectorizedArray<Number> *values_dofs[],
                    VectorizedArray<Number> *values_quad[],
                    VectorizedArray<Number> *gradients_quad[][dim],
@@ -753,7 +738,7 @@ namespace internal
                    const bool               evaluate_hessians);
 
     static
-    void integrate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    void integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                     VectorizedArray<Number> *values_dofs[],
                     VectorizedArray<Number> *values_quad[],
                     VectorizedArray<Number> *gradients_quad[][dim],
@@ -766,7 +751,7 @@ namespace internal
   inline
   void
   FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>
-  ::evaluate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  ::evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
               VectorizedArray<Number> *values_dofs[],
               VectorizedArray<Number> *values_quad[],
               VectorizedArray<Number> *gradients_quad[][dim],
@@ -830,7 +815,7 @@ namespace internal
   inline
   void
   FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>
-  ::integrate (const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+  ::integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
                VectorizedArray<Number> *values_dofs[],
                VectorizedArray<Number> *values_quad[],
                VectorizedArray<Number> *gradients_quad[][dim],
