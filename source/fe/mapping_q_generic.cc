@@ -732,13 +732,6 @@ initialize (const UpdateFlags      update_flags,
 
               scratch.resize((dim-1)*max_size);
               values_dofs.resize(n_comp*n_shape_values);
-              values_quad.resize(n_comp*n_q_points);
-
-              inverse_renumber.resize(n_shape_values);
-              std::vector<unsigned int> renumber(n_shape_values);
-              FETools::hierarchic_to_lexicographic_numbering<dim> (polynomial_degree, renumber);
-              for (unsigned int i=0; i<n_shape_values; ++i)
-                inverse_renumber[renumber[i]] = i;
             }
         }
     }
@@ -769,15 +762,6 @@ initialize_face (const UpdateFlags      update_flags,
 
       scratch.resize((dim-1)*max_size);
       values_dofs.resize(n_comp*n_shape_values);
-      values_quad.resize(n_comp*n_q_points);
-      gradients_quad.resize(n_comp*n_q_points*dim);
-
-      inverse_renumber.resize(n_shape_values);
-      std::vector<unsigned int> renumber(n_shape_values);
-      FETools::hierarchic_to_lexicographic_numbering<facedim> (polynomial_degree, renumber);
-      for (unsigned int i=0; i<n_shape_values; ++i)
-        inverse_renumber[renumber[i]] = i;
-
     }
 
   if (dim > 1)
@@ -1635,13 +1619,15 @@ namespace internal
                     values_quad_ptr[c] = &(data.values_quad[c*n_q_points]);
                   }
 
+                const std::vector<unsigned int> &renumber_to_lexicographic
+                  = data.shape_info.lexicographic_numbering;
                 for (unsigned int i=0; i<n_shape_values; ++i)
                   for (unsigned int d=0; d<spacedim; ++d)
                     {
                       const unsigned int in_comp = d%vec_length;
                       const unsigned int out_comp = d/vec_length;
                       data.values_dofs[out_comp*n_shape_values+i][in_comp]
-                        = data.mapping_support_points[data.inverse_renumber[i]][d];
+                        = data.mapping_support_points[renumber_to_lexicographic[i]][d];
                     }
 
                 internal::FEEvaluationImpl<internal::MatrixFreeFunctions::tensor_general, dim, -1, 0, n_comp, double>::evaluate
@@ -1721,13 +1707,15 @@ namespace internal
                   VectorizedArray<double> *gradients_quad_ptr[n_comp][dim];
 
                   // transform data appropriately
+                  const std::vector<unsigned int> &renumber_to_lexicographic
+                    = data.shape_info.lexicographic_numbering;
                   for (unsigned int i=0; i<n_shape_values; ++i)
                     for (unsigned int d=0; d<spacedim; ++d)
                       {
                         const unsigned int in_comp = d%vec_length;
                         const unsigned int out_comp = d/vec_length;
                         data.values_dofs[out_comp*n_shape_values+i][in_comp]
-                          = data.mapping_support_points[data.inverse_renumber[i]][d];
+                          = data.mapping_support_points[renumber_to_lexicographic[i]][d];
                       }
 
                   for (unsigned int c=0; c<n_comp; ++c)
@@ -1857,13 +1845,15 @@ namespace internal
                     VectorizedArray<double> *hessians_quad_ptr[n_comp][n_hessians];
 
                     // transform data appropriately
+                    const std::vector<unsigned int> &renumber_to_lexicographic
+                      = data.shape_info.lexicographic_numbering;
                     for (unsigned int i=0; i<n_shape_values; ++i)
                       for (unsigned int d=0; d<spacedim; ++d)
                         {
                           const unsigned int in_comp = d%vec_length;
                           const unsigned int out_comp = d/vec_length;
                           data.values_dofs[out_comp*n_shape_values+i][in_comp]
-                            = data.mapping_support_points[data.inverse_renumber[i]][d];
+                            = data.mapping_support_points[renumber_to_lexicographic[i]][d];
                         }
 
                     for (unsigned int c=0; c<n_comp; ++c)
