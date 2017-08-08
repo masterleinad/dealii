@@ -88,7 +88,8 @@ int main(int argc, char **argv)
 
     PETScWrappers::SolverCG solver(control);
     PETScWrappers::PreconditionSSOR preconditioner(A);
-    check_solve (solver, control, A,u,f, preconditioner);
+    check_solver_within_range(solver.solve(A,u,f,preconditioner),
+                              control.last_step(), 18, 20);
   }
 
 }
