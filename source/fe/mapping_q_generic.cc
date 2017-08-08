@@ -690,8 +690,6 @@ initialize (const UpdateFlags      update_flags,
 
   if (dim>1)
     {
-      tensor_product_quadrature = q.is_tensor_product();
-
       // find out if the one-dimensional formula is the same
       // in all directions
       if (tensor_product_quadrature)
@@ -1634,16 +1632,12 @@ namespace internal
                 (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]), nullptr, nullptr,
                  &(data.scratch[0]), true, false, false);
 
-                for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
+                for (unsigned int out_comp=0; out_comp<n_comp; ++out_comp)
                   for (unsigned int i=0; i<n_q_points; ++i)
-                    for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
+                    for (unsigned int in_comp=0;
+                         in_comp<vec_length && in_comp<spacedim-out_comp*vec_length; ++in_comp)
                       quadrature_points[i][out_comp*vec_length+in_comp]
                         = data.values_quad[out_comp*n_q_points+i][in_comp];
-                // Treat the last component special as it might not be full.
-                for (unsigned int i=0; i<n_q_points; ++i)
-                  for (unsigned int in_comp=0; in_comp<spacedim-(n_comp-1)*vec_length; ++in_comp)
-                    quadrature_points[i][(n_comp-1)*vec_length+in_comp]
-                      = data.values_quad[(n_comp-1)*n_q_points+i][in_comp];
               }
             else
               {
@@ -1730,10 +1724,11 @@ namespace internal
                    &(data.scratch[0]), false, true, false);
 
                   // We need to reinterpret the data after evaluate has been applied.
-                  for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
+                  for (unsigned int out_comp=0; out_comp<n_comp; ++out_comp)
                     for (unsigned int point=0; point<n_q_points; ++point)
                       for (unsigned int j=0; j<dim; ++j)
-                        for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
+                        for (unsigned int in_comp=0;
+                             in_comp<vec_length && in_comp<spacedim-out_comp*vec_length; ++in_comp)
                           {
                             const unsigned int total_number = point*dim+j;
                             const unsigned int new_comp = total_number/n_q_points;
@@ -1741,17 +1736,6 @@ namespace internal
                             data.contravariant[new_point][out_comp*vec_length+in_comp][new_comp]
                               = data.gradients_quad[(out_comp*n_q_points+point)*dim+j][in_comp];
                           }
-                  // treat last component special as it might not be full
-                  for (unsigned int point=0; point<n_q_points; ++point)
-                    for (unsigned int j=0; j<dim; ++j)
-                      for (unsigned int in_comp=0; in_comp<spacedim-(n_comp-1)*vec_length; ++in_comp)
-                        {
-                          const unsigned int total_number = point*dim+j;
-                          const unsigned int new_comp = total_number/n_q_points;
-                          const unsigned int new_point = total_number % n_q_points;
-                          data.contravariant[new_point][(n_comp-1)*vec_length+in_comp][new_comp]
-                            = data.gradients_quad[((n_comp-1)*n_q_points+point)*dim+j][in_comp];
-                        }
                 }
               else // no tensor product
                 {
@@ -1871,10 +1855,11 @@ namespace internal
                     constexpr int desymmetrize_2d [3][2] = {{0,0},{1,1},{0,1}};
 
                     // We need to reinterpret the data after evaluate has been applied.
-                    for (unsigned int out_comp=0; out_comp<n_comp-1; ++out_comp)
+                    for (unsigned int out_comp=0; out_comp<n_comp; ++out_comp)
                       for (unsigned int point=0; point<n_q_points; ++point)
                         for (unsigned int j=0; j<n_hessians; ++j)
-                          for (unsigned int in_comp=0; in_comp<vec_length; ++in_comp)
+                          for (unsigned int in_comp=0;
+                               in_comp<vec_length && in_comp<spacedim-out_comp*vec_length; ++in_comp)
                             {
                               const unsigned int total_number = point*n_hessians+j;
                               const unsigned int new_point = total_number % n_q_points;
@@ -1887,22 +1872,6 @@ namespace internal
                               jacobian_grads[new_point][out_comp*vec_length+in_comp][new_hessian_comp_i][new_hessian_comp_j] = value;
                               jacobian_grads[new_point][out_comp*vec_length+in_comp][new_hessian_comp_j][new_hessian_comp_i] = value;
                             }
-                    // treat last component special as it might not be full
-                    for (unsigned int point=0; point<n_q_points; ++point)
-                      for (unsigned int j=0; j<n_hessians; ++j)
-                        for (unsigned int in_comp=0; in_comp<spacedim-(n_comp-1)*vec_length; ++in_comp)
-                          {
-                            const unsigned int total_number = point*n_hessians+j;
-                            const unsigned int new_point = total_number % n_q_points;
-                            const unsigned int new_hessian_comp = total_number/n_q_points;
-                            const unsigned int new_hessian_comp_i = dim==2 ? desymmetrize_2d[new_hessian_comp][0]
-                                                                    : desymmetrize_3d[new_hessian_comp][0];
-                            const unsigned int new_hessian_comp_j = dim==2 ? desymmetrize_2d[new_hessian_comp][1]
-                                                                    : desymmetrize_3d[new_hessian_comp][1];
-                            const double value = data.hessians_quad[((n_comp-1)*n_q_points+point)*n_hessians+j][in_comp];
-                            jacobian_grads[new_point][(n_comp-1)*vec_length+in_comp][new_hessian_comp_i][new_hessian_comp_j] = value;
-                            jacobian_grads[new_point][(n_comp-1)*vec_length+in_comp][new_hessian_comp_j][new_hessian_comp_i] = value;
-                          }
                   }
                 else
                   {
