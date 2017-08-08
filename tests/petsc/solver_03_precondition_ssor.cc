@@ -40,7 +40,6 @@ check_solve(SolverType          &solver,
             VectorType          &f,
             const PRECONDITION  &P)
 {
-  deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
   u = 0.;
   f = 1.;
@@ -88,7 +87,7 @@ int main(int argc, char **argv)
 
     PETScWrappers::SolverCG solver(control);
     PETScWrappers::PreconditionSSOR preconditioner(A);
-    check_solver_within_range(solver.solve(A,u,f,preconditioner),
+    check_solver_within_range_detailed(solver.solve(A,u,f,preconditioner),
                               control.last_step(), 18, 20);
   }
 

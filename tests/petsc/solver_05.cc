@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 
     PETScWrappers::SolverGMRES solver(control);
     PETScWrappers::PreconditionJacobi preconditioner(A);
-    check_solver_within_range(solver.solve(A,u,f,preconditioner),
+    check_solver_within_range_detailed(solver.solve(A,u,f,preconditioner),
                               control.last_step(), 47, 49);
   }
 

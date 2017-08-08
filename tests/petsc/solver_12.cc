@@ -62,14 +62,12 @@ int main(int argc, char **argv)
     PETScWrappers::SolverPreOnly solver(control);
 
     PETScWrappers::PreconditionJacobi preconditioner(A);
-    deallog << "Solver type: " << typeid(solver).name() << std::endl;
-    check_solver_within_range(solver.solve(A,u,f,preconditioner),
+    check_solver_within_range_detailed(solver.solve(A,u,f,preconditioner),
                               control.last_step(), 1, 11);
 
     //run twice because this errored out at some point
     u = 0.;
-    deallog << "Solver type: " << typeid(solver).name() << std::endl;
-    check_solver_within_range(solver.solve(A,u,f,preconditioner),
+    check_solver_within_range_detailed(solver.solve(A,u,f,preconditioner),
                               control.last_step(), 1, 1);
   }
 

@@ -59,7 +59,7 @@ int main(int argc, char **argv)
     PETScWrappers::SolverRichardson solver(control);
     PETScWrappers::PreconditionJacobi preconditioner(A);
 
-    check_solver_within_range(
+    check_solver_within_range_detailed(
       solver.solve(A,u,f, preconditioner),
       control.last_step(), 2295, 2300);
   }

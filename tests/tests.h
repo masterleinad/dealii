@@ -240,11 +240,11 @@ std::string unify_pretty_function (const std::string &text)
   {                                                                              \
     const unsigned int previous_depth = deallog.depth_file(0);                   \
     try                                                                          \
-      {                                                                                \
-        SolverType_COMMAND;                                                          \
-      }                                                                                \
-    catch  (SolverControl::NoConvergence &exc)                                                    \
-      {}                                                                               \
+      {                                                                          \
+        SolverType_COMMAND;                                                      \
+      }                                                                          \
+    catch  (SolverControl::NoConvergence &exc)                                   \
+      {}                                                                         \
     deallog.depth_file(previous_depth);                                          \
     const unsigned int steps = CONTROL_COMMAND;                                  \
     if (steps >= MIN_ALLOWED && steps <= MAX_ALLOWED)                            \
@@ -260,7 +260,34 @@ std::string unify_pretty_function (const std::string &text)
   }
 
 
-// ------------------------------ Functions used in initializing subsystems -------------------
+
+/*
+ * Same as above but don't change the log depth.
+ */
+
+#define check_solver_within_range_detailed(SolverType_COMMAND, CONTROL_COMMAND, MIN_ALLOWED, MAX_ALLOWED) \
+  {                                                                              \
+    deallog << "Solver type: " << typeid(solver).name() << std::endl;            \
+    try                                                                          \
+      {                                                                          \
+        SolverType_COMMAND;                                                      \
+      }                                                                          \
+    catch (SolverControl::NoConvergence &exc)                                    \
+      {}                                                                         \
+    if (steps >= MIN_ALLOWED && steps <= MAX_ALLOWED)                            \
+      {                                                                          \
+        deallog << "Solver stopped within " << MIN_ALLOWED << " - "              \
+                << MAX_ALLOWED << " iterations" << std::endl;                    \
+      }                                                                          \
+    else                                                                         \
+      {                                                                          \
+        deallog << "Solver stopped after " << steps << " iterations"             \
+                << std::endl;                                                    \
+      }                                                                          \
+  }
+
+
+------------------------------ Functions used in initializing subsystems -------------------
 
 
 /*
