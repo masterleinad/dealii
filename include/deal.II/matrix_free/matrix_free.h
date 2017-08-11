@@ -1762,48 +1762,56 @@ reinit(const Mapping<dim>                                    &mapping,
 namespace internal
 {
   template <typename VectorStruct>
-  bool update_ghost_values_start_block (const VectorStruct &vec,
-                                        const unsigned int channel,
-                                        std::integral_constant<bool, true>);
-  template <typename VectorStruct>
-  void reset_ghost_values_block (const VectorStruct &vec,
-                                 const bool          zero_out_ghosts,
-                                 std::integral_constant<bool, true>);
-  template <typename VectorStruct>
-  void update_ghost_values_finish_block (const VectorStruct &vec,
-                                         std::integral_constant<bool, true>);
-  template <typename VectorStruct>
-  void compress_start_block (const VectorStruct &vec,
-                             const unsigned int channel,
-                             std::integral_constant<bool, true>);
-  template <typename VectorStruct>
-  void compress_finish_block (const VectorStruct &vec,
-                              std::integral_constant<bool, true>);
+  typename std::enable_if<IsBlockVector<VectorStruct>::value, bool>::type
+  update_ghost_values_start_block (const VectorStruct &vec,
+                                   const unsigned int channel);
 
   template <typename VectorStruct>
-  bool update_ghost_values_start_block (const VectorStruct &,
-                                        const unsigned int,
-                                        std::integral_constant<bool, false>)
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  reset_ghost_values_block (const VectorStruct &vec,
+                            const bool          zero_out_ghosts);
+
+  template <typename VectorStruct>
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  update_ghost_values_finish_block (const VectorStruct &vec);
+
+  template <typename VectorStruct>
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  compress_start_block (const VectorStruct &vec,
+                        const unsigned int channel);
+
+  template <typename VectorStruct>
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  compress_finish_block (const VectorStruct &vec);
+
+  template <typename VectorStruct>
+  typename std::enable_if<!IsBlockVector<VectorStruct>::value, bool>::type
+  update_ghost_values_start_block (const VectorStruct &,
+                                   const unsigned int)
   {
     return false;
   }
+
   template <typename VectorStruct>
-  void reset_ghost_values_block (const VectorStruct &,
-                                 const bool,
-                                 std::integral_constant<bool, false>)
+  typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
+  reset_ghost_values_block (const VectorStruct &,
+                            const bool)
   {}
+
   template <typename VectorStruct>
-  void update_ghost_values_finish_block (const VectorStruct &,
-                                         std::integral_constant<bool, false>)
+  typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
+  update_ghost_values_finish_block (const VectorStruct &)
   {}
+
   template <typename VectorStruct>
-  void compress_start_block (const VectorStruct &,
-                             const unsigned int,
-                             std::integral_constant<bool, false>)
+  typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
+  compress_start_block (const VectorStruct &,
+                        const unsigned int)
   {}
+
   template <typename VectorStruct>
-  void compress_finish_block (const VectorStruct &,
-                              std::integral_constant<bool, false>)
+  typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
+  compress_finish_block (const VectorStruct &)
   {}
 
 
@@ -1815,9 +1823,7 @@ namespace internal
   bool update_ghost_values_start (const VectorStruct &vec,
                                   const unsigned int channel = 0)
   {
-    return
-      update_ghost_values_start_block(vec, channel,
-                                      std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
+    return  update_ghost_values_start_block(vec, channel);
   }
 
 
@@ -1860,9 +1866,9 @@ namespace internal
 
   template <typename VectorStruct>
   inline
-  bool update_ghost_values_start_block (const VectorStruct &vec,
-                                        const unsigned int channel,
-                                        std::integral_constant<bool, true>)
+  typename std::enable_if<IsBlockVector<VectorStruct>::value, bool>::type
+  update_ghost_values_start_block (const VectorStruct &vec,
+                                        const unsigned int channel)
   {
     bool return_value = false;
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
@@ -1880,8 +1886,7 @@ namespace internal
   void reset_ghost_values (const VectorStruct &vec,
                            const bool          zero_out_ghosts)
   {
-    reset_ghost_values_block(vec, zero_out_ghosts,
-                             std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
+    reset_ghost_values_block(vec, zero_out_ghosts);
   }
 
 
@@ -1921,9 +1926,9 @@ namespace internal
 
   template <typename VectorStruct>
   inline
-  void reset_ghost_values_block (const VectorStruct &vec,
-                                 const bool          zero_out_ghosts,
-                                 std::integral_constant<bool, true>)
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  reset_ghost_values_block (const VectorStruct &vec,
+                                 const bool          zero_out_ghosts)
   {
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       reset_ghost_values(vec.block(i), zero_out_ghosts);
@@ -1935,8 +1940,7 @@ namespace internal
   inline
   void update_ghost_values_finish (const VectorStruct &vec)
   {
-    update_ghost_values_finish_block(vec,
-                                     std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
+    update_ghost_values_finish_block(vec);
   }
 
 
@@ -1972,8 +1976,8 @@ namespace internal
 
   template <typename VectorStruct>
   inline
-  void update_ghost_values_finish_block (const VectorStruct &vec,
-                                         std::integral_constant<bool, true>)
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  update_ghost_values_finish_block (const VectorStruct &vec)
   {
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       update_ghost_values_finish(vec.block(i));
@@ -1986,8 +1990,7 @@ namespace internal
   void compress_start (VectorStruct &vec,
                        const unsigned int channel = 0)
   {
-    compress_start_block (vec, channel,
-                          std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
+    compress_start_block (vec, channel);
   }
 
 
@@ -2024,9 +2027,9 @@ namespace internal
 
   template <typename VectorStruct>
   inline
-  void compress_start_block (VectorStruct      &vec,
-                             const unsigned int channel,
-                             std::integral_constant<bool, true>)
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  compress_start_block (VectorStruct      &vec,
+                        const unsigned int channel)
   {
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       compress_start(vec.block(i), channel + 500*i);
@@ -2038,8 +2041,7 @@ namespace internal
   inline
   void compress_finish (VectorStruct &vec)
   {
-    compress_finish_block(vec,
-                          std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
+    compress_finish_block(vec);
   }
 
 
@@ -2075,8 +2077,8 @@ namespace internal
 
   template <typename VectorStruct>
   inline
-  void compress_finish_block (VectorStruct &vec,
-                              std::integral_constant<bool, true>)
+  typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
+  compress_finish_block (VectorStruct &vec)                         
   {
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       compress_finish(vec.block(i));
