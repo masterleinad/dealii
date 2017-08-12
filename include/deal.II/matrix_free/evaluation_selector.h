@@ -21,6 +21,7 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+#ifndef DOXYGEN
 namespace
 {
 // The following classes serve the purpose of choosing the correct template
@@ -36,6 +37,11 @@ namespace
 // 4. If the current assumption on n_q_points_1d doesn't match the runtime
 //    parameter, increase n_q_points_1d by one and try again.
 //    If n_q_points_1d==degree+2 use the class Default which serves as a fallback.
+
+ /**
+  * This class serves as a fallback in case we don't have the appropriate template 
+  * specialization for the run time and template parameters given.
+  */
   template <int dim, int n_components, typename Number>
   struct Default
   {
@@ -73,18 +79,31 @@ namespace
   };
 
 
-
+  /**
+   * This class implements the actual choice of the template specialization.
+   */
   template<int dim, int n_components, typename Number,
            int DEPTH=0, int degree=0, int n_q_points_1d=0, class Enable = void>
   struct Factory : Default<dim, n_components, Number> {};
 
+  /**
+   * This specialization sets the maximal fe_degree for
+   * which we want to determine the correct template parameters based at runtime.
+   */
   template<int n_q_points_1d, int dim, int n_components, typename Number>
   struct Factory<dim, n_components, Number, 0, 10, n_q_points_1d> : Default<dim, n_components, Number> {};
 
+  /**
+   * This specialization sets the maximal number of n_q_points_1d for
+   * which we want to determine the correct template parameters based at runtime.
+   */
   template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
   struct Factory<dim, n_components, Number, 1, degree, n_q_points_1d,
     typename std::enable_if<n_q_points_1d==degree+2>::type> : Default<dim, n_components, Number> {};
 
+  /**
+   * This class chooses the correct template degree.
+   */
   template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
   struct Factory<dim, n_components, Number, 0, degree, n_q_points_1d>
   {
@@ -133,6 +152,9 @@ namespace
     }
   };
 
+  /**
+   * This class chooses the correct template n_q_points_1d after degree was chosen.
+   */
   template<int degree, int n_q_points_1d, int dim, int n_components, typename Number>
   struct Factory<dim, n_components, Number, 1, degree, n_q_points_1d,
     typename std::enable_if<n_q_points_1d<degree+2>::type>
@@ -213,6 +235,10 @@ namespace
 
 
 
+  /**
+   * This is the entry point for choosing the correct runtime parameters 
+   * for the 'evaluate' function.
+   */
   template<int dim, int n_components, typename Number>
   void symmetric_selector_evaluate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                     VectorizedArray<Number> *values_dofs_actual[],
@@ -234,6 +260,10 @@ namespace
 
 
 
+  /**
+   * This is the entry point for choosing the correct runtime parameters 
+   * for the 'integrate' function.
+   */
   template<int dim, int n_components, typename Number>
   void symmetric_selector_integrate (const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number> > &shape_info,
                                      VectorizedArray<Number> *values_dofs_actual[],
@@ -251,8 +281,20 @@ namespace
      scratch_data, integrate_values, integrate_gradients);
   }
 }
+#endif
 
 
+
+/**
+ * This class chooses an appropriate evaluation strategy based on the 
+ * template parameters and the shape_info variable which contains runtime
+ * parameters. In case the template parameters fe_degree and n_q_points_1d
+ * contain valid information (i.e. fe_degree>-1 and n_q_points>0), we simply
+ * pass these values to the respective template specializations.
+ * Otherwise, we perform a runtime matching of the runtime parameters to find
+ * the correct specialization. This matching currently supports 
+ * $0\leq fe\_degree$ and $degree-1\leq n_q_points_1d\leq degree+1$.
+ */
 template <int dim, int fe_degree, int n_q_points_1d, int n_components, typename Number>
 struct SelectEvaluator
 {
@@ -410,7 +452,9 @@ SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>::integrate
 }
 
 
-
+/**
+ * Specialization for invalid template parameters, i.e. fe_degree==-1.
+ */
 template <int dim, int n_q_points_1d, int n_components, typename Number>
 struct SelectEvaluator<dim, -1, n_q_points_1d, n_components, Number>
 {
