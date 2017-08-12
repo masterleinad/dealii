@@ -1756,7 +1756,8 @@ reinit(const Mapping<dim>                                    &mapping,
 // functions: for generic vectors, do nothing at all. For distributed vectors,
 // call update_ghost_values_start function and so on. If we have collections
 // of vectors, just do the individual functions of the components. In order to
-// keep ghost values consistent (whether we are in read or write mode). the whole situation is a bit complicated by the fact
+// keep ghost values consistent (whether we are in read or write mode).
+// the whole situation is a bit complicated by the fact
 // that we need to treat block vectors differently, which use some additional
 // helper functions to select the blocks and template magic.
 namespace internal
@@ -1789,6 +1790,7 @@ namespace internal
   update_ghost_values_start_block (const VectorStruct &,
                                    const unsigned int)
   {
+    std::cout << "update_ghost_values_start_block wrong" << std::endl;
     return false;
   }
 
@@ -1796,23 +1798,33 @@ namespace internal
   typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
   reset_ghost_values_block (const VectorStruct &,
                             const bool)
-  {}
+  {
+    std::cout << "reset_ghost_values_block wrong" << std::endl;
+  }
 
   template <typename VectorStruct>
   typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
   update_ghost_values_finish_block (const VectorStruct &)
-  {}
+  {
+    std::cout << "update_ghost_values_finish_block wrong" << std::endl;
+  }
 
   template <typename VectorStruct>
   typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
   compress_start_block (const VectorStruct &,
                         const unsigned int)
-  {}
+  {
+    Assert(false, ExcInternalError());
+    std::cout << "compress_start wrong" << std::endl;
+  }
 
   template <typename VectorStruct>
   typename std::enable_if<!IsBlockVector<VectorStruct>::value>::type
   compress_finish_block (const VectorStruct &)
-  {}
+  {
+    Assert(false, ExcInternalError());
+    std::cout << "compress_finish_block wrong" << std::endl;
+  }
 
 
 
@@ -1823,6 +1835,7 @@ namespace internal
   bool update_ghost_values_start (const VectorStruct &vec,
                                   const unsigned int channel = 0)
   {
+    std::cout << "update_ghost_values_start" << std::endl;
     return  update_ghost_values_start_block(vec, channel);
   }
 
@@ -1868,8 +1881,9 @@ namespace internal
   inline
   typename std::enable_if<IsBlockVector<VectorStruct>::value, bool>::type
   update_ghost_values_start_block (const VectorStruct &vec,
-                                        const unsigned int channel)
+                                   const unsigned int channel)
   {
+    std::cout << "update_ghost_values_start true" << std::endl;
     bool return_value = false;
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       return_value = update_ghost_values_start(vec.block(i), channel+509*i);
@@ -1886,6 +1900,7 @@ namespace internal
   void reset_ghost_values (const VectorStruct &vec,
                            const bool          zero_out_ghosts)
   {
+    std::cout << "reset_ghost_values" << std::endl;
     reset_ghost_values_block(vec, zero_out_ghosts);
   }
 
@@ -1928,8 +1943,9 @@ namespace internal
   inline
   typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
   reset_ghost_values_block (const VectorStruct &vec,
-                                 const bool          zero_out_ghosts)
+                            const bool          zero_out_ghosts)
   {
+    std::cout << "reset_ghost_values true" << std::endl;
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       reset_ghost_values(vec.block(i), zero_out_ghosts);
   }
@@ -1940,6 +1956,7 @@ namespace internal
   inline
   void update_ghost_values_finish (const VectorStruct &vec)
   {
+    std::cout << "update_ghost_values_finish" << std::endl;
     update_ghost_values_finish_block(vec);
   }
 
@@ -1979,6 +1996,7 @@ namespace internal
   typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
   update_ghost_values_finish_block (const VectorStruct &vec)
   {
+    std::cout << "update_ghost_values_finish true" << std::endl;
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       update_ghost_values_finish(vec.block(i));
   }
@@ -1990,6 +2008,7 @@ namespace internal
   void compress_start (VectorStruct &vec,
                        const unsigned int channel = 0)
   {
+    std::cout << "compress_start" << std::endl;
     compress_start_block (vec, channel);
   }
 
@@ -2028,9 +2047,10 @@ namespace internal
   template <typename VectorStruct>
   inline
   typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
-  compress_start_block (VectorStruct      &vec,
+  compress_start_block (const VectorStruct      &vec,
                         const unsigned int channel)
   {
+    std::cout << "compress_start true" << std::endl;
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       compress_start(vec.block(i), channel + 500*i);
   }
@@ -2041,6 +2061,7 @@ namespace internal
   inline
   void compress_finish (VectorStruct &vec)
   {
+    std::cout << "compress_finish" << std::endl;
     compress_finish_block(vec);
   }
 
@@ -2078,8 +2099,9 @@ namespace internal
   template <typename VectorStruct>
   inline
   typename std::enable_if<IsBlockVector<VectorStruct>::value>::type
-  compress_finish_block (VectorStruct &vec)                         
+  compress_finish_block (const VectorStruct &vec)
   {
+    std::cout << "compress_finish true" << std::endl;
     for (unsigned int i=0; i<vec.n_blocks(); ++i)
       compress_finish(vec.block(i));
   }
