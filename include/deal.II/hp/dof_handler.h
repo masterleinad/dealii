@@ -659,8 +659,23 @@ namespace hp
     /**
      * Return a constant reference to the set of finite element objects that
      * are used by this @p DoFHandler.
+     *
+     * @deprecated Use get_fe_collection() instead.
      */
-    const hp::FECollection<dim,spacedim> &get_fe () const;
+//    const hp::FECollection<dim,spacedim> &get_fe () const DEAL_II_DEPRECATED;
+
+    /**
+     * Return a constant reference to the ith finite element object that is
+     * used by this @p DoFHandler.
+     */
+    const FiniteElement<dim,spacedim> &
+    get_finite_element (const unsigned int i) const;
+
+    /**
+     * Return a constant reference to the set of finite element objects that
+     * are used by this @p DoFHandler.
+     */
+    const hp::FECollection<dim,spacedim> &get_fe_collection () const;
 
     /**
      * Return a constant reference to the triangulation underlying this
@@ -1058,10 +1073,37 @@ namespace hp
 
 
 
-  template <int dim, int spacedim>
+  /*template <int dim, int spacedim>
   inline
   const hp::FECollection<dim,spacedim> &
   DoFHandler<dim,spacedim>::get_fe () const
+  {
+    Assert (finite_elements != nullptr,
+            ExcMessage ("No finite element collection is associated with "
+                        "this DoFHandler"));
+    return *finite_elements;
+  }*/
+
+
+
+  template <int dim, int spacedim>
+  inline
+  const FiniteElement<dim,spacedim> &
+  DoFHandler<dim,spacedim>::get_finite_element
+  (const unsigned int number) const
+  {
+    Assert (finite_elements != nullptr,
+            ExcMessage ("No finite element collection is associated with "
+                        "this DoFHandler"));
+    return (*finite_elements)[number];
+  }
+
+
+
+  template <int dim, int spacedim>
+  inline
+  const hp::FECollection<dim,spacedim> &
+  DoFHandler<dim,spacedim>::get_fe_collection () const
   {
     Assert (finite_elements != nullptr,
             ExcMessage ("No finite element collection is associated with "
