@@ -832,7 +832,7 @@ public:
    *
    * @deprecated Use get_finite_element() instead.
    */
-//  const FiniteElement<dim,spacedim> &get_fe () const DEAL_II_DEPRECATED;
+  const FiniteElement<dim,spacedim> &get_fe () const DEAL_II_DEPRECATED;
 
   /**
    * Return a constant reference to the selected finite element object.
@@ -1227,7 +1227,7 @@ DoFHandler<dim, spacedim>::locally_owned_mg_dofs_per_processor (const unsigned i
 
 
 
-/*template <int dim, int spacedim>
+template <int dim, int spacedim>
 inline
 const FiniteElement<dim,spacedim> &
 DoFHandler<dim,spacedim>::get_fe () const
@@ -1235,7 +1235,7 @@ DoFHandler<dim,spacedim>::get_fe () const
   Assert(selected_fe!=nullptr,
          ExcMessage("You are trying to access the DoFHandler's FiniteElement object before it has been initialized."));
   return *selected_fe;
-}*/
+}
 
 
 

@@ -662,7 +662,7 @@ namespace hp
      *
      * @deprecated Use get_fe_collection() instead.
      */
-//    const hp::FECollection<dim,spacedim> &get_fe () const DEAL_II_DEPRECATED;
+    const hp::FECollection<dim,spacedim> &get_fe () const DEAL_II_DEPRECATED;
 
     /**
      * Return a constant reference to the ith finite element object that is
@@ -1073,7 +1073,7 @@ namespace hp
 
 
 
-  /*template <int dim, int spacedim>
+  template <int dim, int spacedim>
   inline
   const hp::FECollection<dim,spacedim> &
   DoFHandler<dim,spacedim>::get_fe () const
@@ -1082,7 +1082,7 @@ namespace hp
             ExcMessage ("No finite element collection is associated with "
                         "this DoFHandler"));
     return *finite_elements;
-  }*/
+  }
 
 
 
