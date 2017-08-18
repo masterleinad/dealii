@@ -3275,26 +3275,6 @@ namespace internal
           // finally update the cell DoF indices caches to make sure
           // our internal data structures are consistent
           update_all_active_cell_dof_indices_caches (dof_handler);
-
-
-          // have a barrier so that sends between two calls to this
-          // function are not mixed up.
-          //
-          // this is necessary because above we just see if there are
-          // messages and then receive them, without discriminating
-          // where they come from and whether they were sent in phase
-          // 1 or 2 (the function is called twice in a row). the need
-          // for a global communication step like this barrier could
-          // be avoided by receiving messages specifically from those
-          // processors from which we expect messages, and by using
-          // different tags for phase 1 and 2, but the cost of a
-          // barrier is negligible compared to everything else we do
-          // here
-          const parallel::distributed::Triangulation< dim, spacedim > *triangulation
-            = (dynamic_cast<const parallel::distributed::Triangulation<dim,spacedim>*>
-               (&dof_handler.get_triangulation()));
-          const int ierr = MPI_Barrier(triangulation->get_communicator());
-          AssertThrowMPI(ierr);
 #endif
         }
 
