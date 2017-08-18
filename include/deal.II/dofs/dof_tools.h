@@ -2487,6 +2487,97 @@ namespace DoFTools
 
 // ---------------------- inline and template functions --------------------
 
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  max_dofs_per_cell (const DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_finite_element().dofs_per_cell;
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  max_dofs_per_face (const DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_finite_element().dofs_per_face;
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  max_dofs_per_vertex (const DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_finite_element().dofs_per_vertex;
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  n_components (const DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_finite_element().n_components();
+  }
+
+
+
+  template <int dim, int spacedim>
+  inline
+  bool
+  fe_is_primitive (const DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_finite_element().is_primitive();
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  max_dofs_per_cell (const hp::DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_fe_collection().max_dofs_per_cell ();
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  max_dofs_per_face (const hp::DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_fe_collection().max_dofs_per_face ();
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  max_dofs_per_vertex (const hp::DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_fe_collection().max_dofs_per_vertex ();
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  unsigned int
+  n_components (const hp::DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_finite_element(0).n_components();
+  }
+
+
+  template <int dim, int spacedim>
+  inline
+  bool
+  fe_is_primitive (const hp::DoFHandler<dim,spacedim> &dh)
+  {
+    return dh.get_finite_element(0).is_primitive();
+  }
+
+
   template <typename DoFHandlerType, class Comp>
   void
   map_support_points_to_dofs

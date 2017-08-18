@@ -458,6 +458,32 @@ namespace DoFTools
 
 
 
+  template <int dim, int spacedim>
+  void
+  extract_dofs (const DoFHandler<dim,spacedim>   &dof,
+                const BlockMask     &block_mask,
+                std::vector<bool>       &selected_dofs)
+  {
+    // simply forward to the function that works based on a component mask
+    extract_dofs (dof, dof.get_fe().component_mask (block_mask),
+                  selected_dofs);
+  }
+
+
+
+  template <int dim, int spacedim>
+  void
+  extract_dofs (const hp::DoFHandler<dim,spacedim>   &dof,
+                const BlockMask     &block_mask,
+                std::vector<bool>       &selected_dofs)
+  {
+    // simply forward to the function that works based on a component mask
+    extract_dofs (dof, dof.get_fe().component_mask (block_mask),
+                  selected_dofs);
+  }
+
+
+
   template <typename DoFHandlerType>
   void
   extract_level_dofs (const unsigned int    level,
