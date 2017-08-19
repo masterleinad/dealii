@@ -30,13 +30,13 @@
 #include <deal.II/dofs/dof_levels.h>
 #include <deal.II/dofs/function_map.h>
 #include <deal.II/hp/fe_collection.h>
+#include <deal.II/base/std_cxx14/memory.h>
 
 #include <boost/serialization/split_member.hpp>
 
 #include <vector>
 #include <map>
 #include <set>
-#include <memory>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -846,7 +846,7 @@ public:
     * FiniteElement, only this one object is returned wrapped in a
     * hp::FECollection.
     */
-  hp::FECollection<dim,spacedim> get_fe_collection () const;
+  const hp::FECollection<dim,spacedim> &get_fe_collection () const;
 
   /**
    * Return a constant reference to the triangulation underlying this object.
@@ -950,6 +950,18 @@ private:
    */
   SmartPointer<const FiniteElement<dim,spacedim>,DoFHandler<dim,spacedim> >
   selected_fe;
+
+  /**
+   * The member function get_fe_collection returns a hp::FECollection
+   * which is expensive to construct each time anew. Hence, we just store
+   * a pointer to the required object which is filled the first time needed.
+   */
+  mutable std::unique_ptr<hp::FECollection<dim, spacedim> > fe_collection;
+
+  /**
+   * Mutex making sure that fe_collection can be correctly initialized.
+   */
+  mutable Threads::Mutex mutex;
 
   /**
    * An object that describes how degrees of freedom should be distributed and
@@ -1254,12 +1266,18 @@ DoFHandler<dim,spacedim>::get_finite_element
 
 template <int dim, int spacedim>
 inline
-hp::FECollection<dim,spacedim>
+const hp::FECollection<dim,spacedim> &
 DoFHandler<dim,spacedim>::get_fe_collection () const
 {
   Assert(selected_fe!=nullptr,
          ExcMessage("You are trying to access the DoFHandler's FiniteElement object before it has been initialized."));
-  return hp::FECollection<dim,spacedim>(*selected_fe);
+  if (fe_collection == nullptr)
+    {
+      Threads::Mutex::ScopedLock lock(mutex);
+      if (fe_collection == nullptr)
+        fe_collection = std_cxx14::make_unique<hp::FECollection<dim, spacedim>>(*selected_fe);
+    }
+  return *fe_collection;
 }
 
 
