@@ -542,8 +542,8 @@ public:
    *
    * @deprecated Use get_finite_element() instead.
    */
-  //const FiniteElement<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &
-  //get_fe (const unsigned int fe_index) const  DEAL_II_DEPRECATED;
+  const FiniteElement<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &
+  get_fe (const unsigned int fe_index) const  DEAL_II_DEPRECATED;
 
   /**
    * Return a reference to the finite element used on this object with the
@@ -1019,8 +1019,8 @@ public:
    *
    * @deprecated Use get_finite_element() instead.
    */
-  //const FiniteElement<DoFHandlerType<1,spacedim>::dimension,DoFHandlerType<1,spacedim>::space_dimension> &
-  //get_fe (const unsigned int fe_index) const DEAL_II_DEPRECATED;
+  const FiniteElement<DoFHandlerType<1,spacedim>::dimension,DoFHandlerType<1,spacedim>::space_dimension> &
+  get_fe (const unsigned int fe_index) const DEAL_II_DEPRECATED;
 
   /**
    * Return a reference to the finite element used on this object with the
@@ -1702,8 +1702,8 @@ public:
    *
    * @deprecated Use get_finite_element() instead.
    */
-  //const FiniteElement<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &
-  //get_fe () const DEAL_II_DEPRECATED;
+  const FiniteElement<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &
+  get_fe () const DEAL_II_DEPRECATED;
 
   /**
    * Return the finite element that is used on the cell pointed to by this

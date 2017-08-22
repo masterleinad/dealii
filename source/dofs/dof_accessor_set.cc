@@ -68,7 +68,7 @@ set_dof_values_by_interpolation (const Vector<number> &local_values,
           FullMatrix<double> interpolation (this->get_finite_element().dofs_per_cell, this->dof_handler->get_finite_element(fe_index).dofs_per_cell);
 
           this->get_finite_element().get_interpolation_matrix (this->dof_handler->get_finite_element(fe_index),
-                                                   interpolation);
+                                                               interpolation);
 
           // do the interpolation to the target space. for historical
           // reasons, matrices are set to size 0x0 internally even

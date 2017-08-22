@@ -1784,13 +1784,13 @@ DoFAccessor<structdim, DoFHandlerType,level_dof_access>::set_mg_dof_index
 
 
 
-/*template <int dim, typename DoFHandlerType, bool level_dof_access>
+template <int dim, typename DoFHandlerType, bool level_dof_access>
 inline
 const FiniteElement<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &
 DoFAccessor<dim,DoFHandlerType,level_dof_access>::get_fe (const unsigned int fe_index) const
 {
   return get_finite_element(fe_index);
-}*/
+}
 
 
 
@@ -2536,14 +2536,14 @@ fe_index_is_active (const unsigned int /*fe_index*/) const
 
 
 
-/*template <template <int, int> class DoFHandlerType, int spacedim, bool level_dof_access>
+template <template <int, int> class DoFHandlerType, int spacedim, bool level_dof_access>
 inline
 const FiniteElement<DoFHandlerType<1,spacedim>::dimension,DoFHandlerType<1,spacedim>::space_dimension> &
 DoFAccessor<0,DoFHandlerType<1,spacedim>, level_dof_access>::
 get_fe (const unsigned int fe_index) const
 {
   return get_finite_element(fe_index);
-}*/
+}
 
 
 
@@ -3714,7 +3714,7 @@ DoFCellAccessor<DoFHandlerType,level_dof_access>::set_dof_values
 
 
 
-/*template <typename DoFHandlerType, bool level_dof_access>
+template <typename DoFHandlerType, bool level_dof_access>
 inline
 const FiniteElement<DoFHandlerType::dimension,DoFHandlerType::space_dimension> &
 DoFCellAccessor<DoFHandlerType,level_dof_access>::get_fe () const
@@ -3727,7 +3727,7 @@ DoFCellAccessor<DoFHandlerType,level_dof_access>::get_fe () const
                       "with active cells. Consequently, you can not ask for the "
                       "active finite element on cells with children."));
   return this->dof_handler->get_finite_element(active_fe_index());
-}*/
+}
 
 
 
