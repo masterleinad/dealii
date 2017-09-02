@@ -70,6 +70,10 @@ void test (unsigned int variant)
   data.max_n_tmp_vectors = 80;
 
   SolverGMRES<Vector<number> > solver(control, data);
+  solver.connect_re_orthogonalize_slot([](int accumulated_iterations){
+          deallog << "Re-orthogonalization enabled at step "
+                  << accumulated_iterations << std::endl;
+          });
   solver.solve(matrix, sol, rhs, PreconditionIdentity());
 
   deallog.pop();
