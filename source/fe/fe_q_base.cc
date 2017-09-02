@@ -16,7 +16,6 @@
 
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/qprojector.h>
-#include <deal.II/base/template_constraints.h>
 #include <deal.II/base/tensor_product_polynomials.h>
 #include <deal.II/base/tensor_product_polynomials_const.h>
 #include <deal.II/base/tensor_product_polynomials_bubbles.h>
@@ -28,8 +27,6 @@
 #include <deal.II/fe/fe_tools.h>
 #include <deal.II/base/quadrature_lib.h>
 
-#include <vector>
-#include <sstream>
 #include <deal.II/base/std_cxx14/memory.h>
 
 DEAL_II_NAMESPACE_OPEN
@@ -47,7 +44,7 @@ namespace internal
       std::vector<unsigned int>
       face_lexicographic_to_hierarchic_numbering (const unsigned int degree)
       {
-        std::vector<unsigned int> dpo(dim, 1U);
+        std::array<unsigned int, dim> dpo {1U};
         for (unsigned int i=1; i<dpo.size(); ++i)
           dpo[i]=dpo[i-1]*(degree-1);
         const dealii::FiniteElementData<dim-1> face_data(dpo,1,degree);
@@ -1140,7 +1137,7 @@ FE_Q_Base<PolynomialType,dim,spacedim>::get_dpo_vector(const unsigned int degree
 {
   typedef FE_Q_Base<PolynomialType,dim,spacedim> FEQ;
   AssertThrow(degree>0, typename FEQ::ExcFEQCannotHaveDegree0());
-  std::vector<unsigned int> dpo(dim+1, 1U);
+  std::array<unsigned int, dim+1> dpo{1U};
   for (unsigned int i=1; i<dpo.size(); ++i)
     dpo[i]=dpo[i-1]*(degree-1);
   return dpo;
