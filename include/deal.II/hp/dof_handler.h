@@ -296,6 +296,11 @@ namespace hp
     DoFHandler (const DoFHandler &) = delete;
 
     /**
+     * Move constructor.
+     */
+    DoFHandler (DoFHandler &&) = default;
+
+    /**
      * Destructor.
      */
     virtual ~DoFHandler ();
@@ -307,6 +312,11 @@ namespace hp
      * is explicitly removed from the interface of this class.
      */
     DoFHandler &operator = (const DoFHandler &) = delete;
+
+    /**
+     * Copy assignment operator.
+     */
+    DoFHandler &operator = (DoFHandler &&) = default;
 
     /**
      * Go through the triangulation and "distribute" the degrees of freedoms
