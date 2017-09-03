@@ -27,6 +27,7 @@
 #include <memory>
 #include <utility>
 
+#include <deal.II/fe/fe_tools.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -430,7 +431,14 @@ public:
   /**
    * Move constructor.
    */
-//  FESystem (FESystem<dim,spacedim> &&) = default;
+  FESystem (FESystem<dim,spacedim> &&fe) :
+       FiniteElement<dim,spacedim> (FETools::Compositing::multiply_dof_numbers(&fe, 1),
+                                               FETools::Compositing::compute_restriction_is_additive_flags (&fe,1),
+                                                                               FETools::Compositing::compute_nonzero_components(&fe,1)),
+          base_elements((1>0))
+  {
+      Assert(false, ExcInternalError());
+  }
 
   /**
    * Destructor.
