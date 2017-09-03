@@ -442,7 +442,7 @@ public:
    * Copy assignment operator. This constructor is deleted, i.e, copying
    * FESystem objects is not allowed.
    */
-  FESystem& operator= (const FESystem<dim, spacedim> &) = delete;
+  //FESystem& operator= (const FESystem<dim, spacedim> &) = delete;
 
   /**
    * Move assignment operator.
