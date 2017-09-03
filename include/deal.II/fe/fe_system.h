@@ -431,19 +431,23 @@ public:
   /**
    * Move constructor.
    */
-  FESystem (FESystem<dim,spacedim> &&fe) :
-       FiniteElement<dim,spacedim> (FETools::Compositing::multiply_dof_numbers(&fe, 1),
-                                               FETools::Compositing::compute_restriction_is_additive_flags (&fe,1),
-                                                                               FETools::Compositing::compute_nonzero_components(&fe,1)),
-          base_elements((1>0))
-  {
-      Assert(false, ExcInternalError());
-  }
+  FESystem (FESystem<dim,spacedim> &&) = default;
 
   /**
    * Destructor.
    */
   virtual ~FESystem () = default;
+
+  /**
+   * Copy assignment operator. This constructor is deleted, i.e, copying
+   * FESystem objects is not allowed.
+   */
+  FESystem& operator= (const FESystem<dim, spacedim> &) = delete;
+
+  /**
+   * Move assignment operator.
+   */
+  FESystem& operator= (FESystem<dim, spacedim> &&) = default;
 
   /**
    * Return a string that uniquely identifies a finite element. This element
