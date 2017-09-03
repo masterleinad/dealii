@@ -321,6 +321,11 @@ public:
   DoFHandler (const DoFHandler &) = delete;
 
   /**
+   * Move constructor.
+   */
+  DoFHandler (DoFHandler &&) = default;
+
+  /**
    * Destructor.
    */
   virtual ~DoFHandler ();
@@ -332,6 +337,11 @@ public:
    * is explicitly removed from the interface of this class.
    */
   DoFHandler &operator = (const DoFHandler &) = delete;
+
+  /**
+   * Move assignment operator.
+   */
+  DoFHandler &operator = (DoFHandler &&) = default;
 
   /**
    * Assign a Triangulation and a FiniteElement to the DoFHandler and compute
