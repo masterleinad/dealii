@@ -428,9 +428,14 @@ public:
   FESystem (const FESystem<dim,spacedim> &) = delete;
 
   /**
+   * Move constructor.
+   */
+//  FESystem (FESystem<dim,spacedim> &&) = default;
+
+  /**
    * Destructor.
    */
-  virtual ~FESystem ();
+  virtual ~FESystem () = default;
 
   /**
    * Return a string that uniquely identifies a finite element. This element

@@ -23,7 +23,7 @@
 
 
 //
-// Check convert_generalized_support_opint_values_to_dof_values for systems
+// Check convert_generalized_support_point_values_to_dof_values for systems
 // of non-Lagrangian elements.
 //
 
