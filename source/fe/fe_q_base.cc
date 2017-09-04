@@ -16,7 +16,6 @@
 
 #include <deal.II/base/quadrature.h>
 #include <deal.II/base/qprojector.h>
-#include <deal.II/base/template_constraints.h>
 #include <deal.II/base/tensor_product_polynomials.h>
 #include <deal.II/base/tensor_product_polynomials_const.h>
 #include <deal.II/base/tensor_product_polynomials_bubbles.h>
@@ -28,8 +27,6 @@
 #include <deal.II/fe/fe_tools.h>
 #include <deal.II/base/quadrature_lib.h>
 
-#include <vector>
-#include <sstream>
 #include <deal.II/base/std_cxx14/memory.h>
 
 DEAL_II_NAMESPACE_OPEN
