@@ -24,41 +24,26 @@
 
 #include <deal.II/base/utilities.h>
 #include <deal.II/base/mpi.h>
-#include <deal.II/base/exceptions.h>
 #include <deal.II/base/thread_local_storage.h>
 
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #include <boost/math/special_functions/erf.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/random.hpp>
 DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 
-#include <algorithm>
-#include <cctype>
-#include <cerrno>
-#include <cmath>
-#include <cstddef>
-#include <cstdio>
-#include <ctime>
 #include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <limits>
-#include <sstream>
 
 #if defined(DEAL_II_HAVE_UNISTD_H) && defined(DEAL_II_HAVE_GETHOSTNAME)
-#  include <unistd.h>
 #endif
 
 #ifndef DEAL_II_MSVC
-#  include <stdlib.h>
 #endif
 
 
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
-#    include <Epetra_MpiComm.h>
+
 #    include <deal.II/lac/vector_memory.h>
 #    include <deal.II/lac/trilinos_vector.h>
 #    include <deal.II/lac/trilinos_parallel_block_vector.h>

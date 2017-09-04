@@ -17,14 +17,6 @@
 
 #ifdef DEAL_II_WITH_OPENCASCADE
 
-#include <deal.II/base/point.h>
-#include <deal.II/base/utilities.h>
-#include <deal.II/base/exceptions.h>
-
-#include <cstdio>
-#include <iostream>
-#include <set>
-
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 
 #include <IGESControl_Controller.hxx>
@@ -36,25 +28,18 @@ DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #include <STEPControl_Writer.hxx>
 
 #include <TopoDS.hxx>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Edge.hxx>
 #include <TopExp_Explorer.hxx>
 
 #include <Standard_Version.hxx>
 #if (OCC_VERSION_MAJOR < 7)
-#  include <Handle_Standard_Transient.hxx>
 #else
 #  include <Standard_Transient.hxx>
 #endif
 
-#include <TColStd_SequenceOfTransient.hxx>
 #include <TColStd_HSequenceOfTransient.hxx>
 #include <TColgp_HArray1OfPnt.hxx>
 
-#include <gp_Pnt.hxx>
 #include <gp_Lin.hxx>
-#include <gp_Vec.hxx>
 #include <GeomAPI_ProjectPointOnSurf.hxx>
 #include <GeomAPI_ProjectPointOnCurve.hxx>
 #include <IntCurvesFace_ShapeIntersector.hxx>
@@ -79,9 +64,6 @@ DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #include <ShapeAnalysis_Surface.hxx>
 
 DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
-
-#include <vector>
-#include <algorithm>
 
 DEAL_II_NAMESPACE_OPEN
 

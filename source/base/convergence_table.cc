@@ -14,7 +14,6 @@
 // ---------------------------------------------------------------------
 
 #include <deal.II/base/convergence_table.h>
-#include <cmath>
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -25,7 +25,6 @@ DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 #include <deal.II/differentiation/ad/sacado_product_types.h>
 #endif
 
-#include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/symmetric_tensor.templates.h>
 
 DEAL_II_NAMESPACE_OPEN

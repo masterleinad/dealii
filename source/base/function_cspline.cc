@@ -17,8 +17,6 @@
 #include <deal.II/base/function_cspline.h>
 
 #ifdef DEAL_II_WITH_GSL
-#include <cmath>
-#include <algorithm>
 
 DEAL_II_NAMESPACE_OPEN
 namespace Functions

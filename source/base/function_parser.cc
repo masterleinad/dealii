@@ -15,11 +15,8 @@
 
 
 #include <deal.II/base/function_parser.h>
-#include <deal.II/base/utilities.h>
 #include <deal.II/base/thread_management.h>
 #include <deal.II/lac/vector.h>
-#include <cmath>
-#include <map>
 
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #include <boost/random.hpp>

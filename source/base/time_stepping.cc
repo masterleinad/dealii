@@ -23,7 +23,6 @@
 #include <deal.II/lac/trilinos_epetra_vector.h>
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
-#include <deal.II/lac/trilinos_parallel_block_vector.h>
 
 DEAL_II_NAMESPACE_OPEN
 namespace TimeStepping

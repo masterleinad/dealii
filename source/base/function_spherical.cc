@@ -17,9 +17,6 @@
 #include <deal.II/base/function_spherical.h>
 #include <deal.II/base/geometric_utilities.h>
 
-#include <cmath>
-#include <algorithm>
-
 DEAL_II_NAMESPACE_OPEN
 namespace Functions
 {

@@ -19,8 +19,6 @@ DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #include <boost/math/special_functions/binomial.hpp>
 DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 
-#include <vector>
-
 DEAL_II_NAMESPACE_OPEN
 
 namespace

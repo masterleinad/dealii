@@ -18,8 +18,6 @@
 #include <deal.II/base/flow_function.h>
 #include <deal.II/lac/vector.h>
 
-#include <cmath>
-
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -32,24 +32,11 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <deal.II/base/data_out_base.h>
-#include <deal.II/base/utilities.h>
 #include <deal.II/base/parameter_handler.h>
-#include <deal.II/base/thread_management.h>
-#include <deal.II/base/memory_consumption.h>
-#include <deal.II/base/mpi.h>
 
-#include <cstring>
-#include <algorithm>
-#include <iomanip>
-#include <ctime>
-#include <cmath>
-#include <set>
-#include <sstream>
 #include <fstream>
-#include <memory>
 
 // we use uint32_t and uint8_t below, which are declared here:
-#include <stdint.h>
 
 #ifdef DEAL_II_WITH_ZLIB
 #  include <zlib.h>

@@ -14,8 +14,6 @@
 // ---------------------------------------------------------------------
 
 #include <deal.II/base/config.h>
-#include <cmath>
-#include <complex>
 #include <limits>
 
 DEAL_II_NAMESPACE_OPEN

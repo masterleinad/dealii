@@ -17,14 +17,9 @@
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/index_set.h>
 
-#include <vector>
-
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
-#    include <Epetra_MpiComm.h>
 #  endif
-#  include <Epetra_SerialComm.h>
-#  include <Epetra_Map.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

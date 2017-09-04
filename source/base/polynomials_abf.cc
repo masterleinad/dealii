@@ -15,9 +15,6 @@
 
 
 #include <deal.II/base/polynomials_abf.h>
-#include <deal.II/base/quadrature_lib.h>
-#include <iostream>
-#include <iomanip>
 
 
 DEAL_II_NAMESPACE_OPEN
