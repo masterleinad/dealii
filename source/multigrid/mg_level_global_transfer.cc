@@ -25,15 +25,12 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <deal.II/grid/tria.h>
-#include <deal.II/grid/tria_iterator.h>
 #include <deal.II/fe/fe.h>
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/multigrid/mg_tools.h>
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/mg_transfer.templates.h>
 #include <deal.II/multigrid/mg_transfer_internal.h>
-
-#include <algorithm>
 
 DEAL_II_NAMESPACE_OPEN
 

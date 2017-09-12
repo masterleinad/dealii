@@ -16,19 +16,14 @@
 
 #include <deal.II/lac/vector.h>
 #include <deal.II/lac/la_vector.h>
-#include <deal.II/lac/la_parallel_vector.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
-#include <deal.II/lac/petsc_parallel_vector.h>
-#include <deal.II/lac/petsc_parallel_block_vector.h>
-#include <deal.II/lac/trilinos_vector.h>
-#include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <deal.II/lac/sparse_matrix.h>
+#include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <deal.II/lac/block_sparse_matrix.h>
 #include <deal.II/multigrid/mg_transfer.h>
 #include <deal.II/multigrid/mg_transfer_block.h>
 #include <deal.II/multigrid/mg_transfer_component.h>
 #include <deal.II/multigrid/mg_smoother.h>
-#include <deal.II/multigrid/mg_transfer_block.templates.h>
 #include <deal.II/multigrid/mg_transfer_component.templates.h>
 #include <deal.II/multigrid/multigrid.templates.h>
 

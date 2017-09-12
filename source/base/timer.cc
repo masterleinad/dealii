@@ -18,16 +18,6 @@
 #include <deal.II/base/signaling_nan.h>
 #include <deal.II/base/thread_management.h>
 #include <deal.II/base/timer.h>
-#include <deal.II/base/utilities.h>
-
-#include <algorithm>
-#include <chrono>
-#include <iostream>
-#include <iomanip>
-#include <map>
-#include <sstream>
-#include <string>
-#include <type_traits>
 
 #ifdef DEAL_II_HAVE_SYS_RESOURCE_H
 #  include <sys/resource.h>

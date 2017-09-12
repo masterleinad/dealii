@@ -20,7 +20,6 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <sstream>
 
 
 DEAL_II_NAMESPACE_OPEN

@@ -16,7 +16,6 @@
 
 #include <deal.II/meshworker/local_results.h>
 #include <deal.II/meshworker/local_integrator.h>
-#include <deal.II/lac/block_indices.h>
 
 DEAL_II_NAMESPACE_OPEN
 

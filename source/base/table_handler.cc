@@ -18,10 +18,6 @@
 
 #include <boost/io/ios_state.hpp>
 
-#include <sstream>
-#include <iostream>
-#include <iomanip>
-
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -16,19 +16,14 @@
 
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/mpi.templates.h>
-#include <deal.II/base/utilities.h>
-#include <deal.II/base/exceptions.h>
 #include <deal.II/lac/vector_memory.h>
 #include <deal.II/lac/la_parallel_vector.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/base/multithread_info.h>
 
-#include <iostream>
-
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
-#    include <Epetra_MpiComm.h>
-#    include <deal.II/lac/vector_memory.h>
+
 #    include <deal.II/lac/trilinos_vector.h>
 #    include <deal.II/lac/trilinos_parallel_block_vector.h>
 #  endif

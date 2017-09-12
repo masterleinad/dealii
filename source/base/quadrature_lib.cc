@@ -16,11 +16,6 @@
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/geometry_info.h>
 
-#include <cmath>
-#include <limits>
-#include <algorithm>
-#include <functional>
-
 
 DEAL_II_NAMESPACE_OPEN
 

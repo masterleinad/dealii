@@ -17,8 +17,6 @@
 #include <deal.II/base/subscriptor.h>
 #include <deal.II/base/logstream.h>
 
-#include <typeinfo>
-#include <string>
 #include <iostream>
 
 DEAL_II_NAMESPACE_OPEN

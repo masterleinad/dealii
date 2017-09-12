@@ -16,10 +16,6 @@
 
 #include <deal.II/base/geometry_info.h>
 #include <deal.II/base/polynomials_bdm.h>
-#include <deal.II/base/polynomial_space.h>
-#include <deal.II/base/quadrature_lib.h>
-#include <iostream>
-#include <iomanip>
 
 DEAL_II_NAMESPACE_OPEN
 

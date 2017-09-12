@@ -15,7 +15,6 @@
 
 
 #include <deal.II/base/geometric_utilities.h>
-#include <deal.II/base/exceptions.h>
 
 
 DEAL_II_NAMESPACE_OPEN

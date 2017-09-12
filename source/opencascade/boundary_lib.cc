@@ -21,11 +21,9 @@
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 
 #include <GCPnts_AbscissaPoint.hxx>
-#include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_CompCurve.hxx>
 #include <BRepAdaptor_HCurve.hxx>
 #include <BRepAdaptor_HCompCurve.hxx>
-#include <GCPnts_AbscissaPoint.hxx>
 #include <ShapeAnalysis_Curve.hxx>
 #include <BRep_Tool.hxx>
 #include <BRepTools.hxx>
@@ -34,7 +32,6 @@ DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 
 #include <Standard_Version.hxx>
 #if (OCC_VERSION_MAJOR < 7)
-#  include <Handle_Adaptor3d_HCurve.hxx>
 #endif
 
 DEAL_II_ENABLE_EXTRA_DIAGNOSTICS

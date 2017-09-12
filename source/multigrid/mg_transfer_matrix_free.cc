@@ -19,17 +19,12 @@
 #include <deal.II/base/vectorization.h>
 #include <deal.II/lac/la_parallel_vector.h>
 #include <deal.II/grid/tria.h>
-#include <deal.II/grid/tria_iterator.h>
 #include <deal.II/dofs/dof_tools.h>
-#include <deal.II/fe/fe.h>
-#include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/multigrid/mg_tools.h>
 #include <deal.II/multigrid/mg_transfer_matrix_free.h>
 #include <deal.II/multigrid/mg_transfer_internal.h>
 
 #include <deal.II/matrix_free/tensor_product_kernels.h>
-
-#include <algorithm>
 
 DEAL_II_NAMESPACE_OPEN
 

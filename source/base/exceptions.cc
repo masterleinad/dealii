@@ -16,16 +16,8 @@
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/utilities.h>
-#include <deal.II/base/mpi.h>
-
-#include <string>
-#include <cstring>
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
 
 #ifdef DEAL_II_WITH_MPI
-#  include <mpi.h>
 #endif
 
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
