@@ -302,7 +302,7 @@ namespace OpenCASCADE
   {
     Handle(Geom_Plane) plane = new Geom_Plane(c_x,c_y,c_z,c);
     BRepAlgo_Section section(in_shape, plane);
-    TopoDS_Shape edges = section.Shape();
+    const TopoDS_Shape &edges = section.Shape();
     return edges;
   }
 
@@ -310,7 +310,7 @@ namespace OpenCASCADE
                          const double tolerance)
   {
     TopoDS_Edge out_shape;
-    TopoDS_Shape edges = in_shape;
+    const TopoDS_Shape &edges = in_shape;
     std::vector<Handle_Geom_BoundedCurve> intersections;
     TopLoc_Location L;
     Standard_Real First;
