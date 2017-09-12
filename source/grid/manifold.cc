@@ -48,8 +48,7 @@ private:
 /* -------------------------- Manifold --------------------- */
 
 template <int dim, int spacedim>
-Manifold<dim, spacedim>::~Manifold ()
-{}
+Manifold<dim, spacedim>::~Manifold () = default;
 
 
 

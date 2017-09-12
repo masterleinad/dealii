@@ -34,8 +34,7 @@ FiniteElement<dim, spacedim>::InternalDataBase::InternalDataBase ():
 
 
 template <int dim, int spacedim>
-FiniteElement<dim,spacedim>::InternalDataBase::~InternalDataBase ()
-{}
+FiniteElement<dim,spacedim>::InternalDataBase::~InternalDataBase () = default;
 
 
 
@@ -144,8 +143,7 @@ FiniteElement (const FiniteElementData<dim> &fe_data,
 
 
 template <int dim, int spacedim>
-FiniteElement<dim,spacedim>::~FiniteElement ()
-{}
+FiniteElement<dim,spacedim>::~FiniteElement () = default;
 
 
 

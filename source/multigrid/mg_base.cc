@@ -27,18 +27,15 @@ DEAL_II_NAMESPACE_OPEN
 
 
 template <typename VectorType>
-MGTransferBase<VectorType>::~MGTransferBase()
-{}
+MGTransferBase<VectorType>::~MGTransferBase() = default;
 
 
 template <typename VectorType>
-MGMatrixBase<VectorType>::~MGMatrixBase()
-{}
+MGMatrixBase<VectorType>::~MGMatrixBase() = default;
 
 
 template <typename VectorType>
-MGSmootherBase<VectorType>::~MGSmootherBase()
-{}
+MGSmootherBase<VectorType>::~MGSmootherBase() = default;
 
 
 template <typename VectorType>
@@ -53,8 +50,7 @@ MGSmootherBase<VectorType>::apply (const unsigned int level,
 
 
 template <typename VectorType>
-MGCoarseGridBase<VectorType>::~MGCoarseGridBase()
-{}
+MGCoarseGridBase<VectorType>::~MGCoarseGridBase() = default;
 
 
 // Explicit instantiations

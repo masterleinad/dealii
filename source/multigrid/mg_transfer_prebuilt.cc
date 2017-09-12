@@ -33,8 +33,7 @@ DEAL_II_NAMESPACE_OPEN
 
 
 template <typename VectorType>
-MGTransferPrebuilt<VectorType>::MGTransferPrebuilt ()
-{}
+MGTransferPrebuilt<VectorType>::MGTransferPrebuilt () = default;
 
 
 
@@ -55,8 +54,7 @@ MGTransferPrebuilt<VectorType>::MGTransferPrebuilt (const ConstraintMatrix &/*c*
 
 
 template <typename VectorType>
-MGTransferPrebuilt<VectorType>::~MGTransferPrebuilt ()
-{}
+MGTransferPrebuilt<VectorType>::~MGTransferPrebuilt () = default;
 
 
 

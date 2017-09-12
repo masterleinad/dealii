@@ -29,8 +29,7 @@ DEAL_II_NAMESPACE_OPEN
 
 
 template <int dim, int spacedim>
-Boundary<dim, spacedim>::~Boundary ()
-{}
+Boundary<dim, spacedim>::~Boundary () = default;
 
 
 template <int dim, int spacedim>

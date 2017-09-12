@@ -447,7 +447,7 @@ public:
   /**
    * Move assignment operator.
    */
-  FESystem& operator= (FESystem<dim, spacedim> &&) = default;
+  FESystem &operator= (FESystem<dim, spacedim> &&) = default;
 
   /**
    * Return a string that uniquely identifies a finite element. This element

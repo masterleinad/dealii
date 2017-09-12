@@ -6363,10 +6363,9 @@ DataOutInterface<dim,spacedim>::DataOutInterface ()
 {}
 
 
-template <int dim, int spacedim>
-DataOutInterface<dim,spacedim>::~DataOutInterface ()
-{}
 
+template <int dim, int spacedim>
+DataOutInterface<dim,spacedim>::~DataOutInterface () = default;
 
 
 

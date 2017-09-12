@@ -215,8 +215,7 @@ SolverRichardson<VectorType>::SolverRichardson(SolverControl        &cn,
 
 
 template <class VectorType>
-SolverRichardson<VectorType>::~SolverRichardson()
-{}
+SolverRichardson<VectorType>::~SolverRichardson() = default;
 
 
 template <class VectorType>
