@@ -17,6 +17,7 @@
 #include <deal.II/lac/vector.h>
 
 #include <deal.II/meshworker/integration_info.templates.h>
+#include <deal.II/meshworker/dof_info.templates.h>
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -46,7 +46,7 @@
 #include <tbb/blocked_range.h>
 #endif
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <memory>
 #include <limits>
 #include <list>
