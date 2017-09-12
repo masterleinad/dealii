@@ -182,11 +182,6 @@ namespace TrilinosWrappers
                 const size_type        index);
 
       /**
-       * Copy constructor.
-       */
-      Iterator (const Iterator &i);
-
-      /**
        * Prefix increment.
        */
       Iterator &operator++ ();
@@ -1224,13 +1219,6 @@ namespace TrilinosWrappers
                        const size_type        index)
       :
       accessor(sp, row, index)
-    {}
-
-
-    inline
-    Iterator::Iterator(const Iterator &i)
-      :
-      accessor(i.accessor)
     {}
 
 

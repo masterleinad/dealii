@@ -1002,14 +1002,6 @@ namespace Threads
     Thread () = default;
 
     /**
-     * Copy constructor.
-     */
-    Thread (const Thread<RT> &t)
-      :
-      thread_descriptor (t.thread_descriptor)
-    {}
-
-    /**
      * Join the thread represented by this object, i.e. wait for it to finish.
      * If you have used the default constructor of this class and have not
      * assigned a thread object to it, then this function is a no-op.
@@ -1632,19 +1624,6 @@ namespace Threads
       task_descriptor.reset (new internal::TaskDescriptor<RT>(function_object));
       task_descriptor->queue_task ();
     }
-
-
-    /**
-     * Copy constructor.
-     *
-     * @post Using this constructor automatically makes the task object
-     * joinable().
-     */
-    Task (const Task<RT> &t)
-      :
-      task_descriptor (t.task_descriptor)
-    {}
-
 
     /**
      * Default constructor. You can't do much with a task object constructed
