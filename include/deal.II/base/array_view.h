@@ -115,6 +115,12 @@ public:
              const std::size_t n_elements);
 
   /**
+   * Constructor. Same as above but deduce the length of the array.
+   */
+  template <std::size_t N>
+  ArrayView (ElementType (&arr)[N]);
+
+  /**
    * Copy constructor from array views that point to non-@p const elements. If
    * the current object will point to non-@p const elements, then this is a
    * straight forward copy constructor. On the other hand, if the current
@@ -273,7 +279,6 @@ ArrayView (const std::vector<typename std::remove_cv<value_type>::type> &vector)
 }
 
 
-
 template <typename ElementType>
 inline
 ArrayView<ElementType>::
@@ -284,6 +289,14 @@ ArrayView (std::vector<typename std::remove_cv<value_type>::type> &vector)
 {}
 
 
+
+template <typename ElementType>
+template <std::size_t N>
+inline
+ArrayView<ElementType>::
+ArrayView (ElementType (&arr)[N])
+  : ArrayView(arr, N)
+{}
 
 
 template <typename ElementType>
