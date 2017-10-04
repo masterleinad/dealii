@@ -90,7 +90,7 @@ public:
    * Default constructor. Creates an invalid view that does not point to
    * anything at all.
    */
-  ArrayView ();
+  constexpr ArrayView ();
 
   /**
    * Constructor.
@@ -111,8 +111,8 @@ public:
    * which it points. The appropriate way to do this is to use the
    * make_array_view() functions.
    */
-  ArrayView (value_type       *starting_element,
-             const std::size_t n_elements);
+  constexpr ArrayView (value_type       *starting_element,
+                       const std::size_t n_elements);
 
   /**
    * Copy constructor from array views that point to non-@p const elements. If
@@ -123,7 +123,7 @@ public:
    * non-@p const view to a @p const view, akin to converting a non-@p const
    * pointer to a @p const pointer.
    */
-  ArrayView (const ArrayView<typename std::remove_cv<value_type>::type> &view);
+  constexpr ArrayView (const ArrayView<typename std::remove_cv<value_type>::type> &view);
 
   /**
    * A constructor that automatically creates a view from a std::vector object.
@@ -139,7 +139,7 @@ public:
    *   You cannot initialize ArrayView objects to non-@p const memory with
    *   such arguments, such as <code>ArrayView@<double@></code>.
    */
-  ArrayView (const std::vector<typename std::remove_cv<value_type>::type> &vector);
+  constexpr ArrayView (const std::vector<typename std::remove_cv<value_type>::type> &vector);
 
   /**
    * A constructor that automatically creates a view from a std::vector object.
@@ -155,7 +155,7 @@ public:
    *   <code>ArrayView@<const double@></code>, or to non-@p const memory,
    *   such as <code>ArrayView@<double@></code>.
    */
-  ArrayView (std::vector<typename std::remove_cv<value_type>::type> &vector);
+  constexpr ArrayView (std::vector<typename std::remove_cv<value_type>::type> &vector);
 
   /**
    * Compare two ArrayView objects of the same type. Two objects are considered
@@ -191,28 +191,40 @@ public:
    * Return the size (in elements) of the view of memory this object
    * represents.
    */
-  std::size_t size() const;
+  constexpr std::size_t size() const;
 
   /**
    * Return an iterator pointing to the beginning of the array view.
    */
-  iterator begin() const;
+  constexpr iterator begin() const;
 
   /**
    * Return an iterator pointing to one past the end of the array view.
    */
-  iterator end() const;
+  constexpr iterator end() const;
 
   /**
    * Return a constant iterator pointing to the beginning of the array view.
    */
-  const_iterator cbegin() const;
+  constexpr const_iterator cbegin() const;
 
   /**
    * Return a constant iterator pointing to one past the end of the array view.
    */
-  const_iterator cend() const;
+  constexpr const_iterator cend() const;
 
+#ifdef DEAL_II_WITH_CXX14
+  /**
+   * Return a reference to the $i$th element of the range represented by the
+   * current object.
+   *
+   * This function is marked as @p const because it does not change the
+   * <em>view object</em>. It may however return a reference to a non-@p const
+   * memory location depending on whether the template type of the class is @p
+   * const or not.
+   */
+  constexpr value_type &operator[] (const std::size_t i) const;
+#else
   /**
    * Return a reference to the $i$th element of the range represented by the
    * current object.
@@ -223,6 +235,7 @@ public:
    * const or not.
    */
   value_type &operator[] (const std::size_t i) const;
+#endif
 
 private:
   /**
@@ -245,7 +258,7 @@ private:
 
 
 template <typename ElementType>
-inline
+constexpr
 ArrayView<ElementType>::ArrayView()
   :
   starting_element (nullptr),
@@ -255,7 +268,7 @@ ArrayView<ElementType>::ArrayView()
 
 
 template <typename ElementType>
-inline
+constexpr
 ArrayView<ElementType>::
 ArrayView(value_type        *starting_element,
           const std::size_t  n_elements)
@@ -267,7 +280,7 @@ ArrayView(value_type        *starting_element,
 
 
 template <typename ElementType>
-inline
+constexpr
 ArrayView<ElementType>::
 ArrayView(const ArrayView<typename std::remove_cv<value_type>::type> &view)
   :
@@ -278,7 +291,7 @@ ArrayView(const ArrayView<typename std::remove_cv<value_type>::type> &view)
 
 
 template <typename ElementType>
-inline
+constexpr
 ArrayView<ElementType>::
 ArrayView (const std::vector<typename std::remove_cv<value_type>::type> &vector)
   :
@@ -304,7 +317,7 @@ ArrayView (const std::vector<typename std::remove_cv<value_type>::type> &vector)
 
 
 template <typename ElementType>
-inline
+constexpr
 ArrayView<ElementType>::
 ArrayView (std::vector<typename std::remove_cv<value_type>::type> &vector)
   :
@@ -315,8 +328,8 @@ ArrayView (std::vector<typename std::remove_cv<value_type>::type> &vector)
 
 
 template <typename ElementType>
-inline
-constexpr bool
+constexpr
+bool
 ArrayView<ElementType>::operator == (const ArrayView<const value_type> &other_view) const
 {
   return (other_view.begin() == starting_element)
@@ -326,8 +339,8 @@ ArrayView<ElementType>::operator == (const ArrayView<const value_type> &other_vi
 
 
 template <typename ElementType>
-inline
-constexpr bool
+constexpr
+bool
 ArrayView<ElementType>::operator ==
 (const ArrayView<typename std::remove_cv<value_type>::type> &other_view) const
 {
@@ -338,8 +351,8 @@ ArrayView<ElementType>::operator ==
 
 
 template <typename ElementType>
-inline
-constexpr bool
+constexpr
+bool
 ArrayView<ElementType>::operator != (const ArrayView<const value_type> &other_view) const
 {
   return !(*this == other_view);
@@ -348,8 +361,8 @@ ArrayView<ElementType>::operator != (const ArrayView<const value_type> &other_vi
 
 
 template <typename ElementType>
-inline
-constexpr bool
+constexpr
+bool
 ArrayView<ElementType>::operator !=
 (const ArrayView<typename std::remove_cv<value_type>::type> &other_view) const
 {
@@ -359,7 +372,7 @@ ArrayView<ElementType>::operator !=
 
 
 template <typename ElementType>
-inline
+constexpr
 std::size_t
 ArrayView<ElementType>::size() const
 {
@@ -367,7 +380,7 @@ ArrayView<ElementType>::size() const
 }
 
 template <typename ElementType>
-inline
+constexpr
 typename ArrayView<ElementType>::iterator
 ArrayView<ElementType>::begin() const
 {
@@ -376,7 +389,7 @@ ArrayView<ElementType>::begin() const
 
 
 template <typename ElementType>
-inline
+constexpr
 typename ArrayView<ElementType>::iterator
 ArrayView<ElementType>::end() const
 {
@@ -384,7 +397,7 @@ ArrayView<ElementType>::end() const
 }
 
 template <typename ElementType>
-inline
+constexpr
 typename ArrayView<ElementType>::const_iterator
 ArrayView<ElementType>::cbegin() const
 {
@@ -393,7 +406,7 @@ ArrayView<ElementType>::cbegin() const
 
 
 template <typename ElementType>
-inline
+constexpr
 typename ArrayView<ElementType>::const_iterator
 ArrayView<ElementType>::cend() const
 {
@@ -402,7 +415,11 @@ ArrayView<ElementType>::cend() const
 
 
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
 inline
+#endif
 typename ArrayView<ElementType>::value_type &
 ArrayView<ElementType>::operator[](const std::size_t i) const
 {
@@ -427,7 +444,7 @@ ArrayView<ElementType>::operator[](const std::size_t i) const
  * @relates ArrayView
  */
 template <typename ElementType>
-inline
+constexpr
 ArrayView<ElementType>
 make_array_view (std::vector<ElementType> &vector)
 {
@@ -451,7 +468,7 @@ make_array_view (std::vector<ElementType> &vector)
  * @relates ArrayView
  */
 template <typename ElementType>
-inline
+constexpr
 ArrayView<const ElementType>
 make_array_view (const std::vector<ElementType> &vector)
 {
@@ -480,7 +497,11 @@ make_array_view (const std::vector<ElementType> &vector)
  * @relates ArrayView
  */
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
 inline
+#endif
 ArrayView<ElementType>
 make_array_view (std::vector<ElementType> &vector,
                  const std::size_t         starting_index,
@@ -509,6 +530,11 @@ make_array_view (std::vector<ElementType> &vector,
  * @relates ArrayView
  */
 template <typename Iterator>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
+inline
+#endif
 ArrayView<typename std::remove_reference<typename std::iterator_traits<Iterator>::reference>::type>
 make_array_view (const Iterator begin, const Iterator end)
 {
@@ -533,6 +559,11 @@ make_array_view (const Iterator begin, const Iterator end)
  * @relates ArrayView
  */
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
+inline
+#endif
 ArrayView<ElementType>
 make_array_view (ElementType *const begin, ElementType *const end)
 {
@@ -563,7 +594,11 @@ make_array_view (ElementType *const begin, ElementType *const end)
  * @relates ArrayView
  */
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
 inline
+#endif
 ArrayView<const ElementType>
 make_array_view (const std::vector<ElementType> &vector,
                  const std::size_t         starting_index,
@@ -595,7 +630,11 @@ make_array_view (const std::vector<ElementType> &vector,
  * @relates ArrayView
  */
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
 inline
+#endif
 ArrayView<ElementType>
 make_array_view (Table<2,ElementType>                           &table,
                  const typename Table<2,ElementType>::size_type  row)
@@ -623,7 +662,11 @@ make_array_view (Table<2,ElementType>                           &table,
  * @relates ArrayView
  */
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
 inline
+#endif
 ArrayView<const ElementType>
 make_array_view (const Table<2,ElementType>                     &table,
                  const typename Table<2,ElementType>::size_type  row)
@@ -654,7 +697,11 @@ make_array_view (const Table<2,ElementType>                     &table,
  * @relates ArrayView
  */
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
 inline
+#endif
 ArrayView<ElementType>
 make_array_view (Table<2,ElementType>                           &table,
                  const typename Table<2,ElementType>::size_type  row,
@@ -692,7 +739,11 @@ make_array_view (Table<2,ElementType>                           &table,
  * @relates ArrayView
  */
 template <typename ElementType>
+#ifdef DEAL_II_WITH_CXX14
+constexpr
+#else
 inline
+#endif
 ArrayView<const ElementType>
 make_array_view (const Table<2,ElementType>                     &table,
                  const typename Table<2,ElementType>::size_type  row,
