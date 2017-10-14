@@ -102,6 +102,7 @@ namespace Testing
   int rand(const bool reseed=false,
            const int seed=1)
   {
+    return std::rand();
     static int r[32];
     static int k;
     static bool inited=false;
@@ -142,7 +143,8 @@ namespace Testing
 // reseed our random number generator
   void srand(const int seed)
   {
-    rand(true, seed);
+    std::srand(seed);
+    //rand(true, seed);
   }
 }
 
