@@ -133,6 +133,12 @@ for (deal_II_dimension : DIMENSIONS; deal_II_space_dimension :  SPACE_DIMENSIONS
     template FiniteElement<deal_II_dimension,deal_II_space_dimension> *
     get_fe_by_name<deal_II_dimension,deal_II_space_dimension> (const std::string &);
 
+    template
+    void
+    compute_interpolation_to_quadrature_points_matrix (const FiniteElement<deal_II_dimension,deal_II_space_dimension> &,
+            const Quadrature<deal_II_dimension> &,
+            FullMatrix<double> &);
+
 #endif
 
 #if deal_II_dimension == deal_II_space_dimension
@@ -208,13 +214,6 @@ for (deal_II_dimension : DIMENSIONS; deal_II_space_dimension :  SPACE_DIMENSIONS
         const FullMatrix<double> &,
         const std::vector<SymmetricTensor<2, deal_II_dimension> > &,
         std::vector<SymmetricTensor<2, deal_II_dimension> > &);
-
-
-    template
-    void
-    compute_interpolation_to_quadrature_points_matrix (const FiniteElement<deal_II_dimension> &,
-            const Quadrature<deal_II_dimension> &,
-            FullMatrix<double> &);
 
 #if deal_II_dimension != 1
     template

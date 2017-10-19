@@ -5997,7 +5997,7 @@ namespace VectorTools
                                       ConstraintMatrix                   &constraints,
                                       const Mapping<dim, spacedim>       &mapping)
   {
-    ZeroFunction<dim>zero_function(dim);
+    ZeroFunction<spacedim>zero_function(dim);
     typename FunctionMap<spacedim>::type function_map;
     std::set<types::boundary_id>::const_iterator it
       = boundary_ids.begin();
@@ -6070,7 +6070,7 @@ namespace VectorTools
     // normal vector was computed on
     typedef
     std::multimap<internal::VectorDoFTuple<dim>,
-        std::pair<Tensor<1,dim>, typename DoFHandlerType<dim,spacedim>::active_cell_iterator> >
+        std::pair<Tensor<1,spacedim>, typename DoFHandlerType<dim,spacedim>::active_cell_iterator> >
         DoFToNormalsMap;
     std::map<internal::VectorDoFTuple<dim>, Vector<double> >
     dof_vector_to_b_values;
@@ -6089,7 +6089,7 @@ namespace VectorTools
           if ((b_id=boundary_ids.find(cell->face(face_no)->boundary_id()))
               != boundary_ids.end())
             {
-              const FiniteElement<dim> &fe = cell->get_fe ();
+              const FiniteElement<dim, spacedim> &fe = cell->get_fe ();
               typename DoFHandlerType<dim,spacedim>::face_iterator face = cell->face(face_no);
 
               // get the indices of the dofs on this cell...
@@ -6097,7 +6097,7 @@ namespace VectorTools
               face->get_dof_indices (face_dofs, cell->active_fe_index());
 
               x_fe_face_values.reinit (cell, face_no);
-              const FEFaceValues<dim> &fe_values = x_fe_face_values.get_present_fe_values();
+              const FEFaceValues<dim, spacedim> &fe_values = x_fe_face_values.get_present_fe_values();
 
               // then identify which of them correspond to the selected set of
               // vector components
@@ -6178,7 +6178,7 @@ namespace VectorTools
                     // sign of the normal vector provided by the boundary
                     // if they should point in different directions. this is the
                     // case in tests/deal.II/no_flux_11.
-                    Tensor<1,dim> normal_vector
+                    Tensor<1,spacedim> normal_vector
                       = (cell->face(face_no)->get_manifold().normal_vector
                          (cell->face(face_no),
                           fe_values.quadrature_point(i)));
@@ -6191,7 +6191,7 @@ namespace VectorTools
                         normal_vector[d] = 0;
                     normal_vector /= normal_vector.norm();
 
-                    const Point<dim> point
+                    const Point<spacedim> point
                       = fe_values.quadrature_point(i);
                     Vector<double> b_values(dim);
                     function_map[*b_id]->vector_value(point, b_values);
@@ -6253,7 +6253,7 @@ namespace VectorTools
         // vectors. the values of the map are pairs of normal vectors and
         // number of cells that have contributed
         typedef std::map<typename DoFHandlerType<dim,spacedim>::active_cell_iterator,
-                std::pair<Tensor<1,dim>, unsigned int> >
+                std::pair<Tensor<1,spacedim>, unsigned int> >
                 CellToNormalsMap;
 
         CellToNormalsMap cell_to_normals_map;
@@ -6266,7 +6266,7 @@ namespace VectorTools
               = std::make_pair (q->second.first, 1U);
           else
             {
-              const Tensor<1,dim> old_normal
+              const Tensor<1,spacedim> old_normal
                 = cell_to_normals_map[q->second.second].first;
               const unsigned int old_count
                 = cell_to_normals_map[q->second.second].second;
@@ -6324,7 +6324,7 @@ namespace VectorTools
             // the same set of dofs. we could add them up and divide them by
             // the number of additions, or simply normalize them right away
             // since we want them to have unit length anyway
-            Tensor<1,dim> normal;
+            Tensor<1,spacedim> normal;
             for (typename CellToNormalsMap::const_iterator
                  x = cell_to_normals_map.begin();
                  x != cell_to_normals_map.end(); ++x)
@@ -6584,7 +6584,7 @@ namespace VectorTools
                                    ConstraintMatrix                   &constraints,
                                    const Mapping<dim, spacedim>       &mapping)
   {
-    ZeroFunction<dim>zero_function(dim);
+    ZeroFunction<spacedim>zero_function(dim);
     typename FunctionMap<spacedim>::type function_map;
     std::set<types::boundary_id>::const_iterator it
       = boundary_ids.begin();
@@ -6662,7 +6662,7 @@ namespace VectorTools
           if ((b_id=boundary_ids.find(cell->face(face_no)->boundary_id()))
               != boundary_ids.end())
             {
-              const FiniteElement<dim> &fe = cell->get_fe();
+              const FiniteElement<spacedim, dim> &fe = cell->get_fe();
               typename DoFHandlerType<dim,spacedim>::face_iterator face=cell->face(face_no);
 
               // get the indices of the dofs on this cell...
