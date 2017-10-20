@@ -310,7 +310,7 @@ namespace VectorTools
 
       typedef typename VectorType::value_type number;
 
-      const hp::FECollection<dim, spacedim> fe(dof_handler.get_fe());
+      const hp::FECollection<dim, spacedim> &fe(dof_handler.get_fe());
 
       std::vector<types::global_dof_index> dofs_on_cell(fe.max_dofs_per_cell());
 
@@ -2496,7 +2496,7 @@ namespace VectorTools
           // now that we have a q_collection object with all the right quadrature
           // points, create an hp::FEFaceValues object that we can use to evaluate
           // the boundary values at
-          dealii::hp::MappingCollection<dim,spacedim> mapping_collection (mapping);
+          const dealii::hp::MappingCollection<dim,spacedim> &mapping_collection (mapping);
           dealii::hp::FEFaceValues<dim,spacedim> x_fe_values (mapping_collection,
                                                               finite_elements,
                                                               q_collection,
@@ -4214,7 +4214,7 @@ namespace VectorTools
     const unsigned int superdegree = dof_handler.get_fe ().degree;
     const QGauss<dim - 1> reference_face_quadrature (2 * superdegree);
     const unsigned int dofs_per_face = dof_handler.get_fe ().dofs_per_face;
-    hp::FECollection<dim> fe_collection (dof_handler.get_fe_collection ());
+    const hp::FECollection<dim> &fe_collection (dof_handler.get_fe_collection ());
     hp::MappingCollection<dim> mapping_collection (mapping);
     hp::QCollection<dim> face_quadrature_collection;
 
@@ -4416,7 +4416,7 @@ namespace VectorTools
    ConstraintMatrix                 &constraints,
    const hp::MappingCollection<dim> &mapping_collection)
   {
-    hp::FECollection<dim> fe_collection (dof_handler.get_fe_collection ());
+    const hp::FECollection<dim> &fe_collection (dof_handler.get_fe_collection ());
     hp::QCollection<dim> face_quadrature_collection;
 
     for (unsigned int i = 0; i < fe_collection.size (); ++i)
@@ -5240,7 +5240,7 @@ namespace VectorTools
 
       // Create hp FEcollection, dof_handler can be either hp or standard type.
       // From here on we can treat it like a hp-namespace object.
-      const hp::FECollection<dim> fe_collection (dof_handler.get_fe_collection ());
+      const hp::FECollection<dim> &fe_collection (dof_handler.get_fe_collection ());
 
       // Create face quadrature collection
       hp::QCollection<dim - 1> face_quadrature_collection;
