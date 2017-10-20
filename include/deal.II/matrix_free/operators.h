@@ -1199,7 +1199,7 @@ namespace MatrixFreeOperators
         // lost
         VectorView<Number> view_src_in(subblock(src,i).local_size(),
                                        subblock(src,i).begin());
-        const Vector<Number> copy_vec = view_src_in;
+        Vector<Number> copy_vec = view_src_in;
         subblock(const_cast<VectorType &>(src),i).
         reinit(data->get_dof_info(mf_component).vector_partitioner);
         VectorView<Number> view_src_out(subblock(src,i).local_size(),
