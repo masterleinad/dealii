@@ -32,10 +32,12 @@
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
+#ifdef DEAL_II_WITH_ZLIB
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+#endif
 #include <boost/serialization/array.hpp>
 DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 
@@ -3051,6 +3053,7 @@ namespace internal
             // set up a buffer and then use it as the target of a compressing
             // stream into which we serialize the current object
             std::vector<char> buffer;
+#ifdef DEAL_II_WITH_ZLIB
             {
               boost::iostreams::filtering_ostream out;
               out.push(boost::iostreams::gzip_compressor
@@ -3063,7 +3066,10 @@ namespace internal
               archive << *this;
               out.flush();
             }
-
+#else
+            Assert(false, ExcMessage("This feature requires deal.II and the used boost "
+                                     "package to be compiled with zlib support!"));
+#endif
             return buffer;
           }
 
@@ -3075,6 +3081,7 @@ namespace internal
            */
           void unpack_data (const std::vector<char> &buffer)
           {
+#ifdef DEAL_II_WITH_ZLIB
             std::string decompressed_buffer;
 
             // first decompress the buffer
@@ -3091,6 +3098,10 @@ namespace internal
             boost::archive::binary_iarchive archive(in);
 
             archive >> *this;
+#else
+            Assert(false, ExcMessage("This feature requires deal.II and the used boost "
+                                     "package to be compiled with zlib support!"));
+#endif
           }
         };
 
@@ -4161,6 +4172,11 @@ namespace internal
 
         Assert (new_numbers.size() == dof_handler->n_locally_owned_dofs(),
                 ExcInternalError());
+#ifndef DEAL_II_WITH_ZLIB
+        Assert(false, ExcMessage("This feature requires deal.II and the used boost "
+                                 "package to be compiled with zlib support!"));
+        return NumberCache();
+#else
 
 #ifndef DEAL_II_WITH_P4EST
         Assert (false, ExcNotImplemented());
@@ -4351,7 +4367,8 @@ namespace internal
 
         return NumberCache (locally_owned_dofs_per_processor,
                             Utilities::MPI::this_mpi_process (triangulation->get_communicator()));
-#endif
+#endif // DEAL_II_WITH_P4EST
+#endif // DEAl_II_WITH_ZLIB
       }
 
 

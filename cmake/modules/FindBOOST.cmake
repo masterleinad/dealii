@@ -80,12 +80,54 @@ IF(Boost_FOUND)
     )
 ENDIF()
 
+  #
+  # Test that Boost.Iostreams is usuable.
+  #
+  RESET_CMAKE_REQUIRED()
+  PUSH_CMAKE_REQUIRED("-L${Boost_LIBRARY_DIRS}")
+  PUSH_CMAKE_REQUIRED("${DEAL_II_CXX_VERSION_FLAG}")
+  PUSH_CMAKE_REQUIRED("-L${Boost_LIBRARY_DIRS}")
+  SET(CMAKE_REQUIRED_LIBRARIES "-lboost_iostreams")
+  MESSAGE(STATUS "${CMAKE_REQUIRED_FLAGS}")
+  MESSAGE(STATUS "${CMAKE_REQUIRED_INCLUDES}")
+  MESSAGE(STATUS "${CMAKE_REQUIRED_LIBRARIES}")
+  CHECK_CXX_SOURCE_COMPILES(
+    "
+    #include <string>
+    #include <boost/iostreams/device/back_inserter.hpp>
+    #include <boost/iostreams/filter/gzip.hpp>
+    #include <boost/iostreams/filtering_stream.hpp>
+ 
+    int main()
+    {
+      std::string decompressed_buffer;
+      char test[1] = {'c'};
+     
+      boost::iostreams::filtering_ostream decompressing_stream;
+      decompressing_stream.push(boost::iostreams::gzip_decompressor());
+      decompressing_stream.push(boost::iostreams::back_inserter(decompressed_buffer));
+      decompressing_stream.write (test, 1);
+      static_assert(false, \"\");
+    }
+    "
+    DEAL_II_BOOST_IOSTREAMS_USUABLE
+    )
+  MESSAGE(STATUS "${DEAL_II_BOOST_IOSTREAMS_USUABLE}")
+  IF(${DEAL_II_BOOST_IOSTREAMS_USUABLE})
+    MESSAGE(STATUS "Boost.Iostreams is usuable.")
+  ELSE()
+    MESSAGE(STATUS "Boost.Iostreams is not usuable. "
+                   "Probabaly it was not built with zlib support")
+    SET(Boost_FOUND FALSE)
+  ENDIF()
+  RESET_CMAKE_REQUIRED()
+
 DEAL_II_PACKAGE_HANDLE(BOOST
   LIBRARIES REQUIRED Boost_LIBRARIES
   INCLUDE_DIRS REQUIRED Boost_INCLUDE_DIRS
   USER_INCLUDE_DIRS Boost_INCLUDE_DIRS
   CLEAR
-    Boost_DIR Boost_INCLUDE_DIR Boost_IOSTREAMS_LIBRARY_DEBUG
+    Boost_DIR Boost_INCLUDE_DIRS Boost_IOSTREAMS_LIBRARY_DEBUG
     Boost_IOSTREAMS_LIBRARY_RELEASE Boost_LIBRARY_DIR
     Boost_SERIALIZATION_LIBRARY_DEBUG Boost_SERIALIZATION_LIBRARY_RELEASE
     Boost_SYSTEM_LIBRARY_DEBUG Boost_SYSTEM_LIBRARY_RELEASE

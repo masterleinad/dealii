@@ -33,6 +33,7 @@ IF(FEATURE_BOOST_BUNDLED_CONFIGURED)
     ADD_SUBDIRECTORY(${BOOST_FOLDER}/libs/iostreams/src)
   ELSE()
     MESSAGE(STATUS "BOOST::Iostreams will not be available because zlib or its header files could not be found")
+      #MESSAGE(FATAL_ERROR "To use the bundled Boost package DEAL_II_WITH_ZLIB has to be enabled!")
   ENDIF()
 ENDIF()
 
