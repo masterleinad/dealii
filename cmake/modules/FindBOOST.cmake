@@ -51,6 +51,8 @@ FIND_PACKAGE(Boost 1.59 COMPONENTS
   )
 LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules/)
 
+MESSAGE(STATUS "Boost static found ${Boost_FOUND} ${Boost_USE_STATIC_LIBS}")
+
 #
 # Fall back to dynamic libraries if no static libraries could be found:
 #
@@ -63,7 +65,7 @@ IF(NOT Boost_FOUND AND Boost_USE_STATIC_LIBS)
   LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules/)
 ENDIF()
 
-
+MESSAGE(STATUS "Boost found ${Boost_FOUND} ${Boost_USE_STATIC_LIBS}")
 
 IF(Boost_FOUND)
   #
@@ -78,7 +80,6 @@ IF(Boost_FOUND)
   SET(BOOST_VERSION
     "${BOOST_VERSION_MAJOR}.${BOOST_VERSION_MINOR}.${BOOST_VERSION_SUBMINOR}"
     )
-ENDIF()
 
   #
   # Test that Boost.Iostreams is usuable.
@@ -121,6 +122,8 @@ ENDIF()
     SET(Boost_FOUND FALSE)
   ENDIF()
   RESET_CMAKE_REQUIRED()
+
+ENDIF()
 
 DEAL_II_PACKAGE_HANDLE(BOOST
   LIBRARIES REQUIRED Boost_LIBRARIES

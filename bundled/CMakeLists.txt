@@ -28,12 +28,12 @@ IF(FEATURE_BOOST_BUNDLED_CONFIGURED)
 
   ADD_SUBDIRECTORY(${BOOST_FOLDER}/libs/serialization/src)
   ADD_SUBDIRECTORY(${BOOST_FOLDER}/libs/system/src)
+  ADD_SUBDIRECTORY(${BOOST_FOLDER}/libs/iostreams/src)
 
-  IF(DEAL_II_WITH_ZLIB)
-    ADD_SUBDIRECTORY(${BOOST_FOLDER}/libs/iostreams/src)
-  ELSE()
-    MESSAGE(STATUS "BOOST::Iostreams will not be available because zlib or its header files could not be found")
-      #MESSAGE(FATAL_ERROR "To use the bundled Boost package DEAL_II_WITH_ZLIB has to be enabled!")
+  IF(NOT DEAL_II_WITH_ZLIB)
+    MESSAGE(FATAL_ERROR
+            "The bundled Boost package requires "
+            "DEAL_II_WITH_ZLIB to be enabled!")
   ENDIF()
 ENDIF()
 
