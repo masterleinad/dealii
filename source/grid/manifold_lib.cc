@@ -25,6 +25,67 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+
+namespace internal
+{
+  Tensor<1,3> RotateUnitInDirection ( const Tensor<1,3> &u, const Tensor<1,3> &dir)
+  {
+    double theta = dir.norm();
+    if ( theta==0. )
+      {
+        return u;
+      }
+    else
+      {
+        double costheta = cos(theta);
+        double sintheta = sin(theta);
+        Tensor<1,3> dirUnit = dir/theta;
+        return costheta*u + sintheta*dirUnit;
+      }
+  }
+
+
+  // Returns the projection of u onto the plane perpendicular to the unit vector v
+  //    This one is more stable when u and v are nearly equal.
+  Tensor<1,3> ProjectPerpUnitDiff ( const Tensor<1,3> &u, const Tensor<1,3> &v)
+  {
+    Tensor<1,3> ans = u-v;
+    ans -= (ans*v)*v;
+    return ans;             // ans = (u-v) - ((u-v)*v)*v
+  }
+
+  // helper function to compute a vector orthogonal to a given one.
+  Point<3>
+  compute_normal(const Tensor<1,3> &vector)
+  {
+    AssertThrow(vector.norm() != 0.,
+                ExcMessage("The direction parameter must not be zero!"));
+    Point<3> normal;
+    if (std::abs(vector[0]) >= std::abs(vector[1])
+        && std::abs(vector[0]) >= std::abs(vector[2]))
+      {
+        normal[1]=-1.;
+        normal[2]=-1.;
+        normal[0]=(vector[1]+vector[2])/vector[0];
+      }
+    else if (std::abs(vector[1]) >= std::abs(vector[0])
+             && std::abs(vector[1]) >= std::abs(vector[2]))
+      {
+        normal[0]=-1.;
+        normal[2]=-1.;
+        normal[1]=(vector[0]+vector[2])/vector[1];
+      }
+    else
+      {
+        normal[0]=-1.;
+        normal[1]=-1.;
+        normal[2]=(vector[0]+vector[1])/vector[2];
+      }
+    return normal;
+  }
+}
+
+
 // ============================================================
 // PolarManifold
 // ============================================================
@@ -280,72 +341,134 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
                const ArrayView<const double>          &weights) const
 {
   const unsigned int n_points = vertices.size();
+  const double tolerance = 1e-10;
 
-  double rho = 0.0;
+  double rho = 0.;
   Tensor<1,spacedim> candidate;
-  for (unsigned int i = 0; i<n_points; i++)
-    {
-      const Tensor<1,spacedim> direction (vertices[i]-center);
-      rho += direction.norm()*weights[i];
-      candidate += direction*weights[i];
-    }
 
-  // Unit norm direction.
-  const double norm = candidate.norm();
+  // Step 1:
+  // Perform a simple average ...
+  {
+    double total_weights = 0.;
+    for (unsigned int i = 0; i < n_points; i++)
+      {
+        const Tensor<1, spacedim> direction(vertices[i] - center);
+        rho += direction.norm() * weights[i];
+        candidate += direction * weights[i];
+        total_weights += weights[i];
+      }
+    // ... and normalize if the candidate is different from the origin.
+    const double norm = candidate.norm();
+    if(norm == 0.)
+      return center;
+    candidate /= candidate.norm();
+    rho /= total_weights;
+  }
 
-  if (norm == 0)
-    return center;
+  if (spacedim<2)
+    return center + rho*candidate;
 
-  candidate /= norm;
+  // Step 2:
+  // Do Newton-style iterations to improve the estimate.
+  //
+  // In this step, we consider all points and directions to be embedded
+  // in a three-dimensional space.
+  {
+    std::vector<Tensor<1, 3> > directions(vertices.size());
+    for (unsigned int i=0; i<n_points; ++i)
+      for (unsigned int c=0; c<spacedim; ++c)
+        directions[i][c] = vertices[i][c]-center[c];
 
-  return center+rho*candidate;
+    Tensor<1, 3> xVec;
+    for (unsigned int c=0; c<spacedim; ++c)
+      xVec[c]=candidate[c];
+
+    Tensor<1,3> vPerp;
+    Tensor<2,2> Hessian;
+    Tensor<1,2> gradient;
+    Tensor<1,2> gradlocal;
+
+    while (true)
+      {
+        // Get local basis for estimate c = xVec.:
+        const Tensor<1,3> Clocalx = internal::compute_normal(xVec);
+        const Tensor<1,3> Clocaly = cross_product_3d(xVec, Clocalx);
+
+        // For each vertices vector, compute the tangent vector from xVec
+        // towards the vertices vector -- its length is the spherical length
+        // from xVec to the vertices vector.
+        //Then compute its contribution to the Hessian.
+        gradient = 0.;
+        Hessian = 0.;
+        for ( unsigned int i=0; i<n_points; ++i)
+          {
+            vPerp = internal::ProjectPerpUnitDiff ( directions[i], xVec );
+            const double sintheta = vPerp.norm();
+            if ( sintheta==0.)
+              {
+                Hessian[0][0]+=weights[i];
+                Hessian[1][1]+=weights[i];
+              }
+            else
+              {
+                const double costheta = (directions[i])*xVec;
+                const double theta = atan2( sintheta, costheta );   // Angle from xVec to (*vi)
+                const double sinthetaInv = 1.0/sintheta;
+
+                vPerp *= sinthetaInv;                       // Normalize
+                const double cosphi = vPerp*Clocalx;
+                const double sinphi = vPerp*Clocaly;
+
+                gradlocal[0] = cosphi;
+                gradlocal[1] = sinphi;
+                gradient += ((weights[i])*theta)*gradlocal; // Added on weighted discrepancy to gradient
+
+                const double sinphiSq = sinphi*sinphi;
+                const double cosphiSq = cosphi*cosphi;
+                const double tt = (weights[i])*(theta*sinthetaInv)*costheta;
+                const double offdiag = cosphi*sinphi*((weights[i])-tt);
+                Hessian[0][0] += (weights[i])*cosphiSq+tt*sinphiSq;
+                Hessian[0][1] += offdiag;
+                Hessian[1][0] += offdiag;
+                Hessian[1][1] += (weights[i])*sinphiSq+tt*cosphiSq;
+              }
+          }
+        const Tensor<2,2> inverse_Hessian = invert(Hessian);
+
+        const Tensor<1,2> xDisplocal = inverse_Hessian*gradient;
+        const Tensor<1,3> xDisp = xDisplocal[0]*Clocalx + xDisplocal[1]*Clocaly;
+
+        std::cout << "    xDisp = " << xDisp << "\n";  // DEBUG
+
+        // Step 2c: rotate xVec in direction xDisp, for new estimate.
+
+        const Tensor<1,3> xVecOld = xVec;
+        xVec = internal::RotateUnitInDirection(xVec, xDisp);
+        xVec /= xVec.norm();                // Avoid roundoff error problems
+
+        std::cout << xVec << "\n";  // DEBUG
+
+        const double error = (xVec-xVecOld).norm();
+        if ( error <= tolerance )
+          break;                  // return xVec as answer
+      }
+
+    std::cout << "center: " << center
+              << " rho: "   << rho
+              << "xVec: " << xVec << std::endl;
+
+    for (unsigned int c=0; c<spacedim; ++c)
+      candidate[c] = xVec[c];
+
+    Assert (spacedim == 3 || std::abs(xVec[2]) < tolerance,
+            ExcInternalError());
+  }
+  return center + rho*candidate;
 }
 
 // ============================================================
 // CylindricalManifold
 // ============================================================
-
-namespace internal
-{
-  namespace CylindricalManifold
-  {
-    namespace
-    {
-      // helper function to compute a vector orthogonal to a given one.
-      template <int spacedim>
-      Point<spacedim>
-      compute_normal(const Tensor<1,spacedim> &vector)
-      {
-        AssertThrow(vector.norm() != 0.,
-                    ExcMessage("The direction parameter must not be zero!"));
-        Point<3> normal;
-        if (std::abs(vector[0]) >= std::abs(vector[1])
-            && std::abs(vector[0]) >= std::abs(vector[2]))
-          {
-            normal[1]=-1.;
-            normal[2]=-1.;
-            normal[0]=(vector[1]+vector[2])/vector[0];
-          }
-        else if (std::abs(vector[1]) >= std::abs(vector[0])
-                 && std::abs(vector[1]) >= std::abs(vector[2]))
-          {
-            normal[0]=-1.;
-            normal[2]=-1.;
-            normal[1]=(vector[0]+vector[2])/vector[1];
-          }
-        else
-          {
-            normal[0]=-1.;
-            normal[1]=-1.;
-            normal[2]=(vector[0]+vector[1])/vector[2];
-          }
-        return normal;
-      }
-    }
-  }
-}
-
-
 
 template <int dim, int spacedim>
 CylindricalManifold<dim, spacedim>::CylindricalManifold(const unsigned int axis,
@@ -362,7 +485,7 @@ CylindricalManifold<dim, spacedim>::CylindricalManifold(const Point<spacedim> &d
                                                         const Point<spacedim> &point_on_axis_,
                                                         const double tolerance) :
   ChartManifold<dim,3,3>(Tensor<1,3>({0,2.*numbers::PI,0})),
-              normal_direction(internal::CylindricalManifold::compute_normal(direction_)),
+              normal_direction(internal::compute_normal(direction_)),
               direction (direction_/direction_.norm()),
               point_on_axis (point_on_axis_),
               tolerance(tolerance)
