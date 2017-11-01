@@ -28,7 +28,9 @@ DEAL_II_NAMESPACE_OPEN
 
 namespace internal
 {
-  Tensor<1,3> RotateUnitInDirection ( const Tensor<1,3> &u, const Tensor<1,3> &dir)
+  // rotate a given unit vector u around the axis dir
+  // where the angle is given by the length of dir
+  Tensor<1,3> RotateUnitInDirection (const Tensor<1,3> &u, const Tensor<1,3> &dir)
   {
     double theta = dir.norm();
     if ( theta==0. )
@@ -58,7 +60,7 @@ namespace internal
   Point<3>
   compute_normal(const Tensor<1,3> &vector)
   {
-    AssertThrow(vector.norm() != 0.,
+    AssertThrow(vector.norm_square() != 0.,
                 ExcMessage("The direction parameter must not be zero!"));
     Point<3> normal;
     if (std::abs(vector[0]) >= std::abs(vector[1])
@@ -238,9 +240,6 @@ get_intermediate_point (const Point<spacedim> &p1,
                         const Point<spacedim> &p2,
                         const double w) const
 {
-  Assert(w >=0.0 && w <= 1.0,
-         ExcMessage("w should be in the range [0.0,1.0]."));
-
   const double tol = 1e-10;
 
   if ( p1.distance(p2) < tol || w < tol)
@@ -265,7 +264,7 @@ get_intermediate_point (const Point<spacedim> &p1,
   const Tensor<1,spacedim> e2 = v2/r2;
 
   // Treat points that are collinear with the center special.
-  if ((e1 + e2).norm_square() == 0)
+  if ((e1 + e2).norm_square() == 0.)
     return center;
 
   if ((e1 - e2).norm_square() < tol*tol)
@@ -280,11 +279,12 @@ get_intermediate_point (const Point<spacedim> &p1,
   // Normal to v1 in the plane described by v1,v2,and the origin.
   // Since p1 and p2 do not coincide n is not zero and well defined.
   Tensor<1,spacedim> n = v2 - (v2*e1)*e1;
-  Assert( n.norm() > 0,
+  const double n_norm = n.norm();
+  Assert( n_norm > 0,
           ExcInternalError("n should be different from the null vector. "
                            "Probably, this means v1==v2 or v2==0."));
 
-  n /= n.norm();
+  n /= n_norm;
 
   // Find the point Q along O,v1 such that
   // P1,V,P2 has measure sigma.
@@ -337,7 +337,14 @@ get_tangent_vector (const Point<spacedim> &p1,
 }
 
 
-
+// The main part of the implementation uses the ideas in the publication
+//
+// Buss, Samuel R., and Jay P. Fillmore.
+// "Spherical averages and applications to spherical splines and interpolation."
+// ACM Transactions on Graphics (TOG) 20.2 (2001): 95-126.
+//
+// and in particular the implementation provided at
+// http://math.ucsd.edu/~sbuss/ResearchWeb/spheremean/
 template <int dim, int spacedim>
 Point<spacedim>
 SphericalManifold<dim,spacedim>::
@@ -347,8 +354,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
   const unsigned int n_points = vertices.size();
 
   if (n_points == 2)
-    return get_intermediate_point(vertices[0], vertices[1],
-                                  std::max(0., std::min(weights[1],1.)));
+    return get_intermediate_point(vertices[0], vertices[1], weights[1]);
 
   const double tolerance = 1e-10;
 
@@ -408,76 +414,70 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
 
     while (true)
       {
-        // Get local basis for estimate c = xVec.:
+        // Step 2a: Find new descent direction
+
+        // Get local basis for the estimate xVec
         const Tensor<1,3> Clocalx = internal::compute_normal(xVec);
         const Tensor<1,3> Clocaly = cross_product_3d(xVec, Clocalx);
 
         // For each vertices vector, compute the tangent vector from xVec
         // towards the vertices vector -- its length is the spherical length
         // from xVec to the vertices vector.
-        //Then compute its contribution to the Hessian.
+        // Then compute its contribution to the Hessian.
         gradient = 0.;
         Hessian = 0.;
-        for ( unsigned int i=0; i<n_points; ++i)
-          {
-            vPerp = internal::ProjectPerpUnitDiff ( directions[i], xVec );
-            const double sintheta = vPerp.norm();
-            if ( sintheta==0.)
-              {
-                Hessian[0][0]+=weights[i];
-                Hessian[1][1]+=weights[i];
-              }
-            else
-              {
-                const double costheta = (directions[i])*xVec;
-                const double theta = atan2( sintheta, costheta );   // Angle from xVec to (*vi)
-                const double sinthetaInv = 1.0/sintheta;
+        for (unsigned int i=0; i<n_points; ++i)
+          if (weights[i]>tolerance)
+            {
+              vPerp = internal::ProjectPerpUnitDiff (directions[i], xVec);
+              const double sintheta = vPerp.norm();
+              if (sintheta<tolerance)
+                {
+                  Hessian[0][0]+=weights[i];
+                  Hessian[1][1]+=weights[i];
+                }
+              else
+                {
+                  const double costheta = (directions[i])*xVec;
+                  const double theta = atan2(sintheta, costheta);
+                  const double sinthetaInv = 1.0/sintheta;
 
-                vPerp *= sinthetaInv;                       // Normalize
-                const double cosphi = vPerp*Clocalx;
-                const double sinphi = vPerp*Clocaly;
+                  vPerp *= sinthetaInv;
+                  const double cosphi = vPerp*Clocalx;
+                  const double sinphi = vPerp*Clocaly;
 
-                gradlocal[0] = cosphi;
-                gradlocal[1] = sinphi;
-                gradient += ((weights[i])*theta)*gradlocal; // Added on weighted discrepancy to gradient
+                  gradlocal[0] = cosphi;
+                  gradlocal[1] = sinphi;
+                  gradient += (weights[i]*theta)*gradlocal;
 
-                const double sinphiSq = sinphi*sinphi;
-                const double cosphiSq = cosphi*cosphi;
-                const double tt = (weights[i])*(theta*sinthetaInv)*costheta;
-                const double offdiag = cosphi*sinphi*((weights[i])-tt);
-                Hessian[0][0] += (weights[i])*cosphiSq+tt*sinphiSq;
-                Hessian[0][1] += offdiag;
-                Hessian[1][0] += offdiag;
-                Hessian[1][1] += (weights[i])*sinphiSq+tt*cosphiSq;
-              }
-          }
+                  const double sinphiSq = sinphi*sinphi;
+                  const double cosphiSq = cosphi*cosphi;
+                  const double tt = weights[i]*(theta*sinthetaInv)*costheta;
+                  const double offdiag = cosphi*sinphi*(weights[i]-tt);
+                  Hessian[0][0] += weights[i]*cosphiSq+tt*sinphiSq;
+                  Hessian[0][1] += offdiag;
+                  Hessian[1][0] += offdiag;
+                  Hessian[1][1] += weights[i]*sinphiSq+tt*cosphiSq;
+                }
+            }
 
-        const double det = Hessian[0][0]*Hessian[1][1]-Hessian[0][1]*Hessian[1][0];
-        Assert(det>1.e-16, ExcInternalError());
+        Assert(determinant(Hessian)>tol, ExcInternalError());
 
         const Tensor<2,2> inverse_Hessian = invert(Hessian);
 
         const Tensor<1,2> xDisplocal = inverse_Hessian*gradient;
         const Tensor<1,3> xDisp = xDisplocal[0]*Clocalx + xDisplocal[1]*Clocaly;
 
-//        std::cout << "    xDisp = " << xDisp << "\n";  // DEBUG
-
-        // Step 2c: rotate xVec in direction xDisp, for new estimate.
-
+        // Step 2b: rotate xVec in direction xDisp for a new candidate.
         const Tensor<1,3> xVecOld = xVec;
         xVec = internal::RotateUnitInDirection(xVec, xDisp);
-        xVec /= xVec.norm();                // Avoid roundoff error problems
+        xVec /= xVec.norm();
 
-        //      std::cout << xVec << "\n";  // DEBUG
-
-        const double error = (xVec-xVecOld).norm();
-        if ( error <= tolerance )
-          break;                  // return xVec as answer
+        // Step 3c: return the new candidate if we didn't move
+        const double error = (xVec-xVecOld).norm_square();
+        if ( error < tolerance*tolerance )
+          break;
       }
-
-    /*std::cout << "center: " << center
-              << " rho: "   << rho
-              << "xVec: " << xVec << std::endl;*/
 
     for (unsigned int c=0; c<spacedim; ++c)
       candidate[c] = xVec[c];
