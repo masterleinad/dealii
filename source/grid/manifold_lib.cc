@@ -341,6 +341,11 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
                const ArrayView<const double>          &weights) const
 {
   const unsigned int n_points = vertices.size();
+
+  if (n_points == 2)
+    return get_intermediate_point(vertices[0], vertices[1],
+                                  std::max(0., std::min(weights[1],1.)));
+
   const double tolerance = 1e-10;
 
   double rho = 0.;
@@ -376,14 +381,21 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
   // In this step, we consider all points and directions to be embedded
   // in a three-dimensional space.
   {
-    std::vector<Tensor<1, 3> > directions(vertices.size());
-    for (unsigned int i=0; i<n_points; ++i)
-      for (unsigned int c=0; c<spacedim; ++c)
-        directions[i][c] = vertices[i][c]-center[c];
-
     Tensor<1, 3> xVec;
     for (unsigned int c=0; c<spacedim; ++c)
       xVec[c]=candidate[c];
+
+    // If the candidate happens to coincide with a normalized
+    // direction, we return it. Otherwise, the Hessian would be singular.
+    std::vector<Tensor<1, 3> > directions(vertices.size());
+    for (unsigned int i=0; i<n_points; ++i)
+      {
+        for (unsigned int c = 0; c < spacedim; ++c)
+          directions[i][c] = vertices[i][c] - center[c];
+        directions[i] /= directions[i].norm();
+        if ((xVec - directions[i]).norm() < tolerance)
+          return center + rho * candidate;
+      }
 
     Tensor<1,3> vPerp;
     Tensor<2,2> Hessian;
