@@ -28,28 +28,32 @@ DEAL_II_NAMESPACE_OPEN
 
 namespace internal
 {
-  // rotate a given unit vector u around the axis dir
-  // where the angle is given by the length of dir
-  Tensor<1,3> RotateUnitInDirection (const Tensor<1,3> &u, const Tensor<1,3> &dir)
+  // Rotate a given unit vector u around the axis dir
+  // where the angle is given by the length of dir.
+  // This is the exponential map for a sphere.
+  Tensor<1,3>
+  apply_exponential_map (const Tensor<1,3> &u,
+                         const Tensor<1,3> &dir)
   {
-    double theta = dir.norm();
-    if ( theta==0. )
+    const double theta = dir.norm();
+    if (theta<1.e-10)
       {
         return u;
       }
     else
       {
-        double costheta = cos(theta);
-        double sintheta = sin(theta);
-        Tensor<1,3> dirUnit = dir/theta;
-        return costheta*u + sintheta*dirUnit;
+        const Tensor<1,3> dirUnit = dir/theta;
+        const Tensor<1,3> tmp = cos(theta)*u + sin(theta)*dirUnit;
+        return tmp/tmp.norm();
       }
   }
 
-
-  // Returns the projection of u onto the plane perpendicular to the unit vector v
-  //    This one is more stable when u and v are nearly equal.
-  Tensor<1,3> ProjectPerpUnitDiff ( const Tensor<1,3> &u, const Tensor<1,3> &v)
+  // Returns the direction to go from v to u
+  // projected to the plane perpendicular to the unit vector v.
+  // This one is more stable when u and v are nearly equal.
+  Tensor<1,3>
+  projected_direction (const Tensor<1,3> &u,
+                       const Tensor<1,3> &v)
   {
     Tensor<1,3> ans = u-v;
     ans -= (ans*v)*v;
@@ -60,8 +64,8 @@ namespace internal
   Point<3>
   compute_normal(const Tensor<1,3> &vector)
   {
-    AssertThrow(vector.norm_square() != 0.,
-                ExcMessage("The direction parameter must not be zero!"));
+    Assert(vector.norm_square() != 0.,
+           ExcMessage("The direction parameter must not be zero!"));
     Point<3> normal;
     if (std::abs(vector[0]) >= std::abs(vector[1])
         && std::abs(vector[0]) >= std::abs(vector[2]))
@@ -357,6 +361,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
     return get_intermediate_point(vertices[0], vertices[1], weights[1]);
 
   const double tolerance = 1e-10;
+  const int max_iterations = 10;
 
   double rho = 0.;
   Tensor<1,spacedim> candidate;
@@ -402,8 +407,12 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
       {
         for (unsigned int c = 0; c < spacedim; ++c)
           directions[i][c] = vertices[i][c] - center[c];
+        const double norm = directions[i].norm();
+        Assert(norm != 0.,
+               ExcMessage("One of the vertices coincides with the center. "
+                          "This is not allowed!"));
         directions[i] /= directions[i].norm();
-        if ((xVec - directions[i]).norm() < tolerance)
+        if ((xVec - directions[i]).norm_square() < tolerance*tolerance)
           return center + rho * candidate;
       }
 
@@ -412,7 +421,9 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
     Tensor<1,2> gradient;
     Tensor<1,2> gradlocal;
 
-    while (true)
+    // On success we exit the loop early.
+    // Otherwise, we just take the result after max_iterations steps.
+    for (unsigned int i=0; i<max_iterations; ++i)
       {
         // Step 2a: Find new descent direction
 
@@ -429,7 +440,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
         for (unsigned int i=0; i<n_points; ++i)
           if (weights[i]>tolerance)
             {
-              vPerp = internal::ProjectPerpUnitDiff (directions[i], xVec);
+              vPerp = internal::projected_direction(directions[i], xVec);
               const double sintheta = vPerp.norm();
               if (sintheta<tolerance)
                 {
@@ -461,7 +472,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
                 }
             }
 
-        Assert(determinant(Hessian)>tol, ExcInternalError());
+        Assert(determinant(Hessian)>tolerance, ExcInternalError());
 
         const Tensor<2,2> inverse_Hessian = invert(Hessian);
 
@@ -470,12 +481,10 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
 
         // Step 2b: rotate xVec in direction xDisp for a new candidate.
         const Tensor<1,3> xVecOld = xVec;
-        xVec = internal::RotateUnitInDirection(xVec, xDisp);
-        xVec /= xVec.norm();
+        xVec = internal::apply_exponential_map(xVec, xDisp);
 
         // Step 3c: return the new candidate if we didn't move
-        const double error = (xVec-xVecOld).norm_square();
-        if ( error < tolerance*tolerance )
+        if ((xVec-xVecOld).norm_square() < tolerance*tolerance)
           break;
       }
 
