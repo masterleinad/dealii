@@ -352,6 +352,8 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
     double total_weights = 0.;
     for (unsigned int i = 0; i < n_points; i++)
       {
+        if (std::abs(1-weights[i])<tolerance)
+          return vertices[i];
         const Tensor<1, spacedim> direction(vertices[i] - center);
         rho += direction.norm() * weights[i];
         candidate += direction * weights[i];
@@ -433,12 +435,16 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
                 Hessian[1][1] += (weights[i])*sinphiSq+tt*cosphiSq;
               }
           }
+
+        const double det = Hessian[0][0]*Hessian[1][1]-Hessian[0][1]*Hessian[1][0];
+        Assert(det>1.e-16, ExcInternalError());
+
         const Tensor<2,2> inverse_Hessian = invert(Hessian);
 
         const Tensor<1,2> xDisplocal = inverse_Hessian*gradient;
         const Tensor<1,3> xDisp = xDisplocal[0]*Clocalx + xDisplocal[1]*Clocaly;
 
-        std::cout << "    xDisp = " << xDisp << "\n";  // DEBUG
+//        std::cout << "    xDisp = " << xDisp << "\n";  // DEBUG
 
         // Step 2c: rotate xVec in direction xDisp, for new estimate.
 
@@ -446,16 +452,16 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
         xVec = internal::RotateUnitInDirection(xVec, xDisp);
         xVec /= xVec.norm();                // Avoid roundoff error problems
 
-        std::cout << xVec << "\n";  // DEBUG
+        //      std::cout << xVec << "\n";  // DEBUG
 
         const double error = (xVec-xVecOld).norm();
         if ( error <= tolerance )
           break;                  // return xVec as answer
       }
 
-    std::cout << "center: " << center
+    /*std::cout << "center: " << center
               << " rho: "   << rho
-              << "xVec: " << xVec << std::endl;
+              << "xVec: " << xVec << std::endl;*/
 
     for (unsigned int c=0; c<spacedim; ++c)
       candidate[c] = xVec[c];
