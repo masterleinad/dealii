@@ -264,6 +264,10 @@ get_intermediate_point (const Point<spacedim> &p1,
   const Tensor<1,spacedim> e1 = v1/r1;
   const Tensor<1,spacedim> e2 = v2/r2;
 
+  // Treat points that are collinear with the center special.
+  if ((e1 + e2).norm_square() == 0)
+    return center;
+
   if ((e1 - e2).norm_square() < tol*tol)
     return Point<spacedim>(center + w*v2 + (1-w)*v1);
 
@@ -277,8 +281,8 @@ get_intermediate_point (const Point<spacedim> &p1,
   // Since p1 and p2 do not coincide n is not zero and well defined.
   Tensor<1,spacedim> n = v2 - (v2*e1)*e1;
   Assert( n.norm() > 0,
-          ExcInternalError("n should be different from the null vector."
-                           "Probably this means v1==v2 or v2==0."));
+          ExcInternalError("n should be different from the null vector. "
+                           "Probably, this means v1==v2 or v2==0."));
 
   n /= n.norm();
 
