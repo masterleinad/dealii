@@ -366,7 +366,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
       }
     // ... and normalize if the candidate is different from the origin.
     const double norm = candidate.norm();
-    if(norm == 0.)
+    if (norm == 0.)
       return center;
     candidate /= candidate.norm();
     rho /= total_weights;
@@ -387,7 +387,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
 
     // If the candidate happens to coincide with a normalized
     // direction, we return it. Otherwise, the Hessian would be singular.
-    std::vector<Tensor<1, 3> > directions(vertices.size());
+    boost::container::small_vector<Tensor<1, 3>, 100> directions(n_points);
     for (unsigned int i=0; i<n_points; ++i)
       {
         for (unsigned int c = 0; c < spacedim; ++c)
