@@ -383,7 +383,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
     const double norm = candidate.norm();
     if (norm == 0.)
       return center;
-    candidate /= candidate.norm();
+    candidate /= norm;
     rho /= total_weights;
   }
 
@@ -411,7 +411,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
         Assert(norm != 0.,
                ExcMessage("One of the vertices coincides with the center. "
                           "This is not allowed!"));
-        directions[i] /= directions[i].norm();
+        directions[i] /= norm;
         if ((xVec - directions[i]).norm_square() < tolerance*tolerance)
           return center + rho * candidate;
       }
