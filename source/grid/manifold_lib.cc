@@ -438,7 +438,7 @@ get_new_point (const ArrayView<const Point<spacedim>> &vertices,
         gradient = 0.;
         Hessian = 0.;
         for (unsigned int i=0; i<n_points; ++i)
-          if (weights[i]>tolerance)
+          if (std::abs(weights[i])>1.e-15)
             {
               vPerp = internal::projected_direction(directions[i], xVec);
               const double sintheta = vPerp.norm();
