@@ -952,8 +952,22 @@ namespace hp
     ar &number_cache;
     ar &mg_number_cache;
     ar &levels;
+
+    // some versions of gcc have trouble with loading vectors of
+    // std::unique_ptr objects because std::unique_ptr does not
+    // have a copy constructor. do it one level at a time
+    unsigned int n_levels = levels.size();
+    ar &n_levels;
+    for (unsigned int i = 0; i < levels.size(); ++i)
+      ar &levels[i];
+
     ar &faces;
-    ar &has_children;
+
+    // the same issue as above
+    unsigned int n_has_children = has_children.size();
+    ar &n_has_children;
+    for (unsigned int i = 0; i < has_children.size(); ++i)
+      ar &has_children[i];
 
     // write out the number of triangulation cells and later check during
     // loading that this number is indeed correct; same with something that
@@ -983,9 +997,30 @@ namespace hp
     has_children.clear ();
     faces.reset ();
 
-    ar &levels;
+    // some versions of gcc have trouble with loading vectors of
+    // std::unique_ptr objects because std::unique_ptr does not
+    // have a copy constructor. do it one level at a time
+    unsigned int size;
+    ar &size;
+    levels.resize(size);
+    for (unsigned int i = 0; i < levels.size(); ++i)
+      {
+        std::unique_ptr<dealii::internal::hp::DoFLevel> level;
+        ar &level;
+        levels[i] = std::move(level);
+      }
+
     ar &faces;
-    ar &has_children;
+
+    // the same issue as above
+    ar &size;
+    has_children.resize(size);
+    for (unsigned int i = 0; i < has_children.size(); ++i)
+      {
+        std::unique_ptr<std::vector<bool> > has_children_on_level;
+        ar &has_children_on_level;
+        has_children[i] = std::move(has_children_on_level);
+      }
 
     // these are the checks that correspond to the last block in the save()
     // function
