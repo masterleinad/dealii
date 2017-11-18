@@ -951,28 +951,27 @@ namespace hp
     ar &vertex_dof_offsets;
     ar &number_cache;
     ar &mg_number_cache;
-    ar &levels;
 
     // some versions of gcc have trouble with loading vectors of
     // std::unique_ptr objects because std::unique_ptr does not
     // have a copy constructor. do it one level at a time
-    unsigned int n_levels = levels.size();
+    const unsigned int n_levels = levels.size();
     ar &n_levels;
-    for (unsigned int i = 0; i < levels.size(); ++i)
+    for (unsigned int i = 0; i < n_levels; ++i)
       ar &levels[i];
 
     ar &faces;
 
     // the same issue as above
-    unsigned int n_has_children = has_children.size();
+    const unsigned int n_has_children = has_children.size();
     ar &n_has_children;
-    for (unsigned int i = 0; i < has_children.size(); ++i)
+    for (unsigned int i = 0; i < n_has_children; ++i)
       ar &has_children[i];
 
     // write out the number of triangulation cells and later check during
     // loading that this number is indeed correct; same with something that
     // identifies the policy
-    unsigned int n_cells = tria->n_cells();
+    const unsigned int n_cells = tria->n_cells();
     std::string  policy_name = dealii::internal::policy_to_string(*policy);
 
     ar &n_cells &policy_name;
@@ -1003,7 +1002,7 @@ namespace hp
     unsigned int size;
     ar &size;
     levels.resize(size);
-    for (unsigned int i = 0; i < levels.size(); ++i)
+    for (unsigned int i = 0; i < size; ++i)
       {
         std::unique_ptr<dealii::internal::hp::DoFLevel> level;
         ar &level;
@@ -1015,7 +1014,7 @@ namespace hp
     // the same issue as above
     ar &size;
     has_children.resize(size);
-    for (unsigned int i = 0; i < has_children.size(); ++i)
+    for (unsigned int i = 0; i < size; ++i)
       {
         std::unique_ptr<std::vector<bool> > has_children_on_level;
         ar &has_children_on_level;
