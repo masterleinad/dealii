@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-#ifndef dealii__solver_sqmr_h
-#define dealii__solver_sqmr_h
+#ifndef dealii__solver_qmrs_h
+#define dealii__solver_qmrs_h
 
 #include <deal.II/base/config.h>
 #include <deal.II/lac/solver.h>
@@ -156,7 +156,7 @@ DEAL_II_NAMESPACE_OPEN
 	/**
 	 * Constructor.
 	 */
-	MySolverSQMR (SolverControl &cn,
+	SolverQMRS (SolverControl &cn,
 	    VectorMemory<VectorType> &mem,
 	    const AdditionalData &data = AdditionalData ());
 
@@ -164,7 +164,7 @@ DEAL_II_NAMESPACE_OPEN
 	 * Constructor. Use an object of type GrowingVectorMemory as a default to
 	 * allocate memory.
 	 */
-	MySolverSQMR (SolverControl &cn,
+	SolverQMRS (SolverControl &cn,
 	    const AdditionalData &data = AdditionalData ());
 
 	/**
@@ -249,7 +249,7 @@ DEAL_II_NAMESPACE_OPEN
 #ifndef DOXYGEN
 
   template <class VectorType>
-    MySolverSQMR<VectorType>::IterationResult::IterationResult (const SolverControl::State state,
+    SolverQMRS<VectorType>::IterationResult::IterationResult (const SolverControl::State state,
 	const double last_residual)
 	:
 	    state (state),
@@ -258,7 +258,7 @@ DEAL_II_NAMESPACE_OPEN
     }
 
   template <class VectorType>
-    MySolverSQMR<VectorType>::MySolverSQMR (SolverControl &cn,
+    SolverQMRS<VectorType>::SolverQMRS (SolverControl &cn,
 	VectorMemory<VectorType> &mem,
 	const AdditionalData &data)
 	:
@@ -268,7 +268,7 @@ DEAL_II_NAMESPACE_OPEN
     }
 
   template <class VectorType>
-    MySolverSQMR<VectorType>::MySolverSQMR (SolverControl &cn,
+    SolverQMRS<VectorType>::SolverQMRS (SolverControl &cn,
 	const AdditionalData &data)
 	:
 	    Solver<VectorType> (cn),
@@ -278,7 +278,7 @@ DEAL_II_NAMESPACE_OPEN
 
   template <class VectorType>
     void
-    MySolverSQMR<VectorType>::print_vectors (const unsigned int,
+    SolverQMRS<VectorType>::print_vectors (const unsigned int,
 	const VectorType &,
 	const VectorType &,
 	const VectorType &) const
@@ -288,7 +288,7 @@ DEAL_II_NAMESPACE_OPEN
   template <class VectorType>
     template <typename MatrixType, typename PreconditionerType>
       void
-      MySolverSQMR<VectorType>::solve (const MatrixType &A,
+      SolverQMRS<VectorType>::solve (const MatrixType &A,
 	  VectorType &x,
 	  const VectorType &b,
 	  const PreconditionerType &precondition)
@@ -342,8 +342,8 @@ DEAL_II_NAMESPACE_OPEN
 
   template <class VectorType>
     template <typename MatrixType, typename PreconditionerType>
-      typename MySolverSQMR<VectorType>::IterationResult
-      MySolverSQMR<VectorType>::iterate (const MatrixType &A,
+      typename SolverQMRS<VectorType>::IterationResult
+      SolverQMRS<VectorType>::iterate (const MatrixType &A,
 	  const PreconditionerType &precondition)
       {
 
