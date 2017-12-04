@@ -268,13 +268,7 @@ namespace PETScWrappers
       std::vector<size_type> ghostindices;
       ghostnodes.fill_index_vector(ghostindices);
 
-      const PetscInt *ptr
-        = (ghostindices.size() > 0
-           ?
-           (const PetscInt *)(&(ghostindices[0]))
-           :
-           nullptr);
-
+      const PetscInt *const ptr = reinterpret_cast<const PetscInt *>(ghostindices.data());
       PetscErrorCode ierr = VecCreateGhost(communicator,
                                            local_size,
                                            PETSC_DETERMINE,
