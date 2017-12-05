@@ -282,7 +282,6 @@ SolverQMRS<VectorType>::solve (const MatrixType &A,
                                const VectorType &b,
                                const PreconditionerType &preconditioner)
 {
-  //deallog.push ("SQMR");
   LogStream::Prefix prefix("SQMR"); //TODO Renaming issue
 
 
@@ -343,8 +342,6 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
 
   double tau, rho, theta = 0;
   double res;
-
-  //d.reinit (x);
 
   // Compute the start residual
   A.vmult (r, x);
