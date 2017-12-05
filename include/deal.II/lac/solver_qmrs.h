@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------
 //
-// Copyright (C) 1999 - 2015 by the deal.II authors
+// Copyright (C) 1999 - 2017 by the deal.II authors
 //
 // This file is part of the deal.II library.
 //
@@ -175,7 +175,7 @@ public:
   solve (const MatrixType &A,
          VectorType &x,
          const VectorType &b,
-         const PreconditionerType &precondition);
+         const PreconditionerType &preconditioner);
 
   /**
    * Interface for derived class. This function gets the current iteration
@@ -189,24 +189,6 @@ public:
                  const VectorType &d) const;
 
 protected:
-
-  /**
-   * Temporary vectors, allocated through the @p VectorMemory object at the
-   * start of the actual solution process and deallocated at the end.
-   */
-  VectorType *Vr;
-  VectorType *Vu;
-  VectorType *Vq;
-  VectorType *Vt;
-  VectorType *Vd;
-  /**
-   * Iteration vector.
-   */
-  VectorType *Vx;
-  /**
-   * RHS vector.
-   */
-  const VectorType *Vb;
 
   /**
    * Additional parameters.
@@ -235,7 +217,14 @@ private:
   template <typename MatrixType, typename PreconditionerType>
   IterationResult
   iterate (const MatrixType &A,
-           const PreconditionerType &precondition);
+           VectorType &x,
+           const VectorType &b,
+           const PreconditionerType &preconditioner,
+           VectorType &r,
+           VectorType &u,
+           VectorType &q,
+           VectorType &t,
+           VectorType &d);
 
   /**
    * Number of the current iteration (accumulated over restarts)
@@ -291,19 +280,21 @@ void
 SolverQMRS<VectorType>::solve (const MatrixType &A,
                                VectorType &x,
                                const VectorType &b,
-                               const PreconditionerType &precondition)
+                               const PreconditionerType &preconditioner)
 {
-  deallog.push ("SQMR");
+  //deallog.push ("SQMR");
+  LogStream::Prefix prefix("SQMR"); //TODO Renaming issue
 
-  // Memory allocation
-  Vr = this->memory.alloc ();
-  Vu = this->memory.alloc ();
-  Vq = this->memory.alloc ();
-  Vt = this->memory.alloc ();
-  Vd = this->memory.alloc ();
 
-  Vx = &x;
-  Vb = &b;
+// temporary vectors, allocated trough the @p VectorMemory object at the
+// start of the actual solution process and deallocated at the end.
+  typename VectorMemory<VectorType>::Pointer Vr(this->memory);
+  typename VectorMemory<VectorType>::Pointer Vu(this->memory);
+  typename VectorMemory<VectorType>::Pointer Vq(this->memory);
+  typename VectorMemory<VectorType>::Pointer Vt(this->memory);
+  typename VectorMemory<VectorType>::Pointer Vd(this->memory);
+
+
   // resize the vectors, but do not set
   // the values since they'd be overwritten
   // soon anyway.
@@ -311,6 +302,7 @@ SolverQMRS<VectorType>::solve (const MatrixType &A,
   Vu->reinit (x, true);
   Vq->reinit (x, true);
   Vt->reinit (x, true);
+  Vd->reinit (x, true);
 
   step = 0;
 
@@ -320,19 +312,10 @@ SolverQMRS<VectorType>::solve (const MatrixType &A,
     {
       if (step > 0)
         deallog << "Restart step " << step << std::endl;
-      state = iterate (A, precondition);
+      state = iterate (A, x, b, preconditioner, *Vr, *Vu, *Vq, *Vt, *Vd);
     }
   while (state.state == SolverControl::iterate);
 
-  // Deallocate Memory
-  this->memory.free (Vr);
-  this->memory.free (Vu);
-  this->memory.free (Vq);
-  this->memory.free (Vt);
-  this->memory.free (Vd);
-
-  // Output
-  deallog.pop ();
 
   // in case of failure: throw exception
   AssertThrow(state.state == SolverControl::success,
@@ -344,26 +327,24 @@ template <class VectorType>
 template <typename MatrixType, typename PreconditionerType>
 typename SolverQMRS<VectorType>::IterationResult
 SolverQMRS<VectorType>::iterate (const MatrixType &A,
-                                 const PreconditionerType &precondition)
+                                 VectorType &x,
+                                 const VectorType &b,
+                                 const PreconditionerType &preconditioner,
+                                 VectorType &r,
+                                 VectorType &u,
+                                 VectorType &q,
+                                 VectorType &t,
+                                 VectorType &d)
 {
 
   SolverControl::State state = SolverControl::iterate;
 
-  // define some aliases for simpler access
-  VectorType &r = *Vr;
-  VectorType &u = *Vu;
-  VectorType &q = *Vq;
-  VectorType &t = *Vt;
-  VectorType &d = *Vd;
-  VectorType &x = *Vx;
-  const VectorType &b = *Vb;
-
   int it = 0;
 
-  double tau, rho, theta = 0, sigma, alpha, psi, theta_old, rho_old, beta;
+  double tau, rho, theta = 0;
   double res;
 
-  d.reinit (x);
+  //d.reinit (x);
 
   // Compute the start residual
   A.vmult (r, x);
@@ -373,14 +354,14 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
   if (additional_data.left_preconditioning)
     {
       // Left preconditioning
-      precondition.vmult (t, r);
+      preconditioner.vmult (t, r);
       q = t;
     }
   else
     {
       // Right preconditioning
       t = r;
-      precondition.vmult (q, t);
+      preconditioner.vmult (q, t);
     };
 
   tau = t.norm_sqr ();
@@ -399,7 +380,7 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
       // Step 1: apply the system matrix and compute one inner product
       //--------------------------------------------------------------
       A.vmult (t, q);
-      sigma = q * t;
+      const double sigma = q * t;
 
       // Check the breakdown criterion
       if (additional_data.breakdown_testing == true
@@ -407,19 +388,19 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
         return IterationResult (SolverControl::iterate,
                                 res);
       // Update the residual
-      alpha = rho / sigma;
+      const double alpha = rho / sigma;
       r.add (-alpha, t);
 
       //--------------------------------------------------------------
       // Step 2: update the solution vector
       //--------------------------------------------------------------
-      theta_old = theta;
+      const double theta_old = theta;
 
       // Apply the preconditioner
       if (additional_data.left_preconditioning)
         {
           // Left Preconditioning
-          precondition.vmult (t, r);
+          preconditioner.vmult (t, r);
         }
       else
         {
@@ -429,7 +410,7 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
 
       // Double updates
       theta = t * t / tau;
-      psi = 1. / (1. + theta);
+      const double psi = 1. / (1. + theta);
       tau *= theta * psi;
 
       // Actual update of the solution vector
@@ -460,7 +441,7 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
           && std::fabs (sigma) < additional_data.breakdown_threshold)
         return IterationResult (SolverControl::iterate, res);
 
-      rho_old = rho;
+      const double rho_old = rho;
 
       // Applying the preconditioner
       if (additional_data.left_preconditioning)
@@ -471,12 +452,12 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
       else
         {
           // Right preconditioning
-          precondition.vmult (u, t);
+          preconditioner.vmult (u, t);
         }
 
       // Double and vector updates
       rho = u * r;
-      beta = rho / rho_old;
+      const double beta = rho / rho_old;
       q.sadd (beta, u);
     }
   return IterationResult (SolverControl::success, res);
