@@ -5339,7 +5339,7 @@ next_cell:
 
     // Exchanging the number of bboxes
     MPI_Allgather(&n_local_data, 1, MPI_INT,
-                  &(size_all_data[0]), 1, MPI_INT,
+                  (size_all_data.data()), 1, MPI_INT,
                   mpi_communicator);
 
     // Now computing the the displacement, relative to recvbuf,
@@ -5353,9 +5353,9 @@ next_cell:
     // Allocating a vector to contain all the received data
     std::vector<double> data_array(rdispls.back() + size_all_data.back());
 
-    MPI_Allgatherv(&(loc_data_array[0]), n_local_data, MPI_DOUBLE,
-                   &(data_array[0]), &(size_all_data[0]),
-                   &(rdispls[0]), MPI_DOUBLE, mpi_communicator);
+    MPI_Allgatherv((loc_data_array.data()), n_local_data, MPI_DOUBLE,
+                   (data_array.data()), (size_all_data.data()),
+                   (rdispls.data()), MPI_DOUBLE, mpi_communicator);
 
     // Step 4: create the array of bboxes for output
     std::vector< std::vector< BoundingBox<spacedim> > > global_bboxes(n_procs);

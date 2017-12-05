@@ -1115,7 +1115,7 @@ namespace PETScWrappers
   void VectorBase::extract_subvector_to (const std::vector<size_type> &indices,
                                          std::vector<PetscScalar> &values) const
   {
-    extract_subvector_to(&(indices[0]), &(indices[0]) + indices.size(),  &(values[0]));
+    extract_subvector_to((indices.data()), (indices.data()) + indices.size(),  (values.data()));
   }
 
   template <typename ForwardIterator, typename OutputIterator>

@@ -725,7 +725,7 @@ FE_DGQArbitraryNodes<dim,spacedim>::get_name () const
         equidistant = false;
         break;
       }
-  if (this->degree == 0 && std::abs(points[0]-0.5) < 1e-15)
+  if (this->degree == 0 & std::abs(points.data()-0.5) < 1e-15)
     equidistant = true;
 
   if (equidistant == true)

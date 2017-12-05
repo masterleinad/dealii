@@ -4872,12 +4872,12 @@ namespace DataOutBase
       int total = (vars_per_node*num_nodes);
 
       ierr = TECDAT (&total,
-                     &tm.nodalData[0],
+                     tm.nodalData.data(),
                      &is_double);
 
       Assert (ierr == 0, ExcTecplotAPIError());
 
-      ierr = TECNOD (&tm.connData[0]);
+      ierr = TECNOD (tm.connData.data());
 
       Assert (ierr == 0, ExcTecplotAPIError());
 

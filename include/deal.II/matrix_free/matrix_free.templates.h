@@ -114,7 +114,7 @@ internal_reinit(const Mapping<dim>                          &mapping,
         {
           const parallel::Triangulation<dim> *dist_tria =
             dynamic_cast<const parallel::Triangulation<dim>*>
-            (&(dof_handler[0]->get_triangulation()));
+            ((dof_handler.data()->get_triangulation()));
           size_info.communicator = dist_tria != nullptr ?
                                    dist_tria->get_communicator() :
                                    MPI_COMM_SELF;
@@ -248,7 +248,7 @@ internal_reinit(const Mapping<dim>                            &mapping,
         {
           const parallel::Triangulation<dim> *dist_tria =
             dynamic_cast<const parallel::Triangulation<dim>*>
-            (&(dof_handler[0]->get_triangulation()));
+            ((dof_handler.data()->get_triangulation()));
           size_info.communicator = dist_tria != nullptr ?
                                    dist_tria->get_communicator() :
                                    MPI_COMM_SELF;
@@ -413,7 +413,7 @@ initialize_dof_handlers (const std::vector<const DoFHandler<dim>*> &dof_handler,
   const unsigned int n_mpi_procs = size_info.n_procs;
   const unsigned int my_pid = size_info.my_pid;
 
-  const Triangulation<dim> &tria = dof_handlers.dof_handler[0]->get_triangulation();
+  const Triangulation<dim> tria = dof_handlers.dof_handler.data()->get_triangulation();
   if (level == numbers::invalid_unsigned_int)
     {
       if (n_mpi_procs == 1)
@@ -423,7 +423,7 @@ initialize_dof_handlers (const std::vector<const DoFHandler<dim>*> &dof_handler,
       // For serial Triangulations always take all cells
       const unsigned int subdomain_id
         = (dynamic_cast<const parallel::Triangulation<dim> *>
-           (&dof_handler[0]->get_triangulation())!=nullptr)
+           (dof_handler.data()->get_triangulation())!=nullptr)
           ? my_pid : numbers::invalid_subdomain_id;
       for ( ; cell != end_cell; ++cell)
         internal::resolve_cell (cell, cell_level_index, subdomain_id);
@@ -469,7 +469,7 @@ initialize_dof_handlers (const std::vector<const hp::DoFHandler<dim>*> &dof_hand
 
   // if we have no level given, use the same as for the standard DoFHandler,
   // otherwise we must loop through the respective level
-  const Triangulation<dim> &tria = dof_handler[0]->get_triangulation();
+  const Triangulation<dim> tria = dof_handler.data()->get_triangulation();
 
   if (n_mpi_procs == 1)
     {
@@ -480,7 +480,7 @@ initialize_dof_handlers (const std::vector<const hp::DoFHandler<dim>*> &dof_hand
   // For serial Triangulations always take all cells
   const unsigned int subdomain_id
     = (dynamic_cast<const parallel::Triangulation<dim> *>
-       (&dof_handler[0]->get_triangulation())!=nullptr)
+       (dof_handler.data()->get_triangulation())!=nullptr)
       ? my_pid : numbers::invalid_subdomain_id;
   for ( ; cell != end_cell; ++cell)
     internal::resolve_cell (cell, cell_level_index,

@@ -54,7 +54,7 @@ KDTree<dim>::get_closest_points(const Point<dim> &target,
   std::vector<unsigned int> indices(n_points);
   std::vector<double> distances(n_points);
 
-  kdtree->knnSearch(&target[0], n_points, &indices[0], &distances[0]);
+  kdtree->knnSearch(&target[0], n_points, indices.data(), distances.data());
 
   // convert it to the format we want to return
   std::vector<std::pair<unsigned int, double> > matches(n_points);

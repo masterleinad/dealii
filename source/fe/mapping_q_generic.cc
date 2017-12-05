@@ -1058,27 +1058,27 @@ namespace internal
             // tensor product operations manually.
             if (dim == 3)
               {
-                eval_rhs.template gradients<0,false,false>(&tmp_rhs[0], &rl1[0]);
-                eval_rhs.template values<1,false,false> (&rl1[0], &rl2[0]);
-                eval_rhs.template values<0,false,false> (&tmp_rhs[n_q_points], &rl1[0]);
-                eval_rhs.template gradients<1,false,true>(&rl1[0], &rl2[0]);
-                eval_rhs.template values<2,false,false> (&rl2[0], &tmp_rhs[0]);
-                eval_rhs.template values<0,false,false> (&tmp_rhs[2*n_q_points], &rl1[0]);
-                eval_rhs.template values<1,false,false> (&rl1[0], &rl2[0]);
-                eval_rhs.template gradients<2,false,true> (&rl2[0], &tmp_rhs[0]);
+                eval_rhs.template gradients<0,false,false>(tmp_rhs.data(), rl1.data());
+                eval_rhs.template values<1,false,false> (rl1.data(), rl2.data());
+                eval_rhs.template values<0,false,false> (&tmp_rhs[n_q_points], rl1.data());
+                eval_rhs.template gradients<1,false,true>(rl1.data(), rl2.data());
+                eval_rhs.template values<2,false,false> (rl2.data(), tmp_rhs.data());
+                eval_rhs.template values<0,false,false> (&tmp_rhs[2*n_q_points], rl1.data());
+                eval_rhs.template values<1,false,false> (rl1.data(), rl2.data());
+                eval_rhs.template gradients<2,false,true> (rl2.data(), tmp_rhs.data());
               }
             else if (dim == 2)
               {
-                eval_rhs.template gradients<0,false,false>(&tmp_rhs[0], &rl1[0]);
-                eval_rhs.template values<1,false,false> (&rl1[0], &tmp_rhs[0]);
-                eval_rhs.template values<0,false,false> (&tmp_rhs[n_q_points], &rl1[0]);
-                eval_rhs.template gradients<1,false,true>(&rl1[0], &tmp_rhs[0]);
+                eval_rhs.template gradients<0,false,false>(tmp_rhs.data(), rl1.data());
+                eval_rhs.template values<1,false,false> (rl1.data(), tmp_rhs.data());
+                eval_rhs.template values<0,false,false> (&tmp_rhs[n_q_points], rl1.data());
+                eval_rhs.template gradients<1,false,true>(rl1.data(), tmp_rhs.data());
               }
             else
               Assert(false, ExcNotImplemented());
 
-            const ArrayView<double> rl1_view {&(rl1[0]), n_inner};
-            const ArrayView<const double> tmp_rhs_view {&(tmp_rhs[0]), n_inner};
+            const ArrayView<double> rl1_view {(rl1.data()), n_inner};
+            const ArrayView<const double> tmp_rhs_view {(tmp_rhs.data()), n_inner};
             tensor_product_matrix.apply_inverse(rl1_view, tmp_rhs_view);
 
             for (unsigned int i=0; i<n_inner; ++i)
@@ -1661,8 +1661,8 @@ namespace internal
 
             // do the actual tensorized evaluation
             SelectEvaluator<dim, -1, 0, n_comp, double>::evaluate
-            (data.shape_info, &(values_dofs_ptr[0]), &(values_quad_ptr[0]),
-             &(gradients_quad_ptr[0]), &(hessians_quad_ptr[0]), &(data.scratch[0]),
+            (data.shape_info, (values_dofs_ptr.data()), (values_quad_ptr.data()),
+             (gradients_quad_ptr.data()), (hessians_quad_ptr.data()), (data.scratch.data()),
              evaluate_values, evaluate_gradients, evaluate_hessians);
           }
 
@@ -1792,7 +1792,7 @@ namespace internal
               Assert (data.n_shape_functions > 0, ExcInternalError());
 
               const Tensor<1,spacedim> *supp_pts =
-                &data.mapping_support_points[0];
+                data.mapping_support_points.data();
 
               for (unsigned int point=0; point<n_q_points; ++point)
                 {

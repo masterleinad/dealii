@@ -280,7 +280,7 @@ namespace
   {
     if (Eval::n_q_points != numbers::invalid_unsigned_int)
       AssertDimension(n_components * Eval::n_q_points, n_child_cell_dofs);
-    VectorizedArray<Number> *t0 = &evaluation_data[0];
+    VectorizedArray<Number> *t0 = evaluation_data.data();
     VectorizedArray<Number> *t1 = &evaluation_data[n_child_cell_dofs];
     VectorizedArray<Number> *t2 = &evaluation_data[2*n_child_cell_dofs];
 
@@ -481,7 +481,7 @@ void MGTransferMatrixFree<dim,Number>
                               2*fe_degree+1);
           weight_dofs_on_child<dim,degree,Number>(&weights_on_refined[from_level-1][(cell/vec_size)*three_to_dim],
                                                   n_components, fe_degree,
-                                                  &evaluation_data[0]);
+                                                  evaluation_data.data());
           perform_tensorized_op<dim,Evaluator,Number,false>(evaluator,
                                                             n_child_cell_dofs,
                                                             n_components,

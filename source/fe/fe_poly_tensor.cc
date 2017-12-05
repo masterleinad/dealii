@@ -327,7 +327,7 @@ fill_fe_values
 
   const unsigned int n_q_points = quadrature.size();
 
-  Assert(!(fe_data.update_each & update_values) || fe_data.shape_values.size()[0] == this->dofs_per_cell,
+  Assert(!(fe_data.update_each  update_values) || fe_data.shape_values.size().data() == this->dofs_per_cell,
          ExcDimensionMismatch(fe_data.shape_values.size()[0], this->dofs_per_cell));
   Assert(!(fe_data.update_each & update_values) || fe_data.shape_values.size()[1] == n_q_points,
          ExcDimensionMismatch(fe_data.shape_values.size()[1], n_q_points));

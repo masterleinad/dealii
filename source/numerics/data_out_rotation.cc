@@ -482,8 +482,8 @@ void DataOutRotation<dim,DoFHandlerType>::build_patches (const unsigned int n_pa
     }
 
   // now build the patches in parallel
-  WorkStream::run (&all_cells[0],
-                   &all_cells[0]+all_cells.size(),
+  WorkStream::run (all_cells.data(),
+                   all_cells.data()+all_cells.size(),
                    std::bind(&DataOutRotation<dim,DoFHandlerType>::build_one_patch,
                              this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                    std::bind(&internal::DataOutRotation

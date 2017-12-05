@@ -4009,7 +4009,7 @@ namespace internal
 
             int ierr = MPI_Allgather ( &level_number_cache.n_locally_owned_dofs,
                                        1, DEAL_II_DOF_INDEX_MPI_TYPE,
-                                       &level_number_cache.n_locally_owned_dofs_per_processor[0],
+                                       level_number_cache.n_locally_owned_dofs_per_processor.data(),
                                        1, DEAL_II_DOF_INDEX_MPI_TYPE,
                                        triangulation->get_communicator());
             AssertThrowMPI(ierr);

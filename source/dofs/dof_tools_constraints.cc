@@ -1995,10 +1995,10 @@ namespace DoFTools
                             {
                               const std::vector<std::pair<types::global_dof_index, double > > *constraint_entries
                                 = constraint_matrix.get_constraint_entries(dofs_1[j]);
-                              if (constraint_entries->size()==1 && (*constraint_entries)[0].first == dofs_2[i])
+                              if (constraint_entries->size()==1 & (*constraint_entries).data().first == dofs_2[i])
                                 {
-                                  if ((is_identity_constrained && std::abs((*constraint_entries)[0].second-1) > eps) ||
-                                      (is_inverse_constrained && std::abs((*constraint_entries)[0].second+1) > eps))
+                                  if ((is_identity_constrained & std::abs((*constraint_entries).data().second-1) > eps) ||
+                                      (is_inverse_constrained & std::abs((*constraint_entries).data().second+1) > eps))
                                     {
                                       //this pair of constraints means that both dofs have to be constrained to 0.
                                       constraint_matrix.add_line(dofs_2[i]);

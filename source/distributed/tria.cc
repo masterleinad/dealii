@@ -650,7 +650,7 @@ namespace
         internal::p4est::functions<dim>::
         quadrant_childrenv (&p4est_cell, p4est_child);
         int child0_idx = sc_array_bsearch(const_cast<sc_array_t *>(&tree.quadrants),
-                                          &p4est_child[0],
+                                          p4est_child.data(),
                                           internal::p4est::functions<dim>::quadrant_compare);
         Assert(child0_idx != -1, ExcMessage("the first child should exist as an active quadrant!"));
 
@@ -3133,7 +3133,7 @@ namespace parallel
           // that the packet has been
           // received
           it->second.pack_data (*buffer);
-          const int ierr = MPI_Isend(&(*buffer)[0], buffer->size(),
+          const int ierr = MPI_Isend((*buffer).data(), buffer->size(),
                                      MPI_BYTE, it->first,
                                      123, this->get_communicator(), &requests[idx]);
           AssertThrowMPI(ierr);

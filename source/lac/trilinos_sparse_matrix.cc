@@ -133,8 +133,8 @@ namespace TrilinosWrappers
       int ierr = matrix->trilinos_matrix().
                  ExtractGlobalRowCopy((TrilinosWrappers::types::int_type)this->a_row,
                                       colnums,
-                                      ncols, &((*value_cache)[0]),
-                                      reinterpret_cast<TrilinosWrappers::types::int_type *>(&((*colnum_cache)[0])));
+                                      ncols, ((*value_cache).data()),
+                                      reinterpret_cast<TrilinosWrappers::types::int_type *>(((*colnum_cache).data())));
       value_cache->resize (ncols);
       colnum_cache->resize (ncols);
       AssertThrow (ierr == 0, ExcTrilinosError(ierr));
@@ -192,7 +192,7 @@ namespace TrilinosWrappers
     column_space_map (new Epetra_Map (input_map)),
     matrix (new Epetra_FECrsMatrix
             (Copy, *column_space_map,
-             (int *)const_cast<unsigned int *>(&(n_entries_per_row[0])),
+             (int *)const_cast<unsigned int *>((n_entries_per_row.data())),
              false)),
     last_action (Zero),
     compressed (false)
@@ -219,7 +219,7 @@ namespace TrilinosWrappers
     :
     column_space_map (new Epetra_Map (input_col_map)),
     matrix (new Epetra_FECrsMatrix(Copy, input_row_map,
-                                   (int *)const_cast<unsigned int *>(&(n_entries_per_row[0])),
+                                   (int *)const_cast<unsigned int *>((n_entries_per_row.data())),
                                    false)),
     last_action (Zero),
     compressed (false)
@@ -264,7 +264,7 @@ namespace TrilinosWrappers
                                    Epetra_Map (static_cast<TrilinosWrappers::types::int_type>(m), 0,
                                                Utilities::Trilinos::comm_self()),
                                    *column_space_map,
-                                   (int *)const_cast<unsigned int *>(&(n_entries_per_row[0])),
+                                   (int *)const_cast<unsigned int *>((n_entries_per_row.data())),
                                    false)),
     last_action (Zero),
     compressed (false)
@@ -296,7 +296,7 @@ namespace TrilinosWrappers
                                      make_trilinos_map(communicator, false))),
     matrix (new Epetra_FECrsMatrix(Copy,
                                    *column_space_map,
-                                   (int *)const_cast<unsigned int *>(&(n_entries_per_row[0])),
+                                   (int *)const_cast<unsigned int *>((n_entries_per_row.data())),
                                    false)),
     last_action (Zero),
     compressed (false)
@@ -332,7 +332,7 @@ namespace TrilinosWrappers
     matrix (new Epetra_FECrsMatrix(Copy,
                                    row_parallel_partitioning.
                                    make_trilinos_map(communicator, false),
-                                   (int *)const_cast<unsigned int *>(&(n_entries_per_row[0])),
+                                   (int *)const_cast<unsigned int *>((n_entries_per_row.data())),
                                    false)),
     last_action (Zero),
     compressed (false)

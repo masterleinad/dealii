@@ -417,7 +417,7 @@ namespace PETScWrappers
           // now copy over the information
           // from the sparsity pattern.
           {
-            PetscInt *ptr = & colnums_in_window[0];
+            PetscInt *ptr =  colnums_in_window.data();
             for (PetscInt i=local_row_start; i<local_row_end; ++i)
               for (typename SparsityPatternType::iterator p=sparsity_pattern.begin(i);
                    p != sparsity_pattern.end(i); ++p, ++ptr)
@@ -546,7 +546,7 @@ namespace PETScWrappers
           // now copy over the information
           // from the sparsity pattern.
           {
-            PetscInt *ptr = & colnums_in_window[0];
+            PetscInt *ptr =  colnums_in_window.data();
             for (size_type i=local_row_start; i<local_row_end; ++i)
               for (typename SparsityPatternType::iterator p=sparsity_pattern.begin(i);
                    p != sparsity_pattern.end(i); ++p, ++ptr)

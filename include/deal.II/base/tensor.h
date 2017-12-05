@@ -951,7 +951,7 @@ Tensor<rank_,dim,Number> &
 Tensor<rank_,dim,Number>::operator = (const Tensor<rank_,dim,OtherNumber> &t)
 {
   if (dim > 0)
-    std::copy (&t.values[0], &t.values[0]+dim, &values[0]);
+    std::copy (t.values.data(), t.values.data()+dim, values.data());
   return *this;
 }
 

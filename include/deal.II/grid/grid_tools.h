@@ -2902,7 +2902,7 @@ namespace GridTools
             {
               return object->get_manifold().get_new_point
               (make_array_view(vertices.begin(), vertices.end()),
-              make_array_view(&weights[0],
+              make_array_view(weights.data(),
               &weights[GeometryInfo<structdim>::vertices_per_cell - 1] + 1));
             };
 

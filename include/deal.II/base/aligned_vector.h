@@ -245,6 +245,16 @@ public:
   size_type capacity () const;
 
   /**
+   * Return a write pointer to the underlying data array.
+   */
+  pointer data() noexcept;
+
+  /**
+   * Return a read pointer to the underlying data array.
+   */
+  const pointer data() const noexcept;
+
+  /**
    * Read-write access to entry @p index in the vector.
    */
   reference
@@ -1012,6 +1022,26 @@ AlignedVector<T>::operator [] (const size_type index) const
 {
   AssertIndexRange (index, size());
   return _data[index];
+}
+
+
+
+template < class T >
+inline
+typename AlignedVector<T>::pointer
+AlignedVector<T>::data () noexcept
+{
+  return _data;
+}
+
+
+
+template < class T >
+inline
+const typename AlignedVector<T>::pointer
+AlignedVector<T>::data () const noexcept
+{
+  return _data;
 }
 
 

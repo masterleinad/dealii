@@ -779,7 +779,7 @@ namespace Particles
         MPI_Irecv(&(n_recv_data[i]), 1, MPI_INT, neighbors[i], 0, triangulation->get_communicator(), &(n_requests[2*i]));
       for (unsigned int i=0; i<n_neighbors; ++i)
         MPI_Isend(&(n_send_data[i]), 1, MPI_INT, neighbors[i], 0, triangulation->get_communicator(), &(n_requests[2*i+1]));
-      MPI_Waitall(2*n_neighbors,&n_requests[0],MPI_STATUSES_IGNORE);
+      MPI_Waitall(2*n_neighbors,n_requests.data(),MPI_STATUSES_IGNORE);
     }
 
     // Determine how many particles and data we will receive
@@ -812,7 +812,7 @@ namespace Particles
             MPI_Isend(&(send_data[send_offsets[i]]), n_send_data[i], MPI_CHAR, neighbors[i], 1, triangulation->get_communicator(),&(requests[send_ops+recv_ops]));
             recv_ops++;
           }
-      MPI_Waitall(send_ops+recv_ops,&requests[0],MPI_STATUSES_IGNORE);
+      MPI_Waitall(send_ops+recv_ops,requests.data(),MPI_STATUSES_IGNORE);
     }
 
     // Put the received particles into the domain if they are in the triangulation

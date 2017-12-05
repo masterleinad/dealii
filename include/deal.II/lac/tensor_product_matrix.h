@@ -460,18 +460,18 @@ TensorProductMatrixSymmetricSumBase<dim,Number,size>
        AlignedVector<Number> {}, mass_matrix[0].n_rows()-1, mass_matrix[0].n_rows());
   Number *t = tmp_array.begin();
   const Number *src = src_view.begin();
-  Number *dst = &(dst_view[0]);
+  Number *dst = (dst_view.data());
 
   if (dim == 1)
     {
-      const Number *A = &derivative_matrix[0](0,0);
+      const Number *A = derivative_matrix.data()(0,0);
       eval.template apply<0, false, false> (A, src, dst);
     }
 
   else if (dim == 2)
     {
-      const Number *A0 = &derivative_matrix[0](0,0);
-      const Number *M0 = &mass_matrix[0](0,0);
+      const Number *A0 = derivative_matrix.data()(0,0);
+      const Number *M0 = mass_matrix.data()(0,0);
       const Number *A1 = &derivative_matrix[1](0,0);
       const Number *M1 = &mass_matrix[1](0,0);
       eval.template apply<0, false, false> (M0, src, t);
@@ -482,8 +482,8 @@ TensorProductMatrixSymmetricSumBase<dim,Number,size>
 
   else if (dim == 3)
     {
-      const Number *A0 = &derivative_matrix[0](0,0);
-      const Number *M0 = &mass_matrix[0](0,0);
+      const Number *A0 = derivative_matrix.data()(0,0);
+      const Number *M0 = mass_matrix.data()(0,0);
       const Number *A1 = &derivative_matrix[1](0,0);
       const Number *M1 = &mass_matrix[1](0,0);
       const Number *A2 = &derivative_matrix[2](0,0);
@@ -521,7 +521,7 @@ TensorProductMatrixSymmetricSumBase<dim,Number,size>
        AlignedVector<Number>(), mass_matrix[0].n_rows()-1, mass_matrix[0].n_rows());
   Number *t = tmp_array.begin();
   const Number *src = src_view.data();
-  Number *dst = &(dst_view[0]);
+  Number *dst = (dst_view.data());
 
   // NOTE: dof_to_quad has to be interpreted as 'dof to eigenvalue index'
   //       --> apply<.,true,.> (S,src,dst) calculates dst = S^T * src,
@@ -530,7 +530,7 @@ TensorProductMatrixSymmetricSumBase<dim,Number,size>
   //       rows correspond to dofs whereas columns to eigenvalue indices!
   if (dim == 1)
     {
-      const Number *S = &eigenvectors[0](0,0);
+      const Number *S = eigenvectors.data()(0,0);
       eval.template apply<0, true, false> (S, src, t);
       for (unsigned int i=0; i<n; ++i)
         t[i] /= eigenvalues[0][i];
@@ -539,7 +539,7 @@ TensorProductMatrixSymmetricSumBase<dim,Number,size>
 
   else if (dim == 2)
     {
-      const Number *S0 = &(eigenvectors[0](0,0));
+      const Number *S0 = (eigenvectors.data()(0,0));
       const Number *S1 = &(eigenvectors[1](0,0));
       eval.template apply<0, true, false> (S0, src, t);
       eval.template apply<1, true, false> (S1, t, dst);
@@ -552,7 +552,7 @@ TensorProductMatrixSymmetricSumBase<dim,Number,size>
 
   else if (dim == 3)
     {
-      const Number *S0 = &eigenvectors[0](0,0);
+      const Number *S0 = eigenvectors.data()(0,0);
       const Number *S1 = &eigenvectors[1](0,0);
       const Number *S2 = &eigenvectors[2](0,0);
       eval.template apply<0, true, false> (S0, src, t);

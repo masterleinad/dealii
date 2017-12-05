@@ -579,7 +579,7 @@ namespace SparsityTools
       unsigned int idx=0;
       for (map_vec_t::iterator it=send_data.begin(); it!=send_data.end(); ++it, ++idx)
         {
-          const int ierr = MPI_Isend(&(it->second[0]),
+          const int ierr = MPI_Isend((it->second.data()),
                                      it->second.size(),
                                      DEAL_II_DOF_INDEX_MPI_TYPE,
                                      it->first,
@@ -710,7 +710,7 @@ namespace SparsityTools
       unsigned int idx=0;
       for (map_vec_t::iterator it=send_data.begin(); it!=send_data.end(); ++it, ++idx)
         {
-          const int ierr = MPI_Isend(&(it->second[0]),
+          const int ierr = MPI_Isend((it->second.data()),
                                      it->second.size(),
                                      DEAL_II_DOF_INDEX_MPI_TYPE,
                                      it->first,

@@ -564,10 +564,10 @@ copy_to_mg (const std::vector<const DoFHandler<dim,spacedim>*> &mg_dof,
   {
     const parallel::Triangulation<dim,spacedim> *tria =
       (dynamic_cast<const parallel::Triangulation<dim,spacedim>*>
-       (&(mg_dof[0]->get_triangulation())));
+       ((mg_dof.data()->get_triangulation())));
     for (unsigned int i=1; i<n_blocks; ++i)
       AssertThrow((dynamic_cast<const parallel::Triangulation<dim,spacedim>*>
-                   (&(mg_dof[0]->get_triangulation())) == tria),
+                   ((mg_dof.data()->get_triangulation())) == tria),
                   ExcMessage("The DoFHandler use different Triangulations!"));
 
     for (unsigned int level = min_level; level <= max_level; ++level)

@@ -3120,7 +3120,7 @@ namespace std
     for (unsigned int i=0; i<dealii::VectorizedArray<Number>::n_array_elements; ++i)
       values[i] = std::sin(x[i]);
     ::dealii::VectorizedArray<Number> out;
-    out.load(&values[0]);
+    out.load(values.data());
     return out;
   }
 
@@ -3142,7 +3142,7 @@ namespace std
     for (unsigned int i=0; i<dealii::VectorizedArray<Number>::n_array_elements; ++i)
       values[i] = std::cos(x[i]);
     ::dealii::VectorizedArray<Number> out;
-    out.load(&values[0]);
+    out.load(values.data());
     return out;
   }
 
@@ -3164,7 +3164,7 @@ namespace std
     for (unsigned int i=0; i<dealii::VectorizedArray<Number>::n_array_elements; ++i)
       values[i] = std::tan(x[i]);
     ::dealii::VectorizedArray<Number> out;
-    out.load(&values[0]);
+    out.load(values.data());
     return out;
   }
 
@@ -3186,7 +3186,7 @@ namespace std
     for (unsigned int i=0; i<dealii::VectorizedArray<Number>::n_array_elements; ++i)
       values[i] = std::exp(x[i]);
     ::dealii::VectorizedArray<Number> out;
-    out.load(&values[0]);
+    out.load(values.data());
     return out;
   }
 
@@ -3208,7 +3208,7 @@ namespace std
     for (unsigned int i=0; i<dealii::VectorizedArray<Number>::n_array_elements; ++i)
       values[i] = std::log(x[i]);
     ::dealii::VectorizedArray<Number> out;
-    out.load(&values[0]);
+    out.load(values.data());
     return out;
   }
 

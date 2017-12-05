@@ -3216,7 +3216,7 @@ FEEvaluationBase<dim,n_components_,Number>
       const unsigned int n_local_dofs =
         dofs_per_component*VectorizedArray<Number>::n_array_elements * n_components;
       Number   *local_data =
-        const_cast<Number *>(&values_dofs[0][0][0]);
+        const_cast<Number *>(values_dofs.data()[0][0]);
       if (at_irregular_cell == false)
         {
           // check whether there is any constraint on the current cell
@@ -3533,7 +3533,7 @@ FEEvaluationBase<dim,n_components_,Number>
       Assert (n_fe_components == n_components_, ExcNotImplemented());
       const unsigned int n_local_dofs =
         dofs_per_component * VectorizedArray<Number>::n_array_elements * n_components;
-      Number *local_src_number = &values_dofs[0][0][0];
+      Number *local_src_number = values_dofs.data()[0][0];
       if (at_irregular_cell == false)
         {
           for (unsigned int j=0; j<n_local_dofs; ++j)
@@ -3603,7 +3603,7 @@ const VectorizedArray<Number> *
 FEEvaluationBase<dim,n_components,Number>::
 begin_dof_values () const
 {
-  return &values_dofs[0][0];
+  return values_dofs.data()[0];
 }
 
 
@@ -3617,7 +3617,7 @@ begin_dof_values ()
 #ifdef DEBUG
   dof_values_initialized = true;
 #endif
-  return &values_dofs[0][0];
+  return values_dofs.data()[0];
 }
 
 
@@ -3630,7 +3630,7 @@ begin_values () const
 {
   Assert (values_quad_initialized || values_quad_submitted,
           ExcNotInitialized());
-  return &values_quad[0][0];
+  return values_quad.data()[0];
 }
 
 
@@ -3644,7 +3644,7 @@ begin_values ()
 #ifdef DEBUG
   values_quad_submitted = true;
 #endif
-  return &values_quad[0][0];
+  return values_quad.data()[0];
 }
 
 
@@ -3657,7 +3657,7 @@ begin_gradients () const
 {
   Assert (gradients_quad_initialized || gradients_quad_submitted,
           ExcNotInitialized());
-  return &gradients_quad[0][0][0];
+  return gradients_quad.data()[0][0];
 }
 
 
@@ -3671,7 +3671,7 @@ begin_gradients ()
 #ifdef DEBUG
   gradients_quad_submitted = true;
 #endif
-  return &gradients_quad[0][0][0];
+  return gradients_quad.data()[0][0];
 }
 
 
@@ -3683,7 +3683,7 @@ FEEvaluationBase<dim,n_components,Number>::
 begin_hessians () const
 {
   Assert (hessians_quad_initialized, ExcNotInitialized());
-  return &hessians_quad[0][0][0];
+  return hessians_quad.data()[0][0];
 }
 
 
@@ -3694,7 +3694,7 @@ VectorizedArray<Number> *
 FEEvaluationBase<dim,n_components,Number>::
 begin_hessians ()
 {
-  return &hessians_quad[0][0][0];
+  return hessians_quad.data()[0][0];
 }
 
 
@@ -3846,7 +3846,7 @@ FEEvaluationBase<dim,n_components_,Number>
   // Cartesian cell
   if (this->cell_type == internal::MatrixFreeFunctions::cartesian)
     {
-      const Tensor<1,dim,VectorizedArray<Number> > &jac = cartesian_data[0];
+      const Tensor<1,dim,VectorizedArray<Number> > jac = cartesian_data.data();
       for (unsigned int comp=0; comp<n_components; comp++)
         for (unsigned int d=0; d<dim; ++d)
           {
@@ -3924,7 +3924,7 @@ FEEvaluationBase<dim,n_components_,Number>
   // cell with general Jacobian, but constant within the cell
   else // if (this->cell_type == internal::MatrixFreeFunctions::affine)
     {
-      const Tensor<2,dim,VectorizedArray<Number> > &jac = jacobian[0];
+      const Tensor<2,dim,VectorizedArray<Number> > jac = jacobian.data();
       for (unsigned int comp=0; comp<n_components; comp++)
         {
           // compute laplacian before the gradient because it needs to access
@@ -3971,7 +3971,7 @@ FEEvaluationBase<dim,n_components_,Number>
   // Cartesian cell
   if (this->cell_type == internal::MatrixFreeFunctions::cartesian)
     {
-      const Tensor<1,dim,VectorizedArray<Number> > &jac = cartesian_data[0];
+      const Tensor<1,dim,VectorizedArray<Number> > jac = cartesian_data.data();
       for (unsigned int comp=0; comp<n_components; comp++)
         for (unsigned int d=0; d<dim; ++d)
           hessian_out[comp][d] = (this->hessians_quad[comp][d][q_point] *
@@ -4010,7 +4010,7 @@ FEEvaluationBase<dim,n_components_,Number>
   // cell with general Jacobian, but constant within the cell
   else // if (this->cell_type == internal::MatrixFreeFunctions::affine)
     {
-      const Tensor<2,dim,VectorizedArray<Number> > &jac = jacobian[0];
+      const Tensor<2,dim,VectorizedArray<Number> > jac = jacobian.data();
       for (unsigned int comp=0; comp<n_components; comp++)
         {
           // compute laplacian before the gradient because it needs to access
@@ -5394,7 +5394,7 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
          this->mapped_geometry->is_initialized(), ExcNotInitialized());
 
   SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>
-  ::evaluate (*this->data, &this->values_dofs[0], this->values_quad,
+  ::evaluate (*this->data, this->values_dofs.data(), this->values_quad,
               this->gradients_quad, this->hessians_quad, this->scratch_data,
               evaluate_values, evaluate_gradients, evaluate_hessians);
 
@@ -5428,7 +5428,7 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
          this->mapped_geometry->is_initialized(), ExcNotInitialized());
 
   SelectEvaluator<dim, fe_degree, n_q_points_1d, n_components, Number>
-  ::integrate (*this->data, &this->values_dofs[0], this->values_quad,
+  ::integrate (*this->data, this->values_dofs.data(), this->values_quad,
                this->gradients_quad, this->scratch_data,
                integrate_values, integrate_gradients);
 

@@ -352,8 +352,8 @@ void DataOutFaces<dim,DoFHandlerType>::build_patches (const Mapping<dimension> &
                             Utilities::fixed_power<dimension-1>(n_subdivisions+1));
 
   // now build the patches in parallel
-  WorkStream::run (&all_faces[0],
-                   &all_faces[0]+all_faces.size(),
+  WorkStream::run (all_faces.data(),
+                   all_faces.data()+all_faces.size(),
                    std::bind(&DataOutFaces<dim,DoFHandlerType>::build_one_patch,
                              this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                    std::bind(&internal::DataOutFaces::

@@ -507,8 +507,8 @@ void DataOut<dim,DoFHandlerType>::build_patches
 
   // now build the patches in parallel
   if (all_cells.size() > 0)
-    WorkStream::run (&all_cells[0],
-                     &all_cells[0]+all_cells.size(),
+    WorkStream::run (all_cells.data(),
+                     all_cells.data()+all_cells.size(),
                      std::bind(&DataOut<dim,DoFHandlerType>::build_one_patch,
                                this,
                                std::placeholders::_1,

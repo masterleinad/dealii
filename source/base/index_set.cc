@@ -643,7 +643,7 @@ IndexSet::is_ascending_and_one_to_one (const MPI_Comm &communicator) const
   std::vector<types::global_dof_index> global_dofs(gather_size);
 
   int ierr = MPI_Gather(&first_local_dof, 1, DEAL_II_DOF_INDEX_MPI_TYPE,
-                        &(global_dofs[0]), 1, DEAL_II_DOF_INDEX_MPI_TYPE, 0,
+                        (global_dofs.data()), 1, DEAL_II_DOF_INDEX_MPI_TYPE, 0,
                         communicator);
   AssertThrowMPI(ierr);
 
