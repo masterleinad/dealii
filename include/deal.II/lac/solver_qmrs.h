@@ -120,10 +120,10 @@ public:
      * 1e-16.
      */
     explicit
-    AdditionalData (bool left_preconditioning = false,
-                    double solver_tolerance = 1.e-9,
-                    bool breakdown_testing = true,
-                    double breakdown_threshold = 1.e-16)
+    AdditionalData (const bool left_preconditioning = false,
+                    const double solver_tolerance = 1.e-9,
+                    const bool breakdown_testing = true,
+                    const double breakdown_threshold = 1.e-16)
       :
       left_preconditioning (left_preconditioning),
       solver_tolerance (solver_tolerance),
@@ -282,7 +282,7 @@ SolverQMRS<VectorType>::solve (const MatrixType &A,
                                const VectorType &b,
                                const PreconditionerType &preconditioner)
 {
-  LogStream::Prefix prefix("SQMR"); //TODO Renaming issue
+  LogStream::Prefix prefix("SQMR");
 
 
 // temporary vectors, allocated trough the @p VectorMemory object at the
@@ -359,10 +359,10 @@ SolverQMRS<VectorType>::iterate (const MatrixType &A,
       // Right preconditioning
       t = r;
       preconditioner.vmult (q, t);
-    };
+    }
 
   tau = t.norm_sqr ();
-  res = sqrt (tau);
+  res = std::sqrt (tau);
 
   if (this->iteration_status (step, res, x) == SolverControl::success)
     return IterationResult (SolverControl::success, res);
