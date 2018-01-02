@@ -774,6 +774,24 @@ public:
                       const Point<spacedim> &x2) const override;
 
   /**
+   * Return the normal vector to the given face at point p taking into account
+   * that the face might not be flat.
+   */
+  virtual
+  Tensor<1,spacedim>
+  normal_vector (const typename Triangulation<dim,spacedim>::face_iterator &face,
+                 const Point<spacedim> &p) const override;
+
+  /**
+   * Compute the normal vectors to the boundary at each vertex of the
+   * given face taking into account that the face might not be flat.
+   */
+  virtual
+  void
+  get_normals_at_vertices (const typename Triangulation<dim,spacedim>::face_iterator &face,
+                           typename Manifold<dim, spacedim>::FaceVertexNormals &face_vertex_normals) const override;
+
+  /**
    * Return the periodicity of this Manifold.
    */
   const Tensor<1,spacedim> &get_periodicity() const;
