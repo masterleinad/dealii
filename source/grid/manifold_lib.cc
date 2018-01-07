@@ -968,6 +968,18 @@ template<int dim, int spacedim>
 DerivativeForm<1, 3, spacedim>
 CylindricalManifold<dim, spacedim>::push_forward_gradient(const Point<3> &chart_point) const
 {
+  Assert (spacedim==3,
+          ExcMessage("CylindricalManifold can only be used for spacedim==3!"));
+
+  return DerivativeForm<1,3,spacedim>();
+}
+
+
+
+template<int dim>
+DerivativeForm<1, 3, 3>
+CylindricalManifold<dim, 3>::push_forward_gradient(const Point<3> &chart_point) const
+{
   Tensor<2, 3> derivatives;
 
   // Rotate the orthogonal direction by the given angle.
