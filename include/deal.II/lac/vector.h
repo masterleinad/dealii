@@ -982,6 +982,9 @@ Vector<Number>::Vector ()
   max_vec_size(0),
   values(nullptr, &free)
 {
+  // virtual functions called in constructors and destructors never use the
+  // override in a derived class
+  // for clarity be explicit on which function is called
   Vector<Number>::reinit(0);
 }
 
@@ -1011,6 +1014,9 @@ Vector<Number>::Vector (const size_type n)
   max_vec_size(0),
   values(nullptr, &free)
 {
+  // virtual functions called in constructors and destructors never use the
+  // override in a derived class
+  // for clarity be explicit on which function is called
   Vector<Number>::reinit (n, false);
 }
 
