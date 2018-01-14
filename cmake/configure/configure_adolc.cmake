@@ -31,20 +31,22 @@ MACRO(FEATURE_ADOLC_FIND_EXTERNAL var)
     # values from constant objects.
     #
 
-    SET(CMAKE_REQUIRED_LIBRARIES ${ADOLC_LIBRARIES})
+    SET(CMAKE_REQUIRED_LIBRARIES "${ADOLC_LIBRARIES} boost_system")
     SET(CMAKE_REQUIRED_INCLUDES ${ADOLC_INCLUDE_DIRS})
     SET(CMAKE_REQUIRED_FLAGS "${DEAL_II_CXX_FLAGS}")
     CHECK_CXX_SOURCE_COMPILES("
       #include <adolc/adouble.h>
+      #include <adolc/adtl.h>
       #include <iostream>
       void print_double(const adouble &val)
       {
         std::cout << \"val (non-const): \" << static_cast<double>(val) << std::endl;
       }
-      int main (int argc, char *argv[])
+      int main ()
       {
         const adouble val = 1.0;
         print_double(val);
+        std::cout << adtl::getNumDir() << std::endl;
       }"
       ADOLC_DOUBLE_CAST_CHECK)
 
