@@ -1646,11 +1646,6 @@ alternating_form_at_vertices
 }
 
 
-template struct GeometryInfo<1>;
-template struct GeometryInfo<2>;
-template struct GeometryInfo<3>;
-template struct GeometryInfo<4>;
-
 template
 void
 GeometryInfo<1>::
@@ -1712,5 +1707,7 @@ alternating_form_at_vertices
 #endif
 ;
 
+// explicit instantiations
+#include "geometry_info.inst"
 
 DEAL_II_NAMESPACE_CLOSE
