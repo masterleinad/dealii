@@ -573,6 +573,24 @@ make_array_view (std::vector<ElementType> &vector,
   return ArrayView<ElementType> (&vector[starting_index], size_of_view);
 }
 
+#ifndef DOXYGEN
+namespace internal
+{
+  namespace ArrayViewHelper
+  {
+    template<class Iterator>
+    bool is_contiguous(const Iterator &first, const Iterator &last)
+    {
+      const auto n = std::distance(first, last);
+      for (typename std::decay<decltype(n)>::type i = 0; i < n; ++i)
+        if (*(std::next(first, i)) != *(std::next(std::addressof(*first), i)))
+          return false;
+      return true;
+    }
+  }
+}
+#endif
+
 
 /**
  * Create an ArrayView that takes a pair of iterators as arguments. The type
@@ -585,6 +603,7 @@ make_array_view (std::vector<ElementType> &vector,
  * <code>boost::container::small_vector</code> or <code>std::vector</code> and
  * will not work correctly with, e.g.,
  * <code>boost::container::stable_vector</code> or <code>std::deque</code>.
+ * This assumption is checked in debug mode.
  *
  * @relates ArrayView
  */
@@ -597,6 +616,8 @@ make_array_view (const Iterator begin, const Iterator end)
                 "The provided iterator should be a random access iterator.");
   Assert(begin <= end,
          ExcMessage("The beginning of the array view should be before the end."));
+  Assert(internal::ArrayViewHelper::is_contiguous(begin, end),
+         ExcMessage("The provided range isn't contiguous in memory!"));
   // the reference type, not the value type, knows the constness of the iterator
   return ArrayView<typename std::remove_reference
          <typename std::iterator_traits<Iterator>::reference>::type>
@@ -609,6 +630,7 @@ make_array_view (const Iterator begin, const Iterator end)
  *
  * @warning The pointers @p begin and @p end must bound (in the usual
  * half-open way) a contiguous in memory range of values.
+ * This assumption is checked in debug mode.
  *
  * @relates ArrayView
  */
@@ -618,6 +640,8 @@ make_array_view (ElementType *const begin, ElementType *const end)
 {
   Assert(begin <= end,
          ExcMessage("The beginning of the array view should be before the end."));
+  Assert(internal::ArrayViewHelper::is_contiguous(begin, end),
+         ExcMessage("The provided range isn't contiguous in memory!"));
   return ArrayView<ElementType>(begin, end - begin);
 }
 
