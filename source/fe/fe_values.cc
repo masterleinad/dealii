@@ -60,6 +60,7 @@ namespace
 
 
   IndexSet::value_type
+  inline
   get_vector_element (const IndexSet &is,
                       const types::global_dof_index cell_number)
   {
