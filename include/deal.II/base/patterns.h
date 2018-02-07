@@ -1375,10 +1375,10 @@ namespace Patterns
           return std_cxx14::make_unique<Patterns::Bool>();
         else if (std::is_integral<T>::value)
           return std_cxx14::make_unique<Patterns::Integer>(
-                   std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
+                   std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
         else if (std::is_floating_point<T>::value)
           return std_cxx14::make_unique<Patterns::Double>(
-                   -std::numeric_limits<T>::max(), std::numeric_limits<T>::max());
+                   -std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
 
         Assert(false, ExcNotImplemented());
         //the following line should never be invoked
@@ -1392,7 +1392,7 @@ namespace Patterns
         std::string str;
         if (std::is_same<T, unsigned char>() || std::is_same<T, char>())
           str = std::to_string((int)value);
-        else  if (std::is_same<T,bool>::value)
+        else if (std::is_same<T,bool>::value)
           str = value ? "true" : "false";
         else
           str = std::to_string(value);

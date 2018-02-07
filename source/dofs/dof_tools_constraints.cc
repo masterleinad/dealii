@@ -314,7 +314,7 @@ namespace DoFTools
       {
         if (master_dof_mask == nullptr)
           {
-            master_dof_mask = std_cxx14::make_unique<std::vector<bool> > (fe1.dofs_per_face);
+            master_dof_mask = std_cxx14::make_unique<std::vector<bool> > (fe1.dofs_per_face>0);
             select_master_dofs_for_face_restriction (fe1,
                                                      fe2,
                                                      face_interpolation_matrix,

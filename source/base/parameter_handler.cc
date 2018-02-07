@@ -588,7 +588,7 @@ void ParameterHandler::parse_input_from_xml (std::istream &in)
 
 void ParameterHandler::clear ()
 {
-  entries.reset (new boost::property_tree::ptree());
+  entries = std_cxx14::make_unique<boost::property_tree::ptree> ();
 }
 
 
