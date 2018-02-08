@@ -1468,7 +1468,7 @@ private:
    * object. Every nodes in the property tree corresponding to a parameter
    * stores an index into this array.
    */
-  std::vector<std::shared_ptr<const Patterns::PatternBase> > patterns;
+  std::vector<std::unique_ptr<const Patterns::PatternBase> > patterns;
 
   /**
    * A list of actions that are associated with parameters. These
@@ -1991,7 +1991,7 @@ ParameterHandler::load (Archive &ar, const unsigned int)
 
   patterns.clear ();
   for (unsigned int j=0; j<descriptions.size(); ++j)
-    patterns.push_back (std::shared_ptr<const Patterns::PatternBase>(Patterns::pattern_factory(descriptions[j])));
+    patterns.push_back (Patterns::pattern_factory(descriptions[j]));
 }
 
 

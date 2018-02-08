@@ -18,6 +18,7 @@
 #ifdef DEAL_II_WITH_TRILINOS
 
 #  include <deal.II/base/mpi.h>
+#  include <deal.II/base/std_cxx14/memory.h>
 #  include <deal.II/lac/trilinos_sparse_matrix.h>
 #  include <deal.II/lac/trilinos_parallel_block_vector.h>
 #  include <deal.II/lac/trilinos_index_access.h>
@@ -112,9 +113,8 @@ namespace TrilinosWrappers
                    ExcDimensionMismatch (parallel_partitioner.size(),
                                          TrilinosWrappers::n_global_elements(v.vector->Map())));
 
-      vector.reset (new Epetra_FEVector
-                    (parallel_partitioner.make_trilinos_map(communicator,
-                                                            true)));
+      vector = std_cxx14::make_unique<Epetra_FEVector>
+               (parallel_partitioner.make_trilinos_map(communicator, true));
       reinit (v, false, true);
     }
 
@@ -142,7 +142,7 @@ namespace TrilinosWrappers
 #endif
 
       has_ghosts = false;
-      vector.reset (new Epetra_FEVector(map));
+      vector = std_cxx14::make_unique<Epetra_FEVector>(map);
       last_action = Zero;
     }
 
@@ -158,7 +158,7 @@ namespace TrilinosWrappers
       Epetra_Map map = parallel_partitioner.make_trilinos_map (communicator,
                                                                true);
 
-      vector.reset (new Epetra_FEVector(map));
+      vector = std_cxx14::make_unique<Epetra_FEVector>(map);
 
       has_ghosts = vector->Map().UniqueGIDs()==false;
 
@@ -212,7 +212,7 @@ namespace TrilinosWrappers
 #endif
           if (!same_communicators || vector->Map().SameAs(v.vector->Map()) == false)
             {
-              vector.reset (new Epetra_FEVector(v.vector->Map()));
+              vector = std_cxx14::make_unique<Epetra_FEVector>(v.vector->Map());
               has_ghosts = v.has_ghosts;
               last_action = Zero;
               owned_elements = v.owned_elements;
@@ -301,14 +301,7 @@ namespace TrilinosWrappers
       Epetra_Map new_map (v.size(), n_elements, global_ids.data(), 0,
                           v.block(0).vector_partitioner().Comm());
 
-      std::shared_ptr<Epetra_FEVector> actual_vec;
-      if ( import_data == true )
-        actual_vec.reset (new Epetra_FEVector (new_map));
-      else
-        {
-          vector.reset (new Epetra_FEVector (new_map));
-          actual_vec = vector;
-        }
+      std::unique_ptr<Epetra_FEVector> actual_vec = std_cxx14::make_unique<Epetra_FEVector>(new_map);
 
       TrilinosScalar *entries = (*actual_vec)[0];
       for (size_type block=0; block<v.n_blocks(); ++block)
@@ -331,6 +324,8 @@ namespace TrilinosWrappers
 
           last_action = Insert;
         }
+      else
+          vector = std::move(actual_vec);
 #if defined(DEBUG) && defined(DEAL_II_WITH_MPI)
       const Epetra_MpiComm *comm_ptr
         = dynamic_cast<const Epetra_MpiComm *>(&(vector->Comm()));
@@ -357,7 +352,7 @@ namespace TrilinosWrappers
           parallel_partitioner.add_indices(ghost_entries);
           Epetra_Map map = parallel_partitioner.make_trilinos_map (communicator,
                                                                    true);
-          vector.reset (new Epetra_FEVector(map));
+          vector = std_cxx14::make_unique<Epetra_FEVector>(map);
         }
       else
         {
@@ -368,7 +363,7 @@ namespace TrilinosWrappers
                              "its parallel partitioning"));
 
           if (vector->Map().SameAs(map)==false)
-            vector.reset (new Epetra_FEVector(map));
+            vector = std_cxx14::make_unique<Epetra_FEVector>(map);
           else
             {
               const int ierr = vector->PutScalar(0.);
@@ -460,7 +455,7 @@ namespace TrilinosWrappers
       // size.
       else
         {
-          vector.reset (new Epetra_FEVector(*v.vector));
+          vector = std_cxx14::make_unique<Epetra_FEVector>(*v.vector);
           last_action = Zero;
           has_ghosts = v.has_ghosts;
           owned_elements = v.owned_elements;
@@ -515,11 +510,7 @@ namespace TrilinosWrappers
                           "which is not allowed."));
 
       if (vector->Map().SameAs(m.trilinos_matrix().ColMap()) == false)
-        {
-          vector.reset (new Epetra_FEVector(
-                          m.trilinos_matrix().ColMap()
-                        ));
-        }
+        vector = std_cxx14::make_unique<Epetra_FEVector>(m.trilinos_matrix().ColMap());
 
       Epetra_Import data_exchange (vector->Map(), v.vector->Map());
       const int ierr = vector->Import(*v.vector, data_exchange, Insert);

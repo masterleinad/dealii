@@ -763,7 +763,7 @@ namespace Patterns
         std::string str;
         std::getline(is, str, '>');
 
-        std::shared_ptr<PatternBase> base_pattern (pattern_factory(str));
+        std::unique_ptr<PatternBase> base_pattern (pattern_factory(str));
 
         is.ignore(strlen(" of length "));
         if (!(is >> min_elements))
@@ -954,8 +954,8 @@ namespace Patterns
         std::string value;
         std::getline(is, value, '>');
 
-        std::shared_ptr<PatternBase> key_pattern (pattern_factory(key));
-        std::shared_ptr<PatternBase> value_pattern (pattern_factory(value));
+        std::unique_ptr<PatternBase> key_pattern (pattern_factory(key));
+        std::unique_ptr<PatternBase> value_pattern (pattern_factory(value));
 
         is.ignore(strlen(" of length "));
         if (!(is >> min_elements))

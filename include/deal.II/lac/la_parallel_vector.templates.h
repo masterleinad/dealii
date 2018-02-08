@@ -18,6 +18,7 @@
 
 
 #include <deal.II/base/config.h>
+#include <deal.II/base/std_cxx14/memory.h>
 #include <deal.II/lac/exceptions.h>
 #include <deal.II/lac/la_parallel_vector.h>
 #include <deal.II/lac/vector_operations_internal.h>
@@ -95,7 +96,7 @@ namespace LinearAlgebra
       import_data.reset ();
 
       // set partitioner to serial version
-      partitioner.reset (new Utilities::MPI::Partitioner (size));
+      partitioner = std::make_shared<Utilities::MPI::Partitioner> (size);
 
       // set entries to zero if so requested
       if (omit_zeroing_entries == false)
@@ -540,7 +541,7 @@ namespace LinearAlgebra
 
       // allocate import_data in case it is not set up yet
       if (import_data == nullptr && partitioner->n_import_indices() > 0)
-        import_data.reset (new Number[partitioner->n_import_indices()]);
+        import_data = std_cxx14::make_unique<Number[]>(partitioner->n_import_indices());
 
       partitioner->import_from_ghosted_array_start
       (operation, counter,
@@ -595,7 +596,7 @@ namespace LinearAlgebra
 
       // allocate import_data in case it is not set up yet
       if (import_data == nullptr && partitioner->n_import_indices() > 0)
-        import_data.reset (new Number[partitioner->n_import_indices()]);
+        import_data = std_cxx14::make_unique<Number[]>(partitioner->n_import_indices());
 
       partitioner->export_to_ghosted_array_start
       (counter,

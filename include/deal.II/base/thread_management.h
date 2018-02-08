@@ -1629,7 +1629,7 @@ namespace Threads
     {
       // create a task descriptor and tell it to queue itself up with
       // the scheduling system
-      task_descriptor.reset (new internal::TaskDescriptor<RT>(function_object));
+      task_descriptor = std::make_shared<internal::TaskDescriptor<RT>>(function_object);
       task_descriptor->queue_task ();
     }
 

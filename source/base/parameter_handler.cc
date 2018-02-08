@@ -460,7 +460,7 @@ namespace
   read_xml_recursively (const boost::property_tree::ptree &source,
                         const std::string                 &current_path,
                         const char                         path_separator,
-                        const std::vector<std::shared_ptr<const Patterns::PatternBase> > &
+                        const std::vector<std::unique_ptr<const Patterns::PatternBase> > &
                         patterns,
                         boost::property_tree::ptree       &destination)
   {

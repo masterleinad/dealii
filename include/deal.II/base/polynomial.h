@@ -534,7 +534,7 @@ namespace Polynomials
      * shared_ptr in order to correctly free the memory of the vectors when
      * the global destructor is called.
      */
-    static std::vector<std::shared_ptr<const std::vector<double> > > recursive_coefficients;
+    static std::vector<std::unique_ptr<const std::vector<double> > > recursive_coefficients;
   };
 
 

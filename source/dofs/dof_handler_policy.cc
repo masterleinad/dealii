@@ -42,6 +42,7 @@ DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #endif
 DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 
+#include <memory>
 #include <set>
 #include <algorithm>
 #include <numeric>
@@ -162,7 +163,7 @@ namespace internal
         void
         ensure_existence_of_dof_identities (const FiniteElement<dim,spacedim> &fe1,
                                             const FiniteElement<dim,spacedim> &fe2,
-                                            std::shared_ptr<DoFIdentities> &identities)
+                                            std::unique_ptr<DoFIdentities> &identities)
         {
           // see if we need to fill this entry, or whether it already
           // exists
@@ -172,25 +173,22 @@ namespace internal
                 {
                 case 0:
                 {
-                  identities =
-                    std::shared_ptr<DoFIdentities>
-                    (new DoFIdentities(fe1.hp_vertex_dof_identities(fe2)));
+                  identities = std_cxx14::make_unique<DoFIdentities>
+                    (fe1.hp_vertex_dof_identities(fe2));
                   break;
                 }
 
                 case 1:
                 {
-                  identities =
-                    std::shared_ptr<DoFIdentities>
-                    (new DoFIdentities(fe1.hp_line_dof_identities(fe2)));
+                  identities = std_cxx14::make_unique<DoFIdentities>
+                    (fe1.hp_line_dof_identities(fe2));
                   break;
                 }
 
                 case 2:
                 {
-                  identities =
-                    std::shared_ptr<DoFIdentities>
-                    (new DoFIdentities(fe1.hp_quad_dof_identities(fe2)));
+                  identities = std_cxx14::make_unique<DoFIdentities>
+                    (fe1.hp_quad_dof_identities(fe2));
                   break;
                 }
 
@@ -608,7 +606,7 @@ namespace internal
           // it is not clear whether this is actually necessary for
           // vertices at all, I can't think of a finite element that
           // would make that necessary...
-          dealii::Table<2,std::shared_ptr<DoFIdentities> >
+          dealii::Table<2,std::unique_ptr<DoFIdentities> >
           vertex_dof_identities (dof_handler.get_fe_collection().size(),
                                  dof_handler.get_fe_collection().size());
 
@@ -775,7 +773,7 @@ namespace internal
           // is to first treat all pairs of finite elements that have *identical* dofs,
           // and then only deal with those that are not identical of which we can
           // handle at most 2
-          dealii::Table<2,std::shared_ptr<DoFIdentities> >
+          dealii::Table<2,std::unique_ptr<DoFIdentities> >
           line_dof_identities (dof_handler.finite_elements->size(),
                                dof_handler.finite_elements->size());
 
@@ -1007,7 +1005,7 @@ namespace internal
           // trouble. note that this only happens for lines in 3d and
           // higher, and for quads only in 4d and higher, so this
           // isn't a particularly frequent case
-          dealii::Table<2,std::shared_ptr<DoFIdentities> >
+          dealii::Table<2,std::unique_ptr<DoFIdentities> >
           quad_dof_identities (dof_handler.finite_elements->size(),
                                dof_handler.finite_elements->size());
 
