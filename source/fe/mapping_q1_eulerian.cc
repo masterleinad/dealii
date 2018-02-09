@@ -117,7 +117,7 @@ compute_mapping_support_points(const typename Triangulation<dim,spacedim>::cell_
 
 template <int dim, class VectorType, int spacedim>
 MappingQ1Eulerian<dim,VectorType,spacedim> *
-MappingQ1Eulerian<dim, VectorType, spacedim>::clone () const
+MappingQ1Eulerian<dim, VectorType, spacedim>::raw_clone () const
 {
   return new MappingQ1Eulerian<dim,VectorType,spacedim>(*this);
 }

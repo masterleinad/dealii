@@ -2154,10 +2154,10 @@ MappingQGeneric<dim,spacedim>::MappingQGeneric (const MappingQGeneric<dim,spaced
 
 
 template <int dim, int spacedim>
-Mapping<dim,spacedim> *
-MappingQGeneric<dim,spacedim>::clone () const
+MappingQGeneric<dim,spacedim> *
+MappingQGeneric<dim,spacedim>::raw_clone () const
 {
-  return new MappingQGeneric<dim,spacedim>(*this);
+  return new MappingQGeneric<dim,spacedim> (*this);
 }
 
 

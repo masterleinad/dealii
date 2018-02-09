@@ -1064,8 +1064,8 @@ MappingCartesian<dim, spacedim>::transform_real_to_unit_cell (
 
 
 template <int dim, int spacedim>
-Mapping<dim, spacedim> *
-MappingCartesian<dim, spacedim>::clone () const
+MappingCartesian<dim, spacedim> *
+MappingCartesian<dim, spacedim>::raw_clone () const
 {
   return new MappingCartesian<dim, spacedim>(*this);
 }

@@ -61,9 +61,17 @@ public:
    */
   MappingQ1 ();
 
+  std::unique_ptr<MappingQ1<dim,spacedim> >
+  clone () const
+  {
+    return std::unique_ptr<MappingQ1<dim, spacedim>>(raw_clone());
+  }
+
+private:
   // for documentation, see the Mapping base class
   virtual
-  MappingQ1<dim,spacedim> *clone () const;
+  MappingQ1<dim,spacedim> *
+  raw_clone () const override;
 };
 
 

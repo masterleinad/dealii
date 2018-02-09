@@ -91,12 +91,12 @@ MappingQ<dim,spacedim>::MappingQ (const MappingQ<dim,spacedim> &mapping)
   use_mapping_q_on_all_cells (mapping.use_mapping_q_on_all_cells),
   // clone the Q1 mapping for use on interior cells (if necessary)
   // or to create a good initial guess in transform_real_to_unit_cell()
-  q1_mapping (dynamic_cast<MappingQGeneric<dim,spacedim>*>(mapping.q1_mapping->clone())),
+  q1_mapping (mapping.q1_mapping->clone()),
   // create a Q_p mapping; if p=1, simply share the Q_1 mapping already
   // created via the shared_ptr objects
   qp_mapping (this->polynomial_degree>1
               ?
-              std::shared_ptr<const MappingQGeneric<dim,spacedim> >(dynamic_cast<MappingQGeneric<dim,spacedim>*>(mapping.qp_mapping->clone()))
+              std::shared_ptr<const dealii::MappingQGeneric<dim, spacedim>>(mapping.qp_mapping->clone())
               :
               q1_mapping)
 {}
@@ -502,8 +502,8 @@ transform_real_to_unit_cell (const typename Triangulation<dim,spacedim>::cell_it
 
 
 template <int dim, int spacedim>
-Mapping<dim,spacedim> *
-MappingQ<dim,spacedim>::clone () const
+MappingQ<dim,spacedim> *
+MappingQ<dim,spacedim>::raw_clone () const
 {
   return new MappingQ<dim,spacedim>(this->polynomial_degree,
                                     this->use_mapping_q_on_all_cells);

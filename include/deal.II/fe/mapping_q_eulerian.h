@@ -119,14 +119,25 @@ public:
    */
   virtual
   std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
-  get_vertices (const typename Triangulation<dim,spacedim>::cell_iterator &cell) const;
+  get_vertices (const typename Triangulation<dim,spacedim>::cell_iterator &cell) const override;
 
   /**
    * Return a pointer to a copy of the present object. The caller of this copy
    * then assumes ownership of it.
    */
+  std::unique_ptr<MappingQEulerian<dim,VectorType,spacedim> >
+  clone () const
+  {
+    return std::unique_ptr<MappingQEulerian<dim,VectorType,spacedim> >(raw_clone());
+  }
+
+private:
+
   virtual
-  Mapping<dim,spacedim> *clone () const;
+  MappingQEulerian<dim,VectorType,spacedim> *
+  raw_clone () const override;
+
+public:
 
   /**
    * Always return @p false because MappingQEulerian does not in general
@@ -134,7 +145,7 @@ public:
    * provide zero displacements at vertex locations).
    */
   virtual
-  bool preserves_vertex_locations () const;
+  bool preserves_vertex_locations () const override;
 
   /**
    * Exception which is thrown when the mapping is being evaluated at
@@ -157,7 +168,7 @@ protected:
                   const CellSimilarity::Similarity                           cell_similarity,
                   const Quadrature<dim>                                     &quadrature,
                   const typename Mapping<dim,spacedim>::InternalDataBase    &internal_data,
-                  internal::FEValues::MappingRelatedData<dim,spacedim>      &output_data) const;
+                  internal::FEValues::MappingRelatedData<dim,spacedim>      &output_data) const override;
 
   /**
    * Reference to the vector of shifts.

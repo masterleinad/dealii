@@ -31,7 +31,7 @@ void test ()
 {
   MappingQ<dim> mapping(2);
   deallog << "Cloning..." << std::endl;
-  Mapping<dim> *copy = mapping.clone();
+  Mapping<dim> *copy = mapping.clone().release();
   deallog << "Deleting clone..." << std::endl;
   delete copy;
   deallog << "Destroying original..." << std::endl;
@@ -41,10 +41,7 @@ void test ()
 
 int main ()
 {
-  std::ofstream logfile("output");
-  logfile.precision(2);
-
-  deallog.attach(logfile);
+  initlog();
 
   test<1> ();
   test<2> ();

@@ -293,17 +293,26 @@ public:
    */
   virtual ~Mapping () = default;
 
+  std::unique_ptr<Mapping<dim, spacedim> > clone() const
+  {
+    return std::unique_ptr<Mapping<dim, spacedim> >(raw_clone());
+  }
+
+private:
   /**
    * Return a pointer to a copy of the present object. The caller of this copy
    * then assumes ownership of it.
    *
    * The function is declared abstract virtual in this base class, and derived
-   * classes will have to implement it.
+   * classes will have to implement it. We deal with raw pointers here to be
+   * allowed to have covariant return types. A derived class Derived should implement
+   * a public equivalent clone() which returns a std::unique_ptr<Derived>.
    *
    * This function is mainly used by the hp::MappingCollection class.
    */
-  virtual
-  Mapping<dim,spacedim> *clone () const = 0;
+  virtual Mapping<dim, spacedim> *raw_clone () const = 0;
+
+public:
 
   /**
    * Return the mapped vertices of a cell.

@@ -1974,10 +1974,10 @@ MappingFEField<dim,spacedim,VectorType,DoFHandlerType>::get_component_mask() con
 
 
 template <int dim, int spacedim, typename VectorType, typename DoFHandlerType>
-Mapping<dim,spacedim> *
-MappingFEField<dim,spacedim,VectorType,DoFHandlerType>::clone () const
+MappingFEField<dim,spacedim,VectorType,DoFHandlerType> *
+MappingFEField<dim,spacedim,VectorType,DoFHandlerType>::raw_clone () const
 {
-  return new MappingFEField<dim,spacedim,VectorType,DoFHandlerType>(*this);
+  return new MappingFEField<dim,spacedim,VectorType,DoFHandlerType> (*this);
 }
 
 

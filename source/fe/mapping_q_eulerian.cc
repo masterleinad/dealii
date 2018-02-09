@@ -79,8 +79,8 @@ MappingQEulerian (const unsigned int              degree,
 
 
 template <int dim, class VectorType, int spacedim>
-Mapping<dim,spacedim> *
-MappingQEulerian<dim, VectorType, spacedim>::clone () const
+MappingQEulerian<dim,VectorType,spacedim> *
+MappingQEulerian<dim,VectorType,spacedim>::raw_clone () const
 {
   return new MappingQEulerian<dim,VectorType,spacedim>(this->get_degree(),
                                                        *euler_dof_handler,

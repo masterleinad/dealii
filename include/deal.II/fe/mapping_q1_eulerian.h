@@ -122,8 +122,8 @@ public:
    * Return a pointer to a copy of the present object. The caller of this copy
    * then assumes ownership of it.
    */
-  virtual
-  MappingQ1Eulerian<dim,VectorType,spacedim> *clone () const;
+  std::unique_ptr<MappingQ1Eulerian<dim,VectorType,spacedim> >
+  clone () const;
 
   /**
    * Always returns @p false because MappingQ1Eulerian does not in general
@@ -175,6 +175,11 @@ protected:
    * Pointer to the DoFHandler to which the mapping vector is associated.
    */
   SmartPointer<const DoFHandler<dim,spacedim>,MappingQ1Eulerian<dim,VectorType,spacedim> > shiftmap_dof_handler;
+
+private:
+  virtual
+  MappingQ1Eulerian<dim,VectorType,spacedim> *
+  raw_clone () const;
 };
 
 /*@}*/

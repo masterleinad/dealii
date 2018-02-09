@@ -176,10 +176,10 @@ MappingManifold<dim,spacedim>::MappingManifold (const MappingManifold<dim,spaced
 
 
 template <int dim, int spacedim>
-Mapping<dim,spacedim> *
-MappingManifold<dim,spacedim>::clone () const
+MappingManifold<dim,spacedim> *
+MappingManifold<dim,spacedim>::raw_clone () const
 {
-  return new MappingManifold<dim,spacedim>(*this);
+  return new MappingManifold<dim,spacedim> (*this);
 }
 
 

@@ -50,7 +50,7 @@ MappingQ1<dim,spacedim>::MappingQ1 ()
 
 template <int dim, int spacedim>
 MappingQ1<dim,spacedim> *
-MappingQ1<dim,spacedim>::clone () const
+MappingQ1<dim,spacedim>::raw_clone () const
 {
   return new MappingQ1<dim,spacedim>(*this);
 }
