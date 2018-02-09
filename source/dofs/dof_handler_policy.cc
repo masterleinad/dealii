@@ -174,21 +174,21 @@ namespace internal
                 case 0:
                 {
                   identities = std_cxx14::make_unique<DoFIdentities>
-                    (fe1.hp_vertex_dof_identities(fe2));
+                               (fe1.hp_vertex_dof_identities(fe2));
                   break;
                 }
 
                 case 1:
                 {
                   identities = std_cxx14::make_unique<DoFIdentities>
-                    (fe1.hp_line_dof_identities(fe2));
+                               (fe1.hp_line_dof_identities(fe2));
                   break;
                 }
 
                 case 2:
                 {
                   identities = std_cxx14::make_unique<DoFIdentities>
-                    (fe1.hp_quad_dof_identities(fe2));
+                               (fe1.hp_quad_dof_identities(fe2));
                   break;
                 }
 

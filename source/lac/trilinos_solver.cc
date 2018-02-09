@@ -86,9 +86,9 @@ namespace TrilinosWrappers
     // We need an Epetra_LinearProblem object to let the AztecOO solver know
     // about the matrix and vectors.
     linear_problem = std_cxx14::make_unique<Epetra_LinearProblem>
-        (const_cast<Epetra_CrsMatrix *>(&A.trilinos_matrix()),
-                              &x.trilinos_vector(),
-                              const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
+                     (const_cast<Epetra_CrsMatrix *>(&A.trilinos_matrix()),
+                      &x.trilinos_vector(),
+                      const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
 
     do_solve(preconditioner);
   }
@@ -106,9 +106,9 @@ namespace TrilinosWrappers
     // We need an Epetra_LinearProblem object to let the AztecOO solver know
     // about the matrix and vectors.
     linear_problem = std_cxx14::make_unique<Epetra_LinearProblem>
-        (const_cast<Epetra_Operator *>(&A),
-                              &x.trilinos_vector(),
-                              const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
+                     (const_cast<Epetra_Operator *>(&A),
+                      &x.trilinos_vector(),
+                      const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
 
     do_solve(preconditioner);
   }
@@ -126,9 +126,9 @@ namespace TrilinosWrappers
     // We need an Epetra_LinearProblem object to let the AztecOO solver know
     // about the matrix and vectors.
     linear_problem = std_cxx14::make_unique<Epetra_LinearProblem>
-        (const_cast<Epetra_Operator *>(&A),
-                              &x.trilinos_vector(),
-                              const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
+                     (const_cast<Epetra_Operator *>(&A),
+                      &x.trilinos_vector(),
+                      const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
 
     do_solve(preconditioner);
   }
@@ -146,9 +146,9 @@ namespace TrilinosWrappers
     // We need an Epetra_LinearProblem object to let the AztecOO solver know
     // about the matrix and vectors.
     linear_problem = std_cxx14::make_unique<Epetra_LinearProblem>
-        (const_cast<Epetra_Operator *>(&A),
-                              &x,
-                              const_cast<Epetra_MultiVector *>(&b));
+                     (const_cast<Epetra_Operator *>(&A),
+                      &x,
+                      const_cast<Epetra_MultiVector *>(&b));
 
     do_solve(preconditioner);
   }
@@ -166,9 +166,9 @@ namespace TrilinosWrappers
     // We need an Epetra_LinearProblem object to let the AztecOO solver know
     // about the matrix and vectors.
     linear_problem = std_cxx14::make_unique<Epetra_LinearProblem>
-        (const_cast<Epetra_Operator *>(&A),
-                              &x,
-                              const_cast<Epetra_MultiVector *>(&b));
+                     (const_cast<Epetra_Operator *>(&A),
+                      &x,
+                      const_cast<Epetra_MultiVector *>(&b));
 
     do_solve(preconditioner);
   }
@@ -371,8 +371,8 @@ namespace TrilinosWrappers
       {
         // Consider linear problem converged if any of the collection
         // of criterion are met
-        status_test_collection = std_cxx14::make_unique<AztecOO_StatusTestCombo> 
-            (AztecOO_StatusTestCombo::OR);
+        status_test_collection = std_cxx14::make_unique<AztecOO_StatusTestCombo>
+                                 (AztecOO_StatusTestCombo::OR);
 
         // Maximum number of iterations
         Assert (max_steps >=0, ExcInternalError());
@@ -384,10 +384,10 @@ namespace TrilinosWrappers
 
         // Residual norm is below some absolute value
         status_test_abs_tol = std_cxx14::make_unique<AztecOO_StatusTestResNorm>
-            (*linear_problem.GetOperator(),
-                                        *(linear_problem.GetLHS()->operator()(0)),
-                                        *(linear_problem.GetRHS()->operator()(0)),
-                                        tolerance);
+                              (*linear_problem.GetOperator(),
+                               *(linear_problem.GetLHS()->operator()(0)),
+                               *(linear_problem.GetRHS()->operator()(0)),
+                               tolerance);
         status_test_abs_tol->DefineResForm(AztecOO_StatusTestResNorm::Explicit,
                                            AztecOO_StatusTestResNorm::TwoNorm);
         status_test_abs_tol->DefineScaleForm(AztecOO_StatusTestResNorm::None,
@@ -396,10 +396,10 @@ namespace TrilinosWrappers
 
         // Residual norm, scaled by some initial value, is below some threshold
         status_test_rel_tol = std_cxx14::make_unique<AztecOO_StatusTestResNorm>
-            (*linear_problem.GetOperator(),
-                                        *(linear_problem.GetLHS()->operator()(0)),
-                                        *(linear_problem.GetRHS()->operator()(0)),
-                                        reduction);
+                              (*linear_problem.GetOperator(),
+                               *(linear_problem.GetLHS()->operator()(0)),
+                               *(linear_problem.GetRHS()->operator()(0)),
+                               reduction);
         status_test_rel_tol->DefineResForm(AztecOO_StatusTestResNorm::Explicit,
                                            AztecOO_StatusTestResNorm::TwoNorm);
         status_test_rel_tol->DefineScaleForm(AztecOO_StatusTestResNorm::NormOfInitRes,
@@ -470,10 +470,10 @@ namespace TrilinosWrappers
             = dynamic_cast<const ReductionControl *const>(&solver_control))
           {
             status_test = std_cxx14::make_unique<internal::TrilinosReductionControl>
-                (reduction_control->max_steps(),
-                                reduction_control->tolerance(),
-                                reduction_control->reduction(),
-                                *linear_problem);
+                          (reduction_control->max_steps(),
+                           reduction_control->tolerance(),
+                           reduction_control->reduction(),
+                           *linear_problem);
             solver.SetStatusTest(status_test.get());
           }
       }
@@ -867,9 +867,9 @@ namespace TrilinosWrappers
     // We need an Epetra_LinearProblem object to let the Amesos solver know
     // about the matrix and vectors.
     linear_problem = std_cxx14::make_unique<Epetra_LinearProblem>
-        (const_cast<Epetra_CrsMatrix *>(&A.trilinos_matrix()),
-                              &x.trilinos_vector(),
-                              const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
+                     (const_cast<Epetra_CrsMatrix *>(&A.trilinos_matrix()),
+                      &x.trilinos_vector(),
+                      const_cast<Epetra_MultiVector *>(&b.trilinos_vector()));
 
     do_solve();
   }

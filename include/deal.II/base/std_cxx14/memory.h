@@ -50,7 +50,7 @@ namespace std_cxx14
   typename std::enable_if<!std::is_array<T>::value, std::unique_ptr<T> >::type
   make_unique(Args &&... constructor_arguments)
   {
-    return std::unique_ptr<T>(new T {std::forward<Args>(constructor_arguments)...});
+    return std::unique_ptr<T>(new T (std::forward<Args>(constructor_arguments)...));
   }
 
   template <typename T>

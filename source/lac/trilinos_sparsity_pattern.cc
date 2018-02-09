@@ -84,12 +84,12 @@ namespace TrilinosWrappers
   SparsityPattern::SparsityPattern ()
   {
     column_space_map = std_cxx14::make_unique<Epetra_Map> (TrilinosWrappers::types::int_type(0),
-                                           TrilinosWrappers::types::int_type(0),
-                                           Utilities::Trilinos::comm_self());
+                                                           TrilinosWrappers::types::int_type(0),
+                                                           Utilities::Trilinos::comm_self());
     graph = std_cxx14::make_unique<Epetra_FECrsGraph>(View,
-                                                *column_space_map,
-                                                *column_space_map,
-                                                0);
+                                                      *column_space_map,
+                                                      *column_space_map,
+                                                      0);
     graph->FillComplete();
   }
 
@@ -284,13 +284,19 @@ namespace TrilinosWrappers
       // columns as well. If we use a recent Trilinos version, we can also
       // require building a non-local graph which gives us thread-safe
       // initialization.
-      Assert(n_entries_per_row>0, ExcInternalError());
+      Assert(n_entries_per_row>=0, ExcInternalError());
       if (row_map.Comm().NumProc() > 1)
         graph = std_cxx14::make_unique<Epetra_FECrsGraph>
-            (Copy, row_map, n_entries_per_row, false, true);
+                (Copy, row_map, n_entries_per_row, false
+                 // TODO: Check which new Trilinos version supports this...
+                 // Remember to change tests/trilinos/assemble_matrix_parallel_07, too.
+//#if DEAL_II_TRILINOS_VERSION_GTE(11,14,0)
+//                 , true
+//#endif
+                );
       else
         graph = std_cxx14::make_unique<Epetra_FECrsGraph>
-            (Copy, row_map, col_map, n_entries_per_row, false);
+                (Copy, row_map, col_map, n_entries_per_row, false);
     }
 
 
@@ -323,21 +329,17 @@ namespace TrilinosWrappers
         local_entries_per_row[i] = n_entries_per_row[TrilinosWrappers::min_my_gid(row_map)+i];
 
       if (row_map.Comm().NumProc() > 1)
-        graph.reset(new Epetra_FECrsGraph(Copy, row_map,
-                                          local_entries_per_row.data(),
-                                          false
-                                          // TODO: Check which new Trilinos
-                                          // version supports this... Remember
-                                          // to change tests/trilinos/assemble_matrix_parallel_07
-                                          // too.
-                                          //#if DEAL_II_TRILINOS_VERSION_GTE(11,14,0)
-                                          //, true
-                                          //#endif
-                                         ));
+        graph = std_cxx14::make_unique<Epetra_FECrsGraph>
+                (Copy, row_map, local_entries_per_row.data(), false
+                 // TODO: Check which new Trilinos version supports this...
+                 // Remember to change tests/trilinos/assemble_matrix_parallel_07, too.
+//#if DEAL_II_TRILINOS_VERSION_GTE(11,14,0)
+//                , true
+//#endif
+                );
       else
-        graph.reset(new Epetra_FECrsGraph(Copy, row_map, col_map,
-                                          local_entries_per_row.data(),
-                                          false));
+        graph = std_cxx14::make_unique<Epetra_FECrsGraph>
+                (Copy, row_map, col_map, local_entries_per_row.data(), false);
     }
 
 
@@ -376,12 +378,12 @@ namespace TrilinosWrappers
 
       if (row_map.Comm().NumProc() > 1)
         graph = std_cxx14::make_unique<Epetra_FECrsGraph>(Copy, row_map,
-                                          n_entries_per_row.data(),
-                                          false);
+                                                          n_entries_per_row.data(),
+                                                          false);
       else
         graph = std_cxx14::make_unique<Epetra_FECrsGraph>(Copy, row_map, col_map,
-                                                    n_entries_per_row.data(),
-                                                    false);
+                                                          n_entries_per_row.data(),
+                                                          false);
 
       AssertDimension (sp.n_rows(),
                        static_cast<size_type>(n_global_rows(*graph)));
@@ -575,7 +577,7 @@ namespace TrilinosWrappers
       {
         Epetra_Map nonlocal_map =
           nonlocal_partitioner.make_trilinos_map(communicator, true);
-        nonlocal_graph.reset(new Epetra_CrsGraph(Copy, nonlocal_map, 0));
+        nonlocal_graph = std_cxx14::make_unique<Epetra_CrsGraph>(Copy, nonlocal_map, 0);
       }
     else
       Assert(nonlocal_partitioner.n_elements() == 0, ExcInternalError());
@@ -688,10 +690,10 @@ namespace TrilinosWrappers
     // the pointer and generate an
     // empty sparsity pattern.
     column_space_map = std_cxx14::make_unique<Epetra_Map >(TrilinosWrappers::types::int_type(0),
-                                                     TrilinosWrappers::types::int_type(0),
-                                                     Utilities::Trilinos::comm_self());
+                                                           TrilinosWrappers::types::int_type(0),
+                                                           Utilities::Trilinos::comm_self());
     graph = std_cxx14::make_unique<Epetra_FECrsGraph>(View, *column_space_map,
-                                                *column_space_map, 0);
+                                                      *column_space_map, 0);
     graph->FillComplete();
 
     nonlocal_graph.reset();

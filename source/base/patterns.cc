@@ -775,7 +775,7 @@ namespace Patterns
 
         is.ignore(strlen(" (inclusive) separated by <"));
         std::string separator;
-        if (is)
+        if (!is.eof())
           std::getline(is, separator, '>');
         else
           separator = ",";
@@ -967,7 +967,7 @@ namespace Patterns
 
         is.ignore(strlen(" (inclusive) separated by <"));
         std::string separator;
-        if (is)
+        if (!is.eof())
           std::getline(is, separator, '>');
         else
           separator = ",";
@@ -1168,7 +1168,7 @@ namespace Patterns
         is.ignore(strlen(" separated by <"));
 
         std::string separator;
-        if (is)
+        if (!is.eof())
           std::getline(is, separator, '>');
         else
           separator = ":";

@@ -325,7 +325,7 @@ namespace TrilinosWrappers
           last_action = Insert;
         }
       else
-          vector = std::move(actual_vec);
+        vector = std::move(actual_vec);
 #if defined(DEBUG) && defined(DEAL_II_WITH_MPI)
       const Epetra_MpiComm *comm_ptr
         = dynamic_cast<const Epetra_MpiComm *>(&(vector->Comm()));

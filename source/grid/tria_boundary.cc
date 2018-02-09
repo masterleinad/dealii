@@ -167,8 +167,8 @@ get_line_support_points (const unsigned int n_intermediate_points) const
 
       // another thread might have created points in the meantime
       if (points[n_intermediate_points].get() == nullptr)
-          points[n_intermediate_points] = std_cxx14::make_unique<QGaussLobatto<1> >
-              (n_intermediate_points+2);
+        points[n_intermediate_points] = std_cxx14::make_unique<QGaussLobatto<1> >
+                                        (n_intermediate_points+2);
     }
   return points[n_intermediate_points]->get_points();
 }

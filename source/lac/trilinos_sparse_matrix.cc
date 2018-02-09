@@ -512,10 +512,10 @@ namespace TrilinosWrappers
       std::unique_ptr<Epetra_CrsGraph> graph;
       if (input_row_map.Comm().NumProc() > 1)
         graph = std_cxx14::make_unique<Epetra_CrsGraph>(Copy, input_row_map,
-                                                  n_entries_per_row.data(), true);
+                                                        n_entries_per_row.data(), true);
       else
         graph = std_cxx14::make_unique<Epetra_CrsGraph>(Copy, input_row_map, input_col_map,
-                                                  n_entries_per_row.data(), true);
+                                                        n_entries_per_row.data(), true);
 
       // This functions assumes that the sparsity pattern sits on all
       // processors (completely). The parallel version uses an Epetra graph
@@ -661,16 +661,16 @@ namespace TrilinosWrappers
       if (input_row_map.Comm().NumProc() > 1)
         {
           graph = std_cxx14::make_unique<Epetra_CrsGraph>(Copy, input_row_map,
-                                                    (n_entries_per_row.size()>0)?(n_entries_per_row.data()):nullptr,
-                                                    exchange_data ? false : true);
+                                                          (n_entries_per_row.size()>0)?(n_entries_per_row.data()):nullptr,
+                                                          exchange_data ? false : true);
           if (have_ghost_rows == true)
             nonlocal_graph = std_cxx14::make_unique<Epetra_CrsGraphMod>(off_processor_map,
-                                                                  n_entries_per_ghost_row.data());
+                                                                        n_entries_per_ghost_row.data());
         }
       else
         graph = std_cxx14::make_unique<Epetra_CrsGraph>(Copy, input_row_map, input_col_map,
-                                                  (n_entries_per_row.size()>0)?(n_entries_per_row.data()):nullptr,
-                                                  true);
+                                                        (n_entries_per_row.size()>0)?(n_entries_per_row.data()):nullptr,
+                                                        true);
 
       // now insert the indices, select between the right matrix
       std::vector<TrilinosWrappers::types::int_type> row_indices;
@@ -1099,7 +1099,7 @@ namespace TrilinosWrappers
     // the pointer and generate an
     // empty matrix.
     column_space_map = std_cxx14::make_unique<Epetra_Map>
-        (0, 0, Utilities::Trilinos::comm_self());
+                       (0, 0, Utilities::Trilinos::comm_self());
     matrix = std_cxx14::make_unique<Epetra_FECrsMatrix>(View, *column_space_map, 0);
     nonlocal_matrix.reset();
     nonlocal_matrix_exporter.reset();
