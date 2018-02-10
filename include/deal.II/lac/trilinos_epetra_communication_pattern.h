@@ -80,7 +80,7 @@ namespace LinearAlgebra
       /**
        * Shared pointer to the Epetra_Import object used.
        */
-      std::shared_ptr<Epetra_Import> import;
+      std::unique_ptr<Epetra_Import> import;
     };
   } // end of namespace EpetraWrappers
 } // end of namespace LinearAlgebra
