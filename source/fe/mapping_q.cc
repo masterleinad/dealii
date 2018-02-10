@@ -77,7 +77,7 @@ MappingQ<dim,spacedim>::MappingQ (const unsigned int degree,
   // created via the shared_ptr objects
   qp_mapping (this->polynomial_degree>1
               ?
-              std::shared_ptr<const MappingQGeneric<dim,spacedim> >(new MappingQGeneric<dim,spacedim>(degree))
+              std::make_shared<const MappingQGeneric<dim,spacedim> >(degree)
               :
               q1_mapping)
 {}
