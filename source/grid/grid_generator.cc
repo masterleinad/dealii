@@ -78,7 +78,10 @@ namespace GridGenerator
           const typename Triangulation<dim,spacedim>::cell_iterator
           cell = tria.begin();
           for (unsigned int f=0; f<GeometryInfo<dim>::faces_per_cell; ++f)
-            cell->face(f)->set_boundary_id (f);
+            {
+              cell->face(f)->set_boundary_id (f);
+              cell->face(f)->set_manifold_id (f);
+            }
         }
     }
 
@@ -142,6 +145,8 @@ namespace GridGenerator
                 // but we could not find
                 // on which boundary.
                 Assert (false, ExcInternalError());
+
+              face->set_manifold_id(face->boundary_id);
 
             }
 
@@ -291,42 +296,62 @@ namespace GridGenerator
             if (std::fabs(cell->face(f)->center()(0)) < eps ) // x = 0 set boundary 2
               {
                 cell->face(f)->set_boundary_id(2);
+                cell->face(f)->set_manifold_id(2);
                 for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
                   if (cell->face(f)->line(j)->at_boundary())
                     if (std::fabs(cell->face(f)->line(j)->vertex(0).norm() - cell->face(f)->line(j)->vertex(1).norm()) > eps)
-                      cell->face(f)->line(j)->set_boundary_id(2);
+                      {
+                        cell->face(f)->line(j)->set_boundary_id(2);
+                        cell->face(f)->line(j)->set_manifold_id(2);
+                      }
               }
             else if (std::fabs(cell->face(f)->center()(1)) < eps) // y = 0 set boundary 3
               {
                 cell->face(f)->set_boundary_id(3);
+                cell->face(f)->set_manifold_id(3);
                 for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
                   if (cell->face(f)->line(j)->at_boundary())
                     if (std::fabs(cell->face(f)->line(j)->vertex(0).norm() - cell->face(f)->line(j)->vertex(1).norm()) > eps)
-                      cell->face(f)->line(j)->set_boundary_id(3);
+                      {
+                        cell->face(f)->line(j)->set_boundary_id(3);
+                        cell->face(f)->line(j)->set_manifold_id(3);
+                      }
               }
             else if (std::fabs(cell->face(f)->center()(2)) < eps ) // z = 0 set boundary 4
               {
                 cell->face(f)->set_boundary_id(4);
+                cell->face(f)->set_manifold_id(4);
                 for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
                   if (cell->face(f)->line(j)->at_boundary())
                     if (std::fabs(cell->face(f)->line(j)->vertex(0).norm() - cell->face(f)->line(j)->vertex(1).norm()) > eps)
-                      cell->face(f)->line(j)->set_boundary_id(4);
+                      {
+                        cell->face(f)->line(j)->set_boundary_id(4);
+                        cell->face(f)->line(j)->set_manifold_id(4);
+                      }
               }
             else if (radius < middle) // inner radius set boundary 0
               {
                 cell->face(f)->set_boundary_id(0);
+                cell->face(f)->set_manifold_id(0);
                 for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
                   if (cell->face(f)->line(j)->at_boundary())
                     if (std::fabs(cell->face(f)->line(j)->vertex(0).norm() - cell->face(f)->line(j)->vertex(1).norm()) < eps)
-                      cell->face(f)->line(j)->set_boundary_id(0);
+                      {
+                        cell->face(f)->line(j)->set_boundary_id(0);
+                        cell->face(f)->line(j)->set_manifold_id(0);
+                      }
               }
             else if (radius > middle) // outer radius set boundary 1
               {
                 cell->face(f)->set_boundary_id(1);
+                cell->face(f)->set_manifold_id(1);
                 for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
                   if (cell->face(f)->line(j)->at_boundary())
                     if (std::fabs(cell->face(f)->line(j)->vertex(0).norm() - cell->face(f)->line(j)->vertex(1).norm()) < eps)
-                      cell->face(f)->line(j)->set_boundary_id(1);
+                      {
+                        cell->face(f)->line(j)->set_boundary_id(1);
+                        cell->face(f)->line(j)->set_manifold_id(1);
+                      }
               }
             else
               Assert (false, ExcInternalError());
@@ -1096,7 +1121,10 @@ namespace GridGenerator
             for (unsigned int face=0; face<GeometryInfo<dim>::faces_per_cell; ++face)
               {
                 if (cell->face(face)->at_boundary())
-                  cell->face(face)->set_boundary_id(face);
+                  {
+                    cell->face(face)->set_boundary_id(face);
+                    cell->face(face)->set_manifold_id(face);
+                  }
               }
           }
       }
@@ -1642,9 +1670,15 @@ namespace GridGenerator
                   for (unsigned int i=0; i<2; ++i)
                     {
                       if (face_center[i]<cell_center[i]-eps)
-                        cell->face(f)->set_boundary_id(i*2);
+                        {
+                          cell->face(f)->set_boundary_id(i*2);
+                          cell->face(f)->set_manifold_id(i*2);
+                        }
                       if (face_center[i]>cell_center[i]+eps)
-                        cell->face(f)->set_boundary_id(i*2+1);
+                        {
+                          cell->face(f)->set_boundary_id(i*2+1);
+                          cell->face(f)->set_manifold_id(i*2+1);
+                        }
                     }
                 }
           }
@@ -1755,9 +1789,15 @@ namespace GridGenerator
                   for (unsigned int i=0; i<dim; ++i)
                     {
                       if (face_center[i]<cell_center[i]-eps)
-                        cell->face(f)->set_boundary_id(i*2);
+                        {
+                          cell->face(f)->set_boundary_id(i*2);
+                          cell->face(f)->set_manifold_id(i*2);
+                        }
                       if (face_center[i]>cell_center[i]+eps)
-                        cell->face(f)->set_boundary_id(i*2+1);
+                        {
+                          cell->face(f)->set_boundary_id(i*2+1);
+                          cell->face(f)->set_manifold_id(i*2+1);
+                        }
                     }
                 }
           }
@@ -2168,8 +2208,10 @@ namespace GridGenerator
       {
         Triangulation<2>::cell_iterator cell = tria.begin();
         cell->face(1)->set_boundary_id(1);
+        cell->face(1)->set_manifold_id(1);
         ++cell;
         cell->face(0)->set_boundary_id(2);
+        cell->face(0)->set_manifold_id(2);
       }
   }
 
@@ -2205,10 +2247,15 @@ namespace GridGenerator
     Triangulation<2>::cell_iterator cell = triangulation.begin ();
 
     cell->face (0)->set_boundary_id (1);
+    cell->face (0)->set_manifold_id (1);
     cell->face (1)->set_boundary_id (2);
+    cell->face (1)->set_manifold_id (2);
 
     for (unsigned int i = 2; i < 4; ++i)
-      cell->face (i)->set_boundary_id (0);
+      {
+        cell->face (i)->set_boundary_id (0);
+        cell->face (i)->set_manifold_id (0);
+      }
   }
 
 
@@ -2254,20 +2301,26 @@ namespace GridGenerator
         Triangulation<2>::cell_iterator cell = tria.begin();
 
         cell->face(0)->set_boundary_id(0);
+        cell->face(0)->set_manifold_id(0);
         cell->face(2)->set_boundary_id(1);
+        cell->face(2)->set_manifold_id(1);
         cell++;
 
         cell->face(1)->set_boundary_id(2);
+        cell->face(1)->set_manifold_id(2);
         cell->face(2)->set_boundary_id(1);
+        cell->face(2)->set_manifold_id(1);
         cell->face(3)->set_boundary_id(3);
+        cell->face(3)->ste_manifold_id(3);
         cell++;
 
         cell->face(0)->set_boundary_id(0);
+        cell->face(0)->ste_manifold_id(0);
         cell->face(1)->set_boundary_id(4);
+        cell->face(1)->ste_manifold_id(4);
         cell->face(3)->set_boundary_id(5);
-
+        cell->face(3)->set_manifold_id(5);
       }
-
   }
 
 
@@ -2402,12 +2455,15 @@ namespace GridGenerator
           {
           case 0:
             f->set_boundary_id(1);
+            f->set_manifold_id(1);
             break;
           case 1:
             f->set_boundary_id(2);
+            f->set_manifold_id(2);
             break;
           default:
             f->set_boundary_id(0);
+            f->set_manifold_id(0);
             break;
           }
         ++f;
@@ -2484,7 +2540,10 @@ namespace GridGenerator
             // component of the center, then this is part of the plane
             if (cell->face(i)->center()(0) < p(0)+1.e-5 * radius
                 || cell->face(i)->center()(1) < p(1)+1.e-5 * radius)
-              cell->face(i)->set_boundary_id(1);
+              {
+                cell->face(i)->set_boundary_id(1);
+                cell->face(i)->set_manifold_id(1);
+              }
           }
         ++cell;
       }
@@ -2544,7 +2603,10 @@ namespace GridGenerator
 
             // If x is zero, then this is part of the plane
             if (cell->face(i)->center()(0) < p(0)+1.e-5 * radius)
-              cell->face(i)->set_boundary_id(1);
+              {
+                cell->face(i)->set_boundary_id(1);
+                cell->face(i)->set_manifold_id(1);
+              }
           }
         ++cell;
       }
@@ -2627,10 +2689,13 @@ namespace GridGenerator
         for (; cell!=tria.end(); ++cell)
           {
             cell->face(2)->set_boundary_id(1);
+            cell->face(2)->set_manifold_id(1);
           }
         tria.begin()->face(0)->set_boundary_id(3);
+        tria.begin()->face(0)->set_manifold_id(3);
 
         tria.last()->face(1)->set_boundary_id(2);
+        tria.last()->face(1)->set_manifold_id(2);
       }
   }
 
@@ -2707,10 +2772,13 @@ namespace GridGenerator
         for (; cell!=tria.end(); ++cell)
           {
             cell->face(2)->set_boundary_id(1);
+            cell->face(2)->set_manifold_id(1);
           }
         tria.begin()->face(0)->set_boundary_id(3);
+        tria.begin()->face(0)->set_manifold_id(3);
 
         tria.last()->face(1)->set_boundary_id(2);
+        tria.last()->face(1)->set_manifold_id(2);
       }
   }
 
@@ -2770,8 +2838,10 @@ namespace GridGenerator
       {
         Triangulation<3>::cell_iterator cell = tria.begin();
         cell->face(1)->set_boundary_id(1);
+        cell->face(1)->set_manifold_id(1)l
         ++cell;
         cell->face(0)->set_boundary_id(2);
+        cell->face(0)->set_manifold_id(2);
       }
   }
 
@@ -2903,21 +2973,32 @@ namespace GridGenerator
         if (cell->vertex (0) (0) == -half_length)
           {
             cell->face (4)->set_boundary_id (1);
+            cell->face (4)->set_manifold_id (1);
 
             for (unsigned int i = 0; i < 4; ++i)
-              cell->line (i)->set_boundary_id (0);
+              {
+                cell->line (i)->set_boundary_id (0);
+                cell->line (i)->set_manifold_id (0);
+              }
           }
 
         if (cell->vertex (4) (0) == half_length)
           {
             cell->face (5)->set_boundary_id (2);
+            cell->face (5)->set_bundaary_id (2);
 
             for (unsigned int i = 4; i < 8; ++i)
-              cell->line (i)->set_boundary_id (0);
+              {
+                cell->line (i)->set_boundary_id (0);
+                cell->line (i)->set_manifold_id (0);
+              }
           }
 
         for (unsigned int i = 0; i < 4; ++i)
-          cell->face (i)->set_boundary_id (0);
+          {
+            cell->face (i)->set_boundary_id (0);
+            cell->face (i)->set_manifold_id (0);
+          }
       }
   }
 
@@ -3170,24 +3251,32 @@ namespace GridGenerator
             if (cell->face(i)->center()(0) > half_length-1.e-5)
               {
                 cell->face(i)->set_boundary_id(2);
+                cell->face(i)->set_manifold_id(2);
 
                 for (unsigned int e=0; e<GeometryInfo<3>::lines_per_face; ++e)
                   if ((std::fabs(cell->face(i)->line(e)->vertex(0)[1]) == a) ||
                       (std::fabs(cell->face(i)->line(e)->vertex(0)[2]) == a) ||
                       (std::fabs(cell->face(i)->line(e)->vertex(1)[1]) == a) ||
                       (std::fabs(cell->face(i)->line(e)->vertex(1)[2]) == a))
-                    cell->face(i)->line(e)->set_boundary_id(2);
+                    {
+                      cell->face(i)->line(e)->set_boundary_id(2);
+                      cell->face(i)->line(e)->set_manifold_id(2);
+                    }
               }
             else if (cell->face(i)->center()(0) < -half_length+1.e-5)
               {
                 cell->face(i)->set_boundary_id(1);
+                cell->face(1)->set_manifold_id(1);
 
                 for (unsigned int e=0; e<GeometryInfo<3>::lines_per_face; ++e)
                   if ((std::fabs(cell->face(i)->line(e)->vertex(0)[1]) == a) ||
                       (std::fabs(cell->face(i)->line(e)->vertex(0)[2]) == a) ||
                       (std::fabs(cell->face(i)->line(e)->vertex(1)[1]) == a) ||
                       (std::fabs(cell->face(i)->line(e)->vertex(1)[2]) == a))
-                    cell->face(i)->line(e)->set_boundary_id(1);
+                    {
+                      cell->face(i)->line(e)->set_boundary_id(1);
+                      cell->face(i)->line(e)->set_manifold_id(1);
+                    }
               }
           }
   }
@@ -3258,6 +3347,7 @@ namespace GridGenerator
                 || cell->face(i)->center()(2) < center(2)+1.e-5 * radius)
               {
                 cell->face(i)->set_boundary_id(1);
+                cell->face(i)->set_manifold_id(1);
                 // also set the boundary indicators of the bounding lines,
                 // unless both vertices are on the perimeter
                 for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
@@ -3271,7 +3361,10 @@ namespace GridGenerator
                         ||
                         (std::fabs(line_vertices[1].distance(center)-radius) >
                          1e-5*radius))
-                      cell->face(i)->line(j)->set_boundary_id(1);
+                      {
+                        cell->face(i)->line(j)->set_boundary_id(1);
+                        cell->face(i)->line(j)->set_manifold_id(1);
+                      }
                   }
 
               }
@@ -3364,6 +3457,7 @@ namespace GridGenerator
             if (cell->face(i)->center()(0) < center(0)+1.e-5*radius)
               {
                 cell->face(i)->set_boundary_id(1);
+                cell->face(i)->set_manifold_id(1);
                 for (unsigned int j=0; j<GeometryInfo<3>::lines_per_face; ++j)
                   {
                     const Point<3> line_vertices[2]
@@ -3375,7 +3469,10 @@ namespace GridGenerator
                         ||
                         (std::fabs(line_vertices[1].distance(center)-radius) >
                          1e-5*radius))
-                      cell->face(i)->line(j)->set_boundary_id(1);
+                      {
+                        cell->face(i)->line(j)->set_boundary_id(1);
+                        cell->face(i)->line(j)->set_manifold_id(1);
+                      }
                   }
               }
           }
@@ -4242,6 +4339,7 @@ namespace GridGenerator
                     cell->face(f)->set_boundary_id(3);
                   else
                     cell->face(f)->set_boundary_id(4);
+                  cell->face(f)->set_manifold_id(cell->face(f)->boundary_id());
                 }
               else
                 {
@@ -4250,6 +4348,7 @@ namespace GridGenerator
                     cell->face(f)->set_boundary_id(1);
                   else
                     cell->face(f)->set_boundary_id(0);
+                  cell->face(f)->set_manifold_id(cell->face(f)->boundary_id());
                 }
             }
       }
@@ -4332,28 +4431,44 @@ namespace GridGenerator
               if (colorize)
                 {
                   if (std::abs(dx + outer_radius) < eps)
-                    cell->face(f)->set_boundary_id(0);
-
+                    {
+                      cell->face(f)->set_boundary_id(0);
+                      cell->face(f)->set_manifold_id(0);
+                    }
                   else if (std::abs(dx - outer_radius) < eps)
-                    cell->face(f)->set_boundary_id(1);
-
+                    {
+                      cell->face(f)->set_boundary_id(1);
+                      cell->face(f)->set_manifold_id(1);
+                    }
                   else if (std::abs(dy + outer_radius) < eps)
-                    cell->face(f)->set_boundary_id(2);
-
+                    {
+                      cell->face(f)->set_boundary_id(2);
+                      cell->face(f)->set_manifold_id(2);
+                    }
                   else if (std::abs(dy - outer_radius) < eps)
-                    cell->face(f)->set_boundary_id(3);
-
+                    {
+                      cell->face(f)->set_boundary_id(3);
+                      cell->face(f)->set_manifold_id(3);
+                    }
                   else if (std::abs(dz) < eps)
-                    cell->face(f)->set_boundary_id(4);
-
+                    {
+                      cell->face(f)->set_boundary_id(4);
+                      cell->face(f)->set_manifold_id(4);
+                    }
                   else if (std::abs(dz - L) < eps)
-                    cell->face(f)->set_boundary_id(5);
-
+                    {
+                      cell->face(f)->set_boundary_id(5);
+                      cell->face(f)->set_manifold_id(5);
+                    }
                   else
                     {
                       cell->face(f)->set_boundary_id(6);
+                      cell->face(f)->set_manifold_id(6);
                       for (unsigned int l=0; l<GeometryInfo<dim>::lines_per_face; ++l)
-                        cell->face(f)->line(l)->set_boundary_id(6);
+                        {
+                          cell->face(f)->line(l)->set_boundary_id(6);
+                          cell->face(f)->line(l)->set_manifold_id(6);
+                        }
                     }
 
                 }
@@ -4365,11 +4480,18 @@ namespace GridGenerator
                   if (d-inner_radius < 0)
                     {
                       cell->face(f)->set_boundary_id(1);
+                      cell->face(f)->set_manifold_id(1);
                       for (unsigned int l=0; l<GeometryInfo<dim>::lines_per_face; ++l)
-                        cell->face(f)->line(l)->set_boundary_id(1);
+                        {
+                          cell->face(f)->line(l)->set_boundary_id(1);
+                          cell->face(f)->line(l)->set_manifold_id(1):
+                          }
                     }
                   else
-                    cell->face(f)->set_boundary_id(0);
+                  {
+                      cell->face(f)->set_boundary_id(0);
+                      cell->face(f)->set_manifold_id(0);
+                    }
                 }
             }
       }
