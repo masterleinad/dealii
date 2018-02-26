@@ -146,7 +146,7 @@ namespace GridGenerator
                 // on which boundary.
                 Assert (false, ExcInternalError());
 
-              face->set_manifold_id(face->boundary_id);
+              face->set_manifold_id(face->boundary_id());
 
             }
 
@@ -183,6 +183,7 @@ namespace GridGenerator
         {
           Assert(cell->face(2)->at_boundary(), ExcInternalError());
           cell->face (2)->set_all_boundary_ids (1);
+          cell->face (2)->set_all_manifold_ids (1);
         }
     }
 
@@ -207,26 +208,32 @@ namespace GridGenerator
 
           Assert (cell->face(4)->at_boundary(), ExcInternalError());
           cell->face(4)->set_all_boundary_ids(1);
+          cell->face(4)->set_all_boundary_ids(1);
 
           ++cell;
           Assert (cell->face(2)->at_boundary(), ExcInternalError());
           cell->face(2)->set_all_boundary_ids(1);
+          cell->face(4)->set_all_boundary_ids(1);
 
           ++cell;
           Assert (cell->face(2)->at_boundary(), ExcInternalError());
           cell->face(2)->set_all_boundary_ids(1);
+          cell->face(4)->set_all_boundary_ids(1);
 
           ++cell;
           Assert (cell->face(0)->at_boundary(), ExcInternalError());
           cell->face(0)->set_all_boundary_ids(1);
+          cell->face(4)->set_all_boundary_ids(1);
 
           ++cell;
           Assert (cell->face(2)->at_boundary(), ExcInternalError());
           cell->face(2)->set_all_boundary_ids(1);
+          cell->face(4)->set_all_boundary_ids(1);
 
           ++cell;
           Assert (cell->face(0)->at_boundary(), ExcInternalError());
           cell->face(0)->set_all_boundary_ids(1);
+          cell->face(4)->set_all_boundary_ids(1);
         }
       else if (tria.n_cells() == 12)
         {
@@ -2311,13 +2318,13 @@ namespace GridGenerator
         cell->face(2)->set_boundary_id(1);
         cell->face(2)->set_manifold_id(1);
         cell->face(3)->set_boundary_id(3);
-        cell->face(3)->ste_manifold_id(3);
+        cell->face(3)->set_manifold_id(3);
         cell++;
 
         cell->face(0)->set_boundary_id(0);
-        cell->face(0)->ste_manifold_id(0);
+        cell->face(0)->set_manifold_id(0);
         cell->face(1)->set_boundary_id(4);
-        cell->face(1)->ste_manifold_id(4);
+        cell->face(1)->set_manifold_id(4);
         cell->face(3)->set_boundary_id(5);
         cell->face(3)->set_manifold_id(5);
       }
@@ -2838,7 +2845,7 @@ namespace GridGenerator
       {
         Triangulation<3>::cell_iterator cell = tria.begin();
         cell->face(1)->set_boundary_id(1);
-        cell->face(1)->set_manifold_id(1)l
+        cell->face(1)->set_manifold_id(1);
         ++cell;
         cell->face(0)->set_boundary_id(2);
         cell->face(0)->set_manifold_id(2);
@@ -2985,7 +2992,7 @@ namespace GridGenerator
         if (cell->vertex (4) (0) == half_length)
           {
             cell->face (5)->set_boundary_id (2);
-            cell->face (5)->set_bundaary_id (2);
+            cell->face (5)->set_manifold_id (2);
 
             for (unsigned int i = 4; i < 8; ++i)
               {
@@ -3792,7 +3799,10 @@ namespace GridGenerator
         for (; cell!=tria.end(); ++cell)
           for (unsigned int i=0; i<GeometryInfo<3>::faces_per_cell; ++i)
             if (cell->at_boundary(i))
+            {
               cell->face(i)->set_all_boundary_ids(2);
+              cell->face(i)->set_all_manifold_ids(2);
+            }
 
         // Next look for the curved boundaries. If the x value of the
         // center of the face is not equal to center(0), we're on a curved
@@ -3810,9 +3820,15 @@ namespace GridGenerator
                   {
                     if (std::abs((face_center-center).norm()-inner_radius) <
                         std::abs((face_center-center).norm()-outer_radius))
+                    {
                       face->set_all_boundary_ids(0);
+                      face->set_all_manifold_ids(0);
+                    }
                     else
+                    {
                       face->set_all_boundary_ids(1);
+                      face->set_all_manifold_ids(1);
+                    }
                   }
               }
       }
@@ -4484,7 +4500,7 @@ namespace GridGenerator
                       for (unsigned int l=0; l<GeometryInfo<dim>::lines_per_face; ++l)
                         {
                           cell->face(f)->line(l)->set_boundary_id(1);
-                          cell->face(f)->line(l)->set_manifold_id(1):
+                          cell->face(f)->line(l)->set_manifold_id(1);
                           }
                     }
                   else
