@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------
 //
-// Copyright (C) 2016 by the deal.II authors
+// Copyright (C) 2016 - 2018 by the deal.II authors
 //
 // This file is part of the deal.II library.
 //
@@ -8,15 +8,12 @@
 // it, and/or modify it under the terms of the GNU Lesser General
 // Public License as published by the Free Software Foundation; either
 // version 2.1 of the License, or (at your option) any later version.
-// The full text of the license can be found in the file LICENSE at
-// the top level of the deal.II distribution.
+// The full text of the license can be found in the file LICENSE.md at
+// the top level directory of deal.II.
 //
 // ---------------------------------------------------------------------
 
 #include <triangulation_wrapper.h>
-
-#ifdef DEAL_II_WITH_CXX11
-
 #include <cell_accessor_wrapper.h>
 #include <boost/python.hpp>
 
@@ -185,7 +182,7 @@ namespace python
 
   const char generate_varying_subdivided_parallelepiped_docstring [] =
     "A subdivided parallelepided, i.e., the same as above, but where the    \n"
-    "number of subdivisions in each ot the dim directsions may vary.        \n"
+    "number of subdivisions in each of the dim directions may vary.         \n"
     "Colorizing is done according to hyper_rectangle().                     \n"
     ;
 
@@ -228,9 +225,9 @@ namespace python
   const char generate_quarter_hyper_ball_docstring [] =
     "Generate a hyper-ball intersected with the positive orthant relate to  \n"
     "center, which contains three elements in 2d and four in 3d. The        \n"
-    "boundary indicators for the final triangulations are 0 for the curved  \n" 
-    "boundary and 1 for the cut plane. The appropiate boundary class is     \n"
-    "HyperBallBoundary.                                                     \n"
+    "boundary indicators for the final triangulations are 0 for the curved  \n"
+    "boundary and 1 for the cut plane. The appropriate Manifold class is    \n"
+    "SphericalManifold.                                                     \n"
     ;
 
 
@@ -239,14 +236,14 @@ namespace python
     "Generate a half hyper-ball around center, which contains four          \n"
     "elements in 2d and 6 in 3d. The cut plane is perpendicular to the      \n"
     "x-axis. The boundary indicators for the final triangulation are 0 for  \n"
-    "the curved boundary and 1 for the cut plane. The appropriate boundary  \n"
-    "class is HalfHyperBallBoundary, or HyperBallBoundary.                  \n"
+    "the curved boundary and 1 for the cut plane. The appropriate manifold  \n"
+    "class is SphericalManifold.                                            \n"
     ;
 
 
 
   const char shift_docstring [] =
-    "Shift every vertex of the Triangulation by the gien shift vector       \n"
+    "Shift every vertex of the Triangulation by the given shift vector      \n"
     ;
 
 
@@ -274,7 +271,7 @@ namespace python
     "faces of the triangulation to the faces of out_tria. If you need to    \n"
     "specify manifold ids on interior faces, they have to be specified      \n"
     "manually after the triangulation is created. This function will fail   \n"
-    "the input Triangulation contains hanging nodes.                        \n"
+    "if the input Triangulation contains hanging nodes.                     \n"
     ;
 
 
@@ -470,5 +467,3 @@ namespace python
 }
 
 DEAL_II_NAMESPACE_CLOSE
-
-#endif

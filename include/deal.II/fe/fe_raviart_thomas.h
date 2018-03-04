@@ -17,11 +17,13 @@
 #define dealii_fe_raviart_thomas_h
 
 #include <deal.II/base/config.h>
-#include <deal.II/base/table.h>
-#include <deal.II/base/polynomials_raviart_thomas.h>
-#include <deal.II/base/polynomial.h>
-#include <deal.II/base/tensor_product_polynomials.h>
+
 #include <deal.II/base/geometry_info.h>
+#include <deal.II/base/polynomial.h>
+#include <deal.II/base/polynomials_raviart_thomas.h>
+#include <deal.II/base/table.h>
+#include <deal.II/base/tensor_product_polynomials.h>
+
 #include <deal.II/fe/fe.h>
 #include <deal.II/fe/fe_poly_tensor.h>
 
@@ -101,25 +103,24 @@ DEAL_II_NAMESPACE_OPEN
  */
 template <int dim>
 class FE_RaviartThomas
-  :
-  public FE_PolyTensor<PolynomialsRaviartThomas<dim>, dim>
+  : public FE_PolyTensor<PolynomialsRaviartThomas<dim>, dim>
 {
 public:
   /**
    * Constructor for the Raviart-Thomas element of degree @p p.
    */
-  FE_RaviartThomas (const unsigned int p);
+  FE_RaviartThomas(const unsigned int p);
 
   /**
    * Return a string that uniquely identifies a finite element. This class
    * returns <tt>FE_RaviartThomas<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  virtual std::string
+  get_name() const;
 
   // documentation inherited from the base class
-  virtual
-  std::unique_ptr<FiniteElement<dim,dim> >
+  virtual std::unique_ptr<FiniteElement<dim, dim>>
   clone() const;
 
   /**
@@ -129,23 +130,35 @@ public:
    * Right now, this is only implemented for RT0 in 1D. Otherwise, returns
    * always @p true.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  virtual bool
+  has_support_on_face(const unsigned int shape_index,
+                      const unsigned int face_index) const;
 
   // documentation inherited from the base class
-  virtual
-  void
-  convert_generalized_support_point_values_to_dof_values (const std::vector<Vector<double> > &support_point_values,
-                                                          std::vector<double>                &nodal_values) const;
+  virtual void
+  convert_generalized_support_point_values_to_dof_values(
+    const std::vector<Vector<double>> &support_point_values,
+    std::vector<double> &              nodal_values) const;
 
   /**
    * Return a list of constant modes of the element. This method is currently
    * not correctly implemented because it returns ones for all components.
    */
-  virtual std::pair<Table<2,bool>, std::vector<unsigned int> >
-  get_constant_modes () const;
+  virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
+  get_constant_modes() const;
 
-  virtual std::size_t memory_consumption () const;
+  virtual std::size_t
+  memory_consumption() const;
+
+  /**
+   * Returns inverse node matrix internally stored by this Finite Element
+   * There are no guard checks from access to non-existent matrix. Care
+   * must be taken by the user herself
+   */
+  const FullMatrix<double> &
+               get_inverse_node_matrix() const;
+  unsigned int n_interior_dofs;
+  unsigned int n_face_dofs;
 
 private:
   /**
@@ -155,14 +168,15 @@ private:
    * FiniteElementData.
    */
   static std::vector<unsigned int>
-  get_dpo_vector (const unsigned int degree);
+  get_dpo_vector(const unsigned int degree);
 
   /**
    * Initialize the @p generalized_support_points field of the FiniteElement
    * class and fill the tables with interpolation weights (#boundary_weights
    * and #interior_weights). Called from the constructor.
    */
-  void initialize_support_points (const unsigned int rt_degree);
+  void
+  initialize_support_points(const unsigned int rt_degree);
 
   /**
    * Initialize the interpolation from functions on refined mesh cells onto
@@ -170,7 +184,8 @@ private:
    * element, this restriction operator preserves the divergence of a function
    * weakly.
    */
-  void initialize_restriction ();
+  void
+  initialize_restriction();
 
   /**
    * These are the factors multiplied to a function in the
@@ -195,7 +210,8 @@ private:
   /**
    * Allow access from other dimensions.
    */
-  template <int dim1> friend class FE_RaviartThomas;
+  template <int dim1>
+  friend class FE_RaviartThomas;
 };
 
 
@@ -241,51 +257,53 @@ private:
  */
 template <int dim>
 class FE_RaviartThomasNodal
-  :
-  public FE_PolyTensor<PolynomialsRaviartThomas<dim>, dim>
+  : public FE_PolyTensor<PolynomialsRaviartThomas<dim>, dim>
 {
 public:
   /**
    * Constructor for the Raviart-Thomas element of degree @p p.
    */
-  FE_RaviartThomasNodal (const unsigned int p);
+  FE_RaviartThomasNodal(const unsigned int p);
 
   /**
    * Return a string that uniquely identifies a finite element. This class
    * returns <tt>FE_RaviartThomasNodal<dim>(degree)</tt>, with @p dim and @p
    * degree replaced by appropriate values.
    */
-  virtual std::string get_name () const;
+  virtual std::string
+  get_name() const;
 
   // documentation inherited from the base class
-  virtual
-  std::unique_ptr<FiniteElement<dim,dim> >
+  virtual std::unique_ptr<FiniteElement<dim, dim>>
   clone() const;
 
-  virtual
-  void
-  convert_generalized_support_point_values_to_dof_values (const std::vector<Vector<double> > &support_point_values,
-                                                          std::vector<double>                &nodal_values) const;
+  virtual void
+  convert_generalized_support_point_values_to_dof_values(
+    const std::vector<Vector<double>> &support_point_values,
+    std::vector<double> &              nodal_values) const;
 
-  virtual void get_face_interpolation_matrix (const FiniteElement<dim> &source,
-                                              FullMatrix<double>       &matrix) const;
+  virtual void
+  get_face_interpolation_matrix(const FiniteElement<dim> &source,
+                                FullMatrix<double> &      matrix) const;
 
-  virtual void get_subface_interpolation_matrix (const FiniteElement<dim> &source,
-                                                 const unsigned int        subface,
-                                                 FullMatrix<double>       &matrix) const;
-  virtual bool hp_constraints_are_implemented () const;
+  virtual void
+  get_subface_interpolation_matrix(const FiniteElement<dim> &source,
+                                   const unsigned int        subface,
+                                   FullMatrix<double> &      matrix) const;
+  virtual bool
+  hp_constraints_are_implemented() const;
 
-  virtual std::vector<std::pair<unsigned int, unsigned int> >
-  hp_vertex_dof_identities (const FiniteElement<dim> &fe_other) const;
+  virtual std::vector<std::pair<unsigned int, unsigned int>>
+  hp_vertex_dof_identities(const FiniteElement<dim> &fe_other) const;
 
-  virtual std::vector<std::pair<unsigned int, unsigned int> >
-  hp_line_dof_identities (const FiniteElement<dim> &fe_other) const;
+  virtual std::vector<std::pair<unsigned int, unsigned int>>
+  hp_line_dof_identities(const FiniteElement<dim> &fe_other) const;
 
-  virtual std::vector<std::pair<unsigned int, unsigned int> >
-  hp_quad_dof_identities (const FiniteElement<dim> &fe_other) const;
+  virtual std::vector<std::pair<unsigned int, unsigned int>>
+  hp_quad_dof_identities(const FiniteElement<dim> &fe_other) const;
 
   virtual FiniteElementDomination::Domination
-  compare_for_face_domination (const FiniteElement<dim> &fe_other) const;
+  compare_for_face_domination(const FiniteElement<dim> &fe_other) const;
 
 private:
   /**
@@ -295,14 +313,14 @@ private:
    * FiniteElementData.
    */
   static std::vector<unsigned int>
-  get_dpo_vector (const unsigned int degree);
+  get_dpo_vector(const unsigned int degree);
 
   /**
    * Compute the vector used for the @p restriction_is_additive field passed
    * to the base class's constructor.
    */
   static std::vector<bool>
-  get_ria_vector (const unsigned int degree);
+  get_ria_vector(const unsigned int degree);
 
   /**
    * This function returns @p true, if the shape function @p shape_index has
@@ -311,8 +329,9 @@ private:
    * Right now, this is only implemented for RT0 in 1D. Otherwise, returns
    * always @p true.
    */
-  virtual bool has_support_on_face (const unsigned int shape_index,
-                                    const unsigned int face_index) const;
+  virtual bool
+  has_support_on_face(const unsigned int shape_index,
+                      const unsigned int face_index) const;
   /**
    * Initialize the FiniteElement<dim>::generalized_support_points and
    * FiniteElement<dim>::generalized_face_support_points fields. Called from
@@ -322,7 +341,8 @@ private:
    * @ref GlossGeneralizedSupport "glossary entry on generalized support points"
    * for more information.
    */
-  void initialize_support_points (const unsigned int rt_degree);
+  void
+  initialize_support_points(const unsigned int rt_degree);
 };
 
 

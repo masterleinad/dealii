@@ -18,59 +18,64 @@
 #define dealii_matrix_free_evaluation_kernels_h
 
 #include <deal.II/base/config.h>
-#include <deal.II/base/vectorization.h>
+
 #include <deal.II/base/utilities.h>
-#include <deal.II/matrix_free/tensor_product_kernels.h>
+#include <deal.II/base/vectorization.h>
+
 #include <deal.II/matrix_free/shape_info.h>
+#include <deal.II/matrix_free/tensor_product_kernels.h>
 
 
 DEAL_II_NAMESPACE_OPEN
-
 
 
 namespace internal
 {
   // Select evaluator type from element shape function type
   template <MatrixFreeFunctions::ElementType element, bool is_long>
-  struct EvaluatorSelector {};
+  struct EvaluatorSelector
+  {};
 
   template <bool is_long>
-  struct EvaluatorSelector<MatrixFreeFunctions::tensor_general,is_long>
+  struct EvaluatorSelector<MatrixFreeFunctions::tensor_general, is_long>
   {
     static const EvaluatorVariant variant = evaluate_general;
   };
 
   template <>
-  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric,false>
+  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric, false>
   {
     static const EvaluatorVariant variant = evaluate_symmetric;
   };
 
-  template <> struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric,true>
+  template <>
+  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric, true>
   {
     static const EvaluatorVariant variant = evaluate_evenodd;
   };
 
   template <bool is_long>
-  struct EvaluatorSelector<MatrixFreeFunctions::truncated_tensor,is_long>
+  struct EvaluatorSelector<MatrixFreeFunctions::truncated_tensor, is_long>
   {
     static const EvaluatorVariant variant = evaluate_general;
   };
 
   template <>
-  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0,false>
+  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0,
+                           false>
   {
     static const EvaluatorVariant variant = evaluate_general;
   };
 
   template <>
-  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0,true>
+  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0, true>
   {
     static const EvaluatorVariant variant = evaluate_evenodd;
   };
 
   template <bool is_long>
-  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_collocation,is_long>
+  struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_collocation,
+                           is_long>
   {
     static const EvaluatorVariant variant = evaluate_evenodd;
   };
@@ -95,73 +100,92 @@ namespace internal
    *
    * @author Katharina Kormann, Martin Kronbichler, 2012, 2014, 2017
    */
-  template <MatrixFreeFunctions::ElementType type, int dim, int fe_degree,
-            int n_q_points_1d, int n_components, typename Number>
+  template <MatrixFreeFunctions::ElementType type,
+            int                              dim,
+            int                              fe_degree,
+            int                              n_q_points_1d,
+            int                              n_components,
+            typename Number>
   struct FEEvaluationImpl
   {
-    static
-    void evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-                   VectorizedArray<Number> *values_dofs_actual[],
-                   VectorizedArray<Number> *values_quad[],
-                   VectorizedArray<Number> *gradients_quad[][dim],
-                   VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
-                   VectorizedArray<Number> *scratch_data,
-                   const bool               evaluate_values,
-                   const bool               evaluate_gradients,
-                   const bool               evaluate_hessians);
+    static void
+    evaluate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs_actual[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients,
+      const bool               evaluate_hessians);
 
-    static
-    void integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-                    VectorizedArray<Number> *values_dofs_actual[],
-                    VectorizedArray<Number> *values_quad[],
-                    VectorizedArray<Number> *gradients_quad[][dim],
-                    VectorizedArray<Number> *scratch_data,
-                    const bool               evaluate_values,
-                    const bool               evaluate_gradients);
+    static void
+    integrate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs_actual[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients);
   };
 
 
-  template <MatrixFreeFunctions::ElementType type, int dim, int fe_degree,
-            int n_q_points_1d, int n_components, typename Number>
-  inline
-  void
-  FEEvaluationImpl<type,dim,fe_degree,n_q_points_1d,n_components,Number>
-  ::evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-              VectorizedArray<Number> *values_dofs_actual[],
-              VectorizedArray<Number> *values_quad[],
-              VectorizedArray<Number> *gradients_quad[][dim],
-              VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
-              VectorizedArray<Number> *scratch_data,
-              const bool               evaluate_values,
-              const bool               evaluate_gradients,
-              const bool               evaluate_hessians)
+  template <MatrixFreeFunctions::ElementType type,
+            int                              dim,
+            int                              fe_degree,
+            int                              n_q_points_1d,
+            int                              n_components,
+            typename Number>
+  inline void
+  FEEvaluationImpl<type, dim, fe_degree, n_q_points_1d, n_components, Number>::
+    evaluate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs_actual[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients,
+      const bool               evaluate_hessians)
   {
-    if (evaluate_values == false && evaluate_gradients == false && evaluate_hessians == false)
+    if (evaluate_values == false && evaluate_gradients == false &&
+        evaluate_hessians == false)
       return;
 
-    const EvaluatorVariant variant =
-      EvaluatorSelector<type,(fe_degree+n_q_points_1d>4)>::variant;
-    typedef EvaluatorTensorProduct<variant, dim, fe_degree, n_q_points_1d,
-            VectorizedArray<Number> > Eval;
-    Eval eval (variant == evaluate_evenodd ? shape_info.shape_values_eo :
-               shape_info.shape_values,
-               variant == evaluate_evenodd ? shape_info.shape_gradients_eo :
-               shape_info.shape_gradients,
-               variant == evaluate_evenodd ? shape_info.shape_hessians_eo :
-               shape_info.shape_hessians,
-               shape_info.fe_degree,
-               shape_info.n_q_points_1d);
 
-    const unsigned int temp_size = Eval::dofs_per_cell == numbers::invalid_unsigned_int ? 0
-                                   : (Eval::dofs_per_cell > Eval::n_q_points ?
-                                      Eval::dofs_per_cell : Eval::n_q_points);
+    const EvaluatorVariant variant =
+      EvaluatorSelector<type, (fe_degree + n_q_points_1d > 4)>::variant;
+    typedef EvaluatorTensorProduct<variant,
+                                   dim,
+                                   fe_degree,
+                                   n_q_points_1d,
+                                   VectorizedArray<Number>>
+         Eval;
+    Eval eval(variant == evaluate_evenodd ? shape_info.shape_values_eo :
+                                            shape_info.shape_values,
+              variant == evaluate_evenodd ? shape_info.shape_gradients_eo :
+                                            shape_info.shape_gradients,
+              variant == evaluate_evenodd ? shape_info.shape_hessians_eo :
+                                            shape_info.shape_hessians,
+              shape_info.fe_degree,
+              shape_info.n_q_points_1d);
+
+    const unsigned int temp_size =
+      Eval::dofs_per_cell == numbers::invalid_unsigned_int ?
+        0 :
+        (Eval::dofs_per_cell > Eval::n_q_points ? Eval::dofs_per_cell :
+                                                  Eval::n_q_points);
     VectorizedArray<Number> *temp1;
     VectorizedArray<Number> *temp2;
     if (temp_size == 0)
       {
         temp1 = scratch_data;
-        temp2 = temp1 + std::max(Utilities::fixed_power<dim>(shape_info.fe_degree+1),
-                                 Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
+        temp2 = temp1 +
+                std::max(Utilities::fixed_power<dim>(shape_info.fe_degree + 1),
+                         Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
       }
     else
       {
@@ -170,211 +194,252 @@ namespace internal
       }
 
     VectorizedArray<Number> **values_dofs = values_dofs_actual;
-    VectorizedArray<Number> *expanded_dof_values[n_components];
+    VectorizedArray<Number> * expanded_dof_values[n_components];
     if (type == MatrixFreeFunctions::truncated_tensor)
       {
         values_dofs = expanded_dof_values;
-        for (unsigned int c=0; c<n_components; ++c)
-          expanded_dof_values[c] = scratch_data+2*(std::max(shape_info.dofs_per_component_on_cell,
-                                                            shape_info.n_q_points)) +
-                                   c*Utilities::fixed_power<dim>(shape_info.fe_degree+1);
+        for (unsigned int c = 0; c < n_components; ++c)
+          expanded_dof_values[c] =
+            scratch_data +
+            2 * (std::max(shape_info.dofs_per_component_on_cell,
+                          shape_info.n_q_points)) +
+            c * Utilities::fixed_power<dim>(shape_info.fe_degree + 1);
         const int degree = fe_degree != -1 ? fe_degree : shape_info.fe_degree;
         unsigned int count_p = 0, count_q = 0;
-        for (int i=0; i<(dim>2?degree+1:1); ++i)
+        for (int i = 0; i < (dim > 2 ? degree + 1 : 1); ++i)
           {
-            for (int j=0; j<(dim>1?degree+1-i:1); ++j)
+            for (int j = 0; j < (dim > 1 ? degree + 1 - i : 1); ++j)
               {
-                for (int k=0; k<degree+1-j-i; ++k, ++count_p, ++count_q)
-                  for (unsigned int c=0; c<n_components; ++c)
-                    expanded_dof_values[c][count_q] = values_dofs_actual[c][count_p];
-                for (int k=degree+1-j-i; k<degree+1; ++k, ++count_q)
-                  for (unsigned int c=0; c<n_components; ++c)
+                for (int k = 0; k < degree + 1 - j - i;
+                     ++k, ++count_p, ++count_q)
+                  for (unsigned int c = 0; c < n_components; ++c)
+                    expanded_dof_values[c][count_q] =
+                      values_dofs_actual[c][count_p];
+                for (int k = degree + 1 - j - i; k < degree + 1; ++k, ++count_q)
+                  for (unsigned int c = 0; c < n_components; ++c)
                     expanded_dof_values[c][count_q] = VectorizedArray<Number>();
               }
-            for (int j=degree+1-i; j<degree+1; ++j)
-              for (int k=0; k<degree+1; ++k, ++count_q)
-                for (unsigned int c=0; c<n_components; ++c)
+            for (int j = degree + 1 - i; j < degree + 1; ++j)
+              for (int k = 0; k < degree + 1; ++k, ++count_q)
+                for (unsigned int c = 0; c < n_components; ++c)
                   expanded_dof_values[c][count_q] = VectorizedArray<Number>();
           }
-        AssertDimension(count_q, Utilities::fixed_power<dim>(shape_info.fe_degree+1));
+        AssertDimension(count_q,
+                        Utilities::fixed_power<dim>(shape_info.fe_degree + 1));
       }
 
     // These avoid compiler warnings; they are only used in sensible context but
     // compilers typically cannot detect when we access something like
     // gradients_quad[2] only for dim==3.
-    const unsigned int d1 = dim>1?1:0;
-    const unsigned int d2 = dim>2?2:0;
-    const unsigned int d3 = dim>2?3:0;
-    const unsigned int d4 = dim>2?4:0;
-    const unsigned int d5 = dim>2?5:0;
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : 0;
+    const unsigned int d3 = dim > 2 ? 3 : 0;
+    const unsigned int d4 = dim > 2 ? 4 : 0;
+    const unsigned int d5 = dim > 2 ? 5 : 0;
 
     switch (dim)
       {
-      case 1:
-        for (unsigned int c=0; c<n_components; c++)
-          {
-            if (evaluate_values == true)
-              eval.template values<0,true,false> (values_dofs[c], values_quad[c]);
-            if (evaluate_gradients == true)
-              eval.template gradients<0,true,false>(values_dofs[c], gradients_quad[c][0]);
-            if (evaluate_hessians == true)
-              eval.template hessians<0,true,false> (values_dofs[c], hessians_quad[c][0]);
-          }
-        break;
+        case 1:
+          for (unsigned int c = 0; c < n_components; c++)
+            {
+              if (evaluate_values == true)
+                eval.template values<0, true, false>(values_dofs[c],
+                                                     values_quad[c]);
+              if (evaluate_gradients == true)
+                eval.template gradients<0, true, false>(values_dofs[c],
+                                                        gradients_quad[c][0]);
+              if (evaluate_hessians == true)
+                eval.template hessians<0, true, false>(values_dofs[c],
+                                                       hessians_quad[c][0]);
+            }
+          break;
 
-      case 2:
-        for (unsigned int c=0; c<n_components; c++)
-          {
-            // grad x
-            if (evaluate_gradients == true)
-              {
-                eval.template gradients<0,true,false> (values_dofs[c], temp1);
-                eval.template values<1,true,false> (temp1, gradients_quad[c][0]);
-              }
-            if (evaluate_hessians == true)
-              {
-                // grad xy
-                if (evaluate_gradients == false)
-                  eval.template gradients<0,true,false>(values_dofs[c], temp1);
-                eval.template gradients<1,true,false>  (temp1, hessians_quad[c][d1+d1]);
+        case 2:
+          for (unsigned int c = 0; c < n_components; c++)
+            {
+              // grad x
+              if (evaluate_gradients == true)
+                {
+                  eval.template gradients<0, true, false>(values_dofs[c],
+                                                          temp1);
+                  eval.template values<1, true, false>(temp1,
+                                                       gradients_quad[c][0]);
+                }
+              if (evaluate_hessians == true)
+                {
+                  // grad xy
+                  if (evaluate_gradients == false)
+                    eval.template gradients<0, true, false>(values_dofs[c],
+                                                            temp1);
+                  eval.template gradients<1, true, false>(
+                    temp1, hessians_quad[c][d1 + d1]);
 
-                // grad xx
-                eval.template hessians<0,true,false>(values_dofs[c], temp1);
-                eval.template values<1,true,false>  (temp1, hessians_quad[c][0]);
-              }
+                  // grad xx
+                  eval.template hessians<0, true, false>(values_dofs[c], temp1);
+                  eval.template values<1, true, false>(temp1,
+                                                       hessians_quad[c][0]);
+                }
 
-            // grad y
-            eval.template values<0,true,false> (values_dofs[c], temp1);
-            if (evaluate_gradients == true)
-              eval.template gradients<1,true,false> (temp1, gradients_quad[c][d1]);
+              // grad y
+              eval.template values<0, true, false>(values_dofs[c], temp1);
+              if (evaluate_gradients == true)
+                eval.template gradients<1, true, false>(temp1,
+                                                        gradients_quad[c][d1]);
 
-            // grad yy
-            if (evaluate_hessians == true)
-              eval.template hessians<1,true,false> (temp1, hessians_quad[c][d1]);
+              // grad yy
+              if (evaluate_hessians == true)
+                eval.template hessians<1, true, false>(temp1,
+                                                       hessians_quad[c][d1]);
 
-            // val: can use values applied in x
-            if (evaluate_values == true)
-              eval.template values<1,true,false> (temp1, values_quad[c]);
-          }
-        break;
+              // val: can use values applied in x
+              if (evaluate_values == true)
+                eval.template values<1, true, false>(temp1, values_quad[c]);
+            }
+          break;
 
-      case 3:
-        for (unsigned int c=0; c<n_components; c++)
-          {
-            if (evaluate_gradients == true)
-              {
-                // grad x
-                eval.template gradients<0,true,false> (values_dofs[c], temp1);
-                eval.template values<1,true,false> (temp1, temp2);
-                eval.template values<2,true,false> (temp2, gradients_quad[c][0]);
-              }
+        case 3:
+          for (unsigned int c = 0; c < n_components; c++)
+            {
+              if (evaluate_gradients == true)
+                {
+                  // grad x
+                  eval.template gradients<0, true, false>(values_dofs[c],
+                                                          temp1);
+                  eval.template values<1, true, false>(temp1, temp2);
+                  eval.template values<2, true, false>(temp2,
+                                                       gradients_quad[c][0]);
+                }
 
-            if (evaluate_hessians == true)
-              {
-                // grad xz
-                if (evaluate_gradients == false)
-                  {
-                    eval.template gradients<0,true,false> (values_dofs[c], temp1);
-                    eval.template values<1,true,false> (temp1, temp2);
-                  }
-                eval.template gradients<2,true,false> (temp2, hessians_quad[c][d4]);
+              if (evaluate_hessians == true)
+                {
+                  // grad xz
+                  if (evaluate_gradients == false)
+                    {
+                      eval.template gradients<0, true, false>(values_dofs[c],
+                                                              temp1);
+                      eval.template values<1, true, false>(temp1, temp2);
+                    }
+                  eval.template gradients<2, true, false>(temp2,
+                                                          hessians_quad[c][d4]);
 
-                // grad xy
-                eval.template gradients<1,true,false> (temp1, temp2);
-                eval.template values<2,true,false> (temp2, hessians_quad[c][d3]);
+                  // grad xy
+                  eval.template gradients<1, true, false>(temp1, temp2);
+                  eval.template values<2, true, false>(temp2,
+                                                       hessians_quad[c][d3]);
 
-                // grad xx
-                eval.template hessians<0,true,false>(values_dofs[c], temp1);
-                eval.template values<1,true,false>  (temp1, temp2);
-                eval.template values<2,true,false>  (temp2, hessians_quad[c][0]);
-              }
+                  // grad xx
+                  eval.template hessians<0, true, false>(values_dofs[c], temp1);
+                  eval.template values<1, true, false>(temp1, temp2);
+                  eval.template values<2, true, false>(temp2,
+                                                       hessians_quad[c][0]);
+                }
 
-            // grad y
-            eval.template values<0,true,false> (values_dofs[c], temp1);
-            if (evaluate_gradients == true)
-              {
-                eval.template gradients<1,true,false>(temp1, temp2);
-                eval.template values<2,true,false>   (temp2, gradients_quad[c][d1]);
-              }
+              // grad y
+              eval.template values<0, true, false>(values_dofs[c], temp1);
+              if (evaluate_gradients == true)
+                {
+                  eval.template gradients<1, true, false>(temp1, temp2);
+                  eval.template values<2, true, false>(temp2,
+                                                       gradients_quad[c][d1]);
+                }
 
-            if (evaluate_hessians == true)
-              {
-                // grad yz
-                if (evaluate_gradients == false)
-                  eval.template gradients<1,true,false>(temp1, temp2);
-                eval.template gradients<2,true,false>  (temp2, hessians_quad[c][d5]);
+              if (evaluate_hessians == true)
+                {
+                  // grad yz
+                  if (evaluate_gradients == false)
+                    eval.template gradients<1, true, false>(temp1, temp2);
+                  eval.template gradients<2, true, false>(temp2,
+                                                          hessians_quad[c][d5]);
 
-                // grad yy
-                eval.template hessians<1,true,false> (temp1, temp2);
-                eval.template values<2,true,false> (temp2, hessians_quad[c][d1]);
-              }
+                  // grad yy
+                  eval.template hessians<1, true, false>(temp1, temp2);
+                  eval.template values<2, true, false>(temp2,
+                                                       hessians_quad[c][d1]);
+                }
 
-            // grad z: can use the values applied in x direction stored in temp1
-            eval.template values<1,true,false> (temp1, temp2);
-            if (evaluate_gradients == true)
-              eval.template gradients<2,true,false> (temp2, gradients_quad[c][d2]);
+              // grad z: can use the values applied in x direction stored in
+              // temp1
+              eval.template values<1, true, false>(temp1, temp2);
+              if (evaluate_gradients == true)
+                eval.template gradients<2, true, false>(temp2,
+                                                        gradients_quad[c][d2]);
 
-            // grad zz: can use the values applied in x and y direction stored
-            // in temp2
-            if (evaluate_hessians == true)
-              eval.template hessians<2,true,false>(temp2, hessians_quad[c][d2]);
+              // grad zz: can use the values applied in x and y direction stored
+              // in temp2
+              if (evaluate_hessians == true)
+                eval.template hessians<2, true, false>(temp2,
+                                                       hessians_quad[c][d2]);
 
-            // val: can use the values applied in x & y direction stored in temp2
-            if (evaluate_values == true)
-              eval.template values<2,true,false> (temp2, values_quad[c]);
-          }
-        break;
+              // val: can use the values applied in x & y direction stored in
+              // temp2
+              if (evaluate_values == true)
+                eval.template values<2, true, false>(temp2, values_quad[c]);
+            }
+          break;
 
-      default:
-        AssertThrow(false, ExcNotImplemented());
+        default:
+          AssertThrow(false, ExcNotImplemented());
       }
 
     // case additional dof for FE_Q_DG0: add values; gradients and second
     // derivatives evaluate to zero
-    if (type == MatrixFreeFunctions::tensor_symmetric_plus_dg0 && evaluate_values)
-      for (unsigned int c=0; c<n_components; ++c)
-        for (unsigned int q=0; q<shape_info.n_q_points; ++q)
-          values_quad[c][q] += values_dofs[c][shape_info.dofs_per_component_on_cell-1];
+    if (type == MatrixFreeFunctions::tensor_symmetric_plus_dg0 &&
+        evaluate_values)
+      for (unsigned int c = 0; c < n_components; ++c)
+        for (unsigned int q = 0; q < shape_info.n_q_points; ++q)
+          values_quad[c][q] +=
+            values_dofs[c][shape_info.dofs_per_component_on_cell - 1];
   }
 
 
 
-  template <MatrixFreeFunctions::ElementType type, int dim, int fe_degree,
-            int n_q_points_1d, int n_components, typename Number>
-  inline
-  void
-  FEEvaluationImpl<type,dim,fe_degree,n_q_points_1d,n_components,Number>
-  ::integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-               VectorizedArray<Number> *values_dofs_actual[],
-               VectorizedArray<Number> *values_quad[],
-               VectorizedArray<Number> *gradients_quad[][dim],
-               VectorizedArray<Number> *scratch_data,
-               const bool               integrate_values,
-               const bool               integrate_gradients)
+  template <MatrixFreeFunctions::ElementType type,
+            int                              dim,
+            int                              fe_degree,
+            int                              n_q_points_1d,
+            int                              n_components,
+            typename Number>
+  inline void
+  FEEvaluationImpl<type, dim, fe_degree, n_q_points_1d, n_components, Number>::
+    integrate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs_actual[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *scratch_data,
+      const bool               integrate_values,
+      const bool               integrate_gradients)
   {
     const EvaluatorVariant variant =
-      EvaluatorSelector<type,(fe_degree+n_q_points_1d>4)>::variant;
-    typedef EvaluatorTensorProduct<variant, dim, fe_degree, n_q_points_1d,
-            VectorizedArray<Number> > Eval;
-    Eval eval (variant == evaluate_evenodd ? shape_info.shape_values_eo :
-               shape_info.shape_values,
-               variant == evaluate_evenodd ? shape_info.shape_gradients_eo :
-               shape_info.shape_gradients,
-               variant == evaluate_evenodd ? shape_info.shape_hessians_eo :
-               shape_info.shape_hessians,
-               shape_info.fe_degree,
-               shape_info.n_q_points_1d);
+      EvaluatorSelector<type, (fe_degree + n_q_points_1d > 4)>::variant;
+    typedef EvaluatorTensorProduct<variant,
+                                   dim,
+                                   fe_degree,
+                                   n_q_points_1d,
+                                   VectorizedArray<Number>>
+         Eval;
+    Eval eval(variant == evaluate_evenodd ? shape_info.shape_values_eo :
+                                            shape_info.shape_values,
+              variant == evaluate_evenodd ? shape_info.shape_gradients_eo :
+                                            shape_info.shape_gradients,
+              variant == evaluate_evenodd ? shape_info.shape_hessians_eo :
+                                            shape_info.shape_hessians,
+              shape_info.fe_degree,
+              shape_info.n_q_points_1d);
 
-    const unsigned int temp_size = Eval::dofs_per_cell == numbers::invalid_unsigned_int ? 0
-                                   : (Eval::dofs_per_cell > Eval::n_q_points ?
-                                      Eval::dofs_per_cell : Eval::n_q_points);
+    const unsigned int temp_size =
+      Eval::dofs_per_cell == numbers::invalid_unsigned_int ?
+        0 :
+        (Eval::dofs_per_cell > Eval::n_q_points ? Eval::dofs_per_cell :
+                                                  Eval::n_q_points);
     VectorizedArray<Number> *temp1;
     VectorizedArray<Number> *temp2;
     if (temp_size == 0)
       {
         temp1 = scratch_data;
-        temp2 = temp1 + std::max(Utilities::fixed_power<dim>(shape_info.fe_degree+1),
-                                 Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
+        temp2 = temp1 +
+                std::max(Utilities::fixed_power<dim>(shape_info.fe_degree + 1),
+                         Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
       }
     else
       {
@@ -384,141 +449,164 @@ namespace internal
 
     // expand dof_values to tensor product for truncated tensor products
     VectorizedArray<Number> **values_dofs = values_dofs_actual;
-    VectorizedArray<Number> *expanded_dof_values[n_components];
+    VectorizedArray<Number> * expanded_dof_values[n_components];
     if (type == MatrixFreeFunctions::truncated_tensor)
       {
         values_dofs = expanded_dof_values;
-        for (unsigned int c=0; c<n_components; ++c)
-          expanded_dof_values[c] = scratch_data+2*(std::max(shape_info.dofs_per_component_on_cell,
-                                                            shape_info.n_q_points)) +
-                                   c*Utilities::fixed_power<dim>(shape_info.fe_degree+1);
+        for (unsigned int c = 0; c < n_components; ++c)
+          expanded_dof_values[c] =
+            scratch_data +
+            2 * (std::max(shape_info.dofs_per_component_on_cell,
+                          shape_info.n_q_points)) +
+            c * Utilities::fixed_power<dim>(shape_info.fe_degree + 1);
       }
 
     // These avoid compiler warnings; they are only used in sensible context but
     // compilers typically cannot detect when we access something like
     // gradients_quad[2] only for dim==3.
-    const unsigned int d1 = dim>1?1:0;
-    const unsigned int d2 = dim>2?2:0;
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : 0;
 
     switch (dim)
       {
-      case 1:
-        for (unsigned int c=0; c<n_components; c++)
-          {
-            if (integrate_values == true)
-              eval.template values<0,false,false> (values_quad[c], values_dofs[c]);
-            if (integrate_gradients == true)
-              {
-                if (integrate_values == true)
-                  eval.template gradients<0,false,true> (gradients_quad[c][0], values_dofs[c]);
-                else
-                  eval.template gradients<0,false,false> (gradients_quad[c][0], values_dofs[c]);
-              }
-          }
-        break;
+        case 1:
+          for (unsigned int c = 0; c < n_components; c++)
+            {
+              if (integrate_values == true)
+                eval.template values<0, false, false>(values_quad[c],
+                                                      values_dofs[c]);
+              if (integrate_gradients == true)
+                {
+                  if (integrate_values == true)
+                    eval.template gradients<0, false, true>(
+                      gradients_quad[c][0], values_dofs[c]);
+                  else
+                    eval.template gradients<0, false, false>(
+                      gradients_quad[c][0], values_dofs[c]);
+                }
+            }
+          break;
 
-      case 2:
-        for (unsigned int c=0; c<n_components; c++)
-          {
-            if (integrate_values == true)
-              {
-                // val
-                eval.template values<0,false,false> (values_quad[c], temp1);
-                //grad x
-                if (integrate_gradients == true)
-                  eval.template gradients<0,false,true> (gradients_quad[c][0], temp1);
-                eval.template values<1,false,false>(temp1, values_dofs[c]);
-              }
-            if (integrate_gradients == true)
-              {
-                // grad y
-                eval.template values<0,false,false>  (gradients_quad[c][d1], temp1);
-                if (integrate_values == false)
-                  {
-                    eval.template gradients<1,false,false>(temp1, values_dofs[c]);
-                    //grad x
-                    eval.template gradients<0,false,false> (gradients_quad[c][0], temp1);
-                    eval.template values<1,false,true> (temp1, values_dofs[c]);
-                  }
-                else
-                  eval.template gradients<1,false,true>(temp1, values_dofs[c]);
-              }
-          }
-        break;
+        case 2:
+          for (unsigned int c = 0; c < n_components; c++)
+            {
+              if (integrate_values == true)
+                {
+                  // val
+                  eval.template values<0, false, false>(values_quad[c], temp1);
+                  // grad x
+                  if (integrate_gradients == true)
+                    eval.template gradients<0, false, true>(
+                      gradients_quad[c][0], temp1);
+                  eval.template values<1, false, false>(temp1, values_dofs[c]);
+                }
+              if (integrate_gradients == true)
+                {
+                  // grad y
+                  eval.template values<0, false, false>(gradients_quad[c][d1],
+                                                        temp1);
+                  if (integrate_values == false)
+                    {
+                      eval.template gradients<1, false, false>(temp1,
+                                                               values_dofs[c]);
+                      // grad x
+                      eval.template gradients<0, false, false>(
+                        gradients_quad[c][0], temp1);
+                      eval.template values<1, false, true>(temp1,
+                                                           values_dofs[c]);
+                    }
+                  else
+                    eval.template gradients<1, false, true>(temp1,
+                                                            values_dofs[c]);
+                }
+            }
+          break;
 
-      case 3:
-        for (unsigned int c=0; c<n_components; c++)
-          {
-            if (integrate_values == true)
-              {
-                // val
-                eval.template values<0,false,false> (values_quad[c], temp1);
-                //grad x: can sum to temporary value in temp1
-                if (integrate_gradients == true)
-                  eval.template gradients<0,false,true> (gradients_quad[c][0], temp1);
-                eval.template values<1,false,false>(temp1, temp2);
-                if (integrate_gradients == true)
-                  {
-                    eval.template values<0,false,false> (gradients_quad[c][d1], temp1);
-                    eval.template gradients<1,false,true>(temp1, temp2);
-                  }
-                eval.template values<2,false,false> (temp2, values_dofs[c]);
-              }
-            else if (integrate_gradients == true)
-              {
-                eval.template gradients<0,false,false>(gradients_quad[c][0], temp1);
-                eval.template values<1,false,false> (temp1, temp2);
-                eval.template values<0,false,false> (gradients_quad[c][d1], temp1);
-                eval.template gradients<1,false,true>(temp1, temp2);
-                eval.template values<2,false,false> (temp2, values_dofs[c]);
-              }
-            if (integrate_gradients == true)
-              {
-                // grad z: can sum to temporary x and y value in output
-                eval.template values<0,false,false> (gradients_quad[c][d2], temp1);
-                eval.template values<1,false,false> (temp1, temp2);
-                eval.template gradients<2,false,true> (temp2, values_dofs[c]);
-              }
-          }
-        break;
+        case 3:
+          for (unsigned int c = 0; c < n_components; c++)
+            {
+              if (integrate_values == true)
+                {
+                  // val
+                  eval.template values<0, false, false>(values_quad[c], temp1);
+                  // grad x: can sum to temporary value in temp1
+                  if (integrate_gradients == true)
+                    eval.template gradients<0, false, true>(
+                      gradients_quad[c][0], temp1);
+                  eval.template values<1, false, false>(temp1, temp2);
+                  if (integrate_gradients == true)
+                    {
+                      eval.template values<0, false, false>(
+                        gradients_quad[c][d1], temp1);
+                      eval.template gradients<1, false, true>(temp1, temp2);
+                    }
+                  eval.template values<2, false, false>(temp2, values_dofs[c]);
+                }
+              else if (integrate_gradients == true)
+                {
+                  eval.template gradients<0, false, false>(gradients_quad[c][0],
+                                                           temp1);
+                  eval.template values<1, false, false>(temp1, temp2);
+                  eval.template values<0, false, false>(gradients_quad[c][d1],
+                                                        temp1);
+                  eval.template gradients<1, false, true>(temp1, temp2);
+                  eval.template values<2, false, false>(temp2, values_dofs[c]);
+                }
+              if (integrate_gradients == true)
+                {
+                  // grad z: can sum to temporary x and y value in output
+                  eval.template values<0, false, false>(gradients_quad[c][d2],
+                                                        temp1);
+                  eval.template values<1, false, false>(temp1, temp2);
+                  eval.template gradients<2, false, true>(temp2,
+                                                          values_dofs[c]);
+                }
+            }
+          break;
 
-      default:
-        AssertThrow(false, ExcNotImplemented());
+        default:
+          AssertThrow(false, ExcNotImplemented());
       }
 
     // case FE_Q_DG0: add values, gradients and second derivatives are zero
     if (type == MatrixFreeFunctions::tensor_symmetric_plus_dg0)
       {
         if (integrate_values)
-          for (unsigned int c=0; c<n_components; ++c)
+          for (unsigned int c = 0; c < n_components; ++c)
             {
-              values_dofs[c][shape_info.dofs_per_component_on_cell-1] = values_quad[c][0];
-              for (unsigned int q=1; q<shape_info.n_q_points; ++q)
-                values_dofs[c][shape_info.dofs_per_component_on_cell-1] += values_quad[c][q];
+              values_dofs[c][shape_info.dofs_per_component_on_cell - 1] =
+                values_quad[c][0];
+              for (unsigned int q = 1; q < shape_info.n_q_points; ++q)
+                values_dofs[c][shape_info.dofs_per_component_on_cell - 1] +=
+                  values_quad[c][q];
             }
         else
-          for (unsigned int c=0; c<n_components; ++c)
-            values_dofs[c][shape_info.dofs_per_component_on_cell-1] = VectorizedArray<Number>();
+          for (unsigned int c = 0; c < n_components; ++c)
+            values_dofs[c][shape_info.dofs_per_component_on_cell - 1] =
+              VectorizedArray<Number>();
       }
 
     if (type == MatrixFreeFunctions::truncated_tensor)
       {
         unsigned int count_p = 0, count_q = 0;
         const int degree = fe_degree != -1 ? fe_degree : shape_info.fe_degree;
-        for (int i=0; i<(dim>2?degree+1:1); ++i)
+        for (int i = 0; i < (dim > 2 ? degree + 1 : 1); ++i)
           {
-            for (int j=0; j<(dim>1?degree+1-i:1); ++j)
+            for (int j = 0; j < (dim > 1 ? degree + 1 - i : 1); ++j)
               {
-                for (int k=0; k<degree+1-j-i; ++k, ++count_p, ++count_q)
+                for (int k = 0; k < degree + 1 - j - i;
+                     ++k, ++count_p, ++count_q)
                   {
-                    for (unsigned int c=0; c<n_components; ++c)
-                      values_dofs_actual[c][count_p] = expanded_dof_values[c][count_q];
+                    for (unsigned int c = 0; c < n_components; ++c)
+                      values_dofs_actual[c][count_p] =
+                        expanded_dof_values[c][count_q];
                   }
-                count_q += j+i;
+                count_q += j + i;
               }
-            count_q += i*(degree+1);
+            count_q += i * (degree + 1);
           }
-        AssertDimension(count_q, Utilities::fixed_power<dim>(shape_info.fe_degree+1));
+        AssertDimension(count_q,
+                        Utilities::fixed_power<dim>(shape_info.fe_degree + 1));
       }
   }
 
@@ -539,49 +627,55 @@ namespace internal
   template <int dim, int fe_degree, int n_components, typename Number>
   struct FEEvaluationImplTransformToCollocation
   {
-    static
-    void evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-                   VectorizedArray<Number> *values_dofs[],
-                   VectorizedArray<Number> *values_quad[],
-                   VectorizedArray<Number> *gradients_quad[][dim],
-                   VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
-                   VectorizedArray<Number> *scratch_data,
-                   const bool               evaluate_values,
-                   const bool               evaluate_gradients,
-                   const bool               evaluate_hessians);
+    static void
+    evaluate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients,
+      const bool               evaluate_hessians);
 
-    static
-    void integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-                    VectorizedArray<Number> *values_dofs[],
-                    VectorizedArray<Number> *values_quad[],
-                    VectorizedArray<Number> *gradients_quad[][dim],
-                    VectorizedArray<Number> *scratch_data,
-                    const bool               integrate_values,
-                    const bool               integrate_gradients);
+    static void
+    integrate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *scratch_data,
+      const bool               integrate_values,
+      const bool               integrate_gradients);
   };
 
   template <int dim, int fe_degree, int n_components, typename Number>
-  inline
-  void
-  FEEvaluationImplTransformToCollocation<dim, fe_degree, n_components, Number>
-  ::evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-              VectorizedArray<Number> *values_dofs[],
-              VectorizedArray<Number> *values_quad[],
-              VectorizedArray<Number> *gradients_quad[][dim],
-              VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
-              VectorizedArray<Number> *,
-              const bool,
-              const bool               evaluate_gradients,
-              const bool               evaluate_hessians)
+  inline void
+  FEEvaluationImplTransformToCollocation<dim, fe_degree, n_components, Number>::
+    evaluate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+      VectorizedArray<Number> *,
+      const bool,
+      const bool evaluate_gradients,
+      const bool evaluate_hessians)
   {
-    typedef EvaluatorTensorProduct<evaluate_evenodd, dim, fe_degree, fe_degree+1,
-            VectorizedArray<Number> > Eval;
-    Eval eval_val (shape_info.shape_values_eo,
-                   AlignedVector<VectorizedArray<Number> >(),
-                   AlignedVector<VectorizedArray<Number> >(),
-                   shape_info.fe_degree,
-                   shape_info.n_q_points_1d);
-    Eval eval(AlignedVector<VectorizedArray<Number> >(),
+    typedef EvaluatorTensorProduct<evaluate_evenodd,
+                                   dim,
+                                   fe_degree,
+                                   fe_degree + 1,
+                                   VectorizedArray<Number>>
+         Eval;
+    Eval eval_val(shape_info.shape_values_eo,
+                  AlignedVector<VectorizedArray<Number>>(),
+                  AlignedVector<VectorizedArray<Number>>(),
+                  shape_info.fe_degree,
+                  shape_info.n_q_points_1d);
+    Eval eval(AlignedVector<VectorizedArray<Number>>(),
               shape_info.shape_gradients_collocation_eo,
               shape_info.shape_hessians_collocation_eo,
               shape_info.fe_degree,
@@ -590,80 +684,99 @@ namespace internal
     // These avoid compiler warnings; they are only used in sensible context but
     // compilers typically cannot detect when we access something like
     // gradients_quad[2] only for dim==3.
-    const unsigned int d1 = dim>1?1:0;
-    const unsigned int d2 = dim>2?2:d1;
-    const unsigned int d3 = d1+d2;
-    const unsigned int d4 = dim>2?4:d3;
-    const unsigned int d5 = dim>2?5:d4;
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : d1;
+    const unsigned int d3 = d1 + d2;
+    const unsigned int d4 = dim > 2 ? 4 : d3;
+    const unsigned int d5 = dim > 2 ? 5 : d4;
 
-    for (unsigned int c=0; c<n_components; c++)
+    for (unsigned int c = 0; c < n_components; c++)
       {
         // transform to the basis functions of the collocation space. use
         // gradients_quad[c][0] as a temporary array (it gets overwritten by
         // the gradient contributions later)
         if (dim == 1)
-          eval_val.template values<0,true,false>(values_dofs[c], values_quad[c]);
+          eval_val.template values<0, true, false>(values_dofs[c],
+                                                   values_quad[c]);
         else if (dim == 2)
           {
-            eval_val.template values<0,true,false>(values_dofs[c], gradients_quad[c][0]);
-            eval_val.template values<1,true,false>(gradients_quad[c][0], values_quad[c]);
+            eval_val.template values<0, true, false>(values_dofs[c],
+                                                     gradients_quad[c][0]);
+            eval_val.template values<1, true, false>(gradients_quad[c][0],
+                                                     values_quad[c]);
           }
         else if (dim == 3)
           {
-            eval_val.template values<0,true,false>(values_dofs[c], values_quad[c]);
-            eval_val.template values<1,true,false>(values_quad[c], gradients_quad[c][0]);
-            eval_val.template values<2,true,false>(gradients_quad[c][0], values_quad[c]);
+            eval_val.template values<0, true, false>(values_dofs[c],
+                                                     values_quad[c]);
+            eval_val.template values<1, true, false>(values_quad[c],
+                                                     gradients_quad[c][0]);
+            eval_val.template values<2, true, false>(gradients_quad[c][0],
+                                                     values_quad[c]);
           }
 
         // apply derivatives in the collocation space
         if (evaluate_gradients == true || evaluate_hessians == true)
           {
-            eval.template gradients<0,true,false>(values_quad[c], gradients_quad[c][0]);
+            eval.template gradients<0, true, false>(values_quad[c],
+                                                    gradients_quad[c][0]);
             if (dim > 1)
-              eval.template gradients<1,true,false>(values_quad[c], gradients_quad[c][d1]);
+              eval.template gradients<1, true, false>(values_quad[c],
+                                                      gradients_quad[c][d1]);
             if (dim > 2)
-              eval.template gradients<2,true,false>(values_quad[c], gradients_quad[c][d2]);
+              eval.template gradients<2, true, false>(values_quad[c],
+                                                      gradients_quad[c][d2]);
           }
         if (evaluate_hessians == true)
           {
-            eval.template hessians<0,true,false> (values_quad[c], hessians_quad[c][0]);
+            eval.template hessians<0, true, false>(values_quad[c],
+                                                   hessians_quad[c][0]);
             if (dim > 1)
               {
                 // re-use grad_x already in gradients
-                eval.template gradients<1,true,false> (gradients_quad[c][0], hessians_quad[c][d3]);
-                eval.template hessians<1,true,false> (values_quad[c], hessians_quad[c][d1]);
+                eval.template gradients<1, true, false>(gradients_quad[c][0],
+                                                        hessians_quad[c][d3]);
+                eval.template hessians<1, true, false>(values_quad[c],
+                                                       hessians_quad[c][d1]);
               }
             if (dim > 2)
               {
                 // re-use grad_x and grad_y already in gradients
-                eval.template gradients<2,true,false> (gradients_quad[c][0], hessians_quad[c][d4]);
-                eval.template gradients<2,true,false> (gradients_quad[c][d1], hessians_quad[c][d5]);
-                eval.template hessians<2,true,false> (values_quad[c], hessians_quad[c][d2]);
+                eval.template gradients<2, true, false>(gradients_quad[c][0],
+                                                        hessians_quad[c][d4]);
+                eval.template gradients<2, true, false>(gradients_quad[c][d1],
+                                                        hessians_quad[c][d5]);
+                eval.template hessians<2, true, false>(values_quad[c],
+                                                       hessians_quad[c][d2]);
               }
           }
       }
   }
 
   template <int dim, int fe_degree, int n_components, typename Number>
-  inline
-  void
-  FEEvaluationImplTransformToCollocation<dim, fe_degree, n_components, Number>
-  ::integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-               VectorizedArray<Number> *values_dofs[],
-               VectorizedArray<Number> *values_quad[],
-               VectorizedArray<Number> *gradients_quad[][dim],
-               VectorizedArray<Number> *,
-               const bool               integrate_values,
-               const bool               integrate_gradients)
+  inline void
+  FEEvaluationImplTransformToCollocation<dim, fe_degree, n_components, Number>::
+    integrate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *,
+      const bool integrate_values,
+      const bool integrate_gradients)
   {
-    typedef EvaluatorTensorProduct<evaluate_evenodd, dim, fe_degree, fe_degree+1,
-            VectorizedArray<Number> > Eval;
-    Eval eval_val (shape_info.shape_values_eo,
-                   AlignedVector<VectorizedArray<Number> >(),
-                   AlignedVector<VectorizedArray<Number> >(),
-                   shape_info.fe_degree,
-                   shape_info.n_q_points_1d);
-    Eval eval(AlignedVector<VectorizedArray<Number> >(),
+    typedef EvaluatorTensorProduct<evaluate_evenodd,
+                                   dim,
+                                   fe_degree,
+                                   fe_degree + 1,
+                                   VectorizedArray<Number>>
+         Eval;
+    Eval eval_val(shape_info.shape_values_eo,
+                  AlignedVector<VectorizedArray<Number>>(),
+                  AlignedVector<VectorizedArray<Number>>(),
+                  shape_info.fe_degree,
+                  shape_info.n_q_points_1d);
+    Eval eval(AlignedVector<VectorizedArray<Number>>(),
               shape_info.shape_gradients_collocation_eo,
               shape_info.shape_hessians_collocation_eo,
               shape_info.fe_degree,
@@ -672,37 +785,47 @@ namespace internal
     // These avoid compiler warnings; they are only used in sensible context but
     // compilers typically cannot detect when we access something like
     // gradients_quad[2] only for dim==3.
-    const unsigned int d1 = dim>1?1:0;
-    const unsigned int d2 = dim>2?2:0;
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : 0;
 
-    for (unsigned int c=0; c<n_components; c++)
+    for (unsigned int c = 0; c < n_components; c++)
       {
         // apply derivatives in collocation space
         if (integrate_gradients == true)
           {
             if (integrate_values)
-              eval.template gradients<0,false,true>(gradients_quad[c][0], values_quad[c]);
+              eval.template gradients<0, false, true>(gradients_quad[c][0],
+                                                      values_quad[c]);
             else
-              eval.template gradients<0,false,false>(gradients_quad[c][0], values_quad[c]);
+              eval.template gradients<0, false, false>(gradients_quad[c][0],
+                                                       values_quad[c]);
             if (dim > 1)
-              eval.template gradients<1,false,true>(gradients_quad[c][d1], values_quad[c]);
+              eval.template gradients<1, false, true>(gradients_quad[c][d1],
+                                                      values_quad[c]);
             if (dim > 2)
-              eval.template gradients<2,false,true>(gradients_quad[c][d2], values_quad[c]);
+              eval.template gradients<2, false, true>(gradients_quad[c][d2],
+                                                      values_quad[c]);
           }
 
         // transform back to the original space
         if (dim == 1)
-          eval_val.template values<0,false,false>(values_quad[c], values_dofs[c]);
+          eval_val.template values<0, false, false>(values_quad[c],
+                                                    values_dofs[c]);
         else if (dim == 2)
           {
-            eval_val.template values<0,false,false>(values_quad[c], gradients_quad[c][0]);
-            eval_val.template values<1,false,false>(gradients_quad[c][0], values_dofs[c]);
+            eval_val.template values<0, false, false>(values_quad[c],
+                                                      gradients_quad[c][0]);
+            eval_val.template values<1, false, false>(gradients_quad[c][0],
+                                                      values_dofs[c]);
           }
         else if (dim == 3)
           {
-            eval_val.template values<0,false,false>(values_quad[c], gradients_quad[c][0]);
-            eval_val.template values<1,false,false>(gradients_quad[c][0], values_quad[c]);
-            eval_val.template values<2,false,false>(values_quad[c], values_dofs[c]);
+            eval_val.template values<0, false, false>(values_quad[c],
+                                                      gradients_quad[c][0]);
+            eval_val.template values<1, false, false>(gradients_quad[c][0],
+                                                      values_quad[c]);
+            eval_val.template values<2, false, false>(values_quad[c],
+                                                      values_dofs[c]);
           }
       }
   }
@@ -722,48 +845,53 @@ namespace internal
    * location for shape functions and evaluation space (quadrature points).
    *
    * @author Katharina Kormann, 2012
-  */
+   */
   template <int dim, int fe_degree, int n_components, typename Number>
   struct FEEvaluationImplCollocation
   {
-    static
-    void evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-                   VectorizedArray<Number> *values_dofs[],
-                   VectorizedArray<Number> *values_quad[],
-                   VectorizedArray<Number> *gradients_quad[][dim],
-                   VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
-                   VectorizedArray<Number> *scratch_data,
-                   const bool               evaluate_values,
-                   const bool               evaluate_gradients,
-                   const bool               evaluate_hessians);
+    static void
+    evaluate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients,
+      const bool               evaluate_hessians);
 
-    static
-    void integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-                    VectorizedArray<Number> *values_dofs[],
-                    VectorizedArray<Number> *values_quad[],
-                    VectorizedArray<Number> *gradients_quad[][dim],
-                    VectorizedArray<Number> *scratch_data,
-                    const bool               integrate_values,
-                    const bool               integrate_gradients);
+    static void
+    integrate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *scratch_data,
+      const bool               integrate_values,
+      const bool               integrate_gradients);
   };
 
   template <int dim, int fe_degree, int n_components, typename Number>
-  inline
-  void
-  FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>
-  ::evaluate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-              VectorizedArray<Number> *values_dofs[],
-              VectorizedArray<Number> *values_quad[],
-              VectorizedArray<Number> *gradients_quad[][dim],
-              VectorizedArray<Number> *hessians_quad[][(dim*(dim+1))/2],
-              VectorizedArray<Number> *,
-              const bool               evaluate_values,
-              const bool               evaluate_gradients,
-              const bool               evaluate_hessians)
+  inline void
+  FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>::evaluate(
+    const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+    VectorizedArray<Number> *values_dofs[],
+    VectorizedArray<Number> *values_quad[],
+    VectorizedArray<Number> *gradients_quad[][dim],
+    VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+    VectorizedArray<Number> *,
+    const bool evaluate_values,
+    const bool evaluate_gradients,
+    const bool evaluate_hessians)
   {
-    typedef EvaluatorTensorProduct<evaluate_evenodd, dim, fe_degree, fe_degree+1,
-            VectorizedArray<Number> > Eval;
-    Eval eval(AlignedVector<VectorizedArray<Number> >(),
+    typedef EvaluatorTensorProduct<evaluate_evenodd,
+                                   dim,
+                                   fe_degree,
+                                   fe_degree + 1,
+                                   VectorizedArray<Number>>
+         Eval;
+    Eval eval(AlignedVector<VectorizedArray<Number>>(),
               shape_info.shape_gradients_eo,
               shape_info.shape_hessians_eo,
               shape_info.fe_degree,
@@ -772,60 +900,72 @@ namespace internal
     // These avoid compiler warnings; they are only used in sensible context
     // but compilers typically cannot detect when we access something like
     // gradients_quad[2] only for dim==3.
-    const unsigned int d1 = dim>1?1:0;
-    const unsigned int d2 = dim>2?2:d1;
-    const unsigned int d3 = d1+d2;
-    const unsigned int d4 = dim>2?4:d3;
-    const unsigned int d5 = dim>2?5:d4;
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : d1;
+    const unsigned int d3 = d1 + d2;
+    const unsigned int d4 = dim > 2 ? 4 : d3;
+    const unsigned int d5 = dim > 2 ? 5 : d4;
 
-    for (unsigned int c=0; c<n_components; c++)
+    for (unsigned int c = 0; c < n_components; c++)
       {
         if (evaluate_values == true)
-          for (unsigned int i=0; i<Eval::dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < Eval::dofs_per_cell; ++i)
             values_quad[c][i] = values_dofs[c][i];
         if (evaluate_gradients == true || evaluate_hessians == true)
           {
-            eval.template gradients<0,true,false>(values_dofs[c], gradients_quad[c][0]);
+            eval.template gradients<0, true, false>(values_dofs[c],
+                                                    gradients_quad[c][0]);
             if (dim > 1)
-              eval.template gradients<1,true,false>(values_dofs[c], gradients_quad[c][d1]);
+              eval.template gradients<1, true, false>(values_dofs[c],
+                                                      gradients_quad[c][d1]);
             if (dim > 2)
-              eval.template gradients<2,true,false>(values_dofs[c], gradients_quad[c][d2]);
+              eval.template gradients<2, true, false>(values_dofs[c],
+                                                      gradients_quad[c][d2]);
           }
         if (evaluate_hessians == true)
           {
-            eval.template hessians<0,true,false> (values_dofs[c], hessians_quad[c][0]);
+            eval.template hessians<0, true, false>(values_dofs[c],
+                                                   hessians_quad[c][0]);
             if (dim > 1)
               {
                 // re-use grad_x already in gradients
-                eval.template gradients<1,true,false> (gradients_quad[c][0], hessians_quad[c][d3]);
-                eval.template hessians<1,true,false> (values_dofs[c], hessians_quad[c][d1]);
+                eval.template gradients<1, true, false>(gradients_quad[c][0],
+                                                        hessians_quad[c][d3]);
+                eval.template hessians<1, true, false>(values_dofs[c],
+                                                       hessians_quad[c][d1]);
               }
             if (dim > 2)
               {
                 // re-use grad_x already in gradients
-                eval.template gradients<2,true,false> (gradients_quad[c][0], hessians_quad[c][d4]);
-                eval.template gradients<2,true,false> (gradients_quad[c][d1], hessians_quad[c][d5]);
-                eval.template hessians<2,true,false> (values_dofs[c], hessians_quad[c][d2]);
+                eval.template gradients<2, true, false>(gradients_quad[c][0],
+                                                        hessians_quad[c][d4]);
+                eval.template gradients<2, true, false>(gradients_quad[c][d1],
+                                                        hessians_quad[c][d5]);
+                eval.template hessians<2, true, false>(values_dofs[c],
+                                                       hessians_quad[c][d2]);
               }
           }
       }
   }
 
   template <int dim, int fe_degree, int n_components, typename Number>
-  inline
-  void
-  FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>
-  ::integrate (const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
-               VectorizedArray<Number> *values_dofs[],
-               VectorizedArray<Number> *values_quad[],
-               VectorizedArray<Number> *gradients_quad[][dim],
-               VectorizedArray<Number> *,
-               const bool               integrate_values,
-               const bool               integrate_gradients)
+  inline void
+  FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>::integrate(
+    const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+    VectorizedArray<Number> *values_dofs[],
+    VectorizedArray<Number> *values_quad[],
+    VectorizedArray<Number> *gradients_quad[][dim],
+    VectorizedArray<Number> *,
+    const bool integrate_values,
+    const bool integrate_gradients)
   {
-    typedef EvaluatorTensorProduct<evaluate_evenodd, dim, fe_degree, fe_degree+1,
-            VectorizedArray<Number> > Eval;
-    Eval eval(AlignedVector<VectorizedArray<Number> >(),
+    typedef EvaluatorTensorProduct<evaluate_evenodd,
+                                   dim,
+                                   fe_degree,
+                                   fe_degree + 1,
+                                   VectorizedArray<Number>>
+         Eval;
+    Eval eval(AlignedVector<VectorizedArray<Number>>(),
               shape_info.shape_gradients_eo,
               shape_info.shape_hessians_eo,
               shape_info.fe_degree,
@@ -834,25 +974,747 @@ namespace internal
     // These avoid compiler warnings; they are only used in sensible context
     // but compilers typically cannot detect when we access something like
     // gradients_quad[2] only for dim==3.
-    const unsigned int d1 = dim>1?1:0;
-    const unsigned int d2 = dim>2?2:0;
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : 0;
 
-    for (unsigned int c=0; c<n_components; c++)
+    for (unsigned int c = 0; c < n_components; c++)
       {
         if (integrate_values == true)
-          for (unsigned int i=0; i<Eval::dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < Eval::dofs_per_cell; ++i)
             values_dofs[c][i] = values_quad[c][i];
         if (integrate_gradients == true)
           {
             if (integrate_values == true)
-              eval.template gradients<0,false,true>(gradients_quad[c][0], values_dofs[c]);
+              eval.template gradients<0, false, true>(gradients_quad[c][0],
+                                                      values_dofs[c]);
             else
-              eval.template gradients<0,false,false>(gradients_quad[c][0], values_dofs[c]);
+              eval.template gradients<0, false, false>(gradients_quad[c][0],
+                                                       values_dofs[c]);
             if (dim > 1)
-              eval.template gradients<1,false,true>(gradients_quad[c][d1], values_dofs[c]);
+              eval.template gradients<1, false, true>(gradients_quad[c][d1],
+                                                      values_dofs[c]);
             if (dim > 2)
-              eval.template gradients<2,false,true>(gradients_quad[c][d2], values_dofs[c]);
+              eval.template gradients<2, false, true>(gradients_quad[c][d2],
+                                                      values_dofs[c]);
           }
+      }
+  }
+
+
+
+  // Evaluation for anisotropic Tensor Product Finite Elements
+  // Currently supports Raviart-Thomas elements
+  // Ofcourse anisotropic manner of evaluation can also be used to evaluate
+  // isotropic elements. This facility can be used for debugging and
+  // experimentation
+  // @base_fe_degree : e.g. RT0 = 0, RT1 = 1
+  template <MatrixFreeFunctions::ElementType type,
+            typename FEType,
+            int dim,
+            int base_fe_degree,
+            int n_q_points_1d,
+            typename Number,
+            int c = 0>
+  struct FEEvaluationImplAni
+  {
+    static constexpr int n_components = get_n_comp<FEType, dim>::n_components;
+    static const int     max_fe_degree =
+      get_FEData<FEType,
+                 dim,
+                 0 /* any dir */,
+                 base_fe_degree,
+                 n_components - 1 /* any component */>::max_fe_degree;
+    using VecArr = VectorizedArray<Number>;
+
+    static void
+    evaluate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs_actual[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients,
+      const bool               evaluate_hessians);
+
+    static void
+    integrate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs_actual[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients);
+  };
+
+
+  // Only 1-D and 2-D are tested and supported
+  // evaluation of hessians is not tested, not supported
+  template <MatrixFreeFunctions::ElementType type,
+            typename FEType,
+            int dim,
+            int base_fe_degree,
+            int n_q_points_1d,
+            typename Number,
+            int c>
+  inline void
+  FEEvaluationImplAni<type,
+                      FEType,
+                      dim,
+                      base_fe_degree,
+                      n_q_points_1d,
+                      Number,
+                      c>::
+    evaluate(
+      const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &shape_info,
+      VectorizedArray<Number> *values_dofs_actual[],
+      VectorizedArray<Number> *values_quad[],
+      VectorizedArray<Number> *gradients_quad[][dim],
+      VectorizedArray<Number> *hessians_quad[][(dim * (dim + 1)) / 2],
+      VectorizedArray<Number> *scratch_data,
+      const bool               evaluate_values,
+      const bool               evaluate_gradients,
+      const bool               evaluate_hessians)
+  {
+    if (evaluate_values == false && evaluate_gradients == false &&
+        evaluate_hessians == false)
+      return;
+
+    Assert(evaluate_hessians == false, ExcNotImplemented());
+
+    const EvaluatorVariant variant =
+      EvaluatorSelector<type, (max_fe_degree + n_q_points_1d > 4)>::variant;
+
+    const AlignedVector<VectorizedArray<Number>> empty;
+
+    VectorizedArray<Number> **values_dofs = values_dofs_actual;
+    VectorizedArray<Number> * expanded_dof_values[n_components];
+    VectorizedArray<Number> * temp1;
+    VectorizedArray<Number> * temp2;
+
+    typedef EvaluatorTensorProduct<variant,
+                                   dim,
+                                   base_fe_degree,
+                                   n_q_points_1d,
+                                   VectorizedArray<Number>>
+      Eval;
+
+    Eval eval(AlignedVector<VectorizedArray<Number>>(),
+              AlignedVector<VectorizedArray<Number>>(),
+              AlignedVector<VectorizedArray<Number>>(),
+              shape_info.fe_degree,
+              shape_info.n_q_points_1d);
+
+    const unsigned int temp_size =
+      Eval::dofs_per_cell == numbers::invalid_unsigned_int ?
+        0 :
+        (Eval::dofs_per_cell > Eval::n_q_points ? Eval::dofs_per_cell :
+                                                  Eval::n_q_points);
+    if (temp_size == 0)
+      {
+        temp1 = scratch_data;
+        temp2 = temp1 +
+                std::max(Utilities::fixed_power<dim>(shape_info.fe_degree + 1),
+                         Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
+      }
+    else
+      {
+        temp1 = scratch_data;
+        temp2 = temp1 + temp_size;
+      }
+
+
+    // These avoid compiler warnings; they are only used in sensible context but
+    // compilers typically cannot detect when we access something like
+    // gradients_quad[2] only for dim==3.
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : 0;
+    const unsigned int d3 = dim > 2 ? 3 : 0;
+    const unsigned int d4 = dim > 2 ? 4 : 0;
+    const unsigned int d5 = dim > 2 ? 5 : 0;
+
+    switch (dim)
+      {
+        case 1:
+          {
+            constexpr int fe_deg_x1 =
+              get_FEData<FEType, dim, 0, base_fe_degree, c>::fe_degree;
+            if (evaluate_values == true)
+              apply_anisotropic<dim,
+                                fe_deg_x1,
+                                n_q_points_1d,
+                                VecArr,
+                                0,
+                                true,
+                                false,
+                                fe_deg_x1>(shape_info.shape_values_vec[c][0],
+                                           values_dofs[c],
+                                           values_quad[c]);
+            if (evaluate_gradients == true)
+              apply_anisotropic<dim,
+                                fe_deg_x1,
+                                n_q_points_1d,
+                                VecArr,
+                                0,
+                                true,
+                                false,
+                                fe_deg_x1>(shape_info.shape_gradients_vec[c][0],
+                                           values_dofs[c],
+                                           gradients_quad[c][0]);
+            if (evaluate_hessians == true)
+              apply_anisotropic<dim,
+                                fe_deg_x1,
+                                n_q_points_1d,
+                                VecArr,
+                                0,
+                                true,
+                                false,
+                                fe_deg_x1>(shape_info.shape_hessians_vec[c][0],
+                                           values_dofs[c],
+                                           hessians_quad[c][0]);
+          }
+          break;
+
+        case 2:
+          {
+            constexpr int fe_deg_x2 =
+              get_FEData<FEType, dim, 0, base_fe_degree, c>::fe_degree;
+            constexpr int fe_deg_y2 =
+              get_FEData<FEType, dim, 1, base_fe_degree, c>::fe_degree;
+
+            // grad x
+            if (evaluate_gradients == true)
+              {
+                apply_anisotropic<dim,
+                                  fe_deg_x2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  0,
+                                  true,
+                                  false,
+                                  fe_deg_y2 + 1>(
+                  shape_info.shape_gradients_vec[c][0], values_dofs[c], temp1);
+                apply_anisotropic<dim,
+                                  fe_deg_y2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  1,
+                                  true,
+                                  false,
+                                  n_q_points_1d>(
+                  shape_info.shape_values_vec[c][1],
+                  temp1,
+                  gradients_quad[c][0]);
+              }
+            if (evaluate_hessians == true)
+              {
+                // grad xy
+                if (evaluate_gradients == false)
+                  apply_anisotropic<dim,
+                                    fe_deg_x2,
+                                    n_q_points_1d,
+                                    VecArr,
+                                    0,
+                                    true,
+                                    false,
+                                    fe_deg_y2 + 1>(
+                    shape_info.shape_gradients_vec[c][0],
+                    values_dofs[c],
+                    temp1);
+                apply_anisotropic<dim,
+                                  fe_deg_y2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  1,
+                                  true,
+                                  false,
+                                  fe_deg_x2 + 1>(
+                  shape_info.shape_gradients_vec[c][1],
+                  temp1,
+                  hessians_quad[c][d1 + d1]);
+
+                // grad xx
+                apply_anisotropic<dim,
+                                  fe_deg_x2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  0,
+                                  true,
+                                  false,
+                                  fe_deg_y2 + 1>(
+                  shape_info.shape_hessians_vec[c][0], values_dofs[c], temp1);
+                apply_anisotropic<dim,
+                                  fe_deg_y2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  1,
+                                  true,
+                                  false,
+                                  fe_deg_x2 + 1>(
+                  shape_info.shape_values_vec[c][1],
+                  temp1,
+                  hessians_quad[c][0]);
+              }
+
+
+            // grad y
+            apply_anisotropic<dim,
+                              fe_deg_x2,
+                              n_q_points_1d,
+                              VecArr,
+                              0,
+                              true,
+                              false,
+                              fe_deg_y2 + 1>(shape_info.shape_values_vec[c][0],
+                                             values_dofs[c],
+                                             temp1);
+            if (evaluate_gradients == true)
+              apply_anisotropic<dim,
+                                fe_deg_y2,
+                                n_q_points_1d,
+                                VecArr,
+                                1,
+                                true,
+                                false,
+                                n_q_points_1d>(
+                shape_info.shape_gradients_vec[c][1],
+                temp1,
+                gradients_quad[c][d1]);
+
+            // grad yy
+            if (evaluate_hessians == true)
+              apply_anisotropic<dim,
+                                fe_deg_y2,
+                                n_q_points_1d,
+                                VecArr,
+                                1,
+                                true,
+                                false,
+                                fe_deg_x2 + 1>(
+                shape_info.shape_hessians_vec[c][1],
+                temp1,
+                hessians_quad[c][d1]);
+
+            // val: can use values applied in x
+            if (evaluate_values == true)
+              apply_anisotropic<dim,
+                                fe_deg_y2,
+                                n_q_points_1d,
+                                VecArr,
+                                1,
+                                true,
+                                false,
+                                n_q_points_1d>(
+                shape_info.shape_values_vec[c][1], temp1, values_quad[c]);
+          }
+          break;
+
+        case 3:
+          {
+            if (evaluate_gradients == true)
+              {
+                // grad x
+                eval.template apply<0, true, false>(
+                  shape_info.shape_gradients_vec[c][0], values_dofs[c], temp1);
+                eval.template apply<1, true, false>(
+                  shape_info.shape_values_vec[c][1], temp1, temp2);
+                eval.template apply<2, true, false>(
+                  shape_info.shape_values_vec[c][2],
+                  temp2,
+                  gradients_quad[c][0]);
+              }
+
+            if (evaluate_hessians == true)
+              {
+                // grad xz
+                if (evaluate_gradients == false)
+                  {
+                    eval.template apply<0, true, false>(
+                      shape_info.shape_gradients_vec[c][0],
+                      values_dofs[c],
+                      temp1);
+                    eval.template apply<1, true, false>(
+                      shape_info.shape_values_vec[c][1], temp1, temp2);
+                  }
+                eval.template apply<2, true, false>(
+                  shape_info.shape_gradients_vec[c][2],
+                  temp2,
+                  hessians_quad[c][d4]);
+
+                // grad xy
+                eval.template apply<1, true, false>(
+                  shape_info.shape_gradients_vec[c][1], temp1, temp2);
+                eval.template apply<2, true, false>(
+                  shape_info.shape_values_vec[c][2],
+                  temp2,
+                  hessians_quad[c][d3]);
+
+                // grad xx
+                eval.template apply<0, true, false>(
+                  shape_info.shape_hessians_vec[c][0], values_dofs[c], temp1);
+                eval.template apply<1, true, false>(
+                  shape_info.shape_values_vec[c][1], temp1, temp2);
+                eval.template apply<2, true, false>(
+                  shape_info.shape_values_vec[c][2],
+                  temp2,
+                  hessians_quad[c][0]);
+              }
+
+            // grad y
+            eval.template apply<0, true, false>(
+              shape_info.shape_values_vec[c][0], values_dofs[c], temp1);
+            if (evaluate_gradients == true)
+              {
+                eval.template apply<1, true, false>(
+                  shape_info.shape_gradients_vec[c][1], temp1, temp2);
+                eval.template apply<2, true, false>(
+                  shape_info.shape_values_vec[c][2],
+                  temp2,
+                  gradients_quad[c][d1]);
+              }
+
+            if (evaluate_hessians == true)
+              {
+                // grad yz
+                if (evaluate_gradients == false)
+                  eval.template apply<1, true, false>(
+                    shape_info.shape_gradients_vec[c][1], temp1, temp2);
+                eval.template apply<2, true, false>(
+                  shape_info.shape_gradients_vec[c][2],
+                  temp2,
+                  hessians_quad[c][d5]);
+
+                // grad yy
+                eval.template apply<1, true, false>(
+                  shape_info.shape_hessians_vec[c][1], temp1, temp2);
+                eval.template apply<2, true, false>(
+                  shape_info.shape_values_vec[c][2],
+                  temp2,
+                  hessians_quad[c][d1]);
+              }
+
+            // grad z: can use the values applied in x direction stored in temp1
+            eval.template apply<1, true, false>(
+              shape_info.shape_values_vec[c][1], temp1, temp2);
+            if (evaluate_gradients == true)
+              eval.template apply<2, true, false>(
+                shape_info.shape_gradients_vec[c][2],
+                temp2,
+                gradients_quad[c][d2]);
+
+            // grad zz: can use the values applied in x and y direction stored
+            // in temp2
+            if (evaluate_hessians == true)
+              eval.template apply<2, true, false>(
+                shape_info.shape_hessians_vec[c][2],
+                temp2,
+                hessians_quad[c][d2]);
+
+            // val: can use the values applied in x & y direction stored in
+            // temp2
+            if (evaluate_values == true)
+              eval.template apply<2, true, false>(
+                shape_info.shape_values_vec[c][2], temp2, values_quad[c]);
+          }
+          break;
+        default:
+          Assert(false, ExcNotImplemented());
+      }
+  }
+
+
+  // Only 1-D and 2-D are tested and supported
+  template <MatrixFreeFunctions::ElementType type,
+            typename FEType,
+            int dim,
+            int base_fe_degree,
+            int n_q_points_1d,
+            typename Number,
+            int c>
+  inline void
+  FEEvaluationImplAni<
+    type,
+    FEType,
+    dim,
+    base_fe_degree,
+    n_q_points_1d,
+    Number,
+    c>::integrate(const MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>>
+                    &                      shape_info,
+                  VectorizedArray<Number> *values_dofs_actual[],
+                  VectorizedArray<Number> *values_quad[],
+                  VectorizedArray<Number> *gradients_quad[][dim],
+                  VectorizedArray<Number> *scratch_data,
+                  const bool               integrate_values,
+                  const bool               integrate_gradients)
+  {
+    const EvaluatorVariant variant =
+      EvaluatorSelector<type, (max_fe_degree + n_q_points_1d > 4)>::variant;
+
+    const AlignedVector<VectorizedArray<Number>> empty;
+
+    // expand dof_values to tensor product for truncated tensor products
+    VectorizedArray<Number> **values_dofs = values_dofs_actual;
+    VectorizedArray<Number> * expanded_dof_values[n_components];
+    VectorizedArray<Number> * temp1;
+    VectorizedArray<Number> * temp2;
+
+    typedef EvaluatorTensorProduct<variant,
+                                   dim,
+                                   max_fe_degree,
+                                   n_q_points_1d,
+                                   VectorizedArray<Number>>
+      Eval;
+
+    Eval eval(AlignedVector<VectorizedArray<Number>>(),
+              AlignedVector<VectorizedArray<Number>>(),
+              AlignedVector<VectorizedArray<Number>>(),
+              shape_info.fe_degree,
+              shape_info.n_q_points_1d);
+
+    const unsigned int temp_size =
+      Eval::dofs_per_cell == numbers::invalid_unsigned_int ?
+        0 :
+        (Eval::dofs_per_cell > Eval::n_q_points ? Eval::dofs_per_cell :
+                                                  Eval::n_q_points);
+
+    if (temp_size == 0)
+      {
+        temp1 = scratch_data;
+        temp2 = temp1 +
+                std::max(Utilities::fixed_power<dim>(shape_info.fe_degree + 1),
+                         Utilities::fixed_power<dim>(shape_info.n_q_points_1d));
+      }
+    else
+      {
+        temp1 = scratch_data;
+        temp2 = temp1 + temp_size;
+      }
+
+    // These avoid compiler warnings; they are only used in sensible context but
+    // compilers typically cannot detect when we access something like
+    // gradients_quad[2] only for dim==3.
+    const unsigned int d1 = dim > 1 ? 1 : 0;
+    const unsigned int d2 = dim > 2 ? 2 : 0;
+
+    switch (dim)
+      {
+        case 1:
+          {
+            constexpr int fe_deg_x1 =
+              get_FEData<FEType, dim, 0, base_fe_degree, c>::fe_degree;
+
+            if (integrate_values == true)
+              apply_anisotropic<dim,
+                                fe_deg_x1,
+                                n_q_points_1d,
+                                VecArr,
+                                0,
+                                false,
+                                false,
+                                fe_deg_x1>(shape_info.shape_values_vec[c][0],
+                                           values_quad[c],
+                                           values_dofs[c]);
+            if (integrate_gradients == true)
+              {
+                if (integrate_values == true)
+                  apply_anisotropic<dim,
+                                    fe_deg_x1,
+                                    n_q_points_1d,
+                                    VecArr,
+                                    0,
+                                    false,
+                                    true,
+                                    fe_deg_x1>(
+                    shape_info.shape_gradients_vec[c][0],
+                    gradients_quad[c][0],
+                    values_dofs[c]);
+                else
+                  apply_anisotropic<dim,
+                                    fe_deg_x1,
+                                    n_q_points_1d,
+                                    VecArr,
+                                    0,
+                                    false,
+                                    false,
+                                    fe_deg_x1>(
+                    shape_info.shape_gradients_vec[c][0],
+                    gradients_quad[c][0],
+                    values_dofs[c]);
+              }
+          }
+          break;
+
+        case 2:
+          {
+            constexpr int fe_deg_x2 =
+              get_FEData<FEType, dim, 0, base_fe_degree, c>::fe_degree;
+            constexpr int fe_deg_y2 =
+              get_FEData<FEType, dim, 1, base_fe_degree, c>::fe_degree;
+
+            if (integrate_values == true)
+              {
+                // val
+                apply_anisotropic<dim,
+                                  fe_deg_x2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  0,
+                                  false,
+                                  false,
+                                  n_q_points_1d>(
+                  shape_info.shape_values_vec[c][0], values_quad[c], temp1);
+                // grad x
+                if (integrate_gradients == true)
+                  apply_anisotropic<dim,
+                                    fe_deg_x2,
+                                    n_q_points_1d,
+                                    VecArr,
+                                    0,
+                                    false,
+                                    true,
+                                    n_q_points_1d>(
+                    shape_info.shape_gradients_vec[c][0],
+                    gradients_quad[c][0],
+                    temp1);
+                apply_anisotropic<dim,
+                                  fe_deg_y2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  1,
+                                  false,
+                                  false,
+                                  fe_deg_x2 + 1>(
+                  shape_info.shape_values_vec[c][1], temp1, values_dofs[c]);
+              }
+            if (integrate_gradients == true)
+              {
+                // grad y
+                apply_anisotropic<dim,
+                                  fe_deg_x2,
+                                  n_q_points_1d,
+                                  VecArr,
+                                  0,
+                                  false,
+                                  false,
+                                  n_q_points_1d>(
+                  shape_info.shape_values_vec[c][0],
+                  gradients_quad[c][d1],
+                  temp1);
+                if (integrate_values == false)
+                  {
+                    apply_anisotropic<dim,
+                                      fe_deg_y2,
+                                      n_q_points_1d,
+                                      VecArr,
+                                      1,
+                                      false,
+                                      false,
+                                      fe_deg_x2 + 1>(
+                      shape_info.shape_gradients_vec[c][1],
+                      temp1,
+                      values_dofs[c]);
+                    // grad x
+                    apply_anisotropic<dim,
+                                      fe_deg_x2,
+                                      n_q_points_1d,
+                                      VecArr,
+                                      0,
+                                      false,
+                                      false,
+                                      n_q_points_1d>(
+                      shape_info.shape_gradients_vec[c][0],
+                      gradients_quad[c][0],
+                      temp1);
+                    apply_anisotropic<dim,
+                                      fe_deg_y2,
+                                      n_q_points_1d,
+                                      VecArr,
+                                      1,
+                                      false,
+                                      true,
+                                      fe_deg_x2 + 1>(
+                      shape_info.shape_values_vec[c][1], temp1, values_dofs[c]);
+                  }
+                else
+                  apply_anisotropic<dim,
+                                    fe_deg_y2,
+                                    n_q_points_1d,
+                                    VecArr,
+                                    1,
+                                    false,
+                                    true,
+                                    fe_deg_x2 + 1>(
+                    shape_info.shape_gradients_vec[c][1],
+                    temp1,
+                    values_dofs[c]);
+              }
+          }
+          break;
+
+        case 3:
+          {
+            if (integrate_values == true)
+              {
+                // val
+                eval.template apply<0, false, false>(
+                  shape_info.shape_values_vec[c][0], values_quad[c], temp1);
+                // grad x: can sum to temporary value in temp1
+                if (integrate_gradients == true)
+                  eval.template apply<0, false, true>(
+                    shape_info.shape_gradients_vec[c][0],
+                    gradients_quad[c][0],
+                    temp1);
+                eval.template apply<1, false, false>(
+                  shape_info.shape_values_vec[c][1], temp1, temp2);
+                if (integrate_gradients == true)
+                  {
+                    eval.template apply<0, false, false>(
+                      shape_info.shape_values_vec[c][0],
+                      gradients_quad[c][d1],
+                      temp1);
+                    eval.template apply<1, false, true>(
+                      shape_info.shape_gradients_vec[c][1], temp1, temp2);
+                  }
+                eval.template apply<2, false, false>(
+                  shape_info.shape_values_vec[c][2], temp2, values_dofs[c]);
+              }
+            else if (integrate_gradients == true)
+              {
+                eval.template apply<0, false, false>(
+                  shape_info.shape_gradients_vec[c][0],
+                  gradients_quad[c][0],
+                  temp1);
+                eval.template apply<1, false, false>(
+                  shape_info.shape_values_vec[c][1], temp1, temp2);
+                eval.template apply<0, false, false>(
+                  shape_info.shape_values_vec[c][0],
+                  gradients_quad[c][d1],
+                  temp1);
+                eval.template apply<1, false, true>(
+                  shape_info.shape_gradients_vec[c][1], temp1, temp2);
+                eval.template apply<2, false, false>(
+                  shape_info.shape_values_vec[c][2], temp2, values_dofs[c]);
+              }
+            if (integrate_gradients == true)
+              {
+                // grad z: can sum to temporary x and y value in output
+                eval.template apply<0, false, false>(
+                  shape_info.shape_values_vec[c][0],
+                  gradients_quad[c][d2],
+                  temp1);
+                eval.template apply<1, false, false>(
+                  shape_info.shape_values_vec[c][1], temp1, temp2);
+                eval.template apply<2, false, true>(
+                  shape_info.shape_gradients_vec[c][2], temp2, values_dofs[c]);
+              }
+          }
+          break;
+
+        default:
+          AssertThrow(false, ExcNotImplemented());
       }
   }
 

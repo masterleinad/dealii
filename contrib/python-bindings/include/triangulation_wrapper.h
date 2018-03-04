@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------
 //
-// Copyright (C) 2016 by the deal.II authors
+// Copyright (C) 2016 - 2018 by the deal.II authors
 //
 // This file is part of the deal.II library.
 //
@@ -8,8 +8,8 @@
 // it, and/or modify it under the terms of the GNU Lesser General
 // Public License as published by the Free Software Foundation; either
 // version 2.1 of the License, or (at your option) any later version.
-// The full text of the license can be found in the file LICENSE at
-// the top level of the deal.II distribution.
+// The full text of the license can be found in the file LICENSE.md at
+// the top level directory of deal.II.
 //
 // ---------------------------------------------------------------------
 
@@ -17,8 +17,6 @@
 #define dealii_triangulation_wrapper_h
 
 #include <deal.II/base/config.h>
-
-#ifdef DEAL_II_WITH_CXX11
 
 #include <point_wrapper.h>
 #include <boost/python.hpp>
@@ -186,7 +184,7 @@ namespace python
 
     /**
      * A subdivided parallelepided, i.e., the same as above, but where the
-     * number of subdivisions in each ot the @tparam dim directsions may vary.
+     * number of subdivisions in each of the @tparam dim directions may vary.
      * Colorizing is done according to hyper_rectangle().
      */
     void generate_varying_subdivided_parallelepiped(boost::python::list &n_subdivisions,
@@ -233,8 +231,8 @@ namespace python
      * Generate a hyper-ball intersected with the positive orthant relate to @p
      * center, which contains three elements in 2d and four in 3d. The boundary
      * indicators for the final triangulations are 0 for the curved boundary
-     * and 1 for the cut plane. The appropiate boundary class is
-     * HyperBallBoundary.
+     * and 1 for the cut plane. The appropriate manifold class is
+     * SphericalManifold.
      */
     void generate_quarter_hyper_ball(PointWrapper &center,
                                      const double  radius = 1.);
@@ -243,8 +241,8 @@ namespace python
      * Generate a half hyper-ball around @p center, which contains four elements
      * in 2d and 6 in 3d. The cut plane is perpendicular to the x-axis. The
      * boundary indicators for the final triangulation are 0 for the curved
-     * boundary and 1 for the cut plane. The appropriate boundary class is
-     * HalfHyperBallBoundary, or HyperBallBoundary.
+     * boundary and 1 for the cut plane. The appropriate manifold class is
+     * SphericalManifold.
      */
     void generate_half_hyper_ball(PointWrapper &center,
                                   const double  radius = 1.);
@@ -330,7 +328,7 @@ namespace python
 
   private:
     /**
-     * Helper function for the contructors.
+     * Helper function for the constructors.
      */
     void setup(const std::string &dimension, const std::string &spacedimension);
 
@@ -379,7 +377,5 @@ namespace python
 }
 
 DEAL_II_NAMESPACE_CLOSE
-
-#endif
 
 #endif
