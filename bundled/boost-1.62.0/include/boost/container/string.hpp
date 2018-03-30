@@ -535,7 +535,7 @@ class basic_string
       bool operator()(const typename Tr::char_type& x) const
       {
          return std::find_if(m_first, m_last,
-                        std::bind1st(Eq_traits<Tr>(), x)) == m_last;
+                        boost::container::bind1st(Eq_traits<Tr>(), x)) == m_last;
       }
    };
    #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
@@ -2116,7 +2116,7 @@ class basic_string
          pointer finish = addr + sz;
          const const_iterator result =
             std::find_if(addr + pos, finish,
-                  std::bind2nd(Eq_traits<Traits>(), c));
+                  boost::container::bind2nd(Eq_traits<Traits>(), c));
          return result != finish ? result - begin() : npos;
       }
    }
@@ -2176,7 +2176,7 @@ class basic_string
          const const_iterator last = begin() + container_detail::min_value(len - 1, pos) + 1;
          const_reverse_iterator rresult =
             std::find_if(const_reverse_iterator(last), rend(),
-                  std::bind2nd(Eq_traits<Traits>(), c));
+                  boost::container::bind2nd(Eq_traits<Traits>(), c));
          return rresult != rend() ? (rresult.base() - 1) - begin() : npos;
       }
    }
@@ -2320,7 +2320,7 @@ class basic_string
          const pointer finish = addr + this->priv_size();
          const const_iterator result
             = std::find_if(addr + pos, finish,
-                     std::not1(std::bind2nd(Eq_traits<Traits>(), c)));
+                     std::not1(boost::container::bind2nd(Eq_traits<Traits>(), c)));
          return result != finish ? result - begin() : npos;
       }
    }
@@ -2376,7 +2376,7 @@ class basic_string
          const const_iterator last = begin() + container_detail::min_value(len - 1, pos) + 1;
          const const_reverse_iterator rresult =
             std::find_if(const_reverse_iterator(last), rend(),
-                  std::not1(std::bind2nd(Eq_traits<Traits>(), c)));
+                  std::not1(boost::container::bind2nd(Eq_traits<Traits>(), c)));
          return rresult != rend() ? (rresult.base() - 1) - begin() : npos;
       }
    }

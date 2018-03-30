@@ -842,7 +842,7 @@ all_gather(const mpi_process_group& pg, InputIterator first,
 
   // Adjust sizes based on the number of bytes
   std::transform(sizes.begin(), sizes.end(), sizes.begin(),
-                 std::bind2nd(std::multiplies<int>(), sizeof(T)));
+                 boost::container::bind2nd(std::multiplies<int>(), sizeof(T)));
 
   // Compute displacements
   std::vector<int> displacements;
