@@ -435,8 +435,6 @@ namespace Step50
     preconditioner.connect_transfer_to_mg(print_transfer_to_mg);
     preconditioner.connect_transfer_to_global(print_transfer_to_global);
 
-    mg.connect_transfer_to_mg(print_transfer_to_mg);
-    mg.connect_transfer_to_global(print_transfer_to_global);
     mg.connect_coarse_solve(print_coarse_solve);
     mg.connect_transfer_down_to(print_transfer_down_to);
     mg.connect_transfer_up_to(print_transfer_up_to);

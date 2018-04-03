@@ -384,26 +384,6 @@ Multigrid<VectorType>::vcycle()
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::
-connect_transfer_to_mg(const std::function<void (bool)> &slot)
-{
-  return this->signals.transfer_to_mg.connect(slot);
-}
-
-
-
-template <typename VectorType>
-boost::signals2::connection
-Multigrid<VectorType>::
-connect_transfer_to_global(const std::function<void (bool)> &slot)
-{
-  return this->signals.transfer_to_global.connect(slot);
-}
-
-
-
-template <typename VectorType>
-boost::signals2::connection
-Multigrid<VectorType>::
 connect_coarse_solve(const std::function<void (const bool, const unsigned int)> &slot)
 {
   return this->signals.coarse_solve.connect(slot);
