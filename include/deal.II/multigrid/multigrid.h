@@ -84,46 +84,50 @@ public:
   struct Signals
   {
     /**
-     * This signal is triggered before and after the call to
-     * MGTransfer::copy_to_mg which transfers given vector to all levels.
+     * This signal is triggered before (@p start is true) and after (@p start is
+     * false) the call to MGTransfer::copy_to_mg which transfers the vector
+     * given to it to a multi-level vector.
      */
-    boost::signals2::signal<void (bool start)> transfer_to_mg;
+    boost::signals2::signal<void (const bool start)> transfer_to_mg;
 
     /**
-     * This signal is triggered before and after the call to
-     * MGTransfer::copy_from_mg which transfers a multi-level vector
-     * to a normal vector.
+     * This signal is triggered before (@p start is true) and after (@p start is
+     * false) the call to MGTransfer::copy_from_mg which transfers the
+     * multi-level vector given to it to a normal vector.
      */
-    boost::signals2::signal<void (bool start)> transfer_to_global;
+    boost::signals2::signal<void (const bool start)> transfer_to_global;
 
     /**
-     * This signal is triggered before and after the call to the coarse solver.
+     * This signal is triggered before (@p start is true) and after (@p start is
+     * false) the call to the coarse solver on @p level.
      */
     boost::signals2::signal<void (const bool start, const unsigned int level)> coarse_solve;
 
     /**
-     * This signal is triggered before and after the call to
-     * MGTransfer::restrict_and_add() which restricts a vector from @p level
-     * to the next coarser one (@p level - 1).
+     * This signal is triggered before (@p start is true) and after (@p start is
+     * false) the call to MGTransfer::restrict_and_add() which restricts a
+     * vector from @p level to the next coarser one (@p level - 1).
      */
     boost::signals2::signal<void (const bool start, const unsigned int level)> transfer_down_to;
 
     /**
-     * This signal is triggered before and after the call to
-     * MGTransfer::prolongate() which prolongates a vector to @p level
-     * from the next coarser one (@p level - 1).
+     * This signal is triggered before (@p start is true) and after (@p start is
+     * false) the call to MGTransfer::prolongate() which prolongs a vector to
+     * @p level from the next coarser one (@p level - 1).
      */
     boost::signals2::signal<void (const bool start, const unsigned int level)> transfer_up_to;
 
     /**
-     * This signal is triggered before and after the call to
-     * a pre-smoothing step via MGPreSmoother::apply().
+     * This signal is triggered before (@p start is true) and after (@p start is
+     * false) the call to a pre-smoothing step via MGPreSmoother::apply() on 
+     * @p level.
      */
     boost::signals2::signal<void (const bool start, const unsigned int level)> pre_smoother_step;
 
     /**
-     * This signal is triggered before and after the call to
-     * a post-smoothing step via MGPostSmoother::apply().
+     * This signal is triggered before (@p start is true) and after (@p start is
+     * false) the call to a post-smoothing step via MGPostSmoother::apply() on
+     * @p level.
      */
     boost::signals2::signal<void (const bool start, const unsigned int level)> post_smoother_step;
   };
@@ -506,7 +510,7 @@ public:
                   const OtherVectorType &src) const;
 
   /**
-   * Tranposed preconditioning operator.
+   * Transposed preconditioning operator.
    *
    * Not implemented, but the definition may be needed.
    */
@@ -515,7 +519,7 @@ public:
                const OtherVectorType &src) const;
 
   /**
-   * Tranposed preconditioning operator.
+   * Transposed preconditioning operator.
    *
    * Not implemented, but the definition may be needed.
    */
@@ -743,6 +747,7 @@ namespace internal
       signals.transfer_to_mg(false);
 
       multigrid.cycle();
+
       signals.transfer_to_global(true);
       transfer.copy_from_mg(*dof_handler_vector[0],
                             dst,
