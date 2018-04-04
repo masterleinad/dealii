@@ -760,7 +760,7 @@ namespace internal
               const bool uses_dof_handler_vector,
               const typename dealii::mg::Signals &signals, int)
     {
-      signals.transfer_to_mg(0, true);
+      signals.transfer_to_mg(true);
       if (uses_dof_handler_vector)
         transfer.copy_to_mg(dof_handler_vector,
                             multigrid.defect,
@@ -769,11 +769,11 @@ namespace internal
         transfer.copy_to_mg(*dof_handler_vector[0],
                             multigrid.defect,
                             src);
-      signals.transfer_to_mg(0, false);
+      signals.transfer_to_mg(false);
 
       multigrid.cycle();
 
-      signals.transfer_to_global(0, true);
+      signals.transfer_to_global(true);
       if (uses_dof_handler_vector)
         transfer.copy_from_mg_add(dof_handler_vector,
                                   dst,
@@ -782,7 +782,7 @@ namespace internal
         transfer.copy_from_mg_add(*dof_handler_vector[0],
                                   dst,
                                   multigrid.solution);
-      signals.transfer_to_global(0, false);
+      signals.transfer_to_global(false);
     }
 
     template <int dim, typename VectorType, class TRANSFER, typename OtherVectorType>
