@@ -171,23 +171,12 @@
  * thus, for this element, simply copying pre-computed information is not
  * sufficient to evaluate the values of shape functions on a particular cell.)
  * 
- * To accommodate this structure, both mappings and finite element classes
- * may internally split the update flags into two sets commonly referenced as
- * <code>update_once</code> and <code>update_each</code> (though these names
- * do not appear in any public interfaces). The former contains
- * all those pieces of information that can be pre-computed once at the
- * time the FEValues object starts to interact with a mapping or
- * finite element, whereas the latter contains those flags corresponding to
- * things that need to be computed on every cell. For example, if
+ * Both mappings and finite element classes have a <code>update_each</code>
+ * member that contains the UpdateFlags for those pieces of information that
+ * need to be computed on every cell. For example, if
  * <code>update_flags=update_values</code>, then the FE_Q class will
- * set <code>update_once=update_values</code> and
- * <code>update_each=0</code>, whereas the Raviart-Thomas element will
- * do it the other way around.
- * 
- * These sets of flags are intended to be mutually exclusive. There is,
- * on the other hand, nothing that ever provides this decomposition to
- * anything outside the mapping or finite element classes -- it is a purely
- * internal decomposition.
+ * set <code>update_each=0</code>, whereas the Raviart-Thomas element will
+ * set <code>update_each=update_values</code>.
  * 
  * 
  * <h2>Generation of the actual data</h2>
