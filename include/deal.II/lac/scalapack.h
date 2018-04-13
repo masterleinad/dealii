@@ -26,6 +26,7 @@
 #  include <deal.II/base/thread_management.h>
 
 #  include <deal.II/lac/full_matrix.h>
+#  include <deal.II/lac/lapack_full_matrix.h>
 #  include <deal.II/lac/lapack_support.h>
 
 #  include <mpi.h>
@@ -191,6 +192,15 @@ public:
   operator=(const FullMatrix<NumberType> &);
 
   /**
+   * Copies the content of the locally owned @p matrix to the distributed matrix.
+   * For all processes except root @p matrix is not referenced.
+   *
+   * The distributed matrix and @p matrix on the root process must have matching dimensions.
+   */
+  ScaLAPACKMatrix<NumberType> &
+  operator=(const LAPACKFullMatrix<NumberType> &matrix);
+
+  /**
    * Copy the contents of the distributed matrix into @p matrix.
    *
    * @note This function should only be used for relatively small matrix
@@ -198,6 +208,14 @@ public:
    */
   void
   copy_to(FullMatrix<NumberType> &matrix) const;
+
+  /**
+   * Copies the content of the distributed matrix into the locally replicated @p matrix
+   * on the root process. For all processes except root @p matrix is not referenced.
+   * The distributed matrix and @p matrix on the root process must have matching dimensions.
+   */
+  void
+  copy_to(LAPACKFullMatrix<NumberType> &matrix) const;
 
   /**
    * Copy the contents of the distributed matrix into a differently distributed matrix @p dest.
