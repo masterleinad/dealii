@@ -512,6 +512,21 @@
     </ul>
 
     <dl>
+        <dt><a name="ADOL-C"/>
+            <a href="https://projects.coin-or.org/ADOL-C" target="_top">ADOL-C</a></dt>
+        <dd>
+        <p>
+          <a href="https://projects.coin-or.org/ADOL-C"
+          target="_top">ADOL-C</a> is a package that facilitates the evaluation
+           of first and higher derivatives of vector functions. In particular, 
+           it can be used for automatic differentiation.
+           For using <a href="https://projects.coin-or.org/ADOL-C/" target="_top">ADOL-C</a>
+           with deal.II, version 2.6.4 or newer is required.
+           To use a self compiled version, specify
+           <code>-DADOLC_DIR=/path/to/adolc</code> on the command line.
+     </p>
+       </dd>
+
       <dt><a name="ARPACK"/>
 	<a href="http://www.caam.rice.edu/software/ARPACK/" target="_top">ARPACK</a></dt>
       <dd>
@@ -529,6 +544,24 @@
 	  <a href="external-libs/arpack.html" target="body">this page</a>.
 	</p>
       </dd>
+
+     <dt><a name="Assimp"/>
+             <a href="http://www.assimp.org/" target="_top">Assimp</a></dt>
+         <dd>
+         <p>
+ <a href="http://www.assimp.org/"
+           target="_top"></a> is a portable Open Source library to import various 
+           well-known 3D model formats in a uniform manner. A subset of these formats
+           can be read from within deal.II to generate two-dimensional meshes, 
+           possibly embedded in a three-dimensional space.
+            <a href="http://www.assimp.org/" target="_top">Assimp</a>
+            should be readily packaged by most Linux distributions.
+            (Don't forget to install a development version of the library).
+            To use a self compiled version, specify
+            <code>-DASSIMP_DIR=/path/to/assimp</code> on the command line.
+      </p>
+        </dd>
+
 
       <dt>
 	<a name="blas"></a>
@@ -566,6 +599,21 @@
     Details about compatibility and configuration can be found <a href=external-libs/cuda.html
        target="body">here</a>.
   </p>
+
+     <dt><a name="Gmsh"/>
+             <a href="http://gmsh.info/" target="_top">Gmsh</a></dt>
+         <dd>
+         <p>
+ <a href="http://gmsh.info/"
+           target="_top"></a> is a 3D finite element mesh generator. The executable
+           can be used to create meshes from within deal.II by specifying the relevant input data.
+            <a href="http://gmsh.info/" target="_top">Gmsh</a>
+            should be readily packaged by most Linux distributions.
+            (Don't forget to install a development version of the library).
+            To use a self compiled version, specify
+            <code>-DGMSH_DIR=/path/to/gmsh</code> on the command line.
+      </p>
+        </dd>
 
       <dt><a name="GSL"></a><a href="http://www.gnu.org/software/gsl/">GSL</a></dt>
       <dd>
@@ -634,6 +682,38 @@
 	</p>
       </dd>
 
+     <dt><a name="nanoflann"/>
+             <a href="https://github.com/jlblancoc/nanoflann" target="_top">nanoflann</a></dt>
+         <dd>
+         <p>
+ <a href="https://github.com/jlblancoc/nanoflann"
+           target="_top">nanoflann</a> is a C++11 header-only library for building KD-Trees
+           of datasets with different topologies. In particular, it can be used for
+           operations such as finding the vertex or cell closest to a given evaluation point
+           that occur frequently in many applications using unstructured meshes.
+            scale eigenvalue problems.
+            <a href="https://github.com/jlblancoc/nanoflann" target="_top">nanoflann</a>
+            should be readily packaged by most Linux distributions.
+            (Don't forget to install a development version of the library).
+            To use a self compiled version, specify
+            <code>-DNANOFLANN_DIR=/path/to/nanoflann</code> on the command line.
+      </p>
+        </dd>
+
+  <dt><a name="netcdf"></a><a href="http://www.unidata.ucar.edu/software/netcdf/" target="_top">NetCDF</a></dt>
+       <dd>
+     <a href="http://www.unidata.ucar.edu/software/netcdf/"
+        target="_top">NetCDF</a> is a library that provides services for
+     reading and writing mesh data (and many other
+     things). <acronym>deal.II</acronym> can use it to read meshes via
+         one of the functions of the <code>GridIn</code> class.
+     <a href="http://www.unidata.ucar.edu/software/netcdf/"
+            target="_top">NetCDF</a> should be readily packaged by most
+         Linux distributions. (Don't forget to install a development
+     version of the library). To use a self compiled version, pass
+     <code>-DNETCDF_DIR=/path/to/netcdf</code> to <code>cmake</code>.
+     </p>
+       </dd>
 
       <dt>
 	<a name="opencascade"></a>
@@ -657,21 +737,6 @@
 	found <a href="external-libs/opencascade.html"
 	target="body">here</a>.
       </dd>
-
-      <dt><a name="netcdf"></a><a href="http://www.unidata.ucar.edu/software/netcdf/" target="_top">NetCDF</a></dt>
-      <dd>
-	<a href="http://www.unidata.ucar.edu/software/netcdf/"
-	   target="_top">NetCDF</a> is a library that provides services for
-	reading and writing mesh data (and many other
-	things). <acronym>deal.II</acronym> can use it to read meshes via
-        one of the functions of the <code>GridIn</code> class.
-	<a href="http://www.unidata.ucar.edu/software/netcdf/"
-           target="_top">NetCDF</a> should be readily packaged by most
-        Linux distributions. (Don't forget to install a development
-	version of the library). To use a self compiled version, pass
-	<code>-DNETCDF_DIR=/path/to/netcdf</code> to <code>cmake</code>.
-      </dd>
-
 
       <dt><a name="p4est"></a><a href="http://www.p4est.org/" target="_top">p4est</a></dt>
       <dd>
@@ -753,6 +818,20 @@
 	</p>
       </dd>
 
+  <dt><a name="Sundials"/>
+              <a href="https://computation.llnl.gov/projects/sundials" target="_top">SUNDIALS</a></dt>
+          <dd>
+          <p>
+  <a href="https://computation.llnl.gov/projects/sundials"
+            target="_top">SUNDIALS</a> is a collection of solvers for nonlinear and differential/algebraic
+            equations.
+             <a href="https://computation.llnl.gov/projects/sundials" target="_top">SUNDIALS</a>
+             should be readily packaged by most Linux distributions.
+             (Don't forget to install a development version of the library).
+             To use a self compiled version, specify
+             <code>-DSUNDIALS_DIR=/path/to/sundials</code> on the command line.
+       </p>
+         </dd>
 
       <dt><a name="tbb"></a><a href="http://www.threadingbuildingblocks.org/"
 	     target="_top">Threading Building Blocks (TBB)</a></dt>
@@ -769,7 +848,6 @@
 	  threads are explicitly disabled, see <a href="#optional">above</a>.
 	</p>
       </dd>
-
 
       <dt><a name="trilinos"></a><a href="http://trilinos.sandia.gov" target="_top">Trilinos</a></dt>
       <dd>
@@ -823,6 +901,21 @@
       </dd>
     </dl>
 
+  <dt><a name="zlib"/>
+              <a href="http://zlib.net/" target="_top">zlib</a></dt>
+          <dd>
+          <p>
+  <a href="http://zlib.net/"
+            target="_top">zlib</a> is a software library used for lossless 
+             data-compression. It is used in deal.II whenever compressed data
+             is to be written.
+             <a href="http://zlib.net/" target="_top">zlib</a>
+             should be readily packaged by most Linux distributions.
+             (Don't forget to install a development version of the library).
+             To use a self compiled version, specify
+             <code>-DZLIB_DIR=/path/to/zlib</code> on the command line.
+       </p>
+         </dd>
 
     <a name="conf-details"/>
     <h4>More information on configuring and building the library</h4>
