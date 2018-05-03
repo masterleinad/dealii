@@ -154,7 +154,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 1;
+  static constexpr unsigned int n_array_elements = 1;
 
   // POD means that there should be no user-defined constructors, destructors
   // and copy functions (the standard is somewhat relaxed in C++2011, though).

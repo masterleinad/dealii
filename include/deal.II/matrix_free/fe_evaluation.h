@@ -52,7 +52,8 @@ namespace internal
 }
 
 template <int dim, int fe_degree, int n_q_points_1d = fe_degree+1,
-          int n_components_ = 1, typename Number = double > class FEEvaluation;
+          int n_components_ = 1, typename Number = double ,
+          typename IntermediateNumber = Number> class FEEvaluation;
 
 
 /**
@@ -80,13 +81,13 @@ template <int dim, int fe_degree, int n_q_points_1d = fe_degree+1,
  *
  * @author Katharina Kormann and Martin Kronbichler, 2010-2018
  */
-template <int dim, int n_components_, typename Number, bool is_face=false>
+template <int dim, int n_components_, typename Number, bool is_face=false, typename IntermediateNumber = Number>
 class FEEvaluationBase
 {
 public:
   typedef Number                            number_type;
-  typedef Tensor<1,n_components_,VectorizedArray<Number> > value_type;
-  typedef Tensor<1,n_components_,Tensor<1,dim,VectorizedArray<Number> > > gradient_type;
+  typedef Tensor<1,n_components_,VectorizedArray<IntermediateNumber> > value_type;
+  typedef Tensor<1,n_components_,Tensor<1,dim,VectorizedArray<IntermediateNumber> > > gradient_type;
   static constexpr unsigned int dimension     = dim;
   static constexpr unsigned int n_components  = n_components_;
 
@@ -425,22 +426,22 @@ public:
   // specialization of the base class, in this case FEEvaluationAccess<dim,dim>.
   // For now, hack-in those functions manually only to fix documentation:
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::get_divergence()
+  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::get_divergence()
    * @note Only available for n_components_==dim.
    */
   VectorizedArray<Number> get_divergence (const unsigned int q_point) const;
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::get_symmetric_gradient()
+  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::get_symmetric_gradient()
    * @note Only available for n_components_==dim.
    */
   SymmetricTensor<2, dim, VectorizedArray<Number> > get_symmetric_gradient (const unsigned int q_point) const;
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::get_curl()
+  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::get_curl()
    * @note Only available for n_components_==dim.
    */
   Tensor<1,(dim==2?1:dim), VectorizedArray<Number> > get_curl (const unsigned int q_point) const;
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::submit_divergence()
+  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::submit_divergence()
    * @note Only available for n_components_==dim.
    *
    * @note This operation writes the data to the same field as
@@ -450,7 +451,7 @@ public:
    */
   void submit_divergence (const VectorizedArray<Number> div_in, const unsigned int q_point);
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::submit_symmetric_gradient()
+  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::submit_symmetric_gradient()
    * @note Only available for n_components_==dim.
    *
    * @note This operation writes the data to the same field as
@@ -461,7 +462,7 @@ public:
    */
   void submit_symmetric_gradient (const SymmetricTensor<2, dim, VectorizedArray<Number> > grad_in, const unsigned int q_point);
 
-  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face>::submit_curl()
+  /** @copydoc FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::submit_curl()
    * @note Only available for n_components_==dim.
    *
    * @note This operation writes the data to the same field as
@@ -775,14 +776,14 @@ protected:
   /**
    * This is the general array for all data fields.
    */
-  AlignedVector<VectorizedArray<Number> > *scratch_data_array;
+  AlignedVector<VectorizedArray<IntermediateNumber> > *scratch_data_array;
 
   /**
    * This is the user-visible part of scratch_data_array, only showing the
    * last part of scratch_data_array. The first part is consumed by
    * values_dofs, values_quad, etc.
    */
-  VectorizedArray<Number> *scratch_data;
+  VectorizedArray<IntermediateNumber> *scratch_data;
 
   /**
    * This field stores the values for local degrees of freedom (e.g. after
@@ -796,7 +797,7 @@ protected:
    * memory on the stack, this approach allows for very large polynomial
    * degrees.
    */
-  VectorizedArray<Number> *values_dofs[n_components];
+  VectorizedArray<IntermediateNumber> *values_dofs[n_components];
 
   /**
    * This field stores the values of the finite element function on quadrature
@@ -809,7 +810,7 @@ protected:
    * memory on the stack, this approach allows for very large polynomial
    * degrees.
    */
-  VectorizedArray<Number> *values_quad[n_components];
+  VectorizedArray<IntermediateNumber> *values_quad[n_components];
 
   /**
    * This field stores the gradients of the finite element function on
@@ -824,7 +825,7 @@ protected:
    * memory on the stack, this approach allows for very large polynomial
    * degrees.
    */
-  VectorizedArray<Number> *gradients_quad[n_components][dim];
+  VectorizedArray<IntermediateNumber> *gradients_quad[n_components][dim];
 
   /**
    * This field stores the Hessians of the finite element function on
@@ -837,7 +838,7 @@ protected:
    * memory on the stack, this approach allows for very large polynomial
    * degrees.
    */
-  VectorizedArray<Number> *hessians_quad[n_components][(dim*(dim+1))/2];
+  VectorizedArray<IntermediateNumber> *hessians_quad[n_components][(dim*(dim+1))/2];
 
   /**
    * Stores the number of the quadrature formula of the present cell.
@@ -1041,8 +1042,8 @@ private:
   /**
    * Make other FEEvaluationBase as well as FEEvaluation objects friends.
    */
-  template <int, int, typename, bool> friend class FEEvaluationBase;
-  template <int, int, int, int, typename> friend class FEEvaluation;
+  template <int, int, typename, bool, typename> friend class FEEvaluationBase;
+  template <int, int, int, int, typename, typename> friend class FEEvaluation;
 };
 
 
@@ -1056,16 +1057,16 @@ private:
  *
  * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
-template <int dim, int n_components_, typename Number, bool is_face>
-class FEEvaluationAccess : public FEEvaluationBase<dim,n_components_,Number, is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
+class FEEvaluationAccess : public FEEvaluationBase<dim,n_components_,Number, is_face, IntermediateNumber>
 {
 public:
   typedef Number                            number_type;
-  typedef Tensor<1,n_components_,VectorizedArray<Number> > value_type;
-  typedef Tensor<1,n_components_,Tensor<1,dim,VectorizedArray<Number> > > gradient_type;
+  typedef Tensor<1,n_components_,VectorizedArray<IntermediateNumber> > value_type;
+  typedef Tensor<1,n_components_,Tensor<1,dim,VectorizedArray<IntermediateNumber> > > gradient_type;
   static constexpr unsigned int dimension     = dim;
   static constexpr unsigned int n_components  = n_components_;
-  typedef FEEvaluationBase<dim,n_components_, Number, is_face> BaseClass;
+  typedef FEEvaluationBase<dim,n_components_, Number, is_face, IntermediateNumber> BaseClass;
 
 protected:
   /**
@@ -1119,15 +1120,15 @@ protected:
  *
  * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
-template <int dim, typename Number, bool is_face>
-class FEEvaluationAccess<dim,1,Number,is_face> : public FEEvaluationBase<dim,1,Number,is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
+class FEEvaluationAccess<dim,1,Number,is_face, IntermediateNumber> : public FEEvaluationBase<dim,1,Number,is_face, IntermediateNumber>
 {
 public:
   typedef Number                                 number_type;
-  typedef VectorizedArray<Number>                value_type;
-  typedef Tensor<1,dim,VectorizedArray<Number> > gradient_type;
+  typedef VectorizedArray<IntermediateNumber>                value_type;
+  typedef Tensor<1,dim,VectorizedArray<IntermediateNumber> > gradient_type;
   static constexpr unsigned int dimension          = dim;
-  typedef FEEvaluationBase<dim,1,Number,is_face> BaseClass;
+  typedef FEEvaluationBase<dim,1,Number,is_face, IntermediateNumber> BaseClass;
 
   /** @copydoc FEEvaluationBase<dim,1,Number,is_face>::get_dof_value()
    */
@@ -1149,7 +1150,7 @@ public:
 
   /** @copydoc FEEvaluationBase<dim,1,Number,is_face>::submit_value()
    */
-  void submit_value (const Tensor<1,1,VectorizedArray<Number> > val_in,
+  void submit_value (const Tensor<1,1,VectorizedArray<IntermediateNumber> > val_in,
                      const unsigned int q_point);
 
   /** @copydoc FEEvaluationBase<dim,1,Number,is_face>::get_gradient()
@@ -1172,7 +1173,7 @@ public:
 
   /** @copydoc FEEvaluationBase<dim,1,Number,is_face>::get_hessian()
    */
-  Tensor<2,dim,VectorizedArray<Number> >
+  Tensor<2,dim,VectorizedArray<IntermediateNumber> >
   get_hessian (unsigned int q_point) const;
 
   /** @copydoc FEEvaluationBase<dim,1,Number,is_face>::get_hessian_diagonal()
@@ -1239,16 +1240,16 @@ protected:
  *
  * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
-template <int dim, typename Number, bool is_face>
-class FEEvaluationAccess<dim,dim,Number,is_face> : public FEEvaluationBase<dim,dim,Number,is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
+class FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber> : public FEEvaluationBase<dim,dim,Number,is_face,IntermediateNumber>
 {
 public:
   typedef Number                            number_type;
-  typedef Tensor<1,dim,VectorizedArray<Number> > value_type;
-  typedef Tensor<2,dim,VectorizedArray<Number> > gradient_type;
+  typedef Tensor<1,dim,VectorizedArray<IntermediateNumber> > value_type;
+  typedef Tensor<2,dim,VectorizedArray<IntermediateNumber> > gradient_type;
   static constexpr unsigned int dimension     = dim;
   static constexpr unsigned int n_components  = dim;
-  typedef FEEvaluationBase<dim,dim,Number,is_face> BaseClass;
+  typedef FEEvaluationBase<dim,dim,Number,is_face, IntermediateNumber> BaseClass;
 
   /** @copydoc FEEvaluationBase<dim,dim,Number,is_face>::get_gradient()
    */
@@ -1298,7 +1299,7 @@ public:
    * coincide with the dimension for some dimensions, but not all. To allow
    * for dimension-independent programming, this function can be used instead.
    */
-  void submit_gradient(const Tensor<1,dim,Tensor<1,dim,VectorizedArray<Number> > > grad_in,
+  void submit_gradient(const Tensor<1,dim,Tensor<1,dim,VectorizedArray<IntermediateNumber> > > grad_in,
                        const unsigned int q_point);
 
   /**
@@ -1381,15 +1382,15 @@ protected:
  * @author Katharina Kormann and Martin Kronbichler, 2010, 2011, Shiva
  * Rudraraju, 2014
  */
-template <typename Number, bool is_face>
-class FEEvaluationAccess<1,1,Number,is_face> : public FEEvaluationBase<1,1,Number,is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
+class FEEvaluationAccess<1,1,Number,is_face, IntermediateNumber> : public FEEvaluationBase<1,1,Number,is_face,IntermediateNumber>
 {
 public:
   typedef Number                                 number_type;
-  typedef VectorizedArray<Number>                value_type;
-  typedef Tensor<1,1,VectorizedArray<Number> >   gradient_type;
+  typedef VectorizedArray<IntermediateNumber>                value_type;
+  typedef Tensor<1,1,VectorizedArray<IntermediateNumber> >   gradient_type;
   static constexpr unsigned int dimension      = 1;
-  typedef FEEvaluationBase<1,1,Number,is_face>   BaseClass;
+  typedef FEEvaluationBase<1,1,Number,is_face, IntermediateNumber>   BaseClass;
 
   /** @copydoc FEEvaluationBase<1,1,Number,is_face>::get_dof_value()
    */
@@ -2046,14 +2047,14 @@ protected:
  * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
 template <int dim, int fe_degree, int n_q_points_1d, int n_components_,
-          typename Number >
-class FEEvaluation : public FEEvaluationAccess<dim,n_components_,Number,false>
+          typename Number, typename IntermediateNumber>
+class FEEvaluation : public FEEvaluationAccess<dim,n_components_,Number,false, IntermediateNumber>
 {
 public:
   /**
    * A typedef to the base class.
    */
-  typedef FEEvaluationAccess<dim,n_components_,Number,false> BaseClass;
+  typedef FEEvaluationAccess<dim,n_components_,Number,false,IntermediateNumber> BaseClass;
 
   /**
    * A underlying number type specified as template argument.
@@ -2430,14 +2431,14 @@ private:
  * @author Katharina Kormann and Martin Kronbichler, 2018
  */
 template <int dim, int fe_degree, int n_q_points_1d = fe_degree+1,
-          int n_components_ = 1, typename Number = double >
-class FEFaceEvaluation : public FEEvaluationAccess<dim,n_components_,Number,true>
+          int n_components_ = 1, typename Number = double, typename IntermediateNumber = Number>
+class FEFaceEvaluation : public FEEvaluationAccess<dim,n_components_,Number,true, IntermediateNumber>
 {
 public:
   /**
    * A typedef to the base class.
    */
-  typedef FEEvaluationAccess<dim,n_components_,Number,true> BaseClass;
+  typedef FEEvaluationAccess<dim,n_components_,Number,true, IntermediateNumber> BaseClass;
 
   /**
    * A underlying number type specified as template argument.
@@ -2734,9 +2735,9 @@ namespace internal
 
 /*----------------------- FEEvaluationBase ----------------------------------*/
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::FEEvaluationBase (const MatrixFree<dim,Number> &data_in,
                     const unsigned int dof_no,
                     const unsigned int first_selected_component,
@@ -2745,7 +2746,7 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
                     const unsigned int n_q_points,
                     const bool is_interior_face)
   :
-  scratch_data_array (data_in.acquire_scratch_data()),
+  //scratch_data_array (data_in.acquire_scratch_data()),
   quad_no            (quad_no_in),
   n_fe_components    (data_in.get_dof_info(dof_no).start_components.back()),
   active_fe_index    (fe_degree != numbers::invalid_unsigned_int ?
@@ -2826,10 +2827,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <int n_components_other>
 inline
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face, IntermediateNumber>
 ::FEEvaluationBase (const Mapping<dim>       &mapping,
                     const FiniteElement<dim> &fe,
                     const Quadrature<1>      &quadrature,
@@ -2894,10 +2895,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationBase<dim,n_components_,Number,is_face>
-::FEEvaluationBase (const FEEvaluationBase<dim,n_components_,Number,is_face> &other)
+FEEvaluationBase<dim,n_components_,Number,is_face, IntermediateNumber>
+::FEEvaluationBase (const FEEvaluationBase<dim,n_components_,Number,is_face, IntermediateNumber> &other)
   :
   scratch_data_array (other.matrix_info == nullptr ?
                       new AlignedVector<VectorizedArray<Number> >() :
@@ -2951,11 +2952,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationBase<dim,n_components_,Number,is_face> &
-FEEvaluationBase<dim,n_components_,Number,is_face>
-::operator= (const FEEvaluationBase<dim,n_components_,Number,is_face> &other)
+FEEvaluationBase<dim,n_components_,Number,is_face, IntermediateNumber> &
+FEEvaluationBase<dim,n_components_,Number,is_face, IntermediateNumber>
+::operator= (const FEEvaluationBase<dim,n_components_,Number,is_face, IntermediateNumber> &other)
 {
   AssertDimension(quad_no, other.quad_no);
   AssertDimension(n_fe_components, other.n_fe_components);
@@ -3017,15 +3018,15 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationBase<dim,n_components_,Number,is_face>::~FEEvaluationBase ()
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::~FEEvaluationBase ()
 {
   if (matrix_info != nullptr)
     {
       try
         {
-          matrix_info->release_scratch_data(scratch_data_array);
+          //matrix_info->release_scratch_data(scratch_data_array);
         }
       catch (...)
         {}
@@ -3041,10 +3042,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>::~FEEvaluationBase ()
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::set_data_pointers()
 {
   Assert(scratch_data_array != nullptr, ExcInternalError());
@@ -3081,10 +3082,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 unsigned int
-FEEvaluationBase<dim,n_components_,Number, is_face>
+FEEvaluationBase<dim,n_components_,Number, is_face,IntermediateNumber>
 ::get_cell_data_number () const
 {
   return get_mapping_data_index_offset();
@@ -3092,10 +3093,10 @@ FEEvaluationBase<dim,n_components_,Number, is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 unsigned int
-FEEvaluationBase<dim,n_components_,Number, is_face>
+FEEvaluationBase<dim,n_components_,Number, is_face,IntermediateNumber>
 ::get_mapping_data_index_offset () const
 {
   if (matrix_info == 0)
@@ -3109,10 +3110,10 @@ FEEvaluationBase<dim,n_components_,Number, is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 internal::MatrixFreeFunctions::GeometryType
-FEEvaluationBase<dim,n_components_,Number, is_face>::get_cell_type () const
+FEEvaluationBase<dim,n_components_,Number, is_face,IntermediateNumber>::get_cell_type () const
 {
   Assert (cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   return cell_type;
@@ -3120,10 +3121,10 @@ FEEvaluationBase<dim,n_components_,Number, is_face>::get_cell_type () const
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &
-    FEEvaluationBase<dim,n_components_,Number, is_face>::get_shape_info() const
+    FEEvaluationBase<dim,n_components_,Number, is_face,IntermediateNumber>::get_shape_info() const
 {
   Assert(data != nullptr, ExcInternalError());
   return *data;
@@ -3131,10 +3132,10 @@ const internal::MatrixFreeFunctions::ShapeInfo<VectorizedArray<Number>> &
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::fill_JxW_values(AlignedVector<VectorizedArray<Number> > &JxW_values) const
 {
   AssertDimension(JxW_values.size(), n_quadrature_points);
@@ -3152,10 +3153,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 Tensor<1,dim,VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_normal_vector(const unsigned int q_index) const
 {
   AssertIndexRange(q_index, n_quadrature_points);
@@ -3168,10 +3169,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 VectorizedArray<Number>
-FEEvaluationBase<dim,n_components_,Number,is_face>::JxW(const unsigned int q_index) const
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::JxW(const unsigned int q_index) const
 {
   AssertIndexRange(q_index, n_quadrature_points);
   Assert (J_value != nullptr, ExcNotInitialized());
@@ -3186,10 +3187,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>::JxW(const unsigned int q_ind
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 Tensor<2,dim,VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::inverse_jacobian(const unsigned int q_index) const
 {
   AssertIndexRange(q_index, n_quadrature_points);
@@ -3202,10 +3203,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 VectorizedArray<Number>
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::read_cell_data(const AlignedVector<VectorizedArray<Number> > &array) const
 {
   Assert(matrix_info != nullptr, ExcNotImplemented());
@@ -3644,11 +3645,11 @@ namespace internal
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <typename VectorType, typename VectorOperation>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::read_write_operation (const VectorOperation &operation,
                         VectorType            *src[],
                         const bool             apply_constraints) const
@@ -3956,11 +3957,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <typename VectorType, typename VectorOperation>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::read_write_operation_global (const VectorOperation &operation,
                                VectorType            *src[]) const
 {
@@ -3980,11 +3981,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <typename VectorType, typename VectorOperation>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::read_write_operation_contiguous (const VectorOperation &operation,
                                    VectorType            *src[]) const
 {
@@ -4048,11 +4049,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::read_dof_values (const VectorType  &src,
                    const unsigned int first_index)
 {
@@ -4073,11 +4074,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::read_dof_values_plain (const VectorType  &src,
                          const unsigned int first_index)
 {
@@ -4098,11 +4099,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::distribute_local_to_global (VectorType        &dst,
                               const unsigned int first_index) const
 {
@@ -4122,11 +4123,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::set_dof_values (VectorType        &dst,
                   const unsigned int first_index) const
 {
@@ -4149,10 +4150,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 /*------------------------------ access to data fields ----------------------*/
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 const std::vector<unsigned int> &
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 get_internal_dof_numbering() const
 {
   return data->lexicographic_numbering;
@@ -4160,10 +4161,10 @@ get_internal_dof_numbering() const
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 ArrayView<VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 get_scratch_data() const
 {
   return ArrayView<VectorizedArray<Number> >(const_cast<VectorizedArray<Number> *>(scratch_data),
@@ -4173,10 +4174,10 @@ get_scratch_data() const
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 const VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_dof_values () const
 {
   return &values_dofs[0][0];
@@ -4184,10 +4185,10 @@ begin_dof_values () const
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_dof_values ()
 {
 #ifdef DEBUG
@@ -4198,10 +4199,10 @@ begin_dof_values ()
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 const VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_values () const
 {
   Assert (values_quad_initialized || values_quad_submitted,
@@ -4211,10 +4212,10 @@ begin_values () const
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_values ()
 {
 #ifdef DEBUG
@@ -4226,10 +4227,10 @@ begin_values ()
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 const VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_gradients () const
 {
   Assert (gradients_quad_initialized || gradients_quad_submitted,
@@ -4239,10 +4240,10 @@ begin_gradients () const
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_gradients ()
 {
 #ifdef DEBUG
@@ -4254,10 +4255,10 @@ begin_gradients ()
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 const VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_hessians () const
 {
   Assert (hessians_quad_initialized, ExcNotInitialized());
@@ -4266,10 +4267,10 @@ begin_hessians () const
 
 
 
-template <int dim, int n_components, typename Number, bool is_face>
+template <int dim, int n_components, typename Number, bool is_face, typename IntermediateNumber>
 inline
 VectorizedArray<Number> *
-FEEvaluationBase<dim,n_components,Number,is_face>::
+FEEvaluationBase<dim,n_components,Number,is_face,IntermediateNumber>::
 begin_hessians ()
 {
 #ifdef DEBUG
@@ -4280,10 +4281,10 @@ begin_hessians ()
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<1,n_components_,VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+Tensor<1,n_components_,VectorizedArray<IntermediateNumber> >
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_dof_value (const unsigned int dof) const
 {
   AssertIndexRange (dof, this->data->dofs_per_component_on_cell);
@@ -4295,10 +4296,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<1,n_components_,VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+typename FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_value (const unsigned int q_point) const
 {
   Assert (this->values_quad_initialized==true,
@@ -4312,10 +4313,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<1,n_components_,Tensor<1,dim,VectorizedArray<Number> > >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+typename FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_gradient (const unsigned int q_point) const
 {
   Assert (this->gradients_quad_initialized==true,
@@ -4354,10 +4355,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<1,n_components_,VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+typename  FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_normal_derivative (const unsigned int q_point) const
 {
   AssertIndexRange (q_point, this->n_quadrature_points);
@@ -4446,10 +4447,10 @@ namespace internal
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
 Tensor<1,n_components_,Tensor<2,dim,VectorizedArray<Number> > >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_hessian (const unsigned int q_point) const
 {
   Assert(!is_face, ExcNotImplemented());
@@ -4569,10 +4570,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-Tensor<1,n_components_,Tensor<1,dim,VectorizedArray<Number> > >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+typename  FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_hessian_diagonal (const unsigned int q_point) const
 {
   Assert(!is_face, ExcNotImplemented());
@@ -4648,10 +4649,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-Tensor<1,n_components_,VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+typename FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::get_laplacian (const unsigned int q_point) const
 {
   Assert (is_face == false, ExcNotImplemented());
@@ -4673,11 +4674,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
-::submit_dof_value (const Tensor<1,n_components_,VectorizedArray<Number> > val_in,
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
+::submit_dof_value (const value_type val_in,
                     const unsigned int dof)
 {
 #ifdef DEBUG
@@ -4690,11 +4691,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
-::submit_value (const Tensor<1,n_components_,VectorizedArray<Number> > val_in,
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
+::submit_value (const value_type val_in,
                 const unsigned int q_point)
 {
 #ifdef DEBUG
@@ -4720,12 +4721,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
-::submit_gradient (const Tensor<1,n_components_,
-                   Tensor<1,dim,VectorizedArray<Number> > >grad_in,
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
+::submit_gradient (const gradient_type grad_in,
                    const unsigned int q_point)
 {
 #ifdef DEBUG
@@ -4765,11 +4765,11 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationBase<dim,n_components_,Number,is_face>
-::submit_normal_derivative (const Tensor<1,n_components_,VectorizedArray<Number> > grad_in,
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
+::submit_normal_derivative (const value_type grad_in,
                             const unsigned int q_point)
 {
 #ifdef DEBUG
@@ -4807,10 +4807,10 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-Tensor<1,n_components_,VectorizedArray<Number> >
-FEEvaluationBase<dim,n_components_,Number,is_face>
+typename  FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>
 ::integrate_value () const
 {
 #ifdef DEBUG
@@ -4833,9 +4833,9 @@ FEEvaluationBase<dim,n_components_,Number,is_face>
 /*----------------------- FEEvaluationAccess --------------------------------*/
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,n_components_,Number,is_face>
+FEEvaluationAccess<dim,n_components_,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const MatrixFree<dim,Number> &data_in,
                       const unsigned int dof_no,
                       const unsigned int first_selected_component,
@@ -4851,10 +4851,10 @@ FEEvaluationAccess<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 template <int n_components_other>
 inline
-FEEvaluationAccess<dim,n_components_,Number,is_face>
+FEEvaluationAccess<dim,n_components_,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const Mapping<dim>       &mapping,
                       const FiniteElement<dim> &fe,
                       const Quadrature<1>      &quadrature,
@@ -4868,23 +4868,23 @@ FEEvaluationAccess<dim,n_components_,Number,is_face>
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,n_components_,Number,is_face>
-::FEEvaluationAccess (const FEEvaluationAccess<dim,n_components_,Number,is_face> &other)
+FEEvaluationAccess<dim,n_components_,Number,is_face,IntermediateNumber>
+::FEEvaluationAccess (const FEEvaluationAccess<dim,n_components_,Number,is_face,IntermediateNumber> &other)
   :
   FEEvaluationBase <dim,n_components_,Number,is_face>(other)
 {}
 
 
 
-template <int dim, int n_components_, typename Number, bool is_face>
+template <int dim, int n_components_, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,n_components_,Number,is_face> &
-FEEvaluationAccess<dim,n_components_,Number,is_face>
-::operator= (const FEEvaluationAccess<dim,n_components_,Number,is_face> &other)
+FEEvaluationAccess<dim,n_components_,Number,is_face,IntermediateNumber> &
+FEEvaluationAccess<dim,n_components_,Number,is_face,IntermediateNumber>
+::operator= (const FEEvaluationAccess<dim,n_components_,Number,is_face,IntermediateNumber> &other)
 {
-  this->FEEvaluationBase<dim,n_components_,Number,is_face>::operator=(other);
+  this->FEEvaluationBase<dim,n_components_,Number,is_face,IntermediateNumber>::operator=(other);
   return *this;
 }
 
@@ -4893,9 +4893,9 @@ FEEvaluationAccess<dim,n_components_,Number,is_face>
 /*-------------------- FEEvaluationAccess scalar ----------------------------*/
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,1,Number,is_face>
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const MatrixFree<dim,Number> &data_in,
                       const unsigned int dof_no,
                       const unsigned int first_selected_component,
@@ -4904,17 +4904,17 @@ FEEvaluationAccess<dim,1,Number,is_face>
                       const unsigned int n_q_points,
                       const bool         is_interior_face)
   :
-  FEEvaluationBase <dim,1,Number,is_face>
+  FEEvaluationBase <dim,1,Number,is_face,IntermediateNumber>
   (data_in, dof_no, first_selected_component, quad_no_in, fe_degree, n_q_points,
    is_interior_face)
 {}
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 template <int n_components_other>
 inline
-FEEvaluationAccess<dim,1,Number,is_face>
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const Mapping<dim>       &mapping,
                       const FiniteElement<dim> &fe,
                       const Quadrature<1>      &quadrature,
@@ -4922,27 +4922,27 @@ FEEvaluationAccess<dim,1,Number,is_face>
                       const unsigned int        first_selected_component,
                       const FEEvaluationBase<dim,n_components_other,Number,is_face> *other)
   :
-  FEEvaluationBase <dim,1,Number,is_face> (mapping, fe, quadrature, update_flags,
+  FEEvaluationBase <dim,1,Number,is_face,IntermediateNumber> (mapping, fe, quadrature, update_flags,
                                            first_selected_component, other)
 {}
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,1,Number,is_face>
-::FEEvaluationAccess (const FEEvaluationAccess<dim,1,Number,is_face> &other)
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
+::FEEvaluationAccess (const FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber> &other)
   :
-  FEEvaluationBase <dim,1,Number,is_face>(other)
+  FEEvaluationBase <dim,1,Number,is_face,IntermediateNumber>(other)
 {}
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,1,Number,is_face> &
-FEEvaluationAccess<dim,1,Number,is_face>
-::operator= (const FEEvaluationAccess<dim,1,Number,is_face> &other)
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber> &
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
+::operator= (const FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber> &other)
 {
   this->FEEvaluationBase<dim,1,Number,is_face>::operator=(other);
   return *this;
@@ -4950,10 +4950,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-VectorizedArray<Number>
-FEEvaluationAccess<dim,1,Number,is_face>
+typename FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::get_dof_value (const unsigned int dof) const
 {
   AssertIndexRange (dof, this->data->dofs_per_component_on_cell);
@@ -4962,10 +4962,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-VectorizedArray<Number>
-FEEvaluationAccess<dim,1,Number,is_face>
+typename FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::get_value (const unsigned int q_point) const
 {
   Assert (this->values_quad_initialized==true,
@@ -4976,10 +4976,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-VectorizedArray<Number>
-FEEvaluationAccess<dim,1,Number,is_face>
+typename FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::get_normal_derivative (const unsigned int q_point) const
 {
   return BaseClass::get_normal_derivative(q_point)[0];
@@ -4987,10 +4987,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<1,dim,VectorizedArray<Number> >
-FEEvaluationAccess<dim,1,Number,is_face>
+typename FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::get_gradient (const unsigned int q_point) const
 {
   // could use the base class gradient, but that involves too many expensive
@@ -5028,10 +5028,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-Tensor<2,dim,VectorizedArray<Number> >
-FEEvaluationAccess<dim,1,Number,is_face>
+Tensor<2,dim,VectorizedArray<IntermediateNumber> >
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::get_hessian (const unsigned int q_point) const
 {
   return BaseClass::get_hessian(q_point)[0];
@@ -5039,10 +5039,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-Tensor<1,dim,VectorizedArray<Number> >
-FEEvaluationAccess<dim,1,Number,is_face>
+typename FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::get_hessian_diagonal (const unsigned int q_point) const
 {
   return BaseClass::get_hessian_diagonal(q_point)[0];
@@ -5050,10 +5050,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-VectorizedArray<Number>
-FEEvaluationAccess<dim,1,Number,is_face>
+typename FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::get_laplacian (const unsigned int q_point) const
 {
   return BaseClass::get_laplacian(q_point)[0];
@@ -5061,11 +5061,11 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
 void DEAL_II_ALWAYS_INLINE
-FEEvaluationAccess<dim,1,Number,is_face>
-::submit_dof_value (const VectorizedArray<Number> val_in,
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
+::submit_dof_value (const value_type val_in,
                     const unsigned int dof)
 {
 #ifdef DEBUG
@@ -5077,11 +5077,11 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
 void DEAL_II_ALWAYS_INLINE
-FEEvaluationAccess<dim,1,Number,is_face>
-::submit_value (const VectorizedArray<Number> val_in,
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
+::submit_value (const value_type val_in,
                 const unsigned int q_index)
 {
 #ifdef DEBUG
@@ -5103,11 +5103,11 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,1,Number,is_face>
-::submit_value (const Tensor<1,1,VectorizedArray<Number> > val_in,
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
+::submit_value (const Tensor<1,1,VectorizedArray<IntermediateNumber> > val_in,
                 const unsigned int q_point)
 {
   submit_value(val_in[0], q_point);
@@ -5115,11 +5115,11 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,1,Number,is_face>
-::submit_normal_derivative (const VectorizedArray<Number> grad_in,
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
+::submit_normal_derivative (const value_type grad_in,
                             const unsigned int q_point)
 {
   Tensor<1,1,VectorizedArray<Number> > grad;
@@ -5129,11 +5129,11 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,1,Number,is_face>
-::submit_gradient (const Tensor<1,dim,VectorizedArray<Number> > grad_in,
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
+::submit_gradient (const gradient_type grad_in,
                    const unsigned int q_index)
 {
 #ifdef DEBUG
@@ -5174,10 +5174,10 @@ FEEvaluationAccess<dim,1,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-VectorizedArray<Number>
-FEEvaluationAccess<dim,1,Number,is_face>
+VectorizedArray<IntermediateNumber>
+FEEvaluationAccess<dim,1,Number,is_face,IntermediateNumber>
 ::integrate_value () const
 {
   return BaseClass::integrate_value()[0];
@@ -5189,9 +5189,9 @@ FEEvaluationAccess<dim,1,Number,is_face>
 /*----------------- FEEvaluationAccess vector-valued ------------------------*/
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const MatrixFree<dim,Number> &data_in,
                       const unsigned int dof_no,
                       const unsigned int first_selected_component,
@@ -5207,10 +5207,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 template <int n_components_other>
 inline
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const Mapping<dim>       &mapping,
                       const FiniteElement<dim> &fe,
                       const Quadrature<1>      &quadrature,
@@ -5224,21 +5224,21 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,dim,Number,is_face>
-::FEEvaluationAccess (const FEEvaluationAccess<dim,dim,Number,is_face> &other)
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
+::FEEvaluationAccess (const FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber> &other)
   :
   FEEvaluationBase <dim,dim,Number,is_face>(other)
 {}
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<dim,dim,Number,is_face> &
-FEEvaluationAccess<dim,dim,Number,is_face>
-::operator= (const FEEvaluationAccess<dim,dim,Number,is_face> &other)
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber> &
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
+::operator= (const FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber> &other)
 {
   this->FEEvaluationBase<dim,dim,Number,is_face>::operator=(other);
   return *this;
@@ -5246,10 +5246,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<2,dim,VectorizedArray<Number> >
-FEEvaluationAccess<dim,dim,Number,is_face>
+typename FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::get_gradient (const unsigned int q_point) const
 {
   return BaseClass::get_gradient (q_point);
@@ -5257,10 +5257,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 VectorizedArray<Number>
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::get_divergence (const unsigned int q_point) const
 {
   Assert (this->gradients_quad_initialized==true,
@@ -5297,10 +5297,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 SymmetricTensor<2,dim,VectorizedArray<Number> >
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::get_symmetric_gradient (const unsigned int q_point) const
 {
   // copy from generic function into dim-specialization function
@@ -5333,10 +5333,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 Tensor<1,(dim==2?1:dim),VectorizedArray<Number> >
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::get_curl (const unsigned int q_point) const
 {
   // copy from generic function into dim-specialization function
@@ -5364,10 +5364,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<2,dim,VectorizedArray<Number> >
-FEEvaluationAccess<dim,dim,Number,is_face>
+typename FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::get_hessian_diagonal (const unsigned int q_point) const
 {
   return BaseClass::get_hessian_diagonal (q_point);
@@ -5375,10 +5375,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 Tensor<3,dim,VectorizedArray<Number> >
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::get_hessian (const unsigned int q_point) const
 {
   Assert (this->hessians_quad_initialized==true,
@@ -5389,11 +5389,11 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,dim,Number,is_face>
-::submit_gradient (const Tensor<2,dim,VectorizedArray<Number> > grad_in,
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
+::submit_gradient (const Tensor<2,dim,VectorizedArray<IntermediateNumber> > grad_in,
                    const unsigned int q_point)
 {
   BaseClass::submit_gradient (grad_in, q_point);
@@ -5401,11 +5401,11 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,dim,Number,is_face>
-::submit_gradient (const Tensor<1,dim,Tensor<1,dim,VectorizedArray<Number> > >
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
+::submit_gradient (const Tensor<1,dim,Tensor<1,dim,VectorizedArray<IntermediateNumber> > >
                    grad_in,
                    const unsigned int q_point)
 {
@@ -5414,10 +5414,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::submit_divergence (const VectorizedArray<Number> div_in,
                      const unsigned int q_point)
 {
@@ -5463,10 +5463,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::submit_symmetric_gradient(const SymmetricTensor<2,dim,VectorizedArray<Number> >
                             sym_grad,
                             const unsigned int q_point)
@@ -5531,10 +5531,10 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 
 
 
-template <int dim, typename Number, bool is_face>
+template <int dim, typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<dim,dim,Number,is_face>
+FEEvaluationAccess<dim,dim,Number,is_face,IntermediateNumber>
 ::submit_curl (const Tensor<1,dim==2?1:dim,VectorizedArray<Number> > curl,
                const unsigned int q_point)
 {
@@ -5567,9 +5567,9 @@ FEEvaluationAccess<dim,dim,Number,is_face>
 /*-------------------- FEEvaluationAccess scalar for 1d ----------------------------*/
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<1,1,Number,is_face>
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const MatrixFree<1,Number> &data_in,
                       const unsigned int dof_no,
                       const unsigned int first_selected_component,
@@ -5585,10 +5585,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 template <int n_components_other>
 inline
-FEEvaluationAccess<1,1,Number,is_face>
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::FEEvaluationAccess (const Mapping<1>       &mapping,
                       const FiniteElement<1> &fe,
                       const Quadrature<1>    &quadrature,
@@ -5602,21 +5602,21 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<1,1,Number,is_face>
-::FEEvaluationAccess (const FEEvaluationAccess<1,1,Number,is_face> &other)
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::FEEvaluationAccess (const FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber> &other)
   :
   FEEvaluationBase <1,1,Number,is_face>(other)
 {}
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline
-FEEvaluationAccess<1,1,Number,is_face> &
-FEEvaluationAccess<1,1,Number,is_face>
-::operator= (const FEEvaluationAccess<1,1,Number,is_face> &other)
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber> &
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::operator= (const FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber> &other)
 {
   this->FEEvaluationBase<1,1,Number,is_face>::operator=(other);
   return *this;
@@ -5624,10 +5624,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-VectorizedArray<Number>
-FEEvaluationAccess<1,1,Number,is_face>
+typename  FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::get_dof_value (const unsigned int dof) const
 {
   AssertIndexRange (dof, this->data->dofs_per_component_on_cell);
@@ -5636,10 +5636,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-VectorizedArray<Number>
-FEEvaluationAccess<1,1,Number,is_face>
+typename  FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::get_value (const unsigned int q_point) const
 {
   Assert (this->values_quad_initialized==true,
@@ -5650,10 +5650,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<1,1,VectorizedArray<Number> >
-FEEvaluationAccess<1,1,Number,is_face>
+typename  FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::get_gradient (const unsigned int q_point) const
 {
   // could use the base class gradient, but that involves too many inefficient
@@ -5675,10 +5675,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-VectorizedArray<Number>
-FEEvaluationAccess<1,1,Number,is_face>
+typename  FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::get_normal_derivative (const unsigned int q_point) const
 {
   return BaseClass::get_normal_derivative(q_point)[0];
@@ -5686,10 +5686,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 Tensor<2,1,VectorizedArray<Number> >
-FEEvaluationAccess<1,1,Number,is_face>
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::get_hessian (const unsigned int q_point) const
 {
   return BaseClass::get_hessian(q_point)[0];
@@ -5697,10 +5697,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-Tensor<1,1,VectorizedArray<Number> >
-FEEvaluationAccess<1,1,Number,is_face>
+typename FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>::gradient_type
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::get_hessian_diagonal (const unsigned int q_point) const
 {
   return BaseClass::get_hessian_diagonal(q_point)[0];
@@ -5708,10 +5708,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
-VectorizedArray<Number>
-FEEvaluationAccess<1,1,Number,is_face>
+typename FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::get_laplacian (const unsigned int q_point) const
 {
   return BaseClass::get_laplacian(q_point)[0];
@@ -5719,11 +5719,11 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void DEAL_II_ALWAYS_INLINE
-FEEvaluationAccess<1,1,Number,is_face>
-::submit_dof_value (const VectorizedArray<Number> val_in,
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::submit_dof_value (const value_type val_in,
                     const unsigned int dof)
 {
 #ifdef DEBUG
@@ -5735,11 +5735,11 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<1,1,Number,is_face>
-::submit_value (const VectorizedArray<Number> val_in,
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::submit_value (const value_type val_in,
                 const unsigned int q_point)
 {
 #ifdef DEBUG
@@ -5761,11 +5761,11 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<1,1,Number,is_face>
-::submit_value (const Tensor<1,1,VectorizedArray<Number> > val_in,
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::submit_value (const Tensor<1,1,VectorizedArray<IntermediateNumber> > val_in,
                 const unsigned int q_point)
 {
   submit_value(val_in[0], q_point);
@@ -5773,11 +5773,11 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<1,1,Number,is_face>
-::submit_gradient (const Tensor<1,1,VectorizedArray<Number> > grad_in,
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::submit_gradient (const Tensor<1,1,VectorizedArray<IntermediateNumber> > grad_in,
                    const unsigned int q_point)
 {
   submit_gradient(grad_in[0], q_point);
@@ -5785,11 +5785,11 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<1,1,Number,is_face>
-::submit_gradient (const VectorizedArray<Number> grad_in,
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::submit_gradient (const VectorizedArray<IntermediateNumber> grad_in,
                    const unsigned int q_point)
 {
 #ifdef DEBUG
@@ -5810,11 +5810,11 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<1,1,Number,is_face>
-::submit_normal_derivative (const VectorizedArray<Number> grad_in,
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::submit_normal_derivative (const VectorizedArray<IntermediateNumber> grad_in,
                             const unsigned int q_point)
 {
   Tensor<1,1,VectorizedArray<Number> > grad;
@@ -5824,11 +5824,11 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline DEAL_II_ALWAYS_INLINE
 void
-FEEvaluationAccess<1,1,Number,is_face>
-::submit_normal_derivative (const Tensor<1,1,VectorizedArray<Number> > grad_in,
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
+::submit_normal_derivative (const Tensor<1,1,VectorizedArray<IntermediateNumber> > grad_in,
                             const unsigned int q_point)
 {
   BaseClass::submit_normal_derivative(grad_in, q_point);
@@ -5836,10 +5836,10 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 
-template <typename Number, bool is_face>
+template <typename Number, bool is_face, typename IntermediateNumber>
 inline
-VectorizedArray<Number>
-FEEvaluationAccess<1,1,Number,is_face>
+typename FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>::value_type
+FEEvaluationAccess<1,1,Number,is_face,IntermediateNumber>
 ::integrate_value () const
 {
   return BaseClass::integrate_value()[0];
@@ -5852,9 +5852,9 @@ FEEvaluationAccess<1,1,Number,is_face>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::FEEvaluation (const MatrixFree<dim,Number> &data_in,
                 const unsigned int fe_no,
                 const unsigned int quad_no,
@@ -5871,9 +5871,9 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::FEEvaluation (const Mapping<dim>       &mapping,
                 const FiniteElement<dim> &fe,
                 const Quadrature<1>      &quadrature,
@@ -5893,9 +5893,9 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::FEEvaluation (const FiniteElement<dim> &fe,
                 const Quadrature<1>      &quadrature,
                 const UpdateFlags         update_flags,
@@ -5914,10 +5914,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 template <int n_components_other>
 inline
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::FEEvaluation (const FiniteElement<dim> &fe,
                 const FEEvaluationBase<dim,n_components_other,Number> &other,
                 const unsigned int        first_selected_component)
@@ -5936,9 +5936,9 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::FEEvaluation (const FEEvaluation &other)
   :
   BaseClass (other),
@@ -5952,10 +5952,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number> &
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber> &
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::operator= (const FEEvaluation &other)
 {
   BaseClass::operator=(other);
@@ -5966,10 +5966,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::check_template_arguments(const unsigned int dof_no,
                            const unsigned int first_selected_component)
 {
@@ -6108,10 +6108,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::reinit (const unsigned int cell_index)
 {
   Assert (this->mapped_geometry == nullptr,
@@ -6140,11 +6140,11 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 template <typename DoFHandlerType, bool level_dof_access>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::reinit (const TriaIterator<DoFCellAccessor<DoFHandlerType,level_dof_access> > &cell)
 {
   Assert(this->matrix_info == nullptr,
@@ -6164,10 +6164,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::reinit (const typename Triangulation<dim>::cell_iterator &cell)
 {
   Assert(this->matrix_info == 0,
@@ -6182,10 +6182,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 Point<dim,VectorizedArray<Number> >
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::quadrature_point (const unsigned int q) const
 {
   if (this->matrix_info == nullptr)
@@ -6239,10 +6239,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::evaluate (const bool evaluate_values,
             const bool evaluate_gradients,
             const bool evaluate_hessians)
@@ -6255,10 +6255,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::evaluate (const VectorizedArray<Number> *values_array,
             const bool evaluate_values,
             const bool evaluate_gradients,
@@ -6283,11 +6283,11 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::gather_evaluate (const VectorType &input_vector,
                    const bool        evaluate_values,
                    const bool        evaluate_gradients,
@@ -6301,10 +6301,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::integrate (const bool integrate_values,
              const bool integrate_gradients)
 {
@@ -6318,10 +6318,10 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::integrate (const bool               integrate_values,
              const bool               integrate_gradients,
              VectorizedArray<Number> *values_array)
@@ -6348,11 +6348,11 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::integrate_scatter (const bool  integrate_values,
                      const bool  integrate_gradients,
                      VectorType &destination)
@@ -6368,9 +6368,9 @@ FEEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree, int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::FEFaceEvaluation (const MatrixFree<dim,Number> &matrix_free,
                     const bool                    is_interior_face,
                     const unsigned int            dof_no,
@@ -6388,18 +6388,18 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree, int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::~FEFaceEvaluation ()
 {}
 
 
 
-template <int dim, int fe_degree, int n_q_points_1d, int n_components_, typename Number>
+template <int dim, int fe_degree, int n_q_points_1d, int n_components_, typename Number, typename IntermediateNumber>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::reinit (const unsigned int face_index)
 {
   Assert (this->mapped_geometry == nullptr,
@@ -6457,10 +6457,10 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 
-template <int dim, int fe_degree, int n_q_points_1d, int n_components_, typename Number>
+template <int dim, int fe_degree, int n_q_points_1d, int n_components_, typename Number, typename IntermediateNumber>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::reinit (const unsigned int cell_index,
           const unsigned int face_number)
 {
@@ -6510,10 +6510,10 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number,IntermediateNumber>
 ::evaluate (const bool evaluate_values,
             const bool evaluate_gradients)
 {
@@ -6525,10 +6525,10 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number,IntermediateNumber>
 ::evaluate (const VectorizedArray<Number> *values_array,
             const bool evaluate_values,
             const bool evaluate_gradients)
@@ -6590,10 +6590,10 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number,IntermediateNumber>
 ::integrate (const bool integrate_values,
              const bool integrate_gradients)
 {
@@ -6607,10 +6607,10 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number,IntermediateNumber>
 ::integrate (const bool integrate_values,
              const bool integrate_gradients,
              VectorizedArray<Number> *values_array)
@@ -6660,11 +6660,11 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::gather_evaluate (const VectorType &input_vector,
                    const bool        evaluate_values,
                    const bool        evaluate_gradients)
@@ -6789,11 +6789,11 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 template <typename VectorType>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::integrate_scatter (const bool  integrate_values,
                      const bool  integrate_gradients,
                      VectorType &destination)
@@ -6912,10 +6912,10 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components,
-          typename Number>
+          typename Number,typename IntermediateNumber>
 inline
 void
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number,IntermediateNumber>
 ::adjust_for_face_orientation(const bool integrate,
                               const bool values,
                               const bool gradients)
@@ -6954,10 +6954,10 @@ FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components,Number>
 
 
 template <int dim, int fe_degree,  int n_q_points_1d, int n_components_,
-          typename Number>
+          typename Number, typename IntermediateNumber>
 inline
 Point<dim,VectorizedArray<Number> >
-FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number>
+FEFaceEvaluation<dim,fe_degree,n_q_points_1d,n_components_,Number,IntermediateNumber>
 ::quadrature_point (const unsigned int q) const
 {
   AssertIndexRange (q, n_q_points);
