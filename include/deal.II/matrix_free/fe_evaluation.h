@@ -3390,7 +3390,7 @@ namespace internal
                       VectorType         &vec,
                       Number             &res) const
     {
-      vector_access (vec, index) += res;
+      vector_access (vec, index) += internal::NumberType<typename VectorType::value_type>::value(res);
     }
 
     template <typename VectorType>
@@ -3413,7 +3413,7 @@ namespace internal
     {
       for (unsigned int d=0; d<dofs_per_cell; ++d)
         for (unsigned int v=0; v<VectorizedArray<Number>::n_array_elements; ++v)
-          vector_access(vec, dof_indices[v]+d) += dof_values[d][v];
+          vector_access(vec, dof_indices[v]+d) += internal::NumberType<typename VectorType::value_type>::value(dof_values[d][v]);
     }
 
     // variant where VectorType::value_type is the same as Number -> can call
@@ -3447,7 +3447,7 @@ namespace internal
                              std::integral_constant<bool, false>) const
     {
       for (unsigned int v=0; v<VectorizedArray<Number>::n_array_elements; ++v)
-        vector_access(vec, indices[v]+constant_offset) += res[v];
+        vector_access(vec, indices[v]+constant_offset) += internal::NumberType<typename VectorType::value_type>::value(res[v]);
     }
 
     template <typename VectorType>
@@ -3455,7 +3455,7 @@ namespace internal
                              VectorType         &vec,
                              Number             &res) const
     {
-      vec(index) += res;
+      vec(index) += internal::NumberType<typename VectorType::value_type>::value(res);
     }
 
     void pre_constraints (const Number &input,
@@ -3470,7 +3470,8 @@ namespace internal
                              VectorType        &vec,
                              Number            &res) const
     {
-      vector_access (vec, index) += weight * res;
+      vector_access (vec, index) += internal::NumberType<typename VectorType::value_type>::value(weight) *
+                                    internal::NumberType<typename VectorType::value_type>::value(res);
     }
 
     void post_constraints (const Number &,
