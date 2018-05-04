@@ -724,7 +724,7 @@ namespace internal
                           }
 
                       data.first[my_q].JxW_values.push_back(determinant(jac)*
-                                                            fe_val.get_quadrature().weight(q));
+                                                            internal::NumberType<Number>::value(fe_val.get_quadrature().weight(q)));
                       Tensor<2,dim,VectorizedArray<Number> > inv_jac = transpose(invert(jac));
                       data.first[my_q].jacobians[0].push_back(inv_jac);
 

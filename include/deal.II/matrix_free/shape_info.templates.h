@@ -433,25 +433,25 @@ namespace internal
         for (unsigned int q=0; q<stride; ++q)
           {
             shape_values_eo[i*stride+q] =
-              0.5 * (shape_values[i*n_q_points_1d+q] +
-                     shape_values[i*n_q_points_1d+n_q_points_1d-1-q]);
+              internal::NumberType<Number>::value(0.5) * (shape_values[i*n_q_points_1d+q] +
+                                                          shape_values[i*n_q_points_1d+n_q_points_1d-1-q]);
             shape_values_eo[(fe_degree-i)*stride+q] =
-              0.5 * (shape_values[i*n_q_points_1d+q] -
-                     shape_values[i*n_q_points_1d+n_q_points_1d-1-q]);
+              internal::NumberType<Number>::value(0.5) * (shape_values[i*n_q_points_1d+q] -
+                                                          shape_values[i*n_q_points_1d+n_q_points_1d-1-q]);
 
             shape_gradients_eo[i*stride+q] =
-              0.5 * (shape_gradients[i*n_q_points_1d+q] +
-                     shape_gradients[i*n_q_points_1d+n_q_points_1d-1-q]);
+              internal::NumberType<Number>::value(0.5) * (shape_gradients[i*n_q_points_1d+q] +
+                                                          shape_gradients[i*n_q_points_1d+n_q_points_1d-1-q]);
             shape_gradients_eo[(fe_degree-i)*stride+q] =
-              0.5 * (shape_gradients[i*n_q_points_1d+q] -
-                     shape_gradients[i*n_q_points_1d+n_q_points_1d-1-q]);
+              internal::NumberType<Number>::value(0.5) * (shape_gradients[i*n_q_points_1d+q] -
+                                                          shape_gradients[i*n_q_points_1d+n_q_points_1d-1-q]);
 
             shape_hessians_eo[i*stride+q] =
-              0.5 * (shape_hessians[i*n_q_points_1d+q] +
-                     shape_hessians[i*n_q_points_1d+n_q_points_1d-1-q]);
+              internal::NumberType<Number>::value(0.5) * (shape_hessians[i*n_q_points_1d+q] +
+                                                          shape_hessians[i*n_q_points_1d+n_q_points_1d-1-q]);
             shape_hessians_eo[(fe_degree-i)*stride+q] =
-              0.5 * (shape_hessians[i*n_q_points_1d+q] -
-                     shape_hessians[i*n_q_points_1d+n_q_points_1d-1-q]);
+              internal::NumberType<Number>::value(0.5) * (shape_hessians[i*n_q_points_1d+q] -
+                                                          shape_hessians[i*n_q_points_1d+n_q_points_1d-1-q]);
           }
       if (fe_degree % 2 == 0)
         for (unsigned int q=0; q<stride; ++q)
