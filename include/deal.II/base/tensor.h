@@ -212,7 +212,12 @@ public:
   /**
    * Assignment from tensors with same underlying scalar type.
    */
-  Tensor &operator = (const Tensor<0,dim,Number> &rhs);
+  Tensor &operator = (const Tensor<0,dim,Number> &rhs)
+#ifndef __INTEL_COMPILER
+    = default;
+  // ICC 15 doesn't allow this opy constructor to be defaulted.
+  // see https://github.com/dealii/dealii/pull/5865.
+#endif
 
   /**
    * This operator assigns a scalar to a tensor. This obviously requires
@@ -813,6 +818,7 @@ Tensor<0,dim,Number> &Tensor<0,dim,Number>::operator = (const Tensor<0,dim,Other
 }
 
 
+#ifdef __INTEL_COMPILER
 template <int dim, typename Number>
 inline
 Tensor<0,dim,Number> &Tensor<0,dim,Number>::operator = (const Tensor<0,dim,Number> &p)
@@ -820,6 +826,7 @@ Tensor<0,dim,Number> &Tensor<0,dim,Number>::operator = (const Tensor<0,dim,Numbe
   value = p.value;
   return *this;
 }
+#endif
 
 
 template <int dim, typename Number>
