@@ -1009,50 +1009,52 @@ namespace Utilities
     // we have to work around the fact that GCC 4.8.x claims to be C++
     // conforming, but is not actually as it does not implement
     // std::is_trivially_copyable.
-    if (
 #if __GNUG__ && __GNUC__ < 5
-      __has_trivial_copy(T)
+    if (  __has_trivial_copy(T))
 #else
-      std::is_trivially_copyable<T>()
+#  ifdef DEAL_II_WITH_CXX17
+    if constexpr (std::is_trivially_copyable<T>())
+#  else
+    if (std::is_trivially_copyable<T>())
+#  endif
 #endif
-      &&
-      sizeof(T)<256)
       {
-        const size_t previous_size = dest_buffer.size();
-        dest_buffer.resize (previous_size + sizeof(T));
+        if (sizeof(T)<256)
+          {
+            const size_t previous_size = dest_buffer.size();
+            dest_buffer.resize (previous_size + sizeof(T));
 
-        std::memcpy (dest_buffer.data() + previous_size, &object, sizeof(T));
+            std::memcpy (dest_buffer.data() + previous_size, &object, sizeof(T));
 
-        return sizeof(T);
+            return sizeof(T);
+          }
       }
-    else
-      {
-        // use buffer as the target of a compressing
-        // stream into which we serialize the current object
-        const size_t previous_size = dest_buffer.size();
-        {
+
+    // use buffer as the target of a compressing
+    // stream into which we serialize the current object
+    const size_t previous_size = dest_buffer.size();
+    {
 #ifdef DEAL_II_WITH_ZLIB
-          boost::iostreams::filtering_ostream out;
-          out.push(boost::iostreams::gzip_compressor
-                   (boost::iostreams::gzip_params
-                    (boost::iostreams::gzip::best_compression)));
-          out.push(boost::iostreams::back_inserter(dest_buffer));
+      boost::iostreams::filtering_ostream out;
+      out.push(boost::iostreams::gzip_compressor
+               (boost::iostreams::gzip_params
+                (boost::iostreams::gzip::best_compression)));
+      out.push(boost::iostreams::back_inserter(dest_buffer));
 
-          boost::archive::binary_oarchive archive(out);
-          archive << object;
-          out.flush();
+      boost::archive::binary_oarchive archive(out);
+      archive << object;
+      out.flush();
 #else
-          std::ostringstream out;
-          boost::archive::binary_oarchive archive(out);
-          archive << object;
+      std::ostringstream out;
+      boost::archive::binary_oarchive archive(out);
+      archive << object;
 
-          const std::string &s = out.str();
-          dest_buffer.reserve (dest_buffer.size() + s.size());
-          std::move (s.begin(), s.end(), std::back_inserter(dest_buffer));
+      const std::string &s = out.str();
+      dest_buffer.reserve (dest_buffer.size() + s.size());
+      std::move (s.begin(), s.end(), std::back_inserter(dest_buffer));
 #endif
-        }
-        return (dest_buffer.size() - previous_size);
-      }
+    }
+    return (dest_buffer.size() - previous_size);
   }
 
 
@@ -1076,44 +1078,46 @@ namespace Utilities
     // we have to work around the fact that GCC 4.8.x claims to be C++
     // conforming, but is not actually as it does not implement
     // std::is_trivially_copyable.
-    if (
 #if __GNUG__ && __GNUC__ < 5
-      __has_trivial_copy(T)
+    if (  __has_trivial_copy(T))
 #else
-      std::is_trivially_copyable<T>()
+#  ifdef DEAL_II_WITH_CXX17
+    if constexpr (std::is_trivially_copyable<T>())
+#  else
+    if (std::is_trivially_copyable<T>())
+#  endif
 #endif
-      &&
-      sizeof(T)<256)
       {
-        Assert (std::distance(cbegin, cend) == sizeof(T), ExcInternalError());
-        T object;
-        std::memcpy (&object, &*cbegin, sizeof(T));
-        return object;
+        if (sizeof(T)<256)
+          {
+            Assert (std::distance(cbegin, cend) == sizeof(T), ExcInternalError());
+            T object;
+            std::memcpy (&object, &*cbegin, sizeof(T));
+            return object;
+          }
       }
-    else
-      {
-        std::string decompressed_buffer;
-        T object;
 
-        // first decompress the buffer
-        {
+    std::string decompressed_buffer;
+    T object;
+
+    // first decompress the buffer
+    {
 #ifdef DEAL_II_WITH_ZLIB
-          boost::iostreams::filtering_ostream decompressing_stream;
-          decompressing_stream.push(boost::iostreams::gzip_decompressor());
-          decompressing_stream.push(boost::iostreams::back_inserter(decompressed_buffer));
-          decompressing_stream.write (&*cbegin, std::distance(cbegin, cend));
+      boost::iostreams::filtering_ostream decompressing_stream;
+      decompressing_stream.push(boost::iostreams::gzip_decompressor());
+      decompressing_stream.push(boost::iostreams::back_inserter(decompressed_buffer));
+      decompressing_stream.write (&*cbegin, std::distance(cbegin, cend));
 #else
-          decompressed_buffer.assign (cbegin, cend);
+      decompressed_buffer.assign (cbegin, cend);
 #endif
-        }
+    }
 
-        // then restore the object from the buffer
-        std::istringstream in(decompressed_buffer);
-        boost::archive::binary_iarchive archive(in);
+    // then restore the object from the buffer
+    std::istringstream in(decompressed_buffer);
+    boost::archive::binary_iarchive archive(in);
 
-        archive >> object;
-        return object;
-      }
+    archive >> object;
+    return object;
   }
 
 

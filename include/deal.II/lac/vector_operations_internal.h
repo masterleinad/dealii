@@ -212,9 +212,18 @@ namespace internal
         Assert (end>=begin, ExcInternalError());
 
         if (value == Number())
-          std::memset (dst+begin,0,(end-begin)*sizeof(Number));
-        else
-          std::fill (dst+begin, dst+end, value);
+          {
+#ifdef DEAL_II_WITH_CXX17
+            if constexpr (std::is_trivial<Number>::value)
+#else
+            if (std::is_trivial<Number>::value)
+#endif
+              {
+                std::memset(dst+begin, 0, sizeof(Number)*(end-begin));
+                return;
+              }
+          }
+        std::fill (dst+begin, dst+end, value);
       }
 
       const Number value;
@@ -238,13 +247,23 @@ namespace internal
         Assert (end>=begin, ExcInternalError());
 
         if (std::is_same<Number,OtherNumber>::value)
-          std::memcpy(dst+begin, src+begin, (end-begin)*sizeof(Number));
-        else
-          {
-            DEAL_II_OPENMP_SIMD_PRAGMA
-            for (size_type i=begin; i<end; ++i)
-              dst[i] = src[i];
-          }
+#if __GNUG__ && __GNUC__ < 5
+          if (  __has_trivial_copy(Number))
+#else
+#  ifdef DEAL_II_WITH_CXX17
+          if constexpr (std::is_trivially_copyable<Number>())
+#  else
+          if (std::is_trivially_copyable<Number>())
+#  endif
+#endif
+            {
+              std::memcpy(dst+begin, src+begin, (end-begin)*sizeof(Number));
+              return;
+            }
+
+        DEAL_II_OPENMP_SIMD_PRAGMA
+        for (size_type i=begin; i<end; ++i)
+          dst[i] = src[i];
       }
 
       const OtherNumber *const src;
