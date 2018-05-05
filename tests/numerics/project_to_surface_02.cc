@@ -94,9 +94,7 @@ void test ()
 
       for (unsigned int e=0; e<GeometryInfo<dim>::quads_per_cell; ++e)
         {
-          const typename Triangulation<dim>::quad_iterator
-          quad = (dim > 2 ? cell->quad(e) :
-                  *reinterpret_cast<const typename Triangulation<dim>::quad_iterator *>(&cell));
+          const typename Triangulation<dim>::quad_iterator quad = cell->quad(e);
 
           deallog << "    Quad " << e << ", projected point=";
 

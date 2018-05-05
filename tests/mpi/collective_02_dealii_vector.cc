@@ -27,10 +27,10 @@ void test()
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes (MPI_COMM_WORLD);
 
   {
-    Vector<int> values(2);
+    Vector<unsigned int> values(2);
     values[0] = 1;
     values[1] = 2;
-    Vector<int> sums(2);
+    Vector<unsigned int> sums(2);
     Utilities::MPI::sum (values,
                          MPI_COMM_WORLD,
                          sums);

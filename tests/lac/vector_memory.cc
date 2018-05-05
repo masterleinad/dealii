@@ -80,7 +80,7 @@ main()
       test_leak<Vector<double> >();
       test_leak<Vector<float> >();
     }
-  catch (StandardExceptions::ExcMemoryLeak e)
+  catch (StandardExceptions::ExcMemoryLeak &e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }

@@ -126,7 +126,7 @@ double
 newton_binomial(unsigned int a,
                 unsigned int b)
 {
-  double c;
+  double c = 0.;
   if (a >= b)
     c = factorial(a)
         / factorial(b)

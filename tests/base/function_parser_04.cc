@@ -54,11 +54,6 @@ void assemble(const std::vector<int>::iterator &it,
   data.value = (std::abs(1.0+s*2.5 - value) < 1e-10)?1:0;
 }
 
-void copy(int &value, const copy_data &data)
-{
-  value += data.value;
-}
-
 
 void test2()
 {
@@ -70,13 +65,14 @@ void test2()
   for (unsigned int i=0; i<v.size(); ++i)
     v[i] = i;
 
-  int result = 0;
+  unsigned int result = 0;
   WorkStream::run(v.begin(),
                   v.end(),
                   &assemble,
-                  std::bind(&copy,
-                            std::ref(result),
-                            std::placeholders::_1),
+                  [&result] (const copy_data &data) mutable 
+                  {
+                    result += data.value;                 
+                  },
                   scratch_data(), copy_data());
   std::cout << "result: " << result << std::endl;
 

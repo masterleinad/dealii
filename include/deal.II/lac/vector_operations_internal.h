@@ -246,20 +246,19 @@ namespace internal
       {
         Assert (end>=begin, ExcInternalError());
 
-        if (std::is_same<Number,OtherNumber>::value)
 #if __GNUG__ && __GNUC__ < 5
-          if (  __has_trivial_copy(Number))
+        if (  __has_trivial_copy(Number) && std::is_same<Number, OtherNumber>::value)
 #else
 #  ifdef DEAL_II_WITH_CXX17
-          if constexpr (std::is_trivially_copyable<Number>())
+        if constexpr (std::is_trivially_copyable<Number>() && std::is_same<Number, OtherNumber>::value)
 #  else
-          if (std::is_trivially_copyable<Number>())
+        if (std::is_trivially_copyable<Number>() && std::is_same<Number, OtherNumber>::value)
 #  endif
 #endif
-            {
-              std::memcpy(dst+begin, src+begin, (end-begin)*sizeof(Number));
-              return;
-            }
+          {
+            std::memcpy(dst+begin, src+begin, (end-begin)*sizeof(Number));
+            return;
+          }
 
         DEAL_II_OPENMP_SIMD_PRAGMA
         for (size_type i=begin; i<end; ++i)

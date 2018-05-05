@@ -22,7 +22,7 @@
 
 template <typename number>
 void
-checkConstructor3(char *name)
+checkConstructor3(std::string name)
 {
   deallog << "Init with matrix name" << std::endl;
   PointerMatrix<FullMatrix<number>, Vector<number> > P(name);
@@ -38,7 +38,7 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  char *name = "Matrix A";
+  std::string name = "Matrix A";
 
   checkConstructor3<double>(name);
 

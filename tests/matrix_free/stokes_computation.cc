@@ -1253,7 +1253,7 @@ namespace StokesClass
                       distributed_stokes_rhs,
                       preconditioner_cheap);
       }
-    catch (SolverControl::NoConvergence)
+    catch (SolverControl::NoConvergence&)
       {
         deallog << "********************************************************************" << std::endl
                 << "SOLVER DID NOT CONVERGE AFTER "

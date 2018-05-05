@@ -46,7 +46,7 @@ void do_test(const Triangulation<dim,spacedim> &tria,
             deallog << mapping_point[d] << " ";
           deallog << std::endl;
         }
-      catch (typename Mapping<dim,spacedim>::ExcTransformationFailed)
+      catch (typename Mapping<dim,spacedim>::ExcTransformationFailed&)
         {
           deallog << "No MappingQ transform possible for this cell and point." << std::endl;
         }

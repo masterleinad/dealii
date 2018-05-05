@@ -108,8 +108,8 @@ void test (const unsigned int n_glob_ref=2, const unsigned int n_ref = 0)
       for (typename Triangulation<dim>::active_cell_iterator cell=triangulation.begin_active();
            cell != triangulation.end(); ++cell)
         if (cell->is_locally_owned() &&
-            (cell->center().norm() < 0.5 && (cell->level() < 5 ||
-                                             cell->center().norm() > 0.45)
+            ((cell->center().norm() < 0.5 && (cell->level() < 5 ||
+                                             cell->center().norm() > 0.45))
              ||
              (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
