@@ -79,7 +79,6 @@ helmholtz_operator (const MatrixFree<dim,ADType> &data,
           vec_copy(i) = ad.val();
         }
 
-
       fe_eval.evaluate (true, true, false);
       for (unsigned int q=0; q<n_q_points; ++q)
         {
@@ -88,27 +87,20 @@ helmholtz_operator (const MatrixFree<dim,ADType> &data,
         }
       fe_eval.integrate (true,true);
 
-      FullMatrix<double> local_matrix (n_independent_variables, n_independent_variables);
+      Vector<double> result (n_independent_variables);
 
       for (unsigned int I=0; I<n_independent_variables; ++I)
         {
           const ADNumberType residual_I = fe_eval.get_dof_value(I)[0];
           for (unsigned int J=0; J<n_independent_variables; ++J)
-            {
-              local_matrix(I,J) = residual_I.dx(J); // linearisation_IJ
-            }
+              result(I)+=residual_I.dx(J)*vec_copy(J);
         }
-
-      Vector<double> result (n_independent_variables);
-      local_matrix.vmult(result, vec_copy);
 
       for (unsigned int I=0; I<n_independent_variables; ++I)
       {
-          Assert(std::abs(fe_eval.get_dof_value(I)[0].val() - result(I)) < 1.e-10, ExcInternalError());
+          AssertThrow(std::abs(fe_eval.get_dof_value(I)[0].val() - result(I)) < 1.e-10, ExcInternalError());
           deallog <<  result(I) << std::endl;
       }
-
-      local_matrix.print_formatted(std::cout);
 
       fe_eval.distribute_local_to_global (dst);
     }
@@ -195,7 +187,7 @@ void do_test (const DoFHandler<dim> &dof,
     {
       if (constraints.is_constrained(i))
         continue;
-      const double entry = random_value<double>();
+      const double entry = i;//random_value<double>();
       in(i) = entry;
       in_dist(i) = entry;
     }
@@ -278,6 +270,7 @@ void test ()
 
 int main ()
 {
+  MultithreadInfo::set_thread_limit(1);
   initlog();
 
   {
