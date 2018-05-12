@@ -145,7 +145,7 @@ public:
     data.initialize_dof_vector(vector);
   }
 
-  const parallel::distributed::Vector<number> &
+  const std::shared_ptr<DiagonalMatrix<parallel::distributed::Vector<number>>> &
   get_matrix_diagonal_inverse() const
   {
     return inverse_diagonal_entries;
@@ -250,14 +250,17 @@ private:
   void
   compute_inverse_diagonal ()
   {
-    data.initialize_dof_vector(inverse_diagonal_entries);
+    this->inverse_diagonal_entries = std::make_shared<DiagonalMatrix<parallel::distributed::Vector<number>>>();
+    parallel::distributed::Vector<number> &inverse_diagonal_vector
+      = this->inverse_diagonal_entries->get_vector();
+    data.initialize_dof_vector(inverse_diagonal_vector);
     unsigned int dummy;
     data.cell_loop (&LaplaceOperator::local_diagonal_cell,
-                    this, inverse_diagonal_entries, dummy);
+                    this, inverse_diagonal_vector, dummy);
 
-    for (unsigned int i=0; i<inverse_diagonal_entries.local_size(); ++i)
-      if (std::abs(inverse_diagonal_entries.local_element(i)) > 1e-10)
-        inverse_diagonal_entries.local_element(i) = 1./inverse_diagonal_entries.local_element(i);
+    for (unsigned int i=0; i<inverse_diagonal_vector.local_size(); ++i)
+      if (std::abs(inverse_diagonal_vector.local_element(i)) > 1e-10)
+        inverse_diagonal_vector.local_element(i) = 1./inverse_diagonal_vector.local_element(i);
   }
 
   void
@@ -328,7 +331,7 @@ private:
   }
 
   MatrixFree<dim,number> data;
-  parallel::distributed::Vector<number> inverse_diagonal_entries;
+  std::shared_ptr<DiagonalMatrix<parallel::distributed::Vector<number>>> inverse_diagonal_entries;
 };
 
 
@@ -433,7 +436,7 @@ void do_test (const DoFHandler<dim>  &dof,
       smoother_data[level].smoothing_range = 20.;
       smoother_data[level].degree = 5;
       smoother_data[level].eig_cg_n_iterations = 15;
-      smoother_data[level].matrix_diagonal_inverse =
+      smoother_data[level].preconditioner =
         mg_matrices[level].get_matrix_diagonal_inverse();
     }
   mg_smoother.initialize(mg_matrices, smoother_data);
