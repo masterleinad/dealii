@@ -51,56 +51,55 @@
 
 using ADNumberType = Sacado::Fad::DFad<double>;
 
-template <int dim, int fe_degree, typename VectorType, int n_q_points_1d, typename ADType>
+template <int dim, int fe_degree, typename VectorType, int n_q_points_1d>
 void
-helmholtz_operator (const MatrixFree<dim,ADType> &data,
+helmholtz_operator (const MatrixFree<dim,typename VectorType::value_type> &data,
                     VectorType                                            &dst,
                     const VectorType                                      &src,
                     const std::pair<unsigned int,unsigned int>            &cell_range)
 {
+  using ADNumberType = Sacado::Fad::DFad<double>;
+
   typedef typename VectorType::value_type Number;
-  FEEvaluation<dim,fe_degree,n_q_points_1d,1,ADType> fe_eval (data);
+  VectorType src_linear (src);
+  src_linear = src;
+
+  FEEvaluation<dim,fe_degree,n_q_points_1d,1,typename VectorType::value_type> fe_eval (data);
+  FEEvaluation<dim,fe_degree,n_q_points_1d,1,typename VectorType::value_type> fe_eval_linear (data);
+
   const unsigned int n_q_points = fe_eval.n_q_points;
 
   for (unsigned int cell=cell_range.first; cell<cell_range.second; ++cell)
     {
       fe_eval.reinit (cell);
+      fe_eval_linear.reinit (cell);
       fe_eval.read_dof_values (src);
-
-      const unsigned int n_independent_variables = fe_eval.dofs_per_cell;
-      Vector<double> vec_copy (n_independent_variables);
-
-      for (unsigned int i=0; i<n_independent_variables; ++i)
-        {
-          const ADType ad (n_independent_variables, i, fe_eval.get_dof_value(i)[0].val());
-          VectorizedArray<ADType> ad_vec;
-          ad_vec = ad;
-          fe_eval.submit_dof_value(ad_vec, i);
-          vec_copy(i) = ad.val();
-        }
+      fe_eval_linear.read_dof_values (src_linear);
 
       fe_eval.evaluate (true, true, false);
+      fe_eval_linear.evaluate (true, true, false);
       for (unsigned int q=0; q<n_q_points; ++q)
         {
-          fe_eval.submit_value (internal::NumberType<VectorizedArray<ADType>>::value(10)*fe_eval.get_value(q),q);
-          fe_eval.submit_gradient (fe_eval.get_gradient(q),q);
+          {
+            const ADNumberType ad (1, 0, fe_eval_linear.get_value(q)[0]);
+            const ADNumberType residual_q_ad = 10.*ad*ad;
+            VectorizedArray<typename VectorType::value_type> residual_q;
+            residual_q = residual_q_ad.dx(0);
+            fe_eval.submit_value (residual_q*fe_eval.get_value(q)[0],q);
+          }
+          {
+            Tensor<1,dim,ADNumberType> ad;
+            for (unsigned int c=0; c<dim; ++c)
+              ad[c] = ADNumberType(dim, c, fe_eval_linear.get_gradient(q)[0][c]);
+            const ADNumberType residual_q_ad = ad*ad;
+
+            Tensor<1, dim, VectorizedArray<typename VectorType::value_type>> residual_q;
+            for (unsigned int c = 0; c<dim; ++c)
+              residual_q[c] = residual_q_ad.dx(c);
+            fe_eval.submit_gradient (residual_q*fe_eval.get_gradient(q)[0],q);
+          }
         }
       fe_eval.integrate (true,true);
-
-      Vector<double> result (n_independent_variables);
-
-      for (unsigned int I=0; I<n_independent_variables; ++I)
-        {
-          const ADNumberType residual_I = fe_eval.get_dof_value(I)[0];
-          for (unsigned int J=0; J<n_independent_variables; ++J)
-            result(I)+=residual_I.dx(J)*vec_copy(J);
-        }
-
-      for (unsigned int I=0; I<n_independent_variables; ++I)
-        {
-          AssertThrow(std::abs(fe_eval.get_dof_value(I)[0].val() - result(I)) < 1.e-10, ExcInternalError());
-          deallog <<  result(I) << std::endl;
-        }
 
       fe_eval.distribute_local_to_global (dst);
     }
@@ -113,7 +112,7 @@ class MatrixFreeTest
 public:
   typedef VectorizedArray<Number> vector_t;
 
-  MatrixFreeTest(const MatrixFree<dim,ADNumberType> &data_in):
+  MatrixFreeTest(const MatrixFree<dim,typename VectorType::value_type> &data_in):
     data (data_in)
   {};
 
@@ -121,16 +120,16 @@ public:
               const VectorType &src) const
   {
     dst = 0;
-    const std::function<void(const MatrixFree<dim,ADNumberType> &,
+    const std::function<void(const MatrixFree<dim,typename VectorType::value_type> &,
                              VectorType &,
                              const VectorType &,
                              const std::pair<unsigned int,unsigned int> &)>
-    wrap = helmholtz_operator<dim,fe_degree,VectorType,n_q_points_1d,ADNumberType>;
+    wrap = helmholtz_operator<dim,fe_degree,VectorType,n_q_points_1d>;
     data.cell_loop (wrap, dst, src);
   };
 
 private:
-  const MatrixFree<dim,ADNumberType> &data;
+  const MatrixFree<dim,typename VectorType::value_type> &data;
 };
 
 
@@ -157,21 +156,22 @@ void do_test (const DoFHandler<dim> &dof,
   //std::cout << "Number of constraints: " << constraints.n_constraints() << std::endl;
 
   MappingQGeneric<dim> mapping(dof.get_fe().degree);
-  MatrixFree<dim,ADNumberType> mf_data;
+  typedef Vector<number> VectorType;
+  MatrixFree<dim,typename VectorType::value_type> mf_data;
   {
     const QGauss<1> quad (n_q_points_1d);
-    typename MatrixFree<dim,ADNumberType>::AdditionalData data;
+    typename MatrixFree<dim, typename VectorType::value_type>::AdditionalData data;
     if (parallel_option == 1)
       data.tasks_parallel_scheme =
-        MatrixFree<dim,ADNumberType>::AdditionalData::partition_color;
+        MatrixFree<dim, typename VectorType::value_type>::AdditionalData::partition_color;
     else if (parallel_option == 2)
       data.tasks_parallel_scheme =
-        MatrixFree<dim,ADNumberType>::AdditionalData::color;
+        MatrixFree<dim, typename VectorType::value_type>::AdditionalData::color;
     else
       {
         Assert (parallel_option == 0, ExcInternalError());
         data.tasks_parallel_scheme =
-          MatrixFree<dim,ADNumberType>::AdditionalData::partition_partition;
+          MatrixFree<dim, typename VectorType::value_type>::AdditionalData::partition_partition;
       }
     data.tasks_block_size = 7;
 
