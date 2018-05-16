@@ -278,16 +278,16 @@ public:
         homogeneous_constraints.distribute(solution_increment);
         solution += solution_increment;
 
-        DataOut<dim> data_out;
+  /*      DataOut<dim> data_out;
         data_out.attach_dof_handler (dof_handler);
         data_out.add_data_vector (solution, "solution");
         data_out.build_patches ();
         std::ofstream output ("solution-2d"+Utilities::int_to_string(iteration)+".vtk");
-        data_out.write_vtk (output);
+        data_out.write_vtk (output);*/
 
-        std::cout << "Solution norm: " << solution.l2_norm() << std::endl;
-        std::cout << "Residual norm: " << residual_vector.l2_norm() << std::endl;
-        std::cout << "Solution increment norm: " << solution_increment.l2_norm() << std::endl;
+        deallog << "Solution norm: " << solution.l2_norm() << std::endl;
+        deallog << "Residual norm: " << residual_vector.l2_norm() << std::endl;
+        deallog << "Solution increment norm: " << solution_increment.l2_norm() << std::endl;
       }
   }
 

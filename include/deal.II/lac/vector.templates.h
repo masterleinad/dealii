@@ -389,7 +389,7 @@ template <typename Number>
 Vector<Number> &
 Vector<Number>::operator= (const Number s)
 {
-  AssertIsFinite(s);
+  AssertIsFinite(internal::NumberType<double>::value(s));
   if (s != Number())
     Assert (vec_size!=0, ExcEmptyObject());
 
