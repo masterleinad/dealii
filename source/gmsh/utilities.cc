@@ -28,7 +28,7 @@ DEAL_II_NAMESPACE_OPEN
 namespace Gmsh
 {
   AdditionalParameters::AdditionalParameters(
-    const double       characteristic_length,
+    const double characteristic_length,
     const std::string& output_base_name)
     : characteristic_length(characteristic_length),
       output_base_name(output_base_name)
@@ -48,12 +48,12 @@ namespace Gmsh
 #  ifdef DEAL_II_WITH_OPENCASCADE
   template <int spacedim>
   void
-  create_triangulation_from_boundary_curve(const TopoDS_Edge&          boundary,
+  create_triangulation_from_boundary_curve(const TopoDS_Edge& boundary,
                                            Triangulation<2, spacedim>& tria,
                                            const AdditionalParameters& prm)
   {
-    std::string base_name      = prm.output_base_name;
-    char        dir_template[] = "ctfbc-XXXXXX";
+    std::string base_name = prm.output_base_name;
+    char dir_template[]   = "ctfbc-XXXXXX";
     if(base_name == "")
       {
         const char* temp = mkdtemp(dir_template);

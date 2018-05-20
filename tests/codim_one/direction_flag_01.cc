@@ -32,7 +32,7 @@ test()
   const unsigned int dim      = spacedim - 1;
 
   Triangulation<dim, spacedim> boundary_mesh;
-  Triangulation<spacedim>      volume_mesh;
+  Triangulation<spacedim> volume_mesh;
   GridGenerator::hyper_cube(volume_mesh);
   GridGenerator::extract_boundary_mesh(volume_mesh, boundary_mesh);
   for(Triangulation<dim, spacedim>::active_cell_iterator cell

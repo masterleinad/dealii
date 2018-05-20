@@ -69,9 +69,9 @@ TridiagonalMatrix<number>::all_zero() const
 
 template <typename number>
 void
-TridiagonalMatrix<number>::vmult(Vector<number>&       w,
+TridiagonalMatrix<number>::vmult(Vector<number>& w,
                                  const Vector<number>& v,
-                                 const bool            adding) const
+                                 const bool adding) const
 {
   Assert(state == matrix, ExcState(state));
 
@@ -122,7 +122,7 @@ TridiagonalMatrix<number>::vmult(Vector<number>&       w,
 
 template <typename number>
 void
-TridiagonalMatrix<number>::vmult_add(Vector<number>&       w,
+TridiagonalMatrix<number>::vmult_add(Vector<number>& w,
                                      const Vector<number>& v) const
 {
   vmult(w, v, true);
@@ -130,9 +130,9 @@ TridiagonalMatrix<number>::vmult_add(Vector<number>&       w,
 
 template <typename number>
 void
-TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
+TridiagonalMatrix<number>::Tvmult(Vector<number>& w,
                                   const Vector<number>& v,
-                                  const bool            adding) const
+                                  const bool adding) const
 {
   Assert(state == matrix, ExcState(state));
 
@@ -142,7 +142,7 @@ TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
   if(n() == 0)
     return;
 
-  const size_type                              e = n() - 1;
+  const size_type e                              = n() - 1;
   typename std::vector<number>::const_iterator d = diagonal.begin();
   typename std::vector<number>::const_iterator r = right.begin();
   typename std::vector<number>::const_iterator l = left.begin();
@@ -173,7 +173,7 @@ TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
 
 template <typename number>
 void
-TridiagonalMatrix<number>::Tvmult_add(Vector<number>&       w,
+TridiagonalMatrix<number>::Tvmult_add(Vector<number>& w,
                                       const Vector<number>& v) const
 {
   Tvmult(w, v, true);
@@ -186,7 +186,7 @@ TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number>& w,
 {
   Assert(state == matrix, ExcState(state));
 
-  const size_type                              e = n() - 1;
+  const size_type e                              = n() - 1;
   typename std::vector<number>::const_iterator d = diagonal.begin();
   typename std::vector<number>::const_iterator r = right.begin();
   typename std::vector<number>::const_iterator l = left.begin();
@@ -220,7 +220,7 @@ TridiagonalMatrix<number>::compute_eigenvalues()
   Assert(is_symmetric, ExcNotImplemented());
 
   const types::blas_int nn = n();
-  types::blas_int       info;
+  types::blas_int info;
   stev(&N, &nn, diagonal.data(), right.data(), nullptr, &one, nullptr, &info);
   Assert(info == 0, ExcInternalError());
 

@@ -38,24 +38,24 @@
 
 template <typename NumberType, int dim, typename ExtractorType>
 void
-test_view(const Vector<double>&          solution,
-          const FEValues<dim>&           fe_values,
-          const unsigned int&            n_q_points,
-          const ExtractorType&           extractor,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
+          const ExtractorType& extractor,
           const std::vector<NumberType>& local_dof_values);
 
 // Scalar view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&             solution,
-          const FEValues<dim>&              fe_values,
-          const unsigned int&               n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::Scalar& extractor,
-          const std::vector<NumberType>&    local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -90,15 +90,15 @@ test_view(const Vector<double>&             solution,
 // Vector view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&             solution,
-          const FEValues<dim>&              fe_values,
-          const unsigned int&               n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::Vector& extractor,
-          const std::vector<NumberType>&    local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -149,15 +149,15 @@ test_view(const Vector<double>&             solution,
 // SymmetricTensor view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&                         solution,
-          const FEValues<dim>&                          fe_values,
-          const unsigned int&                           n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::SymmetricTensor<2>& extractor,
-          const std::vector<NumberType>&                local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -180,15 +180,15 @@ test_view(const Vector<double>&                         solution,
 // Tensor view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&                solution,
-          const FEValues<dim>&                 fe_values,
-          const unsigned int&                  n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::Tensor<2>& extractor,
-          const std::vector<NumberType>&       local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -222,8 +222,8 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
   QGauss<dim> quadrature_formula(2);
 
   Triangulation<dim> tria;
-  DoFHandler<dim>    dof_handler(tria);
-  Vector<double>     solution;
+  DoFHandler<dim> dof_handler(tria);
+  Vector<double> solution;
 
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.refine_global(1);
@@ -237,7 +237,7 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
       solution(i) = i + 1;
     }
 
-  FEValues<dim>                        fe_values(fe,
+  FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients | update_hessians
                             | update_3rd_derivatives);
@@ -277,7 +277,7 @@ test()
 
   deallog.push("Scalar");
   {
-    FE_Q<dim>                  fe(degree);
+    FE_Q<dim> fe(degree);
     FEValuesExtractors::Scalar extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);
   }
@@ -285,7 +285,7 @@ test()
 
   deallog.push("Vector");
   {
-    FESystem<dim>              fe(FE_Q<dim>(degree), dim);
+    FESystem<dim> fe(FE_Q<dim>(degree), dim);
     FEValuesExtractors::Vector extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);
   }
@@ -293,7 +293,7 @@ test()
 
   deallog.push("SymmetricTensor");
   {
-    FESystem<dim>                          fe(FE_Q<dim>(degree),
+    FESystem<dim> fe(FE_Q<dim>(degree),
                      SymmetricTensor<2, dim>::n_independent_components);
     FEValuesExtractors::SymmetricTensor<2> extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);
@@ -302,7 +302,7 @@ test()
 
   deallog.push("Tensor");
   {
-    FESystem<dim>                 fe(FE_Q<dim>(degree),
+    FESystem<dim> fe(FE_Q<dim>(degree),
                      Tensor<2, dim>::n_independent_components);
     FEValuesExtractors::Tensor<2> extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);

@@ -75,12 +75,12 @@ private:
   write_grid(std::string filename);
 
   Triangulation<spacedim - 1, spacedim> tria;
-  FE_DGQ<spacedim - 1, spacedim>        fe;
-  DoFHandler<spacedim - 1, spacedim>    dof_handler;
+  FE_DGQ<spacedim - 1, spacedim> fe;
+  DoFHandler<spacedim - 1, spacedim> dof_handler;
 
   // finite elements used to smoothen the solution (from piecewise constant
   // to continuous piecewise quadratic)
-  FE_Q<spacedim - 1, spacedim>       fe_q;
+  FE_Q<spacedim - 1, spacedim> fe_q;
   DoFHandler<spacedim - 1, spacedim> dof_handler_q;
 
   FullMatrix<double> system_matrix;
@@ -109,7 +109,7 @@ BEM<spacedim>::run()
     {
       read_grid(SOURCE_DIR "/grids/circle_R10.inp");
 
-      Point<spacedim>                           p;
+      Point<spacedim> p;
       SphericalManifold<spacedim - 1, spacedim> boundary(p);
       tria.set_manifold(1, boundary);
 
@@ -165,8 +165,8 @@ template <int spacedim>
 void
 BEM<spacedim>::assemble_system()
 {
-  const QGauss<spacedim - 1>       quadrature_formula(2);
-  const QGaussLog<1>               qlog(1);
+  const QGauss<spacedim - 1> quadrature_formula(2);
+  const QGaussLog<1> qlog(1);
   FEValues<spacedim - 1, spacedim> fe_values_i(
     fe,
     quadrature_formula,
@@ -187,7 +187,7 @@ BEM<spacedim>::assemble_system()
 
   FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
   FullMatrix<double> cell_DLP_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<Tensor<1, spacedim>> cell_normals_i, cell_normals_j;
 
@@ -210,7 +210,7 @@ BEM<spacedim>::assemble_system()
 
       // assembling of the right hand side
       Point<spacedim - 1> a_unit(0.), b_unit(1.);
-      Point<spacedim>     A
+      Point<spacedim> A
         = fe_values_i.get_mapping().transform_unit_to_real_cell(cell_i, a_unit),
         B
         = fe_values_i.get_mapping().transform_unit_to_real_cell(cell_i, b_unit);
@@ -323,7 +323,7 @@ void
 BEM<spacedim>::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
 
@@ -339,15 +339,15 @@ BEM<spacedim>::solve()
   tangential_velocity.reinit(tria.n_active_cells());
   tangential_derivative.reinit(tria.n_active_cells());
   error.reinit(tria.n_active_cells());
-  QMidpoint<spacedim - 1>       q_midpoint;
-  QTrapez<spacedim - 1>         q_trapez;
+  QMidpoint<spacedim - 1> q_midpoint;
+  QTrapez<spacedim - 1> q_trapez;
   const QIterated<spacedim - 1> q_iterated(q_midpoint, 1);
 
   FEValues<spacedim - 1, spacedim> fe_values_q(
     fe_q, q_iterated, update_values | update_gradients | update_normal_vectors);
 
-  std::vector<Tensor<1, spacedim>>     cell_normals(q_iterated.size());
-  std::vector<Point<spacedim>>         cell_tangentials(q_iterated.size());
+  std::vector<Tensor<1, spacedim>> cell_normals(q_iterated.size());
+  std::vector<Point<spacedim>> cell_tangentials(q_iterated.size());
   std::vector<types::global_dof_index> local_dof_indices(fe_q.dofs_per_cell);
 
   typename DoFHandler<spacedim - 1, spacedim>::active_cell_iterator cell

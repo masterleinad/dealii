@@ -96,7 +96,7 @@ check_fe(FiniteElement<dim>& fe)
 
   if(false)
     {
-      DataOut<dim>  data_out;
+      DataOut<dim> data_out;
       Vector<float> subdomain(tr.n_active_cells());
       for(unsigned int i = 0; i < subdomain.size(); ++i)
         subdomain(i) = tr.locally_owned_subdomain();
@@ -111,7 +111,7 @@ check_fe(FiniteElement<dim>& fe)
       data_out.write_vtu(output);
     }
 
-  Functions::ZeroFunction<dim>    zero;
+  Functions::ZeroFunction<dim> zero;
   typename FunctionMap<dim>::type fmap;
   fmap.insert(std::make_pair(0, &zero));
 
@@ -174,7 +174,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   check<2>();
   //check<3> ();

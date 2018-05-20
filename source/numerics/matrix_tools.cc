@@ -62,7 +62,7 @@ namespace MatrixTools
     template <typename Iterator>
     bool
     column_less_than(const typename Iterator::value_type p,
-                     const unsigned int                  column)
+                     const unsigned int column)
     {
       return (p.column() < column);
     }
@@ -73,10 +73,10 @@ namespace MatrixTools
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, number>& boundary_values,
-    SparseMatrix<number>&                            matrix,
-    Vector<number>&                                  solution,
-    Vector<number>&                                  right_hand_side,
-    const bool                                       eliminate_columns)
+    SparseMatrix<number>& matrix,
+    Vector<number>& solution,
+    Vector<number>& right_hand_side,
+    const bool eliminate_columns)
   {
     Assert(matrix.n() == right_hand_side.size(),
            ExcDimensionMismatch(matrix.n(), right_hand_side.size()));
@@ -227,10 +227,10 @@ namespace MatrixTools
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, number>& boundary_values,
-    BlockSparseMatrix<number>&                       matrix,
-    BlockVector<number>&                             solution,
-    BlockVector<number>&                             right_hand_side,
-    const bool                                       eliminate_columns)
+    BlockSparseMatrix<number>& matrix,
+    BlockVector<number>& solution,
+    BlockVector<number>& right_hand_side,
+    const bool eliminate_columns)
   {
     const unsigned int blocks = matrix.n_block_rows();
 
@@ -488,10 +488,10 @@ namespace MatrixTools
   void
   local_apply_boundary_values(
     const std::map<types::global_dof_index, number>& boundary_values,
-    const std::vector<types::global_dof_index>&      local_dof_indices,
-    FullMatrix<number>&                              local_matrix,
-    Vector<number>&                                  local_rhs,
-    const bool                                       eliminate_columns)
+    const std::vector<types::global_dof_index>& local_dof_indices,
+    FullMatrix<number>& local_matrix,
+    Vector<number>& local_rhs,
+    const bool eliminate_columns)
   {
     Assert(local_dof_indices.size() == local_matrix.m(),
            ExcDimensionMismatch(local_dof_indices.size(), local_matrix.m()));
@@ -528,8 +528,8 @@ namespace MatrixTools
     //
     // we only compute this value lazily the
     // first time we need it.
-    number             average_diagonal = 0;
-    const unsigned int n_local_dofs     = local_dof_indices.size();
+    number average_diagonal         = 0;
+    const unsigned int n_local_dofs = local_dof_indices.size();
     for(unsigned int i = 0; i < n_local_dofs; ++i)
       {
         const typename std::map<types::global_dof_index, number>::const_iterator

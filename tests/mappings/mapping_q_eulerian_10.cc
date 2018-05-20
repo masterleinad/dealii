@@ -38,7 +38,7 @@ test()
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria);
 
-  FESystem<dim, spacedim>   fe(FE_Q<dim, spacedim>(1), spacedim);
+  FESystem<dim, spacedim> fe(FE_Q<dim, spacedim>(1), spacedim);
   DoFHandler<dim, spacedim> dh(tria);
 
   dh.distribute_dofs(fe);
@@ -48,7 +48,7 @@ test()
           << std::endl;
 
   // Create a Mapping
-  Vector<double>                                  map_vector(dh.n_dofs());
+  Vector<double> map_vector(dh.n_dofs());
   MappingQEulerian<dim, Vector<double>, spacedim> mapping(1, dh, map_vector);
 
   tria.refine_global(1);

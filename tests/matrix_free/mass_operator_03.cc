@@ -47,7 +47,7 @@ test()
   tria.refine_global(3);
 
   FE_Q_Hierarchical<dim> fe(fe_degree);
-  DoFHandler<dim>        dof(tria);
+  DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
   IndexSet owned_set = dof.locally_owned_dofs();
@@ -66,7 +66,7 @@ test()
   std::shared_ptr<MatrixFree<dim, number>> mf_data(
     new MatrixFree<dim, number>());
   {
-    const QGauss<1>                                  quad(fe_degree + 2);
+    const QGauss<1> quad(fe_degree + 2);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.tasks_block_size      = 7;

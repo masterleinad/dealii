@@ -30,7 +30,7 @@ test()
   const int dim = 2;
   // create a dummy triangulation with no extension and set the geometry
   // through MappingQEulerian
-  Triangulation<dim>      tria;
+  Triangulation<dim> tria;
   std::vector<Point<dim>> points(4);
   points[0][0] = 0.0;
   points[0][1] = 0.0;
@@ -50,8 +50,8 @@ test()
 
   tria.create_triangulation(points, cells, SubCellData());
 
-  FE_Q<dim>       fe(1);
-  FESystem<dim>   fe_sys(fe, dim);
+  FE_Q<dim> fe(1);
+  FESystem<dim> fe_sys(fe, dim);
   DoFHandler<dim> dof_h(tria);
   dof_h.distribute_dofs(fe_sys);
   Vector<double> displacements(dof_h.n_dofs());
@@ -63,9 +63,9 @@ test()
   // this gives a Cartesian cell but in non-standard orientation (x-coordinate
   // is gone through backwards)
   MappingQEulerian<dim> mapping(1, dof_h, displacements);
-  QGauss<dim>           quad(1);
-  FEValues<dim>         fe_val(mapping, fe, quad, update_JxW_values);
-  double                integral = 0.;
+  QGauss<dim> quad(1);
+  FEValues<dim> fe_val(mapping, fe, quad, update_JxW_values);
+  double integral = 0.;
   /*typename*/ Triangulation<dim>::active_cell_iterator cell
     = tria.begin_active(),
     endc = tria.end();

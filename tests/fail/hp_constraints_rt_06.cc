@@ -27,7 +27,7 @@ test()
   if(dim == 1)
     return;
 
-  hp::FECollection<dim>     fe;
+  hp::FECollection<dim> fe;
   std::vector<unsigned int> degrees;
   for(unsigned int i = 1; i < 7 - dim; ++i)
     {

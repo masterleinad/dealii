@@ -31,12 +31,12 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   {
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix                    testproblem(size, size);
+    FDMatrix testproblem(size, size);
     PETScWrappers::SparseMatrix A(dim, dim, 5);
     testproblem.five_point(A);
 
@@ -57,7 +57,7 @@ main(int argc, char** argv)
     // a reasonably small value of 1.e-4.
     SolverControl control(2500, 1.e-4);
 
-    PETScWrappers::SolverRichardson   solver(control);
+    PETScWrappers::SolverRichardson solver(control);
     PETScWrappers::PreconditionJacobi preconditioner(A);
 
     check_solver_within_range(

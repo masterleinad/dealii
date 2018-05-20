@@ -35,7 +35,7 @@ public:
 
 private:
   SmartPointer<const FullMatrix<double>, Explicit> matrix;
-  FullMatrix<double>                               m;
+  FullMatrix<double> m;
 };
 
 class Implicit : public OperatorBase
@@ -47,7 +47,7 @@ public:
 
 private:
   SmartPointer<const FullMatrix<double>, Implicit> matrix;
-  FullMatrix<double>                               m;
+  FullMatrix<double> m;
 };
 
 // End of declarations
@@ -55,7 +55,7 @@ private:
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
@@ -68,16 +68,16 @@ main()
   OutputOperator<Vector<double>> out;
   out.initialize_stream(logfile);
 
-  Explicit                          op_explicit(matrix);
-  Implicit                          op_implicit(matrix);
+  Explicit op_explicit(matrix);
+  Implicit op_implicit(matrix);
   ThetaTimestepping<Vector<double>> solver(op_explicit, op_implicit);
   solver.timestep_control().start_step(0.1);
   //solver.set_output(out);
 
   Vector<double> value(2);
   value(0) = 1.;
-  AnyData         indata;
-  AnyData         outdata;
+  AnyData indata;
+  AnyData outdata;
   Vector<double>* p = &value;
   outdata.add(p, "value");
   deallog << "Initial: " << value(0) << ' ' << value(1) << std::endl;

@@ -59,14 +59,14 @@ static const types::manifold_id straight_manifold_id = 3;
 template <int dim>
 std::shared_ptr<dealii::Manifold<dim>>
 ladutenko_circle(dealii::Triangulation<dim>& triangulation,
-                 const dealii::Point<dim>    center = dealii::Point<dim>(),
-                 const double                radius = 1.0);
+                 const dealii::Point<dim> center = dealii::Point<dim>(),
+                 const double radius             = 1.0);
 
 template <int dim>
 std::shared_ptr<Manifold<dim>>
 ladutenko_circle(Triangulation<dim>& triangulation,
-                 const Point<dim>    center,
-                 const double        radius)
+                 const Point<dim> center,
+                 const double radius)
 {
   std::shared_ptr<Manifold<dim>> boundary(new SphericalManifold<dim>(center));
   GridGenerator::hyper_ball(triangulation, center, radius);
@@ -138,9 +138,9 @@ public:
   const unsigned int n_global_refines;
 
   std::shared_ptr<Manifold<dim>> boundary_manifold;
-  Triangulation<dim>             triangulation;
-  hp::FECollection<dim>          finite_elements;
-  hp::DoFHandler<dim>            dof_handler;
+  Triangulation<dim> triangulation;
+  hp::FECollection<dim> finite_elements;
+  hp::DoFHandler<dim> dof_handler;
 
   void
   setup_dofs();
@@ -200,7 +200,7 @@ main(int argc, char** argv)
 {
   initlog();
 
-  static const int          dim      = 2;
+  static const int dim               = 2;
   static const unsigned int n_cycles = 6;
 
   unsigned int n_global_refines = 2;

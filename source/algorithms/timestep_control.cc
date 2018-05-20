@@ -77,8 +77,8 @@ TimestepControl::parse_parameters(ParameterHandler& param)
 bool
 TimestepControl::advance()
 {
-  bool   changed = false;
-  double s       = step_val;
+  bool changed = false;
+  double s     = step_val;
 
   // Do time step control, but not in
   // first step.

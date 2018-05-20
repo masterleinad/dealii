@@ -53,8 +53,8 @@ public:
   void
   face(MeshWorker::DoFInfo<dim>& dinfo1,
        MeshWorker::DoFInfo<dim>& dinfo2,
-       CellInfo&                 info1,
-       CellInfo&                 info2) const;
+       CellInfo& info1,
+       CellInfo& info2) const;
 
   bool cells;
   bool faces;
@@ -68,9 +68,9 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
     return;
   for(unsigned int k = 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int block_row = info.matrix(k).row;
+      const unsigned int block_col = info.matrix(k).column;
+      FullMatrix<double>& M1       = info.matrix(k).matrix;
       if(block_row == block_col)
         for(unsigned int i = 0; i < M1.m(); ++i)
           for(unsigned int j = 0; j < M1.n(); ++j)
@@ -88,9 +88,9 @@ Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
     return;
   for(unsigned int k = 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int block_row = info.matrix(k).row;
+      const unsigned int block_col = info.matrix(k).column;
+      FullMatrix<double>& M1       = info.matrix(k).matrix;
       if(block_row == block_col)
         for(unsigned int i = 0; i < M1.m(); ++i)
           for(unsigned int j = 0; j < M1.n(); ++j)
@@ -111,9 +111,9 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
     return;
   for(unsigned int k = 0; k < info1.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info1.matrix(k).row;
-      const unsigned int  block_col = info1.matrix(k).column;
-      FullMatrix<double>& M1        = info1.matrix(k).matrix;
+      const unsigned int block_row = info1.matrix(k).row;
+      const unsigned int block_col = info1.matrix(k).column;
+      FullMatrix<double>& M1       = info1.matrix(k).matrix;
       if(block_row == block_col)
         for(unsigned int i = 0; i < M1.m(); ++i)
           for(unsigned int j = 0; j < M1.n(); ++j)
@@ -133,7 +133,7 @@ test_simple(DoFHandler<dim>& dofs, bool faces)
   TrilinosWrappers::SparseMatrix matrix;
 
   const FiniteElement<dim>& fe = dofs.get_fe();
-  DynamicSparsityPattern    csp(dofs.n_dofs(), dofs.n_dofs());
+  DynamicSparsityPattern csp(dofs.n_dofs(), dofs.n_dofs());
   DoFTools::make_flux_sparsity_pattern(dofs, csp);
   matrix.reinit(dofs.locally_owned_dofs(), csp, MPI_COMM_WORLD, true);
 
@@ -260,7 +260,7 @@ test(const FiniteElement<dim>& fe)
           MPI_Barrier(MPI_COMM_WORLD);
           if(myid == i)
             {
-              std::ofstream                        f("ordering",
+              std::ofstream f("ordering",
                               (myid > 0) ? std::ofstream::app :
                                            std::ofstream::out);
               std::vector<types::global_dof_index> local_dof_indices(
@@ -299,9 +299,9 @@ main(int argc, char** argv)
     argc, argv, testing_max_num_threads());
   MPILogInitAll log;
 
-  FE_DGP<2>                      p0(0);
-  FE_Q<2>                        q1(1);
-  FESystem<2, 2>                 sys1(p0, 1, q1, 1);
+  FE_DGP<2> p0(0);
+  FE_Q<2> q1(1);
+  FESystem<2, 2> sys1(p0, 1, q1, 1);
   std::vector<FiniteElement<2>*> fe2;
   fe2.push_back(&p0);
   //  fe2.push_back(&q1);

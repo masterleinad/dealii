@@ -82,12 +82,12 @@ cheb2(const unsigned int d, const double x)
 }
 
 void
-check(const int          degree,
-      const bool         scale = false,
-      const double       a_L   = -0.1,
-      const double       a     = -0.01,
-      const double       b     = 0.01,
-      const unsigned int size  = 1000)
+check(const int degree,
+      const bool scale        = false,
+      const double a_L        = -0.1,
+      const double a          = -0.01,
+      const double b          = 0.01,
+      const unsigned int size = 1000)
 {
   deallog << "Degree " << degree << std::endl;
   LinearAlgebra::distributed::Vector<double> ev(size), x(size), y(size),
@@ -120,7 +120,7 @@ check(const int          degree,
   // p[H]x = \sum_i x_i p(\lambda_i) v_i
   const double c = (a + b) / 2.;
   const double e = (b - a) / 2.;
-  auto         L = [&](const double& x) { return (x - c) / e; };
+  auto L         = [&](const double& x) { return (x - c) / e; };
 
   const double scaling = scale ? cheb2(degree, L(a_L)) : 1.; // p(L(a_L))
   deallog << " Scaling: " << scaling << " @ " << a_L << std::endl;

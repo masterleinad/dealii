@@ -26,7 +26,7 @@ void
 test()
 {
   const SphericalManifold<dim> m0;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.set_all_manifold_ids_on_boundary(0);
   tria.set_manifold(0, m0);

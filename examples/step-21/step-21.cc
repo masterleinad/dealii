@@ -117,17 +117,17 @@ namespace Step21
     const unsigned int degree;
 
     Triangulation<dim> triangulation;
-    FESystem<dim>      fe;
-    DoFHandler<dim>    dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    BlockSparsityPattern      sparsity_pattern;
+    BlockSparsityPattern sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
 
     const unsigned int n_refinement_steps;
 
-    double       time_step;
+    double time_step;
     unsigned int timestep_number;
-    double       viscosity;
+    double viscosity;
 
     BlockVector<double> solution;
     BlockVector<double> old_solution;
@@ -241,7 +241,7 @@ namespace Step21
 
   template <int dim>
   double
-  InitialValues<dim>::value(const Point<dim>&  p,
+  InitialValues<dim>::value(const Point<dim>& p,
                             const unsigned int component) const
   {
     return Functions::ZeroFunction<dim>(dim + 2).value(p, component);
@@ -250,7 +250,7 @@ namespace Step21
   template <int dim>
   void
   InitialValues<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     Functions::ZeroFunction<dim>(dim + 2).vector_value(p, values);
   }
@@ -280,13 +280,13 @@ namespace Step21
 
       virtual void
       value_list(const std::vector<Point<dim>>& points,
-                 std::vector<Tensor<2, dim>>&   values) const;
+                 std::vector<Tensor<2, dim>>& values) const;
     };
 
     template <int dim>
     void
     KInverse<dim>::value_list(const std::vector<Point<dim>>& points,
-                              std::vector<Tensor<2, dim>>&   values) const
+                              std::vector<Tensor<2, dim>>& values) const
     {
       Assert(points.size() == values.size(),
              ExcDimensionMismatch(points.size(), values.size()));
@@ -352,7 +352,7 @@ namespace Step21
 
       virtual void
       value_list(const std::vector<Point<dim>>& points,
-                 std::vector<Tensor<2, dim>>&   values) const override;
+                 std::vector<Tensor<2, dim>>& values) const override;
 
     private:
       static std::vector<Point<dim>> centers;
@@ -383,7 +383,7 @@ namespace Step21
     template <int dim>
     void
     KInverse<dim>::value_list(const std::vector<Point<dim>>& points,
-                              std::vector<Tensor<2, dim>>&   values) const
+                              std::vector<Tensor<2, dim>>& values) const
     {
       Assert(points.size() == values.size(),
              ExcDimensionMismatch(points.size(), values.size()));
@@ -456,12 +456,12 @@ namespace Step21
 
   template <class MatrixType>
   void
-  InverseMatrix<MatrixType>::vmult(Vector<double>&       dst,
+  InverseMatrix<MatrixType>::vmult(Vector<double>& dst,
                                    const Vector<double>& src) const
   {
     SolverControl solver_control(std::max<unsigned int>(src.size(), 200),
                                  1e-8 * src.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     dst = 0;
 
@@ -471,21 +471,21 @@ namespace Step21
   class SchurComplement : public Subscriptor
   {
   public:
-    SchurComplement(const BlockSparseMatrix<double>&           A,
+    SchurComplement(const BlockSparseMatrix<double>& A,
                     const InverseMatrix<SparseMatrix<double>>& Minv);
 
     void
     vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
-    const SmartPointer<const BlockSparseMatrix<double>>           system_matrix;
+    const SmartPointer<const BlockSparseMatrix<double>> system_matrix;
     const SmartPointer<const InverseMatrix<SparseMatrix<double>>> m_inverse;
 
     mutable Vector<double> tmp1, tmp2;
   };
 
   SchurComplement::SchurComplement(
-    const BlockSparseMatrix<double>&           A,
+    const BlockSparseMatrix<double>& A,
     const InverseMatrix<SparseMatrix<double>>& Minv)
     : system_matrix(&A),
       m_inverse(&Minv),
@@ -521,7 +521,7 @@ namespace Step21
   {}
 
   void
-  ApproximateSchurComplement::vmult(Vector<double>&       dst,
+  ApproximateSchurComplement::vmult(Vector<double>& dst,
                                     const Vector<double>& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
@@ -648,10 +648,10 @@ namespace Step21
     system_matrix = 0;
     system_rhs    = 0;
 
-    QGauss<dim>     quadrature_formula(degree + 2);
+    QGauss<dim> quadrature_formula(degree + 2);
     QGauss<dim - 1> face_quadrature_formula(degree + 2);
 
-    FEValues<dim>     fe_values(fe,
+    FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
@@ -667,20 +667,20 @@ namespace Step21
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    const PressureRightHandSide<dim>  pressure_right_hand_side;
+    const PressureRightHandSide<dim> pressure_right_hand_side;
     const PressureBoundaryValues<dim> pressure_boundary_values;
     const RandomMedium::KInverse<dim> k_inverse;
 
-    std::vector<double>         pressure_rhs_values(n_q_points);
-    std::vector<double>         boundary_values(n_face_q_points);
+    std::vector<double> pressure_rhs_values(n_q_points);
+    std::vector<double> boundary_values(n_face_q_points);
     std::vector<Tensor<2, dim>> k_inverse_values(n_q_points);
 
-    std::vector<Vector<double>>              old_solution_values(n_q_points,
-                                                                 Vector<double>(dim + 2));
+    std::vector<Vector<double>> old_solution_values(n_q_points,
+                                                    Vector<double>(dim + 2));
     std::vector<std::vector<Tensor<1, dim>>> old_solution_grads(
       n_q_points, std::vector<Tensor<1, dim>>(dim + 2));
 
@@ -802,9 +802,9 @@ namespace Step21
   void
   TwoPhaseFlowProblem<dim>::assemble_rhs_S()
   {
-    QGauss<dim>       quadrature_formula(degree + 2);
-    QGauss<dim - 1>   face_quadrature_formula(degree + 2);
-    FEValues<dim>     fe_values(fe,
+    QGauss<dim> quadrature_formula(degree + 2);
+    QGauss<dim - 1> face_quadrature_formula(degree + 2);
+    FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
@@ -833,7 +833,7 @@ namespace Step21
     std::vector<Vector<double>> present_solution_values_face(
       n_face_q_points, Vector<double>(dim + 2));
 
-    std::vector<double>                  neighbor_saturation(n_face_q_points);
+    std::vector<double> neighbor_saturation(n_face_q_points);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     SaturationBoundaryValues<dim> saturation_boundary_values;
@@ -858,12 +858,12 @@ namespace Step21
         for(unsigned int q = 0; q < n_q_points; ++q)
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              const double   old_s = old_solution_values[q](dim + 1);
+              const double old_s = old_solution_values[q](dim + 1);
               Tensor<1, dim> present_u;
               for(unsigned int d = 0; d < dim; ++d)
                 present_u[d] = present_solution_values[q](d);
 
-              const double         phi_i_s = fe_values[saturation].value(i, q);
+              const double phi_i_s = fe_values[saturation].value(i, q);
               const Tensor<1, dim> grad_phi_i_s
                 = fe_values[saturation].gradient(i, q);
 
@@ -973,7 +973,7 @@ namespace Step21
 
       SolverControl solver_control(solution.block(1).size(),
                                    1e-12 * schur_rhs.l2_norm());
-      SolverCG<>    cg(solver_control);
+      SolverCG<> cg(solver_control);
 
       cg.solve(schur_complement, solution.block(1), schur_rhs, preconditioner);
 
@@ -1012,7 +1012,7 @@ namespace Step21
     {
       SolverControl solver_control(system_matrix.block(2, 2).m(),
                                    1e-8 * system_rhs.block(2).l2_norm());
-      SolverCG<>    cg(solver_control);
+      SolverCG<> cg(solver_control);
       cg.solve(system_matrix.block(2, 2),
                solution.block(2),
                system_rhs.block(2),
@@ -1116,13 +1116,13 @@ namespace Step21
   double
   TwoPhaseFlowProblem<dim>::get_maximal_velocity() const
   {
-    QGauss<dim>        quadrature_formula(degree + 2);
+    QGauss<dim> quadrature_formula(degree + 2);
     const unsigned int n_q_points = quadrature_formula.size();
 
     FEValues<dim> fe_values(fe, quadrature_formula, update_values);
     std::vector<Vector<double>> solution_values(n_q_points,
                                                 Vector<double>(dim + 2));
-    double                      max_velocity = 0;
+    double max_velocity = 0;
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),

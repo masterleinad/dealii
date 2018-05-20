@@ -39,8 +39,8 @@ void
 test(std::string filename)
 {
   Triangulation<dim, spacedim> tria;
-  FE_Q<dim, spacedim>          base_fe(1);
-  FESystem<dim, spacedim>      fe(base_fe, spacedim);
+  FE_Q<dim, spacedim> base_fe(1);
+  FESystem<dim, spacedim> fe(base_fe, spacedim);
 
   DoFHandler<dim, spacedim> shift_dh(tria);
 
@@ -59,15 +59,15 @@ test(std::string filename)
   grid_out.set_flags(GridOutFlags::Ucd(true));
   grid_out.write_ucd(tria, logfile);
 
-  QTrapez<dim>                                     quad;
+  QTrapez<dim> quad;
   MappingQ1Eulerian<dim, Vector<double>, spacedim> mapping(shift_dh, shift);
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = tria.begin_active(),
     endc = tria.end();
   Point<spacedim> real;
-  Point<dim>      unit;
-  double          eps = 1e-10;
+  Point<dim> unit;
+  double eps = 1e-10;
   for(; cell != endc; ++cell)
     {
       deallog << cell << std::endl;

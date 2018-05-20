@@ -405,7 +405,7 @@ namespace internal
        */
       void
       initialize(const unsigned int n_quadrature_points,
-                 const UpdateFlags  flags);
+                 const UpdateFlags flags);
 
       /**
        * Compute and return an estimate for the memory consumption (in bytes)
@@ -509,9 +509,9 @@ namespace internal
        * Initialize all vectors to correct size.
        */
       void
-      initialize(const unsigned int                  n_quadrature_points,
+      initialize(const unsigned int n_quadrature_points,
                  const FiniteElement<dim, spacedim>& fe,
-                 const UpdateFlags                   flags);
+                 const UpdateFlags flags);
 
       /**
        * Compute and return an estimate for the memory consumption (in bytes)

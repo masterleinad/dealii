@@ -80,8 +80,8 @@ private:
   setup_system();
 
   Triangulation<2> triangulation;
-  FE_Q<2>          fe;
-  DoFHandler<2>    dof_handler;
+  FE_Q<2> fe;
+  DoFHandler<2> dof_handler;
   ConstraintMatrix constraints;
 };
 

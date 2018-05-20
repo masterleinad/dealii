@@ -97,7 +97,7 @@ namespace internal
          */
         virtual NumberCache
         renumber_mg_dofs(
-          const unsigned int                          level,
+          const unsigned int level,
           const std::vector<types::global_dof_index>& new_numbers) const = 0;
       };
 

@@ -49,9 +49,9 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    cell_matrix(FullMatrix<double>&      M,
+    cell_matrix(FullMatrix<double>& M,
                 const FEValuesBase<dim>& fe,
-                double                   factor = 1.)
+                double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -87,8 +87,8 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     cell_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fetest,
+      Vector<number>& result,
+      const FEValuesBase<dim>& fetest,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& input,
       const double factor = 1.)
     {
@@ -122,10 +122,10 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    nitsche_matrix(FullMatrix<double>&      M,
+    nitsche_matrix(FullMatrix<double>& M,
                    const FEValuesBase<dim>& fe,
-                   double                   penalty,
-                   double                   factor = 1.)
+                   double penalty,
+                   double factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -135,8 +135,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               {
@@ -178,11 +178,11 @@ namespace LocalIntegrators
     template <int dim>
     void
     nitsche_residual(
-      Vector<double>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
+      Vector<double>& result,
+      const FEValuesBase<dim>& fe,
+      const VectorSlice<const std::vector<std::vector<double>>>& input,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
-      const VectorSlice<const std::vector<std::vector<double>>>&         data,
+      const VectorSlice<const std::vector<std::vector<double>>>& data,
       double penalty,
       double factor = 1.)
     {
@@ -194,8 +194,8 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
-          const double         dx = factor * fe.JxW(k);
-          const Tensor<1, dim> n  = fe.normal_vector(k);
+          const double dx        = factor * fe.JxW(k);
+          const Tensor<1, dim> n = fe.normal_vector(k);
 
           double umgn = 0.;
           double divu = 0.;
@@ -207,7 +207,7 @@ namespace LocalIntegrators
 
           for(unsigned int i = 0; i < n_dofs; ++i)
             {
-              double       vn = 0.;
+              double vn = 0.;
               const double divv
                 = fe[FEValuesExtractors::Vector(0)].divergence(i, k);
               for(unsigned int d = 0; d < dim; ++d)
@@ -229,15 +229,15 @@ namespace LocalIntegrators
 
     template <int dim>
     void
-    ip_matrix(FullMatrix<double>&      M11,
-              FullMatrix<double>&      M12,
-              FullMatrix<double>&      M21,
-              FullMatrix<double>&      M22,
+    ip_matrix(FullMatrix<double>& M11,
+              FullMatrix<double>& M12,
+              FullMatrix<double>& M21,
+              FullMatrix<double>& M22,
               const FEValuesBase<dim>& fe1,
               const FEValuesBase<dim>& fe2,
-              double                   penalty,
-              double                   factor1 = 1.,
-              double                   factor2 = -1.)
+              double penalty,
+              double factor1 = 1.,
+              double factor2 = -1.)
     {
       const unsigned int n_dofs = fe1.dofs_per_cell;
       AssertDimension(M11.n(), n_dofs);
@@ -255,15 +255,15 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
-          const double         dx = fe1.JxW(k);
-          const Tensor<1, dim> n  = fe1.normal_vector(k);
+          const double dx        = fe1.JxW(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
           for(unsigned int i = 0; i < n_dofs; ++i)
             for(unsigned int j = 0; j < n_dofs; ++j)
               {
-                double       uni = 0.;
-                double       une = 0.;
-                double       vni = 0.;
-                double       vne = 0.;
+                double uni = 0.;
+                double une = 0.;
+                double vni = 0.;
+                double vne = 0.;
                 const double divui
                   = fe1[FEValuesExtractors::Vector(0)].divergence(j, k);
                 const double divue
@@ -313,16 +313,16 @@ namespace LocalIntegrators
     template <int dim>
     void
     ip_residual(
-      Vector<double>&                                            result1,
-      Vector<double>&                                            result2,
-      const FEValuesBase<dim>&                                   fe1,
-      const FEValuesBase<dim>&                                   fe2,
+      Vector<double>& result1,
+      Vector<double>& result2,
+      const FEValuesBase<dim>& fe1,
+      const FEValuesBase<dim>& fe2,
       const VectorSlice<const std::vector<std::vector<double>>>& input1,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-                                                                 Dinput1,
+        Dinput1,
       const VectorSlice<const std::vector<std::vector<double>>>& input2,
       const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-             Dinput2,
+        Dinput2,
       double pen,
       double int_factor = 1.,
       double ext_factor = -1.)
@@ -341,12 +341,12 @@ namespace LocalIntegrators
 
       for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
-          const double         dx    = fe1.JxW(k);
-          const Tensor<1, dim> n     = fe1.normal_vector(k);
-          double               uni   = 0.;
-          double               une   = 0.;
-          double               divui = 0.;
-          double               divue = 0.;
+          const double dx        = fe1.JxW(k);
+          const Tensor<1, dim> n = fe1.normal_vector(k);
+          double uni             = 0.;
+          double une             = 0.;
+          double divui           = 0.;
+          double divue           = 0.;
           for(unsigned int d = 0; d < dim; ++d)
             {
               uni += input1[d][k] * n[d];
@@ -357,8 +357,8 @@ namespace LocalIntegrators
 
           for(unsigned int i = 0; i < n1; ++i)
             {
-              double       vni = 0.;
-              double       vne = 0.;
+              double vni = 0.;
+              double vne = 0.;
               const double divvi
                 = fe1[FEValuesExtractors::Vector(0)].divergence(i, k);
               const double divve

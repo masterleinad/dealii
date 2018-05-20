@@ -56,9 +56,9 @@ check()
   // note that presently dq2 elements
   // are not implemented in 3d, so
   // take special measures
-  const FE_DGQ<dim>  fe_constant(0);
-  const FE_Q<dim>    fe_quadratic(2);
-  const FE_DGQ<dim>  fe_dq_linear(1);
+  const FE_DGQ<dim> fe_constant(0);
+  const FE_Q<dim> fe_quadratic(2);
+  const FE_DGQ<dim> fe_dq_linear(1);
   const FE_DGQ<dim>* fe_dq_quadratic
     = (dim != 3 ? new FE_DGQ<dim>(2) : nullptr);
 

@@ -83,7 +83,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
   SimpleField<dim> function;
 
   deallog << "dim=" << dim << std::endl;
-  MPI_Comm     mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_communicator);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(mpi_communicator);
 
@@ -110,7 +110,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
       triangulation.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
@@ -155,7 +155,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
       data_out.write_vtu(output);
 
       const std::string mg_mesh = "mg_mesh";
-      GridOut           grid_out;
+      GridOut grid_out;
       grid_out.write_mesh_per_processor_as_vtu(
         triangulation, mg_mesh, true, true);
     }
@@ -179,7 +179,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
 
   // now go through all GMG levels and make sure FE field can represent
   // analytic function exactly:
-  QGauss<dim>                  quadrature(n_q_points);
+  QGauss<dim> quadrature(n_q_points);
   std::vector<LevelNumberType> q_values(quadrature.size());
 
   FEValues<dim> fe_values(
@@ -188,7 +188,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
     {
       --level;
 
-      std::vector<types::global_dof_index>    dof_indices(fe.dofs_per_cell);
+      std::vector<types::global_dof_index> dof_indices(fe.dofs_per_cell);
       typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(level);
       typename DoFHandler<dim>::cell_iterator endc = dof_handler.end(level);
       for(; cell != endc; ++cell)
@@ -240,7 +240,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
   test<2, 1>(0, 1);

@@ -35,11 +35,11 @@ namespace Utilities
     template <typename Number>
     void
     Partitioner::export_to_ghosted_array_start(
-      const unsigned int             communication_channel,
+      const unsigned int communication_channel,
       const ArrayView<const Number>& locally_owned_array,
-      const ArrayView<Number>&       temporary_storage,
-      const ArrayView<Number>&       ghost_array,
-      std::vector<MPI_Request>&      requests) const
+      const ArrayView<Number>& temporary_storage,
+      const ArrayView<Number>& ghost_array,
+      std::vector<MPI_Request>& requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices()
@@ -125,7 +125,7 @@ namespace Utilities
     template <typename Number>
     void
     Partitioner::export_to_ghosted_array_finish(
-      const ArrayView<Number>&  ghost_array,
+      const ArrayView<Number>& ghost_array,
       std::vector<MPI_Request>& requests) const
     {
       Assert(ghost_array.size() == n_ghost_indices()
@@ -178,10 +178,10 @@ namespace Utilities
     void
     Partitioner::import_from_ghosted_array_start(
       const VectorOperation::values vector_operation,
-      const unsigned int            communication_channel,
-      const ArrayView<Number>&      ghost_array,
-      const ArrayView<Number>&      temporary_storage,
-      std::vector<MPI_Request>&     requests) const
+      const unsigned int communication_channel,
+      const ArrayView<Number>& ghost_array,
+      const ArrayView<Number>& temporary_storage,
+      std::vector<MPI_Request>& requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices()
@@ -328,11 +328,11 @@ namespace Utilities
     template <typename Number>
     void
     Partitioner::import_from_ghosted_array_finish(
-      const VectorOperation::values  vector_operation,
+      const VectorOperation::values vector_operation,
       const ArrayView<const Number>& temporary_storage,
-      const ArrayView<Number>&       locally_owned_array,
-      const ArrayView<Number>&       ghost_array,
-      std::vector<MPI_Request>&      requests) const
+      const ArrayView<Number>& locally_owned_array,
+      const ArrayView<Number>& ghost_array,
+      std::vector<MPI_Request>& requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices()

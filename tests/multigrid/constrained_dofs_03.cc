@@ -51,7 +51,7 @@ check_fe(FiniteElement<dim>& fe, ComponentMask& component_mask)
   dofh.distribute_dofs(fe);
   dofh.distribute_mg_dofs(fe);
 
-  MGConstrainedDoFs            mg_constrained_dofs;
+  MGConstrainedDoFs mg_constrained_dofs;
   std::set<types::boundary_id> boundary_indicators;
 
   boundary_indicators.insert(0);
@@ -75,8 +75,8 @@ check()
 {
   //All primitive
   {
-    FE_Q<dim>     q1(2);
-    FE_Q<dim>     q2(1);
+    FE_Q<dim> q1(2);
+    FE_Q<dim> q2(1);
     FESystem<dim> s1(q1, dim, q2, 1);
 
     //All selected
@@ -92,8 +92,8 @@ check()
   //Non-primitive
   {
     FE_RaviartThomas<dim> q1(1);
-    FE_DGQ<dim>           q2(1);
-    FESystem<dim>         s1(q1, 1, q2, 1);
+    FE_DGQ<dim> q2(1);
+    FESystem<dim> s1(q1, 1, q2, 1);
 
     //All selected
     ComponentMask component_mask1(dim + 1, true);

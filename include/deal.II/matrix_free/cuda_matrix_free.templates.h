@@ -52,9 +52,9 @@ namespace CUDAWrappers
     template <typename Number>
     void
     transpose(const unsigned int N,
-              const unsigned     M,
-              const Number*      src,
-              Number*            dst)
+              const unsigned M,
+              const Number* src,
+              Number* dst)
     {
       // src is N X M
       // dst is M X N
@@ -69,8 +69,8 @@ namespace CUDAWrappers
     template <typename Number>
     void
     transpose_in_place(std::vector<Number>& array_host,
-                       const unsigned int   n,
-                       const unsigned int   m)
+                       const unsigned int n,
+                       const unsigned int m)
     {
       // convert to structure-of-array
       std::vector<Number> old(array_host.size());
@@ -84,9 +84,9 @@ namespace CUDAWrappers
      */
     template <typename Number1, typename Number2>
     void
-    alloc_and_copy(Number1**             array_device,
+    alloc_and_copy(Number1** array_device,
                    std::vector<Number2>& array_host,
-                   const unsigned int    n)
+                   const unsigned int n)
     {
       cudaError_t error_code = cudaMalloc(array_device, n * sizeof(Number1));
       AssertCuda(error_code);
@@ -107,12 +107,12 @@ namespace CUDAWrappers
     {
     public:
       ReinitHelper(
-        MatrixFree<dim, Number>*       data,
-        const Mapping<dim>&            mapping,
+        MatrixFree<dim, Number>* data,
+        const Mapping<dim>& mapping,
         const FiniteElement<dim, dim>& fe,
-        const Quadrature<1>&           quad,
+        const Quadrature<1>& quad,
         const ::dealii::internal::MatrixFreeFunctions::ShapeInfo<Number>&
-                           shape_info,
+          shape_info,
         const UpdateFlags& update_flags);
 
       void
@@ -132,31 +132,31 @@ namespace CUDAWrappers
       MatrixFree<dim, Number>* data;
       // Host data
       std::vector<unsigned int> local_to_global_host;
-      std::vector<Point<dim>>   q_points_host;
-      std::vector<Number>       JxW_host;
-      std::vector<Number>       inv_jacobian_host;
+      std::vector<Point<dim>> q_points_host;
+      std::vector<Number> JxW_host;
+      std::vector<Number> inv_jacobian_host;
       std::vector<unsigned int> constraint_mask_host;
       // Local buffer
       std::vector<types::global_dof_index> local_dof_indices;
-      FEValues<dim>                        fe_values;
+      FEValues<dim> fe_values;
       // Convert the default dof numbering to a lexicographic one
       const std::vector<unsigned int>& lexicographic_inv;
-      std::vector<unsigned int>        lexicographic_dof_indices;
-      const unsigned int               fe_degree;
-      const unsigned int               dofs_per_cell;
-      const unsigned int               q_points_per_cell;
-      const UpdateFlags&               update_flags;
-      const unsigned int               padding_length;
+      std::vector<unsigned int> lexicographic_dof_indices;
+      const unsigned int fe_degree;
+      const unsigned int dofs_per_cell;
+      const unsigned int q_points_per_cell;
+      const UpdateFlags& update_flags;
+      const unsigned int padding_length;
     };
 
     template <int dim, typename Number>
     ReinitHelper<dim, Number>::ReinitHelper(
-      MatrixFree<dim, Number>*  data,
-      const Mapping<dim>&       mapping,
+      MatrixFree<dim, Number>* data,
+      const Mapping<dim>& mapping,
       const FiniteElement<dim>& fe,
-      const Quadrature<1>&      quad,
+      const Quadrature<1>& quad,
       const ::dealii::internal::MatrixFreeFunctions::ShapeInfo<Number>&
-                         shape_info,
+        shape_info,
       const UpdateFlags& update_flags)
       : data(data),
         fe_degree(data->fe_degree),
@@ -249,7 +249,7 @@ namespace CUDAWrappers
     template <int dim, typename Number>
     template <typename CellFilter>
     void
-    ReinitHelper<dim, Number>::get_cell_data(const CellFilter&  cell,
+    ReinitHelper<dim, Number>::get_cell_data(const CellFilter& cell,
                                              const unsigned int cell_id)
     {
       cell->get_dof_indices(local_dof_indices);
@@ -276,7 +276,7 @@ namespace CUDAWrappers
       if(update_flags & update_JxW_values)
         {
           std::vector<double> JxW_values_double = fe_values.get_JxW_values();
-          const unsigned int  offset            = cell_id * padding_length;
+          const unsigned int offset             = cell_id * padding_length;
           for(unsigned int i = 0; i < q_points_per_cell; ++i)
             JxW_host[i + offset] = static_cast<Number>(JxW_values_double[i]);
         }
@@ -360,7 +360,7 @@ namespace CUDAWrappers
     std::vector<types::global_dof_index>
     get_conflict_indices(
       const FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>&
-                              cell,
+        cell,
       const ConstraintMatrix& constraints)
     {
       std::vector<types::global_dof_index> local_dof_indices(
@@ -375,9 +375,9 @@ namespace CUDAWrappers
     __global__ void
     copy_constrained_dofs(
       const dealii::types::global_dof_index* constrained_dofs,
-      const unsigned int                     n_constrained_dofs,
-      const Number*                          src,
-      Number*                                dst)
+      const unsigned int n_constrained_dofs,
+      const Number* src,
+      Number* dst)
     {
       const unsigned int dof
         = threadIdx.x + blockDim.x * (blockIdx.x + gridDim.x * blockIdx.y);
@@ -389,9 +389,9 @@ namespace CUDAWrappers
     __global__ void
     set_constrained_dofs(
       const dealii::types::global_dof_index* constrained_dofs,
-      const unsigned int                     n_constrained_dofs,
-      Number                                 val,
-      Number*                                dst)
+      const unsigned int n_constrained_dofs,
+      Number val,
+      Number* dst)
     {
       const unsigned int dof
         = threadIdx.x + blockDim.x * (blockIdx.x + gridDim.x * blockIdx.y);
@@ -401,10 +401,10 @@ namespace CUDAWrappers
 
     template <int dim, typename Number, typename functor>
     __global__ void
-    apply_kernel_shmem(const functor&                               func,
+    apply_kernel_shmem(const functor& func,
                        const typename MatrixFree<dim, Number>::Data gpu_data,
-                       const Number*                                src,
-                       Number*                                      dst)
+                       const Number* src,
+                       Number* dst)
     {
       const unsigned int cells_per_block
         = cells_per_block_shmem(dim, functor::n_dofs_1d - 1);
@@ -436,11 +436,11 @@ namespace CUDAWrappers
 
   template <int dim, typename Number>
   void
-  MatrixFree<dim, Number>::reinit(const Mapping<dim>&     mapping,
-                                  const DoFHandler<dim>&  dof_handler,
+  MatrixFree<dim, Number>::reinit(const Mapping<dim>& mapping,
+                                  const DoFHandler<dim>& dof_handler,
                                   const ConstraintMatrix& constraints,
-                                  const Quadrature<1>&    quad,
-                                  const AdditionalData    additional_data)
+                                  const Quadrature<1>& quad,
+                                  const AdditionalData additional_data)
   {
     if(typeid(Number) == typeid(double))
       cudaDeviceSetSharedMemConfig(cudaSharedMemBankSizeEightByte);
@@ -504,13 +504,13 @@ namespace CUDAWrappers
 
     // Create a graph coloring
     typedef FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>
-               CellFilter;
+      CellFilter;
     CellFilter begin(IteratorFilters::LocallyOwnedCell(),
                      dof_handler.begin_active());
     CellFilter end(IteratorFilters::LocallyOwnedCell(), dof_handler.end());
     typedef std::function<std::vector<types::global_dof_index>(
       CellFilter const&)>
-                    fun_type;
+      fun_type;
     const fun_type& fun
       = static_cast<fun_type>(std::bind(&internal::get_conflict_indices<dim>,
                                         std::placeholders::_1,
@@ -559,8 +559,8 @@ namespace CUDAWrappers
         std::vector<dealii::types::global_dof_index> constrained_dofs_host(
           n_constrained_dofs);
 
-        unsigned int       i_constraint = 0;
-        const unsigned int n_dofs       = dof_handler.n_dofs();
+        unsigned int i_constraint = 0;
+        const unsigned int n_dofs = dof_handler.n_dofs();
         for(unsigned int i = 0; i < n_dofs; ++i)
           {
             if(constraints.is_constrained(i))
@@ -673,7 +673,7 @@ namespace CUDAWrappers
   void
   MatrixFree<dim, Number>::copy_constrained_values(
     const CUDAVector<Number>& src,
-    CUDAVector<Number>&       dst) const
+    CUDAVector<Number>& dst) const
   {
     internal::copy_constrained_dofs<Number>
       <<<constraint_grid_dim, constraint_block_dim>>>(constrained_dofs,
@@ -684,7 +684,7 @@ namespace CUDAWrappers
 
   template <int dim, typename Number>
   void
-  MatrixFree<dim, Number>::set_constrained_values(Number              val,
+  MatrixFree<dim, Number>::set_constrained_values(Number val,
                                                   CUDAVector<Number>& dst) const
   {
     internal::set_constrained_dofs<Number>
@@ -702,9 +702,9 @@ namespace CUDAWrappers
   template <int dim, typename Number>
   template <typename functor>
   void
-  MatrixFree<dim, Number>::cell_loop(const functor&            func,
+  MatrixFree<dim, Number>::cell_loop(const functor& func,
                                      const CUDAVector<Number>& src,
-                                     CUDAVector<Number>&       dst) const
+                                     CUDAVector<Number>& dst) const
   {
     for(unsigned int i = 0; i < n_colors; ++i)
       internal::apply_kernel_shmem<dim, Number, functor>

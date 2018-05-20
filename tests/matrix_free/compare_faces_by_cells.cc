@@ -49,11 +49,11 @@ public:
   LaplaceOperator(){};
 
   void
-  initialize(const Mapping<dim>&    mapping,
+  initialize(const Mapping<dim>& mapping,
              const DoFHandler<dim>& dof_handler,
-             const unsigned int     level = numbers::invalid_unsigned_int)
+             const unsigned int level = numbers::invalid_unsigned_int)
   {
-    const QGauss<1>                                  quad(n_q_points_1d);
+    const QGauss<1> quad(n_q_points_1d);
     typename MatrixFree<dim, number>::AdditionalData addit_data;
     addit_data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::none;
@@ -109,7 +109,7 @@ private:
 
   void
   local_diagonal_face(
-    const MatrixFree<dim, number>&         data,
+    const MatrixFree<dim, number>& data,
     parallel::distributed::Vector<number>& dst,
     const int&,
     const std::pair<unsigned int, unsigned int>& face_range) const
@@ -200,7 +200,7 @@ private:
 
   void
   local_diagonal_boundary(
-    const MatrixFree<dim, number>&         data,
+    const MatrixFree<dim, number>& data,
     parallel::distributed::Vector<number>& dst,
     const int&,
     const std::pair<unsigned int, unsigned int>& face_range) const
@@ -244,7 +244,7 @@ private:
 
   void
   local_diagonal_by_cell(
-    const MatrixFree<dim, number>&         data,
+    const MatrixFree<dim, number>& data,
     parallel::distributed::Vector<number>& dst,
     const int&,
     const std::pair<unsigned int, unsigned int>& cell_range) const
@@ -268,7 +268,7 @@ private:
 
             std::array<types::boundary_id,
                        VectorizedArray<number>::n_array_elements>
-                                    boundary_ids = data.get_faces_by_cells_boundary_id(cell, face);
+              boundary_ids = data.get_faces_by_cells_boundary_id(cell, face);
             VectorizedArray<number> factor_boundary;
             for(unsigned int v = 0;
                 v < VectorizedArray<number>::n_array_elements;
@@ -320,13 +320,13 @@ test()
   create_mesh(tria);
   tria.refine_global(std::max(8 - fe_degree - 2 * dim, 1));
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   dof.distribute_mg_dofs(fe);
   deallog << "Number of DoFs: " << dof.n_dofs() << std::endl;
 
-  MappingQGeneric<dim>                                   mapping(fe_degree + 1);
+  MappingQGeneric<dim> mapping(fe_degree + 1);
   LaplaceOperator<dim, fe_degree, n_q_points_1d, number> fine_matrix;
   fine_matrix.initialize(mapping, dof);
 

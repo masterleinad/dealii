@@ -37,7 +37,7 @@ template <int dim>
 void
 check()
 {
-  Triangulation<dim>        triangulation;
+  Triangulation<dim> triangulation;
   std::vector<unsigned int> subdivisions(dim, 1U);
   subdivisions[0] = 2;
   Point<dim> p1, p2;

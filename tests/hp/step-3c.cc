@@ -64,11 +64,11 @@ private:
   void
   output_results() const;
 
-  Triangulation<2>    triangulation;
+  Triangulation<2> triangulation;
   hp::FECollection<2> fe;
-  hp::DoFHandler<2>   dof_handler;
+  hp::DoFHandler<2> dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   // Although we do not have h-refinement,
@@ -149,7 +149,7 @@ LaplaceProblem::assemble_system()
   const unsigned int max_dofs_per_cell = fe.max_dofs_per_cell();
 
   FullMatrix<double> cell_matrix(max_dofs_per_cell, max_dofs_per_cell);
-  Vector<double>     cell_rhs(max_dofs_per_cell);
+  Vector<double> cell_rhs(max_dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(max_dofs_per_cell);
 
@@ -206,7 +206,7 @@ void
 LaplaceProblem::solve()
 {
   SolverControl solver_control(1000, 1e-6);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   check_solver_within_range(
     cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity()),

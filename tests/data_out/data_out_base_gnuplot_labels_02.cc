@@ -36,7 +36,7 @@ class DataOutX : public DataOutInterface<dim, spacedim>
 {
 public:
   DataOutX(const std::vector<::DataOutBase::Patch<dim, spacedim>>& patches,
-           const std::vector<std::string>&                         names)
+           const std::vector<std::string>& names)
     : patches(patches), names(names)
   {}
 
@@ -54,7 +54,7 @@ public:
 
 private:
   const std::vector<::DataOutBase::Patch<dim, spacedim>>& patches;
-  const std::vector<std::string>&                         names;
+  const std::vector<std::string>& names;
 };
 
 template <int dim, int spacedim>
@@ -87,7 +87,7 @@ check_all(std::ostream& log)
   std::ostream& out = log;
 #endif
 
-  char        name[100];
+  char name[100];
   const char* format = "%d%d.gnuplot";
 
   std::vector<std::string> labels;

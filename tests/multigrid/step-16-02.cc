@@ -72,14 +72,14 @@ class LaplaceMatrix : public MeshWorker::LocalIntegrator<dim>
 public:
   LaplaceMatrix();
   virtual void
-  cell(MeshWorker::DoFInfo<dim>&         dinfo,
+  cell(MeshWorker::DoFInfo<dim>& dinfo,
        MeshWorker::IntegrationInfo<dim>& info) const;
   virtual void
-  boundary(MeshWorker::DoFInfo<dim>&         dinfo,
+  boundary(MeshWorker::DoFInfo<dim>& dinfo,
            MeshWorker::IntegrationInfo<dim>& info) const;
   virtual void
-  face(MeshWorker::DoFInfo<dim>&         dinfo1,
-       MeshWorker::DoFInfo<dim>&         dinfo2,
+  face(MeshWorker::DoFInfo<dim>& dinfo1,
+       MeshWorker::DoFInfo<dim>& dinfo2,
        MeshWorker::IntegrationInfo<dim>& info1,
        MeshWorker::IntegrationInfo<dim>& info2) const;
 };
@@ -91,7 +91,7 @@ LaplaceMatrix<dim>::LaplaceMatrix()
 
 template <int dim>
 void
-LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
+LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>& dinfo,
                          MeshWorker::IntegrationInfo<dim>& info) const
 {
   AssertDimension(dinfo.n_matrices(), 1);
@@ -146,10 +146,10 @@ private:
   output_results(const unsigned int cycle) const;
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    mg_dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> mg_dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   ConstraintMatrix constraints;
@@ -160,11 +160,11 @@ private:
   const unsigned int degree;
   LaplaceMatrix<dim> matrix_integrator;
 
-  MGLevelObject<SparsityPattern>      mg_sparsity_patterns;
+  MGLevelObject<SparsityPattern> mg_sparsity_patterns;
   MGLevelObject<SparseMatrix<double>> mg_matrices;
   MGLevelObject<SparseMatrix<double>> mg_interface_in;
   MGLevelObject<SparseMatrix<double>> mg_interface_out;
-  MGConstrainedDoFs                   mg_constrained_dofs;
+  MGConstrainedDoFs mg_constrained_dofs;
 };
 
 template <int dim>
@@ -179,8 +179,8 @@ public:
 
   virtual void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+             std::vector<double>& values,
+             const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -196,8 +196,8 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 template <int dim>
 void
 Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                             std::vector<double>&           values,
-                             const unsigned int             component) const
+                             std::vector<double>& values,
+                             const unsigned int component) const
 {
   const unsigned int n_points = points.size();
 
@@ -243,7 +243,7 @@ LaplaceProblem<dim>::setup_system()
   constraints.clear();
   DoFTools::make_hanging_node_constraints(mg_dof_handler, constraints);
   typename FunctionMap<dim>::type dirichlet_boundary;
-  Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+  Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
   MappingQGeneric<dim> mapping(1);
   VectorTools::interpolate_boundary_values(
@@ -294,12 +294,12 @@ LaplaceProblem<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   const Coefficient<dim> coefficient;
-  std::vector<double>    coefficient_values(n_q_points);
+  std::vector<double> coefficient_values(n_q_points);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = mg_dof_handler.begin_active(),
@@ -341,9 +341,9 @@ LaplaceProblem<dim>::assemble_multigrid(const bool& use_mw)
     {
       mg_matrices = 0.;
 
-      MappingQGeneric<dim>                mapping(1);
+      MappingQGeneric<dim> mapping(1);
       MeshWorker::IntegrationInfoBox<dim> info_box;
-      UpdateFlags                         update_flags
+      UpdateFlags update_flags
         = update_values | update_gradients | update_hessians;
       info_box.add_update_flags_all(update_flags);
       info_box.initialize(fe, mapping);
@@ -387,7 +387,7 @@ LaplaceProblem<dim>::assemble_multigrid(const bool& use_mw)
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
       const Coefficient<dim> coefficient;
-      std::vector<double>    coefficient_values(n_q_points);
+      std::vector<double> coefficient_values(n_q_points);
 
       std::vector<ConstraintMatrix> boundary_constraints(
         triangulation.n_levels());
@@ -483,7 +483,7 @@ LaplaceProblem<dim>::solve()
     preconditioner(mg_dof_handler, mg, mg_transfer);
 
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   solution = 0;
 

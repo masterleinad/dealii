@@ -58,7 +58,7 @@ main()
 
   // attach a piecewise constant
   // element to this one cell
-  FE_DGQ<dim, spacedim>     fe(0);
+  FE_DGQ<dim, spacedim> fe(0);
   DoFHandler<dim, spacedim> dh(boundary_mesh);
   dh.distribute_dofs(fe);
 

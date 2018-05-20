@@ -65,9 +65,9 @@ namespace TrilinosWrappers
   template <typename BlockSparsityPatternType>
   void
   BlockSparseMatrix::reinit(
-    const std::vector<Epetra_Map>&  parallel_partitioning,
+    const std::vector<Epetra_Map>& parallel_partitioning,
     const BlockSparsityPatternType& block_sparsity_pattern,
-    const bool                      exchange_data)
+    const bool exchange_data)
   {
     Assert(parallel_partitioning.size()
              == block_sparsity_pattern.n_block_rows(),
@@ -111,10 +111,10 @@ namespace TrilinosWrappers
   template <typename BlockSparsityPatternType>
   void
   BlockSparseMatrix::reinit(
-    const std::vector<IndexSet>&    parallel_partitioning,
+    const std::vector<IndexSet>& parallel_partitioning,
     const BlockSparsityPatternType& block_sparsity_pattern,
-    const MPI_Comm&                 communicator,
-    const bool                      exchange_data)
+    const MPI_Comm& communicator,
+    const bool exchange_data)
   {
     std::vector<Epetra_Map> epetra_maps;
     for(size_type i = 0; i < block_sparsity_pattern.n_block_rows(); ++i)
@@ -163,9 +163,9 @@ namespace TrilinosWrappers
 
   void
   BlockSparseMatrix::reinit(
-    const std::vector<Epetra_Map>&             parallel_partitioning,
+    const std::vector<Epetra_Map>& parallel_partitioning,
     const ::dealii::BlockSparseMatrix<double>& dealii_block_sparse_matrix,
-    const double                               drop_tolerance)
+    const double drop_tolerance)
   {
     const size_type n_block_rows = parallel_partitioning.size();
 
@@ -197,7 +197,7 @@ namespace TrilinosWrappers
   void
   BlockSparseMatrix::reinit(
     const ::dealii::BlockSparseMatrix<double>& dealii_block_sparse_matrix,
-    const double                               drop_tolerance)
+    const double drop_tolerance)
   {
     Assert(dealii_block_sparse_matrix.n_block_rows()
              == dealii_block_sparse_matrix.n_block_cols(),
@@ -245,7 +245,7 @@ namespace TrilinosWrappers
   }
 
   TrilinosScalar
-  BlockSparseMatrix::residual(MPI::BlockVector&       dst,
+  BlockSparseMatrix::residual(MPI::BlockVector& dst,
                               const MPI::BlockVector& x,
                               const MPI::BlockVector& b) const
   {
@@ -261,8 +261,8 @@ namespace TrilinosWrappers
   // above three more times. Use
   // templates.
   TrilinosScalar
-  BlockSparseMatrix::residual(MPI::BlockVector&       dst,
-                              const MPI::Vector&      x,
+  BlockSparseMatrix::residual(MPI::BlockVector& dst,
+                              const MPI::Vector& x,
                               const MPI::BlockVector& b) const
   {
     vmult(dst, x);
@@ -273,9 +273,9 @@ namespace TrilinosWrappers
   }
 
   TrilinosScalar
-  BlockSparseMatrix::residual(MPI::Vector&            dst,
+  BlockSparseMatrix::residual(MPI::Vector& dst,
                               const MPI::BlockVector& x,
-                              const MPI::Vector&      b) const
+                              const MPI::Vector& b) const
   {
     vmult(dst, x);
     dst -= b;
@@ -285,7 +285,7 @@ namespace TrilinosWrappers
   }
 
   TrilinosScalar
-  BlockSparseMatrix::residual(MPI::Vector&       dst,
+  BlockSparseMatrix::residual(MPI::Vector& dst,
                               const MPI::Vector& x,
                               const MPI::Vector& b) const
   {

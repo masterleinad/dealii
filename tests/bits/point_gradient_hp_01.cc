@@ -57,7 +57,7 @@ public:
   }
 
   virtual void
-  vector_gradient(const Point<dim>&            p,
+  vector_gradient(const Point<dim>& p,
                   std::vector<Tensor<1, dim>>& gradients) const
   {
     gradients[0] = gradient(p, 0);
@@ -90,7 +90,7 @@ public:
   }
 
   virtual void
-  vector_gradient(const Point<dim>&            p,
+  vector_gradient(const Point<dim>& p,
                   std::vector<Tensor<1, dim>>& gradients) const
   {
     gradients(0) = gradient(p, 0);
@@ -149,7 +149,7 @@ check()
   // that isn't
   for(unsigned int i = 0; i < 2; ++i)
     {
-      static const MySquareFunction<dim>          function_1;
+      static const MySquareFunction<dim> function_1;
       static const Functions::CosineFunction<dim> function_2;
 
       const Function<dim>& function

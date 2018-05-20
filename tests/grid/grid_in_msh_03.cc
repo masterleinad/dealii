@@ -36,7 +36,7 @@ void
 check_file(const std::string name, typename GridIn<dim>::Format format)
 {
   Triangulation<dim> tria;
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(tria);
   gi.read(name, format);
   std::string source_dir(SOURCE_DIR "/");

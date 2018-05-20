@@ -85,15 +85,15 @@ test3()
   deallog << "for same underlying FEs: f(qp) * N_{fe}(qp) == N_{pou}(qp)"
           << std::endl;
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   EnrichmentFunction<dim> function;
-  FE_Enriched<dim>        fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
+  FE_Enriched<dim> fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
 
   GridGenerator::hyper_cube(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  QGauss<dim>   quadrature(2);
+  QGauss<dim> quadrature(2);
   FEValues<dim> fe_values(
     fe, quadrature, update_values | update_gradients | update_JxW_values);
 
@@ -120,7 +120,7 @@ test3()
     {
       fe_values.reinit(cell);
 
-      const unsigned int                     dofs_per_cell = fe.dofs_per_cell;
+      const unsigned int dofs_per_cell = fe.dofs_per_cell;
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values.get_quadrature_points();
       fe_values.get_function_values(solution_fe, solution_values_fe);
@@ -142,16 +142,16 @@ void
 plot_shape_function()
 {
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   EnrichmentFunction<dim> function;
-  FE_Enriched<dim>        fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
+  FE_Enriched<dim> fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
 
   GridGenerator::hyper_cube(triangulation);
   dof_handler.distribute_dofs(fe);
 
   std::vector<Vector<double>> shape_functions(dof_handler.n_dofs());
-  std::vector<std::string>    names;
+  std::vector<std::string> names;
   for(unsigned int s = 0; s < shape_functions.size(); s++)
     {
       names.push_back(std::string("N_") + dealii::Utilities::int_to_string(s));

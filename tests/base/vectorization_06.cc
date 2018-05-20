@@ -32,7 +32,7 @@ test()
     vec[i] = i + 1;
 
   const unsigned int n_vectors = VectorizedArray<Number>::n_array_elements;
-  unsigned int       indices[n_vectors];
+  unsigned int indices[n_vectors];
   for(unsigned int i = 0; i < n_vectors; ++i)
     indices[i] = i;
   VectorizedArray<Number> arr;

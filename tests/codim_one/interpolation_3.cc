@@ -46,14 +46,14 @@ void
 test(std::string filename)
 {
   Triangulation<dim, spacedim> triangulation;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
 
   gi.attach_triangulation(triangulation);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
 
-  FE_Q<dim, spacedim>       fe_base(1);
-  FESystem<dim, spacedim>   fe(fe_base, spacedim);
+  FE_Q<dim, spacedim> fe_base(1);
+  FESystem<dim, spacedim> fe(fe_base, spacedim);
   DoFHandler<dim, spacedim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
@@ -62,7 +62,7 @@ test(std::string filename)
   // that this is consistent with what we expect.
   Vector<double> interpolated_one(dof_handler.n_dofs());
 
-  FunctionParser<spacedim>      func(spacedim);
+  FunctionParser<spacedim> func(spacedim);
   std::map<std::string, double> maps;
   if(spacedim == 2)
     func.initialize("x,y", "x^2; y^2", maps);

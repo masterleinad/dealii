@@ -51,8 +51,8 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 {
   Assert(component < 2, ExcIndexRange(component, 0, 1));
 
-  const double PI  = numbers::PI;
-  double       val = 0.0;
+  const double PI = numbers::PI;
+  double val      = 0.0;
   switch(component)
     {
       case 0:
@@ -71,8 +71,8 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 {
   Assert(component < 3, ExcIndexRange(component, 0, 2));
 
-  const double PI  = numbers::PI;
-  double       val = 0.0;
+  const double PI = numbers::PI;
+  double val      = 0.0;
   switch(component)
     {
       case 0:
@@ -91,7 +91,7 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 template <int dim>
 void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+                                  Vector<double>& values) const
 {
   for(int i = 0; i < dim; ++i)
     values(i) = value(p, i);
@@ -111,7 +111,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   MappingQGeneric<dim> mapping(1);
 
   const QGauss<dim> quadrature(fe.degree + 2);
-  FEValues<dim>     fe_values(mapping,
+  FEValues<dim> fe_values(mapping,
                           fe,
                           quadrature,
                           update_values | update_gradients

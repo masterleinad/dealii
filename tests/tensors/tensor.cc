@@ -28,9 +28,9 @@ main()
   double b[3][3] = {{25, 31, 37}, {45, 57, 69}, {75, 96, 117}};
 
   const unsigned int dim = 3;
-  Tensor<2, dim>     t(a);
-  Tensor<2, dim>     tt;
-  Tensor<2, dim>     result(b);
+  Tensor<2, dim> t(a);
+  Tensor<2, dim> tt;
+  Tensor<2, dim> result(b);
   AssertThrow(transpose(transpose(t)) == t, ExcInternalError());
   AssertThrow(transpose(transpose(result)) == result, ExcInternalError());
 

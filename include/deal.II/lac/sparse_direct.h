@@ -144,7 +144,7 @@ public:
    */
   template <class Matrix>
   void
-  initialize(const Matrix&        matrix,
+  initialize(const Matrix& matrix,
              const AdditionalData additional_data = AdditionalData());
 
   /**
@@ -237,7 +237,7 @@ public:
    */
   void
   solve(BlockVector<double>& rhs_and_solution,
-        const bool           transpose = false) const;
+        const bool transpose = false) const;
 
   /**
    * Call the two functions factorize() and solve() in that order, i.e.
@@ -247,18 +247,18 @@ public:
    */
   template <class Matrix>
   void
-  solve(const Matrix&   matrix,
+  solve(const Matrix& matrix,
         Vector<double>& rhs_and_solution,
-        const bool      transpose = false);
+        const bool transpose = false);
 
   /**
    * Same as before, but for block vectors.
    */
   template <class Matrix>
   void
-  solve(const Matrix&        matrix,
+  solve(const Matrix& matrix,
         BlockVector<double>& rhs_and_solution,
-        const bool           transpose = false);
+        const bool transpose = false);
 
   /**
    * @}
@@ -355,7 +355,7 @@ private:
    */
   std::vector<SuiteSparse_long> Ap;
   std::vector<SuiteSparse_long> Ai;
-  std::vector<double>           Ax;
+  std::vector<double> Ax;
 
   /**
    * Control and work arrays for the solver routines.

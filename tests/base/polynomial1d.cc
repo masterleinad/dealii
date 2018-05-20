@@ -29,7 +29,7 @@ double
 scalar_product(const Polynomial<double>& p1, const Polynomial<double>& p2)
 {
   unsigned int degree = (p1.degree() + p2.degree()) / 2 + 1;
-  QGauss<1>    gauss(degree);
+  QGauss<1> gauss(degree);
 
   double sum = 0.;
   for(unsigned int i = 0; i < gauss.size(); ++i)
@@ -57,7 +57,7 @@ polynomial_arithmetic()
   c2[1] = .7;
   c2[2] = -1.3;
   Polynomial<double> p2(c2);
-  Monomial<double>   p3(5);
+  Monomial<double> p3(5);
   deallog << "P1" << std::endl;
   p1.print(deallog.get_file_stream());
   deallog << "P2" << std::endl;

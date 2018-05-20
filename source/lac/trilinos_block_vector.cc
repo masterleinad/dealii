@@ -62,10 +62,10 @@ namespace TrilinosWrappers
 
     void
     BlockVector::reinit(const std::vector<IndexSet>& parallel_partitioning,
-                        const MPI_Comm&              communicator,
-                        const bool                   omit_zeroing_entries)
+                        const MPI_Comm& communicator,
+                        const bool omit_zeroing_entries)
     {
-      const size_type        no_blocks = parallel_partitioning.size();
+      const size_type no_blocks = parallel_partitioning.size();
       std::vector<size_type> block_sizes(no_blocks);
 
       for(size_type i = 0; i < no_blocks; ++i)
@@ -87,10 +87,10 @@ namespace TrilinosWrappers
     void
     BlockVector::reinit(const std::vector<IndexSet>& parallel_partitioning,
                         const std::vector<IndexSet>& ghost_values,
-                        const MPI_Comm&              communicator,
-                        const bool                   vector_writable)
+                        const MPI_Comm& communicator,
+                        const bool vector_writable)
     {
-      const size_type        no_blocks = parallel_partitioning.size();
+      const size_type no_blocks = parallel_partitioning.size();
       std::vector<size_type> block_sizes(no_blocks);
 
       for(size_type i = 0; i < no_blocks; ++i)
@@ -141,7 +141,7 @@ namespace TrilinosWrappers
     void
     BlockVector::import_nonlocal_data_for_fe(
       const TrilinosWrappers::BlockSparseMatrix& m,
-      const BlockVector&                         v)
+      const BlockVector& v)
     {
       Assert(m.n_block_rows() == v.n_blocks(),
              ExcDimensionMismatch(m.n_block_rows(), v.n_blocks()));
@@ -161,10 +161,10 @@ namespace TrilinosWrappers
     }
 
     void
-    BlockVector::print(std::ostream&      out,
+    BlockVector::print(std::ostream& out,
                        const unsigned int precision,
-                       const bool         scientific,
-                       const bool         across) const
+                       const bool scientific,
+                       const bool across) const
     {
       for(size_type i = 0; i < this->n_blocks(); ++i)
         {

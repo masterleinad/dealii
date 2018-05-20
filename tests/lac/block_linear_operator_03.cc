@@ -33,8 +33,8 @@ main()
     BlockSparseMatrix<double> a;
 
     BlockLinearOperator<> op_b(a);
-    auto                  op_c = block_operator<BlockVector<double>>(a);
-    op_c                       = a;
+    auto op_c = block_operator<BlockVector<double>>(a);
+    op_c      = a;
 
     auto op_d = block_operator(a);
     op_d      = a;
@@ -43,7 +43,7 @@ main()
   auto op_a = LinearOperator<>();
 
   {
-    std::array<decltype(op_a), 2>                a{{op_a, op_a}};
+    std::array<decltype(op_a), 2> a{{op_a, op_a}};
     std::array<std::array<decltype(op_a), 2>, 2> temp{{a, a}};
 
     BlockLinearOperator<> op_b(temp);

@@ -36,14 +36,14 @@ test()
   Triangulation<dim - 1, dim> boundary_mesh;
   map<Triangulation<dim - 1, dim>::cell_iterator,
       Triangulation<dim, dim>::face_iterator>
-                     surface_to_volume_mapping;
+    surface_to_volume_mapping;
   Triangulation<dim> volume_mesh;
   GridGenerator::hyper_cube(volume_mesh);
 
   surface_to_volume_mapping
     = GridGenerator::extract_boundary_mesh(volume_mesh, boundary_mesh);
 
-  FE_Q<dim - 1, dim>       boundary_fe(1);
+  FE_Q<dim - 1, dim> boundary_fe(1);
   DoFHandler<dim - 1, dim> boundary_dh(boundary_mesh);
   boundary_dh.distribute_dofs(boundary_fe);
 

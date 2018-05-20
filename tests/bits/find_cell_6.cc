@@ -41,7 +41,7 @@ void
 check2()
 {
   Triangulation<3> tria;
-  GridIn<3>        gridIn;
+  GridIn<3> gridIn;
   gridIn.attach_triangulation(tria);
   std::ifstream inputFile(SOURCE_DIR "/grids/grid.inp");
   gridIn.read_ucd(inputFile);

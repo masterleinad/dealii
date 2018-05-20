@@ -26,8 +26,8 @@ main()
 {
   initlog();
 
-  float                f_scalar = 10.;
-  double               d_scalar = 10.;
+  float f_scalar                = 10.;
+  double d_scalar               = 10.;
   std::complex<double> c_scalar = 10.;
 
   Tensor<1, 2, float> f1;

@@ -123,7 +123,7 @@ FE_DGPNonparametric<dim, spacedim>::clone() const
 template <int dim, int spacedim>
 double
 FE_DGPNonparametric<dim, spacedim>::shape_value(const unsigned int i,
-                                                const Point<dim>&  p) const
+                                                const Point<dim>& p) const
 {
   (void) i;
   (void) p;
@@ -137,7 +137,7 @@ template <int dim, int spacedim>
 double
 FE_DGPNonparametric<dim, spacedim>::shape_value_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim>& p,
   const unsigned int component) const
 {
   (void) i;
@@ -153,7 +153,7 @@ FE_DGPNonparametric<dim, spacedim>::shape_value_component(
 template <int dim, int spacedim>
 Tensor<1, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad(const unsigned int i,
-                                               const Point<dim>&  p) const
+                                               const Point<dim>& p) const
 {
   (void) i;
   (void) p;
@@ -167,7 +167,7 @@ template <int dim, int spacedim>
 Tensor<1, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim>& p,
   const unsigned int component) const
 {
   (void) i;
@@ -183,7 +183,7 @@ FE_DGPNonparametric<dim, spacedim>::shape_grad_component(
 template <int dim, int spacedim>
 Tensor<2, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad_grad(const unsigned int i,
-                                                    const Point<dim>&  p) const
+                                                    const Point<dim>& p) const
 {
   (void) i;
   (void) p;
@@ -197,7 +197,7 @@ template <int dim, int spacedim>
 Tensor<2, dim>
 FE_DGPNonparametric<dim, spacedim>::shape_grad_grad_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim>& p,
   const unsigned int component) const
 {
   (void) i;
@@ -279,7 +279,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_values(
   const typename Mapping<dim, spacedim>::InternalDataBase&,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
                                                                      spacedim>&
-                                                                 mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&
@@ -333,7 +333,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
   const typename Mapping<dim, spacedim>::InternalDataBase&,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
                                                                      spacedim>&
-                                                                 mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&
@@ -388,7 +388,7 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_subface_values(
   const typename Mapping<dim, spacedim>::InternalDataBase&,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
                                                                      spacedim>&
-                                                                 mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&
@@ -436,7 +436,7 @@ template <int dim, int spacedim>
 void
 FE_DGPNonparametric<dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the source
   // FE is also a DGPNonparametric element. in that case,

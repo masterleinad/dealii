@@ -141,10 +141,10 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   deallog << dim << "d, p=" << poly_degree << ", max_p=" << max_poly
           << std::endl;
   deallog << "-----------------------------------" << std::endl;
-  Triangulation<dim>    triangulation;
-  hp::DoFHandler<dim>   dof_handler(triangulation);
+  Triangulation<dim> triangulation;
+  hp::DoFHandler<dim> dof_handler(triangulation);
   hp::FECollection<dim> fe_collection;
-  hp::QCollection<dim>  quadrature_formula;
+  hp::QCollection<dim> quadrature_formula;
 
   // add some extra FEs in fe_collection
   for(unsigned int p = 1; p <= max_poly; p++)
@@ -162,11 +162,11 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 
   VectorTools::interpolate(dof_handler, func, values);
 
-  const unsigned int      N = poly_degree + 1;
+  const unsigned int N = poly_degree + 1;
   FESeries::Legendre<dim> legendre(N, fe_collection, quadrature_formula);
 
   const Table<dim, double>& coeff_in = func.get_coefficients();
-  Table<dim, double>        coeff_out;
+  Table<dim, double> coeff_out;
   resize(coeff_out, N);
 
   Vector<double> local_dof_values;
@@ -203,7 +203,7 @@ main()
     const unsigned int coeff_1d = 2;
     const unsigned int p        = 1;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d);
-    unsigned int       ind = 0;
+    unsigned int ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)
       for(unsigned int j = 0; j < coeff_1d; j++)
         coeff_in(i, j) = 1.0 + ind++;
@@ -217,7 +217,7 @@ main()
     const unsigned int coeff_1d = 3;
     const unsigned int p        = 2;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d);
-    unsigned int       ind = 0;
+    unsigned int ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)
       for(unsigned int j = 0; j < coeff_1d; j++)
         coeff_in(i, j) = 1.0 + ind++;
@@ -231,7 +231,7 @@ main()
     const unsigned int coeff_1d = 2;
     const unsigned int p        = 1;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d, coeff_1d);
-    unsigned int       ind = 0;
+    unsigned int ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)
       for(unsigned int j = 0; j < coeff_1d; j++)
         for(unsigned int k = 0; k < coeff_1d; k++)
@@ -246,7 +246,7 @@ main()
     const unsigned int coeff_1d = 3;
     const unsigned int p        = 2;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d, coeff_1d);
-    unsigned int       ind = 0;
+    unsigned int ind = 0;
     for(unsigned int i = 0; i < coeff_1d; i++)
       for(unsigned int j = 0; j < coeff_1d; j++)
         for(unsigned int k = 0; k < coeff_1d; k++)

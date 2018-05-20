@@ -56,7 +56,7 @@ main(int argc, char** argv)
         // check
         // PETScWrappers::MPI::SparseMatrix
         MPI_Comm mpi_communicator(MPI_COMM_WORLD);
-        int      n_jobs = 1;
+        int n_jobs = 1;
         MPI_Comm_size(mpi_communicator, &n_jobs);
         const unsigned int n_mpi_processes = static_cast<unsigned int>(n_jobs);
         Assert(n_dofs % n_mpi_processes == 0, ExcInternalError());

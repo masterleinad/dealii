@@ -62,12 +62,12 @@ void
 test()
 {
   {
-    X                     x;
+    X x;
     Threads::Thread<void> t = Threads::new_thread(&execute_ref, x);
     t.join();
   }
   {
-    X                     x;
+    X x;
     Threads::Thread<void> t = Threads::new_thread(&execute_value, x);
     t.join();
   }

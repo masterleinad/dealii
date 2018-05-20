@@ -131,7 +131,7 @@ namespace SparsityPatternIterators
      * Constructor.
      */
     Accessor(const SparsityPattern* matrix,
-             const std::size_t      index_within_sparsity);
+             const std::size_t index_within_sparsity);
 
     /**
      * Constructor. Construct the end accessor for the given sparsity pattern.
@@ -265,7 +265,7 @@ namespace SparsityPatternIterators
      * the zeroth row).
      */
     Iterator(const SparsityPattern* sp,
-             const std::size_t      index_within_sparsity);
+             const std::size_t index_within_sparsity);
 
     /**
      * Prefix increment.
@@ -437,8 +437,8 @@ public:
    * @param[in] n The number of columns.
    * @param[in] max_per_row Maximum number of nonzero entries per row.
    */
-  SparsityPattern(const size_type    m,
-                  const size_type    n,
+  SparsityPattern(const size_type m,
+                  const size_type n,
                   const unsigned int max_per_row);
 
   /**
@@ -449,8 +449,8 @@ public:
    * @param[in] row_lengths Possible number of nonzero entries for each row.
    * This vector must have one entry for each row.
    */
-  SparsityPattern(const size_type                  m,
-                  const size_type                  n,
+  SparsityPattern(const size_type m,
+                  const size_type n,
                   const std::vector<unsigned int>& row_lengths);
 
   /**
@@ -470,7 +470,7 @@ public:
    * @param[in] row_lengths Maximum number of nonzero entries for each row.
    * This vector must have one entry for each row.
    */
-  SparsityPattern(const size_type                  m,
+  SparsityPattern(const size_type m,
                   const std::vector<unsigned int>& row_lengths);
 
   /**
@@ -496,8 +496,8 @@ public:
    * compressed after this function finishes.
    */
   SparsityPattern(const SparsityPattern& original,
-                  const unsigned int     max_per_row,
-                  const size_type        extra_off_diagonals);
+                  const unsigned int max_per_row,
+                  const size_type extra_off_diagonals);
 
   /**
    * Destructor.
@@ -538,16 +538,16 @@ public:
    * optimized access in relaxation methods of SparseMatrix.
    */
   void
-  reinit(const size_type                  m,
-         const size_type                  n,
+  reinit(const size_type m,
+         const size_type n,
          const std::vector<unsigned int>& row_lengths);
 
   /**
    * Same as above, but with a VectorSlice argument instead.
    */
   void
-  reinit(const size_type                                     m,
-         const size_type                                     n,
+  reinit(const size_type m,
+         const size_type n,
          const VectorSlice<const std::vector<unsigned int>>& row_lengths);
 
   /**
@@ -643,8 +643,8 @@ public:
    */
   template <typename ForwardIterator>
   void
-  copy_from(const size_type       n_rows,
-            const size_type       n_cols,
+  copy_from(const size_type n_rows,
+            const size_type n_cols,
             const ForwardIterator begin,
             const ForwardIterator end);
 
@@ -703,7 +703,7 @@ public:
   add_entries(const size_type row,
               ForwardIterator begin,
               ForwardIterator end,
-              const bool      indices_are_sorted = false);
+              const bool indices_are_sorted = false);
 
   // @}
 
@@ -1173,7 +1173,7 @@ private:
 namespace SparsityPatternIterators
 {
   inline Accessor::Accessor(const SparsityPattern* sparsity_pattern,
-                            const std::size_t      i)
+                            const std::size_t i)
     : sparsity_pattern(sparsity_pattern), index_within_sparsity(i)
   {}
 
@@ -1252,7 +1252,7 @@ namespace SparsityPatternIterators
   }
 
   inline Iterator::Iterator(const SparsityPattern* sparsity_pattern,
-                            const std::size_t      i)
+                            const std::size_t i)
     : accessor(sparsity_pattern, i)
   {}
 
@@ -1369,7 +1369,7 @@ SparsityPattern::row_length(const size_type row) const
 }
 
 inline SparsityPattern::size_type
-SparsityPattern::column_number(const size_type    row,
+SparsityPattern::column_number(const size_type row,
                                const unsigned int index) const
 {
   Assert(row < rows, ExcIndexRangeType<size_type>(row, 0, rows));
@@ -1398,7 +1398,7 @@ SparsityPattern::save(Archive& ar, const unsigned int) const
   ar& static_cast<const Subscriptor&>(*this);
 
   ar& max_dim& rows& cols& max_vec_len& max_row_length& compressed&
-                                                        store_diagonal_first_in_row;
+    store_diagonal_first_in_row;
 
   ar& boost::serialization::make_array(rowstart.get(), max_dim + 1);
   ar& boost::serialization::make_array(colnums.get(), max_vec_len);
@@ -1412,7 +1412,7 @@ SparsityPattern::load(Archive& ar, const unsigned int)
   ar& static_cast<Subscriptor&>(*this);
 
   ar& max_dim& rows& cols& max_vec_len& max_row_length& compressed&
-                                                        store_diagonal_first_in_row;
+    store_diagonal_first_in_row;
 
   rowstart = std_cxx14::make_unique<std::size_t[]>(max_dim + 1);
   colnums  = std_cxx14::make_unique<size_type[]>(max_vec_len);
@@ -1476,8 +1476,8 @@ namespace internal
 
 template <typename ForwardIterator>
 void
-SparsityPattern::copy_from(const size_type       n_rows,
-                           const size_type       n_cols,
+SparsityPattern::copy_from(const size_type n_rows,
+                           const size_type n_cols,
                            const ForwardIterator begin,
                            const ForwardIterator end)
 {
@@ -1488,7 +1488,7 @@ SparsityPattern::copy_from(const size_type       n_rows,
   // then we might have to add an additional entry for the diagonal, if that
   // is not yet present. as we have to call compress anyway later on, don't
   // bother to check whether that diagonal entry is in a certain row or not
-  const bool                is_square = (n_rows == n_cols);
+  const bool is_square = (n_rows == n_cols);
   std::vector<unsigned int> row_lengths;
   row_lengths.reserve(n_rows);
   for(ForwardIterator i = begin; i != end; ++i)
@@ -1507,7 +1507,7 @@ SparsityPattern::copy_from(const size_type       n_rows,
       inner_iterator;
   for(ForwardIterator i = begin; i != end; ++i, ++row)
     {
-      size_type*           cols = &colnums[rowstart[row]] + (is_square ? 1 : 0);
+      size_type* cols = &colnums[rowstart[row]] + (is_square ? 1 : 0);
       const inner_iterator end_of_row = i->end();
       for(inner_iterator j = i->begin(); j != end_of_row; ++j)
         {

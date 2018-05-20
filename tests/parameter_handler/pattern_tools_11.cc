@@ -27,13 +27,13 @@ main()
 {
   initlog();
 
-  double        a  = 1e-12;
-  int           i  = -1;
-  unsigned int  j  = 3;
-  unsigned char c  = 3;
-  signed char   c1 = -3;
-  char          c2 = -3;
-  bool          b  = false;
+  double a        = 1e-12;
+  int i           = -1;
+  unsigned int j  = 3;
+  unsigned char c = 3;
+  signed char c1  = -3;
+  char c2         = -3;
+  bool b          = false;
 
   auto t = std::make_tuple(a, i, j, c, c1, c2, b);
 

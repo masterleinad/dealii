@@ -66,7 +66,7 @@ check_complex_norms()
       if(size > 10000)
         skip += 17;
       LinearAlgebra::Vector<std::complex<number>> vec(size);
-      long double                                 sum = 0.;
+      long double sum = 0.;
       for(unsigned int i = 0; i < size; ++i)
         {
           vec(i) = std::complex<number>(i + 1, i + 2);

@@ -196,9 +196,9 @@ namespace PETScWrappers
        * different parts of the vector shall communicate
        */
       template <typename Number>
-      explicit Vector(const MPI_Comm&               communicator,
+      explicit Vector(const MPI_Comm& communicator,
                       const dealii::Vector<Number>& v,
-                      const size_type               local_size);
+                      const size_type local_size);
 
       /**
        * Copy-constructor the values from a PETSc wrapper vector class.
@@ -213,9 +213,9 @@ namespace PETScWrappers
        * is deprecated: use PETScWrappers::MPI::Vector instead.
        */
       DEAL_II_DEPRECATED
-      explicit Vector(const MPI_Comm&   communicator,
+      explicit Vector(const MPI_Comm& communicator,
                       const VectorBase& v,
-                      const size_type   local_size);
+                      const size_type local_size);
 
       /**
        * Construct a new parallel ghosted PETSc vector from IndexSets.
@@ -313,7 +313,7 @@ namespace PETScWrappers
       reinit(const MPI_Comm& communicator,
              const size_type N,
              const size_type local_size,
-             const bool      omit_zeroing_entries = false);
+             const bool omit_zeroing_entries = false);
 
       /**
        * Change the dimension to that of the vector @p v, and also take over
@@ -368,10 +368,10 @@ namespace PETScWrappers
        * distributed across processors.
        */
       void
-      print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const;
+      print(std::ostream& out,
+            const unsigned int precision = 3,
+            const bool scientific        = true,
+            const bool across            = true) const;
 
       /**
        * @copydoc PETScWrappers::VectorBase::all_zero()
@@ -428,9 +428,9 @@ namespace PETScWrappers
 #    ifndef DOXYGEN
 
     template <typename number>
-    Vector::Vector(const MPI_Comm&               communicator,
+    Vector::Vector(const MPI_Comm& communicator,
                    const dealii::Vector<number>& v,
-                   const size_type               local_size)
+                   const size_type local_size)
       : communicator(communicator)
     {
       Vector::create_vector(v.size(), local_size);
@@ -513,7 +513,7 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&               matrix,
+      reinit_range_vector(const Matrix& matrix,
                           PETScWrappers::MPI::Vector& v,
                           bool /*omit_zeroing_entries*/)
       {
@@ -523,7 +523,7 @@ namespace internal
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&               matrix,
+      reinit_domain_vector(const Matrix& matrix,
                            PETScWrappers::MPI::Vector& v,
                            bool /*omit_zeroing_entries*/)
       {

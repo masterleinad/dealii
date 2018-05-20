@@ -87,7 +87,7 @@ namespace MeshWorker
 
   template <typename VectorType, int dim, int spacedim>
   void
-  VectorData<VectorType, dim, spacedim>::initialize(const VectorType*  v,
+  VectorData<VectorType, dim, spacedim>::initialize(const VectorType* v,
                                                     const std::string& name)
   {
     SmartPointer<const VectorType, VectorData<VectorType, dim, spacedim>> p = v;
@@ -105,13 +105,13 @@ namespace MeshWorker
       gradients,
     std::vector<std::vector<
       std::vector<Tensor<2, spacedim, typename VectorType::value_type>>>>&
-                                                hessians,
-    const FEValuesBase<dim, spacedim>&          fe,
+      hessians,
+    const FEValuesBase<dim, spacedim>& fe,
     const std::vector<types::global_dof_index>& index,
-    const unsigned int                          component,
-    const unsigned int                          n_comp,
-    const unsigned int                          start,
-    const unsigned int                          size) const
+    const unsigned int component,
+    const unsigned int n_comp,
+    const unsigned int start,
+    const unsigned int size) const
   {
     AssertDimension(values.size(), this->n_values());
     AssertDimension(gradients.size(), this->n_gradients());
@@ -177,7 +177,7 @@ namespace MeshWorker
   void
   MGVectorData<VectorType, dim, spacedim>::initialize(
     const MGLevelObject<VectorType>* v,
-    const std::string&               name)
+    const std::string& name)
   {
     SmartPointer<const MGLevelObject<VectorType>,
                  MGVectorData<VectorType, dim, spacedim>>
@@ -196,14 +196,14 @@ namespace MeshWorker
       gradients,
     std::vector<std::vector<
       std::vector<Tensor<2, spacedim, typename VectorType::value_type>>>>&
-                                                hessians,
-    const FEValuesBase<dim, spacedim>&          fe,
-    const unsigned int                          level,
+      hessians,
+    const FEValuesBase<dim, spacedim>& fe,
+    const unsigned int level,
     const std::vector<types::global_dof_index>& index,
-    const unsigned int                          component,
-    const unsigned int                          n_comp,
-    const unsigned int                          start,
-    const unsigned int                          size) const
+    const unsigned int component,
+    const unsigned int n_comp,
+    const unsigned int start,
+    const unsigned int size) const
   {
     AssertDimension(values.size(), this->n_values());
     AssertDimension(gradients.size(), this->n_gradients());

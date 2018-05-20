@@ -57,8 +57,8 @@ main()
   triangulation.refine_global(2);
 
   MappingQGeneric<dim> mapping_q1(1);
-  FESystem<dim>        fe(FE_Q<dim>(1), 1, FE_Q<dim>(1), 1);
-  DoFHandler<dim>      dof_handler(triangulation);
+  FESystem<dim> fe(FE_Q<dim>(1), 1, FE_Q<dim>(1), 1);
+  DoFHandler<dim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
 
@@ -164,7 +164,7 @@ main()
 
   // solver interface:
 
-  SolverControl                    solver_control(1000, 1e-10);
+  SolverControl solver_control(1000, 1e-10);
   SolverGMRES<BlockVector<double>> solver(solver_control);
 
   deallog.depth_file(0);
@@ -192,7 +192,7 @@ main()
   deallog.depth_file(3);
   PRINTME("(inverse_operator(B)*B)u", w);
 
-  SolverControl                 inner_solver_control(1000, 1e-12);
+  SolverControl inner_solver_control(1000, 1e-12);
   SolverCG<BlockVector<double>> inner_solver(solver_control);
 
   deallog.depth_file(0);

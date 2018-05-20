@@ -37,12 +37,12 @@ main()
   GridGenerator::hyper_cube(coarse_grid, -1, 1);
   coarse_grid.refine_global(1);
 
-  FE_Q<3>       fe(1);
+  FE_Q<3> fe(1);
   DoFHandler<3> dof_handler(coarse_grid);
   dof_handler.distribute_dofs(fe);
 
-  MappingQ<3>     mapping(4);
-  QGauss<2>       q_face(3);
+  MappingQ<3> mapping(4);
+  QGauss<2> q_face(3);
   FEFaceValues<3> fe_face_values(
     mapping, fe, q_face, update_normal_vectors | update_JxW_values);
   fe_face_values.reinit(dof_handler.begin_active(), 0);

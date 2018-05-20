@@ -37,13 +37,13 @@ namespace internal
     struct ParallelData
       : public internal::DataOutImplementation::ParallelDataBase<dim, spacedim>
     {
-      ParallelData(const unsigned int               n_datasets,
-                   const unsigned int               n_subdivisions,
+      ParallelData(const unsigned int n_datasets,
+                   const unsigned int n_subdivisions,
                    const std::vector<unsigned int>& n_postprocessor_outputs,
-                   const Mapping<dim, spacedim>&    mapping,
+                   const Mapping<dim, spacedim>& mapping,
                    const std::vector<
                      std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                                     finite_elements,
+                     finite_elements,
                    const UpdateFlags update_flags);
 
       std::vector<Point<spacedim>> patch_evaluation_points;
@@ -179,7 +179,7 @@ public:
    */
   virtual void
   build_patches(const Mapping<dimension>& mapping,
-                const unsigned int        n_subdivisions = 0);
+                const unsigned int n_subdivisions = 0);
 
   /**
    * Declare a way to describe a face which we would like to generate output
@@ -233,7 +233,7 @@ private:
   build_one_patch(
     const FaceDescriptor* cell_and_face,
     internal::DataOutFacesImplementation::ParallelData<dimension, dimension>&
-                                                        data,
+      data,
     DataOutBase::Patch<dimension - 1, space_dimension>& patch);
 };
 

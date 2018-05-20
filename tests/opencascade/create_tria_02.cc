@@ -43,8 +43,8 @@ main()
   revol.Build();
   auto sh = revol.Shape();
 
-  std::vector<TopoDS_Face>   faces;
-  std::vector<TopoDS_Edge>   edges;
+  std::vector<TopoDS_Face> faces;
+  std::vector<TopoDS_Edge> edges;
   std::vector<TopoDS_Vertex> vertices;
 
   extract_geometrical_shapes(sh, faces, edges, vertices);

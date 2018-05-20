@@ -64,7 +64,7 @@ public:
   }
 
 private:
-  unsigned int              size_;
+  unsigned int size_;
   std::vector<unsigned int> vec;
 };
 

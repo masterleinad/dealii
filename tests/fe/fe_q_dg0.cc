@@ -95,19 +95,19 @@ namespace Step22
 
     void
     divergence_velocity(const BlockVector<double>& calc_solution,
-                        Vector<double>&            output_vector,
-                        const Quadrature<dim>&     quadrature,
-                        bool                       norm);
+                        Vector<double>& output_vector,
+                        const Quadrature<dim>& quadrature,
+                        bool norm);
 
     const unsigned int degree;
 
     Triangulation<dim> triangulation;
-    FESystem<dim>&     fe;
-    DoFHandler<dim>    dof_handler;
+    FESystem<dim>& fe;
+    DoFHandler<dim> dof_handler;
 
     ConstraintMatrix constraints;
 
-    BlockSparsityPattern      sparsity_pattern;
+    BlockSparsityPattern sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
 
     BlockVector<double> solution;
@@ -139,7 +139,7 @@ namespace Step22
 
   template <int dim>
   double
-  ExactSolution<dim>::value(const Point<dim>&  p,
+  ExactSolution<dim>::value(const Point<dim>& p,
                             const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -173,7 +173,7 @@ namespace Step22
 
   template <int dim>
   Tensor<1, dim>
-  ExactSolution<dim>::gradient(const Point<dim>&  p,
+  ExactSolution<dim>::gradient(const Point<dim>& p,
                                const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -227,7 +227,7 @@ namespace Step22
 
   template <int dim>
   double
-  ExactSolution<dim>::laplacian(const Point<dim>&  p,
+  ExactSolution<dim>::laplacian(const Point<dim>& p,
                                 const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -270,7 +270,7 @@ namespace Step22
 
   template <int dim>
   double
-  JumpFunction<dim>::jump(const Point<dim>&     p,
+  JumpFunction<dim>::jump(const Point<dim>& p,
                           const Tensor<1, dim>& normal) const
   {
     double x = p[0];
@@ -300,7 +300,7 @@ namespace Step22
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim>&  p,
+  RightHandSide<dim>::value(const Point<dim>& p,
                             const unsigned int component) const
   {
     Assert(component < this->n_components,
@@ -322,24 +322,24 @@ namespace Step22
     vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
-    const SmartPointer<const Matrix>         matrix;
+    const SmartPointer<const Matrix> matrix;
     const SmartPointer<const Preconditioner> preconditioner;
   };
 
   template <class Matrix, class Preconditioner>
   InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
-    const Matrix&         m,
+    const Matrix& m,
     const Preconditioner& preconditioner)
     : matrix(&m), preconditioner(&preconditioner)
   {}
 
   template <class Matrix, class Preconditioner>
   void
-  InverseMatrix<Matrix, Preconditioner>::vmult(Vector<double>&       dst,
+  InverseMatrix<Matrix, Preconditioner>::vmult(Vector<double>& dst,
                                                const Vector<double>& src) const
   {
     SolverControl solver_control(src.size(), 1e-6 * src.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     dst = 0;
 
@@ -356,7 +356,7 @@ namespace Step22
   {
   public:
     SchurComplement(
-      const BlockSparseMatrix<double>&                           system_matrix,
+      const BlockSparseMatrix<double>& system_matrix,
       const InverseMatrix<SparseMatrix<double>, Preconditioner>& A_inverse);
 
     void
@@ -373,7 +373,7 @@ namespace Step22
 
   template <class Preconditioner>
   SchurComplement<Preconditioner>::SchurComplement(
-    const BlockSparseMatrix<double>&                           system_matrix,
+    const BlockSparseMatrix<double>& system_matrix,
     const InverseMatrix<SparseMatrix<double>, Preconditioner>& A_inverse)
     : system_matrix(&system_matrix),
       A_inverse(&A_inverse),
@@ -383,7 +383,7 @@ namespace Step22
 
   template <class Preconditioner>
   void
-  SchurComplement<Preconditioner>::vmult(Vector<double>&       dst,
+  SchurComplement<Preconditioner>::vmult(Vector<double>& dst,
                                          const Vector<double>& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
@@ -393,7 +393,7 @@ namespace Step22
 
   template <int dim>
   StokesProblem<dim>::StokesProblem(const unsigned int degree,
-                                    FESystem<dim>&     fe_)
+                                    FESystem<dim>& fe_)
     : degree(degree),
       triangulation(Triangulation<dim>::maximum_smoothing),
       fe(fe_),
@@ -506,7 +506,7 @@ namespace Step22
     system_matrix = 0;
     system_rhs    = 0;
 
-    QGauss<dim>     quadrature_formula(degree + 2);
+    QGauss<dim> quadrature_formula(degree + 2);
     QGauss<dim - 1> quadrature_face(degree + 2);
 
     FEValues<dim> fe_values(fe,
@@ -525,11 +525,11 @@ namespace Step22
     const unsigned int n_q_face   = quadrature_face.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    const RightHandSide<dim>    right_hand_side;
+    const RightHandSide<dim> right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim + 1));
 
     const JumpFunction<dim> jumpfunction;
@@ -538,8 +538,8 @@ namespace Step22
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> symgrad_phi_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -641,7 +641,7 @@ namespace Step22
   {
     const InverseMatrix<SparseMatrix<double>,
                         typename InnerPreconditioner<dim>::type>
-                   A_inverse(system_matrix.block(0, 0), *A_preconditioner);
+      A_inverse(system_matrix.block(0, 0), *A_preconditioner);
     Vector<double> tmp(solution.block(0).size());
 
     {
@@ -655,7 +655,7 @@ namespace Step22
 
       SolverControl solver_control(solution.block(1).size(),
                                    1e-8 * schur_rhs.l2_norm());
-      SolverCG<>    cg(solver_control);
+      SolverCG<> cg(solver_control);
 
       SparseILU<double> preconditioner;
       preconditioner.initialize(system_matrix.block(1, 1),
@@ -908,9 +908,9 @@ namespace Step22
   void
   StokesProblem<dim>::divergence_velocity(
     const BlockVector<double>& calc_solution,
-    Vector<double>&            output_vector,
-    const Quadrature<dim>&     quadrature,
-    bool                       norm)
+    Vector<double>& output_vector,
+    const Quadrature<dim>& quadrature,
+    bool norm)
   {
     output_vector = 0;
 
@@ -960,7 +960,7 @@ main()
 
   deallog.depth_file(1);
 
-  unsigned int       degree;
+  unsigned int degree;
   const unsigned int dim = 2;
   {
     degree = 1;

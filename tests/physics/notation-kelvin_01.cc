@@ -72,7 +72,7 @@ void initialize(Tensor<3, dim, Number>& x)
 // of a rank-3 tensor with two symmetric components
 template <int dim, typename Number>
 void initialize(Tensor<3, dim, Number>& x,
-                const bool              left_components_are_symmetric)
+                const bool left_components_are_symmetric)
 {
   Tensor<1, dim, Number> v;
   initialize(v);
@@ -117,7 +117,7 @@ test_scalars()
 {
   const double A = 5;
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+  const Vector<double> vA     = Notation::Kelvin::to_vector(A);
   const FullMatrix<double> mA = Notation::Kelvin::to_matrix(A);
 
   typedef typename std::decay<decltype(A)>::type InpType;
@@ -136,7 +136,7 @@ test_rank_0_tensors()
 {
   const Tensor<0, dim, double> A = 5;
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+  const Vector<double> vA     = Notation::Kelvin::to_vector(A);
   const FullMatrix<double> mA = Notation::Kelvin::to_matrix(A);
 
   typedef typename std::decay<decltype(A)>::type InpType;
@@ -174,7 +174,7 @@ test_rank_2_tensors()
     Tensor<2, dim, double> A;
     initialize(A);
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mA = Notation::Kelvin::to_matrix(A);
 
     typedef typename std::decay<decltype(A)>::type InpType;
@@ -192,7 +192,7 @@ test_rank_2_tensors()
     SymmetricTensor<2, dim, double> A;
     initialize(A);
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mA = Notation::Kelvin::to_matrix(A);
 
     typedef typename std::decay<decltype(A)>::type InpType;

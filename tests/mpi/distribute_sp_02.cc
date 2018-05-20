@@ -28,14 +28,14 @@ test_mpi()
 {
   Assert(Utilities::MPI::job_supports_mpi(), ExcInternalError());
 
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
-  unsigned int          num_local = 10;
-  unsigned int          n         = numprocs * num_local;
+  unsigned int num_local = 10;
+  unsigned int n         = numprocs * num_local;
   std::vector<IndexSet> locally_owned_dofs_per_cpu(numprocs, IndexSet(n));
   for(unsigned int i = 0; i < numprocs; ++i)
     locally_owned_dofs_per_cpu[i].add_range((i) *num_local,

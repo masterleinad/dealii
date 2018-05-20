@@ -39,15 +39,15 @@ template <int dim>
 void
 make_stokes_matrix(const DoFHandler<dim>& dof_handler,
                    const Quadrature<dim>& quadrature_formula,
-                   SparseMatrix<double>&  system_matrix)
+                   SparseMatrix<double>& system_matrix)
 {
-  const FiniteElement<dim>& fe     = dof_handler.get_fe();
-  const unsigned int        degree = fe.degree;
-  system_matrix                    = 0;
+  const FiniteElement<dim>& fe = dof_handler.get_fe();
+  const unsigned int degree    = fe.degree;
+  system_matrix                = 0;
 
   ConstraintMatrix constraints;
   constraints.close();
-  FEValues<dim>      fe_values(fe,
+  FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_quadrature_points
                             | update_JxW_values | update_gradients);
@@ -55,11 +55,11 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
   const unsigned int n_q_points    = quadrature_formula.size();
   FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-  const FEValuesExtractors::Vector     velocities(0);
-  const FEValuesExtractors::Scalar     pressure(dim);
+  const FEValuesExtractors::Vector velocities(0);
+  const FEValuesExtractors::Scalar pressure(dim);
   std::vector<SymmetricTensor<2, dim>> symgrad_phi_u(dofs_per_cell);
-  std::vector<double>                  div_phi_u(dofs_per_cell);
-  std::vector<double>                  phi_p(dofs_per_cell);
+  std::vector<double> div_phi_u(dofs_per_cell);
+  std::vector<double> phi_p(dofs_per_cell);
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -97,7 +97,7 @@ check()
   GridGenerator::hyper_cube(tr, -1, 1);
   tr.refine_global(1);
 
-  FESystem<dim>   element(FESystem<dim>(FE_Q<dim>(2), dim), 1, FE_Q<dim>(1), 1);
+  FESystem<dim> element(FESystem<dim>(FE_Q<dim>(2), dim), 1, FE_Q<dim>(1), 1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
   dof.distribute_mg_dofs();
@@ -118,7 +118,7 @@ check()
   using Smoother = RelaxationBlockJacobi<SparseMatrix<double>>;
   {
     Smoother::AdditionalData smoother_data;
-    Smoother                 smoother;
+    Smoother smoother;
 
     DoFTools::make_vertex_patches(
       smoother_data.block_list, dof, tr.n_levels() - 1, exclude_boundary_dofs);
@@ -131,7 +131,7 @@ check()
   }
   {
     Smoother::AdditionalData smoother_data;
-    Smoother                 smoother;
+    Smoother smoother;
 
     DoFTools::make_vertex_patches(
       smoother_data.block_list, dof, tr.n_levels() - 1, exclude_boundary_dofs);

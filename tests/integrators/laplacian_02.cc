@@ -41,14 +41,14 @@ test_boundary(const FiniteElement<dim>& fe, bool diff = false)
   ConstraintMatrix constraints;
   DoFTools::make_zero_boundary_constraints(dof, constraints);
 
-  QGauss<dim - 1>   quadrature(fe.tensor_degree() + 1);
+  QGauss<dim - 1> quadrature(fe.tensor_degree() + 1);
   FEFaceValues<dim> fev(fe,
                         quadrature,
                         update_values | update_gradients | update_normal_vectors
                           | update_JxW_values);
 
-  FullMatrix<double>                   M(fe.dofs_per_cell);
-  FullMatrix<double>                   Mglobal(dof.n_dofs());
+  FullMatrix<double> M(fe.dofs_per_cell);
+  FullMatrix<double> Mglobal(dof.n_dofs());
   std::vector<types::global_dof_index> indices(fe.dofs_per_cell);
 
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
@@ -78,7 +78,7 @@ test_face(const FiniteElement<dim>& fe, bool diff = false)
   ConstraintMatrix constraints;
   DoFTools::make_zero_boundary_constraints(dof, constraints);
 
-  QGauss<dim - 1>   quadrature(fe.tensor_degree() + 1);
+  QGauss<dim - 1> quadrature(fe.tensor_degree() + 1);
   FEFaceValues<dim> fev1(fe,
                          quadrature,
                          update_values | update_gradients
@@ -88,11 +88,11 @@ test_face(const FiniteElement<dim>& fe, bool diff = false)
                          update_values | update_gradients
                            | update_normal_vectors | update_JxW_values);
 
-  FullMatrix<double>                   M11(fe.dofs_per_cell);
-  FullMatrix<double>                   M12(fe.dofs_per_cell);
-  FullMatrix<double>                   M21(fe.dofs_per_cell);
-  FullMatrix<double>                   M22(fe.dofs_per_cell);
-  FullMatrix<double>                   Mglobal(dof.n_dofs());
+  FullMatrix<double> M11(fe.dofs_per_cell);
+  FullMatrix<double> M12(fe.dofs_per_cell);
+  FullMatrix<double> M21(fe.dofs_per_cell);
+  FullMatrix<double> M22(fe.dofs_per_cell);
+  FullMatrix<double> Mglobal(dof.n_dofs());
   std::vector<types::global_dof_index> indices1(fe.dofs_per_cell);
   std::vector<types::global_dof_index> indices2(fe.dofs_per_cell);
 
@@ -134,7 +134,7 @@ test()
   test_boundary(r1);
   test_face(r1);
 
-  FE_DGQ<dim>   q1(1);
+  FE_DGQ<dim> q1(1);
   FESystem<dim> sys1(q1, dim);
   test_boundary(sys1);
   test_boundary(sys1, true);

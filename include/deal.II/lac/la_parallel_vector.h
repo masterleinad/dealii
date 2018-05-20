@@ -180,14 +180,14 @@ namespace LinearAlgebra
                    public Subscriptor
     {
     public:
-      typedef Number                                            value_type;
-      typedef value_type*                                       pointer;
-      typedef const value_type*                                 const_pointer;
-      typedef value_type*                                       iterator;
-      typedef const value_type*                                 const_iterator;
-      typedef value_type&                                       reference;
-      typedef const value_type&                                 const_reference;
-      typedef types::global_dof_index                           size_type;
+      typedef Number value_type;
+      typedef value_type* pointer;
+      typedef const value_type* const_pointer;
+      typedef value_type* iterator;
+      typedef const value_type* const_iterator;
+      typedef value_type& reference;
+      typedef const value_type& const_reference;
+      typedef types::global_dof_index size_type;
       typedef typename numbers::NumberTraits<Number>::real_type real_type;
 
       /**
@@ -228,7 +228,7 @@ namespace LinearAlgebra
        */
       Vector(const IndexSet& local_range,
              const IndexSet& ghost_indices,
-             const MPI_Comm  communicator);
+             const MPI_Comm communicator);
 
       /**
        * Same constructor as above but without any ghost indices.
@@ -269,7 +269,7 @@ namespace LinearAlgebra
       template <typename Number2>
       void
       reinit(const Vector<Number2>& in_vector,
-             const bool             omit_zeroing_entries = false);
+             const bool omit_zeroing_entries = false);
 
       /**
        * Initialize the vector. The local range is specified by @p
@@ -290,7 +290,7 @@ namespace LinearAlgebra
       void
       reinit(const IndexSet& local_range,
              const IndexSet& ghost_indices,
-             const MPI_Comm  communicator);
+             const MPI_Comm communicator);
 
       /**
        * Same as above, but without ghost entries.
@@ -599,8 +599,8 @@ namespace LinearAlgebra
        */
       virtual void
       import(
-        const LinearAlgebra::ReadWriteVector<Number>&   V,
-        VectorOperation::values                         operation,
+        const LinearAlgebra::ReadWriteVector<Number>& V,
+        VectorOperation::values operation,
         std::shared_ptr<const CommunicationPatternBase> communication_pattern
         = std::shared_ptr<const CommunicationPatternBase>()) override;
 
@@ -626,9 +626,9 @@ namespace LinearAlgebra
        * Multiple addition of scaled vectors, i.e. <tt>*this += a*V+b*W</tt>.
        */
       virtual void
-      add(const Number                     a,
+      add(const Number a,
           const VectorSpaceVector<Number>& V,
-          const Number                     b,
+          const Number b,
           const VectorSpaceVector<Number>& W) override;
 
       /**
@@ -637,15 +637,15 @@ namespace LinearAlgebra
        */
       virtual void
       add(const std::vector<size_type>& indices,
-          const std::vector<Number>&    values);
+          const std::vector<Number>& values);
 
       /**
        * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this =
        * s*(*this)+a*V</tt>.
        */
       virtual void
-      sadd(const Number                     s,
-           const Number                     a,
+      sadd(const Number s,
+           const Number a,
            const VectorSpaceVector<Number>& V) override;
 
       /**
@@ -709,7 +709,7 @@ namespace LinearAlgebra
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       virtual Number
-      add_and_dot(const Number                     a,
+      add_and_dot(const Number a,
                   const VectorSpaceVector<Number>& V,
                   const VectorSpaceVector<Number>& W) override;
 
@@ -738,10 +738,10 @@ namespace LinearAlgebra
        * Print the vector to the output stream @p out.
        */
       virtual void
-      print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const override;
+      print(std::ostream& out,
+            const unsigned int precision = 3,
+            const bool scientific        = true,
+            const bool across            = true) const override;
 
       /**
        * Return the memory consumption of this class in bytes.
@@ -769,7 +769,7 @@ namespace LinearAlgebra
        */
       template <typename OtherNumber>
       void
-      add(const std::vector<size_type>&        indices,
+      add(const std::vector<size_type>& indices,
           const ::dealii::Vector<OtherNumber>& values);
 
       /**
@@ -778,8 +778,8 @@ namespace LinearAlgebra
        */
       template <typename OtherNumber>
       void
-      add(const size_type    n_elements,
-          const size_type*   indices,
+      add(const size_type n_elements,
+          const size_type* indices,
           const OtherNumber* values);
 
       /**
@@ -796,10 +796,10 @@ namespace LinearAlgebra
        */
       DEAL_II_DEPRECATED
       void
-      sadd(const Number          s,
-           const Number          a,
+      sadd(const Number s,
+           const Number a,
            const Vector<Number>& V,
-           const Number          b,
+           const Number b,
            const Vector<Number>& W);
 
       /**
@@ -809,9 +809,9 @@ namespace LinearAlgebra
        */
       DEAL_II_DEPRECATED
       void
-      equ(const Number          a,
+      equ(const Number a,
           const Vector<Number>& u,
-          const Number          b,
+          const Number b,
           const Vector<Number>& v);
 
       //@}
@@ -992,7 +992,7 @@ namespace LinearAlgebra
       template <typename OtherNumber>
       void
       extract_subvector_to(const std::vector<size_type>& indices,
-                           std::vector<OtherNumber>&     values) const;
+                           std::vector<OtherNumber>& values) const;
 
       /**
        * Instead of getting individual elements of a vector via operator(),
@@ -1023,9 +1023,9 @@ namespace LinearAlgebra
        */
       template <typename ForwardIterator, typename OutputIterator>
       void
-      extract_subvector_to(ForwardIterator       indices_begin,
+      extract_subvector_to(ForwardIterator indices_begin,
                            const ForwardIterator indices_end,
-                           OutputIterator        values_begin) const;
+                           OutputIterator values_begin) const;
       /**
        * Return whether the vector contains only elements with value zero.
        * This is a collective operation. This function is expensive, because
@@ -1149,8 +1149,8 @@ namespace LinearAlgebra
        * s*(*this)+a*V</tt> without MPI communication.
        */
       void
-      sadd_local(const Number                     s,
-                 const Number                     a,
+      sadd_local(const Number s,
+                 const Number a,
                  const VectorSpaceVector<Number>& V);
 
       /**
@@ -1202,7 +1202,7 @@ namespace LinearAlgebra
        * the add_and_dot() function.
        */
       Number
-      add_and_dot_local(const Number          a,
+      add_and_dot_local(const Number a,
                         const Vector<Number>& V,
                         const Vector<Number>& W);
 
@@ -1491,7 +1491,7 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename ForwardIterator, typename OutputIterator>
     inline void
-    Vector<Number>::extract_subvector_to(ForwardIterator       indices_begin,
+    Vector<Number>::extract_subvector_to(ForwardIterator indices_begin,
                                          const ForwardIterator indices_end,
                                          OutputIterator values_begin) const
     {
@@ -1506,7 +1506,7 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename OtherNumber>
     inline void
-    Vector<Number>::add(const std::vector<size_type>&        indices,
+    Vector<Number>::add(const std::vector<size_type>& indices,
                         const ::dealii::Vector<OtherNumber>& values)
     {
       AssertDimension(indices.size(), values.size());
@@ -1523,8 +1523,8 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename OtherNumber>
     inline void
-    Vector<Number>::add(const size_type    n_elements,
-                        const size_type*   indices,
+    Vector<Number>::add(const size_type n_elements,
+                        const size_type* indices,
                         const OtherNumber* values)
     {
       for(size_type i = 0; i < n_elements; ++i, ++indices, ++values)
@@ -1599,7 +1599,7 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&                               matrix,
+      reinit_range_vector(const Matrix& matrix,
                           LinearAlgebra::distributed::Vector<Number>& v,
                           bool omit_zeroing_entries)
       {
@@ -1610,7 +1610,7 @@ namespace internal
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&                               matrix,
+      reinit_domain_vector(const Matrix& matrix,
                            LinearAlgebra::distributed::Vector<Number>& v,
                            bool omit_zeroing_entries)
       {

@@ -27,17 +27,17 @@ using namespace dealii;
 void
 test_2d()
 {
-  const unsigned int    dim = 2;
-  const unsigned int    N   = 7;
+  const unsigned int dim = 2;
+  const unsigned int N   = 7;
   hp::FECollection<dim> fe_collection;
-  hp::QCollection<dim>  fourier_q_collection;
+  hp::QCollection<dim> fourier_q_collection;
 
   for(unsigned int degree = 2; degree <= N; ++degree)
     {
       fe_collection.push_back(FE_Q<dim>(degree));
     }
 
-  QGauss<1>      base_quadrature(2);
+  QGauss<1> base_quadrature(2);
   QIterated<dim> quadrature(base_quadrature, N);
   for(unsigned int i = 0; i < fe_collection.size(); i++)
     fourier_q_collection.push_back(quadrature);
@@ -47,7 +47,7 @@ test_2d()
   fourier_coefficients.reinit(N, N);
 
   Vector<double> local_dof_values(9);
-  double         dofs[] = {0.0000000000000000e+00,
+  double dofs[] = {0.0000000000000000e+00,
                    0.0000000000000000e+00,
                    0.0000000000000000e+00,
                    2.3801522930483391e-04,

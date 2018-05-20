@@ -109,9 +109,9 @@ struct periodicity_tests
     typename Triangulation<dim>::active_cell_iterator active_cell_iterator;
   periodicity_tests();
 
-  unsigned                                  refn_cycle;
-  MPI_Comm                                  mpi_comm;
-  int                                       comm_rank, comm_size;
+  unsigned refn_cycle;
+  MPI_Comm mpi_comm;
+  int comm_rank, comm_size;
   parallel::distributed::Triangulation<dim> the_grid;
 
   void
@@ -131,7 +131,7 @@ periodicity_tests<dim>::periodicity_tests()
   comm_rank = Utilities::MPI::this_mpi_process(mpi_comm);
   comm_size = Utilities::MPI::n_mpi_processes(mpi_comm);
   std::vector<unsigned> repeats(dim, 2);
-  Point<dim>            p1, p2, periodic_transfer;
+  Point<dim> p1, p2, periodic_transfer;
   if(dim == 2)
     {
       p2                = Point<dim>(16., 16.);
@@ -187,7 +187,7 @@ template <int dim>
 void
 periodicity_tests<dim>::write_grid()
 {
-  GridOut           Grid1_Out;
+  GridOut Grid1_Out;
   GridOutFlags::Svg svg_flags(
     1,                                       // line_thickness = 2,
     2,                                       // boundary_line_thickness = 4,
@@ -320,7 +320,7 @@ main(int argc, char* argv[])
   try
     {
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-      MPILogInitAll                    log;
+      MPILogInitAll log;
 
       periodicity_tests<2> test_2D;
       /*

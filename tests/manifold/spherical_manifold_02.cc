@@ -68,12 +68,12 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
 
   Triangulation<2, 3> triangulation;
 
-  FE_Q<2, 3>       fe(degree);
+  FE_Q<2, 3> fe(degree);
   DoFHandler<2, 3> dof_handler(triangulation);
   QGaussLobatto<2> cell_quadrature(degree + 1);
 
   const double radius = 1.0;
-  Point<3>     center(0.0, 0.0, 0.0);
+  Point<3> center(0.0, 0.0, 0.0);
   GridGenerator::hyper_sphere(triangulation, center, radius);
 
   static const SphericalManifold<2, 3> sphere;
@@ -95,7 +95,7 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
 
   {
     // Save mesh to file for visualization
-    GridOut       grid_out;
+    GridOut grid_out;
     std::ofstream grid_file("grid.vtk");
     grid_out.write_vtk(triangulation, grid_file);
     // deallog << "Grid has been saved into grid.vtk" << std::endl;

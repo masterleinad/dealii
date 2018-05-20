@@ -52,22 +52,22 @@ namespace Step48
   {
   public:
     SineGordonOperation(const MatrixFree<dim, double>& data_in,
-                        const double                   time_step);
+                        const double time_step);
 
     void
-    apply(LinearAlgebra::distributed::Vector<double>&                     dst,
+    apply(LinearAlgebra::distributed::Vector<double>& dst,
           const std::vector<LinearAlgebra::distributed::Vector<double>*>& src)
       const;
 
   private:
-    const MatrixFree<dim, double>&             data;
-    const VectorizedArray<double>              delta_t_sqr;
+    const MatrixFree<dim, double>& data;
+    const VectorizedArray<double> delta_t_sqr;
     LinearAlgebra::distributed::Vector<double> inv_mass_matrix;
 
     void
     local_apply(
-      const MatrixFree<dim, double>&                                  data,
-      LinearAlgebra::distributed::Vector<double>&                     dst,
+      const MatrixFree<dim, double>& data,
+      LinearAlgebra::distributed::Vector<double>& dst,
       const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
       const std::pair<unsigned int, unsigned int>& cell_range) const;
   };
@@ -75,7 +75,7 @@ namespace Step48
   template <int dim, int fe_degree>
   SineGordonOperation<dim, fe_degree>::SineGordonOperation(
     const MatrixFree<dim, double>& data_in,
-    const double                   time_step)
+    const double time_step)
     : data(data_in), delta_t_sqr(make_vectorized_array(time_step * time_step))
   {
     VectorizedArray<double> one = make_vectorized_array(1.);
@@ -83,7 +83,7 @@ namespace Step48
     data.initialize_dof_vector(inv_mass_matrix);
 
     FEEvaluation<dim, fe_degree> fe_eval(data);
-    const unsigned int           n_q_points = fe_eval.n_q_points;
+    const unsigned int n_q_points = fe_eval.n_q_points;
 
     for(unsigned int cell = 0; cell < data.n_macro_cells(); ++cell)
       {
@@ -106,8 +106,8 @@ namespace Step48
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::local_apply(
-    const MatrixFree<dim>&                                          data,
-    LinearAlgebra::distributed::Vector<double>&                     dst,
+    const MatrixFree<dim>& data,
+    LinearAlgebra::distributed::Vector<double>& dst,
     const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
@@ -143,7 +143,7 @@ namespace Step48
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::apply(
-    LinearAlgebra::distributed::Vector<double>&                     dst,
+    LinearAlgebra::distributed::Vector<double>& dst,
     const std::vector<LinearAlgebra::distributed::Vector<double>*>& src) const
   {
     dst = 0;
@@ -200,10 +200,10 @@ namespace Step48
 #else
     Triangulation<dim> triangulation;
 #endif
-    FE_Q<dim>        fe;
-    DoFHandler<dim>  dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
     ConstraintMatrix constraints;
-    IndexSet         locally_relevant_dofs;
+    IndexSet locally_relevant_dofs;
 
     MatrixFree<dim, double> matrix_free_data;
 
@@ -211,9 +211,9 @@ namespace Step48
       old_old_solution;
 
     const unsigned int n_global_refinements;
-    double             time, time_step;
-    const double       final_time;
-    const double       cfl_number;
+    double time, time_step;
+    const double final_time;
+    const double cfl_number;
     const unsigned int output_timestep_skip;
   };
 
@@ -276,7 +276,7 @@ namespace Step48
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
     constraints.close();
 
-    QGaussLobatto<1>                         quadrature(fe_degree + 1);
+    QGaussLobatto<1> quadrature(fe_degree + 1);
     typename MatrixFree<dim>::AdditionalData additional_data;
     additional_data.tasks_parallel_scheme
       = MatrixFree<dim>::AdditionalData::partition_partition;

@@ -29,7 +29,7 @@ void
 test(TrilinosWrappers::MPI::BlockVector& v)
 {
   std::vector<types::global_dof_index> sizes(2, 3);
-  dealii::BlockVector<TrilinosScalar>  w;
+  dealii::BlockVector<TrilinosScalar> w;
   w.reinit(sizes);
 
   for(unsigned int i = 0; i < w.size(); ++i)
@@ -67,7 +67,7 @@ main(int argc, char** argv)
   try
     {
       {
-        std::vector<IndexSet>              sizes(2, complete_index_set(3));
+        std::vector<IndexSet> sizes(2, complete_index_set(3));
         TrilinosWrappers::MPI::BlockVector v;
         v.reinit(sizes);
         test(v);

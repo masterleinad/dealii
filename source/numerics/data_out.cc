@@ -36,14 +36,14 @@ namespace internal
   {
     template <int dim, int spacedim>
     ParallelData<dim, spacedim>::ParallelData(
-      const unsigned int               n_datasets,
-      const unsigned int               n_subdivisions,
+      const unsigned int n_datasets,
+      const unsigned int n_subdivisions,
       const std::vector<unsigned int>& n_postprocessor_outputs,
-      const Mapping<dim, spacedim>&    mapping,
+      const Mapping<dim, spacedim>& mapping,
       const std::vector<
         std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                                                    finite_elements,
-      const UpdateFlags                             update_flags,
+        finite_elements,
+      const UpdateFlags update_flags,
       const std::vector<std::vector<unsigned int>>& cell_to_patch_index_map)
       : ParallelDataBase<dim, spacedim>(n_datasets,
                                         n_subdivisions,
@@ -64,8 +64,8 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
   internal::DataOutImplementation::ParallelData<
     DoFHandlerType::dimension,
     DoFHandlerType::space_dimension>& scratch_data,
-  const unsigned int                  n_subdivisions,
-  const CurvedCellRegion              curved_cell_region)
+  const unsigned int n_subdivisions,
+  const CurvedCellRegion curved_cell_region)
 {
   // first create the output object that we will write into
   ::dealii::DataOutBase::Patch<DoFHandlerType::dimension,
@@ -425,8 +425,8 @@ template <int dim, typename DoFHandlerType>
 void
 DataOut<dim, DoFHandlerType>::build_patches(
   const Mapping<DoFHandlerType::dimension, DoFHandlerType::space_dimension>&
-                         mapping,
-  const unsigned int     n_subdivisions_,
+    mapping,
+  const unsigned int n_subdivisions_,
   const CurvedCellRegion curved_region)
 {
   // Check consistency of redundant template parameter
@@ -485,9 +485,9 @@ DataOut<dim, DoFHandlerType>::build_patches(
     // data from (cell data vectors do not have the length distance computed by
     // first_locally_owned_cell/next_locally_owned_cell because this might skip
     // some values (FilteredIterator).
-    active_cell_iterator active_cell  = this->triangulation->begin_active();
-    unsigned int         active_index = 0;
-    cell_iterator        cell         = first_locally_owned_cell();
+    active_cell_iterator active_cell = this->triangulation->begin_active();
+    unsigned int active_index        = 0;
+    cell_iterator cell               = first_locally_owned_cell();
     for(; cell != this->triangulation->end();
         cell = next_locally_owned_cell(cell))
       {

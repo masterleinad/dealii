@@ -33,24 +33,24 @@
 
 template <typename NumberType, int dim, typename ExtractorType>
 void
-test_view(const Vector<double>&          solution,
-          const FEValues<dim>&           fe_values,
-          const unsigned int&            n_q_points,
-          const ExtractorType&           extractor,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
+          const ExtractorType& extractor,
           const std::vector<NumberType>& local_dof_values);
 
 // Scalar view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&             solution,
-          const FEValues<dim>&              fe_values,
-          const unsigned int&               n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::Scalar& extractor,
-          const std::vector<NumberType>&    local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -68,21 +68,21 @@ test_view(const Vector<double>&             solution,
 
   // Values
   std::vector<typename OutputType::value_type> qp_values_local(n_q_points);
-  std::vector<value_type>                      qp_values_global(n_q_points);
+  std::vector<value_type> qp_values_global(n_q_points);
   fe_values_view.get_function_values_from_local_dof_values(local_dof_values,
                                                            qp_values_local);
   fe_values_view.get_function_values(solution, qp_values_global);
 
   // Gradients
   std::vector<typename OutputType::gradient_type> qp_grads_local(n_q_points);
-  std::vector<gradient_type>                      qp_grads_global(n_q_points);
+  std::vector<gradient_type> qp_grads_global(n_q_points);
   fe_values_view.get_function_gradients_from_local_dof_values(local_dof_values,
                                                               qp_grads_local);
   fe_values_view.get_function_gradients(solution, qp_grads_global);
 
   // Hessians
   std::vector<typename OutputType::hessian_type> qp_hess_local(n_q_points);
-  std::vector<hessian_type>                      qp_hess_global(n_q_points);
+  std::vector<hessian_type> qp_hess_global(n_q_points);
   fe_values_view.get_function_hessians_from_local_dof_values(local_dof_values,
                                                              qp_hess_local);
   fe_values_view.get_function_hessians(solution, qp_hess_global);
@@ -128,22 +128,22 @@ test_view(const Vector<double>&             solution,
 // Vector view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&             solution,
-          const FEValues<dim>&              fe_values,
-          const unsigned int&               n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::Vector& extractor,
-          const std::vector<NumberType>&    local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
   typedef typename ProductType<typename View::value_type, NumberType>::type
     value_type;
   typedef typename ProductType<typename View::gradient_type, NumberType>::type
-                                                 gradient_type;
+    gradient_type;
   typedef typename ProductType<typename View::symmetric_gradient_type,
                                NumberType>::type symmetric_gradient_type;
   typedef typename ProductType<typename View::divergence_type, NumberType>::type
@@ -160,14 +160,14 @@ test_view(const Vector<double>&             solution,
 
   // Values
   std::vector<typename OutputType::value_type> qp_values_local(n_q_points);
-  std::vector<value_type>                      qp_values_global(n_q_points);
+  std::vector<value_type> qp_values_global(n_q_points);
   fe_values_view.get_function_values_from_local_dof_values(local_dof_values,
                                                            qp_values_local);
   fe_values_view.get_function_values(solution, qp_values_global);
 
   // Gradients
   std::vector<typename OutputType::gradient_type> qp_grads_local(n_q_points);
-  std::vector<gradient_type>                      qp_grads_global(n_q_points);
+  std::vector<gradient_type> qp_grads_global(n_q_points);
   fe_values_view.get_function_gradients_from_local_dof_values(local_dof_values,
                                                               qp_grads_local);
   fe_values_view.get_function_gradients(solution, qp_grads_global);
@@ -183,21 +183,21 @@ test_view(const Vector<double>&             solution,
 
   // Divergences
   std::vector<typename OutputType::divergence_type> qp_divs_local(n_q_points);
-  std::vector<divergence_type>                      qp_divs_global(n_q_points);
+  std::vector<divergence_type> qp_divs_global(n_q_points);
   fe_values_view.get_function_divergences_from_local_dof_values(
     local_dof_values, qp_divs_local);
   fe_values_view.get_function_divergences(solution, qp_divs_global);
 
   // Curls
   std::vector<typename OutputType::curl_type> qp_curls_local(n_q_points);
-  std::vector<curl_type>                      qp_curls_global(n_q_points);
+  std::vector<curl_type> qp_curls_global(n_q_points);
   fe_values_view.get_function_curls_from_local_dof_values(local_dof_values,
                                                           qp_curls_local);
   fe_values_view.get_function_curls(solution, qp_curls_global);
 
   // Hessians
   std::vector<typename OutputType::hessian_type> qp_hess_local(n_q_points);
-  std::vector<hessian_type>                      qp_hess_global(n_q_points);
+  std::vector<hessian_type> qp_hess_global(n_q_points);
   fe_values_view.get_function_hessians_from_local_dof_values(local_dof_values,
                                                              qp_hess_local);
   fe_values_view.get_function_hessians(solution, qp_hess_global);
@@ -257,15 +257,15 @@ test_view(const Vector<double>&             solution,
 // SymmetricTensor view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&                         solution,
-          const FEValues<dim>&                          fe_values,
-          const unsigned int&                           n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::SymmetricTensor<2>& extractor,
-          const std::vector<NumberType>&                local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -276,14 +276,14 @@ test_view(const Vector<double>&                         solution,
 
   // Values
   std::vector<typename OutputType::value_type> qp_values_local(n_q_points);
-  std::vector<value_type>                      qp_values_global(n_q_points);
+  std::vector<value_type> qp_values_global(n_q_points);
   fe_values_view.get_function_values_from_local_dof_values(local_dof_values,
                                                            qp_values_local);
   fe_values_view.get_function_values(solution, qp_values_global);
 
   // Divergences
   std::vector<typename OutputType::divergence_type> qp_divs_local(n_q_points);
-  std::vector<divergence_type>                      qp_divs_global(n_q_points);
+  std::vector<divergence_type> qp_divs_global(n_q_points);
   fe_values_view.get_function_divergences_from_local_dof_values(
     local_dof_values, qp_divs_local);
   fe_values_view.get_function_divergences(solution, qp_divs_global);
@@ -303,15 +303,15 @@ test_view(const Vector<double>&                         solution,
 // Tensor view
 template <typename NumberType, int dim>
 void
-test_view(const Vector<double>&                solution,
-          const FEValues<dim>&                 fe_values,
-          const unsigned int&                  n_q_points,
+test_view(const Vector<double>& solution,
+          const FEValues<dim>& fe_values,
+          const unsigned int& n_q_points,
           const FEValuesExtractors::Tensor<2>& extractor,
-          const std::vector<NumberType>&       local_dof_values)
+          const std::vector<NumberType>& local_dof_values)
 {
   typedef typename std::remove_reference<typename std::remove_const<decltype(
     fe_values[extractor])>::type>::type View;
-  const View&                           fe_values_view = fe_values[extractor];
+  const View& fe_values_view = fe_values[extractor];
 
   // Typedefs
   typedef typename View::template OutputType<NumberType> OutputType;
@@ -324,21 +324,21 @@ test_view(const Vector<double>&                solution,
 
   // Values
   std::vector<typename OutputType::value_type> qp_values_local(n_q_points);
-  std::vector<value_type>                      qp_values_global(n_q_points);
+  std::vector<value_type> qp_values_global(n_q_points);
   fe_values_view.get_function_values_from_local_dof_values(local_dof_values,
                                                            qp_values_local);
   fe_values_view.get_function_values(solution, qp_values_global);
 
   // Divergences
   std::vector<typename OutputType::divergence_type> qp_divs_local(n_q_points);
-  std::vector<divergence_type>                      qp_divs_global(n_q_points);
+  std::vector<divergence_type> qp_divs_global(n_q_points);
   fe_values_view.get_function_divergences_from_local_dof_values(
     local_dof_values, qp_divs_local);
   fe_values_view.get_function_divergences(solution, qp_divs_global);
 
   // Gradients
   std::vector<typename OutputType::gradient_type> qp_grads_local(n_q_points);
-  std::vector<gradient_type>                      qp_grads_global(n_q_points);
+  std::vector<gradient_type> qp_grads_global(n_q_points);
   fe_values_view.get_function_gradients_from_local_dof_values(local_dof_values,
                                                               qp_grads_local);
   fe_values_view.get_function_gradients(solution, qp_grads_global);
@@ -365,8 +365,8 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
   QGauss<dim> quadrature_formula(2);
 
   Triangulation<dim> tria;
-  DoFHandler<dim>    dof_handler(tria);
-  Vector<double>     solution;
+  DoFHandler<dim> dof_handler(tria);
+  Vector<double> solution;
 
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.refine_global(1);
@@ -380,7 +380,7 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
       solution(i) = i + 1;
     }
 
-  FEValues<dim>                        fe_values(fe,
+  FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients | update_hessians
                             | update_3rd_derivatives);
@@ -420,7 +420,7 @@ test()
 
   deallog.push("Scalar");
   {
-    FE_Q<dim>                  fe(degree);
+    FE_Q<dim> fe(degree);
     FEValuesExtractors::Scalar extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);
   }
@@ -428,7 +428,7 @@ test()
 
   deallog.push("Vector");
   {
-    FESystem<dim>              fe(FE_Q<dim>(degree), dim);
+    FESystem<dim> fe(FE_Q<dim>(degree), dim);
     FEValuesExtractors::Vector extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);
   }
@@ -436,7 +436,7 @@ test()
 
   deallog.push("SymmetricTensor");
   {
-    FESystem<dim>                          fe(FE_Q<dim>(degree),
+    FESystem<dim> fe(FE_Q<dim>(degree),
                      SymmetricTensor<2, dim>::n_independent_components);
     FEValuesExtractors::SymmetricTensor<2> extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);
@@ -445,7 +445,7 @@ test()
 
   deallog.push("Tensor");
   {
-    FESystem<dim>                 fe(FE_Q<dim>(degree),
+    FESystem<dim> fe(FE_Q<dim>(degree),
                      Tensor<2, dim>::n_independent_components);
     FEValuesExtractors::Tensor<2> extractor(0);
     test_extractor<NumberType, dim>(fe, extractor);

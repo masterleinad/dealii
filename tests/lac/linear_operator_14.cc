@@ -53,9 +53,9 @@ using namespace dealii;
 template <int dim>
 void
 build_matrix_vector(TrilinosWrappers::BlockSparseMatrix& matrix,
-                    TrilinosWrappers::MPI::BlockVector&  vector,
-                    const FE_Q<dim>&                     fe_test,
-                    const FE_Q<dim>&                     fe_trial)
+                    TrilinosWrappers::MPI::BlockVector& vector,
+                    const FE_Q<dim>& fe_test,
+                    const FE_Q<dim>& fe_trial)
 {
   deallog.push("build_matrix_vector");
 
@@ -63,7 +63,7 @@ build_matrix_vector(TrilinosWrappers::BlockSparseMatrix& matrix,
 
   // Configure block system
   // Block data
-  const unsigned int        n_blocks = 2;
+  const unsigned int n_blocks = 2;
   std::vector<unsigned int> block_component(n_blocks);
   block_component[0] = 0;
   block_component[1] = 1;
@@ -71,20 +71,20 @@ build_matrix_vector(TrilinosWrappers::BlockSparseMatrix& matrix,
 
   // DoF index data
   std::vector<IndexSet> all_locally_owned_dofs;
-  IndexSet              locally_owned_dofs;
-  IndexSet              locally_relevant_dofs;
+  IndexSet locally_owned_dofs;
+  IndexSet locally_relevant_dofs;
   std::vector<IndexSet> locally_owned_partitioning;
   std::vector<IndexSet> locally_relevant_partitioning;
 
   // Initialise
-  const FESystem<dim>                       fe(fe_test, 1, fe_trial, 1);
+  const FESystem<dim> fe(fe_test, 1, fe_trial, 1);
   parallel::distributed::Triangulation<dim> triangulation(
     mpi_communicator,
     typename Triangulation<dim>::MeshSmoothing(
       Triangulation<dim>::smoothing_on_refinement
       | Triangulation<dim>::smoothing_on_coarsening));
-  QGauss<dim>      quadrature_formula(fe_trial.degree + 1);
-  DoFHandler<dim>  dof_handler(triangulation);
+  QGauss<dim> quadrature_formula(fe_trial.degree + 1);
+  DoFHandler<dim> dof_handler(triangulation);
   ConstraintMatrix constraints;
 
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
@@ -138,7 +138,7 @@ build_matrix_vector(TrilinosWrappers::BlockSparseMatrix& matrix,
     fe, quadrature_formula, update_values | update_JxW_values);
   const unsigned int n_q_points = quadrature_formula.size();
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   typename DoFHandler<dim>::active_cell_iterator cell
@@ -181,15 +181,15 @@ build_matrix_vector(TrilinosWrappers::BlockSparseMatrix& matrix,
 
 void
 evaluate_ops(const TrilinosWrappers::BlockSparseMatrix& matrix,
-             const TrilinosWrappers::MPI::BlockVector&  vector)
+             const TrilinosWrappers::MPI::BlockVector& vector)
 {
-  const double                                   tol = 1e-12;
+  const double tol = 1e-12;
   typedef dealii::TrilinosWrappers::SparseMatrix MatrixType;
-  typedef dealii::TrilinosWrappers::MPI::Vector  VectorType;
+  typedef dealii::TrilinosWrappers::MPI::Vector VectorType;
   typedef dealii::TrilinosWrappers::internal::LinearOperatorImplementation::
-    TrilinosPayload                        PayloadType;
+    TrilinosPayload PayloadType;
   typedef typename PayloadType::VectorType PayloadVectorType;
-  typedef dealii::types::global_dof_index  size_type;
+  typedef dealii::types::global_dof_index size_type;
 
   deallog.push("System info");
   {
@@ -530,7 +530,7 @@ main(int argc, char* argv[])
   const int dim = 2;
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    all;
+  MPILogInitAll all;
 
   deallog.depth_console(0);
   deallog << std::setprecision(10);
@@ -540,7 +540,7 @@ main(int argc, char* argv[])
   FE_Q<dim> fe_trial(1);
 
   TrilinosWrappers::BlockSparseMatrix A;
-  TrilinosWrappers::MPI::BlockVector  b;
+  TrilinosWrappers::MPI::BlockVector b;
 
   deallog.push("Square");
   build_matrix_vector<dim>(A, b, fe_test_1, fe_trial);

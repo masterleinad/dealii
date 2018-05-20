@@ -39,7 +39,7 @@ public:
 template <int dim>
 void
 setup(DoFHandler<dim>& dh,
-      FE_Q<dim>&       fe,
+      FE_Q<dim>& fe,
       LA::MPI::Vector& vec,
       LA::MPI::Vector& lr_vec)
 {
@@ -52,9 +52,9 @@ setup(DoFHandler<dim>& dh,
 
 template <int dim>
 void
-output(DoFHandler<dim>&  dh,
-       LA::MPI::Vector&  v,
-       unsigned int      loop,
+output(DoFHandler<dim>& dh,
+       LA::MPI::Vector& v,
+       unsigned int loop,
        const std::string filename_)
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
@@ -104,7 +104,7 @@ test()
   GridGenerator::hyper_cube(tr2);
   tr2.refine_global(2);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dh(tr);
   DoFHandler<dim> dh2(tr2);
 
@@ -159,7 +159,7 @@ test()
                                           local_errors,
                                           QGauss<dim>(3),
                                           VectorTools::L2_norm);
-        double       total_local_error  = local_errors.l2_norm();
+        double total_local_error        = local_errors.l2_norm();
         const double total_global_error = std::sqrt(Utilities::MPI::sum(
           total_local_error * total_local_error, MPI_COMM_WORLD));
         if(myid == 0)
@@ -190,6 +190,6 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   test<2>();
 }

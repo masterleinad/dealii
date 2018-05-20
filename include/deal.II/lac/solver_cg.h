@@ -107,9 +107,9 @@ public:
   /**
    * Constructor.
    */
-  SolverCG(SolverControl&            cn,
+  SolverCG(SolverControl& cn,
            VectorMemory<VectorType>& mem,
-           const AdditionalData&     data = AdditionalData());
+           const AdditionalData& data = AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
@@ -127,9 +127,9 @@ public:
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  solve(const MatrixType&         A,
-        VectorType&               x,
-        const VectorType&         b,
+  solve(const MatrixType& A,
+        VectorType& x,
+        const VectorType& b,
         const PreconditionerType& preconditioner);
 
   /**
@@ -170,9 +170,9 @@ protected:
    */
   virtual void
   print_vectors(const unsigned int step,
-                const VectorType&  x,
-                const VectorType&  r,
-                const VectorType&  d) const;
+                const VectorType& x,
+                const VectorType& r,
+                const VectorType& d) const;
 
   /**
    * Estimates the eigenvalues from diagonal and offdiagonal. Uses these
@@ -184,7 +184,7 @@ protected:
     const std::vector<double>& diagonal,
     const std::vector<double>& offdiagonal,
     const boost::signals2::signal<void(const std::vector<double>&)>&
-                                                 eigenvalues_signal,
+      eigenvalues_signal,
     const boost::signals2::signal<void(double)>& cond_signal);
 
   /**
@@ -230,9 +230,9 @@ protected:
 #ifndef DOXYGEN
 
 template <typename VectorType>
-SolverCG<VectorType>::SolverCG(SolverControl&            cn,
+SolverCG<VectorType>::SolverCG(SolverControl& cn,
                                VectorMemory<VectorType>& mem,
-                               const AdditionalData&     data)
+                               const AdditionalData& data)
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
@@ -255,7 +255,7 @@ SolverCG<VectorType>::compute_eigs_and_cond(
   const std::vector<double>& diagonal,
   const std::vector<double>& offdiagonal,
   const boost::signals2::signal<void(const std::vector<double>&)>&
-                                               eigenvalues_signal,
+    eigenvalues_signal,
   const boost::signals2::signal<void(double)>& cond_signal)
 {
   //Avoid computing eigenvalues unless they are needed.
@@ -292,9 +292,9 @@ SolverCG<VectorType>::compute_eigs_and_cond(
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverCG<VectorType>::solve(const MatrixType&         A,
-                            VectorType&               x,
-                            const VectorType&         b,
+SolverCG<VectorType>::solve(const MatrixType& A,
+                            VectorType& x,
+                            const VectorType& b,
                             const PreconditionerType& preconditioner)
 {
   SolverControl::State conv = SolverControl::iterate;
@@ -321,7 +321,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
   std::vector<double> diagonal;
   std::vector<double> offdiagonal;
 
-  int    it  = 0;
+  int it     = 0;
   double res = -std::numeric_limits<double>::max();
 
   double eigen_beta_alpha = 0;
@@ -439,7 +439,7 @@ template <typename VectorType>
 boost::signals2::connection
 SolverCG<VectorType>::connect_condition_number_slot(
   const std::function<void(double)>& slot,
-  const bool                         every_iteration)
+  const bool every_iteration)
 {
   if(every_iteration)
     {
@@ -455,7 +455,7 @@ template <typename VectorType>
 boost::signals2::connection
 SolverCG<VectorType>::connect_eigenvalues_slot(
   const std::function<void(const std::vector<double>&)>& slot,
-  const bool                                             every_iteration)
+  const bool every_iteration)
 {
   if(every_iteration)
     {

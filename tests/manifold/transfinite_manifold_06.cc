@@ -31,7 +31,7 @@ main()
 {
   initlog();
 
-  const int          dim = 3;
+  const int dim = 3;
   Triangulation<dim> tria1, tria2, tria;
   GridGenerator::hyper_shell(tria1, Point<dim>(), 0.4, std::sqrt(dim), 6);
   GridGenerator::hyper_ball(tria2, Point<dim>(), 0.4);

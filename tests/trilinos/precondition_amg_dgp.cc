@@ -42,14 +42,14 @@ class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
 {
 public:
   void
-  cell(MeshWorker::DoFInfo<dim>&                  dinfo,
+  cell(MeshWorker::DoFInfo<dim>& dinfo,
        typename MeshWorker::IntegrationInfo<dim>& info) const;
   void
-  boundary(MeshWorker::DoFInfo<dim>&                  dinfo,
+  boundary(MeshWorker::DoFInfo<dim>& dinfo,
            typename MeshWorker::IntegrationInfo<dim>& info) const;
   void
-  face(MeshWorker::DoFInfo<dim>&                  dinfo1,
-       MeshWorker::DoFInfo<dim>&                  dinfo2,
+  face(MeshWorker::DoFInfo<dim>& dinfo1,
+       MeshWorker::DoFInfo<dim>& dinfo2,
        typename MeshWorker::IntegrationInfo<dim>& info1,
        typename MeshWorker::IntegrationInfo<dim>& info2) const;
 };
@@ -57,7 +57,7 @@ public:
 template <int dim>
 void
 MatrixIntegrator<dim>::cell(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
+  MeshWorker::DoFInfo<dim>& dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
   LocalIntegrators::Laplace::cell_matrix(dinfo.matrix(0, false).matrix,
@@ -67,7 +67,7 @@ MatrixIntegrator<dim>::cell(
 template <int dim>
 void
 MatrixIntegrator<dim>::boundary(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
+  MeshWorker::DoFInfo<dim>& dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
   const unsigned int deg = info.fe_values(0).get_fe().degree;
@@ -80,8 +80,8 @@ MatrixIntegrator<dim>::boundary(
 template <int dim>
 void
 MatrixIntegrator<dim>::face(
-  MeshWorker::DoFInfo<dim>&                  dinfo1,
-  MeshWorker::DoFInfo<dim>&                  dinfo2,
+  MeshWorker::DoFInfo<dim>& dinfo1,
+  MeshWorker::DoFInfo<dim>& dinfo2,
   typename MeshWorker::IntegrationInfo<dim>& info1,
   typename MeshWorker::IntegrationInfo<dim>& info2) const
 {
@@ -113,8 +113,8 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_DGP<dim>        fe;
-  DoFHandler<dim>    dof_handler;
+  FE_DGP<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   TrilinosWrappers::SparseMatrix system_matrix;
 
@@ -147,7 +147,7 @@ Step4<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 
-  MappingQGeneric<dim>                mapping(1);
+  MappingQGeneric<dim> mapping(1);
   MeshWorker::IntegrationInfoBox<dim> info_box;
   UpdateFlags update_flags = update_values | update_gradients;
   info_box.add_update_flags_all(update_flags);
@@ -175,7 +175,7 @@ void
 Step4<dim>::solve()
 {
   deallog.push(Utilities::int_to_string(dof_handler.n_dofs(), 5));
-  TrilinosWrappers::PreconditionAMG                 preconditioner;
+  TrilinosWrappers::PreconditionAMG preconditioner;
   TrilinosWrappers::PreconditionAMG::AdditionalData data;
   DoFTools::extract_constant_modes(
     dof_handler, std::vector<bool>(1, true), data.constant_modes);
@@ -183,7 +183,7 @@ Step4<dim>::solve()
   {
     solution = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     solver.solve(system_matrix, solution, system_rhs, preconditioner);
   }

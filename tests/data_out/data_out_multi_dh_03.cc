@@ -34,7 +34,7 @@ test()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>     fe1(1);
+  FE_Q<dim> fe1(1);
   FESystem<dim> fe2(FE_Q<dim>(1), dim);
 
   DoFHandler<dim> dof1(tria);

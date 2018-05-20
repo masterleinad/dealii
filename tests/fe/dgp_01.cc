@@ -42,7 +42,7 @@ test(const unsigned int degree)
   else
     GridGenerator::hyper_cube(tr);
 
-  QGauss<dim>   q(degree + 1);
+  QGauss<dim> q(degree + 1);
   FEValues<dim> fe_values(fe, q, update_values);
   for(typename Triangulation<dim>::active_cell_iterator cell
       = tr.begin_active();

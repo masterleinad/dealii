@@ -51,10 +51,10 @@ private:
 template <int dim, typename T>
 void
 test(const FiniteElement<dim>& fe,
-     const T&                  f,
-     const unsigned int        order_mapping,
-     bool                      distort_mesh,
-     bool                      print_function_values = false)
+     const T& f,
+     const unsigned int order_mapping,
+     bool distort_mesh,
+     bool print_function_values = false)
 {
   deallog << "dim " << dim << " " << fe.get_name() << std::endl;
 

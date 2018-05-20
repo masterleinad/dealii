@@ -119,12 +119,12 @@ public:
   virtual void
   fill_fe_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const CellSimilarity::Similarity cell_similarity,
+    const Quadrature<dim>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -132,12 +132,12 @@ public:
   virtual void
   fill_fe_face_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -145,13 +145,13 @@ public:
   virtual void
   fill_fe_subface_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          sub_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const unsigned int sub_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -167,9 +167,9 @@ public:
    */
   virtual std::unique_ptr<
     typename FiniteElement<dim, spacedim>::InternalDataBase>
-  get_data(const UpdateFlags             update_flags,
+  get_data(const UpdateFlags update_flags,
            const Mapping<dim, spacedim>& mapping,
-           const Quadrature<dim>&        quadrature,
+           const Quadrature<dim>& quadrature,
            dealii::internal::FEValuesImplementation::FiniteElementRelatedData<
              dim,
              spacedim>& output_data) const override;
@@ -215,7 +215,7 @@ public:
   virtual void
   get_interpolation_matrix(
     const FiniteElement<dim, spacedim>& source_fe,
-    FullMatrix<double>&                 interpolation_matrix) const override;
+    FullMatrix<double>& interpolation_matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -229,7 +229,7 @@ public:
   virtual void
   get_face_interpolation_matrix(
     const FiniteElement<dim, spacedim>& source_fe,
-    FullMatrix<double>&                 interpolation_matrix) const override;
+    FullMatrix<double>& interpolation_matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the
@@ -243,8 +243,8 @@ public:
   virtual void
   get_subface_interpolation_matrix(
     const FiniteElement<dim, spacedim>& source_fe,
-    const unsigned int                  index,
-    FullMatrix<double>&                 interpolation_matrix) const override;
+    const unsigned int index,
+    FullMatrix<double>& interpolation_matrix) const override;
 
   /**
    * @return true if the FE dominates any other.

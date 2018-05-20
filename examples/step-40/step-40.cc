@@ -175,7 +175,7 @@ namespace Step40
     parallel::distributed::Triangulation<dim> triangulation;
 
     DoFHandler<dim> dof_handler;
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
@@ -183,11 +183,11 @@ namespace Step40
     ConstraintMatrix constraints;
 
     LA::MPI::SparseMatrix system_matrix;
-    LA::MPI::Vector       locally_relevant_solution;
-    LA::MPI::Vector       system_rhs;
+    LA::MPI::Vector locally_relevant_solution;
+    LA::MPI::Vector system_rhs;
 
     ConditionalOStream pcout;
-    TimerOutput        computing_timer;
+    TimerOutput computing_timer;
   };
 
   // @sect3{The <code>LaplaceProblem</code> class implementation}
@@ -376,7 +376,7 @@ namespace Step40
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -465,7 +465,7 @@ namespace Step40
   LaplaceProblem<dim>::solve()
   {
     TimerOutput::Scope t(computing_timer, "solve");
-    LA::MPI::Vector    completely_distributed_solution(locally_owned_dofs,
+    LA::MPI::Vector completely_distributed_solution(locally_owned_dofs,
                                                     mpi_communicator);
 
     SolverControl solver_control(dof_handler.n_dofs(), 1e-12);

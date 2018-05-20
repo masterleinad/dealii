@@ -32,7 +32,7 @@ test_tensor(const Tensor<2, dim>& F)
   // Rank-1 Tensors
   {
     Tensor<1, dim> T;
-    unsigned int   c = 1;
+    unsigned int c = 1;
     for(unsigned int i = 0; i < dim; ++i)
       T[i] = c++;
 
@@ -53,7 +53,7 @@ test_tensor(const Tensor<2, dim>& F)
   // Rank-2 Tensors
   {
     Tensor<2, dim> T;
-    unsigned int   c = 1;
+    unsigned int c = 1;
     for(unsigned int i = 0; i < dim; ++i)
       for(unsigned int j = 0; j < dim; ++j)
         T[i][j] = c++;
@@ -83,7 +83,7 @@ test_tensor(const Tensor<2, dim>& F)
   // Rank-4 Tensors
   {
     Tensor<4, dim> T;
-    unsigned int   c = 1;
+    unsigned int c = 1;
     for(unsigned int i = 0; i < dim; ++i)
       for(unsigned int j = 0; j < dim; ++j)
         for(unsigned int k = 0; k < dim; ++k)
@@ -142,7 +142,7 @@ test_symmetric_tensor(const Tensor<2, dim>& F)
   // Rank-2 Symmetric tensors
   {
     SymmetricTensor<2, dim> T;
-    unsigned int            c = 1;
+    unsigned int c = 1;
     for(unsigned int i = 0; i < dim; ++i)
       for(unsigned int j = i; j < dim; ++j) // symmetry
         T[i][j] = c++;
@@ -176,7 +176,7 @@ test_symmetric_tensor(const Tensor<2, dim>& F)
   // Rank-4 Symmetric tensors
   {
     SymmetricTensor<4, dim> T;
-    unsigned int            c = 1;
+    unsigned int c = 1;
     for(unsigned int i = 0; i < dim; ++i)
       for(unsigned int j = i; j < dim; ++j) // symmetry
         for(unsigned int k = 0; k < dim; ++k)
@@ -246,7 +246,7 @@ test()
 
   // Test with non-trivial tensor
   Tensor<2, dim> F = unit_symmetric_tensor<dim>();
-  double         c = 0.1;
+  double c         = 0.1;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       {

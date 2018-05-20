@@ -45,7 +45,7 @@ check()
       tr.refine_global(3 - dim);
 
       FE_DGQArbitraryNodes<dim> fe((QGauss<1>(q_points)));
-      DoFHandler<dim>           dh(tr);
+      DoFHandler<dim> dh(tr);
       dh.distribute_dofs(fe);
 
       SparsityPattern sp(dh.n_dofs(), dh.n_dofs(), fe.dofs_per_cell);

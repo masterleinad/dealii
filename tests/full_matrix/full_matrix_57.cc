@@ -27,7 +27,7 @@ check()
   deallog << std::fixed;
   deallog << std::setprecision(1);
 
-  Vector<double>     First4(4), Second4(4), First9(9);
+  Vector<double> First4(4), Second4(4), First9(9);
   FullMatrix<double> F4(4, 4), F9(9, 9);
 
   deallog << "Original Vector V" << std::endl;

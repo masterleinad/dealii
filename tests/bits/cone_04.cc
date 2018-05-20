@@ -43,7 +43,7 @@ check()
         if(face->boundary_id() == 0)
           for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
             {
-              const Point<dim>     vertex = face->vertex(v);
+              const Point<dim> vertex = face->vertex(v);
               const Tensor<1, dim> tangent_1({-vertex(2), 0., vertex(0)});
               const Tensor<1, dim> tangent_2 = vertex - Point<dim>(0, 3, 0);
 

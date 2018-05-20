@@ -39,8 +39,8 @@ main()
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 
-  FE_Q<2>     fe1(1);
-  FE_Q<2>     fe2(2);
+  FE_Q<2> fe1(1);
+  FE_Q<2> fe2(2);
   FESystem<2> fe(fe1, 2, fe2, 1);
 
   DoFHandler<2> dof(tr);

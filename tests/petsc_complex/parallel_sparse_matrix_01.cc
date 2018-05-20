@@ -52,7 +52,7 @@ template <int dim>
 void
 test(const unsigned int poly_degree = 1)
 {
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(mpi_communicator));
   const unsigned int this_mpi_process(
@@ -76,7 +76,7 @@ test(const unsigned int poly_degree = 1)
   IndexSet locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
-  PETScWrappers::MPI::Vector       vector;
+  PETScWrappers::MPI::Vector vector;
   PETScWrappers::MPI::SparseMatrix mass_matrix;
 
   vector.reinit(locally_owned_dofs, mpi_communicator);
@@ -100,7 +100,7 @@ test(const unsigned int poly_degree = 1)
   //assemble mass matrix:
   mass_matrix = PetscScalar();
   {
-    QGauss<dim>   quadrature_formula(poly_degree + 1);
+    QGauss<dim> quadrature_formula(poly_degree + 1);
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_gradients

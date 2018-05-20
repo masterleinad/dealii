@@ -51,7 +51,7 @@ test()
 
   v_tmp.reinit(v, false, true);
 
-  bool   exc = false;
+  bool exc = false;
   double norm;
   try
     {

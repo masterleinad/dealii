@@ -83,8 +83,8 @@ test()
     data_storage;
   {
     DoFHandler<dim> dof_handler(tr);
-    FE_Q<dim>       dummy_fe(1);
-    FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
+    FE_Q<dim> dummy_fe(1);
+    FEValues<dim> fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
     for(cell = tr.begin_active(); cell != tr.end(); ++cell)
       if(cell->is_locally_owned())

@@ -51,7 +51,7 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
   // This quadrature rule determines
   // the points, where the continuity
   // will be tested.
-  QGauss<1>       quad(6);
+  QGauss<1> quad(6);
   FEFaceValues<2> fe_v_face(
     dof_handler.get_fe(),
     quad,
@@ -99,8 +99,8 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
               for(unsigned int q_point = 0; q_point < n_q_face; ++q_point)
                 {
                   Tensor<1, 2> vn = fe_v_face.normal_vector(q_point);
-                  double       nx = vn[0];
-                  double       ny = vn[1];
+                  double nx       = vn[0];
+                  double ny       = vn[1];
 
                   double u = this_value[q_point](0);
                   double v = this_value[q_point](1);
@@ -125,8 +125,8 @@ main()
 {
   initlog();
 
-  Triangulation<2>          tria_test;
-  Point<2>                  p1(0, 0), p2(1, 1);
+  Triangulation<2> tria_test;
+  Point<2> p1(0, 0), p2(1, 1);
   std::vector<unsigned int> sub_div;
 
   sub_div.push_back(1);
@@ -136,7 +136,7 @@ main()
   tria_test.refine_global(2);
 
   FE_RaviartThomas<2> fe(1);
-  DoFHandler<2>       dof_handler(tria_test);
+  DoFHandler<2> dof_handler(tria_test);
   dof_handler.distribute_dofs(fe);
 
   // Fill solution vector with random

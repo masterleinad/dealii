@@ -124,7 +124,7 @@ template <int dim>
 void
 FE_BDM<dim>::convert_generalized_support_point_values_to_dof_values(
   const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  std::vector<double>& nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),
@@ -263,10 +263,10 @@ namespace internal
       template <int dim>
       void
       initialize_test_values(std::vector<std::vector<double>>& test_values,
-                             const Quadrature<dim>&            quadrature,
-                             const unsigned int                deg)
+                             const Quadrature<dim>& quadrature,
+                             const unsigned int deg)
       {
-        PolynomialsP<dim>           poly(deg);
+        PolynomialsP<dim> poly(deg);
         std::vector<Tensor<1, dim>> dummy1;
         std::vector<Tensor<2, dim>> dummy2;
         std::vector<Tensor<3, dim>> dummy3;

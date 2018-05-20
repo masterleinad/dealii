@@ -78,15 +78,15 @@ test2()
           << std::endl;
 
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   EnrichmentFunction<dim> function;
-  FE_Enriched<dim>        fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
+  FE_Enriched<dim> fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
 
   GridGenerator::hyper_cube(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  QGauss<dim - 1>   quadrature(1);
+  QGauss<dim - 1> quadrature(1);
   FEFaceValues<dim> fe_face_values(
     fe, quadrature, update_values | update_gradients | update_JxW_values);
 
@@ -97,8 +97,8 @@ test2()
     for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
       {
         fe_face_values.reinit(cell, face);
-        const unsigned int                     n_q_points = quadrature.size();
-        const unsigned int                     dofs_per_cell = fe.dofs_per_cell;
+        const unsigned int n_q_points    = quadrature.size();
+        const unsigned int dofs_per_cell = fe.dofs_per_cell;
         const std::vector<dealii::Point<dim>>& q_points
           = fe_face_values.get_quadrature_points();
 

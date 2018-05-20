@@ -48,7 +48,7 @@ test_compute_pt_loc(unsigned int n_points)
   tria.refine_global(std::max(6 - dim, 2));
 
   //Creating the finite elements needed:
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
@@ -59,11 +59,11 @@ test_compute_pt_loc(unsigned int n_points)
     points.push_back(random_point<dim>());
 
   std::vector<typename DoFHandler<dim>::active_cell_iterator> cells;
-  std::vector<std::vector<Point<dim>>>                        qpoints;
-  std::vector<std::vector<unsigned int>>                      maps;
+  std::vector<std::vector<Point<dim>>> qpoints;
+  std::vector<std::vector<unsigned int>> maps;
 
   // Creating a dummy vector/fe_field_function in order to use FEFieldFunction
-  Vector<double>                  dummy;
+  Vector<double> dummy;
   Functions::FEFieldFunction<dim> fe_function(
     dof_handler, dummy, StaticMappingQ1<dim, dim>::mapping);
   size_t n_cells

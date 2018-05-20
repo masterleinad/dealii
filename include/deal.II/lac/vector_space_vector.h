@@ -51,8 +51,8 @@ namespace LinearAlgebra
   class VectorSpaceVector
   {
   public:
-    typedef Number                                            value_type;
-    typedef types::global_dof_index                           size_type;
+    typedef Number value_type;
+    typedef types::global_dof_index size_type;
     typedef typename numbers::NumberTraits<Number>::real_type real_type;
 
     /**
@@ -61,7 +61,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const VectorSpaceVector<Number>& V,
-           const bool                       omit_zeroing_entries = false)
+           const bool omit_zeroing_entries = false)
       = 0;
 
     /**
@@ -109,8 +109,8 @@ namespace LinearAlgebra
      * performance.
      */
     virtual void
-    import(const ReadWriteVector<Number>&                  V,
-           VectorOperation::values                         operation,
+    import(const ReadWriteVector<Number>& V,
+           VectorOperation::values operation,
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>())
       = 0;
@@ -138,9 +138,9 @@ namespace LinearAlgebra
      * Multiple addition of scaled vectors, i.e. <tt>*this += a*V+b*W</tt>.
      */
     virtual void
-    add(const Number                     a,
+    add(const Number a,
         const VectorSpaceVector<Number>& V,
-        const Number                     b,
+        const Number b,
         const VectorSpaceVector<Number>& W)
       = 0;
 
@@ -221,7 +221,7 @@ namespace LinearAlgebra
      * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
      */
     virtual Number
-    add_and_dot(const Number                     a,
+    add_and_dot(const Number a,
                 const VectorSpaceVector<Number>& V,
                 const VectorSpaceVector<Number>& W)
       = 0;
@@ -257,10 +257,10 @@ namespace LinearAlgebra
      * Print the vector to the output stream @p out.
      */
     virtual void
-    print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true,
-          const bool         across     = true) const = 0;
+    print(std::ostream& out,
+          const unsigned int precision = 3,
+          const bool scientific        = true,
+          const bool across            = true) const = 0;
 
     /**
      * Return the memory consumption of this class in bytes.

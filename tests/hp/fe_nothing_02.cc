@@ -96,8 +96,8 @@ test()
       // attempt to reinit hp_fe_values object
       hp_fe_values.reinit(cell);
 
-      const unsigned int   dofs_per_cell = cell->get_fe().dofs_per_cell;
-      const FEValues<dim>& fe_values     = hp_fe_values.get_present_fe_values();
+      const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
+      const FEValues<dim>& fe_values   = hp_fe_values.get_present_fe_values();
 
       for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
           ++q_point)

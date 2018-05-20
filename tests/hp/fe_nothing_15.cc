@@ -39,11 +39,11 @@ test()
   Triangulation<dim> triangulation;
   GridGenerator ::hyper_cube(triangulation, -0.5, 0.5);
 
-  FESystem<dim>   fe(FE_Q<dim>(1), 1, FE_Nothing<dim>(), 1);
+  FESystem<dim> fe(FE_Q<dim>(1), 1, FE_Nothing<dim>(), 1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  FEValues<dim>              fe_values(fe, QGauss<dim>(2), update_values);
+  FEValues<dim> fe_values(fe, QGauss<dim>(2), update_values);
   FEValuesExtractors::Scalar nothing(1);
   fe_values.reinit(dof_handler.begin_active());
   for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)

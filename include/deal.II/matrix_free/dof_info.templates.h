@@ -63,7 +63,7 @@ namespace internal
         const std::vector<std::pair<types::global_dof_index, double>>& entries);
 
       std::vector<std::pair<types::global_dof_index, double>>
-                                           constraint_entries;
+        constraint_entries;
       std::vector<types::global_dof_index> constraint_indices;
 
       std::pair<std::vector<Number>, types::global_dof_index> next_constraint;
@@ -162,11 +162,11 @@ namespace internal
     void
     DoFInfo ::read_dof_indices(
       const std::vector<types::global_dof_index>& local_indices,
-      const std::vector<unsigned int>&            lexicographic_inv,
-      const ConstraintMatrix&                     constraints,
-      const unsigned int                          cell_number,
-      ConstraintValues<double>&                   constraint_values,
-      bool&                                       cell_at_subdomain_boundary)
+      const std::vector<unsigned int>& lexicographic_inv,
+      const ConstraintMatrix& constraints,
+      const unsigned int cell_number,
+      ConstraintValues<double>& constraint_values,
+      bool& cell_at_subdomain_boundary)
     {
       Assert(vector_partitioner.get() != nullptr, ExcInternalError());
       const unsigned int n_mpi_procs = vector_partitioner->n_mpi_processes();
@@ -339,9 +339,9 @@ namespace internal
       Assert(boundary_cells.size() < row_starts.size(), ExcInternalError());
 
       // sort ghost dofs and compress out duplicates
-      const unsigned int n_owned  = (vector_partitioner->local_range().second
+      const unsigned int n_owned = (vector_partitioner->local_range().second
                                     - vector_partitioner->local_range().first);
-      const std::size_t  n_ghosts = ghost_dofs.size();
+      const std::size_t n_ghosts = ghost_dofs.size();
 #ifdef DEBUG
       for(std::vector<unsigned int>::iterator dof = dof_indices.begin();
           dof != dof_indices.end();
@@ -349,9 +349,9 @@ namespace internal
         AssertIndexRange(*dof, n_owned + n_ghosts);
 #endif
 
-      const unsigned int        n_components = start_components.back();
+      const unsigned int n_components = start_components.back();
       std::vector<unsigned int> ghost_numbering(n_ghosts);
-      IndexSet                  ghost_indices(vector_partitioner->size());
+      IndexSet ghost_indices(vector_partitioner->size());
       if(n_ghosts > 0)
         {
           unsigned int n_unique_ghosts = 0;
@@ -452,9 +452,9 @@ namespace internal
 
     void
     DoFInfo ::reorder_cells(
-      const TaskInfo&                   task_info,
-      const std::vector<unsigned int>&  renumbering,
-      const std::vector<unsigned int>&  constraint_pool_row_index,
+      const TaskInfo& task_info,
+      const std::vector<unsigned int>& renumbering,
+      const std::vector<unsigned int>& constraint_pool_row_index,
       const std::vector<unsigned char>& irregular_cells)
     {
       (void) constraint_pool_row_index;
@@ -500,9 +500,9 @@ namespace internal
         + 1);
       std::vector<unsigned int> new_dof_indices;
       std::vector<std::pair<unsigned short, unsigned short>>
-                                new_constraint_indicator;
+        new_constraint_indicator;
       std::vector<unsigned int> new_plain_indices, new_rowstart_plain;
-      unsigned int              position_cell = 0;
+      unsigned int position_cell = 0;
       new_dof_indices.reserve(dof_indices.size());
       new_constraint_indicator.reserve(constraint_indicator.size());
       if(store_plain_indices == true)
@@ -659,7 +659,7 @@ namespace internal
     DoFInfo::compute_cell_index_compression(
       const std::vector<unsigned char>& irregular_cells)
     {
-      const bool         have_hp      = dofs_per_cell.size() > 1;
+      const bool have_hp              = dofs_per_cell.size() > 1;
       const unsigned int n_components = start_components.back();
 
       Assert(vectorization_length == 1
@@ -715,7 +715,7 @@ namespace internal
               bool indices_are_contiguous = true;
               for(unsigned int j = 0; j < n_comp; ++j)
                 {
-                  const unsigned int  cell_no = i * vectorization_length + j;
+                  const unsigned int cell_no = i * vectorization_length + j;
                   const unsigned int* dof_indices
                     = this->dof_indices.data()
                       + row_starts[cell_no * n_components].first;
@@ -835,7 +835,7 @@ namespace internal
       for(unsigned int face = 0; face < faces.size(); ++face)
         {
           auto face_computation = [&](const DoFAccessIndex face_index,
-                                      const unsigned int*  cell_indices_face) {
+                                      const unsigned int* cell_indices_face) {
             bool is_contiguous      = false;
             bool needs_full_storage = false;
             for(unsigned int v = 0;
@@ -879,7 +879,7 @@ namespace internal
     template <int length>
     void
     DoFInfo::compute_vector_zero_access_pattern(
-      const TaskInfo&                                task_info,
+      const TaskInfo& task_info,
       const std::vector<FaceToCellTopology<length>>& faces)
     {
       // compute a list that tells us the first time a degree of freedom is
@@ -988,7 +988,7 @@ namespace internal
         // insert a given entry. dat is a pointer within this vector (the user
         // needs to make sure that it really stays there)
         void
-        insert(const unsigned int                              entry,
+        insert(const unsigned int entry,
                std::vector<types::global_dof_index>::iterator& dat)
         {
           AssertIndexRange(static_cast<std::size_t>(dat - begin()), size() + 1);
@@ -1019,11 +1019,11 @@ namespace internal
       static constexpr unsigned int bucket_size_threading = 256;
 
       void
-      compute_row_lengths(const unsigned int           begin,
-                          const unsigned int           end,
-                          const DoFInfo&               dof_info,
+      compute_row_lengths(const unsigned int begin,
+                          const unsigned int end,
+                          const DoFInfo& dof_info,
                           std::vector<Threads::Mutex>& mutexes,
-                          std::vector<unsigned int>&   row_lengths)
+                          std::vector<unsigned int>& row_lengths)
       {
         std::vector<unsigned int> scratch;
         const unsigned int n_components = dof_info.start_components.back();
@@ -1058,12 +1058,12 @@ namespace internal
       }
 
       void
-      fill_connectivity_dofs(const unsigned int               begin,
-                             const unsigned int               end,
-                             const DoFInfo&                   dof_info,
+      fill_connectivity_dofs(const unsigned int begin,
+                             const unsigned int end,
+                             const DoFInfo& dof_info,
                              const std::vector<unsigned int>& row_lengths,
-                             std::vector<Threads::Mutex>&     mutexes,
-                             dealii::SparsityPattern&         connectivity_dof)
+                             std::vector<Threads::Mutex>& mutexes,
+                             dealii::SparsityPattern& connectivity_dof)
       {
         std::vector<unsigned int> scratch;
         const unsigned int n_components = dof_info.start_components.back();
@@ -1094,14 +1094,14 @@ namespace internal
       }
 
       void
-      fill_connectivity(const unsigned int               begin,
-                        const unsigned int               end,
-                        const DoFInfo&                   dof_info,
+      fill_connectivity(const unsigned int begin,
+                        const unsigned int end,
+                        const DoFInfo& dof_info,
                         const std::vector<unsigned int>& renumbering,
-                        const dealii::SparsityPattern&   connectivity_dof,
-                        DynamicSparsityPattern&          connectivity)
+                        const dealii::SparsityPattern& connectivity_dof,
+                        DynamicSparsityPattern& connectivity)
       {
-        ordered_vector     row_entries;
+        ordered_vector row_entries;
         const unsigned int n_components = dof_info.start_components.back();
         for(unsigned int block = begin; block < end; ++block)
           {
@@ -1130,9 +1130,9 @@ namespace internal
 
     void
     DoFInfo::make_connectivity_graph(
-      const TaskInfo&                  task_info,
+      const TaskInfo& task_info,
       const std::vector<unsigned int>& renumbering,
-      DynamicSparsityPattern&          connectivity) const
+      DynamicSparsityPattern& connectivity) const
     {
       unsigned int n_rows = (vector_partitioner->local_range().second
                              - vector_partitioner->local_range().first)
@@ -1143,7 +1143,7 @@ namespace internal
         ++n_rows;
 
       // first determine row lengths
-      std::vector<unsigned int>   row_lengths(n_rows);
+      std::vector<unsigned int> row_lengths(n_rows);
       std::vector<Threads::Mutex> mutexes(n_rows / bucket_size_threading + 1);
       parallel::apply_to_subranges(0,
                                    task_info.n_active_cells,
@@ -1206,9 +1206,9 @@ namespace internal
       renumbering.resize(0);
       renumbering.resize(local_size, numbers::invalid_dof_index);
 
-      types::global_dof_index counter      = 0;
-      const unsigned int      n_components = start_components.back();
-      const unsigned int      n_macro_cells
+      types::global_dof_index counter = 0;
+      const unsigned int n_components = start_components.back();
+      const unsigned int n_macro_cells
         = n_vectorization_lanes_filled[dof_access_cell].size();
       Assert(n_macro_cells
                <= (row_starts.size() - 1) / vectorization_length / n_components,
@@ -1269,7 +1269,7 @@ namespace internal
 
     template <typename StreamType>
     void
-    DoFInfo::print_memory_consumption(StreamType&     out,
+    DoFInfo::print_memory_consumption(StreamType& out,
                                       const TaskInfo& task_info) const
     {
       out << "       Memory row starts indices:    ";
@@ -1293,9 +1293,9 @@ namespace internal
 
     template <typename Number>
     void
-    DoFInfo::print(const std::vector<Number>&       constraint_pool_data,
+    DoFInfo::print(const std::vector<Number>& constraint_pool_data,
                    const std::vector<unsigned int>& constraint_pool_row_index,
-                   std::ostream&                    out) const
+                   std::ostream& out) const
     {
       const unsigned int n_rows = row_starts.size() - 1;
       for(unsigned int row = 0; row < n_rows; ++row)
@@ -1305,8 +1305,8 @@ namespace internal
           out << "Entries row " << row << ": ";
           const unsigned int *glob_indices
             = &dof_indices[row_starts[row].first],
-            *end_row = &dof_indices[row_starts[row + 1].first];
-          unsigned int                                    index = 0;
+            *end_row         = &dof_indices[row_starts[row + 1].first];
+          unsigned int index = 0;
           const std::pair<unsigned short, unsigned short>*con_it
             = &constraint_indicator[row_starts[row].second],
             *end_con = &constraint_indicator[row_starts[row + 1].second];

@@ -24,8 +24,8 @@ template <typename Number>
 void
 test()
 {
-  const unsigned int  n_chunks  = 50000;
-  const unsigned int  n_vectors = VectorizedArray<Number>::n_array_elements;
+  const unsigned int n_chunks  = 50000;
+  const unsigned int n_vectors = VectorizedArray<Number>::n_array_elements;
   std::vector<Number> values(n_vectors * n_chunks);
   for(unsigned int i = 0; i < values.size(); ++i)
     values[i] = i;

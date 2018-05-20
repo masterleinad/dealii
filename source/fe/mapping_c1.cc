@@ -59,9 +59,9 @@ template <>
 void
 MappingC1<2>::MappingC1Generic::add_line_support_points(
   const Triangulation<2>::cell_iterator& cell,
-  std::vector<Point<2>>&                 a) const
+  std::vector<Point<2>>& a) const
 {
-  const unsigned int          dim = 2;
+  const unsigned int dim = 2;
   const std::array<double, 2> interior_gl_points{
     {0.5 - 0.5 * std::sqrt(1.0 / 5.0), 0.5 + 0.5 * std::sqrt(1.0 / 5.0)}};
 

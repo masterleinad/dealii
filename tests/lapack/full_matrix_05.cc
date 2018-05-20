@@ -61,11 +61,11 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(1);
   deallog.attach(logfile);
 
-  FullMatrix<double>       A(4, 4, left), B(4, 4, right);
+  FullMatrix<double> A(4, 4, left), B(4, 4, right);
   LAPACKFullMatrix<double> LA(4, 4), LB(4, 4);
   for(unsigned int itype = 1; itype <= 3; ++itype)
     {

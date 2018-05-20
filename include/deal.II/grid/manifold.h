@@ -106,8 +106,8 @@ namespace Manifolds
    */
   template <typename MeshIteratorType>
   DEAL_II_DEPRECATED Quadrature<MeshIteratorType::AccessorType::space_dimension>
-                     get_default_quadrature(const MeshIteratorType& iterator,
-                                            const bool              with_interpolation = false);
+  get_default_quadrature(const MeshIteratorType& iterator,
+                         const bool with_interpolation = false);
 
   /**
    * Given a general mesh iterator, construct arrays of quadrature points and
@@ -384,7 +384,7 @@ public:
   virtual Point<spacedim>
   get_intermediate_point(const Point<spacedim>& p1,
                          const Point<spacedim>& p2,
-                         const double           w) const;
+                         const double w) const;
 
   /**
    * Return the point which shall become the new vertex surrounded by the
@@ -404,7 +404,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const;
+                const ArrayView<const double>& weights) const;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -428,8 +428,8 @@ public:
    */
   virtual void
   get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
-                 ArrayView<Point<spacedim>>              new_points) const;
+                 const Table<2, double>& weights,
+                 ArrayView<Point<spacedim>> new_points) const;
 
   /**
    * Given a point which lies close to the given manifold, it modifies it and
@@ -445,7 +445,7 @@ public:
   virtual Point<spacedim>
   project_to_manifold(
     const ArrayView<const Point<spacedim>>& surrounding_points,
-    const Point<spacedim>&                  candidate) const;
+    const Point<spacedim>& candidate) const;
 
   /**
    * Backward compatibility interface.  Return the point which shall become
@@ -627,7 +627,7 @@ public:
   virtual Tensor<1, spacedim>
   normal_vector(
     const typename Triangulation<dim, spacedim>::face_iterator& face,
-    const Point<spacedim>&                                      p) const;
+    const Point<spacedim>& p) const;
 
   /**
    * Compute the normal vectors to the boundary at each vertex of the
@@ -694,7 +694,7 @@ public:
    * tolerance*periodicity.norm().
    */
   FlatManifold(const Tensor<1, spacedim>& periodicity = Tensor<1, spacedim>(),
-               const double               tolerance   = 1e-10);
+               const double tolerance                 = 1e-10);
 
   /**
    * Return a copy of this manifold.
@@ -725,7 +725,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const override;
+                const ArrayView<const double>& weights) const override;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -739,7 +739,7 @@ public:
    */
   virtual void
   get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
+                 const Table<2, double>& weights,
                  ArrayView<Point<spacedim>> new_points) const override;
 
   /**
@@ -967,7 +967,7 @@ public:
   virtual Point<spacedim>
   get_intermediate_point(const Point<spacedim>& p1,
                          const Point<spacedim>& p2,
-                         const double           w) const override;
+                         const double w) const override;
 
   /**
    * Refer to the general documentation of this class and the documentation of
@@ -975,7 +975,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const override;
+                const ArrayView<const double>& weights) const override;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -1000,7 +1000,7 @@ public:
    */
   virtual void
   get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
+                 const Table<2, double>& weights,
                  ArrayView<Point<spacedim>> new_points) const override;
   /**
    * Pull back the given point in spacedim to the Euclidean chartdim
@@ -1165,7 +1165,7 @@ namespace Manifolds
   template <typename MeshIteratorType>
   Quadrature<MeshIteratorType::AccessorType::space_dimension>
   get_default_quadrature(const MeshIteratorType& iterator,
-                         const bool              with_interpolation)
+                         const bool with_interpolation)
   {
     const auto points_and_weights
       = get_default_points_and_weights(iterator, with_interpolation);
@@ -1182,7 +1182,7 @@ namespace Manifolds
                        n_default_points_per_cell<MeshIteratorType>()>,
             std::array<double, n_default_points_per_cell<MeshIteratorType>()>>
   get_default_points_and_weights(const MeshIteratorType& iterator,
-                                 const bool              with_interpolation)
+                                 const bool with_interpolation)
   {
     const int dim      = MeshIteratorType::AccessorType::structure_dimension;
     const int spacedim = MeshIteratorType::AccessorType::space_dimension;

@@ -22,7 +22,7 @@
 // and we compute the first and second derivatives using
 // Sacado
 
-typedef typename Sacado::Fad::DFad<double>  Sdouble;
+typedef typename Sacado::Fad::DFad<double> Sdouble;
 typedef typename Sacado::Fad::DFad<Sdouble> SSdouble;
 
 template <int dim, int spacedim>

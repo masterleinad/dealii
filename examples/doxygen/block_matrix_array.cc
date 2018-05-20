@@ -73,7 +73,7 @@ main()
 
   matrix.vmult(y, result);
 
-  SolverControl        control(100, 1.e-10);
+  SolverControl control(100, 1.e-10);
   PreconditionIdentity id;
 
   SolverCG<BlockVector<double>> cg(control);

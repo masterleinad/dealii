@@ -59,7 +59,7 @@ VectorBoundaryValues<dim>::VectorBoundaryValues() : Function<dim>(2)
 template <int dim>
 inline void
 VectorBoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                        Vector<double>&   values) const
+                                        Vector<double>& values) const
 {
   Assert(values.size() == 2, ExcDimensionMismatch(values.size(), 2));
 
@@ -82,9 +82,9 @@ private:
   dirichlet_conditions();
 
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe;
-  DoFHandler<dim>    dof_handler;
-  Vector<double>     solution;
+  FESystem<dim> fe;
+  DoFHandler<dim> dof_handler;
+  Vector<double> solution;
 };
 
 // Construct FESystem with
@@ -170,7 +170,7 @@ FindBug<dim>::dirichlet_conditions()
                                            dirichlet_dofs,
                                            component_mask);
 
-  std::vector<bool>            fixed_dofs(dof_handler.n_dofs());
+  std::vector<bool> fixed_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
   boundary_ids.insert(0);
 

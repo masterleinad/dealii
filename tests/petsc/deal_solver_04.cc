@@ -43,12 +43,12 @@ main(int argc, char** argv)
     SolverControl control(100, 1.e-3);
 
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix                    testproblem(size, size);
+    FDMatrix testproblem(size, size);
     PETScWrappers::SparseMatrix A(dim, dim, 5);
     testproblem.five_point(A);
 
@@ -60,8 +60,8 @@ main(int argc, char** argv)
     A.compress(VectorOperation::insert);
 
     GrowingVectorMemory<PETScWrappers::MPI::Vector> mem;
-    SolverMinRes<PETScWrappers::MPI::Vector>        solver(control, mem);
-    PreconditionIdentity                            preconditioner;
+    SolverMinRes<PETScWrappers::MPI::Vector> solver(control, mem);
+    PreconditionIdentity preconditioner;
     deallog << "Solver type: " << typeid(solver).name() << std::endl;
     check_solver_within_range(
       solver.solve(A, u, f, preconditioner), control.last_step(), 42, 44);

@@ -239,10 +239,10 @@ namespace PETScWrappers
      * parallel those in the <tt>C++</tt> standard libraries
      * <tt>vector<...></tt> class.
      */
-    typedef PetscScalar                     value_type;
-    typedef PetscReal                       real_type;
-    typedef types::global_dof_index         size_type;
-    typedef internal::VectorReference       reference;
+    typedef PetscScalar value_type;
+    typedef PetscReal real_type;
+    typedef types::global_dof_index size_type;
+    typedef internal::VectorReference reference;
     typedef const internal::VectorReference const_reference;
 
     /**
@@ -423,7 +423,7 @@ namespace PETScWrappers
      * the corresponding values in the second.
      */
     void
-    set(const std::vector<size_type>&   indices,
+    set(const std::vector<size_type>& indices,
         const std::vector<PetscScalar>& values);
 
     /**
@@ -443,7 +443,7 @@ namespace PETScWrappers
      */
     void
     extract_subvector_to(const std::vector<size_type>& indices,
-                         std::vector<PetscScalar>&     values) const;
+                         std::vector<PetscScalar>& values) const;
 
     /**
      * Instead of getting individual elements of a vector via operator(),
@@ -476,14 +476,14 @@ namespace PETScWrappers
     void
     extract_subvector_to(const ForwardIterator indices_begin,
                          const ForwardIterator indices_end,
-                         OutputIterator        values_begin) const;
+                         OutputIterator values_begin) const;
 
     /**
      * A collective add operation: This function adds a whole set of values
      * stored in @p values to the vector components specified by @p indices.
      */
     void
-    add(const std::vector<size_type>&   indices,
+    add(const std::vector<size_type>& indices,
         const std::vector<PetscScalar>& values);
 
     /**
@@ -491,7 +491,7 @@ namespace PETScWrappers
      * function takes a deal.II vector of values.
      */
     void
-    add(const std::vector<size_type>&        indices,
+    add(const std::vector<size_type>& indices,
         const ::dealii::Vector<PetscScalar>& values);
 
     /**
@@ -500,8 +500,8 @@ namespace PETScWrappers
      * the other two <tt>add()</tt> functions above.
      */
     void
-    add(const size_type    n_elements,
-        const size_type*   indices,
+    add(const size_type n_elements,
+        const size_type* indices,
         const PetscScalar* values);
 
     /**
@@ -708,10 +708,10 @@ namespace PETScWrappers
      * separate line each.
      */
     void
-    print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true,
-          const bool         across     = true) const;
+    print(std::ostream& out,
+          const unsigned int precision = 3,
+          const bool scientific        = true,
+          const bool across            = true) const;
 
     /**
      * Swap the contents of this vector and the other vector @p v. One could
@@ -796,10 +796,10 @@ namespace PETScWrappers
      * corresponding value.
      */
     void
-    do_set_add_operation(const size_type    n_elements,
-                         const size_type*   indices,
+    do_set_add_operation(const size_type n_elements,
+                         const size_type* indices,
                          const PetscScalar* values,
-                         const bool         add_values);
+                         const bool add_values);
 
   private:
     /**
@@ -832,7 +832,7 @@ namespace PETScWrappers
   namespace internal
   {
     inline VectorReference::VectorReference(const VectorBase& vector,
-                                            const size_type   index)
+                                            const size_type index)
       : vector(vector), index(index)
     {}
 
@@ -902,7 +902,7 @@ namespace PETScWrappers
         return *this;
 
       // use the PETSc function to add something
-      const PetscInt       petsc_i = index;
+      const PetscInt petsc_i = index;
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &value, ADD_VALUES);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -933,8 +933,8 @@ namespace PETScWrappers
 
       // use the PETSc function to
       // add something
-      const PetscInt       petsc_i     = index;
-      const PetscScalar    subtractand = -value;
+      const PetscInt petsc_i        = index;
+      const PetscScalar subtractand = -value;
       const PetscErrorCode ierr
         = VecSetValues(vector, 1, &petsc_i, &subtractand, ADD_VALUES);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -963,7 +963,7 @@ namespace PETScWrappers
       if(value == 1.)
         return *this;
 
-      const PetscInt    petsc_i   = index;
+      const PetscInt petsc_i      = index;
       const PetscScalar new_value = static_cast<PetscScalar>(*this) * value;
 
       const PetscErrorCode ierr
@@ -994,7 +994,7 @@ namespace PETScWrappers
       if(value == 1.)
         return *this;
 
-      const PetscInt    petsc_i   = index;
+      const PetscInt petsc_i      = index;
       const PetscScalar new_value = static_cast<PetscScalar>(*this) / value;
 
       const PetscErrorCode ierr
@@ -1029,7 +1029,7 @@ namespace PETScWrappers
   inline bool
   VectorBase::in_local_range(const size_type index) const
   {
-    PetscInt             begin, end;
+    PetscInt begin, end;
     const PetscErrorCode ierr
       = VecGetOwnershipRange(static_cast<const Vec&>(vector), &begin, &end);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -1091,7 +1091,7 @@ namespace PETScWrappers
 
   inline void
   VectorBase::extract_subvector_to(const std::vector<size_type>& indices,
-                                   std::vector<PetscScalar>&     values) const
+                                   std::vector<PetscScalar>& values) const
   {
     extract_subvector_to(
       &(indices[0]), &(indices[0]) + indices.size(), &(values[0]));
@@ -1101,7 +1101,7 @@ namespace PETScWrappers
   inline void
   VectorBase::extract_subvector_to(const ForwardIterator indices_begin,
                                    const ForwardIterator indices_end,
-                                   OutputIterator        values_begin) const
+                                   OutputIterator values_begin) const
   {
     const PetscInt n_idx = static_cast<PetscInt>(indices_end - indices_begin);
     if(n_idx == 0)
@@ -1128,7 +1128,7 @@ namespace PETScWrappers
         // ghost elements whose
         // position we can get from
         // an index set
-        PetscInt       begin, end;
+        PetscInt begin, end;
         PetscErrorCode ierr = VecGetOwnershipRange(vector, &begin, &end);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -1176,7 +1176,7 @@ namespace PETScWrappers
     // element we are interested in
     else
       {
-        PetscInt       begin, end;
+        PetscInt begin, end;
         PetscErrorCode ierr = VecGetOwnershipRange(vector, &begin, &end);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 

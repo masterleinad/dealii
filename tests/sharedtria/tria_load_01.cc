@@ -48,7 +48,7 @@ test()
     false,
     parallel::shared::Triangulation<dim>::partition_metis);
   {
-    std::istringstream            iss(oss.str());
+    std::istringstream iss(oss.str());
     boost::archive::text_iarchive ia(iss, boost::archive::no_header);
     tr2.load(ia, 0);
   }
@@ -66,7 +66,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    all;
+  MPILogInitAll all;
 
   deallog.push("2d");
   test<2>();

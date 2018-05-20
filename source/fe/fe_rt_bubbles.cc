@@ -151,13 +151,13 @@ FE_RT_Bubbles<dim>::initialize_support_points(const unsigned int deg)
 
   // In the interior, we need anisotropic Gauss-Lobatto quadratures,
   // one for each direction
-  QGaussLobatto<1>      high(deg + 1);
+  QGaussLobatto<1> high(deg + 1);
   std::vector<Point<1>> pts = high.get_points();
   pts.erase(pts.begin());
   pts.erase(pts.end() - 1);
 
   std::vector<double> wts(pts.size(), 1);
-  Quadrature<1>       low(pts, wts);
+  Quadrature<1> low(pts, wts);
 
   for(unsigned int d = 0; d < dim; ++d)
     {
@@ -239,7 +239,7 @@ template <int dim>
 void
 FE_RT_Bubbles<dim>::convert_generalized_support_point_values_to_dof_values(
   const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  std::vector<double>& nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),

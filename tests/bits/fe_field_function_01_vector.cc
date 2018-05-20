@@ -60,7 +60,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(8 / dim);
 
-  FESystem<dim>   fe(FE_Q<dim>(2), 2);
+  FESystem<dim> fe(FE_Q<dim>(2), 2);
   DoFHandler<dim> dh(tria);
 
   dh.distribute_dofs(fe);
@@ -79,7 +79,7 @@ test()
   deallog << "Interpolation error: " << abs_zero(v2.l2_norm()) << std::endl;
 
   Vector<double> error(tria.n_active_cells());
-  QGauss<dim>    quad(2);
+  QGauss<dim> quad(2);
   VectorTools::integrate_difference(
     dh, v1, F<dim>(), error, quad, VectorTools::L2_norm);
   deallog << "L2 Interpolation error: " << abs_zero(error.l2_norm())

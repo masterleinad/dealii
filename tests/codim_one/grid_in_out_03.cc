@@ -32,12 +32,12 @@ test(std::string filename)
 {
   logfile << " Tria<" << dim << "," << spacedim << ">: " << std::endl;
   Triangulation<dim, spacedim> tria;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
 
-  PersistentTriangulation<dim, spacedim>                      ptria(tria);
+  PersistentTriangulation<dim, spacedim> ptria(tria);
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
   ptria.restore();

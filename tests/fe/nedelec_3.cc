@@ -71,10 +71,10 @@ check(const unsigned int p)
   // then output these values at the
   // quadrature points of all cells
   // of the finer grid
-  QTrapez<dim>                quadrature;
+  QTrapez<dim> quadrature;
   std::vector<Vector<double>> shape_values(quadrature.size(),
                                            Vector<double>(dim));
-  FEValues<dim>               fe(
+  FEValues<dim> fe(
     fe_ned, quadrature, update_values | update_quadrature_points);
 
   for(typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();

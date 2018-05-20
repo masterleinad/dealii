@@ -41,7 +41,7 @@ test()
   tr.refine_global(3);
 
   std::string filename = "file" + Utilities::int_to_string(dim);
-  GridOut     grid_out;
+  GridOut grid_out;
   grid_out.write_mesh_per_processor_as_vtu(tr, filename, true);
 
   cat_file((std::string(filename) + ".vtu").c_str());

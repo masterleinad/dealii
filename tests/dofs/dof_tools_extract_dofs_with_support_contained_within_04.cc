@@ -88,7 +88,7 @@ test()
   dh.distribute_dofs(fe);
 
   const IndexSet& locally_owned_set = dh.locally_owned_dofs();
-  IndexSet        locally_relevant_set;
+  IndexSet locally_relevant_set;
   DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_set);
 
   ConstraintMatrix cm;
@@ -120,8 +120,8 @@ test()
     [=](const Point<dim>& p) -> double { return p[0] > 0.5 ? 0. : 0.5 - p[0]; };
 
   Vector<double> local_rhs(fe.dofs_per_cell);
-  QGauss<dim>    quadrature(3);
-  FEValues<dim>  fe_values(fe,
+  QGauss<dim> quadrature(3);
+  FEValues<dim> fe_values(fe,
                           quadrature,
                           update_values | update_JxW_values
                             | update_quadrature_points);
@@ -146,9 +146,9 @@ test()
 
         // copy-paste of CM distribute_local_to_global and
         // add is_element() checks:
-        auto       local_vector_begin  = local_rhs.begin();
-        const auto local_vector_end    = local_rhs.end();
-        auto       local_indices_begin = local_dof_indices.begin();
+        auto local_vector_begin     = local_rhs.begin();
+        const auto local_vector_end = local_rhs.end();
+        auto local_indices_begin    = local_dof_indices.begin();
         const std::vector<std::pair<types::global_dof_index, double>>* line_ptr;
         for(; local_vector_begin != local_vector_end;
             ++local_vector_begin, ++local_indices_begin)
@@ -213,7 +213,7 @@ test()
 
       {
         std::map<types::global_dof_index, Point<dim>> support_points;
-        MappingQ1<dim>                                mapping;
+        MappingQ1<dim> mapping;
         DoFTools::map_dofs_to_support_points(mapping, dh, support_points);
 
         const std::string filename
@@ -282,7 +282,7 @@ test()
               filenames.push_back(output_name(i));
 
             const std::string master_name = "output.pvtu";
-            std::ofstream     pvtu_master(master_name.c_str());
+            std::ofstream pvtu_master(master_name.c_str());
             data_out.write_pvtu_record(pvtu_master, filenames);
           }
       }
@@ -291,7 +291,7 @@ test()
   for(unsigned int i = 0; i < locally_owned_set.n_elements(); ++i)
     {
       const unsigned int ind = locally_owned_set.nth_index_in_set(i);
-      const double       v   = rhs[ind];
+      const double v         = rhs[ind];
       AssertThrow(
         std::abs(v) < 1e-12,
         ExcMessage("Element " + std::to_string(ind) + " has an error "

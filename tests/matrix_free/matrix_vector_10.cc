@@ -80,7 +80,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -101,7 +101,7 @@ test()
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.tasks_block_size      = 7;
@@ -112,7 +112,7 @@ test()
                  fe_degree,
                  number,
                  LinearAlgebra::distributed::Vector<number>>
-                                             mf(mf_data);
+    mf(mf_data);
   LinearAlgebra::distributed::Vector<number> in, out, ref;
   mf_data.initialize_dof_vector(in);
   out.reinit(in);

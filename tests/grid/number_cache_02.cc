@@ -71,7 +71,7 @@ void
 test(const char* filename)
 {
   Triangulation<dim> tria(Triangulation<dim>::none, true);
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename);
 

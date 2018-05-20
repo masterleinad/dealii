@@ -51,8 +51,8 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   ConstraintMatrix constraints;
 
@@ -153,7 +153,7 @@ Step4<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -195,7 +195,7 @@ Step4<dim>::solve()
   // variant 1: solve with AMG
   deallog.push(Utilities::int_to_string(dof_handler.n_dofs(), 5));
   deallog.push("Chebyshev");
-  TrilinosWrappers::PreconditionAMG                 preconditioner;
+  TrilinosWrappers::PreconditionAMG preconditioner;
   TrilinosWrappers::PreconditionAMG::AdditionalData data;
   data.coarse_type           = "Amesos-KLU";
   data.smoother_type         = "Chebyshev";
@@ -204,7 +204,7 @@ Step4<dim>::solve()
   {
     solution = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     solver.solve(system_matrix, solution, system_rhs, preconditioner);
   }
@@ -216,7 +216,7 @@ Step4<dim>::solve()
   {
     solution = 0;
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     solver.solve(system_matrix, solution, system_rhs, preconditioner);
   }

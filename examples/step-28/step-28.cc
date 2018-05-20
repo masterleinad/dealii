@@ -405,8 +405,8 @@ namespace Step28
     // used in this object -- using this, we can make the triangulation and
     // DoF handler member variables private, and do not have to grant external
     // use to it, enhancing encapsulation:
-    EnergyGroup(const unsigned int        group,
-                const MaterialData&       material_data,
+    EnergyGroup(const unsigned int group,
+                const MaterialData& material_data,
                 const Triangulation<dim>& coarse_grid,
                 const FiniteElement<dim>& fe);
 
@@ -461,8 +461,8 @@ namespace Step28
 
     void
     refine_grid(const Vector<float>& error_indicators,
-                const double         refine_threshold,
-                const double         coarsen_threshold);
+                const double refine_threshold,
+                const double coarsen_threshold);
 
     // @sect5{Public data members}
     //
@@ -490,20 +490,20 @@ namespace Step28
     // time, we interpolate them once on each new mesh and then store them
     // along with all the other data of this class:
   private:
-    const unsigned int  group;
+    const unsigned int group;
     const MaterialData& material_data;
 
-    Triangulation<dim>        triangulation;
+    Triangulation<dim> triangulation;
     const FiniteElement<dim>& fe;
-    DoFHandler<dim>           dof_handler;
+    DoFHandler<dim> dof_handler;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> system_rhs;
 
     std::map<types::global_dof_index, double> boundary_values;
-    ConstraintMatrix                          hanging_node_constraints;
+    ConstraintMatrix hanging_node_constraints;
 
     // @sect5{Private member functions}
     //
@@ -519,10 +519,10 @@ namespace Step28
   private:
     void
     assemble_cross_group_rhs_recursive(
-      const EnergyGroup<dim>&                        g_prime,
+      const EnergyGroup<dim>& g_prime,
       const typename DoFHandler<dim>::cell_iterator& cell_g,
       const typename DoFHandler<dim>::cell_iterator& cell_g_prime,
-      const FullMatrix<double>                       prolongation_matrix);
+      const FullMatrix<double> prolongation_matrix);
   };
 
   // @sect4{Implementation of the <code>EnergyGroup</code> class}
@@ -533,8 +533,8 @@ namespace Step28
   // group. The next two functions simply return data from private data
   // members, thereby enabling us to make these data members private.
   template <int dim>
-  EnergyGroup<dim>::EnergyGroup(const unsigned int        group,
-                                const MaterialData&       material_data,
+  EnergyGroup<dim>::EnergyGroup(const unsigned int group,
+                                const MaterialData& material_data,
                                 const Triangulation<dim>& coarse_grid,
                                 const FiniteElement<dim>& fe)
     : group(group),
@@ -663,7 +663,7 @@ namespace Step28
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -733,7 +733,7 @@ namespace Step28
                             update_values | update_quadrature_points
                               | update_JxW_values);
 
-    Vector<double>      cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
     std::vector<double> extraneous_source_values(n_q_points);
     std::vector<double> solution_old_values(n_q_points);
 
@@ -838,10 +838,10 @@ namespace Step28
   template <int dim>
   void
   EnergyGroup<dim>::assemble_cross_group_rhs_recursive(
-    const EnergyGroup<dim>&                        g_prime,
+    const EnergyGroup<dim>& g_prime,
     const typename DoFHandler<dim>::cell_iterator& cell_g,
     const typename DoFHandler<dim>::cell_iterator& cell_g_prime,
-    const FullMatrix<double>                       prolongation_matrix)
+    const FullMatrix<double> prolongation_matrix)
   {
     // The first case is that both cells are no further refined. In that case,
     // we can assemble the relevant terms (see the introduction). This
@@ -853,7 +853,7 @@ namespace Step28
     // the finer one by looking at the refinement level of the two cells:
     if(!cell_g->has_children() && !cell_g_prime->has_children())
       {
-        const QGauss<dim>  quadrature_formula(fe.degree + 1);
+        const QGauss<dim> quadrature_formula(fe.degree + 1);
         const unsigned int n_q_points = quadrature_formula.size();
 
         FEValues<dim> fe_values(
@@ -967,7 +967,7 @@ namespace Step28
   double
   EnergyGroup<dim>::get_fission_source() const
   {
-    const QGauss<dim>  quadrature_formula(fe.degree + 1);
+    const QGauss<dim> quadrature_formula(fe.degree + 1);
     const unsigned int n_q_points = quadrature_formula.size();
 
     FEValues<dim> fe_values(
@@ -1013,7 +1013,7 @@ namespace Step28
 
     SolverControl solver_control(system_matrix.m(),
                                  1e-12 * system_rhs.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
@@ -1056,8 +1056,8 @@ namespace Step28
   template <int dim>
   void
   EnergyGroup<dim>::refine_grid(const Vector<float>& error_indicators,
-                                const double         refine_threshold,
-                                const double         coarsen_threshold)
+                                const double refine_threshold,
+                                const double coarsen_threshold)
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
@@ -1193,9 +1193,9 @@ namespace Step28
     // describing the material parameters for the number of energy groups
     // requested in the input file, and (iii) the finite element to be used by
     // all energy groups:
-    const Parameters&  parameters;
+    const Parameters& parameters;
     const MaterialData material_data;
-    FE_Q<dim>          fe;
+    FE_Q<dim> fe;
 
     // Furthermore, we have (iv) the value of the computed eigenvalue at the
     // present iteration. This is, in fact, the only part of the solution that
@@ -1303,8 +1303,8 @@ namespace Step28
   NeutronDiffusionProblem<dim>::initialize_problem()
   {
     const unsigned int rods_per_assembly_x = 17, rods_per_assembly_y = 17;
-    const double       pin_pitch_x = 1.26, pin_pitch_y = 1.26;
-    const double       assembly_height = 200;
+    const double pin_pitch_x = 1.26, pin_pitch_y = 1.26;
+    const double assembly_height = 200;
 
     const unsigned int assemblies_x = 2, assemblies_y = 2, assemblies_z = 1;
 
@@ -1440,9 +1440,9 @@ namespace Step28
         const unsigned int ax    = tmp_x / rods_per_assembly_x;
         const unsigned int cx    = tmp_x - ax * rods_per_assembly_x;
 
-        const unsigned     tmp_y = int(cell_center[1] / pin_pitch_y);
-        const unsigned int ay    = tmp_y / rods_per_assembly_y;
-        const unsigned int cy    = tmp_y - ay * rods_per_assembly_y;
+        const unsigned tmp_y  = int(cell_center[1] / pin_pitch_y);
+        const unsigned int ay = tmp_y / rods_per_assembly_y;
+        const unsigned int cy = tmp_y - ay * rods_per_assembly_y;
 
         const unsigned int az
           = (dim == 2 ? 0 : int(cell_center[dim - 1] / assembly_height));
@@ -1613,7 +1613,7 @@ namespace Step28
             &EnergyGroup<dim>::assemble_system_matrix, *energy_groups[group]);
         threads.join_all();
 
-        double       error;
+        double error;
         unsigned int iteration = 1;
         do
           {

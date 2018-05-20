@@ -50,7 +50,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -60,7 +60,7 @@ test()
 
   MatrixFree<dim> mf_data;
   {
-    const QGauss<1>                          quad(2);
+    const QGauss<1> quad(2);
     typename MatrixFree<dim>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
     data.mapping_update_flags  = update_JxW_values;
@@ -69,9 +69,9 @@ test()
 
   double error = 0, error2 = 0, abs = 0;
 
-  QGauss<dim>                            quad(2);
-  FEValues<dim>                          fe_values(fe, quad, update_JxW_values);
-  FEEvaluation<dim, 1>                   fe_eval(mf_data);
+  QGauss<dim> quad(2);
+  FEValues<dim> fe_values(fe, quad, update_JxW_values);
+  FEEvaluation<dim, 1> fe_eval(mf_data);
   AlignedVector<VectorizedArray<double>> jxw_values_manual(fe_eval.n_q_points);
   for(unsigned int cell = 0; cell < mf_data.n_macro_cells(); ++cell)
     {

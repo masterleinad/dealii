@@ -34,8 +34,8 @@ test_reset_vector_values(const bool reset_values, const int tape_index)
   const unsigned int m = 5;  // Dependents
   const unsigned int n = 10; // Independents
 
-  std::vector<double>  xp(n, 0.0);
-  std::vector<double>  yp(m, 0.0);
+  std::vector<double> xp(n, 0.0);
+  std::vector<double> yp(m, 0.0);
   std::vector<adouble> x(n, 1.0); // Dep. variable values initially set here
   std::vector<adouble> y(m, 1.0);
 

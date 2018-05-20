@@ -140,8 +140,8 @@ public:
    * compute_grad_grad() functions, see below, in a loop over all polynomials.
    */
   void
-  compute(const Point<dim>&            unit_point,
-          std::vector<double>&         values,
+  compute(const Point<dim>& unit_point,
+          std::vector<double>& values,
           std::vector<Tensor<1, dim>>& grads,
           std::vector<Tensor<2, dim>>& grad_grads,
           std::vector<Tensor<3, dim>>& third_derivatives,
@@ -314,7 +314,7 @@ template <int dim>
 template <int order>
 Tensor<order, dim>
 PolynomialSpace<dim>::compute_derivative(const unsigned int i,
-                                         const Point<dim>&  p) const
+                                         const Point<dim>& p) const
 {
   const std::array<unsigned int, dim> indices = compute_index(i);
 

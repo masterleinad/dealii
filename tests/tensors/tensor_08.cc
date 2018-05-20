@@ -24,7 +24,7 @@ void
 test_select(double f1, double f2)
 {
   Tensor<2, dim> t;
-  unsigned int   k = 0;
+  unsigned int k = 0;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       t[i][j] = ++k;
@@ -43,7 +43,7 @@ test_select(double f1, double f2)
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
   deallog << std::setprecision(3);

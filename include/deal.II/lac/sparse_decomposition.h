@@ -146,10 +146,10 @@ public:
     /**
      * Constructor. For the parameters' description, see below.
      */
-    AdditionalData(const double           strengthen_diagonal   = 0,
-                   const unsigned int     extra_off_diagonals   = 0,
-                   const bool             use_previous_sparsity = false,
-                   const SparsityPattern* use_this_sparsity     = nullptr);
+    AdditionalData(const double strengthen_diagonal         = 0,
+                   const unsigned int extra_off_diagonals   = 0,
+                   const bool use_previous_sparsity         = false,
+                   const SparsityPattern* use_this_sparsity = nullptr);
 
     /**
      * <code>strengthen_diag</code> times the sum of absolute row entries is
@@ -212,7 +212,7 @@ public:
   template <typename somenumber>
   void
   initialize(const SparseMatrix<somenumber>& matrix,
-             const AdditionalData            parameters);
+             const AdditionalData parameters);
 
   /**
    * Return whether the object is empty. It calls the inherited
@@ -382,7 +382,7 @@ SparseLUDecomposition<number>::n() const
 template <typename number>
 template <class OutVector, class InVector>
 inline void
-SparseLUDecomposition<number>::vmult_add(OutVector&      dst,
+SparseLUDecomposition<number>::vmult_add(OutVector& dst,
                                          const InVector& src) const
 {
   OutVector tmp;
@@ -398,7 +398,7 @@ SparseLUDecomposition<number>::vmult_add(OutVector&      dst,
 template <typename number>
 template <class OutVector, class InVector>
 inline void
-SparseLUDecomposition<number>::Tvmult_add(OutVector&      dst,
+SparseLUDecomposition<number>::Tvmult_add(OutVector& dst,
                                           const InVector& src) const
 {
   OutVector tmp;
@@ -411,9 +411,9 @@ SparseLUDecomposition<number>::Tvmult_add(OutVector&      dst,
 
 template <typename number>
 SparseLUDecomposition<number>::AdditionalData::AdditionalData(
-  const double           strengthen_diag,
-  const unsigned int     extra_off_diag,
-  const bool             use_prev_sparsity,
+  const double strengthen_diag,
+  const unsigned int extra_off_diag,
+  const bool use_prev_sparsity,
   const SparsityPattern* use_this_spars)
   : strengthen_diagonal(strengthen_diag),
     extra_off_diagonals(extra_off_diag),

@@ -35,8 +35,8 @@ void
 test()
 {
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
-  FE_Q<dim>                                 fe(2);
-  DoFHandler<dim>                           dof(tria);
+  FE_Q<dim> fe(2);
+  DoFHandler<dim> dof(tria);
 
   GridGenerator::hyper_cube(tria, 0, 1);
   tria.refine_global(1);

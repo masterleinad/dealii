@@ -82,15 +82,15 @@ private:
   void
   solve();
   void
-                       process_solution(const unsigned int cycle);
-  Triangulation<dim>   triangulation;
-  DoFHandler<dim>      dof_handler;
-  FE_Nedelec<dim>      fe;
-  ConstraintMatrix     constraints;
-  SparsityPattern      sparsity_pattern;
+  process_solution(const unsigned int cycle);
+  Triangulation<dim> triangulation;
+  DoFHandler<dim> dof_handler;
+  FE_Nedelec<dim> fe;
+  ConstraintMatrix constraints;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
-  Vector<double>       solution;
-  Vector<double>       system_rhs;
+  Vector<double> solution;
+  Vector<double> system_rhs;
 
   unsigned int p_order;
   unsigned int quad_order;
@@ -110,11 +110,11 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& result) const;
   virtual void
   value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component) const;
+             std::vector<double>& values,
+             const unsigned int component) const;
   virtual void
   vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   values) const;
+                    std::vector<Vector<double>>& values) const;
 
 private:
   static const double bc_constant;
@@ -132,7 +132,7 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& values) const;
   virtual void
   vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   value_list) const;
+                    std::vector<Vector<double>>& value_list) const;
 
 private:
   static const double bc_constant;
@@ -143,7 +143,7 @@ const double RightHandSide<dim>::bc_constant = 0.1;
 // DEFINE EXACT SOLUTION MEMBERS
 template <int dim>
 double
-ExactSolution<dim>::value(const Point<dim>&  p,
+ExactSolution<dim>::value(const Point<dim>& p,
                           const unsigned int component) const
 {
   Assert(dim >= 2, ExcNotImplemented());
@@ -162,7 +162,7 @@ ExactSolution<dim>::value(const Point<dim>&  p,
 template <int dim>
 void
 ExactSolution<dim>::vector_value(const Point<dim>& p,
-                                 Vector<double>&   result) const
+                                 Vector<double>& result) const
 {
   Assert(dim >= 2, ExcNotImplemented());
   result(0) = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
@@ -171,8 +171,8 @@ ExactSolution<dim>::vector_value(const Point<dim>& p,
 template <int dim>
 void
 ExactSolution<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+                               std::vector<double>& values,
+                               const unsigned int component) const
 {
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
@@ -218,7 +218,7 @@ RightHandSide<dim>::RightHandSide() : Function<dim>(dim)
 template <int dim>
 inline void
 RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                 Vector<double>&   values) const
+                                 Vector<double>& values) const
 {
   Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
   Assert(dim >= 2, ExcNotImplemented());
@@ -235,7 +235,7 @@ template <int dim>
 void
 RightHandSide<dim>::vector_value_list(
   const std::vector<Point<dim>>& points,
-  std::vector<Vector<double>>&   value_list) const
+  std::vector<Vector<double>>& value_list) const
 {
   Assert(value_list.size() == points.size(),
          ExcDimensionMismatch(value_list.size(), points.size()));
@@ -310,21 +310,21 @@ template <int dim>
 void
 MaxwellProblem<dim>::assemble_system()
 {
-  const QGauss<dim>          quadrature_formula(quad_order);
-  FEValues<dim>              fe_values(fe,
+  const QGauss<dim> quadrature_formula(quad_order);
+  FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
   FEValuesViews::Vector<dim> fe_views(fe_values, 0);
-  const unsigned int         dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int         n_q_points    = quadrature_formula.size();
-  FullMatrix<double>         cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>             cell_rhs(dofs_per_cell);
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int n_q_points    = quadrature_formula.size();
+  FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  RightHandSide<dim>          right_hand_side;
+  RightHandSide<dim> right_hand_side;
   std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim));
-  Tensor<1, dim>              value_i, value_j;
+  Tensor<1, dim> value_i, value_j;
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -394,7 +394,7 @@ void
 MaxwellProblem<dim>::process_solution(const unsigned int cycle)
 {
   const ExactSolution<dim> exact_solution;
-  Vector<double>           diff_per_cell(triangulation.n_active_cells());
+  Vector<double> diff_per_cell(triangulation.n_active_cells());
   VectorTools::integrate_difference(dof_handler,
                                     solution,
                                     exact_solution,

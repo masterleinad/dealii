@@ -91,11 +91,11 @@ namespace Step50
     output_results(const unsigned int cycle) const;
 
     parallel::distributed::Triangulation<dim> triangulation;
-    FE_Q<dim>                                 fe;
-    DoFHandler<dim>                           mg_dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> mg_dof_handler;
 
     typedef TrilinosWrappers::SparseMatrix matrix_t;
-    typedef TrilinosWrappers::MPI::Vector  vector_t;
+    typedef TrilinosWrappers::MPI::Vector vector_t;
 
     matrix_t system_matrix;
 
@@ -108,7 +108,7 @@ namespace Step50
 
     MGLevelObject<matrix_t> mg_matrices;
     MGLevelObject<matrix_t> mg_interface_matrices;
-    MGConstrainedDoFs       mg_constrained_dofs;
+    MGConstrainedDoFs mg_constrained_dofs;
   };
 
   template <int dim>
@@ -123,8 +123,8 @@ namespace Step50
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const;
+               std::vector<double>& values,
+               const unsigned int component = 0) const;
   };
 
   template <int dim>
@@ -140,8 +140,8 @@ namespace Step50
   template <int dim>
   void
   Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+                               std::vector<double>& values,
+                               const unsigned int component) const
   {
     const unsigned int n_points = points.size();
 
@@ -187,7 +187,7 @@ namespace Step50
     DoFTools::make_hanging_node_constraints(mg_dof_handler, constraints);
 
     typename FunctionMap<dim>::type dirichlet_boundary;
-    Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+    Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
     dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
     VectorTools::interpolate_boundary_values(
       static_cast<const DoFHandler<dim>&>(mg_dof_handler),
@@ -247,12 +247,12 @@ namespace Step50
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     const Coefficient<dim> coefficient;
-    std::vector<double>    coefficient_values(n_q_points);
+    std::vector<double> coefficient_values(n_q_points);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = mg_dof_handler.begin_active(),
@@ -312,7 +312,7 @@ namespace Step50
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     const Coefficient<dim> coefficient;
-    std::vector<double>    coefficient_values(n_q_points);
+    std::vector<double> coefficient_values(n_q_points);
 
     std::vector<ConstraintMatrix> boundary_constraints(
       triangulation.n_levels());
@@ -401,13 +401,13 @@ namespace Step50
 
     matrix_t coarse_matrix;
     coarse_matrix.copy_from(mg_matrices[0]);
-    SolverControl         coarse_solver_control(1000, 1e-10, false, false);
+    SolverControl coarse_solver_control(1000, 1e-10, false, false);
     SolverGMRES<vector_t> coarse_solver(coarse_solver_control);
-    PreconditionIdentity  id;
+    PreconditionIdentity id;
     MGCoarseGridLACIteration<SolverGMRES<vector_t>, vector_t>
       coarse_grid_solver(coarse_solver, coarse_matrix, id);
 
-    typedef TrilinosWrappers::PreconditionJacobi         Smoother;
+    typedef TrilinosWrappers::PreconditionJacobi Smoother;
     MGSmootherPrecondition<matrix_t, Smoother, vector_t> mg_smoother;
     mg_smoother.initialize(mg_matrices);
     mg_smoother.set_steps(2);
@@ -433,7 +433,7 @@ namespace Step50
     // With all this together, we can finally
     // get about solving the linear system in
     // the usual way:
-    SolverControl      solver_control(50, 1e-12, false);
+    SolverControl solver_control(50, 1e-12, false);
     SolverCG<vector_t> cg(solver_control);
 
     solution = 0;
@@ -449,7 +449,7 @@ namespace Step50
     Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
 
     TrilinosWrappers::MPI::Vector temp_solution;
-    IndexSet                      idx;
+    IndexSet idx;
     DoFTools::extract_locally_relevant_dofs(mg_dof_handler, idx);
     temp_solution.reinit(idx, MPI_COMM_WORLD);
     temp_solution = solution;

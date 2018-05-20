@@ -46,7 +46,7 @@ using namespace std;
 template <int dim, typename number, int spacedim>
 void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
-              MGLevelObject<dealii::Vector<number>>&   v)
+              MGLevelObject<dealii::Vector<number>>& v)
 {
   for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
@@ -94,7 +94,7 @@ template <int dim>
 void
 initialize(const DoFHandler<dim>& dof, Vector<double>& u)
 {
-  unsigned int       counter       = 0;
+  unsigned int counter             = 0;
   const unsigned int dofs_per_cell = dof.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> dof_indices(dofs_per_cell);
   for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
@@ -167,8 +167,8 @@ template <int dim>
 void
 print_diff(const DoFHandler<dim>& dof_1,
            const DoFHandler<dim>& dof_2,
-           const Vector<double>&  u,
-           const Vector<double>&  v)
+           const Vector<double>& u,
+           const Vector<double>& v)
 {
   Vector<double> diff;
   diff.reinit(u);
@@ -199,7 +199,7 @@ check_simple(const FiniteElement<dim>& fe)
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_cube(tr, -1, 1);
   typename FunctionMap<dim>::type dirichlet_boundary_functions;
-  Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+  Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
   dirichlet_boundary_functions[0] = &homogeneous_dirichlet_bc;
 
   tr.refine_global(1);

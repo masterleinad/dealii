@@ -77,14 +77,14 @@ namespace PETScWrappers
       /**
        * Import the typedefs from the base class.
        */
-      typedef BaseClass::value_type      value_type;
-      typedef BaseClass::pointer         pointer;
-      typedef BaseClass::const_pointer   const_pointer;
-      typedef BaseClass::reference       reference;
+      typedef BaseClass::value_type value_type;
+      typedef BaseClass::pointer pointer;
+      typedef BaseClass::const_pointer const_pointer;
+      typedef BaseClass::reference reference;
       typedef BaseClass::const_reference const_reference;
-      typedef BaseClass::size_type       size_type;
-      typedef BaseClass::iterator        iterator;
-      typedef BaseClass::const_iterator  const_iterator;
+      typedef BaseClass::size_type size_type;
+      typedef BaseClass::iterator iterator;
+      typedef BaseClass::const_iterator const_iterator;
 
       /**
        * Constructor; initializes the matrix to be empty, without any
@@ -149,18 +149,18 @@ namespace PETScWrappers
        * arguments.
        */
       void
-      reinit(const std::vector<IndexSet>&       rows,
-             const std::vector<IndexSet>&       cols,
+      reinit(const std::vector<IndexSet>& rows,
+             const std::vector<IndexSet>& cols,
              const BlockDynamicSparsityPattern& bdsp,
-             const MPI_Comm&                    com);
+             const MPI_Comm& com);
 
       /**
        * Same as above but for a symmetric structure only.
        */
       void
-      reinit(const std::vector<IndexSet>&       sizes,
+      reinit(const std::vector<IndexSet>& sizes,
              const BlockDynamicSparsityPattern& bdsp,
-             const MPI_Comm&                    com);
+             const MPI_Comm& com);
 
       /**
        * Matrix-vector multiplication: let $dst = M*src$ with $M$ being this

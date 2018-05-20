@@ -768,8 +768,8 @@ public:
   template <typename number2>
   void
   set(const std::vector<size_type>& indices,
-      const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = false);
+      const FullMatrix<number2>& full_matrix,
+      const bool elide_zero_values = false);
 
   /**
    * Same function as before, but now including the possibility to use
@@ -780,8 +780,8 @@ public:
   void
   set(const std::vector<size_type>& row_indices,
       const std::vector<size_type>& col_indices,
-      const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = false);
+      const FullMatrix<number2>& full_matrix,
+      const bool elide_zero_values = false);
 
   /**
    * Set several elements in the specified row of the matrix with column
@@ -795,10 +795,10 @@ public:
    */
   template <typename number2>
   void
-  set(const size_type               row,
+  set(const size_type row,
       const std::vector<size_type>& col_indices,
-      const std::vector<number2>&   values,
-      const bool                    elide_zero_values = false);
+      const std::vector<number2>& values,
+      const bool elide_zero_values = false);
 
   /**
    * Set several elements to values given by <tt>values</tt> in a given row in
@@ -811,11 +811,11 @@ public:
    */
   template <typename number2>
   void
-  set(const size_type  row,
-      const size_type  n_cols,
+  set(const size_type row,
+      const size_type n_cols,
       const size_type* col_indices,
-      const number2*   values,
-      const bool       elide_zero_values = false);
+      const number2* values,
+      const bool elide_zero_values = false);
 
   /**
    * Add <tt>value</tt> to the element (<i>i,j</i>).  Throws an error if the
@@ -842,8 +842,8 @@ public:
   template <typename number2>
   void
   add(const std::vector<size_type>& indices,
-      const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = true);
+      const FullMatrix<number2>& full_matrix,
+      const bool elide_zero_values = true);
 
   /**
    * Same function as before, but now including the possibility to use
@@ -854,8 +854,8 @@ public:
   void
   add(const std::vector<size_type>& row_indices,
       const std::vector<size_type>& col_indices,
-      const FullMatrix<number2>&    full_matrix,
-      const bool                    elide_zero_values = true);
+      const FullMatrix<number2>& full_matrix,
+      const bool elide_zero_values = true);
 
   /**
    * Set several elements in the specified row of the matrix with column
@@ -868,10 +868,10 @@ public:
    */
   template <typename number2>
   void
-  add(const size_type               row,
+  add(const size_type row,
       const std::vector<size_type>& col_indices,
-      const std::vector<number2>&   values,
-      const bool                    elide_zero_values = true);
+      const std::vector<number2>& values,
+      const bool elide_zero_values = true);
 
   /**
    * Add an array of values given by <tt>values</tt> in the given global
@@ -884,12 +884,12 @@ public:
    */
   template <typename number2>
   void
-  add(const size_type  row,
-      const size_type  n_cols,
+  add(const size_type row,
+      const size_type n_cols,
       const size_type* col_indices,
-      const number2*   values,
-      const bool       elide_zero_values      = true,
-      const bool       col_indices_are_sorted = false);
+      const number2* values,
+      const bool elide_zero_values      = true,
+      const bool col_indices_are_sorted = false);
 
   /**
    * Multiply the entire matrix by a fixed factor.
@@ -1183,7 +1183,7 @@ public:
    */
   template <typename somenumber>
   somenumber
-  residual(Vector<somenumber>&       dst,
+  residual(Vector<somenumber>& dst,
            const Vector<somenumber>& x,
            const Vector<somenumber>& b) const;
 
@@ -1224,10 +1224,10 @@ public:
    */
   template <typename numberB, typename numberC>
   void
-  mmult(SparseMatrix<numberC>&       C,
+  mmult(SparseMatrix<numberC>& C,
         const SparseMatrix<numberB>& B,
-        const Vector<number>&        V = Vector<number>(),
-        const bool                   rebuild_sparsity_pattern = true) const;
+        const Vector<number>& V             = Vector<number>(),
+        const bool rebuild_sparsity_pattern = true) const;
 
   /**
    * Perform the matrix-matrix multiplication with the transpose of
@@ -1255,10 +1255,10 @@ public:
    */
   template <typename numberB, typename numberC>
   void
-  Tmmult(SparseMatrix<numberC>&       C,
+  Tmmult(SparseMatrix<numberC>& C,
          const SparseMatrix<numberB>& B,
-         const Vector<number>&        V = Vector<number>(),
-         const bool                   rebuild_sparsity_pattern = true) const;
+         const Vector<number>& V             = Vector<number>(),
+         const bool rebuild_sparsity_pattern = true) const;
 
   //@}
   /**
@@ -1305,9 +1305,9 @@ public:
    */
   template <typename somenumber>
   void
-  precondition_Jacobi(Vector<somenumber>&       dst,
+  precondition_Jacobi(Vector<somenumber>& dst,
                       const Vector<somenumber>& src,
-                      const number              omega = 1.) const;
+                      const number omega = 1.) const;
 
   /**
    * Apply SSOR preconditioning to <tt>src</tt> with damping <tt>omega</tt>.
@@ -1317,9 +1317,9 @@ public:
    */
   template <typename somenumber>
   void
-  precondition_SSOR(Vector<somenumber>&             dst,
-                    const Vector<somenumber>&       src,
-                    const number                    omega = 1.,
+  precondition_SSOR(Vector<somenumber>& dst,
+                    const Vector<somenumber>& src,
+                    const number omega = 1.,
                     const std::vector<std::size_t>& pos_right_of_diagonal
                     = std::vector<std::size_t>()) const;
 
@@ -1328,18 +1328,18 @@ public:
    */
   template <typename somenumber>
   void
-  precondition_SOR(Vector<somenumber>&       dst,
+  precondition_SOR(Vector<somenumber>& dst,
                    const Vector<somenumber>& src,
-                   const number              om = 1.) const;
+                   const number om = 1.) const;
 
   /**
    * Apply transpose SOR preconditioning matrix to <tt>src</tt>.
    */
   template <typename somenumber>
   void
-  precondition_TSOR(Vector<somenumber>&       dst,
+  precondition_TSOR(Vector<somenumber>& dst,
                     const Vector<somenumber>& src,
-                    const number              om = 1.) const;
+                    const number om = 1.) const;
 
   /**
    * Perform SSOR preconditioning in-place.  Apply the preconditioner matrix
@@ -1378,10 +1378,10 @@ public:
    */
   template <typename somenumber>
   void
-  PSOR(Vector<somenumber>&           v,
+  PSOR(Vector<somenumber>& v,
        const std::vector<size_type>& permutation,
        const std::vector<size_type>& inverse_permutation,
-       const number                  om = 1.) const;
+       const number om = 1.) const;
 
   /**
    * Perform a transposed permuted SOR preconditioning in-place.
@@ -1395,10 +1395,10 @@ public:
    */
   template <typename somenumber>
   void
-  TPSOR(Vector<somenumber>&           v,
+  TPSOR(Vector<somenumber>& v,
         const std::vector<size_type>& permutation,
         const std::vector<size_type>& inverse_permutation,
-        const number                  om = 1.) const;
+        const number om = 1.) const;
 
   /**
    * Do one Jacobi step on <tt>v</tt>.  Performs a direct Jacobi step with
@@ -1407,9 +1407,9 @@ public:
    */
   template <typename somenumber>
   void
-  Jacobi_step(Vector<somenumber>&       v,
+  Jacobi_step(Vector<somenumber>& v,
               const Vector<somenumber>& b,
-              const number              om = 1.) const;
+              const number om = 1.) const;
 
   /**
    * Do one SOR step on <tt>v</tt>.  Performs a direct SOR step with right
@@ -1417,9 +1417,9 @@ public:
    */
   template <typename somenumber>
   void
-  SOR_step(Vector<somenumber>&       v,
+  SOR_step(Vector<somenumber>& v,
            const Vector<somenumber>& b,
-           const number              om = 1.) const;
+           const number om = 1.) const;
 
   /**
    * Do one adjoint SOR step on <tt>v</tt>.  Performs a direct TSOR step with
@@ -1427,9 +1427,9 @@ public:
    */
   template <typename somenumber>
   void
-  TSOR_step(Vector<somenumber>&       v,
+  TSOR_step(Vector<somenumber>& v,
             const Vector<somenumber>& b,
-            const number              om = 1.) const;
+            const number om = 1.) const;
 
   /**
    * Do one SSOR step on <tt>v</tt>.  Performs a direct SSOR step with right
@@ -1437,9 +1437,9 @@ public:
    */
   template <typename somenumber>
   void
-  SSOR_step(Vector<somenumber>&       v,
+  SSOR_step(Vector<somenumber>& v,
             const Vector<somenumber>& b,
-            const number              om = 1.) const;
+            const number om = 1.) const;
   //@}
   /**
    * @name Iterators
@@ -1528,8 +1528,8 @@ public:
   template <class StreamType>
   void
   print(StreamType& out,
-        const bool  across         = false,
-        const bool  diagonal_first = true) const;
+        const bool across         = false,
+        const bool diagonal_first = true) const;
 
   /**
    * Print the matrix in the usual format, i.e. as a matrix and not as a list
@@ -1552,12 +1552,12 @@ public:
    * applied to a large matrix!
    */
   void
-  print_formatted(std::ostream&      out,
-                  const unsigned int precision   = 3,
-                  const bool         scientific  = true,
-                  const unsigned int width       = 0,
-                  const char*        zero_string = " ",
-                  const double       denominator = 1.) const;
+  print_formatted(std::ostream& out,
+                  const unsigned int precision = 3,
+                  const bool scientific        = true,
+                  const unsigned int width     = 0,
+                  const char* zero_string      = " ",
+                  const double denominator     = 1.) const;
 
   /**
    * Print the actual pattern of the matrix. For each entry with an absolute
@@ -1755,7 +1755,7 @@ template <typename number>
 inline void
 SparseMatrix<number>::set(const size_type i,
                           const size_type j,
-                          const number    value)
+                          const number value)
 {
   AssertIsFinite(value);
 
@@ -1777,8 +1777,8 @@ template <typename number>
 template <typename number2>
 inline void
 SparseMatrix<number>::set(const std::vector<size_type>& indices,
-                          const FullMatrix<number2>&    values,
-                          const bool                    elide_zero_values)
+                          const FullMatrix<number2>& values,
+                          const bool elide_zero_values)
 {
   Assert(indices.size() == values.m(),
          ExcDimensionMismatch(indices.size(), values.m()));
@@ -1797,8 +1797,8 @@ template <typename number2>
 inline void
 SparseMatrix<number>::set(const std::vector<size_type>& row_indices,
                           const std::vector<size_type>& col_indices,
-                          const FullMatrix<number2>&    values,
-                          const bool                    elide_zero_values)
+                          const FullMatrix<number2>& values,
+                          const bool elide_zero_values)
 {
   Assert(row_indices.size() == values.m(),
          ExcDimensionMismatch(row_indices.size(), values.m()));
@@ -1816,10 +1816,10 @@ SparseMatrix<number>::set(const std::vector<size_type>& row_indices,
 template <typename number>
 template <typename number2>
 inline void
-SparseMatrix<number>::set(const size_type               row,
+SparseMatrix<number>::set(const size_type row,
                           const std::vector<size_type>& col_indices,
-                          const std::vector<number2>&   values,
-                          const bool                    elide_zero_values)
+                          const std::vector<number2>& values,
+                          const bool elide_zero_values)
 {
   Assert(col_indices.size() == values.size(),
          ExcDimensionMismatch(col_indices.size(), values.size()));
@@ -1835,7 +1835,7 @@ template <typename number>
 inline void
 SparseMatrix<number>::add(const size_type i,
                           const size_type j,
-                          const number    value)
+                          const number value)
 {
   AssertIsFinite(value);
 
@@ -1860,8 +1860,8 @@ template <typename number>
 template <typename number2>
 inline void
 SparseMatrix<number>::add(const std::vector<size_type>& indices,
-                          const FullMatrix<number2>&    values,
-                          const bool                    elide_zero_values)
+                          const FullMatrix<number2>& values,
+                          const bool elide_zero_values)
 {
   Assert(indices.size() == values.m(),
          ExcDimensionMismatch(indices.size(), values.m()));
@@ -1880,8 +1880,8 @@ template <typename number2>
 inline void
 SparseMatrix<number>::add(const std::vector<size_type>& row_indices,
                           const std::vector<size_type>& col_indices,
-                          const FullMatrix<number2>&    values,
-                          const bool                    elide_zero_values)
+                          const FullMatrix<number2>& values,
+                          const bool elide_zero_values)
 {
   Assert(row_indices.size() == values.m(),
          ExcDimensionMismatch(row_indices.size(), values.m()));
@@ -1899,10 +1899,10 @@ SparseMatrix<number>::add(const std::vector<size_type>& row_indices,
 template <typename number>
 template <typename number2>
 inline void
-SparseMatrix<number>::add(const size_type               row,
+SparseMatrix<number>::add(const size_type row,
                           const std::vector<size_type>& col_indices,
-                          const std::vector<number2>&   values,
-                          const bool                    elide_zero_values)
+                          const std::vector<number2>& values,
+                          const bool elide_zero_values)
 {
   Assert(col_indices.size() == values.size(),
          ExcDimensionMismatch(col_indices.size(), values.size()));
@@ -1921,7 +1921,7 @@ SparseMatrix<number>::operator*=(const number factor)
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  number*             val_ptr = val.get();
+  number* val_ptr             = val.get();
   const number* const end_ptr = val.get() + cols->n_nonzero_elements();
 
   while(val_ptr != end_ptr)
@@ -1940,7 +1940,7 @@ SparseMatrix<number>::operator/=(const number factor)
 
   const number factor_inv = number(1.) / factor;
 
-  number*             val_ptr = val.get();
+  number* val_ptr             = val.get();
   const number* const end_ptr = val.get() + cols->n_nonzero_elements();
 
   while(val_ptr != end_ptr)
@@ -2021,7 +2021,7 @@ SparseMatrix<number>::copy_from(const ForwardIterator begin,
   // iterators
   typedef
     typename std::iterator_traits<ForwardIterator>::value_type::const_iterator
-            inner_iterator;
+      inner_iterator;
   size_type row = 0;
   for(ForwardIterator i = begin; i != end; ++i, ++row)
     {
@@ -2136,7 +2136,7 @@ namespace SparseMatrixIterators
   }
 
   template <typename number>
-  inline Accessor<number, false>::Accessor(MatrixType*       matrix,
+  inline Accessor<number, false>::Accessor(MatrixType* matrix,
                                            const std::size_t index)
     : SparsityPatternIterators::Accessor(&matrix->get_sparsity_pattern(),
                                          index),
@@ -2164,7 +2164,7 @@ namespace SparseMatrixIterators
   }
 
   template <typename number, bool Constness>
-  inline Iterator<number, Constness>::Iterator(MatrixType*       matrix,
+  inline Iterator<number, Constness>::Iterator(MatrixType* matrix,
                                                const std::size_t index)
     : accessor(matrix, index)
   {}
@@ -2199,14 +2199,14 @@ namespace SparseMatrixIterators
 
   template <typename number, bool Constness>
   inline const Accessor<number, Constness>& Iterator<number, Constness>::
-                                            operator*() const
+  operator*() const
   {
     return accessor;
   }
 
   template <typename number, bool Constness>
   inline const Accessor<number, Constness>* Iterator<number, Constness>::
-                                            operator->() const
+  operator->() const
   {
     return &accessor;
   }
@@ -2333,14 +2333,14 @@ template <typename number>
 template <class StreamType>
 inline void
 SparseMatrix<number>::print(StreamType& out,
-                            const bool  across,
-                            const bool  diagonal_first) const
+                            const bool across,
+                            const bool diagonal_first) const
 {
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  bool   hanging_diagonal = false;
-  number diagonal         = number();
+  bool hanging_diagonal = false;
+  number diagonal       = number();
 
   for(size_type i = 0; i < cols->rows; ++i)
     {

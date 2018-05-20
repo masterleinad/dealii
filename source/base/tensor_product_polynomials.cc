@@ -126,7 +126,7 @@ template <int dim, typename PolynomialType>
 double
 TensorProductPolynomials<dim, PolynomialType>::compute_value(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim>& p) const
 {
   Assert(dim > 0, ExcNotImplemented());
 
@@ -144,7 +144,7 @@ template <int dim, typename PolynomialType>
 Tensor<1, dim>
 TensorProductPolynomials<dim, PolynomialType>::compute_grad(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim>& p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -179,7 +179,7 @@ template <int dim, typename PolynomialType>
 Tensor<2, dim>
 TensorProductPolynomials<dim, PolynomialType>::compute_grad_grad(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim>& p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -221,8 +221,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute_grad_grad(
 template <int dim, typename PolynomialType>
 void
 TensorProductPolynomials<dim, PolynomialType>::compute(
-  const Point<dim>&            p,
-  std::vector<double>&         values,
+  const Point<dim>& p,
+  std::vector<double>& values,
   std::vector<Tensor<1, dim>>& grads,
   std::vector<Tensor<2, dim>>& grad_grads,
   std::vector<Tensor<3, dim>>& third_derivatives,
@@ -417,7 +417,7 @@ AnisotropicPolynomials<dim>::compute_index(const unsigned int i,
 template <int dim>
 double
 AnisotropicPolynomials<dim>::compute_value(const unsigned int i,
-                                           const Point<dim>&  p) const
+                                           const Point<dim>& p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -432,7 +432,7 @@ AnisotropicPolynomials<dim>::compute_value(const unsigned int i,
 template <int dim>
 Tensor<1, dim>
 AnisotropicPolynomials<dim>::compute_grad(const unsigned int i,
-                                          const Point<dim>&  p) const
+                                          const Point<dim>& p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -459,7 +459,7 @@ AnisotropicPolynomials<dim>::compute_grad(const unsigned int i,
 template <int dim>
 Tensor<2, dim>
 AnisotropicPolynomials<dim>::compute_grad_grad(const unsigned int i,
-                                               const Point<dim>&  p) const
+                                               const Point<dim>& p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -493,8 +493,8 @@ AnisotropicPolynomials<dim>::compute_grad_grad(const unsigned int i,
 template <int dim>
 void
 AnisotropicPolynomials<dim>::compute(
-  const Point<dim>&            p,
-  std::vector<double>&         values,
+  const Point<dim>& p,
+  std::vector<double>& values,
   std::vector<Tensor<1, dim>>& grads,
   std::vector<Tensor<2, dim>>& grad_grads,
   std::vector<Tensor<3, dim>>& third_derivatives,

@@ -25,7 +25,7 @@ using namespace Polynomials;
 
 void
 check_derivatives(const std::vector<Polynomial<double>>& p,
-                  const unsigned int                     n_deriv)
+                  const unsigned int n_deriv)
 {
   // check whether the values and derivatives
   // are evaluated correctly some randomly
@@ -37,7 +37,7 @@ check_derivatives(const std::vector<Polynomial<double>>& p,
   deallog << "Representation of derivatives up to order " << n_deriv - 1
           << std::endl;
   std::vector<double> values(n_deriv), values_ref(n_deriv);
-  Monomial<double>    zero(0, 0);
+  Monomial<double> zero(0, 0);
   for(unsigned int j = 0; j < p.size(); ++j)
     {
       double x = random_value<double>();

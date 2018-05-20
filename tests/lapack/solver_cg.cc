@@ -35,7 +35,7 @@ output_double_number(double input, const std::string& text)
 template <class NUMBER>
 void
 output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
-                   const std::string&         text)
+                   const std::string& text)
 {
   deallog << text;
   for(unsigned int j = 0; j < eigenvalues.size(); ++j)
@@ -50,10 +50,10 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
+check_solve(SolverType& solver,
+            const MatrixType& A,
+            VectorType& u,
+            VectorType& f,
             const PRECONDITION& P)
 {
   u = 0.;
@@ -73,10 +73,10 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_Tsolve(SolverType&         solver,
-             const MatrixType&   A,
-             VectorType&         u,
-             VectorType&         f,
+check_Tsolve(SolverType& solver,
+             const MatrixType& A,
+             VectorType& u,
+             VectorType& f,
              const PRECONDITION& P)
 {
   u = 0.;
@@ -100,9 +100,9 @@ main()
   deallog.attach(logfile);
 
   GrowingVectorMemory<> mem;
-  SolverControl         control(100, 1.e-3);
-  SolverControl         verbose_control(100, 1.e-3, true);
-  SolverCG<>            cg(control, mem);
+  SolverControl control(100, 1.e-3);
+  SolverControl verbose_control(100, 1.e-3, true);
+  SolverCG<> cg(control, mem);
   cg.connect_condition_number_slot(std::bind(output_double_number,
                                              std::placeholders::_1,
                                              "Condition number estimate: "),
@@ -117,14 +117,14 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();
       SparseMatrix<double> A(structure);
       testproblem.five_point(A);
 
-      PreconditionIdentity   prec_no;
+      PreconditionIdentity prec_no;
       PreconditionRichardson prec_richardson;
       prec_richardson.initialize(0.6);
       PreconditionSSOR<> prec_ssor;

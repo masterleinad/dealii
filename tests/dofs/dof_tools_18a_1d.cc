@@ -85,7 +85,7 @@ check_this()
 {
   // create a mesh where two cells at levels
   // 1 and 3 are adjacent
-  const int          dim = 1;
+  const int dim = 1;
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
@@ -97,7 +97,7 @@ check_this()
     c->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 
-  FE_DGQ<dim>     fe(0);
+  FE_DGQ<dim> fe(0);
   DoFHandler<dim> dof_handler(tr);
   dof_handler.distribute_dofs(fe);
 

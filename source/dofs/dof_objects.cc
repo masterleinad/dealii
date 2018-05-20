@@ -37,10 +37,10 @@ namespace internal
     void
     DoFObjects<dim>::set_dof_index(
       const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-      const unsigned int                          obj_index,
-      const unsigned int                          fe_index,
-      const unsigned int                          local_index,
-      const types::global_dof_index               global_index)
+      const unsigned int obj_index,
+      const unsigned int fe_index,
+      const unsigned int local_index,
+      const types::global_dof_index global_index)
     {
       (void) fe_index;
       Assert(

@@ -32,7 +32,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria(
+  Triangulation<dim> tria(
     Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
@@ -60,10 +60,10 @@ test()
 
   // set up MatrixFree
   MappingQGeneric<dim> mapping(fe_degree);
-  QGauss<1>            quad(fe_degree + 1);
-  MatrixFree<dim>      mf_data;
+  QGauss<1> quad(fe_degree + 1);
+  MatrixFree<dim> mf_data;
   mf_data.reinit(mapping, dof, constraints, quad);
-  SparsityPattern      sparsity;
+  SparsityPattern sparsity;
   SparseMatrix<double> system_matrix;
   {
     DynamicSparsityPattern csp(dof.n_dofs(), dof.n_dofs());
@@ -74,11 +74,11 @@ test()
   system_matrix.reinit(sparsity);
 
   // setup MG levels
-  const unsigned int                  nlevels = tria.n_levels();
-  typedef MatrixFree<dim>             MatrixFreeTestType;
-  MGLevelObject<MatrixFreeTestType>   mg_matrices;
-  MGLevelObject<ConstraintMatrix>     mg_constraints;
-  MGLevelObject<SparsityPattern>      mg_sparsities;
+  const unsigned int nlevels = tria.n_levels();
+  typedef MatrixFree<dim> MatrixFreeTestType;
+  MGLevelObject<MatrixFreeTestType> mg_matrices;
+  MGLevelObject<ConstraintMatrix> mg_constraints;
+  MGLevelObject<SparsityPattern> mg_sparsities;
   MGLevelObject<SparseMatrix<double>> mg_ref_matrices;
   mg_matrices.resize(0, nlevels - 1);
   mg_constraints.resize(0, nlevels - 1);
@@ -86,7 +86,7 @@ test()
   mg_ref_matrices.resize(0, nlevels - 1);
 
   typename FunctionMap<dim>::type dirichlet_boundary;
-  Functions::ZeroFunction<dim>    homogeneous_dirichlet_bc(1);
+  Functions::ZeroFunction<dim> homogeneous_dirichlet_bc(1);
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
   std::vector<std::set<types::global_dof_index>> boundary_indices(nlevels);
   MGTools::make_boundary_list(dof, dirichlet_boundary, boundary_indices);
@@ -113,7 +113,7 @@ test()
   // \nabla u) + (v, 10 * u) on the actual
   // discretization and on all levels
   {
-    QGauss<dim>   quad(fe_degree + 1);
+    QGauss<dim> quad(fe_degree + 1);
     FEValues<dim> fe_values(
       mapping, fe, quad, update_values | update_gradients | update_JxW_values);
     const unsigned int n_quadrature_points = quad.size();

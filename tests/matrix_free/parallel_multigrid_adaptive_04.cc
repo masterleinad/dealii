@@ -52,7 +52,7 @@ class MGTransferMF
 {
 public:
   MGTransferMF(const MGLevelObject<LAPLACEOPERATOR>& laplace,
-               const MGConstrainedDoFs&              mg_constrained_dofs)
+               const MGConstrainedDoFs& mg_constrained_dofs)
     : MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>(
         mg_constrained_dofs),
       laplace_operator(laplace)
@@ -65,10 +65,10 @@ public:
    */
   template <class InVector, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim>&          mg_dof_handler,
+  copy_to_mg(const DoFHandler<dim, spacedim>& mg_dof_handler,
              MGLevelObject<LinearAlgebra::distributed::Vector<
                typename LAPLACEOPERATOR::value_type>>& dst,
-             const InVector&                           src) const
+             const InVector& src) const
   {
     for(unsigned int level = dst.min_level(); level <= dst.max_level(); ++level)
       laplace_operator[level].initialize_dof_vector(dst[level]);
@@ -95,8 +95,8 @@ public:
   }
 
   virtual void
-  operator()(const unsigned int                                level,
-             LinearAlgebra::distributed::Vector<double>&       dst,
+  operator()(const unsigned int level,
+             LinearAlgebra::distributed::Vector<double>& dst,
              const LinearAlgebra::distributed::Vector<double>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
@@ -127,7 +127,7 @@ do_test(const DoFHandler<dim>& dof)
   DoFTools::extract_locally_relevant_dofs(dof, locally_relevant_dofs);
 
   // Dirichlet BC
-  Functions::ZeroFunction<dim>    zero_function;
+  Functions::ZeroFunction<dim> zero_function;
   typename FunctionMap<dim>::type dirichlet_boundary;
   dirichlet_boundary[0] = &zero_function;
 
@@ -150,7 +150,7 @@ do_test(const DoFHandler<dim>& dof)
                   n_q_points_1d,
                   1,
                   LinearAlgebra::distributed::Vector<number>>
-                                           fine_matrix;
+    fine_matrix;
   std::shared_ptr<MatrixFree<dim, number>> fine_level_data(
     new MatrixFree<dim, number>());
 
@@ -193,7 +193,7 @@ do_test(const DoFHandler<dim>& dof)
                           LinearAlgebra::distributed::Vector<number>>
     LevelMatrixType;
 
-  MGLevelObject<LevelMatrixType>         mg_matrices;
+  MGLevelObject<LevelMatrixType> mg_matrices;
   MGLevelObject<MatrixFree<dim, number>> mg_level_data;
   mg_matrices.resize(0, dof.get_triangulation().n_global_levels() - 1);
   mg_level_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
@@ -207,7 +207,7 @@ do_test(const DoFHandler<dim>& dof)
       mg_additional_data.level_mg_handler = level;
 
       ConstraintMatrix level_constraints;
-      IndexSet         relevant_dofs;
+      IndexSet relevant_dofs;
       DoFTools::extract_locally_relevant_level_dofs(dof, level, relevant_dofs);
       level_constraints.reinit(relevant_dofs);
       level_constraints.add_lines(
@@ -311,7 +311,7 @@ test()
                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
-      FE_Q<dim>       fe(fe_degree);
+      FE_Q<dim> fe(fe_degree);
       DoFHandler<dim> dof(tria);
       dof.distribute_dofs(fe);
       dof.distribute_mg_dofs(fe);

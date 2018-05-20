@@ -202,13 +202,13 @@ public:
   typedef typename ActiveSelector::CellAccessor cell_accessor;
   typedef typename ActiveSelector::FaceAccessor face_accessor;
 
-  typedef typename ActiveSelector::line_iterator        line_iterator;
+  typedef typename ActiveSelector::line_iterator line_iterator;
   typedef typename ActiveSelector::active_line_iterator active_line_iterator;
 
-  typedef typename ActiveSelector::quad_iterator        quad_iterator;
+  typedef typename ActiveSelector::quad_iterator quad_iterator;
   typedef typename ActiveSelector::active_quad_iterator active_quad_iterator;
 
-  typedef typename ActiveSelector::hex_iterator        hex_iterator;
+  typedef typename ActiveSelector::hex_iterator hex_iterator;
   typedef typename ActiveSelector::active_hex_iterator active_hex_iterator;
 
   /**
@@ -538,7 +538,7 @@ public:
    * single level of a multigrid hierarchy.
    */
   void
-  renumber_dofs(const unsigned int                          level,
+  renumber_dofs(const unsigned int level,
                 const std::vector<types::global_dof_index>& new_numbers);
 
   /**
@@ -1151,9 +1151,9 @@ private:
      * the given level stored for the current vertex to <code>index</code>.
      */
     void
-    set_index(const unsigned int            level,
-              const unsigned int            dof_number,
-              const unsigned int            dofs_per_vertex,
+    set_index(const unsigned int level,
+              const unsigned int dof_number,
+              const unsigned int dofs_per_vertex,
               const types::global_dof_index index);
 
   private:
@@ -1200,10 +1200,10 @@ private:
 
   template <int structdim>
   void
-  set_dof_index(const unsigned int            obj_level,
-                const unsigned int            obj_index,
-                const unsigned int            fe_index,
-                const unsigned int            local_index,
+  set_dof_index(const unsigned int obj_level,
+                const unsigned int obj_index,
+                const unsigned int fe_index,
+                const unsigned int local_index,
                 const types::global_dof_index global_index) const;
 
   /**
@@ -1441,7 +1441,7 @@ DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // std::unique_ptr objects because std::unique_ptr does not
   // have a copy constructor. do it one level at a time
   unsigned int n_levels = levels.size();
-  ar&          n_levels;
+  ar& n_levels;
   for(unsigned int i = 0; i < levels.size(); ++i)
     ar& levels[i];
 
@@ -1449,16 +1449,16 @@ DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // at least up to 1.65.1. This causes problems with clang-5.
   // Therefore, work around it.
   bool faces_is_nullptr = (faces.get() == nullptr);
-  ar&  faces_is_nullptr;
+  ar& faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
 
   // write out the number of triangulation cells and later check during
   // loading that this number is indeed correct; same with something that
   // identifies the FE and the policy
-  unsigned int n_cells     = tria->n_cells();
-  std::string  fe_name     = this->get_fe(0).get_name();
-  std::string  policy_name = internal::policy_to_string(*policy);
+  unsigned int n_cells    = tria->n_cells();
+  std::string fe_name     = this->get_fe(0).get_name();
+  std::string policy_name = internal::policy_to_string(*policy);
 
   ar& n_cells& fe_name& policy_name;
 }
@@ -1483,26 +1483,26 @@ DoFHandler<dim, spacedim>::load(Archive& ar, const unsigned int)
   // std::unique_ptr objects because std::unique_ptr does not
   // have a copy constructor. do it one level at a time
   unsigned int size;
-  ar&          size;
+  ar& size;
   levels.resize(size);
   for(unsigned int i = 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<dim>> level;
-      ar&                                                                level;
+      ar& level;
       levels[i] = std::move(level);
     }
 
   //Workaround for nullptr, see in save().
   bool faces_is_nullptr = true;
-  ar&  faces_is_nullptr;
+  ar& faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
 
   // these are the checks that correspond to the last block in the save()
   // function
   unsigned int n_cells;
-  std::string  fe_name;
-  std::string  policy_name;
+  std::string fe_name;
+  std::string policy_name;
 
   ar& n_cells& fe_name& policy_name;
 
@@ -1539,9 +1539,9 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::get_index(
 template <int dim, int spacedim>
 inline void
 DoFHandler<dim, spacedim>::MGVertexDoFs::set_index(
-  const unsigned int            level,
-  const unsigned int            dof_number,
-  const unsigned int            dofs_per_vertex,
+  const unsigned int level,
+  const unsigned int dof_number,
+  const unsigned int dofs_per_vertex,
   const types::global_dof_index index)
 {
   Assert((level >= coarsest_level) && (level <= finest_level),

@@ -77,7 +77,7 @@ main()
 
   // AD typedefs
   typedef Sacado::Fad::DFad<Sacado::Fad::DFad<double>> ADNumberType;
-  typedef typename ADNumberType::value_type            ADDerivativeType;
+  typedef typename ADNumberType::value_type ADDerivativeType;
   typedef typename ADNumberType::scalar_type ADScalarType; // == double
 
   // Compute function and derivative with AD

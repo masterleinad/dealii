@@ -102,7 +102,7 @@ check()
     patches, data_filter, output_basename + ".h5", MPI_COMM_SELF);
 
   const double current_time = 0.0;
-  XDMFEntry    entry(output_basename + ".h5",
+  XDMFEntry entry(output_basename + ".h5",
                   output_basename + ".h5",
                   current_time,
                   data_filter.n_nodes(),

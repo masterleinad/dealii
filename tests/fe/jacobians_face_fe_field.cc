@@ -44,7 +44,7 @@ test()
   tria.execute_coarsening_and_refinement();
 
   // create Euler vector field and MappingFEField
-  FESystem<dim>   fe_euler(FE_Q<dim>(QGaussLobatto<1>(4)), dim);
+  FESystem<dim> fe_euler(FE_Q<dim>(QGaussLobatto<1>(4)), dim);
   DoFHandler<dim> map_dh(tria);
   map_dh.distribute_dofs(fe_euler);
 
@@ -62,7 +62,7 @@ test()
   Quadrature<dim - 1> quad(quad_p);
 
   {
-    FEFaceValues<dim>    fe_val(mapping, dummy, quad, update_jacobians);
+    FEFaceValues<dim> fe_val(mapping, dummy, quad, update_jacobians);
     FESubfaceValues<dim> fe_sub_val(mapping, dummy, quad, update_jacobians);
 
     deallog << dim << "D Jacobians:" << std::endl;
@@ -97,7 +97,7 @@ test()
   }
 
   {
-    FEFaceValues<dim>    fe_val(mapping, dummy, quad, update_inverse_jacobians);
+    FEFaceValues<dim> fe_val(mapping, dummy, quad, update_inverse_jacobians);
     FESubfaceValues<dim> fe_sub_val(
       mapping, dummy, quad, update_inverse_jacobians);
 
@@ -133,7 +133,7 @@ test()
   }
 
   {
-    FEFaceValues<dim>    fe_val(mapping, dummy, quad, update_jacobian_grads);
+    FEFaceValues<dim> fe_val(mapping, dummy, quad, update_jacobian_grads);
     FESubfaceValues<dim> fe_sub_val(
       mapping, dummy, quad, update_jacobian_grads);
 

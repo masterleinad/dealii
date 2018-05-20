@@ -60,17 +60,17 @@ main()
        */
 
       const unsigned int rc = 1;
-      SparsityPattern    sparsity_pattern(rc, rc, 0);
+      SparsityPattern sparsity_pattern(rc, rc, 0);
       sparsity_pattern.compress();
 
       SparseMatrix<double> A(sparsity_pattern);
       SparseMatrix<double> B(sparsity_pattern);
       SparseMatrix<double> C(sparsity_pattern);
       SparseMatrix<double> D(sparsity_pattern);
-      Vector<double>       x(rc);
-      Vector<double>       y(rc);
-      Vector<double>       f(rc);
-      Vector<double>       g(rc);
+      Vector<double> x(rc);
+      Vector<double> y(rc);
+      Vector<double> f(rc);
+      Vector<double> g(rc);
       for(unsigned int i = 0; i < rc; ++i)
         {
           A.diag_element(i) = 1.0 * (i + 1);
@@ -86,7 +86,7 @@ main()
       const auto lo_C = linear_operator(C);
       const auto lo_D = linear_operator(D);
 
-      SolverControl            solver_control_A(1, 1.0e-10, false, false);
+      SolverControl solver_control_A(1, 1.0e-10, false, false);
       SolverCG<Vector<double>> solver_A(solver_control_A);
       PreconditionJacobi<SparseMatrix<double>> preconditioner_A;
       preconditioner_A.initialize(A);
@@ -94,7 +94,7 @@ main()
 
       const auto lo_S = schur_complement(lo_A_inv, lo_B, lo_C, lo_D);
 
-      SolverControl            solver_control_S(1, 1.0e-10, false, false);
+      SolverControl solver_control_S(1, 1.0e-10, false, false);
       SolverCG<Vector<double>> solver_S(solver_control_S);
       PreconditionJacobi<SparseMatrix<double>> preconditioner_S;
       preconditioner_S.initialize(D); // Same space as S
@@ -144,8 +144,8 @@ main()
 
        */
 
-      const unsigned int   blks = 2;
-      const unsigned int   rc   = 10;
+      const unsigned int blks = 2;
+      const unsigned int rc   = 10;
       BlockSparsityPattern sparsity_pattern;
       {
         BlockDynamicSparsityPattern csp(blks, blks);
@@ -158,7 +158,7 @@ main()
       }
 
       BlockSparseMatrix<double> A(sparsity_pattern);
-      BlockVector<double>       b(blks, rc);
+      BlockVector<double> b(blks, rc);
       for(unsigned int i = 0; i < rc; ++i)
         {
           for(unsigned int bi = 0; bi < blks; ++bi)
@@ -178,10 +178,10 @@ main()
       Vector<double>& g = b.block(0);
 
       BlockVector<double> s(blks, rc);
-      Vector<double>&     x = s.block(1);
-      Vector<double>&     y = s.block(0);
+      Vector<double>& x = s.block(1);
+      Vector<double>& y = s.block(0);
 
-      SolverControl            solver_control_A(1, 1.0e-10, false, false);
+      SolverControl solver_control_A(1, 1.0e-10, false, false);
       SolverCG<Vector<double>> solver_A(solver_control_A);
       PreconditionJacobi<SparseMatrix<double>> preconditioner_A;
       preconditioner_A.initialize(A.block(1, 1));
@@ -191,7 +191,7 @@ main()
 
       // Preconditinoed by D
       {
-        SolverControl            solver_control_S(11, 1.0e-10, false, false);
+        SolverControl solver_control_S(11, 1.0e-10, false, false);
         SolverCG<Vector<double>> solver_S(solver_control_S);
         PreconditionJacobi<SparseMatrix<double>> preconditioner_S;
         preconditioner_S.initialize(A.block(0, 0)); // Same space as S
@@ -226,7 +226,7 @@ main()
           lo_S_approx, solver_S_approx, preconditioner_S_approx);
 
         // Setup outer solver: Exact inverse of Schur complement
-        SolverControl            solver_control_S(11, 1.0e-10, false, false);
+        SolverControl solver_control_S(11, 1.0e-10, false, false);
         SolverCG<Vector<double>> solver_S(solver_control_S);
         const auto lo_S_inv = inverse_operator(lo_S, solver_S, lo_S_inv_approx);
 

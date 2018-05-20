@@ -79,12 +79,12 @@ namespace Step36
     output_results() const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    SparsityPattern                   sparsity_pattern;
-    SparseMatrix<double>              stiffness_matrix, mass_matrix;
-    std::vector<Vector<double>>       eigenfunctions;
+    SparsityPattern sparsity_pattern;
+    SparseMatrix<double> stiffness_matrix, mass_matrix;
+    std::vector<Vector<double>> eigenfunctions;
     std::vector<std::complex<double>> eigenvalues;
 
     ConstraintMatrix constraints;
@@ -201,7 +201,7 @@ namespace Step36
   std::pair<unsigned int, double>
   EigenvalueProblem<dim>::solve()
   {
-    SolverControl       solver_control(dof_handler.n_dofs(), 1e-10);
+    SolverControl solver_control(dof_handler.n_dofs(), 1e-10);
     SparseDirectUMFPACK inverse;
     inverse.initialize(stiffness_matrix);
     const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 2;

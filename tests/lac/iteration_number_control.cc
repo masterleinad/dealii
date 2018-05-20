@@ -38,7 +38,7 @@ check()
 
   {
     IterationNumberControl control(5);
-    SolverCG<>             solver(control);
+    SolverCG<> solver(control);
     solver.solve(A, out, in, PreconditionIdentity());
     AssertThrow(control.last_step() == 1, ExcInternalError());
   }
@@ -52,7 +52,7 @@ check()
   out = 0;
   {
     IterationNumberControl control(5);
-    SolverCG<>             solver(control);
+    SolverCG<> solver(control);
     solver.solve(A, out, in, PreconditionIdentity());
     AssertThrow(control.last_step() == 5, ExcInternalError());
   }

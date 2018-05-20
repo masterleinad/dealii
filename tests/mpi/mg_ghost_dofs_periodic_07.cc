@@ -70,8 +70,8 @@ test()
     deallog << cell->id().to_string() << " " << cell->level_subdomain_id()
             << std::endl;
 
-  FE_DGQ<dim>     fe1(1);
-  FE_Q<dim>       fe2(1);
+  FE_DGQ<dim> fe1(1);
+  FE_Q<dim> fe2(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe1);
   dof_handler.distribute_mg_dofs(fe1);
@@ -84,7 +84,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
   test<3>();

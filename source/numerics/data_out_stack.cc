@@ -79,7 +79,7 @@ template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
   const std::string& name,
-  const VectorType   vector_type)
+  const VectorType vector_type)
 {
   std::vector<std::string> names;
   names.push_back(name);
@@ -90,7 +90,7 @@ template <int dim, int spacedim, typename DoFHandlerType>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
   const std::vector<std::string>& names,
-  const VectorType                vector_type)
+  const VectorType vector_type)
 {
   // make sure this function is
   // not called after some parameter
@@ -138,7 +138,7 @@ template <typename number>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
   const Vector<number>& vec,
-  const std::string&    name)
+  const std::string& name)
 {
   const unsigned int n_components = dof_handler->get_fe(0).n_components();
 
@@ -171,7 +171,7 @@ template <int dim, int spacedim, typename DoFHandlerType>
 template <typename number>
 void
 DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
-  const Vector<number>&           vec,
+  const Vector<number>& vec,
   const std::vector<std::string>& names)
 {
   Assert(dof_handler != nullptr,
@@ -277,7 +277,7 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
   // patch, and an object that
   // extracts the data on each
   // cell to these points
-  QTrapez<1>     q_trapez;
+  QTrapez<1> q_trapez;
   QIterated<dim> patch_points(q_trapez, n_subdivisions);
 
   // create collection objects from
@@ -287,14 +287,14 @@ DataOutStack<dim, spacedim, DoFHandlerType>::build_patches(
   // dof_handler.get_fe() returns a
   // collection of which we do a
   // shallow copy instead
-  const hp::QCollection<dim>   q_collection(patch_points);
+  const hp::QCollection<dim> q_collection(patch_points);
   const hp::FECollection<dim>& fe_collection = dof_handler->get_fe_collection();
 
   hp::FEValues<dim> x_fe_patch_values(
     fe_collection, q_collection, update_values);
 
-  const unsigned int          n_q_points = patch_points.size();
-  std::vector<double>         patch_values(n_q_points);
+  const unsigned int n_q_points = patch_points.size();
+  std::vector<double> patch_values(n_q_points);
   std::vector<Vector<double>> patch_values_system(n_q_points,
                                                   Vector<double>(n_components));
 

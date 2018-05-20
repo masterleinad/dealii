@@ -238,7 +238,7 @@ public:
   add_entries(const size_type row,
               ForwardIterator begin,
               ForwardIterator end,
-              const bool      indices_are_sorted = false);
+              const bool indices_are_sorted = false);
 
   /**
    * Return number of rows of this matrix, which equals the dimension of the
@@ -426,8 +426,8 @@ public:
    * optimized diagonals, while this is not done for the off-diagonal blocks.
    */
   void
-  reinit(const BlockIndices&                           row_indices,
-         const BlockIndices&                           col_indices,
+  reinit(const BlockIndices& row_indices,
+         const BlockIndices& col_indices,
          const std::vector<std::vector<unsigned int>>& row_lengths);
 
   /**
@@ -674,7 +674,7 @@ namespace TrilinosWrappers
       const std::vector<IndexSet>& row_parallel_partitioning,
       const std::vector<IndexSet>& column_parallel_partitioning,
       const std::vector<IndexSet>& writeable_rows,
-      const MPI_Comm&              communicator = MPI_COMM_WORLD);
+      const MPI_Comm& communicator = MPI_COMM_WORLD);
 
     /**
      * Resize the matrix to a tensor product of matrices with dimensions
@@ -706,7 +706,7 @@ namespace TrilinosWrappers
      */
     void
     reinit(const std::vector<IndexSet>& parallel_partitioning,
-           const MPI_Comm&              communicator = MPI_COMM_WORLD);
+           const MPI_Comm& communicator = MPI_COMM_WORLD);
 
     /**
      * Resize the matrix to a rectangular block matrices. This method allows
@@ -716,7 +716,7 @@ namespace TrilinosWrappers
     void
     reinit(const std::vector<IndexSet>& row_parallel_partitioning,
            const std::vector<IndexSet>& column_parallel_partitioning,
-           const MPI_Comm&              communicator = MPI_COMM_WORLD);
+           const MPI_Comm& communicator = MPI_COMM_WORLD);
 
     /**
      * Resize the matrix to a rectangular block matrices that furthermore
@@ -730,7 +730,7 @@ namespace TrilinosWrappers
     reinit(const std::vector<IndexSet>& row_parallel_partitioning,
            const std::vector<IndexSet>& column_parallel_partitioning,
            const std::vector<IndexSet>& writeable_rows,
-           const MPI_Comm&              communicator = MPI_COMM_WORLD);
+           const MPI_Comm& communicator = MPI_COMM_WORLD);
 
     /**
      * Allow the use of the reinit functions of the base class as well.
@@ -803,7 +803,7 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
   const size_type row,
   ForwardIterator begin,
   ForwardIterator end,
-  const bool      indices_are_sorted)
+  const bool indices_are_sorted)
 {
   // Resize scratch arrays
   if(block_column_indices.size() < this->n_block_cols())
@@ -929,7 +929,7 @@ BlockSparsityPatternBase<SparsityPatternType>::n_block_rows() const
 }
 
 inline BlockDynamicSparsityPattern::size_type
-BlockDynamicSparsityPattern::column_number(const size_type    row,
+BlockDynamicSparsityPattern::column_number(const size_type row,
                                            const unsigned int index) const
 {
   // .first= ith block, .second = jth row in that block

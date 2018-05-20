@@ -23,9 +23,9 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim>
 AutoDerivativeFunction<dim>::AutoDerivativeFunction(
-  const double       hh,
+  const double hh,
   const unsigned int n_components,
-  const double       initial_time)
+  const double initial_time)
   : Function<dim>(n_components, initial_time), h(1), ht(dim), formula(Euler)
 {
   set_h(hh);
@@ -64,7 +64,7 @@ AutoDerivativeFunction<dim>::set_h(const double hh)
 
 template <int dim>
 Tensor<1, dim>
-AutoDerivativeFunction<dim>::gradient(const Point<dim>&  p,
+AutoDerivativeFunction<dim>::gradient(const Point<dim>& p,
                                       const unsigned int comp) const
 {
   Tensor<1, dim> grad;
@@ -116,7 +116,7 @@ AutoDerivativeFunction<dim>::gradient(const Point<dim>&  p,
 template <int dim>
 void
 AutoDerivativeFunction<dim>::vector_gradient(
-  const Point<dim>&            p,
+  const Point<dim>& p,
   std::vector<Tensor<1, dim>>& gradients) const
 {
   Assert(gradients.size() == this->n_components,
@@ -126,9 +126,9 @@ AutoDerivativeFunction<dim>::vector_gradient(
     {
       case UpwindEuler:
         {
-          Point<dim>     q1;
+          Point<dim> q1;
           Vector<double> v(this->n_components), v1(this->n_components);
-          const double   h_inv = 1. / h;
+          const double h_inv = 1. / h;
           for(unsigned int i = 0; i < dim; ++i)
             {
               q1 = p - ht[i];
@@ -143,9 +143,9 @@ AutoDerivativeFunction<dim>::vector_gradient(
 
       case Euler:
         {
-          Point<dim>     q1, q2;
+          Point<dim> q1, q2;
           Vector<double> v1(this->n_components), v2(this->n_components);
-          const double   h_inv_2 = 1. / (2 * h);
+          const double h_inv_2 = 1. / (2 * h);
           for(unsigned int i = 0; i < dim; ++i)
             {
               q1 = p + ht[i];
@@ -161,7 +161,7 @@ AutoDerivativeFunction<dim>::vector_gradient(
 
       case FourthOrder:
         {
-          Point<dim>     q1, q2, q3, q4;
+          Point<dim> q1, q2, q3, q4;
           Vector<double> v1(this->n_components), v2(this->n_components),
             v3(this->n_components), v4(this->n_components);
           const double h_inv_12 = 1. / (12 * h);
@@ -193,8 +193,8 @@ template <int dim>
 void
 AutoDerivativeFunction<dim>::gradient_list(
   const std::vector<Point<dim>>& points,
-  std::vector<Tensor<1, dim>>&   gradients,
-  const unsigned int             comp) const
+  std::vector<Tensor<1, dim>>& gradients,
+  const unsigned int comp) const
 {
   Assert(gradients.size() == points.size(),
          ExcDimensionMismatch(gradients.size(), points.size()));
@@ -254,7 +254,7 @@ AutoDerivativeFunction<dim>::gradient_list(
 template <int dim>
 void
 AutoDerivativeFunction<dim>::vector_gradient_list(
-  const std::vector<Point<dim>>&            points,
+  const std::vector<Point<dim>>& points,
   std::vector<std::vector<Tensor<1, dim>>>& gradients) const
 {
   Assert(gradients.size() == points.size(),

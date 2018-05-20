@@ -122,7 +122,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   // output to check if all is good:
   counter++;
   std::vector<Vector<double>> shape_functions;
-  std::vector<std::string>    names;
+  std::vector<std::string> names;
   for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;
@@ -181,7 +181,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   hp::FEFaceValues<dim> fe_face_values_hp(
     fe_collection, q_face_collection, update_values | update_quadrature_points);
 
-  std::vector<unsigned int>   local_face_dof_indices;
+  std::vector<unsigned int> local_face_dof_indices;
   std::vector<Vector<double>> values;
   for(typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active();

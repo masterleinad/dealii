@@ -119,7 +119,7 @@ public:
    */
   template <typename number2>
   double
-  least_squares(BlockVector<number2>&       dst,
+  least_squares(BlockVector<number2>& dst,
                 const BlockVector<number2>& src) const;
 
   /**
@@ -175,7 +175,7 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
 
   for(size_type j = 0; j < n; ++j)
     {
-      number2   sigma = 0;
+      number2 sigma = 0;
       size_type i;
       // sigma = ||v||^2
       for(i = j; i < m; ++i)
@@ -223,7 +223,7 @@ Householder<number>::Householder(const FullMatrix<number2>& M)
 template <typename number>
 template <typename number2>
 double
-Householder<number>::least_squares(Vector<number2>&       dst,
+Householder<number>::least_squares(Vector<number2>& dst,
                                    const Vector<number2>& src) const
 {
   Assert(!storage.empty(), typename FullMatrix<number2>::ExcEmptyMatrix());
@@ -232,7 +232,7 @@ Householder<number>::least_squares(Vector<number2>&       dst,
 
   const size_type m = storage.m(), n = storage.n();
 
-  GrowingVectorMemory<Vector<number2>>            mem;
+  GrowingVectorMemory<Vector<number2>> mem;
   typename VectorMemory<Vector<number2>>::Pointer aux(mem);
   aux->reinit(src, true);
   *aux = src;
@@ -266,7 +266,7 @@ Householder<number>::least_squares(Vector<number2>&       dst,
 template <typename number>
 template <typename number2>
 double
-Householder<number>::least_squares(BlockVector<number2>&       dst,
+Householder<number>::least_squares(BlockVector<number2>& dst,
                                    const BlockVector<number2>& src) const
 {
   Assert(!storage.empty(), typename FullMatrix<number2>::ExcEmptyMatrix());
@@ -275,7 +275,7 @@ Householder<number>::least_squares(BlockVector<number2>&       dst,
 
   const size_type m = storage.m(), n = storage.n();
 
-  GrowingVectorMemory<BlockVector<number2>>            mem;
+  GrowingVectorMemory<BlockVector<number2>> mem;
   typename VectorMemory<BlockVector<number2>>::Pointer aux(mem);
   aux->reinit(src, true);
   *aux = src;

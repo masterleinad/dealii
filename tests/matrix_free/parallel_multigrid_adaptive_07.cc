@@ -64,7 +64,7 @@ class BlockLaplace : public Subscriptor
 {
 public:
   typedef typename BlockVectorType::value_type value_type;
-  typedef typename BlockVectorType::size_type  size_type;
+  typedef typename BlockVectorType::size_type size_type;
 
   BlockLaplace() : Subscriptor()
   {}
@@ -79,7 +79,7 @@ public:
   void
   initialize(std::shared_ptr<const MatrixFree<dim, value_type>> data,
              const std::vector<MGConstrainedDoFs>& mg_constrained_dofs,
-             const unsigned int                    level)
+             const unsigned int level)
   {
     laplace1.initialize(
       data, mg_constrained_dofs[0], level, std::vector<unsigned int>(1, 0));
@@ -130,9 +130,9 @@ public:
   }
 
   void
-  precondition_Jacobi(BlockVectorType&       dst,
+  precondition_Jacobi(BlockVectorType& dst,
                       const BlockVectorType& src,
-                      const value_type       omega) const
+                      const value_type omega) const
   {
     laplace1.precondition_Jacobi(dst.block(0), src.block(0), omega);
     laplace2.precondition_Jacobi(dst.block(1), src.block(1), omega);
@@ -182,8 +182,8 @@ public:
   }
 
   virtual void
-  operator()(const unsigned int                                     level,
-             LinearAlgebra::distributed::BlockVector<Number>&       dst,
+  operator()(const unsigned int level,
+             LinearAlgebra::distributed::BlockVector<Number>& dst,
              const LinearAlgebra::distributed::BlockVector<Number>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
@@ -224,12 +224,12 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
     DoFTools::extract_locally_relevant_dofs(*dof[i], locally_relevant_dofs[i]);
 
   // Dirichlet BC
-  ZeroFunction<dim>               zero_function;
+  ZeroFunction<dim> zero_function;
   typename FunctionMap<dim>::type dirichlet_boundary;
   dirichlet_boundary[0] = &zero_function;
 
   // fine-level constraints
-  std::vector<ConstraintMatrix>        constraints(dof.size());
+  std::vector<ConstraintMatrix> constraints(dof.size());
   std::vector<const ConstraintMatrix*> constraints_ptrs(dof.size());
   for(unsigned int i = 0; i < dof.size(); ++i)
     {
@@ -240,7 +240,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
       constraints[i].close();
       constraints_ptrs[i] = &constraints[i];
     }
-  QGauss<1>     quad(n_q_points_1d);
+  QGauss<1> quad(n_q_points_1d);
   constexpr int max_degree = std_cxx14::max(fe_degree_1, fe_degree_2);
   MappingQ<dim> mapping(max_degree);
 
@@ -306,7 +306,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
                        LinearAlgebra::distributed::BlockVector<number>>
     LevelMatrixType;
 
-  MGLevelObject<LevelMatrixType>         mg_matrices;
+  MGLevelObject<LevelMatrixType> mg_matrices;
   MGLevelObject<MatrixFree<dim, number>> mg_level_data;
   mg_matrices.resize(0, dof[0]->get_triangulation().n_global_levels() - 1);
   mg_level_data.resize(0, dof[0]->get_triangulation().n_global_levels() - 1);
@@ -320,7 +320,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
       mg_additional_data.tasks_block_size = 3;
       mg_additional_data.level_mg_handler = level;
 
-      std::vector<ConstraintMatrix>        level_constraints(dof.size());
+      std::vector<ConstraintMatrix> level_constraints(dof.size());
       std::vector<const ConstraintMatrix*> level_constraints_ptrs(dof.size());
       for(unsigned int i = 0; i < dof.size(); ++i)
         {
@@ -407,8 +407,8 @@ test()
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(6 - dim);
-  constexpr int      max_degree = std_cxx14::max(fe_degree_1, fe_degree_2);
-  const unsigned int n_runs     = max_degree == 1 ? 6 - dim : 5 - dim;
+  constexpr int max_degree  = std_cxx14::max(fe_degree_1, fe_degree_2);
+  const unsigned int n_runs = max_degree == 1 ? 6 - dim : 5 - dim;
   for(unsigned int i = 0; i < n_runs; ++i)
     {
       for(typename Triangulation<dim>::active_cell_iterator cell
@@ -421,12 +421,12 @@ test()
                 || (dim == 2 && cell->center().norm() > 1.2))))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
-      FE_Q<dim>       fe_1(fe_degree_1);
+      FE_Q<dim> fe_1(fe_degree_1);
       DoFHandler<dim> dof_1(tria);
       dof_1.distribute_dofs(fe_1);
       dof_1.distribute_mg_dofs();
 
-      FE_Q<dim>       fe_2(fe_degree_2);
+      FE_Q<dim> fe_2(fe_degree_2);
       DoFHandler<dim> dof_2(tria);
       dof_2.distribute_dofs(fe_2);
       dof_2.distribute_mg_dofs();

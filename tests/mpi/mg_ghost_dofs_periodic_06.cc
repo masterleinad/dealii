@@ -84,7 +84,7 @@ test()
     {
       std::ofstream grid_output(
         ("out" + Utilities::to_string(myid) + ".svg").c_str());
-      GridOut           grid_out;
+      GridOut grid_out;
       GridOutFlags::Svg flags;
       flags.label_level_subdomain_id = true;
       flags.coloring                 = GridOutFlags::Svg::level_subdomain_id;
@@ -99,7 +99,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
 

@@ -56,11 +56,11 @@ main()
   deallog << std::fixed;
 
   Triangulation<2> triangulation;
-  FE_Q<2>          fe(2);
-  DoFHandler<2>    dof_handler(triangulation);
-  Vector<double>   phi_solution;
-  Vector<float>    gradient_phi;
-  float            gradient_phi_min, gradient_phi_max;
+  FE_Q<2> fe(2);
+  DoFHandler<2> dof_handler(triangulation);
+  Vector<double> phi_solution;
+  Vector<float> gradient_phi;
+  float gradient_phi_min, gradient_phi_max;
 
   GridGenerator::hyper_cube(triangulation, 0, 1);
   triangulation.refine_global(5);

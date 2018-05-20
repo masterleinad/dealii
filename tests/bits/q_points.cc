@@ -32,7 +32,7 @@
 
 void create_two_cubes(Triangulation<3>& coarse_grid)
 {
-  const Point<3>        points[6] = {Point<3>(0, 0, 0),
+  const Point<3> points[6] = {Point<3>(0, 0, 0),
                               Point<3>(1, 0, 0),
                               Point<3>(1, 1, 0),
                               Point<3>(0, 1, 0),
@@ -67,8 +67,8 @@ void create_two_cubes(Triangulation<3>& coarse_grid)
 
 void check(Triangulation<3>& tria)
 {
-  QGauss<2>       quadrature(3);
-  FE_Q<3>         fe(1);
+  QGauss<2> quadrature(3);
+  FE_Q<3> fe(1);
   FEFaceValues<3> fe_face_values1(
     fe, quadrature, update_quadrature_points | update_JxW_values);
   FEFaceValues<3> fe_face_values2(

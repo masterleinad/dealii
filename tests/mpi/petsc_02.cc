@@ -39,7 +39,7 @@ test()
   csp.add(0, 0);
   csp.add(1, 1);
 
-  PETScWrappers::MPI::SparseMatrix     mat;
+  PETScWrappers::MPI::SparseMatrix mat;
   std::vector<types::global_dof_index> local_rows(numprocs, 0);
   local_rows[0] = 2;
 

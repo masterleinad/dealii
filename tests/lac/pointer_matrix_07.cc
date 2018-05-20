@@ -23,8 +23,8 @@
 template <typename number>
 void
 checkTvmult_add(FullMatrix<number>& A,
-                Vector<number>&     V,
-                char*               name = "Test Matrix")
+                Vector<number>& V,
+                char* name = "Test Matrix")
 {
   deallog << "Tvmult_add" << std::endl;
 

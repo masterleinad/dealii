@@ -42,7 +42,7 @@ test()
 {
   deallog << "dim: " << dim << ", spacedim: " << spacedim << std::endl;
 
-  Triangulation<dim, spacedim>      tria;
+  Triangulation<dim, spacedim> tria;
   Triangulation<spacedim, spacedim> space_tria;
 
   GridGenerator::hyper_cube(tria, -.4, .3);
@@ -53,13 +53,13 @@ test()
   space_tria.begin_active()->set_refine_flag();
   space_tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim, spacedim>      fe(1);
+  FE_Q<dim, spacedim> fe(1);
   FE_Q<spacedim, spacedim> space_fe(1);
 
   deallog << "FE      : " << fe.get_name() << std::endl
           << "Space FE: " << space_fe.get_name() << std::endl;
 
-  DoFHandler<dim, spacedim>      dh(tria);
+  DoFHandler<dim, spacedim> dh(tria);
   DoFHandler<spacedim, spacedim> space_dh(space_tria);
 
   dh.distribute_dofs(fe);

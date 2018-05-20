@@ -337,7 +337,7 @@ public:
    * responsibility to guarantee that the lifetime of the two arguments is at
    * least as long as that of the solver object.
    */
-  Solver(SolverControl&            solver_control,
+  Solver(SolverControl& solver_control,
          VectorMemory<VectorType>& vector_memory);
 
   /**
@@ -383,8 +383,8 @@ public:
   boost::signals2::connection
   connect(const std::function<
           SolverControl::State(const unsigned int iteration,
-                               const double       check_value,
-                               const VectorType&  current_iterate)>& slot);
+                               const double check_value,
+                               const VectorType& current_iterate)>& slot);
 
 protected:
   /**
@@ -444,8 +444,8 @@ protected:
    */
   boost::signals2::signal<SolverControl::State(
                             const unsigned int iteration,
-                            const double       check_value,
-                            const VectorType&  current_iterate),
+                            const double check_value,
+                            const VectorType& current_iterate),
                           StateCombiner>
     iteration_status;
 };
@@ -478,7 +478,7 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
 
   // combine the first with all of the following states
   SolverControl::State state = *begin;
-  Iterator             p     = begin;
+  Iterator p                 = begin;
   ++p;
   for(; p != end; ++p)
     state = this->operator()(state, *p);
@@ -487,7 +487,7 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
 }
 
 template <class VectorType>
-inline Solver<VectorType>::Solver(SolverControl&            solver_control,
+inline Solver<VectorType>::Solver(SolverControl& solver_control,
                                   VectorMemory<VectorType>& vector_memory)
   : memory(vector_memory)
 {
@@ -520,8 +520,8 @@ template <class VectorType>
 inline boost::signals2::connection
 Solver<VectorType>::connect(
   const std::function<SolverControl::State(const unsigned int iteration,
-                                           const double       check_value,
-                                           const VectorType&  current_iterate)>&
+                                           const double check_value,
+                                           const VectorType& current_iterate)>&
     slot)
 {
   return iteration_status.connect(slot);

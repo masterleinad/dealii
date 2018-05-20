@@ -70,8 +70,8 @@ void
 test()
 {
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe(FE_DGQ<dim>(0), 2);
-  DoFHandler<dim>    dof_handler(triangulation);
+  FESystem<dim> fe(FE_DGQ<dim>(0), 2);
+  DoFHandler<dim> dof_handler(triangulation);
 
   GridGenerator::hyper_cube(triangulation, 0, 1);
   triangulation.refine_global(1);
@@ -97,7 +97,7 @@ test()
     }
 
   MyPostprocessor<dim> p;
-  DataOutFaces<dim>    data_out;
+  DataOutFaces<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
   data_out.add_data_vector(solution, p);
   data_out.build_patches();

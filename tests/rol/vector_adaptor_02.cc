@@ -61,7 +61,7 @@ public:
   gradient(ROL::Vector<Real>& g, const ROL::Vector<Real>& x, Real& tol)
   {
     Teuchos::RCP<const VectorType> xp = this->get_rcp_to_VectorType(x);
-    Teuchos::RCP<VectorType>       gp = this->get_rcp_to_VectorType(g);
+    Teuchos::RCP<VectorType> gp       = this->get_rcp_to_VectorType(g);
 
     (*gp)[0] = 2. * (*xp)[0];
     (*gp)[1] = 2. * (*xp)[1];
@@ -76,7 +76,7 @@ test(const double x, const double y)
   QuadraticObjective<RealT> quad_objective;
 
   Teuchos::RCP<std::ostream> outStream = Teuchos::rcp(&std::cout, false);
-  Teuchos::RCP<VectorType>   x_rcp     = Teuchos::rcp(new VectorType);
+  Teuchos::RCP<VectorType> x_rcp       = Teuchos::rcp(new VectorType);
 
   x_rcp->reinit(2);
 

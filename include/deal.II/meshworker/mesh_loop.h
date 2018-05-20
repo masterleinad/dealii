@@ -114,16 +114,16 @@ namespace MeshWorker
   template <class CellIteratorType, class ScratchData, class CopyData>
   void
   mesh_loop(
-    const CellIteratorType&                          begin,
+    const CellIteratorType& begin,
     const typename identity<CellIteratorType>::type& end,
 
     const typename identity<std::function<
       void(const CellIteratorType&, ScratchData&, CopyData&)>>::type&
-                                                                         cell_worker,
+      cell_worker,
     const typename identity<std::function<void(const CopyData&)>>::type& copier,
 
     const ScratchData& sample_scratch_data,
-    const CopyData&    sample_copy_data,
+    const CopyData& sample_copy_data,
 
     const AssembleFlags flags = assemble_own_cells,
 
@@ -192,8 +192,8 @@ namespace MeshWorker
         "If you specify a boundary_worker, assemble_boundary_faces needs to be set."));
 
     auto cell_action = [&](const CellIteratorType& cell,
-                           ScratchData&            scratch,
-                           CopyData&               copy) {
+                           ScratchData& scratch,
+                           CopyData& copy) {
       // First reset the CopyData class to the empty copy_data given by the user.
       copy = sample_copy_data;
 

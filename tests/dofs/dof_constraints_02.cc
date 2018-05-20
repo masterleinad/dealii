@@ -54,7 +54,7 @@ test()
 
   // set up a DoFHandler and compute hanging
   // node constraints
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   deallog << "Number of dofs: " << dof_handler.n_dofs() << std::endl;
@@ -74,7 +74,7 @@ test()
   // hanging node constraints later on, or
   // (2) distributing them right away
   std::vector<types::global_dof_index> local_dofs(fe.dofs_per_cell);
-  Vector<double>                       local_vector(fe.dofs_per_cell);
+  Vector<double> local_vector(fe.dofs_per_cell);
   for(typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active();
       cell != dof_handler.end();

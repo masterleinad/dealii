@@ -46,7 +46,7 @@ test()
   std::map<unsigned int, types::global_vertex_index> local_to_global_id
     = GridTools::compute_local_to_global_vertex_index_map(tria);
 
-  std::vector<types::global_vertex_index>         vertex_global_index;
+  std::vector<types::global_vertex_index> vertex_global_index;
   typename Triangulation<2>::active_cell_iterator cell = tria.begin_active(),
                                                   endc = tria.end();
   for(; cell != endc; ++cell)
@@ -101,7 +101,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test();
 

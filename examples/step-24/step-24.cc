@@ -84,12 +84,12 @@ namespace Step24
     output_results() const;
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     ConstraintMatrix constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
     SparseMatrix<double> mass_matrix;
     SparseMatrix<double> laplace_matrix;
@@ -98,7 +98,7 @@ namespace Step24
     Vector<double> old_solution_p, old_solution_v;
     Vector<double> system_rhs_p, system_rhs_v;
 
-    double       time_step, time;
+    double time_step, time;
     unsigned int timestep_number;
     const double theta;
 
@@ -108,7 +108,7 @@ namespace Step24
     //  wave speed $c_0$ that will enter all the formulas with the Laplace
     //  matrix (which we still define as $(\nabla \phi_i,\nabla \phi_j)$):
     SparseMatrix<double> boundary_matrix;
-    const double         wave_speed;
+    const double wave_speed;
 
     // The last thing we have to take care of is that we wanted to evaluate
     // the solution at a certain number of detector locations. We need an
@@ -155,7 +155,7 @@ namespace Step24
       {}
 
       const Point<dim> location;
-      const double     radius;
+      const double radius;
     };
   };
 
@@ -164,7 +164,7 @@ namespace Step24
   InitialValuesP<dim>::value(const Point<dim>& p,
                              const unsigned int /*component*/) const
   {
-    static const Source       sources[] = {Source(Point<dim>(0, 0), 0.025),
+    static const Source sources[]       = {Source(Point<dim>(0, 0), 0.025),
                                      Source(Point<dim>(-0.135, 0), 0.05),
                                      Source(Point<dim>(0.17, 0), 0.03),
                                      Source(Point<dim>(-0.25, 0), 0.02),
@@ -334,7 +334,7 @@ namespace Step24
     // domain. Like this:
     {
       const QGauss<dim - 1> quadrature_formula(3);
-      FEFaceValues<dim>     fe_values(
+      FEFaceValues<dim> fe_values(
         fe, quadrature_formula, update_values | update_JxW_values);
 
       const unsigned int dofs_per_cell = fe.dofs_per_cell;
@@ -399,7 +399,7 @@ namespace Step24
   TATForwardProblem<dim>::solve_p()
   {
     SolverControl solver_control(1000, 1e-8 * system_rhs_p.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     cg.solve(system_matrix, solution_p, system_rhs_p, PreconditionIdentity());
 
@@ -412,7 +412,7 @@ namespace Step24
   TATForwardProblem<dim>::solve_v()
   {
     SolverControl solver_control(1000, 1e-8 * system_rhs_v.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     cg.solve(mass_matrix, solution_v, system_rhs_v, PreconditionIdentity());
 

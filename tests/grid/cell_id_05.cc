@@ -42,8 +42,8 @@ test(const unsigned int& ref)
 
   auto unpacked = Utilities::unpack<std::vector<CellId>>(buffer);
 
-  unsigned int i  = 0;
-  bool         ok = true;
+  unsigned int i = 0;
+  bool ok        = true;
   for(auto cell : tria.active_cell_iterators())
     {
       if(cell->id() != unpacked[i++])

@@ -38,7 +38,7 @@ test(std::ostream& out)
   if(dim > 1)
     p3[1] = 1.;
 
-  GridOut               go;
+  GridOut go;
   GridOut::OutputFormat format = GridOut::msh;
 
   if(true)
@@ -69,7 +69,7 @@ test(std::ostream& out)
     {
       deallog << "subdivided_hyper_rectangle" << std::endl;
       Triangulation<dim, spacedim> tr;
-      std::vector<unsigned int>    sub(dim);
+      std::vector<unsigned int> sub(dim);
       sub[0] = 2;
       if(dim > 1)
         sub[1] = 3;

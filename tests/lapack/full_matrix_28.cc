@@ -57,7 +57,7 @@ template <typename NumberType>
 void
 test()
 {
-  const unsigned int           size = 4;
+  const unsigned int size = 4;
   LAPACKFullMatrix<NumberType> A(size);
   A.set_property(LAPACKSupport::symmetric);
   Vector<NumberType> v(size);
@@ -100,7 +100,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(5);
   deallog.attach(logfile);
 

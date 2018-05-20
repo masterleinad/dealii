@@ -40,8 +40,8 @@ public:
   void
   face(MeshWorker::DoFInfo<dim>& dinfo1,
        MeshWorker::DoFInfo<dim>& dinfo2,
-       CellInfo&                 info1,
-       CellInfo&                 info2) const;
+       CellInfo& info1,
+       CellInfo& info2) const;
 };
 
 template <int dim>
@@ -91,8 +91,8 @@ template <int dim>
 void
 test_simple(DoFHandler<dim>& dofs, MeshWorker::LoopControl& lctrl)
 {
-  myIntegrator<dim>                   local;
-  DoNothingAssembler                  assembler;
+  myIntegrator<dim> local;
+  DoNothingAssembler assembler;
   MeshWorker::IntegrationInfoBox<dim> info_box;
 
   MeshWorker::DoFInfo<dim> dof_info(dofs.block_info());
@@ -218,7 +218,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
 }

@@ -68,7 +68,7 @@ GrowingVectorMemory<VectorType>::Pool::initialize(const size_type size)
 template <typename VectorType>
 inline GrowingVectorMemory<VectorType>::GrowingVectorMemory(
   const size_type initial_size,
-  const bool      log_statistics)
+  const bool log_statistics)
 
   : total_alloc(0), current_alloc(0), log_statistics(log_statistics)
 {
@@ -154,7 +154,7 @@ GrowingVectorMemory<VectorType>::memory_consumption() const
 {
   Threads::Mutex::ScopedLock lock(mutex);
 
-  std::size_t                                            result = sizeof(*this);
+  std::size_t result                                         = sizeof(*this);
   const typename std::vector<entry_type>::const_iterator end = pool.data->end();
   for(typename std::vector<entry_type>::const_iterator i = pool.data->begin();
       i != end;

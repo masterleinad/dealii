@@ -70,7 +70,7 @@ public:
   value(const Point<dim, VectorizedArray<double>>& p_vec) const
   {
     VectorizedArray<double> res = make_vectorized_array(0.);
-    Point<dim>              p;
+    Point<dim> p;
     for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
       {
         for(unsigned int d = 0; d < dim; d++)
@@ -91,9 +91,9 @@ private:
 template <int fe_degree, int n_q_points_1d, int dim>
 void
 do_project(const parallel::distributed::Triangulation<dim>& triangulation,
-           const std::vector<const FiniteElement<dim>*>&    fes,
-           const unsigned int                               p,
-           const unsigned int                               fe_index = 0)
+           const std::vector<const FiniteElement<dim>*>& fes,
+           const unsigned int p,
+           const unsigned int fe_index = 0)
 {
   // we only project scalar value function
   AssertThrow(fes[fe_index]->n_components() == 1, ExcNotImplemented());
@@ -101,10 +101,10 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
   deallog << "n_cells=" << triangulation.n_global_active_cells() << std::endl;
 
   std::vector<std::shared_ptr<DoFHandler<dim>>> dof_handlers(fes.size());
-  std::vector<IndexSet>         locally_relevant_dofs(fes.size());
+  std::vector<IndexSet> locally_relevant_dofs(fes.size());
   std::vector<ConstraintMatrix> constraints(fes.size());
 
-  std::vector<const DoFHandler<dim>*>  dof_handlers_mf(fes.size());
+  std::vector<const DoFHandler<dim>*> dof_handlers_mf(fes.size());
   std::vector<const ConstraintMatrix*> constraints_mf(fes.size());
   for(unsigned int i = 0; i < fes.size(); ++i)
     {
@@ -175,14 +175,14 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
       // L2 norm of the difference between FE field and the function
       double L2_norm = 0.;
       {
-        QGauss<dim>   quadrature_formula_error(std::max(p, q) + 1);
+        QGauss<dim> quadrature_formula_error(std::max(p, q) + 1);
         FEValues<dim> fe_values(*fes[fe_index],
                                 quadrature_formula_error,
                                 update_values | update_quadrature_points
                                   | update_JxW_values);
 
-        const unsigned int  dofs_per_cell = fes[fe_index]->dofs_per_cell;
-        const unsigned int  n_q_points    = quadrature_formula_error.size();
+        const unsigned int dofs_per_cell = fes[fe_index]->dofs_per_cell;
+        const unsigned int n_q_points    = quadrature_formula_error.size();
         std::vector<double> values(n_q_points);
 
         typename DoFHandler<dim>::active_cell_iterator cell
@@ -251,8 +251,8 @@ test_with_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
 template <int fe_degree, int n_q_points_1d, int dim>
 void
 test_with_hanging_nodes(const std::vector<const FiniteElement<dim>*>& fes,
-                        const unsigned int                            p,
-                        const unsigned int                            fe_index)
+                        const unsigned int p,
+                        const unsigned int fe_index)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);

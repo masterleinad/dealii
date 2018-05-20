@@ -27,91 +27,91 @@
 DEAL_II_NAMESPACE_OPEN
 
 extern "C" void
-dnaupd_(int*          ido,
-        char*         bmat,
+dnaupd_(int* ido,
+        char* bmat,
         unsigned int* n,
-        char*         which,
+        char* which,
         unsigned int* nev,
         const double* tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+        double* resid,
+        int* ncv,
+        double* v,
+        int* ldv,
+        int* iparam,
+        int* ipntr,
+        double* workd,
+        double* workl,
+        int* lworkl,
+        int* info);
 
 extern "C" void
-dsaupd_(int*          ido,
-        char*         bmat,
+dsaupd_(int* ido,
+        char* bmat,
         unsigned int* n,
-        char*         which,
+        char* which,
         unsigned int* nev,
-        double*       tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+        double* tol,
+        double* resid,
+        int* ncv,
+        double* v,
+        int* ldv,
+        int* iparam,
+        int* ipntr,
+        double* workd,
+        double* workl,
+        int* lworkl,
+        int* info);
 
 extern "C" void
-dneupd_(int*          rvec,
-        char*         howmany,
-        int*          select,
-        double*       d,
-        double*       di,
-        double*       z,
-        int*          ldz,
-        double*       sigmar,
-        double*       sigmai,
-        double*       workev,
-        char*         bmat,
+dneupd_(int* rvec,
+        char* howmany,
+        int* select,
+        double* d,
+        double* di,
+        double* z,
+        int* ldz,
+        double* sigmar,
+        double* sigmai,
+        double* workev,
+        char* bmat,
         unsigned int* n,
-        char*         which,
+        char* which,
         unsigned int* nev,
-        double*       tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+        double* tol,
+        double* resid,
+        int* ncv,
+        double* v,
+        int* ldv,
+        int* iparam,
+        int* ipntr,
+        double* workd,
+        double* workl,
+        int* lworkl,
+        int* info);
 
 extern "C" void
-dseupd_(int*          rvec,
-        char*         howmany,
-        int*          select,
-        double*       d,
-        double*       z,
-        int*          ldz,
-        double*       sigmar,
-        char*         bmat,
+dseupd_(int* rvec,
+        char* howmany,
+        int* select,
+        double* d,
+        double* z,
+        int* ldz,
+        double* sigmar,
+        char* bmat,
         unsigned int* n,
-        char*         which,
+        char* which,
         unsigned int* nev,
-        double*       tol,
-        double*       resid,
-        int*          ncv,
-        double*       v,
-        int*          ldv,
-        int*          iparam,
-        int*          ipntr,
-        double*       workd,
-        double*       workl,
-        int*          lworkl,
-        int*          info);
+        double* tol,
+        double* resid,
+        int* ncv,
+        double* v,
+        int* ldv,
+        int* iparam,
+        int* ipntr,
+        double* workd,
+        double* workl,
+        int* lworkl,
+        int* info);
 
 /**
  * Interface for using ARPACK. ARPACK is a collection of Fortran77 subroutines
@@ -259,7 +259,7 @@ public:
   /**
    * Constructor.
    */
-  ArpackSolver(SolverControl&        control,
+  ArpackSolver(SolverControl& control,
                const AdditionalData& data = AdditionalData());
 
   /**
@@ -331,12 +331,12 @@ public:
             typename MatrixType2,
             typename INVERSE>
   void
-  solve(const MatrixType1&                 A,
-        const MatrixType2&                 B,
-        const INVERSE&                     inverse,
+  solve(const MatrixType1& A,
+        const MatrixType2& B,
+        const INVERSE& inverse,
         std::vector<std::complex<double>>& eigenvalues,
-        std::vector<VectorType>&           eigenvectors,
-        const unsigned int                 n_eigenvalues = 0);
+        std::vector<VectorType>& eigenvectors,
+        const unsigned int n_eigenvalues = 0);
 
 protected:
   /**
@@ -353,7 +353,7 @@ protected:
   /**
    * Store an initial vector
    */
-  bool                initial_vector_provided;
+  bool initial_vector_provided;
   std::vector<double> resid;
 
   /**
@@ -449,9 +449,9 @@ private:
 };
 
 inline ArpackSolver::AdditionalData::AdditionalData(
-  const unsigned int     number_of_arnoldi_vectors,
+  const unsigned int number_of_arnoldi_vectors,
   const WhichEigenvalues eigenvalue_of_interest,
-  const bool             symmetric)
+  const bool symmetric)
   : number_of_arnoldi_vectors(number_of_arnoldi_vectors),
     eigenvalue_of_interest(eigenvalue_of_interest),
     symmetric(symmetric)
@@ -478,7 +478,7 @@ inline ArpackSolver::AdditionalData::AdditionalData(
     }
 }
 
-inline ArpackSolver::ArpackSolver(SolverControl&        control,
+inline ArpackSolver::ArpackSolver(SolverControl& control,
                                   const AdditionalData& data)
   : solver_control(control),
     additional_data(data),
@@ -510,11 +510,11 @@ template <typename VectorType,
           typename INVERSE>
 inline void
 ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
-                    const MatrixType2&                 mass_matrix,
-                    const INVERSE&                     inverse,
+                    const MatrixType2& mass_matrix,
+                    const INVERSE& inverse,
                     std::vector<std::complex<double>>& eigenvalues,
-                    std::vector<VectorType>&           eigenvectors,
-                    const unsigned int                 n_eigenvalues)
+                    std::vector<VectorType>& eigenvectors,
+                    const unsigned int n_eigenvalues)
 {
   // Problem size
   unsigned int n = eigenvectors[0].size();
@@ -608,7 +608,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   // in additional_data
   int ncv = additional_data.number_of_arnoldi_vectors;
 
-  int                 ldv = n;
+  int ldv = n;
   std::vector<double> v(ldv * ncv, 0.0);
 
   //information to the routines
@@ -627,7 +627,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
 
   // work arrays for ARPACK
   std::vector<double> workd(3 * n, 0.);
-  int                 lworkl
+  int lworkl
     = additional_data.symmetric ? ncv * ncv + 8 * ncv : 3 * ncv * ncv + 6 * ncv;
   std::vector<double> workl(lworkl, 0.);
 

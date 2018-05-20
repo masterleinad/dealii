@@ -39,7 +39,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   Functions::ConstantFunction<dim> constant_function(1., dim);
-  typename FunctionMap<dim>::type  function_map;
+  typename FunctionMap<dim>::type function_map;
   for(unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
     function_map[j] = &constant_function;
 
@@ -59,9 +59,9 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     }
   //Get the location of all boundary dofs
   std::vector<types::global_dof_index> face_dofs;
-  const std::vector<Point<dim - 1>>&   unit_support_points
+  const std::vector<Point<dim - 1>>& unit_support_points
     = fe.get_unit_face_support_points();
-  Quadrature<dim - 1>    quadrature(unit_support_points);
+  Quadrature<dim - 1> quadrature(unit_support_points);
   FEFaceValues<dim, dim> fe_face_values(
     fe, quadrature, update_quadrature_points);
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),

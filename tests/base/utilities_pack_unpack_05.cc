@@ -62,15 +62,15 @@ void
 test()
 {
   // try small arrays that are packed by just using memcpy
-  Point<3> p1    = random_point<3>();
-  double   x1[3] = {1, 2, 3};
+  Point<3> p1  = random_point<3>();
+  double x1[3] = {1, 2, 3};
   check(x1, p1);
 
   // now try much larger arrays that will actually be serialized
   // using BOOST
-  const unsigned int N  = 10000;
-  Point<N>           p2 = random_point<N>();
-  double             x2[N];
+  const unsigned int N = 10000;
+  Point<N> p2          = random_point<N>();
+  double x2[N];
   for(unsigned int i = 0; i < N; ++i)
     x2[i] = i;
   check(x2, p2);

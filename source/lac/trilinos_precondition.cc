@@ -89,14 +89,14 @@ namespace TrilinosWrappers
   /* -------------------------- PreconditionJacobi -------------------------- */
 
   PreconditionJacobi::AdditionalData::AdditionalData(
-    const double       omega,
-    const double       min_diagonal,
+    const double omega,
+    const double min_diagonal,
     const unsigned int n_sweeps)
     : omega(omega), min_diagonal(min_diagonal), n_sweeps(n_sweeps)
   {}
 
   void
-  PreconditionJacobi::initialize(const SparseMatrix&   matrix,
+  PreconditionJacobi::initialize(const SparseMatrix& matrix,
                                  const AdditionalData& additional_data)
   {
     // release memory before reallocation
@@ -145,7 +145,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionSSOR::initialize(const SparseMatrix&   matrix,
+  PreconditionSSOR::initialize(const SparseMatrix& matrix,
                                const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -194,7 +194,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionSOR::initialize(const SparseMatrix&   matrix,
+  PreconditionSOR::initialize(const SparseMatrix& matrix,
                               const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -235,8 +235,8 @@ namespace TrilinosWrappers
   PreconditionBlockJacobi::AdditionalData::AdditionalData(
     const unsigned int block_size,
     const std::string& block_creation_type,
-    const double       omega,
-    const double       min_diagonal,
+    const double omega,
+    const double min_diagonal,
     const unsigned int n_sweeps)
     : block_size(block_size),
       block_creation_type(block_creation_type),
@@ -246,7 +246,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionBlockJacobi::initialize(const SparseMatrix&   matrix,
+  PreconditionBlockJacobi::initialize(const SparseMatrix& matrix,
                                       const AdditionalData& additional_data)
   {
     // release memory before reallocation
@@ -297,8 +297,8 @@ namespace TrilinosWrappers
   PreconditionBlockSSOR::AdditionalData::AdditionalData(
     const unsigned int block_size,
     const std::string& block_creation_type,
-    const double       omega,
-    const double       min_diagonal,
+    const double omega,
+    const double min_diagonal,
     const unsigned int overlap,
     const unsigned int n_sweeps)
     : block_size(block_size),
@@ -310,7 +310,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionBlockSSOR::initialize(const SparseMatrix&   matrix,
+  PreconditionBlockSSOR::initialize(const SparseMatrix& matrix,
                                     const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -361,8 +361,8 @@ namespace TrilinosWrappers
   PreconditionBlockSOR::AdditionalData::AdditionalData(
     const unsigned int block_size,
     const std::string& block_creation_type,
-    const double       omega,
-    const double       min_diagonal,
+    const double omega,
+    const double min_diagonal,
     const unsigned int overlap,
     const unsigned int n_sweeps)
     : block_size(block_size),
@@ -374,7 +374,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionBlockSOR::initialize(const SparseMatrix&   matrix,
+  PreconditionBlockSOR::initialize(const SparseMatrix& matrix,
                                    const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -423,14 +423,14 @@ namespace TrilinosWrappers
   /* -------------------------- PreconditionIC -------------------------- */
 
   PreconditionIC::AdditionalData::AdditionalData(const unsigned int ic_fill,
-                                                 const double       ic_atol,
-                                                 const double       ic_rtol,
+                                                 const double ic_atol,
+                                                 const double ic_rtol,
                                                  const unsigned int overlap)
     : ic_fill(ic_fill), ic_atol(ic_atol), ic_rtol(ic_rtol), overlap(overlap)
   {}
 
   void
-  PreconditionIC::initialize(const SparseMatrix&   matrix,
+  PreconditionIC::initialize(const SparseMatrix& matrix,
                              const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -466,8 +466,8 @@ namespace TrilinosWrappers
   /* -------------------------- PreconditionILU -------------------------- */
 
   PreconditionILU::AdditionalData::AdditionalData(const unsigned int ilu_fill,
-                                                  const double       ilu_atol,
-                                                  const double       ilu_rtol,
+                                                  const double ilu_atol,
+                                                  const double ilu_rtol,
                                                   const unsigned int overlap)
     : ilu_fill(ilu_fill),
       ilu_atol(ilu_atol),
@@ -476,7 +476,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionILU::initialize(const SparseMatrix&   matrix,
+  PreconditionILU::initialize(const SparseMatrix& matrix,
                               const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -512,10 +512,10 @@ namespace TrilinosWrappers
 
   /* -------------------------- PreconditionILUT -------------------------- */
 
-  PreconditionILUT::AdditionalData::AdditionalData(const double       ilut_drop,
+  PreconditionILUT::AdditionalData::AdditionalData(const double ilut_drop,
                                                    const unsigned int ilut_fill,
-                                                   const double       ilut_atol,
-                                                   const double       ilut_rtol,
+                                                   const double ilut_atol,
+                                                   const double ilut_rtol,
                                                    const unsigned int overlap)
     : ilut_drop(ilut_drop),
       ilut_fill(ilut_fill),
@@ -525,7 +525,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionILUT::initialize(const SparseMatrix&   matrix,
+  PreconditionILUT::initialize(const SparseMatrix& matrix,
                                const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -567,7 +567,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionBlockwiseDirect::initialize(const SparseMatrix&   matrix,
+  PreconditionBlockwiseDirect::initialize(const SparseMatrix& matrix,
                                           const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -601,11 +601,11 @@ namespace TrilinosWrappers
 
   PreconditionChebyshev::AdditionalData::AdditionalData(
     const unsigned int degree,
-    const double       max_eigenvalue,
-    const double       eigenvalue_ratio,
-    const double       min_eigenvalue,
-    const double       min_diagonal,
-    const bool         nonzero_starting)
+    const double max_eigenvalue,
+    const double eigenvalue_ratio,
+    const double min_eigenvalue,
+    const double min_diagonal,
+    const bool nonzero_starting)
     : degree(degree),
       max_eigenvalue(max_eigenvalue),
       eigenvalue_ratio(eigenvalue_ratio),
@@ -615,7 +615,7 @@ namespace TrilinosWrappers
   {}
 
   void
-  PreconditionChebyshev::initialize(const SparseMatrix&   matrix,
+  PreconditionChebyshev::initialize(const SparseMatrix& matrix,
                                     const AdditionalData& additional_data)
   {
     preconditioner.reset();
@@ -712,14 +712,14 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionIdentity::vmult(dealii::Vector<double>&       dst,
+  PreconditionIdentity::vmult(dealii::Vector<double>& dst,
                               const dealii::Vector<double>& src) const
   {
     dst = src;
   }
 
   void
-  PreconditionIdentity::Tvmult(dealii::Vector<double>&       dst,
+  PreconditionIdentity::Tvmult(dealii::Vector<double>& dst,
                                const dealii::Vector<double>& src) const
   {
     dst = src;
@@ -727,7 +727,7 @@ namespace TrilinosWrappers
 
   void
   PreconditionIdentity::vmult(
-    LinearAlgebra::distributed::Vector<double>&       dst,
+    LinearAlgebra::distributed::Vector<double>& dst,
     const LinearAlgebra::distributed::Vector<double>& src) const
   {
     dst = src;
@@ -735,7 +735,7 @@ namespace TrilinosWrappers
 
   void
   PreconditionIdentity::Tvmult(
-    LinearAlgebra::distributed::Vector<double>&       dst,
+    LinearAlgebra::distributed::Vector<double>& dst,
     const LinearAlgebra::distributed::Vector<double>& src) const
   {
     dst = src;

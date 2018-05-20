@@ -87,14 +87,14 @@ private:
 
   Triangulation<dim> triangulation;
 
-  hp::DoFHandler<dim>      dof_handler;
-  hp::FECollection<dim>    fe_collection;
-  hp::QCollection<dim>     quadrature_collection;
+  hp::DoFHandler<dim> dof_handler;
+  hp::FECollection<dim> fe_collection;
+  hp::QCollection<dim> quadrature_collection;
   hp::QCollection<dim - 1> face_quadrature_collection;
 
   ConstraintMatrix hanging_node_constraints;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;
@@ -213,7 +213,7 @@ LaplaceProblem<dim>::assemble_system()
     {
       const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
       FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-      Vector<double>     cell_rhs(dofs_per_cell);
+      Vector<double> cell_rhs(dofs_per_cell);
 
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -267,7 +267,7 @@ void
 LaplaceProblem<dim>::solve()
 {
   SolverControl solver_control(system_rhs.size(), 1e-8 * system_rhs.l2_norm());
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   PreconditionSSOR<> preconditioner;
   preconditioner.initialize(system_matrix, 1.2);
@@ -299,7 +299,7 @@ LaplaceProblem<dim>::estimate_smoothness(
   // problems with |k|^{-mu} and also
   // logarithms of |k|
   std::vector<Tensor<1, dim>> k_vectors;
-  std::vector<unsigned int>   k_vectors_magnitude;
+  std::vector<unsigned int> k_vectors_magnitude;
   switch(dim)
     {
       case 2:
@@ -336,7 +336,7 @@ LaplaceProblem<dim>::estimate_smoothness(
         Assert(false, ExcNotImplemented());
     }
 
-  const unsigned      n_fourier_modes = k_vectors.size();
+  const unsigned n_fourier_modes = k_vectors.size();
   std::vector<double> ln_k(n_fourier_modes);
   for(unsigned int i = 0; i < n_fourier_modes; ++i)
     ln_k[i] = std::log(k_vectors[i].norm());
@@ -347,7 +347,7 @@ LaplaceProblem<dim>::estimate_smoothness(
   // with. note that these matrices
   // are complex-valued, so we can't
   // use FullMatrix
-  QGauss<1>      base_quadrature(2);
+  QGauss<1> base_quadrature(2);
   QIterated<dim> quadrature(base_quadrature, N);
 
   std::vector<Table<2, std::complex<double>>> fourier_transform_matrices(
@@ -380,7 +380,7 @@ LaplaceProblem<dim>::estimate_smoothness(
   // transform and estimate the decay
   // coefficient
   std::vector<std::complex<double>> fourier_coefficients(n_fourier_modes);
-  Vector<double>                    local_dof_values;
+  Vector<double> local_dof_values;
 
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),

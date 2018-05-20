@@ -70,15 +70,15 @@ DeclException3(ExcWrongValue,
  */
 template <int dim, typename DATA>
 void
-check_qph(Triangulation<dim>&          tr,
+check_qph(Triangulation<dim>& tr,
           const CellDataStorage<typename Triangulation<dim, dim>::cell_iterator,
                                 DATA>& manager,
-          const Quadrature<dim>&       rhs_quadrature,
-          const MyFunction<dim>&       func)
+          const Quadrature<dim>& rhs_quadrature,
+          const MyFunction<dim>& func)
 {
   DoFHandler<dim> dof_handler(tr);
-  FE_Q<dim>       dummy_fe(1);
-  FEValues<dim>   fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
+  FE_Q<dim> dummy_fe(1);
+  FEValues<dim> fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
   dof_handler.distribute_dofs(dummy_fe);
   typename Triangulation<dim, dim>::active_cell_iterator cell;
   for(cell = tr.begin_active(); cell != tr.end(); ++cell)
@@ -107,7 +107,7 @@ void
 test()
 {
   const MyFunction<dim> my_func;
-  Triangulation<dim>    tr;
+  Triangulation<dim> tr;
 
   GridGenerator::subdivided_hyper_cube(tr, 2);
   tr.refine_global(1);
@@ -119,8 +119,8 @@ test()
     data_storage;
   {
     DoFHandler<dim> dof_handler(tr);
-    FE_Q<dim>       dummy_fe(1);
-    FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
+    FE_Q<dim> dummy_fe(1);
+    FEValues<dim> fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
     for(cell = tr.begin_active(); cell != tr.end(); ++cell)
       if(cell->is_locally_owned())

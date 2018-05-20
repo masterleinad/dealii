@@ -52,9 +52,9 @@ test()
   //DoFRenumbering::component_wise(dof_handler);
   deallog << "Number of dofs: " << dof_handler.n_dofs() << std::endl;
 
-  ConstraintMatrix           constraints;
+  ConstraintMatrix constraints;
   FEValuesExtractors::Vector velocities(1);
-  ComponentMask              mask = fe.component_mask(velocities);
+  ComponentMask mask = fe.component_mask(velocities);
 
   deallog << "ComponentMask " << mask[0] << mask[1] << mask[2] << std::endl;
   DoFTools::make_zero_boundary_constraints(dof_handler, constraints, mask);
@@ -63,12 +63,12 @@ test()
           << std::endl;
 
   Quadrature<2> quadrature_formula(fe.get_unit_support_points());
-  FEValues<2>   fe_values(fe,
+  FEValues<2> fe_values(fe,
                         quadrature_formula,
                         update_values | update_gradients | update_JxW_values
                           | update_quadrature_points);
 
-  const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int dofs_per_cell = fe.dofs_per_cell;
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),

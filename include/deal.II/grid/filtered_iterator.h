@@ -224,7 +224,7 @@ namespace IteratorFilters
      * evaluated to true and state if the iterator must be locally owned.
      */
     MaterialIdEqualTo(const types::material_id material_id,
-                      const bool               only_locally_owned = false);
+                      const bool only_locally_owned = false);
 
     /**
      * Constructor. Store a collection of material ids which iterators shall
@@ -271,7 +271,7 @@ namespace IteratorFilters
      * evaluated to true and state if the iterator must be locally owned.
      */
     ActiveFEIndexEqualTo(const unsigned int active_fe_index,
-                         const bool         only_locally_owned = false);
+                         const bool only_locally_owned = false);
 
     /**
      * Constructor. Store a collection of active FE indices which iterators
@@ -889,7 +889,7 @@ IteratorRange<
   typename internal::FilteredIteratorImplementation::
     NestFilteredIterators<BaseIterator, std::tuple<Predicate, Targs...>>::type>
 filter_iterators(IteratorRange<BaseIterator> i,
-                 const Predicate&            p,
+                 const Predicate& p,
                  const Targs... args)
 {
   // Recursively create filtered iterators, one predicate at a time
@@ -907,7 +907,7 @@ inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate p)
 
 template <typename BaseIterator>
 template <typename Predicate>
-inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate           p,
+inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate p,
                                                         const BaseIterator& bi)
   : BaseIterator(bi), predicate(new PredicateTemplate<Predicate>(p))
 {
@@ -941,8 +941,8 @@ FilteredIterator<BaseIterator>::operator=(const FilteredIterator& fi)
   // BaseIterator but try to go through constructing a new Accessor from fi
   // which fails. Hence, we just use an explicit upcast and call the above-
   // mentioned method.
-  const BaseIterator& bi      = fi;
-  return              operator=(bi);
+  const BaseIterator& bi = fi;
+  return operator        =(bi);
 }
 
 template <typename BaseIterator>
@@ -1168,13 +1168,13 @@ namespace IteratorFilters
   // ---------------- IteratorFilters::MaterialIdEqualTo ---------
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const types::material_id material_id,
-    const bool               only_locally_owned)
+    const bool only_locally_owned)
     : material_ids{material_id}, only_locally_owned(only_locally_owned)
   {}
 
   inline MaterialIdEqualTo::MaterialIdEqualTo(
     const std::set<types::material_id>& material_ids,
-    const bool                          only_locally_owned)
+    const bool only_locally_owned)
     : material_ids(material_ids), only_locally_owned(only_locally_owned)
   {}
 
@@ -1191,13 +1191,13 @@ namespace IteratorFilters
   // ---------------- IteratorFilters::ActiveFEIndexEqualTo ---------
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const unsigned int active_fe_index,
-    const bool         only_locally_owned)
+    const bool only_locally_owned)
     : active_fe_indices{active_fe_index}, only_locally_owned(only_locally_owned)
   {}
 
   inline ActiveFEIndexEqualTo::ActiveFEIndexEqualTo(
     const std::set<unsigned int>& active_fe_indices,
-    const bool                    only_locally_owned)
+    const bool only_locally_owned)
     : active_fe_indices(active_fe_indices),
       only_locally_owned(only_locally_owned)
   {}

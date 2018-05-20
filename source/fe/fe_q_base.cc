@@ -173,8 +173,8 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
     if(q_deg > 1)
       {
-        const unsigned int n    = q_deg - 1;
-        const double       step = 1. / q_deg;
+        const unsigned int n = q_deg - 1;
+        const double step    = 1. / q_deg;
         // subface 0
         for(unsigned int i = 1; i <= n; ++i)
           constraint_points.push_back(
@@ -263,8 +263,8 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
     if(q_deg > 1)
       {
-        const unsigned int          n    = q_deg - 1;
-        const double                step = 1. / q_deg;
+        const unsigned int n = q_deg - 1;
+        const double step    = 1. / q_deg;
         std::vector<Point<dim - 2>> line_support_points(n);
         for(unsigned int i = 0; i < n; ++i)
           line_support_points[i](0) = (i + 1) * step;
@@ -344,8 +344,8 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
     for(unsigned int i = 0; i < constraint_points.size(); ++i)
       {
         const double interval = (double) (q_deg * 2);
-        bool         mirror[dim - 1];
-        Point<dim>   constraint_point;
+        bool mirror[dim - 1];
+        Point<dim> constraint_point;
 
         // Eliminate FP errors in constraint points. Due to their origin, they
         // must all be fractions of the unit interval. If we have polynomial
@@ -416,9 +416,9 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
 template <class PolynomialType, int dim, int spacedim>
 FE_Q_Base<PolynomialType, dim, spacedim>::FE_Q_Base(
-  const PolynomialType&         poly_space,
+  const PolynomialType& poly_space,
   const FiniteElementData<dim>& fe_data,
-  const std::vector<bool>&      restriction_is_additive_flags)
+  const std::vector<bool>& restriction_is_additive_flags)
   : FE_Poly<PolynomialType, dim, spacedim>(
       poly_space,
       fe_data,
@@ -451,7 +451,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize(
          ExcInternalError());
 
   {
-    std::vector<unsigned int>    renumber(q_dofs_per_cell);
+    std::vector<unsigned int> renumber(q_dofs_per_cell);
     const FiniteElementData<dim> fe(get_dpo_vector(q_degree), 1, q_degree);
     FETools::hierarchic_to_lexicographic_numbering(fe, renumber);
     for(unsigned int i = q_dofs_per_cell; i < this->dofs_per_cell; ++i)
@@ -479,7 +479,7 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::get_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // go through the list of elements we can interpolate from
   if(const FE_Q_Base<PolynomialType, dim, spacedim>* source_fe
@@ -575,7 +575,7 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   Assert(dim > 1, ExcImpossibleInDim(1));
   get_subface_interpolation_matrix(
@@ -586,8 +586,8 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::get_subface_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const unsigned int subface,
+  FullMatrix<double>& interpolation_matrix) const
 {
   Assert(
     interpolation_matrix.m() == x_source_fe.dofs_per_face,
@@ -910,7 +910,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize_unit_support_points(
   // product of the 1d set of points. We could do this by hand, but it's
   // easier to just re-use functionality that's already been implemented
   // for quadrature formulas.
-  const Quadrature<1>   support_1d(points);
+  const Quadrature<1> support_1d(points);
   const Quadrature<dim> support_quadrature(support_1d); // NOLINT
 
   // The only thing we have to do is reorder the points from tensor
@@ -942,7 +942,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize_unit_face_support_points(
   // product of the 1d set of points. We could do this by hand, but it's
   // easier to just re-use functionality that's already been implemented
   // for quadrature formulas.
-  const Quadrature<1>       support_1d(points);
+  const Quadrature<1> support_1d(points);
   const Quadrature<dim - 1> support_quadrature(support_1d); // NOLINT
 
   // The only thing we have to do is reorder the points from tensor
@@ -1028,9 +1028,9 @@ unsigned int
 FE_Q_Base<PolynomialType, dim, spacedim>::face_to_cell_index(
   const unsigned int face_index,
   const unsigned int face,
-  const bool         face_orientation,
-  const bool         face_flip,
-  const bool         face_rotation) const
+  const bool face_orientation,
+  const bool face_flip,
+  const bool face_rotation) const
 {
   Assert(face_index < this->dofs_per_face,
          ExcIndexRange(face_index, 0, this->dofs_per_face));
@@ -1161,7 +1161,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize_constraints(
 template <class PolynomialType, int dim, int spacedim>
 const FullMatrix<double>&
 FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -1230,7 +1230,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
       // the tensor product structure of this element and only evaluate 1D
       // information from the polynomial. This makes the cost of this function
       // almost negligible also for high order elements
-      const unsigned int            dofs1d = q_degree + 1;
+      const unsigned int dofs1d = q_degree + 1;
       std::vector<Table<2, double>> subcell_evaluations(
         dim, Table<2, double>(dofs1d, dofs1d));
       const std::vector<unsigned int>& index_map_inverse
@@ -1255,8 +1255,8 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
       for(unsigned int j = 0; j < dofs1d; ++j)
         {
           const unsigned int diag_comp = index_map_inverse[j * step_size_diag];
-          const Point<dim>   p_subcell = this->unit_support_points[diag_comp];
-          const Point<dim>   p_cell
+          const Point<dim> p_subcell   = this->unit_support_points[diag_comp];
+          const Point<dim> p_cell
             = GeometryInfo<dim>::child_to_cell_coordinates(
               p_subcell, child, refinement_case);
           for(unsigned int i = 0; i < dofs1d; ++i)
@@ -1361,7 +1361,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
 template <class PolynomialType, int dim, int spacedim>
 const FullMatrix<double>&
 FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -1408,19 +1408,19 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
       // assumption that whenever a row makes a non-zero contribution to the
       // mother's residual, the correct value is interpolated.
 
-      const double                     eps = 1e-15 * q_degree * dim;
+      const double eps = 1e-15 * q_degree * dim;
       const std::vector<unsigned int>& index_map_inverse
         = this->poly_space.get_numbering_inverse();
 
-      const unsigned int          dofs1d = q_degree + 1;
+      const unsigned int dofs1d = q_degree + 1;
       std::vector<Tensor<1, dim>> evaluations1d(dofs1d);
 
       my_restriction.reinit(this->dofs_per_cell, this->dofs_per_cell);
 
       for(unsigned int i = 0; i < q_dofs_per_cell; ++i)
         {
-          unsigned int     mother_dof = index_map_inverse[i];
-          const Point<dim> p_cell     = this->unit_support_points[mother_dof];
+          unsigned int mother_dof = index_map_inverse[i];
+          const Point<dim> p_cell = this->unit_support_points[mother_dof];
 
           // check whether this interpolation point is inside this child cell
           const Point<dim> p_subcell

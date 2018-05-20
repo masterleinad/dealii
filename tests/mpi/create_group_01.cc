@@ -25,7 +25,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
-  MPILogInitAll                    log_all;
+  MPILogInitAll log_all;
 
   const MPI_Comm global_comm = MPI_COMM_WORLD;
 
@@ -34,10 +34,10 @@ main(int argc, char* argv[])
 
   // Get the group of processes in MPI_COMM_WORLD
   MPI_Group world_group;
-  int       ierr = MPI_Comm_group(MPI_COMM_WORLD, &world_group);
+  int ierr = MPI_Comm_group(MPI_COMM_WORLD, &world_group);
   AssertThrowMPI(ierr);
 
-  const int        n = n_ranks / 2;
+  const int n = n_ranks / 2;
   std::vector<int> ranks;
   for(unsigned int i = 0; i < n_ranks; i += 2)
     ranks.push_back(i);

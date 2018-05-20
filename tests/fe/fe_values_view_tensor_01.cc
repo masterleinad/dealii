@@ -59,10 +59,10 @@ private:
   const unsigned int n_gamma_components;  // scalar plastic multiplier
 
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe;
-  DoFHandler<dim>    dof_handler;
+  FESystem<dim> fe;
+  DoFHandler<dim> dof_handler;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
   BlockVector<double> solution;
@@ -159,12 +159,12 @@ MixedElastoPlasticity<dim>::assemble_system()
   const unsigned int n_q_points = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<unsigned int> local_dof_indices(dofs_per_cell);
 
   const FEValuesExtractors::Tensor<2> stress_extr(0); //rank2
-  const FEValuesExtractors::Scalar    gamma_extr(n_stress_components);
+  const FEValuesExtractors::Scalar gamma_extr(n_stress_components);
 
   deallog << "fe.dofs_per_cell: " << fe.dofs_per_cell
           << "\tquadrature_formula.size(): " << quadrature_formula.size()
@@ -210,7 +210,7 @@ check()
         for(unsigned int j = 0; j < dim; j++)
           {
             TableIndices<2> indices(i, j);
-            unsigned int    unrolled
+            unsigned int unrolled
               = Tensor<2, dim>::component_to_unrolled_index(indices);
             deallog << i << " " << j << " -> " << unrolled << std::endl;
             indices = Tensor<2, dim>::unrolled_to_component_indices(unrolled);

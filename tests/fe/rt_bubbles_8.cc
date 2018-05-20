@@ -44,14 +44,14 @@ test(const unsigned int degree)
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr, 0., 1.);
 
-  DoFHandler<dim>                         dof(tr);
+  DoFHandler<dim> dof(tr);
   typename DoFHandler<dim>::cell_iterator c = dof.begin();
   dof.distribute_dofs(fe_rt_bubbles);
 
-  QTrapez<1>         q_trapez;
+  QTrapez<1> q_trapez;
   const unsigned int div = 4;
-  QIterated<dim>     q(q_trapez, div);
-  FEValues<dim>      fe(fe_rt_bubbles, q, update_values | update_JxW_values);
+  QIterated<dim> q(q_trapez, div);
+  FEValues<dim> fe(fe_rt_bubbles, q, update_values | update_JxW_values);
   fe.reinit(c);
 
   const unsigned int dofs_per_cell = fe_rt_bubbles.dofs_per_cell;
@@ -69,9 +69,9 @@ test(const unsigned int degree)
 
   mass_matrix.print_formatted(logfile, 3, false, 0, "0", 1);
 
-  SolverControl           solver_control(2 * dofs_per_cell, 1e-8);
+  SolverControl solver_control(2 * dofs_per_cell, 1e-8);
   PrimitiveVectorMemory<> vector_memory;
-  SolverCG<>              solver(solver_control, vector_memory);
+  SolverCG<> solver(solver_control, vector_memory);
 
   Vector<double> tmp1(dofs_per_cell), tmp2(dofs_per_cell);
   for(unsigned int i = 0; i < dofs_per_cell; ++i)

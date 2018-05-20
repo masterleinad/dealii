@@ -99,13 +99,13 @@ namespace Step8
     output_results(const unsigned int cycle) const;
 
     Triangulation<dim> triangulation;
-    DoFHandler<dim>    dof_handler;
+    DoFHandler<dim> dof_handler;
 
     FESystem<dim> fe;
 
     ConstraintMatrix hanging_node_constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -141,7 +141,7 @@ namespace Step8
   template <int dim>
   void
   right_hand_side(const std::vector<Point<dim>>& points,
-                  std::vector<Tensor<1, dim>>&   values)
+                  std::vector<Tensor<1, dim>>& values)
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -280,7 +280,7 @@ namespace Step8
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -453,7 +453,7 @@ namespace Step8
   ElasticProblem<dim>::solve()
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);

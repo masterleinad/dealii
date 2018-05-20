@@ -59,7 +59,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   prefix << m << 'x' << n;
   deallog.push(prefix.str());
 
-  FullMatrix<double>       A(m, n, values);
+  FullMatrix<double> A(m, n, values);
   LAPACKFullMatrix<double> LA(m, n);
   LA = A;
 
@@ -104,7 +104,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(3);
   deallog.attach(logfile);
 
@@ -113,7 +113,7 @@ main()
   test_rect(4, 4, symm);
 
   // Test symmetric system
-  FullMatrix<double>       A(4, 4, symm);
+  FullMatrix<double> A(4, 4, symm);
   LAPACKFullMatrix<double> LA(4, 4);
   A.fill(symm);
   LA = A;

@@ -93,9 +93,9 @@ ConstraintMatrix::get_lines() const
 bool
 ConstraintMatrix::is_consistent_in_parallel(
   const std::vector<IndexSet>& locally_owned_dofs,
-  const IndexSet&              locally_active_dofs,
-  const MPI_Comm               mpi_communicator,
-  const bool                   verbose) const
+  const IndexSet& locally_active_dofs,
+  const MPI_Comm mpi_communicator,
+  const bool verbose) const
 {
   ConstraintLine empty;
   empty.inhomogeneity = 0.0;
@@ -203,7 +203,7 @@ ConstraintMatrix::add_lines(const IndexSet& lines)
 
 void
 ConstraintMatrix::add_entries(
-  const size_type                                  line,
+  const size_type line,
   const std::vector<std::pair<size_type, double>>& col_val_pairs)
 {
   Assert(sorted == false, ExcMatrixIsClosed());
@@ -244,7 +244,7 @@ ConstraintMatrix::add_entries(
 
 void
 ConstraintMatrix::add_selected_constraints(const ConstraintMatrix& constraints,
-                                           const IndexSet&         filter)
+                                           const IndexSet& filter)
 {
   if(constraints.n_constraints() == 0)
     return;
@@ -282,7 +282,7 @@ ConstraintMatrix::close()
   {
     std::vector<size_type> new_lines(lines_cache.size(),
                                      numbers::invalid_size_type);
-    size_type              counter = 0;
+    size_type counter = 0;
     for(std::vector<ConstraintLine>::const_iterator line = lines.begin();
         line != lines.end();
         ++line, ++counter)
@@ -372,7 +372,7 @@ ConstraintMatrix::close()
 
                 // look up the chain of constraints for this entry
                 const size_type dof_index = line->entries[entry].first;
-                const double    weight    = line->entries[entry].second;
+                const double weight       = line->entries[entry].second;
 
                 Assert(dof_index != line->index,
                        ExcMessage("Cycle in constraints detected!"));
@@ -559,9 +559,9 @@ ConstraintMatrix::close()
 }
 
 void
-ConstraintMatrix::merge(const ConstraintMatrix&     other_constraints,
+ConstraintMatrix::merge(const ConstraintMatrix& other_constraints,
                         const MergeConflictBehavior merge_conflict_behavior,
-                        const bool                  allow_different_local_lines)
+                        const bool allow_different_local_lines)
 {
   (void) allow_different_local_lines;
   Assert(

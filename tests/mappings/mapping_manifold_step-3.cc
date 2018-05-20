@@ -65,10 +65,10 @@ private:
   output_results() const;
 
   Triangulation<2> triangulation;
-  FE_Q<2>          fe;
-  DoFHandler<2>    dof_handler;
+  FE_Q<2> fe;
+  DoFHandler<2> dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;
@@ -106,7 +106,7 @@ LaplaceProblem::make_grid_and_dofs()
 void
 LaplaceProblem::assemble_system()
 {
-  QGauss<2>          quadrature_formula(2);
+  QGauss<2> quadrature_formula(2);
   MappingManifold<2> mapping;
 
   FEValues<2> x_fe_values(mapping,
@@ -118,7 +118,7 @@ LaplaceProblem::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -167,7 +167,7 @@ void
 LaplaceProblem::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   cg.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
 }

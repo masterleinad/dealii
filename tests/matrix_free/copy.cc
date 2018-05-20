@@ -48,7 +48,7 @@ sub_test()
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   deallog << "Testing " << fe.get_name() << std::endl;
 
@@ -85,8 +85,8 @@ sub_test()
 
       MatrixFreeTest<dim, fe_degree, number> mf_ref(mf_data);
 
-      Vector<number>          in_dist(dof.n_dofs());
-      Vector<number>          out_ref(in_dist), out_copy(in_dist);
+      Vector<number> in_dist(dof.n_dofs());
+      Vector<number> out_ref(in_dist), out_copy(in_dist);
       MatrixFree<dim, number> mf_copy;
       mf_copy.copy_from(mf_data);
       MatrixFreeTest<dim, fe_degree, number> copied(mf_copy);

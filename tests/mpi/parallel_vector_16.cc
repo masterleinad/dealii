@@ -36,7 +36,7 @@ test()
 
   types::global_dof_index min_index  = 0xffffffffU - 39;
   types::global_dof_index local_size = 42;
-  IndexSet                local_owned(min_index + numproc * local_size);
+  IndexSet local_owned(min_index + numproc * local_size);
   local_owned.add_range(min_index + myid * local_size,
                         min_index + (myid + 1) * local_size);
 

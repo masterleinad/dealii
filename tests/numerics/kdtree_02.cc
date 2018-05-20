@@ -41,7 +41,7 @@ main()
   kdtree.set_points(points);
 
   std::vector<unsigned int> indices;
-  std::vector<double>       distances;
+  std::vector<double> distances;
 
   // Get closest points. Do a few rounds
   for(auto& p : test_points)

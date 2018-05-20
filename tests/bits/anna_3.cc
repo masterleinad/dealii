@@ -49,8 +49,8 @@ private:
   check();
 
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe;
-  DoFHandler<dim>    dof_handler;
+  FESystem<dim> fe;
+  DoFHandler<dim> dof_handler;
 };
 
 template <int dim>

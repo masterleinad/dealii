@@ -38,15 +38,15 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dofhandler(tria);
   dofhandler.distribute_dofs(fe);
 
   std::set<std::string> output;
 
   typedef typename DoFHandler<dim>::active_cell_iterator cell_iterator;
-  typedef short                                          DT;
-  short                                                  counter = 0;
+  typedef short DT;
+  short counter = 0;
   GridTools::exchange_cell_data_to_ghosts<DT, DoFHandler<dim>>(
     dofhandler,
     [&](const cell_iterator& cell) {
@@ -72,7 +72,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
   test<3>();

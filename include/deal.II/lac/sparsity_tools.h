@@ -95,10 +95,10 @@ namespace SparsityTools
    * done by calling @p GridTools::partition_triangulation.
    */
   void
-  partition(const SparsityPattern&     sparsity_pattern,
-            const unsigned int         n_partitions,
+  partition(const SparsityPattern& sparsity_pattern,
+            const unsigned int n_partitions,
             std::vector<unsigned int>& partition_indices,
-            const Partitioner          partitioner = Partitioner::metis);
+            const Partitioner partitioner = Partitioner::metis);
 
   /**
    * This function performs the same operation as the one above, except that
@@ -111,11 +111,11 @@ namespace SparsityTools
    * number of active cells in the triangulation.
    */
   void
-  partition(const SparsityPattern&           sparsity_pattern,
+  partition(const SparsityPattern& sparsity_pattern,
             const std::vector<unsigned int>& cell_weights,
-            const unsigned int               n_partitions,
-            std::vector<unsigned int>&       partition_indices,
-            const Partitioner                partitioner = Partitioner::metis);
+            const unsigned int n_partitions,
+            std::vector<unsigned int>& partition_indices,
+            const Partitioner partitioner = Partitioner::metis);
 
   /**
    * Using a coloring algorithm provided by ZOLTAN to color nodes whose
@@ -150,7 +150,7 @@ namespace SparsityTools
    * coloring arising in shared-memory parallel assembly of matrices.
    */
   unsigned int
-  color_sparsity_pattern(const SparsityPattern&     sparsity_pattern,
+  color_sparsity_pattern(const SparsityPattern& sparsity_pattern,
                          std::vector<unsigned int>& color_indices);
 
   /**
@@ -204,8 +204,8 @@ namespace SparsityTools
    */
   void
   reorder_Cuthill_McKee(
-    const DynamicSparsityPattern&                         sparsity,
-    std::vector<DynamicSparsityPattern::size_type>&       new_indices,
+    const DynamicSparsityPattern& sparsity,
+    std::vector<DynamicSparsityPattern::size_type>& new_indices,
     const std::vector<DynamicSparsityPattern::size_type>& starting_indices
     = std::vector<DynamicSparsityPattern::size_type>());
 
@@ -232,7 +232,7 @@ namespace SparsityTools
    */
   void
   reorder_hierarchical(
-    const DynamicSparsityPattern&                   sparsity,
+    const DynamicSparsityPattern& sparsity,
     std::vector<DynamicSparsityPattern::size_type>& new_indices);
 
 #ifdef DEAL_II_WITH_MPI
@@ -262,10 +262,10 @@ namespace SparsityTools
    */
   void
   distribute_sparsity_pattern(
-    DynamicSparsityPattern&                               dsp,
+    DynamicSparsityPattern& dsp,
     const std::vector<DynamicSparsityPattern::size_type>& rows_per_cpu,
-    const MPI_Comm&                                       mpi_comm,
-    const IndexSet&                                       myrange);
+    const MPI_Comm& mpi_comm,
+    const IndexSet& myrange);
 
   /**
    * Similar to the function above, but for BlockDynamicSparsityPattern
@@ -282,8 +282,8 @@ namespace SparsityTools
   void
   distribute_sparsity_pattern(BlockDynamicSparsityPattern& dsp,
                               const std::vector<IndexSet>& owned_set_per_cpu,
-                              const MPI_Comm&              mpi_comm,
-                              const IndexSet&              myrange);
+                              const MPI_Comm& mpi_comm,
+                              const IndexSet& myrange);
 
 #endif
 

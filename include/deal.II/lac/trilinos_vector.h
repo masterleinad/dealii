@@ -398,12 +398,12 @@ namespace TrilinosWrappers
        * parallel those in the <tt>C</tt> standard libraries
        * <tt>vector<...></tt> class.
        */
-      typedef TrilinosScalar                  value_type;
-      typedef TrilinosScalar                  real_type;
+      typedef TrilinosScalar value_type;
+      typedef TrilinosScalar real_type;
       typedef dealii::types::global_dof_index size_type;
-      typedef value_type*                     iterator;
-      typedef const value_type*               const_iterator;
-      typedef internal::VectorReference       reference;
+      typedef value_type* iterator;
+      typedef const value_type* const_iterator;
+      typedef internal::VectorReference reference;
       typedef const internal::VectorReference const_reference;
 
       /**
@@ -473,7 +473,7 @@ namespace TrilinosWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       Vector(const IndexSet& parallel_partitioning,
-             const Vector&   v,
+             const Vector& v,
              const MPI_Comm& communicator = MPI_COMM_WORLD);
 
       /**
@@ -489,9 +489,9 @@ namespace TrilinosWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       template <typename Number>
-      Vector(const IndexSet&               parallel_partitioning,
+      Vector(const IndexSet& parallel_partitioning,
              const dealii::Vector<Number>& v,
-             const MPI_Comm&               communicator = MPI_COMM_WORLD);
+             const MPI_Comm& communicator = MPI_COMM_WORLD);
 
       /**
        * Move constructor. Creates a new vector by stealing the internal data
@@ -536,8 +536,8 @@ namespace TrilinosWrappers
        */
       void
       reinit(const Vector& v,
-             const bool    omit_zeroing_entries = false,
-             const bool    allow_different_maps = false);
+             const bool omit_zeroing_entries = false,
+             const bool allow_different_maps = false);
 
       /**
        * Reinit functionality. This function destroys the old vector content
@@ -563,8 +563,8 @@ namespace TrilinosWrappers
        */
       void
       reinit(const IndexSet& parallel_partitioning,
-             const MPI_Comm& communicator         = MPI_COMM_WORLD,
-             const bool      omit_zeroing_entries = false);
+             const MPI_Comm& communicator    = MPI_COMM_WORLD,
+             const bool omit_zeroing_entries = false);
 
       /**
        * Reinit functionality. This function destroys the old vector content
@@ -594,8 +594,8 @@ namespace TrilinosWrappers
       void
       reinit(const IndexSet& locally_owned_entries,
              const IndexSet& ghost_entries,
-             const MPI_Comm& communicator    = MPI_COMM_WORLD,
-             const bool      vector_writable = false);
+             const MPI_Comm& communicator = MPI_COMM_WORLD,
+             const bool vector_writable   = false);
 
       /**
        * Create vector by merging components from a block vector.
@@ -683,7 +683,7 @@ namespace TrilinosWrappers
       void
       import_nonlocal_data_for_fe(
         const dealii::TrilinosWrappers::SparseMatrix& matrix,
-        const Vector&                                 vector);
+        const Vector& vector);
 
       /**
        * Test for equality. This function assumes that the present vector and
@@ -940,7 +940,7 @@ namespace TrilinosWrappers
        */
       void
       extract_subvector_to(const std::vector<size_type>& indices,
-                           std::vector<TrilinosScalar>&  values) const;
+                           std::vector<TrilinosScalar>& values) const;
 
       /**
        * Instead of getting individual elements of a vector via operator(),
@@ -971,9 +971,9 @@ namespace TrilinosWrappers
        */
       template <typename ForwardIterator, typename OutputIterator>
       void
-      extract_subvector_to(ForwardIterator       indices_begin,
+      extract_subvector_to(ForwardIterator indices_begin,
                            const ForwardIterator indices_end,
-                           OutputIterator        values_begin) const;
+                           OutputIterator values_begin) const;
 
       /**
        * Make the Vector class a bit like the <tt>vector<></tt> class of the C++
@@ -1023,7 +1023,7 @@ namespace TrilinosWrappers
        * the corresponding values in the second.
        */
       void
-      set(const std::vector<size_type>&      indices,
+      set(const std::vector<size_type>& indices,
           const std::vector<TrilinosScalar>& values);
 
       /**
@@ -1031,7 +1031,7 @@ namespace TrilinosWrappers
        * function takes a deal.II vector of values.
        */
       void
-      set(const std::vector<size_type>&           indices,
+      set(const std::vector<size_type>& indices,
           const ::dealii::Vector<TrilinosScalar>& values);
 
       /**
@@ -1040,8 +1040,8 @@ namespace TrilinosWrappers
        * the indices are stored and the number of elements to be set.
        */
       void
-      set(const size_type       n_elements,
-          const size_type*      indices,
+      set(const size_type n_elements,
+          const size_type* indices,
           const TrilinosScalar* values);
 
       /**
@@ -1049,7 +1049,7 @@ namespace TrilinosWrappers
        * stored in @p values to the vector components specified by @p indices.
        */
       void
-      add(const std::vector<size_type>&      indices,
+      add(const std::vector<size_type>& indices,
           const std::vector<TrilinosScalar>& values);
 
       /**
@@ -1057,7 +1057,7 @@ namespace TrilinosWrappers
        * function takes a deal.II vector of values.
        */
       void
-      add(const std::vector<size_type>&           indices,
+      add(const std::vector<size_type>& indices,
           const ::dealii::Vector<TrilinosScalar>& values);
 
       /**
@@ -1066,8 +1066,8 @@ namespace TrilinosWrappers
        * the other two <tt>add()</tt> functions above.
        */
       void
-      add(const size_type       n_elements,
-          const size_type*      indices,
+      add(const size_type n_elements,
+          const size_type* indices,
           const TrilinosScalar* values);
 
       /**
@@ -1127,9 +1127,9 @@ namespace TrilinosWrappers
        */
       void
       add(const TrilinosScalar a,
-          const Vector&        V,
+          const Vector& V,
           const TrilinosScalar b,
-          const Vector&        W);
+          const Vector& W);
 
       /**
        * Scaling and simple vector addition, i.e.  <tt>*this = s*(*this) +
@@ -1193,10 +1193,10 @@ namespace TrilinosWrappers
        * separate line each.
        */
       void
-      print(std::ostream&      out,
-            const unsigned int precision  = 3,
-            const bool         scientific = true,
-            const bool         across     = true) const;
+      print(std::ostream& out,
+            const unsigned int precision = 3,
+            const bool scientific        = true,
+            const bool across            = true) const;
 
       /**
        * Swap the contents of this vector and the other vector @p v. One could
@@ -1332,7 +1332,7 @@ namespace TrilinosWrappers
 
   namespace internal
   {
-    inline VectorReference::VectorReference(MPI::Vector&    vector,
+    inline VectorReference::VectorReference(MPI::Vector& vector,
                                             const size_type index)
       : vector(vector), index(index)
     {}
@@ -1446,7 +1446,7 @@ namespace TrilinosWrappers
 
     inline void
     Vector::extract_subvector_to(const std::vector<size_type>& indices,
-                                 std::vector<TrilinosScalar>&  values) const
+                                 std::vector<TrilinosScalar>& values) const
     {
       for(size_type i = 0; i < indices.size(); ++i)
         values[i] = operator()(indices[i]);
@@ -1454,9 +1454,9 @@ namespace TrilinosWrappers
 
     template <typename ForwardIterator, typename OutputIterator>
     inline void
-    Vector::extract_subvector_to(ForwardIterator       indices_begin,
+    Vector::extract_subvector_to(ForwardIterator indices_begin,
                                  const ForwardIterator indices_end,
-                                 OutputIterator        values_begin) const
+                                 OutputIterator values_begin) const
     {
       while(indices_begin != indices_end)
         {
@@ -1491,7 +1491,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::set(const std::vector<size_type>&      indices,
+    Vector::set(const std::vector<size_type>& indices,
                 const std::vector<TrilinosScalar>& values)
     {
       // if we have ghost values, do not allow
@@ -1505,7 +1505,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::set(const std::vector<size_type>&           indices,
+    Vector::set(const std::vector<size_type>& indices,
                 const ::dealii::Vector<TrilinosScalar>& values)
     {
       // if we have ghost values, do not allow
@@ -1519,8 +1519,8 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::set(const size_type       n_elements,
-                const size_type*      indices,
+    Vector::set(const size_type n_elements,
+                const size_type* indices,
                 const TrilinosScalar* values)
     {
       // if we have ghost values, do not allow
@@ -1538,7 +1538,7 @@ namespace TrilinosWrappers
 
       for(size_type i = 0; i < n_elements; ++i)
         {
-          const size_type                         row       = indices[i];
+          const size_type row                               = indices[i];
           const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
           if(local_row != -1)
@@ -1561,7 +1561,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::add(const std::vector<size_type>&      indices,
+    Vector::add(const std::vector<size_type>& indices,
                 const std::vector<TrilinosScalar>& values)
     {
       // if we have ghost values, do not allow
@@ -1574,7 +1574,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::add(const std::vector<size_type>&           indices,
+    Vector::add(const std::vector<size_type>& indices,
                 const ::dealii::Vector<TrilinosScalar>& values)
     {
       // if we have ghost values, do not allow
@@ -1587,8 +1587,8 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::add(const size_type       n_elements,
-                const size_type*      indices,
+    Vector::add(const size_type n_elements,
+                const size_type* indices,
                 const TrilinosScalar* values)
     {
       // if we have ghost values, do not allow
@@ -1607,7 +1607,7 @@ namespace TrilinosWrappers
 
       for(size_type i = 0; i < n_elements; ++i)
         {
-          const size_type                         row       = indices[i];
+          const size_type row                               = indices[i];
           const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
           if(local_row != -1)
@@ -1708,7 +1708,7 @@ namespace TrilinosWrappers
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
       TrilinosScalar mean;
-      const int      ierr = vector->MeanValue(&mean);
+      const int ierr = vector->MeanValue(&mean);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return mean;
@@ -1718,7 +1718,7 @@ namespace TrilinosWrappers
     Vector::min() const
     {
       TrilinosScalar min_value;
-      const int      ierr = vector->MinValue(&min_value);
+      const int ierr = vector->MinValue(&min_value);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return min_value;
@@ -1728,7 +1728,7 @@ namespace TrilinosWrappers
     Vector::max() const
     {
       TrilinosScalar max_value;
-      const int      ierr = vector->MaxValue(&max_value);
+      const int ierr = vector->MaxValue(&max_value);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return max_value;
@@ -1740,7 +1740,7 @@ namespace TrilinosWrappers
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
       TrilinosScalar d;
-      const int      ierr = vector->Norm1(&d);
+      const int ierr = vector->Norm1(&d);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return d;
@@ -1752,7 +1752,7 @@ namespace TrilinosWrappers
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
       TrilinosScalar d;
-      const int      ierr = vector->Norm2(&d);
+      const int ierr = vector->Norm2(&d);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return d;
@@ -1763,8 +1763,8 @@ namespace TrilinosWrappers
     {
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
-      TrilinosScalar  norm    = 0;
-      TrilinosScalar  sum     = 0;
+      TrilinosScalar norm     = 0;
+      TrilinosScalar sum      = 0;
       const size_type n_local = local_size();
 
       // loop over all the elements because
@@ -1786,7 +1786,7 @@ namespace TrilinosWrappers
       // is safe to run even in the
       // presence of ghost elements
       TrilinosScalar d;
-      const int      ierr = vector->NormInf(&d);
+      const int ierr = vector->NormInf(&d);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       return d;
@@ -1794,8 +1794,8 @@ namespace TrilinosWrappers
 
     inline TrilinosScalar
     Vector::add_and_dot(const TrilinosScalar a,
-                        const Vector&        V,
-                        const Vector&        W)
+                        const Vector& V,
+                        const Vector& W)
     {
       this->add(a, V);
       return *this * W;
@@ -1888,9 +1888,9 @@ namespace TrilinosWrappers
 
     inline void
     Vector::add(const TrilinosScalar a,
-                const Vector&        v,
+                const Vector& v,
                 const TrilinosScalar b,
-                const Vector&        w)
+                const Vector& w)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1937,7 +1937,7 @@ namespace TrilinosWrappers
     inline void
     Vector::sadd(const TrilinosScalar s,
                  const TrilinosScalar a,
-                 const Vector&        v)
+                 const Vector& v)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -2039,9 +2039,9 @@ namespace TrilinosWrappers
     }
 
     template <typename number>
-    Vector::Vector(const IndexSet&               parallel_partitioner,
+    Vector::Vector(const IndexSet& parallel_partitioner,
                    const dealii::Vector<number>& v,
-                   const MPI_Comm&               communicator)
+                   const MPI_Comm& communicator)
     {
       *this
         = Vector(parallel_partitioner.make_trilinos_map(communicator, true), v);
@@ -2089,9 +2089,9 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&                  matrix,
+      reinit_range_vector(const Matrix& matrix,
                           TrilinosWrappers::MPI::Vector& v,
-                          bool                           omit_zeroing_entries)
+                          bool omit_zeroing_entries)
       {
         v.reinit(matrix.locally_owned_range_indices(),
                  matrix.get_mpi_communicator(),
@@ -2100,9 +2100,9 @@ namespace internal
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&                  matrix,
+      reinit_domain_vector(const Matrix& matrix,
                            TrilinosWrappers::MPI::Vector& v,
-                           bool                           omit_zeroing_entries)
+                           bool omit_zeroing_entries)
       {
         v.reinit(matrix.locally_owned_domain_indices(),
                  matrix.get_mpi_communicator(),

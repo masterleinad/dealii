@@ -30,7 +30,7 @@ using namespace dealii::Physics;
 void
 test_rotation_matrix_3d_z_axis(const double angle)
 {
-  Tensor<2, 3>       R_z = unit_symmetric_tensor<3>();
+  Tensor<2, 3> R_z = unit_symmetric_tensor<3>();
   const Tensor<2, 2> R_2d
     = Transformations::Rotations::rotation_matrix_2d(angle);
   for(unsigned int i = 0; i < 2; ++i)
@@ -58,7 +58,7 @@ test_rotation_matrix_3d(const Point<3>& axis, const double angle)
   // NOTE: Angle in radians
   const Tensor<1, 3> u        = axis / axis.norm(); // Ensure unit vector
   const Tensor<2, 3> u_dyad_u = outer_product(u, u);
-  const double       u_skew_array[3][3]
+  const double u_skew_array[3][3]
     = {{0.0, -u[2], u[1]}, {u[2], 0.0, -u[0]}, {-u[1], u[0], 0.0}};
 
   const Tensor<2, 3> R_rodrigues
@@ -98,7 +98,7 @@ main()
 
   // 2-d
   {
-    const double       angle = 90.0 * deg_to_rad;
+    const double angle = 90.0 * deg_to_rad;
     const Tensor<1, 2> in({1, 0});
     const Tensor<2, 2> R
       = Transformations::Rotations::rotation_matrix_2d(angle);
@@ -111,7 +111,7 @@ main()
            ExcMessage("Incorrect computation of 90 degree R in 2d"));
   }
   {
-    const double       angle = 135.0 * deg_to_rad;
+    const double angle = 135.0 * deg_to_rad;
     const Tensor<1, 2> in({1, 0});
     const Tensor<2, 2> R
       = Transformations::Rotations::rotation_matrix_2d(angle);
@@ -126,7 +126,7 @@ main()
       ExcMessage("Incorrect computation of 135 degree R in 2d"));
   }
   {
-    const double       angle = 240.0 * deg_to_rad;
+    const double angle = 240.0 * deg_to_rad;
     const Tensor<1, 2> in({1, 0});
     const Tensor<2, 2> R
       = Transformations::Rotations::rotation_matrix_2d(angle);

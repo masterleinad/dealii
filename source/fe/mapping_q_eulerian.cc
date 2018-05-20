@@ -40,7 +40,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, class VectorType, int spacedim>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   MappingQEulerianGeneric(
-    const unsigned int                                 degree,
+    const unsigned int degree,
     const MappingQEulerian<dim, VectorType, spacedim>& mapping_q_eulerian)
   : MappingQGeneric<dim, spacedim>(degree),
     mapping_q_eulerian(mapping_q_eulerian),
@@ -52,10 +52,10 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
 
 template <int dim, class VectorType, int spacedim>
 MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerian(
-  const unsigned int               degree,
+  const unsigned int degree,
   const DoFHandler<dim, spacedim>& euler_dof_handler,
-  const VectorType&                euler_vector,
-  const unsigned int               level)
+  const VectorType& euler_vector,
+  const unsigned int level)
   : MappingQ<dim, spacedim>(degree, true),
     euler_vector(&euler_vector),
     euler_dof_handler(&euler_dof_handler),
@@ -91,7 +91,7 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   // order, which are (in accordance with MappingQ) the support points of
   // QGaussLobatto.
   const QGaussLobatto<dim> q_iterated(map_degree + 1);
-  const unsigned int       n_q_points = q_iterated.size();
+  const unsigned int n_q_points = q_iterated.size();
 
   // we then need to define a renumbering vector that allows us to go from a
   // lexicographic numbering scheme to a hierarchic one.  this fragment is
@@ -231,7 +231,7 @@ CellSimilarity::Similarity
 MappingQEulerian<dim, VectorType, spacedim>::fill_fe_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const CellSimilarity::Similarity,
-  const Quadrature<dim>&                                   quadrature,
+  const Quadrature<dim>& quadrature,
   const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
   internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
     output_data) const

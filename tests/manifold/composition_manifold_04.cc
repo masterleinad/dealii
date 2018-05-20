@@ -32,7 +32,7 @@ main()
 
   Point<spacedim> center;
 
-  PolarManifold<dim, spacedim>              S(center);
+  PolarManifold<dim, spacedim> S(center);
   FunctionManifold<dim, spacedim, spacedim> F("x;y", "x;y");
 
   CompositionManifold<dim> manifold(S, F);

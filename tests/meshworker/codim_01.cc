@@ -42,16 +42,16 @@ public:
   TestIntegrator(){};
 
   void
-  cell(MeshWorker::DoFInfo<dim, spacedim>&                  dinfo,
+  cell(MeshWorker::DoFInfo<dim, spacedim>& dinfo,
        typename MeshWorker::IntegrationInfo<dim, spacedim>& info) const {};
 
   void
-  boundary(MeshWorker::DoFInfo<dim, spacedim>&                  dinfo,
+  boundary(MeshWorker::DoFInfo<dim, spacedim>& dinfo,
            typename MeshWorker::IntegrationInfo<dim, spacedim>& info) const {};
 
   void
-  face(MeshWorker::DoFInfo<dim, spacedim>&                  dinfo1,
-       MeshWorker::DoFInfo<dim, spacedim>&                  dinfo2,
+  face(MeshWorker::DoFInfo<dim, spacedim>& dinfo1,
+       MeshWorker::DoFInfo<dim, spacedim>& dinfo2,
        typename MeshWorker::IntegrationInfo<dim, spacedim>& info1,
        typename MeshWorker::IntegrationInfo<dim, spacedim>& info2) const {};
 };
@@ -65,7 +65,7 @@ test()
   Triangulation<dim, spacedim> triangulation;
   GridGenerator::hyper_cube(triangulation);
 
-  FE_Q<dim, spacedim>       fe(1);
+  FE_Q<dim, spacedim> fe(1);
   DoFHandler<dim, spacedim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

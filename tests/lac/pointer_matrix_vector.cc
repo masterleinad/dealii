@@ -27,9 +27,9 @@ main()
   Vector<double> u(5);
   Vector<double> v(5);
   Vector<double> w(1);
-  Vector<float>  x(5);
-  Vector<float>  y(5);
-  Vector<float>  z(1);
+  Vector<float> x(5);
+  Vector<float> y(5);
+  Vector<float> z(1);
 
   for(unsigned int i = 0; i < u.size(); ++i)
     {

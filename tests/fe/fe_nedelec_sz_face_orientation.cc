@@ -38,9 +38,9 @@ void create_reference_triangulation(Triangulation<3>& tria)
 }
 
 void create_triangulation(Triangulation<3>& tria,
-                          const bool        face_orientation,
-                          const bool        face_flip,
-                          const bool        face_rotation)
+                          const bool face_orientation,
+                          const bool face_flip,
+                          const bool face_rotation)
 {
   std::vector<CellData<3>> cells(2);
 
@@ -182,8 +182,8 @@ void
 evaluate(const FiniteElement<3>& fe, const DoFHandler<3>& dof_handler)
 {
   const FEValuesExtractors::Vector component(0);
-  const Quadrature<3>              quadrature(Point<3>(0.5, 0.5, 0.5));
-  FEValues<3>                      fe_values(fe,
+  const Quadrature<3> quadrature(Point<3>(0.5, 0.5, 0.5));
+  FEValues<3> fe_values(fe,
                         quadrature,
                         update_quadrature_points | update_values
                           | update_gradients);

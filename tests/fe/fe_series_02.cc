@@ -46,7 +46,7 @@ public:
 
   virtual double
   value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+        const unsigned int component = 0) const;
 
   const std::vector<double>&
   get_coefficients() const
@@ -82,8 +82,8 @@ template <int dim>
 void
 test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 {
-  Triangulation<dim>    triangulation;
-  hp::DoFHandler<dim>   dof_handler(triangulation);
+  Triangulation<dim> triangulation;
+  hp::DoFHandler<dim> dof_handler(triangulation);
   hp::FECollection<dim> fe_collection;
   fe_collection.push_back(dealii::FE_Q<dim>(poly_degree));
 
@@ -99,11 +99,11 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
 
   VectorTools::interpolate(dof_handler, func, values);
 
-  const unsigned int      N = poly_degree + 1;
+  const unsigned int N = poly_degree + 1;
   FESeries::Legendre<dim> legendre(N, fe_collection, quadrature_formula);
 
   const std::vector<double>& coeff_in = func.get_coefficients();
-  Table<1, double>           coeff_out(N);
+  Table<1, double> coeff_out(N);
 
   Vector<double> local_dof_values;
 

@@ -93,7 +93,7 @@ namespace
   template <typename number>
   double
   compute_global_sum(const dealii::Vector<number>& criteria,
-                     MPI_Comm                      mpi_communicator)
+                     MPI_Comm mpi_communicator)
   {
     double my_sum
       = std::accumulate(criteria.begin(),
@@ -122,7 +122,7 @@ namespace
   void
   get_locally_owned_indicators(
     const parallel::distributed::Triangulation<dim, spacedim>& tria,
-    const dealii::Vector<Number>&                              criteria,
+    const dealii::Vector<Number>& criteria,
     Vector<Number>& locally_owned_indicators)
   {
     Assert(locally_owned_indicators.size()
@@ -178,8 +178,8 @@ namespace
   template <int dim, int spacedim, typename Number>
   void
   mark_cells(parallel::distributed::Triangulation<dim, spacedim>& tria,
-             const dealii::Vector<Number>&                        criteria,
-             const double                                         top_threshold,
+             const dealii::Vector<Number>& criteria,
+             const double top_threshold,
              const double bottom_threshold)
   {
     dealii::GridRefinement::refine(tria, criteria, top_threshold);
@@ -206,17 +206,17 @@ namespace
      */
     template <typename number>
     number
-    compute_threshold(const dealii::Vector<number>&    criteria,
+    compute_threshold(const dealii::Vector<number>& criteria,
                       const std::pair<double, double>& global_min_and_max,
-                      const unsigned int               n_target_cells,
-                      MPI_Comm                         mpi_communicator)
+                      const unsigned int n_target_cells,
+                      MPI_Comm mpi_communicator)
     {
       double interesting_range[2]
         = {global_min_and_max.first, global_min_and_max.second};
       adjust_interesting_range(interesting_range);
 
       const unsigned int master_mpi_rank = 0;
-      unsigned int       iteration       = 0;
+      unsigned int iteration             = 0;
 
       do
         {
@@ -295,17 +295,17 @@ namespace
      */
     template <typename number>
     number
-    compute_threshold(const dealii::Vector<number>&    criteria,
+    compute_threshold(const dealii::Vector<number>& criteria,
                       const std::pair<double, double>& global_min_and_max,
-                      const double                     target_error,
-                      MPI_Comm                         mpi_communicator)
+                      const double target_error,
+                      MPI_Comm mpi_communicator)
     {
       double interesting_range[2]
         = {global_min_and_max.first, global_min_and_max.second};
       adjust_interesting_range(interesting_range);
 
       const unsigned int master_mpi_rank = 0;
-      unsigned int       iteration       = 0;
+      unsigned int iteration             = 0;
 
       do
         {
@@ -404,9 +404,9 @@ namespace parallel
       void
       refine_and_coarsen_fixed_number(
         parallel::distributed::Triangulation<dim, spacedim>& tria,
-        const dealii::Vector<Number>&                        criteria,
-        const double       top_fraction_of_cells,
-        const double       bottom_fraction_of_cells,
+        const dealii::Vector<Number>& criteria,
+        const double top_fraction_of_cells,
+        const double bottom_fraction_of_cells,
         const unsigned int max_n_cells)
       {
         Assert(criteria.size() == tria.n_active_cells(),
@@ -474,7 +474,7 @@ namespace parallel
       void
       refine_and_coarsen_fixed_fraction(
         parallel::distributed::Triangulation<dim, spacedim>& tria,
-        const dealii::Vector<Number>&                        criteria,
+        const dealii::Vector<Number>& criteria,
         const double top_fraction_of_error,
         const double bottom_fraction_of_error)
       {

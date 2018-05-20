@@ -33,7 +33,7 @@ check_2()
     {
       for(unsigned int l = 0; l < dim; ++l)
         {
-          const double    entry = double(Testing::rand());
+          const double entry = double(Testing::rand());
           TableIndices<2> indices(k, l);
 
           // check assignment
@@ -72,7 +72,7 @@ check_4()
             {
               for(unsigned int l = 0; l < dim; ++l)
                 {
-                  const double    entry = double(Testing::rand());
+                  const double entry = double(Testing::rand());
                   TableIndices<4> indices(i, j, k, l);
 
                   // check assignment

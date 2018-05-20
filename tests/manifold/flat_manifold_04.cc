@@ -44,7 +44,7 @@ test(unsigned int ref, const MappingQ<dim>& mapping)
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
   QGauss<dim> quadrature(4);
-  FE_Q<dim>   fe(2);
+  FE_Q<dim> fe(2);
 
   FEValues<dim> fe_values(mapping,
                           fe,

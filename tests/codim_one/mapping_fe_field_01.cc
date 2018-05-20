@@ -49,7 +49,7 @@ test(const unsigned int refs,
 
   Triangulation<dim, spacedim> triangulation;
 
-  FE_Q<dim, spacedim>     fe(degree);
+  FE_Q<dim, spacedim> fe(degree);
   FESystem<dim, spacedim> fe_euler(FE_Q<dim, spacedim>(degree), spacedim);
 
   DoFHandler<dim, spacedim> dof_handler(triangulation);

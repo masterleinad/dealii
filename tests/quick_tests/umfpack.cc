@@ -57,7 +57,7 @@ test(bool transpose = false)
   tria.execute_coarsening_and_refinement();
   tria.refine_global(8 - 2 * dim);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

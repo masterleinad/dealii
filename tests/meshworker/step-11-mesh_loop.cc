@@ -89,13 +89,13 @@ namespace Step11
     solve();
 
     Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
-    MappingQ<dim>      mapping;
+    FE_Q<dim> fe;
+    DoFHandler<dim> dof_handler;
+    MappingQ<dim> mapping;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
-    ConstraintMatrix     constraints;
+    ConstraintMatrix constraints;
 
     Vector<double> solution;
     Vector<double> system_rhs;
@@ -161,9 +161,9 @@ namespace Step11
   template <int dim>
   struct ScratchData
   {
-    ScratchData(const Mapping<dim>&       mapping,
+    ScratchData(const Mapping<dim>& mapping,
                 const FiniteElement<dim>& fe,
-                const unsigned int        quadrature_degree)
+                const unsigned int quadrature_degree)
       : fe_values(mapping,
                   fe,
                   QGauss<dim>(quadrature_degree),
@@ -189,13 +189,13 @@ namespace Step11
                          | update_JxW_values | update_normal_vectors)
     {}
 
-    FEValues<dim>     fe_values;
+    FEValues<dim> fe_values;
     FEFaceValues<dim> fe_face_values;
   };
   struct CopyData
   {
-    FullMatrix<double>                   cell_matrix;
-    Vector<double>                       cell_rhs;
+    FullMatrix<double> cell_matrix;
+    Vector<double> cell_rhs;
     std::vector<types::global_dof_index> local_dof_indices;
   };
 
@@ -207,9 +207,9 @@ namespace Step11
   {
     typedef decltype(dof_handler.begin_active()) Iterator;
 
-    auto cell_worker = [](const Iterator&   cell,
+    auto cell_worker = [](const Iterator& cell,
                           ScratchData<dim>& scratch_data,
-                          CopyData&         copy_data) {
+                          CopyData& copy_data) {
       const unsigned int dofs_per_cell
         = scratch_data.fe_values.get_fe().dofs_per_cell;
       const unsigned int n_q_points
@@ -223,7 +223,7 @@ namespace Step11
 
       scratch_data.fe_values.reinit(cell);
 
-      std::vector<double>   rhs_values(n_q_points);
+      std::vector<double> rhs_values(n_q_points);
       ConstantFunction<dim> right_hand_side(-2.0);
       right_hand_side.value_list(scratch_data.fe_values.get_quadrature_points(),
                                  rhs_values);
@@ -245,16 +245,16 @@ namespace Step11
           }
     };
 
-    auto boundary_worker = [](const Iterator&     cell,
+    auto boundary_worker = [](const Iterator& cell,
                               const unsigned int& face_no,
-                              ScratchData<dim>&   scratch_data,
-                              CopyData&           copy_data) {
+                              ScratchData<dim>& scratch_data,
+                              CopyData& copy_data) {
       const unsigned int dofs_per_cell
         = scratch_data.fe_values.get_fe().dofs_per_cell;
       const unsigned int n_face_q_points
         = scratch_data.fe_face_values.get_quadrature().size();
 
-      std::vector<double>   face_boundary_values(n_face_q_points);
+      std::vector<double> face_boundary_values(n_face_q_points);
       ConstantFunction<dim> boundary_values(1.0);
 
       scratch_data.fe_face_values.reinit(cell, face_no);
@@ -339,7 +339,7 @@ namespace Step11
   LaplaceProblem<dim>::solve()
   {
     SolverControl solver_control(1000, 1e-12, false, false);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);

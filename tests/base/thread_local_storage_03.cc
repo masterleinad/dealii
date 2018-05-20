@@ -41,7 +41,7 @@ struct X
 void
 test()
 {
-  X                    x;
+  X x;
   Threads::Thread<int> t;
   t = Threads::new_thread(&X::f, x);
 

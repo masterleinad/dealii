@@ -37,9 +37,9 @@ using namespace std;
 template <int dim, typename number, int spacedim>
 void
 reinit_vector_by_blocks(
-  const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-  MGLevelObject<BlockVector<number>>&                v,
-  const std::vector<bool>&                           sel,
+  const dealii::DoFHandler<dim, spacedim>& mg_dof,
+  MGLevelObject<BlockVector<number>>& v,
+  const std::vector<bool>& sel,
   std::vector<std::vector<types::global_dof_index>>& ndofs)
 {
   std::vector<bool> selected = sel;
@@ -75,8 +75,8 @@ reinit_vector_by_blocks(
 template <int dim>
 void
 check_block(const FiniteElement<dim>& fe,
-            const vector<bool>&       selected,
-            const vector<double>&     factors)
+            const vector<bool>& selected,
+            const vector<double>& factors)
 {
   deallog << fe.get_name() << std::endl << "selected ";
   for(unsigned int i = 0; i < selected.size(); ++i)
@@ -88,7 +88,7 @@ check_block(const FiniteElement<dim>& fe,
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  DoFHandler<dim>  mgdof(tr);
+  DoFHandler<dim> mgdof(tr);
   DoFHandler<dim>& dof = mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
@@ -116,7 +116,7 @@ check_block(const FiniteElement<dim>& fe,
     }
 
   PrimitiveVectorMemory<Vector<double>> mem;
-  MGTransferBlock<double>               transfer;
+  MGTransferBlock<double> transfer;
   transfer.build_matrices(dof, mgdof, selected);
   if(factors.size() > 0)
     transfer.initialize(factors, mem);
@@ -198,8 +198,8 @@ main()
 
   std::vector<double> factors;
 
-  FE_DGQ<2>                q0(0);
-  FE_DGQ<2>                q1(1);
+  FE_DGQ<2> q0(0);
+  FE_DGQ<2> q1(1);
   FE_RaviartThomasNodal<2> rt0(0);
   FE_RaviartThomasNodal<2> rt1(1);
 

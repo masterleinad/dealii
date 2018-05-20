@@ -41,9 +41,9 @@ test()
   Triangulation<dim - 1, dim> tria;
   GridGenerator::extract_boundary_mesh(volume_mesh, tria);
 
-  FE_Q<dim - 1, dim>       fe(1);
+  FE_Q<dim - 1, dim> fe(1);
   DoFHandler<dim - 1, dim> dh(tria);
-  MappingQ<dim - 1, dim>   mapping(1, true);
+  MappingQ<dim - 1, dim> mapping(1, true);
 
   dh.distribute_dofs(fe);
 

@@ -26,7 +26,7 @@ template <int dim>
 void
 test()
 {
-  Triangulation<dim>                  tria;
+  Triangulation<dim> tria;
   static const SphericalManifold<dim> x;
   if(dim == 2)
     {
@@ -37,7 +37,7 @@ test()
     GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
 
-  GridOut              grid_out;
+  GridOut grid_out;
   GridOutFlags::Eps<2> eps2(
     GridOutFlags::EpsFlagsBase::width, 300, .5, false, 5, true);
   grid_out.set_flags(eps2);

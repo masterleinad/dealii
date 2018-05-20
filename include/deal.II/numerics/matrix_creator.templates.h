@@ -119,12 +119,12 @@ namespace MatrixCreator
       {
         Scratch(
           const ::dealii::hp::FECollection<dim, spacedim>& fe,
-          const UpdateFlags                                update_flags,
+          const UpdateFlags update_flags,
           const Function<spacedim,
                          typename numbers::NumberTraits<number>::real_type>*
-                                                                coefficient,
-          const Function<spacedim, number>*                     rhs_function,
-          const ::dealii::hp::QCollection<dim>&                 quadrature,
+            coefficient,
+          const Function<spacedim, number>* rhs_function,
+          const ::dealii::hp::QCollection<dim>& quadrature,
           const ::dealii::hp::MappingCollection<dim, spacedim>& mapping)
           : fe_collection(fe),
             quadrature_collection(quadrature),
@@ -172,7 +172,7 @@ namespace MatrixCreator
         }
 
         const ::dealii::hp::FECollection<dim, spacedim>& fe_collection;
-        const ::dealii::hp::QCollection<dim>&            quadrature_collection;
+        const ::dealii::hp::QCollection<dim>& quadrature_collection;
         const ::dealii::hp::MappingCollection<dim, spacedim>&
           mapping_collection;
 
@@ -182,13 +182,13 @@ namespace MatrixCreator
           coefficient_values;
         std::vector<
           dealii::Vector<typename numbers::NumberTraits<number>::real_type>>
-                                            coefficient_vector_values;
-        std::vector<number>                 rhs_values;
+          coefficient_vector_values;
+        std::vector<number> rhs_values;
         std::vector<dealii::Vector<number>> rhs_vector_values;
 
         const Function<spacedim,
                        typename numbers::NumberTraits<number>::real_type>*
-                                          coefficient;
+          coefficient;
         const Function<spacedim, number>* rhs_function;
 
         const UpdateFlags update_flags;
@@ -199,8 +199,8 @@ namespace MatrixCreator
       {
         std::vector<types::global_dof_index> dof_indices;
         FullMatrix<typename numbers::NumberTraits<number>::real_type>
-                                cell_matrix;
-        dealii::Vector<number>  cell_rhs;
+          cell_matrix;
+        dealii::Vector<number> cell_rhs;
         const ConstraintMatrix* constraints;
       };
     } // namespace AssemblerData
@@ -210,7 +210,7 @@ namespace MatrixCreator
     mass_assembler(
       const CellIterator& cell,
       MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, number>&
-                                                                data,
+        data,
       MatrixCreator::internal::AssemblerData::CopyData<number>& copy_data)
     {
       data.x_fe_values.reinit(cell);
@@ -220,7 +220,7 @@ namespace MatrixCreator
       const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
                          n_q_points          = fe_values.n_quadrature_points;
       const FiniteElement<dim, spacedim>& fe = fe_values.get_fe();
-      const unsigned int                  n_components = fe.n_components();
+      const unsigned int n_components        = fe.n_components();
 
       Assert(data.rhs_function == nullptr
                || data.rhs_function->n_components == 1
@@ -409,7 +409,7 @@ namespace MatrixCreator
     laplace_assembler(
       const CellIterator& cell,
       MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, double>&
-                                                                data,
+        data,
       MatrixCreator::internal::AssemblerData::CopyData<double>& copy_data)
     {
       data.x_fe_values.reinit(cell);
@@ -419,7 +419,7 @@ namespace MatrixCreator
       const unsigned int dofs_per_cell       = fe_values.dofs_per_cell,
                          n_q_points          = fe_values.n_quadrature_points;
       const FiniteElement<dim, spacedim>& fe = fe_values.get_fe();
-      const unsigned int                  n_components = fe.n_components();
+      const unsigned int n_components        = fe.n_components();
 
       Assert(data.rhs_function == nullptr
                || data.rhs_function->n_components == 1
@@ -472,7 +472,7 @@ namespace MatrixCreator
         }
 
       const std::vector<double>& JxW = fe_values.get_JxW_values();
-      double                     add_data;
+      double add_data;
       for(unsigned int i = 0; i < dofs_per_cell; ++i)
         if(fe.is_primitive())
           {
@@ -598,8 +598,8 @@ namespace MatrixCreator
     template <typename number, typename MatrixType, typename VectorType>
     void
     copy_local_to_global(const AssemblerData::CopyData<number>& data,
-                         MatrixType*                            matrix,
-                         VectorType*                            right_hand_side)
+                         MatrixType* matrix,
+                         VectorType* right_hand_side)
     {
       const unsigned int dofs_per_cell = data.dof_indices.size();
       (void) dofs_per_cell;
@@ -635,13 +635,13 @@ namespace MatrixCreator
 
         CopyData(CopyData const& data);
 
-        unsigned int                                  dofs_per_cell;
-        std::vector<types::global_dof_index>          dofs;
-        std::vector<std::vector<bool>>                dof_is_on_face;
+        unsigned int dofs_per_cell;
+        std::vector<types::global_dof_index> dofs;
+        std::vector<std::vector<bool>> dof_is_on_face;
         typename DoFHandlerType::active_cell_iterator cell;
         std::vector<
           FullMatrix<typename numbers::NumberTraits<number>::real_type>>
-                                    cell_matrix;
+          cell_matrix;
         std::vector<Vector<number>> cell_vector;
       };
 
@@ -667,20 +667,20 @@ namespace MatrixCreator
 {
   template <int dim, int spacedim, typename number>
   void
-  create_mass_matrix(const Mapping<dim, spacedim>&           mapping,
-                     const DoFHandler<dim, spacedim>&        dof,
-                     const Quadrature<dim>&                  q,
-                     SparseMatrix<number>&                   matrix,
+  create_mass_matrix(const Mapping<dim, spacedim>& mapping,
+                     const DoFHandler<dim, spacedim>& dof,
+                     const Quadrature<dim>& q,
+                     SparseMatrix<number>& matrix,
                      const Function<spacedim, number>* const coefficient,
-                     const ConstraintMatrix&                 constraints)
+                     const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.m(), dof.n_dofs()));
     Assert(matrix.n() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
-    hp::FECollection<dim, spacedim>      fe_collection(dof.get_fe());
-    hp::QCollection<dim>                 q_collection(q);
+    hp::FECollection<dim, spacedim> fe_collection(dof.get_fe());
+    hp::QCollection<dim> q_collection(q);
     hp::MappingCollection<dim, spacedim> mapping_collection(mapping);
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, number>
       assembler_data(fe_collection,
@@ -722,11 +722,11 @@ namespace MatrixCreator
 
   template <int dim, int spacedim, typename number>
   void
-  create_mass_matrix(const DoFHandler<dim, spacedim>&        dof,
-                     const Quadrature<dim>&                  q,
-                     SparseMatrix<number>&                   matrix,
+  create_mass_matrix(const DoFHandler<dim, spacedim>& dof,
+                     const Quadrature<dim>& q,
+                     SparseMatrix<number>& matrix,
                      const Function<spacedim, number>* const coefficient,
-                     const ConstraintMatrix&                 constraints)
+                     const ConstraintMatrix& constraints)
   {
     create_mass_matrix(StaticMappingQ1<dim, spacedim>::mapping,
                        dof,
@@ -739,15 +739,15 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(
-    const Mapping<dim, spacedim>&                                    mapping,
-    const DoFHandler<dim, spacedim>&                                 dof,
-    const Quadrature<dim>&                                           q,
+    const Mapping<dim, spacedim>& mapping,
+    const DoFHandler<dim, spacedim>& dof,
+    const Quadrature<dim>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
-    const Function<spacedim, number>&                                rhs,
-    Vector<number>&                                                  rhs_vector,
+    const Function<spacedim, number>& rhs,
+    Vector<number>& rhs_vector,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const
-                            coefficient,
+      coefficient,
     const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
@@ -755,11 +755,11 @@ namespace MatrixCreator
     Assert(matrix.n() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
-    hp::FECollection<dim, spacedim>      fe_collection(dof.get_fe());
-    hp::QCollection<dim>                 q_collection(q);
+    hp::FECollection<dim, spacedim> fe_collection(dof.get_fe());
+    hp::QCollection<dim> q_collection(q);
     hp::MappingCollection<dim, spacedim> mapping_collection(mapping);
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, number>
-                                                             assembler_data(fe_collection,
+      assembler_data(fe_collection,
                      update_values | update_JxW_values
                        | update_quadrature_points,
                      coefficient,
@@ -799,14 +799,14 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(
-    const DoFHandler<dim, spacedim>&                                 dof,
-    const Quadrature<dim>&                                           q,
+    const DoFHandler<dim, spacedim>& dof,
+    const Quadrature<dim>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
-    const Function<spacedim, number>&                                rhs,
-    Vector<number>&                                                  rhs_vector,
+    const Function<spacedim, number>& rhs,
+    Vector<number>& rhs_vector,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const
-                            coefficient,
+      coefficient,
     const ConstraintMatrix& constraints)
   {
     create_mass_matrix(StaticMappingQ1<dim, spacedim>::mapping,
@@ -822,11 +822,11 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(const hp::MappingCollection<dim, spacedim>& mapping,
-                     const hp::DoFHandler<dim, spacedim>&        dof,
-                     const hp::QCollection<dim>&                 q,
-                     SparseMatrix<number>&                       matrix,
-                     const Function<spacedim, number>* const     coefficient,
-                     const ConstraintMatrix&                     constraints)
+                     const hp::DoFHandler<dim, spacedim>& dof,
+                     const hp::QCollection<dim>& q,
+                     SparseMatrix<number>& matrix,
+                     const Function<spacedim, number>* const coefficient,
+                     const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.m(), dof.n_dofs()));
@@ -834,7 +834,7 @@ namespace MatrixCreator
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, number>
-                                                             assembler_data(dof.get_fe_collection(),
+      assembler_data(dof.get_fe_collection(),
                      update_values | update_JxW_values
                        | (coefficient != nullptr ? update_quadrature_points :
                                                    UpdateFlags(0)),
@@ -872,11 +872,11 @@ namespace MatrixCreator
 
   template <int dim, int spacedim, typename number>
   void
-  create_mass_matrix(const hp::DoFHandler<dim, spacedim>&    dof,
-                     const hp::QCollection<dim>&             q,
-                     SparseMatrix<number>&                   matrix,
+  create_mass_matrix(const hp::DoFHandler<dim, spacedim>& dof,
+                     const hp::QCollection<dim>& q,
+                     SparseMatrix<number>& matrix,
                      const Function<spacedim, number>* const coefficient,
-                     const ConstraintMatrix&                 constraints)
+                     const ConstraintMatrix& constraints)
   {
     create_mass_matrix(hp::StaticMappingQ1<dim, spacedim>::mapping_collection,
                        dof,
@@ -889,15 +889,15 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(
-    const hp::MappingCollection<dim, spacedim>&                      mapping,
-    const hp::DoFHandler<dim, spacedim>&                             dof,
-    const hp::QCollection<dim>&                                      q,
+    const hp::MappingCollection<dim, spacedim>& mapping,
+    const hp::DoFHandler<dim, spacedim>& dof,
+    const hp::QCollection<dim>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
-    const Function<spacedim, number>&                                rhs,
-    Vector<number>&                                                  rhs_vector,
+    const Function<spacedim, number>& rhs,
+    Vector<number>& rhs_vector,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const
-                            coefficient,
+      coefficient,
     const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
@@ -906,7 +906,7 @@ namespace MatrixCreator
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, number>
-                                                             assembler_data(dof.get_fe_collection(),
+      assembler_data(dof.get_fe_collection(),
                      update_values | update_JxW_values
                        | update_quadrature_points,
                      coefficient,
@@ -946,14 +946,14 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_mass_matrix(
-    const hp::DoFHandler<dim, spacedim>&                             dof,
-    const hp::QCollection<dim>&                                      q,
+    const hp::DoFHandler<dim, spacedim>& dof,
+    const hp::QCollection<dim>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
-    const Function<spacedim, number>&                                rhs,
-    Vector<number>&                                                  rhs_vector,
+    const Function<spacedim, number>& rhs,
+    Vector<number>& rhs_vector,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const
-                            coefficient,
+      coefficient,
     const ConstraintMatrix& constraints)
   {
     create_mass_matrix(hp::StaticMappingQ1<dim, spacedim>::mapping_collection,
@@ -974,14 +974,14 @@ namespace MatrixCreator
       MatrixCreator::internal::AssemblerBoundary::Scratch const&,
       MatrixCreator::internal::AssemblerBoundary::
         CopyData<DoFHandler<dim, spacedim>, number>& copy_data,
-      Mapping<dim, spacedim> const&                  mapping,
-      FiniteElement<dim, spacedim> const&            fe,
-      Quadrature<dim - 1> const&                     q,
+      Mapping<dim, spacedim> const& mapping,
+      FiniteElement<dim, spacedim> const& fe,
+      Quadrature<dim - 1> const& q,
       std::map<types::boundary_id, const Function<spacedim, number>*> const&
         boundary_functions,
       Function<spacedim,
                typename numbers::NumberTraits<number>::real_type> const* const
-                                       coefficient,
+        coefficient,
       std::vector<unsigned int> const& component_mapping)
 
     {
@@ -1214,7 +1214,7 @@ namespace MatrixCreator
       MatrixCreator::internal::AssemblerBoundary::
         CopyData<DoFHandler<dim, spacedim>, number> const& copy_data,
       std::map<types::boundary_id, const Function<spacedim, number>*> const&
-                                                  boundary_functions,
+        boundary_functions,
       std::vector<types::global_dof_index> const& dof_to_boundary_mapping,
       SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
       Vector<number>& rhs_vector)
@@ -1320,17 +1320,17 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
-    const Mapping<dim, spacedim>&                                    mapping,
-    const DoFHandler<dim, spacedim>&                                 dof,
-    const Quadrature<dim - 1>&                                       q,
+    const Mapping<dim, spacedim>& mapping,
+    const DoFHandler<dim, spacedim>& dof,
+    const Quadrature<dim - 1>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
     const std::map<types::boundary_id, const Function<spacedim, number>*>&
-                                          boundary_functions,
-    Vector<number>&                       rhs_vector,
+      boundary_functions,
+    Vector<number>& rhs_vector,
     std::vector<types::global_dof_index>& dof_to_boundary_mapping,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const
-                              coefficient,
+      coefficient,
     std::vector<unsigned int> component_mapping)
   {
     // what would that be in 1d? the
@@ -1342,8 +1342,8 @@ namespace MatrixCreator
         return;
       }
 
-    const FiniteElement<dim, spacedim>& fe           = dof.get_fe();
-    const unsigned int                  n_components = fe.n_components();
+    const FiniteElement<dim, spacedim>& fe = dof.get_fe();
+    const unsigned int n_components        = fe.n_components();
 
     Assert(matrix.n() == dof.n_boundary_dofs(boundary_functions),
            ExcInternalError());
@@ -1411,23 +1411,23 @@ namespace MatrixCreator
       MatrixCreator::internal::AssemblerBoundary::Scratch const&,
       MatrixCreator::internal::AssemblerBoundary ::
         CopyData<hp::DoFHandler<dim, spacedim>, number>& copy_data,
-      hp::MappingCollection<dim, spacedim> const&        mapping,
-      hp::FECollection<dim, spacedim> const&             fe_collection,
-      hp::QCollection<dim - 1> const&                    q,
+      hp::MappingCollection<dim, spacedim> const& mapping,
+      hp::FECollection<dim, spacedim> const& fe_collection,
+      hp::QCollection<dim - 1> const& q,
       const std::map<types::boundary_id, const Function<spacedim, number>*>&
         boundary_functions,
       Function<spacedim,
                typename numbers::NumberTraits<number>::real_type> const* const
-                                       coefficient,
+        coefficient,
       std::vector<unsigned int> const& component_mapping)
     {
       const unsigned int n_components = fe_collection.n_components();
       const unsigned int n_function_components
         = boundary_functions.begin()->second->n_components;
-      const FiniteElement<dim, spacedim>& fe              = cell->get_fe();
-      const bool                          fe_is_system    = (n_components != 1);
-      const bool                          fe_is_primitive = fe.is_primitive();
-      const unsigned int                  dofs_per_face   = fe.dofs_per_face;
+      const FiniteElement<dim, spacedim>& fe = cell->get_fe();
+      const bool fe_is_system                = (n_components != 1);
+      const bool fe_is_primitive             = fe.is_primitive();
+      const unsigned int dofs_per_face       = fe.dofs_per_face;
 
       copy_data.cell          = cell;
       copy_data.dofs_per_cell = fe.dofs_per_cell;
@@ -1451,7 +1451,7 @@ namespace MatrixCreator
       const bool coefficient_is_vector
         = (coefficient != nullptr && coefficient->n_components != 1);
 
-      std::vector<number>         rhs_values_scalar;
+      std::vector<number> rhs_values_scalar;
       std::vector<Vector<number>> rhs_values_system;
 
       std::vector<types::global_dof_index> dofs_on_face_vector(dofs_per_face);
@@ -1667,7 +1667,7 @@ namespace MatrixCreator
       MatrixCreator::internal::AssemblerBoundary ::
         CopyData<hp::DoFHandler<dim, spacedim>, number> const& copy_data,
       std::map<types::boundary_id, const Function<spacedim, number>*> const&
-                                                  boundary_functions,
+        boundary_functions,
       std::vector<types::global_dof_index> const& dof_to_boundary_mapping,
       SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
       Vector<number>& rhs_vector)
@@ -1767,11 +1767,11 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
-    const DoFHandler<dim, spacedim>&                                 dof,
-    const Quadrature<dim - 1>&                                       q,
+    const DoFHandler<dim, spacedim>& dof,
+    const Quadrature<dim - 1>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
     const std::map<types::boundary_id, const Function<spacedim, number>*>& rhs,
-    Vector<number>&                       rhs_vector,
+    Vector<number>& rhs_vector,
     std::vector<types::global_dof_index>& dof_to_boundary_mapping,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a,
@@ -1791,17 +1791,17 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
-    const hp::MappingCollection<dim, spacedim>&                      mapping,
-    const hp::DoFHandler<dim, spacedim>&                             dof,
-    const hp::QCollection<dim - 1>&                                  q,
+    const hp::MappingCollection<dim, spacedim>& mapping,
+    const hp::DoFHandler<dim, spacedim>& dof,
+    const hp::QCollection<dim - 1>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
     const std::map<types::boundary_id, const Function<spacedim, number>*>&
-                                          boundary_functions,
-    Vector<number>&                       rhs_vector,
+      boundary_functions,
+    Vector<number>& rhs_vector,
     std::vector<types::global_dof_index>& dof_to_boundary_mapping,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const
-                              coefficient,
+      coefficient,
     std::vector<unsigned int> component_mapping)
   {
     // what would that be in 1d? the
@@ -1876,11 +1876,11 @@ namespace MatrixCreator
   template <int dim, int spacedim, typename number>
   void
   create_boundary_mass_matrix(
-    const hp::DoFHandler<dim, spacedim>&                             dof,
-    const hp::QCollection<dim - 1>&                                  q,
+    const hp::DoFHandler<dim, spacedim>& dof,
+    const hp::QCollection<dim - 1>& q,
     SparseMatrix<typename numbers::NumberTraits<number>::real_type>& matrix,
     const std::map<types::boundary_id, const Function<spacedim, number>*>& rhs,
-    Vector<number>&                       rhs_vector,
+    Vector<number>& rhs_vector,
     std::vector<types::global_dof_index>& dof_to_boundary_mapping,
     const Function<spacedim,
                    typename numbers::NumberTraits<number>::real_type>* const a,
@@ -1900,23 +1900,23 @@ namespace MatrixCreator
 
   template <int dim, int spacedim>
   void
-  create_laplace_matrix(const Mapping<dim, spacedim>&    mapping,
+  create_laplace_matrix(const Mapping<dim, spacedim>& mapping,
                         const DoFHandler<dim, spacedim>& dof,
-                        const Quadrature<dim>&           q,
-                        SparseMatrix<double>&            matrix,
-                        const Function<spacedim>* const  coefficient,
-                        const ConstraintMatrix&          constraints)
+                        const Quadrature<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.m(), dof.n_dofs()));
     Assert(matrix.n() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
-    hp::FECollection<dim, spacedim>      fe_collection(dof.get_fe());
-    hp::QCollection<dim>                 q_collection(q);
+    hp::FECollection<dim, spacedim> fe_collection(dof.get_fe());
+    hp::QCollection<dim> q_collection(q);
     hp::MappingCollection<dim, spacedim> mapping_collection(mapping);
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, double>
-                                                             assembler_data(fe_collection,
+      assembler_data(fe_collection,
                      update_gradients | update_JxW_values
                        | (coefficient != nullptr ? update_quadrature_points :
                                                    UpdateFlags(0)),
@@ -1954,10 +1954,10 @@ namespace MatrixCreator
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const DoFHandler<dim, spacedim>& dof,
-                        const Quadrature<dim>&           q,
-                        SparseMatrix<double>&            matrix,
-                        const Function<spacedim>* const  coefficient,
-                        const ConstraintMatrix&          constraints)
+                        const Quadrature<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     create_laplace_matrix(StaticMappingQ1<dim, spacedim>::mapping,
                           dof,
@@ -1969,25 +1969,25 @@ namespace MatrixCreator
 
   template <int dim, int spacedim>
   void
-  create_laplace_matrix(const Mapping<dim, spacedim>&    mapping,
+  create_laplace_matrix(const Mapping<dim, spacedim>& mapping,
                         const DoFHandler<dim, spacedim>& dof,
-                        const Quadrature<dim>&           q,
-                        SparseMatrix<double>&            matrix,
-                        const Function<spacedim>&        rhs,
-                        Vector<double>&                  rhs_vector,
-                        const Function<spacedim>* const  coefficient,
-                        const ConstraintMatrix&          constraints)
+                        const Quadrature<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>& rhs,
+                        Vector<double>& rhs_vector,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.m(), dof.n_dofs()));
     Assert(matrix.n() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
-    hp::FECollection<dim, spacedim>      fe_collection(dof.get_fe());
-    hp::QCollection<dim>                 q_collection(q);
+    hp::FECollection<dim, spacedim> fe_collection(dof.get_fe());
+    hp::QCollection<dim> q_collection(q);
     hp::MappingCollection<dim, spacedim> mapping_collection(mapping);
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, double>
-                                                             assembler_data(fe_collection,
+      assembler_data(fe_collection,
                      update_gradients | update_values | update_JxW_values
                        | update_quadrature_points,
                      coefficient,
@@ -2024,12 +2024,12 @@ namespace MatrixCreator
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const DoFHandler<dim, spacedim>& dof,
-                        const Quadrature<dim>&           q,
-                        SparseMatrix<double>&            matrix,
-                        const Function<spacedim>&        rhs,
-                        Vector<double>&                  rhs_vector,
-                        const Function<spacedim>* const  coefficient,
-                        const ConstraintMatrix&          constraints)
+                        const Quadrature<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>& rhs,
+                        Vector<double>& rhs_vector,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     create_laplace_matrix(StaticMappingQ1<dim, spacedim>::mapping,
                           dof,
@@ -2044,11 +2044,11 @@ namespace MatrixCreator
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const hp::MappingCollection<dim, spacedim>& mapping,
-                        const hp::DoFHandler<dim, spacedim>&        dof,
-                        const hp::QCollection<dim>&                 q,
-                        SparseMatrix<double>&                       matrix,
-                        const Function<spacedim>* const             coefficient,
-                        const ConstraintMatrix&                     constraints)
+                        const hp::DoFHandler<dim, spacedim>& dof,
+                        const hp::QCollection<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.m(), dof.n_dofs()));
@@ -2056,7 +2056,7 @@ namespace MatrixCreator
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, double>
-                                                             assembler_data(dof.get_fe_collection(),
+      assembler_data(dof.get_fe_collection(),
                      update_gradients | update_JxW_values
                        | (coefficient != nullptr ? update_quadrature_points :
                                                    UpdateFlags(0)),
@@ -2094,10 +2094,10 @@ namespace MatrixCreator
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const hp::DoFHandler<dim, spacedim>& dof,
-                        const hp::QCollection<dim>&          q,
-                        SparseMatrix<double>&                matrix,
-                        const Function<spacedim>* const      coefficient,
-                        const ConstraintMatrix&              constraints)
+                        const hp::QCollection<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     create_laplace_matrix(
       hp::StaticMappingQ1<dim, spacedim>::mapping_collection,
@@ -2111,13 +2111,13 @@ namespace MatrixCreator
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const hp::MappingCollection<dim, spacedim>& mapping,
-                        const hp::DoFHandler<dim, spacedim>&        dof,
-                        const hp::QCollection<dim>&                 q,
-                        SparseMatrix<double>&                       matrix,
-                        const Function<spacedim>&                   rhs,
-                        Vector<double>&                             rhs_vector,
-                        const Function<spacedim>* const             coefficient,
-                        const ConstraintMatrix&                     constraints)
+                        const hp::DoFHandler<dim, spacedim>& dof,
+                        const hp::QCollection<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>& rhs,
+                        Vector<double>& rhs_vector,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     Assert(matrix.m() == dof.n_dofs(),
            ExcDimensionMismatch(matrix.m(), dof.n_dofs()));
@@ -2125,7 +2125,7 @@ namespace MatrixCreator
            ExcDimensionMismatch(matrix.n(), dof.n_dofs()));
 
     MatrixCreator::internal::AssemblerData::Scratch<dim, spacedim, double>
-                                                             assembler_data(dof.get_fe_collection(),
+      assembler_data(dof.get_fe_collection(),
                      update_gradients | update_values | update_JxW_values
                        | update_quadrature_points,
                      coefficient,
@@ -2162,12 +2162,12 @@ namespace MatrixCreator
   template <int dim, int spacedim>
   void
   create_laplace_matrix(const hp::DoFHandler<dim, spacedim>& dof,
-                        const hp::QCollection<dim>&          q,
-                        SparseMatrix<double>&                matrix,
-                        const Function<spacedim>&            rhs,
-                        Vector<double>&                      rhs_vector,
-                        const Function<spacedim>* const      coefficient,
-                        const ConstraintMatrix&              constraints)
+                        const hp::QCollection<dim>& q,
+                        SparseMatrix<double>& matrix,
+                        const Function<spacedim>& rhs,
+                        Vector<double>& rhs_vector,
+                        const Function<spacedim>* const coefficient,
+                        const ConstraintMatrix& constraints)
   {
     create_laplace_matrix(
       hp::StaticMappingQ1<dim, spacedim>::mapping_collection,

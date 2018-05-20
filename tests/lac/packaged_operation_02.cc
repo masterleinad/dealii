@@ -39,7 +39,7 @@
 using namespace dealii;
 
 void
-test_applies(std::string                              description,
+test_applies(std::string description,
              const PackagedOperation<Vector<double>>& expr)
 {
   // test apply
@@ -68,8 +68,8 @@ main()
   triangulation.refine_global(2);
 
   MappingQGeneric<dim> mapping_q1(1);
-  FE_Q<dim>            q1(1);
-  DoFHandler<dim>      dof_handler(triangulation);
+  FE_Q<dim> q1(1);
+  DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(q1);
 
   DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
@@ -87,7 +87,7 @@ main()
   auto M = linear_operator(m);
 
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    solver(solver_control);
+  SolverCG<> solver(solver_control);
 
   auto MInv = inverse_operator(M, solver, PreconditionIdentity());
 

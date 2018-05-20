@@ -39,7 +39,7 @@ template <>
 void
 check<2>()
 {
-  constexpr int      dim = 2;
+  constexpr int dim = 2;
   Triangulation<dim> triangulation;
   GridGenerator::cylinder(triangulation);
   triangulation.refine_global(2);
@@ -56,9 +56,9 @@ template <>
 void
 check<3>()
 {
-  constexpr int                  dim = 3;
+  constexpr int dim = 3;
   const CylindricalManifold<dim> boundary;
-  Triangulation<dim>             triangulation;
+  Triangulation<dim> triangulation;
   GridGenerator::cylinder(triangulation);
   triangulation.set_manifold(0, boundary);
   triangulation.refine_global(2);

@@ -37,7 +37,7 @@ test(PETScWrappers::MPI::Vector& v)
   v.compress(VectorOperation::add);
 
   Vector<double> w(v);
-  Vector<float>  x(v);
+  Vector<float> x(v);
 
   PETScWrappers::MPI::Vector w1(MPI_COMM_WORLD, w, w.size());
   PETScWrappers::MPI::Vector x1(MPI_COMM_WORLD, x, w.size());

@@ -74,7 +74,7 @@ namespace LinearAlgebra
   template <typename Number>
   void
   ReadWriteVector<Number>::reinit(const size_type size,
-                                  const bool      omit_zeroing_entries)
+                                  const bool omit_zeroing_entries)
   {
     // check whether we need to reallocate
     resize_val(size);
@@ -112,7 +112,7 @@ namespace LinearAlgebra
   template <typename Number>
   void
   ReadWriteVector<Number>::reinit(const IndexSet& locally_stored_indices,
-                                  const bool      omit_zeroing_entries)
+                                  const bool omit_zeroing_entries)
   {
     stored_elements = locally_stored_indices;
 
@@ -144,7 +144,7 @@ namespace LinearAlgebra
     resize_val(stored_elements.n_elements());
 
     TrilinosScalar* start_ptr;
-    int             leading_dimension;
+    int leading_dimension;
     int ierr = trilinos_vec.trilinos_vector().ExtractView(&start_ptr,
                                                           &leading_dimension);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
@@ -227,7 +227,7 @@ namespace LinearAlgebra
   void
   ReadWriteVector<Number>::import(
     const distributed::Vector<Number>& vec,
-    VectorOperation::values            operation,
+    VectorOperation::values operation,
     const std::shared_ptr<const CommunicationPatternBase>&
       communication_pattern)
   {
@@ -271,7 +271,7 @@ namespace LinearAlgebra
     void
     copy_petsc_vector(const PETSC_Number* petsc_start_ptr,
                       const PETSC_Number* petsc_end_ptr,
-                      Number*             ptr)
+                      Number* ptr)
     {
       std::copy(petsc_start_ptr, petsc_end_ptr, ptr);
     }
@@ -280,7 +280,7 @@ namespace LinearAlgebra
     void
     copy_petsc_vector(const std::complex<PETSC_Number>* petsc_start_ptr,
                       const std::complex<PETSC_Number>* petsc_end_ptr,
-                      std::complex<Number>*             ptr)
+                      std::complex<Number>* ptr)
     {
       std::copy(petsc_start_ptr, petsc_end_ptr, ptr);
     }
@@ -308,7 +308,7 @@ namespace LinearAlgebra
            StandardExceptions::ExcInvalidState());
 
     // get a representation of the vector and copy it
-    PetscScalar*   start_ptr;
+    PetscScalar* start_ptr;
     PetscErrorCode ierr
       = VecGetArray(static_cast<const Vec&>(petsc_vec), &start_ptr);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -327,9 +327,9 @@ namespace LinearAlgebra
   void
   ReadWriteVector<Number>::import(
     const Epetra_MultiVector& multivector,
-    const IndexSet&           source_elements,
-    VectorOperation::values   operation,
-    const MPI_Comm&           mpi_comm,
+    const IndexSet& source_elements,
+    VectorOperation::values operation,
+    const MPI_Comm& mpi_comm,
     const std::shared_ptr<const CommunicationPatternBase>&
       communication_pattern)
   {
@@ -380,7 +380,7 @@ namespace LinearAlgebra
                                + Utilities::to_string(err)));
 
         const double* new_values = target_vector.Values();
-        const int     size       = target_vector.MyLength();
+        const int size           = target_vector.MyLength();
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 
@@ -395,7 +395,7 @@ namespace LinearAlgebra
                                + Utilities::to_string(err)));
 
         const double* new_values = target_vector.Values();
-        const int     size       = target_vector.MyLength();
+        const int size           = target_vector.MyLength();
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 
@@ -409,8 +409,8 @@ namespace LinearAlgebra
   template <typename Number>
   void
   ReadWriteVector<Number>::import(
-    const TrilinosWrappers::MPI::Vector&            trilinos_vec,
-    VectorOperation::values                         operation,
+    const TrilinosWrappers::MPI::Vector& trilinos_vec,
+    VectorOperation::values operation,
     std::shared_ptr<const CommunicationPatternBase> communication_pattern)
   {
     // While the import does work with Trilinos 12.8.x, it fails with 12.4.x. To be safe,
@@ -430,8 +430,8 @@ namespace LinearAlgebra
   template <typename Number>
   void
   ReadWriteVector<Number>::import(
-    const LinearAlgebra::EpetraWrappers::Vector&    trilinos_vec,
-    VectorOperation::values                         operation,
+    const LinearAlgebra::EpetraWrappers::Vector& trilinos_vec,
+    VectorOperation::values operation,
     std::shared_ptr<const CommunicationPatternBase> communication_pattern)
   {
     import(trilinos_vec.trilinos_vector(),
@@ -447,7 +447,7 @@ namespace LinearAlgebra
   void
   ReadWriteVector<Number>::import(
     const LinearAlgebra::CUDAWrappers::Vector<Number>& cuda_vec,
-    VectorOperation::values                            operation,
+    VectorOperation::values operation,
     std::shared_ptr<const CommunicationPatternBase>)
   {
     const unsigned int n_elements = stored_elements.n_elements();
@@ -463,7 +463,7 @@ namespace LinearAlgebra
       {
         // Copy the vector from the device to a temporary vector on the host
         std::vector<Number> tmp(n_elements);
-        cudaError_t         error_code = cudaMemcpy(tmp.data(),
+        cudaError_t error_code = cudaMemcpy(tmp.data(),
                                             cuda_vec.get_values(),
                                             n_elements * sizeof(Number),
                                             cudaMemcpyDeviceToHost);
@@ -498,9 +498,9 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  ReadWriteVector<Number>::print(std::ostream&      out,
+  ReadWriteVector<Number>::print(std::ostream& out,
                                  const unsigned int precision,
-                                 const bool         scientific) const
+                                 const bool scientific) const
   {
     AssertThrow(out, ExcIO());
     boost::io::ios_flags_saver restore_flags(out);

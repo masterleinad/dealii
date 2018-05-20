@@ -38,8 +38,8 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim>
 FunctionParser<dim>::FunctionParser(const unsigned int n_components,
-                                    const double       initial_time,
-                                    const double       h)
+                                    const double initial_time,
+                                    const double h)
   : AutoDerivativeFunction<dim>(h, n_components, initial_time),
     initialized(false),
     n_vars(0)
@@ -55,7 +55,7 @@ FunctionParser<dim>::~FunctionParser() = default;
 
 template <int dim>
 void
-FunctionParser<dim>::initialize(const std::string&              variables,
+FunctionParser<dim>::initialize(const std::string& variables,
                                 const std::vector<std::string>& expressions,
                                 const std::map<std::string, double>& constants,
                                 const bool time_dependent)
@@ -194,7 +194,7 @@ namespace internal
   double
   mu_rand_seed(double seed)
   {
-    static Threads::Mutex      rand_mutex;
+    static Threads::Mutex rand_mutex;
     Threads::Mutex::ScopedLock lock(rand_mutex);
 
     static boost::random::uniform_real_distribution<> uniform_distribution(0,
@@ -214,12 +214,12 @@ namespace internal
   double
   mu_rand()
   {
-    static Threads::Mutex                             rand_mutex;
-    Threads::Mutex::ScopedLock                        lock(rand_mutex);
+    static Threads::Mutex rand_mutex;
+    Threads::Mutex::ScopedLock lock(rand_mutex);
     static boost::random::uniform_real_distribution<> uniform_distribution(0,
                                                                            1);
-    static boost::random::mt19937                     rng(
-                          static_cast<unsigned long>(std::time(nullptr)));
+    static boost::random::mt19937 rng(
+      static_cast<unsigned long>(std::time(nullptr)));
     return uniform_distribution(rng);
   }
 
@@ -324,7 +324,7 @@ FunctionParser<dim>::init_muparser() const
               f < sizeof(function_names) / sizeof(function_names[0]);
               ++f)
             {
-              const std::string  function_name        = function_names[f];
+              const std::string function_name         = function_names[f];
               const unsigned int function_name_length = function_name.size();
 
               std::string::size_type pos = 0;
@@ -368,8 +368,8 @@ FunctionParser<dim>::init_muparser() const
 
 template <int dim>
 void
-FunctionParser<dim>::initialize(const std::string&                   vars,
-                                const std::string&                   expression,
+FunctionParser<dim>::initialize(const std::string& vars,
+                                const std::string& expression,
                                 const std::map<std::string, double>& constants,
                                 const bool time_dependent)
 {
@@ -381,7 +381,7 @@ FunctionParser<dim>::initialize(const std::string&                   vars,
 
 template <int dim>
 double
-FunctionParser<dim>::value(const Point<dim>&  p,
+FunctionParser<dim>::value(const Point<dim>& p,
                            const unsigned int component) const
 {
   Assert(initialized == true, ExcNotInitialized());
@@ -416,7 +416,7 @@ FunctionParser<dim>::value(const Point<dim>&  p,
 template <int dim>
 void
 FunctionParser<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+                                  Vector<double>& values) const
 {
   Assert(initialized == true, ExcNotInitialized());
   Assert(values.size() == this->n_components,

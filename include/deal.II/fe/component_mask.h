@@ -257,7 +257,7 @@ inline ComponentMask::ComponentMask(const std::vector<bool>& component_mask)
 {}
 
 inline ComponentMask::ComponentMask(const unsigned int n_components,
-                                    const bool         initializer)
+                                    const bool initializer)
   : component_mask(n_components, initializer)
 {}
 

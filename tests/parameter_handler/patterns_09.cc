@@ -29,7 +29,7 @@ main()
   ps.push_back(std_cxx14::make_unique<Patterns::Double>());
   ps.push_back(std_cxx14::make_unique<Patterns::Anything>());
 
-  Patterns::Tuple   pattern(ps, ";");
+  Patterns::Tuple pattern(ps, ";");
   const std::string desc = pattern.description();
 
   deallog << desc << std::endl;

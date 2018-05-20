@@ -39,10 +39,10 @@ main()
     deallog << std::endl;
   }
 
-  int               c_left[5] = {0, 1, 2, 3, 4};
+  int c_left[5] = {0, 1, 2, 3, 4};
   Tensor<1, 5, int> left(c_left);
 
-  int                     c_right[5] = {0, 100, 200, 300, 400};
+  int c_right[5] = {0, 100, 200, 300, 400};
   const Tensor<1, 5, int> right(c_right);
 
   // Contract rank 1, rank 1, rank 0:

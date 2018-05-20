@@ -74,12 +74,12 @@ do_test()
   convert_to_vectorized(w1, v1);
 
   constexpr unsigned int macro_size = VectorizedArray<float>::n_array_elements;
-  Vector<float>          vec_flat(v1.size() * macro_size);
+  Vector<float> vec_flat(v1.size() * macro_size);
   std::array<unsigned int, macro_size> offsets;
   for(unsigned int i = 0; i < macro_size; ++i)
     offsets[i] = v1.size() * i;
   auto subtract_and_assign
-    = [](AlignedVector<VectorizedArray<float>>&       lhs,
+    = [](AlignedVector<VectorizedArray<float>>& lhs,
          const AlignedVector<VectorizedArray<float>>& rhs) {
         std::transform(
           lhs.begin(),

@@ -62,7 +62,7 @@ double_contract(const Tensor<2, dim, Number>& src1,
  */
 template <int dim, typename Number>
 DEAL_II_DEPRECATED inline void
-  double_contract(Tensor<2, dim, Number>&       dest,
+  double_contract(Tensor<2, dim, Number>& dest,
                   const Tensor<4, dim, Number>& src1,
                   const Tensor<2, dim, Number>& src2);
 
@@ -77,11 +77,11 @@ DEAL_II_DEPRECATED inline void
  * @relatesalso Tensor
  */
 template <int dim, typename Number>
-DEAL_II_DEPRECATED inline void contract(Tensor<2, dim, Number>&       dest,
+DEAL_II_DEPRECATED inline void contract(Tensor<2, dim, Number>& dest,
                                         const Tensor<2, dim, Number>& src1,
-                                        const unsigned int            index1,
+                                        const unsigned int index1,
                                         const Tensor<2, dim, Number>& src2,
-                                        const unsigned int            index3);
+                                        const unsigned int index3);
 
 /**
  * Contract a tensor of rank 3 with a tensor of rank 1. The contraction is
@@ -93,9 +93,9 @@ DEAL_II_DEPRECATED inline void contract(Tensor<2, dim, Number>&       dest,
  * @relatesalso Tensor
  */
 template <int dim, typename Number>
-DEAL_II_DEPRECATED inline void contract(Tensor<2, dim, Number>&       dest,
+DEAL_II_DEPRECATED inline void contract(Tensor<2, dim, Number>& dest,
                                         const Tensor<3, dim, Number>& src1,
-                                        const unsigned int            index1,
+                                        const unsigned int index1,
                                         const Tensor<1, dim, Number>& src2);
 
 /**
@@ -109,11 +109,11 @@ DEAL_II_DEPRECATED inline void contract(Tensor<2, dim, Number>&       dest,
  * @relatesalso Tensor
  */
 template <int dim, typename Number>
-DEAL_II_DEPRECATED inline void contract(Tensor<3, dim, Number>&       dest,
+DEAL_II_DEPRECATED inline void contract(Tensor<3, dim, Number>& dest,
                                         const Tensor<3, dim, Number>& src1,
-                                        const unsigned int            index1,
+                                        const unsigned int index1,
                                         const Tensor<2, dim, Number>& src2,
-                                        const unsigned int            index2);
+                                        const unsigned int index2);
 
 /**
  * Single contraction for tensors: contract the last index of a tensor @p src1
@@ -126,8 +126,8 @@ DEAL_II_DEPRECATED inline void contract(Tensor<3, dim, Number>&       dest,
 template <int rank_1, int rank_2, int dim, typename Number>
 DEAL_II_DEPRECATED inline void
   contract(Tensor<rank_1 + rank_2 - 2, dim, Number>& dest,
-           const Tensor<rank_1, dim, Number>&        src1,
-           const Tensor<rank_2, dim, Number>&        src2);
+           const Tensor<rank_1, dim, Number>& src1,
+           const Tensor<rank_2, dim, Number>& src2);
 
 /**
  * Contract a tensor of rank 1 with a tensor of rank 1 and return the result.
@@ -137,7 +137,7 @@ DEAL_II_DEPRECATED inline void
  */
 template <int dim, typename Number, typename OtherNumber>
 DEAL_II_DEPRECATED inline typename ProductType<Number, OtherNumber>::type
-contract(const Tensor<1, dim, Number>&      src1,
+contract(const Tensor<1, dim, Number>& src1,
          const Tensor<1, dim, OtherNumber>& src2);
 
 /**
@@ -148,7 +148,7 @@ contract(const Tensor<1, dim, Number>&      src1,
  * @relatesalso Tensor
  */
 template <int dim, typename Number>
-DEAL_II_DEPRECATED inline void cross_product(Tensor<1, dim, Number>&       dst,
+DEAL_II_DEPRECATED inline void cross_product(Tensor<1, dim, Number>& dst,
                                              const Tensor<1, dim, Number>& src);
 
 /**
@@ -159,7 +159,7 @@ DEAL_II_DEPRECATED inline void cross_product(Tensor<1, dim, Number>&       dst,
  */
 template <int dim, typename Number>
 DEAL_II_DEPRECATED inline void
-  cross_product(Tensor<1, dim, Number>&       dst,
+  cross_product(Tensor<1, dim, Number>& dst,
                 const Tensor<1, dim, Number>& src1,
                 const Tensor<1, dim, Number>& src2);
 
@@ -172,8 +172,8 @@ DEAL_II_DEPRECATED inline void
 template <int rank_1, int rank_2, int dim, typename Number>
 DEAL_II_DEPRECATED inline void
 outer_product(Tensor<rank_1 + rank_2, dim, Number>& dst,
-              const Tensor<rank_1, dim, Number>&    src1,
-              const Tensor<rank_2, dim, Number>&    src2);
+              const Tensor<rank_1, dim, Number>& src1,
+              const Tensor<rank_2, dim, Number>& src2);
 
 /**
  * Multiply a Tensor<1,dim,Number> with a Number.
@@ -183,8 +183,8 @@ outer_product(Tensor<rank_1 + rank_2, dim, Number>& dst,
  */
 template <int dim, typename Number>
 DEAL_II_DEPRECATED inline void
-  outer_product(Tensor<1, dim, Number>&       dst,
-                const Number                  src1,
+  outer_product(Tensor<1, dim, Number>& dst,
+                const Number src1,
                 const Tensor<1, dim, Number>& src2);
 
 /**
@@ -194,9 +194,9 @@ DEAL_II_DEPRECATED inline void
  * @relatesalso Tensor
  */
 template <int dim, typename Number>
-DEAL_II_DEPRECATED inline void outer_product(Tensor<1, dim, Number>&      dst,
+DEAL_II_DEPRECATED inline void outer_product(Tensor<1, dim, Number>& dst,
                                              const Tensor<1, dim, Number> src1,
-                                             const Number                 src2);
+                                             const Number src2);
 
 /**
  * @deprecated Do not use this function, evaluate the value manually.
@@ -231,7 +231,7 @@ double_contract(const Tensor<2, dim, Number>& src1,
 }
 
 template <int dim, typename Number>
-inline void double_contract(Tensor<2, dim, Number>&       dest,
+inline void double_contract(Tensor<2, dim, Number>& dest,
                             const Tensor<4, dim, Number>& src1,
                             const Tensor<2, dim, Number>& src2)
 {
@@ -244,11 +244,11 @@ inline void double_contract(Tensor<2, dim, Number>&       dest,
 }
 
 template <int dim, typename Number>
-inline void contract(Tensor<2, dim, Number>&       dest,
+inline void contract(Tensor<2, dim, Number>& dest,
                      const Tensor<2, dim, Number>& src1,
-                     const unsigned int            index1,
+                     const unsigned int index1,
                      const Tensor<2, dim, Number>& src2,
-                     const unsigned int            index2)
+                     const unsigned int index2)
 {
   dest.clear();
 
@@ -301,9 +301,9 @@ inline void contract(Tensor<2, dim, Number>&       dest,
 }
 
 template <int dim, typename Number>
-inline void contract(Tensor<2, dim, Number>&       dest,
+inline void contract(Tensor<2, dim, Number>& dest,
                      const Tensor<3, dim, Number>& src1,
-                     const unsigned int            index1,
+                     const unsigned int index1,
                      const Tensor<1, dim, Number>& src2)
 {
   dest.clear();
@@ -337,11 +337,11 @@ inline void contract(Tensor<2, dim, Number>&       dest,
 }
 
 template <int dim, typename Number>
-inline void contract(Tensor<3, dim, Number>&       dest,
+inline void contract(Tensor<3, dim, Number>& dest,
                      const Tensor<3, dim, Number>& src1,
-                     const unsigned int            index1,
+                     const unsigned int index1,
                      const Tensor<2, dim, Number>& src2,
-                     const unsigned int            index2)
+                     const unsigned int index2)
 {
   dest.clear();
 
@@ -420,8 +420,8 @@ inline void contract(Tensor<3, dim, Number>&       dest,
 
 template <int rank_1, int rank_2, int dim, typename Number>
 inline void contract(Tensor<rank_1 + rank_2 - 2, dim, Number>& dest,
-                     const Tensor<rank_1, dim, Number>&        src1,
-                     const Tensor<rank_2, dim, Number>&        src2)
+                     const Tensor<rank_1, dim, Number>& src1,
+                     const Tensor<rank_2, dim, Number>& src2)
 {
   TensorAccessors::internal::
     ReorderedIndexView<0, rank_2, const Tensor<rank_2, dim, Number>>
@@ -431,7 +431,7 @@ inline void contract(Tensor<rank_1 + rank_2 - 2, dim, Number>& dest,
 
 template <int dim, typename Number, typename OtherNumber>
 inline typename ProductType<Number, OtherNumber>::type
-contract(const Tensor<1, dim, Number>&      src1,
+contract(const Tensor<1, dim, Number>& src1,
          const Tensor<1, dim, OtherNumber>& src2)
 {
   typename ProductType<Number, OtherNumber>::type res =
@@ -443,14 +443,14 @@ contract(const Tensor<1, dim, Number>&      src1,
 }
 
 template <int dim, typename Number>
-inline void cross_product(Tensor<1, dim, Number>&       dst,
+inline void cross_product(Tensor<1, dim, Number>& dst,
                           const Tensor<1, dim, Number>& src)
 {
   dst = cross_product_2d(src);
 }
 
 template <int dim, typename Number>
-inline void cross_product(Tensor<1, dim, Number>&       dst,
+inline void cross_product(Tensor<1, dim, Number>& dst,
                           const Tensor<1, dim, Number>& src1,
                           const Tensor<1, dim, Number>& src2)
 {
@@ -460,15 +460,15 @@ inline void cross_product(Tensor<1, dim, Number>&       dst,
 template <int rank_1, int rank_2, int dim, typename Number>
 inline void
 outer_product(Tensor<rank_1 + rank_2, dim, Number>& dst,
-              const Tensor<rank_1, dim, Number>&    src1,
-              const Tensor<rank_2, dim, Number>&    src2)
+              const Tensor<rank_1, dim, Number>& src1,
+              const Tensor<rank_2, dim, Number>& src2)
 {
   TensorAccessors::contract<0, rank_1, rank_2, dim>(dst, src1, src2);
 }
 
 template <int dim, typename Number>
-inline void outer_product(Tensor<1, dim, Number>&       dst,
-                          const Number                  src1,
+inline void outer_product(Tensor<1, dim, Number>& dst,
+                          const Number src1,
                           const Tensor<1, dim, Number>& src2)
 {
   for(unsigned int i = 0; i < dim; ++i)
@@ -476,9 +476,9 @@ inline void outer_product(Tensor<1, dim, Number>&       dst,
 }
 
 template <int dim, typename Number>
-inline void outer_product(Tensor<1, dim, Number>&      dst,
+inline void outer_product(Tensor<1, dim, Number>& dst,
                           const Tensor<1, dim, Number> src1,
-                          const Number                 src2)
+                          const Number src2)
 {
   for(unsigned int i = 0; i < dim; ++i)
     dst[i] = src1[i] * src2;

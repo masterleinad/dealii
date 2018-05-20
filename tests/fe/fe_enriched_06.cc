@@ -85,10 +85,10 @@ test5()
   deallog << "4 cells:" << std::endl;
 
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   EnrichmentFunction<dim> function;
-  FE_Enriched<dim>        fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
+  FE_Enriched<dim> fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
 
   GridGenerator::hyper_cube(triangulation);
 
@@ -97,7 +97,7 @@ test5()
   dof_handler.distribute_dofs(fe);
 
   std::vector<Vector<double>> shape_functions;
-  std::vector<std::string>    names;
+  std::vector<std::string> names;
   for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       names.push_back(std::string("N_") + dealii::Utilities::int_to_string(s));
@@ -111,12 +111,12 @@ test5()
 
   // output 11th:
   {
-    const unsigned int    global_dof = 11;
-    const Vector<double>& solution   = shape_functions[global_dof];
-    QTrapez<dim>          quadrature;
-    FEValues<dim>         fe_values(fe, quadrature, update_values);
+    const unsigned int global_dof  = 11;
+    const Vector<double>& solution = shape_functions[global_dof];
+    QTrapez<dim> quadrature;
+    FEValues<dim> fe_values(fe, quadrature, update_values);
 
-    const unsigned int  n_q_points = quadrature.size();
+    const unsigned int n_q_points = quadrature.size();
     std::vector<double> solution_values(n_q_points);
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;

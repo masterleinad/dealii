@@ -615,7 +615,7 @@ namespace internal
         const DoFHandler<2, spacedim>& dof_handler,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<2>>&,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<2>>&
-                           mg_faces,
+          mg_faces,
         const unsigned int obj_index,
         const unsigned int fe_index,
         const unsigned int local_index,
@@ -647,7 +647,7 @@ namespace internal
         const DoFHandler<3, spacedim>& dof_handler,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<3>>&,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<3>>&
-                           mg_faces,
+          mg_faces,
         const unsigned int obj_index,
         const unsigned int fe_index,
         const unsigned int local_index,
@@ -663,7 +663,7 @@ namespace internal
         const DoFHandler<3, spacedim>& dof_handler,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<3>>&,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<3>>&
-                           mg_faces,
+          mg_faces,
         const unsigned int obj_index,
         const unsigned int fe_index,
         const unsigned int local_index,
@@ -696,9 +696,9 @@ namespace internal
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<1>>&
           mg_level,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<1>>&,
-        const unsigned int            obj_index,
-        const unsigned int            fe_index,
-        const unsigned int            local_index,
+        const unsigned int obj_index,
+        const unsigned int fe_index,
+        const unsigned int local_index,
         const types::global_dof_index global_index,
         const std::integral_constant<int, 1>)
       {
@@ -712,10 +712,10 @@ namespace internal
         const DoFHandler<2, spacedim>& dof_handler,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<2>>&,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<2>>&
-                                      mg_faces,
-        const unsigned int            obj_index,
-        const unsigned int            fe_index,
-        const unsigned int            local_index,
+          mg_faces,
+        const unsigned int obj_index,
+        const unsigned int fe_index,
+        const unsigned int local_index,
         const types::global_dof_index global_index,
         const std::integral_constant<int, 1>)
       {
@@ -730,9 +730,9 @@ namespace internal
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<2>>&
           mg_level,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<2>>&,
-        const unsigned int            obj_index,
-        const unsigned int            fe_index,
-        const unsigned int            local_index,
+        const unsigned int obj_index,
+        const unsigned int fe_index,
+        const unsigned int local_index,
         const types::global_dof_index global_index,
         const std::integral_constant<int, 2>)
       {
@@ -746,10 +746,10 @@ namespace internal
         const DoFHandler<3, spacedim>& dof_handler,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<3>>&,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<3>>&
-                                      mg_faces,
-        const unsigned int            obj_index,
-        const unsigned int            fe_index,
-        const unsigned int            local_index,
+          mg_faces,
+        const unsigned int obj_index,
+        const unsigned int fe_index,
+        const unsigned int local_index,
         const types::global_dof_index global_index,
         const std::integral_constant<int, 1>)
       {
@@ -763,10 +763,10 @@ namespace internal
         const DoFHandler<3, spacedim>& dof_handler,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<3>>&,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<3>>&
-                                      mg_faces,
-        const unsigned int            obj_index,
-        const unsigned int            fe_index,
-        const unsigned int            local_index,
+          mg_faces,
+        const unsigned int obj_index,
+        const unsigned int fe_index,
+        const unsigned int local_index,
         const types::global_dof_index global_index,
         const std::integral_constant<int, 2>)
       {
@@ -781,9 +781,9 @@ namespace internal
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<3>>&
           mg_level,
         const std::unique_ptr<internal::DoFHandlerImplementation::DoFFaces<3>>&,
-        const unsigned int            obj_index,
-        const unsigned int            fe_index,
-        const unsigned int            local_index,
+        const unsigned int obj_index,
+        const unsigned int fe_index,
+        const unsigned int local_index,
         const types::global_dof_index global_index,
         const std::integral_constant<int, 3>)
       {
@@ -1016,7 +1016,7 @@ DoFHandler<dim, spacedim>::n_boundary_dofs() const
 {
   std::set<int> boundary_dofs;
 
-  const unsigned int                   dofs_per_face = get_fe().dofs_per_face;
+  const unsigned int dofs_per_face = get_fe().dofs_per_face;
   std::vector<types::global_dof_index> dofs_on_face(dofs_per_face);
 
   // loop over all faces of all cells
@@ -1057,7 +1057,7 @@ DoFHandler<dim, spacedim>::n_boundary_dofs(
 
   std::set<types::global_dof_index> boundary_dofs;
 
-  const unsigned int                   dofs_per_face = get_fe().dofs_per_face;
+  const unsigned int dofs_per_face = get_fe().dofs_per_face;
   std::vector<types::global_dof_index> dofs_on_face(dofs_per_face);
 
   // same as in the previous
@@ -1272,7 +1272,7 @@ DoFHandler<dim, spacedim>::renumber_dofs(
       std::vector<types::global_dof_index> tmp(new_numbers);
       std::sort(tmp.begin(), tmp.end());
       std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
-      types::global_dof_index                              i = 0;
+      types::global_dof_index i                              = 0;
       for(; p != tmp.end(); ++p, ++i)
         Assert(*p == i, ExcNewNumbersNotConsecutive(i));
     }
@@ -1289,7 +1289,7 @@ DoFHandler<dim, spacedim>::renumber_dofs(
 template <int dim, int spacedim>
 void
 DoFHandler<dim, spacedim>::renumber_dofs(
-  const unsigned int                          level,
+  const unsigned int level,
   const std::vector<types::global_dof_index>& new_numbers)
 {
   Assert(
@@ -1310,7 +1310,7 @@ DoFHandler<dim, spacedim>::renumber_dofs(
       std::vector<types::global_dof_index> tmp(new_numbers);
       std::sort(tmp.begin(), tmp.end());
       std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
-      types::global_dof_index                              i = 0;
+      types::global_dof_index i                              = 0;
       for(; p != tmp.end(); ++p, ++i)
         Assert(*p == i, ExcNewNumbersNotConsecutive(i));
     }
@@ -1402,10 +1402,10 @@ template <int dim, int spacedim>
 template <int structdim>
 void
 DoFHandler<dim, spacedim>::set_dof_index(
-  const unsigned int            obj_level,
-  const unsigned int            obj_index,
-  const unsigned int            fe_index,
-  const unsigned int            local_index,
+  const unsigned int obj_level,
+  const unsigned int obj_index,
+  const unsigned int fe_index,
+  const unsigned int local_index,
   const types::global_dof_index global_index) const
 {
   internal::DoFHandlerImplementation::Implementation::set_dof_index(

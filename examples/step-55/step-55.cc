@@ -111,12 +111,12 @@ namespace Step55
 
     private:
       const SmartPointer<const Matrix> matrix;
-      const Preconditioner&            preconditioner;
+      const Preconditioner& preconditioner;
     };
 
     template <class Matrix, class Preconditioner>
     InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
-      const Matrix&         m,
+      const Matrix& m,
       const Preconditioner& preconditioner)
       : matrix(&m), preconditioner(preconditioner)
     {}
@@ -124,7 +124,7 @@ namespace Step55
     template <class Matrix, class Preconditioner>
     template <typename VectorType>
     void
-    InverseMatrix<Matrix, Preconditioner>::vmult(VectorType&       dst,
+    InverseMatrix<Matrix, Preconditioner>::vmult(VectorType& dst,
                                                  const VectorType& src) const
     {
       SolverControl solver_control(src.size(), 1e-8 * src.l2_norm());
@@ -168,7 +168,7 @@ namespace Step55
     template <class PreconditionerA, class PreconditionerS>
     void
     BlockDiagonalPreconditioner<PreconditionerA, PreconditionerS>::vmult(
-      LA::MPI::BlockVector&       dst,
+      LA::MPI::BlockVector& dst,
       const LA::MPI::BlockVector& src) const
     {
       preconditioner_A.vmult(dst.block(0), src.block(0));
@@ -196,7 +196,7 @@ namespace Step55
   template <int dim>
   void
   RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     const double R_x = p[0];
     const double R_y = p[1];
@@ -232,7 +232,7 @@ namespace Step55
   template <int dim>
   void
   ExactSolution<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     const double R_x = p[0];
     const double R_y = p[1];
@@ -291,12 +291,12 @@ namespace Step55
     output_results(const unsigned int cycle) const;
 
     unsigned int velocity_degree;
-    double       viscosity;
-    MPI_Comm     mpi_communicator;
+    double viscosity;
+    MPI_Comm mpi_communicator;
 
-    FESystem<dim>                             fe;
+    FESystem<dim> fe;
     parallel::distributed::Triangulation<dim> triangulation;
-    DoFHandler<dim>                           dof_handler;
+    DoFHandler<dim> dof_handler;
 
     std::vector<IndexSet> owned_partitioning;
     std::vector<IndexSet> relevant_partitioning;
@@ -305,11 +305,11 @@ namespace Step55
 
     LA::MPI::BlockSparseMatrix system_matrix;
     LA::MPI::BlockSparseMatrix preconditioner_matrix;
-    LA::MPI::BlockVector       locally_relevant_solution;
-    LA::MPI::BlockVector       system_rhs;
+    LA::MPI::BlockVector locally_relevant_solution;
+    LA::MPI::BlockVector system_rhs;
 
     ConditionalOStream pcout;
-    TimerOutput        computing_timer;
+    TimerOutput computing_timer;
   };
 
   template <int dim>
@@ -498,18 +498,18 @@ namespace Step55
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     FullMatrix<double> cell_matrix2(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
-    const RightHandSide<dim>    right_hand_side;
+    const RightHandSide<dim> right_hand_side;
     std::vector<Vector<double>> rhs_values(n_q_points, Vector<double>(dim + 1));
 
     std::vector<Tensor<2, dim>> grad_phi_u(dofs_per_cell);
-    std::vector<double>         div_phi_u(dofs_per_cell);
-    std::vector<double>         phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    const FEValuesExtractors::Vector     velocities(0);
-    const FEValuesExtractors::Scalar     pressure(dim);
+    const FEValuesExtractors::Vector velocities(0);
+    const FEValuesExtractors::Scalar pressure(dim);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -620,7 +620,7 @@ namespace Step55
     // The InverseMatrix is used to solve for the mass matrix:
     typedef LinearSolvers::InverseMatrix<LA::MPI::SparseMatrix,
                                          LA::MPI::PreconditionAMG>
-                       mp_inverse_t;
+      mp_inverse_t;
     const mp_inverse_t mp_inverse(preconditioner_matrix.block(1, 1), prec_S);
 
     // This constructs the block preconditioner based on the preconditioners
@@ -702,7 +702,7 @@ namespace Step55
                                                        dim + 1);
 
       Vector<double> cellwise_errors(triangulation.n_active_cells());
-      QGauss<dim>    quadrature(velocity_degree + 2);
+      QGauss<dim> quadrature(velocity_degree + 2);
 
       VectorTools::integrate_difference(dof_handler,
                                         locally_relevant_solution,

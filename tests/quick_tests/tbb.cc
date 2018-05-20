@@ -31,7 +31,7 @@ add_one(unsigned int& var)
 void
 test1()
 {
-  unsigned int    tmp  = 1;
+  unsigned int tmp     = 1;
   Threads::Task<> task = Threads::new_task(&add_one, tmp);
   task.join();
   if(tmp != 2)
@@ -48,8 +48,8 @@ struct copy_data
 
 void
 assemble(const std::vector<int>::iterator& it,
-         scratch_data&                     scratch,
-         copy_data&                        data)
+         scratch_data& scratch,
+         copy_data& data)
 {
   data.value = (*it);
 }
@@ -63,7 +63,7 @@ copy(int& value, const copy_data& data)
 void
 test2()
 {
-  const int        maxi = 10000;
+  const int maxi = 10000;
   std::vector<int> v(maxi);
   for(unsigned int i = 0; i < v.size(); ++i)
     v[i] = i + 1;

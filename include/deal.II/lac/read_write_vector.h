@@ -131,14 +131,14 @@ namespace LinearAlgebra
      * those in the <tt>C++</tt> standard libraries <tt>vector<...></tt>
      * class.
      */
-    typedef Number                                            value_type;
-    typedef value_type*                                       pointer;
-    typedef const value_type*                                 const_pointer;
-    typedef value_type*                                       iterator;
-    typedef const value_type*                                 const_iterator;
-    typedef value_type&                                       reference;
-    typedef const value_type&                                 const_reference;
-    typedef types::global_dof_index                           size_type;
+    typedef Number value_type;
+    typedef value_type* pointer;
+    typedef const value_type* const_pointer;
+    typedef value_type* iterator;
+    typedef const value_type* const_iterator;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef types::global_dof_index size_type;
     typedef typename numbers::NumberTraits<Number>::real_type real_type;
 
     /**
@@ -194,7 +194,7 @@ namespace LinearAlgebra
     template <typename Number2>
     void
     reinit(const ReadWriteVector<Number2>& in_vector,
-           const bool                      omit_zeroing_entries = false);
+           const bool omit_zeroing_entries = false);
 
     /**
      * Initializes the vector. The indices are specified by @p
@@ -207,7 +207,7 @@ namespace LinearAlgebra
      */
     virtual void
     reinit(const IndexSet& locally_stored_indices,
-           const bool      omit_zeroing_entries = false);
+           const bool omit_zeroing_entries = false);
 
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_WITH_MPI
@@ -289,7 +289,7 @@ namespace LinearAlgebra
      */
     void
     import(const distributed::Vector<Number>& vec,
-           VectorOperation::values            operation,
+           VectorOperation::values operation,
            const std::shared_ptr<const CommunicationPatternBase>&
              communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>());
@@ -305,7 +305,7 @@ namespace LinearAlgebra
      */
     void
     import(const PETScWrappers::MPI::Vector& petsc_vec,
-           VectorOperation::values           operation,
+           VectorOperation::values operation,
            const std::shared_ptr<const CommunicationPatternBase>&
              communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>());
@@ -323,8 +323,8 @@ namespace LinearAlgebra
      * @note: The @p trilinos_vec is not allowed to have ghost entries.
      */
     void
-    import(const TrilinosWrappers::MPI::Vector&            trilinos_vec,
-           VectorOperation::values                         operation,
+    import(const TrilinosWrappers::MPI::Vector& trilinos_vec,
+           VectorOperation::values operation,
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>());
 
@@ -338,8 +338,8 @@ namespace LinearAlgebra
      * performance.
      */
     void
-    import(const EpetraWrappers::Vector&                   epetra_vec,
-           VectorOperation::values                         operation,
+    import(const EpetraWrappers::Vector& epetra_vec,
+           VectorOperation::values operation,
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>());
 #  endif
@@ -353,8 +353,8 @@ namespace LinearAlgebra
      * replace the current elements. The last parameter is not used.
      */
     void
-    import(const CUDAWrappers::Vector<Number>&             cuda_vec,
-           VectorOperation::values                         operation,
+    import(const CUDAWrappers::Vector<Number>& cuda_vec,
+           VectorOperation::values operation,
            std::shared_ptr<const CommunicationPatternBase> communication_pattern
            = std::shared_ptr<const CommunicationPatternBase>());
 #endif
@@ -471,7 +471,7 @@ namespace LinearAlgebra
     template <typename Number2>
     void
     extract_subvector_to(const std::vector<size_type>& indices,
-                         std::vector<Number2>&         values) const;
+                         std::vector<Number2>& values) const;
 
     /**
      * Instead of getting individual elements of a vector via operator(),
@@ -502,9 +502,9 @@ namespace LinearAlgebra
      */
     template <typename ForwardIterator, typename OutputIterator>
     void
-    extract_subvector_to(ForwardIterator       indices_begin,
+    extract_subvector_to(ForwardIterator indices_begin,
                          const ForwardIterator indices_end,
-                         OutputIterator        values_begin) const;
+                         OutputIterator values_begin) const;
 
     /**
      * Read access to the data field specified by @p local_index. When you
@@ -545,7 +545,7 @@ namespace LinearAlgebra
     template <typename Number2>
     void
     add(const std::vector<size_type>& indices,
-        const std::vector<Number2>&   values);
+        const std::vector<Number2>& values);
 
     /**
      * This function is similar to the previous one but takes a
@@ -553,7 +553,7 @@ namespace LinearAlgebra
      */
     template <typename Number2>
     void
-    add(const std::vector<size_type>&   indices,
+    add(const std::vector<size_type>& indices,
         const ReadWriteVector<Number2>& values);
 
     /**
@@ -563,17 +563,17 @@ namespace LinearAlgebra
      */
     template <typename Number2>
     void
-    add(const size_type  n_elements,
+    add(const size_type n_elements,
         const size_type* indices,
-        const Number2*   values);
+        const Number2* values);
 
     /**
      * Prints the vector to the output stream @p out.
      */
     void
-    print(std::ostream&      out,
-          const unsigned int precision  = 3,
-          const bool         scientific = true) const;
+    print(std::ostream& out,
+          const unsigned int precision = 3,
+          const bool scientific        = true) const;
 
     /**
      * Return the memory consumption of this class in bytes.
@@ -591,9 +591,9 @@ namespace LinearAlgebra
      */
     void
     import(const Epetra_MultiVector& multivector,
-           const IndexSet&           locally_owned_elements,
-           VectorOperation::values   operation,
-           const MPI_Comm&           mpi_comm,
+           const IndexSet& locally_owned_elements,
+           VectorOperation::values operation,
+           const MPI_Comm& mpi_comm,
            const std::shared_ptr<const CommunicationPatternBase>&
              communication_pattern);
 #endif
@@ -804,14 +804,14 @@ namespace LinearAlgebra
 
   template <typename Number>
   inline Number ReadWriteVector<Number>::
-                operator[](const size_type global_index) const
+  operator[](const size_type global_index) const
   {
     return operator()(global_index);
   }
 
   template <typename Number>
   inline Number& ReadWriteVector<Number>::
-                 operator[](const size_type global_index)
+  operator[](const size_type global_index)
   {
     return operator()(global_index);
   }
@@ -821,7 +821,7 @@ namespace LinearAlgebra
   inline void
   ReadWriteVector<Number>::extract_subvector_to(
     const std::vector<size_type>& indices,
-    std::vector<Number2>&         extracted_values) const
+    std::vector<Number2>& extracted_values) const
   {
     for(size_type i = 0; i < indices.size(); ++i)
       extracted_values[i] = operator()(indices[i]);
@@ -831,9 +831,9 @@ namespace LinearAlgebra
   template <typename ForwardIterator, typename OutputIterator>
   inline void
   ReadWriteVector<Number>::extract_subvector_to(
-    ForwardIterator       indices_begin,
+    ForwardIterator indices_begin,
     const ForwardIterator indices_end,
-    OutputIterator        values_begin) const
+    OutputIterator values_begin) const
   {
     while(indices_begin != indices_end)
       {
@@ -865,7 +865,7 @@ namespace LinearAlgebra
   template <typename Number2>
   inline void
   ReadWriteVector<Number>::add(const std::vector<size_type>& indices,
-                               const std::vector<Number2>&   values)
+                               const std::vector<Number2>& values)
   {
     AssertDimension(indices.size(), values.size());
     add(indices.size(), indices.data(), values.data());
@@ -874,7 +874,7 @@ namespace LinearAlgebra
   template <typename Number>
   template <typename Number2>
   inline void
-  ReadWriteVector<Number>::add(const std::vector<size_type>&   indices,
+  ReadWriteVector<Number>::add(const std::vector<size_type>& indices,
                                const ReadWriteVector<Number2>& values)
   {
     const size_type size = indices.size();
@@ -891,9 +891,9 @@ namespace LinearAlgebra
   template <typename Number>
   template <typename Number2>
   inline void
-  ReadWriteVector<Number>::add(const size_type  n_indices,
+  ReadWriteVector<Number>::add(const size_type n_indices,
                                const size_type* indices,
-                               const Number2*   values_to_add)
+                               const Number2* values_to_add)
   {
     for(size_type i = 0; i < n_indices; ++i)
       {
@@ -909,7 +909,7 @@ namespace LinearAlgebra
   template <typename Functor>
   inline ReadWriteVector<Number>::FunctorTemplate<Functor>::FunctorTemplate(
     ReadWriteVector<Number>& parent,
-    const Functor&           functor)
+    const Functor& functor)
     : parent(parent), functor(functor)
   {}
 

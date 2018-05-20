@@ -100,7 +100,7 @@ main()
   {
     TransposeTable<double> table(2, 2);
 
-    TransposeTableIterators::Accessor<double, true>  a3(&table, 2);
+    TransposeTableIterators::Accessor<double, true> a3(&table, 2);
     TransposeTableIterators::Accessor<double, false> a4(&table, 2);
     deallog << "Accessors refer to the same entry: "
             << (&(TransposeTableIterators::Accessor<double, true>(a4).value())
@@ -114,8 +114,8 @@ main()
 
   {
     // check that we can convert
-    TransposeTable<double>                 table(3, 4);
-    TransposeTable<double>::iterator       it0 = table.begin();
+    TransposeTable<double> table(3, 4);
+    TransposeTable<double>::iterator it0       = table.begin();
     TransposeTable<double>::const_iterator it1 = it0;
     deallog << "converted iterators are equal: " << (it1 == it0) << std::endl;
   }

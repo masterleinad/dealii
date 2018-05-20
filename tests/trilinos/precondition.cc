@@ -52,8 +52,8 @@ private:
   solve(int cycle);
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   ConstraintMatrix constraints;
 
@@ -154,7 +154,7 @@ Step4<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -197,11 +197,11 @@ Step4<dim>::solve(int cycle)
 
   {
     deallog.push("Jacobi");
-    static constexpr std::array<int, 2>  lower{49, 100};
+    static constexpr std::array<int, 2> lower{49, 100};
     TrilinosWrappers::PreconditionJacobi preconditioner;
     solution = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),
@@ -214,10 +214,10 @@ Step4<dim>::solve(int cycle)
   {
     deallog.push("SSOR");
     static constexpr std::array<int, 2> lower{40, 77};
-    TrilinosWrappers::PreconditionSSOR  preconditioner;
+    TrilinosWrappers::PreconditionSSOR preconditioner;
     solution = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),
@@ -230,9 +230,9 @@ Step4<dim>::solve(int cycle)
   {
     deallog.push("SOR");
     static constexpr std::array<int, 2> lower{31, 62};
-    TrilinosWrappers::PreconditionSOR   preconditioner;
+    TrilinosWrappers::PreconditionSOR preconditioner;
     solution = 0;
-    SolverControl    solver_control(1000, 1e-5);
+    SolverControl solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix);
     check_solver_within_range(
@@ -245,13 +245,13 @@ Step4<dim>::solve(int cycle)
 
   {
     deallog.push("BlockJacobi");
-    static constexpr std::array<int, 2>                       lower{73, 145};
-    TrilinosWrappers::PreconditionBlockJacobi                 preconditioner;
+    static constexpr std::array<int, 2> lower{73, 145};
+    TrilinosWrappers::PreconditionBlockJacobi preconditioner;
     TrilinosWrappers::PreconditionBlockJacobi::AdditionalData data;
     data.block_size = 16;
     solution        = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),
@@ -263,14 +263,14 @@ Step4<dim>::solve(int cycle)
 
   {
     deallog.push("BlockSSOR");
-    static constexpr std::array<int, 2>                     lower{30, 59};
-    TrilinosWrappers::PreconditionBlockSSOR                 preconditioner;
+    static constexpr std::array<int, 2> lower{30, 59};
+    TrilinosWrappers::PreconditionBlockSSOR preconditioner;
     TrilinosWrappers::PreconditionBlockSSOR::AdditionalData data;
     data.block_size = 16;
     data.omega      = 1.2;
     solution        = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),
@@ -282,13 +282,13 @@ Step4<dim>::solve(int cycle)
 
   {
     deallog.push("BlockSOR");
-    static constexpr std::array<int, 2>                    lower{18, 37};
-    TrilinosWrappers::PreconditionBlockSOR                 preconditioner;
+    static constexpr std::array<int, 2> lower{18, 37};
+    TrilinosWrappers::PreconditionBlockSOR preconditioner;
     TrilinosWrappers::PreconditionBlockSOR::AdditionalData data;
     data.block_size = 16;
     data.omega      = 0.8;
     solution        = 0;
-    SolverControl    solver_control(1000, 1e-5);
+    SolverControl solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     check_solver_within_range(
@@ -302,10 +302,10 @@ Step4<dim>::solve(int cycle)
   {
     deallog.push("IC");
     static constexpr std::array<int, 2> lower{49, 67};
-    TrilinosWrappers::PreconditionIC    preconditioner;
+    TrilinosWrappers::PreconditionIC preconditioner;
     solution = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),
@@ -321,7 +321,7 @@ Step4<dim>::solve(int cycle)
     TrilinosWrappers::PreconditionILU preconditioner;
     solution = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),
@@ -333,13 +333,13 @@ Step4<dim>::solve(int cycle)
 
   {
     deallog.push("ILUT");
-    static constexpr std::array<int, 2>                lower{11, 19};
-    TrilinosWrappers::PreconditionILUT                 preconditioner;
+    static constexpr std::array<int, 2> lower{11, 19};
+    TrilinosWrappers::PreconditionILUT preconditioner;
     TrilinosWrappers::PreconditionILUT::AdditionalData data;
     data.ilut_drop = 1e-6;
     data.ilut_fill = 3;
     solution       = 0;
-    SolverControl    solver_control(1000, 1e-5);
+    SolverControl solver_control(1000, 1e-5);
     SolverBicgstab<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     check_solver_within_range(
@@ -352,14 +352,14 @@ Step4<dim>::solve(int cycle)
 
   {
     deallog.push("Chebyshev");
-    static constexpr std::array<int, 2>                     lower{23, 46};
-    TrilinosWrappers::PreconditionChebyshev                 preconditioner;
+    static constexpr std::array<int, 2> lower{23, 46};
+    TrilinosWrappers::PreconditionChebyshev preconditioner;
     TrilinosWrappers::PreconditionChebyshev::AdditionalData data;
     data.max_eigenvalue = 2.5;
     data.degree         = 3;
     solution            = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix, data);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),
@@ -374,7 +374,7 @@ Step4<dim>::solve(int cycle)
     TrilinosWrappers::PreconditionBlockwiseDirect preconditioner;
     solution = 0;
     SolverControl solver_control(1000, 1e-10);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
     preconditioner.initialize(system_matrix);
     check_solver_within_range(
       solver.solve(system_matrix, solution, system_rhs, preconditioner),

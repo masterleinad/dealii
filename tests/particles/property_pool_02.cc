@@ -24,7 +24,7 @@ void
 test()
 {
   {
-    const unsigned int      n_properties = 3;
+    const unsigned int n_properties = 3;
     Particles::PropertyPool pool(n_properties);
 
     typename Particles::PropertyPool::Handle handle

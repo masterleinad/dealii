@@ -115,11 +115,11 @@ public:
    * and distributed using the grid @p process_grid.
    */
   ScaLAPACKMatrix(
-    const size_type                                           n_rows,
-    const size_type                                           n_columns,
+    const size_type n_rows,
+    const size_type n_columns,
     const std::shared_ptr<const Utilities::MPI::ProcessGrid>& process_grid,
-    const size_type               row_block_size    = 32,
-    const size_type               column_block_size = 32,
+    const size_type row_block_size         = 32,
+    const size_type column_block_size      = 32,
     const LAPACKSupport::Property property = LAPACKSupport::Property::general);
 
   /**
@@ -127,10 +127,10 @@ public:
    * using the process grid in @p process_grid.
    */
   ScaLAPACKMatrix(
-    const size_type                                          size,
+    const size_type size,
     const std::shared_ptr<const Utilities::MPI::ProcessGrid> process_grid,
-    const size_type                                          block_size = 32,
-    const LAPACKSupport::Property                            property
+    const size_type block_size = 32,
+    const LAPACKSupport::Property property
     = LAPACKSupport::Property::symmetric);
 
   /**
@@ -143,11 +143,11 @@ public:
    * and distributed using the grid @p process_grid.
    */
   void
-  reinit(const size_type                                           n_rows,
-         const size_type                                           n_columns,
+  reinit(const size_type n_rows,
+         const size_type n_columns,
          const std::shared_ptr<const Utilities::MPI::ProcessGrid>& process_grid,
-         const size_type               row_block_size    = 32,
-         const size_type               column_block_size = 32,
+         const size_type row_block_size    = 32,
+         const size_type column_block_size = 32,
          const LAPACKSupport::Property property
          = LAPACKSupport::Property::general);
 
@@ -155,9 +155,9 @@ public:
    * Initialize the square matrix of size @p size and distributed using the grid @p process_grid.
    */
   void
-  reinit(const size_type                                          size,
+  reinit(const size_type size,
          const std::shared_ptr<const Utilities::MPI::ProcessGrid> process_grid,
-         const size_type               block_size = 32,
+         const size_type block_size = 32,
          const LAPACKSupport::Property property
          = LAPACKSupport::Property::symmetric);
 
@@ -226,7 +226,7 @@ public:
    * with the same MPI communicator.
    */
   void
-  copy_to(ScaLAPACKMatrix<NumberType>&                 B,
+  copy_to(ScaLAPACKMatrix<NumberType>& B,
           const std::pair<unsigned int, unsigned int>& offset_A,
           const std::pair<unsigned int, unsigned int>& offset_B,
           const std::pair<unsigned int, unsigned int>& submatrix_size) const;
@@ -253,9 +253,9 @@ public:
    */
   void
   add(const ScaLAPACKMatrix<NumberType>& B,
-      const NumberType                   a           = 0.,
-      const NumberType                   b           = 1.,
-      const bool                         transpose_B = false);
+      const NumberType a     = 0.,
+      const NumberType b     = 1.,
+      const bool transpose_B = false);
 
   /**
    * Matrix-addition:
@@ -297,12 +297,12 @@ public:
    * The matrices $\mathbf{A}$, $\mathbf{B}$ and $\mathbf{C}$ must have the same process grid.
    */
   void
-  mult(const NumberType                   b,
+  mult(const NumberType b,
        const ScaLAPACKMatrix<NumberType>& B,
-       const NumberType                   c,
-       ScaLAPACKMatrix<NumberType>&       C,
-       const bool                         transpose_A = false,
-       const bool                         transpose_B = false) const;
+       const NumberType c,
+       ScaLAPACKMatrix<NumberType>& C,
+       const bool transpose_A = false,
+       const bool transpose_B = false) const;
 
   /**
    * Matrix-matrix-multiplication.
@@ -320,9 +320,9 @@ public:
    * The following alignment conditions have to be fulfilled: $MB_A=MB_C$, $NB_A=MB_B$ and $NB_B=NB_C$.
    */
   void
-  mmult(ScaLAPACKMatrix<NumberType>&       C,
+  mmult(ScaLAPACKMatrix<NumberType>& C,
         const ScaLAPACKMatrix<NumberType>& B,
-        const bool                         adding = false) const;
+        const bool adding = false) const;
 
   /**
    * Matrix-matrix-multiplication using transpose of $\mathbf{A}$.
@@ -340,9 +340,9 @@ public:
    * The following alignment conditions have to be fulfilled: $MB_A=MB_B$, $NB_A=MB_C$ and $NB_B=NB_C$.
    */
   void
-  Tmmult(ScaLAPACKMatrix<NumberType>&       C,
+  Tmmult(ScaLAPACKMatrix<NumberType>& C,
          const ScaLAPACKMatrix<NumberType>& B,
-         const bool                         adding = false) const;
+         const bool adding = false) const;
 
   /**
    * Matrix-matrix-multiplication using the transpose of $\mathbf{B}$.
@@ -360,9 +360,9 @@ public:
    * The following alignment conditions have to be fulfilled: $MB_A=MB_C$, $NB_A=NB_B$ and $MB_B=NB_C$.
    */
   void
-  mTmult(ScaLAPACKMatrix<NumberType>&       C,
+  mTmult(ScaLAPACKMatrix<NumberType>& C,
          const ScaLAPACKMatrix<NumberType>& B,
-         const bool                         adding = false) const;
+         const bool adding = false) const;
 
   /**
    * Matrix-matrix-multiplication using transpose of $\mathbf{A}$ and
@@ -381,9 +381,9 @@ public:
    * The following alignment conditions have to be fulfilled: $MB_A=NB_B$, $NB_A=MB_C$ and $MB_B=NB_C$.
    */
   void
-  TmTmult(ScaLAPACKMatrix<NumberType>&       C,
+  TmTmult(ScaLAPACKMatrix<NumberType>& C,
           const ScaLAPACKMatrix<NumberType>& B,
-          const bool                         adding = false) const;
+          const bool adding = false) const;
 
   /**
    * Stores the distributed matrix in @p filename using HDF5.
@@ -404,7 +404,7 @@ public:
    * with <tt>chunk_size.first</tt> being the number of rows of a chunk and <tt>chunk_size.second</tt> the number of columns.
    */
   void
-  save(const char*                                  filename,
+  save(const char* filename,
        const std::pair<unsigned int, unsigned int>& chunk_size
        = std::make_pair(numbers::invalid_unsigned_int,
                         numbers::invalid_unsigned_int)) const;
@@ -468,7 +468,7 @@ public:
   std::vector<NumberType>
   eigenpairs_symmetric_by_index(
     const std::pair<unsigned int, unsigned int>& index_limits,
-    const bool                                   compute_eigenvectors);
+    const bool compute_eigenvectors);
 
   /**
    * Computing selected eigenvalues and, optionally, the eigenvectors.
@@ -481,7 +481,7 @@ public:
   std::vector<NumberType>
   eigenpairs_symmetric_by_value(
     const std::pair<NumberType, NumberType>& value_limits,
-    const bool                               compute_eigenvectors);
+    const bool compute_eigenvectors);
 
   /**
    * Computing selected eigenvalues and, optionally, the eigenvectors of the real symmetric
@@ -500,7 +500,7 @@ public:
   std::vector<NumberType>
   eigenpairs_symmetric_by_index_MRRR(
     const std::pair<unsigned int, unsigned int>& index_limits,
-    const bool                                   compute_eigenvectors);
+    const bool compute_eigenvectors);
 
   /**
    * Computing selected eigenvalues and, optionally, the eigenvectors of the real symmetric
@@ -514,7 +514,7 @@ public:
   std::vector<NumberType>
   eigenpairs_symmetric_by_value_MRRR(
     const std::pair<NumberType, NumberType>& value_limits,
-    const bool                               compute_eigenvectors);
+    const bool compute_eigenvectors);
 
   /**
   * Computing the singular value decomposition (SVD) of a
@@ -734,7 +734,7 @@ private:
    */
   std::vector<NumberType>
   eigenpairs_symmetric(
-    const bool                                   compute_eigenvectors,
+    const bool compute_eigenvectors,
     const std::pair<unsigned int, unsigned int>& index_limits
     = std::make_pair(numbers::invalid_unsigned_int,
                      numbers::invalid_unsigned_int),
@@ -762,7 +762,7 @@ private:
    */
   std::vector<NumberType>
   eigenpairs_symmetric_MRRR(
-    const bool                                   compute_eigenvectors,
+    const bool compute_eigenvectors,
     const std::pair<unsigned int, unsigned int>& index_limits
     = std::make_pair(numbers::invalid_unsigned_int,
                      numbers::invalid_unsigned_int),
@@ -775,7 +775,7 @@ private:
    * using serial routines
    */
   void
-  save_serial(const char*                                  filename,
+  save_serial(const char* filename,
               const std::pair<unsigned int, unsigned int>& chunk_size) const;
 
   /*
@@ -790,7 +790,7 @@ private:
    * using parallel routines
    */
   void
-  save_parallel(const char*                                  filename,
+  save_parallel(const char* filename,
                 const std::pair<unsigned int, unsigned int>& chunk_size) const;
 
   /*

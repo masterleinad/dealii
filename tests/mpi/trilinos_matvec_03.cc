@@ -144,7 +144,7 @@ main(int argc, char** argv)
     argc, argv, testing_max_num_threads());
 
   const unsigned int n_procs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid          = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
   if(myid == 0)

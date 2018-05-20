@@ -144,9 +144,9 @@ public:
    * @arg @c degree: constructor argument for poly. May be different from @p
    * fe_data.degree.
    */
-  FE_PolyTensor(const unsigned int                degree,
-                const FiniteElementData<dim>&     fe_data,
-                const std::vector<bool>&          restriction_is_additive_flags,
+  FE_PolyTensor(const unsigned int degree,
+                const FiniteElementData<dim>& fe_data,
+                const std::vector<bool>& restriction_is_additive_flags,
                 const std::vector<ComponentMask>& nonzero_components);
 
   // for documentation, see the FiniteElement base class
@@ -165,7 +165,7 @@ public:
   // documentation inherited from the base class
   virtual double
   shape_value_component(const unsigned int i,
-                        const Point<dim>&  p,
+                        const Point<dim>& p,
                         const unsigned int component) const override;
 
   /**
@@ -180,7 +180,7 @@ public:
   // documentation inherited from the base class
   virtual Tensor<1, dim>
   shape_grad_component(const unsigned int i,
-                       const Point<dim>&  p,
+                       const Point<dim>& p,
                        const unsigned int component) const override;
 
   /**
@@ -195,7 +195,7 @@ public:
   // documentation inherited from the base class
   virtual Tensor<2, dim>
   shape_grad_grad_component(const unsigned int i,
-                            const Point<dim>&  p,
+                            const Point<dim>& p,
                             const unsigned int component) const override;
 
 protected:
@@ -335,12 +335,12 @@ protected:
   virtual void
   fill_fe_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const CellSimilarity::Similarity cell_similarity,
+    const Quadrature<dim>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -348,12 +348,12 @@ protected:
   virtual void
   fill_fe_face_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -361,13 +361,13 @@ protected:
   virtual void
   fill_fe_subface_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          sub_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const unsigned int sub_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -407,11 +407,11 @@ protected:
     /**
      * Scratch arrays for intermediate computations
      */
-    mutable std::vector<double>              sign_change;
+    mutable std::vector<double> sign_change;
     mutable std::vector<Tensor<1, spacedim>> transformed_shape_values;
     // for shape_gradient computations
     mutable std::vector<Tensor<2, spacedim>> transformed_shape_grads;
-    mutable std::vector<Tensor<2, dim>>      untransformed_shape_grads;
+    mutable std::vector<Tensor<2, dim>> untransformed_shape_grads;
     // for shape_hessian computations
     mutable std::vector<Tensor<3, spacedim>> transformed_shape_hessians;
     mutable std::vector<Tensor<3, dim>> untransformed_shape_hessian_tensors;

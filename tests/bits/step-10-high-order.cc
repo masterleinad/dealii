@@ -53,8 +53,8 @@ compute_pi_by_area()
   static const SphericalManifold<dim> boundary;
   triangulation.set_manifold(0, boundary);
 
-  MappingQ<dim>     mapping(degree);
-  const FE_Q<dim>   dummy_fe(1);
+  MappingQ<dim> mapping(degree);
+  const FE_Q<dim> dummy_fe(1);
   const QGauss<dim> quadrature(degree + 3);
 
   DoFHandler<dim> dof_handler(triangulation);
@@ -123,8 +123,8 @@ compute_pi_by_perimeter()
   static const SphericalManifold<dim> boundary;
   triangulation.set_manifold(0, boundary);
 
-  const MappingQ<dim>   mapping(degree);
-  const FE_Q<dim>       fe(1);
+  const MappingQ<dim> mapping(degree);
+  const FE_Q<dim> fe(1);
   const QGauss<dim - 1> quadrature(degree);
 
   DoFHandler<dim> dof_handler(triangulation);

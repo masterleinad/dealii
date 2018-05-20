@@ -48,12 +48,12 @@ namespace Step22
 
     MPI_Comm mpi_communicator;
 
-    SphericalManifold<dim>                    boundary;
+    SphericalManifold<dim> boundary;
     parallel::distributed::Triangulation<dim> triangulation;
-    FESystem<dim>                             fe;
-    DoFHandler<dim>                           dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    ConstraintMatrix      constraints;
+    ConstraintMatrix constraints;
     std::vector<IndexSet> owned_partitioning;
     std::vector<IndexSet> relevant_partitioning;
   };
@@ -122,7 +122,7 @@ namespace Step22
   void
   StokesProblem<dim>::run()
   {
-    Point<dim>   center;
+    Point<dim> center;
     const double inner_radius = .5;
     const double outer_radius = 1.;
 

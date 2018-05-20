@@ -78,7 +78,7 @@ public:
   gradient(const Point<dim>& p, const unsigned int component = 0) const;
 
   virtual void
-  vector_gradient(const Point<dim>&                     p,
+  vector_gradient(const Point<dim>& p,
                   typename std::vector<Tensor<1, dim>>& gradients) const;
 };
 
@@ -95,7 +95,7 @@ ExactSinExp<dim>::gradient(const Point<dim>& p, const unsigned int) const
 template <int dim>
 void
 ExactSinExp<dim>::vector_gradient(
-  const Point<dim>&                     p,
+  const Point<dim>& p,
   typename std::vector<Tensor<1, dim>>& gradients) const
 {
   Assert(gradients.size() == this->n_components,
@@ -112,16 +112,16 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  const unsigned int      dim = 2;
-  AutoSinExp<dim>         auto_function;
-  ExactSinExp<dim>        exact_function;
-  Point<dim>              p(0.23, 0.1);
+  const unsigned int dim = 2;
+  AutoSinExp<dim> auto_function;
+  ExactSinExp<dim> exact_function;
+  Point<dim> p(0.23, 0.1);
   std::vector<Point<dim>> ps(1, p);
 
   Tensor<1, dim> u_grad = exact_function.gradient(p);
 
   AutoDerivativeFunction<dim>::DifferenceFormula formula;
-  const double                                   h_base = 0.1;
+  const double h_base = 0.1;
   for(unsigned int order = 1; order < 5; ++order)
     {
       formula = AutoDerivativeFunction<dim>::get_formula_of_order(order);

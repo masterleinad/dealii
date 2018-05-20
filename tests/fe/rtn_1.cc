@@ -33,7 +33,7 @@ check_support_points(const FiniteElement<dim>& fe)
   deallog << fe.get_name() << std::endl;
 
   const std::vector<Point<dim>>& points = fe.get_generalized_support_points();
-  std::vector<double>            weights(points.size());
+  std::vector<double> weights(points.size());
 
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
@@ -43,8 +43,8 @@ check_support_points(const FiniteElement<dim>& fe)
   MappingCartesian<dim> mapping;
 
   Quadrature<dim> support_quadrature(points, weights);
-  UpdateFlags     flags = update_values | update_gradients;
-  FEValues<dim>   vals(mapping, fe, support_quadrature, flags);
+  UpdateFlags flags = update_values | update_gradients;
+  FEValues<dim> vals(mapping, fe, support_quadrature, flags);
   vals.reinit(dof.begin_active());
 
   for(unsigned int k = 0; k < points.size(); ++k)
@@ -82,8 +82,8 @@ check_face_support_points(const FiniteElement<dim>& fe)
 
   const std::vector<Point<dim - 1>>& sub_points
     = fe.get_generalized_face_support_points();
-  std::vector<double>     weights(sub_points.size());
-  Quadrature<dim - 1>     sub_quadrature(sub_points, weights);
+  std::vector<double> weights(sub_points.size());
+  Quadrature<dim - 1> sub_quadrature(sub_points, weights);
   std::vector<Point<dim>> points(sub_points.size());
 
   Triangulation<dim> tr;
@@ -93,7 +93,7 @@ check_face_support_points(const FiniteElement<dim>& fe)
 
   MappingCartesian<dim> mapping;
 
-  UpdateFlags       flags = update_values | update_gradients;
+  UpdateFlags flags = update_values | update_gradients;
   FEFaceValues<dim> vals(mapping, fe, sub_quadrature, flags);
 
   for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)

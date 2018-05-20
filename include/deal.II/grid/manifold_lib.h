@@ -239,7 +239,7 @@ public:
   virtual Point<spacedim>
   get_intermediate_point(const Point<spacedim>& p1,
                          const Point<spacedim>& p2,
-                         const double           w) const override;
+                         const double w) const override;
 
   /**
    * Compute the derivative of the get_intermediate_point() function
@@ -282,7 +282,7 @@ public:
    */
   virtual void
   get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
+                 const Table<2, double>& weights,
                  ArrayView<Point<spacedim>> new_points) const override;
 
   /**
@@ -291,7 +291,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& vertices,
-                const ArrayView<const double>&          weights) const override;
+                const ArrayView<const double>& weights) const override;
 
   /**
    * The center of the spherical coordinate system.
@@ -307,8 +307,8 @@ private:
    */
   std::pair<double, Tensor<1, spacedim>>
   guess_new_point(const ArrayView<const Tensor<1, spacedim>>& directions,
-                  const ArrayView<const double>&              distances,
-                  const ArrayView<const double>&              weights) const;
+                  const ArrayView<const double>& distances,
+                  const ArrayView<const double>& weights) const;
 
   /**
    * Return a point on the spherical manifold which is intermediate
@@ -326,8 +326,8 @@ private:
    */
   Point<spacedim>
   get_new_point(const ArrayView<const Tensor<1, spacedim>>& directions,
-                const ArrayView<const double>&              distances,
-                const ArrayView<const double>&              weights,
+                const ArrayView<const double>& distances,
+                const ArrayView<const double>& weights,
                 const Point<spacedim>& candidate_point) const;
 
   /**
@@ -345,8 +345,8 @@ private:
    */
   virtual void
   get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const ArrayView<const double>&          weights,
-                 ArrayView<Point<spacedim>>              new_points) const;
+                 const ArrayView<const double>& weights,
+                 ArrayView<Point<spacedim>> new_points) const;
 
   /**
    * A manifold description to be used for get_new_point in 2D.
@@ -379,8 +379,8 @@ public:
    * <tt>axis=2</tt> for a tube along the y- or z-axis, respectively. The
    * tolerance value is used to determine if a point is on the axis.
    */
-  CylindricalManifold(const unsigned int axis      = 0,
-                      const double       tolerance = 1e-10);
+  CylindricalManifold(const unsigned int axis = 0,
+                      const double tolerance  = 1e-10);
 
   /**
    * Constructor. If constructed with this constructor, the manifold described
@@ -390,8 +390,8 @@ public:
    * value is used to determine if a point is on the axis.
    */
   CylindricalManifold(const Tensor<1, spacedim>& direction,
-                      const Point<spacedim>&     point_on_axis,
-                      const double               tolerance = 1e-10);
+                      const Point<spacedim>& point_on_axis,
+                      const double tolerance = 1e-10);
 
   /**
    * Make a clone of this Manifold object.
@@ -430,7 +430,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const override;
+                const ArrayView<const double>& weights) const override;
 
 protected:
   /**
@@ -484,8 +484,8 @@ public:
    * The tolerance argument is used in debug mode to actually check that the
    * two functions are one the inverse of the other.
    */
-  FunctionManifold(const Function<chartdim>&  push_forward_function,
-                   const Function<spacedim>&  pull_back_function,
+  FunctionManifold(const Function<chartdim>& push_forward_function,
+                   const Function<spacedim>& pull_back_function,
                    const Tensor<1, chartdim>& periodicity
                    = Tensor<1, chartdim>(),
                    const double tolerance = 1e-10);
@@ -504,8 +504,8 @@ public:
    * The tolerance argument is used in debug mode to actually check that the
    * two functions are one the inverse of the other.
    */
-  FunctionManifold(const std::string          push_forward_expression,
-                   const std::string          pull_back_expression,
+  FunctionManifold(const std::string push_forward_expression,
+                   const std::string pull_back_expression,
                    const Tensor<1, chartdim>& periodicity
                    = Tensor<1, chartdim>(),
                    const typename FunctionParser<spacedim>::ConstMap
@@ -870,7 +870,7 @@ public:
    */
   virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>>& surrounding_points,
-                const ArrayView<const double>&          weights) const override;
+                const ArrayView<const double>& weights) const override;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -893,7 +893,7 @@ public:
    */
   virtual void
   get_new_points(const ArrayView<const Point<spacedim>>& surrounding_points,
-                 const Table<2, double>&                 weights,
+                 const Table<2, double>& weights,
                  ArrayView<Point<spacedim>> new_points) const override;
 
 private:
@@ -922,7 +922,7 @@ private:
   typename Triangulation<dim, spacedim>::cell_iterator
   compute_chart_points(
     const ArrayView<const Point<spacedim>>& surrounding_points,
-    ArrayView<Point<dim>>                   chart_points) const;
+    ArrayView<Point<dim>> chart_points) const;
 
   /**
    * Pull back operation into the unit coordinates on the given coarse cell.
@@ -942,7 +942,7 @@ private:
    */
   Point<dim>
   pull_back(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-            const Point<spacedim>&                                      p,
+            const Point<spacedim>& p,
             const Point<dim>& initial_guess) const;
 
   /**
@@ -974,7 +974,7 @@ private:
   DerivativeForm<1, dim, spacedim>
   push_forward_gradient(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const Point<dim>&                                           chart_point,
+    const Point<dim>& chart_point,
     const Point<spacedim>& pushed_forward_chart_point) const;
 
   /**

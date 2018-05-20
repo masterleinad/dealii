@@ -76,7 +76,7 @@ check()
 
   // create a system element composed
   // of one Q1 and one Q2 element
-  FE_Q<dim>       element(1);
+  FE_Q<dim> element(1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 

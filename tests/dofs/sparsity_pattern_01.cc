@@ -64,7 +64,7 @@ check_boundary(const DoFHandler<dim>& dof)
   sparsity_1.compress();
 
   // second way: via a DynamicSparsityPattern
-  SparsityPattern        sparsity_2;
+  SparsityPattern sparsity_2;
   DynamicSparsityPattern csp(dof.n_boundary_dofs());
   DoFTools::make_boundary_sparsity_pattern(dof, dof_to_boundary_mapping, csp);
   sparsity_2.copy_from(csp);
@@ -97,7 +97,7 @@ check()
 
   // create a system element composed
   // of one Q1 and one Q2 element
-  FESystem<dim>   element(FE_Q<dim>(1), 1, FE_Q<dim>(2), 1);
+  FESystem<dim> element(FE_Q<dim>(1), 1, FE_Q<dim>(2), 1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 
@@ -122,7 +122,7 @@ check()
 
   // second way: via
   // DynamicSparsityPattern
-  SparsityPattern        sparsity_2;
+  SparsityPattern sparsity_2;
   DynamicSparsityPattern csp_2(dof.n_dofs());
   DoFTools::make_sparsity_pattern(dof, mask, csp_2);
   constraints.condense(csp_2);
@@ -153,7 +153,7 @@ check()
   constraints.condense(sparsity_3);
   sparsity_3.compress();
 
-  BlockSparsityPattern        sparsity_4;
+  BlockSparsityPattern sparsity_4;
   BlockDynamicSparsityPattern csp_4(2, 2);
   csp_4.block(0, 0).reinit(n1, n1);
   csp_4.block(1, 0).reinit(n2, n1);

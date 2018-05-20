@@ -47,8 +47,8 @@ public:
   void
   face(MeshWorker::DoFInfo<dim>& dinfo1,
        MeshWorker::DoFInfo<dim>& dinfo2,
-       CellInfo&                 info1,
-       CellInfo&                 info2) const;
+       CellInfo& info1,
+       CellInfo& info2) const;
 
   bool cells;
   bool faces;
@@ -84,9 +84,9 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 
   for(unsigned int k = 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int block_row = info.matrix(k).row;
+      const unsigned int block_col = info.matrix(k).column;
+      FullMatrix<double>& M1       = info.matrix(k).matrix;
       for(unsigned int i = 0; i < M1.m(); ++i)
         for(unsigned int j = 0; j < M1.n(); ++j)
           {
@@ -114,12 +114,12 @@ template <int dim>
 void
 test_simple(DoFHandler<dim>& mgdofs)
 {
-  SparsityPattern      pattern;
+  SparsityPattern pattern;
   SparseMatrix<double> matrix;
-  Vector<double>       v;
+  Vector<double> v;
 
-  const DoFHandler<dim>&    dofs = mgdofs;
-  const FiniteElement<dim>& fe   = dofs.get_fe();
+  const DoFHandler<dim>& dofs  = mgdofs;
+  const FiniteElement<dim>& fe = dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell
@@ -218,7 +218,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
   std::vector<std::shared_ptr<FiniteElement<2>>> fe2;

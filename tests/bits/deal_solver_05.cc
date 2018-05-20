@@ -34,12 +34,12 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_solve(SolverType&          solver,
+check_solve(SolverType& solver,
             const SolverControl& solver_control,
-            const MatrixType&    A,
-            VectorType&          u,
-            VectorType&          f,
-            const PRECONDITION&  P)
+            const MatrixType& A,
+            VectorType& u,
+            VectorType& f,
+            const PRECONDITION& P)
 {
   deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
@@ -67,15 +67,15 @@ main()
   deallog.attach(logfile);
 
   GrowingVectorMemory<> mem;
-  SolverControl         control(100, 1.e-3);
+  SolverControl control(100, 1.e-3);
 
   const unsigned int size = 32;
-  unsigned int       dim  = (size - 1) * (size - 1);
+  unsigned int dim        = (size - 1) * (size - 1);
 
   deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
   // Make matrix
-  FDMatrix        testproblem(size, size);
+  FDMatrix testproblem(size, size);
   SparsityPattern structure(dim, dim, 5);
   testproblem.five_point_structure(structure);
   structure.compress();
@@ -86,7 +86,7 @@ main()
   Vector<double> u(dim);
   f = 1.;
 
-  SolverQMRS<>         solver(control, mem);
+  SolverQMRS<> solver(control, mem);
   PreconditionIdentity preconditioner;
   check_solve(solver, control, A, u, f, preconditioner);
 }

@@ -42,7 +42,7 @@ main()
   try
     {
       std::vector<types::global_dof_index> block_sizes(2, 50);
-      BlockVector<double>                  v(block_sizes);
+      BlockVector<double> v(block_sizes);
       test(v);
     }
   catch(std::exception& exc)

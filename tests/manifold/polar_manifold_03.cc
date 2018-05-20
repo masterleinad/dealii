@@ -35,8 +35,8 @@ test(unsigned int ref = 1)
   PolarManifold<dim, spacedim> manifold;
 
   Triangulation<dim, spacedim> tria;
-  Point<spacedim>              p0;
-  Point<spacedim>              p1;
+  Point<spacedim> p0;
+  Point<spacedim> p1;
   p0[0] = .2;
   p1[0] = 1;
   p0[1] = .1;

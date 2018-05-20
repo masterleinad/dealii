@@ -32,11 +32,11 @@
 
 template <typename SolverType, typename MatrixType, typename VectorType>
 void
-check_solve(SolverType&               solver,
-            const unsigned int        solver_number,
-            const SolverControl&      solver_control,
-            const MatrixType&         A,
-            std::vector<VectorType>&  u,
+check_solve(SolverType& solver,
+            const unsigned int solver_number,
+            const SolverControl& solver_control,
+            const MatrixType& A,
+            std::vector<VectorType>& u,
             std::vector<PetscScalar>& v)
 {
   deallog << "Solver type: " << typeid(solver).name() << std::endl;
@@ -115,14 +115,14 @@ main(int argc, char** argv)
       500, 1e-12 /*1000*PETSC_MACHINE_EPSILON*/, false, false);
 
     const unsigned int size = 31;
-    unsigned int       dim  = (size - 1);
+    unsigned int dim        = (size - 1);
 
     const unsigned n_eigenvalues = 4;
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl << std::endl;
 
     // Make matrix
-    FD1DLaplaceMatrix           testproblem(size);
+    FD1DLaplaceMatrix testproblem(size);
     PETScWrappers::SparseMatrix A(dim, dim, 3);
     testproblem.three_point(A);
     A.compress(VectorOperation::insert);
@@ -153,7 +153,7 @@ main(int argc, char** argv)
 
     {
       SLEPcWrappers::SolverGeneralizedDavidson::AdditionalData data(true);
-      SLEPcWrappers::SolverGeneralizedDavidson                 solver(
+      SLEPcWrappers::SolverGeneralizedDavidson solver(
         control, PETSC_COMM_SELF, data);
       check_solve(solver, 5, control, A, u, v);
     }

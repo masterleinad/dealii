@@ -85,15 +85,15 @@ test1()
   deallog << "for same underlying FEs: f(qp) * N_{fe}(qp) == N_{pou}(qp)"
           << std::endl;
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   EnrichmentFunction<dim> function;
-  FE_Enriched<dim>        fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
+  FE_Enriched<dim> fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
 
   GridGenerator::hyper_cube(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  QGauss<dim>   quadrature(1);
+  QGauss<dim> quadrature(1);
   FEValues<dim> fe_values(
     fe, quadrature, update_values | update_gradients | update_JxW_values);
 
@@ -103,8 +103,8 @@ test1()
   for(; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      const unsigned int                     n_q_points    = quadrature.size();
-      const unsigned int                     dofs_per_cell = fe.dofs_per_cell;
+      const unsigned int n_q_points    = quadrature.size();
+      const unsigned int dofs_per_cell = fe.dofs_per_cell;
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values.get_quadrature_points();
 

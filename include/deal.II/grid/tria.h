@@ -1569,13 +1569,13 @@ public:
   typedef TriaActiveIterator<dealii::TriaAccessor<0, dim, spacedim>>
     active_vertex_iterator;
 
-  typedef typename IteratorSelector::line_iterator        line_iterator;
+  typedef typename IteratorSelector::line_iterator line_iterator;
   typedef typename IteratorSelector::active_line_iterator active_line_iterator;
 
-  typedef typename IteratorSelector::quad_iterator        quad_iterator;
+  typedef typename IteratorSelector::quad_iterator quad_iterator;
   typedef typename IteratorSelector::active_quad_iterator active_quad_iterator;
 
-  typedef typename IteratorSelector::hex_iterator        hex_iterator;
+  typedef typename IteratorSelector::hex_iterator hex_iterator;
   typedef typename IteratorSelector::active_hex_iterator active_hex_iterator;
 
   /**
@@ -1638,8 +1638,8 @@ public:
    * If set, these two functions may throw an exception if they encounter
    * distorted cells.
    */
-  Triangulation(const MeshSmoothing smooth_grid               = none,
-                const bool          check_for_distorted_cells = false);
+  Triangulation(const MeshSmoothing smooth_grid      = none,
+                const bool check_for_distorted_cells = false);
 
   /**
    * Copy constructor.
@@ -1724,7 +1724,7 @@ public:
    * @ref GlossManifoldIndicator "Glossary entry on manifold indicators"
    */
   void
-  set_manifold(const types::manifold_id       number,
+  set_manifold(const types::manifold_id number,
                const Manifold<dim, spacedim>& manifold_object);
 
   /**
@@ -1923,8 +1923,8 @@ public:
    */
   virtual void
   create_triangulation(const std::vector<Point<spacedim>>& vertices,
-                       const std::vector<CellData<dim>>&   cells,
-                       const SubCellData&                  subcelldata);
+                       const std::vector<CellData<dim>>& cells,
+                       const SubCellData& subcelldata);
 
   /**
    * For backward compatibility, only. This function takes the cell data in
@@ -1937,8 +1937,8 @@ public:
   virtual void
   create_triangulation_compatibility(
     const std::vector<Point<spacedim>>& vertices,
-    const std::vector<CellData<dim>>&   cells,
-    const SubCellData&                  subcelldata);
+    const std::vector<CellData<dim>>& cells,
+    const SubCellData& subcelldata);
 
   /**
    * Revert or flip the direction_flags of a dim<spacedim triangulation, see
@@ -3373,10 +3373,10 @@ protected:
    * therefore be interplatform compatible.
    */
   static void
-  write_bool_vector(const unsigned int       magic_number1,
+  write_bool_vector(const unsigned int magic_number1,
                     const std::vector<bool>& v,
-                    const unsigned int       magic_number2,
-                    std::ostream&            out);
+                    const unsigned int magic_number2,
+                    std::ostream& out);
 
   /**
    * Re-read a vector of bools previously written by @p write_bool_vector and
@@ -3386,7 +3386,7 @@ protected:
   read_bool_vector(const unsigned int magic_number1,
                    std::vector<bool>& v,
                    const unsigned int magic_number2,
-                   std::istream&      in);
+                   std::istream& in);
 
   /**
    * Recreate information about periodic neighbors from periodic_face_pairs_level_0.
@@ -3428,10 +3428,10 @@ private:
   typedef TriaRawIterator<TriaAccessor<dim - 1, dim, spacedim>>
     raw_face_iterator;
   typedef TriaRawIterator<dealii::TriaAccessor<0, dim, spacedim>>
-                                                       raw_vertex_iterator;
+    raw_vertex_iterator;
   typedef typename IteratorSelector::raw_line_iterator raw_line_iterator;
   typedef typename IteratorSelector::raw_quad_iterator raw_quad_iterator;
-  typedef typename IteratorSelector::raw_hex_iterator  raw_hex_iterator;
+  typedef typename IteratorSelector::raw_hex_iterator raw_hex_iterator;
 
   /**
    * Iterator to the first cell, used or not, on level @p level. If a level
@@ -3834,7 +3834,7 @@ Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
   ar& smooth_grid;
 
   unsigned int n_levels = levels.size();
-  ar&          n_levels;
+  ar& n_levels;
   for(unsigned int i = 0; i < levels.size(); ++i)
     ar& levels[i];
 
@@ -3842,7 +3842,7 @@ Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // at least up to 1.65.1. This causes problems with clang-5.
   // Therefore, work around it.
   bool faces_is_nullptr = (faces.get() == nullptr);
-  ar&  faces_is_nullptr;
+  ar& faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
 
@@ -3874,19 +3874,19 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   ar& smooth_grid;
 
   unsigned int size;
-  ar&          size;
+  ar& size;
   levels.resize(size);
   for(unsigned int i = 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>
-          level;
+        level;
       ar& level;
       levels[i] = std::move(level);
     }
 
   //Workaround for nullptr, see in save().
   bool faces_is_nullptr = true;
-  ar&  faces_is_nullptr;
+  ar& faces_is_nullptr;
   if(!faces_is_nullptr)
     ar& faces;
 
@@ -3906,7 +3906,7 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   }
 
   bool my_check_for_distorted_cells;
-  ar&  my_check_for_distorted_cells;
+  ar& my_check_for_distorted_cells;
 
   Assert(my_check_for_distorted_cells == check_for_distorted_cells,
          ExcMessage("The triangulation loaded into here must have the "

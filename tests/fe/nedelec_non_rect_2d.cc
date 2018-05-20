@@ -79,17 +79,17 @@ namespace polytest
     {}
     void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   values) const;
+                      std::vector<Vector<double>>& values) const;
 
     void
     rhs_value_list(const std::vector<Point<dim>>& points,
-                   std::vector<Vector<double>>&   values) const;
+                   std::vector<Vector<double>>& values) const;
   };
   template <int dim>
   void
   SimplePolynomial<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    std::vector<Vector<double>>& values) const
   {
     Assert(dim == 2, ExcNotImplemented());
     Assert(values.size() == points.size(),
@@ -107,7 +107,7 @@ namespace polytest
   void
   SimplePolynomial<dim>::rhs_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    std::vector<Vector<double>>& values) const
   {
     Assert(dim == 2, ExcNotImplemented());
     Assert(values.size() == points.size(),
@@ -146,14 +146,14 @@ namespace polytest
     unsigned int p_order;
     unsigned int quad_order;
 
-    Triangulation<dim>   tria;
-    DoFHandler<dim>      dof_handler;
-    FE_Nedelec<dim>      fe;
-    ConstraintMatrix     constraints;
-    SparsityPattern      sparsity_pattern;
+    Triangulation<dim> tria;
+    DoFHandler<dim> dof_handler;
+    FE_Nedelec<dim> fe;
+    ConstraintMatrix constraints;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
-    Vector<double>       solution;
-    Vector<double>       system_rhs;
+    Vector<double> solution;
+    Vector<double> system_rhs;
   };
 
   template <int dim>
@@ -193,17 +193,17 @@ namespace polytest
   polytest<dim>::assemble_system()
   {
     const QGauss<dim> test_quad(quad_order);
-    FEValues<dim>     fe_values_test(fe,
+    FEValues<dim> fe_values_test(fe,
                                  test_quad,
                                  update_values | update_gradients
                                    | update_quadrature_points
                                    | update_JxW_values);
 
-    const QGauss<dim>  quadrature_formula(quad_order);
+    const QGauss<dim> quadrature_formula(quad_order);
     const unsigned int n_q_points = quadrature_formula.size();
 
     const QGauss<dim - 1> face_quadrature_formula(quad_order);
-    const unsigned int    n_face_q_points = face_quadrature_formula.size();
+    const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     FEValues<dim> fe_values(fe,
                             quadrature_formula,
@@ -221,11 +221,11 @@ namespace polytest
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    SimplePolynomial<dim>       right_hand_side;
+    SimplePolynomial<dim> right_hand_side;
     std::vector<Vector<double>> rhs_value_list(
       n_q_points, Vector<double>(fe.n_components()));
 
@@ -284,7 +284,7 @@ namespace polytest
   polytest<dim>::output_error()
   {
     SimplePolynomial<dim> exact_solution;
-    Vector<double>        diff_per_cell(tria.n_active_cells());
+    Vector<double> diff_per_cell(tria.n_active_cells());
     VectorTools::integrate_difference(dof_handler,
                                       solution,
                                       exact_solution,

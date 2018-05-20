@@ -43,7 +43,7 @@ template <int dim,
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const DoFHandler<dim>&  dof_handler,
+  MatrixFreeTest(const DoFHandler<dim>& dof_handler,
                  const ConstraintMatrix& constraints)
     : dof_handler(dof_handler), constraints(constraints)
   {}
@@ -79,15 +79,15 @@ public:
   };
 
 private:
-  const DoFHandler<dim>&  dof_handler;
+  const DoFHandler<dim>& dof_handler;
   const ConstraintMatrix& constraints;
 };
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim>&  dof,
+do_test(const DoFHandler<dim>& dof,
         const ConstraintMatrix& constraints,
-        const unsigned int      parallel_option = 0)
+        const unsigned int parallel_option = 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
   if(parallel_option > 0)
@@ -97,9 +97,9 @@ do_test(const DoFHandler<dim>&  dof,
   //std::cout << "Number of constraints: " << constraints.n_constraints() << std::endl;
 
   MatrixFreeTest<dim, fe_degree, number> mf(dof, constraints);
-  Vector<number>                         in(dof.n_dofs()), out(dof.n_dofs());
-  Vector<number>                         in_dist(dof.n_dofs());
-  Vector<number>                         out_dist(in_dist);
+  Vector<number> in(dof.n_dofs()), out(dof.n_dofs());
+  Vector<number> in_dist(dof.n_dofs());
+  Vector<number> out_dist(in_dist);
 
   for(unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
@@ -174,7 +174,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -196,8 +196,8 @@ test()
   tria.execute_coarsening_and_refinement();
 
   const unsigned int degree = fe_degree;
-  FESystem<dim>      fe(FE_Q<dim>(degree), dim);
-  DoFHandler<dim>    dof(tria);
+  FESystem<dim> fe(FE_Q<dim>(degree), dim);
+  DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof, constraints);

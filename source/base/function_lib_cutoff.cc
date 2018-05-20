@@ -25,8 +25,8 @@ DEAL_II_NAMESPACE_OPEN
 namespace Functions
 {
   template <int dim>
-  CutOffFunctionBase<dim>::CutOffFunctionBase(const double       r,
-                                              const Point<dim>   p,
+  CutOffFunctionBase<dim>::CutOffFunctionBase(const double r,
+                                              const Point<dim> p,
                                               const unsigned int n_components,
                                               const unsigned int select)
     : Function<dim>(n_components), center(p), radius(r), selected(select)
@@ -50,8 +50,8 @@ namespace Functions
 
   template <int dim>
   CutOffFunctionLinfty<dim>::CutOffFunctionLinfty(
-    const double       r,
-    const Point<dim>   p,
+    const double r,
+    const Point<dim> p,
     const unsigned int n_components,
     const unsigned int select)
     : CutOffFunctionBase<dim>(r, p, n_components, select)
@@ -59,7 +59,7 @@ namespace Functions
 
   template <int dim>
   double
-  CutOffFunctionLinfty<dim>::value(const Point<dim>&  p,
+  CutOffFunctionLinfty<dim>::value(const Point<dim>& p,
                                    const unsigned int component) const
   {
     if(this->selected == CutOffFunctionBase<dim>::no_component
@@ -71,7 +71,7 @@ namespace Functions
   template <int dim>
   void
   CutOffFunctionLinfty<dim>::value_list(const std::vector<Point<dim>>& points,
-                                        std::vector<double>&           values,
+                                        std::vector<double>& values,
                                         const unsigned int component) const
   {
     Assert(values.size() == points.size(),
@@ -91,7 +91,7 @@ namespace Functions
   void
   CutOffFunctionLinfty<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    std::vector<Vector<double>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -111,8 +111,8 @@ namespace Functions
   }
 
   template <int dim>
-  CutOffFunctionW1<dim>::CutOffFunctionW1(const double       r,
-                                          const Point<dim>   p,
+  CutOffFunctionW1<dim>::CutOffFunctionW1(const double r,
+                                          const Point<dim> p,
                                           const unsigned int n_components,
                                           const unsigned int select)
     : CutOffFunctionBase<dim>(r, p, n_components, select)
@@ -120,7 +120,7 @@ namespace Functions
 
   template <int dim>
   double
-  CutOffFunctionW1<dim>::value(const Point<dim>&  p,
+  CutOffFunctionW1<dim>::value(const Point<dim>& p,
                                const unsigned int component) const
   {
     if(this->selected == CutOffFunctionBase<dim>::no_component
@@ -135,7 +135,7 @@ namespace Functions
   template <int dim>
   void
   CutOffFunctionW1<dim>::value_list(const std::vector<Point<dim>>& points,
-                                    std::vector<double>&           values,
+                                    std::vector<double>& values,
                                     const unsigned int component) const
   {
     Assert(values.size() == points.size(),
@@ -156,7 +156,7 @@ namespace Functions
   void
   CutOffFunctionW1<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    std::vector<Vector<double>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -177,8 +177,8 @@ namespace Functions
 
   template <int dim>
   CutOffFunctionCinfty<dim>::CutOffFunctionCinfty(
-    const double       r,
-    const Point<dim>   p,
+    const double r,
+    const Point<dim> p,
     const unsigned int n_components,
     const unsigned int select)
     : CutOffFunctionBase<dim>(r, p, n_components, select)
@@ -186,7 +186,7 @@ namespace Functions
 
   template <int dim>
   double
-  CutOffFunctionCinfty<dim>::value(const Point<dim>&  p,
+  CutOffFunctionCinfty<dim>::value(const Point<dim>& p,
                                    const unsigned int component) const
   {
     if(this->selected == CutOffFunctionBase<dim>::no_component
@@ -205,7 +205,7 @@ namespace Functions
   template <int dim>
   void
   CutOffFunctionCinfty<dim>::value_list(const std::vector<Point<dim>>& points,
-                                        std::vector<double>&           values,
+                                        std::vector<double>& values,
                                         const unsigned int component) const
   {
     Assert(values.size() == points.size(),
@@ -236,16 +236,16 @@ namespace Functions
   void
   CutOffFunctionCinfty<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    std::vector<Vector<double>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
     for(unsigned int k = 0; k < values.size(); ++k)
       {
-        const double d   = this->center.distance(points[k]);
-        const double r   = this->radius;
-        double       val = 0.;
+        const double d = this->center.distance(points[k]);
+        const double r = this->radius;
+        double val     = 0.;
         if(d < this->radius)
           {
             const double e = -r * r / (r * r - d * d);

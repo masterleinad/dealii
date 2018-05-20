@@ -54,7 +54,7 @@ main(int argc, char** argv)
   xsparsity.compress();
 
   // now copy everything into a Trilinos matrix
-  Epetra_Map                     map(TrilinosWrappers::types::int_type(5),
+  Epetra_Map map(TrilinosWrappers::types::int_type(5),
                  5,
                  0,
                  Utilities::Trilinos::comm_world());

@@ -40,8 +40,8 @@ vector_values(const FiniteElement<dim>& fe)
   Assert(fe.n_base_elements() == 1, ExcNotImplemented());
   deallog.push(fe.get_name());
 
-  QTrapez<dim>                           quadrature;
-  std::vector<unsigned int>              renumbering(fe.dofs_per_cell);
+  QTrapez<dim> quadrature;
+  std::vector<unsigned int> renumbering(fe.dofs_per_cell);
   std::vector<std::vector<unsigned int>> component_start;
   FETools::compute_component_wise(fe, renumbering, component_start);
 
@@ -57,7 +57,7 @@ vector_values(const FiniteElement<dim>& fe)
   for(unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
 
-  FEValues<dim>              feval(fe, quadrature, update_values);
+  FEValues<dim> feval(fe, quadrature, update_values);
   std::vector<Vector<float>> local(quadrature.size(),
                                    Vector<float>(fe.n_components()));
 

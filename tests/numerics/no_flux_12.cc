@@ -80,11 +80,11 @@ run()
   grid_out.write_eps (tria, output);
   */
 
-  FESystem<dim>   fe(FE_Q<dim>(1), dim);
+  FESystem<dim> fe(FE_Q<dim>(1), dim);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
-  ConstraintMatrix             constraints;
+  ConstraintMatrix constraints;
   std::set<types::boundary_id> no_normal_flux_boundaries;
   no_normal_flux_boundaries.insert(0); // x=0
   no_normal_flux_boundaries.insert(5); // z=1

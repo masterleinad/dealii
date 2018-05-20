@@ -40,9 +40,9 @@ test()
 
   typedef
     typename parallel::distributed::Triangulation<dim>::active_cell_iterator
-                 cell_iterator;
+      cell_iterator;
   typedef double DT;
-  DT             counter = 0.0;
+  DT counter = 0.0;
   GridTools::
     exchange_cell_data_to_ghosts<DT, parallel::distributed::Triangulation<dim>>(
       tria,
@@ -69,7 +69,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
   test<3>();

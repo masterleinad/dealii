@@ -33,10 +33,10 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
+check_solve(SolverType& solver,
+            const MatrixType& A,
+            VectorType& u,
+            VectorType& f,
             const PRECONDITION& P)
 {
   u = 0.;
@@ -56,10 +56,10 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_Tsolve(SolverType&         solver,
-             const MatrixType&   A,
-             VectorType&         u,
-             VectorType&         f,
+check_Tsolve(SolverType& solver,
+             const MatrixType& A,
+             VectorType& u,
+             VectorType& f,
              const PRECONDITION& P)
 {
   u = 0.;
@@ -82,19 +82,19 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  GrowingVectorMemory<>         mem;
-  SolverControl                 control(100, 1.e-3);
-  SolverControl                 verbose_control(100, 1.e-3, true);
-  SolverCG<>                    cg(control, mem);
+  GrowingVectorMemory<> mem;
+  SolverControl control(100, 1.e-3);
+  SolverControl verbose_control(100, 1.e-3, true);
+  SolverCG<> cg(control, mem);
   SolverGMRES<>::AdditionalData data1(8);
-  SolverGMRES<>                 gmres(control, mem, data1);
+  SolverGMRES<> gmres(control, mem, data1);
   SolverGMRES<>::AdditionalData data2(8, true);
-  SolverGMRES<>                 gmresright(control, mem, data2);
-  SolverMinRes<>                minres(control, mem);
-  SolverBicgstab<>              bicgstab(control, mem);
-  SolverRichardson<>            rich(control, mem);
-  SolverQMRS<>                  qmrs(control, mem);
-  SolverFIRE<>                  fire(control, mem);
+  SolverGMRES<> gmresright(control, mem, data2);
+  SolverMinRes<> minres(control, mem);
+  SolverBicgstab<> bicgstab(control, mem);
+  SolverRichardson<> rich(control, mem);
+  SolverQMRS<> qmrs(control, mem);
+  SolverFIRE<> fire(control, mem);
 
   for(unsigned int size = 4; size <= 30; size *= 3)
     {
@@ -103,14 +103,14 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();
       SparseMatrix<double> A(structure);
       testproblem.five_point(A);
 
-      PreconditionIdentity   prec_no;
+      PreconditionIdentity prec_no;
       PreconditionRichardson prec_richardson;
       prec_richardson.initialize(0.6);
       PreconditionSOR<> prec_sor;
@@ -253,7 +253,7 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();

@@ -29,8 +29,8 @@ test_exchange_bbox()
   std::vector<unsigned int> n_bboxes = {2, 4, 3, 5, 1, 3, 8};
 
   const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
-  unsigned int    n_procs = Utilities::MPI::n_mpi_processes(mpi_communicator);
-  unsigned int    proc    = Utilities::MPI::this_mpi_process(mpi_communicator);
+  unsigned int n_procs = Utilities::MPI::n_mpi_processes(mpi_communicator);
+  unsigned int proc    = Utilities::MPI::this_mpi_process(mpi_communicator);
 
   deallog << "Test for: dimension " << spacedim << std::endl;
   deallog << n_procs << "  mpi processes" << std::endl;
@@ -129,7 +129,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   deallog << "Test: GridTools::exchange_local_bounding_boxes " << std::endl;
 

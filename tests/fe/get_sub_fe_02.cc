@@ -31,9 +31,9 @@ void
 check()
 {
   FESystem<2> fe_velocity(FE_Q<2>(2), 2);
-  FE_Q<2>     fe_pressure(1);
-  FE_DGP<2>   fe_dg(0);
-  FE_BDM<2>   fe_nonprim(1);
+  FE_Q<2> fe_pressure(1);
+  FE_DGP<2> fe_dg(0);
+  FE_BDM<2> fe_nonprim(1);
 
   FESystem<2> fe(fe_velocity, 1, fe_pressure, 1, fe_dg, 2, fe_nonprim, 1);
 

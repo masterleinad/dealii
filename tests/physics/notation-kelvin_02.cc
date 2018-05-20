@@ -75,7 +75,7 @@ void initialize(Tensor<3, dim, Number>& x)
 // of a rank-3 tensor with two symmetric components
 template <int dim, typename Number>
 void initialize(Tensor<3, dim, Number>& x,
-                const bool              left_components_are_symmetric)
+                const bool left_components_are_symmetric)
 {
   Tensor<1, dim, Number> v;
   initialize(v);
@@ -122,9 +122,9 @@ test_scalars()
   const double C = 12;
   const double B = C * A;
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+  const Vector<double> vA     = Notation::Kelvin::to_vector(A);
   const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-  Vector<double>           vB(mC.m());
+  Vector<double> vB(mC.m());
   mC.vmult(vB, vA);
 
   typedef typename std::decay<decltype(A)>::type InpVecType;
@@ -162,9 +162,9 @@ test_rank_0_tensors()
   const Tensor<0, dim, double> C = 12;
   const Tensor<0, dim, double> B = C * A;
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+  const Vector<double> vA     = Notation::Kelvin::to_vector(A);
   const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-  Vector<double>           vB(mC.m());
+  Vector<double> vB(mC.m());
   mC.vmult(vB, vA);
 
   typedef typename std::decay<decltype(A)>::type InpVecType;
@@ -206,9 +206,9 @@ test_rank_1_2_tensors()
     initialize(C);
     const Tensor<1, dim, double> B = C * A;
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-    Vector<double>           vB(mC.m());
+    Vector<double> vB(mC.m());
     mC.vmult(vB, vA);
 
     typedef typename std::decay<decltype(A)>::type InpVecType;
@@ -240,15 +240,15 @@ test_rank_1_2_tensors()
 
   // Symmetric tensor
   {
-    Tensor<1, dim, double>          A;
+    Tensor<1, dim, double> A;
     SymmetricTensor<2, dim, double> C;
     initialize(A);
     initialize(C);
     const Tensor<1, dim, double> B = C * A;
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-    Vector<double>           vB(mC.m());
+    Vector<double> vB(mC.m());
     mC.vmult(vB, vA);
 
     typedef typename std::decay<decltype(A)>::type InpVecType;
@@ -291,9 +291,9 @@ test_rank_2_4_tensors()
     initialize(C);
     const Tensor<2, dim, double> B = double_contract<2, 0, 3, 1>(C, A);
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-    Vector<double>           vB(mC.m());
+    Vector<double> vB(mC.m());
     mC.vmult(vB, vA);
 
     typedef typename std::decay<decltype(A)>::type InpVecType;
@@ -331,9 +331,9 @@ test_rank_2_4_tensors()
     initialize(C);
     const SymmetricTensor<2, dim, double> B = C * A;
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-    Vector<double>           vB(mC.m());
+    Vector<double> vB(mC.m());
     mC.vmult(vB, vA);
 
     typedef typename std::decay<decltype(A)>::type InpVecType;
@@ -370,13 +370,13 @@ test_rank_2_4_tensors()
     initialize(A_symm);
     initialize(C_symm);
 
-    Tensor<2, dim, double>       A(A_symm);
-    Tensor<4, dim, double>       C(C_symm);
+    Tensor<2, dim, double> A(A_symm);
+    Tensor<4, dim, double> C(C_symm);
     const Tensor<2, dim, double> B = double_contract<2, 0, 3, 1>(C, A);
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-    Vector<double>           vB(mC.m());
+    Vector<double> vB(mC.m());
     mC.vmult(vB, vA);
 
     typedef typename std::decay<decltype(A)>::type InpVecType;
@@ -420,10 +420,10 @@ test_rank_3_tensors()
     const Tensor<1, dim, double> B = double_contract<0, 0, 1, 1>(
       C, A); // This implies that a Tvmult is necessary
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
-    Vector<double>           vB(mC.n()); // Note result size
-    mC.Tvmult(vB, vA);                   // Note transpose vmult
+    Vector<double> vB(mC.n()); // Note result size
+    mC.Tvmult(vB, vA);         // Note transpose vmult
 
     typedef typename std::decay<decltype(A)>::type InpVecType;
     typedef typename std::decay<decltype(B)>::type ResVecType;
@@ -461,7 +461,7 @@ test_rank_3_tensors()
     const Tensor<1, dim, double> B = double_contract<1, 0, 2, 1>(
       C, A); // This implies that a standard vmult is necessary
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix<dim,
                                                               Tensor<1, dim>,
                                                               Tensor<2, dim>>(
@@ -499,14 +499,14 @@ test_rank_3_tensors()
   // Symmetric tensor: Version 1
   {
     SymmetricTensor<2, dim, double> A;
-    Tensor<3, dim, double>          C;
+    Tensor<3, dim, double> C;
     initialize(A);
     initialize(C, true); // Specialised constructor
     const Tensor<2, dim, double> A_ns(A);
     const Tensor<1, dim, double> B = double_contract<0, 0, 1, 1>(
       C, A_ns); // This implies that a Tvmult is necessary
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix<
       dim,
       SymmetricTensor<2, dim>,
@@ -545,14 +545,14 @@ test_rank_3_tensors()
   // Symmetric tensor: Version 2
   {
     SymmetricTensor<2, dim, double> A;
-    Tensor<3, dim, double>          C;
+    Tensor<3, dim, double> C;
     initialize(A);
     initialize(C, false); // Specialised constructor
     const Tensor<2, dim, double> A_ns(A);
     const Tensor<1, dim, double> B = double_contract<1, 0, 2, 1>(
       C, A_ns); // This implies that a standard vmult is necessary
 
-    const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+    const Vector<double> vA     = Notation::Kelvin::to_vector(A);
     const FullMatrix<double> mC = Notation::Kelvin::to_matrix<
       dim,
       Tensor<1, dim>,

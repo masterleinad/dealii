@@ -34,9 +34,9 @@ template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof)
 {
-  const FiniteElement<dim>&            fe = dof.get_fe();
+  const FiniteElement<dim>& fe = dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
-  std::shared_ptr<FEValues<dim>>       fevalues;
+  std::shared_ptr<FEValues<dim>> fevalues;
 
   if(fe.has_support_points())
     {
@@ -89,7 +89,7 @@ check()
   tr.refine_global(3 - dim);
 
   {
-    FE_Q<dim>       fe(2);
+    FE_Q<dim> fe(2);
     DoFHandler<dim> dof(tr);
 
     dof.distribute_dofs(fe);
@@ -98,7 +98,7 @@ check()
   }
 
   {
-    FESystem<dim>   fe(FE_DGQ<dim>(1), 1, FE_Q<dim>(2), dim);
+    FESystem<dim> fe(FE_DGQ<dim>(1), 1, FE_Q<dim>(2), dim);
     DoFHandler<dim> dof(tr);
 
     dof.distribute_dofs(fe);

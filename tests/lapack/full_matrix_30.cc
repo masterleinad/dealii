@@ -24,8 +24,8 @@ template <typename NumberType>
 void
 test()
 {
-  const unsigned int           n_rows = 6;
-  const unsigned int           n_cols = 9;
+  const unsigned int n_rows = 6;
+  const unsigned int n_cols = 9;
   LAPACKFullMatrix<NumberType> A(n_rows, n_cols);
 
   for(unsigned int i = 0; i < n_rows; ++i)
@@ -40,7 +40,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   logfile.precision(5);
   deallog.attach(logfile);
 

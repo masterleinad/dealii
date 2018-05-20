@@ -30,7 +30,7 @@ main()
 
   const int dim = 2, spacedim = 2;
 
-  PolarManifold<1, 2>           F;
+  PolarManifold<1, 2> F;
   std::map<std::string, double> constants;
   constants["k"] = numbers::PI / 3;
   FunctionManifold<2, 2, 2> G("cos( k)*x -sin( k)*y; sin( k)*x+cos( k)*y",

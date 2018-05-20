@@ -36,7 +36,7 @@ check(const Triangulation<dim>& tria)
 {
   MappingC1<dim> mapping;
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

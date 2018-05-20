@@ -98,8 +98,8 @@ namespace Step7
   {
   protected:
     static const unsigned int n_source_centers = 3;
-    static const Point<dim>   source_centers[n_source_centers];
-    static const double       width;
+    static const Point<dim> source_centers[n_source_centers];
+    static const double width;
   };
 
   // The variables which denote the centers and the width of the exponentials
@@ -184,7 +184,7 @@ namespace Step7
     value(const Point<dim>& p, const unsigned int component = 0) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim>&  p,
+    gradient(const Point<dim>& p,
              const unsigned int component = 0) const override;
   };
 
@@ -335,7 +335,7 @@ namespace Step7
     };
 
     HelmholtzProblem(const FiniteElement<dim>& fe,
-                     const RefinementMode      refinement_mode);
+                     const RefinementMode refinement_mode);
 
     ~HelmholtzProblem();
 
@@ -437,13 +437,13 @@ namespace Step7
     // on the destruction of the finite element object extends throughout the
     // lifetime of this HelmholtzProblem object.
     Triangulation<dim> triangulation;
-    DoFHandler<dim>    dof_handler;
+    DoFHandler<dim> dof_handler;
 
     SmartPointer<const FiniteElement<dim>> fe;
 
     ConstraintMatrix hanging_node_constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -556,7 +556,7 @@ namespace Step7
   void
   HelmholtzProblem<dim>::assemble_system()
   {
-    QGauss<dim>     quadrature_formula(3);
+    QGauss<dim> quadrature_formula(3);
     QGauss<dim - 1> face_quadrature_formula(3);
 
     const unsigned int n_q_points      = quadrature_formula.size();
@@ -565,7 +565,7 @@ namespace Step7
     const unsigned int dofs_per_cell = fe->dofs_per_cell;
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -611,7 +611,7 @@ namespace Step7
     // only querying data, never changing the object. We can therefore declare
     // it <code>const</code>:
     const RightHandSide<dim> right_hand_side;
-    std::vector<double>      rhs_values(n_q_points);
+    std::vector<double> rhs_values(n_q_points);
 
     // Finally we define an object denoting the exact solution function. We
     // will use it to compute the Neumann values at the boundary from
@@ -744,7 +744,7 @@ namespace Step7
   HelmholtzProblem<dim>::solve()
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
@@ -896,7 +896,7 @@ namespace Step7
     // error on each cell. Finally, we compute the global L infinity error
     // from the L infinity errors on each cell with a call to
     // VectorTools::compute_global_error.
-    const QTrapez<1>     q_trapez;
+    const QTrapez<1> q_trapez;
     const QIterated<dim> q_iterated(q_trapez, 5);
     VectorTools::integrate_difference(dof_handler,
                                       solution,
@@ -1309,7 +1309,7 @@ main()
                   << std::endl
                   << std::endl;
 
-        FE_Q<dim>             fe(1);
+        FE_Q<dim> fe(1);
         HelmholtzProblem<dim> helmholtz_problem_2d(
           fe, HelmholtzProblem<dim>::adaptive_refinement);
 
@@ -1323,7 +1323,7 @@ main()
                   << "===========================================" << std::endl
                   << std::endl;
 
-        FE_Q<dim>             fe(1);
+        FE_Q<dim> fe(1);
         HelmholtzProblem<dim> helmholtz_problem_2d(
           fe, HelmholtzProblem<dim>::global_refinement);
 
@@ -1337,7 +1337,7 @@ main()
                   << "===========================================" << std::endl
                   << std::endl;
 
-        FE_Q<dim>             fe(2);
+        FE_Q<dim> fe(2);
         HelmholtzProblem<dim> helmholtz_problem_2d(
           fe, HelmholtzProblem<dim>::global_refinement);
 
@@ -1351,7 +1351,7 @@ main()
                   << "===========================================" << std::endl
                   << std::endl;
 
-        FE_Q<dim>             fe(2);
+        FE_Q<dim> fe(2);
         HelmholtzProblem<dim> helmholtz_problem_2d(
           fe, HelmholtzProblem<dim>::adaptive_refinement);
 

@@ -108,7 +108,7 @@ test(const bool left = true)
       cm.print(std::cout);
 
       std::map<types::global_dof_index, Point<dim>> support_points;
-      MappingQ1<dim>                                mapping;
+      MappingQ1<dim> mapping;
       DoFTools::map_dofs_to_support_points(mapping, dh, support_points);
 
       const std::string filename

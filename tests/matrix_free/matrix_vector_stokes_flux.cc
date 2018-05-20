@@ -54,18 +54,18 @@ class MatrixFreeTest
 {
 public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
-  typedef double                                         Number;
+  typedef double Number;
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in)
   {}
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              VectorType&                                  dst,
-              const VectorType&                            src,
+  local_apply(const MatrixFree<dim, Number>& data,
+              VectorType& dst,
+              const VectorType& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
-    typedef VectorizedArray<Number>                            vector_t;
+    typedef VectorizedArray<Number> vector_t;
     FEEvaluation<dim, degree_p + 1, degree_p + 2, dim, Number> velocity(
       data, 0, 0, 0);
     FEEvaluation<dim, degree_p, degree_p + 2, 1, Number> pressure(
@@ -122,19 +122,19 @@ test()
   GridGenerator::hyper_cube(triangulation, 0, 1, true);
   triangulation.refine_global(5 - dim);
 
-  FESystem<dim>   fe(FE_Q<dim>(fe_degree + 1), dim, FE_Q<dim>(fe_degree), 1);
+  FESystem<dim> fe(FE_Q<dim>(fe_degree + 1), dim, FE_Q<dim>(fe_degree), 1);
   DoFHandler<dim> dof_handler(triangulation);
 
   MatrixFree<dim, double> mf_data;
 
   ConstraintMatrix constraints;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
   BlockVector<double> solution;
   BlockVector<double> system_rhs;
-  Vector<double>      mf_solution, mf_rhs;
+  Vector<double> mf_solution, mf_rhs;
 
   dof_handler.distribute_dofs(fe);
   std::vector<unsigned int> stokes_sub_blocks(dim + 1, 0);
@@ -187,8 +187,8 @@ test()
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> phi_grads_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),

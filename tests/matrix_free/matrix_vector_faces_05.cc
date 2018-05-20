@@ -35,7 +35,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;

@@ -56,13 +56,13 @@ test()
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
   triangulation.refine_global(2);
 
-  FESystem<3>   fe(FE_Q<3>(1), 2);
+  FESystem<3> fe(FE_Q<3>(1), 2);
   DoFHandler<3> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   DoFRenumbering::block_wise(dof_handler);
 
   std::vector<types::global_dof_index> dofs_per_block(fe.n_blocks());
-  std::vector<unsigned int>            sub_blocks(fe.n_blocks(), 0);
+  std::vector<unsigned int> sub_blocks(fe.n_blocks(), 0);
   sub_blocks[1] = 1;
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, sub_blocks);
 
@@ -102,10 +102,10 @@ test()
     locally_relevant_dofs);
 
   typedef typename LA::MPI::BlockSparseMatrix::value_type number;
-  typename LA::MPI::BlockSparseMatrix                     A;
+  typename LA::MPI::BlockSparseMatrix A;
   A.reinit(locally_owned_partitioning, bcsp, MPI_COMM_WORLD);
 
-  QGauss<3>   quadrature(3);
+  QGauss<3> quadrature(3);
   FEValues<3> fe_values(fe, quadrature, update_values);
 
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
@@ -148,8 +148,8 @@ void
 test_alt()
 {
   typedef LA_Trilinos LA;
-  unsigned int        myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  unsigned int        numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   if(myid == 0)
     deallog << "numproc=" << numproc << std::endl;
@@ -158,13 +158,13 @@ test_alt()
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
   triangulation.refine_global(2);
 
-  FESystem<3>   fe(FE_Q<3>(1), 2);
+  FESystem<3> fe(FE_Q<3>(1), 2);
   DoFHandler<3> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   DoFRenumbering::block_wise(dof_handler);
 
   std::vector<types::global_dof_index> dofs_per_block(fe.n_blocks());
-  std::vector<unsigned int>            sub_blocks(fe.n_blocks(), 0);
+  std::vector<unsigned int> sub_blocks(fe.n_blocks(), 0);
   sub_blocks[1] = 1;
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block, sub_blocks);
 
@@ -207,7 +207,7 @@ test_alt()
   typename LA::MPI::BlockSparseMatrix A;
   A.reinit(sp);
 
-  QGauss<3>   quadrature(3);
+  QGauss<3> quadrature(3);
   FEValues<3> fe_values(fe, quadrature, update_values);
 
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
@@ -248,7 +248,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   {
     deallog.push("PETSc");

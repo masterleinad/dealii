@@ -25,7 +25,7 @@ test_mpi()
 {
   Assert(Utilities::MPI::job_supports_mpi(), ExcInternalError());
 
-  unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
   // select a few destinations
@@ -43,7 +43,7 @@ test_mpi()
 
       for(unsigned int p = 1; p < numprocs; ++p)
         {
-          MPI_Status   status;
+          MPI_Status status;
           unsigned int size = 0;
           MPI_Recv(&size, 1, MPI_UNSIGNED, p, 0, MPI_COMM_WORLD, &status);
 
@@ -79,7 +79,7 @@ test_mpi()
 
       for(unsigned int p = 1; p < numprocs; ++p)
         {
-          MPI_Status   status;
+          MPI_Status status;
           unsigned int size = 0;
           MPI_Recv(&size, 1, MPI_UNSIGNED, p, 0, MPI_COMM_WORLD, &status);
 

@@ -91,7 +91,7 @@ namespace Functions
            ExcCSplineRange(
              x, interpolation_points.front(), interpolation_points.back()));
 
-    const double   deriv = gsl_spline_eval_deriv(cspline, x, acc);
+    const double deriv = gsl_spline_eval_deriv(cspline, x, acc);
     Tensor<1, dim> res;
     res[0] = deriv;
     return res;

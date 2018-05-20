@@ -89,7 +89,7 @@ private:
   std::vector<types::global_dof_index> dofs_per_block;
 
   Triangulation<dim>
-                      triangulation; //a triangulation object of the "dim"-dimensional domain;
+    triangulation; //a triangulation object of the "dim"-dimensional domain;
   hp::DoFHandler<dim> dof_handler; //is associated with triangulation;
 
   FESystem<dim> elasticity_fe;
@@ -98,7 +98,7 @@ private:
     fe; //used to stack several other elements together to form one vector-valued finite element.
 
   ConstraintMatrix
-                   hanging_node_constraints; //object to hold hanging node constraints after refinement
+    hanging_node_constraints; //object to hold hanging node constraints after refinement
   ConstraintMatrix constraints;
 
   BlockSparsityPattern sparsity_pattern; //store sparsity pattern
@@ -113,7 +113,7 @@ private:
   const FEValuesExtractors::Vector lamda_fe;
 
   unsigned int id_of_lagrange_mult;
-  double       beta1;
+  double beta1;
 
   SparsityPattern
     sparsity_pattern_nb; //needed when switching between block system and non-block.
@@ -153,7 +153,7 @@ public:
 template <int dim>
 inline void
 BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+                                  Vector<double>& values) const
 {
   values(0) = -0.001;
 }
@@ -175,11 +175,11 @@ public:
   ConstrainValues(); //need to pass down to the base class of how many components the function consists; default - 1
   virtual void
   vector_value(const Point<dim>& p,
-               Vector<double>&   values)
+               Vector<double>& values)
     const; //returns calculated values in the second argument;
   virtual void
   vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   value_list)
+                    std::vector<Vector<double>>& value_list)
     const; //values at several points at once
   //prevent from calling virtual function "vector_value" to frequently
 };
@@ -193,7 +193,7 @@ ConstrainValues<dim>::ConstrainValues()
 template <int dim>
 inline void
 ConstrainValues<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
 {
   Assert(values.size() == dim,
          ExcDimensionMismatch(values.size(),
@@ -206,7 +206,7 @@ template <int dim>
 void
 ConstrainValues<dim>::vector_value_list(
   const std::vector<Point<dim>>& points,
-  std::vector<Vector<double>>&   value_list) const
+  std::vector<Vector<double>>& value_list) const
 {
   Assert(
     value_list.size() == points.size(),

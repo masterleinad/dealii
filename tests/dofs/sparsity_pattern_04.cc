@@ -67,8 +67,8 @@ check()
     triangulation_2.refine_global(2);
   triangulation_2.refine_global(1);
 
-  FESystem<dim>   element_1(FE_Q<dim>(1), 2, FE_Q<dim>(2), 1);
-  FESystem<dim>   element_2(FE_Q<dim>(3), 1, FE_DGQ<dim>(0), 2);
+  FESystem<dim> element_1(FE_Q<dim>(1), 2, FE_Q<dim>(2), 1);
+  FESystem<dim> element_2(FE_Q<dim>(3), 1, FE_DGQ<dim>(0), 2);
   DoFHandler<dim> dof_1(triangulation_1);
   DoFHandler<dim> dof_2(triangulation_2);
   dof_1.distribute_dofs(element_1);

@@ -112,7 +112,7 @@ private:
 
   Triangulation<dim> triangulation;
 
-  FE_Q<dim>       fe;
+  FE_Q<dim> fe;
   DoFHandler<dim> dof_handler;
 
   // This is the new variable in the main class. We need an object which holds
@@ -124,7 +124,7 @@ private:
   // opposite of the order used in step-2 through step-5 to demonstrate the
   // primary use of the Subscriptor and SmartPointer classes.
   SparseMatrix<double> system_matrix;
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
 
   Vector<double> solution;
   Vector<double> system_rhs;
@@ -340,7 +340,7 @@ Step6<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -409,7 +409,7 @@ void
 Step6<dim>::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    solver(solver_control);
+  SolverCG<> solver(solver_control);
 
   PreconditionSSOR<> preconditioner;
   preconditioner.initialize(system_matrix, 1.2);
@@ -547,7 +547,7 @@ void
 Step6<dim>::output_results(const unsigned int cycle) const
 {
   {
-    GridOut       grid_out;
+    GridOut grid_out;
     std::ofstream output("grid-" + std::to_string(cycle) + ".eps");
     grid_out.write_eps(triangulation, output);
   }

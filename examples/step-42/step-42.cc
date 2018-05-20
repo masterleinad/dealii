@@ -119,18 +119,18 @@ namespace Step42
     bool
     get_stress_strain_tensor(
       const SymmetricTensor<2, dim>& strain_tensor,
-      SymmetricTensor<4, dim>&       stress_strain_tensor) const;
+      SymmetricTensor<4, dim>& stress_strain_tensor) const;
 
     void
     get_linearized_stress_strain_tensors(
       const SymmetricTensor<2, dim>& strain_tensor,
-      SymmetricTensor<4, dim>&       stress_strain_tensor_linearized,
-      SymmetricTensor<4, dim>&       stress_strain_tensor) const;
+      SymmetricTensor<4, dim>& stress_strain_tensor_linearized,
+      SymmetricTensor<4, dim>& stress_strain_tensor) const;
 
   private:
     const double kappa;
     const double mu;
-    double       sigma_0;
+    double sigma_0;
     const double gamma;
 
     const SymmetricTensor<4, dim> stress_strain_tensor_kappa;
@@ -198,7 +198,7 @@ namespace Step42
   bool
   ConstitutiveLaw<dim>::get_stress_strain_tensor(
     const SymmetricTensor<2, dim>& strain_tensor,
-    SymmetricTensor<4, dim>&       stress_strain_tensor) const
+    SymmetricTensor<4, dim>& stress_strain_tensor) const
   {
     Assert(dim == 3, ExcNotImplemented());
 
@@ -237,8 +237,8 @@ namespace Step42
   void
   ConstitutiveLaw<dim>::get_linearized_stress_strain_tensors(
     const SymmetricTensor<2, dim>& strain_tensor,
-    SymmetricTensor<4, dim>&       stress_strain_tensor_linearized,
-    SymmetricTensor<4, dim>&       stress_strain_tensor) const
+    SymmetricTensor<4, dim>& stress_strain_tensor_linearized,
+    SymmetricTensor<4, dim>& stress_strain_tensor) const
   {
     Assert(dim == 3, ExcNotImplemented());
 
@@ -282,7 +282,7 @@ namespace Step42
       BoundaryForce();
 
       virtual double
-      value(const Point<dim>&  p,
+      value(const Point<dim>& p,
             const unsigned int component = 0) const override;
 
       virtual void
@@ -303,7 +303,7 @@ namespace Step42
     template <int dim>
     void
     BoundaryForce<dim>::vector_value(const Point<dim>& p,
-                                     Vector<double>&   values) const
+                                     Vector<double>& values) const
     {
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = BoundaryForce<dim>::value(p, c);
@@ -316,7 +316,7 @@ namespace Step42
       BoundaryValues();
 
       virtual double
-      value(const Point<dim>&  p,
+      value(const Point<dim>& p,
             const unsigned int component = 0) const override;
 
       virtual void
@@ -337,7 +337,7 @@ namespace Step42
     template <int dim>
     void
     BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                      Vector<double>&   values) const
+                                      Vector<double>& values) const
     {
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = BoundaryValues<dim>::value(p, c);
@@ -361,7 +361,7 @@ namespace Step42
       SphereObstacle(const double z_surface);
 
       virtual double
-      value(const Point<dim>&  p,
+      value(const Point<dim>& p,
             const unsigned int component = 0) const override;
 
       virtual void
@@ -378,7 +378,7 @@ namespace Step42
 
     template <int dim>
     double
-    SphereObstacle<dim>::value(const Point<dim>&  p,
+    SphereObstacle<dim>::value(const Point<dim>& p,
                                const unsigned int component) const
     {
       if(component == 0)
@@ -402,7 +402,7 @@ namespace Step42
     template <int dim>
     void
     SphereObstacle<dim>::vector_value(const Point<dim>& p,
-                                      Vector<double>&   values) const
+                                      Vector<double>& values) const
     {
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = SphereObstacle<dim>::value(p, c);
@@ -440,8 +440,8 @@ namespace Step42
 
     private:
       std::vector<double> obstacle_data;
-      double              hx, hy;
-      int                 nx, ny;
+      double hx, hy;
+      int nx, ny;
 
       double
       get_pixel_value(const int i, const int j) const;
@@ -531,7 +531,7 @@ namespace Step42
       ChineseObstacle(const std::string& filename, const double z_surface);
 
       virtual double
-      value(const Point<dim>&  p,
+      value(const Point<dim>& p,
             const unsigned int component = 0) const override;
 
       virtual void
@@ -539,18 +539,18 @@ namespace Step42
 
     private:
       const BitmapFile<dim> input_obstacle;
-      double                z_surface;
+      double z_surface;
     };
 
     template <int dim>
     ChineseObstacle<dim>::ChineseObstacle(const std::string& filename,
-                                          const double       z_surface)
+                                          const double z_surface)
       : Function<dim>(dim), input_obstacle(filename), z_surface(z_surface)
     {}
 
     template <int dim>
     double
-    ChineseObstacle<dim>::value(const Point<dim>&  p,
+    ChineseObstacle<dim>::value(const Point<dim>& p,
                                 const unsigned int component) const
     {
       if(component == 0)
@@ -570,7 +570,7 @@ namespace Step42
     template <int dim>
     void
     ChineseObstacle<dim>::vector_value(const Point<dim>& p,
-                                       Vector<double>&   values) const
+                                       Vector<double>& values) const
     {
       for(unsigned int c = 0; c < this->n_components; ++c)
         values(c) = ChineseObstacle<dim>::value(p, c);
@@ -650,9 +650,9 @@ namespace Step42
     // indicate the MPI universe this program runs on, a stream we use to let
     // exactly one processor produce output to the console (see step-17) and
     // a variable that is used to time the various sections of the program:
-    MPI_Comm           mpi_communicator;
+    MPI_Comm mpi_communicator;
     ConditionalOStream pcout;
-    TimerOutput        computing_timer;
+    TimerOutput computing_timer;
 
     // The next group describes the mesh and the finite element space.
     // In particular, for this parallel program, the finite element
@@ -679,12 +679,12 @@ namespace Step42
     // active cells on the <i>local mesh</i>; it is never used to
     // exchange information between processors and can therefore be
     // a regular deal.II vector.)
-    const unsigned int                        n_initial_global_refinements;
+    const unsigned int n_initial_global_refinements;
     parallel::distributed::Triangulation<dim> triangulation;
 
     const unsigned int fe_degree;
-    FESystem<dim>      fe;
-    DoFHandler<dim>    dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
@@ -693,7 +693,7 @@ namespace Step42
     ConstraintMatrix constraints_dirichlet_and_hanging_nodes;
     ConstraintMatrix all_constraints;
 
-    IndexSet      active_set;
+    IndexSet active_set;
     Vector<float> fraction_of_plastic_q_points_per_cell;
 
     // The next block of variables corresponds to the solution
@@ -715,7 +715,7 @@ namespace Step42
 
     // The next block contains the variables that describe the material
     // response:
-    const double         e_modulus, nu, gamma, sigma_0;
+    const double e_modulus, nu, gamma, sigma_0;
     ConstitutiveLaw<dim> constitutive_law;
 
     // And then there is an assortment of other variables that are used
@@ -731,7 +731,7 @@ namespace Step42
     // following the colon in the constructor since there we have only
     // one shot at setting it; the same is true for the mesh refinement
     // criterion):
-    const std::string                          base_mesh;
+    const std::string base_mesh;
     const std::shared_ptr<const Function<dim>> obstacle;
 
     struct RefinementStrategy
@@ -745,10 +745,10 @@ namespace Step42
     };
     typename RefinementStrategy::value refinement_strategy;
 
-    const bool         transfer_solution;
-    std::string        output_dir;
+    const bool transfer_solution;
+    std::string output_dir;
     const unsigned int n_refinement_cycles;
-    unsigned int       current_refinement_cycle;
+    unsigned int current_refinement_cycle;
   };
 
   // @sect3{Implementation of the <code>PlasticityContactProblem</code> class}
@@ -909,7 +909,7 @@ namespace Step42
     if(base_mesh == "half sphere")
       {
         const Point<dim> center(0, 0, 0);
-        const double     radius = 0.8;
+        const double radius = 0.8;
         GridGenerator::half_hyper_ball(triangulation, center, radius);
         // Since we will attach a different manifold below, we immediately
         // clear the default manifold description:
@@ -1040,7 +1040,7 @@ namespace Step42
     // with the obstacle, but we then immediately set the Newton matrix back
     // to zero.
     {
-      TimerOutput::Scope                t(computing_timer, "Setup: matrix");
+      TimerOutput::Scope t(computing_timer, "Setup: matrix");
       TrilinosWrappers::SparsityPattern sp(locally_owned_dofs,
                                            mpi_communicator);
 
@@ -1245,7 +1245,7 @@ namespace Step42
     // looping over quadrature points is equivalent to looping over shape
     // functions defined on a face. With this, the code looks as follows:
     Quadrature<dim - 1> face_quadrature(fe.get_unit_face_support_points());
-    FEFaceValues<dim>   fe_values_face(
+    FEFaceValues<dim> fe_values_face(
       fe, face_quadrature, update_quadrature_points);
 
     const unsigned int dofs_per_face   = fe.dofs_per_face;
@@ -1357,7 +1357,7 @@ namespace Step42
   {
     TimerOutput::Scope t(computing_timer, "Assembling");
 
-    QGauss<dim>     quadrature_formula(fe.degree + 1);
+    QGauss<dim> quadrature_formula(fe.degree + 1);
     QGauss<dim - 1> face_quadrature_formula(fe.degree + 1);
 
     FEValues<dim> fe_values(fe,
@@ -1379,7 +1379,7 @@ namespace Step42
                                                       Vector<double>(dim));
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -1513,7 +1513,7 @@ namespace Step42
   PlasticityContactProblem<dim>::compute_nonlinear_residual(
     const TrilinosWrappers::MPI::Vector& linearization_point)
   {
-    QGauss<dim>     quadrature_formula(fe.degree + 1);
+    QGauss<dim> quadrature_formula(fe.degree + 1);
     QGauss<dim - 1> face_quadrature_formula(fe.degree + 1);
 
     FEValues<dim> fe_values(fe,
@@ -1562,7 +1562,7 @@ namespace Step42
           for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             {
               SymmetricTensor<4, dim> stress_strain_tensor;
-              const bool              q_point_is_plastic
+              const bool q_point_is_plastic
                 = constitutive_law.get_stress_strain_tensor(
                   strain_tensors[q_point], stress_strain_tensor);
               if(q_point_is_plastic)
@@ -2129,7 +2129,7 @@ namespace Step42
 
     double contact_force = 0.0;
 
-    QGauss<dim - 1>   face_quadrature_formula(fe.degree + 1);
+    QGauss<dim - 1> face_quadrature_formula(fe.degree + 1);
     FEFaceValues<dim> fe_values_face(
       fe, face_quadrature_formula, update_values | update_JxW_values);
 

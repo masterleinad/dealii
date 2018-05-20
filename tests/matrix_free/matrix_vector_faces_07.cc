@@ -62,7 +62,7 @@ test()
     }
 
   FE_DGQArbitraryNodes<dim> fe(QGauss<1>(fe_degree + 1));
-  DoFHandler<dim>           dof(tria);
+  DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
   constraints.close();

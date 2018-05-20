@@ -70,7 +70,7 @@ test()
 
   for(unsigned int p = 1; p < 6 - dim; ++p)
     {
-      FE_DGQ<dim>     fe(p);
+      FE_DGQ<dim> fe(p);
       DoFHandler<dim> dof_handler(triangulation);
       dof_handler.distribute_dofs(fe);
 
@@ -79,7 +79,7 @@ test()
       constraints.close();
 
       Vector<double> interpolant(dof_handler.n_dofs());
-      Vector<float>  error(triangulation.n_active_cells());
+      Vector<float> error(triangulation.n_active_cells());
       for(unsigned int q = 0; q <= p + 2; ++q)
         {
           // interpolate the function

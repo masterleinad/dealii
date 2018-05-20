@@ -29,7 +29,7 @@ main()
   double a[3][3] = {{1, 2, 3}, {3, 4, 5}, {6, 7, 8}};
 
   const unsigned int dim = 3;
-  Tensor<2, dim>     t(a);
+  Tensor<2, dim> t(a);
 
   deallog << t.norm() << std::endl;
   t = 0;

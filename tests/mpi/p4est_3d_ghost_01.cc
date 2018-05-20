@@ -39,8 +39,8 @@ test()
 
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
-      unsigned int              rep = 2;
-      unsigned int              ref = 2;
+      unsigned int rep = 2;
+      unsigned int ref = 2;
       std::vector<unsigned int> repetitions;
       repetitions.push_back(rep);
       repetitions.push_back(rep);

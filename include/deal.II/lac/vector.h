@@ -106,13 +106,13 @@ public:
    * Declare standard types used in all containers. These types parallel those
    * in the <tt>C++</tt> standard libraries <tt>vector<...></tt> class.
    */
-  typedef Number                  value_type;
-  typedef value_type*             pointer;
-  typedef const value_type*       const_pointer;
-  typedef value_type*             iterator;
-  typedef const value_type*       const_iterator;
-  typedef value_type&             reference;
-  typedef const value_type&       const_reference;
+  typedef Number value_type;
+  typedef value_type* pointer;
+  typedef const value_type* const_pointer;
+  typedef value_type* iterator;
+  typedef const value_type* const_iterator;
+  typedef value_type& reference;
+  typedef const value_type& const_reference;
   typedef types::global_dof_index size_type;
 
   /**
@@ -599,7 +599,7 @@ public:
   template <typename OtherNumber>
   void
   extract_subvector_to(const std::vector<size_type>& indices,
-                       std::vector<OtherNumber>&     values) const;
+                       std::vector<OtherNumber>& values) const;
 
   /**
    * Instead of getting individual elements of a vector via operator(),
@@ -630,9 +630,9 @@ public:
    */
   template <typename ForwardIterator, typename OutputIterator>
   void
-  extract_subvector_to(ForwardIterator       indices_begin,
+  extract_subvector_to(ForwardIterator indices_begin,
                        const ForwardIterator indices_end,
-                       OutputIterator        values_begin) const;
+                       OutputIterator values_begin) const;
   //@}
 
   /**
@@ -662,7 +662,7 @@ public:
    */
   template <typename OtherNumber>
   void
-  add(const std::vector<size_type>&   indices,
+  add(const std::vector<size_type>& indices,
       const std::vector<OtherNumber>& values);
 
   /**
@@ -680,8 +680,8 @@ public:
    */
   template <typename OtherNumber>
   void
-  add(const size_type    n_elements,
-      const size_type*   indices,
+  add(const size_type n_elements,
+      const size_type* indices,
       const OtherNumber* values);
 
   /**
@@ -699,9 +699,9 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  add(const Number          a,
+  add(const Number a,
       const Vector<Number>& V,
-      const Number          b,
+      const Number b,
       const Vector<Number>& W);
 
   /**
@@ -823,10 +823,10 @@ public:
    * while if @p false then the elements are printed on a separate line each.
    */
   void
-  print(std::ostream&      out,
-        const unsigned int precision  = 3,
-        const bool         scientific = true,
-        const bool         across     = true) const;
+  print(std::ostream& out,
+        const unsigned int precision = 3,
+        const bool scientific        = true,
+        const bool across            = true) const;
 
   /**
    * Print to a LogStream. <tt>width</tt> is used as argument to the std::setw
@@ -838,9 +838,9 @@ public:
    */
   DEAL_II_DEPRECATED
   void
-  print(LogStream&         out,
-        const unsigned int width  = 6,
-        const bool         across = true) const;
+  print(LogStream& out,
+        const unsigned int width = 6,
+        const bool across        = true) const;
 
   /**
    * Write the vector en bloc to a file. This is done in a binary mode, so the
@@ -1126,7 +1126,7 @@ template <typename Number>
 template <typename OtherNumber>
 inline void
 Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
-                                     std::vector<OtherNumber>&     values) const
+                                     std::vector<OtherNumber>& values) const
 {
   for(size_type i = 0; i < indices.size(); ++i)
     values[i] = operator()(indices[i]);
@@ -1135,9 +1135,9 @@ Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
 template <typename Number>
 template <typename ForwardIterator, typename OutputIterator>
 inline void
-Vector<Number>::extract_subvector_to(ForwardIterator       indices_begin,
+Vector<Number>::extract_subvector_to(ForwardIterator indices_begin,
                                      const ForwardIterator indices_end,
-                                     OutputIterator        values_begin) const
+                                     OutputIterator values_begin) const
 {
   while(indices_begin != indices_end)
     {
@@ -1161,7 +1161,7 @@ Vector<Number>::operator/=(const Number factor)
 template <typename Number>
 template <typename OtherNumber>
 inline void
-Vector<Number>::add(const std::vector<size_type>&   indices,
+Vector<Number>::add(const std::vector<size_type>& indices,
                     const std::vector<OtherNumber>& values)
 {
   Assert(indices.size() == values.size(),
@@ -1173,7 +1173,7 @@ template <typename Number>
 template <typename OtherNumber>
 inline void
 Vector<Number>::add(const std::vector<size_type>& indices,
-                    const Vector<OtherNumber>&    values)
+                    const Vector<OtherNumber>& values)
 {
   Assert(indices.size() == values.size(),
          ExcDimensionMismatch(indices.size(), values.size()));
@@ -1183,8 +1183,8 @@ Vector<Number>::add(const std::vector<size_type>& indices,
 template <typename Number>
 template <typename OtherNumber>
 inline void
-Vector<Number>::add(const size_type    n_indices,
-                    const size_type*   indices,
+Vector<Number>::add(const size_type n_indices,
+                    const size_type* indices,
                     const OtherNumber* values)
 {
   for(size_type i = 0; i < n_indices; ++i)
@@ -1237,7 +1237,7 @@ Vector<Number>::save(Archive& ar, const unsigned int) const
   ar& static_cast<const Subscriptor&>(*this);
 
   ar& vec_size& max_vec_size;
-  ar&           boost::serialization::make_array(values.get(), max_vec_size);
+  ar& boost::serialization::make_array(values.get(), max_vec_size);
 }
 
 template <typename Number>

@@ -75,7 +75,7 @@ test(const unsigned int n_blocks = 5)
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -92,7 +92,7 @@ test(const unsigned int n_blocks = 5)
   std::shared_ptr<MatrixFree<dim, number>> mf_data(
     new MatrixFree<dim, number>());
   {
-    const QGauss<1>                                  quad(fe_degree + 2);
+    const QGauss<1> quad(fe_degree + 2);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.tasks_block_size      = 7;

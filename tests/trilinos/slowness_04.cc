@@ -61,7 +61,7 @@ test()
   }
 
   // build the sparse matrix
-  IndexSet                       indices = complete_index_set(N * N);
+  IndexSet indices = complete_index_set(N * N);
   TrilinosWrappers::SparseMatrix matrix(indices, MPI_COMM_WORLD, 5);
   for(unsigned int i_ = 0; i_ < N; i_++)
     for(unsigned int j_ = 0; j_ < N; j_++)

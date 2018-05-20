@@ -31,13 +31,13 @@ test()
 {
   int NumElements = 4;
 
-  Epetra_MpiComm  Comm(MPI_COMM_WORLD);
-  Epetra_Map      Map(NumElements, 0, Comm);
+  Epetra_MpiComm Comm(MPI_COMM_WORLD);
+  Epetra_Map Map(NumElements, 0, Comm);
   Epetra_FEVector x1(Map);
   x1.PutScalar(0);
 
   // let all processors set global entry 0 to 1
-  const int    GID   = 0;
+  const int GID      = 0;
   const double value = 1;
   x1.ReplaceGlobalValues(1, &GID, &value);
   x1.GlobalAssemble(Insert);

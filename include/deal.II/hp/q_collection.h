@@ -156,7 +156,7 @@ namespace hp
 
   template <int dim>
   inline const Quadrature<dim>& QCollection<dim>::
-                                operator[](const unsigned int index) const
+  operator[](const unsigned int index) const
   {
     Assert(index < quadratures.size(),
            ExcIndexRange(index, 0, quadratures.size()));

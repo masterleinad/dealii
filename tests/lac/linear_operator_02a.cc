@@ -54,8 +54,8 @@ main()
   triangulation.refine_global(2);
 
   MappingQGeneric<dim> mapping_q1(1);
-  FE_Q<dim>            q1(1);
-  DoFHandler<dim>      dof_handler(triangulation);
+  FE_Q<dim> q1(1);
+  DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(q1);
 
   DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());

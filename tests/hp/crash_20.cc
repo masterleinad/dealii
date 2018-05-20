@@ -38,7 +38,7 @@ template <int dim>
 void
 test()
 {
-  Triangulation<dim>  tria;
+  Triangulation<dim> tria;
   hp::DoFHandler<dim> dof_handler(tria);
 
   GridGenerator::hyper_cube(tria);

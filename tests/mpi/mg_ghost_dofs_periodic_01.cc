@@ -33,7 +33,7 @@ test()
     Triangulation<dim>::limit_level_difference_at_vertices,
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   std::vector<unsigned int> subdivisions(dim);
-  Point<dim>                p1, p2;
+  Point<dim> p1, p2;
   for(unsigned int d = 0; d < dim; ++d)
     {
       if(dim == 2)
@@ -70,7 +70,7 @@ test()
 
   tria.refine_global(5 - dim);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
   dof_handler.distribute_mg_dofs(fe);

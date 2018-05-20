@@ -33,7 +33,7 @@ void
 test_boundary(const FEValuesBase<dim>& fev)
 {
   const unsigned int n = fev.dofs_per_cell;
-  unsigned int       d = fev.get_fe().n_components();
+  unsigned int d       = fev.get_fe().n_components();
   FullMatrix<double> M(n, n);
   nitsche_tangential_matrix(M, fev, 17);
   {
@@ -41,7 +41,7 @@ test_boundary(const FEValuesBase<dim>& fev)
     M.print_formatted(deallog.get_file_stream(), 3, true, 0, "0.");
   }
 
-  Vector<double>                   u(n), v(n), w(n);
+  Vector<double> u(n), v(n), w(n);
   std::vector<std::vector<double>> uval(
     d, std::vector<double>(fev.n_quadrature_points)),
     null_val(d, std::vector<double>(fev.n_quadrature_points, 0.));
@@ -90,7 +90,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
   deallog << fe.get_name() << std::endl << "cell matrix" << std::endl;
   typename Triangulation<dim>::cell_iterator cell1 = tr.begin(1);
 
-  QGauss<dim - 1>   face_quadrature(fe.tensor_degree() + 1);
+  QGauss<dim - 1> face_quadrature(fe.tensor_degree() + 1);
   FEFaceValues<dim> fef1(fe,
                          face_quadrature,
                          update_values | update_gradients
@@ -107,11 +107,11 @@ template <int dim>
 void
 test(Triangulation<dim>& tr)
 {
-  FE_DGQ<dim>   q1(1);
+  FE_DGQ<dim> q1(1);
   FESystem<dim> fe1(q1, dim);
   test_fe(tr, fe1);
 
-  FE_DGQ<dim>   q2(2);
+  FE_DGQ<dim> q2(2);
   FESystem<dim> fe2(q2, dim);
   test_fe(tr, fe2);
 

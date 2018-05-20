@@ -60,11 +60,11 @@ template <int dim>
 void
 transfer(std::ostream& out)
 {
-  MyFunction<dim>    function;
+  MyFunction<dim> function;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
-  const unsigned int    max_degree = 6 - dim;
+  const unsigned int max_degree = 6 - dim;
   hp::FECollection<dim> fe_q;
   hp::FECollection<dim> fe_dgq;
   for(unsigned int deg = 1; deg <= max_degree; ++deg)
@@ -72,10 +72,10 @@ transfer(std::ostream& out)
       fe_q.push_back(FE_Q<dim>(deg));
       fe_dgq.push_back(FE_DGQ<dim>(deg));
     }
-  hp::DoFHandler<dim>  q_dof_handler(tria);
-  hp::DoFHandler<dim>  dgq_dof_handler(tria);
-  Vector<double>       q_solution;
-  Vector<double>       dgq_solution;
+  hp::DoFHandler<dim> q_dof_handler(tria);
+  hp::DoFHandler<dim> dgq_dof_handler(tria);
+  Vector<double> q_solution;
+  Vector<double> dgq_solution;
   MappingQGeneric<dim> mapping(1);
 
   // refine a few cells
@@ -176,11 +176,11 @@ transfer(std::ostream& out)
   // on points of QGauss of order 2.
   MyFunction<dim> func;
   {
-    double                     error = 0;
+    double error = 0;
     const hp::QCollection<dim> quad(QGauss<dim>(2));
-    hp::FEValues<dim>          hp_fe_val(
+    hp::FEValues<dim> hp_fe_val(
       fe_q, quad, update_values | update_quadrature_points);
-    std::vector<double>                                vals(quad[0].size());
+    std::vector<double> vals(quad[0].size());
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
       endc = q_dof_handler.end();
@@ -198,11 +198,11 @@ transfer(std::ostream& out)
     deallog << "Error in interpolating hp FE_Q: " << error << std::endl;
   }
   {
-    double                     error = 0;
+    double error = 0;
     const hp::QCollection<dim> quad(QGauss<dim>(2));
-    hp::FEValues<dim>          hp_fe_val(
+    hp::FEValues<dim> hp_fe_val(
       fe_dgq, quad, update_values | update_quadrature_points);
-    std::vector<double>                                vals(quad[0].size());
+    std::vector<double> vals(quad[0].size());
     typename hp::DoFHandler<dim>::active_cell_iterator celldg
       = dgq_dof_handler.begin_active(),
       endc = dgq_dof_handler.end();

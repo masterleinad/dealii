@@ -49,7 +49,7 @@ void
 test()
 {
   Triangulation<3> tria;
-  GridOut          gridout;
+  GridOut gridout;
 
   deallog << "Planar\n";
   GridGenerator::hyper_cube(tria);

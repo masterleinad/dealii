@@ -30,9 +30,9 @@ void
 test(Utilities::CUDA::Handle& cuda_handle)
 {
   // Create the matrix on the host.
-  dealii::SparsityPattern                sparsity_pattern;
-  dealii::SparseMatrix<double>           matrix;
-  unsigned int const                     size = 30;
+  dealii::SparsityPattern sparsity_pattern;
+  dealii::SparseMatrix<double> matrix;
+  unsigned int const size = 30;
   std::vector<std::vector<unsigned int>> column_indices(size);
   for(unsigned int i = 0; i < size; ++i)
     {
@@ -65,19 +65,19 @@ test(Utilities::CUDA::Handle& cuda_handle)
   CUDAWrappers::SparseMatrix<double> matrix_dev(cuda_handle, matrix);
 
   LinearAlgebra::CUDAWrappers::Vector<double> rhs_dev(size);
-  LinearAlgebra::ReadWriteVector<double>      rhs_host(size);
+  LinearAlgebra::ReadWriteVector<double> rhs_host(size);
   std::copy(rhs.begin(), rhs.end(), rhs_host.begin());
   rhs_dev.import(rhs_host, VectorOperation::insert);
 
   LinearAlgebra::CUDAWrappers::Vector<double> solution_dev(size);
-  const std::array<std::string, 3>            solver_names{
+  const std::array<std::string, 3> solver_names{
     "Cholesky", "LU_dense", "LU_host"};
 
   for(auto solver_type : solver_names)
     {
       // Solve on the device
       CUDAWrappers::SolverDirect<double>::AdditionalData data(solver_type);
-      SolverControl                                      solver_control;
+      SolverControl solver_control;
 
       CUDAWrappers::SolverDirect<double> solver(
         cuda_handle, solver_control, data);

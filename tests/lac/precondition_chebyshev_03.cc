@@ -37,7 +37,7 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();
@@ -47,7 +47,7 @@ main()
       PreconditionChebyshev<SparseMatrix<double>,
                             Vector<double>,
                             SparseILU<double>>
-                                                               cheby;
+        cheby;
       PreconditionChebyshev<SparseMatrix<double>,
                             Vector<double>,
                             SparseILU<double>>::AdditionalData cheby_data;

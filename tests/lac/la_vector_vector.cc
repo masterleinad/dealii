@@ -16,8 +16,8 @@
 #include "../tests.h"
 #include <deal.II/lac/la_vector.h>
 
-const unsigned int N           = 10;
-unsigned int       check_point = 0;
+const unsigned int N     = 10;
+unsigned int check_point = 0;
 
 template <typename number>
 void
@@ -59,7 +59,7 @@ check_vectors(LinearAlgebra::Vector<number1>& d1,
   print(d1);
 
   // initialize with iterators
-  number1                        array[] = {0.0, 1.1, 2.2, 3.3};
+  number1 array[] = {0.0, 1.1, 2.2, 3.3};
   LinearAlgebra::Vector<number1> d4(&array[0], &array[4]);
   print(d4);
 
@@ -130,7 +130,7 @@ main()
   deallog.attach(logfile);
 
   LinearAlgebra::Vector<double> d1(N), d2(N);
-  LinearAlgebra::Vector<float>  f1(N), f2(N);
+  LinearAlgebra::Vector<float> f1(N), f2(N);
 
   // cross-tests with double/float
   // vectors at the same time are not

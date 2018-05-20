@@ -84,7 +84,7 @@ BlockMatrixArray<number, BlockVectorType>::clear()
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::vmult_add(
-  BlockVectorType&       dst,
+  BlockVectorType& dst,
   const BlockVectorType& src) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
@@ -114,7 +114,7 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::vmult(
-  BlockVectorType&       dst,
+  BlockVectorType& dst,
   const BlockVectorType& src) const
 {
   dst = 0.;
@@ -124,7 +124,7 @@ BlockMatrixArray<number, BlockVectorType>::vmult(
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
-  BlockVectorType&       dst,
+  BlockVectorType& dst,
   const BlockVectorType& src) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
@@ -154,7 +154,7 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
 template <typename number, typename BlockVectorType>
 void
 BlockMatrixArray<number, BlockVectorType>::Tvmult(
-  BlockVectorType&       dst,
+  BlockVectorType& dst,
   const BlockVectorType& src) const
 {
   dst = 0.;
@@ -247,7 +247,7 @@ template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::do_row(
   BlockVectorType& dst,
-  size_type        row_num) const
+  size_type row_num) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
   typename std::vector<
@@ -331,7 +331,7 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::vmult_add(
-  BlockVectorType&       dst,
+  BlockVectorType& dst,
   const BlockVectorType& src) const
 {
   Assert(dst.n_blocks() == n_block_rows(),
@@ -348,7 +348,7 @@ BlockTrianglePrecondition<number, BlockVectorType>::vmult_add(
 template <typename number, typename BlockVectorType>
 void
 BlockTrianglePrecondition<number, BlockVectorType>::vmult(
-  BlockVectorType&       dst,
+  BlockVectorType& dst,
   const BlockVectorType& src) const
 {
   Assert(dst.n_blocks() == n_block_rows(),

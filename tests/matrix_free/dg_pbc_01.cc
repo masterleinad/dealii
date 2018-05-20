@@ -56,7 +56,7 @@ test()
 
   tria.refine_global(8 - 2 * dim);
 
-  FE_DGQ<dim>     fe(0);
+  FE_DGQ<dim> fe(0);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
@@ -64,7 +64,7 @@ test()
 
   MappingQ<dim> mapping(fe_degree + 1);
 
-  const QGauss<1>                          quad(1);
+  const QGauss<1> quad(1);
   typename MatrixFree<dim>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
   data.mapping_update_flags_inner_faces
@@ -90,7 +90,7 @@ test()
   if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       Vector<double> solution_gather0(sol.size());
-      double*        sol_gather_ptr = solution_gather0.begin();
+      double* sol_gather_ptr = solution_gather0.begin();
       for(unsigned int i = 0; i < sol.local_size(); ++i)
         *sol_gather_ptr++ = sol.local_element(i);
       for(unsigned int i = 1;

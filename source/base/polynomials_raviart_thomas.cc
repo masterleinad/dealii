@@ -51,7 +51,7 @@ PolynomialsRaviartThomas<dim>::create_polynomials(const unsigned int k)
 template <int dim>
 void
 PolynomialsRaviartThomas<dim>::compute(
-  const Point<dim>&            unit_point,
+  const Point<dim>& unit_point,
   std::vector<Tensor<1, dim>>& values,
   std::vector<Tensor<2, dim>>& grads,
   std::vector<Tensor<3, dim>>& grad_grads,
@@ -82,10 +82,10 @@ PolynomialsRaviartThomas<dim>::compute(
   // deal.II/create_mass_matrix_05)
   // will start to produce random
   // results in multithread mode
-  static Threads::Mutex      mutex;
+  static Threads::Mutex mutex;
   Threads::Mutex::ScopedLock lock(mutex);
 
-  static std::vector<double>         p_values;
+  static std::vector<double> p_values;
   static std::vector<Tensor<1, dim>> p_grads;
   static std::vector<Tensor<2, dim>> p_grad_grads;
   static std::vector<Tensor<3, dim>> p_third_derivatives;

@@ -52,17 +52,17 @@ class MatrixFreeTest
 {
 public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
-  typedef double                                         Number;
+  typedef double Number;
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              VectorType&                                  dst,
-              const VectorType&                            src,
+  local_apply(const MatrixFree<dim, Number>& data,
+              VectorType& dst,
+              const VectorType& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
-    typedef VectorizedArray<Number>                    vector_t;
+    typedef VectorizedArray<Number> vector_t;
     FEEvaluation<dim, degree, degree + 1, dim, Number> phi(data);
     vector_t coeff = make_vectorized_array(global_coefficient);
 
@@ -97,7 +97,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -121,8 +121,8 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe_sca(QGaussLobatto<1>(fe_degree + 1));
-  FESystem<dim>   fe(fe_sca, dim);
+  FE_Q<dim> fe_sca(QGaussLobatto<1>(fe_degree + 1));
+  FESystem<dim> fe(fe_sca, dim);
   DoFHandler<dim> dof_handler_sca(tria);
   DoFHandler<dim> dof_handler(tria);
 
@@ -130,7 +130,7 @@ test()
 
   ConstraintMatrix constraints;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
   BlockVector<double> solution, mf_solution;
@@ -184,7 +184,7 @@ test()
 
     const FEValuesExtractors::Vector sc(0);
 
-    const unsigned int               curl_dim = dim == 2 ? 1 : dim;
+    const unsigned int curl_dim = dim == 2 ? 1 : dim;
     std::vector<Tensor<1, curl_dim>> phi_curl(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell

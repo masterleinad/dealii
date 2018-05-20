@@ -41,8 +41,8 @@ template <class OutputVector, typename number>
 void
 DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
   const Vector<number>& local_values,
-  OutputVector&         values,
-  const unsigned int    fe_index) const
+  OutputVector& values,
+  const unsigned int fe_index) const
 {
   if(!this->has_children() && !this->is_artificial())
     {

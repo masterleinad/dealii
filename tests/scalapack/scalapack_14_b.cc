@@ -35,7 +35,7 @@ template <typename NumberType>
 void
 test(const unsigned int block_size_i, const unsigned int block_size_j)
 {
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(mpi_communicator));
   const unsigned int this_mpi_process(
@@ -47,7 +47,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   const unsigned int proc_rows    = std::floor(std::sqrt(n_mpi_processes));
   const unsigned int proc_columns = std::floor(n_mpi_processes / proc_rows);
   //create 2d process grid
-  const std::vector<unsigned int>              sizes = {{400, 500}};
+  const std::vector<unsigned int> sizes = {{400, 500}};
   std::shared_ptr<Utilities::MPI::ProcessGrid> grid
     = std::make_shared<Utilities::MPI::ProcessGrid>(
       mpi_communicator, sizes[0], sizes[1], block_size_i, block_size_i);

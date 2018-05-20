@@ -21,7 +21,7 @@
 int
 main()
 {
-  hid_t  file_id;
+  hid_t file_id;
   herr_t status;
 
   /* Create a new file using default properties. */

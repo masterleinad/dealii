@@ -35,7 +35,7 @@ main()
 
   Triangulation<2> tria;
 
-  Point<2>                      center(1.0, 2.0);
+  Point<2> center(1.0, 2.0);
   const SphericalManifold<2, 2> manifold(center);
 
   GridGenerator::hyper_ball(tria, center);

@@ -40,10 +40,10 @@ const bool errors = false;
 
 template <int dim>
 void
-check(const unsigned int        level,
-      const Mapping<dim>&       mapping,
+check(const unsigned int level,
+      const Mapping<dim>& mapping,
       const FiniteElement<dim>& element,
-      const Quadrature<dim>&    quadrature)
+      const Quadrature<dim>& quadrature)
 {
   Triangulation<dim> tr;
 
@@ -69,7 +69,7 @@ check(const unsigned int        level,
                      | update_JxW_values);
 
   std::vector<types::global_dof_index> global_dofs(element.dofs_per_cell);
-  std::vector<double>                  function(quadrature.size());
+  std::vector<double> function(quadrature.size());
 
   Vector<double> u(dof.n_dofs());
   Vector<double> f(dof.n_dofs());
@@ -82,7 +82,7 @@ check(const unsigned int        level,
   SparseMatrix<double> A(A_pattern);
 
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-  const typename DoFHandler<dim>::cell_iterator  end  = dof.end();
+  const typename DoFHandler<dim>::cell_iterator end   = dof.end();
 
   for(; cell != end; ++cell)
     {
@@ -96,24 +96,24 @@ check(const unsigned int        level,
 
           for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
             {
-              const double v   = fe.shape_value(i, k);
-              double       rhs = dx * v * (function[k]);
+              const double v = fe.shape_value(i, k);
+              double rhs     = dx * v * (function[k]);
 
               f(global_dofs[i]) += rhs;
               for(unsigned int j = 0; j < element.dofs_per_cell; ++j)
                 {
-                  const double u  = fe.shape_value(j, k);
-                  double       el = dx * (u * v /* + (Du*Dv) */);
+                  const double u = fe.shape_value(j, k);
+                  double el      = dx * (u * v /* + (Du*Dv) */);
                   A.add(global_dofs[i], global_dofs[j], el);
                 }
             }
         }
     }
 
-  SolverControl                         control(1000, 1.e-10, false, false);
+  SolverControl control(1000, 1.e-10, false, false);
   PrimitiveVectorMemory<Vector<double>> mem;
-  SolverCG<Vector<double>>              solver(control, mem);
-  PreconditionIdentity                  prec;
+  SolverCG<Vector<double>> solver(control, mem);
+  PreconditionIdentity prec;
 
   solver.solve(A, u, f, prec);
 
@@ -127,10 +127,10 @@ check(const unsigned int        level,
   double h1 = 0.;
   double h2 = 0.;
 
-  std::vector<double>                  u_local(quadrature.size());
-  std::vector<Tensor<1, dim>>          Du(quadrature.size());
-  std::vector<Tensor<1, dim>>          Df(quadrature.size());
-  std::vector<Tensor<2, dim>>          DDu(quadrature.size());
+  std::vector<double> u_local(quadrature.size());
+  std::vector<Tensor<1, dim>> Du(quadrature.size());
+  std::vector<Tensor<1, dim>> Df(quadrature.size());
+  std::vector<Tensor<2, dim>> DDu(quadrature.size());
   std::vector<SymmetricTensor<2, dim>> DDf(quadrature.size());
 
   for(cell = dof.begin_active(); cell != end; ++cell)
@@ -147,7 +147,7 @@ check(const unsigned int        level,
       for(unsigned int k = 0; k < quadrature.size(); ++k)
         {
           const double dx = fe.JxW(k);
-          double       e  = u_local[k];
+          double e        = u_local[k];
           if(errors)
             e -= function[k];
           l2 += dx * e * e;

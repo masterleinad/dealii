@@ -34,7 +34,7 @@
 template <int dim, int spacedim>
 void
 write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
-           const char*                                           filename_)
+           const char* filename_)
 {
   DataOut<dim> data_out;
   data_out.attach_triangulation(tria);
@@ -87,7 +87,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    all;
+  MPILogInitAll all;
 
   deallog.push("2d");
   test<2>();

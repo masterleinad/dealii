@@ -36,7 +36,7 @@ void
 test_equal()
 {
   Tensor<2, dim> t;
-  unsigned int   sum = 0;
+  unsigned int sum = 0;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       {
@@ -54,7 +54,7 @@ test_unequal()
 {
   Tensor<2, dim> s;
   Tensor<2, dim> t;
-  unsigned int   sum = 0;
+  unsigned int sum = 0;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       {
@@ -70,7 +70,7 @@ test_unequal()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

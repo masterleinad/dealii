@@ -49,7 +49,7 @@ check()
 
   Functions::FEFieldFunction<dim, hp::DoFHandler<dim>> fe_field(dof_handler,
                                                                 vector);
-  QGauss<dim>                                          quadrature(5);
+  QGauss<dim> quadrature(5);
 
   deallog << "values:" << std::endl;
 

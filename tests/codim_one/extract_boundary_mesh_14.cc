@@ -30,7 +30,7 @@ test()
   const int dim = 2;
 
   Triangulation<dim> triangulation;
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(triangulation);
 
   std::ifstream infile(SOURCE_DIR

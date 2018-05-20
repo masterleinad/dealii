@@ -62,7 +62,7 @@ test()
 
     tr.execute_coarsening_and_refinement();
 
-    FE_Q<dim>       fe(1);
+    FE_Q<dim> fe(1);
     DoFHandler<dim> dh(tr);
 
     dh.distribute_dofs(fe);
@@ -117,7 +117,7 @@ test()
 
     GridGenerator::hyper_cube(tr);
     tr.load(filename.c_str(), false);
-    FE_Q<dim>       fe(1);
+    FE_Q<dim> fe(1);
     DoFHandler<dim> dh(tr);
 
     dh.distribute_dofs(fe);

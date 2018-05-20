@@ -87,8 +87,8 @@ SquareRoot::solve(AnyData& out, const AnyData& in)
 void
 test()
 {
-  SquareRoot         square_root;
-  SquareRootSolver   sq_solver(square_root);
+  SquareRoot square_root;
+  SquareRootSolver sq_solver(square_root);
   SquareRootResidual sq_residual(square_root);
 
   Algorithms::OutputOperator<Vector<double>> output;
@@ -114,7 +114,7 @@ test()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

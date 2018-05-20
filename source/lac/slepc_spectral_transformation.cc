@@ -85,7 +85,7 @@ namespace SLEPcWrappers
   {}
 
   TransformationShiftInvert::TransformationShiftInvert(
-    const MPI_Comm&       mpi_communicator,
+    const MPI_Comm& mpi_communicator,
     const AdditionalData& data)
     : TransformationBase(mpi_communicator), additional_data(data)
   {
@@ -104,7 +104,7 @@ namespace SLEPcWrappers
   {}
 
   TransformationSpectrumFolding::TransformationSpectrumFolding(
-    const MPI_Comm&       mpi_communicator,
+    const MPI_Comm& mpi_communicator,
     const AdditionalData& data)
     : TransformationBase(mpi_communicator), additional_data(data)
   {

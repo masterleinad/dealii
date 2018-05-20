@@ -49,7 +49,7 @@ test(std::string filename)
 
 {
   Triangulation<dim, spacedim> triangulation;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
 
   gi.attach_triangulation(triangulation);
   std::ifstream in(filename.c_str());
@@ -72,7 +72,7 @@ test(std::string filename)
   // graphical representation with
   // data_out
   const FE_DGQ<dim, spacedim> fe_help(0);
-  DoFHandler<dim, spacedim>   dof_handler_help(triangulation);
+  DoFHandler<dim, spacedim> dof_handler_help(triangulation);
   dof_handler_help.distribute_dofs(fe_help);
   FEValues<dim, spacedim> fe_values_help(
     fe_help, q_midpoint, update_normal_vectors);
@@ -98,7 +98,7 @@ test(std::string filename)
   Functions::Monomial<spacedim> monomial(exp);
 
   const QGauss<dim> quad(5);
-  ConstraintMatrix  constraints;
+  ConstraintMatrix constraints;
   constraints.close();
   VectorTools::project(dof_handler, constraints, quad, monomial, projected_one);
 
@@ -109,8 +109,8 @@ test(std::string filename)
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
 
   std::vector<Tensor<1, spacedim>> cell_normals(q_midpoint.size());
-  std::vector<Point<spacedim>>     cell_tangentials(q_midpoint.size());
-  std::vector<double>              shape_directional_derivative(dofs_per_cell);
+  std::vector<Point<spacedim>> cell_tangentials(q_midpoint.size());
+  std::vector<double> shape_directional_derivative(dofs_per_cell);
   Vector<double> projected_directional_derivative(triangulation.n_cells());
 
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);

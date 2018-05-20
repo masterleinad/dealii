@@ -49,7 +49,7 @@ std::vector<types::global_dof_index>
 conflictor(const std::vector<unsigned int>::iterator& i)
 {
   std::vector<types::global_dof_index> conflicts;
-  const unsigned int                   ad_computed = *i * 2;
+  const unsigned int ad_computed = *i * 2;
   for(unsigned int j = 0; j < 5; ++j)
     conflicts.push_back((ad_computed + j) % result.size());
 

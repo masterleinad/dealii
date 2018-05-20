@@ -62,13 +62,13 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
-  MappingQ<dim>      mapping;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
+  MappingQ<dim> mapping;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
-  ConstraintMatrix     mean_value_constraints;
+  ConstraintMatrix mean_value_constraints;
 
   Vector<double> solution;
   Vector<double> system_rhs;
@@ -165,7 +165,7 @@ void
 LaplaceProblem<dim>::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   PreconditionSSOR<> preconditioner;
   preconditioner.initialize(system_matrix, 1.2);

@@ -36,8 +36,8 @@ std::ofstream logfile("output");
 void
 test(unsigned int degree)
 {
-  const unsigned int           dim      = 1;
-  const unsigned int           spacedim = 1;
+  const unsigned int dim      = 1;
+  const unsigned int spacedim = 1;
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria, 0, 1);
   FE_Q<dim, spacedim> fe(QIterated<1>(QTrapez<1>(), degree));
@@ -51,15 +51,15 @@ test(unsigned int degree)
   for(unsigned int i = 2; i <= degree; ++i)
     shift(i) = 0.1;
 
-  QGauss<dim>                                     quad(degree + 1);
+  QGauss<dim> quad(degree + 1);
   MappingQEulerian<dim, Vector<double>, spacedim> mapping(
     degree, shift_dh, shift);
 
   Triangulation<dim, spacedim>::active_cell_iterator cell = tria.begin_active(),
                                                      endc = tria.end();
   Point<spacedim> real;
-  Point<dim>      unit;
-  double          eps = 1e-10;
+  Point<dim> unit;
+  double eps = 1e-10;
   for(; cell != endc; ++cell)
     {
       deallog << cell << std::endl;

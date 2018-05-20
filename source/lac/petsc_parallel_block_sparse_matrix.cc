@@ -56,10 +56,10 @@ namespace PETScWrappers
     }
 
     void
-    BlockSparseMatrix::reinit(const std::vector<IndexSet>&       rows,
-                              const std::vector<IndexSet>&       cols,
+    BlockSparseMatrix::reinit(const std::vector<IndexSet>& rows,
+                              const std::vector<IndexSet>& cols,
                               const BlockDynamicSparsityPattern& bdsp,
-                              const MPI_Comm&                    com)
+                              const MPI_Comm& com)
     {
       Assert(rows.size() == bdsp.n_block_rows(), ExcMessage("invalid size"));
       Assert(cols.size() == bdsp.n_block_cols(), ExcMessage("invalid size"));
@@ -94,9 +94,9 @@ namespace PETScWrappers
     }
 
     void
-    BlockSparseMatrix::reinit(const std::vector<IndexSet>&       sizes,
+    BlockSparseMatrix::reinit(const std::vector<IndexSet>& sizes,
                               const BlockDynamicSparsityPattern& bdsp,
-                              const MPI_Comm&                    com)
+                              const MPI_Comm& com)
     {
       reinit(sizes, sizes, bdsp, com);
     }

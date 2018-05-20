@@ -542,10 +542,10 @@ public:
    */
   template <typename InitFunctionObject, typename LoopFunctionObject>
   void
-  do_loop(InitFunctionObject      init_function,
-          LoopFunctionObject      loop_function,
+  do_loop(InitFunctionObject init_function,
+          LoopFunctionObject loop_function,
           const TimeSteppingData& timestepping_data,
-          const Direction         direction);
+          const Direction direction);
 
   /**
    * Initialize the objects for the next sweep. This function specifically
@@ -963,7 +963,7 @@ namespace TimeStepBase_Tria_Flags
      * Constructor; see the different fields for a description of the meaning
      * of the parameters.
      */
-    Flags(const bool         delete_and_rebuild_tria,
+    Flags(const bool delete_and_rebuild_tria,
           const unsigned int wakeup_level_to_build_grid,
           const unsigned int sleep_level_to_delete_grid);
 
@@ -1138,13 +1138,13 @@ namespace TimeStepBase_Tria_Flags
     RefinementFlags(const unsigned int max_refinement_level        = 0,
                     const unsigned int first_sweep_with_correction = 0,
                     const unsigned int min_cells_for_correction    = 0,
-                    const double       cell_number_corridor_top    = (1 << dim),
-                    const double       cell_number_corridor_bottom = 1,
+                    const double cell_number_corridor_top          = (1 << dim),
+                    const double cell_number_corridor_bottom       = 1,
                     const CorrectionRelaxations& correction_relaxations
                     = CorrectionRelaxations(),
-                    const unsigned int cell_number_correction_steps  = 0,
-                    const bool         mirror_flags_to_previous_grid = false,
-                    const bool         adapt_grids                   = false);
+                    const unsigned int cell_number_correction_steps = 0,
+                    const bool mirror_flags_to_previous_grid        = false,
+                    const bool adapt_grids                          = false);
 
     /**
      * Maximum level of a cell in the triangulation of a time level. If it is
@@ -1296,7 +1296,7 @@ public:
    */
   typedef typename TimeStepBase_Tria_Flags::Flags<dim> Flags;
   typedef typename TimeStepBase_Tria_Flags::RefinementFlags<dim>
-                                                                RefinementFlags;
+    RefinementFlags;
   typedef typename TimeStepBase_Tria_Flags::RefinementData<dim> RefinementData;
 
   /**
@@ -1333,10 +1333,10 @@ public:
    * needed anyway; the refinement flags can be omitted if you do not intend
    * to call the refinement function of this class.
    */
-  TimeStepBase_Tria(const double                   time,
+  TimeStepBase_Tria(const double time,
                     const Triangulation<dim, dim>& coarse_grid,
-                    const Flags&                   flags,
-                    const RefinementFlags&         refinement_flags
+                    const Flags& flags,
+                    const RefinementFlags& refinement_flags
                     = RefinementFlags());
 
   /**
@@ -1499,10 +1499,10 @@ private:
 
 template <typename InitFunctionObject, typename LoopFunctionObject>
 void
-TimeDependent::do_loop(InitFunctionObject      init_function,
-                       LoopFunctionObject      loop_function,
+TimeDependent::do_loop(InitFunctionObject init_function,
+                       LoopFunctionObject loop_function,
                        const TimeSteppingData& timestepping_data,
-                       const Direction         direction)
+                       const Direction direction)
 {
   // the following functions looks quite
   // disrupted due to the recurring switches

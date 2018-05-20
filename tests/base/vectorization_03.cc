@@ -38,7 +38,7 @@ struct Evaluation
       values[index] = val * general_weight[index];
   }
 
-  bool                    is_cartesian;
+  bool is_cartesian;
   VectorizedArray<double> cartesian_weight;
   VectorizedArray<double> jac_weight[1];
   VectorizedArray<double> general_weight[1];

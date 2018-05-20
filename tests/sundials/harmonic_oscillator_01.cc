@@ -54,7 +54,7 @@ class HarmonicOscillator
 {
 public:
   HarmonicOscillator(
-    double                                                        _kappa,
+    double _kappa,
     const typename SUNDIALS::IDA<Vector<double>>::AdditionalData& data)
     : time_stepper(data),
       y(2),
@@ -69,10 +69,10 @@ public:
 
     time_stepper.reinit_vector = [&](VectorType& v) { v.reinit(2); };
 
-    time_stepper.residual = [&](const double      t,
+    time_stepper.residual = [&](const double t,
                                 const VectorType& y,
                                 const VectorType& y_dot,
-                                VectorType&       res) -> int {
+                                VectorType& res) -> int {
       res = y_dot;
       A.vmult_add(res, y);
       return 0;
@@ -100,9 +100,9 @@ public:
       return 0;
     };
 
-    time_stepper.output_step = [&](const double       t,
-                                   const VectorType&  sol,
-                                   const VectorType&  sol_dot,
+    time_stepper.output_step = [&](const double t,
+                                   const VectorType& sol,
+                                   const VectorType& sol_dot,
                                    const unsigned int step_number) -> int {
       out << t << " " << sol[0] << " " << sol[1] << " " << sol_dot[0] << " "
           << sol_dot[1] << std::endl;
@@ -120,12 +120,12 @@ public:
   SUNDIALS::IDA<Vector<double>> time_stepper;
 
 private:
-  Vector<double>     y;
-  Vector<double>     y_dot;
+  Vector<double> y;
+  Vector<double> y_dot;
   FullMatrix<double> J;
   FullMatrix<double> A;
   FullMatrix<double> Jinv;
-  double             kappa;
+  double kappa;
 
   std::ofstream out;
 };
@@ -137,7 +137,7 @@ main(int argc, char** argv)
     argc, argv, numbers::invalid_unsigned_int);
 
   SUNDIALS::IDA<Vector<double>>::AdditionalData data;
-  ParameterHandler                              prm;
+  ParameterHandler prm;
   data.add_parameters(prm);
 
   // std::ofstream ofile(SOURCE_DIR "/harmonic_oscillator_01.prm");

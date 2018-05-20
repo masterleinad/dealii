@@ -107,7 +107,7 @@ check()
               ExcInternalError());
 
   Point<dim> top_right;
-  double     value_at_top_right = 1;
+  double value_at_top_right = 1;
   for(unsigned int d = 0; d < dim; ++d)
     {
       top_right[d] = 1000;
@@ -122,7 +122,7 @@ check()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

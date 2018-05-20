@@ -47,7 +47,7 @@ public:
 
   virtual std::complex<double>
   value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+        const unsigned int component = 0) const;
 
   double
   get_k() const;
@@ -90,7 +90,7 @@ public:
 
   virtual std::complex<double>
   value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+        const unsigned int component = 0) const;
 
   double
   get_c() const;
@@ -165,11 +165,11 @@ get_h_area_sub<3>(double& h, double& a, const double L)
 // output for inspection
 template <int dim>
 void
-output(const std::string                   name,
-       const Triangulation<dim>&           triangulation,
-       const hp::DoFHandler<dim>&          dof_handler,
+output(const std::string name,
+       const Triangulation<dim>& triangulation,
+       const hp::DoFHandler<dim>& dof_handler,
        const Vector<std::complex<double>>& values,
-       const Vector<float>&                error)
+       const Vector<float>& error)
 {
   dealii::Vector<double> fe_degrees(triangulation.n_active_cells());
   {
@@ -198,12 +198,12 @@ test_neumann(const NeumanBC<dim>& func)
 {
   deallog << "NeumanBC case:" << std::endl;
   deallog << "--------------" << std::endl;
-  Triangulation<dim>       triangulation;
-  hp::DoFHandler<dim>      dof_handler(triangulation);
-  hp::FECollection<dim>    fe_collection;
-  hp::QCollection<dim>     quadrature_formula;
+  Triangulation<dim> triangulation;
+  hp::DoFHandler<dim> dof_handler(triangulation);
+  hp::FECollection<dim> fe_collection;
+  hp::QCollection<dim> quadrature_formula;
   hp::QCollection<dim - 1> face_quadrature_formula;
-  ConstraintMatrix         constraints;
+  ConstraintMatrix constraints;
 
   const unsigned int p = 3;
 
@@ -282,15 +282,15 @@ test_regular(const MyFunction<dim>& func)
   deallog << std::endl;
   deallog << "Regular face:" << std::endl;
   deallog << "-------------" << std::endl;
-  Triangulation<dim>       triangulation;
-  hp::DoFHandler<dim>      dof_handler(triangulation);
-  hp::FECollection<dim>    fe_collection;
-  hp::QCollection<dim>     quadrature_formula;
+  Triangulation<dim> triangulation;
+  hp::DoFHandler<dim> dof_handler(triangulation);
+  hp::FECollection<dim> fe_collection;
+  hp::QCollection<dim> quadrature_formula;
   hp::QCollection<dim - 1> face_quadrature_formula;
-  ConstraintMatrix         constraints;
+  ConstraintMatrix constraints;
 
-  const unsigned int        p1 = 1;
-  const unsigned int        p2 = 2;
+  const unsigned int p1 = 1;
+  const unsigned int p2 = 2;
   std::vector<unsigned int> p_degree;
   p_degree.push_back(p1);
   p_degree.push_back(p2);
@@ -396,16 +396,16 @@ test_irregular(const MyFunction<dim>& func)
   deallog << std::endl;
   deallog << "Irregular face:" << std::endl;
   deallog << "---------------" << std::endl;
-  Triangulation<dim>       triangulation;
-  hp::DoFHandler<dim>      dof_handler(triangulation);
-  hp::FECollection<dim>    fe_collection;
-  hp::QCollection<dim>     quadrature_formula;
+  Triangulation<dim> triangulation;
+  hp::DoFHandler<dim> dof_handler(triangulation);
+  hp::FECollection<dim> fe_collection;
+  hp::QCollection<dim> quadrature_formula;
   hp::QCollection<dim - 1> face_quadrature_formula;
-  ConstraintMatrix         constraints;
+  ConstraintMatrix constraints;
 
-  const unsigned int        p1 = 1;
-  const unsigned int        p2 = 2;
-  const unsigned int        p3 = 3;
+  const unsigned int p1 = 1;
+  const unsigned int p2 = 2;
+  const unsigned int p3 = 3;
   std::vector<unsigned int> p_degree;
   p_degree.push_back(p1);
   p_degree.push_back(p2);
@@ -548,7 +548,7 @@ public:
 
   virtual std::complex<double>
   value(const dealii::Point<dim>& point,
-        const unsigned int        component = 0) const;
+        const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -561,7 +561,7 @@ std::complex<double>
 MySecondFunction<dim>::value(const dealii::Point<dim>& point,
                              const unsigned int) const
 {
-  double        f = 0.0;
+  double f        = 0.0;
   const double& x = point[0];
   Assert(dim > 1, dealii::ExcNotImplemented());
   const double& y = point[1];
@@ -578,12 +578,12 @@ test(const MySecondFunction<dim>& func)
   deallog << "More complicated mesh:" << std::endl;
   deallog << "----------------------" << std::endl;
 
-  dealii::Triangulation<dim>       triangulation;
-  dealii::hp::DoFHandler<dim>      dof_handler(triangulation);
-  dealii::hp::FECollection<dim>    fe_collection;
-  dealii::hp::QCollection<dim>     quadrature_formula;
+  dealii::Triangulation<dim> triangulation;
+  dealii::hp::DoFHandler<dim> dof_handler(triangulation);
+  dealii::hp::FECollection<dim> fe_collection;
+  dealii::hp::QCollection<dim> quadrature_formula;
   dealii::hp::QCollection<dim - 1> face_quadrature_formula;
-  dealii::ConstraintMatrix         constraints;
+  dealii::ConstraintMatrix constraints;
   for(unsigned int p = 1; p <= 3; p++)
     {
       fe_collection.push_back(dealii::FE_Q<dim>(QIterated<1>(QTrapez<1>(), p)));

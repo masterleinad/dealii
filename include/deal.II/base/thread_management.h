@@ -197,8 +197,8 @@ namespace Threads
      * raises an exception if the <code>count</code> argument is one.
      */
     DummyBarrier(const unsigned int count,
-                 const char*        name = nullptr,
-                 void*              arg  = nullptr);
+                 const char* name = nullptr,
+                 void* arg        = nullptr);
 
     /**
      * Wait for all threads to reach this point. Since there may only be one
@@ -423,8 +423,8 @@ namespace Threads
      * Constructor. Initialize the underlying POSIX barrier data structure.
      */
     PosixThreadBarrier(const unsigned int count,
-                       const char*        name = nullptr,
-                       void*              arg  = nullptr);
+                       const char* name = nullptr,
+                       void* arg        = nullptr);
 
     /**
      * Destructor. Release all resources.
@@ -549,7 +549,7 @@ namespace Threads
   std::vector<std::pair<ForwardIterator, ForwardIterator>>
   split_range(const ForwardIterator& begin,
               const ForwardIterator& end,
-              const unsigned int     n_intervals);
+              const unsigned int n_intervals);
 
   /**
    * Split the interval <code>[begin,end)</code> into subintervals of (almost)
@@ -640,7 +640,7 @@ namespace Threads
   std::vector<std::pair<ForwardIterator, ForwardIterator>>
   split_range(const ForwardIterator& begin,
               const ForwardIterator& end,
-              const unsigned int     n_intervals)
+              const unsigned int n_intervals)
   {
     typedef std::pair<ForwardIterator, ForwardIterator> IteratorPair;
 
@@ -780,7 +780,7 @@ namespace Threads
   {
     template <typename RT>
     inline void
-    call(const std::function<RT()>&  function,
+    call(const std::function<RT()>& function,
          internal::return_value<RT>& ret_val)
     {
       ret_val.set(function());
@@ -915,7 +915,7 @@ namespace Threads
        * The function that runs on the thread.
        */
       static void
-      thread_entry_point(const std::function<RT()>&        function,
+      thread_entry_point(const std::function<RT()>& function,
                          std::shared_ptr<return_value<RT>> ret_val)
       {
         // call the function in question. since an exception that is

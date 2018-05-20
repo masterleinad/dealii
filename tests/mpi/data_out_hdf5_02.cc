@@ -102,7 +102,7 @@ check()
     patches, data_filter, output_basename + ".h5", MPI_COMM_WORLD);
 
   const double current_time = 0.0;
-  XDMFEntry    entry(output_basename + ".h5",
+  XDMFEntry entry(output_basename + ".h5",
                   output_basename + ".h5",
                   current_time,
                   data_filter.n_nodes(),
@@ -157,7 +157,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   try
     {

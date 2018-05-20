@@ -108,22 +108,22 @@ namespace LinearAdvectionTest
     void
     calculate_flux_terms(
       const TriaActiveIterator<DoFCellAccessor<DoFHandler<dim>, false>>&
-                         current_cell,
+        current_cell,
       FEFaceValues<dim>& current_face_values,
       const TriaIterator<DoFCellAccessor<DoFHandler<dim>, false>>&
-                             neighbor_cell,
+        neighbor_cell,
       FEFaceValuesBase<dim>& neighbor_face_values,
-      FullMatrix<double>&    current_to_current_flux,
-      FullMatrix<double>&    current_to_neighbor_flux,
-      FullMatrix<double>&    neighbor_to_current_flux,
-      FullMatrix<double>&    neighbor_to_neighbor_flux);
+      FullMatrix<double>& current_to_current_flux,
+      FullMatrix<double>& current_to_neighbor_flux,
+      FullMatrix<double>& neighbor_to_current_flux,
+      FullMatrix<double>& neighbor_to_neighbor_flux);
 
     const unsigned int n_mpi_processes;
     const unsigned int this_mpi_process;
 
     parallel::distributed::Triangulation<dim> triangulation;
-    FE_DGQ<dim>                               fe;
-    DoFHandler<dim>                           dof_handler;
+    FE_DGQ<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     IndexSet locally_owned_dofs;
     IndexSet locally_relevant_dofs;
@@ -184,7 +184,7 @@ namespace LinearAdvectionTest
   void
   AdvectionProblem<dim>::calculate_flux_terms(
     const TriaActiveIterator<DoFCellAccessor<DoFHandler<dim>, false>>&
-                       current_cell,
+      current_cell,
     FEFaceValues<dim>& current_face_values,
     const TriaIterator<DoFCellAccessor<DoFHandler<dim>, false>>& neighbor_cell,
     FEFaceValuesBase<dim>& neighbor_face_values,
@@ -322,7 +322,7 @@ main(int argc, char** argv)
   using namespace dealii;
   initlog();
 
-  Utilities::MPI::MPI_InitFinalize         mpi_initialization(argc, argv, 1);
+  Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   LinearAdvectionTest::AdvectionProblem<2> advection_problem;
   advection_problem.run();
 }

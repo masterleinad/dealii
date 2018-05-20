@@ -35,8 +35,8 @@ using namespace std;
 template <int dim>
 void
 check_select(const FiniteElement<dim>& fe,
-             unsigned int              selected,
-             unsigned int              mg_selected,
+             unsigned int selected,
+             unsigned int mg_selected,
              std::vector<unsigned int> target_component,
              std::vector<unsigned int> mg_target_component)
 {
@@ -47,7 +47,7 @@ check_select(const FiniteElement<dim>& fe,
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  DoFHandler<dim>  mgdof(tr);
+  DoFHandler<dim> mgdof(tr);
   DoFHandler<dim>& dof = mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);

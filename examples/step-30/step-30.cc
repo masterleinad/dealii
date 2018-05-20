@@ -61,8 +61,8 @@ namespace Step30
   public:
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               std::vector<double>& values,
+               const unsigned int component = 0) const override;
   };
 
   template <int dim>
@@ -71,8 +71,8 @@ namespace Step30
   public:
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               std::vector<double>& values,
+               const unsigned int component = 0) const override;
   };
 
   template <int dim>
@@ -83,13 +83,13 @@ namespace Step30
     {}
     void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<Point<dim>>&       values) const;
+               std::vector<Point<dim>>& values) const;
   };
 
   template <int dim>
   void
   RHS<dim>::value_list(const std::vector<Point<dim>>& points,
-                       std::vector<double>&           values,
+                       std::vector<double>& values,
                        const unsigned int) const
   {
     (void) points;
@@ -113,7 +113,7 @@ namespace Step30
   template <int dim>
   void
   Beta<dim>::value_list(const std::vector<Point<dim>>& points,
-                        std::vector<Point<dim>>&       values) const
+                        std::vector<Point<dim>>& values) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -136,7 +136,7 @@ namespace Step30
   template <int dim>
   void
   BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
-                                  std::vector<double>&           values,
+                                  std::vector<double>& values,
                                   const unsigned int) const
   {
     Assert(values.size() == points.size(),
@@ -164,25 +164,25 @@ namespace Step30
 
     void
     assemble_cell_term(const FEValues<dim>& fe_v,
-                       FullMatrix<double>&  ui_vi_matrix,
-                       Vector<double>&      cell_vector) const;
+                       FullMatrix<double>& ui_vi_matrix,
+                       Vector<double>& cell_vector) const;
 
     void
     assemble_boundary_term(const FEFaceValues<dim>& fe_v,
-                           FullMatrix<double>&      ui_vi_matrix,
-                           Vector<double>&          cell_vector) const;
+                           FullMatrix<double>& ui_vi_matrix,
+                           Vector<double>& cell_vector) const;
 
     void
     assemble_face_term2(const FEFaceValuesBase<dim>& fe_v,
                         const FEFaceValuesBase<dim>& fe_v_neighbor,
-                        FullMatrix<double>&          ui_vi_matrix,
-                        FullMatrix<double>&          ue_vi_matrix,
-                        FullMatrix<double>&          ui_ve_matrix,
-                        FullMatrix<double>&          ue_ve_matrix) const;
+                        FullMatrix<double>& ui_vi_matrix,
+                        FullMatrix<double>& ue_vi_matrix,
+                        FullMatrix<double>& ui_ve_matrix,
+                        FullMatrix<double>& ue_ve_matrix) const;
 
   private:
-    const Beta<dim>           beta_function;
-    const RHS<dim>            rhs_function;
+    const Beta<dim> beta_function;
+    const RHS<dim> rhs_function;
     const BoundaryValues<dim> boundary_function;
   };
 
@@ -204,13 +204,13 @@ namespace Step30
   void
   DGTransportEquation<dim>::assemble_cell_term(
     const FEValues<dim>& fe_v,
-    FullMatrix<double>&  ui_vi_matrix,
-    Vector<double>&      cell_vector) const
+    FullMatrix<double>& ui_vi_matrix,
+    Vector<double>& cell_vector) const
   {
     const std::vector<double>& JxW = fe_v.get_JxW_values();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
-    std::vector<double>     rhs(fe_v.n_quadrature_points);
+    std::vector<double> rhs(fe_v.n_quadrature_points);
 
     beta_function.value_list(fe_v.get_quadrature_points(), beta);
     rhs_function.value_list(fe_v.get_quadrature_points(), rhs);
@@ -231,14 +231,14 @@ namespace Step30
   void
   DGTransportEquation<dim>::assemble_boundary_term(
     const FEFaceValues<dim>& fe_v,
-    FullMatrix<double>&      ui_vi_matrix,
-    Vector<double>&          cell_vector) const
+    FullMatrix<double>& ui_vi_matrix,
+    Vector<double>& cell_vector) const
   {
-    const std::vector<double>&         JxW     = fe_v.get_JxW_values();
+    const std::vector<double>& JxW             = fe_v.get_JxW_values();
     const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
-    std::vector<double>     g(fe_v.n_quadrature_points);
+    std::vector<double> g(fe_v.n_quadrature_points);
 
     beta_function.value_list(fe_v.get_quadrature_points(), beta);
     boundary_function.value_list(fe_v.get_quadrature_points(), g);
@@ -263,12 +263,12 @@ namespace Step30
   DGTransportEquation<dim>::assemble_face_term2(
     const FEFaceValuesBase<dim>& fe_v,
     const FEFaceValuesBase<dim>& fe_v_neighbor,
-    FullMatrix<double>&          ui_vi_matrix,
-    FullMatrix<double>&          ue_vi_matrix,
-    FullMatrix<double>&          ui_ve_matrix,
-    FullMatrix<double>&          ue_ve_matrix) const
+    FullMatrix<double>& ui_vi_matrix,
+    FullMatrix<double>& ue_vi_matrix,
+    FullMatrix<double>& ui_ve_matrix,
+    FullMatrix<double>& ue_ve_matrix) const
   {
-    const std::vector<double>&         JxW     = fe_v.get_JxW_values();
+    const std::vector<double>& JxW             = fe_v.get_JxW_values();
     const std::vector<Tensor<1, dim>>& normals = fe_v.get_normal_vectors();
 
     std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
@@ -340,16 +340,16 @@ namespace Step30
     void
     output_results(const unsigned int cycle) const;
 
-    Triangulation<dim>   triangulation;
+    Triangulation<dim> triangulation;
     const MappingQ1<dim> mapping;
     // Again we want to use DG elements of degree 1 (but this is only
     // specified in the constructor). If you want to use a DG method of a
     // different degree replace 1 in the constructor by the new degree.
     const unsigned int degree;
-    FE_DGQ<dim>        fe;
-    DoFHandler<dim>    dof_handler;
+    FE_DGQ<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
     // This is new, the threshold value used in the evaluation of the
     // anisotropic jump indicator explained in the introduction. Its value is
@@ -361,7 +361,7 @@ namespace Step30
     // the same name.
     const bool anisotropic;
 
-    const QGauss<dim>     quadrature;
+    const QGauss<dim> quadrature;
     const QGauss<dim - 1> face_quadrature;
 
     Vector<double> solution2;
@@ -445,7 +445,7 @@ namespace Step30
 
     const UpdateFlags neighbor_face_update_flags = update_values;
 
-    FEValues<dim>     fe_v(mapping, fe, quadrature, update_flags);
+    FEValues<dim> fe_v(mapping, fe, quadrature, update_flags);
     FEFaceValues<dim> fe_v_face(
       mapping, fe, face_quadrature, face_update_flags);
     FESubfaceValues<dim> fe_v_subface(
@@ -629,7 +629,7 @@ namespace Step30
   void
   DGMethod<dim>::solve(Vector<double>& solution)
   {
-    SolverControl      solver_control(1000, 1e-12, false, false);
+    SolverControl solver_control(1000, 1e-12, false, false);
     SolverRichardson<> solver(solver_control);
 
     PreconditionBlockSSOR<SparseMatrix<double>> preconditioner;

@@ -98,8 +98,8 @@ namespace Step37
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               std::vector<double>& values,
+               const unsigned int component = 0) const override;
   };
 
   // This is the new function mentioned above: Evaluate the coefficient for
@@ -134,7 +134,7 @@ namespace Step37
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim>&  p,
+  Coefficient<dim>::value(const Point<dim>& p,
                           const unsigned int component) const
   {
     return value<double>(p, component);
@@ -143,8 +143,8 @@ namespace Step37
   template <int dim>
   void
   Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+                               std::vector<double>& values,
+                               const unsigned int component) const
   {
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
@@ -252,20 +252,20 @@ namespace Step37
   private:
     virtual void
     apply_add(
-      LinearAlgebra::distributed::Vector<number>&       dst,
+      LinearAlgebra::distributed::Vector<number>& dst,
       const LinearAlgebra::distributed::Vector<number>& src) const override;
 
     void
-    local_apply(const MatrixFree<dim, number>&                    data,
-                LinearAlgebra::distributed::Vector<number>&       dst,
+    local_apply(const MatrixFree<dim, number>& data,
+                LinearAlgebra::distributed::Vector<number>& dst,
                 const LinearAlgebra::distributed::Vector<number>& src,
                 const std::pair<unsigned int, unsigned int>& cell_range) const;
 
     void
     local_compute_diagonal(
-      const MatrixFree<dim, number>&               data,
-      LinearAlgebra::distributed::Vector<number>&  dst,
-      const unsigned int&                          dummy,
+      const MatrixFree<dim, number>& data,
+      LinearAlgebra::distributed::Vector<number>& dst,
+      const unsigned int& dummy,
       const std::pair<unsigned int, unsigned int>& cell_range) const;
 
     Table<2, VectorizedArray<number>> coefficient;
@@ -410,10 +410,10 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::local_apply(
-    const MatrixFree<dim, number>&                    data,
-    LinearAlgebra::distributed::Vector<number>&       dst,
+    const MatrixFree<dim, number>& data,
+    LinearAlgebra::distributed::Vector<number>& dst,
     const LinearAlgebra::distributed::Vector<number>& src,
-    const std::pair<unsigned int, unsigned int>&      cell_range) const
+    const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
 
@@ -509,7 +509,7 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::apply_add(
-    LinearAlgebra::distributed::Vector<number>&       dst,
+    LinearAlgebra::distributed::Vector<number>& dst,
     const LinearAlgebra::distributed::Vector<number>& src) const
   {
     this->data->cell_loop(&LaplaceOperator::local_apply, this, dst, src);
@@ -624,7 +624,7 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::local_compute_diagonal(
-    const MatrixFree<dim, number>&              data,
+    const MatrixFree<dim, number>& data,
     LinearAlgebra::distributed::Vector<number>& dst,
     const unsigned int&,
     const std::pair<unsigned int, unsigned int>& cell_range) const
@@ -703,22 +703,22 @@ namespace Step37
     Triangulation<dim> triangulation;
 #endif
 
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
     DoFHandler<dim> dof_handler;
 
     ConstraintMatrix constraints;
     typedef LaplaceOperator<dim, degree_finite_element, double>
-                     SystemMatrixType;
+      SystemMatrixType;
     SystemMatrixType system_matrix;
 
     MGConstrainedDoFs mg_constrained_dofs;
     typedef LaplaceOperator<dim, degree_finite_element, float> LevelMatrixType;
-    MGLevelObject<LevelMatrixType>                             mg_matrices;
+    MGLevelObject<LevelMatrixType> mg_matrices;
 
     LinearAlgebra::distributed::Vector<double> solution;
     LinearAlgebra::distributed::Vector<double> system_rhs;
 
-    double             setup_time;
+    double setup_time;
     ConditionalOStream pcout;
     ConditionalOStream time_details;
   };
@@ -938,7 +938,7 @@ namespace Step37
   void
   LaplaceProblem<dim>::solve()
   {
-    Timer                            time;
+    Timer time;
     MGTransferMatrixFree<dim, float> mg_transfer(mg_constrained_dofs);
     mg_transfer.build(dof_handler);
     setup_time += time.wall_time();
@@ -994,7 +994,7 @@ namespace Step37
       SmootherType;
     mg::SmootherRelaxation<SmootherType,
                            LinearAlgebra::distributed::Vector<float>>
-                                                         mg_smoother;
+      mg_smoother;
     MGLevelObject<typename SmootherType::AdditionalData> smoother_data;
     smoother_data.resize(0, triangulation.n_global_levels() - 1);
     for(unsigned int level = 0; level < triangulation.n_global_levels();

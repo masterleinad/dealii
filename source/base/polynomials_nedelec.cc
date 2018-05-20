@@ -49,7 +49,7 @@ PolynomialsNedelec<dim>::create_polynomials(const unsigned int k)
 template <int dim>
 void
 PolynomialsNedelec<dim>::compute(
-  const Point<dim>&            unit_point,
+  const Point<dim>& unit_point,
   std::vector<Tensor<1, dim>>& values,
   std::vector<Tensor<2, dim>>& grads,
   std::vector<Tensor<3, dim>>& grad_grads,
@@ -330,7 +330,7 @@ PolynomialsNedelec<dim>::compute(
           // <tt>unit_point</tt> with coordinates
           // shifted two steps in positive
           // direction
-          Point<dim>          p1, p2;
+          Point<dim> p1, p2;
           std::vector<double> p1_values((values.size() == 0) ? 0 : n_basis);
           std::vector<Tensor<1, dim>> p1_grads((grads.size() == 0) ? 0 :
                                                                      n_basis);

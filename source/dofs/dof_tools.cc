@@ -186,8 +186,8 @@ namespace DoFTools
     //   in the component_mask that corresponds to this shape function
     template <typename DoFHandlerType>
     void
-    get_component_association(const DoFHandlerType&       dof,
-                              const ComponentMask&        component_mask,
+    get_component_association(const DoFHandlerType& dof,
+                              const ComponentMask& component_mask,
                               std::vector<unsigned char>& dofs_by_component)
     {
       const dealii::hp::FECollection<DoFHandlerType::dimension,
@@ -245,7 +245,7 @@ namespace DoFTools
     // dof.locally_owned_dofs().index_within_set(indices[i])
     template <typename DoFHandlerType>
     inline void
-    get_block_association(const DoFHandlerType&       dof,
+    get_block_association(const DoFHandlerType& dof,
                           std::vector<unsigned char>& dofs_by_block)
     {
       const dealii::hp::FECollection<DoFHandlerType::dimension,
@@ -307,8 +307,8 @@ namespace DoFTools
   void
   distribute_cell_to_dof_vector(const DoFHandlerType& dof_handler,
                                 const Vector<Number>& cell_data,
-                                Vector<double>&       dof_data,
-                                const unsigned int    component)
+                                Vector<double>& dof_data,
+                                const unsigned int component)
   {
     const unsigned int dim                   = DoFHandlerType::dimension;
     const unsigned int spacedim              = DoFHandlerType::space_dimension;
@@ -390,8 +390,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   extract_dofs(const DoFHandler<dim, spacedim>& dof,
-               const ComponentMask&             component_mask,
-               std::vector<bool>&               selected_dofs)
+               const ComponentMask& component_mask,
+               std::vector<bool>& selected_dofs)
   {
     const FiniteElement<dim, spacedim>& fe = dof.get_fe();
     (void) fe;
@@ -436,8 +436,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   extract_dofs(const hp::DoFHandler<dim, spacedim>& dof,
-               const ComponentMask&                 component_mask,
-               std::vector<bool>&                   selected_dofs)
+               const ComponentMask& component_mask,
+               std::vector<bool>& selected_dofs)
   {
     const FiniteElement<dim, spacedim>& fe = dof.begin_active()->get_fe();
     (void) fe;
@@ -479,8 +479,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   extract_dofs(const DoFHandler<dim, spacedim>& dof,
-               const BlockMask&                 block_mask,
-               std::vector<bool>&               selected_dofs)
+               const BlockMask& block_mask,
+               std::vector<bool>& selected_dofs)
   {
     // simply forward to the function that works based on a component mask
     extract_dofs(dof, dof.get_fe().component_mask(block_mask), selected_dofs);
@@ -489,8 +489,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   extract_dofs(const hp::DoFHandler<dim, spacedim>& dof,
-               const BlockMask&                     block_mask,
-               std::vector<bool>&                   selected_dofs)
+               const BlockMask& block_mask,
+               std::vector<bool>& selected_dofs)
   {
     // simply forward to the function that works based on a component mask
     extract_dofs(dof, dof.get_fe().component_mask(block_mask), selected_dofs);
@@ -498,10 +498,10 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_level_dofs(const unsigned int    level,
+  extract_level_dofs(const unsigned int level,
                      const DoFHandlerType& dof,
-                     const ComponentMask&  component_mask,
-                     std::vector<bool>&    selected_dofs)
+                     const ComponentMask& component_mask,
+                     std::vector<bool>& selected_dofs)
   {
     const FiniteElement<DoFHandlerType::dimension,
                         DoFHandlerType::space_dimension>& fe
@@ -540,7 +540,7 @@ namespace DoFTools
       local_selected_dofs[i] = component_mask[local_component_asssociation[i]];
 
     // then loop over all cells and do work
-    std::vector<types::global_dof_index>         indices(fe.dofs_per_cell);
+    std::vector<types::global_dof_index> indices(fe.dofs_per_cell);
     typename DoFHandlerType::level_cell_iterator c;
     for(c = dof.begin(level); c != dof.end(level); ++c)
       {
@@ -552,10 +552,10 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_level_dofs(const unsigned int    level,
+  extract_level_dofs(const unsigned int level,
                      const DoFHandlerType& dof,
-                     const BlockMask&      block_mask,
-                     std::vector<bool>&    selected_dofs)
+                     const BlockMask& block_mask,
+                     std::vector<bool>& selected_dofs)
   {
     // simply defer to the other extract_level_dofs() function
     extract_level_dofs(
@@ -564,9 +564,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_boundary_dofs(const DoFHandlerType&               dof_handler,
-                        const ComponentMask&                component_mask,
-                        std::vector<bool>&                  selected_dofs,
+  extract_boundary_dofs(const DoFHandlerType& dof_handler,
+                        const ComponentMask& component_mask,
+                        std::vector<bool>& selected_dofs,
                         const std::set<types::boundary_id>& boundary_ids)
   {
     Assert(
@@ -591,9 +591,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_boundary_dofs(const DoFHandlerType&               dof_handler,
-                        const ComponentMask&                component_mask,
-                        IndexSet&                           selected_dofs,
+  extract_boundary_dofs(const DoFHandlerType& dof_handler,
+                        const ComponentMask& component_mask,
+                        IndexSet& selected_dofs,
                         const std::set<types::boundary_id>& boundary_ids)
   {
     Assert(component_mask.represents_n_components(n_components(dof_handler)),
@@ -702,9 +702,9 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   extract_dofs_with_support_on_boundary(
-    const DoFHandlerType&               dof_handler,
-    const ComponentMask&                component_mask,
-    std::vector<bool>&                  selected_dofs,
+    const DoFHandlerType& dof_handler,
+    const ComponentMask& component_mask,
+    std::vector<bool>& selected_dofs,
     const std::set<types::boundary_id>& boundary_ids)
   {
     Assert(component_mask.represents_n_components(n_components(dof_handler)),
@@ -791,7 +791,7 @@ namespace DoFTools
     const DoFHandlerType& dof_handler,
     const std::function<
       bool(const typename DoFHandlerType::active_cell_iterator&)>& predicate,
-    const ConstraintMatrix&                                        cm)
+    const ConstraintMatrix& cm)
   {
     const std::function<bool(
       const typename DoFHandlerType::active_cell_iterator&)>
@@ -1002,7 +1002,7 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   extract_hanging_node_dofs(const DoFHandler<dim, spacedim>& dof_handler,
-                            std::vector<bool>&               selected_dofs)
+                            std::vector<bool>& selected_dofs)
   {
     const IndexSet selected_dofs_as_index_set
       = extract_hanging_node_dofs(dof_handler);
@@ -1023,9 +1023,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_subdomain_dofs(const DoFHandlerType&     dof_handler,
+  extract_subdomain_dofs(const DoFHandlerType& dof_handler,
                          const types::subdomain_id subdomain_id,
-                         std::vector<bool>&        selected_dofs)
+                         std::vector<bool>& selected_dofs)
   {
     Assert(selected_dofs.size() == dof_handler.n_dofs(),
            ExcDimensionMismatch(selected_dofs.size(), dof_handler.n_dofs()));
@@ -1055,7 +1055,7 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   extract_locally_owned_dofs(const DoFHandlerType& dof_handler,
-                             IndexSet&             dof_set)
+                             IndexSet& dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_dofs();
@@ -1065,7 +1065,7 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   extract_locally_active_dofs(const DoFHandlerType& dof_handler,
-                              IndexSet&             dof_set)
+                              IndexSet& dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_dofs();
@@ -1074,7 +1074,7 @@ namespace DoFTools
     // in a set. need to check each dof manually because we can't be sure
     // that the dof range of locally_owned_dofs is really contiguous.
     std::vector<types::global_dof_index> dof_indices;
-    std::set<types::global_dof_index>    global_dof_indices;
+    std::set<types::global_dof_index> global_dof_indices;
 
     typename DoFHandlerType::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -1101,7 +1101,7 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   extract_locally_relevant_dofs(const DoFHandlerType& dof_handler,
-                                IndexSet&             dof_set)
+                                IndexSet& dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_dofs();
@@ -1141,8 +1141,8 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   extract_locally_relevant_level_dofs(const DoFHandlerType& dof_handler,
-                                      const unsigned int    level,
-                                      IndexSet&             dof_set)
+                                      const unsigned int level,
+                                      IndexSet& dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_mg_dofs(level);
@@ -1187,8 +1187,8 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_constant_modes(const DoFHandlerType&           dof_handler,
-                         const ComponentMask&            component_mask,
+  extract_constant_modes(const DoFHandlerType& dof_handler,
+                         const ComponentMask& component_mask,
                          std::vector<std::vector<bool>>& constant_modes)
   {
     const unsigned int n_components = dof_handler.get_fe(0).n_components();
@@ -1224,7 +1224,7 @@ namespace DoFTools
       = dof_handler.get_fe_collection();
     std::vector<Table<2, bool>> element_constant_modes;
     std::vector<std::vector<std::pair<unsigned int, unsigned int>>>
-                 constant_mode_to_component_translation(n_components);
+      constant_mode_to_component_translation(n_components);
     unsigned int n_constant_modes = 0;
     for(unsigned int f = 0; f < fe_collection.size(); ++f)
       {
@@ -1279,7 +1279,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  get_active_fe_indices(const DoFHandlerType&      dof_handler,
+  get_active_fe_indices(const DoFHandlerType& dof_handler,
                         std::vector<unsigned int>& active_fe_indices)
   {
     AssertDimension(active_fe_indices.size(),
@@ -1433,7 +1433,7 @@ namespace DoFTools
 
         // Extract DoFs associated with halo layer
         std::vector<types::global_dof_index> local_dof_indices;
-        std::set<types::global_dof_index>    subdomain_halo_global_dof_indices;
+        std::set<types::global_dof_index> subdomain_halo_global_dof_indices;
         for(typename std::vector<
               typename DoFHandlerType::active_cell_iterator>::const_iterator
               it_cell
@@ -1471,7 +1471,7 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   get_subdomain_association(
-    const DoFHandlerType&             dof_handler,
+    const DoFHandlerType& dof_handler,
     std::vector<types::subdomain_id>& subdomain_association)
   {
     // if the Triangulation is distributed, the only thing we can usefully
@@ -1569,7 +1569,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   unsigned int
-  count_dofs_with_subdomain_association(const DoFHandlerType&     dof_handler,
+  count_dofs_with_subdomain_association(const DoFHandlerType& dof_handler,
                                         const types::subdomain_id subdomain)
   {
     std::vector<types::subdomain_id> subdomain_association(
@@ -1582,7 +1582,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   IndexSet
-  dof_indices_with_subdomain_association(const DoFHandlerType&     dof_handler,
+  dof_indices_with_subdomain_association(const DoFHandlerType& dof_handler,
                                          const types::subdomain_id subdomain)
   {
     // If we have a distributed::Triangulation only allow locally_owned
@@ -1638,8 +1638,8 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   count_dofs_with_subdomain_association(
-    const DoFHandlerType&      dof_handler,
-    const types::subdomain_id  subdomain,
+    const DoFHandlerType& dof_handler,
+    const types::subdomain_id subdomain,
     std::vector<unsigned int>& n_dofs_on_subdomain)
   {
     Assert(n_dofs_on_subdomain.size() == dof_handler.get_fe(0).n_components(),
@@ -1693,12 +1693,12 @@ namespace DoFTools
     // index
     template <int dim, int spacedim>
     void
-    resolve_components(const FiniteElement<dim, spacedim>&   fe,
-                       const std::vector<unsigned char>&     dofs_by_component,
-                       const std::vector<unsigned int>&      target_component,
-                       const bool                            only_once,
+    resolve_components(const FiniteElement<dim, spacedim>& fe,
+                       const std::vector<unsigned char>& dofs_by_component,
+                       const std::vector<unsigned int>& target_component,
+                       const bool only_once,
                        std::vector<types::global_dof_index>& dofs_per_component,
-                       unsigned int&                         component)
+                       unsigned int& component)
     {
       for(unsigned int b = 0; b < fe.n_base_elements(); ++b)
         {
@@ -1738,11 +1738,11 @@ namespace DoFTools
     template <int dim, int spacedim>
     void
     resolve_components(const hp::FECollection<dim, spacedim>& fe_collection,
-                       const std::vector<unsigned char>&      dofs_by_component,
-                       const std::vector<unsigned int>&       target_component,
-                       const bool                             only_once,
+                       const std::vector<unsigned char>& dofs_by_component,
+                       const std::vector<unsigned int>& target_component,
+                       const bool only_once,
                        std::vector<types::global_dof_index>& dofs_per_component,
-                       unsigned int&                         component)
+                       unsigned int& component)
     {
       // assert that all elements in the collection have the same structure
       // (base elements and multiplicity, components per base element) and
@@ -1809,10 +1809,10 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   count_dofs_per_component(
-    const DoFHandlerType&                 dof_handler,
+    const DoFHandlerType& dof_handler,
     std::vector<types::global_dof_index>& dofs_per_component,
-    bool                                  only_once,
-    std::vector<unsigned int>             target_component)
+    bool only_once,
+    std::vector<unsigned int> target_component)
   {
     const unsigned int n_components = dof_handler.get_fe(0).n_components();
 
@@ -1901,9 +1901,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  count_dofs_per_block(const DoFHandlerType&                 dof_handler,
+  count_dofs_per_block(const DoFHandlerType& dof_handler,
                        std::vector<types::global_dof_index>& dofs_per_block,
-                       const std::vector<unsigned int>&      target_block_)
+                       const std::vector<unsigned int>& target_block_)
   {
     std::vector<unsigned int> target_block = target_block_;
 
@@ -1987,7 +1987,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  map_dof_to_boundary_indices(const DoFHandlerType&                 dof_handler,
+  map_dof_to_boundary_indices(const DoFHandlerType& dof_handler,
                               std::vector<types::global_dof_index>& mapping)
   {
     mapping.clear();
@@ -2027,7 +2027,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  map_dof_to_boundary_indices(const DoFHandlerType&               dof_handler,
+  map_dof_to_boundary_indices(const DoFHandlerType& dof_handler,
                               const std::set<types::boundary_id>& boundary_ids,
                               std::vector<types::global_dof_index>& mapping)
   {
@@ -2079,7 +2079,7 @@ namespace DoFTools
       map_dofs_to_support_points(
         const hp::MappingCollection<DoFHandlerType::dimension,
                                     DoFHandlerType::space_dimension>& mapping,
-        const DoFHandlerType&                             dof_handler,
+        const DoFHandlerType& dof_handler,
         std::map<types::global_dof_index,
                  Point<DoFHandlerType::space_dimension>>& support_points)
       {
@@ -2138,7 +2138,7 @@ namespace DoFTools
       map_dofs_to_support_points(
         const hp::MappingCollection<DoFHandlerType::dimension,
                                     DoFHandlerType::space_dimension>& mapping,
-        const DoFHandlerType&                                dof_handler,
+        const DoFHandlerType& dof_handler,
         std::vector<Point<DoFHandlerType::space_dimension>>& support_points)
       {
         // get the data in the form of the map as above
@@ -2161,9 +2161,9 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  map_dofs_to_support_points(const Mapping<dim, spacedim>&    mapping,
+  map_dofs_to_support_points(const Mapping<dim, spacedim>& mapping,
                              const DoFHandler<dim, spacedim>& dof_handler,
-                             std::vector<Point<spacedim>>&    support_points)
+                             std::vector<Point<spacedim>>& support_points)
   {
     AssertDimension(support_points.size(), dof_handler.n_dofs());
     Assert(
@@ -2186,8 +2186,8 @@ namespace DoFTools
   void
   map_dofs_to_support_points(
     const hp::MappingCollection<dim, spacedim>& mapping,
-    const hp::DoFHandler<dim, spacedim>&        dof_handler,
-    std::vector<Point<spacedim>>&               support_points)
+    const hp::DoFHandler<dim, spacedim>& dof_handler,
+    std::vector<Point<spacedim>>& support_points)
   {
     AssertDimension(support_points.size(), dof_handler.n_dofs());
     Assert(
@@ -2206,8 +2206,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   map_dofs_to_support_points(
-    const Mapping<dim, spacedim>&                       mapping,
-    const DoFHandler<dim, spacedim>&                    dof_handler,
+    const Mapping<dim, spacedim>& mapping,
+    const DoFHandler<dim, spacedim>& dof_handler,
     std::map<types::global_dof_index, Point<spacedim>>& support_points)
   {
     support_points.clear();
@@ -2223,8 +2223,8 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   map_dofs_to_support_points(
-    const hp::MappingCollection<dim, spacedim>&         mapping,
-    const hp::DoFHandler<dim, spacedim>&                dof_handler,
+    const hp::MappingCollection<dim, spacedim>& mapping,
+    const hp::DoFHandler<dim, spacedim>& dof_handler,
     std::map<types::global_dof_index, Point<spacedim>>& support_points)
   {
     support_points.clear();
@@ -2237,7 +2237,7 @@ namespace DoFTools
   template <int spacedim>
   void
   write_gnuplot_dof_support_point_info(
-    std::ostream&                                             out,
+    std::ostream& out,
     const std::map<types::global_dof_index, Point<spacedim>>& support_points)
   {
     AssertThrow(out, ExcIO());
@@ -2283,11 +2283,11 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   convert_couplings_to_blocks(const DoFHandler<dim, spacedim>& dof_handler,
-                              const Table<2, Coupling>&        table,
+                              const Table<2, Coupling>& table,
                               std::vector<Table<2, Coupling>>& tables_by_block)
   {
     const FiniteElement<dim, spacedim>& fe = dof_handler.get_fe();
-    const unsigned int                  nb = fe.n_blocks();
+    const unsigned int nb                  = fe.n_blocks();
 
     tables_by_block.resize(1);
     tables_by_block[0].reinit(nb, nb);
@@ -2307,7 +2307,7 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   convert_couplings_to_blocks(const hp::DoFHandler<dim, spacedim>& dof_handler,
-                              const Table<2, Coupling>&            table,
+                              const Table<2, Coupling>& table,
                               std::vector<Table<2, Coupling>>& tables_by_block)
   {
     const hp::FECollection<dim>& fe_collection
@@ -2335,11 +2335,11 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  make_cell_patches(SparsityPattern&                 block_list,
+  make_cell_patches(SparsityPattern& block_list,
                     const DoFHandler<dim, spacedim>& dof_handler,
-                    const unsigned int               level,
-                    const std::vector<bool>&         selected_dofs,
-                    const types::global_dof_index    offset)
+                    const unsigned int level,
+                    const std::vector<bool>& selected_dofs,
+                    const types::global_dof_index offset)
   {
     typename DoFHandler<dim, spacedim>::level_cell_iterator cell;
     typename DoFHandler<dim, spacedim>::level_cell_iterator endc
@@ -2379,10 +2379,10 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  make_single_patch(SparsityPattern&      block_list,
+  make_single_patch(SparsityPattern& block_list,
                     const DoFHandlerType& dof_handler,
-                    const unsigned int    level,
-                    const bool            interior_only)
+                    const unsigned int level,
+                    const bool interior_only)
   {
     const FiniteElement<DoFHandlerType::dimension>& fe = dof_handler.get_fe();
     block_list.reinit(1, dof_handler.n_dofs(level), dof_handler.n_dofs(level));
@@ -2390,7 +2390,7 @@ namespace DoFTools
     typename DoFHandlerType::level_cell_iterator endc = dof_handler.end(level);
 
     std::vector<types::global_dof_index> indices;
-    std::vector<bool>                    exclude;
+    std::vector<bool> exclude;
 
     for(cell = dof_handler.begin(level); cell != endc; ++cell)
       {
@@ -2425,11 +2425,11 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  make_child_patches(SparsityPattern&      block_list,
+  make_child_patches(SparsityPattern& block_list,
                      const DoFHandlerType& dof_handler,
-                     const unsigned int    level,
-                     const bool            interior_dofs_only,
-                     const bool            boundary_dofs)
+                     const unsigned int level,
+                     const bool interior_dofs_only,
+                     const bool boundary_dofs)
   {
     Assert(level > 0 && level < dof_handler.get_triangulation().n_levels(),
            ExcIndexRange(level, 1, dof_handler.get_triangulation().n_levels()));
@@ -2440,7 +2440,7 @@ namespace DoFTools
       = dof_handler.end(level - 1);
 
     std::vector<types::global_dof_index> indices;
-    std::vector<bool>                    exclude;
+    std::vector<bool> exclude;
 
     for(unsigned int block = 0; pcell != endc; ++pcell)
       {
@@ -2497,14 +2497,14 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   std::vector<unsigned int>
-  make_vertex_patches(SparsityPattern&      block_list,
+  make_vertex_patches(SparsityPattern& block_list,
                       const DoFHandlerType& dof_handler,
-                      const unsigned int    level,
-                      const bool            interior_only,
-                      const bool            boundary_patches,
-                      const bool            level_boundary_patches,
-                      const bool            single_cell_patches,
-                      const bool            invert_vertex_mapping)
+                      const unsigned int level,
+                      const bool interior_only,
+                      const bool boundary_patches,
+                      const bool level_boundary_patches,
+                      const bool single_cell_patches,
+                      const bool invert_vertex_mapping)
   {
     const unsigned int n_blocks     = dof_handler.get_fe().n_blocks();
     BlockMask exclude_boundary_dofs = BlockMask(n_blocks, interior_only);
@@ -2520,14 +2520,14 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   std::vector<unsigned int>
-  make_vertex_patches(SparsityPattern&      block_list,
+  make_vertex_patches(SparsityPattern& block_list,
                       const DoFHandlerType& dof_handler,
-                      const unsigned int    level,
-                      const BlockMask&      exclude_boundary_dofs,
-                      const bool            boundary_patches,
-                      const bool            level_boundary_patches,
-                      const bool            single_cell_patches,
-                      const bool            invert_vertex_mapping)
+                      const unsigned int level,
+                      const BlockMask& exclude_boundary_dofs,
+                      const bool boundary_patches,
+                      const bool level_boundary_patches,
+                      const bool single_cell_patches,
+                      const bool invert_vertex_mapping)
   {
     typename DoFHandlerType::level_cell_iterator cell;
     typename DoFHandlerType::level_cell_iterator endc = dof_handler.end(level);
@@ -2599,7 +2599,7 @@ namespace DoFTools
       vertex_dof_count.size(), dof_handler.n_dofs(level), vertex_dof_count);
 
     std::vector<types::global_dof_index> indices;
-    std::vector<bool>                    exclude;
+    std::vector<bool> exclude;
 
     for(cell = dof_handler.begin(level); cell != endc; ++cell)
       {
@@ -2676,7 +2676,7 @@ namespace DoFTools
   count_dofs_on_patch(
     const std::vector<typename DoFHandlerType::active_cell_iterator>& patch)
   {
-    std::set<types::global_dof_index>    dofs_on_patch;
+    std::set<types::global_dof_index> dofs_on_patch;
     std::vector<types::global_dof_index> local_dof_indices;
 
     // loop over the cells in the patch and get the DoFs on each.
@@ -2703,7 +2703,7 @@ namespace DoFTools
   get_dofs_on_patch(
     const std::vector<typename DoFHandlerType::active_cell_iterator>& patch)
   {
-    std::set<types::global_dof_index>    dofs_on_patch;
+    std::set<types::global_dof_index> dofs_on_patch;
     std::vector<types::global_dof_index> local_dof_indices;
 
     // loop over the cells in the patch and get the DoFs on each.

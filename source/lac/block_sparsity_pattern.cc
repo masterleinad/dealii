@@ -299,8 +299,8 @@ BlockSparsityPattern::BlockSparsityPattern(const size_type n_rows,
 
 void
 BlockSparsityPattern::reinit(
-  const BlockIndices&                           rows,
-  const BlockIndices&                           cols,
+  const BlockIndices& rows,
+  const BlockIndices& cols,
   const std::vector<std::vector<unsigned int>>& row_lengths)
 {
   AssertDimension(row_lengths.size(), cols.size());
@@ -480,7 +480,7 @@ namespace TrilinosWrappers
 
   BlockSparsityPattern::BlockSparsityPattern(
     const std::vector<IndexSet>& parallel_partitioning,
-    const MPI_Comm&              communicator)
+    const MPI_Comm& communicator)
     : BlockSparsityPatternBase<SparsityPattern>(parallel_partitioning.size(),
                                                 parallel_partitioning.size())
   {
@@ -495,7 +495,7 @@ namespace TrilinosWrappers
     const std::vector<IndexSet>& row_parallel_partitioning,
     const std::vector<IndexSet>& col_parallel_partitioning,
     const std::vector<IndexSet>& writable_rows,
-    const MPI_Comm&              communicator)
+    const MPI_Comm& communicator)
     : BlockSparsityPatternBase<SparsityPattern>(
         row_parallel_partitioning.size(),
         col_parallel_partitioning.size())
@@ -537,7 +537,7 @@ namespace TrilinosWrappers
   void
   BlockSparsityPattern::reinit(
     const std::vector<IndexSet>& parallel_partitioning,
-    const MPI_Comm&              communicator)
+    const MPI_Comm& communicator)
   {
     dealii::BlockSparsityPatternBase<SparsityPattern>::reinit(
       parallel_partitioning.size(), parallel_partitioning.size());
@@ -552,7 +552,7 @@ namespace TrilinosWrappers
   BlockSparsityPattern::reinit(
     const std::vector<IndexSet>& row_parallel_partitioning,
     const std::vector<IndexSet>& col_parallel_partitioning,
-    const MPI_Comm&              communicator)
+    const MPI_Comm& communicator)
   {
     dealii::BlockSparsityPatternBase<SparsityPattern>::reinit(
       row_parallel_partitioning.size(), col_parallel_partitioning.size());
@@ -569,7 +569,7 @@ namespace TrilinosWrappers
     const std::vector<IndexSet>& row_parallel_partitioning,
     const std::vector<IndexSet>& col_parallel_partitioning,
     const std::vector<IndexSet>& writable_rows,
-    const MPI_Comm&              communicator)
+    const MPI_Comm& communicator)
   {
     AssertDimension(writable_rows.size(), row_parallel_partitioning.size());
     dealii::BlockSparsityPatternBase<SparsityPattern>::reinit(

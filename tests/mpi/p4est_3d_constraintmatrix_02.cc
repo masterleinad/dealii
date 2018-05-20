@@ -112,7 +112,7 @@ test()
       for(unsigned int i = 1; i < numproc; ++i)
         {
           MPI_Status status;
-          int        msglen;
+          int msglen;
           MPI_Probe(i, 1, MPI_COMM_WORLD, &status);
           MPI_Get_count(&status, MPI_CHAR, &msglen);
           std::vector<char> buf(msglen);

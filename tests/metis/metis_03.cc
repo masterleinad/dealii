@@ -54,7 +54,7 @@ test()
 
   // generate a field where the value equals
   // the subdomain number, and output it
-  FE_DGQ<dim>     fe(0);
+  FE_DGQ<dim> fe(0);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

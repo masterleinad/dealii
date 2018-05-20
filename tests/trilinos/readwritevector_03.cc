@@ -26,7 +26,7 @@
 void
 test()
 {
-  IndexSet     is(8);
+  IndexSet is(8);
   unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(rank == 0)
     is.add_range(0, 4);

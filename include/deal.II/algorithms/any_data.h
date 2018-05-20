@@ -337,7 +337,7 @@ inline type
 AnyData::entry(const std::string& n)
 {
   const unsigned int i = find(n);
-  type*              p = boost::any_cast<type>(&data[i]);
+  type* p              = boost::any_cast<type>(&data[i]);
   Assert(p != 0, ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
@@ -347,7 +347,7 @@ inline const type
 AnyData::entry(const std::string& n) const
 {
   const unsigned int i = find(n);
-  const type*        p = boost::any_cast<type>(&data[i]);
+  const type* p        = boost::any_cast<type>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
@@ -358,7 +358,7 @@ inline const type
 AnyData::read(const std::string& n) const
 {
   const unsigned int i = find(n);
-  const type*        p = boost::any_cast<type>(&data[i]);
+  const type* p        = boost::any_cast<type>(&data[i]);
   Assert(p != 0, ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
 }
@@ -403,7 +403,7 @@ AnyData::try_read(const std::string& n) const
 
   // Compute index and return casted pointer
   unsigned int i = it - names.begin();
-  const type*  p = boost::any_cast<type>(&data[i]);
+  const type* p  = boost::any_cast<type>(&data[i]);
   return p;
 }
 

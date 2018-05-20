@@ -103,7 +103,7 @@ check()
 
   dof.distribute_dofs(element);
 
-  MySquareFunction<dim>           coefficient;
+  MySquareFunction<dim> coefficient;
   typename FunctionMap<dim>::type function_map;
   function_map[0] = &coefficient;
 

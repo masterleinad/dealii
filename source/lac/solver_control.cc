@@ -26,9 +26,9 @@ DEAL_II_NAMESPACE_OPEN
 /*----------------------- SolverControl ---------------------------------*/
 
 SolverControl::SolverControl(const unsigned int maxiter,
-                             const double       tolerance,
-                             const bool         m_log_history,
-                             const bool         m_log_result)
+                             const double tolerance,
+                             const bool m_log_history,
+                             const bool m_log_result)
   : maxsteps(maxiter),
     tol(tolerance),
     lcheck(failure),
@@ -204,10 +204,10 @@ SolverControl::parse_parameters(ParameterHandler& param)
 /*----------------------- ReductionControl ---------------------------------*/
 
 ReductionControl::ReductionControl(const unsigned int n,
-                                   const double       tol,
-                                   const double       red,
-                                   const bool         m_log_history,
-                                   const bool         m_log_result)
+                                   const double tol,
+                                   const double red,
+                                   const bool m_log_history,
+                                   const bool m_log_result)
   : SolverControl(n, tol, m_log_history, m_log_result),
     reduce(red),
     reduced_tol(numbers::signaling_nan<double>())
@@ -280,9 +280,9 @@ ReductionControl::parse_parameters(ParameterHandler& param)
 /*---------------------- IterationNumberControl -----------------------------*/
 
 IterationNumberControl::IterationNumberControl(const unsigned int n,
-                                               const double       tolerance,
-                                               const bool         m_log_history,
-                                               const bool         m_log_result)
+                                               const double tolerance,
+                                               const bool m_log_history,
+                                               const bool m_log_result)
   : SolverControl(n, tolerance, m_log_history, m_log_result)
 {}
 
@@ -310,10 +310,10 @@ IterationNumberControl::check(const unsigned int step, const double check_value)
 
 ConsecutiveControl::ConsecutiveControl(
   const unsigned int n,
-  const double       tolerance,
+  const double tolerance,
   const unsigned int n_consecutive_iterations,
-  const bool         m_log_history,
-  const bool         m_log_result)
+  const bool m_log_history,
+  const bool m_log_result)
   : SolverControl(n, tolerance, m_log_history, m_log_result),
     n_consecutive_iterations(n_consecutive_iterations),
     n_converged_iterations(0)

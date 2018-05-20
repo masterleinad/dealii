@@ -29,7 +29,7 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  FullMatrix<double>  A(4, 3, rect);
+  FullMatrix<double> A(4, 3, rect);
   Householder<double> H(A);
 
   Vector<double> u(4);

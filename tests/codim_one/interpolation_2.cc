@@ -43,13 +43,13 @@ void
 test(std::string filename)
 {
   Triangulation<dim, spacedim> triangulation;
-  GridIn<dim, spacedim>        gi;
+  GridIn<dim, spacedim> gi;
 
   gi.attach_triangulation(triangulation);
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
 
-  FE_Q<dim, spacedim>       fe(1);
+  FE_Q<dim, spacedim> fe(1);
   DoFHandler<dim, spacedim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);

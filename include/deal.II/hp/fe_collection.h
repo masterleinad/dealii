@@ -539,7 +539,7 @@ namespace hp
 
   template <int dim, int spacedim>
   inline const FiniteElement<dim, spacedim>& FECollection<dim, spacedim>::
-                                             operator[](const unsigned int index) const
+  operator[](const unsigned int index) const
   {
     Assert(index < finite_elements.size(),
            ExcIndexRange(index, 0, finite_elements.size()));

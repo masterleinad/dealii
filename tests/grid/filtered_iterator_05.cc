@@ -29,7 +29,7 @@ void
 test()
 {
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
   GridGenerator::hyper_cube(triangulation);
 
   FilteredIterator<typename DoFHandler<dim>::level_cell_iterator> begin(

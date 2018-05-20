@@ -25,7 +25,7 @@
 #include "patches.h"
 
 std::vector<DataOutBase::Patch<2, 2>> patches;
-std::vector<std::string>              names;
+std::vector<std::string> names;
 
 class DataOutX : public DataOutInterface<2, 2>
 {

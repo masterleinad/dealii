@@ -42,7 +42,7 @@ main()
 {
   initlog();
 
-  const Point<2>             center(0, 0);
+  const Point<2> center(0, 0);
   const SphericalManifold<2> boundary_description(center);
 
   for(unsigned int degree = 1; degree <= 4; ++degree)
@@ -53,8 +53,8 @@ main()
       GridGenerator::hyper_ball(triangulation, Point<2>(0.0, 0.0), 1.0);
 
       const MappingQ<2> mapping(degree, true);
-      const FE_Q<2>     dummy_fe(1);
-      DoFHandler<2>     dof_handler(triangulation);
+      const FE_Q<2> dummy_fe(1);
+      DoFHandler<2> dof_handler(triangulation);
 
       for(Triangulation<2>::active_cell_iterator cell
           = triangulation.begin_active();

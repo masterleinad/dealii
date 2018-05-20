@@ -156,7 +156,7 @@ namespace hp
 
   template <int dim, int spacedim>
   inline const Mapping<dim, spacedim>& MappingCollection<dim, spacedim>::
-                                       operator[](const unsigned int index) const
+  operator[](const unsigned int index) const
   {
     Assert(index < mappings.size(), ExcIndexRange(index, 0, mappings.size()));
     return *mappings[index];

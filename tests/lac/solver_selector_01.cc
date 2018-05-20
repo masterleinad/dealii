@@ -32,9 +32,9 @@ check(const MatrixType& A, const VectorType& f)
   names.push_back("gmres");
   names.push_back("fgmres");
 
-  ReductionControl                       cont1(100, 0., 1.e-4);
-  SolverControl                          cont2(100, 1.e-7);
-  SolverSelector<VectorType>             solver;
+  ReductionControl cont1(100, 0., 1.e-4);
+  SolverControl cont2(100, 1.e-7);
+  SolverSelector<VectorType> solver;
   PreconditionSSOR<SparseMatrix<double>> pre;
   pre.initialize(A);
 
@@ -74,7 +74,7 @@ main()
   deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
   // Make matrix
-  FDMatrix        testproblem(size, size);
+  FDMatrix testproblem(size, size);
   SparsityPattern structure(dim, dim, 5);
   testproblem.five_point_structure(structure);
   structure.compress();

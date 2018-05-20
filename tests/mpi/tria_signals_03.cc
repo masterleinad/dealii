@@ -75,7 +75,7 @@ private:
     return;
   }
 
-  int                                 n_active_cells;
+  int n_active_cells;
   const Triangulation<dim, spacedim>& tria;
 };
 

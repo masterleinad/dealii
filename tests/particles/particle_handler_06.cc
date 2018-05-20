@@ -38,7 +38,7 @@ test()
     Particles::ParticleHandler<dim, spacedim> particle_handler(tr, mapping);
 
     Point<spacedim> position;
-    Point<dim>      reference_position;
+    Point<dim> reference_position;
 
     if(Utilities::MPI::this_mpi_process(tr.get_communicator()) == 0)
       for(unsigned int i = 0; i < dim; ++i)

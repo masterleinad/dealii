@@ -29,7 +29,7 @@ void
 test()
 {
   Triangulation<dim> tria;
-  Point<dim>         points[dim];
+  Point<dim> points[dim];
   points[0][0] = 0.25;
   points[0][1] = 0.123;
   points[1][0] = 0.09983712334;
@@ -66,7 +66,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;

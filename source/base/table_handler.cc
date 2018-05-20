@@ -379,10 +379,10 @@ TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
 
   // cache the columns and compute the widths of each column for alignment
   std::vector<const Column*> cols;
-  std::vector<unsigned int>  column_widths(n_cols, 0);
+  std::vector<unsigned int> column_widths(n_cols, 0);
   for(unsigned int j = 0; j < n_cols; ++j)
     {
-      std::string                                         key = sel_columns[j];
+      std::string key = sel_columns[j];
       const std::map<std::string, Column>::const_iterator col_iter
         = columns.find(key);
       Assert(col_iter != columns.end(), ExcInternalError());
@@ -471,8 +471,8 @@ TableHandler::write_text(std::ostream& out, const TextOutputFormat format) const
           // over all the columns that belong to it.
           for(unsigned int j = 0; j < column_order.size(); ++j)
             {
-              const std::string& key   = column_order[j];
-              unsigned int       width = 0;
+              const std::string& key = column_order[j];
+              unsigned int width     = 0;
               {
                 // compute the width of this column or supercolumn
                 const std::map<std::string,
@@ -729,8 +729,8 @@ TableHandler::n_rows() const
     return 0;
 
   std::map<std::string, Column>::const_iterator col_iter = columns.begin();
-  unsigned int n          = col_iter->second.entries.size();
-  std::string  first_name = col_iter->first;
+  unsigned int n         = col_iter->second.entries.size();
+  std::string first_name = col_iter->first;
 
   for(++col_iter; col_iter != columns.end(); ++col_iter)
     Assert(col_iter->second.entries.size() == n,

@@ -32,7 +32,7 @@ test()
 
   const unsigned int set = 50;
   AssertIndexRange(numproc, set - 2);
-  const unsigned int      local_size  = set - myid;
+  const unsigned int local_size       = set - myid;
   types::global_dof_index global_size = 0;
   types::global_dof_index my_start    = 0;
   for(unsigned int i = 0; i < numproc; ++i)
@@ -90,7 +90,7 @@ test()
   // set up other arrays
   std::vector<unsigned int> locally_owned_array(local_size);
   std::vector<unsigned int> temp_array(v.n_import_indices());
-  std::vector<MPI_Request>  requests;
+  std::vector<MPI_Request> requests;
 
   // send the full array
   {
@@ -190,6 +190,6 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   test();
 }

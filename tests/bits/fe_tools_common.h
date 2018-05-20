@@ -107,7 +107,7 @@ make_dof_handler(const Triangulation<dim>& tria, const FiniteElement<dim>& fe)
 
 template <int dim>
 hp::DoFHandler<dim>*
-make_hp_dof_handler(const Triangulation<dim>&    tria,
+make_hp_dof_handler(const Triangulation<dim>& tria,
                     const hp::FECollection<dim>& fe)
 {
   hp::DoFHandler<dim>* dof_handler = new hp::DoFHandler<dim>(tria);
@@ -119,7 +119,7 @@ template <int dim>
 void
 check(const FiniteElement<dim>& fe1,
       const FiniteElement<dim>& fe2,
-      const std::string&        name)
+      const std::string& name)
 {
   deallog << "Checking " << name << " in " << dim << "d:" << std::endl;
 

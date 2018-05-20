@@ -28,21 +28,21 @@ char fname[50];
 ////////////////////////////////////////////////////////////////////////////
 template <int dim>
 inline void
-plot_shape_functions(Mapping<dim>&       mapping,
+plot_shape_functions(Mapping<dim>& mapping,
                      FiniteElement<dim>& finel,
-                     const char*         name)
+                     const char* name)
 {
   Triangulation<dim> tr;
-  DoFHandler<dim>    dof(tr);
+  DoFHandler<dim> dof(tr);
   GridGenerator::hyper_cube(tr, 0., 1.);
   dof.distribute_dofs(finel);
   typename DoFHandler<dim>::cell_iterator c = dof.begin();
 
   const unsigned int div = 4;
 
-  QTrapez<1>     q_trapez;
+  QTrapez<1> q_trapez;
   QIterated<dim> q(q_trapez, div);
-  FEValues<dim>  fe(
+  FEValues<dim> fe(
     mapping,
     finel,
     q,
@@ -108,15 +108,15 @@ plot_shape_functions(Mapping<dim>&       mapping,
 
 template <int dim>
 inline void
-plot_face_shape_functions(Mapping<dim>&       mapping,
+plot_face_shape_functions(Mapping<dim>& mapping,
                           FiniteElement<dim>& finel,
-                          const char*         name,
-                          UpdateFlags         uflags
+                          const char* name,
+                          UpdateFlags uflags
                           = UpdateFlags(update_values | update_gradients
                                         | update_hessians))
 {
   Triangulation<dim> tr;
-  DoFHandler<dim>    dof(tr);
+  DoFHandler<dim> dof(tr);
   GridGenerator::hyper_cube(tr, 0., 1.);
   tr.refine_global(1);
   typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
@@ -129,9 +129,9 @@ plot_face_shape_functions(Mapping<dim>&       mapping,
 
   const unsigned int div = 4;
 
-  QTrapez<1>         q_trapez;
+  QTrapez<1> q_trapez;
   QIterated<dim - 1> q(q_trapez, div);
-  FEFaceValues<dim>  fe(
+  FEFaceValues<dim> fe(
     mapping, finel, q, UpdateFlags(uflags | update_quadrature_points));
   FESubfaceValues<dim> sub(
     mapping, finel, q, UpdateFlags(uflags | update_quadrature_points));
@@ -323,8 +323,8 @@ void plot_face_shape_functions(Mapping<1>&,
 template <int dim>
 void
 check_values_and_derivatives(const FiniteElement<dim>& fe,
-                             const FEValuesBase<dim>&  fe_values,
-                             const Quadrature<dim>&    q)
+                             const FEValuesBase<dim>& fe_values,
+                             const Quadrature<dim>& q)
 {
   // check values
   for(unsigned int x = 0; x < q.size(); ++x)
@@ -413,7 +413,7 @@ check_values_and_derivatives(const FiniteElement<dim>& fe,
 
 template <int dim>
 void
-test_compute_functions(const Mapping<dim>&       mapping,
+test_compute_functions(const Mapping<dim>& mapping,
                        const FiniteElement<dim>& fe,
                        const char*)
 {
@@ -426,7 +426,7 @@ test_compute_functions(const Mapping<dim>&       mapping,
   // we get from the finite element
   // itself on the unit cell:
   Triangulation<dim> tr;
-  DoFHandler<dim>    dof(tr);
+  DoFHandler<dim> dof(tr);
   GridGenerator::hyper_cube(tr, 0., 1.);
   dof.distribute_dofs(fe);
 
@@ -438,7 +438,7 @@ test_compute_functions(const Mapping<dim>&       mapping,
   if(true)
     {
       const QGauss<dim> q(6);
-      FEValues<dim>     fe_values(mapping, fe, q, update_all);
+      FEValues<dim> fe_values(mapping, fe, q, update_all);
       fe_values.reinit(dof.begin_active());
       check_values_and_derivatives(fe, fe_values, q);
     };

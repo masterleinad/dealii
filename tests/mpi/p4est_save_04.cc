@@ -37,9 +37,9 @@ template <int dim>
 void
 test()
 {
-  unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  MPI_Comm     com_all = MPI_COMM_WORLD;
-  MPI_Comm     com_small;
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  MPI_Comm com_all  = MPI_COMM_WORLD;
+  MPI_Comm com_small;
 
   // split the communicator in proc 0,1,2 and 3,4
   MPI_Comm_split(com_all, (myid < 3) ? 0 : 1, myid, &com_small);
@@ -65,7 +65,7 @@ test()
 
       tr.execute_coarsening_and_refinement();
 
-      FE_Q<dim>       fe(1);
+      FE_Q<dim> fe(1);
       DoFHandler<dim> dh(tr);
       dh.distribute_dofs(fe);
 
@@ -110,7 +110,7 @@ test()
 
     GridGenerator::hyper_cube(tr);
     tr.load("file");
-    FE_Q<dim>       fe(1);
+    FE_Q<dim> fe(1);
     DoFHandler<dim> dh(tr);
     dh.distribute_dofs(fe);
 
@@ -147,7 +147,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
 }

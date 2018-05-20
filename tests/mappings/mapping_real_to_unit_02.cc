@@ -42,16 +42,16 @@ test2()
 
   Point<dim> p(-0.27999999999999992, -0.62999999999999989);
 
-  FE_Q<dim>       fe(2);
+  FE_Q<dim> fe(2);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  Vector<double>                solution(dof_handler.n_dofs());
+  Vector<double> solution(dof_handler.n_dofs());
   Functions::FEFieldFunction<2> fe_function(dof_handler, solution);
   fe_function.value(p); //this works <<<<<<<<<<<
 
   std::vector<Point<dim>> points(19 * 19);
-  std::vector<double>     m(19 * 19);
+  std::vector<double> m(19 * 19);
 
   if(1) //works if changed to "if (0)"   <<<<<<<<<
     for(unsigned int i = 0; i < 19; i++)

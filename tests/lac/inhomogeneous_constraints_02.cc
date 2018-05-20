@@ -73,14 +73,14 @@ test(bool use_inhomogeneity_for_rhs)
   SparsityPattern sp;
   sp.copy_from(csp);
   SparseMatrix<double> mat(sp);
-  Vector<double>       rhs(5);
+  Vector<double> rhs(5);
 
   std::vector<types::global_dof_index> local_dofs;
   for(unsigned int i = 0; i < 5; ++i)
     local_dofs.push_back(i);
 
   FullMatrix<double> local_mat(5, 5);
-  Vector<double>     local_vec(5);
+  Vector<double> local_vec(5);
   for(unsigned int i = 0; i < 5; ++i)
     local_mat(i, i) = 2.0;
 

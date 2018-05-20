@@ -37,11 +37,11 @@ test(unsigned int ref = 1)
 
   FlatManifold<dim, spacedim> manifold(periodicity);
 
-  Quadrature<spacedim>                      quad;
+  Quadrature<spacedim> quad;
   std::vector<std::vector<Point<spacedim>>> ps(10,
                                                std::vector<Point<spacedim>>(2));
-  Point<spacedim>                           middle;
-  std::vector<double>                       ws(2, 0.5);
+  Point<spacedim> middle;
+  std::vector<double> ws(2, 0.5);
 
   // Case 1: both points are close to left boundary of periodicity
   ps[0][0][0] = 1;

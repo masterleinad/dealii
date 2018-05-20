@@ -34,7 +34,7 @@ template <int dim>
 void
 create_disconnected_mesh(Triangulation<dim>& tria)
 {
-  std::vector<Point<dim>>    vertices(2 * GeometryInfo<dim>::vertices_per_cell);
+  std::vector<Point<dim>> vertices(2 * GeometryInfo<dim>::vertices_per_cell);
   std::vector<CellData<dim>> cells(2);
 
   // cell 1

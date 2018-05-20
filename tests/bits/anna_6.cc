@@ -85,7 +85,7 @@ private:
   // a vector-valued one for the
   // field-variable u and a scalar one for
   // the pressure-variable p
-  FESystem<dim>   fe;
+  FESystem<dim> fe;
   DoFHandler<dim> dof_handler;
 
   unsigned int n_u_dofs;
@@ -154,7 +154,7 @@ void
 ImposeBC<dim>::test_extract_boundary_DoFs()
 {
   std::map<types::global_dof_index, double> boundary_values;
-  std::vector<bool>                         bc_component_select(dim + 1);
+  std::vector<bool> bc_component_select(dim + 1);
 
   // extract boundary DoFs for the Nedelec-component
   // and impose zero boundary condition
@@ -162,7 +162,7 @@ ImposeBC<dim>::test_extract_boundary_DoFs()
   bc_component_select[1] = true;
   bc_component_select[2] = false;
 
-  std::vector<bool>            ned_boundary_dofs(dof_handler.n_dofs());
+  std::vector<bool> ned_boundary_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
   boundary_ids.insert(0);
   DoFTools::extract_boundary_dofs(
@@ -178,7 +178,7 @@ void
 ImposeBC<dim>::test_interpolate_BC()
 {
   std::map<types::global_dof_index, double> boundary_values;
-  std::vector<bool>                         bc_component_select(dim + 1, false);
+  std::vector<bool> bc_component_select(dim + 1, false);
 
   // impose inhomogeneous boundary condition
   // on the scalar variable
@@ -193,7 +193,7 @@ ImposeBC<dim>::test_interpolate_BC()
   // check
   // (the pressure is assumed to be set to 1
   // on the boundary)
-  std::vector<bool>            p_boundary_dofs(dof_handler.n_dofs());
+  std::vector<bool> p_boundary_dofs(dof_handler.n_dofs());
   std::set<types::boundary_id> boundary_ids;
   boundary_ids.insert(0);
   DoFTools::extract_boundary_dofs(

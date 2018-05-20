@@ -44,11 +44,11 @@ test()
   triangulation.refine_global(2);
 
   //define DoFhandler and FEs
-  FE_Q<dim>     u1(2);
-  FE_Q<dim>     p1(1);
+  FE_Q<dim> u1(2);
+  FE_Q<dim> p1(1);
   FESystem<dim> fe_system1(u1, 2, p1, 1);
-  FE_Q<dim>     u2(3);
-  FE_Q<dim>     p2(2);
+  FE_Q<dim> u2(3);
+  FE_Q<dim> p2(2);
   FESystem<dim> fe_system2(u2, 2, p2, 1);
 
   hp::FECollection<dim> fe_collection;

@@ -50,8 +50,8 @@ main()
   triangulation.refine_global(2);
 
   MappingQGeneric<dim> mapping_q1(1);
-  FE_Q<dim>            q1(1);
-  DoFHandler<dim>      dof_handler(triangulation);
+  FE_Q<dim> q1(1);
+  DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(q1);
 
   DynamicSparsityPattern dsp(dof_handler.n_dofs(), dof_handler.n_dofs());
@@ -150,7 +150,7 @@ main()
   // solver interface:
 
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    solver(solver_control);
+  SolverCG<> solver(solver_control);
 
   deallog.depth_file(0);
   solver.solve(op_b, v, u, PreconditionIdentity());
@@ -178,7 +178,7 @@ main()
   deallog << "(inverse_operator(B)*B)u: " << w << std::endl;
 
   SolverControl inner_solver_control(1000, 1e-12);
-  SolverCG<>    inner_solver(solver_control);
+  SolverCG<> inner_solver(solver_control);
 
   deallog.depth_file(0);
   solver.solve(inverse_operator(op_b, inner_solver, PreconditionIdentity()),

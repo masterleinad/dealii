@@ -68,7 +68,7 @@ test()
   GridGenerator::hyper_ball(tria);
   tria.set_manifold(0, boundary);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dh(tria);
   dh.distribute_dofs(fe);
 

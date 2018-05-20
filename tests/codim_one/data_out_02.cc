@@ -41,9 +41,9 @@ main()
   const unsigned int dim = 1;
 
   Triangulation<dim, dim + 1> triangulation;
-  FE_Q<dim, dim + 1>          fe(1);
-  DoFHandler<dim, dim + 1>    dof_handler(triangulation);
-  Vector<double>              soln;
+  FE_Q<dim, dim + 1> fe(1);
+  DoFHandler<dim, dim + 1> dof_handler(triangulation);
+  Vector<double> soln;
 
   GridIn<dim, dim + 1> grid_in;
   grid_in.attach_triangulation(triangulation);

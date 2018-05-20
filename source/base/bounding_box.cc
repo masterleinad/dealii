@@ -107,7 +107,7 @@ BoundingBox<spacedim, Number>::get_neighbor_type(
 
       // Checking the two mergeable cases: first if the boxes are aligned so that they can be merged
       unsigned int not_align_1 = 0, not_align_2 = 0;
-      bool         same_direction = true;
+      bool same_direction = true;
       for(unsigned int d = 0; d < spacedim; ++d)
         {
           if(std::abs(bbox2[0][d] - bbox1[0][d])

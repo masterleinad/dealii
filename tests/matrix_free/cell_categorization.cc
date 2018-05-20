@@ -57,13 +57,13 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_DGQ<dim>     fe(1);
+  FE_DGQ<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
   constraints.close();
 
-  MatrixFree<dim>                          mf_data;
+  MatrixFree<dim> mf_data;
   typename MatrixFree<dim>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim>::AdditionalData::none;
   data.mapping_update_flags_inner_faces

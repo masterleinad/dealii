@@ -40,11 +40,11 @@ main()
   // SparseMatrix:
   {
     const unsigned int rc = 2;
-    SparsityPattern    sparsity_pattern(rc, rc, 0);
+    SparsityPattern sparsity_pattern(rc, rc, 0);
     sparsity_pattern.compress();
 
     SparseMatrix<double> A(sparsity_pattern);
-    Vector<double>       b(rc);
+    Vector<double> b(rc);
     for(unsigned int i = 0; i < rc; ++i)
       {
         A.diag_element(i) = 5.0;
@@ -55,8 +55,8 @@ main()
     const auto lo_A_t = transpose_operator(lo_A);
 
     // build transpose of inverse
-    SolverControl                            solver_control_A_1(100, 1.0e-10);
-    SolverCG<Vector<double>>                 solver_A_1(solver_control_A_1);
+    SolverControl solver_control_A_1(100, 1.0e-10);
+    SolverCG<Vector<double>> solver_A_1(solver_control_A_1);
     PreconditionJacobi<SparseMatrix<double>> preconditioner_A_1;
     preconditioner_A_1.initialize(A);
     const auto lo_A_inv
@@ -64,8 +64,8 @@ main()
     const auto lo_A_inv_t = transpose_operator(lo_A_inv);
 
     // build inverse of transpose
-    SolverControl                            solver_control_A_2(100, 1.0e-10);
-    SolverCG<Vector<double>>                 solver_A_2(solver_control_A_2);
+    SolverControl solver_control_A_2(100, 1.0e-10);
+    SolverCG<Vector<double>> solver_A_2(solver_control_A_2);
     PreconditionJacobi<SparseMatrix<double>> preconditioner_A_2;
     preconditioner_A_2.initialize(A);
     const auto lo_A_t_inv

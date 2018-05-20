@@ -93,7 +93,7 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
 /* The 3D case */
 void generate_grid(Triangulation<3>& triangulation, int orientation)
 {
-  Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
+  Point<3> vertices_1[] = {Point<3>(-1., -1., -3.),
                            Point<3>(+1., -1., -3.),
                            Point<3>(-1., +1., -3.),
                            Point<3>(+1., +1., -3.),
@@ -163,8 +163,8 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
  */
 template <typename FaceIterator>
 void
-print_match(const FaceIterator&   face_1,
-            const FaceIterator&   face_2,
+print_match(const FaceIterator& face_1,
+            const FaceIterator& face_2,
             const std::bitset<3>& orientation)
 {
   static const int dim = FaceIterator::AccessorType::dimension;
@@ -202,7 +202,7 @@ main()
 
       typedef Triangulation<2>::cell_iterator CellIterator;
       typedef std::vector<GridTools::PeriodicFacePair<CellIterator>> FaceVector;
-      FaceVector                                                     test;
+      FaceVector test;
       GridTools::collect_periodic_faces(
         triangulation, 42, 43, 1, test, dealii::Tensor<1, 2>());
 
@@ -225,7 +225,7 @@ main()
 
       typedef Triangulation<3>::cell_iterator CellIterator;
       typedef std::vector<GridTools::PeriodicFacePair<CellIterator>> FaceVector;
-      FaceVector                                                     test;
+      FaceVector test;
       GridTools::collect_periodic_faces(
         triangulation, 42, 43, 2, test, dealii::Tensor<1, 3>());
 

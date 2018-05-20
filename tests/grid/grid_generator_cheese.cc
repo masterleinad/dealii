@@ -25,7 +25,7 @@ void
 dim_2(std::ostream& os)
 {
   const unsigned int d = 2;
-  Triangulation<d>   tr;
+  Triangulation<d> tr;
 
   std::vector<unsigned int> holes(d);
   holes[0] = 3;
@@ -40,7 +40,7 @@ void
 dim_3(std::ostream& os)
 {
   const unsigned int d = 3;
-  Triangulation<d>   tr;
+  Triangulation<d> tr;
 
   std::vector<unsigned int> holes(d);
   holes[0] = 3;

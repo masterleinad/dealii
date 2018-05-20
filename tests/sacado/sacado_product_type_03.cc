@@ -33,7 +33,7 @@ check()
 int
 main()
 {
-  typedef Sacado::Fad::DFad<double>  Sdouble;
+  typedef Sacado::Fad::DFad<double> Sdouble;
   typedef Sacado::Fad::DFad<Sdouble> SSdouble;
   initlog();
 

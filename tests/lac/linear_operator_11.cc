@@ -55,14 +55,14 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   ConstraintMatrix constraints;
 
   TrilinosWrappers::SparseMatrix system_matrix;
-  TrilinosWrappers::MPI::Vector  solution;
-  TrilinosWrappers::MPI::Vector  system_rhs;
+  TrilinosWrappers::MPI::Vector solution;
+  TrilinosWrappers::MPI::Vector system_rhs;
 };
 
 template <int dim>
@@ -156,7 +156,7 @@ Step4<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -201,19 +201,19 @@ Step4<dim>::solve()
     solution = 0;
     TrilinosWrappers::SolverDirect::AdditionalData data;
     data.solver_type = "Amesos_Klu";
-    SolverControl                  solver_control(1000, 1e-10);
+    SolverControl solver_control(1000, 1e-10);
     TrilinosWrappers::SolverDirect solver(solver_control, data);
     solver.solve(system_matrix, solution, system_rhs);
     deallog.pop();
   }
 
   typedef TrilinosWrappers::MPI::Vector VectorType;
-  VectorType                            output(solution);
+  VectorType output(solution);
   {
     deallog.push("Trilinos_CG_SSOR");
     output = 0;
-    SolverControl                      solver_control(1000, 1e-12);
-    TrilinosWrappers::SolverCG         solver(solver_control);
+    SolverControl solver_control(1000, 1e-12);
+    TrilinosWrappers::SolverCG solver(solver_control);
     TrilinosWrappers::PreconditionSSOR preconditioner;
     preconditioner.initialize(system_matrix);
     solver.solve(system_matrix, output, system_rhs, preconditioner);
@@ -226,8 +226,8 @@ Step4<dim>::solve()
   {
     deallog.push("LinearOperator_Trilinos_CG_SSOR");
     output = 0;
-    SolverControl                      solver_control(1000, 1e-12);
-    TrilinosWrappers::SolverCG         solver(solver_control);
+    SolverControl solver_control(1000, 1e-12);
+    TrilinosWrappers::SolverCG solver(solver_control);
     TrilinosWrappers::PreconditionSSOR preconditioner;
     preconditioner.initialize(system_matrix);
     const auto lo_A     = linear_operator<VectorType>(system_matrix);

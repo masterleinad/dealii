@@ -45,12 +45,12 @@ main(int argc, char** argv)
     SolverControl control(200, 1.e-3);
 
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix               testproblem(size, size);
+    FDMatrix testproblem(size, size);
     DynamicSparsityPattern csp(dim, dim);
     testproblem.five_point_structure(csp);
     TrilinosWrappers::SparseMatrix A;
@@ -67,8 +67,8 @@ main(int argc, char** argv)
     u.compress(VectorOperation::insert);
 
     GrowingVectorMemory<TrilinosWrappers::MPI::Vector> mem;
-    SolverQMRS<TrilinosWrappers::MPI::Vector>          solver(control, mem);
-    PreconditionIdentity                               preconditioner;
+    SolverQMRS<TrilinosWrappers::MPI::Vector> solver(control, mem);
+    PreconditionIdentity preconditioner;
     deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
     check_solver_within_range(

@@ -28,9 +28,9 @@ std::ofstream logfile("output");
 void
 test()
 {
-  Triangulation<3>          tria;
-  Point<3>                  a(0., 0., 0.);
-  Point<3>                  b(1., 1., 1.);
+  Triangulation<3> tria;
+  Point<3> a(0., 0., 0.);
+  Point<3> b(1., 1., 1.);
   std::vector<unsigned int> repetitions(3);
   repetitions[0] = 2;
   repetitions[1] = 2;

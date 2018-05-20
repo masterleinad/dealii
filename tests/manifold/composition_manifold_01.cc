@@ -28,7 +28,7 @@ main()
 
   const int dim = 2, spacedim = 2;
 
-  FunctionManifold<dim, spacedim, 1>        F("x;x^2", "x");
+  FunctionManifold<dim, spacedim, 1> F("x;x^2", "x");
   FunctionManifold<dim, spacedim, spacedim> G("x;y+1", "x;y-1");
 
   CompositionManifold<dim, spacedim, 1, dim, dim, spacedim> manifold(F, G);

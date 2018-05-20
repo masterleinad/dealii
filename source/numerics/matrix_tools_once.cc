@@ -58,10 +58,10 @@ namespace MatrixTools
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, PetscScalar>& boundary_values,
-    PETScWrappers::MatrixBase&                            matrix,
-    PETScWrappers::VectorBase&                            solution,
-    PETScWrappers::VectorBase&                            right_hand_side,
-    const bool                                            eliminate_columns)
+    PETScWrappers::MatrixBase& matrix,
+    PETScWrappers::VectorBase& solution,
+    PETScWrappers::VectorBase& right_hand_side,
+    const bool eliminate_columns)
   {
     (void) eliminate_columns;
     Assert(eliminate_columns == false, ExcNotImplemented());
@@ -121,7 +121,7 @@ namespace MatrixTools
         matrix.clear_rows(constrained_rows, average_nonzero_diagonal_entry);
 
         std::vector<types::global_dof_index> indices;
-        std::vector<PetscScalar>             solution_values;
+        std::vector<PetscScalar> solution_values;
         for(std::map<types::global_dof_index, PetscScalar>::const_iterator dof
             = boundary_values.begin();
             dof != boundary_values.end();
@@ -157,10 +157,10 @@ namespace MatrixTools
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, PetscScalar>& boundary_values,
-    PETScWrappers::MPI::BlockSparseMatrix&                matrix,
-    PETScWrappers::MPI::BlockVector&                      solution,
-    PETScWrappers::MPI::BlockVector&                      right_hand_side,
-    const bool                                            eliminate_columns)
+    PETScWrappers::MPI::BlockSparseMatrix& matrix,
+    PETScWrappers::MPI::BlockVector& solution,
+    PETScWrappers::MPI::BlockVector& right_hand_side,
+    const bool eliminate_columns)
   {
     Assert(matrix.n() == right_hand_side.size(),
            ExcDimensionMismatch(matrix.n(), right_hand_side.size()));
@@ -177,7 +177,7 @@ namespace MatrixTools
     std::vector<std::map<dealii::types::global_dof_index, PetscScalar>>
       block_boundary_values(n_blocks);
     {
-      int                             block  = 0;
+      int block                              = 0;
       dealii::types::global_dof_index offset = 0;
       for(std::map<types::global_dof_index, PetscScalar>::const_iterator dof
           = boundary_values.begin();
@@ -242,10 +242,10 @@ namespace MatrixTools
       void
       apply_boundary_values(const std::map<types::global_dof_index,
                                            TrilinosScalar>& boundary_values,
-                            TrilinosMatrix&                 matrix,
-                            TrilinosVector&                 solution,
-                            TrilinosVector&                 right_hand_side,
-                            const bool                      eliminate_columns)
+                            TrilinosMatrix& matrix,
+                            TrilinosVector& solution,
+                            TrilinosVector& right_hand_side,
+                            const bool eliminate_columns)
       {
         Assert(eliminate_columns == false, ExcNotImplemented());
         (void) eliminate_columns;
@@ -303,7 +303,7 @@ namespace MatrixTools
             matrix.clear_rows(constrained_rows, average_nonzero_diagonal_entry);
 
             std::vector<types::global_dof_index> indices;
-            std::vector<TrilinosScalar>          solution_values;
+            std::vector<TrilinosScalar> solution_values;
             for(std::map<types::global_dof_index,
                          TrilinosScalar>::const_iterator dof
                 = boundary_values.begin();
@@ -342,11 +342,11 @@ namespace MatrixTools
       void
       apply_block_boundary_values(
         const std::map<types::global_dof_index, TrilinosScalar>&
-                             boundary_values,
-        TrilinosMatrix&      matrix,
+          boundary_values,
+        TrilinosMatrix& matrix,
         TrilinosBlockVector& solution,
         TrilinosBlockVector& right_hand_side,
-        const bool           eliminate_columns)
+        const bool eliminate_columns)
       {
         Assert(eliminate_columns == false, ExcNotImplemented());
 
@@ -366,7 +366,7 @@ namespace MatrixTools
         std::vector<std::map<types::global_dof_index, TrilinosScalar>>
           block_boundary_values(n_blocks);
         {
-          int                     block  = 0;
+          int block                      = 0;
           types::global_dof_index offset = 0;
           for(std::map<types::global_dof_index, TrilinosScalar>::const_iterator
                 dof
@@ -426,10 +426,10 @@ namespace MatrixTools
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, TrilinosScalar>& boundary_values,
-    TrilinosWrappers::SparseMatrix&                          matrix,
-    TrilinosWrappers::MPI::Vector&                           solution,
-    TrilinosWrappers::MPI::Vector&                           right_hand_side,
-    const bool                                               eliminate_columns)
+    TrilinosWrappers::SparseMatrix& matrix,
+    TrilinosWrappers::MPI::Vector& solution,
+    TrilinosWrappers::MPI::Vector& right_hand_side,
+    const bool eliminate_columns)
   {
     // simply redirect to the generic function
     // used for both trilinos matrix types
@@ -440,10 +440,10 @@ namespace MatrixTools
   void
   apply_boundary_values(
     const std::map<types::global_dof_index, TrilinosScalar>& boundary_values,
-    TrilinosWrappers::BlockSparseMatrix&                     matrix,
-    TrilinosWrappers::MPI::BlockVector&                      solution,
-    TrilinosWrappers::MPI::BlockVector&                      right_hand_side,
-    const bool                                               eliminate_columns)
+    TrilinosWrappers::BlockSparseMatrix& matrix,
+    TrilinosWrappers::MPI::BlockVector& solution,
+    TrilinosWrappers::MPI::BlockVector& right_hand_side,
+    const bool eliminate_columns)
   {
     internal::TrilinosWrappers::apply_block_boundary_values(
       boundary_values, matrix, solution, right_hand_side, eliminate_columns);

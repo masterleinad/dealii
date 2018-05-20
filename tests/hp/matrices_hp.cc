@@ -58,10 +58,10 @@ public:
 
 template <int dim>
 void
-check_boundary(const hp::DoFHandler<dim>&        dof,
+check_boundary(const hp::DoFHandler<dim>& dof,
                const hp::MappingCollection<dim>& mapping)
 {
-  MySquareFunction<dim>           coefficient;
+  MySquareFunction<dim> coefficient;
   typename FunctionMap<dim>::type function_map;
   function_map[0] = &coefficient;
 
@@ -157,7 +157,7 @@ check()
   // create sparsity pattern. note
   // that different components should
   // not couple, so use pattern
-  SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
+  SparsityPattern sparsity(dof.n_dofs(), dof.n_dofs());
   Table<2, DoFTools::Coupling> mask(2, 2);
   mask(0, 0) = mask(1, 1) = DoFTools::always;
   mask(0, 1) = mask(1, 0) = DoFTools::none;

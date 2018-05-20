@@ -32,7 +32,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(3);
 
-  FE_Q<2>       fe(1);
+  FE_Q<2> fe(1);
   DoFHandler<2> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
@@ -40,7 +40,7 @@ test()
   coupling.fill(DoFTools::none);
 
   const IndexSet system_partitioning = dof_handler.locally_owned_dofs();
-  IndexSet       system_relevant_set;
+  IndexSet system_relevant_set;
   DoFTools::extract_locally_relevant_dofs(dof_handler, system_relevant_set);
 
   // create an empty sparsity pattern
@@ -70,7 +70,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   try
     {

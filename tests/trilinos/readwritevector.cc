@@ -26,7 +26,7 @@
 void
 test()
 {
-  IndexSet     is(8);
+  IndexSet is(8);
   unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(rank == 0)
     is.add_range(0, 4);
@@ -34,7 +34,7 @@ test()
     is.add_range(4, 8);
   is.compress();
   TrilinosWrappers::MPI::Vector tril_vector(is);
-  Vector<double>                tmp(8);
+  Vector<double> tmp(8);
   for(unsigned int i = 0; i < 8; ++i)
     tmp[i] = i;
   tril_vector = tmp;

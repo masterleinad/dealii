@@ -77,7 +77,7 @@ protected:
     virtual void
     add_line_support_points(
       const typename Triangulation<dim>::cell_iterator& cell,
-      std::vector<Point<dim>>&                          a) const override;
+      std::vector<Point<dim>>& a) const override;
 
     /**
      * For <tt>dim=3</tt>. Append the support points of all shape functions
@@ -91,7 +91,7 @@ protected:
     virtual void
     add_quad_support_points(
       const typename Triangulation<dim>::cell_iterator& cell,
-      std::vector<Point<dim>>&                          a) const override;
+      std::vector<Point<dim>>& a) const override;
   };
 };
 
@@ -110,7 +110,7 @@ template <>
 void
 MappingC1<2>::MappingC1Generic::add_line_support_points(
   const Triangulation<2>::cell_iterator& cell,
-  std::vector<Point<2>>&                 a) const;
+  std::vector<Point<2>>& a) const;
 
 template <>
 void

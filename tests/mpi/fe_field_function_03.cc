@@ -83,7 +83,7 @@ test()
     FEFieldFunction<dim, DoFHandler<dim>, TrilinosWrappers::MPI::Vector>
       field_func(dofh, x_rel);
 
-  Point<2>              p(0.1, 0.0);
+  Point<2> p(0.1, 0.0);
   std::vector<Point<2>> points;
   points.push_back(p);
 
@@ -198,7 +198,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   deal_II_exceptions::disable_abort_on_exception();
 
   test<2>();

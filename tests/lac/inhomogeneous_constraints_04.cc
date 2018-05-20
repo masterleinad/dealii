@@ -62,8 +62,8 @@ test(bool use_constraint_matrix)
   SparsityPattern sp;
   sp.copy_from(csp);
   SparseMatrix<double> mat(sp);
-  Vector<double>       rhs(8);
-  Vector<double>       solution(8);
+  Vector<double> rhs(8);
+  Vector<double> solution(8);
 
   // "assemble":
 
@@ -77,7 +77,7 @@ test(bool use_constraint_matrix)
     local_dofs2.push_back(3 + i);
 
   FullMatrix<double> local_mat(5, 5);
-  Vector<double>     local_vec(5);
+  Vector<double> local_vec(5);
   for(unsigned int i = 0; i < 5; ++i)
     local_mat(i, i) = 2.0;
 

@@ -16,8 +16,8 @@
 #include "../tests.h"
 #include <deal.II/lac/vector.h>
 
-const unsigned int N           = 10;
-unsigned int       check_point = 0;
+const unsigned int N     = 10;
+unsigned int check_point = 0;
 
 template <typename number>
 void
@@ -60,7 +60,7 @@ check_vectors(Vector<number1>& d1, Vector<number2>& d2)
   print(d1);
 
   // initialize with iterators
-  number1         array[] = {0.0, 1.1, 2.2, 3.3};
+  number1 array[] = {0.0, 1.1, 2.2, 3.3};
   Vector<number1> d4(&array[0], &array[4]);
   print(d4);
 
@@ -143,8 +143,8 @@ main()
   deallog << std::setprecision(2);
   deallog.attach(logfile);
 
-  Vector<double>      d1(N), d2(N);
-  Vector<float>       f1(N), f2(N);
+  Vector<double> d1(N), d2(N);
+  Vector<float> f1(N), f2(N);
   Vector<long double> l1(N), l2(N);
 
   // cross-tests with double/float

@@ -37,9 +37,9 @@ using namespace std;
 template <int dim, typename number, int spacedim>
 void
 reinit_vector_by_blocks(
-  const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-  MGLevelObject<dealii::Vector<number>>&             v,
-  const unsigned int                                 selected_block,
+  const dealii::DoFHandler<dim, spacedim>& mg_dof,
+  MGLevelObject<dealii::Vector<number>>& v,
+  const unsigned int selected_block,
   std::vector<std::vector<types::global_dof_index>>& ndofs)
 {
   const unsigned int n_blocks = mg_dof.get_fe().n_blocks();
@@ -73,7 +73,7 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  DoFHandler<dim>  mgdof(tr);
+  DoFHandler<dim> mgdof(tr);
   DoFHandler<dim>& dof = mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
@@ -166,8 +166,8 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  FE_DGQ<2>                q0(0);
-  FE_DGQ<2>                q1(1);
+  FE_DGQ<2> q0(0);
+  FE_DGQ<2> q1(1);
   FE_RaviartThomasNodal<2> rt0(0);
   FE_RaviartThomasNodal<2> rt1(1);
 

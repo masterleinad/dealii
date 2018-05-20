@@ -36,14 +36,14 @@ namespace internal
     struct ParallelData : public ParallelDataBase<dim, spacedim>
     {
       ParallelData(
-        const unsigned int               n_datasets,
-        const unsigned int               n_subdivisions,
+        const unsigned int n_datasets,
+        const unsigned int n_subdivisions,
         const std::vector<unsigned int>& n_postprocessor_outputs,
-        const Mapping<dim, spacedim>&    mapping,
+        const Mapping<dim, spacedim>& mapping,
         const std::vector<
           std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                                                      finite_elements,
-        const UpdateFlags                             update_flags,
+          finite_elements,
+        const UpdateFlags update_flags,
         const std::vector<std::vector<unsigned int>>& cell_to_patch_index_map);
 
       std::vector<Point<spacedim>> patch_evaluation_points;
@@ -292,8 +292,8 @@ public:
   virtual void
   build_patches(const Mapping<DoFHandlerType::dimension,
                               DoFHandlerType::space_dimension>& mapping,
-                const unsigned int     n_subdivisions = 0,
-                const CurvedCellRegion curved_region  = curved_boundary);
+                const unsigned int n_subdivisions    = 0,
+                const CurvedCellRegion curved_region = curved_boundary);
 
   /**
    * Return the first cell which we want output for. The default
@@ -348,8 +348,8 @@ private:
                   internal::DataOutImplementation::ParallelData<
                     DoFHandlerType::dimension,
                     DoFHandlerType::space_dimension>& scratch_data,
-                  const unsigned int                  n_subdivisions,
-                  const CurvedCellRegion              curved_cell_region);
+                  const unsigned int n_subdivisions,
+                  const CurvedCellRegion curved_cell_region);
 };
 
 DEAL_II_NAMESPACE_CLOSE

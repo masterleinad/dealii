@@ -70,13 +70,13 @@ private:
   output_results(const unsigned int cycle) const;
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    mg_dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> mg_dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
-  MGLevelObject<SparsityPattern>     mg_sparsity;
+  MGLevelObject<SparsityPattern> mg_sparsity;
   MGLevelObject<SparseMatrix<float>> mg_matrices;
 
   Vector<double> solution;
@@ -142,7 +142,7 @@ LaplaceProblem<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -253,7 +253,7 @@ LaplaceProblem<dim>::solve()
   mg_smoother.set_symmetric(true);
 
   mg::Matrix<Vector<double>> mg_matrix(mg_matrices);
-  Multigrid<Vector<double>>  mg(mg_dof_handler,
+  Multigrid<Vector<double>> mg(mg_dof_handler,
                                mg_matrix,
                                mg_coarse,
                                mg_transfer,
@@ -263,7 +263,7 @@ LaplaceProblem<dim>::solve()
     preconditioner(mg_dof_handler, mg, mg_transfer);
 
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    cg(solver_control);
+  SolverCG<> cg(solver_control);
 
   cg.solve(system_matrix, solution, system_rhs, preconditioner);
 

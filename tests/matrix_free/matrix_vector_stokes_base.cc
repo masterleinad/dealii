@@ -38,7 +38,7 @@ template <int dim, int degree_p, typename BlockVectorType>
 class MatrixFreeTest : public MatrixFreeOperators::Base<dim, BlockVectorType>
 {
 public:
-  typedef typename BlockVectorType::value_type                     Number;
+  typedef typename BlockVectorType::value_type Number;
   typedef typename MatrixFreeOperators::Base<dim, BlockVectorType> Base;
 
   void
@@ -56,12 +56,12 @@ protected:
 
   void
   local_apply_cell(
-    const dealii::MatrixFree<dim, Number>&       data,
-    BlockVectorType&                             dst,
-    const BlockVectorType&                       src,
+    const dealii::MatrixFree<dim, Number>& data,
+    BlockVectorType& dst,
+    const BlockVectorType& src,
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
-    typedef VectorizedArray<Number>                            vector_t;
+    typedef VectorizedArray<Number> vector_t;
     FEEvaluation<dim, degree_p + 1, degree_p + 2, dim, Number> velocity(data,
                                                                         0);
     FEEvaluation<dim, degree_p, degree_p + 2, 1, Number> pressure(data, 1);
@@ -108,9 +108,9 @@ test()
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>     fe_u_scal(degree + 1);
+  FE_Q<dim> fe_u_scal(degree + 1);
   FESystem<dim> fe_u(fe_u_scal, dim);
-  FE_Q<dim>     fe_p(degree);
+  FE_Q<dim> fe_p(degree);
   FESystem<dim> fe(fe_u_scal, dim, fe_p, 1);
 
   DoFHandler<dim> dof(tria);
@@ -126,11 +126,11 @@ test()
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints, constraints_u, constraints_p;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
-  BlockVector<double>                             solution;
-  BlockVector<double>                             system_rhs;
+  BlockVector<double> solution;
+  BlockVector<double> system_rhs;
   LinearAlgebra::distributed::BlockVector<double> mf_system_rhs;
   LinearAlgebra::distributed::BlockVector<double> mf_solution;
 
@@ -184,8 +184,8 @@ test()
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> phi_grads_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();

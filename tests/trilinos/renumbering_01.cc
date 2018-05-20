@@ -163,7 +163,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   Test test1(false);
   MPI_Barrier(MPI_COMM_WORLD);

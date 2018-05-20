@@ -31,7 +31,7 @@ main()
   deallog << std::setprecision(3);
 
   constexpr unsigned int dim = 3;
-  SphericalManifold<3>   spherical;
+  SphericalManifold<3> spherical;
 
   Triangulation<dim> tria;
   GridGenerator::hyper_shell(tria, Point<dim>(), 0.5, 1., 96, true);

@@ -36,9 +36,9 @@ test(unsigned int degree)
   Triangulation<dim - 1, dim> mesh;
   GridGenerator::hyper_cube(mesh);
 
-  QGauss<dim - 1>        quadrature(dim == 2 ? 3 : 2);
+  QGauss<dim - 1> quadrature(dim == 2 ? 3 : 2);
   MappingQ<dim - 1, dim> mapping(degree);
-  Point<dim>             p;
+  Point<dim> p;
 
   // Try to project a point on the
   // surface

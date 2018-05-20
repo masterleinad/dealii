@@ -33,7 +33,7 @@ test()
   const unsigned int N = 200;
 
   // build the sparse matrix
-  IndexSet                       indices = complete_index_set(N * N);
+  IndexSet indices = complete_index_set(N * N);
   TrilinosWrappers::SparseMatrix matrix(indices, MPI_COMM_WORLD, 5);
   for(unsigned int i = 0; i < N; i++)
     for(unsigned int j = 0; j < N; j++)

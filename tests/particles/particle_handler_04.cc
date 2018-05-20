@@ -40,7 +40,7 @@ test()
     if(Utilities::MPI::this_mpi_process(tr.get_communicator()) == 0)
       {
         std::vector<Point<spacedim>> position(2);
-        std::vector<Point<dim>>      reference_position(2);
+        std::vector<Point<dim>> reference_position(2);
 
         for(unsigned int i = 0; i < dim; ++i)
           {

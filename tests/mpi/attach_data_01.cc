@@ -31,7 +31,7 @@ pack_function(
   const typename parallel::distributed::Triangulation<dim, dim>::cell_iterator&
     cell,
   const typename parallel::distributed::Triangulation<dim, dim>::CellStatus
-        status,
+    status,
   void* data)
 {
   static int some_number = 0;
@@ -67,7 +67,7 @@ unpack_function(
   const typename parallel::distributed::Triangulation<dim, dim>::cell_iterator&
     cell,
   const typename parallel::distributed::Triangulation<dim, dim>::CellStatus
-              status,
+    status,
   const void* data)
 {
   const int* intdata = reinterpret_cast<const int*>(data);
@@ -161,7 +161,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
 }

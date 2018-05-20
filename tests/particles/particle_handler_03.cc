@@ -37,7 +37,7 @@ test()
     Particles::ParticleHandler<dim, spacedim> particle_handler(tr, mapping);
 
     std::vector<Point<spacedim>> position(2);
-    std::vector<Point<dim>>      reference_position(2);
+    std::vector<Point<dim>> reference_position(2);
 
     for(unsigned int i = 0; i < dim; ++i)
       {

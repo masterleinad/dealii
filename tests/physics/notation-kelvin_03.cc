@@ -103,7 +103,7 @@ test_scalars()
   const double A = 1.0;
   const double C = 1.0;
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+  const Vector<double> vA     = Notation::Kelvin::to_vector(A);
   const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
 
   deallog.push("Scalar");
@@ -128,7 +128,7 @@ test_tensors_012()
   initialize(A);
   initialize(C);
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+  const Vector<double> vA     = Notation::Kelvin::to_vector(A);
   const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
 
   const std::string name = std::string("Rank-") + Utilities::int_to_string(rank)
@@ -238,7 +238,7 @@ test_symmetric_tensor_2()
   initialize(A);
   initialize(C);
 
-  const Vector<double>     vA = Notation::Kelvin::to_vector(A);
+  const Vector<double> vA     = Notation::Kelvin::to_vector(A);
   const FullMatrix<double> mC = Notation::Kelvin::to_matrix(C);
 
   deallog.push("Rank-2 symm tensor");

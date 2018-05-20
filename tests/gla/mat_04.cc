@@ -67,7 +67,7 @@ test()
   IndexSet relevant;
   DoFTools::extract_locally_relevant_dofs(dof_handler, relevant);
 
-  DynamicSparsityPattern         sp(relevant);
+  DynamicSparsityPattern sp(relevant);
   typename LA::MPI::SparseMatrix matrix;
   DoFTools::make_sparsity_pattern(
     dof_handler,
@@ -125,7 +125,7 @@ test_trilinos_alternative()
   DoFTools::extract_locally_relevant_dofs(dof_handler, relevant);
 
   TrilinosWrappers::SparsityPattern sp(owned, MPI_COMM_WORLD);
-  typename LA::MPI::SparseMatrix    matrix;
+  typename LA::MPI::SparseMatrix matrix;
   DoFTools::make_sparsity_pattern(
     dof_handler,
     sp,
@@ -146,7 +146,7 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   {
     deallog.push("PETSc");

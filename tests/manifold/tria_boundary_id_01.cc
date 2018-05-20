@@ -31,7 +31,7 @@ using namespace dealii;
 
 template <typename Stream, int dim>
 void
-print_triangulation_data(Stream&                   stream,
+print_triangulation_data(Stream& stream,
                          const Triangulation<dim>& triangulation)
 {
   // Boundary id count
@@ -80,13 +80,13 @@ main()
 {
   initlog();
 
-  const int          dim                  = 2;
+  const int dim                           = 2;
   const unsigned int n_global_refinements = 1;
 
   // Create a geometry with flat and curved boundaries
-  const double       inner_radius = 0.25;
-  const double       outer_radius = 0.5;
-  const double       tol          = 1e-6;
+  const double inner_radius = 0.25;
+  const double outer_radius = 0.5;
+  const double tol          = 1e-6;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube_with_cylindrical_hole(
     tria, inner_radius, outer_radius);

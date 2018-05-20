@@ -36,8 +36,8 @@ template <int dim>
 void
 test_distributed_cpt(unsigned int ref_cube)
 {
-  MPI_Comm     mpi_communicator = MPI_COMM_WORLD;
-  unsigned int n_procs = Utilities::MPI::n_mpi_processes(mpi_communicator);
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
+  unsigned int n_procs      = Utilities::MPI::n_mpi_processes(mpi_communicator);
   unsigned int my_rank = Utilities::MPI::this_mpi_process(mpi_communicator);
 
   deallog << "Testing for dim = " << dim << " on " << n_procs << " processes"
@@ -51,7 +51,7 @@ test_distributed_cpt(unsigned int ref_cube)
 
   // We shall use the points from a shared grid so that each index is known
   std::vector<Point<dim>> test_points;
-  Triangulation<dim>      cube;
+  Triangulation<dim> cube;
   GridGenerator::hyper_cube(cube);
   cube.refine_global(ref_cube);
   for(auto cell : cube.active_cell_iterators())
@@ -61,7 +61,7 @@ test_distributed_cpt(unsigned int ref_cube)
 
   // Computing bounding boxes describing the locally owned part of the mesh
   IteratorFilters::LocallyOwnedCell locally_owned_cell_predicate;
-  std::vector<BoundingBox<dim>>     local_bbox
+  std::vector<BoundingBox<dim>> local_bbox
     = GridTools::compute_mesh_predicate_bounding_box(
       cube_d,
       std::function<bool(
@@ -77,7 +77,7 @@ test_distributed_cpt(unsigned int ref_cube)
 
   // Initializing the cache
   GridTools::Cache<dim, dim> cache_d(cube_d);
-  auto                       output_tuple
+  auto output_tuple
     = distributed_compute_point_locations(cache_d, test_points, global_bboxes);
   const auto& maps   = std::get<2>(output_tuple);
   const auto& points = std::get<3>(output_tuple);
@@ -109,7 +109,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   deallog << "Deal.II GridTools::distributed_compute_point_locations"
           << std::endl;

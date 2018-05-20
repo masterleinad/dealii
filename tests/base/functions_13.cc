@@ -41,10 +41,10 @@ main()
   initlog();
 
   MyFunction<1, std::complex<double>> function_1;
-  MyFunction<2, std::complex<float>>  function_2;
+  MyFunction<2, std::complex<float>> function_2;
 
   MyTensorFunction<1, 1, std::complex<double>> tensor_function_1;
-  MyTensorFunction<2, 2, std::complex<float>>  tensor_function_2;
+  MyTensorFunction<2, 2, std::complex<float>> tensor_function_2;
 
   deallog << "OK" << std::endl;
 }

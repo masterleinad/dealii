@@ -55,7 +55,7 @@ test()
   tria.refine_global(4 - dim);
 
   hp::FECollection<dim> fe_collection;
-  hp::QCollection<dim>  q_collection;
+  hp::QCollection<dim> q_collection;
   for(unsigned int i = 1; i <= 4; ++i)
     {
       fe_collection.push_back(FESystem<dim>(FE_Q<dim>(i), dim));

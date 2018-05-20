@@ -78,7 +78,7 @@ test()
     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  MPI_Comm                                mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
   parallel::distributed::Triangulation<2> fluid_triangulation(
     mpi_communicator,
     typename Triangulation<2>::MeshSmoothing(
@@ -190,7 +190,7 @@ test()
 
   // call data_out.build_patches() once but then destroy the object.
   {
-    FE_Q<2>       fe(1);
+    FE_Q<2> fe(1);
     DoFHandler<2> dof_handler(fluid_triangulation);
 
     DataOut<2> data_out;
@@ -207,7 +207,7 @@ test()
 
   // do it again. the bug is that we get wrong data because of the call above
   {
-    FE_Q<2>       fe(2);
+    FE_Q<2> fe(2);
     DoFHandler<2> handler(fluid_triangulation);
     handler.distribute_dofs(fe);
 

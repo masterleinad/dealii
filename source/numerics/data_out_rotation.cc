@@ -46,14 +46,14 @@ namespace internal
   {
     template <int dim, int spacedim>
     ParallelData<dim, spacedim>::ParallelData(
-      const unsigned int               n_datasets,
-      const unsigned int               n_subdivisions,
-      const unsigned int               n_patches_per_circle,
+      const unsigned int n_datasets,
+      const unsigned int n_subdivisions,
+      const unsigned int n_patches_per_circle,
       const std::vector<unsigned int>& n_postprocessor_outputs,
-      const Mapping<dim, spacedim>&    mapping,
+      const Mapping<dim, spacedim>& mapping,
       const std::vector<
         std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                        finite_elements,
+        finite_elements,
       const UpdateFlags update_flags)
       : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
           n_datasets,
@@ -74,7 +74,7 @@ namespace internal
     void
     append_patch_to_list(
       const std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>>& new_patches,
-      std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>>&       patches)
+      std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>>& patches)
     {
       for(unsigned int i = 0; i < new_patches.size(); ++i)
         {
@@ -88,7 +88,7 @@ namespace internal
 template <int dim, typename DoFHandlerType>
 void
 DataOutRotation<dim, DoFHandlerType>::build_one_patch(
-  const cell_iterator*                                                    cell,
+  const cell_iterator* cell,
   internal::DataOutRotationImplementation::ParallelData<dimension,
                                                         space_dimension>& data,
   std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>&

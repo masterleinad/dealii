@@ -73,7 +73,7 @@ do_test()
   {
     MPI_Comm communicator
       = Utilities::MPI::duplicate_communicator(MPI_COMM_WORLD);
-    GrowingVectorMemory<VectorType>            memory;
+    GrowingVectorMemory<VectorType> memory;
     typename VectorMemory<VectorType>::Pointer v3(memory);
     v1.reinit(set, communicator);
     v3->reinit(v1);
@@ -87,7 +87,7 @@ do_test()
   {
     MPI_Comm communicator
       = Utilities::MPI::duplicate_communicator(MPI_COMM_WORLD);
-    GrowingVectorMemory<VectorType>            memory;
+    GrowingVectorMemory<VectorType> memory;
     typename VectorMemory<VectorType>::Pointer v3(memory);
     v1.reinit(set, communicator);
     v3->reinit(v1);

@@ -33,7 +33,7 @@ template <typename NumberType>
 void
 test(const unsigned int block_size_i, const unsigned int block_size_j)
 {
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int n_mpi_processes(
     Utilities::MPI::n_mpi_processes(mpi_communicator));
   const unsigned int this_mpi_process(
@@ -44,7 +44,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   const unsigned int size = 500;
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(size);
-  unsigned int           count = 0;
+  unsigned int count = 0;
   for(unsigned int i = 0; i < size; ++i)
     for(unsigned int j = 0; j < size; ++j, ++count)
       full(i, j) = count;
@@ -64,7 +64,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
         << std::endl;
 
   scalapack_matrix                               = full;
-  unsigned int                          sub_size = 100;
+  unsigned int sub_size                          = 100;
   std::pair<unsigned int, unsigned int> offset_A = std::make_pair(49, 99);
   std::pair<unsigned int, unsigned int> offset_B = std::make_pair(4, 7);
   std::pair<unsigned int, unsigned int> submatrix_size

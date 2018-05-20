@@ -108,11 +108,11 @@ check()
   Triangulation<dim> tria;
   make_mesh(tria);
 
-  FE_Q<dim>       element(QIterated<1>(QTrapez<1>(), 3));
+  FE_Q<dim> element(QIterated<1>(QTrapez<1>(), 3));
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(element);
 
-  MappingQ<dim>        mapping(3);
+  MappingQ<dim> mapping(3);
   Quadrature<dim - 1>& q_face = get_q_face(function);
 
   std::map<types::boundary_id, const Function<dim>*> neumann_bc;

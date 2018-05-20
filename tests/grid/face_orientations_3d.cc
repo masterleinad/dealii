@@ -30,7 +30,7 @@ void
 test(const char* filename)
 {
   Triangulation<3> tria;
-  GridIn<3>        gi;
+  GridIn<3> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename);
 

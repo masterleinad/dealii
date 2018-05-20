@@ -87,7 +87,7 @@ namespace OpenCASCADE
   count_elements(const TopoDS_Shape& shape)
   {
     TopExp_Explorer exp;
-    unsigned int    n_faces = 0, n_edges = 0, n_vertices = 0;
+    unsigned int n_faces = 0, n_edges = 0, n_vertices = 0;
     for(exp.Init(shape, TopAbs_FACE); exp.More(); exp.Next(), ++n_faces)
       {
       }
@@ -102,9 +102,9 @@ namespace OpenCASCADE
   }
 
   void
-  extract_geometrical_shapes(const TopoDS_Shape&         shape,
-                             std::vector<TopoDS_Face>&   faces,
-                             std::vector<TopoDS_Edge>&   edges,
+  extract_geometrical_shapes(const TopoDS_Shape& shape,
+                             std::vector<TopoDS_Face>& faces,
+                             std::vector<TopoDS_Edge>& edges,
                              std::vector<TopoDS_Vertex>& vertices)
   {
     faces.resize(0);
@@ -127,12 +127,12 @@ namespace OpenCASCADE
   }
 
   void
-  extract_compound_shapes(const TopoDS_Shape&            shape,
-                          std::vector<TopoDS_Compound>&  compounds,
+  extract_compound_shapes(const TopoDS_Shape& shape,
+                          std::vector<TopoDS_Compound>& compounds,
                           std::vector<TopoDS_CompSolid>& compsolids,
-                          std::vector<TopoDS_Solid>&     solids,
-                          std::vector<TopoDS_Shell>&     shells,
-                          std::vector<TopoDS_Wire>&      wires)
+                          std::vector<TopoDS_Solid>& solids,
+                          std::vector<TopoDS_Shell>& shells,
+                          std::vector<TopoDS_Wire>& wires)
   {
     compounds.resize(0);
     compsolids.resize(0);
@@ -209,10 +209,10 @@ namespace OpenCASCADE
 
   template <int dim>
   bool
-  point_compare(const Point<dim>&     p1,
-                const Point<dim>&     p2,
+  point_compare(const Point<dim>& p1,
+                const Point<dim>& p2,
                 const Tensor<1, dim>& direction,
-                const double          tolerance)
+                const double tolerance)
   {
     const double rel_tol
       = std::max(tolerance, std::max(p1.norm(), p2.norm()) * tolerance);
@@ -233,13 +233,13 @@ namespace OpenCASCADE
   TopoDS_Shape
   read_IGES(const std::string& filename, const double scale_factor)
   {
-    IGESControl_Reader    reader;
+    IGESControl_Reader reader;
     IFSelect_ReturnStatus stat;
     stat = reader.ReadFile(filename.c_str());
     AssertThrow(stat == IFSelect_RetDone, ExcMessage("Error in reading file!"));
 
-    Standard_Boolean    failsonly = Standard_False;
-    IFSelect_PrintCount mode      = IFSelect_ItemsByEntity;
+    Standard_Boolean failsonly = Standard_False;
+    IFSelect_PrintCount mode   = IFSelect_ItemsByEntity;
     reader.PrintCheckLoad(failsonly, mode);
 
     Standard_Integer nRoots = reader.TransferRoots();
@@ -249,11 +249,11 @@ namespace OpenCASCADE
     AssertThrow(nRoots > 0, ExcMessage("Read nothing from file."));
 
     // Handle IGES Scale here.
-    gp_Pnt  Origin;
+    gp_Pnt Origin;
     gp_Trsf scale;
     scale.SetScale(Origin, scale_factor);
 
-    TopoDS_Shape             sh = reader.OneShape();
+    TopoDS_Shape sh = reader.OneShape();
     BRepBuilderAPI_Transform trans(sh, scale);
 
     return trans.Shape(); // this is the actual translation
@@ -264,7 +264,7 @@ namespace OpenCASCADE
   {
     IGESControl_Controller::Init();
     IGESControl_Writer ICW("MM", 0);
-    Standard_Boolean   ok = ICW.AddShape(shape);
+    Standard_Boolean ok = ICW.AddShape(shape);
     AssertThrow(ok, ExcMessage("Failed to add shape to IGES controller."));
     ICW.ComputeModel();
     Standard_Boolean OK = ICW.Write(filename.c_str());
@@ -274,13 +274,13 @@ namespace OpenCASCADE
   TopoDS_Shape
   read_STEP(const std::string& filename, const double scale_factor)
   {
-    STEPControl_Reader    reader;
+    STEPControl_Reader reader;
     IFSelect_ReturnStatus stat;
     stat = reader.ReadFile(filename.c_str());
     AssertThrow(stat == IFSelect_RetDone, ExcMessage("Error in reading file!"));
 
-    Standard_Boolean    failsonly = Standard_False;
-    IFSelect_PrintCount mode      = IFSelect_ItemsByEntity;
+    Standard_Boolean failsonly = Standard_False;
+    IFSelect_PrintCount mode   = IFSelect_ItemsByEntity;
     reader.PrintCheckLoad(failsonly, mode);
 
     Standard_Integer nRoots = reader.TransferRoots();
@@ -290,11 +290,11 @@ namespace OpenCASCADE
     AssertThrow(nRoots > 0, ExcMessage("Read nothing from file."));
 
     // Handle STEP Scale here.
-    gp_Pnt  Origin;
+    gp_Pnt Origin;
     gp_Trsf scale;
     scale.SetScale(Origin, scale_factor);
 
-    TopoDS_Shape             sh = reader.OneShape();
+    TopoDS_Shape sh = reader.OneShape();
     BRepBuilderAPI_Transform trans(sh, scale);
 
     return trans.Shape(); // this is the actual translation
@@ -304,7 +304,7 @@ namespace OpenCASCADE
   write_STEP(const TopoDS_Shape& shape, const std::string& filename)
   {
     STEPControl_Controller::Init();
-    STEPControl_Writer    SCW;
+    STEPControl_Writer SCW;
     IFSelect_ReturnStatus status;
     status = SCW.Transfer(shape, STEPControl_AsIs);
     AssertThrow(status == IFSelect_RetDone,
@@ -321,8 +321,8 @@ namespace OpenCASCADE
   {
     double tolerance = 0.0;
 
-    std::vector<TopoDS_Face>   faces;
-    std::vector<TopoDS_Edge>   edges;
+    std::vector<TopoDS_Face> faces;
+    std::vector<TopoDS_Edge> edges;
     std::vector<TopoDS_Vertex> vertices;
 
     extract_geometrical_shapes(shape, faces, edges, vertices);
@@ -341,32 +341,32 @@ namespace OpenCASCADE
 
   TopoDS_Shape
   intersect_plane(const TopoDS_Shape& in_shape,
-                  const double        c_x,
-                  const double        c_y,
-                  const double        c_z,
-                  const double        c,
+                  const double c_x,
+                  const double c_y,
+                  const double c_z,
+                  const double c,
                   const double /*tolerance*/)
   {
     Handle(Geom_Plane) plane = new Geom_Plane(c_x, c_y, c_z, c);
     BRepAlgo_Section section(in_shape, plane);
-    TopoDS_Shape     edges = section.Shape();
+    TopoDS_Shape edges = section.Shape();
     return edges;
   }
 
   TopoDS_Edge
   join_edges(const TopoDS_Shape& in_shape, const double tolerance)
   {
-    TopoDS_Edge                           out_shape;
-    const TopoDS_Shape&                   edges = in_shape;
+    TopoDS_Edge out_shape;
+    const TopoDS_Shape& edges = in_shape;
     std::vector<Handle_Geom_BoundedCurve> intersections;
-    TopLoc_Location                       L;
-    Standard_Real                         First;
-    Standard_Real                         Last;
-    gp_Pnt                                PIn(0.0, 0.0, 0.0);
-    gp_Pnt                                PFin(0.0, 0.0, 0.0);
-    gp_Pnt                                PMid(0.0, 0.0, 0.0);
-    TopExp_Explorer                       edgeExplorer(edges, TopAbs_EDGE);
-    TopoDS_Edge                           edge;
+    TopLoc_Location L;
+    Standard_Real First;
+    Standard_Real Last;
+    gp_Pnt PIn(0.0, 0.0, 0.0);
+    gp_Pnt PFin(0.0, 0.0, 0.0);
+    gp_Pnt PMid(0.0, 0.0, 0.0);
+    TopExp_Explorer edgeExplorer(edges, TopAbs_EDGE);
+    TopoDS_Edge edge;
     while(edgeExplorer.More())
       {
         edge                     = TopoDS::Edge(edgeExplorer.Current());
@@ -382,7 +382,7 @@ namespace OpenCASCADE
 
     GeomConvert_CompCurveToBSplineCurve convert_bspline(intersections[0]);
 
-    bool              check = false, one_added = true, one_failed = true;
+    bool check = false, one_added = true, one_failed = true;
     std::vector<bool> added(numIntersEdges, false);
     added[0] = true;
     while(one_added == true)
@@ -422,10 +422,10 @@ namespace OpenCASCADE
 
   template <int dim>
   Point<dim>
-  line_intersection(const TopoDS_Shape&   in_shape,
-                    const Point<dim>&     origin,
+  line_intersection(const TopoDS_Shape& in_shape,
+                    const Point<dim>& origin,
                     const Tensor<1, dim>& direction,
-                    const double          tolerance)
+                    const double tolerance)
   {
     // translating original Point<dim> to gp point
 
@@ -449,7 +449,7 @@ namespace OpenCASCADE
     Inters.Perform(line, -RealLast(), +RealLast());
     Assert(Inters.IsDone(), ExcMessage("Could not project point."));
 
-    double     minDistance = 1e7;
+    double minDistance = 1e7;
     Point<dim> result;
     for(int i = 0; i < Inters.NbPnt(); ++i)
       {
@@ -468,9 +468,9 @@ namespace OpenCASCADE
   template <int dim>
   TopoDS_Edge
   interpolation_curve(std::vector<Point<dim>>& curve_points,
-                      const Tensor<1, dim>&    direction,
-                      const bool               closed,
-                      const double             tolerance)
+                      const Tensor<1, dim>& direction,
+                      const bool closed,
+                      const double tolerance)
   {
     unsigned int n_vertices = curve_points.size();
 
@@ -506,15 +506,15 @@ namespace OpenCASCADE
   std::vector<TopoDS_Edge>
   create_curves_from_triangulation_boundary(
     const Triangulation<2, spacedim>& triangulation,
-    const Mapping<2, spacedim>&       mapping)
+    const Mapping<2, spacedim>& mapping)
 
   {
     // store maps from global vertex index to pairs of global face   indices
     //        and from global face   index to pairs of global vertex indices
     std::map<unsigned int, std::pair<unsigned int, unsigned int>> vert_to_faces;
     std::map<unsigned int, std::pair<unsigned int, unsigned int>> face_to_verts;
-    std::map<unsigned int, bool>                                  visited_faces;
-    std::map<unsigned int, Point<spacedim>>                       vert_to_point;
+    std::map<unsigned int, bool> visited_faces;
+    std::map<unsigned int, Point<spacedim>> vert_to_point;
 
     unsigned int face_index;
 
@@ -560,13 +560,13 @@ namespace OpenCASCADE
     // run through maps in an orderly fashion, i.e., through the
     // boundary in one cycle and add points to pointlist.
     std::vector<TopoDS_Edge> interpolation_curves;
-    bool                     finished = (face_to_verts.size() == 0);
-    face_index = finished ? 0 : face_to_verts.begin()->first;
+    bool finished = (face_to_verts.size() == 0);
+    face_index    = finished ? 0 : face_to_verts.begin()->first;
 
     while(finished == false)
       {
         const unsigned int start_point_index = face_to_verts[face_index].first;
-        unsigned int       point_index       = start_point_index;
+        unsigned int point_index             = start_point_index;
 
         // point_index and face_index always run together
         std::vector<Point<spacedim>> pointlist;
@@ -608,11 +608,11 @@ namespace OpenCASCADE
   template <int dim>
   std::tuple<Point<dim>, TopoDS_Shape, double, double>
   project_point_and_pull_back(const TopoDS_Shape& in_shape,
-                              const Point<dim>&   origin,
-                              const double        tolerance)
+                              const Point<dim>& origin,
+                              const double tolerance)
   {
     TopExp_Explorer exp;
-    gp_Pnt          Pproj = point(origin);
+    gp_Pnt Pproj = point(origin);
 
     double minDistance = 1e7;
     gp_Pnt tmp_proj(0.0, 0.0, 0.0);
@@ -621,8 +621,8 @@ namespace OpenCASCADE
     unsigned int face_counter = 0;
 
     TopoDS_Shape out_shape;
-    double       u = 0;
-    double       v = 0;
+    double u = 0;
+    double v = 0;
 
     for(exp.Init(in_shape, TopAbs_FACE); exp.More(); exp.Next())
       {
@@ -661,8 +661,8 @@ namespace OpenCASCADE
           if(!BRep_Tool::Degenerated(edge))
             {
               TopLoc_Location L;
-              Standard_Real   First;
-              Standard_Real   Last;
+              Standard_Real First;
+              Standard_Real Last;
 
               // the projection function needs a Curve, so we obtain the
               // curve upon which the edge is defined
@@ -670,7 +670,7 @@ namespace OpenCASCADE
                 = BRep_Tool::Curve(edge, L, First, Last);
 
               GeomAPI_ProjectPointOnCurve Proj(point(origin), CurveToProj);
-              unsigned int                num_proj_points = Proj.NbPoints();
+              unsigned int num_proj_points = Proj.NbPoints();
               if((num_proj_points > 0) && (Proj.LowerDistance() < minDistance))
                 {
                   minDistance = Proj.LowerDistance();
@@ -690,8 +690,8 @@ namespace OpenCASCADE
   template <int dim>
   Point<dim>
   closest_point(const TopoDS_Shape& in_shape,
-                const Point<dim>&   origin,
-                const double        tolerance)
+                const Point<dim>& origin,
+                const double tolerance)
   {
     std::tuple<Point<dim>, TopoDS_Shape, double, double> ref
       = project_point_and_pull_back(in_shape, origin, tolerance);
@@ -700,16 +700,16 @@ namespace OpenCASCADE
 
   std::tuple<Point<3>, Tensor<1, 3>, double, double>
   closest_point_and_differential_forms(const TopoDS_Shape& in_shape,
-                                       const Point<3>&     origin,
-                                       const double        tolerance)
+                                       const Point<3>& origin,
+                                       const double tolerance)
 
   {
     std::tuple<Point<3>, TopoDS_Shape, double, double> shape_and_params
       = project_point_and_pull_back(in_shape, origin, tolerance);
 
     TopoDS_Shape& out_shape = std::get<1>(shape_and_params);
-    double&       u         = std::get<2>(shape_and_params);
-    double&       v         = std::get<3>(shape_and_params);
+    double& u               = std::get<2>(shape_and_params);
+    double& v               = std::get<3>(shape_and_params);
 
     // just a check here: the number of faces in out_shape must be 1, otherwise
     // something is wrong
@@ -756,20 +756,20 @@ namespace OpenCASCADE
 
   std::tuple<Point<3>, Tensor<1, 3>, double, double>
   push_forward_and_differential_forms(const TopoDS_Face& face,
-                                      const double       u,
-                                      const double       v,
+                                      const double u,
+                                      const double v,
                                       const double /*tolerance*/)
   {
     Handle(Geom_Surface) SurfToProj = BRep_Tool::Surface(face);
     GeomLProp_SLProps props(SurfToProj, u, v, 1, 1e-7);
-    gp_Pnt            Value = props.Value();
+    gp_Pnt Value = props.Value();
     Assert(props.IsNormalDefined(), ExcMessage("Normal is not well defined!"));
     gp_Dir Normal = props.Normal();
     Assert(props.IsCurvatureDefined(),
            ExcMessage("Curvature is not well defined!"));
     Standard_Real Min_Curvature = props.MinCurvature();
     Standard_Real Max_Curvature = props.MaxCurvature();
-    Tensor<1, 3>  normal        = Point<3>(Normal.X(), Normal.Y(), Normal.Z());
+    Tensor<1, 3> normal         = Point<3>(Normal.X(), Normal.Y(), Normal.Z());
 
     // In the case your manifold changes from convex to concave or viceversa
     // the normal could jump from "inner" to "outer" normal.
@@ -788,18 +788,18 @@ namespace OpenCASCADE
 
   template <int spacedim>
   void
-  create_triangulation(const TopoDS_Face&          face,
+  create_triangulation(const TopoDS_Face& face,
                        Triangulation<2, spacedim>& tria)
   {
     BRepAdaptor_Surface surf(face);
-    const double        u0 = surf.FirstUParameter();
-    const double        u1 = surf.LastUParameter();
-    const double        v0 = surf.FirstVParameter();
-    const double        v1 = surf.LastVParameter();
+    const double u0 = surf.FirstUParameter();
+    const double u1 = surf.LastUParameter();
+    const double v0 = surf.FirstVParameter();
+    const double v1 = surf.LastVParameter();
 
-    std::vector<CellData<2>>     cells;
+    std::vector<CellData<2>> cells;
     std::vector<Point<spacedim>> vertices;
-    SubCellData                  t;
+    SubCellData t;
 
     vertices.push_back(point<spacedim>(surf.Value(u0, v0)));
     vertices.push_back(point<spacedim>(surf.Value(u1, v0)));

@@ -21,12 +21,12 @@ template <class Quad, typename... Args>
 std::string
 check_q_move(Args&&... args)
 {
-  Quad               quad1(args...);
+  Quad quad1(args...);
   const unsigned int size1 = quad1.size();
 
   std::vector<double> weights1 = quad1.get_weights();
 
-  Quad               quad2(std::move(quad1));
+  Quad quad2(std::move(quad1));
   const unsigned int size2 = quad2.size();
 
   std::vector<double> weights2 = quad2.get_weights();

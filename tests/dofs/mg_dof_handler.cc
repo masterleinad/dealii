@@ -37,7 +37,7 @@ main()
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
 
-  FE_DGQ<dim>     fe(1);
+  FE_DGQ<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
 
   tria.begin_active()->set_refine_flag();

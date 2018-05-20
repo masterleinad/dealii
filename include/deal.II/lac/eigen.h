@@ -77,9 +77,9 @@ public:
   /**
    * Constructor.
    */
-  EigenPower(SolverControl&            cn,
+  EigenPower(SolverControl& cn,
              VectorMemory<VectorType>& mem,
-             const AdditionalData&     data = AdditionalData());
+             const AdditionalData& data = AdditionalData());
 
   /**
    * Virtual destructor.
@@ -156,9 +156,9 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(double       relaxation     = 1.,
+    AdditionalData(double relaxation           = 1.,
                    unsigned int start_adaption = 6,
-                   bool         use_residual   = true)
+                   bool use_residual           = true)
       : relaxation(relaxation),
         start_adaption(start_adaption),
         use_residual(use_residual)
@@ -168,9 +168,9 @@ public:
   /**
    * Constructor.
    */
-  EigenInverse(SolverControl&            cn,
+  EigenInverse(SolverControl& cn,
                VectorMemory<VectorType>& mem,
-               const AdditionalData&     data = AdditionalData());
+               const AdditionalData& data = AdditionalData());
 
   /**
    * Virtual destructor.
@@ -199,9 +199,9 @@ protected:
 //---------------------------------------------------------------------------
 
 template <class VectorType>
-EigenPower<VectorType>::EigenPower(SolverControl&            cn,
+EigenPower<VectorType>::EigenPower(SolverControl& cn,
                                    VectorMemory<VectorType>& mem,
-                                   const AdditionalData&     data)
+                                   const AdditionalData& data)
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
@@ -219,10 +219,10 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
   LogStream::Prefix prefix("Power method");
 
   typename VectorMemory<VectorType>::Pointer Vy(this->memory);
-  VectorType&                                y = *Vy;
+  VectorType& y = *Vy;
   y.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
-  VectorType&                                r = *Vr;
+  VectorType& r = *Vr;
   r.reinit(x);
 
   double length     = x.l2_norm();
@@ -243,9 +243,9 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 
       // do a little trick to compute the sign
       // with not too much effect of round-off errors.
-      double    entry  = 0.;
-      size_type i      = 0;
-      double    thresh = length / x.size();
+      double entry  = 0.;
+      size_type i   = 0;
+      double thresh = length / x.size();
       do
         {
           Assert(i < x.size(), ExcInternalError());
@@ -282,9 +282,9 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 //---------------------------------------------------------------------------
 
 template <class VectorType>
-EigenInverse<VectorType>::EigenInverse(SolverControl&            cn,
+EigenInverse<VectorType>::EigenInverse(SolverControl& cn,
                                        VectorMemory<VectorType>& mem,
-                                       const AdditionalData&     data)
+                                       const AdditionalData& data)
   : Solver<VectorType>(cn, mem), additional_data(data)
 {}
 
@@ -295,22 +295,22 @@ EigenInverse<VectorType>::~EigenInverse()
 template <class VectorType>
 template <typename MatrixType>
 void
-EigenInverse<VectorType>::solve(double&           value,
+EigenInverse<VectorType>::solve(double& value,
                                 const MatrixType& A,
-                                VectorType&       x)
+                                VectorType& x)
 {
   LogStream::Prefix prefix("Wielandt");
 
   SolverControl::State conv = SolverControl::iterate;
 
   // Prepare matrix for solver
-  auto   A_op          = linear_operator(A);
+  auto A_op            = linear_operator(A);
   double current_shift = -value;
-  auto   A_s           = A_op + current_shift * identity_operator(A_op);
+  auto A_s             = A_op + current_shift * identity_operator(A_op);
 
   // Define solver
-  ReductionControl        inner_control(5000, 1.e-16, 1.e-5, false, false);
-  PreconditionIdentity    prec;
+  ReductionControl inner_control(5000, 1.e-16, 1.e-5, false, false);
+  PreconditionIdentity prec;
   SolverGMRES<VectorType> solver(inner_control, this->memory);
 
   // Next step for recomputing the shift
@@ -318,10 +318,10 @@ EigenInverse<VectorType>::solve(double&           value,
 
   // Auxiliary vector
   typename VectorMemory<VectorType>::Pointer Vy(this->memory);
-  VectorType&                                y = *Vy;
+  VectorType& y = *Vy;
   y.reinit(x);
   typename VectorMemory<VectorType>::Pointer Vr(this->memory);
-  VectorType&                                r = *Vr;
+  VectorType& r = *Vr;
   r.reinit(x);
 
   double length    = x.l2_norm();
@@ -330,7 +330,7 @@ EigenInverse<VectorType>::solve(double&           value,
   x *= 1. / length;
 
   // Main loop
-  double    res  = -std::numeric_limits<double>::max();
+  double res     = -std::numeric_limits<double>::max();
   size_type iter = 0;
   for(; conv == SolverControl::iterate; iter++)
     {
@@ -341,9 +341,9 @@ EigenInverse<VectorType>::solve(double&           value,
 
       // do a little trick to compute the sign
       // with not too much effect of round-off errors.
-      double    entry  = 0.;
-      size_type i      = 0;
-      double    thresh = length / x.size();
+      double entry  = 0.;
+      size_type i   = 0;
+      double thresh = length / x.size();
       do
         {
           Assert(i < x.size(), ExcInternalError());
@@ -358,7 +358,7 @@ EigenInverse<VectorType>::solve(double&           value,
 
       if(iter == goal)
         {
-          const auto&  relaxation = additional_data.relaxation;
+          const auto& relaxation = additional_data.relaxation;
           const double new_shift
             = relaxation * (-value) + (1. - relaxation) * current_shift;
 

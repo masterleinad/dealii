@@ -176,7 +176,7 @@ public:
    */
   void
   declare_data_vector(const std::vector<std::string>& name,
-                      const VectorType                vector_type);
+                      const VectorType vector_type);
 
   /**
    * Add a data vector for the presently set value of the parameter.
@@ -221,7 +221,7 @@ public:
    */
   template <typename number>
   void
-  add_data_vector(const Vector<number>&           vec,
+  add_data_vector(const Vector<number>& vec,
                   const std::vector<std::string>& names);
 
   /**

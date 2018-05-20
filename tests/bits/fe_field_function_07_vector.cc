@@ -68,7 +68,7 @@ test()
   triangulation.set_manifold(0, boundary_description);
   triangulation.refine_global(1);
 
-  FESystem<dim>   fe(FE_Q<dim>(2), 2);
+  FESystem<dim> fe(FE_Q<dim>(2), 2);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

@@ -33,12 +33,12 @@ plot_FE_TraceQ_shape_functions()
   FE_TraceQ<dim> tq2(2);
   FE_TraceQ<dim> tq3(3);
   FE_TraceQ<dim> tq4(4);
-  FE_Q<dim>      q1(1);
-  FE_Q<dim>      q2(2);
-  FESystem<dim>  sys1(tq1, 1);
-  FESystem<dim>  sys2(tq2, 1);
-  FESystem<dim>  sys11(tq1, 1, q1, 1);
-  FESystem<dim>  sys22(tq2, 1, q2, 1);
+  FE_Q<dim> q1(1);
+  FE_Q<dim> q2(2);
+  FESystem<dim> sys1(tq1, 1);
+  FESystem<dim> sys2(tq2, 1);
+  FESystem<dim> sys11(tq1, 1, q1, 1);
+  FESystem<dim> sys22(tq2, 1, q2, 1);
   plot_face_shape_functions(m, tq1, "TraceQ1", update_values);
   plot_face_shape_functions(m, tq2, "TraceQ2", update_values);
   plot_face_shape_functions(m, tq3, "TraceQ3", update_values);
@@ -53,7 +53,7 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog << std::setprecision(PRECISION) << std::fixed;
   deallog.attach(logfile);
 

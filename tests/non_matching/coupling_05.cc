@@ -58,7 +58,7 @@ test()
 
   const auto& comm = MPI_COMM_WORLD;
 
-  parallel::shared::Triangulation<dim, spacedim>           tria(comm);
+  parallel::shared::Triangulation<dim, spacedim> tria(comm);
   parallel::distributed::Triangulation<spacedim, spacedim> space_tria(comm);
 
   GridGenerator::hyper_cube(tria, -.4, .3);
@@ -67,13 +67,13 @@ test()
   tria.refine_global(3);
   space_tria.refine_global(3);
 
-  FE_Q<dim, spacedim>      fe(2);
+  FE_Q<dim, spacedim> fe(2);
   FE_Q<spacedim, spacedim> space_fe(2);
 
   deallog << "FE      : " << fe.get_name() << std::endl
           << "Space FE: " << space_fe.get_name() << std::endl;
 
-  DoFHandler<dim, spacedim>      dh(tria);
+  DoFHandler<dim, spacedim> dh(tria);
   DoFHandler<spacedim, spacedim> space_dh(space_tria);
 
   dh.distribute_dofs(fe);
@@ -107,11 +107,11 @@ test()
   TrilinosWrappers::SparseMatrix mass_matrix(mass_sparsity);
 
   {
-    QGauss<dim>             quad(4);
+    QGauss<dim> quad(4);
     FEValues<dim, spacedim> fev(fe, quad, update_values | update_JxW_values);
     std::vector<types::global_dof_index> dofs(fe.dofs_per_cell);
     FullMatrix<double> cell_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
-    ConstraintMatrix   constraints;
+    ConstraintMatrix constraints;
 
     for(auto cell : dh.active_cell_iterators())
       if(cell->is_locally_owned())
@@ -143,8 +143,8 @@ test()
 
   coupling.Tvmult(Mprojected_squares, space_square);
 
-  SolverControl                     cn(100, 1e-12);
-  TrilinosWrappers::SolverCG        solver(cn);
+  SolverControl cn(100, 1e-12);
+  TrilinosWrappers::SolverCG solver(cn);
   TrilinosWrappers::PreconditionILU prec;
   prec.initialize(mass_matrix);
 
@@ -160,7 +160,7 @@ test()
 int
 main(int argc, char** argv)
 {
-  auto          init = Utilities::MPI::MPI_InitFinalize(argc, argv, 1);
+  auto init = Utilities::MPI::MPI_InitFinalize(argc, argv, 1);
   MPILogInitAll log(true);
   test<1, 2>();
   test<2, 2>();

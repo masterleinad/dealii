@@ -27,7 +27,7 @@
 
 template <int dim>
 void
-compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
+compare_meshes(parallel::shared::Triangulation<dim>& shared_tria,
                parallel::distributed::Triangulation<dim>& p4est_tria)
 {
   AssertThrow(shared_tria.n_locally_owned_active_cells()
@@ -35,7 +35,7 @@ compare_meshes(parallel::shared::Triangulation<dim>&      shared_tria,
               ExcMessage("Subdomains are of different sizes."))
 
     std::map<CellId, unsigned int>
-                                 shared_map;
+      shared_map;
   std::map<CellId, unsigned int> p4est_map;
 
   typename Triangulation<dim>::active_cell_iterator cell1
@@ -138,7 +138,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    all;
+  MPILogInitAll all;
 
   deallog.push("2d");
   test<2>();

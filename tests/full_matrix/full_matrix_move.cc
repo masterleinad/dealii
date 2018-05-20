@@ -24,7 +24,7 @@ main()
 {
   initlog();
 
-  size_t             m = 2, n = 3;
+  size_t m = 2, n = 3;
   FullMatrix<double> A(m, n);
   for(size_t i = 0; i < m; ++i)
     for(size_t j = 0; j < n; ++j)

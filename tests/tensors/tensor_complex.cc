@@ -35,7 +35,7 @@ main()
                               {{45, -3}, {57, 0}, {69, 15}},
                               {{75, 12}, {96, 21}, {108, 48}}};
 
-  const unsigned int   dim = 3;
+  const unsigned int dim = 3;
   std::complex<double> a[dim][dim], b[dim][dim];
   for(unsigned int d = 0; d < dim; ++d)
     for(unsigned int e = 0; e < dim; ++e)

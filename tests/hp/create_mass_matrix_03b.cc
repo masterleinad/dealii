@@ -83,7 +83,7 @@ check()
   // formula suited to the elements
   // we have here
   MappingQ<dim> mapping(3);
-  QGauss<dim>   quadrature(6);
+  QGauss<dim> quadrature(6);
 
   // create sparsity pattern. note
   // that different components should

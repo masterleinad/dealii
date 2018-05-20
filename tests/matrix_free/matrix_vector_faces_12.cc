@@ -115,7 +115,7 @@ public:
 
     const double gamma      = gamma_x(xi[0]);
     const double tanh_gamma = std::tanh(gamma);
-    double       s_y
+    double s_y
       = std::tanh(gamma * (2.0 * ((xi[1] - y_FoR) / y_max) - 1.0)) / tanh_gamma;
     double t_y
       = std::tanh(gamma * (2.0 * (1.0 - (xi[1] - y_FoR) / y_max) - 1.0))
@@ -139,8 +139,8 @@ public:
     // y component
     unsigned int iter    = 0;
     unsigned int maxiter = 100;
-    double       tol     = 1.0e-14;
-    double       eps     = 1.;
+    double tol           = 1.0e-14;
+    double eps           = 1.;
 
     // get a good estimate for Y (pullBack without stretching the cells)
     double Y = 0.0;
@@ -230,7 +230,7 @@ test()
   Triangulation<dim> triangulation;
   /* --------------- Generate grid ------------------- */
   const double h = 0.028;
-  Point<dim>   coordinates;
+  Point<dim> coordinates;
   coordinates[0] = 9.0 * h;   //9.0*h;
   coordinates[1] = 3.036 * h; //2.036*h;
   if(dim == 3)
@@ -284,7 +284,7 @@ test()
   triangulation.set_manifold(111, manifold);
   triangulation.refine_global(2);
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof(triangulation);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;

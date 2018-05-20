@@ -327,9 +327,9 @@ namespace Step53
   Point<3>
   AfricaGeometry::push_forward_topo(const Point<3>& phi_theta_d_hat) const
   {
-    const double   d_hat = phi_theta_d_hat[2];
-    const double   h = topography.value(phi_theta_d_hat[0], phi_theta_d_hat[1]);
-    const double   d = d_hat + (d_hat + 500000) / 500000 * h;
+    const double d_hat = phi_theta_d_hat[2];
+    const double h = topography.value(phi_theta_d_hat[0], phi_theta_d_hat[1]);
+    const double d = d_hat + (d_hat + 500000) / 500000 * h;
     const Point<3> phi_theta_d(phi_theta_d_hat[0], phi_theta_d_hat[1], d);
     return phi_theta_d;
   }
@@ -337,9 +337,9 @@ namespace Step53
   Point<3>
   AfricaGeometry::pull_back_topo(const Point<3>& phi_theta_d) const
   {
-    const double   d     = phi_theta_d[2];
-    const double   h     = topography.value(phi_theta_d[0], phi_theta_d[1]);
-    const double   d_hat = 500000 * (d - h) / (500000 + h);
+    const double d     = phi_theta_d[2];
+    const double h     = topography.value(phi_theta_d[0], phi_theta_d[1]);
+    const double d_hat = 500000 * (d - h) / (500000 + h);
     const Point<3> phi_theta_d_hat(phi_theta_d[0], phi_theta_d[1], d_hat);
     return phi_theta_d_hat;
   }
@@ -374,7 +374,7 @@ namespace Step53
   void
   run()
   {
-    AfricaGeometry   geometry;
+    AfricaGeometry geometry;
     Triangulation<3> triangulation;
 
     {
@@ -442,8 +442,8 @@ namespace Step53
 
     // Having done this all, we can now output the mesh into a file of its own:
     const std::string filename = "mesh.vtu";
-    std::ofstream     out(filename);
-    GridOut           grid_out;
+    std::ofstream out(filename);
+    GridOut grid_out;
     grid_out.write_vtu(triangulation, out);
   }
 } // namespace Step53

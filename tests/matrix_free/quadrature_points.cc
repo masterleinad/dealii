@@ -41,9 +41,9 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  typedef double               number;
+  typedef double number;
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -54,8 +54,8 @@ test()
   tria.set_manifold(0, manifold);
   tria.refine_global(5 - dim);
 
-  MappingQ<dim>   mapping(4);
-  FE_Q<dim>       fe(fe_degree);
+  MappingQ<dim> mapping(4);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   deallog << "Testing " << fe.get_name() << std::endl;
@@ -68,17 +68,17 @@ test()
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.mapping_update_flags  = update_quadrature_points;
     mf_data.reinit(mapping, dof, constraints, quad, data);
   }
 
-  double                       error_points = 0, abs_points = 0;
-  const unsigned int           n_cells = mf_data.n_macro_cells();
+  double error_points = 0, abs_points = 0;
+  const unsigned int n_cells = mf_data.n_macro_cells();
   FEEvaluation<dim, fe_degree> fe_eval(mf_data);
-  FEValues<dim>                fe_values(
+  FEValues<dim> fe_values(
     mapping, fe, mf_data.get_quadrature(), update_quadrature_points);
 
   typedef VectorizedArray<double> vector_t;

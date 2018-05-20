@@ -41,7 +41,7 @@ template <class InputVector, typename number>
 void
 DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
   const InputVector& values,
-  Vector<number>&    interpolated_values,
+  Vector<number>& interpolated_values,
   const unsigned int fe_index) const
 {
   if(!this->has_children())

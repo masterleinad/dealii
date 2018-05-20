@@ -51,12 +51,12 @@ test(const unsigned int degree)
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe_rt_bubbles);
 
-  QTrapez<1>         q_trapez;
+  QTrapez<1> q_trapez;
   const unsigned int div = 4;
-  QIterated<dim>     q(q_trapez, div);
+  QIterated<dim> q(q_trapez, div);
 
   const unsigned int dofs_per_cell = fe_rt_bubbles.dofs_per_cell;
-  SparsityPattern    sp(dofs_per_cell, dofs_per_cell, dofs_per_cell);
+  SparsityPattern sp(dofs_per_cell, dofs_per_cell, dofs_per_cell);
   for(unsigned int i = 0; i < dofs_per_cell; ++i)
     for(unsigned int j = 0; j < dofs_per_cell; ++j)
       sp.add(i, j);
@@ -67,9 +67,9 @@ test(const unsigned int degree)
 
   mass_matrix.print_formatted(logfile, 3, false, 0, "0", 1);
 
-  SolverControl           solver_control(3 * dofs_per_cell, 1e-8);
+  SolverControl solver_control(3 * dofs_per_cell, 1e-8);
   PrimitiveVectorMemory<> vector_memory;
-  SolverCG<>              solver(solver_control, vector_memory);
+  SolverCG<> solver(solver_control, vector_memory);
 
   Vector<double> tmp1(dofs_per_cell), tmp2(dofs_per_cell);
   for(unsigned int i = 0; i < dofs_per_cell; ++i)

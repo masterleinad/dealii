@@ -112,7 +112,7 @@ ExceptionBase::~ExceptionBase() noexcept
 
 void
 ExceptionBase::set_fields(const char* f,
-                          const int   l,
+                          const int l,
                           const char* func,
                           const char* c,
                           const char* e)
@@ -231,7 +231,7 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
       // the stacktrace frame is actually of the format
       // "filename(functionname+offset) [address]". let's try to get the
       // mangled functionname out:
-      std::string        stacktrace_entry(stacktrace[frame]);
+      std::string stacktrace_entry(stacktrace[frame]);
       const unsigned int pos_start = stacktrace_entry.find('('),
                          pos_end   = stacktrace_entry.find('+');
       std::string functionname
@@ -245,7 +245,7 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
       // differently, since it is apparently demangled as "unsigned int"
       // for unknown reasons :-) if we can, demangle the function name
 #ifdef DEAL_II_HAVE_LIBSTDCXX_DEMANGLER
-      int   status;
+      int status;
       char* p
         = abi::__cxa_demangle(functionname.c_str(), nullptr, nullptr, &status);
 

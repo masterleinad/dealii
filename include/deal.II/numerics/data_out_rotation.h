@@ -37,14 +37,14 @@ namespace internal
     struct ParallelData
       : public internal::DataOutImplementation::ParallelDataBase<dim, spacedim>
     {
-      ParallelData(const unsigned int               n_datasets,
-                   const unsigned int               n_subdivisions,
-                   const unsigned int               n_patches_per_circle,
+      ParallelData(const unsigned int n_datasets,
+                   const unsigned int n_subdivisions,
+                   const unsigned int n_patches_per_circle,
                    const std::vector<unsigned int>& n_postprocessor_outputs,
-                   const Mapping<dim, spacedim>&    mapping,
+                   const Mapping<dim, spacedim>& mapping,
                    const std::vector<
                      std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                                     finite_elements,
+                     finite_elements,
                    const UpdateFlags update_flags);
 
       const unsigned int n_patches_per_circle;

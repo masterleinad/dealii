@@ -31,9 +31,9 @@ test(PETScWrappers::MatrixBase& m)
   typedef PETScWrappers::MatrixBase::size_type size_type;
 
   // build a tri-diagonal pattern
-  double          norm_sqr = 0;
-  unsigned int    nnz      = 0;
-  const size_type N        = m.m();
+  double norm_sqr   = 0;
+  unsigned int nnz  = 0;
+  const size_type N = m.m();
   for(size_type i = 0; i < N; ++i)
     {
       if(i >= 5)

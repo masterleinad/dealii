@@ -235,7 +235,7 @@ namespace Rol
      */
     void
     applyBinary(const ROL::Elementwise::BinaryFunction<value_type>& f,
-                const ROL::Vector<value_type>&                      rol_vector);
+                const ROL::Vector<value_type>& rol_vector);
 
     /**
      * Return the accumulated value on applying reduction operation @p r on
@@ -299,7 +299,7 @@ namespace Rol
 
   template <typename VectorType>
   void
-  VectorAdaptor<VectorType>::axpy(const value_type               alpha,
+  VectorAdaptor<VectorType>::axpy(const value_type alpha,
                                   const ROL::Vector<value_type>& rol_vector)
   {
     Assert(this->dimension() == rol_vector.dimension(),
@@ -397,7 +397,7 @@ namespace Rol
   void
   VectorAdaptor<VectorType>::applyBinary(
     const ROL::Elementwise::BinaryFunction<value_type>& f,
-    const ROL::Vector<value_type>&                      rol_vector)
+    const ROL::Vector<value_type>& rol_vector)
   {
     Assert(this->dimension() == rol_vector.dimension(),
            ExcDimensionMismatch(this->dimension(), rol_vector.dimension()));
@@ -407,7 +407,7 @@ namespace Rol
 
     const VectorType& given_rol_vector = *(vector_adaptor.getVector());
 
-    const typename VectorType::iterator       vend   = vector_ptr->end();
+    const typename VectorType::iterator vend         = vector_ptr->end();
     const typename VectorType::const_iterator rolend = given_rol_vector.end();
 
     typename VectorType::const_iterator r_iterator = given_rol_vector.begin();

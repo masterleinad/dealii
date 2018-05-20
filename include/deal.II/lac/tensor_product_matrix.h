@@ -101,7 +101,7 @@ public:
    * array bounds with respect to @p dst and @p src.
    */
   void
-  apply_inverse(const ArrayView<Number>&       dst,
+  apply_inverse(const ArrayView<Number>& dst,
                 const ArrayView<const Number>& src) const;
 
 protected:
@@ -392,17 +392,17 @@ namespace internal
      */
     template <typename Number>
     void
-    spectral_assembly(const Number*      mass_matrix,
-                      const Number*      derivative_matrix,
+    spectral_assembly(const Number* mass_matrix,
+                      const Number* derivative_matrix,
                       const unsigned int n_rows,
                       const unsigned int n_cols,
-                      Number*            eigenvalues,
-                      Number*            eigenvectors)
+                      Number* eigenvalues,
+                      Number* eigenvectors)
     {
       Assert(n_rows == n_cols, ExcNotImplemented());
 
-      auto&& transpose_fill_nm = [](Number*            out,
-                                    const Number*      in,
+      auto&& transpose_fill_nm = [](Number* out,
+                                    const Number* in,
                                     const unsigned int n,
                                     const unsigned int m) {
         for(unsigned int mm = 0; mm < m; ++mm)
@@ -411,8 +411,8 @@ namespace internal
       };
 
       std::vector<dealii::Vector<Number>> eigenvecs(n_rows);
-      LAPACKFullMatrix<Number>            mass_copy(n_rows, n_cols);
-      LAPACKFullMatrix<Number>            deriv_copy(n_rows, n_cols);
+      LAPACKFullMatrix<Number> mass_copy(n_rows, n_cols);
+      LAPACKFullMatrix<Number> deriv_copy(n_rows, n_cols);
 
       transpose_fill_nm(&(mass_copy(0, 0)), mass_matrix, n_rows, n_cols);
       transpose_fill_nm(&(deriv_copy(0, 0)), derivative_matrix, n_rows, n_cols);
@@ -453,13 +453,13 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::n() const
 template <int dim, typename Number, int size>
 inline void
 TensorProductMatrixSymmetricSumBase<dim, Number, size>::vmult(
-  const ArrayView<Number>&       dst_view,
+  const ArrayView<Number>& dst_view,
   const ArrayView<const Number>& src_view) const
 {
   AssertDimension(dst_view.size(), this->m());
   AssertDimension(src_view.size(), this->n());
   Threads::Mutex::ScopedLock lock(this->mutex);
-  const unsigned int         n
+  const unsigned int n
     = Utilities::fixed_power<dim>(size > 0 ? size : eigenvalues[0].size());
   tmp_array.resize_fast(n * 2);
   constexpr int kernel_size = size > 0 ? size : 0;
@@ -468,14 +468,14 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::vmult(
                                    kernel_size,
                                    kernel_size,
                                    Number>
-                eval(AlignedVector<Number>{},
+    eval(AlignedVector<Number>{},
          AlignedVector<Number>{},
          AlignedVector<Number>{},
          mass_matrix[0].n_rows(),
          mass_matrix[0].n_rows());
-  Number*       t   = tmp_array.begin();
+  Number* t         = tmp_array.begin();
   const Number* src = src_view.begin();
-  Number*       dst = &(dst_view[0]);
+  Number* dst       = &(dst_view[0]);
 
   if(dim == 1)
     {
@@ -519,13 +519,13 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::vmult(
 template <int dim, typename Number, int size>
 inline void
 TensorProductMatrixSymmetricSumBase<dim, Number, size>::apply_inverse(
-  const ArrayView<Number>&       dst_view,
+  const ArrayView<Number>& dst_view,
   const ArrayView<const Number>& src_view) const
 {
   AssertDimension(dst_view.size(), this->n());
   AssertDimension(src_view.size(), this->m());
   Threads::Mutex::ScopedLock lock(this->mutex);
-  const unsigned int         n = size > 0 ? size : eigenvalues[0].size();
+  const unsigned int n = size > 0 ? size : eigenvalues[0].size();
   tmp_array.resize_fast(Utilities::fixed_power<dim>(n));
   constexpr int kernel_size = size > 0 ? size : 0;
   internal::EvaluatorTensorProduct<internal::evaluate_general,
@@ -533,14 +533,14 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::apply_inverse(
                                    kernel_size,
                                    kernel_size,
                                    Number>
-                eval(AlignedVector<Number>(),
+    eval(AlignedVector<Number>(),
          AlignedVector<Number>(),
          AlignedVector<Number>(),
          mass_matrix[0].n_rows(),
          mass_matrix[0].n_rows());
-  Number*       t   = tmp_array.begin();
+  Number* t         = tmp_array.begin();
   const Number* src = src_view.data();
-  Number*       dst = &(dst_view[0]);
+  Number* dst       = &(dst_view[0]);
 
   // NOTE: dof_to_quad has to be interpreted as 'dof to eigenvalue index'
   //       --> apply<.,true,.> (S,src,dst) calculates dst = S^T * src,
@@ -737,7 +737,7 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
   this->derivative_matrix  = derivative_matrix;
 
   constexpr unsigned int macro_size = VectorizedArray<Number>::n_array_elements;
-  std::size_t            n_rows_max = (size > 0) ? size : 0;
+  std::size_t n_rows_max            = (size > 0) ? size : 0;
   if(size == -1)
     for(unsigned int d = 0; d < dim; ++d)
       n_rows_max = std::max(n_rows_max, mass_matrix[d].n_rows());
@@ -784,10 +784,10 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
                                      offsets_nm.cbegin(),
                                      deriv_matrix_flat.data());
 
-      const Number* mass_cbegin    = mass_matrix_flat.data();
-      const Number* deriv_cbegin   = deriv_matrix_flat.data();
-      Number*       eigenvec_begin = eigenvectors_flat.data();
-      Number*       eigenval_begin = eigenvalues_flat.data();
+      const Number* mass_cbegin  = mass_matrix_flat.data();
+      const Number* deriv_cbegin = deriv_matrix_flat.data();
+      Number* eigenvec_begin     = eigenvectors_flat.data();
+      Number* eigenval_begin     = eigenvalues_flat.data();
       for(unsigned int lane = 0; lane < macro_size; ++lane)
         internal::TensorProductMatrix ::spectral_assembly<Number>(
           mass_cbegin + nm * lane,

@@ -44,8 +44,8 @@ main()
   const unsigned int dim = 1;
 
   Triangulation<dim, dim + 1> triangulation;
-  FESystem<dim, dim + 1>      fe(FE_Q<dim, dim + 1>(1), dim + 1);
-  DoFHandler<dim, dim + 1>    dof_handler(triangulation);
+  FESystem<dim, dim + 1> fe(FE_Q<dim, dim + 1>(1), dim + 1);
+  DoFHandler<dim, dim + 1> dof_handler(triangulation);
 
   Vector<double> soln;
 
@@ -58,9 +58,9 @@ main()
   soln.reinit(dof_handler.n_dofs());
   soln = 1;
 
-  std::vector<Tensor<1, dim + 1>>                local_velocity_values(1);
-  const FEValuesExtractors::Vector               velocities(0);
-  QGauss<dim>                                    quadrature_formula(1);
+  std::vector<Tensor<1, dim + 1>> local_velocity_values(1);
+  const FEValuesExtractors::Vector velocities(0);
+  QGauss<dim> quadrature_formula(1);
   DoFHandler<dim, dim + 1>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();

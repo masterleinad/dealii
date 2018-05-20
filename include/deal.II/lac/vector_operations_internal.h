@@ -83,7 +83,7 @@ namespace internal
     void
     copy(const std::complex<T>* begin,
          const std::complex<T>* end,
-         std::complex<U>*       dest)
+         std::complex<U>* dest)
     {
       std::copy(begin, end, dest);
     }
@@ -109,7 +109,7 @@ namespace internal
     template <typename Functor>
     struct TBBForFunctor
     {
-      TBBForFunctor(Functor&        functor,
+      TBBForFunctor(Functor& functor,
                     const size_type start,
                     const size_type end)
         : functor(functor), start(start), end(end)
@@ -142,20 +142,20 @@ namespace internal
         functor(r_begin, r_end);
       }
 
-      Functor&        functor;
+      Functor& functor;
       const size_type start;
       const size_type end;
-      unsigned int    n_chunks;
-      size_type       chunk_size;
+      unsigned int n_chunks;
+      size_type chunk_size;
     };
 #endif
 
     template <typename Functor>
     void
     parallel_for(
-      Functor&                                             functor,
-      size_type                                            start,
-      size_type                                            end,
+      Functor& functor,
+      size_type start,
+      size_type end,
       std::shared_ptr<parallel::internal::TBBPartitioner>& partitioner)
     {
 #ifdef DEAL_II_WITH_THREADS
@@ -219,7 +219,7 @@ namespace internal
         std::fill(dst + begin, dst + end, value);
       }
 
-      const Number  value;
+      const Number value;
       Number* const dst;
     };
 
@@ -259,7 +259,7 @@ namespace internal
       }
 
       const OtherNumber* const src;
-      Number* const            dst;
+      Number* const dst;
     };
 
     template <typename Number>
@@ -286,7 +286,7 @@ namespace internal
       }
 
       Number* val;
-      Number  factor;
+      Number factor;
     };
 
     template <typename Number>
@@ -314,7 +314,7 @@ namespace internal
 
       Number* val;
       Number* v_val;
-      Number  factor;
+      Number factor;
     };
 
     template <typename Number>
@@ -342,8 +342,8 @@ namespace internal
 
       Number* val;
       Number* v_val;
-      Number  a;
-      Number  x;
+      Number a;
+      Number x;
     };
 
     template <typename Number>
@@ -397,7 +397,7 @@ namespace internal
       }
 
       Number* val;
-      Number  factor;
+      Number factor;
     };
 
     template <typename Number>
@@ -432,8 +432,8 @@ namespace internal
       Vectorization_add_avpbw(Number* val,
                               Number* v_val,
                               Number* w_val,
-                              Number  a,
-                              Number  b)
+                              Number a,
+                              Number b)
         : val(val), v_val(v_val), w_val(w_val), a(a), b(b)
       {}
 
@@ -456,8 +456,8 @@ namespace internal
       Number* val;
       Number* v_val;
       Number* w_val;
-      Number  a;
-      Number  b;
+      Number a;
+      Number b;
     };
 
     template <typename Number>
@@ -485,7 +485,7 @@ namespace internal
 
       Number* val;
       Number* v_val;
-      Number  x;
+      Number x;
     };
 
     template <typename Number>
@@ -494,9 +494,9 @@ namespace internal
       Vectorization_sadd_xavbw(Number* val,
                                Number* v_val,
                                Number* w_val,
-                               Number  x,
-                               Number  a,
-                               Number  b)
+                               Number x,
+                               Number a,
+                               Number b)
         : val(val), v_val(v_val), w_val(w_val), x(x), a(a), b(b)
       {}
 
@@ -519,9 +519,9 @@ namespace internal
       Number* val;
       Number* v_val;
       Number* w_val;
-      Number  x;
-      Number  a;
-      Number  b;
+      Number x;
+      Number a;
+      Number b;
     };
 
     template <typename Number>
@@ -575,7 +575,7 @@ namespace internal
 
       Number* val;
       Number* u_val;
-      Number  a;
+      Number a;
     };
 
     template <typename Number>
@@ -584,8 +584,8 @@ namespace internal
       Vectorization_equ_aubv(Number* val,
                              Number* u_val,
                              Number* v_val,
-                             Number  a,
-                             Number  b)
+                             Number a,
+                             Number b)
         : val(val), u_val(u_val), v_val(v_val), a(a), b(b)
       {}
 
@@ -608,8 +608,8 @@ namespace internal
       Number* val;
       Number* u_val;
       Number* v_val;
-      Number  a;
-      Number  b;
+      Number a;
+      Number b;
     };
 
     template <typename Number>
@@ -619,9 +619,9 @@ namespace internal
                                Number* u_val,
                                Number* v_val,
                                Number* w_val,
-                               Number  a,
-                               Number  b,
-                               Number  c)
+                               Number a,
+                               Number b,
+                               Number c)
         : val(val), u_val(u_val), v_val(v_val), w_val(w_val), a(a), b(b), c(c)
       {}
 
@@ -645,9 +645,9 @@ namespace internal
       Number* u_val;
       Number* v_val;
       Number* w_val;
-      Number  a;
-      Number  b;
-      Number  c;
+      Number a;
+      Number b;
+      Number c;
     };
 
     template <typename Number>
@@ -719,7 +719,7 @@ namespace internal
         return x * y;
       }
 
-      const Number*  X;
+      const Number* X;
       const Number2* Y;
     };
 
@@ -799,7 +799,7 @@ namespace internal
       }
 
       const Number* X;
-      RealType      p;
+      RealType p;
     };
 
     template <typename Number>
@@ -870,9 +870,9 @@ namespace internal
         return x * w;
       }
 
-      Number*       X;
+      Number* X;
       const Number *V, *W;
-      Number        a;
+      Number a;
     };
 
     // this is the main working loop for all vector sums using the templated
@@ -918,9 +918,9 @@ namespace internal
     template <typename Operation, typename ResultType>
     void
     accumulate_recursive(const Operation& op,
-                         const size_type  first,
-                         const size_type  last,
-                         ResultType&      result)
+                         const size_type first,
+                         const size_type last,
+                         ResultType& result)
     {
       const size_type vec_size = last - first;
       if(vec_size <= vector_accumulation_recursion_threshold * 32)
@@ -928,7 +928,7 @@ namespace internal
           // the vector is short enough so we perform the summation. first
           // work on the regular part. The innermost 32 values are expanded in
           // order to obtain known loop bounds for most of the work.
-          size_type  index = first;
+          size_type index = first;
           ResultType outer_results[vector_accumulation_recursion_threshold];
 
           // set the zeroth element to zero to correctly handle the case where
@@ -939,7 +939,7 @@ namespace internal
           // for the given size; all results are stored in outer_results[0,n_chunks)
           // (ii) in the SIMD case n_chunks is also a next free index in outer_results[]
           // to which we can write after accumulate_regular() is executed.
-          size_type       n_chunks  = vec_size / 32;
+          size_type n_chunks        = vec_size / 32;
           const size_type remainder = vec_size % 32;
           Assert(remainder == 0
                    || n_chunks < vector_accumulation_recursion_threshold,
@@ -970,7 +970,7 @@ namespace internal
               const size_type inner_chunks = remainder / 8;
               Assert(inner_chunks <= 3, ExcInternalError());
               const size_type remainder_inner = remainder % 8;
-              ResultType      r0 = ResultType(), r1 = ResultType(),
+              ResultType r0 = ResultType(), r1 = ResultType(),
                          r2 = ResultType();
               switch(inner_chunks)
                 {
@@ -1050,8 +1050,8 @@ namespace internal
     void
     accumulate_regular(
       const Operation& op,
-      size_type&       n_chunks,
-      size_type&       index,
+      size_type& n_chunks,
+      size_type& index,
       ResultType (&outer_results)[vector_accumulation_recursion_threshold],
       std::integral_constant<bool, false>)
     {
@@ -1086,8 +1086,8 @@ namespace internal
     void
     accumulate_regular(
       const Operation& op,
-      size_type&       n_chunks,
-      size_type&       index,
+      size_type& n_chunks,
+      size_type& index,
       Number (&outer_results)[vector_accumulation_recursion_threshold],
       std::integral_constant<bool, true>)
     {
@@ -1098,7 +1098,7 @@ namespace internal
       // nvecs*(4*8) elements.
 
       const unsigned int nvecs = VectorizedArray<Number>::n_array_elements;
-      const size_type    regular_chunks = n_chunks / nvecs;
+      const size_type regular_chunks = n_chunks / nvecs;
       for(size_type i = 0; i < regular_chunks; ++i)
         {
           VectorizedArray<Number> r0 = op.do_vectorized(index);
@@ -1181,8 +1181,8 @@ namespace internal
       static const unsigned int threshold_array_allocate = 512;
 
       TBBReduceFunctor(const Operation& op,
-                       const size_type  start,
-                       const size_type  end)
+                       const size_type start,
+                       const size_type end)
         : op(op), start(start), end(end)
       {
         const size_type vec_size = end - start;
@@ -1244,12 +1244,12 @@ namespace internal
       }
 
       const Operation& op;
-      const size_type  start;
-      const size_type  end;
+      const size_type start;
+      const size_type end;
 
-      mutable unsigned int    n_chunks;
-      unsigned int            chunk_size;
-      ResultType              small_array[threshold_array_allocate];
+      mutable unsigned int n_chunks;
+      unsigned int chunk_size;
+      ResultType small_array[threshold_array_allocate];
       std::vector<ResultType> large_array;
       // this variable either points to small_array or large_array depending on
       // the number of threads we want to feed
@@ -1264,10 +1264,10 @@ namespace internal
     template <typename Operation, typename ResultType>
     void
     parallel_reduce(
-      const Operation&                                     op,
-      const size_type                                      start,
-      const size_type                                      end,
-      ResultType&                                          result,
+      const Operation& op,
+      const size_type start,
+      const size_type end,
+      ResultType& result,
       std::shared_ptr<parallel::internal::TBBPartitioner>& partitioner)
     {
 #ifdef DEAL_II_WITH_THREADS

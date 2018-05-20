@@ -88,11 +88,11 @@ namespace Maxwell
 
     virtual void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   values) const;
+                      std::vector<Vector<double>>& values) const;
 
     void
     curl_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   value_list);
+                    std::vector<Vector<double>>& value_list);
   };
 
   template <int dim>
@@ -102,7 +102,7 @@ namespace Maxwell
   void
   ExactSolution<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    std::vector<Vector<double>>& value_list) const
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
@@ -122,7 +122,7 @@ namespace Maxwell
   template <int dim>
   void
   ExactSolution<dim>::curl_value_list(const std::vector<Point<dim>>& points,
-                                      std::vector<Vector<double>>&   value_list)
+                                      std::vector<Vector<double>>& value_list)
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
@@ -163,15 +163,15 @@ namespace Maxwell
     double
     calcErrorHcurlNorm();
 
-    Triangulation<dim>   triangulation;
-    MappingQ<dim>        mapping;
-    DoFHandler<dim>      dof_handler;
-    FE_Nedelec<dim>      fe;
-    ConstraintMatrix     constraints;
-    SparsityPattern      sparsity_pattern;
+    Triangulation<dim> triangulation;
+    MappingQ<dim> mapping;
+    DoFHandler<dim> dof_handler;
+    FE_Nedelec<dim> fe;
+    ConstraintMatrix constraints;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
-    Vector<double>       solution;
-    Vector<double>       system_rhs;
+    Vector<double> solution;
+    Vector<double> system_rhs;
 
     ConvergenceTable convergence_table;
 
@@ -198,7 +198,7 @@ namespace Maxwell
   double
   MaxwellProblem<dim>::calcErrorHcurlNorm()
   {
-    QGauss<dim>        quadrature_formula(quad_order);
+    QGauss<dim> quadrature_formula(quad_order);
     const unsigned int n_q_points = quadrature_formula.size();
 
     FEValues<dim> fe_values(mapping,
@@ -224,7 +224,7 @@ namespace Maxwell
 
     // storage for computed sol:
     std::vector<Tensor<1, dim>> sol(n_q_points);
-    Tensor<1, dim>              curlsol;
+    Tensor<1, dim> curlsol;
 
     double h_curl_norm = 0.0;
 
@@ -304,7 +304,7 @@ namespace Maxwell
   void
   MaxwellProblem<dim>::assemble_system()
   {
-    QGauss<dim>     quadrature_formula(quad_order);
+    QGauss<dim> quadrature_formula(quad_order);
     QGauss<dim - 1> face_quadrature_formula(quad_order);
 
     const unsigned int n_q_points      = quadrature_formula.size();
@@ -330,7 +330,7 @@ namespace Maxwell
 
     // Local cell storage:
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     //RHS storage:

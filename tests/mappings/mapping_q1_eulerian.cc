@@ -45,15 +45,15 @@ show_values(FiniteElement<dim>& fe, const char* name)
   // construct the MappingQ1Eulerian
   // object
 
-  FESystem<dim>   mapping_fe(FE_Q<dim>(1), dim);
+  FESystem<dim> mapping_fe(FE_Q<dim>(1), dim);
   DoFHandler<dim> flowfield_dof_handler(tr);
   flowfield_dof_handler.distribute_dofs(mapping_fe);
-  Vector<double>         map_points(flowfield_dof_handler.n_dofs());
+  Vector<double> map_points(flowfield_dof_handler.n_dofs());
   MappingQ1Eulerian<dim> mapping(flowfield_dof_handler, map_points);
 
   QGauss<dim> quadrature_formula(2);
 
-  FEValues<dim>                           fe_values(mapping,
+  FEValues<dim> fe_values(mapping,
                           fe,
                           quadrature_formula,
                           UpdateFlags(update_values | update_JxW_values

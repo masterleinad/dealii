@@ -75,7 +75,7 @@ test_base()
 {
   deallog << "Test basic functions:" << std::endl;
   EnrichmentFunction<dim> function;
-  FE_Enriched<dim>        fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
+  FE_Enriched<dim> fe(FE_Q<dim>(1), FE_Q<dim>(1), &function);
   deallog << fe.get_name() << std::endl;
   deallog << fe.n_blocks() << std::endl;
   deallog << fe.n_components() << std::endl;

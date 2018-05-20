@@ -26,7 +26,7 @@ template <int dim>
 void
 test()
 {
-  FE_Q<dim>          fe(2);
+  FE_Q<dim> fe(2);
   const unsigned int dofs_per_face = fe.dofs_per_face;
 
   for(unsigned int face = 0; face < 4; ++face)

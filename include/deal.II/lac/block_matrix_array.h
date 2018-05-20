@@ -158,11 +158,11 @@ public:
    */
   template <typename MatrixType>
   void
-  enter(const MatrixType&  matrix,
+  enter(const MatrixType& matrix,
         const unsigned int row,
         const unsigned int col,
-        const number       prefix    = 1.,
-        const bool         transpose = false);
+        const number prefix  = 1.,
+        const bool transpose = false);
 
   /**
    * Delete all entries, i.e. reset the matrix to an empty state.
@@ -283,10 +283,10 @@ protected:
      */
     template <typename MatrixType>
     Entry(const MatrixType& matrix,
-          size_type         row,
-          size_type         col,
-          number            prefix,
-          bool              transpose);
+          size_type row,
+          size_type col,
+          number prefix,
+          bool transpose);
 
     /**
      * Copy constructor invalidating the old object. Since it is only used for
@@ -450,10 +450,10 @@ public:
   template <typename MatrixType>
   void
   enter(const MatrixType& matrix,
-        const size_type   row,
-        const size_type   col,
-        const number      prefix    = 1.,
-        const bool        transpose = false);
+        const size_type row,
+        const size_type col,
+        const number prefix  = 1.,
+        const bool transpose = false);
 
   /**
    * Preconditioning.
@@ -540,10 +540,10 @@ template <typename number, typename BlockVectorType>
 template <typename MatrixType>
 inline BlockMatrixArray<number, BlockVectorType>::Entry::Entry(
   const MatrixType& m,
-  size_type         row,
-  size_type         col,
-  number            prefix,
-  bool              transpose)
+  size_type row,
+  size_type col,
+  number prefix,
+  bool transpose)
   : row(row),
     col(col),
     prefix(prefix),
@@ -557,10 +557,10 @@ template <typename number, typename BlockVectorType>
 template <typename MatrixType>
 inline void
 BlockMatrixArray<number, BlockVectorType>::enter(const MatrixType& matrix,
-                                                 unsigned int      row,
-                                                 unsigned int      col,
-                                                 number            prefix,
-                                                 bool              transpose)
+                                                 unsigned int row,
+                                                 unsigned int col,
+                                                 number prefix,
+                                                 bool transpose)
 {
   Assert(row < n_block_rows(), ExcIndexRange(row, 0, n_block_rows()));
   Assert(col < n_block_cols(), ExcIndexRange(col, 0, n_block_cols()));
@@ -580,7 +580,7 @@ BlockMatrixArray<number, BlockVectorType>::print_latex(StreamType& out) const
   typedef std::map<
     const PointerMatrixBase<typename BlockVectorType::BlockType>*,
     std::string>
-          NameMap;
+    NameMap;
   NameMap matrix_names;
 
   typename std::vector<Entry>::const_iterator m   = entries.begin();
@@ -636,10 +636,10 @@ template <typename MatrixType>
 inline void
 BlockTrianglePrecondition<number, BlockVectorType>::enter(
   const MatrixType& matrix,
-  size_type         row,
-  size_type         col,
-  number            prefix,
-  bool              transpose)
+  size_type row,
+  size_type col,
+  number prefix,
+  bool transpose)
 {
   BlockMatrixArray<number, BlockVectorType>::enter(
     matrix, row, col, prefix, transpose);

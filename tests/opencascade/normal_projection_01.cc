@@ -46,7 +46,7 @@ main()
 {
   std::ofstream logfile("output");
 
-  gp_Pnt        center(.5, .5, .5);
+  gp_Pnt center(.5, .5, .5);
   Standard_Real radius(Point<3>().distance(point<3>(center)));
 
   TopoDS_Face face = BRepPrimAPI_MakeSphere(center, radius);

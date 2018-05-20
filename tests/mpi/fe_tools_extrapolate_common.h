@@ -84,7 +84,7 @@ make_tria()
 template <int dim>
 DoFHandler<dim>*
 make_dof_handler(const parallel::distributed::Triangulation<dim>& tria,
-                 const FiniteElement<dim>&                        fe)
+                 const FiniteElement<dim>& fe)
 {
   DoFHandler<dim>* dof_handler = new DoFHandler<dim>(tria);
   dof_handler->distribute_dofs(fe);
@@ -94,8 +94,8 @@ make_dof_handler(const parallel::distributed::Triangulation<dim>& tria,
 // output some indicators for a given vector
 template <unsigned int dim, typename VectorType>
 void
-output_vector(const VectorType&      v,
-              const std::string&     output_name,
+output_vector(const VectorType& v,
+              const std::string& output_name,
               const DoFHandler<dim>& dof_handler)
 {
   DataOut<dim> data_out;
@@ -171,7 +171,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 
   std::unique_ptr<DoFHandler<dim>> dof1(make_dof_handler(*tria, fe1));
   std::unique_ptr<DoFHandler<dim>> dof2(make_dof_handler(*tria, fe2));
-  ConstraintMatrix                 cm1;
+  ConstraintMatrix cm1;
   DoFTools::make_hanging_node_constraints(*dof1, cm1);
   cm1.close();
   ConstraintMatrix cm2;
@@ -301,7 +301,7 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 
   std::unique_ptr<DoFHandler<dim>> dof1(make_dof_handler(*tria, fe1));
   std::unique_ptr<DoFHandler<dim>> dof2(make_dof_handler(*tria, fe2));
-  ConstraintMatrix                 cm1;
+  ConstraintMatrix cm1;
   DoFTools::make_hanging_node_constraints(*dof1, cm1);
   cm1.close();
   ConstraintMatrix cm2;

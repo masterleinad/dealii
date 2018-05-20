@@ -30,7 +30,7 @@ main()
   // double radius = center.norm();
 
   {
-    Point<2>                      center(0.0, 0.0);
+    Point<2> center(0.0, 0.0);
     const SphericalManifold<2, 2> manifold(center);
 
     Point<2> P1(1.0, 0.0);
@@ -59,7 +59,7 @@ main()
   }
 
   {
-    Point<2>                      center(0.0, 0.0);
+    Point<2> center(0.0, 0.0);
     const SphericalManifold<1, 2> manifold(center);
 
     Point<2> P1(1.0, 0.0);
@@ -88,7 +88,7 @@ main()
   }
 
   {
-    Point<3>                      center(0.0, 0.0, 0.0);
+    Point<3> center(0.0, 0.0, 0.0);
     const SphericalManifold<2, 3> manifold(center);
 
     Point<3> P1(1.0, 0.0, 0.0);
@@ -117,7 +117,7 @@ main()
   }
 
   {
-    Point<3>                      center(0.0, 0.0, 0.0);
+    Point<3> center(0.0, 0.0, 0.0);
     const SphericalManifold<3, 3> manifold(center);
 
     Point<3> P1(2.0, 0.0, 0.0);
@@ -136,7 +136,7 @@ main()
   }
 
   {
-    Point<3>                      center(0.0, 0.0, 0.0);
+    Point<3> center(0.0, 0.0, 0.0);
     const SphericalManifold<3, 3> manifold(center);
 
     Point<3> P1(1.0, 0.0, 0.0);
@@ -146,7 +146,7 @@ main()
     std::vector<Point<3>> points1(3);
     std::vector<Point<3>> points2(3);
     std::vector<Point<3>> points3(3);
-    std::vector<double>   weights(3);
+    std::vector<double> weights(3);
 
     points1[0] = P1;
     points1[1] = P2;

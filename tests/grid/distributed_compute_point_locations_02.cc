@@ -38,8 +38,8 @@ template <int dim>
 void
 test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
 {
-  MPI_Comm     mpi_communicator = MPI_COMM_WORLD;
-  unsigned int n_procs = Utilities::MPI::n_mpi_processes(mpi_communicator);
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
+  unsigned int n_procs      = Utilities::MPI::n_mpi_processes(mpi_communicator);
   unsigned int my_rank = Utilities::MPI::this_mpi_process(mpi_communicator);
 
   deallog << "Testing for dim = " << dim << " on " << n_procs << " processes"
@@ -53,7 +53,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
   cube.refine_global(ref_cube);
 
   parallel::shared::Triangulation<dim> sphere(mpi_communicator);
-  Point<dim>                           sphere_center;
+  Point<dim> sphere_center;
   // Defining center and radius
   for(unsigned int i = 0; i < dim; ++i)
     sphere_center[i] = 0.47 - i * 0.05;
@@ -75,9 +75,9 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
   // description for more details, this is in fact compute point location
   // code with the addition of rank storing)
   std::vector<typename Triangulation<dim, dim>::active_cell_iterator>
-                                         computed_cells;
-  std::vector<std::vector<Point<dim>>>   computed_qpoints;
-  std::vector<std::vector<Point<dim>>>   computed_points;
+    computed_cells;
+  std::vector<std::vector<Point<dim>>> computed_qpoints;
+  std::vector<std::vector<Point<dim>>> computed_points;
   std::vector<std::vector<unsigned int>> computed_ranks;
 
   unsigned int computed_pts = 0;
@@ -119,7 +119,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
 
   // Computing bounding boxes describing the locally owned part of the mesh
   IteratorFilters::LocallyOwnedCell locally_owned_cell_predicate;
-  std::vector<BoundingBox<dim>>     local_bbox
+  std::vector<BoundingBox<dim>> local_bbox
     = GridTools::compute_mesh_predicate_bounding_box(
       cache.get_triangulation(),
       std::function<bool(
@@ -155,7 +155,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
     {
       output_computed_pts += output_points[c].size();
       const auto& cell = output_cells[c];
-      auto        cell_it
+      auto cell_it
         = std::find(computed_cells.begin(), computed_cells.end(), cell);
       if(cell_it == computed_cells.end())
         {
@@ -190,8 +190,8 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
               for(unsigned int pt_idx = 0; pt_idx < output_points[c].size();
                   pt_idx++)
                 {
-                  const auto& pt    = output_points[c][pt_idx];
-                  auto        pt_it = std::find(computed_points[c_cell].begin(),
+                  const auto& pt = output_points[c][pt_idx];
+                  auto pt_it     = std::find(computed_points[c_cell].begin(),
                                          computed_points[c_cell].end(),
                                          pt);
                   if(pt_it == computed_points[c_cell].end())
@@ -250,7 +250,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   deallog << "Deal.II distributed_compute_point_locations:" << std::endl;
   deallog << "Test on parallel setting 2D:" << std::endl;

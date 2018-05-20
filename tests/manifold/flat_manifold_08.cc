@@ -32,7 +32,7 @@ void
 test(unsigned int ref = 1)
 {
   std::vector<Point<spacedim>> vertices(GeometryInfo<dim>::vertices_per_cell);
-  std::vector<CellData<dim>>   cells(1);
+  std::vector<CellData<dim>> cells(1);
   for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
     cells[0].vertices[i] = i;
   cells[0].material_id = 0;

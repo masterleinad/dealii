@@ -53,27 +53,27 @@ private:
   void
   assemble_system();
   void
-                                                    solve();
-  MPI_Comm                                          mpi_communicator;
+  solve();
+  MPI_Comm mpi_communicator;
   parallel::distributed::Triangulation<2>::Settings settings;
-  parallel::distributed::Triangulation<dim>         triangulation;
-  DoFHandler<dim>                                   dof_handler;
-  FE_Q<dim>                                         fe;
-  IndexSet                                          locally_owned_dofs;
-  IndexSet                                          locally_relevant_dofs;
-  ConstraintMatrix                                  constraints;
-  TrilinosWrappers::SparseMatrix                    system_matrix;
-  TrilinosWrappers::MPI::Vector                     locally_relevant_solution;
+  parallel::distributed::Triangulation<dim> triangulation;
+  DoFHandler<dim> dof_handler;
+  FE_Q<dim> fe;
+  IndexSet locally_owned_dofs;
+  IndexSet locally_relevant_dofs;
+  ConstraintMatrix constraints;
+  TrilinosWrappers::SparseMatrix system_matrix;
+  TrilinosWrappers::MPI::Vector locally_relevant_solution;
   TrilinosWrappers::MPI::Vector interpolated_locally_relevant_solution;
   TrilinosWrappers::MPI::Vector system_rhs;
   parallel::distributed::Triangulation<dim> second_triangulation;
-  DoFHandler<dim>                           second_dof_handler;
-  FE_Q<dim>                                 second_fe;
-  IndexSet                                  second_locally_owned_dofs;
-  IndexSet                                  second_locally_relevant_dofs;
-  TrilinosWrappers::MPI::Vector             second_locally_relevant_solution;
-  ConditionalOStream                        pcout;
-  unsigned int                              prob_number;
+  DoFHandler<dim> second_dof_handler;
+  FE_Q<dim> second_fe;
+  IndexSet second_locally_owned_dofs;
+  IndexSet second_locally_relevant_dofs;
+  TrilinosWrappers::MPI::Vector second_locally_relevant_solution;
+  ConditionalOStream pcout;
+  unsigned int prob_number;
 };
 template <int dim>
 SeventhProblem<dim>::SeventhProblem(unsigned int prob_number)
@@ -152,15 +152,15 @@ template <int dim>
 void
 SeventhProblem<dim>::assemble_system()
 {
-  const QGauss<dim>  quadrature_formula(3);
-  FEValues<dim>      fe_values(fe,
+  const QGauss<dim> quadrature_formula(3);
+  FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients
                             | update_quadrature_points | update_JxW_values);
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
   const unsigned int n_q_points    = quadrature_formula.size();
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
@@ -203,11 +203,11 @@ template <int dim>
 void
 SeventhProblem<dim>::solve()
 {
-  LA::MPI::Vector            completely_distributed_solution(locally_owned_dofs,
+  LA::MPI::Vector completely_distributed_solution(locally_owned_dofs,
                                                   mpi_communicator);
-  SolverControl              solver_control(dof_handler.n_dofs(), 1e-12);
+  SolverControl solver_control(dof_handler.n_dofs(), 1e-12);
   TrilinosWrappers::SolverCG solver(solver_control);
-  TrilinosWrappers::PreconditionAMG                 preconditioner;
+  TrilinosWrappers::PreconditionAMG preconditioner;
   TrilinosWrappers::PreconditionAMG::AdditionalData data;
   preconditioner.initialize(system_matrix, data);
   solver.solve(
@@ -279,7 +279,7 @@ seventh_grid()
     (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0));
 
   pcout << "7th Starting" << std::endl;
-  SeventhProblem<2>  lap(1);
+  SeventhProblem<2> lap(1);
   const unsigned int n_cycles = 5;
   for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
     {
@@ -293,7 +293,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   deallog.depth_file(0);
 
   seventh_grid();

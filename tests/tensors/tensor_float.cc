@@ -29,7 +29,7 @@ main()
   float a[3][3] = {{1, 2, 3}, {3, 4, 5}, {6, 7, 8}};
   float b[3][3] = {{25, 31, 37}, {45, 57, 69}, {75, 96, 117}};
 
-  const unsigned int    dim = 3;
+  const unsigned int dim = 3;
   Tensor<2, dim, float> t(a);
   Tensor<2, dim, float> tt;
   Tensor<2, dim, float> result(b);

@@ -270,8 +270,8 @@ public:
    */
   TriaRawIterator(
     const Triangulation<Accessor::dimension, Accessor::space_dimension>* parent,
-    const int                                                            level,
-    const int                                                            index,
+    const int level,
+    const int index,
     const typename AccessorType::AccessorData* local_data = nullptr);
 
   /**
@@ -295,7 +295,7 @@ public:
     const TriaAccessorBase<Accessor::structure_dimension,
                            Accessor::dimension,
                            Accessor::space_dimension>& tria_accessor,
-    const typename Accessor::AccessorData*             local_data);
+    const typename Accessor::AccessorData* local_data);
 
   /**
    * Conversion constructor. Same as above with the difference that it
@@ -484,10 +484,10 @@ public:
    * specifics of the iterators they work on.
    */
   typedef std::bidirectional_iterator_tag iterator_category;
-  typedef Accessor                        value_type;
-  typedef int                             difference_type;
-  typedef Accessor*                       pointer;
-  typedef Accessor&                       reference;
+  typedef Accessor value_type;
+  typedef int difference_type;
+  typedef Accessor* pointer;
+  typedef Accessor& reference;
 
   /**@name Exceptions*/
   /*@{*/
@@ -593,8 +593,8 @@ public:
    */
   TriaIterator(
     const Triangulation<Accessor::dimension, Accessor::space_dimension>* parent,
-    const int                                                            level,
-    const int                                                            index,
+    const int level,
+    const int index,
     const typename Accessor::AccessorData* local_data = nullptr);
 
   /**
@@ -624,7 +624,7 @@ public:
   TriaIterator(const TriaAccessorBase<Accessor::structure_dimension,
                                       Accessor::dimension,
                                       Accessor::space_dimension>& tria_accessor,
-               const typename Accessor::AccessorData*             local_data);
+               const typename Accessor::AccessorData* local_data);
 
   /**
    * Similar conversion operator to the above one, but does a check whether
@@ -713,10 +713,10 @@ public:
    * work on.
    */
   typedef
-    typename TriaRawIterator<Accessor>::iterator_category     iterator_category;
-  typedef typename TriaRawIterator<Accessor>::value_type      value_type;
-  typedef typename TriaRawIterator<Accessor>::pointer         pointer;
-  typedef typename TriaRawIterator<Accessor>::reference       reference;
+    typename TriaRawIterator<Accessor>::iterator_category iterator_category;
+  typedef typename TriaRawIterator<Accessor>::value_type value_type;
+  typedef typename TriaRawIterator<Accessor>::pointer pointer;
+  typedef typename TriaRawIterator<Accessor>::reference reference;
   typedef typename TriaRawIterator<Accessor>::difference_type difference_type;
 
   /**
@@ -776,8 +776,8 @@ public:
    */
   TriaActiveIterator(
     const Triangulation<Accessor::dimension, Accessor::space_dimension>* parent,
-    const int                                                            level,
-    const int                                                            index,
+    const int level,
+    const int index,
     const typename Accessor::AccessorData* local_data = 0);
 
   /**
@@ -801,7 +801,7 @@ public:
     const TriaAccessorBase<Accessor::structure_dimension,
                            Accessor::dimension,
                            Accessor::space_dimension>& tria_accessor,
-    const typename Accessor::AccessorData*             local_data);
+    const typename Accessor::AccessorData* local_data);
 
   /**
    * Similar conversion operator to the above one, but does a check whether
@@ -901,10 +901,10 @@ public:
    * work on.
    */
   typedef typename TriaIterator<Accessor>::iterator_category iterator_category;
-  typedef typename TriaIterator<Accessor>::value_type        value_type;
-  typedef typename TriaIterator<Accessor>::pointer           pointer;
-  typedef typename TriaIterator<Accessor>::reference         reference;
-  typedef typename TriaIterator<Accessor>::difference_type   difference_type;
+  typedef typename TriaIterator<Accessor>::value_type value_type;
+  typedef typename TriaIterator<Accessor>::pointer pointer;
+  typedef typename TriaIterator<Accessor>::reference reference;
+  typedef typename TriaIterator<Accessor>::difference_type difference_type;
 
   /**
    * Exception

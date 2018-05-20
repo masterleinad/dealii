@@ -54,7 +54,7 @@ test()
       = DoFTools::locally_owned_dofs_per_subdomain(dh);
 
     const types::global_dof_index dofs_per_block = dh.n_dofs() / 2;
-    std::vector<IndexSet>         locally_owned_dofs_per_block(2);
+    std::vector<IndexSet> locally_owned_dofs_per_block(2);
     locally_owned_dofs_per_block[0]
       = locally_owned_dofs_per_subdomain[this_mpi_process].get_view(
         0, dofs_per_block);
@@ -75,7 +75,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
   test<3>();

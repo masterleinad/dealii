@@ -46,14 +46,14 @@ test()
 
   FESystem<dim> fe_system(u, 2, p, 1);
 
-  MappingQ<dim>              mapping(2);
+  MappingQ<dim> mapping(2);
   hp::MappingCollection<dim> mapping_collection(mapping);
 
   hp::FECollection<dim> fe_collection;
   fe_collection.push_back(fe_system);
 
   hp::DoFHandler<dim> hp_dof_handler(triangulation);
-  DoFHandler<dim>     dof_handler(triangulation);
+  DoFHandler<dim> dof_handler(triangulation);
 
   //distribute dofs
   hp_dof_handler.distribute_dofs(fe_collection);

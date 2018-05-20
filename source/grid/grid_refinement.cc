@@ -36,9 +36,9 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, typename Number, int spacedim>
 void
 GridRefinement::refine(Triangulation<dim, spacedim>& tria,
-                       const Vector<Number>&         criteria,
-                       const double                  threshold,
-                       const unsigned int            max_to_mark)
+                       const Vector<Number>& criteria,
+                       const double threshold,
+                       const unsigned int max_to_mark)
 {
   Assert(criteria.size() == tria.n_active_cells(),
          ExcDimensionMismatch(criteria.size(), tria.n_active_cells()));
@@ -84,8 +84,8 @@ GridRefinement::refine(Triangulation<dim, spacedim>& tria,
 template <int dim, typename Number, int spacedim>
 void
 GridRefinement::coarsen(Triangulation<dim, spacedim>& tria,
-                        const Vector<Number>&         criteria,
-                        const double                  threshold)
+                        const Vector<Number>& criteria,
+                        const double threshold)
 {
   Assert(criteria.size() == tria.n_active_cells(),
          ExcDimensionMismatch(criteria.size(), tria.n_active_cells()));
@@ -105,8 +105,8 @@ std::pair<double, double>
 GridRefinement::adjust_refine_and_coarsen_number_fraction(
   const unsigned int current_n_cells,
   const unsigned int max_n_cells,
-  const double       top_fraction,
-  const double       bottom_fraction)
+  const double top_fraction,
+  const double bottom_fraction)
 {
   Assert(top_fraction >= 0, ExcInvalidParameterValue());
   Assert(top_fraction <= 1, ExcInvalidParameterValue());
@@ -184,10 +184,10 @@ template <int dim, typename Number, int spacedim>
 void
 GridRefinement::refine_and_coarsen_fixed_number(
   Triangulation<dim, spacedim>& tria,
-  const Vector<Number>&         criteria,
-  const double                  top_fraction,
-  const double                  bottom_fraction,
-  const unsigned int            max_n_cells)
+  const Vector<Number>& criteria,
+  const double top_fraction,
+  const double bottom_fraction,
+  const unsigned int max_n_cells)
 {
   // correct number of cells is
   // checked in @p{refine}
@@ -245,10 +245,10 @@ template <int dim, typename Number, int spacedim>
 void
 GridRefinement::refine_and_coarsen_fixed_fraction(
   Triangulation<dim, spacedim>& tria,
-  const Vector<Number>&         criteria,
-  const double                  top_fraction,
-  const double                  bottom_fraction,
-  const unsigned int            max_n_cells)
+  const Vector<Number>& criteria,
+  const double top_fraction,
+  const double bottom_fraction,
+  const unsigned int max_n_cells)
 {
   // correct number of cells is
   // checked in @p{refine}
@@ -368,7 +368,7 @@ template <int dim, typename Number, int spacedim>
 void
 GridRefinement::refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
                                             const Vector<Number>& criteria,
-                                            const unsigned int    order)
+                                            const unsigned int order)
 {
   Assert(criteria.size() == tria.n_active_cells(),
          ExcDimensionMismatch(criteria.size(), tria.n_active_cells()));
@@ -384,14 +384,14 @@ GridRefinement::refine_and_coarsen_optimize(Triangulation<dim, spacedim>& tria,
               return criteria[left] > criteria[right];
             });
 
-  double       expected_error_reduction = 0;
-  const double original_error           = criteria.l1_norm();
+  double expected_error_reduction = 0;
+  const double original_error     = criteria.l1_norm();
 
   const std::size_t N = criteria.size();
 
   // minimize the cost functional discussed in the documentation
-  double      min_cost = std::numeric_limits<double>::max();
-  std::size_t min_arg  = 0;
+  double min_cost     = std::numeric_limits<double>::max();
+  std::size_t min_arg = 0;
 
   for(std::size_t M = 0; M < criteria.size(); ++M)
     {

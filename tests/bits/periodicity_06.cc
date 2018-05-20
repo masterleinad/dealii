@@ -42,7 +42,7 @@ using namespace dealii;
 ConstraintMatrix
 make_constraint_matrix(const DoFHandler<2>& dof_handler, int version)
 {
-  constexpr int    dim = 2;
+  constexpr int dim = 2;
   ConstraintMatrix constraints;
   constraints.clear();
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -128,17 +128,17 @@ public:
 template <int dim>
 void
 get_point_value(const DoFHandler<dim>& dof_handler,
-                const Point<dim>&      point,
-                const Vector<double>&  solution,
-                Vector<double>&        value)
+                const Point<dim>& point,
+                const Vector<double>& solution,
+                Vector<double>& value)
 {
   VectorTools::point_value(dof_handler, solution, point, value);
 }
 
 void
 check_periodicity(const DoFHandler<2>& dof_handler,
-                  Vector<double>&      solution,
-                  const unsigned int   cycle)
+                  Vector<double>& solution,
+                  const unsigned int cycle)
 {
   unsigned int n_points = 2;
   for(unsigned int i = 0; i < cycle; i++)
@@ -212,8 +212,8 @@ main(int argc, char* argv[])
 {
   initlog();
 
-  constexpr int      dim = 2;
-  const double       L   = numbers::PI;
+  constexpr int dim = 2;
+  const double L    = numbers::PI;
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation, -L, L, true);
 
@@ -223,7 +223,7 @@ main(int argc, char* argv[])
   cellBegin->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

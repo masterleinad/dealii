@@ -55,7 +55,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   deallog << cm.max_constraint_indirections() << std::endl;
 
   // L_2 project constant function onto field
-  QGauss<dim>    quadrature(6);
+  QGauss<dim> quadrature(6);
   Vector<double> solution(dof_handler.n_dofs());
 
   VectorTools::project(dof_handler, cm, quadrature, test_func, solution);

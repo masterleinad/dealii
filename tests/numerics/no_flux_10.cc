@@ -41,9 +41,9 @@
 #include <deal.II/numerics/vector_tools.h>
 
 void colorize_sixty_deg_hyper_shell(Triangulation<3>& tria,
-                                    const Point<3>&   center,
-                                    const double      inner_radius,
-                                    const double      outer_radius)
+                                    const Point<3>& center,
+                                    const double inner_radius,
+                                    const double outer_radius)
 {
   //    if (tria.n_cells() != 4)
   //      AssertThrow (false, ExcNotImplemented());
@@ -133,9 +133,9 @@ void colorize_sixty_deg_hyper_shell(Triangulation<3>& tria,
 }
 
 void sixty_deg_hyper_shell(Triangulation<3>& tria,
-                           const Point<3>&   center,
-                           const double      inner_radius,
-                           const double      outer_radius)
+                           const Point<3>& center,
+                           const double inner_radius,
+                           const double outer_radius)
 {
   const double r0 = inner_radius;
   const double r1 = outer_radius;
@@ -199,9 +199,9 @@ void
 run()
 {
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe(FE_Q<dim>(1), dim);
-  DoFHandler<dim>    dof_handler(triangulation);
-  ConstraintMatrix   constraints;
+  FESystem<dim> fe(FE_Q<dim>(1), dim);
+  DoFHandler<dim> dof_handler(triangulation);
+  ConstraintMatrix constraints;
 
   sixty_deg_hyper_shell(triangulation, Point<dim>(), 0.5, 1.0);
   GridTools::copy_boundary_to_manifold_id(triangulation);
@@ -214,8 +214,8 @@ run()
   // a good test for functionality
   // that may not actually be tested
   // anywhere else
-  MappingQ<3>           m(4);
-  GridOut               go;
+  MappingQ<3> m(4);
+  GridOut go;
   GridOutFlags::Gnuplot gof;
   gof.n_boundary_face_points = 6;
   go.set_flags(gof);

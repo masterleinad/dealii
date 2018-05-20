@@ -30,12 +30,12 @@ template <>
 void
 FE_Poly<TensorProductPolynomials<1>, 1, 2>::fill_fe_values(
   const Triangulation<1, 2>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<1>&                   quadrature,
-  const Mapping<1, 2>&                   mapping,
+  const CellSimilarity::Similarity cell_similarity,
+  const Quadrature<1>& quadrature,
+  const Mapping<1, 2>& mapping,
   const Mapping<1, 2>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<1, 2>&
-                                               mapping_data,
+    mapping_data,
   const FiniteElement<1, 2>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1, 2>&
     output_data) const
@@ -96,12 +96,12 @@ template <>
 void
 FE_Poly<TensorProductPolynomials<2>, 2, 3>::fill_fe_values(
   const Triangulation<2, 3>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<2>&                   quadrature,
-  const Mapping<2, 3>&                   mapping,
+  const CellSimilarity::Similarity cell_similarity,
+  const Quadrature<2>& quadrature,
+  const Mapping<2, 3>& mapping,
   const Mapping<2, 3>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 3>&
-                                               mapping_data,
+    mapping_data,
   const FiniteElement<2, 3>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 3>&
     output_data) const
@@ -160,12 +160,12 @@ template <>
 void
 FE_Poly<PolynomialSpace<1>, 1, 2>::fill_fe_values(
   const Triangulation<1, 2>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<1>&                   quadrature,
-  const Mapping<1, 2>&                   mapping,
+  const CellSimilarity::Similarity cell_similarity,
+  const Quadrature<1>& quadrature,
+  const Mapping<1, 2>& mapping,
   const Mapping<1, 2>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<1, 2>&
-                                               mapping_data,
+    mapping_data,
   const FiniteElement<1, 2>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1, 2>&
     output_data) const
@@ -227,12 +227,12 @@ template <>
 void
 FE_Poly<PolynomialSpace<2>, 2, 3>::fill_fe_values(
   const Triangulation<2, 3>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<2>&                   quadrature,
-  const Mapping<2, 3>&                   mapping,
+  const CellSimilarity::Similarity cell_similarity,
+  const Quadrature<2>& quadrature,
+  const Mapping<2, 3>& mapping,
   const Mapping<2, 3>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 3>&
-                                               mapping_data,
+    mapping_data,
   const FiniteElement<2, 3>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 3>&
     output_data) const

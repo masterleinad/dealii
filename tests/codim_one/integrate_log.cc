@@ -43,11 +43,11 @@ std::ofstream logfile("output");
 double
 test(const unsigned int n,
      const unsigned int exponent,
-     const double       a,
-     const double       b)
+     const double a,
+     const double b)
 {
   const QGaussLog<1> qlog(n);
-  const QGauss<1>    qgauss(7);
+  const QGauss<1> qgauss(7);
 
   Tensor<1, 1> exp;
   exp[0] = exponent;

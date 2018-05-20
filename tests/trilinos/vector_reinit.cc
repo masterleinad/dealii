@@ -49,7 +49,7 @@ test()
   tria.refine_global(2);
 
   const unsigned int poly_degree = 1;
-  FE_Q<dim>          fe(poly_degree);
+  FE_Q<dim> fe(poly_degree);
 
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);

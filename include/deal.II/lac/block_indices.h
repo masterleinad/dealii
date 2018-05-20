@@ -88,7 +88,7 @@ public:
    * Specialized constructor for a structure with blocks of equal size.
    */
   explicit BlockIndices(const unsigned int n_blocks,
-                        const size_type    block_size = 0);
+                        const size_type block_size = 0);
 
   /**
    * Reinitialize the number of blocks and assign each block the same number
@@ -275,7 +275,7 @@ inline BlockIndices::BlockIndices() : n_blocks(0), start_indices(1, 0)
 {}
 
 inline BlockIndices::BlockIndices(const unsigned int n_blocks,
-                                  const size_type    block_size)
+                                  const size_type block_size)
   : n_blocks(n_blocks), start_indices(n_blocks + 1)
 {
   for(size_type i = 0; i <= n_blocks; ++i)
@@ -319,7 +319,7 @@ BlockIndices::global_to_local(const size_type i) const
 
 inline BlockIndices::size_type
 BlockIndices::local_to_global(const unsigned int block,
-                              const size_type    index) const
+                              const size_type index) const
 {
   Assert(block < n_blocks, ExcIndexRange(block, 0, n_blocks));
   Assert(index < start_indices[block + 1] - start_indices[block],

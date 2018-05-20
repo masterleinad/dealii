@@ -25,7 +25,7 @@
 void
 test()
 {
-  const unsigned int                          size = 100;
+  const unsigned int size = 100;
   LinearAlgebra::CUDAWrappers::Vector<double> a;
   LinearAlgebra::CUDAWrappers::Vector<double> b(size);
   LinearAlgebra::CUDAWrappers::Vector<double> c(b);

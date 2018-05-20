@@ -65,8 +65,8 @@ SparsityPattern::SparsityPattern(const SparsityPattern& s)
   reinit(0, 0, 0);
 }
 
-SparsityPattern::SparsityPattern(const size_type    m,
-                                 const size_type    n,
+SparsityPattern::SparsityPattern(const size_type m,
+                                 const size_type n,
                                  const unsigned int max_per_row)
   : max_dim(0),
     max_vec_len(0),
@@ -78,8 +78,8 @@ SparsityPattern::SparsityPattern(const size_type    m,
   reinit(m, n, max_per_row);
 }
 
-SparsityPattern::SparsityPattern(const size_type                  m,
-                                 const size_type                  n,
+SparsityPattern::SparsityPattern(const size_type m,
+                                 const size_type n,
                                  const std::vector<unsigned int>& row_lengths)
   : max_dim(0),
     max_vec_len(0),
@@ -90,14 +90,14 @@ SparsityPattern::SparsityPattern(const size_type                  m,
   reinit(m, n, row_lengths);
 }
 
-SparsityPattern::SparsityPattern(const size_type    m,
+SparsityPattern::SparsityPattern(const size_type m,
                                  const unsigned int max_per_row)
   : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
 {
   reinit(m, m, max_per_row);
 }
 
-SparsityPattern::SparsityPattern(const size_type                  m,
+SparsityPattern::SparsityPattern(const size_type m,
                                  const std::vector<unsigned int>& row_lengths)
   : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
 {
@@ -105,8 +105,8 @@ SparsityPattern::SparsityPattern(const size_type                  m,
 }
 
 SparsityPattern::SparsityPattern(const SparsityPattern& original,
-                                 const unsigned int     max_per_row,
-                                 const size_type        extra_off_diagonals)
+                                 const unsigned int max_per_row,
+                                 const size_type extra_off_diagonals)
   : max_dim(0), max_vec_len(0), rowstart(nullptr), colnums(nullptr)
 {
   Assert(original.rows == original.cols, ExcNotQuadratic());
@@ -198,8 +198,8 @@ SparsityPattern::operator=(const SparsityPattern& s)
 }
 
 void
-SparsityPattern::reinit(const size_type    m,
-                        const size_type    n,
+SparsityPattern::reinit(const size_type m,
+                        const size_type n,
                         const unsigned int max_per_row)
 {
   // simply map this function to the other @p{reinit} function
@@ -209,8 +209,8 @@ SparsityPattern::reinit(const size_type    m,
 
 void
 SparsityPattern::reinit(
-  const size_type                                     m,
-  const size_type                                     n,
+  const size_type m,
+  const size_type n,
   const VectorSlice<const std::vector<unsigned int>>& row_lengths)
 {
   AssertDimension(row_lengths.size(), m);
@@ -423,7 +423,7 @@ SparsityPattern::copy_from(const SparsityPattern& sp)
   // then we might have to add an additional entry for the diagonal, if that
   // is not yet present. as we have to call compress anyway later on, don't
   // bother to check whether that diagonal entry is in a certain row or not
-  const bool                do_diag_optimize = (sp.n_rows() == sp.n_cols());
+  const bool do_diag_optimize = (sp.n_rows() == sp.n_cols());
   std::vector<unsigned int> row_lengths(sp.n_rows());
   for(size_type i = 0; i < sp.n_rows(); ++i)
     {
@@ -465,7 +465,7 @@ SparsityPattern::copy_from(const SparsityPattern& sp)
 void
 SparsityPattern::copy_from(const DynamicSparsityPattern& dsp)
 {
-  const bool                do_diag_optimize = (dsp.n_rows() == dsp.n_cols());
+  const bool do_diag_optimize = (dsp.n_rows() == dsp.n_cols());
   std::vector<unsigned int> row_lengths(dsp.n_rows());
   for(size_type i = 0; i < dsp.n_rows(); ++i)
     {
@@ -558,8 +558,8 @@ SparsityPattern::copy_from(const FullMatrix<number>& matrix)
 }
 
 void
-SparsityPattern::reinit(const size_type                  m,
-                        const size_type                  n,
+SparsityPattern::reinit(const size_type m,
+                        const size_type n,
                         const std::vector<unsigned int>& row_lengths)
 {
   reinit(m, n, make_slice(row_lengths));
@@ -668,14 +668,14 @@ void
 SparsityPattern::add_entries(const size_type row,
                              ForwardIterator begin,
                              ForwardIterator end,
-                             const bool      indices_are_sorted)
+                             const bool indices_are_sorted)
 {
   if(indices_are_sorted == true)
     {
       if(begin != end)
         {
-          ForwardIterator it                 = begin;
-          bool            has_larger_entries = false;
+          ForwardIterator it      = begin;
+          bool has_larger_entries = false;
           // skip diagonal
           std::size_t k = rowstart[row] + store_diagonal_first_in_row;
           for(; k < rowstart[row + 1]; k++)

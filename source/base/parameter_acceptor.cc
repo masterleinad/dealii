@@ -48,10 +48,10 @@ ParameterAcceptor::get_section_name() const
 
 void
 ParameterAcceptor::initialize(
-  const std::string&                  filename,
-  const std::string&                  output_filename,
+  const std::string& filename,
+  const std::string& output_filename,
   const ParameterHandler::OutputStyle output_style_for_prm_format,
-  ParameterHandler&                   prm)
+  ParameterHandler& prm)
 {
   declare_all_parameters(prm);
   if(filename != "")

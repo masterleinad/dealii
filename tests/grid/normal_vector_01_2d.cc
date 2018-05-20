@@ -54,15 +54,15 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  Triangulation<2>               tria;
-  FlatManifold<2>                boundary;
+  Triangulation<2> tria;
+  FlatManifold<2> boundary;
   Manifold<2>::FaceVertexNormals normals;
   for(unsigned int case_no = 0; case_no < 2; ++case_no)
     {
       deallog << "Case" << case_no << std::endl;
       create_triangulation(case_no, tria);
       const Triangulation<2>::active_cell_iterator cell = tria.begin_active();
-      Triangulation<2>::face_iterator              face;
+      Triangulation<2>::face_iterator face;
       for(unsigned int face_no = 0; face_no < GeometryInfo<2>::faces_per_cell;
           ++face_no)
         {

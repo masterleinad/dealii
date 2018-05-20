@@ -32,8 +32,8 @@ main()
   initlog();
   deallog.precision(10);
 
-  std::vector<TopoDS_Face>   faces;
-  std::vector<TopoDS_Edge>   edges;
+  std::vector<TopoDS_Face> faces;
+  std::vector<TopoDS_Edge> edges;
   std::vector<TopoDS_Vertex> vertices;
 
   TopoDS_Shape sh = read_STEP(SOURCE_DIR "/step_files/goteborg.step");
@@ -52,8 +52,8 @@ main()
     {
       double step = ((double) i) / 10;
       deallog << " pos = " << step << std::endl;
-      double   u_pos = step * u_min + (1 - step) * u_max;
-      double   v_pos = step * v_min + (1 - step) * v_max;
+      double u_pos = step * u_min + (1 - step) * u_max;
+      double v_pos = step * v_min + (1 - step) * v_max;
       Point<2> uv(u_pos, v_pos);
       deallog << " uv = " << uv << std::endl;
       Point<3> q = manifold.push_forward(uv);
@@ -63,9 +63,9 @@ main()
       deallog << "=======================================" << std::endl;
     }
 
-  double                  u_pos = (u_min + u_max) / 2;
-  double                  v_pos = (v_min + v_max) / 2;
-  Point<2>                uv(u_pos, v_pos);
+  double u_pos = (u_min + u_max) / 2;
+  double v_pos = (v_min + v_max) / 2;
+  Point<2> uv(u_pos, v_pos);
   DerivativeForm<1, 2, 3> D = manifold.push_forward_gradient(uv);
   deallog << "=======================================" << std::endl;
   deallog << " | " << D[0][1] << " | " << D[0][0] << " | " << std::endl;

@@ -74,7 +74,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   NormalProjectionManifold<dim, spacedim>::NormalProjectionManifold(
     const TopoDS_Shape& sh,
-    const double        tolerance)
+    const double tolerance)
     : sh(sh), tolerance(tolerance)
   {
     Assert(spacedim == 3, ExcNotImplemented());
@@ -92,7 +92,7 @@ namespace OpenCASCADE
   Point<spacedim>
   NormalProjectionManifold<dim, spacedim>::project_to_manifold(
     const ArrayView<const Point<spacedim>>& surrounding_points,
-    const Point<spacedim>&                  candidate) const
+    const Point<spacedim>& candidate) const
   {
     (void) surrounding_points;
 #  ifdef DEBUG
@@ -108,9 +108,9 @@ namespace OpenCASCADE
   /*============================== DirectionalProjectionManifold ==============================*/
   template <int dim, int spacedim>
   DirectionalProjectionManifold<dim, spacedim>::DirectionalProjectionManifold(
-    const TopoDS_Shape&        sh,
+    const TopoDS_Shape& sh,
     const Tensor<1, spacedim>& direction,
-    const double               tolerance)
+    const double tolerance)
     : sh(sh), direction(direction), tolerance(tolerance)
   {
     Assert(spacedim == 3, ExcNotImplemented());
@@ -128,7 +128,7 @@ namespace OpenCASCADE
   Point<spacedim>
   DirectionalProjectionManifold<dim, spacedim>::project_to_manifold(
     const ArrayView<const Point<spacedim>>& surrounding_points,
-    const Point<spacedim>&                  candidate) const
+    const Point<spacedim>& candidate) const
   {
     (void) surrounding_points;
 #  ifdef DEBUG
@@ -145,7 +145,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   NormalToMeshProjectionManifold<dim, spacedim>::NormalToMeshProjectionManifold(
     const TopoDS_Shape& sh,
-    const double        tolerance)
+    const double tolerance)
     : sh(sh), tolerance(tolerance)
   {
     Assert(spacedim == 3, ExcNotImplemented());
@@ -167,7 +167,7 @@ namespace OpenCASCADE
   Point<spacedim>
   NormalToMeshProjectionManifold<dim, spacedim>::project_to_manifold(
     const ArrayView<const Point<spacedim>>& surrounding_points,
-    const Point<spacedim>&                  candidate) const
+    const Point<spacedim>& candidate) const
   {
     TopoDS_Shape out_shape;
     Tensor<1, 3> average_normal;
@@ -289,7 +289,7 @@ namespace OpenCASCADE
   template <int dim, int spacedim>
   ArclengthProjectionLineManifold<dim, spacedim>::
     ArclengthProjectionLineManifold(const TopoDS_Shape& sh,
-                                    const double        tolerance)
+                                    const double tolerance)
     :
 
       ChartManifold<dim, spacedim, 1>(sh.Closed() ? Point<1>(shape_length(sh)) :
@@ -315,10 +315,10 @@ namespace OpenCASCADE
   ArclengthProjectionLineManifold<dim, spacedim>::pull_back(
     const Point<spacedim>& space_point) const
   {
-    double              t(0.0);
+    double t(0.0);
     ShapeAnalysis_Curve curve_analysis;
-    gp_Pnt              proj;
-    const double        dist = curve_analysis.Project(
+    gp_Pnt proj;
+    const double dist = curve_analysis.Project(
       curve->GetCurve(), point(space_point), tolerance, proj, t, true);
     Assert(dist < tolerance * length,
            ExcPointNotOnManifold<spacedim>(space_point));

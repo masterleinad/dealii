@@ -37,7 +37,7 @@ PolynomialsRT_Bubbles<dim>::PolynomialsRT_Bubbles(const unsigned int k)
 template <int dim>
 void
 PolynomialsRT_Bubbles<dim>::compute(
-  const Point<dim>&            unit_point,
+  const Point<dim>& unit_point,
   std::vector<Tensor<1, dim>>& values,
   std::vector<Tensor<2, dim>>& grads,
   std::vector<Tensor<3, dim>>& grad_grads,
@@ -67,7 +67,7 @@ PolynomialsRT_Bubbles<dim>::compute(
   // using a mutex to make sure they are not used by multiple threads
   // at once
   {
-    static Threads::Mutex      mutex;
+    static Threads::Mutex mutex;
     Threads::Mutex::ScopedLock lock(mutex);
 
     static std::vector<Tensor<1, dim>> p_values;
@@ -98,8 +98,8 @@ PolynomialsRT_Bubbles<dim>::compute(
   // Next we compute the polynomials and derivatives
   // of the curl part of the space
   const unsigned int n_derivatives = 3;
-  double             monoval_plus[dim][n_derivatives + 1];
-  double             monoval[dim][n_derivatives + 1];
+  double monoval_plus[dim][n_derivatives + 1];
+  double monoval[dim][n_derivatives + 1];
 
   double monoval_i[dim][n_derivatives + 1];
   double monoval_j[dim][n_derivatives + 1];

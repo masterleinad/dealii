@@ -96,7 +96,7 @@ eigenvalues(const SymmetricTensor<2, 3, Number>& T)
       const Number tmp1 = (T[0][0] - q) * (T[0][0] - q)
                           + (T[1][1] - q) * (T[1][1] - q)
                           + (T[2][2] - q) * (T[2][2] - q) + 2.0 * upp_tri_sq;
-      const Number                        p = std::sqrt(tmp1 / 6.0);
+      const Number p = std::sqrt(tmp1 / 6.0);
       const SymmetricTensor<2, 3, Number> B
         = Number(1.0 / p) * (T - q * unit_symmetric_tensor<3, Number>());
       const Number tmp_2 = determinant(B) / 2.0;
@@ -140,9 +140,9 @@ namespace internal
     template <int dim, typename Number>
     void
     tridiagonalize(const dealii::SymmetricTensor<2, dim, Number>& A,
-                   dealii::Tensor<2, dim, Number>&                Q,
-                   std::array<Number, dim>&                       d,
-                   std::array<Number, dim - 1>&                   e)
+                   dealii::Tensor<2, dim, Number>& Q,
+                   std::array<Number, dim>& d,
+                   std::array<Number, dim - 1>& e)
     {
       // Create some intermediate storage
       Number h, g, omega_inv, K, f;
@@ -173,7 +173,7 @@ namespace internal
         }
 
       std::array<Number, dim> q;
-      const Number            omega = h - g * A[0][1];
+      const Number omega = h - g * A[0][1];
       if(omega > 0.0)
         {
           omega_inv = 1.0 / omega;
@@ -724,7 +724,7 @@ namespace internal
     template <typename Number>
     Tensor<2, 3, Number>
     dediagonalize_tensor(const dealii::SymmetricTensor<2, 3, Number>& T,
-                         const double       rotation_angle,
+                         const double rotation_angle,
                          const unsigned int axis = 0)
     {
       Assert(axis < 3, ExcIndexRange(axis, 0, 3));
@@ -887,7 +887,7 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
 
           typedef
             typename Differentiation::AD::ADNumberTraits<Number>::scalar_type
-                       scalar_type;
+              scalar_type;
           const double delta = sf * std::numeric_limits<scalar_type>::epsilon();
           const double rotation_angle = delta * numbers::PI / 180.0;
 
@@ -918,7 +918,7 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
               Assert(dim == 3, ExcDimensionMismatch(dim, 3));
 
               SymmetricTensor<2, dim, Number> T_prime;
-              Tensor<2, dim, Number>          T_prime_ns;
+              Tensor<2, dim, Number> T_prime_ns;
               for(unsigned int i = 0; i < dim; ++i)
                 {
                   // This is a little bit hacky, so here's a brief explanation as to

@@ -63,7 +63,7 @@ gnuplot_output()
 
           const MappingQ<dim> mapping(degree);
 
-          GridOut               grid_out;
+          GridOut grid_out;
           GridOutFlags::Gnuplot gnuplot_flags(false, 30);
           grid_out.set_flags(gnuplot_flags);
 
@@ -93,7 +93,7 @@ compute_pi_by_area()
       static const SphericalManifold<dim> boundary;
       triangulation.set_manifold(0, boundary);
 
-      MappingQ<dim>                    m(degree);
+      MappingQ<dim> m(degree);
       const hp::MappingCollection<dim> mapping(m);
 
       const hp::FECollection<dim> dummy_fe(FE_Q<dim>(1));
@@ -157,9 +157,9 @@ compute_pi_by_perimeter()
       static const SphericalManifold<dim> boundary;
       triangulation.set_manifold(0, boundary);
 
-      const MappingQ<dim>              m(degree);
+      const MappingQ<dim> m(degree);
       const hp::MappingCollection<dim> mapping(m);
-      const hp::FECollection<dim>      fe(FE_Q<dim>(1));
+      const hp::FECollection<dim> fe(FE_Q<dim>(1));
 
       hp::DoFHandler<dim> dof_handler(triangulation);
 

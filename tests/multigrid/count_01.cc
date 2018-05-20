@@ -85,8 +85,8 @@ template <int dim>
 void
 check()
 {
-  FE_Q<dim>   q1(1);
-  FE_Q<dim>   q2(2);
+  FE_Q<dim> q1(1);
+  FE_Q<dim> q2(2);
   FE_DGQ<dim> dq1(1);
 
   FESystem<dim> s1(q1, 2, q2, 1);
@@ -95,8 +95,8 @@ check()
   if(dim > 1)
     {
       FE_RaviartThomas<dim> rt(1);
-      FESystem<dim>         s2(rt, 2, dq1, 1);
-      FESystem<dim>         s3(rt, 1, s1, 2);
+      FESystem<dim> s2(rt, 2, dq1, 1);
+      FESystem<dim> s3(rt, 1, s1, 2);
 
       check_fe(s2);
       check_fe(s3);

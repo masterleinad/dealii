@@ -103,7 +103,7 @@ namespace PETScWrappers
   }
 
   /* ----------------- PreconditionJacobi -------------------- */
-  PreconditionJacobi::PreconditionJacobi(const MPI_Comm        comm,
+  PreconditionJacobi::PreconditionJacobi(const MPI_Comm comm,
                                          const AdditionalData& additional_data_)
   {
     additional_data = additional_data_;
@@ -114,7 +114,7 @@ namespace PETScWrappers
     initialize();
   }
 
-  PreconditionJacobi::PreconditionJacobi(const MatrixBase&     matrix,
+  PreconditionJacobi::PreconditionJacobi(const MatrixBase& matrix,
                                          const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
@@ -133,7 +133,7 @@ namespace PETScWrappers
   }
 
   void
-  PreconditionJacobi::initialize(const MatrixBase&     matrix_,
+  PreconditionJacobi::initialize(const MatrixBase& matrix_,
                                  const AdditionalData& additional_data_)
   {
     clear();
@@ -150,7 +150,7 @@ namespace PETScWrappers
 
   /* ----------------- PreconditionBlockJacobi -------------------- */
   PreconditionBlockJacobi::PreconditionBlockJacobi(
-    const MPI_Comm        comm,
+    const MPI_Comm comm,
     const AdditionalData& additional_data_)
   {
     additional_data = additional_data_;
@@ -162,7 +162,7 @@ namespace PETScWrappers
   }
 
   PreconditionBlockJacobi::PreconditionBlockJacobi(
-    const MatrixBase&     matrix,
+    const MatrixBase& matrix,
     const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
@@ -179,7 +179,7 @@ namespace PETScWrappers
   }
 
   void
-  PreconditionBlockJacobi::initialize(const MatrixBase&     matrix_,
+  PreconditionBlockJacobi::initialize(const MatrixBase& matrix_,
                                       const AdditionalData& additional_data_)
   {
     clear();
@@ -200,14 +200,14 @@ namespace PETScWrappers
     : omega(omega)
   {}
 
-  PreconditionSOR::PreconditionSOR(const MatrixBase&     matrix,
+  PreconditionSOR::PreconditionSOR(const MatrixBase& matrix,
                                    const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionSOR::initialize(const MatrixBase&     matrix_,
+  PreconditionSOR::initialize(const MatrixBase& matrix_,
                               const AdditionalData& additional_data_)
   {
     clear();
@@ -237,14 +237,14 @@ namespace PETScWrappers
     : omega(omega)
   {}
 
-  PreconditionSSOR::PreconditionSSOR(const MatrixBase&     matrix,
+  PreconditionSSOR::PreconditionSSOR(const MatrixBase& matrix,
                                      const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionSSOR::initialize(const MatrixBase&     matrix_,
+  PreconditionSSOR::initialize(const MatrixBase& matrix_,
                                const AdditionalData& additional_data_)
   {
     clear();
@@ -279,14 +279,14 @@ namespace PETScWrappers
   {}
 
   PreconditionEisenstat::PreconditionEisenstat(
-    const MatrixBase&     matrix,
+    const MatrixBase& matrix,
     const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionEisenstat::initialize(const MatrixBase&     matrix_,
+  PreconditionEisenstat::initialize(const MatrixBase& matrix_,
                                     const AdditionalData& additional_data_)
   {
     clear();
@@ -316,14 +316,14 @@ namespace PETScWrappers
     : levels(levels)
   {}
 
-  PreconditionICC::PreconditionICC(const MatrixBase&     matrix,
+  PreconditionICC::PreconditionICC(const MatrixBase& matrix,
                                    const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionICC::initialize(const MatrixBase&     matrix_,
+  PreconditionICC::initialize(const MatrixBase& matrix_,
                               const AdditionalData& additional_data_)
   {
     clear();
@@ -353,14 +353,14 @@ namespace PETScWrappers
     : levels(levels)
   {}
 
-  PreconditionILU::PreconditionILU(const MatrixBase&     matrix,
+  PreconditionILU::PreconditionILU(const MatrixBase& matrix,
                                    const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionILU::initialize(const MatrixBase&     matrix_,
+  PreconditionILU::initialize(const MatrixBase& matrix_,
                               const AdditionalData& additional_data_)
   {
     clear();
@@ -387,11 +387,11 @@ namespace PETScWrappers
   /* ----------------- PreconditionBoomerAMG -------------------- */
 
   PreconditionBoomerAMG::AdditionalData::AdditionalData(
-    const bool         symmetric_operator,
-    const double       strong_threshold,
-    const double       max_row_sum,
+    const bool symmetric_operator,
+    const double strong_threshold,
+    const double max_row_sum,
     const unsigned int aggressive_coarsening_num_levels,
-    const bool         output_details)
+    const bool output_details)
     : symmetric_operator(symmetric_operator),
       strong_threshold(strong_threshold),
       max_row_sum(max_row_sum),
@@ -400,7 +400,7 @@ namespace PETScWrappers
   {}
 
   PreconditionBoomerAMG::PreconditionBoomerAMG(
-    const MPI_Comm        comm,
+    const MPI_Comm comm,
     const AdditionalData& additional_data_)
   {
     additional_data = additional_data_;
@@ -419,7 +419,7 @@ namespace PETScWrappers
   }
 
   PreconditionBoomerAMG::PreconditionBoomerAMG(
-    const MatrixBase&     matrix,
+    const MatrixBase& matrix,
     const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
@@ -479,7 +479,7 @@ namespace PETScWrappers
   }
 
   void
-  PreconditionBoomerAMG::initialize(const MatrixBase&     matrix_,
+  PreconditionBoomerAMG::initialize(const MatrixBase& matrix_,
                                     const AdditionalData& additional_data_)
   {
 #  ifdef DEAL_II_PETSC_WITH_HYPRE
@@ -508,9 +508,9 @@ namespace PETScWrappers
   PreconditionParaSails::AdditionalData::AdditionalData(
     const unsigned int symmetric,
     const unsigned int n_levels,
-    const double       threshold,
-    const double       filter,
-    const bool         output_details)
+    const double threshold,
+    const double filter,
+    const bool output_details)
     : symmetric(symmetric),
       n_levels(n_levels),
       threshold(threshold),
@@ -519,14 +519,14 @@ namespace PETScWrappers
   {}
 
   PreconditionParaSails::PreconditionParaSails(
-    const MatrixBase&     matrix,
+    const MatrixBase& matrix,
     const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionParaSails::initialize(const MatrixBase&     matrix_,
+  PreconditionParaSails::initialize(const MatrixBase& matrix_,
                                     const AdditionalData& additional_data_)
   {
     clear();
@@ -611,14 +611,14 @@ namespace PETScWrappers
 
   /* ----------------- PreconditionNone ------------------------- */
 
-  PreconditionNone::PreconditionNone(const MatrixBase&     matrix,
+  PreconditionNone::PreconditionNone(const MatrixBase& matrix,
                                      const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionNone::initialize(const MatrixBase&     matrix_,
+  PreconditionNone::initialize(const MatrixBase& matrix_,
                                const AdditionalData& additional_data_)
   {
     clear();
@@ -646,14 +646,14 @@ namespace PETScWrappers
     : pivoting(pivoting), zero_pivot(zero_pivot), damping(damping)
   {}
 
-  PreconditionLU::PreconditionLU(const MatrixBase&     matrix,
+  PreconditionLU::PreconditionLU(const MatrixBase& matrix,
                                  const AdditionalData& additional_data)
   {
     initialize(matrix, additional_data);
   }
 
   void
-  PreconditionLU::initialize(const MatrixBase&     matrix_,
+  PreconditionLU::initialize(const MatrixBase& matrix_,
                              const AdditionalData& additional_data_)
   {
     clear();

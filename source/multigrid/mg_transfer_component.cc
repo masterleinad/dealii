@@ -75,15 +75,15 @@ namespace
   template <int dim, typename number, int spacedim>
   void
   reinit_vector_by_components(
-    const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-    MGLevelObject<BlockVector<number>>&                v,
-    const std::vector<bool>&                           sel,
-    const std::vector<unsigned int>&                   target_comp,
+    const dealii::DoFHandler<dim, spacedim>& mg_dof,
+    MGLevelObject<BlockVector<number>>& v,
+    const std::vector<bool>& sel,
+    const std::vector<unsigned int>& target_comp,
     std::vector<std::vector<types::global_dof_index>>& ndofs)
   {
-    std::vector<bool>         selected         = sel;
+    std::vector<bool> selected                 = sel;
     std::vector<unsigned int> target_component = target_comp;
-    const unsigned int        ncomp = mg_dof.get_fe(0).n_components();
+    const unsigned int ncomp = mg_dof.get_fe(0).n_components();
 
     // If the selected and
     // target_component have size 0,
@@ -173,10 +173,10 @@ namespace
   template <int dim, typename number, int spacedim>
   void
   reinit_vector_by_components(
-    const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-    MGLevelObject<dealii::Vector<number>>&             v,
-    const ComponentMask&                               component_mask,
-    const std::vector<unsigned int>&                   target_component,
+    const dealii::DoFHandler<dim, spacedim>& mg_dof,
+    MGLevelObject<dealii::Vector<number>>& v,
+    const ComponentMask& component_mask,
+    const std::vector<unsigned int>& target_component,
     std::vector<std::vector<types::global_dof_index>>& ndofs)
   {
     Assert(component_mask.represents_n_components(target_component.size()),
@@ -208,8 +208,8 @@ template <int dim, class InVector, int spacedim>
 void
 MGTransferSelect<number>::do_copy_to_mg(
   const DoFHandler<dim, spacedim>& mg_dof_handler,
-  MGLevelObject<Vector<number>>&   dst,
-  const InVector&                  src) const
+  MGLevelObject<Vector<number>>& dst,
+  const InVector& src) const
 {
   dst = 0;
 
@@ -557,16 +557,16 @@ template <typename number>
 template <int dim, int spacedim>
 void
 MGTransferSelect<number>::build_matrices(
-  const DoFHandler<dim, spacedim>&                      dof,
-  const DoFHandler<dim, spacedim>&                      mg_dof,
-  unsigned int                                          select,
-  unsigned int                                          mg_select,
-  const std::vector<unsigned int>&                      t_component,
-  const std::vector<unsigned int>&                      mg_t_component,
+  const DoFHandler<dim, spacedim>& dof,
+  const DoFHandler<dim, spacedim>& mg_dof,
+  unsigned int select,
+  unsigned int mg_select,
+  const std::vector<unsigned int>& t_component,
+  const std::vector<unsigned int>& mg_t_component,
   const std::vector<std::set<types::global_dof_index>>& bdry_indices)
 {
-  const FiniteElement<dim>& fe    = mg_dof.get_fe();
-  unsigned int              ncomp = mg_dof.get_fe(0).n_components();
+  const FiniteElement<dim>& fe = mg_dof.get_fe();
+  unsigned int ncomp           = mg_dof.get_fe(0).n_components();
 
   target_component    = t_component;
   mg_target_component = mg_t_component;

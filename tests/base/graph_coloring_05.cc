@@ -49,7 +49,7 @@ check()
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(2);
-  FE_Q<dim>       fe(2);
+  FE_Q<dim> fe(2);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

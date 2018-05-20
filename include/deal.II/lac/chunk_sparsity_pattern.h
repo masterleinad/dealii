@@ -303,10 +303,10 @@ public:
    * number of nonzero entries for each row.  This vector must have one entry
    * for each row.
    */
-  ChunkSparsityPattern(const size_type               m,
-                       const size_type               n,
+  ChunkSparsityPattern(const size_type m,
+                       const size_type n,
                        const std::vector<size_type>& row_lengths,
-                       const size_type               chunk_size);
+                       const size_type chunk_size);
 
   /**
    * Initialize a quadratic matrix of dimension <tt>n</tt> with at most
@@ -327,9 +327,9 @@ public:
    * nonzero entries for each row.  This vector must have one entry for each
    * row.
    */
-  ChunkSparsityPattern(const size_type               m,
+  ChunkSparsityPattern(const size_type m,
                        const std::vector<size_type>& row_lengths,
-                       const size_type               chunk_size);
+                       const size_type chunk_size);
 
   /**
    * Destructor.
@@ -373,19 +373,19 @@ public:
    * methods of SparseMatrix.
    */
   void
-  reinit(const size_type               m,
-         const size_type               n,
+  reinit(const size_type m,
+         const size_type n,
          const std::vector<size_type>& row_lengths,
-         const size_type               chunk_size);
+         const size_type chunk_size);
 
   /**
    * Same as above, but with a VectorSlice argument instead.
    */
   void
-  reinit(const size_type                                  m,
-         const size_type                                  n,
+  reinit(const size_type m,
+         const size_type n,
          const VectorSlice<const std::vector<size_type>>& row_lengths,
-         const size_type                                  chunk_size);
+         const size_type chunk_size);
 
   /**
    * This function compresses the sparsity structure that this object
@@ -480,11 +480,11 @@ public:
    */
   template <typename ForwardIterator>
   void
-  copy_from(const size_type       n_rows,
-            const size_type       n_cols,
+  copy_from(const size_type n_rows,
+            const size_type n_cols,
             const ForwardIterator begin,
             const ForwardIterator end,
-            const size_type       chunk_size);
+            const size_type chunk_size);
 
   /**
    * Copy data from an object of type DynamicSparsityPattern. Previous content
@@ -527,9 +527,9 @@ public:
   void
   create_from(const unsigned int m,
               const unsigned int n,
-              const Sparsity&    sparsity_pattern_for_chunks,
+              const Sparsity& sparsity_pattern_for_chunks,
               const unsigned int chunk_size,
-              const bool         optimize_diagonal = true);
+              const bool optimize_diagonal = true);
 
   /**
    * Return whether the object is empty. It is empty if no memory is
@@ -852,7 +852,7 @@ private:
 namespace ChunkSparsityPatternIterators
 {
   inline Accessor::Accessor(const ChunkSparsityPattern* sparsity_pattern,
-                            const unsigned int          row)
+                            const unsigned int row)
     : sparsity_pattern(sparsity_pattern),
       reduced_accessor(row == sparsity_pattern->n_rows() ?
                          *sparsity_pattern->sparsity_pattern.end() :
@@ -1009,7 +1009,7 @@ namespace ChunkSparsityPatternIterators
   }
 
   inline Iterator::Iterator(const ChunkSparsityPattern* sparsity_pattern,
-                            const unsigned int          row)
+                            const unsigned int row)
     : accessor(sparsity_pattern, row)
   {}
 
@@ -1110,11 +1110,11 @@ ChunkSparsityPattern::is_compressed() const
 
 template <typename ForwardIterator>
 void
-ChunkSparsityPattern::copy_from(const size_type       n_rows,
-                                const size_type       n_cols,
+ChunkSparsityPattern::copy_from(const size_type n_rows,
+                                const size_type n_cols,
                                 const ForwardIterator begin,
                                 const ForwardIterator end,
-                                const size_type       chunk_size)
+                                const size_type chunk_size)
 {
   Assert(static_cast<size_type>(std::distance(begin, end)) == n_rows,
          ExcIteratorRange(std::distance(begin, end), n_rows));
@@ -1123,7 +1123,7 @@ ChunkSparsityPattern::copy_from(const size_type       n_rows,
   // then we might have to add an additional entry for the diagonal, if that
   // is not yet present. as we have to call compress anyway later on, don't
   // bother to check whether that diagonal entry is in a certain row or not
-  const bool             is_square = (n_rows == n_cols);
+  const bool is_square = (n_rows == n_cols);
   std::vector<size_type> row_lengths;
   row_lengths.reserve(n_rows);
   for(ForwardIterator i = begin; i != end; ++i)

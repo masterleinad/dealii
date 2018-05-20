@@ -72,8 +72,8 @@ public:
    * over all tensor product polynomials.
    */
   void
-  compute(const Point<dim>&            unit_point,
-          std::vector<double>&         values,
+  compute(const Point<dim>& unit_point,
+          std::vector<double>& values,
           std::vector<Tensor<1, dim>>& grads,
           std::vector<Tensor<2, dim>>& grad_grads,
           std::vector<Tensor<3, dim>>& third_derivatives,
@@ -186,7 +186,7 @@ template <int order>
 Tensor<order, dim>
 TensorProductPolynomialsConst<dim>::compute_derivative(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim>& p) const
 {
   const unsigned int max_indices = this->n_tensor_pols;
   Assert(i <= max_indices, ExcInternalError());

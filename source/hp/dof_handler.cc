@@ -941,7 +941,7 @@ namespace internal
                 = [&dof_handler](
                     const typename dealii::hp::DoFHandler<dim, spacedim>::
                       active_cell_iterator& cell,
-                    const unsigned int&     active_fe_index) -> void {
+                    const unsigned int& active_fe_index) -> void {
                 // we would like to say
                 //   cell->set_active_fe_index(active_fe_index);
                 // but this is not allowed on cells that are not
@@ -1104,7 +1104,7 @@ namespace hp
   {
     Assert(fe_collection.size() > 0, ExcNoFESelected());
 
-    std::set<types::global_dof_index>    boundary_dofs;
+    std::set<types::global_dof_index> boundary_dofs;
     std::vector<types::global_dof_index> dofs_on_face;
     dofs_on_face.reserve(this->get_fe_collection().max_dofs_per_face());
 
@@ -1143,7 +1143,7 @@ namespace hp
 
     // same as above, but with additional checks for set of boundary
     // indicators
-    std::set<types::global_dof_index>    boundary_dofs;
+    std::set<types::global_dof_index> boundary_dofs;
     std::vector<types::global_dof_index> dofs_on_face;
     dofs_on_face.reserve(this->get_fe_collection().max_dofs_per_face());
 
@@ -1252,7 +1252,7 @@ namespace hp
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::initialize(
-    const Triangulation<dim, spacedim>&    tria,
+    const Triangulation<dim, spacedim>& tria,
     const hp::FECollection<dim, spacedim>& fe)
   {
     if(this->tria != &tria)
@@ -1452,7 +1452,7 @@ namespace hp
         std::vector<types::global_dof_index> tmp(new_numbers);
         std::sort(tmp.begin(), tmp.end());
         std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
-        types::global_dof_index                              i = 0;
+        types::global_dof_index i                              = 0;
         for(; p != tmp.end(); ++p, ++i)
           Assert(*p == i, ExcNewNumbersNotConsecutive(i));
       }

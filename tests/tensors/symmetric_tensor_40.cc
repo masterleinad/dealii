@@ -21,8 +21,8 @@
 #include <deal.II/base/symmetric_tensor.h>
 
 void
-check_value(const int    dim,
-            const int    index,
+check_value(const int dim,
+            const int index,
             const double expected,
             const double actual,
             const double tol = 1e-12)
@@ -55,7 +55,7 @@ bool check_orientation(Tensor<1, dim> v1, Tensor<1, dim> v2)
 void
 test_dim_1(const double e1, const double tol = 1e-12)
 {
-  const unsigned int      dim = 1;
+  const unsigned int dim = 1;
   SymmetricTensor<2, dim> T;
   T[0][0]                                = e1;
   const std::array<double, dim> eig_vals = eigenvalues(T);

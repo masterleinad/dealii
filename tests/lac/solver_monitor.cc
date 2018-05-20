@@ -30,8 +30,8 @@
 #include <deal.II/lac/vector_memory.h>
 
 SolverControl::State
-monitor_norm(const unsigned int    iteration,
-             const double          check_value,
+monitor_norm(const unsigned int iteration,
+             const double check_value,
              const Vector<double>& current_iterate)
 {
   deallog << "   -- " << iteration << ' ' << check_value << std::endl;
@@ -40,8 +40,8 @@ monitor_norm(const unsigned int    iteration,
 }
 
 SolverControl::State
-monitor_mean(const unsigned int    iteration,
-             const double          check_value,
+monitor_mean(const unsigned int iteration,
+             const double check_value,
              const Vector<double>& current_iterate)
 {
   deallog << "   Mean=" << current_iterate.mean_value() << std::endl;
@@ -53,10 +53,10 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
+check_solve(SolverType& solver,
+            const MatrixType& A,
+            VectorType& u,
+            VectorType& f,
             const PRECONDITION& P)
 {
   u = 0.;
@@ -100,7 +100,7 @@ main()
       deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
       // Make matrix
-      FDMatrix        testproblem(size, size);
+      FDMatrix testproblem(size, size);
       SparsityPattern structure(dim, dim, 5);
       testproblem.five_point_structure(structure);
       structure.compress();

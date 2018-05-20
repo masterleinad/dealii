@@ -76,7 +76,7 @@ private:
     return;
   }
 
-  int                                 n_active_cells;
+  int n_active_cells;
   const Triangulation<dim, spacedim>& tria;
 };
 
@@ -96,8 +96,8 @@ test()
 
   {
     std::vector<unsigned int> repetitions;
-    Point<dim>                p1;
-    Point<dim>                p2;
+    Point<dim> p1;
+    Point<dim> p2;
 
     for(unsigned int d = 0; d < dim; ++d)
       {

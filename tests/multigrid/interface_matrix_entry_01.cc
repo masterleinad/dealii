@@ -80,10 +80,10 @@ test()
       }
   tria.execute_coarsening_and_refinement();
 
-  FE_Q<dim>         fe(2);
-  DoFHandler<dim>   mg_dof_handler(tria);
-  IndexSet          locally_relevant_set;
-  ConstraintMatrix  constraints;
+  FE_Q<dim> fe(2);
+  DoFHandler<dim> mg_dof_handler(tria);
+  IndexSet locally_relevant_set;
+  ConstraintMatrix constraints;
   MGConstrainedDoFs mg_constrained_dofs;
 
   mg_dof_handler.distribute_dofs(fe);
@@ -94,8 +94,8 @@ test()
   constraints.reinit(locally_relevant_set);
   DoFTools::make_hanging_node_constraints(mg_dof_handler, constraints);
 
-  std::set<types::boundary_id>     dirichlet_boundary_ids;
-  typename FunctionMap<dim>::type  dirichlet_boundary;
+  std::set<types::boundary_id> dirichlet_boundary_ids;
+  typename FunctionMap<dim>::type dirichlet_boundary;
   Functions::ConstantFunction<dim> homogeneous_dirichlet_bc(0.0);
   dirichlet_boundary_ids.insert(0);
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
@@ -122,7 +122,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    all;
+  MPILogInitAll all;
 
   deallog.push("2d");
   test<2>();

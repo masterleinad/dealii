@@ -75,7 +75,7 @@ test(unsigned int ref = 1)
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   MyFlatManifold<dim, spacedim> flat_manifold;
-  Triangulation<dim, spacedim>  tria;
+  Triangulation<dim, spacedim> tria;
   tria.set_manifold(0, flat_manifold);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);

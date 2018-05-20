@@ -43,7 +43,7 @@ test(TrilinosWrappers::MPI::Vector& v)
   // vector. have a bit pattern of where we
   // actually wrote elements to
   std::vector<bool> pattern(v.size(), false);
-  bool              flag = false;
+  bool flag = false;
   for(unsigned int i = 0; i < v.size(); i += 1 + i)
     {
       if(flag == true)

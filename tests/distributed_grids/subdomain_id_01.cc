@@ -58,7 +58,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   initlog();
 
-  Triangulation<2>                        tria;
+  Triangulation<2> tria;
   parallel::distributed::Triangulation<2> tria2(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);

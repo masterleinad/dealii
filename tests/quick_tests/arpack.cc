@@ -53,7 +53,7 @@ test()
   GridGenerator::hyper_cube(tria, 0, 1);
   tria.refine_global(3);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
@@ -78,10 +78,10 @@ test()
   MatrixTools::create_laplace_matrix(dof_handler, qr, A);
   MatrixTools::create_mass_matrix(dof_handler, qr, B);
 
-  SolverControl       solver_control(dof_handler.n_dofs(), 1e-10);
+  SolverControl solver_control(dof_handler.n_dofs(), 1e-10);
   SparseDirectUMFPACK inverse;
   inverse.initialize(A);
-  const unsigned int           num_arnoldi_vectors = 2 * eigenvalues.size() + 2;
+  const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 2;
   ArpackSolver::AdditionalData additional_data(
     num_arnoldi_vectors, ArpackSolver::largest_magnitude, true);
   ArpackSolver eigensolver(solver_control, additional_data);
@@ -89,7 +89,7 @@ test()
     A, B, inverse, eigenvalues, eigenvectors, eigenvalues.size());
 
   {
-    const double   precision = 1e-7;
+    const double precision = 1e-7;
     Vector<double> Ax(eigenvectors[0]), Bx(eigenvectors[0]);
     for(unsigned int i = 0; i < eigenvectors.size(); ++i)
       {

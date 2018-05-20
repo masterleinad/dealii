@@ -47,7 +47,7 @@ test()
 
   // set up a DoFHandler and compute hanging
   // node constraints for a Q2 element
-  FE_Q<dim>       fe(2);
+  FE_Q<dim> fe(2);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
   deallog << "Number of dofs: " << dof_handler.n_dofs() << std::endl;

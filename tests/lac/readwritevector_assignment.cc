@@ -24,12 +24,12 @@ test()
 {
   unsigned int double_size = 2;
   unsigned int float_size  = 10;
-  IndexSet     is(50);
+  IndexSet is(50);
   is.add_range(0, 2);
   is.add_index(46);
   is.add_range(10, 15);
   LinearAlgebra::ReadWriteVector<double> double_vector(is);
-  LinearAlgebra::ReadWriteVector<float>  float_vector(float_size);
+  LinearAlgebra::ReadWriteVector<float> float_vector(float_size);
   deallog << "double_size " << double_vector.n_elements() << std::endl;
   deallog << "float_size " << float_vector.n_elements() << std::endl;
 

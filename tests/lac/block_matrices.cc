@@ -132,7 +132,7 @@ test()
 
   // Check the iterator
   deallog.push("Iterator");
-  BlockSparseMatrix<double>::const_iterator       iter     = bsm.begin();
+  BlockSparseMatrix<double>::const_iterator iter           = bsm.begin();
   const BlockSparseMatrix<double>::const_iterator end_iter = bsm.end();
   for(; iter != end_iter; ++iter)
     deallog << iter->row() << '\t' << iter->column() << '\t' << iter->value()
@@ -142,13 +142,13 @@ test()
   // now allocate two block vectors
   // and see what we can get after
   // vmults:
-  BlockVector<double>                  src;
+  BlockVector<double> src;
   std::vector<types::global_dof_index> src_sizes(2);
   src_sizes[0] = 10;
   src_sizes[1] = 19;
   src.reinit(src_sizes);
 
-  BlockVector<double>                  dst;
+  BlockVector<double> dst;
   std::vector<types::global_dof_index> dst_sizes(3);
   dst_sizes[0] = 2;
   dst_sizes[1] = 7;

@@ -87,12 +87,12 @@ void make_grid(Triangulation<2>& triangulation)
 template <int dim>
 void
 test(const Triangulation<dim>& tria,
-     const Mapping<dim>&       mapping,
+     const Mapping<dim>& mapping,
      const FiniteElement<dim>& fe1,
-     const std::string&        fe_string1,
+     const std::string& fe_string1,
      const FiniteElement<dim>& fe2,
-     const std::string&        fe_string2,
-     const unsigned int        testcase)
+     const std::string& fe_string2,
+     const unsigned int testcase)
 {
   DoFHandler<dim> dof_handler1(tria);
   DoFHandler<dim> dof_handler2(tria);
@@ -112,7 +112,7 @@ test(const Triangulation<dim>& tria,
   DoFTools::make_hanging_node_constraints(dof_handler2, constraints2);
   constraints2.close();
 
-  QGauss<dim>  quadrature(4);
+  QGauss<dim> quadrature(4);
   TestFunction function;
   VectorTools::project(
     mapping, dof_handler1, constraints1, quadrature, function, function1);
@@ -189,7 +189,7 @@ main()
 {
   initlog();
 
-  Triangulation<2>   tria;
+  Triangulation<2> tria;
   MappingQGeneric<2> mapping(1);
 
   make_grid(tria);

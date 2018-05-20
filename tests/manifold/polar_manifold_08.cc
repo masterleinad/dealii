@@ -29,7 +29,7 @@ main()
 
   // Center and radius of the Ball
   Point<2> center(.5, .5);
-  double   radius = center.norm();
+  double radius = center.norm();
 
   const PolarManifold<2, 2> manifold(center);
 

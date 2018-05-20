@@ -67,7 +67,7 @@ test(const Triangulation<dim>& tr)
   dof.distribute_dofs(fe);
 
   const QGauss<dim> quadrature(2);
-  FEValues<dim>     fe_values(mapping,
+  FEValues<dim> fe_values(mapping,
                           fe,
                           quadrature,
                           update_values | update_gradients | update_JxW_values);
@@ -133,8 +133,8 @@ void
 test()
 {
   Triangulation<dim> tr;
-  Point<dim>         p1 = Point<dim>();
-  Point<dim>         p2 = (dim == 2 ? Point<dim>(2, 1) : Point<dim>(2, 1, 1));
+  Point<dim> p1 = Point<dim>();
+  Point<dim> p2 = (dim == 2 ? Point<dim>(2, 1) : Point<dim>(2, 1, 1));
   std::vector<unsigned int> subdivisions(dim, 1);
   subdivisions[0] = 2;
   GridGenerator::subdivided_hyper_rectangle(tr, subdivisions, p1, p2);

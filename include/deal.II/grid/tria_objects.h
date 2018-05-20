@@ -221,7 +221,7 @@ namespace internal
       template <int dim, int spacedim>
       typename dealii::Triangulation<dim, spacedim>::raw_hex_iterator
       next_free_hex(const dealii::Triangulation<dim, spacedim>& tria,
-                    const unsigned int                          level);
+                    const unsigned int level);
 
       /**
        * Clear all the data contained in this object.
@@ -703,11 +703,11 @@ namespace internal
     TriaObjects<G>::serialize(Archive& ar, const unsigned int)
     {
       ar& cells& children;
-      ar&        refinement_cases;
-      ar&        used;
-      ar&        user_flags;
-      ar&        boundary_or_material_id;
-      ar&        manifold_id;
+      ar& refinement_cases;
+      ar& used;
+      ar& user_flags;
+      ar& boundary_or_material_id;
+      ar& manifold_id;
       ar& next_free_single& next_free_pair& reverse_order_next_free_single;
       ar& user_data& user_data_type;
     }

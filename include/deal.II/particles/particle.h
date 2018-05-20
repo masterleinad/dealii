@@ -118,8 +118,8 @@ namespace Particles
      * in the coordinate system of the reference cell.
      * @param[in] id Globally unique ID number of particle.
      */
-    Particle(const Point<spacedim>&      location,
-             const Point<dim>&           reference_location,
+    Particle(const Point<spacedim>& location,
+             const Point<dim>& reference_location,
              const types::particle_index id);
 
     /**

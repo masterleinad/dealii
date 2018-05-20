@@ -43,8 +43,8 @@ fill_matrices(MeshWorker::LocalResults<number>& results, bool face)
 {
   for(unsigned int k = 0; k < results.n_matrices(); ++k)
     {
-      FullMatrix<number>& M    = results.matrix(k, false).matrix;
-      double              base = 1000 * (results.matrix(k).row + 1)
+      FullMatrix<number>& M = results.matrix(k, false).matrix;
+      double base           = 1000 * (results.matrix(k).row + 1)
                     + 100 * (results.matrix(k).column + 1);
       for(unsigned int i = 0; i < M.m(); ++i)
         for(unsigned int j = 0; j < M.n(); ++j)
@@ -74,7 +74,7 @@ test(FiniteElement<dim>& fe)
   deallog << "DoFs " << dof.n_dofs() << std::endl;
 
   typename DoFHandler<dim>::active_cell_iterator cell     = dof.begin_active();
-  typename DoFHandler<dim>::face_iterator        face     = cell->face(1);
+  typename DoFHandler<dim>::face_iterator face            = cell->face(1);
   typename DoFHandler<dim>::active_cell_iterator neighbor = cell->neighbor(1);
 
   DynamicSparsityPattern csp(dof.n_dofs(), dof.n_dofs());
@@ -112,10 +112,10 @@ main()
 {
   initlog();
 
-  FE_DGP<2>           p0(0);
-  FE_DGP<2>           p1(1);
+  FE_DGP<2> p0(0);
+  FE_DGP<2> p1(1);
   FE_RaviartThomas<2> rt0(0);
-  FE_Q<2>             q2(2);
+  FE_Q<2> q2(2);
 
   FESystem<2> sys1(p0, 2, p1, 1);
   FESystem<2> sys2(p0, 2, rt0, 1);

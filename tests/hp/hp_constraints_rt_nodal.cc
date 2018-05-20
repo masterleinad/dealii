@@ -28,7 +28,7 @@ test()
     return;
 
   deallog << "Test for dim = " << dim << std::endl << std::endl;
-  hp::FECollection<dim>     fe;
+  hp::FECollection<dim> fe;
   std::vector<unsigned int> degrees;
   for(unsigned int i = 0; i < 7 - dim; ++i)
     {

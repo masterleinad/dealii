@@ -171,13 +171,13 @@ namespace hp
     typedef typename ActiveSelector::CellAccessor cell_accessor;
     typedef typename ActiveSelector::FaceAccessor face_accessor;
 
-    typedef typename ActiveSelector::line_iterator        line_iterator;
+    typedef typename ActiveSelector::line_iterator line_iterator;
     typedef typename ActiveSelector::active_line_iterator active_line_iterator;
 
-    typedef typename ActiveSelector::quad_iterator        quad_iterator;
+    typedef typename ActiveSelector::quad_iterator quad_iterator;
     typedef typename ActiveSelector::active_quad_iterator active_quad_iterator;
 
-    typedef typename ActiveSelector::hex_iterator        hex_iterator;
+    typedef typename ActiveSelector::hex_iterator hex_iterator;
     typedef typename ActiveSelector::active_hex_iterator active_hex_iterator;
 
     /**
@@ -298,7 +298,7 @@ namespace hp
      * the distribution of degrees of freedom over the mesh.
      */
     void
-    initialize(const Triangulation<dim, spacedim>&    tria,
+    initialize(const Triangulation<dim, spacedim>& tria,
                const hp::FECollection<dim, spacedim>& fe);
 
     /**
@@ -898,10 +898,10 @@ namespace hp
 
     template <int structdim>
     void
-    set_dof_index(const unsigned int            obj_level,
-                  const unsigned int            obj_index,
-                  const unsigned int            fe_index,
-                  const unsigned int            local_index,
+    set_dof_index(const unsigned int obj_level,
+                  const unsigned int obj_index,
+                  const unsigned int fe_index,
+                  const unsigned int local_index,
                   const types::global_dof_index global_index) const;
 
     /**
@@ -1076,7 +1076,7 @@ namespace hp
     // std::unique_ptr objects because std::unique_ptr does not
     // have a copy constructor. do it one level at a time
     const unsigned int n_levels = levels.size();
-    ar&                n_levels;
+    ar& n_levels;
     for(unsigned int i = 0; i < n_levels; ++i)
       ar& levels[i];
 
@@ -1084,13 +1084,13 @@ namespace hp
     // at least up to 1.65.1. This causes problems with clang-5.
     // Therefore, work around it.
     bool faces_is_nullptr = (faces.get() == nullptr);
-    ar&  faces_is_nullptr;
+    ar& faces_is_nullptr;
     if(!faces_is_nullptr)
       ar& faces;
 
     // the same issue as above
     const unsigned int n_has_children = has_children.size();
-    ar&                n_has_children;
+    ar& n_has_children;
     for(unsigned int i = 0; i < n_has_children; ++i)
       ar& has_children[i];
 
@@ -1125,18 +1125,18 @@ namespace hp
     // std::unique_ptr objects because std::unique_ptr does not
     // have a copy constructor. do it one level at a time
     unsigned int size;
-    ar&          size;
+    ar& size;
     levels.resize(size);
     for(unsigned int i = 0; i < size; ++i)
       {
         std::unique_ptr<dealii::internal::hp::DoFLevel> level;
-        ar&                                             level;
+        ar& level;
         levels[i] = std::move(level);
       }
 
     //Workaround for nullptr, see in save().
     bool faces_is_nullptr = true;
-    ar&  faces_is_nullptr;
+    ar& faces_is_nullptr;
     if(!faces_is_nullptr)
       ar& faces;
 
@@ -1146,14 +1146,14 @@ namespace hp
     for(unsigned int i = 0; i < size; ++i)
       {
         std::unique_ptr<std::vector<bool>> has_children_on_level;
-        ar&                                has_children_on_level;
+        ar& has_children_on_level;
         has_children[i] = std::move(has_children_on_level);
       }
 
     // these are the checks that correspond to the last block in the save()
     // function
     unsigned int n_cells;
-    std::string  policy_name;
+    std::string policy_name;
 
     ar& n_cells& policy_name;
 

@@ -94,7 +94,7 @@ TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestMap1<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -146,7 +146,7 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef1<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -192,7 +192,7 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef2<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -239,7 +239,7 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestDef3<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -296,7 +296,7 @@ TestPoly<dim>::value(const Point<dim>& p, const unsigned int component) const
 template <int dim>
 void
 TestPoly<dim>::vector_value(const Point<dim>& p,
-                            Vector<double>&   return_value) const
+                            Vector<double>& return_value) const
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
@@ -331,7 +331,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
 
       // Now evaluate error ...
       // Use a high order quadrature.
-      QGauss<2>   quad(6);
+      QGauss<2> quad(6);
       FEValues<2> fe_values(mapping,
                             dof_handler->get_fe(),
                             quad,
@@ -359,7 +359,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
 
           for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             {
-              double   u = this_value[q_point](0), v = this_value[q_point](1);
+              double u = this_value[q_point](0), v = this_value[q_point](1);
               Point<2> p = fe_values.quadrature_point(q_point);
 
               double u_ex = pol.value(p, 0), v_ex = pol.value(p, 1);
@@ -396,8 +396,8 @@ main()
   deallog.attach(logfile);
 
   Triangulation<2> tria_test;
-  DoFHandler<2>*   dof_handler, *dof_handler_def;
-  Point<2>         p1(0, 0), p2(1, 1);
+  DoFHandler<2>*dof_handler, *dof_handler_def;
+  Point<2> p1(0, 0), p2(1, 1);
 
   GridGenerator::hyper_rectangle(tria_test, p1, p2);
   //  tria_test.refine_global (1);

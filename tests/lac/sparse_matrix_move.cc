@@ -59,7 +59,7 @@ main()
 
   const unsigned int size = 5;
 
-  FDMatrix     testproblem(size, size);
+  FDMatrix testproblem(size, size);
   unsigned int dim = (size - 1) * (size - 1);
 
   SparsityPattern sparsity(dim, dim, size);

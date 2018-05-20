@@ -40,27 +40,27 @@ public:
   static void
   cell(MeshWorker::DoFInfo<dim>& dinfo, MeshWorker::IntegrationInfo<dim>& info);
   static void
-  face(MeshWorker::DoFInfo<dim>&         dinfo1,
-       MeshWorker::DoFInfo<dim>&         dinfo2,
+  face(MeshWorker::DoFInfo<dim>& dinfo1,
+       MeshWorker::DoFInfo<dim>& dinfo2,
        MeshWorker::IntegrationInfo<dim>& info1,
        MeshWorker::IntegrationInfo<dim>& info2);
   static void
-  block_cell(MeshWorker::DoFInfo<dim>&         dinfo,
+  block_cell(MeshWorker::DoFInfo<dim>& dinfo,
              MeshWorker::IntegrationInfo<dim>& info);
   static void
-  block_face(MeshWorker::DoFInfo<dim>&         dinfo1,
-             MeshWorker::DoFInfo<dim>&         dinfo2,
+  block_face(MeshWorker::DoFInfo<dim>& dinfo1,
+             MeshWorker::DoFInfo<dim>& dinfo2,
              MeshWorker::IntegrationInfo<dim>& info1,
              MeshWorker::IntegrationInfo<dim>& info2);
 };
 
 template <int dim>
 void
-MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
+MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>& dinfo,
                             MeshWorker::IntegrationInfo<dim>& info)
 {
-  const FiniteElement<dim>& fe           = info.fe_values().get_fe();
-  FullMatrix<double>&       local_matrix = dinfo.matrix(0).matrix;
+  const FiniteElement<dim>& fe     = info.fe_values().get_fe();
+  FullMatrix<double>& local_matrix = dinfo.matrix(0).matrix;
 
   for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
     for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
@@ -72,15 +72,15 @@ MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
 
 template <int dim>
 void
-MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
-                            MeshWorker::DoFInfo<dim>&         dinfo2,
+MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>& dinfo1,
+                            MeshWorker::DoFInfo<dim>& dinfo2,
                             MeshWorker::IntegrationInfo<dim>& info1,
                             MeshWorker::IntegrationInfo<dim>& info2)
 {
-  const FiniteElement<dim>& fe1         = info1.fe_values().get_fe();
-  const FiniteElement<dim>& fe2         = info2.fe_values().get_fe();
-  FullMatrix<double>&       matrix_v1u2 = dinfo1.matrix(0, true).matrix;
-  FullMatrix<double>&       matrix_v2u1 = dinfo2.matrix(0, true).matrix;
+  const FiniteElement<dim>& fe1   = info1.fe_values().get_fe();
+  const FiniteElement<dim>& fe2   = info2.fe_values().get_fe();
+  FullMatrix<double>& matrix_v1u2 = dinfo1.matrix(0, true).matrix;
+  FullMatrix<double>& matrix_v2u1 = dinfo2.matrix(0, true).matrix;
 
   for(unsigned int i = 0; i < fe1.dofs_per_cell; ++i)
     for(unsigned int j = 0; j < fe1.dofs_per_cell; ++j)
@@ -143,7 +143,7 @@ void
 assemble(const DoFHandler<dim>& dof_handler, SparseMatrix<double>& matrix)
 {
   const FiniteElement<dim>& fe = dof_handler.get_fe();
-  MappingQGeneric<dim>      mapping(1);
+  MappingQGeneric<dim> mapping(1);
 
   MeshWorker::IntegrationInfoBox<dim> info_box;
   const unsigned int n_gauss_points = dof_handler.get_fe().tensor_degree() + 1;
@@ -175,13 +175,13 @@ assemble(const DoFHandler<dim>& dof_handler, SparseMatrix<double>& matrix)
 
 template <int dim>
 void
-assemble(const DoFHandler<dim>&              dof_handler,
+assemble(const DoFHandler<dim>& dof_handler,
          MGLevelObject<SparseMatrix<double>> matrix,
          MGLevelObject<SparseMatrix<double>> dg_up,
          MGLevelObject<SparseMatrix<double>> dg_down)
 {
   const FiniteElement<dim>& fe = dof_handler.get_fe();
-  MappingQGeneric<dim>      mapping(1);
+  MappingQGeneric<dim> mapping(1);
 
   MeshWorker::IntegrationInfoBox<dim> info_box;
   const unsigned int n_gauss_points = dof_handler.get_fe().tensor_degree() + 1;
@@ -213,12 +213,12 @@ template <int dim>
 void
 test_simple(DoFHandler<dim>& mgdofs)
 {
-  SparsityPattern      pattern;
+  SparsityPattern pattern;
   SparseMatrix<double> matrix;
-  Vector<double>       v;
+  Vector<double> v;
 
-  const DoFHandler<dim>&    dofs = mgdofs;
-  const FiniteElement<dim>& fe   = dofs.get_fe();
+  const DoFHandler<dim>& dofs  = mgdofs;
+  const FiniteElement<dim>& fe = dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell
@@ -233,8 +233,8 @@ test_simple(DoFHandler<dim>& mgdofs)
   deallog << std::setprecision(3);
   matrix.print_formatted(deallog.get_file_stream(), 0, false, 4);
 
-  MGLevelObject<SparsityPattern>      mg_sparsity;
-  MGLevelObject<SparsityPattern>      mg_sparsity_dg_interface;
+  MGLevelObject<SparsityPattern> mg_sparsity;
+  MGLevelObject<SparsityPattern> mg_sparsity_dg_interface;
   MGLevelObject<SparseMatrix<double>> mg_matrix;
   MGLevelObject<SparseMatrix<double>> mg_matrix_dg_up;
   MGLevelObject<SparseMatrix<double>> mg_matrix_dg_down;
@@ -309,12 +309,12 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
   FE_DGP<2> dgp0(0);
   FE_DGP<2> dgp1(1);
-  FE_Q<2>   q1(1);
+  FE_Q<2> q1(1);
 
   std::vector<std::shared_ptr<FiniteElement<2>>> fe2;
   fe2.push_back(std::shared_ptr<FiniteElement<2>>(new FE_DGP<2>(0)));

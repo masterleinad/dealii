@@ -25,8 +25,8 @@
 void
 test()
 {
-  IndexSet     parallel_partitioner_1(10);
-  IndexSet     parallel_partitioner_2(10);
+  IndexSet parallel_partitioner_1(10);
+  IndexSet parallel_partitioner_2(10);
   unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   if(rank == 0)
     {

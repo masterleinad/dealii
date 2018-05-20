@@ -77,7 +77,7 @@ namespace internal
       Point<1>
       transform_real_to_unit_cell(
         const std::array<Point<spacedim>, GeometryInfo<1>::vertices_per_cell>&
-                               vertices,
+          vertices,
         const Point<spacedim>& p)
       {
         Assert(spacedim == 1, ExcInternalError());
@@ -89,7 +89,7 @@ namespace internal
       Point<2>
       transform_real_to_unit_cell(
         const std::array<Point<spacedim>, GeometryInfo<2>::vertices_per_cell>&
-                               vertices,
+          vertices,
         const Point<spacedim>& p)
       {
         Assert(spacedim == 2, ExcInternalError());
@@ -123,8 +123,8 @@ namespace internal
           discriminant > 0.0,
           (typename Mapping<spacedim, spacedim>::ExcTransformationFailed()));
 
-        long double       eta1;
-        long double       eta2;
+        long double eta1;
+        long double eta2;
         const long double sqrt_discriminant = std::sqrt(discriminant);
         // special case #1: if a is near-zero to make the discriminant exactly
         // equal b, then use the linear formula
@@ -211,7 +211,7 @@ namespace internal
       template <int dim, int spacedim>
       void
       compute_shape_function_values_general(
-        const unsigned int             n_shape_functions,
+        const unsigned int n_shape_functions,
         const std::vector<Point<dim>>& unit_points,
         typename dealii::MappingQGeneric<dim, spacedim>::InternalData& data)
       {
@@ -232,7 +232,7 @@ namespace internal
             1,
             data.polynomial_degree)));
 
-        std::vector<double>         values;
+        std::vector<double> values;
         std::vector<Tensor<1, dim>> grads;
         if(data.shape_values.size() != 0)
           {
@@ -308,8 +308,8 @@ namespace internal
 
       void
       compute_shape_function_values_hardcode(
-        const unsigned int                           n_shape_functions,
-        const std::vector<Point<1>>&                 unit_points,
+        const unsigned int n_shape_functions,
+        const std::vector<Point<1>>& unit_points,
         dealii::MappingQGeneric<1, 1>::InternalData& data)
       {
         (void) n_shape_functions;
@@ -366,8 +366,8 @@ namespace internal
 
       void
       compute_shape_function_values_hardcode(
-        const unsigned int                           n_shape_functions,
-        const std::vector<Point<2>>&                 unit_points,
+        const unsigned int n_shape_functions,
+        const std::vector<Point<2>>& unit_points,
         dealii::MappingQGeneric<2, 2>::InternalData& data)
       {
         (void) n_shape_functions;
@@ -446,8 +446,8 @@ namespace internal
 
       void
       compute_shape_function_values_hardcode(
-        const unsigned int                           n_shape_functions,
-        const std::vector<Point<3>>&                 unit_points,
+        const unsigned int n_shape_functions,
+        const std::vector<Point<3>>& unit_points,
         dealii::MappingQGeneric<3, 3>::InternalData& data)
       {
         (void) n_shape_functions;
@@ -654,9 +654,9 @@ MappingQGeneric<dim, spacedim>::InternalData::memory_consumption() const
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::InternalData::initialize(
-  const UpdateFlags      update_flags,
+  const UpdateFlags update_flags,
   const Quadrature<dim>& q,
-  const unsigned int     n_original_q_points)
+  const unsigned int n_original_q_points)
 {
   // store the flags in the internal data object so we can access them
   // in fill_fe_*_values()
@@ -767,15 +767,15 @@ MappingQGeneric<dim, spacedim>::InternalData::initialize(
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::InternalData::initialize_face(
-  const UpdateFlags      update_flags,
+  const UpdateFlags update_flags,
   const Quadrature<dim>& q,
-  const unsigned int     n_original_q_points)
+  const unsigned int n_original_q_points)
 {
   initialize(update_flags, q, n_original_q_points);
 
   if(dim > 1 && tensor_product_quadrature)
     {
-      const unsigned int  facedim = dim > 1 ? dim - 1 : 1;
+      const unsigned int facedim = dim > 1 ? dim - 1 : 1;
       const FE_Q<facedim> fe(polynomial_degree);
       shape_info.reinit(q.get_tensor_basis()[0], fe);
 
@@ -1018,7 +1018,7 @@ namespace internal
           for(unsigned int j = 0; j < M; ++j)
             for(unsigned int k = 0; k < M; ++k)
               {
-                const Point<3>     p = gl.point((i + 1) * (M + 2) * (M + 2)
+                const Point<3> p = gl.point((i + 1) * (M + 2) * (M + 2)
                                             + (j + 1) * (M + 2) + (k + 1));
                 const unsigned int index_table = i * M * M + j * M + k;
 
@@ -1123,7 +1123,7 @@ namespace internal
         if(polynomial_degree <= 1)
           return dealii::Table<2, double>();
 
-        QGaussLobatto<dim>        quadrature(polynomial_degree + 1);
+        QGaussLobatto<dim> quadrature(polynomial_degree + 1);
         std::vector<unsigned int> h2l(quadrature.size());
         FETools::hierarchic_to_lexicographic_numbering<dim>(polynomial_degree,
                                                             h2l);
@@ -1171,7 +1171,7 @@ namespace internal
       Point<dim>
       do_transform_real_to_unit_cell_internal(
         const typename dealii::Triangulation<dim, dim>::cell_iterator& cell,
-        const Point<dim>&                                              p,
+        const Point<dim>& p,
         const Point<dim>& initial_p_unit,
         typename dealii::MappingQGeneric<dim, dim>::InternalData& mdata)
       {
@@ -1240,11 +1240,11 @@ namespace internal
         // in every iteration (A isn't fixed by depends on xk). However, if the
         // cell is not too deformed (it may be stretched, but not twisted) then
         // the mapping is almost linear and A is indeed constant or nearly so.
-        const double       eps                    = 1.e-11;
+        const double eps                          = 1.e-11;
         const unsigned int newton_iteration_limit = 20;
 
         unsigned int newton_iteration = 0;
-        double       last_f_weighted_norm;
+        double last_f_weighted_norm;
         do
           {
 #ifdef DEBUG_TRANSFORM_REAL_TO_UNIT_CELL
@@ -1255,8 +1255,8 @@ namespace internal
             Tensor<2, spacedim> df;
             for(unsigned int k = 0; k < mdata.n_shape_functions; ++k)
               {
-                const Tensor<1, dim>&  grad_transform = mdata.derivative(0, k);
-                const Point<spacedim>& point          = points[k];
+                const Tensor<1, dim>& grad_transform = mdata.derivative(0, k);
+                const Point<spacedim>& point         = points[k];
 
                 for(unsigned int i = 0; i < spacedim; ++i)
                   for(unsigned int j = 0; j < dim; ++j)
@@ -1267,7 +1267,7 @@ namespace internal
             AssertThrow(
               determinant(df) > 0,
               (typename Mapping<dim, spacedim>::ExcTransformationFailed()));
-            Tensor<2, spacedim>       df_inverse = invert(df);
+            Tensor<2, spacedim> df_inverse = invert(df);
             const Tensor<1, spacedim> delta
               = df_inverse * static_cast<const Tensor<1, spacedim>&>(f);
 
@@ -1349,7 +1349,7 @@ namespace internal
       Point<dim>
       do_transform_real_to_unit_cell_internal_codim1(
         const typename dealii::Triangulation<dim, dim + 1>::cell_iterator& cell,
-        const Point<dim + 1>&                                              p,
+        const Point<dim + 1>& p,
         const Point<dim>& initial_p_unit,
         typename dealii::MappingQGeneric<dim, dim + 1>::InternalData& mdata)
       {
@@ -1370,8 +1370,8 @@ namespace internal
         Tensor<1, spacedim> DF[dim];
         Tensor<1, spacedim> D2F[dim][dim];
 
-        Point<dim>     p_unit = initial_p_unit;
-        Point<dim>     f;
+        Point<dim> p_unit = initial_p_unit;
+        Point<dim> f;
         Tensor<2, dim> df;
 
         // Evaluate first and second derivatives
@@ -1379,9 +1379,9 @@ namespace internal
 
         for(unsigned int k = 0; k < mdata.n_shape_functions; ++k)
           {
-            const Tensor<1, dim>&  grad_phi_k = mdata.derivative(0, k);
-            const Tensor<2, dim>&  hessian_k  = mdata.second_derivative(0, k);
-            const Point<spacedim>& point_k    = points[k];
+            const Tensor<1, dim>& grad_phi_k = mdata.derivative(0, k);
+            const Tensor<2, dim>& hessian_k  = mdata.second_derivative(0, k);
+            const Point<spacedim>& point_k   = points[k];
 
             for(unsigned int j = 0; j < dim; ++j)
               {
@@ -1404,7 +1404,7 @@ namespace internal
               df[j][l] = -DF[j] * DF[l] + D2F[j][l] * p_minus_F;
           }
 
-        const double       eps        = 1.e-12 * cell->diameter();
+        const double eps              = 1.e-12 * cell->diameter();
         const unsigned int loop_limit = 10;
 
         unsigned int loop = 0;
@@ -1474,8 +1474,8 @@ namespace internal
       maybe_update_q_points_Jacobians_and_grads_tensor(
         const CellSimilarity::Similarity cell_similarity,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
-                                                       data,
-        std::vector<Point<spacedim>>&                  quadrature_points,
+          data,
+        std::vector<Point<spacedim>>& quadrature_points,
         std::vector<DerivativeForm<2, dim, spacedim>>& jacobian_grads)
       {
         const UpdateFlags update_flags = data.update_each;
@@ -1639,7 +1639,7 @@ namespace internal
       maybe_compute_q_points(
         const typename QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
-                                      data,
+          data,
         std::vector<Point<spacedim>>& quadrature_points)
       {
         const UpdateFlags update_flags = data.update_each;
@@ -1647,7 +1647,7 @@ namespace internal
         if(update_flags & update_quadrature_points)
           for(unsigned int point = 0; point < quadrature_points.size(); ++point)
             {
-              const double*   shape = &data.shape(point + data_set, 0);
+              const double* shape = &data.shape(point + data_set, 0);
               Point<spacedim> result
                 = (shape[0] * data.mapping_support_points[0]);
               for(unsigned int k = 1; k < data.n_shape_functions; ++k)
@@ -1749,10 +1749,10 @@ namespace internal
       template <int dim, int spacedim>
       void
       maybe_update_jacobian_grads(
-        const CellSimilarity::Similarity                  cell_similarity,
+        const CellSimilarity::Similarity cell_similarity,
         const typename QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
-                                                       data,
+          data,
         std::vector<DerivativeForm<2, dim, spacedim>>& jacobian_grads)
       {
         const UpdateFlags update_flags = data.update_each;
@@ -1796,10 +1796,10 @@ namespace internal
       template <int dim, int spacedim>
       void
       maybe_update_jacobian_pushed_forward_grads(
-        const CellSimilarity::Similarity                  cell_similarity,
+        const CellSimilarity::Similarity cell_similarity,
         const typename QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
-                                          data,
+          data,
         std::vector<Tensor<3, spacedim>>& jacobian_pushed_forward_grads)
       {
         const UpdateFlags update_flags = data.update_each;
@@ -1872,10 +1872,10 @@ namespace internal
       template <int dim, int spacedim>
       void
       maybe_update_jacobian_2nd_derivatives(
-        const CellSimilarity::Similarity                  cell_similarity,
+        const CellSimilarity::Similarity cell_similarity,
         const typename QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
-                                                       data,
+          data,
         std::vector<DerivativeForm<3, dim, spacedim>>& jacobian_2nd_derivatives)
       {
         const UpdateFlags update_flags = data.update_each;
@@ -1927,7 +1927,7 @@ namespace internal
       template <int dim, int spacedim>
       void
       maybe_update_jacobian_pushed_forward_2nd_derivatives(
-        const CellSimilarity::Similarity                  cell_similarity,
+        const CellSimilarity::Similarity cell_similarity,
         const typename QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
           data,
@@ -2030,10 +2030,10 @@ namespace internal
       template <int dim, int spacedim>
       void
       maybe_update_jacobian_3rd_derivatives(
-        const CellSimilarity::Similarity                  cell_similarity,
+        const CellSimilarity::Similarity cell_similarity,
         const typename QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
-                                                       data,
+          data,
         std::vector<DerivativeForm<4, dim, spacedim>>& jacobian_3rd_derivatives)
       {
         const UpdateFlags update_flags = data.update_each;
@@ -2087,7 +2087,7 @@ namespace internal
       template <int dim, int spacedim>
       void
       maybe_update_jacobian_pushed_forward_3rd_derivatives(
-        const CellSimilarity::Similarity                  cell_similarity,
+        const CellSimilarity::Similarity cell_similarity,
         const typename QProjector<dim>::DataSetDescriptor data_set,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
           data,
@@ -2253,7 +2253,7 @@ template <int dim, int spacedim>
 Point<spacedim>
 MappingQGeneric<dim, spacedim>::transform_unit_to_real_cell(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const Point<dim>&                                           p) const
+  const Point<dim>& p) const
 {
   // set up the polynomial space
   const TensorProductPolynomials<dim> tensor_pols(
@@ -2314,8 +2314,8 @@ template <>
 Point<1>
 MappingQGeneric<1, 1>::transform_real_to_unit_cell_internal(
   const Triangulation<1, 1>::cell_iterator& cell,
-  const Point<1>&                           p,
-  const Point<1>&                           initial_p_unit) const
+  const Point<1>& p,
+  const Point<1>& initial_p_unit) const
 {
   const int dim      = 1;
   const int spacedim = 1;
@@ -2340,8 +2340,8 @@ template <>
 Point<2>
 MappingQGeneric<2, 2>::transform_real_to_unit_cell_internal(
   const Triangulation<2, 2>::cell_iterator& cell,
-  const Point<2>&                           p,
-  const Point<2>&                           initial_p_unit) const
+  const Point<2>& p,
+  const Point<2>& initial_p_unit) const
 {
   const int dim      = 2;
   const int spacedim = 2;
@@ -2366,8 +2366,8 @@ template <>
 Point<3>
 MappingQGeneric<3, 3>::transform_real_to_unit_cell_internal(
   const Triangulation<3, 3>::cell_iterator& cell,
-  const Point<3>&                           p,
-  const Point<3>&                           initial_p_unit) const
+  const Point<3>& p,
+  const Point<3>& initial_p_unit) const
 {
   const int dim      = 3;
   const int spacedim = 3;
@@ -2392,8 +2392,8 @@ template <>
 Point<1>
 MappingQGeneric<1, 2>::transform_real_to_unit_cell_internal(
   const Triangulation<1, 2>::cell_iterator& cell,
-  const Point<2>&                           p,
-  const Point<1>&                           initial_p_unit) const
+  const Point<2>& p,
+  const Point<1>& initial_p_unit) const
 {
   const int dim      = 1;
   const int spacedim = 2;
@@ -2419,8 +2419,8 @@ template <>
 Point<2>
 MappingQGeneric<2, 3>::transform_real_to_unit_cell_internal(
   const Triangulation<2, 3>::cell_iterator& cell,
-  const Point<3>&                           p,
-  const Point<2>&                           initial_p_unit) const
+  const Point<3>& p,
+  const Point<2>& initial_p_unit) const
 {
   const int dim      = 2;
   const int spacedim = 3;
@@ -2457,7 +2457,7 @@ template <int dim, int spacedim>
 Point<dim>
 MappingQGeneric<dim, spacedim>::transform_real_to_unit_cell(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const Point<spacedim>&                                      p) const
+  const Point<spacedim>& p) const
 {
   // Use an exact formula if one is available. this is only the case
   // for Q1 mappings in 1d, and in 2d if dim==spacedim
@@ -2643,7 +2643,7 @@ MappingQGeneric<dim, spacedim>::requires_update_flags(
 
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
-MappingQGeneric<dim, spacedim>::get_data(const UpdateFlags      update_flags,
+MappingQGeneric<dim, spacedim>::get_data(const UpdateFlags update_flags,
                                          const Quadrature<dim>& q) const
 {
   auto data = std_cxx14::make_unique<InternalData>(polynomial_degree);
@@ -2655,7 +2655,7 @@ MappingQGeneric<dim, spacedim>::get_data(const UpdateFlags      update_flags,
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingQGeneric<dim, spacedim>::get_face_data(
-  const UpdateFlags          update_flags,
+  const UpdateFlags update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
   auto data = std_cxx14::make_unique<InternalData>(polynomial_degree);
@@ -2669,7 +2669,7 @@ MappingQGeneric<dim, spacedim>::get_face_data(
 template <int dim, int spacedim>
 std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>
 MappingQGeneric<dim, spacedim>::get_subface_data(
-  const UpdateFlags          update_flags,
+  const UpdateFlags update_flags,
   const Quadrature<dim - 1>& quadrature) const
 {
   auto data = std_cxx14::make_unique<InternalData>(polynomial_degree);
@@ -2684,9 +2684,9 @@ template <int dim, int spacedim>
 CellSimilarity::Similarity
 MappingQGeneric<dim, spacedim>::fill_fe_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const CellSimilarity::Similarity                            cell_similarity,
-  const Quadrature<dim>&                                      quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  const CellSimilarity::Similarity cell_similarity,
+  const Quadrature<dim>& quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
   internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
     output_data) const
 {
@@ -2783,8 +2783,8 @@ MappingQGeneric<dim, spacedim>::fill_fe_values(
       data,
       output_data.jacobian_pushed_forward_3rd_derivatives);
 
-  const UpdateFlags          update_flags = data.update_each;
-  const std::vector<double>& weights      = quadrature.get_weights();
+  const UpdateFlags update_flags     = data.update_each;
+  const std::vector<double>& weights = quadrature.get_weights();
 
   // Multiply quadrature weights by absolute value of Jacobian determinants or
   // the area element g=sqrt(DX^t DX) in case of codim > 0
@@ -2917,10 +2917,10 @@ namespace internal
       maybe_compute_face_data(
         const dealii::MappingQGeneric<dim, spacedim>& mapping,
         const typename dealii::Triangulation<dim, spacedim>::cell_iterator&
-                                   cell,
-        const unsigned int         face_no,
-        const unsigned int         subface_no,
-        const unsigned int         n_q_points,
+          cell,
+        const unsigned int face_no,
+        const unsigned int subface_no,
+        const unsigned int n_q_points,
         const std::vector<double>& weights,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
           data,
@@ -3086,11 +3086,11 @@ namespace internal
       do_fill_fe_face_values(
         const dealii::MappingQGeneric<dim, spacedim>& mapping,
         const typename dealii::Triangulation<dim, spacedim>::cell_iterator&
-                                                          cell,
-        const unsigned int                                face_no,
-        const unsigned int                                subface_no,
+          cell,
+        const unsigned int face_no,
+        const unsigned int subface_no,
         const typename QProjector<dim>::DataSetDescriptor data_set,
-        const Quadrature<dim - 1>&                        quadrature,
+        const Quadrature<dim - 1>& quadrature,
         const typename dealii::MappingQGeneric<dim, spacedim>::InternalData&
           data,
         internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
@@ -3156,9 +3156,9 @@ template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::fill_fe_face_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int                                          face_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  const unsigned int face_no,
+  const Quadrature<dim - 1>& quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
   internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
     output_data) const
 {
@@ -3199,10 +3199,10 @@ template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::fill_fe_subface_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int                                          face_no,
-  const unsigned int                                          subface_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
+  const unsigned int face_no,
+  const unsigned int subface_no,
+  const Quadrature<dim - 1>& quadrature,
+  const typename Mapping<dim, spacedim>::InternalDataBase& internal_data,
   internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
     output_data) const
 {
@@ -3250,10 +3250,10 @@ namespace internal
       template <int dim, int spacedim, int rank>
       void
       transform_fields(
-        const ArrayView<const Tensor<rank, dim>>&                input,
-        const MappingType                                        mapping_type,
+        const ArrayView<const Tensor<rank, dim>>& input,
+        const MappingType mapping_type,
         const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-        const ArrayView<Tensor<rank, spacedim>>&                 output)
+        const ArrayView<Tensor<rank, spacedim>>& output)
       {
         AssertDimension(input.size(), output.size());
         Assert(
@@ -3328,10 +3328,10 @@ namespace internal
       template <int dim, int spacedim, int rank>
       void
       transform_gradients(
-        const ArrayView<const Tensor<rank, dim>>&                input,
-        const MappingType                                        mapping_type,
+        const ArrayView<const Tensor<rank, dim>>& input,
+        const MappingType mapping_type,
         const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-        const ArrayView<Tensor<rank, spacedim>>&                 output)
+        const ArrayView<Tensor<rank, spacedim>>& output)
       {
         AssertDimension(input.size(), output.size());
         Assert(
@@ -3426,10 +3426,10 @@ namespace internal
       template <int dim, int spacedim>
       void
       transform_hessians(
-        const ArrayView<const Tensor<3, dim>>&                   input,
-        const MappingType                                        mapping_type,
+        const ArrayView<const Tensor<3, dim>>& input,
+        const MappingType mapping_type,
         const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-        const ArrayView<Tensor<3, spacedim>>&                    output)
+        const ArrayView<Tensor<3, spacedim>>& output)
       {
         AssertDimension(input.size(), output.size());
         Assert(
@@ -3595,9 +3595,9 @@ namespace internal
       void
       transform_differential_forms(
         const ArrayView<const DerivativeForm<rank, dim, spacedim>>& input,
-        const MappingType                                        mapping_type,
+        const MappingType mapping_type,
         const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-        const ArrayView<Tensor<rank + 1, spacedim>>&             output)
+        const ArrayView<Tensor<rank + 1, spacedim>>& output)
       {
         AssertDimension(input.size(), output.size());
         Assert(
@@ -3635,10 +3635,10 @@ namespace internal
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
-  const ArrayView<const Tensor<1, dim>>&                   input,
-  const MappingType                                        mapping_type,
+  const ArrayView<const Tensor<1, dim>>& input,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<1, spacedim>>&                    output) const
+  const ArrayView<Tensor<1, spacedim>>& output) const
 {
   internal::MappingQGenericImplementation::transform_fields(
     input, mapping_type, mapping_data, output);
@@ -3648,9 +3648,9 @@ template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
   const ArrayView<const DerivativeForm<1, dim, spacedim>>& input,
-  const MappingType                                        mapping_type,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<2, spacedim>>&                    output) const
+  const ArrayView<Tensor<2, spacedim>>& output) const
 {
   internal::MappingQGenericImplementation::transform_differential_forms(
     input, mapping_type, mapping_data, output);
@@ -3659,10 +3659,10 @@ MappingQGeneric<dim, spacedim>::transform(
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
-  const ArrayView<const Tensor<2, dim>>&                   input,
-  const MappingType                                        mapping_type,
+  const ArrayView<const Tensor<2, dim>>& input,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<2, spacedim>>&                    output) const
+  const ArrayView<Tensor<2, spacedim>>& output) const
 {
   switch(mapping_type)
     {
@@ -3686,9 +3686,9 @@ template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
   const ArrayView<const DerivativeForm<2, dim, spacedim>>& input,
-  const MappingType                                        mapping_type,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<3, spacedim>>&                    output) const
+  const ArrayView<Tensor<3, spacedim>>& output) const
 {
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData*>(&mapping_data) != nullptr,
@@ -3732,10 +3732,10 @@ MappingQGeneric<dim, spacedim>::transform(
 template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::transform(
-  const ArrayView<const Tensor<3, dim>>&                   input,
-  const MappingType                                        mapping_type,
+  const ArrayView<const Tensor<3, dim>>& input,
+  const MappingType mapping_type,
   const typename Mapping<dim, spacedim>::InternalDataBase& mapping_data,
-  const ArrayView<Tensor<3, spacedim>>&                    output) const
+  const ArrayView<Tensor<3, spacedim>>& output) const
 {
   switch(mapping_type)
     {
@@ -3754,7 +3754,7 @@ template <int dim, int spacedim>
 void
 MappingQGeneric<dim, spacedim>::add_line_support_points(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  std::vector<Point<spacedim>>&                               a) const
+  std::vector<Point<spacedim>>& a) const
 {
   // if we only need the midpoint, then ask for it.
   if(this->polynomial_degree == 2)
@@ -3817,7 +3817,7 @@ template <>
 void
 MappingQGeneric<3, 3>::add_quad_support_points(
   const Triangulation<3, 3>::cell_iterator& cell,
-  std::vector<Point<3>>&                    a) const
+  std::vector<Point<3>>& a) const
 {
   const unsigned int faces_per_cell = GeometryInfo<3>::faces_per_cell;
 
@@ -3884,7 +3884,7 @@ template <>
 void
 MappingQGeneric<2, 3>::add_quad_support_points(
   const Triangulation<2, 3>::cell_iterator& cell,
-  std::vector<Point<3>>&                    a) const
+  std::vector<Point<3>>& a) const
 {
   std::array<Point<3>, GeometryInfo<2>::vertices_per_cell> vertices;
   for(unsigned int i = 0; i < GeometryInfo<2>::vertices_per_cell; ++i)

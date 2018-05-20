@@ -56,7 +56,7 @@ main()
   Triangulation<2, 3> triangulation;
 
   SphericalManifold<3> boundary_description;
-  Triangulation<3>     volume_mesh;
+  Triangulation<3> volume_mesh;
   GridGenerator::half_hyper_ball(volume_mesh);
 
   volume_mesh.set_manifold(0, boundary_description);

@@ -39,7 +39,7 @@ test()
 
   // Mark a small block at the corner of the hypercube
   std::vector<cell_iterator> ghost_cells_tria;
-  cell_iterator              cell = tria.begin_active(), endc = tria.end();
+  cell_iterator cell = tria.begin_active(), endc = tria.end();
   for(; cell != endc; ++cell)
     {
       if(cell->is_ghost() == true)
@@ -94,7 +94,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   test<2>();
   test<3>();

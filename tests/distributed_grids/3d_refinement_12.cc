@@ -59,17 +59,17 @@ public:
     = dealii::Triangulation<dim>::none);
   void
   run(std::vector<unsigned int>& n_cell,
-      std::set<Location<dim>>&   position_list);
+      std::set<Location<dim>>& position_list);
 
 private:
   void
   write_vtu(const unsigned int counter) const;
 
-  const MPI_Comm     mpi_communicator;
-  TypeTria           triangulation;
+  const MPI_Comm mpi_communicator;
+  TypeTria triangulation;
   const unsigned int myid;
-  const bool         I_am_host;
-  const std::string  case_name;
+  const bool I_am_host;
+  const std::string case_name;
 };
 
 // Equip class Point<dim> with operator < in order to sort the cell center coordinates.
@@ -109,7 +109,7 @@ main(int argc, char* argv[])
               ExcMessage("Current code works properly only with one process."));
 
   const unsigned int dim = 3;
-  std::ofstream      logfile;
+  std::ofstream logfile;
   if(I_am_host)
     {
       logfile.open("output");
@@ -195,8 +195,8 @@ TriaTest<dim>::TriaTest(
     case_name(smoothing_option ? "smooth-" : "no_smooth-")
 {
   std::vector<unsigned int> repetitions;
-  Point<dim>                p1;
-  Point<dim>                p2;
+  Point<dim> p1;
+  Point<dim> p2;
 
   for(unsigned int d = 0; d < dim; ++d)
     {
@@ -213,7 +213,7 @@ TriaTest<dim>::TriaTest(
 template <int dim>
 void
 TriaTest<dim>::run(std::vector<unsigned int>& n_cell,
-                   std::set<Location<dim>>&   position_list)
+                   std::set<Location<dim>>& position_list)
 {
   n_cell.clear();
   position_list.clear();

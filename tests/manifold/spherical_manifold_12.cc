@@ -35,8 +35,8 @@ main()
   deallog << std::setprecision(8);
 
   constexpr unsigned int dim = 3;
-  SphericalManifold<3>   spherical;
-  FlatManifold<3>        flat;
+  SphericalManifold<3> spherical;
+  FlatManifold<3> flat;
 
   Triangulation<dim> tria;
   GridGenerator::half_hyper_shell(tria, Point<dim>(), .5, 1., 0, true);
@@ -46,10 +46,10 @@ main()
 
   tria.refine_global(1);
 
-  MappingQGeneric<dim>   mapping(4);
+  MappingQGeneric<dim> mapping(4);
   QGaussLobatto<dim - 1> quadrature(4);
-  FE_Nothing<dim>        dummy;
-  FEFaceValues<dim>      fe_values(mapping,
+  FE_Nothing<dim> dummy;
+  FEFaceValues<dim> fe_values(mapping,
                               dummy,
                               quadrature,
                               update_normal_vectors | update_quadrature_points);

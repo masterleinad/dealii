@@ -763,7 +763,7 @@ namespace Patterns
      * Constructor.
      */
     Tuple(const std::vector<std::unique_ptr<PatternBase>>& patterns,
-          const std::string&                               separator = ":");
+          const std::string& separator = ":");
 
     /**
      * Constructor. Same as above, specialized for const char *. This is
@@ -771,7 +771,7 @@ namespace Patterns
      * provided below.
      */
     Tuple(const std::vector<std::unique_ptr<PatternBase>>& patterns,
-          const char*                                      separator);
+          const char* separator);
 
     /**
      * Constructor. Creates a Tuple from more than one class derived from
@@ -1298,7 +1298,7 @@ namespace Patterns
        * class template for particular kinds of template arguments @p T.
        */
       static std::string
-      to_string(const T&                                      s,
+      to_string(const T& s,
                 const std::unique_ptr<Patterns::PatternBase>& p
                 = Convert<T>::to_pattern())
         = delete;
@@ -1312,7 +1312,7 @@ namespace Patterns
        * class template for particular kinds of template arguments @p T.
        */
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& p
                = Convert<T>::to_pattern())
         = delete;
@@ -1480,7 +1480,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      value,
+      to_string(const T& value,
                 const std::unique_ptr<Patterns::PatternBase>& p
                 = Convert<T>::to_pattern())
       {
@@ -1498,7 +1498,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& p
                = Convert<T>::to_pattern())
       {
@@ -1725,7 +1725,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -1733,7 +1733,7 @@ namespace Patterns
         AssertThrow(p,
                     ExcMessage("I need a List pattern to convert a "
                                "string to a List type."));
-        auto                     base_p = p->get_base_pattern().clone();
+        auto base_p = p->get_base_pattern().clone();
         std::vector<std::string> vec(t.size());
 
         unsigned int i = 0;
@@ -1751,7 +1751,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -1763,7 +1763,7 @@ namespace Patterns
                                "to a List type."));
 
         auto base_p = p->get_base_pattern().clone();
-        T    t;
+        T t;
 
         auto v = Utilities::split_string_list(s, p->get_separator());
         for(const auto& str : v)
@@ -1797,7 +1797,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -1805,8 +1805,8 @@ namespace Patterns
         AssertThrow(p,
                     ExcMessage("I need a Map pattern to convert a string to "
                                "a Map compatbile type."));
-        auto                     key_p = p->get_key_pattern().clone();
-        auto                     val_p = p->get_value_pattern().clone();
+        auto key_p = p->get_key_pattern().clone();
+        auto val_p = p->get_value_pattern().clone();
         std::vector<std::string> vec(t.size());
 
         unsigned int i = 0;
@@ -1827,7 +1827,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -1840,7 +1840,7 @@ namespace Patterns
 
         auto key_p = p->get_key_pattern().clone();
         auto val_p = p->get_value_pattern().clone();
-        T    t;
+        T t;
 
         auto v = Utilities::split_string_list(s, p->get_separator());
         for(const auto& str : v)
@@ -1876,7 +1876,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -1884,7 +1884,7 @@ namespace Patterns
         AssertThrow(p,
                     ExcMessage("I need a List pattern to convert a string "
                                "to a List compatbile type."));
-        auto                     base_p = p->get_base_pattern().clone();
+        auto base_p = p->get_base_pattern().clone();
         std::vector<std::string> vec(dim);
 
         for(unsigned int i = 0; i < dim; ++i)
@@ -1901,7 +1901,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -1913,9 +1913,9 @@ namespace Patterns
                                "to a List compatbile type."));
 
         auto base_p = p->get_base_pattern().clone();
-        T    t;
+        T t;
 
-        auto         v = Utilities::split_string_list(s, p->get_separator());
+        auto v         = Utilities::split_string_list(s, p->get_separator());
         unsigned int i = 0;
         for(const auto& str : v)
           t[i++] = Convert<typename T::value_type>::to_value(str, base_p);
@@ -1937,7 +1937,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -1946,7 +1946,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -1974,7 +1974,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -1983,7 +1983,7 @@ namespace Patterns
                     ExcMessage("I need a List pattern to convert a string "
                                "to a List compatbile type."));
 
-        auto        base_p = p->get_base_pattern().clone();
+        auto base_p = p->get_base_pattern().clone();
         std::string s
           = Convert<typename T::value_type>::to_string(t.real(), base_p)
             + p->get_separator() + " "
@@ -1997,7 +1997,7 @@ namespace Patterns
        * Convert a string to a value, using the given pattern, or a default one.
        */
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -2031,7 +2031,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -2040,7 +2040,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -2072,7 +2072,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -2084,7 +2084,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -2111,7 +2111,7 @@ namespace Patterns
       }
 
       static std::string
-      to_string(const T&                                      t,
+      to_string(const T& t,
                 const std::unique_ptr<Patterns::PatternBase>& pattern
                 = Convert<T>::to_pattern())
       {
@@ -2120,7 +2120,7 @@ namespace Patterns
                     ExcMessage("I need a Tuple pattern to convert a tuple "
                                "to a string."));
 
-        const auto  string_array = Convert<T>::to_string_internal_2(t, *p);
+        const auto string_array = Convert<T>::to_string_internal_2(t, *p);
         std::string str;
         for(unsigned int i = 0; i < string_array.size(); ++i)
           str += (i ? " " + p->get_separator() + " " : "") + string_array[i];
@@ -2129,7 +2129,7 @@ namespace Patterns
       }
 
       static T
-      to_value(const std::string&                            s,
+      to_value(const std::string& s,
                const std::unique_ptr<Patterns::PatternBase>& pattern
                = Convert<T>::to_pattern())
       {
@@ -2148,7 +2148,7 @@ namespace Patterns
     private:
       template <std::size_t... I>
       static std::array<std::string, std::tuple_size<T>::value>
-      to_string_internal_1(const T&               t,
+      to_string_internal_1(const T& t,
                            const Patterns::Tuple& pattern,
                            std_cxx14::index_sequence<I...>)
       {
@@ -2170,7 +2170,7 @@ namespace Patterns
       template <std::size_t... I>
       static T
       to_value_internal_1(const std::vector<std::string>& s,
-                          const Patterns::Tuple&          pattern,
+                          const Patterns::Tuple& pattern,
                           std_cxx14::index_sequence<I...>)
       {
         return std::make_tuple(
@@ -2180,7 +2180,7 @@ namespace Patterns
 
       static T
       to_value_internal_2(const std::vector<std::string>& s,
-                          const Patterns::Tuple&          pattern)
+                          const Patterns::Tuple& pattern)
       {
         return Convert<T>::to_value_internal_1(
           s,

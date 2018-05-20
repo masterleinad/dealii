@@ -51,7 +51,7 @@ private:
 void
 test1()
 {
-  const X               x(42);
+  const X x(42);
   Threads::Thread<void> t = Threads::new_thread(&X::execute, x);
   t.join();
 }
@@ -84,7 +84,7 @@ private:
 void
 test2()
 {
-  Y                     y(42);
+  Y y(42);
   Threads::Thread<void> t = Threads::new_thread(&Y::execute, y);
   t.join();
 }

@@ -117,22 +117,22 @@ test()
   const unsigned int global_mesh_refinement_steps = 5;
   const unsigned int number_of_eigenvalues        = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
     = Utilities::MPI::this_mpi_process(mpi_communicator);
 
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler(triangulation);
-  FE_Q<dim>          fe(1);
-  ConstraintMatrix   constraints;
-  IndexSet           locally_owned_dofs;
-  IndexSet           locally_relevant_dofs;
+  DoFHandler<dim> dof_handler(triangulation);
+  FE_Q<dim> fe(1);
+  ConstraintMatrix constraints;
+  IndexSet locally_owned_dofs;
+  IndexSet locally_relevant_dofs;
 
   std::vector<TrilinosWrappers::MPI::Vector> eigenfunctions;
-  std::vector<double>                        eigenvalues;
-  TrilinosWrappers::SparseMatrix             stiffness_matrix, mass_matrix;
+  std::vector<double> eigenvalues;
+  TrilinosWrappers::SparseMatrix stiffness_matrix, mass_matrix;
 
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(global_mesh_refinement_steps);
@@ -150,7 +150,7 @@ test()
     for(; cell != endc; ++cell)
       {
         const Point<dim>& center = cell->center();
-        const double      x      = center[0];
+        const double x           = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
         cell->set_subdomain_id(id);
@@ -203,7 +203,7 @@ test()
   stiffness_matrix = 0;
   mass_matrix      = 0;
 
-  QGauss<dim>   quadrature_formula(2);
+  QGauss<dim> quadrature_formula(2);
   FEValues<dim> fe_values(fe,
                           quadrature_formula,
                           update_values | update_gradients
@@ -254,7 +254,7 @@ test()
 
   // test Arpack
   {
-    const double                      shift = 4.0;
+    const double shift = 4.0;
     std::vector<std::complex<double>> lambda(eigenfunctions.size());
 
     for(unsigned int i = 0; i < eigenvalues.size(); i++)
@@ -264,8 +264,8 @@ test()
                                             /*tolerance (global)*/ 0.0,
                                             /*reduce (w.r.t. initial)*/ 1.e-13);
 
-    typedef TrilinosWrappers::MPI::Vector  VectorType;
-    SolverCG<VectorType>                   solver_c(inner_control_c);
+    typedef TrilinosWrappers::MPI::Vector VectorType;
+    SolverCG<VectorType> solver_c(inner_control_c);
     TrilinosWrappers::PreconditionIdentity preconditioner;
 
     const auto shifted_matrix
@@ -312,7 +312,7 @@ test()
     // a) (A*x_i-\lambda*B*x_i).L2() == 0
     // b) x_j*B*x_i=\delta_{ij}
     {
-      const double                  precision = 1e-7;
+      const double precision = 1e-7;
       TrilinosWrappers::MPI::Vector Ax(eigenfunctions[0]),
         Bx(eigenfunctions[0]);
       for(unsigned int i = 0; i < eigenfunctions.size(); ++i)

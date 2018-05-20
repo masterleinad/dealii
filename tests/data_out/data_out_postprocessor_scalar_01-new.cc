@@ -56,8 +56,8 @@ private:
   output_results() const;
 
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe;
-  DoFHandler<dim>    dof_handler;
+  FESystem<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   Vector<double> solution;
 };
@@ -143,7 +143,7 @@ void
 LaplaceProblem<dim>::output_results() const
 {
   MyPostprocessor<dim> p;
-  DataOut<dim>         data_out;
+  DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
   data_out.add_data_vector(solution, p);
   data_out.build_patches();

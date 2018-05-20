@@ -54,7 +54,7 @@ test()
 
   // generate a field where the value equals
   // the subdomain number, and output it
-  FE_Q<dim>       fe(2);
+  FE_Q<dim> fe(2);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
@@ -65,7 +65,7 @@ test()
     for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
       partitions(index) = cell->subdomain_id();
   }
-  Vector<double>            dof_part(dof_handler.n_dofs());
+  Vector<double> dof_part(dof_handler.n_dofs());
   std::vector<unsigned int> assoc(dof_handler.n_dofs());
   DoFTools::get_subdomain_association(dof_handler, assoc);
 

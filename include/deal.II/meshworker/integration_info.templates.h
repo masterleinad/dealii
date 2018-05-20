@@ -84,7 +84,7 @@ namespace MeshWorker
   void
   IntegrationInfo<dim, sdim>::fill_local_data(
     const DoFInfo<dim, sdim, number>& info,
-    bool                              split_fevalues)
+    bool split_fevalues)
   {
     if(split_fevalues)
       {
@@ -93,9 +93,9 @@ namespace MeshWorker
         for(unsigned int b = 0; b < info.block_info->local().size(); ++b)
           {
             const unsigned int fe_no = info.block_info->base_element(b);
-            const FEValuesBase<dim, sdim>& fe     = this->fe_values(fe_no);
-            const unsigned int             n_comp = fe.get_fe().n_components();
-            const unsigned int             block_start
+            const FEValuesBase<dim, sdim>& fe = this->fe_values(fe_no);
+            const unsigned int n_comp         = fe.get_fe().n_components();
+            const unsigned int block_start
               = info.block_info->local().block_start(b);
             const unsigned int block_size
               = info.block_info->local().block_size(b);
@@ -126,8 +126,8 @@ namespace MeshWorker
       }
     else
       {
-        const FEValuesBase<dim, sdim>& fe     = this->fe_values(0);
-        const unsigned int             n_comp = fe.get_fe().n_components();
+        const FEValuesBase<dim, sdim>& fe = this->fe_values(0);
+        const unsigned int n_comp         = fe.get_fe().n_components();
         if(info.level_cell)
           this->global_data->mg_fill(values,
                                      gradients,
@@ -216,10 +216,10 @@ namespace MeshWorker
   template <int dim, int sdim>
   void
   IntegrationInfoBox<dim, sdim>::add_update_flags(const UpdateFlags flags,
-                                                  bool              cell,
-                                                  bool              boundary,
-                                                  bool              face,
-                                                  bool              neighbor)
+                                                  bool cell,
+                                                  bool boundary,
+                                                  bool face,
+                                                  bool neighbor)
   {
     if(cell)
       cell_flags |= flags;

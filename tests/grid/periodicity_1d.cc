@@ -28,7 +28,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  Point<dim>         p0, p1;
+  Point<dim> p0, p1;
   for(unsigned int d = 0; d < dim; ++d)
     p1[d] = 1 + d;
   std::vector<unsigned int> refinements(dim, 3);

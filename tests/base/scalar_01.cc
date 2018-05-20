@@ -35,7 +35,7 @@ main()
   deallog.attach(logfile);
 
   typedef Tensor<0, 1> T;
-  T                    t1(13.), t2(42);
+  T t1(13.), t2(42);
 
   compare(T(), 0.);
   compare(T(13.), 13.);

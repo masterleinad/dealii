@@ -34,7 +34,7 @@ main()
   if(true)
     {
       Table<2, double> Td(3, 3);
-      Table<2, int>    Ti(3, 3);
+      Table<2, int> Ti(3, 3);
 
       for(unsigned int i = 0; i < 9; ++i)
         {
@@ -64,7 +64,7 @@ main()
   if(true)
     {
       Table<2, double> Td(4, 3);
-      Table<2, int>    Ti(4, 3);
+      Table<2, int> Ti(4, 3);
 
       for(unsigned int i = 0; i < 12; ++i)
         {
@@ -97,7 +97,7 @@ main()
   if(true)
     {
       TransposeTable<float> Td(4, 3);
-      TransposeTable<int>   Ti(4, 3);
+      TransposeTable<int> Ti(4, 3);
 
       // Fill the float matrix in row
       // first ordering
@@ -126,8 +126,8 @@ main()
   if(true)
     {
       const unsigned int N = 10;
-      Table<1, double>   Td(N);
-      Table<1, int>      Ti(N);
+      Table<1, double> Td(N);
+      Table<1, int> Ti(N);
 
       for(unsigned int i = 0; i < N; ++i)
         {
@@ -149,8 +149,8 @@ main()
   if(true)
     {
       const unsigned int I = 4, J = 3, K = 2;
-      Table<3, double>   Td(I, J, K);
-      Table<3, int>      Ti(I, J, K);
+      Table<3, double> Td(I, J, K);
+      Table<3, int> Ti(I, J, K);
 
       unsigned int index = 0;
       for(unsigned int i = 0; i < I; ++i)
@@ -196,8 +196,8 @@ main()
   if(true)
     {
       const unsigned int I = 5, J = 4, K = 3, L = 2;
-      Table<4, double>   Td(I, J, K, L);
-      Table<4, int>      Ti(I, J, K, L);
+      Table<4, double> Td(I, J, K, L);
+      Table<4, int> Ti(I, J, K, L);
 
       unsigned int index = 0;
       for(unsigned int i = 0; i < I; ++i)
@@ -258,8 +258,8 @@ main()
   if(true)
     {
       const unsigned int I = 6, J = 2, K = 3, L = 4, M = 5;
-      Table<5, double>   Td(I, J, K, L, M);
-      Table<5, int>      Ti(I, J, K, L, M);
+      Table<5, double> Td(I, J, K, L, M);
+      Table<5, int> Ti(I, J, K, L, M);
 
       unsigned int index = 0;
       for(unsigned int i = 0; i < I; ++i)
@@ -321,8 +321,8 @@ main()
   if(true)
     {
       const unsigned int I = 6, J = 2, K = 4, L = 3, M = 5, N = 7;
-      Table<6, double>   Td(I, J, K, L, M, N);
-      Table<6, int>      Ti(I, J, K, L, M, N);
+      Table<6, double> Td(I, J, K, L, M, N);
+      Table<6, int> Ti(I, J, K, L, M, N);
 
       unsigned int index = 0;
       for(unsigned int i = 0; i < I; ++i)

@@ -43,10 +43,10 @@
 
 template <int dim, int fe_degree, typename Number>
 void
-helmholtz_operator(const MatrixFree<dim, Number>&                    data,
-                   parallel::distributed::BlockVector<Number>&       dst,
+helmholtz_operator(const MatrixFree<dim, Number>& data,
+                   parallel::distributed::BlockVector<Number>& dst,
                    const parallel::distributed::BlockVector<Number>& src,
-                   const std::pair<unsigned int, unsigned int>&      cell_range)
+                   const std::pair<unsigned int, unsigned int>& cell_range)
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 2, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
@@ -73,13 +73,13 @@ class MatrixFreeTest
 {
 public:
   typedef VectorizedArray<Number> vector_t;
-  static const std::size_t        n_vectors
+  static const std::size_t n_vectors
     = VectorizedArray<Number>::n_array_elements;
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  vmult(parallel::distributed::BlockVector<Number>&       dst,
+  vmult(parallel::distributed::BlockVector<Number>& dst,
         const parallel::distributed::BlockVector<Number>& src) const
   {
     for(unsigned int i = 0; i < dst.size(); ++i)
@@ -130,7 +130,7 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -147,7 +147,7 @@ test()
 
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::partition_color;
@@ -155,8 +155,8 @@ test()
     mf_data.reinit(dof, constraints, quad, data);
   }
 
-  MatrixFreeTest<dim, fe_degree, number>     mf(mf_data);
-  parallel::distributed::Vector<number>      ref;
+  MatrixFreeTest<dim, fe_degree, number> mf(mf_data);
+  parallel::distributed::Vector<number> ref;
   parallel::distributed::BlockVector<number> in(2), out(2);
   for(unsigned int i = 0; i < 2; ++i)
     {

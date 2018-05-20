@@ -51,8 +51,8 @@ private:
   solve();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   ConstraintMatrix constraints;
 
@@ -153,7 +153,7 @@ Step4<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -196,7 +196,7 @@ Step4<dim>::solve()
   TrilinosWrappers::PreconditionSSOR preconditioner;
   solution = 0;
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    solver(solver_control);
+  SolverCG<> solver(solver_control);
   preconditioner.initialize(system_matrix);
   solver.solve(system_matrix, solution, system_rhs, preconditioner);
 
@@ -205,7 +205,7 @@ Step4<dim>::solve()
     deallog.push("DirectKLU");
     TrilinosWrappers::SolverDirect::AdditionalData data;
     data.solver_type = "Amesos_Klu";
-    SolverControl                  solver_control(1000, 1e-10);
+    SolverControl solver_control(1000, 1e-10);
     TrilinosWrappers::SolverDirect solver(solver_control, data);
     solver.solve(system_matrix, output, system_rhs);
     output -= solution;
@@ -218,7 +218,7 @@ Step4<dim>::solve()
     deallog.push("DirectLAPACK");
     TrilinosWrappers::SolverDirect::AdditionalData data;
     data.solver_type = "Amesos_Lapack";
-    SolverControl                  solver_control(1000, 1e-10);
+    SolverControl solver_control(1000, 1e-10);
     TrilinosWrappers::SolverDirect solver(solver_control, data);
     solver.solve(system_matrix, output, system_rhs);
     output -= solution;
@@ -231,7 +231,7 @@ Step4<dim>::solve()
     deallog.push("DirectDscpack");
     TrilinosWrappers::SolverDirect::AdditionalData data;
     data.solver_type = "Amesos_Dscpack";
-    SolverControl                  solver_control(1000, 1e-10);
+    SolverControl solver_control(1000, 1e-10);
     TrilinosWrappers::SolverDirect solver(solver_control, data);
     try
       {
@@ -249,7 +249,7 @@ Step4<dim>::solve()
     deallog.push("Dummy");
     TrilinosWrappers::SolverDirect::AdditionalData data;
     data.solver_type = "DummySolver";
-    SolverControl                  solver_control(1000, 1e-10);
+    SolverControl solver_control(1000, 1e-10);
     TrilinosWrappers::SolverDirect solver(solver_control, data);
     try
       {

@@ -89,7 +89,7 @@ test()
   tria.create_triangulation_compatibility(vertices, cells, subcelldata);
 
   GridOutFlags::Ucd ucd_flags(true, true);
-  GridOut           grid_out;
+  GridOut grid_out;
   grid_out.set_flags(ucd_flags);
   grid_out.write_ucd(tria, deallog.get_file_stream());
 

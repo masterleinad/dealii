@@ -28,8 +28,8 @@ main(int argc, char* argv[])
   initlog();
 
   unsigned int root_process = 0;
-  auto         n_procs      = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-  auto         my_proc      = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  auto n_procs              = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+  auto my_proc              = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   // Creating the local array of points
   std::vector<Point<3>> local_points(my_proc + 1);
   for(unsigned int i = 0; i < my_proc + 1; ++i)

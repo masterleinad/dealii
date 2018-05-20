@@ -151,15 +151,15 @@ namespace
     SmartPointer<
       const MGConstrainedDoFs,
       MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>>
-                   mg_constrained_dofs,
+      mg_constrained_dofs,
     const MPI_Comm mpi_communicator,
-    const bool     transfer_solution_vectors,
+    const bool transfer_solution_vectors,
     std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
       copy_indices,
     std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
       copy_indices_global_mine,
     std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
-                                                copy_indices_level_mine,
+      copy_indices_level_mine,
     LinearAlgebra::distributed::Vector<Number>& ghosted_global_vector,
     MGLevelObject<LinearAlgebra::distributed::Vector<Number>>&
       ghosted_level_vector)

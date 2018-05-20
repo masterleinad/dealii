@@ -40,7 +40,7 @@ test()
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
@@ -60,13 +60,13 @@ test()
     new MatrixFree<dim, number>());
   std::shared_ptr<MatrixFree<dim, number>> mf_data_combined(
     new MatrixFree<dim, number>());
-  const QGauss<1>                                  quad(2);
+  const QGauss<1> quad(2);
   typename MatrixFree<dim, number>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
   mf_data_0->reinit(dof, constraints_0, quad, data);
   mf_data_1->reinit(dof, constraints_1, quad, data);
   {
-    std::vector<const DoFHandler<dim>*>  dof_handlers(2, &dof);
+    std::vector<const DoFHandler<dim>*> dof_handlers(2, &dof);
     std::vector<const ConstraintMatrix*> constraint(2);
     constraint[0] = &constraints_0;
     constraint[1] = &constraints_1;

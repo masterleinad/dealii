@@ -27,7 +27,7 @@ void
 abaqus_grid(const char* name)
 {
   Triangulation<dim> tria;
-  GridIn<dim>        grid_in;
+  GridIn<dim> grid_in;
   grid_in.attach_triangulation(tria);
   std::ifstream input_file(name);
   grid_in.read_abaqus(input_file);

@@ -97,10 +97,10 @@ namespace Functions
      */
     template <int dim>
     void
-    set_unit_vectors(const double&   cos_theta,
-                     const double&   sin_theta,
-                     const double&   cos_phi,
-                     const double&   sin_phi,
+    set_unit_vectors(const double& cos_theta,
+                     const double& sin_theta,
+                     const double& cos_phi,
+                     const double& sin_phi,
                      Tensor<1, dim>& unit_r,
                      Tensor<1, dim>& unit_theta,
                      Tensor<1, dim>& unit_phi)
@@ -123,9 +123,9 @@ namespace Functions
      */
     template <int dim>
     void add_outer_product(SymmetricTensor<2, dim>& out,
-                           const double&            val,
-                           const Tensor<1, dim>&    in1,
-                           const Tensor<1, dim>&    in2)
+                           const double& val,
+                           const Tensor<1, dim>& in1,
+                           const Tensor<1, dim>& in2)
     {
       if(val != 0.)
         for(unsigned int i = 0; i < dim; i++)
@@ -138,8 +138,8 @@ namespace Functions
      */
     template <int dim>
     void add_outer_product(SymmetricTensor<2, dim>& out,
-                           const double&            val,
-                           const Tensor<1, dim>&    in)
+                           const double& val,
+                           const Tensor<1, dim>& in)
     {
       if(val != 0.)
         for(unsigned int i = 0; i < dim; i++)
@@ -149,7 +149,7 @@ namespace Functions
   } // namespace
 
   template <int dim>
-  Spherical<dim>::Spherical(const Point<dim>&  p,
+  Spherical<dim>::Spherical(const Point<dim>& p,
                             const unsigned int n_components)
     : Function<dim>(n_components), coordinate_system_offset(p)
   {
@@ -158,10 +158,10 @@ namespace Functions
 
   template <int dim>
   double
-  Spherical<dim>::value(const Point<dim>&  p_,
+  Spherical<dim>::value(const Point<dim>& p_,
                         const unsigned int component) const
   {
-    const Point<dim>              p = p_ - coordinate_system_offset;
+    const Point<dim> p = p_ - coordinate_system_offset;
     const std::array<double, dim> sp
       = GeometricUtilities::Coordinates::to_spherical(p);
     return svalue(sp, component);
@@ -181,8 +181,8 @@ namespace Functions
   Tensor<1, 3>
   Spherical<3>::gradient(const Point<3>& p_, const unsigned int component) const
   {
-    constexpr int                 dim = 3;
-    const Point<dim>              p   = p_ - coordinate_system_offset;
+    constexpr int dim  = 3;
+    const Point<dim> p = p_ - coordinate_system_offset;
     const std::array<double, dim> sp
       = GeometricUtilities::Coordinates::to_spherical(p);
     const std::array<double, dim> sg = sgradient(sp, component);
@@ -233,12 +233,12 @@ namespace Functions
   Spherical<3>::hessian(const Point<3>& p_, const unsigned int component) const
 
   {
-    constexpr int                 dim = 3;
-    const Point<dim>              p   = p_ - coordinate_system_offset;
+    constexpr int dim  = 3;
+    const Point<dim> p = p_ - coordinate_system_offset;
     const std::array<double, dim> sp
       = GeometricUtilities::Coordinates::to_spherical(p);
     const std::array<double, dim> sg = sgradient(sp, component);
-    const std::array<double, 6>   sh = shessian(sp, component);
+    const std::array<double, 6> sh   = shessian(sp, component);
 
     // somewhat backwards, but we need cos/sin's for unit vectors
     const double cos_theta = std::cos(sp[1]);

@@ -27,8 +27,8 @@
 
 struct X
 {
-  int    i;
-  int    k;
+  int i;
+  int k;
   double d;
 
   bool

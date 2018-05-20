@@ -26,7 +26,7 @@ void
 check_this(const DoFHandler<dim>& dof_handler)
 {
   std::vector<types::global_dof_index> map(dof_handler.n_dofs());
-  std::set<types::boundary_id>         boundary_ids;
+  std::set<types::boundary_id> boundary_ids;
 
   // check for boundary id 0 alone
   boundary_ids.insert(0);

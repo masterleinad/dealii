@@ -46,9 +46,9 @@ test();
 
 template <int dim, int fe_degree, typename number, int n_q_points_1d>
 void
-do_test(const DoFHandler<dim>&  dof,
+do_test(const DoFHandler<dim>& dof,
         const ConstraintMatrix& constraints,
-        const unsigned int      parallel_option = 0)
+        const unsigned int parallel_option = 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
   if(parallel_option > 0)
@@ -57,10 +57,10 @@ do_test(const DoFHandler<dim>&  dof,
   //std::cout << "Number of degrees of freedom: " << dof.n_dofs() << std::endl;
   //std::cout << "Number of constraints: " << constraints.n_constraints() << std::endl;
 
-  MappingQGeneric<dim>    mapping(dof.get_fe().degree);
+  MappingQGeneric<dim> mapping(dof.get_fe().degree);
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(n_q_points_1d);
+    const QGauss<1> quad(n_q_points_1d);
     typename MatrixFree<dim, number>::AdditionalData data;
     if(parallel_option == 1)
       data.tasks_parallel_scheme

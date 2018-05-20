@@ -76,7 +76,7 @@ public:
    */
   template <int dim, int spacedim>
   DEAL_II_DEPRECATED void
-  initialize(const DoFHandler<dim, spacedim>&       dof,
+  initialize(const DoFHandler<dim, spacedim>& dof,
              const typename FunctionMap<dim>::type& function_map,
              const ComponentMask& component_mask = ComponentMask());
 
@@ -93,9 +93,9 @@ public:
   template <int dim, int spacedim>
   void
   make_zero_boundary_constraints(
-    const DoFHandler<dim, spacedim>&    dof,
+    const DoFHandler<dim, spacedim>& dof,
     const std::set<types::boundary_id>& boundary_ids,
-    const ComponentMask&                component_mask = ComponentMask());
+    const ComponentMask& component_mask = ComponentMask());
 
   /**
    * Reset the data structures.
@@ -107,14 +107,14 @@ public:
    * Determine whether a dof index is subject to a boundary constraint.
    */
   bool
-  is_boundary_index(const unsigned int            level,
+  is_boundary_index(const unsigned int level,
                     const types::global_dof_index index) const;
 
   /**
    * Determine whether a dof index is at the refinement edge.
    */
   bool
-  at_refinement_edge(const unsigned int            level,
+  at_refinement_edge(const unsigned int level,
                      const types::global_dof_index index) const;
 
   /**
@@ -124,7 +124,7 @@ public:
    * j is not, and both are not on the external boundary.
    */
   bool
-  is_interface_matrix_entry(const unsigned int            level,
+  is_interface_matrix_entry(const unsigned int level,
                             const types::global_dof_index i,
                             const types::global_dof_index j) const;
 
@@ -259,9 +259,9 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
 template <int dim, int spacedim>
 inline void
 MGConstrainedDoFs::initialize(
-  const DoFHandler<dim, spacedim>&       dof,
+  const DoFHandler<dim, spacedim>& dof,
   const typename FunctionMap<dim>::type& function_map,
-  const ComponentMask&                   component_mask)
+  const ComponentMask& component_mask)
 {
   initialize(dof);
 
@@ -278,9 +278,9 @@ MGConstrainedDoFs::initialize(
 template <int dim, int spacedim>
 inline void
 MGConstrainedDoFs::make_zero_boundary_constraints(
-  const DoFHandler<dim, spacedim>&    dof,
+  const DoFHandler<dim, spacedim>& dof,
   const std::set<types::boundary_id>& boundary_ids,
-  const ComponentMask&                component_mask)
+  const ComponentMask& component_mask)
 {
   // allocate an IndexSet for each global level. Contents will be
   // overwritten inside make_boundary_list.
@@ -301,7 +301,7 @@ MGConstrainedDoFs::clear()
 }
 
 inline bool
-MGConstrainedDoFs::is_boundary_index(const unsigned int            level,
+MGConstrainedDoFs::is_boundary_index(const unsigned int level,
                                      const types::global_dof_index index) const
 {
   if(boundary_indices.size() == 0)
@@ -312,7 +312,7 @@ MGConstrainedDoFs::is_boundary_index(const unsigned int            level,
 }
 
 inline bool
-MGConstrainedDoFs::at_refinement_edge(const unsigned int            level,
+MGConstrainedDoFs::at_refinement_edge(const unsigned int level,
                                       const types::global_dof_index index) const
 {
   AssertIndexRange(level, refinement_edge_indices.size());
@@ -322,7 +322,7 @@ MGConstrainedDoFs::at_refinement_edge(const unsigned int            level,
 
 inline bool
 MGConstrainedDoFs::is_interface_matrix_entry(
-  const unsigned int            level,
+  const unsigned int level,
   const types::global_dof_index i,
   const types::global_dof_index j) const
 {

@@ -72,7 +72,7 @@ main()
   deallog.attach(logfile);
 
   FullMatrix<double> A1(10, 10);
-  Tensor<2, 3>       T1;
+  Tensor<2, 3> T1;
   fill_tensor_2(T1);
 
   for(unsigned int n = 0; n < 3; n++)

@@ -24,7 +24,7 @@ void
 test()
 {
   {
-    const unsigned int      n_properties_per_particle = 3;
+    const unsigned int n_properties_per_particle = 3;
     Particles::PropertyPool pool(n_properties_per_particle);
 
     Point<spacedim> position;
@@ -62,7 +62,7 @@ test()
             << std::endl;
 
     std::vector<char> data(particle.serialized_size_in_bytes());
-    void*             write_pointer = static_cast<void*>(&data.front());
+    void* write_pointer = static_cast<void*>(&data.front());
 
     particle.write_data(write_pointer);
 

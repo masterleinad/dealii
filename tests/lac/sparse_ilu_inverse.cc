@@ -57,7 +57,7 @@ main()
       // representation of the
       // inverse
       FullMatrix<double> inverse(N, N);
-      Vector<double>     tmp1(N), tmp2(N);
+      Vector<double> tmp1(N), tmp2(N);
       for(unsigned int i = 0; i < N; ++i)
         {
           tmp1    = 0;

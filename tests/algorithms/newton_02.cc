@@ -88,7 +88,7 @@ test()
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.refine_global(1);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dofh(tria);
   dofh.distribute_dofs(fe);
 
@@ -96,7 +96,7 @@ test()
   output_operator.initialize(dofh);
 
   IdentitySolver solver;
-  ZeroResidual   residual;
+  ZeroResidual residual;
 
   Algorithms::Newton<Vector<double>> newton(residual, solver);
   newton.initialize(output_operator);
@@ -114,7 +114,7 @@ test()
 int
 main()
 {
-  std::string   logname = "output";
+  std::string logname = "output";
   std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 

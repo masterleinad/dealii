@@ -65,8 +65,8 @@ namespace
   template <int dim, typename number, int spacedim>
   void
   reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
-                std::vector<unsigned int>                target_component,
-                MGLevelObject<BlockVector<number>>&      v)
+                std::vector<unsigned int> target_component,
+                MGLevelObject<BlockVector<number>>& v)
   {
     const unsigned int n_blocks = mg_dof.get_fe().n_blocks();
     if(target_component.size() == 0)
@@ -162,9 +162,9 @@ namespace internal
   void
   copy_vector(const std::vector<
                 std::pair<types::global_dof_index, types::global_dof_index>>&
-                       copy_indices,
+                copy_indices,
               const T& src,
-              V&       dst)
+              V& dst)
   {
     // we should have i->second == i->first, therefore we can use the same
     // function for both copying to mg as well as copying from mg
@@ -183,7 +183,7 @@ namespace internal
   copy_vector(const std::vector<
                 std::pair<types::global_dof_index, types::global_dof_index>>&,
               const T& src,
-              T&       dst)
+              T& dst)
   {
     dst = src;
   }
@@ -194,8 +194,8 @@ template <int dim, class InVector, int spacedim>
 void
 MGLevelGlobalTransfer<VectorType>::copy_to_mg(
   const DoFHandler<dim, spacedim>& mg_dof_handler,
-  MGLevelObject<VectorType>&       dst,
-  const InVector&                  src) const
+  MGLevelObject<VectorType>& dst,
+  const InVector& src) const
 {
   AssertIndexRange(dst.max_level(),
                    mg_dof_handler.get_triangulation().n_global_levels());
@@ -228,7 +228,7 @@ MGLevelGlobalTransfer<VectorType>::copy_to_mg(
 
       typedef std::vector<std::pair<types::global_dof_index,
                                     types::global_dof_index>>::const_iterator
-                  dof_pair_iterator;
+        dof_pair_iterator;
       VectorType& dst_level = dst[level];
 
       // first copy local unknowns
@@ -260,7 +260,7 @@ template <int dim, class OutVector, int spacedim>
 void
 MGLevelGlobalTransfer<VectorType>::copy_from_mg(
   const DoFHandler<dim, spacedim>& mg_dof_handler,
-  OutVector&                       dst,
+  OutVector& dst,
   const MGLevelObject<VectorType>& src) const
 {
   (void) mg_dof_handler;
@@ -292,7 +292,7 @@ MGLevelGlobalTransfer<VectorType>::copy_from_mg(
 
       typedef std::vector<std::pair<types::global_dof_index,
                                     types::global_dof_index>>::const_iterator
-                        dof_pair_iterator;
+        dof_pair_iterator;
       const VectorType& src_level = src[level];
 
       // First copy all indices local to this process
@@ -331,7 +331,7 @@ template <int dim, class OutVector, int spacedim>
 void
 MGLevelGlobalTransfer<VectorType>::copy_from_mg_add(
   const DoFHandler<dim, spacedim>& /*mg_dof_handler*/,
-  OutVector&                       dst,
+  OutVector& dst,
   const MGLevelObject<VectorType>& src) const
 {
   // For non-DG: degrees of freedom in the refinement face may need special
@@ -341,7 +341,7 @@ MGLevelGlobalTransfer<VectorType>::copy_from_mg_add(
     {
       typedef std::vector<std::pair<types::global_dof_index,
                                     types::global_dof_index>>::const_iterator
-                        dof_pair_iterator;
+        dof_pair_iterator;
       const VectorType& src_level = src[level];
 
       // First add all indices local to this process
@@ -374,9 +374,9 @@ template <typename Number>
 template <int dim, typename Number2, int spacedim>
 void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
-  const DoFHandler<dim, spacedim>&                           mg_dof_handler,
+  const DoFHandler<dim, spacedim>& mg_dof_handler,
   MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& dst,
-  const LinearAlgebra::distributed::Vector<Number2>&         src) const
+  const LinearAlgebra::distributed::Vector<Number2>& src) const
 {
   copy_to_mg(mg_dof_handler, dst, src, false);
 }
@@ -385,9 +385,9 @@ template <typename Number>
 template <int dim, typename Number2, int spacedim>
 void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
-  const DoFHandler<dim, spacedim>&                           mg_dof_handler,
+  const DoFHandler<dim, spacedim>& mg_dof_handler,
   MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& dst,
-  const LinearAlgebra::distributed::Vector<Number2>&         src,
+  const LinearAlgebra::distributed::Vector<Number2>& src,
   const bool solution_transfer) const
 {
   LinearAlgebra::distributed::Vector<Number>& this_ghosted_global_vector
@@ -437,7 +437,7 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
       --level;
 
       typedef std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
-                                                  dof_pair_iterator;
+        dof_pair_iterator;
       LinearAlgebra::distributed::Vector<Number>& dst_level = dst[level];
 
       // first copy local unknowns
@@ -463,7 +463,7 @@ template <typename Number>
 template <int dim, typename Number2, int spacedim>
 void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_from_mg(
-  const DoFHandler<dim, spacedim>&             mg_dof_handler,
+  const DoFHandler<dim, spacedim>& mg_dof_handler,
   LinearAlgebra::distributed::Vector<Number2>& dst,
   const MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& src) const
 {
@@ -536,7 +536,7 @@ void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
   copy_from_mg_add(
     const DoFHandler<dim, spacedim>& /*mg_dof_handler*/,
-    LinearAlgebra::distributed::Vector<Number2>&                     dst,
+    LinearAlgebra::distributed::Vector<Number2>& dst,
     const MGLevelObject<LinearAlgebra::distributed::Vector<Number>>& src) const
 {
   // For non-DG: degrees of freedom in the refinement face may need special

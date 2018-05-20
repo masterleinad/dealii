@@ -538,7 +538,7 @@ public:
    * of normals via the @p update_normal_vectors flag.
    */
   DataPostprocessorScalar(const std::string& name,
-                          const UpdateFlags  update_flags);
+                          const UpdateFlags update_flags);
 
   /**
    * Return the vector of strings describing the names of the computed
@@ -772,7 +772,7 @@ public:
    * of normals via the @p update_normal_vectors flag.
    */
   DataPostprocessorVector(const std::string& name,
-                          const UpdateFlags  update_flags);
+                          const UpdateFlags update_flags);
 
   /**
    * Return the vector of strings describing the names of the computed
@@ -1010,7 +1010,7 @@ public:
    * of normals via the @p update_normal_vectors flag.
    */
   DataPostprocessorTensor(const std::string& name,
-                          const UpdateFlags  update_flags);
+                          const UpdateFlags update_flags);
 
   /**
    * Return the vector of strings describing the names of the computed

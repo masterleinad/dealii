@@ -44,8 +44,8 @@ test()
 {
   Triangulation<2> triangulation;
 
-  Point<2>                  left_bottom(0, -270);
-  Point<2>                  right_top(5000, 30);
+  Point<2> left_bottom(0, -270);
+  Point<2> right_top(5000, 30);
   std::vector<unsigned int> n_cells;
   n_cells.push_back(10);
   n_cells.push_back(2);

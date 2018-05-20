@@ -124,11 +124,11 @@ namespace Step15
     Triangulation<dim> triangulation;
 
     DoFHandler<dim> dof_handler;
-    FE_Q<dim>       fe;
+    FE_Q<dim> fe;
 
     ConstraintMatrix hanging_node_constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> present_solution;
@@ -250,7 +250,7 @@ namespace Step15
     const unsigned int n_q_points    = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
 
     std::vector<Tensor<1, dim>> old_solution_gradients(n_q_points);
 
@@ -349,7 +349,7 @@ namespace Step15
   {
     SolverControl solver_control(system_rhs.size(),
                                  system_rhs.l2_norm() * 1e-6);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
@@ -502,7 +502,7 @@ namespace Step15
     evaluation_point.add(alpha, newton_update);
 
     const QGauss<dim> quadrature_formula(3);
-    FEValues<dim>     fe_values(fe,
+    FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_gradients | update_quadrature_points
                               | update_JxW_values);
@@ -510,7 +510,7 @@ namespace Step15
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int n_q_points    = quadrature_formula.size();
 
-    Vector<double>              cell_residual(dofs_per_cell);
+    Vector<double> cell_residual(dofs_per_cell);
     std::vector<Tensor<1, dim>> gradients(n_q_points);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
@@ -605,7 +605,7 @@ namespace Step15
   MinimalSurfaceProblem<dim>::run()
   {
     unsigned int refinement = 0;
-    bool         first_step = true;
+    bool first_step         = true;
 
     // As described in the introduction, the domain is the unit disk around
     // the origin, created in the same way as shown in step-6. The mesh is
@@ -678,7 +678,7 @@ namespace Step15
         data_out.build_patches();
         const std::string filename
           = "solution-" + Utilities::int_to_string(refinement, 2) + ".vtk";
-        std::ofstream         output(filename);
+        std::ofstream output(filename);
         DataOutBase::VtkFlags vtk_flags;
         vtk_flags.compression_level
           = DataOutBase::VtkFlags::ZlibCompressionLevel::best_speed;

@@ -55,7 +55,7 @@ transfer(std::ostream& out)
   hp::DoFHandler<dim> dof_handler(tria);
   dof_handler.begin(0)->child(0)->set_active_fe_index(1);
 
-  Vector<double>   solution;
+  Vector<double> solution;
   ConstraintMatrix cm;
   cm.close();
 

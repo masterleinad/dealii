@@ -54,7 +54,7 @@ namespace SUNDIALS
                    N_Vector yy,
                    N_Vector yp,
                    N_Vector rr,
-                   void*    user_data)
+                   void* user_data)
     {
       IDA<VectorType>& solver = *static_cast<IDA<VectorType>*>(user_data);
       GrowingVectorMemory<VectorType> mem;
@@ -80,7 +80,7 @@ namespace SUNDIALS
 
     template <typename VectorType>
     int
-    t_dae_lsetup(IDAMem   IDA_mem,
+    t_dae_lsetup(IDAMem IDA_mem,
                  N_Vector yy,
                  N_Vector yp,
                  N_Vector resp,
@@ -113,7 +113,7 @@ namespace SUNDIALS
 
     template <typename VectorType>
     int
-    t_dae_solve(IDAMem   IDA_mem,
+    t_dae_solve(IDAMem IDA_mem,
                 N_Vector b,
                 N_Vector weight,
                 N_Vector yy,
@@ -180,8 +180,8 @@ namespace SUNDIALS
   {
     unsigned int system_size = solution.size();
 
-    double       t           = data.initial_time;
-    double       h           = data.initial_step_size;
+    double t                 = data.initial_time;
+    double h                 = data.initial_step_size;
     unsigned int step_number = 0;
 
     int status;
@@ -193,8 +193,8 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
-        const size_t   local_system_size = is.n_elements();
+        const IndexSet is              = solution.locally_owned_elements();
+        const size_t local_system_size = is.n_elements();
 
         yy = N_VNew_Parallel(communicator, local_system_size, system_size);
 
@@ -268,11 +268,11 @@ namespace SUNDIALS
   void
   IDA<VectorType>::reset(const double& current_time,
                          const double& current_time_step,
-                         VectorType&   solution,
-                         VectorType&   solution_dot)
+                         VectorType& solution,
+                         VectorType& solution_dot)
   {
     unsigned int system_size;
-    bool         first_step = (current_time == data.initial_time);
+    bool first_step = (current_time == data.initial_time);
 
     if(ida_mem)
       IDAFree(&ida_mem);
@@ -306,8 +306,8 @@ namespace SUNDIALS
 #  ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
-        const IndexSet is                = solution.locally_owned_elements();
-        const size_t   local_system_size = is.n_elements();
+        const IndexSet is              = solution.locally_owned_elements();
+        const size_t local_system_size = is.n_elements();
 
         yy = N_VNew_Parallel(communicator, local_system_size, system_size);
 
@@ -468,7 +468,7 @@ namespace SUNDIALS
       = [](const double, VectorType&, VectorType&) -> bool { return false; };
 
     differential_components = [&]() -> IndexSet {
-      GrowingVectorMemory<VectorType>            mem;
+      GrowingVectorMemory<VectorType> mem;
       typename VectorMemory<VectorType>::Pointer v(mem);
       reinit_vector(*v);
       const unsigned int size = v->size();

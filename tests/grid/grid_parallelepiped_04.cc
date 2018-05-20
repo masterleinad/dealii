@@ -77,7 +77,7 @@ check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
     triangulation, subd, corners, colorize);
 
   {
-    std::map<unsigned int, unsigned int>              boundary_count;
+    std::map<unsigned int, unsigned int> boundary_count;
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
       endc = triangulation.end();
@@ -111,12 +111,12 @@ check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
 
   if(log)
     {
-      FE_Q<dim>       fe(2);
+      FE_Q<dim> fe(2);
       DoFHandler<dim> dh(triangulation);
       dh.distribute_dofs(fe);
       DataOut<dim> d_o;
       d_o.attach_dof_handler(dh);
-      Vector<double>   vec(dh.n_dofs());
+      Vector<double> vec(dh.n_dofs());
       ConstraintMatrix constraints;
       for(unsigned int c = 0; c < 6; ++c)
         VectorTools::interpolate_boundary_values(
@@ -126,7 +126,7 @@ check_parallelepiped(bool colorize, bool log, const unsigned int (&subd)[dim])
 
       d_o.add_data_vector(vec, "v");
       d_o.build_patches(2);
-      char       fname[] = "0.vtk";
+      char fname[]       = "0.vtk";
       static int counter = 0;
       fname[0] += counter;
       ++counter;

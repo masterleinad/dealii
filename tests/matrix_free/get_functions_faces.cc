@@ -56,7 +56,7 @@ private:
   local_apply_boundary_face(
     const MatrixFree<dim, number>& data,
     Vector<number>&,
-    const Vector<number>&                        src,
+    const Vector<number>& src,
     const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> fe_eval(data,
@@ -112,7 +112,7 @@ test()
   GridGenerator::hyper_cube(tria, 0, 1);
   GridTools::transform(&grid_transform<dim>, tria);
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
@@ -120,7 +120,7 @@ test()
 
   MatrixFree<dim, double> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, double>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
     data.mapping_update_flags_inner_faces
@@ -131,7 +131,7 @@ test()
     mf_data.reinit(dof, constraints, quad, data);
   }
   MatrixFreeTest<dim, fe_degree, double> mf(mf_data);
-  Vector<double>                         in(dof.n_dofs());
+  Vector<double> in(dof.n_dofs());
   VectorTools::interpolate(dof, BoundaryFunction<dim>(), in);
   mf.action(in);
 }

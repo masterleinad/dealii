@@ -433,7 +433,7 @@ private:
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             make_vectorized_array(const Number& u)
+make_vectorized_array(const Number& u)
 {
   VectorizedArray<Number> result;
   result = u;
@@ -467,9 +467,9 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  */
 template <typename Number>
 inline void
-vectorized_load_and_transpose(const unsigned int       n_entries,
-                              const Number*            in,
-                              const unsigned int*      offsets,
+vectorized_load_and_transpose(const unsigned int n_entries,
+                              const Number* in,
+                              const unsigned int* offsets,
                               VectorizedArray<Number>* out)
 {
   for(unsigned int i = 0; i < n_entries; ++i)
@@ -517,11 +517,11 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
  */
 template <typename Number>
 inline void
-vectorized_transpose_and_store(const bool                     add_into,
-                               const unsigned int             n_entries,
+vectorized_transpose_and_store(const bool add_into,
+                               const unsigned int n_entries,
                                const VectorizedArray<Number>* in,
-                               const unsigned int*            offsets,
-                               Number*                        out)
+                               const unsigned int* offsets,
+                               Number* out)
 {
   if(add_into)
     for(unsigned int i = 0; i < n_entries; ++i)
@@ -703,9 +703,9 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
-    data                    = _mm512_i32gather_pd(index, base_ptr, 8);
+    const __m256 index_val = _mm256_loadu_ps((const float*) offsets);
+    const __m256i index    = *((__m256i*) (&index_val));
+    data                   = _mm512_i32gather_pd(index, base_ptr, 8);
   }
 
   /**
@@ -733,8 +733,8 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
+    const __m256 index_val = _mm256_loadu_ps((const float*) offsets);
+    const __m256i index    = *((__m256i*) (&index_val));
     _mm512_i32scatter_pd(base_ptr, index, data, 8);
   }
 
@@ -771,7 +771,7 @@ private:
     // value to +. Since there is no andnot for AVX512, we interpret the data
     // as 64 bit integers and do the andnot on those types (note that andnot
     // is a bitwise operation so the data type does not matter)
-    __m512d         mask = _mm512_set1_pd(-0.);
+    __m512d mask = _mm512_set1_pd(-0.);
     VectorizedArray res;
     res.data = (__m512d) _mm512_andnot_epi64((__m512i) mask, (__m512i) data);
     return res;
@@ -825,9 +825,9 @@ private:
  */
 template <>
 inline void
-vectorized_load_and_transpose(const unsigned int       n_entries,
-                              const double*            in,
-                              const unsigned int*      offsets,
+vectorized_load_and_transpose(const unsigned int n_entries,
+                              const double* in,
+                              const unsigned int* offsets,
                               VectorizedArray<double>* out)
 {
   const unsigned int n_chunks = n_entries / 4;
@@ -868,11 +868,11 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
  */
 template <>
 inline void
-vectorized_transpose_and_store(const bool                     add_into,
-                               const unsigned int             n_entries,
+vectorized_transpose_and_store(const bool add_into,
+                               const unsigned int n_entries,
                                const VectorizedArray<double>* in,
-                               const unsigned int*            offsets,
-                               double*                        out)
+                               const unsigned int* offsets,
+                               double* out)
 {
   const unsigned int n_chunks = n_entries / 4;
   // do not do full transpose because the code is too long and will most
@@ -1099,9 +1099,9 @@ public:
     // unfortunately, there does not appear to be a 512 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
-    data                    = _mm512_i32gather_ps(index, base_ptr, 4);
+    const __m512 index_val = _mm512_loadu_ps((const float*) offsets);
+    const __m512i index    = *((__m512i*) (&index_val));
+    data                   = _mm512_i32gather_ps(index, base_ptr, 4);
   }
 
   /**
@@ -1129,8 +1129,8 @@ public:
     // unfortunately, there does not appear to be a 512 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m512  index_val = _mm512_loadu_ps((const float*) offsets);
-    const __m512i index     = *((__m512i*) (&index_val));
+    const __m512 index_val = _mm512_loadu_ps((const float*) offsets);
+    const __m512i index    = *((__m512i*) (&index_val));
     _mm512_i32scatter_ps(base_ptr, index, data, 4);
   }
 
@@ -1167,7 +1167,7 @@ private:
     // value to +. Since there is no andnot for AVX512, we interpret the data
     // as 32 bit integers and do the andnot on those types (note that andnot
     // is a bitwise operation so the data type does not matter)
-    __m512          mask = _mm512_set1_ps(-0.f);
+    __m512 mask = _mm512_set1_ps(-0.f);
     VectorizedArray res;
     res.data = (__m512) _mm512_andnot_epi32((__m512i) mask, (__m512i) data);
     return res;
@@ -1221,9 +1221,9 @@ private:
  */
 template <>
 inline void
-vectorized_load_and_transpose(const unsigned int      n_entries,
-                              const float*            in,
-                              const unsigned int*     offsets,
+vectorized_load_and_transpose(const unsigned int n_entries,
+                              const float* in,
+                              const unsigned int* offsets,
                               VectorizedArray<float>* out)
 {
   const unsigned int n_chunks = n_entries / 4;
@@ -1274,11 +1274,11 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
  */
 template <>
 inline void
-vectorized_transpose_and_store(const bool                    add_into,
-                               const unsigned int            n_entries,
+vectorized_transpose_and_store(const bool add_into,
+                               const unsigned int n_entries,
                                const VectorizedArray<float>* in,
-                               const unsigned int*           offsets,
-                               float*                        out)
+                               const unsigned int* offsets,
+                               float* out)
 {
   const unsigned int n_chunks = n_entries / 4;
   for(unsigned int outer = 0; outer < 16; outer += 8)
@@ -1529,9 +1529,9 @@ public:
     // unfortunately, there does not appear to be a 128 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m128  index_val = _mm_loadu_ps((const float*) offsets);
-    const __m128i index     = *((__m128i*) (&index_val));
-    data                    = _mm256_i32gather_pd(base_ptr, index, 8);
+    const __m128 index_val = _mm_loadu_ps((const float*) offsets);
+    const __m128i index    = *((__m128i*) (&index_val));
+    data                   = _mm256_i32gather_pd(base_ptr, index, 8);
 #  else
     for(unsigned int i = 0; i < 4; ++i)
       *(reinterpret_cast<double*>(&data) + i) = base_ptr[offsets[i]];
@@ -1590,7 +1590,7 @@ private:
     // to compute the absolute value, perform bitwise andnot with -0. This
     // will leave all value and exponent bits unchanged but force the sign
     // value to +.
-    __m256d         mask = _mm256_set1_pd(-0.);
+    __m256d mask = _mm256_set1_pd(-0.);
     VectorizedArray res;
     res.data = _mm256_andnot_pd(mask, data);
     return res;
@@ -1644,16 +1644,16 @@ private:
  */
 template <>
 inline void
-vectorized_load_and_transpose(const unsigned int       n_entries,
-                              const double*            in,
-                              const unsigned int*      offsets,
+vectorized_load_and_transpose(const unsigned int n_entries,
+                              const double* in,
+                              const unsigned int* offsets,
                               VectorizedArray<double>* out)
 {
   const unsigned int n_chunks = n_entries / 4;
-  const double*      in0      = in + offsets[0];
-  const double*      in1      = in + offsets[1];
-  const double*      in2      = in + offsets[2];
-  const double*      in3      = in + offsets[3];
+  const double* in0           = in + offsets[0];
+  const double* in1           = in + offsets[1];
+  const double* in2           = in + offsets[2];
+  const double* in3           = in + offsets[3];
 
   for(unsigned int i = 0; i < n_chunks; ++i)
     {
@@ -1680,17 +1680,17 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
  */
 template <>
 inline void
-vectorized_transpose_and_store(const bool                     add_into,
-                               const unsigned int             n_entries,
+vectorized_transpose_and_store(const bool add_into,
+                               const unsigned int n_entries,
                                const VectorizedArray<double>* in,
-                               const unsigned int*            offsets,
-                               double*                        out)
+                               const unsigned int* offsets,
+                               double* out)
 {
   const unsigned int n_chunks = n_entries / 4;
-  double*            out0     = out + offsets[0];
-  double*            out1     = out + offsets[1];
-  double*            out2     = out + offsets[2];
-  double*            out3     = out + offsets[3];
+  double* out0                = out + offsets[0];
+  double* out1                = out + offsets[1];
+  double* out2                = out + offsets[2];
+  double* out3                = out + offsets[3];
   for(unsigned int i = 0; i < n_chunks; ++i)
     {
       __m256d u0   = in[4 * i + 0].data;
@@ -1902,9 +1902,9 @@ public:
     // unfortunately, there does not appear to be a 256 bit integer load, so
     // do it by some reinterpret casts here. this is allowed because the Intel
     // API allows aliasing between different vector types.
-    const __m256  index_val = _mm256_loadu_ps((const float*) offsets);
-    const __m256i index     = *((__m256i*) (&index_val));
-    data                    = _mm256_i32gather_ps(base_ptr, index, 4);
+    const __m256 index_val = _mm256_loadu_ps((const float*) offsets);
+    const __m256i index    = *((__m256i*) (&index_val));
+    data                   = _mm256_i32gather_ps(base_ptr, index, 4);
 #  else
     for(unsigned int i = 0; i < 8; ++i)
       *(reinterpret_cast<float*>(&data) + i) = base_ptr[offsets[i]];
@@ -1963,7 +1963,7 @@ private:
     // to compute the absolute value, perform bitwise andnot with -0. This
     // will leave all value and exponent bits unchanged but force the sign
     // value to +.
-    __m256          mask = _mm256_set1_ps(-0.f);
+    __m256 mask = _mm256_set1_ps(-0.f);
     VectorizedArray res;
     res.data = _mm256_andnot_ps(mask, data);
     return res;
@@ -2017,9 +2017,9 @@ private:
  */
 template <>
 inline void
-vectorized_load_and_transpose(const unsigned int      n_entries,
-                              const float*            in,
-                              const unsigned int*     offsets,
+vectorized_load_and_transpose(const unsigned int n_entries,
+                              const float* in,
+                              const unsigned int* offsets,
                               VectorizedArray<float>* out)
 {
   const unsigned int n_chunks = n_entries / 4;
@@ -2063,11 +2063,11 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
  */
 template <>
 inline void
-vectorized_transpose_and_store(const bool                    add_into,
-                               const unsigned int            n_entries,
+vectorized_transpose_and_store(const bool add_into,
+                               const unsigned int n_entries,
                                const VectorizedArray<float>* in,
-                               const unsigned int*           offsets,
-                               float*                        out)
+                               const unsigned int* offsets,
+                               float* out)
 {
   const unsigned int n_chunks = n_entries / 4;
   for(unsigned int i = 0; i < n_chunks; ++i)
@@ -2354,7 +2354,7 @@ private:
     // bitwise andnot with -0. This will leave all
     // value and exponent bits unchanged but force
     // the sign value to +.
-    __m128d         mask = _mm_set1_pd(-0.);
+    __m128d mask = _mm_set1_pd(-0.);
     VectorizedArray res;
     res.data = _mm_andnot_pd(mask, data);
     return res;
@@ -2408,9 +2408,9 @@ private:
  */
 template <>
 inline void
-vectorized_load_and_transpose(const unsigned int       n_entries,
-                              const double*            in,
-                              const unsigned int*      offsets,
+vectorized_load_and_transpose(const unsigned int n_entries,
+                              const double* in,
+                              const unsigned int* offsets,
                               VectorizedArray<double>* out)
 {
   const unsigned int n_chunks = n_entries / 2;
@@ -2431,11 +2431,11 @@ vectorized_load_and_transpose(const unsigned int       n_entries,
  */
 template <>
 inline void
-vectorized_transpose_and_store(const bool                     add_into,
-                               const unsigned int             n_entries,
+vectorized_transpose_and_store(const bool add_into,
+                               const unsigned int n_entries,
                                const VectorizedArray<double>* in,
-                               const unsigned int*            offsets,
-                               double*                        out)
+                               const unsigned int* offsets,
+                               double* out)
 {
   const unsigned int n_chunks = n_entries / 2;
   if(add_into)
@@ -2686,7 +2686,7 @@ private:
     // to compute the absolute value, perform bitwise andnot with -0. This
     // will leave all value and exponent bits unchanged but force the sign
     // value to +.
-    __m128          mask = _mm_set1_ps(-0.f);
+    __m128 mask = _mm_set1_ps(-0.f);
     VectorizedArray res;
     res.data = _mm_andnot_ps(mask, data);
     return res;
@@ -2740,9 +2740,9 @@ private:
  */
 template <>
 inline void
-vectorized_load_and_transpose(const unsigned int      n_entries,
-                              const float*            in,
-                              const unsigned int*     offsets,
+vectorized_load_and_transpose(const unsigned int n_entries,
+                              const float* in,
+                              const unsigned int* offsets,
                               VectorizedArray<float>* out)
 {
   const unsigned int n_chunks = n_entries / 4;
@@ -2771,11 +2771,11 @@ vectorized_load_and_transpose(const unsigned int      n_entries,
  */
 template <>
 inline void
-vectorized_transpose_and_store(const bool                    add_into,
-                               const unsigned int            n_entries,
+vectorized_transpose_and_store(const bool add_into,
+                               const unsigned int n_entries,
                                const VectorizedArray<float>* in,
-                               const unsigned int*           offsets,
-                               float*                        out)
+                               const unsigned int* offsets,
+                               float* out)
 {
   const unsigned int n_chunks = n_entries / 4;
   for(unsigned int i = 0; i < n_chunks; ++i)
@@ -2851,7 +2851,7 @@ operator==(const VectorizedArray<Number>& lhs,
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator+(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
+operator+(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp = u;
   return tmp += v;
@@ -2864,7 +2864,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator-(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
+operator-(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp = u;
   return tmp -= v;
@@ -2877,7 +2877,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator*(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
+operator*(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp = u;
   return tmp *= v;
@@ -2890,7 +2890,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator/(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
+operator/(const VectorizedArray<Number>& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp = u;
   return tmp /= v;
@@ -2904,7 +2904,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator+(const Number& u, const VectorizedArray<Number>& v)
+operator+(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
   tmp = u;
@@ -2920,7 +2920,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator+(const double& u, const VectorizedArray<float>& v)
+operator+(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
   tmp = u;
@@ -2935,7 +2935,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator+(const VectorizedArray<Number>& v, const Number& u)
+operator+(const VectorizedArray<Number>& v, const Number& u)
 {
   return u + v;
 }
@@ -2949,7 +2949,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator+(const VectorizedArray<float>& v, const double& u)
+operator+(const VectorizedArray<float>& v, const double& u)
 {
   return u + v;
 }
@@ -2962,7 +2962,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator-(const Number& u, const VectorizedArray<Number>& v)
+operator-(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
   tmp = u;
@@ -2978,7 +2978,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator-(const double& u, const VectorizedArray<float>& v)
+operator-(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
   tmp = float(u);
@@ -2993,7 +2993,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator-(const VectorizedArray<Number>& v, const Number& u)
+operator-(const VectorizedArray<Number>& v, const Number& u)
 {
   VectorizedArray<Number> tmp;
   tmp = u;
@@ -3009,7 +3009,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator-(const VectorizedArray<float>& v, const double& u)
+operator-(const VectorizedArray<float>& v, const double& u)
 {
   VectorizedArray<float> tmp;
   tmp = float(u);
@@ -3024,7 +3024,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator*(const Number& u, const VectorizedArray<Number>& v)
+operator*(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
   tmp = u;
@@ -3040,7 +3040,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator*(const double& u, const VectorizedArray<float>& v)
+operator*(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
   tmp = float(u);
@@ -3055,7 +3055,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator*(const VectorizedArray<Number>& v, const Number& u)
+operator*(const VectorizedArray<Number>& v, const Number& u)
 {
   return u * v;
 }
@@ -3069,7 +3069,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator*(const VectorizedArray<float>& v, const double& u)
+operator*(const VectorizedArray<float>& v, const double& u)
 {
   return u * v;
 }
@@ -3082,7 +3082,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator/(const Number& u, const VectorizedArray<Number>& v)
+operator/(const Number& u, const VectorizedArray<Number>& v)
 {
   VectorizedArray<Number> tmp;
   tmp = u;
@@ -3098,7 +3098,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator/(const double& u, const VectorizedArray<float>& v)
+operator/(const double& u, const VectorizedArray<float>& v)
 {
   VectorizedArray<float> tmp;
   tmp = float(u);
@@ -3113,7 +3113,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator/(const VectorizedArray<Number>& v, const Number& u)
+operator/(const VectorizedArray<Number>& v, const Number& u)
 {
   VectorizedArray<Number> tmp;
   tmp = u;
@@ -3129,7 +3129,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  * @relatesalso VectorizedArray
  */
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
-                             operator/(const VectorizedArray<float>& v, const double& u)
+operator/(const VectorizedArray<float>& v, const double& u)
 {
   VectorizedArray<float> tmp;
   tmp = float(u);
@@ -3143,7 +3143,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator+(const VectorizedArray<Number>& u)
+operator+(const VectorizedArray<Number>& u)
 {
   return u;
 }
@@ -3155,7 +3155,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
  */
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE VectorizedArray<Number>
-                             operator-(const VectorizedArray<Number>& u)
+operator-(const VectorizedArray<Number>& u)
 {
   // to get a negative sign, subtract the input from zero (could also
   // multiply by -1, but this one is slightly simpler)

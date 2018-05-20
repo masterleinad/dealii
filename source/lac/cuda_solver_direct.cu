@@ -22,9 +22,9 @@ namespace CUDAWrappers
   namespace internal
   {
     void
-    cusparsecsr2dense(cusparseHandle_t           cusparse_handle,
+    cusparsecsr2dense(cusparseHandle_t cusparse_handle,
                       const SparseMatrix<float>& matrix,
-                      float*                     dense_matrix_dev)
+                      float* dense_matrix_dev)
     {
       auto cusparse_matrix = matrix.get_cusparse_matrix();
 
@@ -42,9 +42,9 @@ namespace CUDAWrappers
     }
 
     void
-    cusparsecsr2dense(cusparseHandle_t            cusparse_handle,
+    cusparsecsr2dense(cusparseHandle_t cusparse_handle,
                       const SparseMatrix<double>& matrix,
-                      double*                     dense_matrix_dev)
+                      double* dense_matrix_dev)
     {
       auto cusparse_matrix = matrix.get_cusparse_matrix();
 
@@ -63,10 +63,10 @@ namespace CUDAWrappers
 
     void
     cusolverDngetrf_buffer_size(cusolverDnHandle_t cusolver_dn_handle,
-                                int                m,
-                                int                n,
-                                float*             dense_matrix_dev,
-                                int&               workspace_size)
+                                int m,
+                                int n,
+                                float* dense_matrix_dev,
+                                int& workspace_size)
     {
       cusolverStatus_t cusolver_error_code = cusolverDnSgetrf_bufferSize(
         cusolver_dn_handle, m, n, dense_matrix_dev, m, &workspace_size);
@@ -75,10 +75,10 @@ namespace CUDAWrappers
 
     void
     cusolverDngetrf_buffer_size(cusolverDnHandle_t cusolver_dn_handle,
-                                int                m,
-                                int                n,
-                                double*            dense_matrix_dev,
-                                int&               workspace_size)
+                                int m,
+                                int n,
+                                double* dense_matrix_dev,
+                                int& workspace_size)
     {
       cusolverStatus_t cusolver_error_code = cusolverDnDgetrf_bufferSize(
         cusolver_dn_handle, m, n, dense_matrix_dev, m, &workspace_size);
@@ -87,12 +87,12 @@ namespace CUDAWrappers
 
     void
     cusolverDngetrf(cusolverDnHandle_t cusolver_dn_handle,
-                    int                m,
-                    int                n,
-                    float*             dense_matrix_dev,
-                    float*             workspace_dev,
-                    int*               pivot_dev,
-                    int*               info_dev)
+                    int m,
+                    int n,
+                    float* dense_matrix_dev,
+                    float* workspace_dev,
+                    int* pivot_dev,
+                    int* info_dev)
     {
       cusolverStatus_t cusolver_error_code
         = cusolverDnSgetrf(cusolver_dn_handle,
@@ -108,12 +108,12 @@ namespace CUDAWrappers
 
     void
     cusolverDngetrf(cusolverDnHandle_t cusolver_dn_handle,
-                    int                m,
-                    int                n,
-                    double*            dense_matrix_dev,
-                    double*            workspace_dev,
-                    int*               pivot_dev,
-                    int*               info_dev)
+                    int m,
+                    int n,
+                    double* dense_matrix_dev,
+                    double* workspace_dev,
+                    int* pivot_dev,
+                    int* info_dev)
     {
       cusolverStatus_t cusolver_error_code
         = cusolverDnDgetrf(cusolver_dn_handle,
@@ -129,13 +129,13 @@ namespace CUDAWrappers
 
     void
     cusolverDngetrs(cusolverDnHandle_t cusolver_dn_handle,
-                    int                m,
-                    float*             dense_matrix_dev,
-                    int*               pivot_dev,
-                    float*             b,
-                    int*               info_dev)
+                    int m,
+                    float* dense_matrix_dev,
+                    int* pivot_dev,
+                    float* b,
+                    int* info_dev)
     {
-      const int        n_rhs = 1;
+      const int n_rhs = 1;
       cusolverStatus_t cusolver_error_code
         = cusolverDnSgetrs(cusolver_dn_handle,
                            CUBLAS_OP_N,
@@ -152,13 +152,13 @@ namespace CUDAWrappers
 
     void
     cusolverDngetrs(cusolverDnHandle_t cusolver_dn_handle,
-                    int                m,
-                    double*            dense_matrix_dev,
-                    int*               pivot_dev,
-                    double*            b,
-                    int*               info_dev)
+                    int m,
+                    double* dense_matrix_dev,
+                    int* pivot_dev,
+                    double* b,
+                    int* info_dev)
     {
-      const int        n_rhs = 1;
+      const int n_rhs = 1;
       cusolverStatus_t cusolver_error_code
         = cusolverDnDgetrs(cusolver_dn_handle,
                            CUBLAS_OP_N,
@@ -178,13 +178,13 @@ namespace CUDAWrappers
                            const unsigned int n_rows,
                            const unsigned int nnz,
                            cusparseMatDescr_t descr,
-                           const float*       val_host,
-                           const int*         row_ptr_host,
-                           const int*         column_index_host,
-                           const float*       b_host,
-                           float*             x_host)
+                           const float* val_host,
+                           const int* row_ptr_host,
+                           const int* column_index_host,
+                           const float* b_host,
+                           float* x_host)
     {
-      int              singularity = 0;
+      int singularity = 0;
       cusolverStatus_t cusolver_error_code
         = cusolverSpScsrlsvluHost(cusolver_sp_handle,
                                   n_rows,
@@ -205,15 +205,15 @@ namespace CUDAWrappers
     void
     cusolverSpcsrlsvluHost(cusolverSpHandle_t cusolver_sp_handle,
                            const unsigned int n_rows,
-                           unsigned int       nnz,
+                           unsigned int nnz,
                            cusparseMatDescr_t descr,
-                           const double*      val_host,
-                           const int*         row_ptr_host,
-                           const int*         column_index_host,
-                           const double*      b_host,
-                           double*            x_host)
+                           const double* val_host,
+                           const int* row_ptr_host,
+                           const int* column_index_host,
+                           const double* b_host,
+                           double* x_host)
     {
-      int              singularity = 0;
+      int singularity = 0;
       cusolverStatus_t cusolver_error_code
         = cusolverSpDcsrlsvluHost(cusolver_sp_handle,
                                   n_rows,
@@ -232,13 +232,13 @@ namespace CUDAWrappers
     }
 
     void
-    cholesky_factorization(cusolverSpHandle_t         cusolver_sp_handle,
+    cholesky_factorization(cusolverSpHandle_t cusolver_sp_handle,
                            const SparseMatrix<float>& matrix,
-                           const float*               b,
-                           float*                     x)
+                           const float* b,
+                           float* x)
     {
       auto cusparse_matrix = matrix.get_cusparse_matrix();
-      int  singularity     = 0;
+      int singularity      = 0;
 
       cusolverStatus_t cusolver_error_code
         = cusolverSpScsrlsvchol(cusolver_sp_handle,
@@ -258,13 +258,13 @@ namespace CUDAWrappers
     }
 
     void
-    cholesky_factorization(cusolverSpHandle_t          cusolver_sp_handle,
+    cholesky_factorization(cusolverSpHandle_t cusolver_sp_handle,
                            const SparseMatrix<double>& matrix,
-                           const double*               b,
-                           double*                     x)
+                           const double* b,
+                           double* x)
     {
       auto cusparse_matrix = matrix.get_cusparse_matrix();
-      int  singularity     = 0;
+      int singularity      = 0;
 
       cusolverStatus_t cusolver_error_code
         = cusolverSpDcsrlsvchol(cusolver_sp_handle,
@@ -285,11 +285,11 @@ namespace CUDAWrappers
 
     template <typename Number>
     void
-    lu_factorization(cusparseHandle_t            cusparse_handle,
-                     cusolverDnHandle_t          cusolver_dn_handle,
+    lu_factorization(cusparseHandle_t cusparse_handle,
+                     cusolverDnHandle_t cusolver_dn_handle,
                      const SparseMatrix<Number>& matrix,
-                     const Number*               b_dev,
-                     Number*                     x_dev)
+                     const Number* b_dev,
+                     Number* x_dev)
     {
       // Change the format of the matrix from sparse to dense
       unsigned int const m = matrix.m();
@@ -324,7 +324,7 @@ namespace CUDAWrappers
                                 info_dev);
 
 #ifdef DEBUG
-      int         info = 0;
+      int info = 0;
       cudaError_t cuda_error_code_debug
         = cudaMemcpy(&info, info_dev, sizeof(int), cudaMemcpyDeviceToHost);
       AssertCuda(cuda_error_code_debug);
@@ -354,19 +354,19 @@ namespace CUDAWrappers
 
     template <typename Number>
     void
-    lu_factorization(cusolverSpHandle_t          cusolver_sp_handle,
+    lu_factorization(cusolverSpHandle_t cusolver_sp_handle,
                      const SparseMatrix<Number>& matrix,
-                     const Number*               b_dev,
-                     Number*                     x_dev)
+                     const Number* b_dev,
+                     Number* x_dev)
     {
       // cuSOLVER does not support LU factorization of sparse matrix on the device,
       // so we need to move everything to the host first and then back to the host.
-      const unsigned int  nnz    = matrix.n_nonzero_elements();
-      const unsigned int  n_rows = matrix.m();
+      const unsigned int nnz    = matrix.n_nonzero_elements();
+      const unsigned int n_rows = matrix.m();
       std::vector<Number> val_host(nnz);
-      std::vector<int>    column_index_host(nnz);
-      std::vector<int>    row_ptr_host(n_rows + 1);
-      auto                cusparse_matrix = matrix.get_cusparse_matrix();
+      std::vector<int> column_index_host(nnz);
+      std::vector<int> row_ptr_host(n_rows + 1);
+      auto cusparse_matrix = matrix.get_cusparse_matrix();
       Utilities::CUDA::copy_to_host(std::get<0>(cusparse_matrix), val_host);
       Utilities::CUDA::copy_to_host(std::get<1>(cusparse_matrix),
                                     column_index_host);
@@ -399,8 +399,8 @@ namespace CUDAWrappers
 
   template <typename Number>
   SolverDirect<Number>::SolverDirect(const Utilities::CUDA::Handle& handle,
-                                     SolverControl&                 cn,
-                                     const AdditionalData&          data)
+                                     SolverControl& cn,
+                                     const AdditionalData& data)
     : cuda_handle(handle), solver_control(cn), additional_data(data.solver_type)
   {}
 
@@ -414,8 +414,8 @@ namespace CUDAWrappers
   template <typename Number>
   void
   SolverDirect<Number>::solve(
-    const SparseMatrix<Number>&                        A,
-    LinearAlgebra::CUDAWrappers::Vector<Number>&       x,
+    const SparseMatrix<Number>& A,
+    LinearAlgebra::CUDAWrappers::Vector<Number>& x,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& b)
   {
     if(additional_data.solver_type == "Cholesky")

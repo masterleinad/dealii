@@ -74,11 +74,11 @@ private:
   refine_grid();
 
   Triangulation<dim> triangulation;
-  FE_Q<dim>          fe;
-  DoFHandler<dim>    dof_handler;
-  ConstraintMatrix   constraints;
+  FE_Q<dim> fe;
+  DoFHandler<dim> dof_handler;
+  ConstraintMatrix constraints;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
   SparseMatrix<double> system_matrix_lo;
 
@@ -133,7 +133,7 @@ Step6<dim>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -172,7 +172,7 @@ void
 Step6<dim>::solve()
 {
   SolverControl solver_control(1000, 1e-8);
-  SolverCG<>    solver(solver_control);
+  SolverCG<> solver(solver_control);
 
   PreconditionSSOR<> preconditioner;
   preconditioner.initialize(system_matrix, 1.2);

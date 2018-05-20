@@ -65,7 +65,7 @@ template <int dim>
 void
 test()
 {
-  Triangulation<dim>    triangulation;
+  Triangulation<dim> triangulation;
   hp::FECollection<dim> fe;
   fe.push_back(FE_Q<dim>(1));
 
@@ -81,7 +81,7 @@ test()
   deallog << "Number of degrees of freedom: " << dof_handler.n_dofs()
           << std::endl;
 
-  ExactSolution<dim>                        exact_solution;
+  ExactSolution<dim> exact_solution;
   std::map<types::global_dof_index, double> boundary_values;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, exact_solution, boundary_values);

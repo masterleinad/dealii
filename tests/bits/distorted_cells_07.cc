@@ -70,8 +70,8 @@ check(const unsigned int testcase)
 
   // now build an FEValues object and compute quadrature points on that cell
   FE_Nothing<dim> dummy;
-  QGauss<dim>     quadrature(2);
-  FEValues<dim>   fe_values(dummy, quadrature, update_JxW_values);
+  QGauss<dim> quadrature(2);
+  FEValues<dim> fe_values(dummy, quadrature, update_JxW_values);
   // should throw an assertion
   try
     {

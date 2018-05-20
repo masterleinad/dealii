@@ -43,12 +43,12 @@ main()
 {
   initlog();
 
-  std::vector<unsigned int>             t00;
-  std::deque<unsigned int>              t01;
-  std::list<unsigned int>               t02;
-  std::set<unsigned int>                t03;
-  std::multiset<unsigned int>           t04;
-  std::unordered_set<unsigned int>      t05;
+  std::vector<unsigned int> t00;
+  std::deque<unsigned int> t01;
+  std::list<unsigned int> t02;
+  std::set<unsigned int> t03;
+  std::multiset<unsigned int> t04;
+  std::unordered_set<unsigned int> t05;
   std::unordered_multiset<unsigned int> t06;
 
   t00.insert(t00.end(), 0);

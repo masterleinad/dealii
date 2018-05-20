@@ -40,7 +40,7 @@ test()
     Point<dim> center;
     GridGenerator::hyper_ball(tria, center, 12);
 
-    const types::manifold_id            sphere_id = 0;
+    const types::manifold_id sphere_id = 0;
     static const SphericalManifold<dim> boundary_ball(center);
     tria.set_all_manifold_ids_on_boundary(sphere_id);
     tria.set_manifold(sphere_id, boundary_ball);
@@ -48,7 +48,7 @@ test()
     tria.refine_global(dim == 2 ? 1 : 3);
   }
 
-  FESystem<dim>   fe(FE_Q<dim>(4), dim);
+  FESystem<dim> fe(FE_Q<dim>(4), dim);
   DoFHandler<dim> dh(tria);
 
   dh.distribute_dofs(fe);

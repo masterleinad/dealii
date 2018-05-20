@@ -40,7 +40,7 @@ template <int dim>
 void
 check_get_normals(const NonMatching::ImmersedSurfaceQuadrature<dim>& quadrature)
 {
-  const std::vector<Point<dim>>&     points  = quadrature.get_points();
+  const std::vector<Point<dim>>& points      = quadrature.get_points();
   const std::vector<Tensor<1, dim>>& normals = quadrature.get_normal_vectors();
   AssertThrow(points.size() == normals.size(), ExcInternalError())
 }
@@ -50,8 +50,8 @@ void
 test_non_default_constructor()
 {
   deallog << "Using constructor" << std::endl;
-  std::vector<Point<dim>>     points(1);
-  std::vector<double>         weights(1, 1);
+  std::vector<Point<dim>> points(1);
+  std::vector<double> weights(1, 1);
   std::vector<Tensor<1, dim>> normals;
   normals.push_back(Point<dim>::unit_vector(dim - 1));
   NonMatching::ImmersedSurfaceQuadrature<dim> quadrature(
@@ -65,8 +65,8 @@ void
 test_push_back()
 {
   deallog << "Using push_back" << std::endl;
-  const Point<dim>     point;
-  const double         weight = 1;
+  const Point<dim> point;
+  const double weight         = 1;
   const Tensor<1, dim> normal = Point<dim>::unit_vector(dim - 1);
 
   NonMatching::ImmersedSurfaceQuadrature<dim> quadrature;

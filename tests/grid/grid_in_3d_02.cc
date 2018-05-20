@@ -39,7 +39,7 @@ test(const char* filename)
   const unsigned int dim = 3;
 
   Triangulation<3> tria;
-  GridIn<3>        gi;
+  GridIn<3> gi;
   gi.attach_triangulation(tria);
   std::ifstream in(filename);
 

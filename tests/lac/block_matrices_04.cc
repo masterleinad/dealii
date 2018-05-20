@@ -77,11 +77,11 @@ private:
   const unsigned int n_blocks;
 
   Triangulation<2> triangulation;
-  FE_Q<2>          fe;
-  DoFHandler<2>    dof_handler;
+  FE_Q<2> fe;
+  DoFHandler<2> dof_handler;
 
   Sparsity sparsity_pattern;
-  Matrix   system_matrix;
+  Matrix system_matrix;
 
   VectorType system_rhs;
 };
@@ -259,7 +259,7 @@ template <typename VectorType, class Matrix, class Sparsity>
 void
 LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
 {
-  QGauss<2>   quadrature_formula(2);
+  QGauss<2> quadrature_formula(2);
   FEValues<2> fe_values(
     fe,
     quadrature_formula,
@@ -269,7 +269,7 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  ::Vector<double>   cell_rhs(dofs_per_cell);
+  ::Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -320,9 +320,9 @@ template <typename VectorType, class Matrix, class Sparsity>
 void
 LaplaceProblem<VectorType, Matrix, Sparsity>::solve()
 {
-  SolverControl                     solver_control(1000, 1e-12, false, false);
+  SolverControl solver_control(1000, 1e-12, false, false);
   PrimitiveVectorMemory<VectorType> vector_memory;
-  SolverCG<VectorType>              cg(solver_control, vector_memory);
+  SolverCG<VectorType> cg(solver_control, vector_memory);
 
   PreconditionJacobi<Matrix> preconditioner;
   preconditioner.initialize(system_matrix, 0.8);

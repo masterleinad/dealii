@@ -64,9 +64,9 @@ namespace Polynomials
      * exactly like a usual polynomial.
      */
     PiecewisePolynomial(const Polynomial<number>& coefficients_on_interval,
-                        const unsigned int        n_intervals,
-                        const unsigned int        interval,
-                        const bool                spans_next_interval);
+                        const unsigned int n_intervals,
+                        const unsigned int interval,
+                        const bool spans_next_interval);
 
     /**
      * Return the value of this polynomial at the given point, evaluating the
@@ -110,9 +110,9 @@ namespace Polynomials
      * make sense.
      */
     void
-    value(const number       x,
+    value(const number x,
           const unsigned int n_derivatives,
-          number*            values) const;
+          number* values) const;
 
     /**
      * Degree of the polynomial. This is the degree of the underlying base

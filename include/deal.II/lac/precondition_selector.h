@@ -104,7 +104,7 @@ public:
    * Constructor. @p omega denotes the damping parameter of the
    * preconditioning.
    */
-  PreconditionSelector(const std::string&                     preconditioning,
+  PreconditionSelector(const std::string& preconditioning,
                        const typename VectorType::value_type& omega = 1.);
 
   /**
@@ -196,7 +196,7 @@ private:
 
 template <typename MatrixType, typename VectorType>
 PreconditionSelector<MatrixType, VectorType>::PreconditionSelector(
-  const std::string&                     preconditioning,
+  const std::string& preconditioning,
   const typename VectorType::value_type& omega)
   : preconditioning(preconditioning), omega(omega)
 {}
@@ -233,7 +233,7 @@ PreconditionSelector<MatrixType, VectorType>::n() const
 
 template <typename MatrixType, typename VectorType>
 void
-PreconditionSelector<MatrixType, VectorType>::vmult(VectorType&       dst,
+PreconditionSelector<MatrixType, VectorType>::vmult(VectorType& dst,
                                                     const VectorType& src) const
 {
   if(preconditioning == "none")
@@ -264,7 +264,7 @@ PreconditionSelector<MatrixType, VectorType>::vmult(VectorType&       dst,
 template <typename MatrixType, typename VectorType>
 void
 PreconditionSelector<MatrixType, VectorType>::Tvmult(
-  VectorType&       dst,
+  VectorType& dst,
   const VectorType& src) const
 {
   if(preconditioning == "none")

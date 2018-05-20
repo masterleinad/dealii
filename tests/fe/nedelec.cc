@@ -92,7 +92,7 @@ template <int dim>
 inline void
 plot_shape_functions(const unsigned int degree)
 {
-  FE_Nedelec<dim>    element(degree);
+  FE_Nedelec<dim> element(degree);
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr, 0., 1.);
 
@@ -107,14 +107,14 @@ plot_shape_functions(const unsigned int degree)
 
       transform_grid(tr, transform);
 
-      DoFHandler<dim>                         dof(tr);
+      DoFHandler<dim> dof(tr);
       typename DoFHandler<dim>::cell_iterator c = dof.begin();
       dof.distribute_dofs(element);
 
-      QTrapez<1>         q_trapez;
+      QTrapez<1> q_trapez;
       const unsigned int div = 2;
-      QIterated<dim>     q(q_trapez, div);
-      FEValues<dim>      fe(element,
+      QIterated<dim> q(q_trapez, div);
+      FEValues<dim> fe(element,
                        q,
                        update_values | update_gradients
                          | update_quadrature_points);

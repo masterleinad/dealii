@@ -34,7 +34,7 @@ test(unsigned int ref = 1)
   PolarManifold<dim, spacedim> manifold;
 
   Triangulation<spacedim, spacedim> volume_tria;
-  Triangulation<dim, spacedim>      tria;
+  Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_ball(volume_tria);
   GridGenerator::extract_boundary_mesh(volume_tria, tria);
 

@@ -60,14 +60,14 @@ public:
    * Declare standard types used in all containers. These types parallel those
    * in the <tt>C++</tt> standard libraries <tt>vector<...></tt> class.
    */
-  typedef T                 value_type;
-  typedef value_type*       pointer;
+  typedef T value_type;
+  typedef value_type* pointer;
   typedef const value_type* const_pointer;
-  typedef value_type*       iterator;
+  typedef value_type* iterator;
   typedef const value_type* const_iterator;
-  typedef value_type&       reference;
+  typedef value_type& reference;
   typedef const value_type& const_reference;
-  typedef std::size_t       size_type;
+  typedef std::size_t size_type;
 
   /**
    * Empty constructor. Sets the vector size to zero.
@@ -371,7 +371,7 @@ namespace internal
      */
     AlignedVectorCopy(const T* const source_begin,
                       const T* const source_end,
-                      T* const       destination)
+                      T* const destination)
       : source_(source_begin), destination_(destination)
     {
       Assert(source_end >= source_begin, ExcInternalError());
@@ -410,7 +410,7 @@ namespace internal
 
   private:
     const T* const source_;
-    T* const       destination_;
+    T* const destination_;
   };
 
   /**
@@ -506,8 +506,8 @@ namespace internal
      * elements, otherwise work in serial.
      */
     AlignedVectorSet(const std::size_t size,
-                     const T&          element,
-                     T* const          destination)
+                     const T& element,
+                     T* const destination)
       : element_(element), destination_(destination), trivial_element(false)
     {
       if(size == 0)
@@ -553,9 +553,9 @@ namespace internal
     }
 
   private:
-    const T&   element_;
+    const T& element_;
     mutable T* destination_;
-    bool       trivial_element;
+    bool trivial_element;
 
     // copy assignment operation
     void
@@ -944,7 +944,7 @@ AlignedVector<T>::capacity() const
 
 template <class T>
 inline typename AlignedVector<T>::reference AlignedVector<T>::
-                                            operator[](const size_type index)
+operator[](const size_type index)
 {
   AssertIndexRange(index, size());
   return _data[index];
@@ -952,7 +952,7 @@ inline typename AlignedVector<T>::reference AlignedVector<T>::
 
 template <class T>
 inline typename AlignedVector<T>::const_reference AlignedVector<T>::
-                                                  operator[](const size_type index) const
+operator[](const size_type index) const
 {
   AssertIndexRange(index, size());
   return _data[index];
@@ -992,7 +992,7 @@ inline void
 AlignedVector<T>::save(Archive& ar, const unsigned int) const
 {
   size_type vec_size(size());
-  ar&       vec_size;
+  ar& vec_size;
   if(vec_size > 0)
     ar& boost::serialization::make_array(_data, vec_size);
 }
@@ -1003,7 +1003,7 @@ inline void
 AlignedVector<T>::load(Archive& ar, const unsigned int)
 {
   size_type vec_size = 0;
-  ar&       vec_size;
+  ar& vec_size;
 
   if(vec_size > 0)
     {

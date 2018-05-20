@@ -30,7 +30,7 @@ test()
   Triangulation<2> tria;
   GridGenerator::hyper_cube(tria);
 
-  FE_Q<2>       fe(1);
+  FE_Q<2> fe(1);
   DoFHandler<2> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 

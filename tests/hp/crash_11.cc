@@ -54,7 +54,7 @@ main()
   // *---*---*
   // | 0 | 1 |
   // *---*---*
-  Triangulation<3>          triangulation;
+  Triangulation<3> triangulation;
   std::vector<unsigned int> subdivisions(3, 2);
   subdivisions[2] = 1;
   GridGenerator::subdivided_hyper_rectangle(

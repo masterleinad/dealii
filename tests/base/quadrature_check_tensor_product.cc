@@ -23,7 +23,7 @@
 template <int dim>
 void
 check_tensor_product(const std::vector<Quadrature<dim>>& quadratures,
-                     const std::vector<std::string>&     quadrature_names)
+                     const std::vector<std::string>& quadrature_names)
 {
   Assert(false, ExcNotImplemented());
 }
@@ -31,7 +31,7 @@ check_tensor_product(const std::vector<Quadrature<dim>>& quadratures,
 template <>
 void
 check_tensor_product(const std::vector<Quadrature<1>>& quadratures,
-                     const std::vector<std::string>&   quadrature_names)
+                     const std::vector<std::string>& quadrature_names)
 {
   for(unsigned int i = 0; i < quadratures.size(); ++i)
     {
@@ -64,7 +64,7 @@ check_tensor_product(const std::vector<Quadrature<1>>& quadratures,
 template <>
 void
 check_tensor_product(const std::vector<Quadrature<2>>& quadratures,
-                     const std::vector<std::string>&   quadrature_names)
+                     const std::vector<std::string>& quadrature_names)
 {
   for(unsigned int i = 0; i < quadratures.size(); ++i)
     {
@@ -105,7 +105,7 @@ check_tensor_product(const std::vector<Quadrature<2>>& quadratures,
 template <>
 void
 check_tensor_product(const std::vector<Quadrature<3>>& quadratures,
-                     const std::vector<std::string>&   quadrature_names)
+                     const std::vector<std::string>& quadrature_names)
 {
   for(unsigned int i = 0; i < quadratures.size(); ++i)
     {
@@ -153,7 +153,7 @@ check_tensor_product(const std::vector<Quadrature<3>>& quadratures,
 template <int dim>
 void
 fill_quadrature_vector(std::vector<Quadrature<dim>>& quadratures,
-                       std::vector<std::string>&     quadrature_names)
+                       std::vector<std::string>& quadrature_names)
 {
   quadratures.push_back(Quadrature<dim>());
   quadrature_names.push_back("Quadrature");
@@ -207,7 +207,7 @@ main()
   Quadrature<1> q;
 
   std::vector<Quadrature<1>> quadratures_1d;
-  std::vector<std::string>   quadrature_names_1d;
+  std::vector<std::string> quadrature_names_1d;
   fill_quadrature_vector(quadratures_1d, quadrature_names_1d);
   quadratures_1d.push_back(QAnisotropic<1>(q));
   quadrature_names_1d.push_back("QAnisotropic");
@@ -218,7 +218,7 @@ main()
   check_tensor_product(quadratures_1d, quadrature_names_1d);
 
   std::vector<Quadrature<2>> quadratures_2d;
-  std::vector<std::string>   quadrature_names_2d;
+  std::vector<std::string> quadrature_names_2d;
   fill_quadrature_vector(quadratures_2d, quadrature_names_2d);
   quadratures_2d.push_back(QAnisotropic<2>(q, q));
   quadrature_names_2d.push_back("QAnisotropic");
@@ -227,7 +227,7 @@ main()
   check_tensor_product(quadratures_2d, quadrature_names_2d);
 
   std::vector<Quadrature<3>> quadratures_3d;
-  std::vector<std::string>   quadrature_names_3d;
+  std::vector<std::string> quadrature_names_3d;
   fill_quadrature_vector(quadratures_3d, quadrature_names_3d);
   quadratures_3d.push_back(QAnisotropic<3>(q, q, q));
   quadrature_names_3d.push_back("QAnisotropic");

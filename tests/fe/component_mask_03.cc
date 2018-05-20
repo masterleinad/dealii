@@ -25,7 +25,7 @@ void
 test()
 {
   std::vector<bool> v(12, false);
-  ComponentMask     m(12, false);
+  ComponentMask m(12, false);
 
   // verify equality
   for(unsigned int i = 0; i < v.size(); ++i)

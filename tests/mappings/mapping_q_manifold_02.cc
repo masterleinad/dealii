@@ -198,7 +198,7 @@ template <int dim>
 void
 create_tria(Triangulation<dim>& triangulation, const Manifold<dim>& manifold)
 {
-  const double              h = 0.028;
+  const double h = 0.028;
   std::vector<unsigned int> refinements(dim, 1);
   refinements[1] = 2;
 
@@ -228,8 +228,8 @@ test()
 {
   deallog << "dim: " << dim << std::endl;
 
-  PushForward<dim>                push_forward;
-  PullBack<dim>                   pull_back;
+  PushForward<dim> push_forward;
+  PullBack<dim> pull_back;
   FunctionManifold<dim, dim, dim> manifold(push_forward, pull_back);
 
   Triangulation<dim> triangulation;
@@ -238,7 +238,7 @@ test()
   for(unsigned mapping_p = 4; mapping_p <= 5; ++mapping_p)
     {
       deallog << "Mapping degree: " << mapping_p << std::endl;
-      MappingQ<dim>           mapping(mapping_p, true);
+      MappingQ<dim> mapping(mapping_p, true);
       std::vector<Point<dim>> points(Utilities::fixed_power<dim>(2));
       for(unsigned int i = 0, c = 0; i < (dim == 2 ? 1 : 2); ++i)
         for(unsigned int j = 0; j < 2; ++j)
@@ -251,7 +251,7 @@ test()
             }
       FE_Nothing<dim> dummy;
       Quadrature<dim> quad(points);
-      FEValues<dim>   fe_values(mapping, dummy, quad, update_quadrature_points);
+      FEValues<dim> fe_values(mapping, dummy, quad, update_quadrature_points);
 
       for(typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();

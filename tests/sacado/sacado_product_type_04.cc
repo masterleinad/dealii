@@ -33,7 +33,7 @@ check()
 int
 main()
 {
-  typedef Sacado::Fad::DFad<double>  Sdouble;
+  typedef Sacado::Fad::DFad<double> Sdouble;
   typedef Sacado::Fad::DFad<Sdouble> SSdouble;
   initlog();
 
@@ -43,9 +43,9 @@ main()
 
   Tensor<1, 2, SSdouble> t1;
   Tensor<1, 2, SSdouble> t2;
-  SSdouble               a(2, 0, 7.0);
-  SSdouble               b(2, 1, 3.0);
-  SSdouble               c;
+  SSdouble a(2, 0, 7.0);
+  SSdouble b(2, 1, 3.0);
+  SSdouble c;
   a.val() = Sdouble(2, 0, 7.0);
   b.val() = Sdouble(2, 1, 3.0);
 
@@ -55,7 +55,7 @@ main()
       t2[i] = 3. * b - i;
     }
   const Tensor<1, 2, SSdouble> t3 = t2;
-  t1*                          t2;
+  t1* t2;
 
   t2 += a * t1;
 

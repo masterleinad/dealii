@@ -358,9 +358,9 @@ public:
    * elements such as FESystem will want to pass a different value here.
    */
   FiniteElementData(const std::vector<unsigned int>& dofs_per_object,
-                    const unsigned int               n_components,
-                    const unsigned int               degree,
-                    const Conformity                 conformity = unknown,
+                    const unsigned int n_components,
+                    const unsigned int degree,
+                    const Conformity conformity       = unknown,
                     const BlockIndices& block_indices = BlockIndices());
 
   /**

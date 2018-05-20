@@ -27,7 +27,7 @@ check_norms()
   for(unsigned int test = 0; test < 20; ++test)
     {
       const unsigned int size = Testing::rand() % 100000;
-      Vector<number>     vec(size);
+      Vector<number> vec(size);
       for(unsigned int i = 0; i < size; ++i)
         vec(i) = random_value<number>();
       const typename Vector<number>::real_type norm = vec.l2_norm();

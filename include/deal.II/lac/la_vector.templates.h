@@ -37,7 +37,7 @@ namespace LinearAlgebra
   template <typename Number2>
   void
   Vector<Number>::reinit(const ReadWriteVector<Number2>& in_vector,
-                         const bool                      omit_zeroing_entries)
+                         const bool omit_zeroing_entries)
   {
     ReadWriteVector<Number>::reinit(in_vector, omit_zeroing_entries);
   }
@@ -45,7 +45,7 @@ namespace LinearAlgebra
   template <typename Number>
   void
   Vector<Number>::reinit(const IndexSet& locally_stored_indices,
-                         const bool      omit_zeroing_entries)
+                         const bool omit_zeroing_entries)
   {
     ReadWriteVector<Number>::reinit(locally_stored_indices,
                                     omit_zeroing_entries);
@@ -54,7 +54,7 @@ namespace LinearAlgebra
   template <typename Number>
   void
   Vector<Number>::reinit(const VectorSpaceVector<Number>& V,
-                         const bool                       omit_zeroing_entries)
+                         const bool omit_zeroing_entries)
   {
     // Check that casting will work.
     Assert(dynamic_cast<const Vector<Number>*>(&V) != nullptr,
@@ -201,7 +201,7 @@ namespace LinearAlgebra
     Assert(down_V.size() == this->size(),
            ExcMessage("Cannot compute the scalar product "
                       "of two vectors with different numbers of elements"));
-    Number                                          sum;
+    Number sum;
     internal::VectorOperations::Dot<Number, Number> dot(this->values.get(),
                                                         down_V.values.get());
     internal::VectorOperations::parallel_reduce(
@@ -254,9 +254,9 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::add(const Number                     a,
+  Vector<Number>::add(const Number a,
                       const VectorSpaceVector<Number>& V,
-                      const Number                     b,
+                      const Number b,
                       const VectorSpaceVector<Number>& W)
   {
     // Check that casting will work.
@@ -287,8 +287,8 @@ namespace LinearAlgebra
 
   template <typename Number>
   void
-  Vector<Number>::sadd(const Number                     s,
-                       const Number                     a,
+  Vector<Number>::sadd(const Number s,
+                       const Number a,
                        const VectorSpaceVector<Number>& V)
   {
     AssertIsFinite(s);
@@ -366,8 +366,8 @@ namespace LinearAlgebra
     Assert(this->size(), ExcEmptyObject());
 
     typedef typename VectorSpaceVector<Number>::real_type real_type;
-    value_type                                            sum;
-    internal::VectorOperations::MeanValue<Number>         mean_value(
+    value_type sum;
+    internal::VectorOperations::MeanValue<Number> mean_value(
       this->values.get());
     internal::VectorOperations::parallel_reduce(
       mean_value, 0, this->size(), sum, this->thread_loop_partitioner);
@@ -382,8 +382,8 @@ namespace LinearAlgebra
     Assert(this->size(), ExcEmptyObject());
 
     typedef typename VectorSpaceVector<Number>::real_type real_type;
-    real_type                                             sum;
-    internal::VectorOperations::Norm1<Number, real_type>  norm1(
+    real_type sum;
+    internal::VectorOperations::Norm1<Number, real_type> norm1(
       this->values.get());
     internal::VectorOperations::parallel_reduce(
       norm1, 0, this->size(), sum, this->thread_loop_partitioner);
@@ -403,8 +403,8 @@ namespace LinearAlgebra
     // so working on the vector twice is uncritical and paid off by the extended
     // precision) using the BLAS approach with a weight, see e.g. dnrm2.f.
     typedef typename VectorSpaceVector<Number>::real_type real_type;
-    real_type                                             norm_square;
-    internal::VectorOperations::Norm2<Number, real_type>  norm2(
+    real_type norm_square;
+    internal::VectorOperations::Norm2<Number, real_type> norm2(
       this->values.get());
     internal::VectorOperations::parallel_reduce(
       norm2, 0, this->size(), norm_square, this->thread_loop_partitioner);
@@ -413,9 +413,9 @@ namespace LinearAlgebra
       return std::sqrt(norm_square);
     else
       {
-        real_type       scale = 0.;
-        real_type       sum   = 1.;
-        const size_type size  = this->size();
+        real_type scale      = 0.;
+        real_type sum        = 1.;
+        const size_type size = this->size();
         for(size_type i = 0; i < size; ++i)
           {
             if(this->values[i] != Number())
@@ -441,7 +441,7 @@ namespace LinearAlgebra
   Vector<Number>::linfty_norm() const
   {
     typename ReadWriteVector<Number>::real_type norm = 0.;
-    const size_type                             size = this->size();
+    const size_type size                             = this->size();
     for(size_type i = 0; i < size; ++i)
       norm = std::max(std::abs(this->values[i]), norm);
 
@@ -450,7 +450,7 @@ namespace LinearAlgebra
 
   template <typename Number>
   Number
-  Vector<Number>::add_and_dot(const Number                     a,
+  Vector<Number>::add_and_dot(const Number a,
                               const VectorSpaceVector<Number>& V,
                               const VectorSpaceVector<Number>& W)
   {
@@ -473,7 +473,7 @@ namespace LinearAlgebra
       down_W.size() == this->size(),
       ExcMessage("Cannot add two vectors with different numbers of elements"));
 
-    Number                                        sum;
+    Number sum;
     internal::VectorOperations::AddAndDot<Number> adder(
       this->values.get(), down_V.values.get(), down_W.values.get(), a);
     internal::VectorOperations::parallel_reduce(
@@ -494,7 +494,7 @@ namespace LinearAlgebra
     // Reason: operator<< seems to use some resources  that lead to problems in
     // a multithreaded environment.
     const size_type sz = this->size();
-    char            buf[16];
+    char buf[16];
 #ifdef DEAL_II_WITH_64BIT_INDICES
     std::sprintf(buf, "%llu", sz);
 #else

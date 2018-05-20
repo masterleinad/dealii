@@ -26,7 +26,7 @@
 template <int dim, int spacedim>
 void
 write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
-          const char*                                                filename)
+          const char* filename)
 {
   deallog << "Checksum: " << tria.get_checksum() << std::endl;
 
@@ -35,7 +35,7 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
   // copy the .pvtu and .vtu files
   // into the logstream
   {
-    unsigned int  c = 0;
+    unsigned int c = 0;
     std::ifstream in((std::string(filename) + ".pvtu").c_str());
     while(in && ++c < 20)
       {
@@ -46,7 +46,7 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
   }
 
   {
-    unsigned int  c = 0;
+    unsigned int c = 0;
     std::ifstream in((std::string(filename) + "_0000.vtu").c_str());
     while(in && ++c < 20)
       {

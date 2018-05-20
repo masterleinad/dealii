@@ -202,7 +202,7 @@ namespace Step33
     template <typename InputVector>
     static void
     compute_flux_matrix(
-      const InputVector&                             W,
+      const InputVector& W,
       std::array<std::array<typename InputVector::value_type, dim>,
                  EulerEquations<dim>::n_components>& flux)
     {
@@ -241,10 +241,10 @@ namespace Step33
     template <typename InputVector>
     static void
     numerical_normal_flux(
-      const Tensor<1, dim>&                                       normal,
-      const InputVector&                                          Wplus,
-      const InputVector&                                          Wminus,
-      const double                                                alpha,
+      const Tensor<1, dim>& normal,
+      const InputVector& Wplus,
+      const InputVector& Wminus,
+      const double alpha,
       std::array<typename InputVector::value_type, n_components>& normal_flux)
     {
       std::array<std::array<typename InputVector::value_type, dim>,
@@ -277,7 +277,7 @@ namespace Step33
     template <typename InputVector>
     static void
     compute_forcing_vector(
-      const InputVector&                                          W,
+      const InputVector& W,
       std::array<typename InputVector::value_type, n_components>& forcing)
     {
       const double gravity = -1.0;
@@ -350,9 +350,9 @@ namespace Step33
     static void
     compute_Wminus(const BoundaryKind (&boundary_kind)[n_components],
                    const Tensor<1, dim>& normal_vector,
-                   const DataVector&     Wplus,
+                   const DataVector& Wplus,
                    const Vector<double>& boundary_values,
-                   const DataVector&     Wminus)
+                   const DataVector& Wminus)
     {
       for(unsigned int c = 0; c < n_components; c++)
         switch(boundary_kind[c])
@@ -435,16 +435,16 @@ namespace Step33
     // indicators, but this one does, and it is easy to compute:
     static void
     compute_refinement_indicators(const DoFHandler<dim>& dof_handler,
-                                  const Mapping<dim>&    mapping,
-                                  const Vector<double>&  solution,
-                                  Vector<double>&        refinement_indicators)
+                                  const Mapping<dim>& mapping,
+                                  const Vector<double>& solution,
+                                  Vector<double>& refinement_indicators)
     {
       const unsigned int dofs_per_cell = dof_handler.get_fe().dofs_per_cell;
       std::vector<unsigned int> dofs(dofs_per_cell);
 
       const QMidpoint<dim> quadrature_formula;
-      const UpdateFlags    update_flags = update_gradients;
-      FEValues<dim>        fe_v(
+      const UpdateFlags update_flags = update_gradients;
+      FEValues<dim> fe_v(
         mapping, dof_handler.get_fe(), quadrature_formula, update_flags);
 
       std::vector<std::vector<Tensor<1, dim>>> dU(
@@ -549,7 +549,7 @@ namespace Step33
   void
   EulerEquations<dim>::Postprocessor::evaluate_vector_field(
     const DataPostprocessorInputs::Vector<dim>& inputs,
-    std::vector<Vector<double>>&                computed_quantities) const
+    std::vector<Vector<double>>& computed_quantities) const
   {
     // At the beginning of the function, let us make sure that all variables
     // have the correct sizes, so that we can access individual vector
@@ -724,7 +724,7 @@ namespace Step33
       OutputType output;
 
       double linear_residual;
-      int    max_iterations;
+      int max_iterations;
 
       double ilut_fill;
       double ilut_atol;
@@ -809,7 +809,7 @@ namespace Step33
     // shock parameters do, see the mesh refinement functions further down.
     struct Refinement
     {
-      bool   do_refine;
+      bool do_refine;
       double shock_val;
       double shock_levels;
 
@@ -936,7 +936,7 @@ namespace Step33
     // want an output file every time step.
     struct Output
     {
-      bool   schlieren_plot;
+      bool schlieren_plot;
       double output_step;
 
       static void
@@ -1041,12 +1041,12 @@ namespace Step33
 
       double time_step, final_time;
       double theta;
-      bool   is_stationary;
+      bool is_stationary;
 
       std::string mesh_filename;
 
       FunctionParser<dim> initial_conditions;
-      BoundaryConditions  boundary_conditions[max_n_boundaries];
+      BoundaryConditions boundary_conditions[max_n_boundaries];
 
       static void
       declare_parameters(ParameterHandler& prm);
@@ -1259,18 +1259,18 @@ namespace Step33
     void
     assemble_system();
     void
-    assemble_cell_term(const FEValues<dim>&                        fe_v,
+    assemble_cell_term(const FEValues<dim>& fe_v,
                        const std::vector<types::global_dof_index>& dofs);
     void
     assemble_face_term(
-      const unsigned int                          face_no,
-      const FEFaceValuesBase<dim>&                fe_v,
-      const FEFaceValuesBase<dim>&                fe_v_neighbor,
+      const unsigned int face_no,
+      const FEFaceValuesBase<dim>& fe_v,
+      const FEFaceValuesBase<dim>& fe_v_neighbor,
       const std::vector<types::global_dof_index>& dofs,
       const std::vector<types::global_dof_index>& dofs_neighbor,
-      const bool                                  external_face,
-      const unsigned int                          boundary_id,
-      const double                                face_diameter);
+      const bool external_face,
+      const unsigned int boundary_id,
+      const double face_diameter);
 
     std::pair<unsigned int, double>
     solve(Vector<double>& solution);
@@ -1293,13 +1293,13 @@ namespace Step33
     // known that for transsonic simulations with the Euler equations,
     // computations do not converge even as $h\rightarrow 0$ if the boundary
     // approximation is not of sufficiently high order.
-    Triangulation<dim>   triangulation;
+    Triangulation<dim> triangulation;
     const MappingQ1<dim> mapping;
 
     const FESystem<dim> fe;
-    DoFHandler<dim>     dof_handler;
+    DoFHandler<dim> dof_handler;
 
-    const QGauss<dim>     quadrature;
+    const QGauss<dim> quadrature;
     const QGauss<dim - 1> face_quadrature;
 
     // Next come a number of data vectors that correspond to the solution of
@@ -1330,7 +1330,7 @@ namespace Step33
     TrilinosWrappers::SparseMatrix system_matrix;
 
     Parameters::AllParameters<dim> parameters;
-    ConditionalOStream             verbose_cout;
+    ConditionalOStream verbose_cout;
   };
 
   // @sect4{ConservationLaw::ConservationLaw}
@@ -1410,7 +1410,7 @@ namespace Step33
                           | update_normal_vectors,
       neighbor_face_update_flags = update_values;
 
-    FEValues<dim>     fe_v(mapping, fe, quadrature, update_flags);
+    FEValues<dim> fe_v(mapping, fe, quadrature, update_flags);
     FEFaceValues<dim> fe_v_face(
       mapping, fe, face_quadrature, face_update_flags);
     FESubfaceValues<dim> fe_v_subface(
@@ -1632,7 +1632,7 @@ namespace Step33
   template <int dim>
   void
   ConservationLaw<dim>::assemble_cell_term(
-    const FEValues<dim>&                        fe_v,
+    const FEValues<dim>& fe_v,
     const std::vector<types::global_dof_index>& dof_indices)
   {
     const unsigned int dofs_per_cell = fe_v.dofs_per_cell;
@@ -1856,14 +1856,14 @@ namespace Step33
   template <int dim>
   void
   ConservationLaw<dim>::assemble_face_term(
-    const unsigned int                          face_no,
-    const FEFaceValuesBase<dim>&                fe_v,
-    const FEFaceValuesBase<dim>&                fe_v_neighbor,
+    const unsigned int face_no,
+    const FEFaceValuesBase<dim>& fe_v,
+    const FEFaceValuesBase<dim>& fe_v_neighbor,
     const std::vector<types::global_dof_index>& dof_indices,
     const std::vector<types::global_dof_index>& dof_indices_neighbor,
-    const bool                                  external_face,
-    const unsigned int                          boundary_id,
-    const double                                face_diameter)
+    const bool external_face,
+    const unsigned int boundary_id,
+    const double face_diameter)
   {
     const unsigned int n_q_points    = fe_v.n_quadrature_points;
     const unsigned int dofs_per_cell = fe_v.dofs_per_cell;
@@ -2086,7 +2086,7 @@ namespace Step33
         // may be provided here:
         case Parameters::Solver::direct:
           {
-            SolverControl                                  solver_control(1, 0);
+            SolverControl solver_control(1, 0);
             TrilinosWrappers::SolverDirect::AdditionalData data(
               parameters.output == Parameters::Solver::verbose);
             TrilinosWrappers::SolverDirect direct(solver_control, data);
@@ -2284,7 +2284,7 @@ namespace Step33
     data_out.build_patches();
 
     static unsigned int output_file_number = 0;
-    std::string         filename
+    std::string filename
       = "solution-" + Utilities::int_to_string(output_file_number, 3) + ".vtk";
     std::ofstream output(filename);
     data_out.write_vtk(output);

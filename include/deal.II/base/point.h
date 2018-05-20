@@ -436,7 +436,7 @@ Point<dim, Number>::operator/(const OtherNumber factor) const
 
 template <int dim, typename Number>
 inline Number Point<dim, Number>::
-              operator*(const Tensor<1, dim, Number>& p) const
+operator*(const Tensor<1, dim, Number>& p) const
 {
   Number res = Number();
   for(unsigned int i = 0; i < dim; ++i)

@@ -25,7 +25,7 @@
 #include <vector>
 
 void
-check(const unsigned int                                myid,
+check(const unsigned int myid,
       const LinearAlgebra::distributed::Vector<double>& v)
 {
   if(myid == 0)
@@ -54,9 +54,9 @@ test()
   Assert(numproc == 2, ExcNotImplemented());
 
   const unsigned int size = 20;
-  IndexSet           local_owned(size);
-  IndexSet           local_nonzero(size);
-  IndexSet           local_relevant(size);
+  IndexSet local_owned(size);
+  IndexSet local_nonzero(size);
+  IndexSet local_relevant(size);
   if(myid == 0)
     {
       local_owned.add_range(0, 10);

@@ -34,12 +34,12 @@ test()
   if(fe_degree > 1)
     return;
 
-  const double       h  = 1;
-  const double       Lx = 30 * h;
-  const double       Li = 10 * h;
-  const double       Ly = 6 * h;
-  const double       Lz = 4 * h;
-  const double       ER = Ly / (Ly - h);
+  const double h  = 1;
+  const double Lx = 30 * h;
+  const double Li = 10 * h;
+  const double Ly = 6 * h;
+  const double Lz = 4 * h;
+  const double ER = Ly / (Ly - h);
   Triangulation<dim> left, right, bottom, temp;
   Point<dim> left_one, left_two, right_one, right_two, bottom_one, bottom_two;
 
@@ -141,7 +141,7 @@ test()
       triangulation.add_periodicity(periodic_faces);
     }
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_DGQ<dim> fe(fe_degree);
   DoFHandler<dim> dof_orig(triangulation);
   DoFHandler<dim> dof(triangulation);
   dof_orig.distribute_dofs(fe);
@@ -160,8 +160,8 @@ test()
   LinearAlgebra::distributed::Vector<double> in, in_orig, out, out_orig;
 
   // create MatrixFree with DoFHandler in original numbering
-  MatrixFree<dim, double>                          mf_data_orig;
-  const QGauss<1>                                  quad(fe_degree + 1);
+  MatrixFree<dim, double> mf_data_orig;
+  const QGauss<1> quad(fe_degree + 1);
   typename MatrixFree<dim, double>::AdditionalData data;
   data.tasks_parallel_scheme = MatrixFree<dim, double>::AdditionalData::none;
   data.tasks_block_size      = 3;

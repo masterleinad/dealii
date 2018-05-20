@@ -38,10 +38,10 @@ main()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(4);
   DoFHandler<2> dof_handler(triangulation);
-  FE_Q<2>       finite_element(1);
+  FE_Q<2> finite_element(1);
   dof_handler.distribute_dofs(finite_element);
 
-  std::ostringstream            out_stream;
+  std::ostringstream out_stream;
   boost::archive::text_oarchive archive(out_stream);
 
   archive << dof_handler;

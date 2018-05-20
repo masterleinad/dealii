@@ -26,8 +26,8 @@ template <int dim>
 void
 check_rect1(unsigned int n, bool color, bool log)
 {
-  Point<dim>                left;
-  Point<dim>                right;
+  Point<dim> left;
+  Point<dim> right;
   std::vector<unsigned int> subdivisions(dim);
 
   for(unsigned int d = 0; d < dim; ++d)

@@ -43,17 +43,17 @@ main()
 {
   initlog();
 
-  int           t0 = 1;
-  unsigned int  t1 = 2;
+  int t0           = 1;
+  unsigned int t1  = 2;
   unsigned char t2 = 3;
-  std::string   t3 = "Ciao";
-  double        t4 = 4.0;
+  std::string t3   = "Ciao";
+  double t4        = 4.0;
 
-  std::vector<int>           t10(2, t0);
-  std::vector<unsigned int>  t11(2, t1);
+  std::vector<int> t10(2, t0);
+  std::vector<unsigned int> t11(2, t1);
   std::vector<unsigned char> t12(2, t2);
-  std::vector<std::string>   t13(2, t3);
-  std::vector<double>        t14(2, t4);
+  std::vector<std::string> t13(2, t3);
+  std::vector<double> t14(2, t4);
 
   test(t10);
   test(t11);

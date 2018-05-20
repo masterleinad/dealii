@@ -38,13 +38,13 @@ public:
 int
 main()
 {
-  const unsigned int     dim = 2;
-  Point<dim>             origin;
+  const unsigned int dim = 2;
+  Point<dim> origin;
   SphericalManifold<dim> boundary(origin);
-  MappingQ<dim>          mapping(2);
-  Triangulation<dim>     tria;
-  const double           inner_radius = 1.;
-  const double           outer_radius = 5.;
+  MappingQ<dim> mapping(2);
+  Triangulation<dim> tria;
+  const double inner_radius = 1.;
+  const double outer_radius = 5.;
   GridGenerator::hyper_shell(tria, origin, inner_radius, outer_radius, 8);
   tria.set_all_manifold_ids(numbers::flat_manifold_id);
   GridTools::copy_boundary_to_manifold_id(tria);
@@ -59,7 +59,7 @@ main()
   // new center and new radius
   // of the inner circle.
   const Point<dim> n_center(0, -1);
-  const double     n_radius = 0.5;
+  const double n_radius = 0.5;
 
   Triangulation<dim>::cell_iterator cell = tria.begin_active(),
                                     endc = tria.end();
@@ -116,7 +116,7 @@ main()
   SphericalManifold<dim> inner_ball(n_center);
   tria.set_manifold(1, inner_ball);
 
-  GridOut       grid_out;
+  GridOut grid_out;
   std::ofstream eps_stream2("output");
   grid_out.write_eps(tria, eps_stream2, &mapping);
 

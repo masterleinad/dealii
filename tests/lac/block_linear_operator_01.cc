@@ -49,8 +49,8 @@ main()
   triangulation.refine_global(2);
 
   MappingQGeneric<dim> mapping_q1(1);
-  FESystem<dim>        fe(FE_Q<dim>(2), 1, FE_Q<dim>(1), 1);
-  DoFHandler<dim>      dof_handler(triangulation);
+  FESystem<dim> fe(FE_Q<dim>(2), 1, FE_Q<dim>(1), 1);
+  DoFHandler<dim> dof_handler(triangulation);
 
   dof_handler.distribute_dofs(fe);
 
@@ -113,8 +113,8 @@ main()
   {
     // also test copy and reference assignment to a LinearOperator
     LinearOperator<BlockVector<double>>& op_x1 = op_b;
-    LinearOperator<BlockVector<double>>  op_x2 = op_b;
-    LinearOperator<BlockVector<double>>  op_x3(op_b);
+    LinearOperator<BlockVector<double>> op_x2  = op_b;
+    LinearOperator<BlockVector<double>> op_x3(op_b);
   }
 
   // vmult:

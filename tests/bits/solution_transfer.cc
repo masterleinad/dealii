@@ -56,19 +56,19 @@ template <int dim>
 void
 transfer(std::ostream& out)
 {
-  MyFunction<dim>    function;
+  MyFunction<dim> function;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
-  FE_Q<dim>            fe_q(1);
-  FE_DGQ<dim>          fe_dgq(1);
-  DoFHandler<dim>      q_dof_handler(tria);
-  DoFHandler<dim>      dgq_dof_handler(tria);
-  Vector<double>       q_solution;
-  Vector<double>       dgq_solution;
+  FE_Q<dim> fe_q(1);
+  FE_DGQ<dim> fe_dgq(1);
+  DoFHandler<dim> q_dof_handler(tria);
+  DoFHandler<dim> dgq_dof_handler(tria);
+  Vector<double> q_solution;
+  Vector<double> dgq_solution;
   MappingQGeneric<dim> mapping(1);
-  DataOut<dim>         q_data_out, dgq_data_out;
-  ConstraintMatrix     cm;
+  DataOut<dim> q_data_out, dgq_data_out;
+  ConstraintMatrix cm;
   cm.close();
 
   q_dof_handler.distribute_dofs(fe_q);

@@ -198,8 +198,8 @@ FE_P1NC::fill_fe_values(
   const Mapping<2, 2>&,
   const Mapping<2, 2>::InternalDataBase&,
   const internal::FEValuesImplementation::MappingRelatedData<2, 2>&
-                                                                    mapping_data,
-  const FiniteElement<2, 2>::InternalDataBase&                      fe_internal,
+    mapping_data,
+  const FiniteElement<2, 2>::InternalDataBase& fe_internal,
   internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>& output_data)
   const
 {
@@ -230,9 +230,9 @@ FE_P1NC::fill_fe_values(
 void
 FE_P1NC::fill_fe_face_values(
   const Triangulation<2, 2>::cell_iterator& cell,
-  const unsigned int                        face_no,
-  const Quadrature<1>&                      quadrature,
-  const Mapping<2, 2>&                      mapping,
+  const unsigned int face_no,
+  const Quadrature<1>& quadrature,
+  const Mapping<2, 2>& mapping,
   const Mapping<2, 2>::InternalDataBase&,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2>&,
   const InternalDataBase& fe_internal,
@@ -271,10 +271,10 @@ FE_P1NC::fill_fe_face_values(
 void
 FE_P1NC::fill_fe_subface_values(
   const Triangulation<2, 2>::cell_iterator& cell,
-  const unsigned int                        face_no,
-  const unsigned int                        sub_no,
-  const Quadrature<1>&                      quadrature,
-  const Mapping<2, 2>&                      mapping,
+  const unsigned int face_no,
+  const unsigned int sub_no,
+  const Quadrature<1>& quadrature,
+  const Mapping<2, 2>& mapping,
   const Mapping<2, 2>::InternalDataBase&,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2>&,
   const InternalDataBase& fe_internal,

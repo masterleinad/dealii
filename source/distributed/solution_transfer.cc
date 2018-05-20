@@ -233,7 +233,7 @@ namespace parallel
         cell_iterator& cell_,
       const typename Triangulation<dim, DoFHandlerType::space_dimension>::
         CellStatus /*status*/,
-      const void*               data,
+      const void* data,
       std::vector<VectorType*>& all_out)
     {
       typename DoFHandlerType::cell_iterator cell(*cell_, dof_handler);

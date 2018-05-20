@@ -260,7 +260,7 @@ namespace internal
        */
       template <typename StreamType>
       void
-      print_memory_consumption(StreamType&     out,
+      print_memory_consumption(StreamType& out,
                                const SizeInfo& task_info) const;
 
       /**
@@ -296,13 +296,13 @@ namespace internal
        */
       void
       initialize(
-        const dealii::Triangulation<dim>&                          tria,
-        const std::vector<std::pair<unsigned int, unsigned int>>&  cells,
+        const dealii::Triangulation<dim>& tria,
+        const std::vector<std::pair<unsigned int, unsigned int>>& cells,
         const FaceInfo<VectorizedArray<Number>::n_array_elements>& faces,
-        const std::vector<unsigned int>&               active_fe_index,
-        const Mapping<dim>&                            mapping,
+        const std::vector<unsigned int>& active_fe_index,
+        const Mapping<dim>& mapping,
         const std::vector<dealii::hp::QCollection<1>>& quad,
-        const UpdateFlags                              update_flags_cells,
+        const UpdateFlags update_flags_cells,
         const UpdateFlags update_flags_boundary_faces,
         const UpdateFlags update_flags_inner_faces,
         const UpdateFlags update_flags_faces_by_cells);
@@ -331,7 +331,7 @@ namespace internal
        */
       template <typename StreamType>
       void
-      print_memory_consumption(StreamType&     out,
+      print_memory_consumption(StreamType& out,
                                const TaskInfo& task_info) const;
 
       /**
@@ -373,12 +373,12 @@ namespace internal
        */
       void
       initialize_cells(
-        const dealii::Triangulation<dim>&                         tria,
+        const dealii::Triangulation<dim>& tria,
         const std::vector<std::pair<unsigned int, unsigned int>>& cells,
-        const std::vector<unsigned int>&               active_fe_index,
-        const Mapping<dim>&                            mapping,
+        const std::vector<unsigned int>& active_fe_index,
+        const Mapping<dim>& mapping,
         const std::vector<dealii::hp::QCollection<1>>& quad,
-        const UpdateFlags                              update_flags_cells);
+        const UpdateFlags update_flags_cells);
 
       /**
        * Computes the information in the given faces, called within
@@ -386,11 +386,11 @@ namespace internal
        */
       void
       initialize_faces(
-        const dealii::Triangulation<dim>&                         tria,
+        const dealii::Triangulation<dim>& tria,
         const std::vector<std::pair<unsigned int, unsigned int>>& cells,
         const std::vector<
           FaceToCellTopology<VectorizedArray<Number>::n_array_elements>>& faces,
-        const Mapping<dim>&                            mapping,
+        const Mapping<dim>& mapping,
         const std::vector<dealii::hp::QCollection<1>>& quad,
         const UpdateFlags update_flags_boundary_faces,
         const UpdateFlags update_flags_inner_faces);
@@ -401,10 +401,10 @@ namespace internal
        */
       void
       initialize_faces_by_cells(
-        const dealii::Triangulation<dim>&                         tria,
+        const dealii::Triangulation<dim>& tria,
         const std::vector<std::pair<unsigned int, unsigned int>>& cells,
-        const Mapping<dim>&                                       mapping,
-        const std::vector<dealii::hp::QCollection<1>>&            quad,
+        const Mapping<dim>& mapping,
+        const std::vector<dealii::hp::QCollection<1>>& quad,
         const UpdateFlags update_flags_faces_by_cells);
 
       /**
@@ -431,7 +431,7 @@ namespace internal
     {
       static const MappingInfoStorage<dim, dim, Number>*
       get(const MappingInfo<dim, Number>& mapping_info,
-          const unsigned int              quad_no)
+          const unsigned int quad_no)
       {
         AssertIndexRange(quad_no, mapping_info.cell_data.size());
         return &mapping_info.cell_data[quad_no];
@@ -443,7 +443,7 @@ namespace internal
     {
       static const MappingInfoStorage<dim - 1, dim, Number>*
       get(const MappingInfo<dim, Number>& mapping_info,
-          const unsigned int              quad_no)
+          const unsigned int quad_no)
       {
         AssertIndexRange(quad_no, mapping_info.face_data.size());
         return &mapping_info.face_data[quad_no];

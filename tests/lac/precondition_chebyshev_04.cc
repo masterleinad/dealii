@@ -76,7 +76,7 @@ check()
   PreconditionChebyshev<FullMatrix<double>,
                         Vector<double>,
                         DiagonalMatrixManual>
-                                                              prec;
+    prec;
   PreconditionChebyshev<FullMatrix<double>,
                         Vector<double>,
                         DiagonalMatrixManual>::AdditionalData data;

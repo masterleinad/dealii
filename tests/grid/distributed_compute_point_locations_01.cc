@@ -53,7 +53,7 @@ test_compute_pt_loc(unsigned int n_points)
 
   // Computing the description of the locally owned part of the mesh
   IteratorFilters::LocallyOwnedCell locally_owned_cell_predicate;
-  std::vector<BoundingBox<dim>>     local_bbox
+  std::vector<BoundingBox<dim>> local_bbox
     = GridTools::compute_mesh_predicate_bounding_box(
       cache.get_triangulation(),
       std::function<bool(
@@ -73,9 +73,9 @@ test_compute_pt_loc(unsigned int n_points)
   // Testing in serial against the serial version
   auto cell_qpoint_map = GridTools::compute_point_locations(cache, points);
 
-  auto&  serial_cells   = std::get<0>(cell_qpoint_map);
-  auto&  serial_qpoints = std::get<1>(cell_qpoint_map);
-  size_t n_cells        = std::get<0>(output_tuple).size();
+  auto& serial_cells   = std::get<0>(cell_qpoint_map);
+  auto& serial_qpoints = std::get<1>(cell_qpoint_map);
+  size_t n_cells       = std::get<0>(output_tuple).size();
 
   deallog << "Points found in " << n_cells << " cells" << std::endl;
 
@@ -152,7 +152,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   deallog << "Deal.II distributed_compute_point_locations:" << std::endl;
   test_compute_pt_loc<2>(100);

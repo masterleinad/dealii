@@ -68,8 +68,8 @@ test_global_refinement(
   //  FE_Q<dim> fe3(1);
   FE_RaviartThomas<dim> fe4(0);
   FE_RaviartThomas<dim> fe5(1);
-  FE_Nedelec<dim>       fe6(0);
-  FE_Nedelec<dim>       fe7(1);
+  FE_Nedelec<dim> fe6(0);
+  FE_Nedelec<dim> fe7(1);
 
   deallog.push("Square");
   test_block_list(trc, fe1);
@@ -95,7 +95,7 @@ template <int dim>
 void
 test_global_refinement_parallel(
   void (*test_block_list)(const parallel::distributed::Triangulation<dim>& tr,
-                          const FiniteElement<dim>&                        fe))
+                          const FiniteElement<dim>& fe))
 {
   parallel::distributed::Triangulation<dim> trl(
     MPI_COMM_WORLD,
@@ -105,11 +105,11 @@ test_global_refinement_parallel(
   GridGenerator::hyper_L(trl);
   trl.refine_global(2);
 
-  FE_DGQ<dim>           fe1(0);
-  FE_DGQ<dim>           fe2(1);
-  FE_Q<dim>             fe3(1);
+  FE_DGQ<dim> fe1(0);
+  FE_DGQ<dim> fe2(1);
+  FE_Q<dim> fe3(1);
   FE_RaviartThomas<dim> fe4(0);
-  FE_Nedelec<dim>       fe6(0);
+  FE_Nedelec<dim> fe6(0);
 
   deallog.push("L");
   test_block_list(trl, fe1);

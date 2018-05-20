@@ -103,7 +103,7 @@ test()
                                      ghost_owners.end());
       Assert(is_subset, ExcInternalError());
 
-      Vector<float>                 indicators(tr.n_active_cells());
+      Vector<float> indicators(tr.n_active_cells());
       std::set<types::subdomain_id> neighbors;
       {
         for(typename Triangulation<dim>::active_cell_iterator cell

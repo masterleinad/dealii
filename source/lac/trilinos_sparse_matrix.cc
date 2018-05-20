@@ -122,7 +122,7 @@ namespace TrilinosWrappers
         }
 
       // get a representation of the present row
-      int                               ncols;
+      int ncols;
       TrilinosWrappers::types::int_type colnums = matrix->n();
       if(value_cache.get() == nullptr)
         {
@@ -178,7 +178,7 @@ namespace TrilinosWrappers
   }
 
   SparseMatrix::SparseMatrix(const Epetra_Map& input_map,
-                             const size_type   n_max_entries_per_row)
+                             const size_type n_max_entries_per_row)
     : column_space_map(new Epetra_Map(input_map)),
       matrix(new Epetra_FECrsMatrix(
         Copy,
@@ -189,7 +189,7 @@ namespace TrilinosWrappers
       compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const Epetra_Map&                input_map,
+  SparseMatrix::SparseMatrix(const Epetra_Map& input_map,
                              const std::vector<unsigned int>& n_entries_per_row)
     : column_space_map(new Epetra_Map(input_map)),
       matrix(new Epetra_FECrsMatrix(
@@ -203,7 +203,7 @@ namespace TrilinosWrappers
 
   SparseMatrix::SparseMatrix(const Epetra_Map& input_row_map,
                              const Epetra_Map& input_col_map,
-                             const size_type   n_max_entries_per_row)
+                             const size_type n_max_entries_per_row)
     : column_space_map(new Epetra_Map(input_col_map)),
       matrix(new Epetra_FECrsMatrix(
         Copy,
@@ -214,8 +214,8 @@ namespace TrilinosWrappers
       compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const Epetra_Map&                input_row_map,
-                             const Epetra_Map&                input_col_map,
+  SparseMatrix::SparseMatrix(const Epetra_Map& input_row_map,
+                             const Epetra_Map& input_col_map,
                              const std::vector<unsigned int>& n_entries_per_row)
     : column_space_map(new Epetra_Map(input_col_map)),
       matrix(new Epetra_FECrsMatrix(
@@ -227,8 +227,8 @@ namespace TrilinosWrappers
       compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const size_type    m,
-                             const size_type    n,
+  SparseMatrix::SparseMatrix(const size_type m,
+                             const size_type n,
                              const unsigned int n_max_entries_per_row)
     : column_space_map(
         new Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(n),
@@ -255,8 +255,8 @@ namespace TrilinosWrappers
       compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const size_type                  m,
-                             const size_type                  n,
+  SparseMatrix::SparseMatrix(const size_type m,
+                             const size_type n,
                              const std::vector<unsigned int>& n_entries_per_row)
     : column_space_map(
         new Epetra_Map(static_cast<TrilinosWrappers::types::int_type>(n),
@@ -274,8 +274,8 @@ namespace TrilinosWrappers
       compressed(false)
   {}
 
-  SparseMatrix::SparseMatrix(const IndexSet&    parallel_partitioning,
-                             const MPI_Comm&    communicator,
+  SparseMatrix::SparseMatrix(const IndexSet& parallel_partitioning,
+                             const MPI_Comm& communicator,
                              const unsigned int n_max_entries_per_row)
     : column_space_map(new Epetra_Map(
         parallel_partitioning.make_trilinos_map(communicator, false))),
@@ -387,10 +387,10 @@ namespace TrilinosWrappers
             const int row_local = matrix->RowMap().LID(
               static_cast<TrilinosWrappers::types::int_type>(row));
 
-            int             n_entries, rhs_n_entries;
+            int n_entries, rhs_n_entries;
             TrilinosScalar *value_ptr, *rhs_value_ptr;
-            int *           index_ptr, *rhs_index_ptr;
-            int             ierr = rhs.matrix->ExtractMyRowView(
+            int *index_ptr, *rhs_index_ptr;
+            int ierr = rhs.matrix->ExtractMyRowView(
               row_local, rhs_n_entries, rhs_value_ptr, rhs_index_ptr);
             (void) ierr;
             Assert(ierr == 0, ExcTrilinosError(ierr));
@@ -436,14 +436,14 @@ namespace TrilinosWrappers
 
     template <typename SparsityPatternType>
     void
-    reinit_matrix(const Epetra_Map&                    input_row_map,
-                  const Epetra_Map&                    input_col_map,
-                  const SparsityPatternType&           sparsity_pattern,
-                  const bool                           exchange_data,
-                  std::unique_ptr<Epetra_Map>&         column_space_map,
+    reinit_matrix(const Epetra_Map& input_row_map,
+                  const Epetra_Map& input_col_map,
+                  const SparsityPatternType& sparsity_pattern,
+                  const bool exchange_data,
+                  std::unique_ptr<Epetra_Map>& column_space_map,
                   std::unique_ptr<Epetra_FECrsMatrix>& matrix,
-                  std::unique_ptr<Epetra_CrsMatrix>&   nonlocal_matrix,
-                  std::unique_ptr<Epetra_Export>&      nonlocal_matrix_exporter)
+                  std::unique_ptr<Epetra_CrsMatrix>& nonlocal_matrix,
+                  std::unique_ptr<Epetra_Export>& nonlocal_matrix_exporter)
     {
       // release memory before reallocation
       matrix.reset();
@@ -561,7 +561,7 @@ namespace TrilinosWrappers
     {
     public:
       Epetra_CrsGraphMod(const Epetra_Map& row_map,
-                         const int*        n_entries_per_row)
+                         const int* n_entries_per_row)
         : Epetra_CrsGraph(Copy, row_map, n_entries_per_row, true){};
 
       void
@@ -575,14 +575,14 @@ namespace TrilinosWrappers
     // more information about the non-locally owned rows
     template <>
     void
-    reinit_matrix(const Epetra_Map&                    input_row_map,
-                  const Epetra_Map&                    input_col_map,
-                  const DynamicSparsityPattern&        sparsity_pattern,
-                  const bool                           exchange_data,
-                  std::unique_ptr<Epetra_Map>&         column_space_map,
+    reinit_matrix(const Epetra_Map& input_row_map,
+                  const Epetra_Map& input_col_map,
+                  const DynamicSparsityPattern& sparsity_pattern,
+                  const bool exchange_data,
+                  std::unique_ptr<Epetra_Map>& column_space_map,
                   std::unique_ptr<Epetra_FECrsMatrix>& matrix,
-                  std::unique_ptr<Epetra_CrsMatrix>&   nonlocal_matrix,
-                  std::unique_ptr<Epetra_Export>&      nonlocal_matrix_exporter)
+                  std::unique_ptr<Epetra_CrsMatrix>& nonlocal_matrix,
+                  std::unique_ptr<Epetra_Export>& nonlocal_matrix_exporter)
     {
       matrix.reset();
       nonlocal_matrix.reset();
@@ -660,7 +660,7 @@ namespace TrilinosWrappers
         0,
         input_row_map.Comm());
 
-      std::unique_ptr<Epetra_CrsGraph>    graph;
+      std::unique_ptr<Epetra_CrsGraph> graph;
       std::unique_ptr<Epetra_CrsGraphMod> nonlocal_graph;
       if(input_row_map.Comm().NumProc() > 1)
         {
@@ -770,9 +770,9 @@ namespace TrilinosWrappers
 
   template <typename SparsityPatternType>
   void
-  SparseMatrix::reinit(const Epetra_Map&          input_map,
+  SparseMatrix::reinit(const Epetra_Map& input_map,
                        const SparsityPatternType& sparsity_pattern,
-                       const bool                 exchange_data)
+                       const bool exchange_data)
   {
     reinit_matrix(input_map,
                   input_map,
@@ -786,11 +786,11 @@ namespace TrilinosWrappers
 
   template <typename SparsityPatternType>
   inline void
-  SparseMatrix::reinit(const IndexSet&            row_parallel_partitioning,
-                       const IndexSet&            col_parallel_partitioning,
+  SparseMatrix::reinit(const IndexSet& row_parallel_partitioning,
+                       const IndexSet& col_parallel_partitioning,
                        const SparsityPatternType& sparsity_pattern,
-                       const MPI_Comm&            communicator,
-                       const bool                 exchange_data)
+                       const MPI_Comm& communicator,
+                       const bool exchange_data)
   {
     Epetra_Map row_map
       = row_parallel_partitioning.make_trilinos_map(communicator, false);
@@ -813,10 +813,10 @@ namespace TrilinosWrappers
 
   template <typename SparsityPatternType>
   inline void
-  SparseMatrix::reinit(const Epetra_Map&          row_map,
-                       const Epetra_Map&          col_map,
+  SparseMatrix::reinit(const Epetra_Map& row_map,
+                       const Epetra_Map& col_map,
                        const SparsityPatternType& sparsity_pattern,
-                       const bool                 exchange_data)
+                       const bool exchange_data)
   {
     reinit_matrix(row_map,
                   col_map,
@@ -881,13 +881,13 @@ namespace TrilinosWrappers
   template <typename number>
   inline void
   SparseMatrix::reinit(
-    const IndexSet&                       row_parallel_partitioning,
-    const IndexSet&                       col_parallel_partitioning,
+    const IndexSet& row_parallel_partitioning,
+    const IndexSet& col_parallel_partitioning,
     const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
-    const MPI_Comm&                       communicator,
-    const double                          drop_tolerance,
-    const bool                            copy_values,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const MPI_Comm& communicator,
+    const double drop_tolerance,
+    const bool copy_values,
+    const ::dealii::SparsityPattern* use_this_sparsity)
   {
     if(copy_values == false)
       {
@@ -933,8 +933,8 @@ namespace TrilinosWrappers
     // input matrix and the specified sparsity pattern might be different,
     // need to go through the row for both these sparsity structures
     // simultaneously in order to really set the correct values.
-    size_type                   maximum_row_length = matrix->MaxNumEntries();
-    std::vector<size_type>      row_indices(maximum_row_length);
+    size_type maximum_row_length = matrix->MaxNumEntries();
+    std::vector<size_type> row_indices(maximum_row_length);
     std::vector<TrilinosScalar> values(maximum_row_length);
 
     for(size_type row = 0; row < n_rows; ++row)
@@ -992,9 +992,9 @@ namespace TrilinosWrappers
   void
   SparseMatrix::reinit(
     const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
-    const double                          drop_tolerance,
-    const bool                            copy_values,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const double drop_tolerance,
+    const bool copy_values,
+    const ::dealii::SparsityPattern* use_this_sparsity)
   {
     reinit(complete_index_set(dealii_sparse_matrix.m()),
            complete_index_set(dealii_sparse_matrix.n()),
@@ -1008,11 +1008,11 @@ namespace TrilinosWrappers
   template <typename number>
   void
   SparseMatrix::reinit(
-    const Epetra_Map&                     input_map,
+    const Epetra_Map& input_map,
     const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
-    const double                          drop_tolerance,
-    const bool                            copy_values,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const double drop_tolerance,
+    const bool copy_values,
+    const ::dealii::SparsityPattern* use_this_sparsity)
   {
     reinit(IndexSet(input_map),
            IndexSet(input_map),
@@ -1026,12 +1026,12 @@ namespace TrilinosWrappers
   template <typename number>
   void
   SparseMatrix::reinit(
-    const Epetra_Map&                     input_row_map,
-    const Epetra_Map&                     input_col_map,
+    const Epetra_Map& input_row_map,
+    const Epetra_Map& input_col_map,
     const ::dealii::SparseMatrix<number>& dealii_sparse_matrix,
-    const double                          drop_tolerance,
-    const bool                            copy_values,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const double drop_tolerance,
+    const bool copy_values,
+    const ::dealii::SparsityPattern* use_this_sparsity)
   {
     reinit(IndexSet(input_row_map),
            IndexSet(input_col_map),
@@ -1044,7 +1044,7 @@ namespace TrilinosWrappers
 
   void
   SparseMatrix::reinit(const Epetra_CrsMatrix& input_matrix,
-                       const bool              copy_values)
+                       const bool copy_values)
   {
     Assert(input_matrix.Filled() == true,
            ExcMessage("Input CrsMatrix has not called FillComplete()!"));
@@ -1065,9 +1065,9 @@ namespace TrilinosWrappers
       {
         // point to the first data entry in the two
         // matrices and copy the content
-        const TrilinosScalar* in_values   = input_matrix[0];
-        TrilinosScalar*       values      = (*matrix)[0];
-        const size_type       my_nonzeros = input_matrix.NumMyNonzeros();
+        const TrilinosScalar* in_values = input_matrix[0];
+        TrilinosScalar* values          = (*matrix)[0];
+        const size_type my_nonzeros     = input_matrix.NumMyNonzeros();
         std::memcpy(values, in_values, my_nonzeros * sizeof(TrilinosScalar));
       }
 
@@ -1145,7 +1145,7 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::clear_row(const size_type      row,
+  SparseMatrix::clear_row(const size_type row,
                           const TrilinosScalar new_diag_value)
   {
     Assert(matrix->Filled() == true, ExcMatrixNotCompressed());
@@ -1157,9 +1157,9 @@ namespace TrilinosWrappers
     if(local_row >= 0)
       {
         TrilinosScalar* values;
-        int*            col_indices;
-        int             num_entries;
-        const int       ierr = matrix->ExtractMyRowView(
+        int* col_indices;
+        int num_entries;
+        const int ierr = matrix->ExtractMyRowView(
           local_row, num_entries, values, col_indices);
         (void) ierr;
 
@@ -1181,7 +1181,7 @@ namespace TrilinosWrappers
 
   void
   SparseMatrix::clear_rows(const std::vector<size_type>& rows,
-                           const TrilinosScalar          new_diag_value)
+                           const TrilinosScalar new_diag_value)
   {
     for(size_type row = 0; row < rows.size(); ++row)
       clear_row(rows[row], new_diag_value);
@@ -1219,9 +1219,9 @@ namespace TrilinosWrappers
 
         // Prepare pointers for extraction
         // of a view of the row.
-        int             nnz_present = matrix->NumMyEntries(trilinos_i);
-        int             nnz_extracted;
-        int*            col_indices;
+        int nnz_present = matrix->NumMyEntries(trilinos_i);
+        int nnz_extracted;
+        int* col_indices;
         TrilinosScalar* values;
 
         // Generate the view and make
@@ -1293,9 +1293,9 @@ namespace TrilinosWrappers
 
         // Prepare pointers for extraction
         // of a view of the row.
-        int             nnz_present = matrix->NumMyEntries(trilinos_i);
-        int             nnz_extracted;
-        int*            col_indices;
+        int nnz_present = matrix->NumMyEntries(trilinos_i);
+        int nnz_extracted;
+        int* col_indices;
         TrilinosScalar* values;
 
         // Generate the view and make
@@ -1376,10 +1376,10 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::set(const std::vector<size_type>&     row_indices,
-                    const std::vector<size_type>&     col_indices,
+  SparseMatrix::set(const std::vector<size_type>& row_indices,
+                    const std::vector<size_type>& col_indices,
                     const FullMatrix<TrilinosScalar>& values,
-                    const bool                        elide_zero_values)
+                    const bool elide_zero_values)
   {
     Assert(row_indices.size() == values.m(),
            ExcDimensionMismatch(row_indices.size(), values.m()));
@@ -1395,10 +1395,10 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::set(const size_type                    row,
-                    const std::vector<size_type>&      col_indices,
+  SparseMatrix::set(const size_type row,
+                    const std::vector<size_type>& col_indices,
                     const std::vector<TrilinosScalar>& values,
-                    const bool                         elide_zero_values)
+                    const bool elide_zero_values)
   {
     Assert(col_indices.size() == values.size(),
            ExcDimensionMismatch(col_indices.size(), values.size()));
@@ -1411,11 +1411,11 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::set(const size_type       row,
-                    const size_type       n_cols,
-                    const size_type*      col_indices,
+  SparseMatrix::set(const size_type row,
+                    const size_type n_cols,
+                    const size_type* col_indices,
                     const TrilinosScalar* values,
-                    const bool            elide_zero_values)
+                    const bool elide_zero_values)
   {
     AssertIndexRange(row, this->m());
 
@@ -1431,8 +1431,8 @@ namespace TrilinosWrappers
     last_action = Insert;
 
     TrilinosWrappers::types::int_type* col_index_ptr;
-    TrilinosScalar*                    col_value_ptr;
-    TrilinosWrappers::types::int_type  n_columns;
+    TrilinosScalar* col_value_ptr;
+    TrilinosWrappers::types::int_type n_columns;
 
     boost::container::small_vector<TrilinosScalar, 200> local_value_array(
       n_cols);
@@ -1544,9 +1544,9 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::add(const std::vector<size_type>&     indices,
+  SparseMatrix::add(const std::vector<size_type>& indices,
                     const FullMatrix<TrilinosScalar>& values,
-                    const bool                        elide_zero_values)
+                    const bool elide_zero_values)
   {
     Assert(indices.size() == values.m(),
            ExcDimensionMismatch(indices.size(), values.m()));
@@ -1561,10 +1561,10 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::add(const std::vector<size_type>&     row_indices,
-                    const std::vector<size_type>&     col_indices,
+  SparseMatrix::add(const std::vector<size_type>& row_indices,
+                    const std::vector<size_type>& col_indices,
                     const FullMatrix<TrilinosScalar>& values,
-                    const bool                        elide_zero_values)
+                    const bool elide_zero_values)
   {
     Assert(row_indices.size() == values.m(),
            ExcDimensionMismatch(row_indices.size(), values.m()));
@@ -1580,10 +1580,10 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::add(const size_type                    row,
-                    const std::vector<size_type>&      col_indices,
+  SparseMatrix::add(const size_type row,
+                    const std::vector<size_type>& col_indices,
                     const std::vector<TrilinosScalar>& values,
-                    const bool                         elide_zero_values)
+                    const bool elide_zero_values)
   {
     Assert(col_indices.size() == values.size(),
            ExcDimensionMismatch(col_indices.size(), values.size()));
@@ -1596,11 +1596,11 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::add(const size_type       row,
-                    const size_type       n_cols,
-                    const size_type*      col_indices,
+  SparseMatrix::add(const size_type row,
+                    const size_type n_cols,
+                    const size_type* col_indices,
                     const TrilinosScalar* values,
-                    const bool            elide_zero_values,
+                    const bool elide_zero_values,
                     const bool /*col_indices_are_sorted*/)
   {
     AssertIndexRange(row, this->m());
@@ -1618,8 +1618,8 @@ namespace TrilinosWrappers
     last_action = Add;
 
     TrilinosWrappers::types::int_type* col_index_ptr;
-    TrilinosScalar*                    col_value_ptr;
-    TrilinosWrappers::types::int_type  n_columns;
+    TrilinosScalar* col_value_ptr;
+    TrilinosWrappers::types::int_type n_columns;
 
     boost::container::small_vector<TrilinosScalar, 100> local_value_array(
       n_cols);
@@ -1734,7 +1734,7 @@ namespace TrilinosWrappers
                         "")
                   << " has the following indices:" << std::endl;
         std::vector<TrilinosWrappers::types::int_type> indices;
-        const Epetra_CrsGraph*                         graph
+        const Epetra_CrsGraph* graph
           = (nonlocal_matrix.get() != nullptr
              && matrix->RowMap().MyGID(
                   static_cast<TrilinosWrappers::types::int_type>(row))
@@ -1802,10 +1802,10 @@ namespace TrilinosWrappers
         // the data is in local index spaces so we need to be careful not only
         // to compare column indices in case they are derived from the same
         // map.
-        int             n_entries, rhs_n_entries;
+        int n_entries, rhs_n_entries;
         TrilinosScalar *value_ptr, *rhs_value_ptr;
-        int *           index_ptr, *rhs_index_ptr;
-        int             ierr = rhs.matrix->ExtractMyRowView(
+        int *index_ptr, *rhs_index_ptr;
+        int ierr = rhs.matrix->ExtractMyRowView(
           row_local, rhs_n_entries, rhs_value_ptr, rhs_index_ptr);
         (void) ierr;
         Assert(ierr == 0, ExcTrilinosError(ierr));
@@ -1838,7 +1838,7 @@ namespace TrilinosWrappers
                   continue;
                 const TrilinosWrappers::types::int_type rhs_global_col
                   = global_column_index(*rhs.matrix, rhs_index_ptr[i]);
-                int  local_col   = matrix->ColMap().LID(rhs_global_col);
+                int local_col    = matrix->ColMap().LID(rhs_global_col);
                 int* local_index = Utilities::lower_bound(
                   index_ptr, index_ptr + n_entries, local_col);
                 Assert(
@@ -1933,7 +1933,7 @@ namespace TrilinosWrappers
       {}
 
       inline void
-      check_vector_map_equality(const Epetra_CrsMatrix&              m,
+      check_vector_map_equality(const Epetra_CrsMatrix& m,
                                 const TrilinosWrappers::MPI::Vector& in,
                                 const TrilinosWrappers::MPI::Vector& out)
       {
@@ -2064,7 +2064,7 @@ namespace TrilinosWrappers
   }
 
   TrilinosScalar
-  SparseMatrix::residual(MPI::Vector&       dst,
+  SparseMatrix::residual(MPI::Vector& dst,
                          const MPI::Vector& x,
                          const MPI::Vector& b) const
   {
@@ -2082,9 +2082,9 @@ namespace TrilinosWrappers
     void
     perform_mmult(const SparseMatrix& inputleft,
                   const SparseMatrix& inputright,
-                  SparseMatrix&       result,
-                  const MPI::Vector&  V,
-                  const bool          transpose_left)
+                  SparseMatrix& result,
+                  const MPI::Vector& V,
+                  const bool transpose_left)
     {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
       Assert(false, ExcNotImplemented())
@@ -2137,7 +2137,7 @@ namespace TrilinosWrappers
           const int local_N = inputright.local_size();
           for(int i = 0; i < local_N; ++i)
             {
-              int     N_entries = -1;
+              int N_entries = -1;
               double *new_data, *B_data;
               mod_B->ExtractMyRowView(i, N_entries, new_data);
               inputright.trilinos_matrix().ExtractMyRowView(
@@ -2188,7 +2188,7 @@ namespace TrilinosWrappers
                 i, num_entries, indices);
               Assert(num_entries >= 0, ExcInternalError());
 
-              const auto&     trilinos_matrix = inputleft.trilinos_matrix();
+              const auto& trilinos_matrix = inputleft.trilinos_matrix();
               const size_type GID
                 = TrilinosWrappers::global_index(trilinos_matrix.RowMap(), i);
               for(TrilinosWrappers::types::int_type j = 0; j < num_entries; ++j)
@@ -2202,13 +2202,13 @@ namespace TrilinosWrappers
           for(dealii::types::global_dof_index i = 0; i < inputleft.local_size();
               ++i)
             {
-              int     num_entries, *indices;
+              int num_entries, *indices;
               double* values;
               inputleft.trilinos_matrix().ExtractMyRowView(
                 i, num_entries, values, indices);
               Assert(num_entries >= 0, ExcInternalError());
 
-              const auto&     trilinos_matrix = inputleft.trilinos_matrix();
+              const auto& trilinos_matrix = inputleft.trilinos_matrix();
               const size_type GID
                 = TrilinosWrappers::global_index(trilinos_matrix.RowMap(), i);
               for(TrilinosWrappers::types::int_type j = 0; j < num_entries; ++j)
@@ -2233,9 +2233,9 @@ namespace TrilinosWrappers
       // in ml/src/Operator/ml_rap.c
 
       // import data if necessary
-      ML_Operator *                     Btmp, *Ctmp, *Ctmp2, *tptr;
-      ML_CommInfoOP*                    getrow_comm;
-      int                               max_per_proc;
+      ML_Operator *Btmp, *Ctmp, *Ctmp2, *tptr;
+      ML_CommInfoOP* getrow_comm;
+      int max_per_proc;
       TrilinosWrappers::types::int_type N_input_vector = B_->invec_leng;
       getrow_comm                                      = B_->getrow->pre_comm;
       if(getrow_comm != nullptr)
@@ -2316,9 +2316,9 @@ namespace TrilinosWrappers
   } // namespace internals
 
   void
-  SparseMatrix::mmult(SparseMatrix&       C,
+  SparseMatrix::mmult(SparseMatrix& C,
                       const SparseMatrix& B,
-                      const MPI::Vector&  V) const
+                      const MPI::Vector& V) const
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     Assert(false, ExcNotImplemented())
@@ -2327,9 +2327,9 @@ namespace TrilinosWrappers
   }
 
   void
-  SparseMatrix::Tmmult(SparseMatrix&       C,
+  SparseMatrix::Tmmult(SparseMatrix& C,
                        const SparseMatrix& B,
-                       const MPI::Vector&  V) const
+                       const MPI::Vector& V) const
   {
 #  ifdef DEAL_II_WITH_64BIT_INDICES
     Assert(false, ExcNotImplemented())
@@ -2348,15 +2348,15 @@ namespace TrilinosWrappers
   // multiple processors.
   void
   SparseMatrix::print(std::ostream& out,
-                      const bool    print_detailed_trilinos_information) const
+                      const bool print_detailed_trilinos_information) const
   {
     if(print_detailed_trilinos_information == true)
       out << *matrix;
     else
       {
         double* values;
-        int*    indices;
-        int     num_entries;
+        int* indices;
+        int num_entries;
 
         for(int i = 0; i < matrix->NumMyRows(); ++i)
           {
@@ -2500,7 +2500,7 @@ namespace TrilinosWrappers
             matrix_exemplar.locally_owned_range_indices()))
 #  endif
       {
-        vmult = [&matrix_exemplar, &matrix](Range&        tril_dst,
+        vmult = [&matrix_exemplar, &matrix](Range& tril_dst,
                                             const Domain& tril_src) {
           // Duplicated from TrilinosWrappers::SparseMatrix::vmult
           Assert(&tril_src != &tril_dst,
@@ -2522,7 +2522,7 @@ namespace TrilinosWrappers
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         };
 
-        Tvmult = [&matrix_exemplar, &matrix](Domain&      tril_dst,
+        Tvmult = [&matrix_exemplar, &matrix](Domain& tril_dst,
                                              const Range& tril_src) {
           // Duplicated from TrilinosWrappers::SparseMatrix::Tvmult
           Assert(&tril_src != &tril_dst,
@@ -2564,7 +2564,7 @@ namespace TrilinosWrappers
       }
 
       TrilinosPayload::TrilinosPayload(
-        const TrilinosWrappers::SparseMatrix&     matrix_exemplar,
+        const TrilinosWrappers::SparseMatrix& matrix_exemplar,
         const TrilinosWrappers::PreconditionBase& preconditioner)
         : use_transpose(matrix_exemplar.trilinos_matrix().UseTranspose()),
 #  ifdef DEAL_II_WITH_MPI
@@ -2582,7 +2582,7 @@ namespace TrilinosWrappers
             matrix_exemplar.locally_owned_range_indices()))
 #  endif
       {
-        vmult = [&matrix_exemplar, &preconditioner](Range&        tril_dst,
+        vmult = [&matrix_exemplar, &preconditioner](Range& tril_dst,
                                                     const Domain& tril_src) {
           // Duplicated from TrilinosWrappers::PreconditionBase::vmult
           // as well as from TrilinosWrappers::SparseMatrix::Tvmult
@@ -2604,7 +2604,7 @@ namespace TrilinosWrappers
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         };
 
-        Tvmult = [&matrix_exemplar, &preconditioner](Domain&      tril_dst,
+        Tvmult = [&matrix_exemplar, &preconditioner](Domain& tril_dst,
                                                      const Range& tril_src) {
           // Duplicated from TrilinosWrappers::PreconditionBase::vmult
           // as well as from TrilinosWrappers::SparseMatrix::Tvmult
@@ -2630,7 +2630,7 @@ namespace TrilinosWrappers
             !preconditioner.trilinos_operator().UseTranspose());
         };
 
-        inv_vmult = [&matrix_exemplar, &preconditioner](Domain&      tril_dst,
+        inv_vmult = [&matrix_exemplar, &preconditioner](Domain& tril_dst,
                                                         const Range& tril_src) {
           // Duplicated from TrilinosWrappers::PreconditionBase::vmult
           // as well as from TrilinosWrappers::SparseMatrix::Tvmult
@@ -2988,10 +2988,10 @@ namespace TrilinosWrappers
       operator+(const TrilinosPayload& first_op,
                 const TrilinosPayload& second_op)
       {
-        typedef typename TrilinosPayload::Domain     Domain;
-        typedef typename TrilinosPayload::Range      Range;
+        typedef typename TrilinosPayload::Domain Domain;
+        typedef typename TrilinosPayload::Range Range;
         typedef typename TrilinosPayload::VectorType Intermediate;
-        typedef TrilinosWrappers::MPI::Vector        GVMVectorType;
+        typedef TrilinosWrappers::MPI::Vector GVMVectorType;
 
         Assert(
           first_op.locally_owned_domain_indices()
@@ -3005,11 +3005,11 @@ namespace TrilinosWrappers
         TrilinosPayload return_op(first_op, second_op);
 
         // Capture by copy so the payloads are always valid
-        return_op.vmult = [first_op, second_op](Range&        tril_dst,
+        return_op.vmult = [first_op, second_op](Range& tril_dst,
                                                 const Domain& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // Initialize intermediate vector
@@ -3042,11 +3042,11 @@ namespace TrilinosWrappers
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         };
 
-        return_op.Tvmult = [first_op, second_op](Domain&      tril_dst,
+        return_op.Tvmult = [first_op, second_op](Domain& tril_dst,
                                                  const Range& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // These operators may themselves be transposed or not, so we let them
@@ -3090,11 +3090,11 @@ namespace TrilinosWrappers
           const_cast<TrilinosPayload&>(second_op).transpose();
         };
 
-        return_op.inv_vmult = [first_op, second_op](Domain&      tril_dst,
+        return_op.inv_vmult = [first_op, second_op](Domain& tril_dst,
                                                     const Range& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // Initialize intermediate vector
@@ -3127,11 +3127,11 @@ namespace TrilinosWrappers
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         };
 
-        return_op.inv_Tvmult = [first_op, second_op](Range&        tril_dst,
+        return_op.inv_Tvmult = [first_op, second_op](Range& tril_dst,
                                                      const Domain& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // These operators may themselves be transposed or not, so we let them
@@ -3181,10 +3181,10 @@ namespace TrilinosWrappers
       TrilinosPayload operator*(const TrilinosPayload& first_op,
                                 const TrilinosPayload& second_op)
       {
-        typedef typename TrilinosPayload::Domain     Domain;
-        typedef typename TrilinosPayload::Range      Range;
+        typedef typename TrilinosPayload::Domain Domain;
+        typedef typename TrilinosPayload::Range Range;
         typedef typename TrilinosPayload::VectorType Intermediate;
-        typedef TrilinosWrappers::MPI::Vector        GVMVectorType;
+        typedef TrilinosWrappers::MPI::Vector GVMVectorType;
 
         AssertThrow(
           first_op.locally_owned_domain_indices()
@@ -3194,11 +3194,11 @@ namespace TrilinosWrappers
         TrilinosPayload return_op(first_op, second_op);
 
         // Capture by copy so the payloads are always valid
-        return_op.vmult = [first_op, second_op](Range&        tril_dst,
+        return_op.vmult = [first_op, second_op](Range& tril_dst,
                                                 const Domain& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // Initialize intermediate vector
@@ -3229,11 +3229,11 @@ namespace TrilinosWrappers
           first_op.Apply(tril_int, tril_dst);
         };
 
-        return_op.Tvmult = [first_op, second_op](Domain&      tril_dst,
+        return_op.Tvmult = [first_op, second_op](Domain& tril_dst,
                                                  const Range& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // These operators may themselves be transposed or not, so we let them
@@ -3274,11 +3274,11 @@ namespace TrilinosWrappers
           const_cast<TrilinosPayload&>(second_op).transpose();
         };
 
-        return_op.inv_vmult = [first_op, second_op](Domain&      tril_dst,
+        return_op.inv_vmult = [first_op, second_op](Domain& tril_dst,
                                                     const Range& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // Initialize intermediate vector
@@ -3309,11 +3309,11 @@ namespace TrilinosWrappers
           second_op.ApplyInverse(tril_int, tril_dst);
         };
 
-        return_op.inv_Tvmult = [first_op, second_op](Range&        tril_dst,
+        return_op.inv_Tvmult = [first_op, second_op](Range& tril_dst,
                                                      const Domain& tril_src) {
           // Duplicated from LinearOperator::operator*
           // TODO: Template the constructor on GrowingVectorMemory vector type?
-          GrowingVectorMemory<GVMVectorType>   vector_memory;
+          GrowingVectorMemory<GVMVectorType> vector_memory;
           VectorMemory<GVMVectorType>::Pointer i(vector_memory);
 
           // These operators may themselves be transposed or not, so we let them

@@ -132,15 +132,15 @@ template <int dim>
 void
 derivatives()
 {
-  MyFunction<dim>    function;
+  MyFunction<dim> function;
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   tria.refine_global(5 - dim);
-  FE_DGQ<dim>          fe(2);
-  DoFHandler<dim>      dof_handler(tria);
-  Vector<double>       solution;
+  FE_DGQ<dim> fe(2);
+  DoFHandler<dim> dof_handler(tria);
+  Vector<double> solution;
   MappingQGeneric<dim> mapping(1);
-  QMidpoint<dim>       q_midpoint;
+  QMidpoint<dim> q_midpoint;
   FEValues<dim> fe_values(mapping, fe, q_midpoint, update_quadrature_points);
 
   dof_handler.distribute_dofs(fe);

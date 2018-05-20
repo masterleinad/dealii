@@ -137,11 +137,11 @@ private:
   void
   output_results(unsigned int i) const;
 
-  Triangulation<dim>  triangulation;
+  Triangulation<dim> triangulation;
   FiniteElement<dim>* fe;
-  DoFHandler<dim>     dof_handler;
+  DoFHandler<dim> dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;
@@ -187,7 +187,7 @@ Step3<dim>::assemble_system(unsigned int i)
 {
   system_matrix = 0.;
   system_rhs    = 0.;
-  QGauss<dim>   quadrature_formula(m_degree + 1);
+  QGauss<dim> quadrature_formula(m_degree + 1);
   FEValues<dim> fe_values(*fe,
                           quadrature_formula,
                           update_values | update_gradients | update_JxW_values
@@ -197,7 +197,7 @@ Step3<dim>::assemble_system(unsigned int i)
   const unsigned int n_q_points    = quadrature_formula.size();
 
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -243,7 +243,7 @@ void
 Step3<dim>::solve()
 {
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<>    solver(solver_control);
+  SolverCG<> solver(solver_control);
 
   solver.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
 }
@@ -278,8 +278,8 @@ Step3<dim>::output_results(unsigned int i) const
                                     difference_per_cell,
                                     QGauss<dim>(m_degree + 2),
                                     VectorTools::H1_seminorm);
-  const double         H1_error = difference_per_cell.l2_norm();
-  const QTrapez<1>     q_trapez;
+  const double H1_error = difference_per_cell.l2_norm();
+  const QTrapez<1> q_trapez;
   const QIterated<dim> q_iterated(q_trapez, 5);
   VectorTools::integrate_difference(dof_handler,
                                     solution,

@@ -22,10 +22,10 @@
 void
 test()
 {
-  unsigned int         degree1 = 3;
+  unsigned int degree1 = 3;
   Polynomials::Lobatto p1(degree1);
 
-  unsigned int         degree2 = 6;
+  unsigned int degree2 = 6;
   Polynomials::Lobatto p2(degree2);
 
   verify(p1, p2);

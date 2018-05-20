@@ -101,7 +101,7 @@ namespace Utilities
    */
   template <typename number>
   std::string
-  to_string(const number       value,
+  to_string(const number value,
             const unsigned int digits = numbers::invalid_unsigned_int);
 
   /**
@@ -217,7 +217,7 @@ namespace Utilities
   std::vector<std::string>
   break_text_into_lines(const std::string& original_text,
                         const unsigned int width,
-                        const char         delimiter = ' ');
+                        const char delimiter = ' ');
 
   /**
    * Return true if the given pattern string appears in the first position of
@@ -958,8 +958,8 @@ namespace Utilities
               }
           }
 
-        const unsigned int half   = len >> 1;
-        const Iterator     middle = first + half;
+        const unsigned int half = len >> 1;
+        const Iterator middle   = first + half;
 
         // if the value is larger than
         // that pointed to by the
@@ -1023,7 +1023,7 @@ namespace Utilities
           archive << object;
           out.flush();
 #else
-          std::ostringstream              out;
+          std::ostringstream out;
           boost::archive::binary_oarchive archive(out);
           archive << object;
 
@@ -1075,7 +1075,7 @@ namespace Utilities
     else
       {
         std::string decompressed_buffer;
-        T           object;
+        T object;
 
         // first decompress the buffer
         {
@@ -1091,7 +1091,7 @@ namespace Utilities
         }
 
         // then restore the object from the buffer
-        std::istringstream              in(decompressed_buffer);
+        std::istringstream in(decompressed_buffer);
         boost::archive::binary_iarchive archive(in);
 
         archive >> object;
@@ -1149,7 +1149,7 @@ namespace Utilities
         }
 
         // then restore the object from the buffer
-        std::istringstream              in(decompressed_buffer);
+        std::istringstream in(decompressed_buffer);
         boost::archive::binary_iarchive archive(in);
 
         archive >> unpacked_object;

@@ -43,7 +43,7 @@ namespace Functions
   void
   FlowFunction<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    std::vector<Vector<double>>& values) const
   {
     const unsigned int n_points = points.size();
     Assert(values.size() == n_points,
@@ -69,12 +69,12 @@ namespace Functions
   template <int dim>
   void
   FlowFunction<dim>::vector_value(const Point<dim>& point,
-                                  Vector<double>&   value) const
+                                  Vector<double>& value) const
   {
     Assert(value.size() == dim + 1,
            ExcDimensionMismatch(value.size(), dim + 1));
 
-    const unsigned int      n_points = 1;
+    const unsigned int n_points = 1;
     std::vector<Point<dim>> points(1);
     points[0] = point;
 
@@ -92,11 +92,11 @@ namespace Functions
 
   template <int dim>
   double
-  FlowFunction<dim>::value(const Point<dim>&  point,
+  FlowFunction<dim>::value(const Point<dim>& point,
                            const unsigned int comp) const
   {
     Assert(comp < dim + 1, ExcIndexRange(comp, 0, dim + 1));
-    const unsigned int      n_points = 1;
+    const unsigned int n_points = 1;
     std::vector<Point<dim>> points(1);
     points[0] = point;
 
@@ -114,7 +114,7 @@ namespace Functions
   template <int dim>
   void
   FlowFunction<dim>::vector_gradient_list(
-    const std::vector<Point<dim>>&            points,
+    const std::vector<Point<dim>>& points,
     std::vector<std::vector<Tensor<1, dim>>>& values) const
   {
     const unsigned int n_points = points.size();
@@ -142,7 +142,7 @@ namespace Functions
   void
   FlowFunction<dim>::vector_laplacian_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    std::vector<Vector<double>>& values) const
   {
     const unsigned int n_points = points.size();
     Assert(values.size() == n_points,
@@ -185,11 +185,11 @@ namespace Functions
   template <int dim>
   void
   PoisseuilleFlow<dim>::vector_values(
-    const std::vector<Point<dim>>&    points,
+    const std::vector<Point<dim>>& points,
     std::vector<std::vector<double>>& values) const
   {
-    unsigned int n       = points.size();
-    double       stretch = 1. / radius;
+    unsigned int n = points.size();
+    double stretch = 1. / radius;
 
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
@@ -221,11 +221,11 @@ namespace Functions
   template <int dim>
   void
   PoisseuilleFlow<dim>::vector_gradients(
-    const std::vector<Point<dim>>&            points,
+    const std::vector<Point<dim>>& points,
     std::vector<std::vector<Tensor<1, dim>>>& values) const
   {
-    unsigned int n       = points.size();
-    double       stretch = 1. / radius;
+    unsigned int n = points.size();
+    double stretch = 1. / radius;
 
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
@@ -252,7 +252,7 @@ namespace Functions
   template <int dim>
   void
   PoisseuilleFlow<dim>::vector_laplacians(
-    const std::vector<Point<dim>>&    points,
+    const std::vector<Point<dim>>& points,
     std::vector<std::vector<double>>& values) const
   {
     unsigned int n = points.size();
@@ -285,7 +285,7 @@ namespace Functions
   template <int dim>
   void
   StokesCosine<dim>::vector_values(
-    const std::vector<Point<dim>>&    points,
+    const std::vector<Point<dim>>& points,
     std::vector<std::vector<double>>& values) const
   {
     unsigned int n = points.size();
@@ -297,13 +297,13 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<dim>& p  = points[k];
-        const double      x  = numbers::PI / 2. * p(0);
-        const double      y  = numbers::PI / 2. * p(1);
-        const double      cx = cos(x);
-        const double      cy = cos(y);
-        const double      sx = sin(x);
-        const double      sy = sin(y);
+        const Point<dim>& p = points[k];
+        const double x      = numbers::PI / 2. * p(0);
+        const double y      = numbers::PI / 2. * p(1);
+        const double cx     = cos(x);
+        const double cy     = cos(y);
+        const double sx     = sin(x);
+        const double sy     = sin(y);
 
         if(dim == 2)
           {
@@ -332,7 +332,7 @@ namespace Functions
   template <int dim>
   void
   StokesCosine<dim>::vector_gradients(
-    const std::vector<Point<dim>>&            points,
+    const std::vector<Point<dim>>& points,
     std::vector<std::vector<Tensor<1, dim>>>& values) const
   {
     unsigned int n = points.size();
@@ -344,15 +344,15 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<dim>& p   = points[k];
-        const double      x   = numbers::PI / 2. * p(0);
-        const double      y   = numbers::PI / 2. * p(1);
-        const double      c2x = cos(2 * x);
-        const double      c2y = cos(2 * y);
-        const double      s2x = sin(2 * x);
-        const double      s2y = sin(2 * y);
-        const double      cx2 = .5 + .5 * c2x; // cos^2 x
-        const double      cy2 = .5 + .5 * c2y; // cos^2 y
+        const Point<dim>& p = points[k];
+        const double x      = numbers::PI / 2. * p(0);
+        const double y      = numbers::PI / 2. * p(1);
+        const double c2x    = cos(2 * x);
+        const double c2y    = cos(2 * y);
+        const double s2x    = sin(2 * x);
+        const double s2y    = sin(2 * y);
+        const double cx2    = .5 + .5 * c2x; // cos^2 x
+        const double cy2    = .5 + .5 * c2y; // cos^2 y
 
         if(dim == 2)
           {
@@ -396,7 +396,7 @@ namespace Functions
   template <int dim>
   void
   StokesCosine<dim>::vector_laplacians(
-    const std::vector<Point<dim>>&    points,
+    const std::vector<Point<dim>>& points,
     std::vector<std::vector<double>>& values) const
   {
     unsigned int n = points.size();
@@ -422,14 +422,14 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<dim>& p   = points[k];
-        const double      x   = numbers::PI / 2. * p(0);
-        const double      y   = numbers::PI / 2. * p(1);
-        const double      c2x = cos(2 * x);
-        const double      c2y = cos(2 * y);
-        const double      s2x = sin(2 * x);
-        const double      s2y = sin(2 * y);
-        const double      pi2 = .25 * numbers::PI * numbers::PI;
+        const Point<dim>& p = points[k];
+        const double x      = numbers::PI / 2. * p(0);
+        const double y      = numbers::PI / 2. * p(1);
+        const double c2x    = cos(2 * x);
+        const double c2y    = cos(2 * y);
+        const double s2x    = sin(2 * x);
+        const double s2y    = sin(2 * y);
+        const double pi2    = .25 * numbers::PI * numbers::PI;
 
         if(dim == 2)
           {
@@ -509,7 +509,7 @@ namespace Functions
 
   void
   StokesLSingularity::vector_values(
-    const std::vector<Point<2>>&      points,
+    const std::vector<Point<2>>& points,
     std::vector<std::vector<double>>& values) const
   {
     unsigned int n = points.size();
@@ -521,8 +521,8 @@ namespace Functions
     for(unsigned int k = 0; k < n; ++k)
       {
         const Point<2>& p = points[k];
-        const double    x = p(0);
-        const double    y = p(1);
+        const double x    = p(0);
+        const double y    = p(1);
 
         if((x < 0) || (y < 0))
           {
@@ -547,7 +547,7 @@ namespace Functions
 
   void
   StokesLSingularity::vector_gradients(
-    const std::vector<Point<2>>&            points,
+    const std::vector<Point<2>>& points,
     std::vector<std::vector<Tensor<1, 2>>>& values) const
   {
     unsigned int n = points.size();
@@ -559,8 +559,8 @@ namespace Functions
     for(unsigned int k = 0; k < n; ++k)
       {
         const Point<2>& p = points[k];
-        const double    x = p(0);
-        const double    y = p(1);
+        const double x    = p(0);
+        const double y    = p(1);
 
         if((x < 0) || (y < 0))
           {
@@ -607,7 +607,7 @@ namespace Functions
 
   void
   StokesLSingularity::vector_laplacians(
-    const std::vector<Point<2>>&      points,
+    const std::vector<Point<2>>& points,
     std::vector<std::vector<double>>& values) const
   {
     unsigned int n = points.size();
@@ -636,7 +636,7 @@ namespace Functions
   }
 
   void
-  Kovasznay::vector_values(const std::vector<Point<2>>&      points,
+  Kovasznay::vector_values(const std::vector<Point<2>>& points,
                            std::vector<std::vector<double>>& values) const
   {
     unsigned int n = points.size();
@@ -647,10 +647,10 @@ namespace Functions
 
     for(unsigned int k = 0; k < n; ++k)
       {
-        const Point<2>& p   = points[k];
-        const double    x   = p(0);
-        const double    y   = 2. * numbers::PI * p(1);
-        const double    elx = std::exp(lbda * x);
+        const Point<2>& p = points[k];
+        const double x    = p(0);
+        const double y    = 2. * numbers::PI * p(1);
+        const double elx  = std::exp(lbda * x);
 
         values[0][k] = 1. - elx * cos(y);
         values[1][k] = .5 / numbers::PI * lbda * elx * sin(y);
@@ -660,7 +660,7 @@ namespace Functions
 
   void
   Kovasznay::vector_gradients(
-    const std::vector<Point<2>>&            points,
+    const std::vector<Point<2>>& points,
     std::vector<std::vector<Tensor<1, 2>>>& gradients) const
   {
     unsigned int n = points.size();
@@ -690,7 +690,7 @@ namespace Functions
   }
 
   void
-  Kovasznay::vector_laplacians(const std::vector<Point<2>>&      points,
+  Kovasznay::vector_laplacians(const std::vector<Point<2>>& points,
                                std::vector<std::vector<double>>& values) const
   {
     unsigned int n = points.size();
@@ -703,16 +703,16 @@ namespace Functions
         const double zp = 2. * numbers::PI;
         for(unsigned int k = 0; k < n; ++k)
           {
-            const Point<2>& p   = points[k];
-            const double    x   = p(0);
-            const double    y   = zp * p(1);
-            const double    elx = std::exp(lbda * x);
-            const double    u   = 1. - elx * cos(y);
-            const double    ux  = -lbda * elx * cos(y);
-            const double    uy  = elx * zp * sin(y);
-            const double    v   = lbda / zp * elx * sin(y);
-            const double    vx  = lbda * lbda / zp * elx * sin(y);
-            const double    vy  = zp * lbda / zp * elx * cos(y);
+            const Point<2>& p = points[k];
+            const double x    = p(0);
+            const double y    = zp * p(1);
+            const double elx  = std::exp(lbda * x);
+            const double u    = 1. - elx * cos(y);
+            const double ux   = -lbda * elx * cos(y);
+            const double uy   = elx * zp * sin(y);
+            const double v    = lbda / zp * elx * sin(y);
+            const double vx   = lbda * lbda / zp * elx * sin(y);
+            const double vy   = zp * lbda / zp * elx * cos(y);
 
             values[0][k] = u * ux + v * uy;
             values[1][k] = u * vx + v * vy;

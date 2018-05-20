@@ -25,7 +25,7 @@ template <int dim>
 void
 write_active_fe_index_to_file(const hp::DoFHandler<dim>& dof_handler)
 {
-  int                                                count = 0;
+  int count = 0;
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
@@ -42,7 +42,7 @@ write_vtk(const hp::DoFHandler<dim>& dof_handler, const std::string filename)
 {
   Vector<double> active_fe_index(
     dof_handler.get_triangulation().n_active_cells());
-  int                                                count = 0;
+  int count = 0;
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();

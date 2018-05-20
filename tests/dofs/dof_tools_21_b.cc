@@ -108,7 +108,7 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
 /* The 3D case */
 void generate_grid(Triangulation<3>& triangulation, int orientation)
 {
-  Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
+  Point<3> vertices_1[] = {Point<3>(-1., -1., -3.),
                            Point<3>(+1., -1., -3.),
                            Point<3>(-1., +1., -3.),
                            Point<3>(+1., +1., -3.),
@@ -180,13 +180,13 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
 template <int dim>
 void
 print_matching(DoFHandler<dim>& dof_handler,
-               bool             constrain_only_velocity = false)
+               bool constrain_only_velocity = false)
 {
   const FiniteElement<dim>& fe = dof_handler.get_fe();
-  MappingQ<dim>             mapping(1);
+  MappingQ<dim> mapping(1);
 
-  ConstraintMatrix        constraint_matrix;
-  ConstraintMatrix        constraint_matrix_reverse;
+  ConstraintMatrix constraint_matrix;
+  ConstraintMatrix constraint_matrix_reverse;
   std::vector<Point<dim>> support_points(dof_handler.n_dofs());
   DoFTools::map_dofs_to_support_points<dim>(
     mapping, dof_handler, support_points);
@@ -296,8 +296,8 @@ main()
     {
       // Generate a triangulation and match:
       Triangulation<2> triangulation;
-      FE_Q<2>          fe(1);
-      DoFHandler<2>    dof_handler;
+      FE_Q<2> fe(1);
+      DoFHandler<2> dof_handler;
 
       deallog << "Triangulation:" << i << std::endl;
 
@@ -312,8 +312,8 @@ main()
     {
       // Generate a triangulation and match:
       Triangulation<3> triangulation;
-      FE_Q<3>          fe(1);
-      DoFHandler<3>    dof_handler;
+      FE_Q<3> fe(1);
+      DoFHandler<3> dof_handler;
 
       deallog << "Triangulation:" << i << std::endl;
 
@@ -329,8 +329,8 @@ main()
     {
       // Generate a triangulation and match:
       Triangulation<3> triangulation;
-      FE_Q<3>          fe(1);
-      DoFHandler<3>    dof_handler;
+      FE_Q<3> fe(1);
+      DoFHandler<3> dof_handler;
 
       deallog << "Triangulation:" << i << std::endl;
 
@@ -347,9 +347,9 @@ main()
     {
       // Generate a triangulation and match:
       Triangulation<3> triangulation;
-      FE_Q<3>          u(2);
-      FE_Q<3>          p(1);
-      FESystem<3>      taylor_hood(u, 3, p, 1);
+      FE_Q<3> u(2);
+      FE_Q<3> p(1);
+      FESystem<3> taylor_hood(u, 3, p, 1);
 
       DoFHandler<3> dof_handler;
 

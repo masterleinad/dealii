@@ -143,7 +143,7 @@ namespace Utilities
        */
       Partitioner(const IndexSet& locally_owned_indices,
                   const IndexSet& ghost_indices_in,
-                  const MPI_Comm  communicator_in);
+                  const MPI_Comm communicator_in);
 
       /**
        * Constructor with one index set argument. This constructor creates a
@@ -153,7 +153,7 @@ namespace Utilities
        * constructor with two index sets.
        */
       Partitioner(const IndexSet& locally_owned_indices,
-                  const MPI_Comm  communicator_in);
+                  const MPI_Comm communicator_in);
 
       /**
        * Reinitialize the communication pattern. The first argument @p
@@ -420,11 +420,11 @@ namespace Utilities
       template <typename Number>
       void
       export_to_ghosted_array_start(
-        const unsigned int             communication_channel,
+        const unsigned int communication_channel,
         const ArrayView<const Number>& locally_owned_array,
-        const ArrayView<Number>&       temporary_storage,
-        const ArrayView<Number>&       ghost_array,
-        std::vector<MPI_Request>&      requests) const;
+        const ArrayView<Number>& temporary_storage,
+        const ArrayView<Number>& ghost_array,
+        std::vector<MPI_Request>& requests) const;
 
       /**
        * Finish the exports of the data in a locally owned array to the range
@@ -445,7 +445,7 @@ namespace Utilities
        */
       template <typename Number>
       void
-      export_to_ghosted_array_finish(const ArrayView<Number>&  ghost_array,
+      export_to_ghosted_array_finish(const ArrayView<Number>& ghost_array,
                                      std::vector<MPI_Request>& requests) const;
 
       /**
@@ -488,10 +488,10 @@ namespace Utilities
       void
       import_from_ghosted_array_start(
         const VectorOperation::values vector_operation,
-        const unsigned int            communication_channel,
-        const ArrayView<Number>&      ghost_array,
-        const ArrayView<Number>&      temporary_storage,
-        std::vector<MPI_Request>&     requests) const;
+        const unsigned int communication_channel,
+        const ArrayView<Number>& ghost_array,
+        const ArrayView<Number>& temporary_storage,
+        std::vector<MPI_Request>& requests) const;
 
       /**
        * Finish importing the data from an array indexed by the ghost
@@ -530,11 +530,11 @@ namespace Utilities
       template <typename Number>
       void
       import_from_ghosted_array_finish(
-        const VectorOperation::values  vector_operation,
+        const VectorOperation::values vector_operation,
         const ArrayView<const Number>& temporary_storage,
-        const ArrayView<Number>&       locally_owned_storage,
-        const ArrayView<Number>&       ghost_array,
-        std::vector<MPI_Request>&      requests) const;
+        const ArrayView<Number>& locally_owned_storage,
+        const ArrayView<Number>& ghost_array,
+        std::vector<MPI_Request>& requests) const;
 #endif
 
       /**

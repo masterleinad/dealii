@@ -39,7 +39,7 @@ mesh_info(const Triangulation<dim>& tria)
   // Next loop over all faces of all cells and find how often each boundary
   // indicator is used:
   {
-    std::map<unsigned int, unsigned int>              boundary_count;
+    std::map<unsigned int, unsigned int> boundary_count;
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active(),
       endc = tria.end();

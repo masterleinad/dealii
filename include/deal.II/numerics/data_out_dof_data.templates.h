@@ -57,15 +57,15 @@ namespace internal
   {
     template <int dim, int spacedim>
     ParallelDataBase<dim, spacedim>::ParallelDataBase(
-      const unsigned int               n_datasets,
-      const unsigned int               n_subdivisions,
+      const unsigned int n_datasets,
+      const unsigned int n_subdivisions,
       const std::vector<unsigned int>& n_postprocessor_outputs,
-      const Mapping<dim, spacedim>&    mapping,
+      const Mapping<dim, spacedim>& mapping,
       const std::vector<
         std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                        finite_elements,
+        finite_elements,
       const UpdateFlags update_flags,
-      const bool        use_face_values)
+      const bool use_face_values)
       : n_datasets(n_datasets),
         n_subdivisions(n_subdivisions),
         postprocessed_values(n_postprocessor_outputs.size()),
@@ -215,7 +215,7 @@ namespace internal
     ParallelDataBase<dim, spacedim>::reinit_all_fe_values(
       std::vector<std::shared_ptr<DataEntryBase<DoFHandlerType>>>& dof_data,
       const typename dealii::Triangulation<dim, spacedim>::cell_iterator& cell,
-      const unsigned int                                                  face)
+      const unsigned int face)
     {
       for(unsigned int dataset = 0; dataset < dof_data.size(); ++dataset)
         {
@@ -292,7 +292,7 @@ namespace internal
     template <int dim, int spacedim>
     void
     append_patch_to_list(
-      const DataOutBase::Patch<dim, spacedim>&        patch,
+      const DataOutBase::Patch<dim, spacedim>& patch,
       std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
     {
       patches.push_back(patch);
@@ -312,7 +312,7 @@ namespace internal
      */
     template <typename NumberType>
     double
-    get_component(const NumberType         value,
+    get_component(const NumberType value,
                   const ComponentExtractor extract_component)
     {
       (void) extract_component;
@@ -332,7 +332,7 @@ namespace internal
     template <typename NumberType>
     double
     get_component(const std::complex<NumberType>& value,
-                  const ComponentExtractor        extract_component)
+                  const ComponentExtractor extract_component)
     {
       switch(extract_component)
         {
@@ -352,7 +352,7 @@ namespace internal
     template <int rank, int dim, typename NumberType>
     Tensor<rank, dim>
     get_component(const Tensor<rank, dim, NumberType>& value,
-                  const ComponentExtractor             extract_component)
+                  const ComponentExtractor extract_component)
     {
       Assert(extract_component == ComponentExtractor::real_part,
              ExcMessage("You cannot extract anything other than the real "
@@ -367,7 +367,7 @@ namespace internal
 
     template <typename DoFHandlerType>
     DataEntryBase<DoFHandlerType>::DataEntryBase(
-      const DoFHandlerType*           dofs,
+      const DoFHandlerType* dofs,
       const std::vector<std::string>& names_in,
       const std::vector<
         DataComponentInterpretation::DataComponentInterpretation>&
@@ -452,8 +452,8 @@ namespace internal
        * the vector and their interpretation as scalar or vector data. This
        * constructor assumes that no postprocessor is going to be used.
        */
-      DataEntry(const DoFHandlerType*           dofs,
-                const VectorType*               data,
+      DataEntry(const DoFHandlerType* dofs,
+                const VectorType* data,
                 const std::vector<std::string>& names,
                 const std::vector<
                   DataComponentInterpretation::DataComponentInterpretation>&
@@ -465,7 +465,7 @@ namespace internal
        * the postprocessor.
        */
       DataEntry(const DoFHandlerType* dofs,
-                const VectorType*     data,
+                const VectorType* data,
                 const DataPostprocessor<DoFHandlerType::space_dimension>*
                   data_postprocessor);
 
@@ -475,7 +475,7 @@ namespace internal
        */
       virtual double
       get_cell_data_value(
-        const unsigned int       cell_number,
+        const unsigned int cell_number,
         const ComponentExtractor extract_component) const override;
 
       /**
@@ -486,7 +486,7 @@ namespace internal
       get_function_values(
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
-        const ComponentExtractor                             extract_component,
+        const ComponentExtractor extract_component,
         std::vector<double>& patch_values) const override;
 
       /**
@@ -498,7 +498,7 @@ namespace internal
       get_function_values(
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
-        const ComponentExtractor                             extract_component,
+        const ComponentExtractor extract_component,
         std::vector<dealii::Vector<double>>& patch_values_system)
         const override;
 
@@ -510,7 +510,7 @@ namespace internal
       get_function_gradients(
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
-        const ComponentExtractor                             extract_component,
+        const ComponentExtractor extract_component,
         std::vector<Tensor<1, DoFHandlerType::space_dimension>>&
           patch_gradients) const override;
 
@@ -523,7 +523,7 @@ namespace internal
       get_function_gradients(
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
-        const ComponentExtractor                             extract_component,
+        const ComponentExtractor extract_component,
         std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>&
           patch_gradients_system) const override;
 
@@ -535,7 +535,7 @@ namespace internal
       get_function_hessians(
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
-        const ComponentExtractor                             extract_component,
+        const ComponentExtractor extract_component,
         std::vector<Tensor<2, DoFHandlerType::space_dimension>>& patch_hessians)
         const override;
 
@@ -548,7 +548,7 @@ namespace internal
       get_function_hessians(
         const FEValuesBase<DoFHandlerType::dimension,
                            DoFHandlerType::space_dimension>& fe_patch_values,
-        const ComponentExtractor                             extract_component,
+        const ComponentExtractor extract_component,
         std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>&
           patch_hessians_system) const override;
 
@@ -582,8 +582,8 @@ namespace internal
 
     template <typename DoFHandlerType, typename VectorType>
     DataEntry<DoFHandlerType, VectorType>::DataEntry(
-      const DoFHandlerType*           dofs,
-      const VectorType*               data,
+      const DoFHandlerType* dofs,
+      const VectorType* data,
       const std::vector<std::string>& names,
       const std::vector<
         DataComponentInterpretation::DataComponentInterpretation>&
@@ -597,7 +597,7 @@ namespace internal
     template <typename DoFHandlerType, typename VectorType>
     DataEntry<DoFHandlerType, VectorType>::DataEntry(
       const DoFHandlerType* dofs,
-      const VectorType*     data,
+      const VectorType* data,
       const DataPostprocessor<DoFHandlerType::space_dimension>*
         data_postprocessor)
       : DataEntryBase<DoFHandlerType>(dofs, data_postprocessor), vector(data)
@@ -607,7 +607,7 @@ namespace internal
     {
       template <typename VectorType>
       inline typename VectorType::value_type
-      get_vector_element(const VectorType&  vector,
+      get_vector_element(const VectorType& vector,
                          const unsigned int cell_number)
       {
         return internal::ElementAccess<VectorType>::get(vector, cell_number);
@@ -623,7 +623,7 @@ namespace internal
     template <typename DoFHandlerType, typename VectorType>
     double
     DataEntry<DoFHandlerType, VectorType>::get_cell_data_value(
-      const unsigned int       cell_number,
+      const unsigned int cell_number,
       const ComponentExtractor extract_component) const
     {
       return get_component(get_vector_element(*vector, cell_number),
@@ -635,7 +635,7 @@ namespace internal
     DataEntry<DoFHandlerType, VectorType>::get_function_values(
       const FEValuesBase<DoFHandlerType::dimension,
                          DoFHandlerType::space_dimension>& fe_patch_values,
-      const ComponentExtractor                             extract_component,
+      const ComponentExtractor extract_component,
       std::vector<dealii::Vector<double>>& patch_values_system) const
     {
       if(typeid(typename VectorType::value_type) == typeid(double))
@@ -691,8 +691,8 @@ namespace internal
     DataEntry<DoFHandlerType, VectorType>::get_function_values(
       const FEValuesBase<DoFHandlerType::dimension,
                          DoFHandlerType::space_dimension>& fe_patch_values,
-      const ComponentExtractor                             extract_component,
-      std::vector<double>&                                 patch_values) const
+      const ComponentExtractor extract_component,
+      std::vector<double>& patch_values) const
     {
       if(typeid(typename VectorType::value_type) == typeid(double))
         {
@@ -726,7 +726,7 @@ namespace internal
     DataEntry<DoFHandlerType, VectorType>::get_function_gradients(
       const FEValuesBase<DoFHandlerType::dimension,
                          DoFHandlerType::space_dimension>& fe_patch_values,
-      const ComponentExtractor                             extract_component,
+      const ComponentExtractor extract_component,
       std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>&
         patch_gradients_system) const
     {
@@ -787,7 +787,7 @@ namespace internal
     DataEntry<DoFHandlerType, VectorType>::get_function_gradients(
       const FEValuesBase<DoFHandlerType::dimension,
                          DoFHandlerType::space_dimension>& fe_patch_values,
-      const ComponentExtractor                             extract_component,
+      const ComponentExtractor extract_component,
       std::vector<Tensor<1, DoFHandlerType::space_dimension>>& patch_gradients)
       const
     {
@@ -830,7 +830,7 @@ namespace internal
     DataEntry<DoFHandlerType, VectorType>::get_function_hessians(
       const FEValuesBase<DoFHandlerType::dimension,
                          DoFHandlerType::space_dimension>& fe_patch_values,
-      const ComponentExtractor                             extract_component,
+      const ComponentExtractor extract_component,
       std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>&
         patch_hessians_system) const
     {
@@ -891,7 +891,7 @@ namespace internal
     DataEntry<DoFHandlerType, VectorType>::get_function_hessians(
       const FEValuesBase<DoFHandlerType::dimension,
                          DoFHandlerType::space_dimension>& fe_patch_values,
-      const ComponentExtractor                             extract_component,
+      const ComponentExtractor extract_component,
       std::vector<Tensor<2, DoFHandlerType::space_dimension>>& patch_hessians)
       const
     {
@@ -1007,8 +1007,8 @@ template <typename DoFHandlerType, int patch_dim, int patch_space_dim>
 template <typename VectorType>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
-  const DoFHandlerType&                                     dof_handler,
-  const VectorType&                                         vec,
+  const DoFHandlerType& dof_handler,
+  const VectorType& vec,
   const DataPostprocessor<DoFHandlerType::space_dimension>& data_postprocessor)
 {
   // this is a specialized version of the other function where we have a
@@ -1046,12 +1046,12 @@ template <typename VectorType>
 void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   add_data_vector_internal(
-    const DoFHandlerType*           dof_handler,
-    const VectorType&               data_vector,
+    const DoFHandlerType* dof_handler,
+    const VectorType& data_vector,
     const std::vector<std::string>& names,
-    const DataVectorType            type,
+    const DataVectorType type,
     const std::vector<DataComponentInterpretation::DataComponentInterpretation>&
-               data_component_interpretation_,
+      data_component_interpretation_,
     const bool deduce_output_names)
 {
   // Check available mesh information:
@@ -1100,7 +1100,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
              ExcMessage("The DoF handler attached to the current output vector "
                         "does not have any degrees of freedom, so it is not "
                         "possible to output DoF data in this context."));
-      const std::string  name         = names[0];
+      const std::string name          = names[0];
       const unsigned int n_components = dof_handler->get_fe(0).n_components();
       deduced_names.resize(n_components);
       if(n_components > 1)

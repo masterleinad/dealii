@@ -25,9 +25,9 @@ main()
 {
   initlog();
 
-  int               c_left1[5] = {0, 1, 2, 3, 4};
+  int c_left1[5] = {0, 1, 2, 3, 4};
   Tensor<1, 5, int> left1(c_left1);
-  int               c_right1[5] = {0, 10, 20, 30, 40};
+  int c_right1[5] = {0, 10, 20, 30, 40};
   Tensor<1, 5, int> right1(c_right1);
 
   deallog << "left1: " << left1 << std::endl;

@@ -48,7 +48,7 @@ template <int dim>
 void
 test(const Triangulation<dim>& tr,
      const FiniteElement<dim>& fe,
-     const double              tolerance)
+     const double tolerance)
 {
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
@@ -58,13 +58,13 @@ test(const Triangulation<dim>& tr,
   deallog << "FE=" << fe.get_name() << std::endl;
 
   const QGauss<dim> quadrature(6);
-  FEValues<dim>     fe_values(fe,
+  FEValues<dim> fe_values(fe,
                           quadrature,
                           update_3rd_derivatives | update_quadrature_points
                             | update_JxW_values);
 
   const QGauss<dim - 1> face_quadrature(6);
-  FEFaceValues<dim>     fe_face_values(fe,
+  FEFaceValues<dim> fe_face_values(fe,
                                    face_quadrature,
                                    update_hessians | update_quadrature_points
                                      | update_normal_vectors

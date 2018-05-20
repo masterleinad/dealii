@@ -71,7 +71,7 @@ class BlockLaplace : public Subscriptor
 {
 public:
   typedef typename BlockVectorType::value_type value_type;
-  typedef typename BlockVectorType::size_type  size_type;
+  typedef typename BlockVectorType::size_type size_type;
 
   BlockLaplace() : Subscriptor()
   {}
@@ -85,7 +85,7 @@ public:
   void
   initialize(std::shared_ptr<const MatrixFree<dim, value_type>> data,
              const MGConstrainedDoFs& mg_constrained_dofs,
-             const unsigned int       level)
+             const unsigned int level)
   {
     laplace.initialize(data, mg_constrained_dofs, level);
   }
@@ -133,9 +133,9 @@ public:
   }
 
   void
-  precondition_Jacobi(BlockVectorType&       dst,
+  precondition_Jacobi(BlockVectorType& dst,
                       const BlockVectorType& src,
-                      const value_type       omega) const
+                      const value_type omega) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.precondition_Jacobi(dst.block(b), src.block(b), omega);
@@ -177,8 +177,8 @@ public:
   }
 
   virtual void
-  operator()(const unsigned int                                     level,
-             LinearAlgebra::distributed::BlockVector<Number>&       dst,
+  operator()(const unsigned int level,
+             LinearAlgebra::distributed::BlockVector<Number>& dst,
              const LinearAlgebra::distributed::BlockVector<Number>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
@@ -209,7 +209,7 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
   DoFTools::extract_locally_relevant_dofs(dof, locally_relevant_dofs);
 
   // Dirichlet BC
-  ZeroFunction<dim>               zero_function;
+  ZeroFunction<dim> zero_function;
   typename FunctionMap<dim>::type dirichlet_boundary;
   dirichlet_boundary[0] = &zero_function;
 
@@ -231,7 +231,7 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
                fe_degree,
                n_q_points_1d,
                LinearAlgebra::distributed::BlockVector<number>>
-                                           fine_matrix;
+    fine_matrix;
   std::shared_ptr<MatrixFree<dim, number>> fine_level_data(
     new MatrixFree<dim, number>());
 
@@ -282,7 +282,7 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
                        LinearAlgebra::distributed::BlockVector<number>>
     LevelMatrixType;
 
-  MGLevelObject<LevelMatrixType>         mg_matrices;
+  MGLevelObject<LevelMatrixType> mg_matrices;
   MGLevelObject<MatrixFree<dim, number>> mg_level_data;
   mg_matrices.resize(0, dof.get_triangulation().n_global_levels() - 1);
   mg_level_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
@@ -296,7 +296,7 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
       mg_additional_data.level_mg_handler = level;
 
       ConstraintMatrix level_constraints;
-      IndexSet         relevant_dofs;
+      IndexSet relevant_dofs;
       DoFTools::extract_locally_relevant_level_dofs(dof, level, relevant_dofs);
       level_constraints.reinit(relevant_dofs);
       level_constraints.add_lines(
@@ -390,7 +390,7 @@ test(const unsigned int nbands = 1)
                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
-      FE_Q<dim>       fe(fe_degree);
+      FE_Q<dim> fe(fe_degree);
       DoFHandler<dim> dof(tria);
       dof.distribute_dofs(fe);
       dof.distribute_mg_dofs(fe);

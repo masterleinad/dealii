@@ -59,7 +59,7 @@ public:
              update_values | update_gradients | update_hessians){};
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in,
-                 const Mapping<dim>&            mapping)
+                 const Mapping<dim>& mapping)
     : data(data_in),
       fe_val(mapping,
              data.get_dof_handler().get_fe(),
@@ -74,12 +74,12 @@ public:
   virtual void
   operator()(const MatrixFree<dim, Number>& data,
              Vector<Number>&,
-             const Vector<Number>&                        src,
+             const Vector<Number>& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
 
-    std::vector<Number>                 reference_values(fe_eval.n_q_points);
+    std::vector<Number> reference_values(fe_eval.n_q_points);
     std::vector<Tensor<1, dim, Number>> reference_grads(fe_eval.n_q_points);
     std::vector<Tensor<2, dim, Number>> reference_hess(fe_eval.n_q_points);
 
@@ -191,8 +191,8 @@ public:
 
 protected:
   const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val;
-  mutable double                 errors[5], total[5];
+  mutable FEValues<dim> fe_val;
+  mutable double errors[5], total[5];
 };
 
 // dummy with empty quadrature formula
@@ -240,7 +240,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   constraints.distribute(solution);
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.mapping_update_flags  = update_gradients | update_hessians;

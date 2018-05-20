@@ -54,7 +54,7 @@ template <int dim>
 int
 generate_grid(Triangulation<dim>& tria)
 {
-  Point<dim>                p1, p2;
+  Point<dim> p1, p2;
   std::vector<unsigned int> sub_div;
 
   // Define a rectangular shape
@@ -91,7 +91,7 @@ test_constraints(hp::FECollection<dim>& fe_coll)
   // Now assign increasing
   // active_fe_indices to
   // the different cells.
-  hp::DoFHandler<dim>                                dof_handler(tria);
+  hp::DoFHandler<dim> dof_handler(tria);
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc               = dof_handler.end();

@@ -94,12 +94,12 @@ namespace Step52
     evaluate_diffusion(const double time, const Vector<double>& y) const;
 
     Vector<double>
-    id_minus_tau_J_inverse(const double          time,
-                           const double          tau,
+    id_minus_tau_J_inverse(const double time,
+                           const double tau,
                            const Vector<double>& y);
 
     void
-    output_results(const unsigned int               time_step,
+    output_results(const unsigned int time_step,
                    TimeStepping::runge_kutta_method method) const;
 
     // The next three functions are the drivers for the explicit methods, the
@@ -110,21 +110,21 @@ namespace Step52
     // itself.
     void
     explicit_method(const TimeStepping::runge_kutta_method method,
-                    const unsigned int                     n_time_steps,
-                    const double                           initial_time,
-                    const double                           final_time);
+                    const unsigned int n_time_steps,
+                    const double initial_time,
+                    const double final_time);
 
     void
     implicit_method(const TimeStepping::runge_kutta_method method,
-                    const unsigned int                     n_time_steps,
-                    const double                           initial_time,
-                    const double                           final_time);
+                    const unsigned int n_time_steps,
+                    const double initial_time,
+                    const double final_time);
 
     unsigned int
     embedded_explicit_method(const TimeStepping::runge_kutta_method method,
                              const unsigned int n_time_steps,
-                             const double       initial_time,
-                             const double       final_time);
+                             const double initial_time,
+                             const double final_time);
 
     unsigned int fe_degree;
 
@@ -282,7 +282,7 @@ namespace Step52
   // lines of code, or wanted to take advantage of doing the integration in
   // parallel.) The result is then multiplied by $M^{-1}$.
   Vector<double>
-  Diffusion::evaluate_diffusion(const double          time,
+  Diffusion::evaluate_diffusion(const double time,
                                 const Vector<double>& y) const
   {
     Vector<double> tmp(dof_handler.n_dofs());
@@ -343,8 +343,8 @@ namespace Step52
   //   - compute $z=\left(M-\tau \frac{\partial f}{\partial y}\right)^{-1} tmp = \left(M-\tau \frac{\partial f}{\partial y}\right)^{-1} My$
   //   - return z.
   Vector<double>
-  Diffusion::id_minus_tau_J_inverse(const double          time,
-                                    const double          tau,
+  Diffusion::id_minus_tau_J_inverse(const double time,
+                                    const double tau,
                                     const Vector<double>& y)
   {
     (void) time;
@@ -371,7 +371,7 @@ namespace Step52
   // course, the (exact) result should really be the same for all time
   // stepping method, but the output here at least allows us to compare them.
   void
-  Diffusion::output_results(const unsigned int               time_step,
+  Diffusion::output_results(const unsigned int time_step,
                             TimeStepping::runge_kutta_method method) const
   {
     std::string method_name;
@@ -464,8 +464,8 @@ namespace Step52
   void
   Diffusion::explicit_method(const TimeStepping::runge_kutta_method method,
                              const unsigned int n_time_steps,
-                             const double       initial_time,
-                             const double       final_time)
+                             const double initial_time,
+                             const double final_time)
   {
     const double time_step
       = (final_time - initial_time) / static_cast<double>(n_time_steps);
@@ -499,8 +499,8 @@ namespace Step52
   void
   Diffusion::implicit_method(const TimeStepping::runge_kutta_method method,
                              const unsigned int n_time_steps,
-                             const double       initial_time,
-                             const double       final_time)
+                             const double initial_time,
+                             const double final_time)
   {
     const double time_step
       = (final_time - initial_time) / static_cast<double>(n_time_steps);
@@ -549,13 +549,13 @@ namespace Step52
   unsigned int
   Diffusion::embedded_explicit_method(
     const TimeStepping::runge_kutta_method method,
-    const unsigned int                     n_time_steps,
-    const double                           initial_time,
-    const double                           final_time)
+    const unsigned int n_time_steps,
+    const double initial_time,
+    const double final_time)
   {
     double time_step
       = (final_time - initial_time) / static_cast<double>(n_time_steps);
-    double       time          = initial_time;
+    double time                = initial_time;
     const double coarsen_param = 1.2;
     const double refine_param  = 0.8;
     const double min_delta     = 1e-8;
@@ -639,10 +639,10 @@ namespace Step52
     // introduction, since the exact solution is zero at the final time, the
     // error equals the numerical solution and can be computed by just taking
     // the $l_2$ norm of the solution vector.)
-    unsigned int       n_steps      = 0;
+    unsigned int n_steps            = 0;
     const unsigned int n_time_steps = 200;
-    const double       initial_time = 0.;
-    const double       final_time   = 10.;
+    const double initial_time       = 0.;
+    const double final_time         = 10.;
 
     std::cout << "Explicit methods:" << std::endl;
     explicit_method(

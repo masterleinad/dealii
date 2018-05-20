@@ -59,7 +59,7 @@ using namespace dealii;
 template <int dim>
 void
 print_mesh_info(const Triangulation<dim>& triangulation,
-                const std::string&        filename)
+                const std::string& filename)
 {
   std::cout << "Mesh info:" << std::endl
             << " dimension: " << dim << std::endl
@@ -94,7 +94,7 @@ print_mesh_info(const Triangulation<dim>& triangulation,
   // Finally, produce a graphical representation of the mesh to an output
   // file:
   std::ofstream out(filename);
-  GridOut       grid_out;
+  GridOut grid_out;
   grid_out.write_eps(triangulation, out);
   std::cout << " written to " << filename << std::endl << std::endl;
 }
@@ -131,7 +131,7 @@ grid_2()
   Triangulation<2> tria1;
   GridGenerator::hyper_cube_with_cylindrical_hole(tria1, 0.25, 1.0);
 
-  Triangulation<2>          tria2;
+  Triangulation<2> tria2;
   std::vector<unsigned int> repetitions(2);
   repetitions[0] = 3;
   repetitions[1] = 2;
@@ -237,7 +237,7 @@ grid_4()
 void
 grid_5()
 {
-  Triangulation<2>          triangulation;
+  Triangulation<2> triangulation;
   std::vector<unsigned int> repetitions(2);
   repetitions[0] = 14;
   repetitions[1] = 2;
@@ -280,7 +280,7 @@ struct Grid6Func
 void
 grid_6()
 {
-  Triangulation<2>          triangulation;
+  Triangulation<2> triangulation;
   std::vector<unsigned int> repetitions(2);
   repetitions[0] = repetitions[1] = 40;
   GridGenerator::subdivided_hyper_rectangle(
@@ -301,7 +301,7 @@ grid_6()
 void
 grid_7()
 {
-  Triangulation<2>          triangulation;
+  Triangulation<2> triangulation;
   std::vector<unsigned int> repetitions(2);
   repetitions[0] = repetitions[1] = 16;
   GridGenerator::subdivided_hyper_rectangle(

@@ -39,7 +39,7 @@ check(TRIA& tr)
     {
       std::ostringstream outb;
       outb << cell->id();
-      CellId             tmp;
+      CellId tmp;
       std::istringstream in(outb.str());
       in >> tmp;
       deallog << cell->level() << " " << cell->index() << " " << cell->id()

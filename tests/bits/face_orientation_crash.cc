@@ -56,7 +56,7 @@ check()
       tria.execute_coarsening_and_refinement();
 
       // attach a DoFHandler
-      FE_Q<dim>       element(1);
+      FE_Q<dim> element(1);
       DoFHandler<dim> dof(tria);
       dof.distribute_dofs(element);
 

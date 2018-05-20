@@ -44,7 +44,7 @@ template <int dim>
 void
 test()
 {
-  Triangulation<dim>        triangulation;
+  Triangulation<dim> triangulation;
   std::vector<unsigned int> sub(dim, 1);
   sub[dim - 1] = 2;
 

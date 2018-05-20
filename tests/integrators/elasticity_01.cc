@@ -40,7 +40,7 @@ test_cell(const FEValuesBase<dim>& fev)
     M.print_formatted(deallog.get_file_stream(), 3, true, 0, "0.");
   }
 
-  Vector<double>                           u(n), v(n), w(n);
+  Vector<double> u(n), v(n), w(n);
   std::vector<std::vector<Tensor<1, dim>>> ugrad(
     dim, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
 
@@ -74,7 +74,7 @@ void
 test_boundary(const FEValuesBase<dim>& fev)
 {
   const unsigned int n = fev.dofs_per_cell;
-  unsigned int       d = fev.get_fe().n_components();
+  unsigned int d       = fev.get_fe().n_components();
   FullMatrix<double> M(n, n);
   nitsche_matrix(M, fev, 17);
   {
@@ -82,7 +82,7 @@ test_boundary(const FEValuesBase<dim>& fev)
     M.print_formatted(deallog.get_file_stream(), 3, true, 0, "0.");
   }
 
-  Vector<double>                   u(n), v(n), w(n);
+  Vector<double> u(n), v(n), w(n);
   std::vector<std::vector<double>> uval(
     d, std::vector<double>(fev.n_quadrature_points)),
     null_val(d, std::vector<double>(fev.n_quadrature_points, 0.));
@@ -130,7 +130,7 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
 {
   const unsigned int n1 = fev1.dofs_per_cell;
   const unsigned int n2 = fev1.dofs_per_cell;
-  unsigned int       d  = fev1.get_fe().n_components();
+  unsigned int d        = fev1.get_fe().n_components();
   FullMatrix<double> M11(n1, n1);
   FullMatrix<double> M12(n1, n2);
   FullMatrix<double> M21(n2, n1);
@@ -155,8 +155,8 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
     M22.print_formatted(deallog.get_file_stream(), 3, true, 0, "0.");
   }
 
-  Vector<double>                   u1(n1), v1(n1), w1(n1);
-  Vector<double>                   u2(n2), v2(n2), w2(n2);
+  Vector<double> u1(n1), v1(n1), w1(n1);
+  Vector<double> u2(n2), v2(n2), w2(n2);
   std::vector<std::vector<double>> u1val(
     d, std::vector<double>(fev1.n_quadrature_points)),
     nullval(d, std::vector<double>(fev2.n_quadrature_points, 0.));
@@ -241,13 +241,13 @@ void
 test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
 {
   deallog << fe.get_name() << std::endl << "cell matrix" << std::endl;
-  QGauss<dim>   quadrature(fe.tensor_degree() + 1);
+  QGauss<dim> quadrature(fe.tensor_degree() + 1);
   FEValues<dim> fev(fe, quadrature, update_gradients | update_JxW_values);
   typename Triangulation<dim>::cell_iterator cell1 = tr.begin(1);
   fev.reinit(cell1);
   test_cell(fev);
 
-  QGauss<dim - 1>   face_quadrature(fe.tensor_degree() + 1);
+  QGauss<dim - 1> face_quadrature(fe.tensor_degree() + 1);
   FEFaceValues<dim> fef1(fe,
                          face_quadrature,
                          update_values | update_gradients
@@ -274,11 +274,11 @@ template <int dim>
 void
 test(Triangulation<dim>& tr)
 {
-  FE_DGQ<dim>   q1(1);
+  FE_DGQ<dim> q1(1);
   FESystem<dim> fe1(q1, dim);
   test_fe(tr, fe1);
 
-  FE_DGQ<dim>   q2(2);
+  FE_DGQ<dim> q2(2);
   FESystem<dim> fe2(q2, dim);
   test_fe(tr, fe2);
 

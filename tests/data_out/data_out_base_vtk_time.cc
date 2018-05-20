@@ -56,7 +56,7 @@ check_all(std::ostream& log)
   std::ostream& out = log;
 #endif
 
-  char                  name[100];
+  char name[100];
   DataOutBase::VtkFlags flags;
 
   flags.time = numbers::PI;

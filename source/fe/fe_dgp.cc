@@ -93,7 +93,7 @@ template <int dim, int spacedim>
 void
 FE_DGP<dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the source FE is also a DGP element. in that
   // case, both elements have no dofs on their faces and the face
@@ -101,7 +101,7 @@ FE_DGP<dim, spacedim>::get_face_interpolation_matrix(
   // need to do here.
   (void) interpolation_matrix;
   typedef FiniteElement<dim, spacedim> FE;
-  typedef FE_DGP<dim, spacedim>        FEDGP;
+  typedef FE_DGP<dim, spacedim> FEDGP;
   AssertThrow((x_source_fe.get_name().find("FE_DGP<") == 0)
                 || (dynamic_cast<const FEDGP*>(&x_source_fe) != nullptr),
               typename FE::ExcInterpolationNotImplemented());
@@ -125,7 +125,7 @@ FE_DGP<dim, spacedim>::get_subface_interpolation_matrix(
   // need to do here.
   (void) interpolation_matrix;
   typedef FiniteElement<dim, spacedim> FE;
-  typedef FE_DGP<dim, spacedim>        FEDGP;
+  typedef FE_DGP<dim, spacedim> FEDGP;
   AssertThrow((x_source_fe.get_name().find("FE_DGP<") == 0)
                 || (dynamic_cast<const FEDGP*>(&x_source_fe) != nullptr),
               typename FE::ExcInterpolationNotImplemented());

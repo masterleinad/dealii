@@ -38,7 +38,7 @@ test(std::ostream& /*out*/)
 
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
-  DoFHandler<dim>        dofh(tr);
+  DoFHandler<dim> dofh(tr);
   static const FE_Q<dim> fe(2);
   dofh.distribute_dofs(fe);
 

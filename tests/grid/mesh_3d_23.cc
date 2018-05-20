@@ -54,19 +54,19 @@ main()
   deallog.attach(logfile);
 
   Triangulation<3> triangulation;
-  GridIn<3>        grid_in;
+  GridIn<3> grid_in;
   grid_in.attach_triangulation(triangulation);
   std::ifstream inputStream(SOURCE_DIR "/grids/mesh.msh");
   grid_in.read_msh(inputStream);
 
-  MappingQ<3>   mapping(3);
-  FE_Q<3>       fe(3);
+  MappingQ<3> mapping(3);
+  FE_Q<3> fe(3);
   DoFHandler<3> dofh(triangulation);
 
   dofh.distribute_dofs(fe);
 
   Vector<double> x(dofh.n_dofs());
-  DataOut<3>     data_out;
+  DataOut<3> data_out;
 
   data_out.attach_dof_handler(dofh);
   data_out.add_data_vector(x, "u");

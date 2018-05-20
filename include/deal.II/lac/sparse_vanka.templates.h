@@ -41,9 +41,9 @@ SparseVanka<number>::SparseVanka()
 
 template <typename number>
 SparseVanka<number>::SparseVanka(const SparseMatrix<number>& M,
-                                 const std::vector<bool>&    selected_dofs,
-                                 const bool                  conserve_mem,
-                                 const unsigned int          n_threads)
+                                 const std::vector<bool>& selected_dofs,
+                                 const bool conserve_mem,
+                                 const unsigned int n_threads)
   : matrix(&M, typeid(*this).name()),
     conserve_mem(conserve_mem),
     selected(&selected_dofs),
@@ -77,7 +77,7 @@ SparseVanka<number>::~SparseVanka()
 template <typename number>
 void
 SparseVanka<number>::initialize(const SparseMatrix<number>& M,
-                                const AdditionalData&       additional_data)
+                                const AdditionalData& additional_data)
 {
   matrix       = &M;
   conserve_mem = additional_data.conserve_mem;
@@ -179,7 +179,7 @@ SparseVanka<number>::compute_inverses(const size_type begin,
 
 template <typename number>
 void
-SparseVanka<number>::compute_inverse(const size_type         row,
+SparseVanka<number>::compute_inverse(const size_type row,
                                      std::vector<size_type>& local_indices)
 {
   Assert(matrix != nullptr, ExcNotInitialized());
@@ -210,7 +210,7 @@ SparseVanka<number>::compute_inverse(const size_type         row,
 template <typename number>
 template <typename number2>
 void
-SparseVanka<number>::vmult(Vector<number2>&       dst,
+SparseVanka<number>::vmult(Vector<number2>& dst,
                            const Vector<number2>& src) const
 {
   Assert(matrix != nullptr, ExcNotInitialized());
@@ -227,8 +227,8 @@ template <typename number>
 template <typename number2>
 void
 SparseVanka<number>::apply_preconditioner(
-  Vector<number2>&               dst,
-  const Vector<number2>&         src,
+  Vector<number2>& dst,
+  const Vector<number2>& src,
   const std::vector<bool>* const dof_mask) const
 {
   Assert(dst.size() == src.size(),
@@ -256,8 +256,8 @@ SparseVanka<number>::apply_preconditioner(
   // loop.
   FullMatrix<float> local_matrix(structure.max_entries_per_row(),
                                  structure.max_entries_per_row());
-  Vector<float>     b(structure.max_entries_per_row());
-  Vector<float>     x(structure.max_entries_per_row());
+  Vector<float> b(structure.max_entries_per_row());
+  Vector<float> x(structure.max_entries_per_row());
 
   std::map<size_type, size_type> local_index;
 
@@ -398,8 +398,8 @@ SparseVanka<number>::memory_consumption() const
 template <typename number>
 SparseVanka<number>::AdditionalData::AdditionalData(
   const std::vector<bool>& selected,
-  const bool               conserve_mem,
-  const unsigned int       n_threads)
+  const bool conserve_mem,
+  const unsigned int n_threads)
   : selected(selected), conserve_mem(conserve_mem), n_threads(n_threads)
 {}
 
@@ -408,11 +408,11 @@ SparseVanka<number>::AdditionalData::AdditionalData(
 template <typename number>
 SparseBlockVanka<number>::SparseBlockVanka(
   const SparseMatrix<number>& M,
-  const std::vector<bool>&    selected,
-  const unsigned int          n_blocks,
-  const BlockingStrategy      blocking_strategy,
-  const bool                  conserve_memory,
-  const unsigned int          n_threads)
+  const std::vector<bool>& selected,
+  const unsigned int n_blocks,
+  const BlockingStrategy blocking_strategy,
+  const bool conserve_memory,
+  const unsigned int n_threads)
   : SparseVanka<number>(M, selected, conserve_memory, n_threads),
     n_blocks(n_blocks),
     dof_masks(n_blocks, std::vector<bool>(M.m(), false))
@@ -424,8 +424,8 @@ template <typename number>
 void
 SparseBlockVanka<number>::compute_dof_masks(
   const SparseMatrix<number>& M,
-  const std::vector<bool>&    selected,
-  const BlockingStrategy      blocking_strategy)
+  const std::vector<bool>& selected,
+  const BlockingStrategy blocking_strategy)
 {
   Assert(n_blocks > 0, ExcInternalError());
 
@@ -562,7 +562,7 @@ SparseBlockVanka<number>::compute_dof_masks(
                 // find out which block
                 // accesses this dof
                 // the most often
-                size_type    max_accesses     = 0;
+                size_type max_accesses        = 0;
                 unsigned int max_access_block = 0;
                 for(unsigned int block = 0; block < n_blocks; ++block)
                   if(access_count[block][row] > max_accesses)
@@ -584,7 +584,7 @@ SparseBlockVanka<number>::compute_dof_masks(
 template <typename number>
 template <typename number2>
 void
-SparseBlockVanka<number>::vmult(Vector<number2>&       dst,
+SparseBlockVanka<number>::vmult(Vector<number2>& dst,
                                 const Vector<number2>& src) const
 {
   dst = 0;

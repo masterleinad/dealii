@@ -46,10 +46,10 @@
 
 using namespace dealii;
 
-static const unsigned int               fe_order          = 4;
+static const unsigned int fe_order                        = 4;
 static const dealii::types::boundary_id boundary_id       = 0;
 static const dealii::types::manifold_id cubic_manifold_id = 1;
-static const double                     pi                = numbers::PI;
+static const double pi                                    = numbers::PI;
 
 // ----------------------------------------------------------------------------
 // Manufactured solution and manufactured forcing
@@ -170,7 +170,7 @@ template <int dim>
 struct CubicRoofFunctions
 {
   PushForward<dim> forward;
-  PullBack<dim>    backward;
+  PullBack<dim> backward;
 };
 
 /**
@@ -214,17 +214,17 @@ protected:
   std::shared_ptr<Function<dim>> manufactured_forcing;
 
   std::shared_ptr<Manifold<dim>> boundary_manifold;
-  Triangulation<dim>             triangulation;
-  FE_Q<dim>                      finite_element;
-  DoFHandler<dim>                dof_handler;
-  QGauss<dim>                    cell_quadrature;
-  MappingQGeneric<dim>           cell_mapping;
+  Triangulation<dim> triangulation;
+  FE_Q<dim> finite_element;
+  DoFHandler<dim> dof_handler;
+  QGauss<dim> cell_quadrature;
+  MappingQGeneric<dim> cell_mapping;
 
-  ConstraintMatrix     all_constraints;
-  SparsityPattern      sparsity_pattern;
+  ConstraintMatrix all_constraints;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
-  Vector<double>       system_rhs;
-  Vector<double>       solution;
+  Vector<double> system_rhs;
+  Vector<double> solution;
 
   void
   setup_dofs();
@@ -282,7 +282,7 @@ JxWError<dim>::setup_matrices()
 
   const unsigned int dofs_per_cell = finite_element.dofs_per_cell;
   FullMatrix<double> cell_system(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   typename DoFHandler<dim>::active_cell_iterator cell
@@ -333,7 +333,7 @@ JxWError<dim>::solve()
       1e-14 * system_rhs.l2_norm(),
       false,
       false);
-    SolverCG<>         solver(solver_control);
+    SolverCG<> solver(solver_control);
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
 

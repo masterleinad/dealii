@@ -59,7 +59,7 @@ test()
 
   // distribute some degrees of freedom and
   // output some information on them
-  FESystem<dim>   fe(FE_Q<dim>(2), dim, FE_DGQ<dim>(1), 1);
+  FESystem<dim> fe(FE_Q<dim>(2), dim, FE_DGQ<dim>(1), 1);
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
   deallog << dof_handler.n_dofs() << std::endl;

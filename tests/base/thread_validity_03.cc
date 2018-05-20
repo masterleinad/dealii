@@ -45,7 +45,7 @@ private:
 void
 test()
 {
-  X                     x(42);
+  X x(42);
   Threads::Thread<void> t = Threads::new_thread(&X::execute, x);
   t.join();
 }

@@ -63,7 +63,7 @@ test(VectorTools::NormType norm, double value, double exp = 2.0)
   GridGenerator::hyper_cube(tria);
   tria.refine_global(3);
 
-  FESystem<dim>   fe(FE_Q<dim>(4), dim);
+  FESystem<dim> fe(FE_Q<dim>(4), dim);
   DoFHandler<dim> dofh(tria);
   dofh.distribute_dofs(fe);
 
@@ -148,6 +148,6 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   test<3>();
 }

@@ -56,7 +56,7 @@ main()
       {
         deallog << " ===============Vertex: " << vertices[index]
                 << " ============================= " << endl;
-        QTelles<2>        quad(m, vertices[index]);
+        QTelles<2> quad(m, vertices[index]);
         QGaussOneOverR<2> quad2(m, vertices[index]);
 
         for(unsigned int i = 0; i < 6; ++i)

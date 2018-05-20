@@ -56,22 +56,22 @@ test(std::string solver_name, std::string preconditioner_name)
   const unsigned int global_mesh_refinement_steps = 5;
   const unsigned int number_of_eigenvalues        = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
     = dealii::Utilities::MPI::this_mpi_process(mpi_communicator);
 
   dealii::Triangulation<dim> triangulation;
-  dealii::DoFHandler<dim>    dof_handler(triangulation);
-  dealii::FE_Q<dim>          fe(1);
-  dealii::ConstraintMatrix   constraints;
-  dealii::IndexSet           locally_owned_dofs;
-  dealii::IndexSet           locally_relevant_dofs;
+  dealii::DoFHandler<dim> dof_handler(triangulation);
+  dealii::FE_Q<dim> fe(1);
+  dealii::ConstraintMatrix constraints;
+  dealii::IndexSet locally_owned_dofs;
+  dealii::IndexSet locally_relevant_dofs;
 
   std::vector<dealii::PETScWrappers::MPI::Vector> eigenfunctions;
-  std::vector<PetscScalar>                        eigenvalues;
-  dealii::PETScWrappers::MPI::SparseMatrix        stiffness_matrix, mass_matrix;
+  std::vector<PetscScalar> eigenvalues;
+  dealii::PETScWrappers::MPI::SparseMatrix stiffness_matrix, mass_matrix;
 
   dealii::GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(global_mesh_refinement_steps);
@@ -89,7 +89,7 @@ test(std::string solver_name, std::string preconditioner_name)
     for(; cell != endc; ++cell)
       {
         const dealii::Point<dim>& center = cell->center();
-        const double              x      = center[0];
+        const double x                   = center[0];
 
         const unsigned int id = std::floor((x - x0) / dL);
         cell->set_subdomain_id(id);
@@ -151,7 +151,7 @@ test(std::string solver_name, std::string preconditioner_name)
   stiffness_matrix = 0;
   mass_matrix      = 0;
 
-  dealii::QGauss<dim>   quadrature_formula(2);
+  dealii::QGauss<dim> quadrature_formula(2);
   dealii::FEValues<dim> fe_values(
     fe,
     quadrature_formula,
@@ -234,7 +234,7 @@ test(std::string solver_name, std::string preconditioner_name)
           = new PETScWrappers::PreconditionJacobi(mpi_communicator);
       }
 
-    dealii::SolverControl   linear_solver_control(dof_handler.n_dofs(),
+    dealii::SolverControl linear_solver_control(dof_handler.n_dofs(),
                                                 1e-15,
                                                 /*log_history*/ false,
                                                 /*log_results*/ false);
@@ -309,7 +309,7 @@ test(std::string solver_name, std::string preconditioner_name)
     // a) (A*x_i-\lambda*B*x_i).L2() == 0
     // b) x_j*B*x_i=\delta_{ij}
     {
-      const double               precision = 1e-5;
+      const double precision = 1e-5;
       PETScWrappers::MPI::Vector Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
       for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {

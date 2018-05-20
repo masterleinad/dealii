@@ -24,8 +24,8 @@ value(unsigned int i,
       unsigned int j,
       unsigned int k,
       unsigned int l,
-      double       lambda,
-      double       mu)
+      double lambda,
+      double mu)
 {
   return ((i == k) && (j == l) ? mu : 0) + ((i == l) && (j == k) ? mu : 0)
          + ((i == j) && (k == l) ? lambda : 0);
@@ -35,7 +35,7 @@ template <int dim>
 void
 test()
 {
-  const double            lambda = 1.5, mu = 1.7;
+  const double lambda = 1.5, mu = 1.7;
   SymmetricTensor<4, dim> t;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)

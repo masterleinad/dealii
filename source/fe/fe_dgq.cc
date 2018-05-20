@@ -122,7 +122,7 @@ template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
   const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  std::vector<double>& nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());
@@ -165,7 +165,7 @@ FE_DGQ<dim, spacedim>::rotate_indices(std::vector<unsigned int>& numbers,
                                       const char direction) const
 {
   const unsigned int n = this->degree + 1;
-  unsigned int       s = n;
+  unsigned int s       = n;
   for(unsigned int i = 1; i < dim; ++i)
     s *= n;
   numbers.resize(s);
@@ -238,7 +238,7 @@ template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::get_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
@@ -314,7 +314,7 @@ template <int dim, int spacedim>
 void
 FE_DGQ<dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   // this is only implemented, if the source
   // FE is also a DGQ element. in that case,
@@ -362,7 +362,7 @@ FE_DGQ<dim, spacedim>::get_subface_interpolation_matrix(
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FE_DGQ<dim, spacedim>::get_prolongation_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -436,7 +436,7 @@ FE_DGQ<dim, spacedim>::get_prolongation_matrix(
 template <int dim, int spacedim>
 const FullMatrix<double>&
 FE_DGQ<dim, spacedim>::get_restriction_matrix(
-  const unsigned int         child,
+  const unsigned int child,
   const RefinementCase<dim>& refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
@@ -689,8 +689,8 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 {
   // note that the FETools::get_fe_by_name function does not work for
   // FE_DGQArbitraryNodes since there is no initialization by a degree value.
-  std::ostringstream  namebuf;
-  bool                equidistant = true;
+  std::ostringstream namebuf;
+  bool equidistant = true;
   std::vector<double> points(this->degree + 1);
 
   std::vector<unsigned int> lexicographic
@@ -722,7 +722,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 
   // Check whether the support points come from QGaussLobatto.
   const QGaussLobatto<1> points_gl(this->degree + 1);
-  bool                   gauss_lobatto = true;
+  bool gauss_lobatto = true;
   for(unsigned int j = 0; j <= this->degree; j++)
     if(points[j] != points_gl.point(j)(0))
       {
@@ -739,7 +739,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 
   // Check whether the support points come from QGauss.
   const QGauss<1> points_g(this->degree + 1);
-  bool            gauss = true;
+  bool gauss = true;
   for(unsigned int j = 0; j <= this->degree; j++)
     if(points[j] != points_g.point(j)(0))
       {
@@ -756,7 +756,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
 
   // Check whether the support points come from QGauss.
   const QGaussLog<1> points_glog(this->degree + 1);
-  bool               gauss_log = true;
+  bool gauss_log = true;
   for(unsigned int j = 0; j <= this->degree; j++)
     if(points[j] != points_glog.point(j)(0))
       {
@@ -782,7 +782,7 @@ void
 FE_DGQArbitraryNodes<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const
+    std::vector<double>& nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());
@@ -802,7 +802,7 @@ std::unique_ptr<FiniteElement<dim, spacedim>>
 FE_DGQArbitraryNodes<dim, spacedim>::clone() const
 {
   // Construct a dummy quadrature formula containing the FE's nodes:
-  std::vector<Point<1>>     qpoints(this->degree + 1);
+  std::vector<Point<1>> qpoints(this->degree + 1);
   std::vector<unsigned int> lexicographic
     = this->poly_space.get_numbering_inverse();
   for(unsigned int i = 0; i <= this->degree; ++i)

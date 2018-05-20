@@ -77,7 +77,7 @@ namespace LinearAlgebra
     atomicMax_wrapper(float* address, float val)
     {
       int* address_as_int = reinterpret_cast<int*>(address);
-      int  old            = *address_as_int, assumed;
+      int old             = *address_as_int, assumed;
       do
         {
           assumed = old;

@@ -30,8 +30,8 @@
 template <typename number>
 void
 print_formatted(const FullMatrix<number>& A,
-                const unsigned int        precision,
-                const unsigned int        width)
+                const unsigned int precision,
+                const unsigned int width)
 {
   for(unsigned int i = 0; i < A.m(); ++i)
     {
@@ -92,7 +92,7 @@ template <int dim>
 void
 test_projection(const FiniteElement<dim>& fe1,
                 const FiniteElement<dim>& fe2,
-                std::ostream&             out)
+                std::ostream& out)
 {
   out << fe1.get_name() << " -> " << fe2.get_name() << std::endl;
 
@@ -113,9 +113,9 @@ template <int dim>
 void
 test_projection(std::ostream& out)
 {
-  FE_DGQ<dim>               q0(0);
-  FE_DGQ<dim>               q1(1);
-  FE_DGQ<dim>               q2(2);
+  FE_DGQ<dim> q0(0);
+  FE_DGQ<dim> q1(1);
+  FE_DGQ<dim> q2(2);
   FE_DGQArbitraryNodes<dim> q3(QIterated<1>(QTrapez<1>(), 3));
   FE_DGQArbitraryNodes<dim> q4(QIterated<1>(QTrapez<1>(), 4));
 

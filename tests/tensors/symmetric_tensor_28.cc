@@ -30,7 +30,7 @@ test()
     for(unsigned int j = i; j < dim; ++j)
       s[i][j] = (i + 1) * (j + 1);
 
-  Tensor<2, dim>          t = s;
+  Tensor<2, dim> t = s;
   SymmetricTensor<2, dim> u(t);
 
   for(unsigned int i = 0; i < dim; ++i)

@@ -81,7 +81,7 @@ template <int dim, int spacedim>
 void
 FE_Bernstein<dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double>& interpolation_matrix) const
 {
   Assert(dim > 1, ExcImpossibleInDim(1));
   get_subface_interpolation_matrix(
@@ -92,8 +92,8 @@ template <int dim, int spacedim>
 void
 FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
   const FiniteElement<dim, spacedim>& x_source_fe,
-  const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const unsigned int subface,
+  FullMatrix<double>& interpolation_matrix) const
 {
   Assert(
     interpolation_matrix.m() == x_source_fe.dofs_per_face,
@@ -329,7 +329,7 @@ FE_Bernstein<dim, spacedim>::renumber_bases(const unsigned int deg)
 {
   TensorProductPolynomials<dim> tpp(
     dealii::generate_complete_bernstein_basis<double>(deg));
-  std::vector<unsigned int>    renumber(Utilities::fixed_power<dim>(deg + 1));
+  std::vector<unsigned int> renumber(Utilities::fixed_power<dim>(deg + 1));
   const FiniteElementData<dim> fe(this->get_dpo_vector(deg), 1, deg);
   FETools::hierarchic_to_lexicographic_numbering(fe, renumber);
   tpp.set_numbering(renumber);

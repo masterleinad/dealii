@@ -129,19 +129,19 @@ my5(double const t)
 }
 
 void
-test(TimeStepping::RungeKutta<Vector<double>>&                          solver,
+test(TimeStepping::RungeKutta<Vector<double>>& solver,
      std::function<Vector<double>(double const, Vector<double> const&)> f,
      std::function<Vector<double>(double const,
                                   double const,
                                   Vector<double> const&)> id_minus_tau_J_inv,
-     std::function<double(double const)>                  my)
+     std::function<double(double const)> my)
 {
   unsigned int n_time_steps = 1;
   unsigned int size         = 1;
-  double       initial_time = 0.0, final_time = 1.0;
-  double       time_step
+  double initial_time = 0.0, final_time = 1.0;
+  double time_step
     = (final_time - initial_time) / static_cast<double>(n_time_steps);
-  double         time = initial_time;
+  double time = initial_time;
   Vector<double> solution(size);
   Vector<double> exact_solution(size);
   for(unsigned int i = 0; i < size; ++i)
@@ -161,18 +161,18 @@ test(TimeStepping::RungeKutta<Vector<double>>&                          solver,
 }
 
 void
-test2(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>&          solver,
+test2(TimeStepping::EmbeddedExplicitRungeKutta<Vector<double>>& solver,
       std::function<Vector<double>(double const, Vector<double> const&)> f,
       std::function<Vector<double>(double const,
                                    double const,
                                    Vector<double> const&)> id_minus_tau_J_inv,
-      std::function<double(double const)>                  my)
+      std::function<double(double const)> my)
 {
-  double         initial_time = 0.0, final_time = 1.0;
-  double         time_step    = 1.0;
-  unsigned int   size         = 1;
-  unsigned int   n_time_steps = 0;
-  double         time         = initial_time;
+  double initial_time = 0.0, final_time = 1.0;
+  double time_step          = 1.0;
+  unsigned int size         = 1;
+  unsigned int n_time_steps = 0;
+  double time               = initial_time;
   Vector<double> solution(size);
   Vector<double> exact_solution(size);
   for(unsigned int i = 0; i < size; ++i)

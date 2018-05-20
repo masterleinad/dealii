@@ -58,9 +58,9 @@ public:
               update_values | update_gradients | update_JxW_values){};
 
   void
-  operator()(const MatrixFree<dim, Number>&               data,
-             VectorType&                                  dst,
-             const VectorType&                            src,
+  operator()(const MatrixFree<dim, Number>& data,
+             VectorType& dst,
+             const VectorType& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const;
 
   void
@@ -77,16 +77,16 @@ public:
 
 private:
   const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val0;
-  mutable FEValues<dim>          fe_val01;
-  mutable FEValues<dim>          fe_val1;
+  mutable FEValues<dim> fe_val0;
+  mutable FEValues<dim> fe_val01;
+  mutable FEValues<dim> fe_val1;
 };
 
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
 operator()(const MatrixFree<dim, Number>& data,
-           std::vector<Vector<Number>>&   dst,
+           std::vector<Vector<Number>>& dst,
            const std::vector<Vector<Number>>&,
            const std::pair<unsigned int, unsigned int>& cell_range) const
 {
@@ -102,8 +102,8 @@ operator()(const MatrixFree<dim, Number>& data,
   AlignedVector<VectorizedArray<Number>> gradients0(dim * n_q_points0);
   AlignedVector<VectorizedArray<Number>> values1(n_q_points1);
   AlignedVector<VectorizedArray<Number>> gradients1(dim * n_q_points1);
-  std::vector<types::global_dof_index>   dof_indices0(dofs_per_cell0);
-  std::vector<types::global_dof_index>   dof_indices1(dofs_per_cell1);
+  std::vector<types::global_dof_index> dof_indices0(dofs_per_cell0);
+  std::vector<types::global_dof_index> dof_indices1(dofs_per_cell1);
   for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval0.reinit(cell);
@@ -229,7 +229,7 @@ test()
   // create hyper ball geometry and refine some
   // cells
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -265,8 +265,8 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_Q<dim>       fe0(fe_degree);
-  FE_Q<dim>       fe1(fe_degree + 1);
+  FE_Q<dim> fe0(fe_degree);
+  FE_Q<dim> fe1(fe_degree + 1);
   DoFHandler<dim> dof0(tria);
   dof0.distribute_dofs(fe0);
   DoFHandler<dim> dof1(tria);
@@ -289,7 +289,7 @@ test()
   dst[5].reinit(dst[0]);
 
   std::vector<const ConstraintMatrix*> constraints(2);
-  ConstraintMatrix                     constraint0;
+  ConstraintMatrix constraint0;
   DoFTools::make_hanging_node_constraints(*dof[0], constraint0);
   constraint0.close();
   constraints[0] = &constraint0;

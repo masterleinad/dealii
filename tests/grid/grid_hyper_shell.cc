@@ -35,7 +35,7 @@ check(double r1, double r2, unsigned int n)
 {
   deallog << "dim=" << dim << std::endl;
 
-  Point<dim>         center;
+  Point<dim> center;
   Triangulation<dim> tria(Triangulation<dim>::none, true);
 
   // create a hyper shell. before a bug fix in early 2015, the coloring would
@@ -77,7 +77,7 @@ check(double r1, double r2, unsigned int n)
         }
     }
 
-  GridOut          grid_out;
+  GridOut grid_out;
   GridOutFlags::DX flags;
   flags.write_faces = true;
   grid_out.set_flags(flags);

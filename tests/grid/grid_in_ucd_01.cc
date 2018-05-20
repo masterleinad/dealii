@@ -33,12 +33,12 @@ int
 main()
 {
   initlog();
-  std::string   name(std::string(SOURCE_DIR "/grids/kcs_initial.inp"));
+  std::string name(std::string(SOURCE_DIR "/grids/kcs_initial.inp"));
   std::ifstream in;
   in.open(name.c_str());
 
   Triangulation<2, 3> tria;
-  GridIn<2, 3>        gi;
+  GridIn<2, 3> gi;
   gi.attach_triangulation(tria);
   gi.read_ucd(in, true);
   deallog << '\t' << tria.n_vertices() << '\t' << tria.n_cells() << std::endl;

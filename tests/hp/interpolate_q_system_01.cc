@@ -70,15 +70,15 @@ test()
 
   for(unsigned int p = 1; p < 6 - dim; ++p)
     {
-      FE_Q<dim>             fe_p(p);
-      FE_Q<dim>             fe_p1(p + 1);
-      FESystem<dim>         fe(fe_p, 2, fe_p1, 1);
+      FE_Q<dim> fe_p(p);
+      FE_Q<dim> fe_p1(p + 1);
+      FESystem<dim> fe(fe_p, 2, fe_p1, 1);
       hp::FECollection<dim> hp_fe(fe);
-      hp::DoFHandler<dim>   dof_handler(triangulation);
+      hp::DoFHandler<dim> dof_handler(triangulation);
       dof_handler.distribute_dofs(hp_fe);
 
       Vector<double> interpolant(dof_handler.n_dofs());
-      Vector<float>  error(triangulation.n_active_cells());
+      Vector<float> error(triangulation.n_active_cells());
       for(unsigned int q = 0; q <= p + 2; ++q)
         {
           // interpolate the function

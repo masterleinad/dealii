@@ -30,7 +30,7 @@ main()
   const std::string elements = "1 2 3 4 5 6";
   {
     // create a 2x3 table from this
-    Table<2, double>   t(2, 3);
+    Table<2, double> t(2, 3);
     std::istringstream in1(elements);
     t.fill(std::istream_iterator<double>(in1), true);
 

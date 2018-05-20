@@ -100,8 +100,8 @@ template <int dim>
 void
 do_project(const Triangulation<dim>& triangulation,
            const FiniteElement<dim>& fe,
-           const unsigned int        p,
-           const unsigned int        order_difference)
+           const unsigned int p,
+           const unsigned int order_difference)
 {
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
@@ -113,7 +113,7 @@ do_project(const Triangulation<dim>& triangulation,
   constraints.close();
 
   Vector<double> projection(dof_handler.n_dofs());
-  Vector<float>  error(triangulation.n_active_cells());
+  Vector<float> error(triangulation.n_active_cells());
   for(unsigned int q = 0; q <= p + 2 - order_difference; ++q)
     {
       // project the function
@@ -158,8 +158,8 @@ do_project(const Triangulation<dim>& triangulation,
 template <int dim>
 void
 test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
-                                 const unsigned int        p,
-                                 const unsigned int        order_difference = 0)
+                                 const unsigned int p,
+                                 const unsigned int order_difference = 0)
 {
   if(dim != 3)
     return;

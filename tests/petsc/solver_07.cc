@@ -36,12 +36,12 @@ main(int argc, char** argv)
     SolverControl control(100, 1.e-3);
 
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
+    unsigned int dim        = (size - 1) * (size - 1);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix                    testproblem(size, size);
+    FDMatrix testproblem(size, size);
     PETScWrappers::SparseMatrix A(dim, dim, 5);
     testproblem.five_point(A);
 
@@ -52,7 +52,7 @@ main(int argc, char** argv)
     f = 1.;
     A.compress(VectorOperation::insert);
 
-    PETScWrappers::SolverCGS          solver(control);
+    PETScWrappers::SolverCGS solver(control);
     PETScWrappers::PreconditionJacobi preconditioner(A);
     deallog << "Solver type: " << typeid(solver).name() << std::endl;
     check_solver_within_range(

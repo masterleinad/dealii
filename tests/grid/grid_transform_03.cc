@@ -57,9 +57,9 @@ main()
 {
   const int dim = 2;
 
-  Triangulation<dim>                 tria;
+  Triangulation<dim> tria;
   std::map<unsigned int, Point<dim>> new_points;
-  const unsigned int                 N = 8;
+  const unsigned int N = 8;
   GridGenerator::subdivided_hyper_cube(tria, N, -5, 5);
 
   // find the vertex at the origin
@@ -68,8 +68,8 @@ main()
 
   unsigned int best_vertex
     = cell->vertex_index(0); //vertex number on local triangulation
-  Point<dim> best_pos  = cell->vertex(0);
-  double     best_dist = Point<dim>().distance(best_pos);
+  Point<dim> best_pos = cell->vertex(0);
+  double best_dist    = Point<dim>().distance(best_pos);
 
   for(unsigned int vertex_no = 1;
       vertex_no < GeometryInfo<dim>::vertices_per_cell;
@@ -110,6 +110,6 @@ main()
   L2_inverse<dim> coefficient(metric);
   GridTools::laplace_transform(new_points, tria, &coefficient);
   std::ofstream out("output");
-  GridOut       grid_out;
+  GridOut grid_out;
   grid_out.write_eps(tria, out);
 }

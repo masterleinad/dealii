@@ -26,7 +26,7 @@
 
 void create_two_cubes(Triangulation<3>& coarse_grid)
 {
-  const Point<3>        points[6] = {Point<3>(0, 0, 0),
+  const Point<3> points[6] = {Point<3>(0, 0, 0),
                               Point<3>(1, 0, 0),
                               Point<3>(1, 1, 0),
                               Point<3>(0, 1, 0),
@@ -63,12 +63,12 @@ void create_two_cubes(Triangulation<3>& coarse_grid)
 // the edges are not all ok and the common face is rotated. we thus have
 // to store the face rotation (and face flip) in each cell
 
-void create_two_cubes_rotation(Triangulation<3>&  coarse_grid,
+void create_two_cubes_rotation(Triangulation<3>& coarse_grid,
                                const unsigned int n_rotations)
 {
   Assert(n_rotations < 4, ExcNotImplemented());
 
-  const Point<3>        points[6] = {Point<3>(0, 0, 0),
+  const Point<3> points[6] = {Point<3>(0, 0, 0),
                               Point<3>(1, 0, 0),
                               Point<3>(1, 1, 0),
                               Point<3>(0, 1, 0),
@@ -106,7 +106,7 @@ void create_two_cubes_rotation(Triangulation<3>&  coarse_grid,
 
 void create_L_shape(Triangulation<3>& coarse_grid)
 {
-  std::vector<Point<3>>    vertices;
+  std::vector<Point<3>> vertices;
   std::vector<CellData<3>> cells;
 
   const Point<3> outer_points[7] = {Point<3>(-1, 0, 0),

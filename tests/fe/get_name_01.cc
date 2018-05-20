@@ -50,22 +50,22 @@ main()
     test(fe);
   }
   {
-    QGauss<1>               quadrature_g(5);
+    QGauss<1> quadrature_g(5);
     FE_DGQArbitraryNodes<2> fe(quadrature_g);
     test(fe);
   }
   {
-    QGaussLobatto<1>        quadrature_gl(5);
+    QGaussLobatto<1> quadrature_gl(5);
     FE_DGQArbitraryNodes<2> fe(quadrature_gl);
     test(fe);
   }
   {
-    QGaussLog<1>            quadrature(3);
+    QGaussLog<1> quadrature(3);
     FE_DGQArbitraryNodes<2> fe(quadrature);
     test(fe);
   }
   {
-    QIterated<1>            quadrature(QTrapez<1>(), 3);
+    QIterated<1> quadrature(QTrapez<1>(), 3);
     FE_DGQArbitraryNodes<2> fe(quadrature);
     test(fe);
   }

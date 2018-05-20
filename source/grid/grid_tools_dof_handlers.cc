@@ -53,8 +53,8 @@ namespace GridTools
   template <int dim, template <int, int> class MeshType, int spacedim>
   unsigned int
   find_closest_vertex(const MeshType<dim, spacedim>& mesh,
-                      const Point<spacedim>&         p,
-                      const std::vector<bool>&       marked_vertices)
+                      const Point<spacedim>& p,
+                      const std::vector<bool>& marked_vertices)
   {
     // first get the underlying
     // triangulation from the
@@ -106,7 +106,7 @@ namespace GridTools
     Assert(first != used.end(), ExcInternalError());
 
     unsigned int best_vertex = std::distance(used.begin(), first);
-    double       best_dist   = (p - vertices[best_vertex]).norm_square();
+    double best_dist         = (p - vertices[best_vertex]).norm_square();
 
     // For all remaining vertices, test
     // whether they are any closer
@@ -126,10 +126,10 @@ namespace GridTools
 
   template <int dim, template <int, int> class MeshType, int spacedim>
   unsigned int
-  find_closest_vertex(const Mapping<dim, spacedim>&  mapping,
+  find_closest_vertex(const Mapping<dim, spacedim>& mapping,
                       const MeshType<dim, spacedim>& mesh,
-                      const Point<spacedim>&         p,
-                      const std::vector<bool>&       marked_vertices)
+                      const Point<spacedim>& p,
+                      const std::vector<bool>& marked_vertices)
   {
     // Take a shortcut in the simple case.
     if(mapping.preserves_vertex_locations() == true)
@@ -191,7 +191,7 @@ namespace GridTools
       ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type>
 #endif
   find_cells_adjacent_to_vertex(const MeshType<dim, spacedim>& mesh,
-                                const unsigned int             vertex)
+                                const unsigned int vertex)
   {
     // make sure that the given vertex is
     // an active vertex of the underlying
@@ -404,8 +404,8 @@ namespace GridTools
     ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type
 #endif
   find_active_cell_around_point(const MeshType<dim, spacedim>& mesh,
-                                const Point<spacedim>&         p,
-                                const std::vector<bool>&       marked_vertices)
+                                const Point<spacedim>& p,
+                                const std::vector<bool>& marked_vertices)
   {
     return find_active_cell_around_point<dim, MeshType, spacedim>(
              StaticMappingQ1<dim, spacedim>::mapping, mesh, p, marked_vertices)
@@ -420,10 +420,10 @@ namespace GridTools
               ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type,
             Point<dim>>
 #endif
-  find_active_cell_around_point(const Mapping<dim, spacedim>&  mapping,
+  find_active_cell_around_point(const Mapping<dim, spacedim>& mapping,
                                 const MeshType<dim, spacedim>& mesh,
-                                const Point<spacedim>&         p,
-                                const std::vector<bool>&       marked_vertices)
+                                const Point<spacedim>& p,
+                                const std::vector<bool>& marked_vertices)
   {
     typedef typename dealii::internal::
       ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type
@@ -433,8 +433,8 @@ namespace GridTools
     // maximum allowable distance from
     // the unit cell; we assume a
     // max. deviation of 1e-10
-    double                                      best_distance = 1e-10;
-    int                                         best_level    = -1;
+    double best_distance = 1e-10;
+    int best_level       = -1;
     std::pair<active_cell_iterator, Point<dim>> best_cell;
 
     // Find closest vertex and determine
@@ -460,7 +460,7 @@ namespace GridTools
     // we keep on looking.
     const unsigned int n_active_cells
       = mesh.get_triangulation().n_active_cells();
-    bool         found          = false;
+    bool found                  = false;
     unsigned int cells_searched = 0;
     while(!found && cells_searched < n_active_cells)
       {
@@ -587,7 +587,7 @@ namespace GridTools
   compute_cell_halo_layer_on_level(
     const MeshType& mesh,
     const std::function<bool(const typename MeshType::cell_iterator&)>&
-                       predicate,
+      predicate,
     const unsigned int level)
   {
     std::vector<typename MeshType::cell_iterator> level_halo_layer;
@@ -689,11 +689,11 @@ namespace GridTools
   compute_active_cell_layer_within_distance(
     const MeshType& mesh,
     const std::function<bool(const typename MeshType::active_cell_iterator&)>&
-                 predicate,
+      predicate,
     const double layer_thickness)
   {
     std::vector<typename MeshType::active_cell_iterator>
-                      subdomain_boundary_cells, active_cell_layer_within_distance;
+      subdomain_boundary_cells, active_cell_layer_within_distance;
     std::vector<bool> vertices_outside_subdomain(
       mesh.get_triangulation().n_vertices(), false);
 
@@ -836,7 +836,7 @@ namespace GridTools
   template <class MeshType>
   std::vector<typename MeshType::active_cell_iterator>
   compute_ghost_cell_layer_within_distance(const MeshType& mesh,
-                                           const double    layer_thickness)
+                                           const double layer_thickness)
   {
     IteratorFilters::LocallyOwnedCell locally_owned_cell_predicate;
     std::function<bool(const typename MeshType::active_cell_iterator&)>
@@ -1045,8 +1045,8 @@ namespace GridTools
             Point<dim>>
   find_active_cell_around_point(
     const hp::MappingCollection<dim, spacedim>& mapping,
-    const hp::DoFHandler<dim, spacedim>&        mesh,
-    const Point<spacedim>&                      p)
+    const hp::DoFHandler<dim, spacedim>& mesh,
+    const Point<spacedim>& p)
   {
     Assert((mapping.size() == 1)
              || (mapping.size() == mesh.get_fe_collection().size()),
@@ -1070,7 +1070,7 @@ namespace GridTools
         // the unit cell; we assume a
         // max. deviation of 1e-10
         double best_distance = 1e-10;
-        int    best_level    = -1;
+        int best_level       = -1;
 
         // Find closest vertex and determine
         // all adjacent cells
@@ -1094,9 +1094,9 @@ namespace GridTools
         // the cell and have not searched
         // every cell in the triangulation,
         // we keep on looking.
-        const unsigned int n_cells        = mesh.get_triangulation().n_cells();
-        bool               found          = false;
-        unsigned int       cells_searched = 0;
+        const unsigned int n_cells  = mesh.get_triangulation().n_cells();
+        bool found                  = false;
+        unsigned int cells_searched = 0;
         while(!found && cells_searched < n_cells)
           {
             typename std::set<cell_iterator>::const_iterator cell
@@ -1276,7 +1276,7 @@ namespace GridTools
     std::vector<Point<Container::space_dimension>> vertices;
     const unsigned int n_uniform_cells = uniform_cells.size();
     std::vector<CellData<Container::dimension>> cells(n_uniform_cells);
-    unsigned int                                k = 0; // for enumerating cells
+    unsigned int k = 0; // for enumerating cells
     unsigned int i = 0; // for enumerating vertices
     typename std::vector<typename Container::cell_iterator>::const_iterator
       uniform_cell;
@@ -1795,11 +1795,11 @@ namespace GridTools
   match_periodic_face_pairs(
     std::set<std::pair<CellIterator, unsigned int>>& pairs1,
     std::set<std::pair<typename identity<CellIterator>::type, unsigned int>>&
-                                                 pairs2,
-    const int                                    direction,
+      pairs2,
+    const int direction,
     std::vector<PeriodicFacePair<CellIterator>>& matched_pairs,
     const dealii::Tensor<1, CellIterator::AccessorType::space_dimension>&
-                              offset,
+      offset,
     const FullMatrix<double>& matrix)
   {
     static const int space_dim = CellIterator::AccessorType::space_dimension;
@@ -1853,13 +1853,13 @@ namespace GridTools
   template <typename MeshType>
   void
   collect_periodic_faces(
-    const MeshType&          mesh,
+    const MeshType& mesh,
     const types::boundary_id b_id,
-    const int                direction,
+    const int direction,
     std::vector<PeriodicFacePair<typename MeshType::cell_iterator>>&
-                                                matched_pairs,
+      matched_pairs,
     const Tensor<1, MeshType::space_dimension>& offset,
-    const FullMatrix<double>&                   matrix)
+    const FullMatrix<double>& matrix)
   {
     static const int dim       = MeshType::dimension;
     static const int space_dim = MeshType::space_dimension;
@@ -1933,14 +1933,14 @@ namespace GridTools
   template <typename MeshType>
   void
   collect_periodic_faces(
-    const MeshType&          mesh,
+    const MeshType& mesh,
     const types::boundary_id b_id1,
     const types::boundary_id b_id2,
-    const int                direction,
+    const int direction,
     std::vector<PeriodicFacePair<typename MeshType::cell_iterator>>&
-                                                matched_pairs,
+      matched_pairs,
     const Tensor<1, MeshType::space_dimension>& offset,
-    const FullMatrix<double>&                   matrix)
+    const FullMatrix<double>& matrix)
   {
     static const int dim       = MeshType::dimension;
     static const int space_dim = MeshType::space_dimension;
@@ -2002,11 +2002,11 @@ namespace GridTools
    */
   template <int spacedim>
   inline bool
-  orthogonal_equality(const Point<spacedim>&     point1,
-                      const Point<spacedim>&     point2,
-                      const int                  direction,
+  orthogonal_equality(const Point<spacedim>& point1,
+                      const Point<spacedim>& point2,
+                      const int direction,
                       const Tensor<1, spacedim>& offset,
-                      const FullMatrix<double>&  matrix)
+                      const FullMatrix<double>& matrix)
   {
     Assert(0 <= direction && direction < spacedim,
            ExcIndexRange(direction, 0, spacedim));
@@ -2136,12 +2136,12 @@ namespace GridTools
 
   template <typename FaceIterator>
   inline bool orthogonal_equality(
-    std::bitset<3>&                                               orientation,
-    const FaceIterator&                                           face1,
-    const FaceIterator&                                           face2,
-    const int                                                     direction,
+    std::bitset<3>& orientation,
+    const FaceIterator& face1,
+    const FaceIterator& face2,
+    const int direction,
     const Tensor<1, FaceIterator::AccessorType::space_dimension>& offset,
-    const FullMatrix<double>&                                     matrix)
+    const FullMatrix<double>& matrix)
   {
     Assert(matrix.m() == matrix.n(),
            ExcMessage("The supplied matrix must be a square matrix"));
@@ -2185,11 +2185,11 @@ namespace GridTools
   template <typename FaceIterator>
   inline bool
   orthogonal_equality(
-    const FaceIterator&                                           face1,
-    const FaceIterator&                                           face2,
-    const int                                                     direction,
+    const FaceIterator& face1,
+    const FaceIterator& face2,
+    const int direction,
     const Tensor<1, FaceIterator::AccessorType::space_dimension>& offset,
-    const FullMatrix<double>&                                     matrix)
+    const FullMatrix<double>& matrix)
   {
     // Call the function above with a dummy orientation array
     std::bitset<3> dummy;

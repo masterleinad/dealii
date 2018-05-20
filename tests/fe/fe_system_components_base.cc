@@ -37,8 +37,8 @@ void
 test(const bool renumber = false)
 {
   Triangulation<dim> triangulation;
-  FESystem<dim>      fe_basis(FE_Q<dim>(2), dim, FE_Q<dim>(1), 1);
-  DoFHandler<dim>    dof_handler(triangulation);
+  FESystem<dim> fe_basis(FE_Q<dim>(2), dim, FE_Q<dim>(1), 1);
+  DoFHandler<dim> dof_handler(triangulation);
   GridGenerator::hyper_cube(triangulation);
   dof_handler.distribute_dofs(fe_basis);
 
@@ -80,7 +80,7 @@ test(const bool renumber = false)
   if(true)
     {
       std::map<types::global_dof_index, Point<dim>> support_points;
-      MappingQ1<dim>                                mapping;
+      MappingQ1<dim> mapping;
       DoFTools::map_dofs_to_support_points(
         mapping, dof_handler, support_points);
 

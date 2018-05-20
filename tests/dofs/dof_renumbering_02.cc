@@ -34,9 +34,9 @@ template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof)
 {
-  const FiniteElement<dim>&            fe = dof.get_fe();
+  const FiniteElement<dim>& fe = dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
-  std::shared_ptr<FEValues<dim>>       fevalues;
+  std::shared_ptr<FEValues<dim>> fevalues;
 
   if(fe.has_support_points())
     {
@@ -67,9 +67,9 @@ template <int dim>
 void
 print_dofs(const DoFHandler<dim>& dof, unsigned int level)
 {
-  const FiniteElement<dim>&            fe = dof.get_fe();
+  const FiniteElement<dim>& fe = dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
-  std::shared_ptr<FEValues<dim>>       fevalues;
+  std::shared_ptr<FEValues<dim>> fevalues;
 
   if(fe.has_support_points())
     {
@@ -101,7 +101,7 @@ void
 check_renumbering(DoFHandler<dim>& mgdof)
 {
   const FiniteElement<dim>& element = mgdof.get_fe();
-  DoFHandler<dim>&          dof     = mgdof;
+  DoFHandler<dim>& dof              = mgdof;
   deallog << element.get_name() << std::endl;
 
   // Prepare a reordering of
@@ -152,8 +152,8 @@ check()
 
   DoFHandler<dim> mgdof(tr);
 
-  FE_Q<dim>     q2(2);
-  FE_DGQ<dim>   dgq1(1);
+  FE_Q<dim> q2(2);
+  FE_DGQ<dim> dgq1(1);
   FESystem<dim> system(q2, 2, dgq1, 1);
 
   mgdof.distribute_dofs(q2);

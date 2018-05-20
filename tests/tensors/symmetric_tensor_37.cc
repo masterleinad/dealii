@@ -29,9 +29,9 @@ template <int rank1,
           template <int, int, typename> class T1,
           template <int, int, typename> class T3>
 void
-test_symm_tensor_contract_3(const T1<rank1, dim, number>&     l,
+test_symm_tensor_contract_3(const T1<rank1, dim, number>& l,
                             const Tensor<rank2, dim, number>& m,
-                            const T3<rank3, dim, number>&     r)
+                            const T3<rank3, dim, number>& r)
 {
   const double res1 = contract3(l, m, r);
   const double res2 = contract3(
@@ -47,12 +47,12 @@ main()
   deallog << std::setprecision(5);
   deallog.attach(logfile);
 
-  const int               dim = 3;
-  Tensor<1, dim>          v1;
-  Tensor<2, dim>          t1;
+  const int dim = 3;
+  Tensor<1, dim> v1;
+  Tensor<2, dim> t1;
   SymmetricTensor<2, dim> s1, s2;
-  Tensor<3, dim>          T1;
-  Tensor<4, dim>          H1;
+  Tensor<3, dim> T1;
+  Tensor<4, dim> H1;
 
   for(unsigned int i = 0; i < dim; ++i)
     {

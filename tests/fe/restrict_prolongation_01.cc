@@ -42,8 +42,8 @@ using namespace dealii;
 template <int dim, int spacedim>
 void
 check(const FiniteElement<dim, spacedim>& fe,
-      const bool                          isotropic_only = false,
-      unsigned int                        nested_size    = 0)
+      const bool isotropic_only = false,
+      unsigned int nested_size  = 0)
 {
   deallog << fe.get_name() << std::endl;
   const unsigned int dpc = fe.dofs_per_cell;
@@ -176,12 +176,12 @@ main()
         check(fe);
       }
       {
-        FE_Q_Bubbles<2>    fe(i);
+        FE_Q_Bubbles<2> fe(i);
         const unsigned int n_q_dofs = FE_Q<2>(i).dofs_per_cell;
         check(fe, false, n_q_dofs);
       }
       {
-        FE_Q_Bubbles<3>    fe(i);
+        FE_Q_Bubbles<3> fe(i);
         const unsigned int n_q_dofs = FE_Q<3>(i).dofs_per_cell;
         check(fe, false, n_q_dofs);
       }

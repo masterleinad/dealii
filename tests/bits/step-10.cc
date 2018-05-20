@@ -61,7 +61,7 @@ gnuplot_output()
 
           const MappingQ<dim> mapping(degree);
 
-          GridOut               grid_out;
+          GridOut grid_out;
           GridOutFlags::Gnuplot gnuplot_flags(false, 30);
           grid_out.set_flags(gnuplot_flags);
 
@@ -155,7 +155,7 @@ compute_pi_by_perimeter()
       triangulation.set_manifold(0, boundary);
 
       const MappingQ<dim> mapping(degree);
-      const FE_Q<dim>     fe(1);
+      const FE_Q<dim> fe(1);
 
       DoFHandler<dim> dof_handler(triangulation);
 

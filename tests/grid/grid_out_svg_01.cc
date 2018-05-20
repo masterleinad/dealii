@@ -69,7 +69,7 @@ main()
 {
   initlog();
 
-  GridOut           grid_out;
+  GridOut grid_out;
   GridOutFlags::Svg svg_flags;
 
   svg_flags.coloring          = GridOutFlags::Svg::level_number;

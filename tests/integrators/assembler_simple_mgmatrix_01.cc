@@ -50,15 +50,15 @@ int
 main()
 {
   const std::string logname = "output";
-  std::ofstream     logfile(logname.c_str());
+  std::ofstream logfile(logname.c_str());
   deallog.attach(logfile);
 
   Triangulation<2, 2> tr;
   GridGenerator::hyper_cube(tr);
-  FE_DGP<2, 2>   fe1(1);
-  FE_DGP<2, 2>   fe2(2);
-  FE_DGP<2, 2>   fe3(3);
-  FE_DGP<2, 2>   fe5(5);
+  FE_DGP<2, 2> fe1(1);
+  FE_DGP<2, 2> fe2(2);
+  FE_DGP<2, 2> fe3(3);
+  FE_DGP<2, 2> fe5(5);
   FESystem<2, 2> fes1(fe3, 1, fe5, 1, fe1, 1);
   FESystem<2, 2> fes2(fe3, 1, fe5, 1, fe1, 1, fe2, 1);
 

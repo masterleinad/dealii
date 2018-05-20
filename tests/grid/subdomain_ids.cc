@@ -112,7 +112,7 @@ test()
   // subdomain
   if(true)
     {
-      FE_DGQ<dim>     fe(2);
+      FE_DGQ<dim> fe(2);
       DoFHandler<dim> dof_handler(tria);
       dof_handler.distribute_dofs(fe);
       std::vector<bool> selected_dofs(dof_handler.n_dofs());
@@ -138,7 +138,7 @@ test()
   // several subdomain at once
   if(true)
     {
-      FE_Q<dim>       fe(1);
+      FE_Q<dim> fe(1);
       DoFHandler<dim> dof_handler(tria);
       dof_handler.distribute_dofs(fe);
 

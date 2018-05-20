@@ -203,8 +203,8 @@ public:
    * is thrown.
    */
   FunctionParser(const unsigned int n_components = 1,
-                 const double       initial_time = 0.0,
-                 const double       h            = 1e-8);
+                 const double initial_time       = 0.0,
+                 const double h                  = 1e-8);
 
   /**
    * Destructor. Explicitly delete the FunctionParser objects (there is one
@@ -257,10 +257,10 @@ public:
    * false, i.e. do not consider time.
    */
   void
-  initialize(const std::string&              vars,
+  initialize(const std::string& vars,
              const std::vector<std::string>& expressions,
-             const ConstMap&                 constants,
-             const bool                      time_dependent = false);
+             const ConstMap& constants,
+             const bool time_dependent = false);
 
   /**
    * Initialize the function. Same as above, but accepts a string rather than
@@ -272,8 +272,8 @@ public:
   void
   initialize(const std::string& vars,
              const std::string& expression,
-             const ConstMap&    constants,
-             const bool         time_dependent = false);
+             const ConstMap& constants,
+             const bool time_dependent = false);
 
   /**
    * A function that returns default names for variables, to be used in the

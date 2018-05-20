@@ -37,7 +37,7 @@
 
 void
 partition(const SparsityPattern& sparsity_pattern,
-          const unsigned int     n_partitions)
+          const unsigned int n_partitions)
 {
   // generate the data structures for
   // METIS. Note that this is particularly

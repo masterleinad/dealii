@@ -42,13 +42,13 @@ main(int argc, char** argv)
 
   {
     const unsigned int size = 32;
-    unsigned int       dim  = (size - 1) * (size - 1);
-    SolverControl      control(10000, 1.e-3);
+    unsigned int dim        = (size - 1) * (size - 1);
+    SolverControl control(10000, 1.e-3);
 
     deallog << "Size " << size << " Unknowns " << dim << std::endl;
 
     // Make matrix
-    FDMatrix               testproblem(size, size);
+    FDMatrix testproblem(size, size);
     DynamicSparsityPattern csp(dim, dim);
     testproblem.five_point_structure(csp);
     TrilinosWrappers::SparseMatrix A;
@@ -64,11 +64,11 @@ main(int argc, char** argv)
     f.compress(VectorOperation::insert);
     u.compress(VectorOperation::insert);
 
-    GrowingVectorMemory<TrilinosWrappers::MPI::Vector>              mem;
+    GrowingVectorMemory<TrilinosWrappers::MPI::Vector> mem;
     SolverRichardson<TrilinosWrappers::MPI::Vector>::AdditionalData data(
       /*omega=*/0.1);
     SolverRichardson<TrilinosWrappers::MPI::Vector> solver(control, mem, data);
-    PreconditionIdentity                            preconditioner;
+    PreconditionIdentity preconditioner;
     deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
     check_solver_within_range(

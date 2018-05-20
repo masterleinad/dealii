@@ -84,14 +84,14 @@ public:
     /**
      * Constructor.
      */
-    AdditionalData(const double relaxation      = 1.,
-                   const bool   invert_diagonal = true,
-                   const bool   same_diagonal   = false,
+    AdditionalData(const double relaxation    = 1.,
+                   const bool invert_diagonal = true,
+                   const bool same_diagonal   = false,
                    const typename PreconditionBlockBase<
                      InverseNumberType>::Inversion inversion
                    = PreconditionBlockBase<InverseNumberType>::gauss_jordan,
-                   const double threshold         = 0.,
-                   VectorType*  temp_ghost_vector = nullptr);
+                   const double threshold        = 0.,
+                   VectorType* temp_ghost_vector = nullptr);
 
     /**
      * The mapping from indices to blocks. Each row of this pattern enumerates
@@ -236,10 +236,10 @@ protected:
    * @p prev after this.
    */
   void
-  do_step(VectorType&       dst,
+  do_step(VectorType& dst,
           const VectorType& prev,
           const VectorType& src,
-          const bool        backward) const;
+          const bool backward) const;
 
   /**
    * Pointer to the matrix. Make sure that the matrix exists as long as this

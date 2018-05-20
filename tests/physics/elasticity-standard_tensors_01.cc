@@ -34,8 +34,8 @@ template <int dim>
 SymmetricTensor<2, dim>
 get_S(const Tensor<2, dim>& F)
 {
-  const SymmetricTensor<2, dim> C  = symmetrize(transpose(F) * F);
-  const double                  I1 = first_invariant(C);
+  const SymmetricTensor<2, dim> C = symmetrize(transpose(F) * F);
+  const double I1                 = first_invariant(C);
   return 2.0 * c10 * StandardTensors<dim>::I
          + 2.0 * c01 * (I1 * StandardTensors<dim>::I - C);
 }
@@ -46,8 +46,8 @@ template <int dim>
 SymmetricTensor<2, dim>
 get_tau(const Tensor<2, dim>& F)
 {
-  const SymmetricTensor<2, dim> b  = symmetrize(F * transpose(F));
-  const double                  I1 = first_invariant(b);
+  const SymmetricTensor<2, dim> b = symmetrize(F * transpose(F));
+  const double I1                 = first_invariant(b);
   const SymmetricTensor<2, dim> tmp
     = 2.0 * c10 * StandardTensors<dim>::I
       + 2.0 * c01 * (I1 * StandardTensors<dim>::I - b);

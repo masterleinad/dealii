@@ -39,8 +39,8 @@
 
 template <int dim>
 inline void
-plot_faces(Mapping<dim>&                            mapping,
-           FiniteElement<dim>&                      fe,
+plot_faces(Mapping<dim>& mapping,
+           FiniteElement<dim>& fe,
            typename DoFHandler<dim>::cell_iterator& cell)
 {
   // create a QGauss<0>(4), which should
@@ -81,8 +81,8 @@ plot_faces(Mapping<dim>&                            mapping,
 
 template <int dim>
 inline void
-plot_subfaces(Mapping<dim>&                            mapping,
-              FiniteElement<dim>&                      fe,
+plot_subfaces(Mapping<dim>& mapping,
+              FiniteElement<dim>& fe,
               typename DoFHandler<dim>::cell_iterator& cell)
 {
   // create a QGauss<0>(4), which should
@@ -131,15 +131,15 @@ mapping_test()
   deallog << "dim=" << dim << std::endl;
 
   std::vector<Mapping<dim>*> mapping_ptr;
-  std::vector<std::string>   mapping_strings;
+  std::vector<std::string> mapping_strings;
 
   MappingQGeneric<dim> mapping(1);
-  std::string          mapping_name = "MappingQ1";
+  std::string mapping_name = "MappingQ1";
 
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
 
-  FE_Q<dim>       fe_q4(2);
+  FE_Q<dim> fe_q4(2);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe_q4);
 

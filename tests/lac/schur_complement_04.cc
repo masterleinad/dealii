@@ -95,7 +95,7 @@ main(int argc, char** argv)
 
        */
 
-      const unsigned int                    rc = 1;
+      const unsigned int rc = 1;
       typedef TrilinosWrappers::MPI::Vector VectorType;
 
       TrilinosWrappers::SparseMatrix A(rc, rc, rc);
@@ -129,8 +129,8 @@ main(int argc, char** argv)
       const auto lo_C = linear_operator<VectorType>(C);
       const auto lo_D = linear_operator<VectorType>(D);
 
-      SolverControl                        solver_control_A(100, 1.0e-10);
-      TrilinosWrappers::SolverCG           solver_A(solver_control_A);
+      SolverControl solver_control_A(100, 1.0e-10);
+      TrilinosWrappers::SolverCG solver_A(solver_control_A);
       TrilinosWrappers::PreconditionJacobi preconditioner_A;
       preconditioner_A.initialize(A);
       const auto lo_A_inv = inverse_operator(lo_A, solver_A, preconditioner_A);

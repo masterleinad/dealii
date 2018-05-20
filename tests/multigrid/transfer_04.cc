@@ -97,7 +97,7 @@ check_fe(FiniteElement<dim>& fe)
 
   if(false)
     {
-      DataOut<dim>  data_out;
+      DataOut<dim> data_out;
       Vector<float> subdomain(tr.n_active_cells());
       for(unsigned int i = 0; i < subdomain.size(); ++i)
         subdomain(i) = tr.locally_owned_subdomain();
@@ -121,7 +121,7 @@ check_fe(FiniteElement<dim>& fe)
   mg_constrained_dofs.initialize(dofh);
 
   ConstraintMatrix hanging_node_constraints;
-  IndexSet         locally_relevant_set;
+  IndexSet locally_relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, locally_relevant_set);
   hanging_node_constraints.reinit(locally_relevant_set);
   DoFTools::make_hanging_node_constraints(dofh, hanging_node_constraints);
@@ -183,7 +183,7 @@ int
 main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
 
   check<2>();
   //check<3> ();

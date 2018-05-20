@@ -62,7 +62,7 @@ test()
   const unsigned int global_mesh_refinement_steps = 5;
   const unsigned int number_of_eigenvalues        = 5;
 
-  MPI_Comm           mpi_communicator = MPI_COMM_WORLD;
+  MPI_Comm mpi_communicator = MPI_COMM_WORLD;
   const unsigned int n_mpi_processes
     = Utilities::MPI::n_mpi_processes(mpi_communicator);
   const unsigned int this_mpi_process
@@ -73,7 +73,7 @@ test()
   triangulation.refine_global(global_mesh_refinement_steps);
 
   DoFHandler<dim> dof_handler(triangulation);
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   dof_handler.distribute_dofs(fe);
 
   IndexSet locally_relevant_dofs;
@@ -88,7 +88,7 @@ test()
   std::shared_ptr<MatrixFree<dim, double>> mf_data(
     new MatrixFree<dim, double>());
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, double>::AdditionalData data;
     data.tasks_parallel_scheme
       = MatrixFree<dim, double>::AdditionalData::partition_color;
@@ -98,7 +98,7 @@ test()
   }
 
   std::vector<LinearAlgebra::distributed::Vector<double>> eigenfunctions;
-  std::vector<double>                                     eigenvalues;
+  std::vector<double> eigenvalues;
   MatrixFreeOperators::MassOperator<dim,
                                     fe_degree,
                                     fe_degree + 1,
@@ -130,7 +130,7 @@ test()
     typedef LinearAlgebra::distributed::Vector<double> VectorType;
     SolverCG<VectorType> solver_c(inner_control_c);
     PreconditionIdentity preconditioner;
-    const auto           invert = inverse_operator(
+    const auto invert = inverse_operator(
       linear_operator<VectorType>(mass), solver_c, preconditioner);
 
     const unsigned int num_arnoldi_vectors = 2 * eigenvalues.size() + 40;
@@ -177,7 +177,7 @@ test()
     // a) (A*x_i-\lambda*B*x_i).L2() == 0
     // b) x_j*B*x_i=\delta_{ij}
     {
-      const double                               precision = 1e-7;
+      const double precision = 1e-7;
       LinearAlgebra::distributed::Vector<double> Ax(eigenfunctions[0]),
         Bx(eigenfunctions[0]);
       for(unsigned int i = 0; i < eigenfunctions.size(); ++i)

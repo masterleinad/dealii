@@ -33,8 +33,8 @@ main()
   deallog.attach(logfile);
 
   GrowingVectorMemory<> mem;
-  SolverControl         control(100, 1.e-3);
-  SolverBicgstab<>      bicgstab(control, mem);
+  SolverControl control(100, 1.e-3);
+  SolverBicgstab<> bicgstab(control, mem);
 
   SparsityPattern sparsity_pattern(4, 4, 4);
   for(unsigned int i = 0; i < 4; ++i)

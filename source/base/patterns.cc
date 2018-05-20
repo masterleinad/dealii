@@ -955,7 +955,7 @@ namespace Patterns
   const char* Tuple::description_init = "[Tuple";
 
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
-               const std::string&                               separator)
+               const std::string& separator)
     : separator(separator)
   {
     Assert(ps.size() > 0,
@@ -968,7 +968,7 @@ namespace Patterns
   }
 
   Tuple::Tuple(const std::vector<std::unique_ptr<PatternBase>>& ps,
-               const char*                                      separator)
+               const char* separator)
     : Tuple(ps, std::string(separator))
   {}
 
@@ -1131,7 +1131,7 @@ namespace Patterns
   bool
   MultipleSelection::match(const std::string& test_string_list) const
   {
-    std::string              tmp = test_string_list;
+    std::string tmp = test_string_list;
     std::vector<std::string> split_names;
 
     // first split the input list
@@ -1409,8 +1409,8 @@ namespace Patterns
        == 0)
       {
         std::istringstream is(description);
-        std::string        file_type;
-        FileType           type;
+        std::string file_type;
+        FileType type;
 
         is.ignore(strlen(description_init) + strlen(" (Type:"));
 

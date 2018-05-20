@@ -56,7 +56,7 @@ test()
   vb_one *= 2.0;
   v_one = vb_one;
 
-  TrilinosWrappers::MPI::BlockVector              vb(2), v(2);
+  TrilinosWrappers::MPI::BlockVector vb(2), v(2);
   LinearAlgebra::distributed::BlockVector<double> copied(2);
   for(unsigned int bl = 0; bl < 2; ++bl)
     {

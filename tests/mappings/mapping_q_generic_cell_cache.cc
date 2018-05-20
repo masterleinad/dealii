@@ -40,8 +40,8 @@ main()
   MultithreadInfo::set_thread_limit(1);
 
   Triangulation<2> triangulation;
-  FE_DGQ<2>        fe(0);
-  QMidpoint<2>     qf_cell;
+  FE_DGQ<2> fe(0);
+  QMidpoint<2> qf_cell;
 
   GridGenerator::hyper_cube(triangulation, 0.0, 1.0);
   FEValues<2> fe_values(fe, qf_cell, update_JxW_values);

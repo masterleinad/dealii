@@ -26,7 +26,7 @@ struct ScratchData
 {};
 struct CopyData
 {
-  unsigned     n_cells;
+  unsigned n_cells;
   unsigned int n_own_cells;
   unsigned int n_ghost_cells;
 
@@ -53,7 +53,7 @@ test()
   tria.execute_coarsening_and_refinement();
 
   ScratchData scratch;
-  CopyData    copy;
+  CopyData copy;
 
   auto cell = tria.begin_active();
   auto endc = tria.end();
@@ -76,14 +76,14 @@ test()
                 << std::endl;
       };
 
-  auto face_worker = [](const Iterator&     cell,
+  auto face_worker = [](const Iterator& cell,
                         const unsigned int& f,
                         const unsigned int& sf,
-                        const Iterator&     ncell,
+                        const Iterator& ncell,
                         const unsigned int& nf,
                         const unsigned int& nsf,
-                        ScratchData&        s,
-                        CopyData&           c) {
+                        ScratchData& s,
+                        CopyData& c) {
     deallog << "Face worker on : " << cell << ", Neighbor cell : " << ncell
             << ", Face : " << f << ", Neighbor Face : " << nf
             << ", Subface: " << sf << ", Neighbor Subface: " << nsf
@@ -92,7 +92,7 @@ test()
   };
 
   CopyData data;
-  auto     copier = [&](const CopyData& c) {
+  auto copier = [&](const CopyData& c) {
     data.n_cells += c.n_cells;
     data.n_own_cells += c.n_own_cells;
     data.n_ghost_cells += c.n_ghost_cells;

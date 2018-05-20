@@ -65,11 +65,11 @@ do_test(const DoFHandler<dim>& dof)
     FullMatrix<double> test_matrix(dofs_per_cell, dofs_per_cell);
 
     // The matrix part is from step-22
-    const FEValuesExtractors::Vector     velocities(0);
-    const FEValuesExtractors::Scalar     pressure(dim);
+    const FEValuesExtractors::Vector velocities(0);
+    const FEValuesExtractors::Scalar pressure(dim);
     std::vector<SymmetricTensor<2, dim>> phi_grads_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_pres(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_pres(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
@@ -179,7 +179,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -195,7 +195,7 @@ test()
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FESystem<dim>   fe(FE_Q<dim>(degree_p + 1), dim, FE_Q<dim>(degree_p), 1);
+  FESystem<dim> fe(FE_Q<dim>(degree_p + 1), dim, FE_Q<dim>(degree_p), 1);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   do_test<dim>(dof);

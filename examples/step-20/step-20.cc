@@ -98,15 +98,15 @@ namespace Step20
     const unsigned int degree;
 
     Triangulation<dim> triangulation;
-    FESystem<dim>      fe;
-    DoFHandler<dim>    dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
     // The second difference is that the sparsity pattern, the system matrix,
     // and solution and right hand side vectors are now blocked. What this
     // means and what one can do with such objects is explained in the
     // introduction to this program as well as further down below when we
     // explain the linear solvers and preconditioners for this problem:
-    BlockSparsityPattern      sparsity_pattern;
+    BlockSparsityPattern sparsity_pattern;
     BlockSparseMatrix<double> system_matrix;
 
     BlockVector<double> solution;
@@ -183,7 +183,7 @@ namespace Step20
   template <int dim>
   void
   ExactSolution<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+                                   Vector<double>& values) const
   {
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
@@ -232,7 +232,7 @@ namespace Step20
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<Tensor<2, dim>>&   values) const override;
+               std::vector<Tensor<2, dim>>& values) const override;
   };
 
   // The implementation is less interesting. As in previous examples, we add a
@@ -244,7 +244,7 @@ namespace Step20
   template <int dim>
   void
   KInverse<dim>::value_list(const std::vector<Point<dim>>& points,
-                            std::vector<Tensor<2, dim>>&   values) const
+                            std::vector<Tensor<2, dim>>& values) const
   {
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
@@ -418,10 +418,10 @@ namespace Step20
   void
   MixedLaplaceProblem<dim>::assemble_system()
   {
-    QGauss<dim>     quadrature_formula(degree + 2);
+    QGauss<dim> quadrature_formula(degree + 2);
     QGauss<dim - 1> face_quadrature_formula(degree + 2);
 
-    FEValues<dim>     fe_values(fe,
+    FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
@@ -436,7 +436,7 @@ namespace Step20
     const unsigned int n_face_q_points = face_quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -446,12 +446,12 @@ namespace Step20
     // arrays to hold their values at the quadrature points of individual
     // cells (or faces, for the boundary values). Note that in the case of the
     // coefficient, the array has to be one of matrices.
-    const RightHandSide<dim>          right_hand_side;
+    const RightHandSide<dim> right_hand_side;
     const PressureBoundaryValues<dim> pressure_boundary_values;
-    const KInverse<dim>               k_inverse;
+    const KInverse<dim> k_inverse;
 
-    std::vector<double>         rhs_values(n_q_points);
-    std::vector<double>         boundary_values(n_face_q_points);
+    std::vector<double> rhs_values(n_q_points);
+    std::vector<double> boundary_values(n_face_q_points);
     std::vector<Tensor<2, dim>> k_inverse_values(n_q_points);
 
     // Finally, we need a couple of extractors that we will use to get at the
@@ -579,7 +579,7 @@ namespace Step20
 
   template <class MatrixType>
   void
-  InverseMatrix<MatrixType>::vmult(Vector<double>&       dst,
+  InverseMatrix<MatrixType>::vmult(Vector<double>& dst,
                                    const Vector<double>& src) const
   {
     // To make the control flow simpler, we recreate both the ReductionControl
@@ -589,7 +589,7 @@ namespace Step20
     // acceptable for the sake of exposition.
     SolverControl solver_control(std::max<unsigned int>(src.size(), 200),
                                  1e-8 * src.l2_norm());
-    SolverCG<>    cg(solver_control);
+    SolverCG<> cg(solver_control);
 
     dst = 0;
 
@@ -620,21 +620,21 @@ namespace Step20
   class SchurComplement : public Subscriptor
   {
   public:
-    SchurComplement(const BlockSparseMatrix<double>&           A,
+    SchurComplement(const BlockSparseMatrix<double>& A,
                     const InverseMatrix<SparseMatrix<double>>& Minv);
 
     void
     vmult(Vector<double>& dst, const Vector<double>& src) const;
 
   private:
-    const SmartPointer<const BlockSparseMatrix<double>>           system_matrix;
+    const SmartPointer<const BlockSparseMatrix<double>> system_matrix;
     const SmartPointer<const InverseMatrix<SparseMatrix<double>>> m_inverse;
 
     mutable Vector<double> tmp1, tmp2;
   };
 
   SchurComplement ::SchurComplement(
-    const BlockSparseMatrix<double>&           A,
+    const BlockSparseMatrix<double>& A,
     const InverseMatrix<SparseMatrix<double>>& Minv)
     : system_matrix(&A),
       m_inverse(&Minv),
@@ -676,7 +676,7 @@ namespace Step20
   {}
 
   void
-  ApproximateSchurComplement::vmult(Vector<double>&       dst,
+  ApproximateSchurComplement::vmult(Vector<double>& dst,
                                     const Vector<double>& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
@@ -696,13 +696,13 @@ namespace Step20
   MixedLaplaceProblem<dim>::solve()
   {
     InverseMatrix<SparseMatrix<double>> inverse_mass(system_matrix.block(0, 0));
-    Vector<double>                      tmp(solution.block(0).size());
+    Vector<double> tmp(solution.block(0).size());
 
     // Now on to the first equation. The right hand side of it is $B^TM^{-1}F-G$,
     // which is what we compute in the first few lines:
     {
       SchurComplement schur_complement(system_matrix, inverse_mass);
-      Vector<double>  schur_rhs(solution.block(1).size());
+      Vector<double> schur_rhs(solution.block(1).size());
       inverse_mass.vmult(tmp, system_rhs.block(0));
       system_matrix.block(1, 0).vmult(schur_rhs, tmp);
       schur_rhs -= system_rhs.block(1);
@@ -711,7 +711,7 @@ namespace Step20
       // pressure, using our approximation of the inverse as a preconditioner:
       SolverControl solver_control(solution.block(1).size(),
                                    1e-12 * schur_rhs.l2_norm());
-      SolverCG<>    cg(solver_control);
+      SolverCG<> cg(solver_control);
 
       ApproximateSchurComplement approximate_schur(system_matrix);
       InverseMatrix<ApproximateSchurComplement> approximate_inverse(
@@ -782,7 +782,7 @@ namespace Step20
                                                      dim + 1);
 
     ExactSolution<dim> exact_solution;
-    Vector<double>     cellwise_errors(triangulation.n_active_cells());
+    Vector<double> cellwise_errors(triangulation.n_active_cells());
 
     // As already discussed in step-7, we have to realize that it is
     // impossible to integrate the errors exactly. All we can do is
@@ -798,7 +798,7 @@ namespace Step20
     // points for integration. To avoid this problem, we simply use a
     // trapezoidal rule and iterate it <code>degree+2</code> times in each
     // coordinate direction (again as explained in step-7):
-    QTrapez<1>     q_trapez;
+    QTrapez<1> q_trapez;
     QIterated<dim> quadrature(q_trapez, degree + 2);
 
     // With this, we can then let the library compute the errors and output

@@ -27,7 +27,7 @@
 // column (well, we had to invent
 // something)
 void
-make_masks(const unsigned int            n,
+make_masks(const unsigned int n,
            Table<2, DoFTools::Coupling>& m1,
            Table<2, DoFTools::Coupling>& m2)
 {

@@ -73,9 +73,9 @@ public:
   /**
    * Constructor.
    */
-  FE_Poly(const PolynomialType&             poly_space,
-          const FiniteElementData<dim>&     fe_data,
-          const std::vector<bool>&          restriction_is_additive_flags,
+  FE_Poly(const PolynomialType& poly_space,
+          const FiniteElementData<dim>& fe_data,
+          const std::vector<bool>& restriction_is_additive_flags,
           const std::vector<ComponentMask>& nonzero_components);
 
   /**
@@ -124,7 +124,7 @@ public:
    */
   virtual double
   shape_value_component(const unsigned int i,
-                        const Point<dim>&  p,
+                        const Point<dim>& p,
                         const unsigned int component) const override;
 
   /**
@@ -147,7 +147,7 @@ public:
    */
   virtual Tensor<1, dim>
   shape_grad_component(const unsigned int i,
-                       const Point<dim>&  p,
+                       const Point<dim>& p,
                        const unsigned int component) const override;
 
   /**
@@ -170,7 +170,7 @@ public:
    */
   virtual Tensor<2, dim>
   shape_grad_grad_component(const unsigned int i,
-                            const Point<dim>&  p,
+                            const Point<dim>& p,
                             const unsigned int component) const override;
 
   /**
@@ -180,7 +180,7 @@ public:
    */
   virtual Tensor<3, dim>
   shape_3rd_derivative(const unsigned int i,
-                       const Point<dim>&  p) const override;
+                       const Point<dim>& p) const override;
 
   /**
    * Return the third derivative of the <tt>component</tt>th vector component
@@ -194,7 +194,7 @@ public:
    */
   virtual Tensor<3, dim>
   shape_3rd_derivative_component(const unsigned int i,
-                                 const Point<dim>&  p,
+                                 const Point<dim>& p,
                                  const unsigned int component) const override;
 
   /**
@@ -204,7 +204,7 @@ public:
    */
   virtual Tensor<4, dim>
   shape_4th_derivative(const unsigned int i,
-                       const Point<dim>&  p) const override;
+                       const Point<dim>& p) const override;
 
   /**
    * Return the fourth derivative of the <tt>component</tt>th vector component
@@ -218,7 +218,7 @@ public:
    */
   virtual Tensor<4, dim>
   shape_4th_derivative_component(const unsigned int i,
-                                 const Point<dim>&  p,
+                                 const Point<dim>& p,
                                  const unsigned int component) const override;
 
 protected:
@@ -341,12 +341,12 @@ protected:
   virtual void
   fill_fe_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const CellSimilarity::Similarity cell_similarity,
+    const Quadrature<dim>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -354,12 +354,12 @@ protected:
   virtual void
   fill_fe_face_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -367,13 +367,13 @@ protected:
   virtual void
   fill_fe_subface_values(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          sub_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
+    const unsigned int face_no,
+    const unsigned int sub_no,
+    const Quadrature<dim - 1>& quadrature,
+    const Mapping<dim, spacedim>& mapping,
     const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>&                           mapping_data,
+      MappingRelatedData<dim, spacedim>& mapping_data,
     const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
     dealii::internal::FEValuesImplementation::
       FiniteElementRelatedData<dim, spacedim>& output_data) const override;
@@ -456,7 +456,7 @@ protected:
     internal::FEValuesImplementation::FiniteElementRelatedData<dim, spacedim>&
       output_data,
     const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
-                       mapping_data,
+      mapping_data,
     const unsigned int n_q_points,
     const unsigned int dof) const;
 

@@ -98,7 +98,7 @@ test(VectorTools::NormType norm, double value, double exp = 2.0)
   TrilinosWrappers::MPI::Vector solution(relevant_set, MPI_COMM_WORLD);
   solution = interpolated;
 
-  Vector<double>       cellwise_errors(tria.n_active_cells());
+  Vector<double> cellwise_errors(tria.n_active_cells());
   hp::QCollection<dim> quadrature;
   quadrature.push_back(QIterated<dim>(QTrapez<1>(), 5));
   quadrature.push_back(QIterated<dim>(QTrapez<1>(), 6));
@@ -172,6 +172,6 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   test<3>();
 }

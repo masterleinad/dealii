@@ -45,8 +45,8 @@ private:
   make_grid();
 
   Triangulation<dim> triangulation;
-  FE_DGQ<dim>        fe;
-  DoFHandler<dim>    dof_handler;
+  FE_DGQ<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   SparsityPattern sparsity_pattern;
 };
@@ -62,7 +62,7 @@ MakeFlux<dim>::make_grid()
   GridGenerator::hyper_cube(triangulation, -1, 1, true);
   typedef typename dealii::Triangulation<dim>::cell_iterator CellIteratorTria;
   std::vector<dealii::GridTools::PeriodicFacePair<CellIteratorTria>>
-                     periodic_faces;
+    periodic_faces;
   const unsigned int b_id1     = 2;
   const unsigned int b_id2     = 3;
   const unsigned int direction = 1;

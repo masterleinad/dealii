@@ -56,7 +56,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   const QGauss<dim> quadrature(2);
 
-  FE_Q<dim>                        fe_scalar(1);
+  FE_Q<dim> fe_scalar(1);
   std::vector<std::vector<double>> scalar_values(
     fe_scalar.dofs_per_cell, std::vector<double>(quadrature.size()));
   std::vector<std::vector<Tensor<1, dim>>> scalar_gradients(
@@ -115,7 +115,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
     {
       const double f_val = fe_function(local_dof_indices[i]);
-      const auto   val   = fe_values[extractor].value(i, 0);
+      const auto val     = fe_values[extractor].value(i, 0);
       // find out which component is non-zero
       TableIndices<2> nonzero_ind;
       for(unsigned int k = 0; k < Tensor<2, dim>::n_independent_components; ++k)

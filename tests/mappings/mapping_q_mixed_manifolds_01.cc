@@ -50,7 +50,7 @@ ManifoldWrapper<2>::operator()(const Tensor<1, 2>& /*direction*/,
 template <>
 Manifold<3>*
 ManifoldWrapper<3>::operator()(const Tensor<1, 3>& direction,
-                               const Point<3>&     center) const
+                               const Point<3>& center) const
 {
   return new CylindricalManifold<3>(direction, center);
 }
@@ -79,9 +79,9 @@ test()
     {
       MappingQGeneric<dim> mapping(degree);
 
-      QGauss<dim>   quad(degree + 1);
+      QGauss<dim> quad(degree + 1);
       FEValues<dim> fe_values(mapping, fe, quad, update_JxW_values);
-      double        sum = 0.;
+      double sum = 0.;
       for(typename Triangulation<dim>::active_cell_iterator cell
           = tria.begin_active();
           cell != tria.end();

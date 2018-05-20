@@ -59,7 +59,7 @@ public:
 
 private:
   const unsigned int q;
-  const double       adj;
+  const double adj;
 };
 
 template <int dim>
@@ -75,20 +75,20 @@ test()
 
   for(unsigned int p = 1; p < 6 - dim; ++p)
     {
-      FE_Q<dim>       fe1(p);
-      FE_Q<dim>       fe2(p + 1);
-      FESystem<dim>   fe(fe1, 2, fe2, 1);
+      FE_Q<dim> fe1(p);
+      FE_Q<dim> fe2(p + 1);
+      FESystem<dim> fe(fe1, 2, fe2, 1);
       DoFHandler<dim> dof_handler(triangulation);
       dof_handler.distribute_dofs(fe);
 
-      const double                 adj1 = 0.3;
+      const double adj1 = 0.3;
       ComponentSelectFunction<dim> select_mask1(0, 3);
-      ComponentMask                mask1(3, false);
+      ComponentMask mask1(3, false);
       mask1.set(0, true);
 
-      const double                 adj2 = 1.7;
+      const double adj2 = 1.7;
       ComponentSelectFunction<dim> select_mask2(std::make_pair(1, 3), 3);
-      ComponentMask                mask2(3, false);
+      ComponentMask mask2(3, false);
       mask2.set(1, true);
       mask2.set(2, true);
 
@@ -97,7 +97,7 @@ test()
       constraints.close();
 
       Vector<double> interpolant(dof_handler.n_dofs());
-      Vector<float>  error(triangulation.n_active_cells());
+      Vector<float> error(triangulation.n_active_cells());
       for(unsigned int q = 0; q <= p + 2; ++q)
         {
           // interpolate the function

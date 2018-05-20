@@ -41,7 +41,7 @@ Quadrature<dim>::Quadrature(const unsigned int n_q)
 template <int dim>
 void
 Quadrature<dim>::initialize(const std::vector<Point<dim>>& p,
-                            const std::vector<double>&     w)
+                            const std::vector<double>& w)
 {
   AssertDimension(w.size(), p.size());
   quadrature_points = p;
@@ -50,7 +50,7 @@ Quadrature<dim>::initialize(const std::vector<Point<dim>>& p,
 
 template <int dim>
 Quadrature<dim>::Quadrature(const std::vector<Point<dim>>& points,
-                            const std::vector<double>&     weights)
+                            const std::vector<double>& weights)
   : quadrature_points(points),
     weights(weights),
     is_tensor_product_flag(dim == 1)
@@ -378,7 +378,7 @@ Quadrature<2>
 QProjector<dim>::reflect(const Quadrature<2>& q)
 {
   std::vector<Point<2>> q_points(q.size());
-  std::vector<double>   weights(q.size());
+  std::vector<double> weights(q.size());
   for(unsigned int i = 0; i < q.size(); ++i)
     {
       q_points[i][0] = q.point(i)[1];
@@ -395,7 +395,7 @@ Quadrature<2>
 QProjector<dim>::rotate(const Quadrature<2>& q, const unsigned int n_times)
 {
   std::vector<Point<2>> q_points(q.size());
-  std::vector<double>   weights(q.size());
+  std::vector<double> weights(q.size());
   for(unsigned int i = 0; i < q.size(); ++i)
     {
       switch(n_times % 4)
@@ -431,7 +431,7 @@ QProjector<dim>::rotate(const Quadrature<2>& q, const unsigned int n_times)
 template <>
 void
 QProjector<1>::project_to_face(const Quadrature<0>&,
-                               const unsigned int     face_no,
+                               const unsigned int face_no,
                                std::vector<Point<1>>& q_points)
 {
   const unsigned int dim = 1;
@@ -443,8 +443,8 @@ QProjector<1>::project_to_face(const Quadrature<0>&,
 
 template <>
 void
-QProjector<2>::project_to_face(const Quadrature<1>&   quadrature,
-                               const unsigned int     face_no,
+QProjector<2>::project_to_face(const Quadrature<1>& quadrature,
+                               const unsigned int face_no,
                                std::vector<Point<2>>& q_points)
 {
   const unsigned int dim = 2;
@@ -474,8 +474,8 @@ QProjector<2>::project_to_face(const Quadrature<1>&   quadrature,
 
 template <>
 void
-QProjector<3>::project_to_face(const Quadrature<2>&   quadrature,
-                               const unsigned int     face_no,
+QProjector<3>::project_to_face(const Quadrature<2>& quadrature,
+                               const unsigned int face_no,
                                std::vector<Point<3>>& q_points)
 {
   const unsigned int dim = 3;
@@ -533,9 +533,9 @@ QProjector<1>::project_to_subface(const Quadrature<0>&,
 
 template <>
 void
-QProjector<2>::project_to_subface(const Quadrature<1>&   quadrature,
-                                  const unsigned int     face_no,
-                                  const unsigned int     subface_no,
+QProjector<2>::project_to_subface(const Quadrature<1>& quadrature,
+                                  const unsigned int face_no,
+                                  const unsigned int subface_no,
                                   std::vector<Point<2>>& q_points,
                                   const RefinementCase<1>&)
 {
@@ -609,10 +609,10 @@ QProjector<2>::project_to_subface(const Quadrature<1>&   quadrature,
 
 template <>
 void
-QProjector<3>::project_to_subface(const Quadrature<2>&     quadrature,
-                                  const unsigned int       face_no,
-                                  const unsigned int       subface_no,
-                                  std::vector<Point<3>>&   q_points,
+QProjector<3>::project_to_subface(const Quadrature<2>& quadrature,
+                                  const unsigned int face_no,
+                                  const unsigned int subface_no,
+                                  std::vector<Point<3>>& q_points,
                                   const RefinementCase<2>& ref_case)
 {
   const unsigned int dim = 3;
@@ -904,9 +904,9 @@ template <>
 Quadrature<3>
 QProjector<3>::project_to_all_subfaces(const SubQuadrature& quadrature)
 {
-  const unsigned int dim         = 3;
-  SubQuadrature      q_reflected = reflect(quadrature);
-  SubQuadrature      q[8]        = {quadrature,
+  const unsigned int dim    = 3;
+  SubQuadrature q_reflected = reflect(quadrature);
+  SubQuadrature q[8]        = {quadrature,
                         rotate(quadrature, 1),
                         rotate(quadrature, 2),
                         rotate(quadrature, 3),
@@ -978,7 +978,7 @@ QProjector<3>::project_to_all_subfaces(const SubQuadrature& quadrature)
 template <int dim>
 Quadrature<dim>
 QProjector<dim>::project_to_child(const Quadrature<dim>& quadrature,
-                                  const unsigned int     child_no)
+                                  const unsigned int child_no)
 {
   Assert(child_no < GeometryInfo<dim>::max_children_per_cell,
          ExcIndexRange(child_no, 0, GeometryInfo<dim>::max_children_per_cell));
@@ -1008,7 +1008,7 @@ QProjector<dim>::project_to_all_children(const Quadrature<dim>& quadrature)
                      n_children = GeometryInfo<dim>::max_children_per_cell;
 
   std::vector<Point<dim>> q_points(n_points * n_children);
-  std::vector<double>     weights(n_points * n_children);
+  std::vector<double> weights(n_points * n_children);
 
   // project to each child and copy
   // results
@@ -1027,13 +1027,13 @@ QProjector<dim>::project_to_all_children(const Quadrature<dim>& quadrature)
 template <int dim>
 Quadrature<dim>
 QProjector<dim>::project_to_line(const Quadrature<1>& quadrature,
-                                 const Point<dim>&    p1,
-                                 const Point<dim>&    p2)
+                                 const Point<dim>& p1,
+                                 const Point<dim>& p2)
 {
-  const unsigned int      n = quadrature.size();
+  const unsigned int n = quadrature.size();
   std::vector<Point<dim>> points(n);
-  std::vector<double>     weights(n);
-  const double            length = p1.distance(p2);
+  std::vector<double> weights(n);
+  const double length = p1.distance(p2);
 
   for(unsigned int k = 0; k < n; ++k)
     {
@@ -1048,9 +1048,9 @@ QProjector<dim>::project_to_line(const Quadrature<1>& quadrature,
 template <int dim>
 typename QProjector<dim>::DataSetDescriptor
 QProjector<dim>::DataSetDescriptor::face(const unsigned int face_no,
-                                         const bool         face_orientation,
-                                         const bool         face_flip,
-                                         const bool         face_rotation,
+                                         const bool face_orientation,
+                                         const bool face_flip,
+                                         const bool face_rotation,
                                          const unsigned int n_quadrature_points)
 {
   Assert(face_no < GeometryInfo<dim>::faces_per_cell, ExcInternalError());
@@ -1152,12 +1152,12 @@ QProjector<2>::DataSetDescriptor::subface(
 template <>
 QProjector<3>::DataSetDescriptor
 QProjector<3>::DataSetDescriptor::subface(
-  const unsigned int             face_no,
-  const unsigned int             subface_no,
-  const bool                     face_orientation,
-  const bool                     face_flip,
-  const bool                     face_rotation,
-  const unsigned int             n_quadrature_points,
+  const unsigned int face_no,
+  const unsigned int subface_no,
+  const bool face_orientation,
+  const bool face_flip,
+  const bool face_rotation,
+  const unsigned int n_quadrature_points,
   const internal::SubfaceCase<3> ref_case)
 {
   const unsigned int dim = 3;
@@ -1403,7 +1403,7 @@ QProjector<3>::DataSetDescriptor::subface(
 template <int dim>
 Quadrature<dim>
 QProjector<dim>::project_to_face(const SubQuadrature& quadrature,
-                                 const unsigned int   face_no)
+                                 const unsigned int face_no)
 {
   std::vector<Point<dim>> points(quadrature.size());
   project_to_face(quadrature, face_no, points);
@@ -1412,9 +1412,9 @@ QProjector<dim>::project_to_face(const SubQuadrature& quadrature,
 
 template <int dim>
 Quadrature<dim>
-QProjector<dim>::project_to_subface(const SubQuadrature&           quadrature,
-                                    const unsigned int             face_no,
-                                    const unsigned int             subface_no,
+QProjector<dim>::project_to_subface(const SubQuadrature& quadrature,
+                                    const unsigned int face_no,
+                                    const unsigned int subface_no,
                                     const RefinementCase<dim - 1>& ref_case)
 {
   std::vector<Point<dim>> points(quadrature.size());
@@ -1559,7 +1559,7 @@ QIterated<0>::QIterated(const Quadrature<1>&, const unsigned int)
 
 template <>
 QIterated<1>::QIterated(const Quadrature<1>& base_quadrature,
-                        const unsigned int   n_copies)
+                        const unsigned int n_copies)
   : Quadrature<1>(
       internal::QIteratedImplementation::uses_both_endpoints(base_quadrature) ?
         (base_quadrature.size() - 1) * n_copies + 1 :
@@ -1598,8 +1598,8 @@ QIterated<1>::QIterated(const Quadrature<1>& base_quadrature,
       // points. note that these usually
       // are but need not necessarily be
       // the same
-      double       double_point_weight = 0;
-      unsigned int n_end_points        = 0;
+      double double_point_weight = 0;
+      unsigned int n_end_points  = 0;
       for(unsigned int i = 0; i < base_quadrature.size(); ++i)
         // add up the weight if this
         // is an endpoint
@@ -1667,7 +1667,7 @@ QIterated<1>::QIterated(const Quadrature<1>& base_quadrature,
 // of lower dimensional iterated quadrature formulae
 template <int dim>
 QIterated<dim>::QIterated(const Quadrature<1>& base_quadrature,
-                          const unsigned int   N)
+                          const unsigned int N)
   : Quadrature<dim>(QIterated<dim - 1>(base_quadrature, N),
                     QIterated<1>(base_quadrature, N))
 {}

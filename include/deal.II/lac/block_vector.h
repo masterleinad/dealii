@@ -75,15 +75,15 @@ public:
   /**
    * Import the typedefs from the base class.
    */
-  typedef typename BaseClass::value_type      value_type;
-  typedef typename BaseClass::real_type       real_type;
-  typedef typename BaseClass::pointer         pointer;
-  typedef typename BaseClass::const_pointer   const_pointer;
-  typedef typename BaseClass::reference       reference;
+  typedef typename BaseClass::value_type value_type;
+  typedef typename BaseClass::real_type real_type;
+  typedef typename BaseClass::pointer pointer;
+  typedef typename BaseClass::const_pointer const_pointer;
+  typedef typename BaseClass::reference reference;
   typedef typename BaseClass::const_reference const_reference;
-  typedef typename BaseClass::size_type       size_type;
-  typedef typename BaseClass::iterator        iterator;
-  typedef typename BaseClass::const_iterator  const_iterator;
+  typedef typename BaseClass::size_type size_type;
+  typedef typename BaseClass::iterator iterator;
+  typedef typename BaseClass::const_iterator const_iterator;
 
   /**
    * Constructor. There are three ways to use this constructor. First, without
@@ -95,8 +95,8 @@ public:
    * Confer the other constructor further down if you intend to use blocks of
    * different sizes.
    */
-  explicit BlockVector(const unsigned int n_blocks   = 0,
-                       const size_type    block_size = 0);
+  explicit BlockVector(const unsigned int n_blocks = 0,
+                       const size_type block_size  = 0);
 
   /**
    * Copy Constructor. Dimension set to that of @p v, all components are
@@ -156,8 +156,8 @@ public:
    */
   template <typename InputIterator>
   BlockVector(const std::vector<size_type>& block_sizes,
-              const InputIterator           first,
-              const InputIterator           end);
+              const InputIterator first,
+              const InputIterator end);
 
   /**
    * Destructor. Clears memory
@@ -237,8 +237,8 @@ public:
    */
   void
   reinit(const unsigned int n_blocks,
-         const size_type    block_size           = 0,
-         const bool         omit_zeroing_entries = false);
+         const size_type block_size      = 0,
+         const bool omit_zeroing_entries = false);
 
   /**
    * Reinitialize the BlockVector such that it contains
@@ -258,7 +258,7 @@ public:
    */
   void
   reinit(const std::vector<size_type>& block_sizes,
-         const bool                    omit_zeroing_entries = false);
+         const bool omit_zeroing_entries = false);
 
   /**
    * Reinitialize the BlockVector to reflect the structure found in
@@ -271,7 +271,7 @@ public:
    */
   void
   reinit(const BlockIndices& block_indices,
-         const bool          omit_zeroing_entries = false);
+         const bool omit_zeroing_entries = false);
 
   /**
    * Change the dimension to that of the vector <tt>V</tt>. The same applies
@@ -289,7 +289,7 @@ public:
   template <typename Number2>
   void
   reinit(const BlockVector<Number2>& V,
-         const bool                  omit_zeroing_entries = false);
+         const bool omit_zeroing_entries = false);
 
   /**
    * Multiply each element of this vector by the corresponding element of
@@ -317,10 +317,10 @@ public:
    * Print to a stream.
    */
   void
-  print(std::ostream&      out,
-        const unsigned int precision  = 3,
-        const bool         scientific = true,
-        const bool         across     = true) const;
+  print(std::ostream& out,
+        const unsigned int precision = 3,
+        const bool scientific        = true,
+        const bool across            = true) const;
 
   /**
    * Write the vector en bloc to a stream. This is done in a binary mode, so
@@ -364,8 +364,8 @@ public:
 template <typename Number>
 template <typename InputIterator>
 BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
-                                 const InputIterator           first,
-                                 const InputIterator           end)
+                                 const InputIterator first,
+                                 const InputIterator end)
 {
   // first set sizes of blocks, but
   // don't initialize them as we will
@@ -470,18 +470,18 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&        matrix,
+      reinit_range_vector(const Matrix& matrix,
                           BlockVector<number>& v,
-                          bool                 omit_zeroing_entries)
+                          bool omit_zeroing_entries)
       {
         v.reinit(matrix.get_row_indices(), omit_zeroing_entries);
       }
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&        matrix,
+      reinit_domain_vector(const Matrix& matrix,
                            BlockVector<number>& v,
-                           bool                 omit_zeroing_entries)
+                           bool omit_zeroing_entries)
       {
         v.reinit(matrix.get_column_indices(), omit_zeroing_entries);
       }

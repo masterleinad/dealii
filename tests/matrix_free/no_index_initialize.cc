@@ -57,7 +57,7 @@ public:
   void
   operator()(const MatrixFree<dim, Number>& data,
              Vector<Number>&,
-             const Vector<Number>&                        src,
+             const Vector<Number>& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
@@ -123,7 +123,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   constraints.distribute(solution);
   MatrixFree<dim, number> mf_data;
   {
-    const QGauss<1>                                  quad(fe_degree + 1);
+    const QGauss<1> quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
     data.tasks_parallel_scheme = MatrixFree<dim, number>::AdditionalData::none;
     data.mapping_update_flags  = update_gradients | update_hessians;
@@ -163,7 +163,7 @@ void
 test()
 {
   const SphericalManifold<dim> manifold;
-  Triangulation<dim>           tria;
+  Triangulation<dim> tria;
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
@@ -179,7 +179,7 @@ test()
   tria.execute_coarsening_and_refinement();
   tria.refine_global(4 - dim);
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 

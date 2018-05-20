@@ -26,23 +26,23 @@ main()
 {
   initlog();
 
-  int                  a0(-1);
-  unsigned int         a1(1);
-  double               a2(2.0);
+  int a0(-1);
+  unsigned int a1(1);
+  double a2(2.0);
   std::complex<double> a3(3.0, 4.0);
-  std::string          a4("foo");
-  Point<1>             a5(5.0);
-  Point<2>             a6(6.0, 7.0);
-  Point<3>             a7(8.0, 9.0, 10.0);
+  std::string a4("foo");
+  Point<1> a5(5.0);
+  Point<2> a6(6.0, 7.0);
+  Point<3> a7(8.0, 9.0, 10.0);
 
-  std::vector<int>                  va0(2, -1);
-  std::vector<unsigned int>         va1(2, 1);
-  std::vector<double>               va2(2, 2.0);
+  std::vector<int> va0(2, -1);
+  std::vector<unsigned int> va1(2, 1);
+  std::vector<double> va2(2, 2.0);
   std::vector<std::complex<double>> va3(2, std::complex<double>(3.0, 4.0));
-  std::vector<std::string>          va4(2, std::string("foo"));
-  std::vector<Point<1>>             va5(2, Point<1>(5.0));
-  std::vector<Point<2>>             va6(2, Point<2>(6.0, 7.0));
-  std::vector<Point<3>>             va7(2, Point<3>(8.0, 9.0, 10.0));
+  std::vector<std::string> va4(2, std::string("foo"));
+  std::vector<Point<1>> va5(2, Point<1>(5.0));
+  std::vector<Point<2>> va6(2, Point<2>(6.0, 7.0));
+  std::vector<Point<3>> va7(2, Point<3>(8.0, 9.0, 10.0));
 
   ParameterHandler prm;
   prm.add_parameter("A signed integer", a0);

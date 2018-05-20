@@ -29,9 +29,9 @@ void
 dim_2(std::ostream& os)
 {
   const unsigned int d = 2;
-  const Point<d>     center(0, 0);
-  const double       inner = 0.2, outer = 1.0;
-  Triangulation<d>   tr;
+  const Point<d> center(0, 0);
+  const double inner = 0.2, outer = 1.0;
+  Triangulation<d> tr;
 
   GridGenerator::hyper_cube_with_cylindrical_hole(
     tr, inner, outer, outer, true);
@@ -52,8 +52,8 @@ dim_3(std::ostream& os)
 {
   const unsigned int d = 3;
 
-  const Point<d>   center(0, 0, 0);
-  const double     inner = 0.2, outer = 1.0;
+  const Point<d> center(0, 0, 0);
+  const double inner = 0.2, outer = 1.0;
   Triangulation<d> tr;
 
   GridGenerator::hyper_cube_with_cylindrical_hole(

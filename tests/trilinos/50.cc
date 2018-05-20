@@ -26,7 +26,7 @@ void
 test(TrilinosWrappers::MPI::Vector& v)
 {
   Vector<double> w(v.size());
-  Vector<float>  x(v.size());
+  Vector<float> x(v.size());
 
   for(unsigned int i = 0; i < w.size(); ++i)
     {

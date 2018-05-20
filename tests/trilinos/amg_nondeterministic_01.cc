@@ -498,11 +498,11 @@ double matv[]
      2.03753e+25,  2.03753e+25};
 
 void
-check(Epetra_FECrsMatrix&     mat,
+check(Epetra_FECrsMatrix& mat,
       Teuchos::ParameterList& parameter_list,
-      Epetra_FEVector&        x1,
-      Epetra_FEVector&        x2,
-      Epetra_FEVector&        b)
+      Epetra_FEVector& x1,
+      Epetra_FEVector& x2,
+      Epetra_FEVector& b)
 {
   int ierr;
   {
@@ -531,8 +531,8 @@ run()
   int dim = 130;
   int ierr;
 
-  Epetra_MpiComm     Comm(MPI_COMM_WORLD);
-  Epetra_Map         map(dim, 0, Comm);
+  Epetra_MpiComm Comm(MPI_COMM_WORLD);
+  Epetra_Map map(dim, 0, Comm);
   Epetra_FECrsMatrix mat(Copy, map, map, 30, false);
 
   unsigned int n = sizeof(mati) / sizeof(*mati);
@@ -587,6 +587,6 @@ int
 main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-  MPILogInitAll                    log;
+  MPILogInitAll log;
   run();
 }

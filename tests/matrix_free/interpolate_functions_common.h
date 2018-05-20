@@ -54,7 +54,7 @@ public:
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in,
-                 const Mapping<dim>&            mapping)
+                 const Mapping<dim>& mapping)
     : data(data_in){};
 
   virtual ~MatrixFreeTest()
@@ -65,7 +65,7 @@ public:
   virtual void
   cell(const MatrixFree<dim, Number>& data,
        Vector<Number>&,
-       const Vector<Number>&                        src,
+       const Vector<Number>& src,
        const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
@@ -101,7 +101,7 @@ public:
   virtual void
   face(const MatrixFree<dim, Number>& data,
        Vector<Number>&,
-       const Vector<Number>&                        src,
+       const Vector<Number>& src,
        const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_evalm(data,
@@ -169,7 +169,7 @@ public:
   virtual void
   boundary(const MatrixFree<dim, Number>& data,
            Vector<Number>&,
-           const Vector<Number>&                        src,
+           const Vector<Number>& src,
            const std::pair<unsigned int, unsigned int>& face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_evalm(data,

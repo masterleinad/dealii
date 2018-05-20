@@ -345,11 +345,11 @@ namespace SUNDIALS
         const double& initial_step_size = 1e-2,
         const double& output_period     = 1e-1,
         // Running parameters
-        const double&       minimum_step_size                     = 1e-6,
-        const unsigned int& maximum_order                         = 5,
-        const unsigned int& maximum_non_linear_iterations         = 10,
-        const bool          implicit_function_is_linear           = false,
-        const bool          implicit_function_is_time_independent = false,
+        const double& minimum_step_size                   = 1e-6,
+        const unsigned int& maximum_order                 = 5,
+        const unsigned int& maximum_non_linear_iterations = 10,
+        const bool implicit_function_is_linear            = false,
+        const bool implicit_function_is_time_independent  = false,
         // Error parameters
         const double& absolute_tolerance = 1e-6,
         const double& relative_tolerance = 1e-5)
@@ -502,8 +502,8 @@ namespace SUNDIALS
      * @param data ARKode configuration data
      * @param mpi_comm MPI communicator
      */
-    ARKode(const AdditionalData& data     = AdditionalData(),
-           const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
+    ARKode(const AdditionalData& data = AdditionalData(),
+           const MPI_Comm mpi_comm    = MPI_COMM_WORLD);
 
     /**
      * Destructor.
@@ -660,12 +660,12 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const int         convfail,
-                      const double      t,
-                      const double      gamma,
+    std::function<int(const int convfail,
+                      const double t,
+                      const double gamma,
                       const VectorType& ypred,
                       const VectorType& fpred,
-                      bool&             j_is_current)>
+                      bool& j_is_current)>
       setup_jacobian;
 
     /**
@@ -711,12 +711,12 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const double      t,
-                      const double      gamma,
+    std::function<int(const double t,
+                      const double gamma,
                       const VectorType& ycur,
                       const VectorType& fcur,
                       const VectorType& rhs,
-                      VectorType&       dst)>
+                      VectorType& dst)>
       solve_jacobian_system;
 
     /**
@@ -789,8 +789,8 @@ namespace SUNDIALS
      * times this function is called and how many time steps have actually been
      * computed.
      */
-    std::function<void(const double       t,
-                       const VectorType&  sol,
+    std::function<void(const double t,
+                       const VectorType& sol,
                        const unsigned int step_number)>
       output_step;
 

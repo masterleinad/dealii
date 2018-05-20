@@ -44,21 +44,21 @@ main()
 
   {
     // The circle passing through the vertices of the unit square
-    gp_Dir        z_axis(0., 0., 1.);
-    gp_Pnt        center(.5, .5, 0.);
-    gp_Ax2        axis(center, z_axis);
+    gp_Dir z_axis(0., 0., 1.);
+    gp_Pnt center(.5, .5, 0.);
+    gp_Ax2 axis(center, z_axis);
     Standard_Real radius(std::sqrt(2.) / 2.);
 
     GC_MakeCircle make_circle(axis, radius);
     Handle(Geom_Circle) circle = make_circle.Value();
     TopoDS_Edge edge           = BRepBuilderAPI_MakeEdge(circle);
 
-    NormalProjectionBoundary<2, 3>  manifold_b(edge);
+    NormalProjectionBoundary<2, 3> manifold_b(edge);
     std::unique_ptr<Manifold<2, 3>> clone_b = manifold_b.clone();
     deallog << "typeid of NormalProjectionBoundary<2, 3> is "
             << boost::core::demangle(typeid(*clone_b).name()) << std::endl;
 
-    NormalProjectionManifold<2, 3>  manifold_m(edge);
+    NormalProjectionManifold<2, 3> manifold_m(edge);
     std::unique_ptr<Manifold<2, 3>> clone_m = manifold_m.clone();
     deallog << "typeid of NormalProjectionManifold<2, 3> is "
             << boost::core::demangle(typeid(*clone_m).name()) << std::endl;
@@ -114,7 +114,7 @@ main()
             << boost::core::demangle(typeid(*clone_b).name()) << std::endl;
 
     NormalToMeshProjectionManifold<1, 3> manifold_m(face);
-    std::unique_ptr<Manifold<1, 3>>      clone_m = manifold_m.clone();
+    std::unique_ptr<Manifold<1, 3>> clone_m = manifold_m.clone();
     deallog << "typeid of NormalProjectionManifold<2, 3> is "
             << boost::core::demangle(typeid(*clone_m).name()) << std::endl;
   }

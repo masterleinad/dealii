@@ -38,7 +38,7 @@ using namespace std;
 template <int dim, typename number, int spacedim>
 void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
-              MGLevelObject<dealii::Vector<number>>&   v)
+              MGLevelObject<dealii::Vector<number>>& v)
 {
   for(unsigned int level = v.min_level(); level <= v.max_leve(); ++level)
     {
@@ -49,8 +49,8 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
 
 template <typename Transfer>
 void
-make_matrix(const Transfer&     transfer,
-            const unsigned int  high_level,
+make_matrix(const Transfer& transfer,
+            const unsigned int high_level,
             FullMatrix<double>& matrix)
 {
   Vector<double> src(matrix.n());
@@ -86,8 +86,8 @@ refine_mesh(Triangulation<dim>& triangulation)
       cell != triangulation.end();
       ++cell)
     {
-      const Point<dim> p        = cell->center();
-      bool             positive = p(0) > 0;
+      const Point<dim> p = cell->center();
+      bool positive      = p(0) > 0;
       if(positive)
         {
           cell->set_refine_flag();
@@ -141,7 +141,7 @@ check(const FiniteElement<dim>& fe)
   std::vector<std::set<types::global_dof_index>> boundary_indices(
     tr.n_levels());
   typename FunctionMap<dim>::type dirichlet_boundary;
-  Functions::ZeroFunction<dim>    dirichlet_bc(fe.n_components());
+  Functions::ZeroFunction<dim> dirichlet_bc(fe.n_components());
   dirichlet_boundary[3] = &dirichlet_bc;
 
   MGTools::make_boundary_list(

@@ -130,7 +130,7 @@ public:
   void
   evaluate_convergence_rates(const std::string& data_column_key,
                              const std::string& reference_column_key,
-                             const RateMode     rate_mode,
+                             const RateMode rate_mode,
                              const unsigned int dim = 2);
 
   /**
@@ -151,7 +151,7 @@ public:
    */
   void
   evaluate_convergence_rates(const std::string& data_column_key,
-                             const RateMode     rate_mode);
+                             const RateMode rate_mode);
 
   /**
    * Omit this column <tt>key</tt> (not supercolumn!) from the evaluation of
@@ -179,7 +179,7 @@ public:
    */
   void
   evaluate_all_convergence_rates(const std::string& reference_column_key,
-                                 const RateMode     rate_mode);
+                                 const RateMode rate_mode);
 
   /**
    * Evaluate convergence rates due to the <tt>rate_mode</tt>. This function

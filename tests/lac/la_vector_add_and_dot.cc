@@ -24,7 +24,7 @@ check()
 {
   for(unsigned int test = 0; test < 5; ++test)
     {
-      const unsigned int            size = 17 + test * 1101;
+      const unsigned int size = 17 + test * 1101;
       LinearAlgebra::Vector<number> v1(size), v2(size), v3(size), check(size);
       // Check that the assignment works
       v1 = 0.;

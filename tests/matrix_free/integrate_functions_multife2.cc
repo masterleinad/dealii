@@ -61,9 +61,9 @@ public:
               update_values | update_gradients | update_JxW_values){};
 
   void
-  operator()(const MatrixFree<dim, Number>&               data,
-             VectorType&                                  dst,
-             const VectorType&                            src,
+  operator()(const MatrixFree<dim, Number>& data,
+             VectorType& dst,
+             const VectorType& src,
              const std::pair<unsigned int, unsigned int>& cell_range) const;
 
   void
@@ -80,22 +80,22 @@ public:
 
 private:
   const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val0;
-  mutable FEValues<dim>          fe_val01;
-  mutable FEValues<dim>          fe_val1;
+  mutable FEValues<dim> fe_val0;
+  mutable FEValues<dim> fe_val01;
+  mutable FEValues<dim> fe_val1;
 };
 
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
 operator()(const MatrixFree<dim, Number>& data,
-           std::vector<Vector<Number>>&   dst,
+           std::vector<Vector<Number>>& dst,
            const std::vector<Vector<Number>>&,
            const std::pair<unsigned int, unsigned int>& cell_range) const
 {
-  FEEvaluation<dim, 0, 1, 1, Number>                     fe_eval0(data, 0, 0);
+  FEEvaluation<dim, 0, 1, 1, Number> fe_eval0(data, 0, 0);
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval1(data, 1, 1);
-  FEEvaluation<dim, 0, fe_degree + 1, 1, Number>         fe_eval01(data, 0, 1);
+  FEEvaluation<dim, 0, fe_degree + 1, 1, Number> fe_eval01(data, 0, 1);
   const unsigned int n_q_points0    = fe_eval0.n_q_points;
   const unsigned int n_q_points1    = fe_eval1.n_q_points;
   const unsigned int dofs_per_cell0 = fe_eval0.dofs_per_cell;
@@ -104,8 +104,8 @@ operator()(const MatrixFree<dim, Number>& data,
   AlignedVector<VectorizedArray<Number>> gradients0(dim * n_q_points0);
   AlignedVector<VectorizedArray<Number>> values1(n_q_points1);
   AlignedVector<VectorizedArray<Number>> gradients1(dim * n_q_points1);
-  std::vector<types::global_dof_index>   dof_indices0(dofs_per_cell0);
-  std::vector<types::global_dof_index>   dof_indices1(dofs_per_cell1);
+  std::vector<types::global_dof_index> dof_indices0(dofs_per_cell0);
+  std::vector<types::global_dof_index> dof_indices1(dofs_per_cell1);
   for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval0.reinit(cell);
@@ -257,8 +257,8 @@ test()
       tria.execute_coarsening_and_refinement();
     }
 
-  FE_DGQ<dim>     fe0(0);
-  FE_Q<dim>       fe1(fe_degree);
+  FE_DGQ<dim> fe0(0);
+  FE_Q<dim> fe1(fe_degree);
   DoFHandler<dim> dof0(tria);
   dof0.distribute_dofs(fe0);
   DoFHandler<dim> dof1(tria);
@@ -281,7 +281,7 @@ test()
   dst[5].reinit(dst[0]);
 
   std::vector<const ConstraintMatrix*> constraints(2);
-  ConstraintMatrix                     constraint0;
+  ConstraintMatrix constraint0;
   constraint0.close();
   constraints[0] = &constraint0;
   ConstraintMatrix constraint1;

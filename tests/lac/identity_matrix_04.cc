@@ -30,8 +30,8 @@ check_vmult()
   sp.compress();
 
   SparseMatrix<number> M(sp, IdentityMatrix(4));
-  Vector<number>       u(4);
-  Vector<number>       v(4);
+  Vector<number> u(4);
+  Vector<number> v(4);
 
   for(unsigned int i = 0; i < 4; ++i)
     u(i) = i + 1;

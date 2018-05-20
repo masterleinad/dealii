@@ -96,7 +96,7 @@ test_isotropic(int type, std::ostream* logfile)
       if(!single_file)
         {
           // graphical output
-          GridOut              grid_out;
+          GridOut grid_out;
           GridOutFlags::Eps<2> eps2(
             GridOutFlags::EpsFlagsBase::width, 300, .01, false, 5, false);
           grid_out.set_flags(eps2);

@@ -38,7 +38,7 @@ namespace hp
       return *fes.begin();
 
     const hp::FECollection<dim, spacedim>& fe_collection = *this;
-    std::set<unsigned int>                 candidate_fes;
+    std::set<unsigned int> candidate_fes;
 
     // first loop over all FEs and check which can dominate those given in @p fes:
     for(unsigned int cur_fe = 0; cur_fe < fe_collection.size(); cur_fe++)

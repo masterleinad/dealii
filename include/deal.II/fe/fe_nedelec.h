@@ -213,7 +213,7 @@ public:
    */
   virtual void
   get_subface_interpolation_matrix(const FiniteElement<dim>& source,
-                                   const unsigned int        subface,
+                                   const unsigned int subface,
                                    FullMatrix<double>& matrix) const override;
   /**
    * Projection from a fine grid space onto a coarse grid space. If this
@@ -231,7 +231,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_restriction_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -257,7 +257,7 @@ public:
    */
   virtual const FullMatrix<double>&
   get_prolongation_matrix(
-    const unsigned int         child,
+    const unsigned int child,
     const RefinementCase<dim>& refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
@@ -265,7 +265,7 @@ public:
   virtual void
   convert_generalized_support_point_values_to_dof_values(
     const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    std::vector<double>& nodal_values) const override;
 
   /**
    * Return a list of constant modes of the element.

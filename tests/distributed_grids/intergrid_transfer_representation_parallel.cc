@@ -76,7 +76,7 @@ test(unsigned n_refinements)
       tria2.execute_coarsening_and_refinement();
     }
 
-  FE_DGQ<dim>     fe_dg(0);
+  FE_DGQ<dim> fe_dg(0);
   DoFHandler<dim> dof_handler1(tria1);
   dof_handler1.distribute_dofs(fe_dg);
 

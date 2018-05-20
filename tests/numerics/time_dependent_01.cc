@@ -35,7 +35,7 @@ public:
   virtual void
   end_sweep()
   {
-    static Threads::Mutex      mutex;
+    static Threads::Mutex mutex;
     Threads::Mutex::ScopedLock lock(mutex);
     end_sweep_flags[time_step_number] = true;
   }
@@ -52,7 +52,7 @@ void
 test()
 {
   // create time steps, more than there are likely threads on current machines
-  TimeDependent      td(TimeDependent::TimeSteppingData(0, 0),
+  TimeDependent td(TimeDependent::TimeSteppingData(0, 0),
                    TimeDependent::TimeSteppingData(0, 0),
                    TimeDependent::TimeSteppingData(0, 0));
   const unsigned int n_time_steps = 10000;

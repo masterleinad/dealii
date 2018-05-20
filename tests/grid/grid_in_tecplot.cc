@@ -28,7 +28,7 @@ void
 test(const std::string& infilename)
 {
   Triangulation<dim> tria;
-  GridIn<dim>        gi;
+  GridIn<dim> gi;
   gi.attach_triangulation(tria);
   gi.read(infilename);
 

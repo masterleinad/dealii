@@ -52,11 +52,11 @@ test()
   // processor are empty
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tr);
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 
-  IndexSet                      owned_set = dofh.locally_owned_dofs();
+  IndexSet owned_set = dofh.locally_owned_dofs();
   TrilinosWrappers::MPI::Vector x;
 
   x.reinit(owned_set, MPI_COMM_WORLD);

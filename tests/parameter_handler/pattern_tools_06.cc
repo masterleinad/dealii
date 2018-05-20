@@ -43,9 +43,9 @@ main()
 {
   initlog();
 
-  std::map<int, double>                t0;
-  std::unordered_map<int, double>      t1;
-  std::multimap<int, double>           t2;
+  std::map<int, double> t0;
+  std::unordered_map<int, double> t1;
+  std::multimap<int, double> t2;
   std::unordered_multimap<int, double> t3;
 
   auto p  = std::make_pair(5, 1.0);

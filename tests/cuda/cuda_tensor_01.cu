@@ -24,9 +24,9 @@
 void
 test_cpu()
 {
-  double             a[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-  const unsigned int dim     = 3;
-  Tensor<2, dim>     t;
+  double a[3][3]         = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+  const unsigned int dim = 3;
+  Tensor<2, dim> t;
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
       t[i][j] = a[i][j];
@@ -60,9 +60,9 @@ void
 test_gpu()
 {
   const unsigned int dim = 3;
-  double*            norm_dev;
-  double             norm_host;
-  Tensor<2, dim>*    t_dev;
+  double* norm_dev;
+  double norm_host;
+  Tensor<2, dim>* t_dev;
 
   // Allocate objects on the device
   cudaError_t cuda_error = cudaMalloc(&t_dev, sizeof(Tensor<2, dim>));

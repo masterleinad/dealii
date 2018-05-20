@@ -46,11 +46,11 @@ main(int argc, char** argv)
   try
     {
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-      Vec                              vpetsc;
+      Vec vpetsc;
       int ierr = VecCreateSeq(PETSC_COMM_SELF, 100, &vpetsc);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
       {
-        PETScWrappers::VectorBase  v(vpetsc);
+        PETScWrappers::VectorBase v(vpetsc);
         PETScWrappers::MPI::Vector w(PETSC_COMM_SELF, 100, 100);
         test(v, w);
       }

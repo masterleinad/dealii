@@ -74,8 +74,8 @@ namespace Step22
     solve();
     void
     get_point_value(const Point<dim> point,
-                    const int        proc,
-                    Vector<double>&  value) const;
+                    const int proc,
+                    Vector<double>& value) const;
     void
     check_periodicity() const;
     void
@@ -88,10 +88,10 @@ namespace Step22
     MPI_Comm mpi_communicator;
 
     parallel::distributed::Triangulation<dim> triangulation;
-    FESystem<dim>                             fe;
-    DoFHandler<dim>                           dof_handler;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
 
-    ConstraintMatrix      constraints;
+    ConstraintMatrix constraints;
     std::vector<IndexSet> owned_partitioning;
     std::vector<IndexSet> relevant_partitioning;
 
@@ -103,36 +103,36 @@ namespace Step22
     ConditionalOStream pcout;
 
     FullMatrix<double> rot_matrix;
-    Tensor<1, dim>     offset;
+    Tensor<1, dim> offset;
   };
 
   template <class Matrix, class Preconditioner>
   class InverseMatrix : public Preconditioner
   {
   public:
-    InverseMatrix(const Matrix&         m,
+    InverseMatrix(const Matrix& m,
                   const Preconditioner& preconditioner,
-                  const IndexSet&       locally_owned,
-                  const MPI_Comm&       mpi_communicator);
+                  const IndexSet& locally_owned,
+                  const MPI_Comm& mpi_communicator);
 
     void
-    vmult(TrilinosWrappers::MPI::Vector&       dst,
+    vmult(TrilinosWrappers::MPI::Vector& dst,
           const TrilinosWrappers::MPI::Vector& src) const;
 
   private:
-    const SmartPointer<const Matrix>         matrix;
+    const SmartPointer<const Matrix> matrix;
     const SmartPointer<const Preconditioner> preconditioner;
 
-    const MPI_Comm*                       mpi_communicator;
+    const MPI_Comm* mpi_communicator;
     mutable TrilinosWrappers::MPI::Vector tmp;
   };
 
   template <class Matrix, class Preconditioner>
   InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
-    const Matrix&         m,
+    const Matrix& m,
     const Preconditioner& preconditioner,
-    const IndexSet&       locally_owned,
-    const MPI_Comm&       mpi_communicator)
+    const IndexSet& locally_owned,
+    const MPI_Comm& mpi_communicator)
     : matrix(&m),
       preconditioner(&preconditioner),
       mpi_communicator(&mpi_communicator),
@@ -142,7 +142,7 @@ namespace Step22
   template <class Matrix, class Preconditioner>
   void
   InverseMatrix<Matrix, Preconditioner>::vmult(
-    TrilinosWrappers::MPI::Vector&       dst,
+    TrilinosWrappers::MPI::Vector& dst,
     const TrilinosWrappers::MPI::Vector& src) const
   {
     SolverControl solver_control(
@@ -160,19 +160,19 @@ namespace Step22
   public:
     SchurComplement(const TrilinosWrappers::BlockSparseMatrix& system_matrix,
                     const InverseMatrix<TrilinosWrappers::SparseMatrix,
-                                        Preconditioner>&       A_inverse,
-                    const IndexSet&                            owned_pres,
+                                        Preconditioner>& A_inverse,
+                    const IndexSet& owned_pres,
                     const MPI_Comm& mpi_communicator);
 
     void
-    vmult(TrilinosWrappers::MPI::Vector&       dst,
+    vmult(TrilinosWrappers::MPI::Vector& dst,
           const TrilinosWrappers::MPI::Vector& src) const;
 
   private:
     const SmartPointer<const TrilinosWrappers::BlockSparseMatrix> system_matrix;
     const SmartPointer<
       const InverseMatrix<TrilinosWrappers::SparseMatrix, Preconditioner>>
-                                          A_inverse;
+      A_inverse;
     mutable TrilinosWrappers::MPI::Vector tmp1, tmp2;
   };
 
@@ -180,7 +180,7 @@ namespace Step22
   SchurComplement<Preconditioner>::SchurComplement(
     const TrilinosWrappers::BlockSparseMatrix& system_matrix,
     const InverseMatrix<TrilinosWrappers::SparseMatrix, Preconditioner>&
-                    A_inverse,
+      A_inverse,
     const IndexSet& owned_vel,
     const MPI_Comm& mpi_communicator)
     : system_matrix(&system_matrix),
@@ -192,7 +192,7 @@ namespace Step22
   template <class Preconditioner>
   void
   SchurComplement<Preconditioner>::vmult(
-    TrilinosWrappers::MPI::Vector&       dst,
+    TrilinosWrappers::MPI::Vector& dst,
     const TrilinosWrappers::MPI::Vector& src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
@@ -353,7 +353,7 @@ namespace Step22
     const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> local_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     local_rhs(dofs_per_cell);
+    Vector<double> local_rhs(dofs_per_cell);
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -361,8 +361,8 @@ namespace Step22
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> symgrad_phi_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -474,8 +474,8 @@ namespace Step22
   template <int dim>
   void
   StokesProblem<dim>::get_point_value(const Point<dim> point,
-                                      const int        proc,
-                                      Vector<double>&  value) const
+                                      const int proc,
+                                      Vector<double>& value) const
   {
     try
       {
@@ -518,7 +518,7 @@ namespace Step22
   void
   StokesProblem<3>::check_periodicity() const
   {
-    const unsigned int  dim = 3;
+    const unsigned int dim = 3;
     Quadrature<dim - 1> q_dummy(
       fe.base_element(0).get_unit_face_support_points());
     FEFaceValues<dim> fe_face_values(fe, q_dummy, update_quadrature_points);
@@ -564,7 +564,7 @@ namespace Step22
     std::vector<double> global_quad_points_first;
     {
       // how many elements are sent from which process?
-      unsigned int       n_my_elements = local_quad_points_first.size();
+      unsigned int n_my_elements = local_quad_points_first.size();
       const unsigned int n_processes
         = Utilities::MPI::n_mpi_processes(mpi_communicator);
       std::vector<int> n_elements(n_processes);
@@ -593,7 +593,7 @@ namespace Step22
     std::vector<double> global_quad_points_second;
     {
       // how many elements are sent from which process?
-      unsigned int       n_my_elements = local_quad_points_second.size();
+      unsigned int n_my_elements = local_quad_points_second.size();
       const unsigned int n_processes
         = Utilities::MPI::n_mpi_processes(mpi_communicator);
       std::vector<int> n_elements(n_processes);
@@ -629,7 +629,7 @@ namespace Step22
           Vector<double> value_1(dim + 1);
           Vector<double> value_2(dim + 1);
 
-          Point<dim>     point_1, point_2;
+          Point<dim> point_1, point_2;
           Vector<double> vector_point_1(dim);
           for(unsigned int c = 0; c < dim; ++c)
             {
@@ -681,7 +681,7 @@ namespace Step22
           Vector<double> value_1(dim + 1);
           Vector<double> value_2(dim + 1);
 
-          Point<dim>     point_1, point_2;
+          Point<dim> point_1, point_2;
           Vector<double> vector_point_1(dim);
           for(unsigned int c = 0; c < dim; ++c)
             {

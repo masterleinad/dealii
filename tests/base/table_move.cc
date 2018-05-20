@@ -22,7 +22,7 @@ main()
 {
   initlog();
 
-  const unsigned int     entries[] = {1, 2, 3, 4, 5, 6};
+  const unsigned int entries[] = {1, 2, 3, 4, 5, 6};
   Table<2, unsigned int> t(2, 3);
   t.fill(entries, true);
 

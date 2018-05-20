@@ -20,7 +20,7 @@
 #include <deal.II/base/aligned_vector.h>
 
 typedef AlignedVector<unsigned int> VEC;
-typedef AlignedVector<VEC>          VECVEC;
+typedef AlignedVector<VEC> VECVEC;
 void
 print_vec(VECVEC& v)
 {
@@ -38,7 +38,7 @@ void
 test()
 {
   typedef AlignedVector<unsigned int> VEC;
-  VEC                                 a(4);
+  VEC a(4);
   a[0] = 2;
   a[1] = 1;
   a[2] = 42;

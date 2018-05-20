@@ -56,7 +56,7 @@ namespace
   void
   assign_1d_boundary_ids(
     const std::map<unsigned int, types::boundary_id>& boundary_ids,
-    Triangulation<1, spacedim>&                       triangulation)
+    Triangulation<1, spacedim>& triangulation)
   {
     if(boundary_ids.size() > 0)
       for(typename Triangulation<1, spacedim>::active_cell_iterator cell
@@ -134,8 +134,8 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
   ///////////////////Declaring storage and mappings//////////////////
 
   std::vector<Point<spacedim>> vertices;
-  std::vector<CellData<dim>>   cells;
-  SubCellData                  subcelldata;
+  std::vector<CellData<dim>> cells;
+  SubCellData subcelldata;
 
   std::string keyword;
 
@@ -170,7 +170,7 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
 
   //////////////////ignoring space between points and cells sections////////////////////
   std::string checkline;
-  int         no;
+  int no;
   in.ignore(256,
             '\n'); //this move pointer to the next line ignoring unwanted no.
   no = in.tellg();
@@ -428,8 +428,8 @@ GridIn<dim, spacedim>::read_unv(std::istream& in)
 
   while(tmp != -1) // we do until reach end of 2411
     {
-      int    no; // unv
-      int    dummy;
+      int no; // unv
+      int dummy;
       double x[3];
 
       AssertThrow(in, ExcIO());
@@ -464,7 +464,7 @@ GridIn<dim, spacedim>::read_unv(std::istream& in)
   AssertThrow(tmp == 2412, ExcUnknownSectionType(tmp));
 
   std::vector<CellData<dim>> cells; // vector of cells
-  SubCellData                subcelldata;
+  SubCellData subcelldata;
 
   std::map<int, int>
     cell_indices; // # cell in unv (key) ---> # cell in deal.II (value)
@@ -647,7 +647,7 @@ GridIn<dim, spacedim>::read_unv(std::istream& in)
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::read_ucd(std::istream& in,
-                                const bool    apply_all_indicators_to_manifolds)
+                                const bool apply_all_indicators_to_manifolds)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   AssertThrow(in, ExcIO());
@@ -657,7 +657,7 @@ GridIn<dim, spacedim>::read_ucd(std::istream& in,
 
   unsigned int n_vertices;
   unsigned int n_cells;
-  int          dummy;
+  int dummy;
 
   in >> n_vertices >> n_cells >> dummy // number of data vectors
     >> dummy                           // cell data
@@ -673,7 +673,7 @@ GridIn<dim, spacedim>::read_ucd(std::istream& in,
 
   for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
     {
-      int    vertex_number;
+      int vertex_number;
       double x[3];
 
       // read vertex
@@ -691,7 +691,7 @@ GridIn<dim, spacedim>::read_ucd(std::istream& in,
 
   // set up array of cells
   std::vector<CellData<dim>> cells;
-  SubCellData                subcelldata;
+  SubCellData subcelldata;
 
   for(unsigned int cell = 0; cell < n_cells; ++cell)
     {
@@ -988,7 +988,7 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
   AssertThrow(line == "Vertices", ExcInvalidDBMESHInput(line));
 
   unsigned int n_vertices;
-  double       dummy;
+  double dummy;
 
   in >> n_vertices;
   std::vector<Point<spacedim>> vertices(n_vertices);
@@ -1048,8 +1048,8 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
   AssertThrow(line == "Quadrilaterals", ExcInvalidDBMESHInput(line));
 
   std::vector<CellData<dim>> cells;
-  SubCellData                subcelldata;
-  unsigned int               n_cells;
+  SubCellData subcelldata;
+  unsigned int n_cells;
   in >> n_cells;
   for(unsigned int cell = 0; cell < n_cells; ++cell)
     {
@@ -1133,7 +1133,7 @@ GridIn<2>::read_xda(std::istream& in)
 
   // set up array of cells
   std::vector<CellData<2>> cells(n_cells);
-  SubCellData              subcelldata;
+  SubCellData subcelldata;
 
   for(unsigned int cell = 0; cell < n_cells; ++cell)
     {
@@ -1201,7 +1201,7 @@ GridIn<3>::read_xda(std::istream& in)
 
   // set up array of cells
   std::vector<CellData<3>> cells(n_cells);
-  SubCellData              subcelldata;
+  SubCellData subcelldata;
 
   for(unsigned int cell = 0; cell < n_cells; ++cell)
     {
@@ -1255,7 +1255,7 @@ GridIn<dim, spacedim>::read_msh(std::istream& in)
   unsigned int n_vertices;
   unsigned int n_cells;
   unsigned int dummy;
-  std::string  line;
+  std::string line;
 
   in >> line;
 
@@ -1273,7 +1273,7 @@ GridIn<dim, spacedim>::read_msh(std::istream& in)
   // rest of the header
   if(gmsh_file_format == 2)
     {
-      double       version;
+      double version;
       unsigned int file_type, data_size;
 
       in >> version >> file_type >> data_size;
@@ -1319,7 +1319,7 @@ GridIn<dim, spacedim>::read_msh(std::istream& in)
 
   for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
     {
-      int    vertex_number;
+      int vertex_number;
       double x[3];
 
       // read vertex
@@ -1348,8 +1348,8 @@ GridIn<dim, spacedim>::read_msh(std::istream& in)
   // set up array of cells and subcells (faces). In 1d, there is currently no
   // standard way in deal.II to pass boundary indicators attached to individual
   // vertices, so do this by hand via the boundary_ids_1d array
-  std::vector<CellData<dim>>                 cells;
-  SubCellData                                subcelldata;
+  std::vector<CellData<dim>> cells;
+  SubCellData subcelldata;
   std::map<unsigned int, types::boundary_id> boundary_ids_1d;
 
   for(unsigned int cell = 0; cell < n_cells; ++cell)
@@ -2087,14 +2087,14 @@ GridIn<3>::read_netcdf(const std::string& filename)
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::parse_tecplot_header(
-  std::string&               header,
+  std::string& header,
   std::vector<unsigned int>& tecplot2deal,
-  unsigned int&              n_vars,
-  unsigned int&              n_vertices,
-  unsigned int&              n_cells,
+  unsigned int& n_vars,
+  unsigned int& n_vertices,
+  unsigned int& n_cells,
   std::vector<unsigned int>& IJK,
-  bool&                      structured,
-  bool&                      blocked)
+  bool& structured,
+  bool& blocked)
 {
   Assert(tecplot2deal.size() == dim, ExcInternalError());
   Assert(IJK.size() == dim, ExcInternalError());
@@ -2345,8 +2345,8 @@ GridIn<2>::read_tecplot(std::istream& in)
   // this information from the header string
   std::vector<unsigned int> tecplot2deal(dim);
   std::vector<unsigned int> IJK(dim);
-  unsigned int              n_vars, n_vertices, n_cells;
-  bool                      structured, blocked;
+  unsigned int n_vars, n_vertices, n_cells;
+  bool structured, blocked;
 
   parse_tecplot_header(header,
                        tecplot2deal,
@@ -2367,7 +2367,7 @@ GridIn<2>::read_tecplot(std::istream& in)
   vertices[0] = Point<spacedim>();
   // reserve space for cells
   std::vector<CellData<dim>> cells(n_cells);
-  SubCellData                subcelldata;
+  SubCellData subcelldata;
 
   if(blocked)
     {
@@ -2488,7 +2488,7 @@ GridIn<2>::read_tecplot(std::istream& in)
           }
       Assert(cell == n_cells, ExcInternalError());
       std::vector<unsigned int> boundary_vertices(2 * I + 2 * J - 4);
-      unsigned int              k = 0;
+      unsigned int k = 0;
       for(unsigned int i = 1; i < I + 1; ++i)
         {
           boundary_vertices[k] = i;
@@ -2559,9 +2559,9 @@ template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::read_assimp(const std::string& filename,
                                    const unsigned int mesh_index,
-                                   const bool         remove_duplicates,
-                                   const double       tol,
-                                   const bool         ignore_unsupported_types)
+                                   const bool remove_duplicates,
+                                   const double tol,
+                                   const bool ignore_unsupported_types)
 {
 #ifdef DEAL_II_WITH_ASSIMP
   // Only good for surface grids.
@@ -2595,8 +2595,8 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
 
   // Deal.II objects are created empty, and then filled with imported file.
   std::vector<Point<spacedim>> vertices;
-  std::vector<CellData<dim>>   cells;
-  SubCellData                  subcelldata;
+  std::vector<CellData<dim>> cells;
+  SubCellData subcelldata;
 
   // A series of counters to merge cells.
   unsigned int v_offset = 0;
@@ -2625,11 +2625,11 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
         }
       // Vertices
       const unsigned int n_vertices = mesh->mNumVertices;
-      const aiVector3D*  mVertices  = mesh->mVertices;
+      const aiVector3D* mVertices   = mesh->mVertices;
 
       // Faces
       const unsigned int n_faces = mesh->mNumFaces;
-      const aiFace*      mFaces  = mesh->mFaces;
+      const aiFace* mFaces       = mesh->mFaces;
 
       vertices.resize(v_offset + n_vertices);
       cells.resize(c_offset + n_faces);
@@ -2744,7 +2744,7 @@ GridIn<dim, spacedim>::skip_empty_lines(std::istream& in)
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::skip_comment_lines(std::istream& in,
-                                          const char    comment_start)
+                                          const char comment_start)
 {
   char c;
   // loop over the following comment
@@ -2777,8 +2777,8 @@ GridIn<dim, spacedim>::debug_output_grid(
 template <>
 void
 GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
-                             const std::vector<Point<2>>&    vertices,
-                             std::ostream&                   out)
+                             const std::vector<Point<2>>& vertices,
+                             std::ostream& out)
 {
   double min_x = vertices[cells[0].vertices[0]](0),
          max_x = vertices[cells[0].vertices[0]](0),
@@ -2835,8 +2835,8 @@ GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
 template <>
 void
 GridIn<3>::debug_output_grid(const std::vector<CellData<3>>& cells,
-                             const std::vector<Point<3>>&    vertices,
-                             std::ostream&                   out)
+                             const std::vector<Point<3>>& vertices,
+                             std::ostream& out)
 {
   for(unsigned int cell = 0; cell < cells.size(); ++cell)
     {
@@ -2908,7 +2908,7 @@ void
 GridIn<dim, spacedim>::read(const std::string& filename, Format format)
 {
   // Search file class for meshes
-  PathSearch  search("MESH");
+  PathSearch search("MESH");
   std::string name;
   // Open the file and remember its name
   if(format == Default)
@@ -3171,7 +3171,7 @@ namespace
                 std::vector<double> node(dim + 1);
 
                 std::istringstream iss(line);
-                char               comma;
+                char comma;
                 for(unsigned int i = 0; i < dim + 1; ++i)
                   iss >> node[i] >> comma;
 
@@ -3211,7 +3211,7 @@ namespace
                   goto cont;
 
                 std::istringstream iss(line);
-                char               comma;
+                char comma;
 
                 // We will store the material id in the zeroth entry of the
                 // vector and the rest of the elements represent the global
@@ -3268,13 +3268,13 @@ namespace
                 // Surface can be created from ELSET, or directly from cells
                 // If elsets_list contains a key with specific name - refers to that ELSET, otherwise refers to cell
                 std::istringstream iss(line);
-                int                el_idx;
-                int                face_number;
-                char               temp;
+                int el_idx;
+                int face_number;
+                char temp;
 
                 // Get relevant faces, taking into account the element orientation
                 std::vector<double> quad_node_list;
-                const std::string   elset_name = line.substr(0, line.find(','));
+                const std::string elset_name = line.substr(0, line.find(','));
                 if(elsets_list.count(elset_name) != 0)
                   {
                     // Surface refers to ELSET
@@ -3333,17 +3333,17 @@ namespace
             // 1. If the header contains the 'GENERATE' keyword, then the next line describes range of cells as:
             //    cell_id_start, cell_id_end, cell_step
             // 2. If the header does not contain the 'GENERATE' keyword, then the next lines contain cells numbers
-            std::vector<int>  elements;
+            std::vector<int> elements;
             const std::size_t generate_idx = line.find("GENERATE");
             if(generate_idx != std::string::npos)
               {
                 // Option (1)
                 std::getline(input_stream, line);
                 std::istringstream iss(line);
-                char               comma;
-                int                elid_start;
-                int                elid_end;
-                int                elis_step
+                char comma;
+                int elid_start;
+                int elid_end;
+                int elis_step
                   = 1; // Default value set in case stride not provided
                 // Some files don't have the stride size
                 // Compare mesh test cases ./grids/abaqus/3d/other_simple.inp to ./grids/abaqus/2d/2d_test_abaqus.inp
@@ -3369,8 +3369,8 @@ namespace
                       break;
 
                     std::istringstream iss(line);
-                    char               comma;
-                    int                elid;
+                    char comma;
+                    int elid;
                     while(!iss.eof())
                       {
                         iss >> elid >> comma;
@@ -3412,7 +3412,7 @@ namespace
             const std::size_t last_equal
               = line.find("MATERIAL=") + material_key.size();
             const std::size_t material_id_start = line.find('-', last_equal);
-            int               material_id       = 0;
+            int material_id                     = 0;
             from_string(
               material_id, line.substr(material_id_start + 1), std::dec);
 

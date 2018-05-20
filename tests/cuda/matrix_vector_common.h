@@ -51,7 +51,7 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
 
-  MappingQGeneric<dim>                  mapping(fe_degree);
+  MappingQGeneric<dim> mapping(fe_degree);
   CUDAWrappers::MatrixFree<dim, Number> mf_data;
   typename CUDAWrappers::MatrixFree<dim, Number>::AdditionalData
     additional_data;
@@ -61,10 +61,10 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   const QGauss<1> quad(n_q_points_1d);
   mf_data.reinit(mapping, dof, constraints, quad, additional_data);
 
-  const unsigned int                                    n_dofs = dof.n_dofs();
+  const unsigned int n_dofs = dof.n_dofs();
   MatrixFreeTest<dim, fe_degree, Number, n_q_points_1d> mf(mf_data);
-  Vector<Number>                              in_host(n_dofs), out_host(n_dofs);
-  LinearAlgebra::ReadWriteVector<Number>      in(n_dofs), out(n_dofs);
+  Vector<Number> in_host(n_dofs), out_host(n_dofs);
+  LinearAlgebra::ReadWriteVector<Number> in(n_dofs), out(n_dofs);
   LinearAlgebra::CUDAWrappers::Vector<Number> in_device(n_dofs);
   LinearAlgebra::CUDAWrappers::Vector<Number> out_device(n_dofs);
 

@@ -103,10 +103,10 @@ namespace Utilities
 
       template <typename T>
       void
-      all_reduce(const MPI_Op&             mpi_op,
+      all_reduce(const MPI_Op& mpi_op,
                  const ArrayView<const T>& values,
-                 const MPI_Comm&           mpi_communicator,
-                 const ArrayView<T>&       output)
+                 const MPI_Comm& mpi_communicator,
+                 const ArrayView<T>& output)
       {
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
@@ -114,12 +114,12 @@ namespace Utilities
           {
 #  ifdef DEBUG
             {
-              const unsigned int rank     = this_mpi_process(mpi_communicator);
-              unsigned int       size     = values.size();
-              unsigned int       size_min = 0;
-              unsigned int       size_max = 0;
-              int                ierr2    = 0;
-              ierr2                       = MPI_Reduce(&size,
+              const unsigned int rank = this_mpi_process(mpi_communicator);
+              unsigned int size       = values.size();
+              unsigned int size_min   = 0;
+              unsigned int size_max   = 0;
+              int ierr2               = 0;
+              ierr2                   = MPI_Reduce(&size,
                                  &size_min,
                                  1,
                                  MPI_UNSIGNED,
@@ -169,10 +169,10 @@ namespace Utilities
 
       template <typename T>
       void
-      all_reduce(const MPI_Op&                           mpi_op,
+      all_reduce(const MPI_Op& mpi_op,
                  const ArrayView<const std::complex<T>>& values,
-                 const MPI_Comm&                         mpi_communicator,
-                 const ArrayView<std::complex<T>>&       output)
+                 const MPI_Comm& mpi_communicator,
+                 const ArrayView<std::complex<T>>& output)
       {
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
@@ -235,8 +235,8 @@ namespace Utilities
     template <typename T>
     void
     sum(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       sums)
+        const MPI_Comm& mpi_communicator,
+        const ArrayView<T>& sums)
     {
       internal::all_reduce(MPI_SUM, values, mpi_communicator, sums);
     }
@@ -244,7 +244,7 @@ namespace Utilities
     template <int rank, int dim, typename Number>
     Tensor<rank, dim, Number>
     sum(const Tensor<rank, dim, Number>& local,
-        const MPI_Comm&                  mpi_communicator)
+        const MPI_Comm& mpi_communicator)
     {
       Tensor<rank, dim, Number> sums;
       sum(local, mpi_communicator, sums);
@@ -254,7 +254,7 @@ namespace Utilities
     template <int rank, int dim, typename Number>
     SymmetricTensor<rank, dim, Number>
     sum(const SymmetricTensor<rank, dim, Number>& local,
-        const MPI_Comm&                           mpi_communicator)
+        const MPI_Comm& mpi_communicator)
     {
       const unsigned int n_entries
         = SymmetricTensor<rank, dim, Number>::n_independent_components;
@@ -278,8 +278,8 @@ namespace Utilities
     template <typename Number>
     void
     sum(const SparseMatrix<Number>& local,
-        const MPI_Comm&             mpi_communicator,
-        SparseMatrix<Number>&       global)
+        const MPI_Comm& mpi_communicator,
+        SparseMatrix<Number>& global)
     {
       Assert(
         local.get_sparsity_pattern() == global.get_sparsity_pattern(),
@@ -328,8 +328,8 @@ namespace Utilities
     template <typename T>
     void
     max(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       maxima)
+        const MPI_Comm& mpi_communicator,
+        const ArrayView<T>& maxima)
     {
       internal::all_reduce(MPI_MAX, values, mpi_communicator, maxima);
     }
@@ -364,8 +364,8 @@ namespace Utilities
     template <typename T>
     void
     min(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       minima)
+        const MPI_Comm& mpi_communicator,
+        const ArrayView<T>& minima)
     {
       internal::all_reduce(MPI_MIN, values, mpi_communicator, minima);
     }

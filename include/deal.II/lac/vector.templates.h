@@ -88,11 +88,11 @@ namespace internal
   template <typename Number>
   void
   copy_petsc_vector(const PETScWrappers::VectorBase& v,
-                    ::dealii::Vector<Number>&        out)
+                    ::dealii::Vector<Number>& out)
   {
     // Create a sequential PETSc vector and then copy over the entries into
     // the deal.II vector.
-    Vec        sequential_vector;
+    Vec sequential_vector;
     VecScatter scatter_context;
 
     PetscErrorCode ierr
@@ -310,7 +310,7 @@ template <typename Number>
 template <typename Number2>
 void
 Vector<Number>::reinit(const Vector<Number2>& v,
-                       const bool             omit_zeroing_entries)
+                       const bool omit_zeroing_entries)
 {
   thread_loop_partitioner = v.thread_loop_partitioner;
 
@@ -433,7 +433,7 @@ Number Vector<Number>::operator*(const Vector<Number2>& v) const
 
   Assert(vec_size == v.size(), ExcDimensionMismatch(vec_size, v.size()));
 
-  Number                                           sum;
+  Number sum;
   internal::VectorOperations::Dot<Number, Number2> dot(values.get(),
                                                        v.values.get());
   internal::VectorOperations::parallel_reduce(
@@ -449,7 +449,7 @@ Vector<Number>::norm_sqr() const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
-  real_type                                            sum;
+  real_type sum;
   internal::VectorOperations::Norm2<Number, real_type> norm2(values.get());
   internal::VectorOperations::parallel_reduce(
     norm2, 0, vec_size, sum, thread_loop_partitioner);
@@ -465,7 +465,7 @@ Vector<Number>::mean_value() const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
-  Number                                        sum;
+  Number sum;
   internal::VectorOperations::MeanValue<Number> mean(values.get());
   internal::VectorOperations::parallel_reduce(
     mean, 0, vec_size, sum, thread_loop_partitioner);
@@ -479,7 +479,7 @@ Vector<Number>::l1_norm() const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
-  real_type                                            sum;
+  real_type sum;
   internal::VectorOperations::Norm1<Number, real_type> norm1(values.get());
   internal::VectorOperations::parallel_reduce(
     norm1, 0, vec_size, sum, thread_loop_partitioner);
@@ -498,7 +498,7 @@ Vector<Number>::l2_norm() const
   // precision) using the BLAS approach with a weight, see e.g. dnrm2.f.
   Assert(vec_size != 0, ExcEmptyObject());
 
-  real_type                                            norm_square;
+  real_type norm_square;
   internal::VectorOperations::Norm2<Number, real_type> norm2(values.get());
   internal::VectorOperations::parallel_reduce(
     norm2, 0, vec_size, norm_square, thread_loop_partitioner);
@@ -540,7 +540,7 @@ Vector<Number>::lp_norm(const real_type p) const
   else if(p == 2.)
     return l2_norm();
 
-  real_type                                            sum;
+  real_type sum;
   internal::VectorOperations::NormP<Number, real_type> normp(values.get(), p);
   internal::VectorOperations::parallel_reduce(
     normp, 0, vec_size, sum, thread_loop_partitioner);
@@ -586,7 +586,7 @@ Vector<Number>::linfty_norm() const
 
 template <typename Number>
 Number
-Vector<Number>::add_and_dot(const Number          a,
+Vector<Number>::add_and_dot(const Number a,
                             const Vector<Number>& V,
                             const Vector<Number>& W)
 {
@@ -594,7 +594,7 @@ Vector<Number>::add_and_dot(const Number          a,
   AssertDimension(vec_size, V.size());
   AssertDimension(vec_size, W.size());
 
-  Number                                        sum;
+  Number sum;
   internal::VectorOperations::AddAndDot<Number> adder(
     this->values.get(), V.values.get(), W.values.get(), a);
   internal::VectorOperations::parallel_reduce(
@@ -647,9 +647,9 @@ Vector<Number>::add(const Number v)
 
 template <typename Number>
 void
-Vector<Number>::add(const Number          a,
+Vector<Number>::add(const Number a,
                     const Vector<Number>& v,
-                    const Number          b,
+                    const Number b,
                     const Vector<Number>& w)
 {
   AssertIsFinite(a);
@@ -857,16 +857,16 @@ Vector<Number>::print(const char* format) const
 
 template <typename Number>
 void
-Vector<Number>::print(std::ostream&      out,
+Vector<Number>::print(std::ostream& out,
                       const unsigned int precision,
-                      const bool         scientific,
-                      const bool         across) const
+                      const bool scientific,
+                      const bool across) const
 {
   Assert(vec_size != 0, ExcEmptyObject());
   AssertThrow(out, ExcIO());
 
-  std::ios::fmtflags old_flags     = out.flags();
-  unsigned int       old_precision = out.precision(precision);
+  std::ios::fmtflags old_flags = out.flags();
+  unsigned int old_precision   = out.precision(precision);
 
   out.precision(precision);
   if(scientific)
@@ -890,9 +890,9 @@ Vector<Number>::print(std::ostream&      out,
 
 template <typename Number>
 void
-Vector<Number>::print(LogStream&         out,
+Vector<Number>::print(LogStream& out,
                       const unsigned int width,
-                      const bool         across) const
+                      const bool across) const
 {
   Assert(vec_size != 0, ExcEmptyObject());
 
@@ -918,7 +918,7 @@ Vector<Number>::block_write(std::ostream& out) const
   // problems in a multithreaded
   // environment
   const size_type sz = size();
-  char            buf[16];
+  char buf[16];
 
 #ifdef DEAL_II_WITH_64BIT_INDICES
   std::sprintf(buf, "%llu", sz);

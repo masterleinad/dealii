@@ -40,14 +40,14 @@ class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
 {
 public:
   void
-  cell(MeshWorker::DoFInfo<dim>&                  dinfo,
+  cell(MeshWorker::DoFInfo<dim>& dinfo,
        typename MeshWorker::IntegrationInfo<dim>& info) const;
   void
-  boundary(MeshWorker::DoFInfo<dim>&                  dinfo,
+  boundary(MeshWorker::DoFInfo<dim>& dinfo,
            typename MeshWorker::IntegrationInfo<dim>& info) const;
   void
-  face(MeshWorker::DoFInfo<dim>&                  dinfo1,
-       MeshWorker::DoFInfo<dim>&                  dinfo2,
+  face(MeshWorker::DoFInfo<dim>& dinfo1,
+       MeshWorker::DoFInfo<dim>& dinfo2,
        typename MeshWorker::IntegrationInfo<dim>& info1,
        typename MeshWorker::IntegrationInfo<dim>& info2) const;
 };
@@ -55,7 +55,7 @@ public:
 template <int dim>
 void
 MatrixIntegrator<dim>::cell(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
+  MeshWorker::DoFInfo<dim>& dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
   LocalIntegrators::Laplace::cell_matrix(dinfo.matrix(0, false).matrix,
@@ -65,7 +65,7 @@ MatrixIntegrator<dim>::cell(
 template <int dim>
 void
 MatrixIntegrator<dim>::boundary(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
+  MeshWorker::DoFInfo<dim>& dinfo,
   typename MeshWorker::IntegrationInfo<dim>& info) const
 {
   const unsigned int deg = info.fe_values(0).get_fe().degree;
@@ -78,8 +78,8 @@ MatrixIntegrator<dim>::boundary(
 template <int dim>
 void
 MatrixIntegrator<dim>::face(
-  MeshWorker::DoFInfo<dim>&                  dinfo1,
-  MeshWorker::DoFInfo<dim>&                  dinfo2,
+  MeshWorker::DoFInfo<dim>& dinfo1,
+  MeshWorker::DoFInfo<dim>& dinfo2,
   typename MeshWorker::IntegrationInfo<dim>& info1,
   typename MeshWorker::IntegrationInfo<dim>& info2) const
 {
@@ -115,10 +115,10 @@ private:
   check_periodicity(const unsigned int cycle) const;
 
   Triangulation<dim> triangulation;
-  FE_DGQ<dim>        fe;
-  DoFHandler<dim>    dof_handler;
+  FE_DGQ<dim> fe;
+  DoFHandler<dim> dof_handler;
 
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   Vector<double> solution;
@@ -136,7 +136,7 @@ Step4<dim>::make_grid()
   GridGenerator::hyper_cube(triangulation, -1, 1, true);
   typedef typename dealii::Triangulation<dim>::cell_iterator CellIteratorTria;
   std::vector<dealii::GridTools::PeriodicFacePair<CellIteratorTria>>
-                     periodic_faces;
+    periodic_faces;
   const unsigned int b_id1     = 2;
   const unsigned int b_id2     = 3;
   const unsigned int direction = 1;
@@ -165,7 +165,7 @@ Step4<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 
-  MappingQGeneric<dim>                mapping(1);
+  MappingQGeneric<dim> mapping(1);
   MeshWorker::IntegrationInfoBox<dim> info_box;
   UpdateFlags update_flags = update_values | update_gradients;
   info_box.add_update_flags_all(update_flags);
@@ -192,7 +192,7 @@ Step4<dim>::solve()
 {
   solution = 0;
   SolverControl solver_control(1000, 1e-10, false, false);
-  SolverCG<>    solver(solver_control);
+  SolverCG<> solver(solver_control);
 
   PreconditionJacobi<SparseMatrix<double>> preconditioner;
   preconditioner.initialize(system_matrix);

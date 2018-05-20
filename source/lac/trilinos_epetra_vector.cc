@@ -55,7 +55,7 @@ namespace LinearAlgebra
     void
     Vector::reinit(const IndexSet& parallel_partitioner,
                    const MPI_Comm& communicator,
-                   const bool      omit_zeroing_entries)
+                   const bool omit_zeroing_entries)
     {
       Epetra_Map input_map
         = parallel_partitioner.make_trilinos_map(communicator, false);
@@ -71,7 +71,7 @@ namespace LinearAlgebra
 
     void
     Vector::reinit(const VectorSpaceVector<double>& V,
-                   const bool                       omit_zeroing_entries)
+                   const bool omit_zeroing_entries)
     {
       // Check that casting will work.
       Assert(dynamic_cast<const Vector*>(&V) != nullptr,
@@ -128,8 +128,8 @@ namespace LinearAlgebra
 
     void
     Vector::import(
-      const ReadWriteVector<double>&                  V,
-      VectorOperation::values                         operation,
+      const ReadWriteVector<double>& V,
+      VectorOperation::values operation,
       std::shared_ptr<const CommunicationPatternBase> communication_pattern)
     {
       // If no communication pattern is given, create one. Otherwsie, use the
@@ -163,7 +163,7 @@ namespace LinearAlgebra
 
       // The TargetMap and the SourceMap have their roles inverted.
       Epetra_FEVector source_vector(import.TargetMap());
-      double*         values = source_vector.Values();
+      double* values = source_vector.Values();
       std::copy(V.begin(), V.end(), values);
 
       if(operation == VectorOperation::insert)
@@ -215,7 +215,7 @@ namespace LinearAlgebra
 #    if DEAL_II_TRILINOS_VERSION_GTE(11, 11, 0)
           Epetra_Import data_exchange(vector->Map(),
                                       down_V.trilinos_vector().Map());
-          const int     ierr = vector->Import(
+          const int ierr = vector->Import(
             down_V.trilinos_vector(), data_exchange, Epetra_AddLocalAlso);
           Assert(ierr == 0, ExcTrilinosError(ierr));
           (void) ierr;
@@ -224,7 +224,7 @@ namespace LinearAlgebra
           // Hence, we provide a workaround in this case
 
           Epetra_MultiVector dummy(vector->Map(), 1, false);
-          Epetra_Import      data_exchange(dummy.Map(),
+          Epetra_Import data_exchange(dummy.Map(),
                                       down_V.trilinos_vector().Map());
 
           int ierr
@@ -261,7 +261,7 @@ namespace LinearAlgebra
       Assert(vector->Map().SameAs(down_V.trilinos_vector().Map()),
              ExcDifferentParallelPartitioning());
 
-      double    result(0.);
+      double result(0.);
       const int ierr = vector->Dot(down_V.trilinos_vector(), &result);
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;
@@ -297,9 +297,9 @@ namespace LinearAlgebra
     }
 
     void
-    Vector::add(const double                     a,
+    Vector::add(const double a,
                 const VectorSpaceVector<double>& V,
-                const double                     b,
+                const double b,
                 const VectorSpaceVector<double>& W)
     {
       // Check that casting will work.
@@ -327,8 +327,8 @@ namespace LinearAlgebra
     }
 
     void
-    Vector::sadd(const double                     s,
-                 const double                     a,
+    Vector::sadd(const double s,
+                 const double a,
                  const VectorSpaceVector<double>& V)
     {
       // Check that casting will work.
@@ -338,7 +338,7 @@ namespace LinearAlgebra
       *this *= s;
       // Downcast V. It fails, throws an exception.
       const Vector& down_V = dynamic_cast<const Vector&>(V);
-      Vector        tmp(down_V);
+      Vector tmp(down_V);
       tmp *= a;
       *this += tmp;
     }
@@ -388,9 +388,9 @@ namespace LinearAlgebra
     {
       // get a representation of the vector and
       // loop over all the elements
-      double*       start_ptr = (*vector)[0];
+      double* start_ptr = (*vector)[0];
       const double *ptr = start_ptr, *eptr = start_ptr + vector->MyLength();
-      unsigned int  flag = 0;
+      unsigned int flag = 0;
       while(ptr != eptr)
         {
           if(*ptr != 0)
@@ -426,7 +426,7 @@ namespace LinearAlgebra
     Vector::l1_norm() const
     {
       double norm(0.);
-      int    ierr = vector->Norm1(&norm);
+      int ierr = vector->Norm1(&norm);
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;
 
@@ -437,7 +437,7 @@ namespace LinearAlgebra
     Vector::l2_norm() const
     {
       double norm(0.);
-      int    ierr = vector->Norm2(&norm);
+      int ierr = vector->Norm2(&norm);
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;
 
@@ -448,7 +448,7 @@ namespace LinearAlgebra
     Vector::linfty_norm() const
     {
       double norm(0.);
-      int    ierr = vector->NormInf(&norm);
+      int ierr = vector->NormInf(&norm);
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;
 
@@ -456,7 +456,7 @@ namespace LinearAlgebra
     }
 
     double
-    Vector::add_and_dot(const double                     a,
+    Vector::add_and_dot(const double a,
                         const VectorSpaceVector<double>& V,
                         const VectorSpaceVector<double>& W)
     {
@@ -529,10 +529,10 @@ namespace LinearAlgebra
     }
 
     void
-    Vector::print(std::ostream&      out,
+    Vector::print(std::ostream& out,
                   const unsigned int precision,
-                  const bool         scientific,
-                  const bool         across) const
+                  const bool scientific,
+                  const bool across) const
     {
       AssertThrow(out, ExcIO());
       boost::io::ios_flags_saver restore_flags(out);
@@ -540,8 +540,8 @@ namespace LinearAlgebra
       // Get a representation of the vector and loop over all
       // the elements
       double* val;
-      int     leading_dimension;
-      int     ierr = vector->ExtractView(&val, &leading_dimension);
+      int leading_dimension;
+      int ierr = vector->ExtractView(&val, &leading_dimension);
 
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;

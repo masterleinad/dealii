@@ -123,11 +123,11 @@ namespace internal
       template <int dim, int spacedim>
       void
       set_dof_index(const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-                    const unsigned int                           obj_index,
-                    const unsigned int                           fe_index,
-                    const unsigned int                           local_index,
-                    const types::global_dof_index                global_index,
-                    const unsigned int                           obj_level);
+                    const unsigned int obj_index,
+                    const unsigned int fe_index,
+                    const unsigned int local_index,
+                    const types::global_dof_index global_index,
+                    const unsigned int obj_level);
 
       /**
        * Return the global index of the @p local_index-th degree of freedom
@@ -143,9 +143,9 @@ namespace internal
       template <int dim, int spacedim>
       types::global_dof_index
       get_dof_index(const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-                    const unsigned int                           obj_index,
-                    const unsigned int                           fe_index,
-                    const unsigned int                           local_index,
+                    const unsigned int obj_index,
+                    const unsigned int fe_index,
+                    const unsigned int local_index,
                     const unsigned int obj_level) const;
 
       /**
@@ -163,7 +163,7 @@ namespace internal
       unsigned int
       n_active_fe_indices(
         const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-        const unsigned int                           obj_index) const;
+        const unsigned int obj_index) const;
 
       /**
        * Return the fe_index of the n-th active finite element on this object.
@@ -172,9 +172,9 @@ namespace internal
       types::global_dof_index
       nth_active_fe_index(
         const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-        const unsigned int                           obj_level,
-        const unsigned int                           obj_index,
-        const unsigned int                           n) const;
+        const unsigned int obj_level,
+        const unsigned int obj_index,
+        const unsigned int n) const;
 
       /**
        * Check whether a given finite element index is used on the present
@@ -184,9 +184,9 @@ namespace internal
       bool
       fe_index_is_active(
         const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-        const unsigned int                           obj_index,
-        const unsigned int                           fe_index,
-        const unsigned int                           obj_level) const;
+        const unsigned int obj_index,
+        const unsigned int fe_index,
+        const unsigned int obj_level) const;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
@@ -355,9 +355,9 @@ namespace internal
     inline types::global_dof_index
     DoFIndicesOnFacesOrEdges<structdim>::get_dof_index(
       const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-      const unsigned int                           obj_index,
-      const unsigned int                           fe_index,
-      const unsigned int                           local_index,
+      const unsigned int obj_index,
+      const unsigned int fe_index,
+      const unsigned int local_index,
       const unsigned int /*obj_level*/) const
     {
       Assert(
@@ -392,8 +392,8 @@ namespace internal
       // find the one with the correct fe_index, and then poke
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
-      const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
+      const types::global_dof_index starting_offset = dof_offsets[obj_index];
+      const types::global_dof_index* pointer        = &dofs[starting_offset];
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -412,10 +412,10 @@ namespace internal
     inline void
     DoFIndicesOnFacesOrEdges<structdim>::set_dof_index(
       const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-      const unsigned int                           obj_index,
-      const unsigned int                           fe_index,
-      const unsigned int                           local_index,
-      const types::global_dof_index                global_index,
+      const unsigned int obj_index,
+      const unsigned int fe_index,
+      const unsigned int local_index,
+      const types::global_dof_index global_index,
       const unsigned int /*obj_level*/)
     {
       Assert(
@@ -451,7 +451,7 @@ namespace internal
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
       const types::global_dof_index starting_offset = dof_offsets[obj_index];
-      types::global_dof_index*      pointer         = &dofs[starting_offset];
+      types::global_dof_index* pointer              = &dofs[starting_offset];
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -472,7 +472,7 @@ namespace internal
     inline unsigned int
     DoFIndicesOnFacesOrEdges<structdim>::n_active_fe_indices(
       const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-      const unsigned int                           obj_index) const
+      const unsigned int obj_index) const
     {
       Assert(obj_index < dof_offsets.size(),
              ExcIndexRange(obj_index, 0, dof_offsets.size()));
@@ -491,9 +491,9 @@ namespace internal
       // one with the correct fe_index, and then poke into that
       // part. trigger an exception if we can't find a set for this
       // particular fe_index
-      const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
-      unsigned int                   counter         = 0;
+      const unsigned int starting_offset     = dof_offsets[obj_index];
+      const types::global_dof_index* pointer = &dofs[starting_offset];
+      unsigned int counter                   = 0;
       while(true)
         {
           if(*pointer == numbers::invalid_dof_index)
@@ -540,9 +540,9 @@ namespace internal
       // find the one with the correct fe_index, and then poke
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
-      const unsigned int             starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
-      unsigned int                   counter         = 0;
+      const unsigned int starting_offset     = dof_offsets[obj_index];
+      const types::global_dof_index* pointer = &dofs[starting_offset];
+      unsigned int counter                   = 0;
       while(true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
@@ -567,8 +567,8 @@ namespace internal
     inline bool
     DoFIndicesOnFacesOrEdges<structdim>::fe_index_is_active(
       const dealii::hp::DoFHandler<dim, spacedim>& dof_handler,
-      const unsigned int                           obj_index,
-      const unsigned int                           fe_index,
+      const unsigned int obj_index,
+      const unsigned int fe_index,
       const unsigned int /*obj_level*/) const
     {
       Assert(obj_index < dof_offsets.size(),
@@ -598,8 +598,8 @@ namespace internal
       // find the one with the correct fe_index, and then poke
       // into that part. trigger an exception if we can't find a
       // set for this particular fe_index
-      const types::global_dof_index  starting_offset = dof_offsets[obj_index];
-      const types::global_dof_index* pointer         = &dofs[starting_offset];
+      const types::global_dof_index starting_offset = dof_offsets[obj_index];
+      const types::global_dof_index* pointer        = &dofs[starting_offset];
       while(true)
         {
           if(*pointer == numbers::invalid_dof_index)

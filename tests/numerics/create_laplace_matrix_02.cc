@@ -61,7 +61,7 @@ check()
 
   // create a system element composed
   // of one Q1 and one Q2 element
-  FESystem<dim>   element(FE_Q<dim>(1), 1, FE_Q<dim>(2), 1);
+  FESystem<dim> element(FE_Q<dim>(1), 1, FE_Q<dim>(2), 1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 
@@ -70,12 +70,12 @@ check()
   // formula suited to the elements
   // we have here
   MappingQ<dim> mapping(3);
-  QGauss<dim>   quadrature(6);
+  QGauss<dim> quadrature(6);
 
   // create sparsity pattern. note
   // that different components should
   // not couple, so use pattern
-  SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
+  SparsityPattern sparsity(dof.n_dofs(), dof.n_dofs());
   Table<2, DoFTools::Coupling> mask(2, 2);
   mask(0, 0) = mask(1, 1) = DoFTools::always;
   mask(0, 1) = mask(1, 0) = DoFTools::none;

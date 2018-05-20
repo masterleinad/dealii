@@ -26,7 +26,7 @@ test()
 {
   deallog << "dim = " << dim << ", spacedim = " << spacedim << std::endl;
 
-  Triangulation<dim>    tria;
+  Triangulation<dim> tria;
   GridTools::Cache<dim> cache(tria);
 
   GridGenerator::hyper_cube(tria);

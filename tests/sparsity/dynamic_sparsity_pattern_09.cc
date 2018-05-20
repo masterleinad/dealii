@@ -21,7 +21,7 @@
 void
 test()
 {
-  const unsigned int     N = 1000;
+  const unsigned int N = 1000;
   DynamicSparsityPattern csp;
   AssertThrow(csp.empty() == true, ExcInternalError());
 

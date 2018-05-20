@@ -59,9 +59,9 @@ namespace FETools
             class OutVector>
   void
   interpolate(const DoFHandlerType1<dim, spacedim>& dof1,
-              const InVector&                       u1,
+              const InVector& u1,
               const DoFHandlerType2<dim, spacedim>& dof2,
-              OutVector&                            u2)
+              OutVector& u2)
   {
     ConstraintMatrix dummy;
     dummy.close();
@@ -76,10 +76,10 @@ namespace FETools
             class OutVector>
   void
   interpolate(const DoFHandlerType1<dim, spacedim>& dof1,
-              const InVector&                       u1,
+              const InVector& u1,
               const DoFHandlerType2<dim, spacedim>& dof2,
-              const ConstraintMatrix&               constraints,
-              OutVector&                            u2)
+              const ConstraintMatrix& constraints,
+              OutVector& u2)
   {
     Assert(&dof1.get_triangulation() == &dof2.get_triangulation(),
            ExcTriangulationMismatch());
@@ -93,7 +93,7 @@ namespace FETools
 #ifdef DEBUG
     const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
     const IndexSet& dof2_local_dofs = dof2.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
+    const IndexSet u1_elements      = u1.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
            ExcMessage("The provided vector and DoF handler should have the same"
                       " index sets."));
@@ -262,9 +262,9 @@ namespace FETools
             int spacedim>
   void
   back_interpolate(const DoFHandlerType<dim, spacedim>& dof1,
-                   const InVector&                      u1,
-                   const FiniteElement<dim, spacedim>&  fe2,
-                   OutVector&                           u1_interpolated)
+                   const InVector& u1,
+                   const FiniteElement<dim, spacedim>& fe2,
+                   OutVector& u1_interpolated)
   {
     Assert(
       dof1.get_fe(0).n_components() == fe2.n_components(),
@@ -276,8 +276,8 @@ namespace FETools
 
 #ifdef DEBUG
     const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
-    const IndexSet  u1_interpolated_elements
+    const IndexSet u1_elements      = u1.locally_owned_elements();
+    const IndexSet u1_interpolated_elements
       = u1_interpolated.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
            ExcMessage("The provided vector and DoF handler should have the same"
@@ -360,11 +360,11 @@ namespace FETools
       template <int dim, int spacedim, class InVector>
       void
       back_interpolate(const DoFHandler<dim, spacedim>& dof1,
-                       const ConstraintMatrix&          constraints1,
-                       const InVector&                  u1,
+                       const ConstraintMatrix& constraints1,
+                       const InVector& u1,
                        const DoFHandler<dim, spacedim>& dof2,
-                       const ConstraintMatrix&          constraints2,
-                       InVector&                        u1_interpolated)
+                       const ConstraintMatrix& constraints2,
+                       InVector& u1_interpolated)
       {
         Vector<typename InVector::value_type> u2(dof2.n_dofs());
         interpolate(dof1, u1, dof2, constraints2, u2);
@@ -375,18 +375,18 @@ namespace FETools
 #ifdef DEAL_II_WITH_PETSC
       template <int dim, int spacedim>
       void
-      back_interpolate(const DoFHandler<dim, spacedim>&  dof1,
-                       const ConstraintMatrix&           constraints1,
+      back_interpolate(const DoFHandler<dim, spacedim>& dof1,
+                       const ConstraintMatrix& constraints1,
                        const PETScWrappers::MPI::Vector& u1,
-                       const DoFHandler<dim, spacedim>&  dof2,
-                       const ConstraintMatrix&           constraints2,
-                       PETScWrappers::MPI::Vector&       u1_interpolated)
+                       const DoFHandler<dim, spacedim>& dof2,
+                       const ConstraintMatrix& constraints2,
+                       PETScWrappers::MPI::Vector& u1_interpolated)
       {
         // if u1 is a parallel distributed PETSc vector, we create a
         // vector u2 with based on the sets of locally owned and relevant
         // dofs of dof2
         const IndexSet& dof2_locally_owned_dofs = dof2.locally_owned_dofs();
-        IndexSet        dof2_locally_relevant_dofs;
+        IndexSet dof2_locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dof2,
                                                 dof2_locally_relevant_dofs);
 
@@ -405,18 +405,18 @@ namespace FETools
 #ifdef DEAL_II_WITH_TRILINOS
       template <int dim, int spacedim>
       void
-      back_interpolate(const DoFHandler<dim, spacedim>&     dof1,
-                       const ConstraintMatrix&              constraints1,
+      back_interpolate(const DoFHandler<dim, spacedim>& dof1,
+                       const ConstraintMatrix& constraints1,
                        const TrilinosWrappers::MPI::Vector& u1,
-                       const DoFHandler<dim, spacedim>&     dof2,
-                       const ConstraintMatrix&              constraints2,
-                       TrilinosWrappers::MPI::Vector&       u1_interpolated)
+                       const DoFHandler<dim, spacedim>& dof2,
+                       const ConstraintMatrix& constraints2,
+                       TrilinosWrappers::MPI::Vector& u1_interpolated)
       {
         // if u1 is a parallel distributed Trilinos vector, we create a
         // vector u2 with based on the sets of locally owned and relevant
         // dofs of dof2
         const IndexSet& dof2_locally_owned_dofs = dof2.locally_owned_dofs();
-        IndexSet        dof2_locally_relevant_dofs;
+        IndexSet dof2_locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dof2,
                                                 dof2_locally_relevant_dofs);
 
@@ -435,15 +435,15 @@ namespace FETools
       template <int dim, int spacedim, typename Number>
       void
       back_interpolate(
-        const DoFHandler<dim, spacedim>&                  dof1,
-        const ConstraintMatrix&                           constraints1,
+        const DoFHandler<dim, spacedim>& dof1,
+        const ConstraintMatrix& constraints1,
         const LinearAlgebra::distributed::Vector<Number>& u1,
-        const DoFHandler<dim, spacedim>&                  dof2,
-        const ConstraintMatrix&                           constraints2,
-        LinearAlgebra::distributed::Vector<Number>&       u1_interpolated)
+        const DoFHandler<dim, spacedim>& dof2,
+        const ConstraintMatrix& constraints2,
+        LinearAlgebra::distributed::Vector<Number>& u1_interpolated)
       {
         const IndexSet& dof2_locally_owned_dofs = dof2.locally_owned_dofs();
-        IndexSet        dof2_locally_relevant_dofs;
+        IndexSet dof2_locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dof2,
                                                 dof2_locally_relevant_dofs);
 
@@ -462,11 +462,11 @@ namespace FETools
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   back_interpolate(const DoFHandler<dim, spacedim>& dof1,
-                   const ConstraintMatrix&          constraints1,
-                   const InVector&                  u1,
+                   const ConstraintMatrix& constraints1,
+                   const InVector& u1,
                    const DoFHandler<dim, spacedim>& dof2,
-                   const ConstraintMatrix&          constraints2,
-                   OutVector&                       u1_interpolated)
+                   const ConstraintMatrix& constraints2,
+                   OutVector& u1_interpolated)
   {
     // For discontinuous elements without constraints take the simpler version
     // of the back_interpolate function.
@@ -494,10 +494,10 @@ namespace FETools
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  interpolation_difference(const DoFHandler<dim, spacedim>&    dof1,
-                           const InVector&                     u1,
+  interpolation_difference(const DoFHandler<dim, spacedim>& dof1,
+                           const InVector& u1,
                            const FiniteElement<dim, spacedim>& fe2,
-                           OutVector&                          u1_difference)
+                           OutVector& u1_difference)
   {
     Assert(
       dof1.get_fe(0).n_components() == fe2.n_components(),
@@ -509,8 +509,8 @@ namespace FETools
 
 #ifdef DEBUG
     const IndexSet& dof1_local_dofs = dof1.locally_owned_dofs();
-    const IndexSet  u1_elements     = u1.locally_owned_elements();
-    const IndexSet  u1_difference_elements
+    const IndexSet u1_elements      = u1.locally_owned_elements();
+    const IndexSet u1_difference_elements
       = u1_difference.locally_owned_elements();
     Assert(u1_elements == dof1_local_dofs,
            ExcMessage("The provided vector and DoF handler should have the same"
@@ -574,11 +574,11 @@ namespace FETools
       template <int dim, class InVector, class OutVector, int spacedim>
       void
       interpolation_difference(const DoFHandler<dim, spacedim>& dof1,
-                               const ConstraintMatrix&          constraints1,
-                               const InVector&                  u1,
+                               const ConstraintMatrix& constraints1,
+                               const InVector& u1,
                                const DoFHandler<dim, spacedim>& dof2,
-                               const ConstraintMatrix&          constraints2,
-                               OutVector&                       u1_difference)
+                               const ConstraintMatrix& constraints2,
+                               OutVector& u1_difference)
       {
         back_interpolate(
           dof1, constraints1, u1, dof2, constraints2, u1_difference);
@@ -590,10 +590,10 @@ namespace FETools
       template <int dim, int spacedim>
       void
       interpolation_difference(const DoFHandler<dim, spacedim>& dof1,
-                               const ConstraintMatrix&          constraints1,
+                               const ConstraintMatrix& constraints1,
                                const TrilinosWrappers::MPI::Vector& u1,
-                               const DoFHandler<dim, spacedim>&     dof2,
-                               const ConstraintMatrix&        constraints2,
+                               const DoFHandler<dim, spacedim>& dof2,
+                               const ConstraintMatrix& constraints2,
                                TrilinosWrappers::MPI::Vector& u1_difference)
       {
         back_interpolate(
@@ -616,11 +616,11 @@ namespace FETools
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   interpolation_difference(const DoFHandler<dim, spacedim>& dof1,
-                           const ConstraintMatrix&          constraints1,
-                           const InVector&                  u1,
+                           const ConstraintMatrix& constraints1,
+                           const InVector& u1,
                            const DoFHandler<dim, spacedim>& dof2,
-                           const ConstraintMatrix&          constraints2,
-                           OutVector&                       u1_difference)
+                           const ConstraintMatrix& constraints2,
+                           OutVector& u1_difference)
   {
     // For discontinuous elements
     // without constraints take the
@@ -640,9 +640,9 @@ namespace FETools
   template <int dim, class InVector, class OutVector, int spacedim>
   void
   project_dg(const DoFHandler<dim, spacedim>& dof1,
-             const InVector&                  u1,
+             const InVector& u1,
              const DoFHandler<dim, spacedim>& dof2,
-             OutVector&                       u2)
+             OutVector& u2)
   {
     Assert(&dof1.get_triangulation() == &dof2.get_triangulation(),
            ExcTriangulationMismatch());
@@ -665,7 +665,7 @@ namespace FETools
 
     Vector<typename OutVector::value_type> u1_local(n1);
     Vector<typename OutVector::value_type> u2_local(n2);
-    std::vector<types::global_dof_index>   dofs(n2);
+    std::vector<types::global_dof_index> dofs(n2);
 
     FullMatrix<double> matrix(n2, n1);
     get_projection_matrix(dof1.get_fe(), dof2.get_fe(), matrix);

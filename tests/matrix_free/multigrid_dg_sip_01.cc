@@ -58,11 +58,11 @@ public:
   LaplaceOperator(){};
 
   void
-  initialize(const Mapping<dim>&    mapping,
+  initialize(const Mapping<dim>& mapping,
              const DoFHandler<dim>& dof_handler,
-             const unsigned int     level = numbers::invalid_unsigned_int)
+             const unsigned int level = numbers::invalid_unsigned_int)
   {
-    const QGauss<1>                                  quad(n_q_points_1d);
+    const QGauss<1> quad(n_q_points_1d);
     typename MatrixFree<dim, number>::AdditionalData addit_data;
     addit_data.tasks_parallel_scheme
       = MatrixFree<dim, number>::AdditionalData::none;
@@ -81,7 +81,7 @@ public:
   }
 
   void
-  vmult(parallel::distributed::Vector<number>&       dst,
+  vmult(parallel::distributed::Vector<number>& dst,
         const parallel::distributed::Vector<number>& src) const
   {
     dst = 0;
@@ -89,7 +89,7 @@ public:
   }
 
   void
-  Tvmult(parallel::distributed::Vector<number>&       dst,
+  Tvmult(parallel::distributed::Vector<number>& dst,
          const parallel::distributed::Vector<number>& src) const
   {
     dst = 0;
@@ -97,14 +97,14 @@ public:
   }
 
   void
-  Tvmult_add(parallel::distributed::Vector<number>&       dst,
+  Tvmult_add(parallel::distributed::Vector<number>& dst,
              const parallel::distributed::Vector<number>& src) const
   {
     vmult_add(dst, src);
   }
 
   void
-  vmult_add(parallel::distributed::Vector<number>&       dst,
+  vmult_add(parallel::distributed::Vector<number>& dst,
             const parallel::distributed::Vector<number>& src) const
   {
     if(!src.partitioners_are_globally_compatible(
@@ -166,8 +166,8 @@ public:
 
 private:
   void
-  local_apply(const MatrixFree<dim, number>&               data,
-              parallel::distributed::Vector<number>&       dst,
+  local_apply(const MatrixFree<dim, number>& data,
+              parallel::distributed::Vector<number>& dst,
               const parallel::distributed::Vector<number>& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
@@ -187,8 +187,8 @@ private:
 
   void
   local_apply_face(
-    const MatrixFree<dim, number>&               data,
-    parallel::distributed::Vector<number>&       dst,
+    const MatrixFree<dim, number>& data,
+    parallel::distributed::Vector<number>& dst,
     const parallel::distributed::Vector<number>& src,
     const std::pair<unsigned int, unsigned int>& face_range) const
   {
@@ -236,8 +236,8 @@ private:
 
   void
   local_apply_boundary(
-    const MatrixFree<dim, number>&               data,
-    parallel::distributed::Vector<number>&       dst,
+    const MatrixFree<dim, number>& data,
+    parallel::distributed::Vector<number>& dst,
     const parallel::distributed::Vector<number>& src,
     const std::pair<unsigned int, unsigned int>& face_range) const
   {
@@ -288,7 +288,7 @@ private:
 
   void
   local_diagonal_cell(
-    const MatrixFree<dim, number>&         data,
+    const MatrixFree<dim, number>& data,
     parallel::distributed::Vector<number>& dst,
     const unsigned int&,
     const std::pair<unsigned int, unsigned int>& cell_range) const
@@ -319,7 +319,7 @@ private:
 
   void
   local_diagonal_face(
-    const MatrixFree<dim, number>&         data,
+    const MatrixFree<dim, number>& data,
     parallel::distributed::Vector<number>& dst,
     const unsigned int&,
     const std::pair<unsigned int, unsigned int>& face_range) const
@@ -405,7 +405,7 @@ private:
 
   void
   local_diagonal_boundary(
-    const MatrixFree<dim, number>&         data,
+    const MatrixFree<dim, number>& data,
     parallel::distributed::Vector<number>& dst,
     const unsigned int&,
     const std::pair<unsigned int, unsigned int>& face_range) const
@@ -448,7 +448,7 @@ private:
       }
   }
 
-  MatrixFree<dim, number>               data;
+  MatrixFree<dim, number> data;
   parallel::distributed::Vector<number> inverse_diagonal_entries;
 };
 
@@ -468,7 +468,7 @@ public:
 
   virtual void
   operator()(const unsigned int,
-             parallel::distributed::Vector<double>&       dst,
+             parallel::distributed::Vector<double>& dst,
              const parallel::distributed::Vector<double>& src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10, false, false);
@@ -486,7 +486,7 @@ class MGTransferMF
 {
 public:
   MGTransferMF(const MGLevelObject<LAPLACEOPERATOR>& laplace,
-               const MGConstrainedDoFs&              mg_constrained_dofs)
+               const MGConstrainedDoFs& mg_constrained_dofs)
     : MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>(
         mg_constrained_dofs),
       laplace_operator(laplace){};
@@ -496,10 +496,10 @@ public:
    */
   template <class InVector, int spacedim>
   void
-  copy_to_mg(const DoFHandler<dim, spacedim>&          mg_dof_handler,
+  copy_to_mg(const DoFHandler<dim, spacedim>& mg_dof_handler,
              MGLevelObject<LinearAlgebra::distributed::Vector<
                typename LAPLACEOPERATOR::value_type>>& dst,
-             const InVector&                           src) const
+             const InVector& src) const
   {
     for(unsigned int level = dst.min_level(); level <= dst.max_level(); ++level)
       laplace_operator[level].initialize_dof_vector(dst[level]);
@@ -519,7 +519,7 @@ do_test(const DoFHandler<dim>& dof, const bool also_test_parallel = false)
   deallog << std::endl;
   deallog << "Number of degrees of freedom: " << dof.n_dofs() << std::endl;
 
-  MappingQ<dim>                                          mapping(fe_degree + 1);
+  MappingQ<dim> mapping(fe_degree + 1);
   LaplaceOperator<dim, fe_degree, n_q_points_1d, number> fine_matrix;
   fine_matrix.initialize(mapping, dof);
 
@@ -565,8 +565,8 @@ do_test(const DoFHandler<dim>& dof, const bool also_test_parallel = false)
     }
   mg_smoother.initialize(mg_matrices, smoother_data);
 
-  MGConstrainedDoFs               mg_constrained_dofs;
-  ZeroFunction<dim>               zero_function;
+  MGConstrainedDoFs mg_constrained_dofs;
+  ZeroFunction<dim> zero_function;
   typename FunctionMap<dim>::type dirichlet_boundary;
   dirichlet_boundary[0] = &zero_function;
   mg_constrained_dofs.initialize(dof, dirichlet_boundary);
@@ -585,7 +585,7 @@ do_test(const DoFHandler<dim>& dof, const bool also_test_parallel = false)
     preconditioner(dof, mg, mg_transfer);
 
   {
-    ReductionControl                                control(30, 1e-20, 1e-7);
+    ReductionControl control(30, 1e-20, 1e-7);
     SolverCG<parallel::distributed::Vector<double>> solver(control);
     solver.solve(fine_matrix, sol, in, preconditioner);
   }
@@ -605,7 +605,7 @@ test()
       GridGenerator::hyper_cube(tria);
       tria.refine_global(i - dim);
 
-      FE_DGQ<dim>     fe(fe_degree);
+      FE_DGQ<dim> fe(fe_degree);
       DoFHandler<dim> dof(tria);
       dof.distribute_dofs(fe);
       dof.distribute_mg_dofs(fe);

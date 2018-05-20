@@ -89,10 +89,10 @@ namespace Step47
       const typename hp::DoFHandler<dim>::active_cell_iterator& cell,
       const std::vector<double>& level_set_values);
     void
-    append_quadrature(const Quadrature<dim>&         plain_quadrature,
+    append_quadrature(const Quadrature<dim>& plain_quadrature,
                       const std::vector<Point<dim>>& v,
-                      std::vector<Point<dim>>&       xfem_points,
-                      std::vector<double>&           xfem_weights);
+                      std::vector<Point<dim>>& xfem_points,
+                      std::vector<double>& xfem_weights);
 
     void
     setup_system();
@@ -109,12 +109,12 @@ namespace Step47
 
     Triangulation<dim> triangulation;
 
-    hp::DoFHandler<dim>   dof_handler;
+    hp::DoFHandler<dim> dof_handler;
     hp::FECollection<dim> fe_collection;
 
     ConstraintMatrix constraints;
 
-    SparsityPattern      sparsity_pattern;
+    SparsityPattern sparsity_pattern;
     SparseMatrix<double> system_matrix;
 
     Vector<double> solution;
@@ -133,8 +133,8 @@ namespace Step47
 
     virtual void
     value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+               std::vector<double>& values,
+               const unsigned int component = 0) const override;
   };
 
   template <int dim>
@@ -150,8 +150,8 @@ namespace Step47
   template <int dim>
   void
   Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+                               std::vector<double>& values,
+                               const unsigned int component) const
   {
     const unsigned int n_points = points.size();
 
@@ -272,12 +272,12 @@ namespace Step47
     const unsigned int n_q_points = quadrature_formula.size();
 
     FullMatrix<double> cell_matrix;
-    Vector<double>     cell_rhs;
+    Vector<double> cell_rhs;
 
     std::vector<types::global_dof_index> local_dof_indices;
 
     const Coefficient<dim> coefficient;
-    std::vector<double>    coefficient_values(n_q_points);
+    std::vector<double> coefficient_values(n_q_points);
 
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -624,7 +624,7 @@ namespace Step47
         //<< C << std::endl; std::cout << D << std::endl; std::cout << E <<
         //std::endl; std::cout << F << std::endl;
 
-        std::string   filename = "vertices.dat";
+        std::string filename = "vertices.dat";
         std::ofstream output(filename);
         output << "#vertices of xfem subcells" << std::endl;
         output << v0(0) << "   " << v0(1) << std::endl;
@@ -668,7 +668,7 @@ namespace Step47
         subcell_vertices[9] = F;
 
         std::vector<Point<dim>> xfem_points;
-        std::vector<double>     xfem_weights;
+        std::vector<double> xfem_weights;
 
         // lookup table for the decomposition
 
@@ -772,7 +772,7 @@ namespace Step47
 
         //std::cout << "Pos " << Pos << std::endl; std::cout << A <<
         //std::endl; std::cout << B << std::endl;
-        std::string   filename = "vertices.dat";
+        std::string filename = "vertices.dat";
         std::ofstream output(filename);
         output << "#vertices of xfem subcells" << std::endl;
         output << A(0) << "   " << A(1) << std::endl;
@@ -788,7 +788,7 @@ namespace Step47
         subcell_vertices[5] = B;
 
         std::vector<Point<dim>> xfem_points;
-        std::vector<double>     xfem_weights;
+        std::vector<double> xfem_weights;
 
         if(dim == 2)
           {
@@ -829,10 +829,10 @@ namespace Step47
   template <int dim>
   void
   LaplaceProblem<dim>::append_quadrature(
-    const Quadrature<dim>&         plain_quadrature,
+    const Quadrature<dim>& plain_quadrature,
     const std::vector<Point<dim>>& v,
-    std::vector<Point<dim>>&       xfem_points,
-    std::vector<double>&           xfem_weights)
+    std::vector<Point<dim>>& xfem_points,
+    std::vector<double>& xfem_weights)
 
   {
     // Project integration points into sub-elements.  This maps quadrature
@@ -845,10 +845,10 @@ namespace Step47
 
     unsigned int n_v = GeometryInfo<dim>::vertices_per_cell;
 
-    std::vector<Point<dim>>     q_points = plain_quadrature.get_points();
-    std::vector<Point<dim>>     q_transf(q_points.size());
-    std::vector<double>         W = plain_quadrature.get_weights();
-    std::vector<double>         phi(n_v);
+    std::vector<Point<dim>> q_points = plain_quadrature.get_points();
+    std::vector<Point<dim>> q_transf(q_points.size());
+    std::vector<double> W = plain_quadrature.get_weights();
+    std::vector<double> phi(n_v);
     std::vector<Tensor<1, dim>> grad_phi(n_v);
 
     const unsigned int n_q_points = plain_quadrature.size();
@@ -919,7 +919,7 @@ namespace Step47
   LaplaceProblem<dim>::solve()
   {
     SolverControl solver_control(1000, 1e-12);
-    SolverCG<>    solver(solver_control);
+    SolverCG<> solver(solver_control);
 
     PreconditionSSOR<> preconditioner;
     preconditioner.initialize(system_matrix, 1.2);
@@ -1028,7 +1028,7 @@ namespace Step47
 
     std::ofstream output(filename);
 
-    Postprocessor<dim>                postprocessor;
+    Postprocessor<dim> postprocessor;
     DataOut<dim, hp::DoFHandler<dim>> data_out;
 
     data_out.attach_dof_handler(dof_handler);

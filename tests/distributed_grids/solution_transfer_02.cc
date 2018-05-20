@@ -56,13 +56,13 @@ template <int dim>
 void
 test(std::ostream& /*out*/)
 {
-  MyFunction<dim>                           func;
-  MappingQGeneric<dim>                      mapping(1);
+  MyFunction<dim> func;
+  MappingQGeneric<dim> mapping(1);
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-  DoFHandler<dim>        dofh(tr);
+  DoFHandler<dim> dofh(tr);
   static const FE_Q<dim> fe(1);
   dofh.distribute_dofs(fe);
 

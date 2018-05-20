@@ -38,17 +38,17 @@ namespace TrilinosWrappers
   /* -------------------------- PreconditionAMG -------------------------- */
 
   PreconditionAMG::AdditionalData::AdditionalData(
-    const bool                            elliptic,
-    const bool                            higher_order_elements,
-    const unsigned int                    n_cycles,
-    const bool                            w_cycle,
-    const double                          aggregation_threshold,
+    const bool elliptic,
+    const bool higher_order_elements,
+    const unsigned int n_cycles,
+    const bool w_cycle,
+    const double aggregation_threshold,
     const std::vector<std::vector<bool>>& constant_modes,
-    const unsigned int                    smoother_sweeps,
-    const unsigned int                    smoother_overlap,
-    const bool                            output_details,
-    const char*                           smoother_type,
-    const char*                           coarse_type)
+    const unsigned int smoother_sweeps,
+    const unsigned int smoother_overlap,
+    const bool output_details,
+    const char* smoother_type,
+    const char* coarse_type)
     : elliptic(elliptic),
       higher_order_elements(higher_order_elements),
       n_cycles(n_cycles),
@@ -69,7 +69,7 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMG::initialize(const SparseMatrix&   matrix,
+  PreconditionAMG::initialize(const SparseMatrix& matrix,
                               const AdditionalData& additional_data)
   {
     initialize(matrix.trilinos_matrix(), additional_data);
@@ -77,7 +77,7 @@ namespace TrilinosWrappers
 
   void
   PreconditionAMG::initialize(const Epetra_RowMatrix& matrix,
-                              const AdditionalData&   additional_data)
+                              const AdditionalData& additional_data)
   {
     // Build the AMG preconditioner.
     Teuchos::ParameterList parameter_list;
@@ -205,14 +205,14 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMG::initialize(const SparseMatrix&           matrix,
+  PreconditionAMG::initialize(const SparseMatrix& matrix,
                               const Teuchos::ParameterList& ml_parameters)
   {
     initialize(matrix.trilinos_matrix(), ml_parameters);
   }
 
   void
-  PreconditionAMG::initialize(const Epetra_RowMatrix&       matrix,
+  PreconditionAMG::initialize(const Epetra_RowMatrix& matrix,
                               const Teuchos::ParameterList& ml_parameters)
   {
     preconditioner.reset();
@@ -224,9 +224,9 @@ namespace TrilinosWrappers
   void
   PreconditionAMG::initialize(
     const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
-    const AdditionalData&                 additional_data,
-    const double                          drop_tolerance,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const AdditionalData& additional_data,
+    const double drop_tolerance,
+    const ::dealii::SparsityPattern* use_this_sparsity)
   {
     preconditioner.reset();
     const size_type n_rows = deal_ii_sparse_matrix.m();

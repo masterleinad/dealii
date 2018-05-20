@@ -532,7 +532,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
+      to_tensor(const FullMatrix<Number>& mtrx,
                 SymmetricTensor<2, dim, Number>& st);
 
       /**
@@ -560,7 +560,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
+      to_tensor(const FullMatrix<Number>& mtrx,
                 SymmetricTensor<4, dim, Number>& st);
 
       /**
@@ -607,7 +607,7 @@ namespace Physics
         template <int dim>
         std::pair<unsigned int, unsigned int>
         indices_from_component(const unsigned int component_n,
-                               const bool         symmetric);
+                               const bool symmetric);
 
         template <int dim>
         std::pair<unsigned int, unsigned int>
@@ -629,7 +629,7 @@ namespace Physics
         template <>
         inline std::pair<unsigned int, unsigned int>
         indices_from_component<2>(const unsigned int component_n,
-                                  const bool         symmetric)
+                                  const bool symmetric)
         {
           if(symmetric == true)
             {
@@ -655,7 +655,7 @@ namespace Physics
         template <>
         inline std::pair<unsigned int, unsigned int>
         indices_from_component<3>(const unsigned int component_n,
-                                  const bool         symmetric)
+                                  const bool symmetric)
         {
           if(symmetric == true)
             {
@@ -692,7 +692,7 @@ namespace Physics
         template <int dim>
         double
         vector_component_factor(const unsigned int component_i,
-                                const bool         symmetric)
+                                const bool symmetric)
         {
           if(symmetric == false)
             return 1.0;
@@ -711,7 +711,7 @@ namespace Physics
         double
         matrix_component_factor(const unsigned int component_i,
                                 const unsigned int component_j,
-                                const bool         symmetric)
+                                const bool symmetric)
         {
           if(symmetric == false)
             return 1.0;
@@ -732,7 +732,7 @@ namespace Physics
       Vector<Number>
       to_vector(const Number& s)
       {
-        Vector<Number>     out(1);
+        Vector<Number> out(1);
         const unsigned int n_rows = out.size();
         for(unsigned int r = 0; r < n_rows; ++r)
           out(r) = s;
@@ -750,7 +750,7 @@ namespace Physics
       Vector<Number>
       to_vector(const Tensor<1, dim, Number>& v)
       {
-        Vector<Number>     out(v.n_independent_components);
+        Vector<Number> out(v.n_independent_components);
         const unsigned int n_rows = out.size();
         for(unsigned int r = 0; r < n_rows; ++r)
           {
@@ -767,7 +767,7 @@ namespace Physics
       Vector<Number>
       to_vector(const Tensor<2, dim, Number>& t)
       {
-        Vector<Number>     out(t.n_independent_components);
+        Vector<Number> out(t.n_independent_components);
         const unsigned int n_rows = out.size();
         for(unsigned int r = 0; r < n_rows; ++r)
           {
@@ -786,7 +786,7 @@ namespace Physics
       Vector<Number>
       to_vector(const SymmetricTensor<2, dim, Number>& st)
       {
-        Vector<Number>     out(st.n_independent_components);
+        Vector<Number> out(st.n_independent_components);
         const unsigned int n_rows = out.size();
         for(unsigned int r = 0; r < n_rows; ++r)
           {
@@ -1229,7 +1229,7 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
+      to_tensor(const FullMatrix<Number>& mtrx,
                 SymmetricTensor<2, dim, Number>& st)
       {
         // Its impossible to fit the (dim^2 + dim)/2 entries into a square matrix
@@ -1430,7 +1430,7 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
+      to_tensor(const FullMatrix<Number>& mtrx,
                 SymmetricTensor<4, dim, Number>& st)
       {
         Assert((mtrx.m()

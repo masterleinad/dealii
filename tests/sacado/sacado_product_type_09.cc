@@ -23,15 +23,15 @@
 int
 main()
 {
-  typedef Sacado::Fad::DFad<double>  Sdouble;
+  typedef Sacado::Fad::DFad<double> Sdouble;
   typedef Sacado::Fad::DFad<Sdouble> SSdouble;
   initlog();
 
   // check product with Tensor<2,dim>
-  Tensor<2, 2, double>            t;
+  Tensor<2, 2, double> t;
   SymmetricTensor<2, 2, SSdouble> st;
-  SSdouble                        a(2, 0, 7.0);
-  SSdouble                        b(2, 1, 3.0);
+  SSdouble a(2, 0, 7.0);
+  SSdouble b(2, 1, 3.0);
   a.val() = Sdouble(2, 0, 7.0);
   b.val() = Sdouble(2, 1, 3.0);
 

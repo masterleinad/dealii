@@ -50,7 +50,7 @@ sub_test()
     tria.refine_global(1);
 #endif
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   deallog << "Testing " << fe.get_name() << std::endl;
 
@@ -105,7 +105,7 @@ sub_test()
       MatrixFreeTest<dim, fe_degree, number> mf_ref(mf_data);
       MatrixFreeTest<dim, fe_degree, number> mf_color(mf_data_color);
       MatrixFreeTest<dim, fe_degree, number> mf_partition(mf_data_partition);
-      Vector<number>                         in_dist(dof.n_dofs());
+      Vector<number> in_dist(dof.n_dofs());
       Vector<number> out_dist(in_dist), out_color(in_dist),
         out_partition(in_dist);
 

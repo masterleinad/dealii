@@ -36,7 +36,7 @@ test()
 {
   const std::string filename("scalapack_10_test.h5");
 
-  MPI_Comm           mpi_communicator(MPI_COMM_WORLD);
+  MPI_Comm mpi_communicator(MPI_COMM_WORLD);
   const unsigned int this_mpi_process(
     Utilities::MPI::this_mpi_process(mpi_communicator));
   ConditionalOStream pcout(std::cout, (this_mpi_process == 0));

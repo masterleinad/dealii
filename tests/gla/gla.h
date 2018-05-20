@@ -21,9 +21,9 @@ public:
   class MPI
   {
   public:
-    typedef LinearAlgebraPETSc::MPI::Vector            Vector;
-    typedef LinearAlgebraPETSc::MPI::SparseMatrix      SparseMatrix;
-    typedef LinearAlgebraPETSc::MPI::BlockVector       BlockVector;
+    typedef LinearAlgebraPETSc::MPI::Vector Vector;
+    typedef LinearAlgebraPETSc::MPI::SparseMatrix SparseMatrix;
+    typedef LinearAlgebraPETSc::MPI::BlockVector BlockVector;
     typedef LinearAlgebraPETSc::MPI::BlockSparseMatrix BlockSparseMatrix;
   };
 };
@@ -34,9 +34,9 @@ public:
   class MPI
   {
   public:
-    typedef LinearAlgebraTrilinos::MPI::Vector            Vector;
-    typedef LinearAlgebraTrilinos::MPI::SparseMatrix      SparseMatrix;
-    typedef LinearAlgebraTrilinos::MPI::BlockVector       BlockVector;
+    typedef LinearAlgebraTrilinos::MPI::Vector Vector;
+    typedef LinearAlgebraTrilinos::MPI::SparseMatrix SparseMatrix;
+    typedef LinearAlgebraTrilinos::MPI::BlockVector BlockVector;
     typedef LinearAlgebraTrilinos::MPI::BlockSparseMatrix BlockSparseMatrix;
   };
 };
@@ -122,7 +122,7 @@ public:
       template <typename SP>
       SparseMatrix(const IndexSet& local,
                    const IndexSet&,
-                   SP&             sp,
+                   SP& sp,
                    const MPI_Comm& comm = MPI_COMM_WORLD)
       {}
 

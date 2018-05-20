@@ -51,8 +51,8 @@ void
 df(const double& x,
    const double& y,
    const double& z,
-   double&       df_dx,
-   double&       df_dy)
+   double& df_dx,
+   double& df_dy)
 {
   df_dx = z * (1.0 + y);
   df_dy = z * (z + x);
@@ -61,8 +61,8 @@ void
 dg(const double& x,
    const double& y,
    const double& z,
-   double&       dg_dx,
-   double&       dg_dy)
+   double& dg_dx,
+   double& dg_dy)
 {
   dg_dx = z * std::cos(x * z) * std::cos(y / z);
   dg_dy = -(1.0 / z) * std::sin(x * z) * std::sin(y / z);
@@ -71,8 +71,8 @@ void
 dh(const double& x,
    const double& y,
    const double& z,
-   double&       dh_dx,
-   double&       dh_dy)
+   double& dh_dx,
+   double& dh_dy)
 {
   dh_dx = y * z;
   dh_dy = x * z;

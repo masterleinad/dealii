@@ -49,9 +49,9 @@ SparseMatrixEZ<number>::SparseMatrixEZ(const SparseMatrixEZ<number>& m)
 }
 
 template <typename number>
-SparseMatrixEZ<number>::SparseMatrixEZ(const size_type    n_rows,
-                                       const size_type    n_cols,
-                                       const size_type    default_row_length,
+SparseMatrixEZ<number>::SparseMatrixEZ(const size_type n_rows,
+                                       const size_type n_cols,
+                                       const size_type default_row_length,
                                        const unsigned int default_increment)
 {
   reinit(n_rows, n_cols, default_row_length, default_increment);
@@ -77,7 +77,7 @@ SparseMatrixEZ<number>::operator=(const double d)
   (void) d;
   Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-  typename std::vector<Entry>::iterator       e   = data.begin();
+  typename std::vector<Entry>::iterator e         = data.begin();
   const typename std::vector<Entry>::iterator end = data.end();
 
   while(e != end)
@@ -92,9 +92,9 @@ template <typename number>
 void
 SparseMatrixEZ<number>::reinit(const size_type n_rows,
                                const size_type n_cols,
-                               size_type       default_row_length,
-                               unsigned int    default_increment,
-                               size_type       reserve)
+                               size_type default_row_length,
+                               unsigned int default_increment,
+                               size_type reserve)
 {
   clear();
 
@@ -130,7 +130,7 @@ SparseMatrixEZ<number>::empty() const
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::vmult(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::vmult(Vector<somenumber>& dst,
                               const Vector<somenumber>& src) const
 {
   Assert(m() == dst.size(), ExcDimensionMismatch(m(), dst.size()));
@@ -139,7 +139,7 @@ SparseMatrixEZ<number>::vmult(Vector<somenumber>&       dst,
   const size_type end_row = row_info.size();
   for(size_type row = 0; row < end_row; ++row)
     {
-      const RowInfo&                              ri = row_info[row];
+      const RowInfo& ri = row_info[row];
       typename std::vector<Entry>::const_iterator entry
         = data.begin() + ri.start;
       double s = 0.;
@@ -156,7 +156,7 @@ template <typename number>
 number
 SparseMatrixEZ<number>::l2_norm() const
 {
-  number         sum   = 0.;
+  number sum           = 0.;
   const_iterator start = begin();
   const_iterator final = end();
 
@@ -172,7 +172,7 @@ SparseMatrixEZ<number>::l2_norm() const
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::Tvmult(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::Tvmult(Vector<somenumber>& dst,
                                const Vector<somenumber>& src) const
 {
   dst = 0.;
@@ -182,7 +182,7 @@ SparseMatrixEZ<number>::Tvmult(Vector<somenumber>&       dst,
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::vmult_add(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::vmult_add(Vector<somenumber>& dst,
                                   const Vector<somenumber>& src) const
 {
   Assert(m() == dst.size(), ExcDimensionMismatch(m(), dst.size()));
@@ -191,7 +191,7 @@ SparseMatrixEZ<number>::vmult_add(Vector<somenumber>&       dst,
   const size_type end_row = row_info.size();
   for(size_type row = 0; row < end_row; ++row)
     {
-      const RowInfo&                              ri = row_info[row];
+      const RowInfo& ri = row_info[row];
       typename std::vector<Entry>::const_iterator entry
         = data.begin() + ri.start;
       double s = 0.;
@@ -207,7 +207,7 @@ SparseMatrixEZ<number>::vmult_add(Vector<somenumber>&       dst,
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::Tvmult_add(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::Tvmult_add(Vector<somenumber>& dst,
                                    const Vector<somenumber>& src) const
 {
   Assert(n() == dst.size(), ExcDimensionMismatch(n(), dst.size()));
@@ -216,7 +216,7 @@ SparseMatrixEZ<number>::Tvmult_add(Vector<somenumber>&       dst,
   const size_type end_row = row_info.size();
   for(size_type row = 0; row < end_row; ++row)
     {
-      const RowInfo&                              ri = row_info[row];
+      const RowInfo& ri = row_info[row];
       typename std::vector<Entry>::const_iterator entry
         = data.begin() + ri.start;
       for(unsigned short i = 0; i < ri.length; ++i, ++entry)
@@ -230,17 +230,17 @@ SparseMatrixEZ<number>::Tvmult_add(Vector<somenumber>&       dst,
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::precondition_Jacobi(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::precondition_Jacobi(Vector<somenumber>& dst,
                                             const Vector<somenumber>& src,
-                                            const number              om) const
+                                            const number om) const
 {
   Assert(m() == n(), ExcNotQuadratic());
   Assert(dst.size() == n(), ExcDimensionMismatch(dst.size(), n()));
   Assert(src.size() == n(), ExcDimensionMismatch(src.size(), n()));
 
-  somenumber*                                         dst_ptr = dst.begin();
-  const somenumber*                                   src_ptr = src.begin();
-  typename std::vector<RowInfo>::const_iterator       ri  = row_info.begin();
+  somenumber* dst_ptr                                     = dst.begin();
+  const somenumber* src_ptr                               = src.begin();
+  typename std::vector<RowInfo>::const_iterator ri        = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator end = row_info.end();
 
   for(; ri != end; ++dst_ptr, ++src_ptr, ++ri)
@@ -253,23 +253,23 @@ SparseMatrixEZ<number>::precondition_Jacobi(Vector<somenumber>&       dst,
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::precondition_SOR(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::precondition_SOR(Vector<somenumber>& dst,
                                          const Vector<somenumber>& src,
-                                         const number              om) const
+                                         const number om) const
 {
   Assert(m() == n(), ExcNotQuadratic());
   Assert(dst.size() == n(), ExcDimensionMismatch(dst.size(), n()));
   Assert(src.size() == n(), ExcDimensionMismatch(src.size(), n()));
 
-  somenumber*                                         dst_ptr = dst.begin();
-  const somenumber*                                   src_ptr = src.begin();
-  typename std::vector<RowInfo>::const_iterator       ri  = row_info.begin();
+  somenumber* dst_ptr                                     = dst.begin();
+  const somenumber* src_ptr                               = src.begin();
+  typename std::vector<RowInfo>::const_iterator ri        = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator end = row_info.end();
 
   for(; ri != end; ++dst_ptr, ++src_ptr, ++ri)
     {
       Assert(ri->diagonal != RowInfo::invalid_diagonal, ExcNoDiagonal());
-      number          s       = *src_ptr;
+      number s                = *src_ptr;
       const size_type end_row = ri->start + ri->diagonal;
       for(size_type i = ri->start; i < end_row; ++i)
         s -= data[i].value * dst(data[i].column);
@@ -281,15 +281,15 @@ SparseMatrixEZ<number>::precondition_SOR(Vector<somenumber>&       dst,
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::precondition_TSOR(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::precondition_TSOR(Vector<somenumber>& dst,
                                           const Vector<somenumber>& src,
-                                          const number              om) const
+                                          const number om) const
 {
   Assert(m() == n(), ExcNotQuadratic());
   Assert(dst.size() == n(), ExcDimensionMismatch(dst.size(), n()));
   Assert(src.size() == n(), ExcDimensionMismatch(src.size(), n()));
 
-  somenumber*       dst_ptr = dst.begin() + dst.size() - 1;
+  somenumber* dst_ptr       = dst.begin() + dst.size() - 1;
   const somenumber* src_ptr = src.begin() + src.size() - 1;
   typename std::vector<RowInfo>::const_reverse_iterator ri = row_info.rbegin();
   const typename std::vector<RowInfo>::const_reverse_iterator end
@@ -298,7 +298,7 @@ SparseMatrixEZ<number>::precondition_TSOR(Vector<somenumber>&       dst,
   for(; ri != end; --dst_ptr, --src_ptr, ++ri)
     {
       Assert(ri->diagonal != RowInfo::invalid_diagonal, ExcNoDiagonal());
-      number          s       = *src_ptr;
+      number s                = *src_ptr;
       const size_type end_row = ri->start + ri->length;
       for(size_type i = ri->start + ri->diagonal + 1; i < end_row; ++i)
         s -= data[i].value * dst(data[i].column);
@@ -310,25 +310,25 @@ SparseMatrixEZ<number>::precondition_TSOR(Vector<somenumber>&       dst,
 template <typename number>
 template <typename somenumber>
 void
-SparseMatrixEZ<number>::precondition_SSOR(Vector<somenumber>&       dst,
+SparseMatrixEZ<number>::precondition_SSOR(Vector<somenumber>& dst,
                                           const Vector<somenumber>& src,
-                                          const number              om,
+                                          const number om,
                                           const std::vector<std::size_t>&) const
 {
   Assert(m() == n(), ExcNotQuadratic());
   Assert(dst.size() == n(), ExcDimensionMismatch(dst.size(), n()));
   Assert(src.size() == n(), ExcDimensionMismatch(src.size(), n()));
 
-  somenumber*                                         dst_ptr = dst.begin();
-  const somenumber*                                   src_ptr = src.begin();
-  typename std::vector<RowInfo>::const_iterator       ri;
+  somenumber* dst_ptr       = dst.begin();
+  const somenumber* src_ptr = src.begin();
+  typename std::vector<RowInfo>::const_iterator ri;
   const typename std::vector<RowInfo>::const_iterator end = row_info.end();
 
   // Forward
   for(ri = row_info.begin(); ri != end; ++dst_ptr, ++src_ptr, ++ri)
     {
       Assert(ri->diagonal != RowInfo::invalid_diagonal, ExcNoDiagonal());
-      number          s       = 0;
+      number s                = 0;
       const size_type end_row = ri->start + ri->diagonal;
       for(size_type i = ri->start; i < end_row; ++i)
         s += data[i].value * dst(data[i].column);
@@ -342,14 +342,14 @@ SparseMatrixEZ<number>::precondition_SSOR(Vector<somenumber>&       dst,
     *dst_ptr *= om * (2. - om) * data[ri->start + ri->diagonal].value;
 
   // Backward
-  typename std::vector<RowInfo>::const_reverse_iterator       rri;
+  typename std::vector<RowInfo>::const_reverse_iterator rri;
   const typename std::vector<RowInfo>::const_reverse_iterator rend
     = row_info.rend();
   dst_ptr = dst.begin() + dst.size() - 1;
   for(rri = row_info.rbegin(); rri != rend; --dst_ptr, ++rri)
     {
       const size_type end_row = rri->start + rri->length;
-      number          s       = 0;
+      number s                = 0;
       for(size_type i = rri->start + rri->diagonal + 1; i < end_row; ++i)
         s += data[i].value * dst(data[i].column);
 
@@ -377,7 +377,7 @@ template <typename number>
 typename SparseMatrixEZ<number>::size_type
 SparseMatrixEZ<number>::n_nonzero_elements() const
 {
-  typename std::vector<RowInfo>::const_iterator       row    = row_info.begin();
+  typename std::vector<RowInfo>::const_iterator row          = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator endrow = row_info.end();
 
   // Add up entries actually used
@@ -389,13 +389,13 @@ SparseMatrixEZ<number>::n_nonzero_elements() const
 
 template <typename number>
 void
-SparseMatrixEZ<number>::compute_statistics(size_type&              used,
-                                           size_type&              allocated,
-                                           size_type&              reserved,
+SparseMatrixEZ<number>::compute_statistics(size_type& used,
+                                           size_type& allocated,
+                                           size_type& reserved,
                                            std::vector<size_type>& used_by_line,
-                                           const bool              full) const
+                                           const bool full) const
 {
-  typename std::vector<RowInfo>::const_iterator       row    = row_info.begin();
+  typename std::vector<RowInfo>::const_iterator row          = row_info.begin();
   const typename std::vector<RowInfo>::const_iterator endrow = row_info.end();
 
   // Add up entries actually used
@@ -431,7 +431,7 @@ SparseMatrixEZ<number>::print(std::ostream& out) const
 {
   AssertThrow(out, ExcIO());
 
-  const_iterator       i = begin();
+  const_iterator i       = begin();
   const const_iterator e = end();
   while(i != e)
     {
@@ -442,12 +442,12 @@ SparseMatrixEZ<number>::print(std::ostream& out) const
 
 template <typename number>
 void
-SparseMatrixEZ<number>::print_formatted(std::ostream&      out,
+SparseMatrixEZ<number>::print_formatted(std::ostream& out,
                                         const unsigned int precision,
-                                        const bool         scientific,
+                                        const bool scientific,
                                         const unsigned int width_,
-                                        const char*        zero_string,
-                                        const double       denominator) const
+                                        const char* zero_string,
+                                        const double denominator) const
 {
   AssertThrow(out, ExcIO());
   Assert(m() != 0, ExcNotInitialized());
@@ -455,8 +455,8 @@ SparseMatrixEZ<number>::print_formatted(std::ostream&      out,
 
   unsigned int width = width_;
 
-  std::ios::fmtflags old_flags     = out.flags();
-  unsigned int       old_precision = out.precision(precision);
+  std::ios::fmtflags old_flags = out.flags();
+  unsigned int old_precision   = out.precision(precision);
 
   if(scientific)
     {
@@ -528,7 +528,7 @@ SparseMatrixEZ<number>::block_read(std::istream& in)
   AssertThrow(in, ExcIO());
 
   char c;
-  int  n;
+  int n;
   // first read in simple data
   DEAL_II_CHECK_INPUT(in, '[', c);
   in >> n;

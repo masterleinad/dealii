@@ -39,8 +39,8 @@ namespace Step27
     run();
 
   private:
-    Triangulation<dim>    triangulation;
-    hp::DoFHandler<dim>   dof_handler;
+    Triangulation<dim> triangulation;
+    hp::DoFHandler<dim> dof_handler;
     hp::FECollection<dim> fe_collection;
   };
 

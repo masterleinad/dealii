@@ -38,11 +38,11 @@ test()
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
   triangulation.begin_active()->face(1)->set_all_boundary_ids(1);
 
-  FE_Q<dim>       fe(1);
+  FE_Q<dim> fe(1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 
-  ConstraintMatrix             constraints;
+  ConstraintMatrix constraints;
   std::set<types::boundary_id> no_normal_flux_boundaries;
   no_normal_flux_boundaries.insert(1);
   deal_II_exceptions::disable_abort_on_exception();

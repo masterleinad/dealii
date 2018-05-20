@@ -55,7 +55,7 @@ void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
 {
   // This quadrature rule determines the points, where the
   // continuity will be tested.
-  QGauss<1>     quad(6);
+  QGauss<1> quad(6);
   Quadrature<2> qproject = QProjector<2>::project_to_all_faces(quad);
 
   FEFaceValues<2> fe_v_face(
@@ -131,8 +131,8 @@ void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
               for(unsigned int q_point = 0; q_point < n_q_face; ++q_point)
                 {
                   Tensor<1, 2> vn = fe_v_face.normal_vector(q_point);
-                  double       nx = vn[0];
-                  double       ny = vn[1];
+                  double nx       = vn[0];
+                  double ny       = vn[1];
 
                   double u = this_value[q_point + offset](0);
                   double v = this_value[q_point + offset](1);
@@ -162,7 +162,7 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
 {
   // This quadrature rule determines the points, where the
   // continuity will be tested.
-  QGauss<1>       quad(6);
+  QGauss<1> quad(6);
   FEFaceValues<2> fe_v_face(
     dof_handler->get_fe(),
     quad,
@@ -211,8 +211,8 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
               for(unsigned int q_point = 0; q_point < n_q_face; ++q_point)
                 {
                   Tensor<1, 2> vn = fe_v_face.normal_vector(q_point);
-                  double       nx = vn[0];
-                  double       ny = vn[1];
+                  double nx       = vn[0];
+                  double ny       = vn[1];
 
                   double u = this_value[q_point](0);
                   double v = this_value[q_point](1);
@@ -241,9 +241,9 @@ main(int /*argc*/, char** /*argv*/)
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  Triangulation<2>          tria_test;
-  DoFHandler<2>*            dof_handler;
-  Point<2>                  p1(0, 0), p2(1, 1);
+  Triangulation<2> tria_test;
+  DoFHandler<2>* dof_handler;
+  Point<2> p1(0, 0), p2(1, 1);
   std::vector<unsigned int> sub_div;
 
   sub_div.push_back(1);

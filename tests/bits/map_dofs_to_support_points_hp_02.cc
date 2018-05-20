@@ -45,7 +45,7 @@ test()
   FE_Q<dim> fe1(1);
   FE_Q<dim> fe2(2);
 
-  MappingQ<dim>              mapping(1);
+  MappingQ<dim> mapping(1);
   hp::MappingCollection<dim> mapping_collection(mapping);
 
   hp::FECollection<dim> fe_collection;

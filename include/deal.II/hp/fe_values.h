@@ -67,9 +67,9 @@ namespace internal
         const dealii::hp::MappingCollection<dim, FEValuesType::space_dimension>&
           mapping_collection,
         const dealii::hp::FECollection<dim, FEValuesType::space_dimension>&
-                                              fe_collection,
+          fe_collection,
         const dealii::hp::QCollection<q_dim>& q_collection,
-        const dealii::UpdateFlags             update_flags);
+        const dealii::UpdateFlags update_flags);
       /**
        * Constructor. This constructor is equivalent to the other one except
        * that it makes the object use a $Q_1$ mapping (i.e., an object of type
@@ -77,9 +77,9 @@ namespace internal
        */
       FEValuesBase(
         const dealii::hp::FECollection<dim, FEValuesType::space_dimension>&
-                                              fe_collection,
+          fe_collection,
         const dealii::hp::QCollection<q_dim>& q_collection,
-        const UpdateFlags                     update_flags);
+        const UpdateFlags update_flags);
 
       /**
        * Get a reference to the collection of finite element objects used
@@ -250,9 +250,9 @@ namespace hp
      */
     FEValues(
       const dealii::hp::MappingCollection<dim, spacedim>& mapping_collection,
-      const dealii::hp::FECollection<dim, spacedim>&      fe_collection,
-      const dealii::hp::QCollection<dim>&                 q_collection,
-      const UpdateFlags                                   update_flags);
+      const dealii::hp::FECollection<dim, spacedim>& fe_collection,
+      const dealii::hp::QCollection<dim>& q_collection,
+      const UpdateFlags update_flags);
 
     /**
      * Constructor. This constructor is equivalent to the other one except
@@ -266,8 +266,8 @@ namespace hp
      * the DoFHandler::get_fe() function.
      */
     FEValues(const hp::FECollection<dim, spacedim>& fe_collection,
-             const hp::QCollection<dim>&            q_collection,
-             const UpdateFlags                      update_flags);
+             const hp::QCollection<dim>& q_collection,
+             const UpdateFlags update_flags);
 
     /**
      * Reinitialize the object for the given cell.
@@ -382,9 +382,9 @@ namespace hp
      * the <tt>DoFHandler::get_fe()</tt> function.
      */
     FEFaceValues(const hp::MappingCollection<dim, spacedim>& mapping_collection,
-                 const hp::FECollection<dim, spacedim>&      fe_collection,
-                 const hp::QCollection<dim - 1>&             q_collection,
-                 const UpdateFlags                           update_flags);
+                 const hp::FECollection<dim, spacedim>& fe_collection,
+                 const hp::QCollection<dim - 1>& q_collection,
+                 const UpdateFlags update_flags);
 
     /**
      * Constructor. This constructor is equivalent to the other one except
@@ -398,8 +398,8 @@ namespace hp
      * the <tt>DoFHandler::get_fe()</tt> function.
      */
     FEFaceValues(const hp::FECollection<dim, spacedim>& fe_collection,
-                 const hp::QCollection<dim - 1>&        q_collection,
-                 const UpdateFlags                      update_flags);
+                 const hp::QCollection<dim - 1>& q_collection,
+                 const UpdateFlags update_flags);
 
     /**
      * Reinitialize the object for the given cell and face.
@@ -449,7 +449,7 @@ namespace hp
     template <typename DoFHandlerType, bool lda>
     void
     reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType, lda>> cell,
-           const unsigned int                                       face_no,
+           const unsigned int face_no,
            const unsigned int q_index       = numbers::invalid_unsigned_int,
            const unsigned int mapping_index = numbers::invalid_unsigned_int,
            const unsigned int fe_index      = numbers::invalid_unsigned_int);
@@ -470,7 +470,7 @@ namespace hp
      */
     void
     reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-           const unsigned int                                          face_no,
+           const unsigned int face_no,
            const unsigned int q_index       = numbers::invalid_unsigned_int,
            const unsigned int mapping_index = numbers::invalid_unsigned_int,
            const unsigned int fe_index      = numbers::invalid_unsigned_int);
@@ -500,9 +500,9 @@ namespace hp
      */
     FESubfaceValues(
       const hp::MappingCollection<dim, spacedim>& mapping_collection,
-      const hp::FECollection<dim, spacedim>&      fe_collection,
-      const hp::QCollection<dim - 1>&             q_collection,
-      const UpdateFlags                           update_flags);
+      const hp::FECollection<dim, spacedim>& fe_collection,
+      const hp::QCollection<dim - 1>& q_collection,
+      const UpdateFlags update_flags);
 
     /**
      * Constructor. This constructor is equivalent to the other one except
@@ -516,8 +516,8 @@ namespace hp
      * the <tt>DoFHandler::get_fe()</tt> function.
      */
     FESubfaceValues(const hp::FECollection<dim, spacedim>& fe_collection,
-                    const hp::QCollection<dim - 1>&        q_collection,
-                    const UpdateFlags                      update_flags);
+                    const hp::QCollection<dim - 1>& q_collection,
+                    const UpdateFlags update_flags);
 
     /**
      * Reinitialize the object for the given cell, face, and subface.
@@ -557,8 +557,8 @@ namespace hp
     template <typename DoFHandlerType, bool lda>
     void
     reinit(const TriaIterator<DoFCellAccessor<DoFHandlerType, lda>> cell,
-           const unsigned int                                       face_no,
-           const unsigned int                                       subface_no,
+           const unsigned int face_no,
+           const unsigned int subface_no,
            const unsigned int q_index       = numbers::invalid_unsigned_int,
            const unsigned int mapping_index = numbers::invalid_unsigned_int,
            const unsigned int fe_index      = numbers::invalid_unsigned_int);
@@ -579,7 +579,7 @@ namespace hp
      */
     void
     reinit(const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-           const unsigned int                                          face_no,
+           const unsigned int face_no,
            const unsigned int subface_no,
            const unsigned int q_index       = numbers::invalid_unsigned_int,
            const unsigned int mapping_index = numbers::invalid_unsigned_int,

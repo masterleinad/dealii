@@ -57,8 +57,8 @@ namespace internal
       void
       get_face_sign_change_rt(
         const dealii::Triangulation<2>::cell_iterator& cell,
-        const unsigned int                             dofs_per_face,
-        std::vector<double>&                           face_sign)
+        const unsigned int dofs_per_face,
+        std::vector<double>& face_sign)
       {
         const unsigned int dim      = 2;
         const unsigned int spacedim = 2;
@@ -139,9 +139,9 @@ namespace internal
 
 template <class PolynomialType, int dim, int spacedim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::FE_PolyTensor(
-  const unsigned int                degree,
-  const FiniteElementData<dim>&     fe_data,
-  const std::vector<bool>&          restriction_is_additive_flags,
+  const unsigned int degree,
+  const FiniteElementData<dim>& fe_data,
+  const std::vector<bool>& restriction_is_additive_flags,
   const std::vector<ComponentMask>& nonzero_components)
   : FiniteElement<dim, spacedim>(fe_data,
                                  restriction_is_additive_flags,
@@ -176,7 +176,7 @@ template <class PolynomialType, int dim, int spacedim>
 double
 FE_PolyTensor<PolynomialType, dim, spacedim>::shape_value_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim>& p,
   const unsigned int component) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
@@ -218,7 +218,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<1, dim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim>& p,
   const unsigned int component) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
@@ -261,7 +261,7 @@ template <class PolynomialType, int dim, int spacedim>
 Tensor<2, dim>
 FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_grad_component(
   const unsigned int i,
-  const Point<dim>&  p,
+  const Point<dim>& p,
   const unsigned int component) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));
@@ -298,13 +298,13 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const CellSimilarity::Similarity                            cell_similarity,
-  const Quadrature<dim>&                                      quadrature,
-  const Mapping<dim, spacedim>&                               mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
+  const CellSimilarity::Similarity cell_similarity,
+  const Quadrature<dim>& quadrature,
+  const Mapping<dim, spacedim>& mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
                                                                      spacedim>&
-                                                                 mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&
@@ -897,13 +897,13 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_face_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int                                          face_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const Mapping<dim, spacedim>&                               mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
+  const unsigned int face_no,
+  const Quadrature<dim - 1>& quadrature,
+  const Mapping<dim, spacedim>& mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
                                                                      spacedim>&
-                                                                 mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&
@@ -1528,14 +1528,14 @@ template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int                                          face_no,
-  const unsigned int                                          sub_no,
-  const Quadrature<dim - 1>&                                  quadrature,
-  const Mapping<dim, spacedim>&                               mapping,
-  const typename Mapping<dim, spacedim>::InternalDataBase&    mapping_internal,
+  const unsigned int face_no,
+  const unsigned int sub_no,
+  const Quadrature<dim - 1>& quadrature,
+  const Mapping<dim, spacedim>& mapping,
+  const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
                                                                      spacedim>&
-                                                                 mapping_data,
+    mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
                                                                      spacedim>&

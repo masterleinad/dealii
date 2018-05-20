@@ -164,9 +164,9 @@ namespace parallel
   void
   transform(const InputIterator& begin_in,
             const InputIterator& end_in,
-            OutputIterator       out,
-            Predicate&           predicate,
-            const unsigned int   grainsize)
+            OutputIterator out,
+            Predicate& predicate,
+            const unsigned int grainsize)
   {
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
@@ -177,8 +177,8 @@ namespace parallel
       *out++ = predicate(*in++);
 #else
     typedef std::tuple<InputIterator, OutputIterator> Iterators;
-    typedef SynchronousIterators<Iterators>           SyncIterators;
-    Iterators                                         x_begin(begin_in, out);
+    typedef SynchronousIterators<Iterators> SyncIterators;
+    Iterators x_begin(begin_in, out);
     Iterators x_end(end_in, OutputIterator());
     tbb::parallel_for(
       tbb::blocked_range<SyncIterators>(x_begin, x_end, grainsize),
@@ -217,10 +217,10 @@ namespace parallel
   void
   transform(const InputIterator1& begin_in1,
             const InputIterator1& end_in1,
-            InputIterator2        in2,
-            OutputIterator        out,
-            Predicate&            predicate,
-            const unsigned int    grainsize)
+            InputIterator2 in2,
+            OutputIterator out,
+            Predicate& predicate,
+            const unsigned int grainsize)
   {
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
@@ -231,9 +231,9 @@ namespace parallel
       *out++ = predicate(*in1++, *in2++);
 #else
     typedef std::tuple<InputIterator1, InputIterator2, OutputIterator>
-                                            Iterators;
+      Iterators;
     typedef SynchronousIterators<Iterators> SyncIterators;
-    Iterators                               x_begin(begin_in1, in2, out);
+    Iterators x_begin(begin_in1, in2, out);
     Iterators x_end(end_in1, InputIterator2(), OutputIterator());
     tbb::parallel_for(
       tbb::blocked_range<SyncIterators>(x_begin, x_end, grainsize),
@@ -273,11 +273,11 @@ namespace parallel
   void
   transform(const InputIterator1& begin_in1,
             const InputIterator1& end_in1,
-            InputIterator2        in2,
-            InputIterator3        in3,
-            OutputIterator        out,
-            Predicate&            predicate,
-            const unsigned int    grainsize)
+            InputIterator2 in2,
+            InputIterator3 in3,
+            OutputIterator out,
+            Predicate& predicate,
+            const unsigned int grainsize)
   {
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
@@ -289,10 +289,10 @@ namespace parallel
 #else
     typedef std::
       tuple<InputIterator1, InputIterator2, InputIterator3, OutputIterator>
-                                            Iterators;
+        Iterators;
     typedef SynchronousIterators<Iterators> SyncIterators;
-    Iterators                               x_begin(begin_in1, in2, in3, out);
-    Iterators                               x_end(
+    Iterators x_begin(begin_in1, in2, in3, out);
+    Iterators x_end(
       end_in1, InputIterator2(), InputIterator3(), OutputIterator());
     tbb::parallel_for(
       tbb::blocked_range<SyncIterators>(x_begin, x_end, grainsize),
@@ -311,7 +311,7 @@ namespace parallel
     template <typename RangeType, typename Function>
     void
     apply_to_subranges(const tbb::blocked_range<RangeType>& range,
-                       const Function&                      f)
+                       const Function& f)
     {
       f(range.begin(), range.end());
     }
@@ -391,10 +391,10 @@ namespace parallel
    */
   template <typename RangeType, typename Function>
   void
-  apply_to_subranges(const RangeType&                          begin,
+  apply_to_subranges(const RangeType& begin,
                      const typename identity<RangeType>::type& end,
-                     const Function&                           f,
-                     const unsigned int                        grainsize)
+                     const Function& f,
+                     const unsigned int grainsize)
   {
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler
@@ -504,8 +504,8 @@ namespace parallel
        * std::plus<int>().
        */
       template <typename Reductor>
-      ReductionOnSubranges(const Function&  f,
-                           const Reductor&  reductor,
+      ReductionOnSubranges(const Function& f,
+                           const Reductor& reductor,
                            const ResultType neutral_element = ResultType())
         : result(neutral_element),
           f(f),
@@ -626,10 +626,10 @@ namespace parallel
    */
   template <typename ResultType, typename RangeType, typename Function>
   ResultType
-  accumulate_from_subranges(const Function&                           f,
-                            const RangeType&                          begin,
+  accumulate_from_subranges(const Function& f,
+                            const RangeType& begin,
                             const typename identity<RangeType>::type& end,
-                            const unsigned int                        grainsize)
+                            const unsigned int grainsize)
   {
 #ifndef DEAL_II_WITH_THREADS
     // make sure we don't get compiler

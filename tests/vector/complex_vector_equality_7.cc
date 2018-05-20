@@ -46,7 +46,7 @@ main()
   try
     {
       Vector<std::complex<double>> v(100);
-      Vector<std::complex<float>>  w(100);
+      Vector<std::complex<float>> w(100);
       test(v, w);
     }
   catch(std::exception& exc)

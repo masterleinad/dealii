@@ -120,12 +120,12 @@ private:
   // will specify the exact polynomial degree of the finite element in the
   // constructor of this class)...
   Triangulation<2> triangulation;
-  FE_Q<2>          fe;
-  DoFHandler<2>    dof_handler;
+  FE_Q<2> fe;
+  DoFHandler<2> dof_handler;
 
   // ...variables for the sparsity pattern and values of the system matrix
   // resulting from the discretization of the Laplace equation...
-  SparsityPattern      sparsity_pattern;
+  SparsityPattern sparsity_pattern;
   SparseMatrix<double> system_matrix;
 
   // ...and variables which will hold the right hand side and solution
@@ -377,7 +377,7 @@ Step3::assemble_system()
   // rather than a sparse one for the local operations; everything will be
   // transferred to a global sparse matrix later on):
   FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-  Vector<double>     cell_rhs(dofs_per_cell);
+  Vector<double> cell_rhs(dofs_per_cell);
 
   // When assembling the contributions of each cell, we do this with the local
   // numbering of the degrees of freedom (i.e. the number running from zero

@@ -43,7 +43,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
 
-  FE_Q<dim>       fe(fe_degree);
+  FE_Q<dim> fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
   ConstraintMatrix constraints;
@@ -63,7 +63,7 @@ test()
   {
     MatrixFree<dim, double> mf_data;
     {
-      const QGauss<1>                                  quad(fe_degree + 1);
+      const QGauss<1> quad(fe_degree + 1);
       typename MatrixFree<dim, double>::AdditionalData data;
       data.tasks_parallel_scheme
         = MatrixFree<dim, double>::AdditionalData::none;
@@ -78,7 +78,7 @@ test()
   {
     MatrixFree<dim, double> mf_data;
     {
-      const QGauss<1>                                  quad(fe_degree + 2);
+      const QGauss<1> quad(fe_degree + 2);
       typename MatrixFree<dim, double>::AdditionalData data;
       data.tasks_parallel_scheme
         = MatrixFree<dim, double>::AdditionalData::none;

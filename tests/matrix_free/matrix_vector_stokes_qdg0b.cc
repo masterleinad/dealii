@@ -53,19 +53,19 @@ class MatrixFreeTest
 {
 public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
-  typedef double                                         Number;
+  typedef double Number;
 
   MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              VectorType&                                  dst,
-              const VectorType&                            src,
+  local_apply(const MatrixFree<dim, Number>& data,
+              VectorType& dst,
+              const VectorType& src,
               const std::pair<unsigned int, unsigned int>& cell_range) const
   {
-    typedef VectorizedArray<Number>       vector_t;
+    typedef VectorizedArray<Number> vector_t;
     FEEvaluation<dim, -1, 0, dim, Number> velocity(data, 0);
-    FEEvaluation<dim, -1, 0, 1, Number>   pressure(data, 1);
+    FEEvaluation<dim, -1, 0, 1, Number> pressure(data, 1);
 
     for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
@@ -122,9 +122,9 @@ test(const unsigned int fe_degree)
   else
     triangulation.refine_global(3 - dim);
 
-  FE_Q<dim>       fe_u(fe_degree + 1);
-  FE_Q_DG0<dim>   fe_p(fe_degree);
-  FESystem<dim>   fe(fe_u, dim, fe_p, 1);
+  FE_Q<dim> fe_u(fe_degree + 1);
+  FE_Q_DG0<dim> fe_p(fe_degree);
+  FESystem<dim> fe(fe_u, dim, fe_p, 1);
   DoFHandler<dim> dof_handler_u(triangulation);
   DoFHandler<dim> dof_handler_p(triangulation);
   DoFHandler<dim> dof_handler(triangulation);
@@ -133,11 +133,11 @@ test(const unsigned int fe_degree)
 
   ConstraintMatrix constraints;
 
-  BlockSparsityPattern      sparsity_pattern;
+  BlockSparsityPattern sparsity_pattern;
   BlockSparseMatrix<double> system_matrix;
 
-  BlockVector<double>         solution;
-  BlockVector<double>         system_rhs;
+  BlockVector<double> solution;
+  BlockVector<double> system_rhs;
   std::vector<Vector<double>> vec1, vec2;
 
   dof_handler.distribute_dofs(fe);
@@ -212,8 +212,8 @@ test(const unsigned int fe_degree)
     const FEValuesExtractors::Scalar pressure(dim);
 
     std::vector<SymmetricTensor<2, dim>> phi_grads_u(dofs_per_cell);
-    std::vector<double>                  div_phi_u(dofs_per_cell);
-    std::vector<double>                  phi_p(dofs_per_cell);
+    std::vector<double> div_phi_u(dofs_per_cell);
+    std::vector<double> phi_p(dofs_per_cell);
 
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
@@ -283,7 +283,7 @@ test(const unsigned int fe_degree)
   system_matrix.vmult(solution, system_rhs);
 
   typedef std::vector<Vector<double>> VectorType;
-  MatrixFreeTest<dim, VectorType>     mf(mf_data);
+  MatrixFreeTest<dim, VectorType> mf(mf_data);
   mf.vmult(vec2, vec1);
 
   // Verification

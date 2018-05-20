@@ -56,7 +56,7 @@ main()
   tria.refine_global(1);
 
   FE_Q_Hierarchical<2> fe(1);
-  DoFHandler<2>        dof_handler(tria);
+  DoFHandler<2> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
 
   BlockSparsityPattern sparsity_pattern;
@@ -85,7 +85,7 @@ main()
   BlockSparseMatrix<double> B;
   B.reinit(sparsity_pattern);
 
-  QGauss<2>   qr(2);
+  QGauss<2> qr(2);
   FEValues<2> fe_values(dof_handler.get_fe(),
                         qr,
                         UpdateFlags(update_values | update_gradients

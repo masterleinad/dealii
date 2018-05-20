@@ -82,8 +82,8 @@ namespace Step18
   template <int dim>
   inline SymmetricTensor<2, dim>
   get_strain(const FEValues<dim>& fe_values,
-             const unsigned int   shape_func,
-             const unsigned int   q_point)
+             const unsigned int shape_func,
+             const unsigned int q_point)
   {
     SymmetricTensor<2, dim> tmp;
     for(unsigned int i = 0; i < dim; ++i)
@@ -124,11 +124,11 @@ namespace Step18
     const Point<3> curl(grad_u[2][1] - grad_u[1][2],
                         grad_u[0][2] - grad_u[2][0],
                         grad_u[1][0] - grad_u[0][1]);
-    const double   tan_angle = std::sqrt(curl * curl);
+    const double tan_angle = std::sqrt(curl * curl);
     // Note: Here the negative angle suggests that we're computing the rotation
     // of the coordinate system around a fixed point
-    const double   angle = -std::atan(tan_angle);
-    const Point<3> axis  = curl / tan_angle;
+    const double angle  = -std::atan(tan_angle);
+    const Point<3> axis = curl / tan_angle;
     return Physics::Transformations::Rotations::rotation_matrix_3d(axis, angle);
   }
   template <int dim>
@@ -164,30 +164,30 @@ namespace Step18
     void
     setup_quadrature_point_history();
     void
-                                         update_quadrature_point_history();
+    update_quadrature_point_history();
     parallel::shared::Triangulation<dim> triangulation;
-    FESystem<dim>                        fe;
-    DoFHandler<dim>                      dof_handler;
-    ConstraintMatrix                     hanging_node_constraints;
-    const QGauss<dim>                    quadrature_formula;
-    std::vector<PointHistory<dim>>       quadrature_point_history;
-    PETScWrappers::MPI::SparseMatrix     system_matrix;
-    PETScWrappers::MPI::Vector           system_rhs;
-    Vector<double>                       incremental_displacement;
-    double                               present_time;
-    double                               present_timestep;
-    double                               end_time;
-    unsigned int                         timestep_no;
-    MPI_Comm                             mpi_communicator;
-    const unsigned int                   n_mpi_processes;
-    const unsigned int                   this_mpi_process;
-    ConditionalOStream                   pcout;
+    FESystem<dim> fe;
+    DoFHandler<dim> dof_handler;
+    ConstraintMatrix hanging_node_constraints;
+    const QGauss<dim> quadrature_formula;
+    std::vector<PointHistory<dim>> quadrature_point_history;
+    PETScWrappers::MPI::SparseMatrix system_matrix;
+    PETScWrappers::MPI::Vector system_rhs;
+    Vector<double> incremental_displacement;
+    double present_time;
+    double present_timestep;
+    double end_time;
+    unsigned int timestep_no;
+    MPI_Comm mpi_communicator;
+    const unsigned int n_mpi_processes;
+    const unsigned int this_mpi_process;
+    ConditionalOStream pcout;
     std::vector<types::global_dof_index> local_dofs_per_process;
-    IndexSet                             locally_owned_dofs;
-    IndexSet                             locally_relevant_dofs;
-    unsigned int                         n_local_cells;
+    IndexSet locally_owned_dofs;
+    IndexSet locally_relevant_dofs;
+    unsigned int n_local_cells;
     static const SymmetricTensor<4, dim> stress_strain_tensor;
-    int                                  monitored_vertex_first_dof;
+    int monitored_vertex_first_dof;
   };
   template <int dim>
   class BodyForce : public Function<dim>
@@ -198,7 +198,7 @@ namespace Step18
     vector_value(const Point<dim>& p, Vector<double>& values) const;
     virtual void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const;
+                      std::vector<Vector<double>>& value_list) const;
   };
   template <int dim>
   BodyForce<dim>::BodyForce() : Function<dim>(dim)
@@ -218,7 +218,7 @@ namespace Step18
   void
   BodyForce<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    std::vector<Vector<double>>& value_list) const
   {
     const unsigned int n_points = points.size();
     Assert(value_list.size() == n_points,
@@ -236,7 +236,7 @@ namespace Step18
     vector_value(const Point<dim>& p, Vector<double>& values) const;
     virtual void
     vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const;
+                      std::vector<Vector<double>>& value_list) const;
 
   private:
     const double velocity;
@@ -265,7 +265,7 @@ namespace Step18
   void
   IncrementalBoundaryValues<dim>::vector_value_list(
     const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    std::vector<Vector<double>>& value_list) const
   {
     const unsigned int n_points = points.size();
     Assert(value_list.size() == n_points,
@@ -376,18 +376,18 @@ namespace Step18
   {
     system_rhs    = 0;
     system_matrix = 0;
-    FEValues<dim>      fe_values(fe,
+    FEValues<dim> fe_values(fe,
                             quadrature_formula,
                             update_values | update_gradients
                               | update_quadrature_points | update_JxW_values);
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int n_q_points    = quadrature_formula.size();
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
-    Vector<double>     cell_rhs(dofs_per_cell);
+    Vector<double> cell_rhs(dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    BodyForce<dim>                       body_force;
-    std::vector<Vector<double>>          body_force_values(n_q_points,
-                                                           Vector<double>(dim));
+    BodyForce<dim> body_force;
+    std::vector<Vector<double>> body_force_values(n_q_points,
+                                                  Vector<double>(dim));
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
@@ -435,7 +435,7 @@ namespace Step18
         }
     system_matrix.compress(VectorOperation::add);
     system_rhs.compress(VectorOperation::add);
-    FEValuesExtractors::Scalar                z_component(dim - 1);
+    FEValuesExtractors::Scalar z_component(dim - 1);
     std::map<types::global_dof_index, double> boundary_values;
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, Functions::ZeroFunction<dim>(dim), boundary_values);
@@ -473,7 +473,7 @@ namespace Step18
     distributed_incremental_displacement = incremental_displacement;
     SolverControl solver_control(
       dof_handler.n_dofs(), 1e-16 * system_rhs.l2_norm(), false, false);
-    PETScWrappers::SolverCG                cg(solver_control, mpi_communicator);
+    PETScWrappers::SolverCG cg(solver_control, mpi_communicator);
     PETScWrappers::PreconditionBlockJacobi preconditioner(system_matrix);
     cg.solve(system_matrix,
              distributed_incremental_displacement,
@@ -596,7 +596,7 @@ namespace Step18
         // Get point at which to output displacement
         // (outer radius of displaced surface)
         {
-          const Point<dim>                               soln_pt(1.0, 0.0, 3.0);
+          const Point<dim> soln_pt(1.0, 0.0, 3.0);
           typename DoFHandler<dim>::active_cell_iterator cell
             = dof_handler.begin_active(),
             endc = dof_handler.end();
@@ -772,7 +772,7 @@ main(int argc, char** argv)
       using namespace dealii;
       using namespace Step18;
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
-      TopLevel<3>                      elastic_problem;
+      TopLevel<3> elastic_problem;
       elastic_problem.run();
     }
   catch(std::exception& exc)

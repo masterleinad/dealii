@@ -36,7 +36,7 @@ check()
       Utilities::System::posix_memalign(
         (void**) &val, 64, sizeof(Number) * size);
 
-      const Number                                   s = 3.1415;
+      const Number s = 3.1415;
       internal::VectorOperations::Vector_set<Number> setter(s, val);
 
       // now break the size in chunks

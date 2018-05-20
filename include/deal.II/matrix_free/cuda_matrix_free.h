@@ -127,13 +127,13 @@ namespace CUDAWrappers
      */
     struct Data
     {
-      point_type*   q_points;
+      point_type* q_points;
       unsigned int* local_to_global;
-      Number*       inv_jacobian;
-      Number*       JxW;
-      unsigned int  n_cells;
-      unsigned int  padding_length;
-      unsigned int  row_start;
+      Number* inv_jacobian;
+      Number* JxW;
+      unsigned int n_cells;
+      unsigned int padding_length;
+      unsigned int row_start;
       unsigned int* constraint_mask;
     };
 
@@ -153,20 +153,20 @@ namespace CUDAWrappers
      * together with the quadrature formula describe the local operations.
      */
     void
-    reinit(const Mapping<dim>&     mapping,
-           const DoFHandler<dim>&  dof_handler,
+    reinit(const Mapping<dim>& mapping,
+           const DoFHandler<dim>& dof_handler,
            const ConstraintMatrix& constraints,
-           const Quadrature<1>&    quad,
-           const AdditionalData    additional_data = AdditionalData());
+           const Quadrature<1>& quad,
+           const AdditionalData additional_data = AdditionalData());
 
     /**
      * Initializes the data structures. Same as above but using a Q1 mapping.
      */
     void
-    reinit(const DoFHandler<dim>&  dof_handler,
+    reinit(const DoFHandler<dim>& dof_handler,
            const ConstraintMatrix& constraints,
-           const Quadrature<1>&    quad,
-           const AdditionalData    AdditionalData = AdditionalData());
+           const Quadrature<1>& quad,
+           const AdditionalData AdditionalData = AdditionalData());
 
     /**
      * Return the Data structure associated with @p color.
@@ -180,13 +180,13 @@ namespace CUDAWrappers
      */
     template <typename functor>
     void
-    cell_loop(const functor&            func,
+    cell_loop(const functor& func,
               const CUDAVector<Number>& src,
-              CUDAVector<Number>&       dst) const;
+              CUDAVector<Number>& dst) const;
 
     void
     copy_constrained_values(const CUDAVector<Number>& src,
-                            CUDAVector<Number>&       dst) const;
+                            CUDAVector<Number>& dst) const;
 
     void
     set_constrained_values(const Number val, CUDAVector<Number>& dst) const;
@@ -255,7 +255,7 @@ namespace CUDAWrappers
     std::vector<Number*> JxW;
 
     // Constraints
-    unsigned int*              constrained_dofs;
+    unsigned int* constrained_dofs;
     std::vector<unsigned int*> constraint_mask;
     /**
      * Grid dimensions associated to the different colors. The grid dimensions
@@ -270,10 +270,10 @@ namespace CUDAWrappers
 
     // Parallelization parameter
     unsigned int cells_per_block;
-    dim3         constraint_grid_dim;
-    dim3         constraint_block_dim;
+    dim3 constraint_grid_dim;
+    dim3 constraint_block_dim;
 
-    unsigned int              padding_length;
+    unsigned int padding_length;
     std::vector<unsigned int> row_start;
 
     friend class internal::ReinitHelper<dim, Number>;
@@ -300,7 +300,7 @@ namespace CUDAWrappers
   // time
   // TODO this function should be rewritten using meta-programming
   __host__ __device__ constexpr unsigned int
-           cells_per_block_shmem(int dim, int fe_degree)
+  cells_per_block_shmem(int dim, int fe_degree)
   {
     return dim == 2 ?
              (fe_degree == 1 ?

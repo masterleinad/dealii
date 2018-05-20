@@ -109,13 +109,13 @@ private:
   void
   test_mapping()
   {
-    const double               tol = 1e-8;
+    const double tol = 1e-8;
     const MappingQGeneric<dim> mapping(1);
 
     deallog << "Number of active cells: " << triangulation.n_active_cells()
             << std::endl;
 
-    auto       cell = dof_handler.begin_active();
+    auto cell       = dof_handler.begin_active();
     const auto endc = dof_handler.end();
     for(unsigned int index = 0; cell != endc; ++cell, ++index)
       {
@@ -168,7 +168,7 @@ private:
 
 private:
   Triangulation<dim> triangulation;
-  DoFHandler<dim>    dof_handler;
+  DoFHandler<dim> dof_handler;
   const unsigned int refine_case;
 };
 
