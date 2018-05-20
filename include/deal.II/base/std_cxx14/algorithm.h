@@ -18,7 +18,7 @@
 #include <deal.II/base/config.h>
 
 #ifdef DEAL_II_WITH_CXX14
-#  include <algorithm>
+#include <algorithm>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

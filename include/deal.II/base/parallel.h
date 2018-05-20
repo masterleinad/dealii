@@ -28,10 +28,10 @@
 #include <tuple>
 
 #ifdef DEAL_II_WITH_THREADS
-#  include <tbb/blocked_range.h>
-#  include <tbb/parallel_for.h>
-#  include <tbb/parallel_reduce.h>
-#  include <tbb/partitioner.h>
+#include <tbb/blocked_range.h>
+#include <tbb/parallel_for.h>
+#include <tbb/parallel_reduce.h>
+#include <tbb/partitioner.h>
 #endif
 
 //TODO[WB]: allow calling functions to pass along a tbb::affinity_partitioner object to ensure that subsequent calls use the same cache lines
@@ -401,14 +401,14 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-#  ifndef DEAL_II_BIND_NO_CONST_OP_PARENTHESES
+#ifndef DEAL_II_BIND_NO_CONST_OP_PARENTHESES
     f(begin, end);
-#  else
+#else
     // work around a problem with MS VC++ where there is no const
     // operator() in 'Function' if 'Function' is the result of std::bind
     Function ff = f;
     ff(begin, end);
-#  endif
+#endif
 #else
     tbb::parallel_for(
       tbb::blocked_range<RangeType>(begin, end, grainsize),
@@ -636,14 +636,14 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-#  ifndef DEAL_II_BIND_NO_CONST_OP_PARENTHESES
+#ifndef DEAL_II_BIND_NO_CONST_OP_PARENTHESES
     return f(begin, end);
-#  else
+#else
     // work around a problem with MS VC++ where there is no const
     // operator() in 'Function' if 'Function' is the result of std::bind
     Function ff = f;
     return ff(begin, end);
-#  endif
+#endif
 #else
     internal::ReductionOnSubranges<ResultType, Function> reductor(
       f, std::plus<ResultType>(), 0);

@@ -42,13 +42,13 @@ namespace types
    */
   typedef unsigned long long int particle_index;
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
   /**
    * An identifier that denotes the MPI type associated with
    * types::global_dof_index.
    */
-#    define PARTICLE_INDEX_MPI_TYPE MPI_UNSIGNED_LONG_LONG
-#  endif
+#define PARTICLE_INDEX_MPI_TYPE MPI_UNSIGNED_LONG_LONG
+#endif
 #else
   /**
    * The type used for indices of particles. While in
@@ -63,13 +63,13 @@ namespace types
    */
   typedef unsigned int particle_index;
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
   /**
    * An identifier that denotes the MPI type associated with
    * types::global_dof_index.
    */
-#    define PARTICLE_INDEX_MPI_TYPE MPI_UNSIGNED
-#  endif
+#define PARTICLE_INDEX_MPI_TYPE MPI_UNSIGNED
+#endif
 #endif
 } // namespace types
 

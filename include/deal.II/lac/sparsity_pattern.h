@@ -25,9 +25,9 @@
 // moved to a different file in BOOST 1.64
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 106400
-#  include <boost/serialization/array_wrapper.hpp>
+#include <boost/serialization/array_wrapper.hpp>
 #else
-#  include <boost/serialization/array.hpp>
+#include <boost/serialization/array.hpp>
 #endif
 #include <boost/serialization/split_member.hpp>
 

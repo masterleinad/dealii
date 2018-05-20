@@ -403,7 +403,7 @@ template class BlockTrianglePrecondition<double,
 #endif
 
 #ifdef DEAL_II_WITH_PETSC
-#  ifdef PETSC_USE_COMPLEX
+#ifdef PETSC_USE_COMPLEX
 template class BlockMatrixArray<std::complex<float>,
                                 PETScWrappers::MPI::BlockVector>;
 template class BlockMatrixArray<std::complex<double>,
@@ -412,14 +412,14 @@ template class BlockTrianglePrecondition<std::complex<float>,
                                          PETScWrappers::MPI::BlockVector>;
 template class BlockTrianglePrecondition<std::complex<double>,
                                          PETScWrappers::MPI::BlockVector>;
-#  else
+#else
 template class BlockMatrixArray<float, PETScWrappers::MPI::BlockVector>;
 template class BlockMatrixArray<double, PETScWrappers::MPI::BlockVector>;
 template class BlockTrianglePrecondition<float,
                                          PETScWrappers::MPI::BlockVector>;
 template class BlockTrianglePrecondition<double,
                                          PETScWrappers::MPI::BlockVector>;
-#  endif
+#endif
 #endif
 
 DEAL_II_NAMESPACE_CLOSE

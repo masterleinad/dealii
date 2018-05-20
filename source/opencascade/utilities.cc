@@ -17,67 +17,67 @@
 
 #ifdef DEAL_II_WITH_OPENCASCADE
 
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/point.h>
-#  include <deal.II/base/utilities.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/point.h>
+#include <deal.II/base/utilities.h>
 
-#  include <cstdio>
-#  include <iostream>
-#  include <set>
+#include <cstdio>
+#include <iostream>
+#include <set>
 
-#  include <IGESControl_Controller.hxx>
-#  include <IGESControl_Reader.hxx>
-#  include <IGESControl_Writer.hxx>
+#include <IGESControl_Controller.hxx>
+#include <IGESControl_Reader.hxx>
+#include <IGESControl_Writer.hxx>
 
-#  include <STEPControl_Controller.hxx>
-#  include <STEPControl_Reader.hxx>
-#  include <STEPControl_Writer.hxx>
+#include <STEPControl_Controller.hxx>
+#include <STEPControl_Reader.hxx>
+#include <STEPControl_Writer.hxx>
 
-#  include <TopExp_Explorer.hxx>
-#  include <TopoDS.hxx>
-#  include <TopoDS_Edge.hxx>
-#  include <TopoDS_Face.hxx>
-#  include <TopoDS_Shape.hxx>
+#include <TopExp_Explorer.hxx>
+#include <TopoDS.hxx>
+#include <TopoDS_Edge.hxx>
+#include <TopoDS_Face.hxx>
+#include <TopoDS_Shape.hxx>
 
-#  include <Standard_Version.hxx>
-#  if(OCC_VERSION_MAJOR < 7)
-#    include <Handle_Standard_Transient.hxx>
-#  else
-#    include <Standard_Transient.hxx>
-#  endif
+#include <Standard_Version.hxx>
+#if(OCC_VERSION_MAJOR < 7)
+#include <Handle_Standard_Transient.hxx>
+#else
+#include <Standard_Transient.hxx>
+#endif
 
-#  include <TColStd_HSequenceOfTransient.hxx>
-#  include <TColStd_SequenceOfTransient.hxx>
-#  include <TColgp_HArray1OfPnt.hxx>
+#include <TColStd_HSequenceOfTransient.hxx>
+#include <TColStd_SequenceOfTransient.hxx>
+#include <TColgp_HArray1OfPnt.hxx>
 
-#  include <GeomAPI_ProjectPointOnCurve.hxx>
-#  include <GeomAPI_ProjectPointOnSurf.hxx>
-#  include <IntCurvesFace_ShapeIntersector.hxx>
-#  include <gp_Lin.hxx>
-#  include <gp_Pnt.hxx>
-#  include <gp_Vec.hxx>
+#include <GeomAPI_ProjectPointOnCurve.hxx>
+#include <GeomAPI_ProjectPointOnSurf.hxx>
+#include <IntCurvesFace_ShapeIntersector.hxx>
+#include <gp_Lin.hxx>
+#include <gp_Pnt.hxx>
+#include <gp_Vec.hxx>
 
-#  include <BRepAdaptor_Curve.hxx>
-#  include <BRepAdaptor_HCompCurve.hxx>
-#  include <BRepAdaptor_HCurve.hxx>
-#  include <BRepAdaptor_Surface.hxx>
-#  include <BRepAlgo_Section.hxx>
-#  include <BRepBuilderAPI_MakeEdge.hxx>
-#  include <BRepBuilderAPI_Transform.hxx>
-#  include <BRepTools.hxx>
-#  include <BRep_Builder.hxx>
+#include <BRepAdaptor_Curve.hxx>
+#include <BRepAdaptor_HCompCurve.hxx>
+#include <BRepAdaptor_HCurve.hxx>
+#include <BRepAdaptor_Surface.hxx>
+#include <BRepAlgo_Section.hxx>
+#include <BRepBuilderAPI_MakeEdge.hxx>
+#include <BRepBuilderAPI_Transform.hxx>
+#include <BRepTools.hxx>
+#include <BRep_Builder.hxx>
 
-#  include <GeomAPI_Interpolate.hxx>
-#  include <GeomConvert_CompCurveToBSplineCurve.hxx>
-#  include <GeomLProp_SLProps.hxx>
-#  include <Geom_BoundedCurve.hxx>
-#  include <Geom_Plane.hxx>
+#include <GeomAPI_Interpolate.hxx>
+#include <GeomConvert_CompCurveToBSplineCurve.hxx>
+#include <GeomLProp_SLProps.hxx>
+#include <Geom_BoundedCurve.hxx>
+#include <Geom_Plane.hxx>
 
-#  include <GCPnts_AbscissaPoint.hxx>
-#  include <ShapeAnalysis_Surface.hxx>
+#include <GCPnts_AbscissaPoint.hxx>
+#include <ShapeAnalysis_Surface.hxx>
 
-#  include <algorithm>
-#  include <vector>
+#include <algorithm>
+#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -814,7 +814,7 @@ namespace OpenCASCADE
     tria.create_triangulation(vertices, cells, t);
   }
 
-#  include "utilities.inst"
+#include "utilities.inst"
 
 } // namespace OpenCASCADE
 

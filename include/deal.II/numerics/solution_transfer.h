@@ -14,17 +14,17 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_solution_transfer_h
-#  define dealii_solution_transfer_h
+#define dealii_solution_transfer_h
 
 /*----------------------------   solutiontransfer.h     ----------------------*/
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/smartpointer.h>
-#  include <deal.II/dofs/dof_handler.h>
-#  include <deal.II/lac/vector.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/smartpointer.h>
+#include <deal.II/dofs/dof_handler.h>
+#include <deal.II/lac/vector.h>
 
-#  include <vector>
+#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -291,12 +291,12 @@ template <int dim,
           typename DoFHandlerType = DoFHandler<dim>>
 class SolutionTransfer
 {
-#  ifndef DEAL_II_MSVC
+#ifndef DEAL_II_MSVC
   static_assert(dim == DoFHandlerType::dimension,
                 "The dimension explicitly provided as a template "
                 "argument, and the dimension of the DoFHandlerType "
                 "template argument must match.");
-#  endif
+#endif
 public:
   /**
    * Constructor, takes the current DoFHandler as argument.

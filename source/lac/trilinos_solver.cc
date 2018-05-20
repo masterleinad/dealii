@@ -17,20 +17,20 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  include <deal.II/base/conditional_ostream.h>
-#  include <deal.II/base/std_cxx14/memory.h>
-#  include <deal.II/lac/trilinos_precondition.h>
-#  include <deal.II/lac/trilinos_sparse_matrix.h>
-#  include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/base/conditional_ostream.h>
+#include <deal.II/base/std_cxx14/memory.h>
+#include <deal.II/lac/trilinos_precondition.h>
+#include <deal.II/lac/trilinos_sparse_matrix.h>
+#include <deal.II/lac/trilinos_vector.h>
 
-#  include <AztecOO_StatusTest.h>
-#  include <AztecOO_StatusTestCombo.h>
-#  include <AztecOO_StatusTestMaxIters.h>
-#  include <AztecOO_StatusTestResNorm.h>
-#  include <AztecOO_StatusType.h>
+#include <AztecOO_StatusTest.h>
+#include <AztecOO_StatusTestCombo.h>
+#include <AztecOO_StatusTestMaxIters.h>
+#include <AztecOO_StatusTestResNorm.h>
+#include <AztecOO_StatusType.h>
 
-#  include <cmath>
-#  include <limits>
+#include <cmath>
+#include <limits>
 
 DEAL_II_NAMESPACE_OPEN
 

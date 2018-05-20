@@ -17,15 +17,15 @@
 
 #ifdef DEAL_II_WITH_SLEPC
 
-#  include <deal.II/lac/petsc_matrix_base.h>
-#  include <deal.II/lac/petsc_vector_base.h>
-#  include <deal.II/lac/slepc_spectral_transformation.h>
+#include <deal.II/lac/petsc_matrix_base.h>
+#include <deal.II/lac/petsc_vector_base.h>
+#include <deal.II/lac/slepc_spectral_transformation.h>
 
-#  include <cmath>
-#  include <vector>
+#include <cmath>
+#include <vector>
 
-#  include <petscversion.h>
-#  include <slepcversion.h>
+#include <petscversion.h>
+#include <slepcversion.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -92,7 +92,7 @@ namespace SLEPcWrappers
     PetscErrorCode ierr = EPSSetST(eps, transformation.st);
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
 
-#  if DEAL_II_SLEPC_VERSION_GTE(3, 8, 0)
+#if DEAL_II_SLEPC_VERSION_GTE(3, 8, 0)
     // see https://lists.mcs.anl.gov/mailman/htdig/petsc-users/2017-October/033649.html
     // From 3.8.0 SLEPc insists that when looking for smallest eigenvalues with shift-and-invert
     // users should (a) set target (b) use EPS_TARGET_MAGNITUDE
@@ -104,7 +104,7 @@ namespace SLEPcWrappers
         ierr = EPSSetTarget(eps, sinv->additional_data.shift_parameter);
         AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
       }
-#  endif
+#endif
   }
 
   void
@@ -211,11 +211,11 @@ namespace SLEPcWrappers
           // https://lists.mcs.anl.gov/pipermail/petsc-users/2014-November/023509.html
           //
           // for more information.
-#  if DEAL_II_SLEPC_VERSION_GTE(3, 6, 0)
+#if DEAL_II_SLEPC_VERSION_GTE(3, 6, 0)
           ierr = EPSComputeError(eps, i, EPS_ERROR_ABSOLUTE, &residual_norm_i);
-#  else
+#else
           ierr = EPSComputeResidualNorm(eps, i, &residual_norm_i);
-#  endif
+#endif
 
           AssertThrow(ierr == 0, ExcSLEPcError(ierr));
           residual_norm = std::max(residual_norm, residual_norm_i);
@@ -255,7 +255,7 @@ namespace SLEPcWrappers
                             PETScWrappers::VectorBase& real_eigenvectors,
                             PETScWrappers::VectorBase& imag_eigenvectors)
   {
-#  ifndef PETSC_USE_COMPLEX
+#ifndef PETSC_USE_COMPLEX
     // get converged eigenpair
     const PetscErrorCode ierr = EPSGetEigenpair(eps,
                                                 index,
@@ -264,7 +264,7 @@ namespace SLEPcWrappers
                                                 real_eigenvectors,
                                                 imag_eigenvectors);
     AssertThrow(ierr == 0, ExcSLEPcError(ierr));
-#  else
+#else
     Assert(
       (false),
       ExcMessage(
@@ -277,7 +277,7 @@ namespace SLEPcWrappers
     (void) imag_eigenvalues;
     (void) real_eigenvectors;
     (void) imag_eigenvectors;
-#  endif
+#endif
   }
 
   void
@@ -430,16 +430,16 @@ namespace SLEPcWrappers
   {
     // 'Tis overwhelmingly likely that PETSc/SLEPc *always* has
     // BLAS/LAPACK, but let's be defensive.
-#  if PETSC_HAVE_BLASLAPACK
+#if PETSC_HAVE_BLASLAPACK
     const PetscErrorCode ierr = EPSSetType(eps, const_cast<char*>(EPSLAPACK));
     AssertThrow(ierr == 0, ExcSLEPcError(ierr));
-#  else
+#else
     Assert(
       (false),
       ExcMessage(
         "Your PETSc/SLEPc installation was not configured with BLAS/LAPACK "
         "but this is needed to use the LAPACK solver."));
-#  endif
+#endif
   }
 } // namespace SLEPcWrappers
 

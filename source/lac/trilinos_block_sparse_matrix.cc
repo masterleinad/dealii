@@ -17,8 +17,8 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  include <deal.II/lac/block_sparse_matrix.h>
-#  include <deal.II/lac/block_sparsity_pattern.h>
+#include <deal.II/lac/block_sparse_matrix.h>
+#include <deal.II/lac/block_sparsity_pattern.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -209,11 +209,11 @@ namespace TrilinosWrappers
 
     // produce a dummy local map and pass it
     // off to the other function
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     Epetra_MpiComm trilinos_communicator(MPI_COMM_SELF);
-#  else
+#else
     Epetra_SerialComm trilinos_communicator;
-#  endif
+#endif
 
     std::vector<Epetra_Map> parallel_partitioning;
     for(size_type i = 0; i < dealii_block_sparse_matrix.n_block_rows(); ++i)

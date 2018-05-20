@@ -20,11 +20,11 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  include <deal.II/base/numbers.h>
-#  include <deal.II/differentiation/ad/ad_number_traits.h>
-#  include <deal.II/differentiation/ad/sacado_number_types.h>
+#include <deal.II/base/numbers.h>
+#include <deal.II/differentiation/ad/ad_number_traits.h>
+#include <deal.II/differentiation/ad/sacado_number_types.h>
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
 /**
  * Define some missing fundamental math functions
@@ -94,7 +94,7 @@ namespace std
 
 } // namespace std
 
-#  endif // DOXYGEN
+#endif // DOXYGEN
 
 #endif // DEAL_II_WITH_TRILINOS
 

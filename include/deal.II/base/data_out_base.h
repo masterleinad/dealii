@@ -32,8 +32,8 @@
 // Only include the Tecplot API header if the appropriate files
 // were detected by configure
 #ifdef DEAL_II_HAVE_TECPLOT
-#  include "TECIO.h"
-#  include <string.h>
+#include "TECIO.h"
+#include <string.h>
 #endif
 
 #include <ostream>

@@ -14,25 +14,25 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_work_stream_h
-#  define dealii_work_stream_h
+#define dealii_work_stream_h
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/graph_coloring.h>
-#  include <deal.II/base/multithread_info.h>
-#  include <deal.II/base/parallel.h>
-#  include <deal.II/base/template_constraints.h>
-#  include <deal.II/base/thread_local_storage.h>
-#  include <deal.II/base/thread_management.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/graph_coloring.h>
+#include <deal.II/base/multithread_info.h>
+#include <deal.II/base/parallel.h>
+#include <deal.II/base/template_constraints.h>
+#include <deal.II/base/thread_local_storage.h>
+#include <deal.II/base/thread_management.h>
 
-#  ifdef DEAL_II_WITH_THREADS
-#    include <deal.II/base/thread_management.h>
-#    include <tbb/pipeline.h>
-#  endif
+#ifdef DEAL_II_WITH_THREADS
+#include <deal.II/base/thread_management.h>
+#include <tbb/pipeline.h>
+#endif
 
-#  include <functional>
-#  include <memory>
-#  include <utility>
-#  include <vector>
+#include <functional>
+#include <memory>
+#include <utility>
+#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -141,7 +141,7 @@ DEAL_II_NAMESPACE_OPEN
  */
 namespace WorkStream
 {
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
 
   namespace internal
   {
@@ -853,7 +853,7 @@ namespace WorkStream
 
   } // namespace internal
 
-#  endif // DEAL_II_WITH_THREADS
+#endif // DEAL_II_WITH_THREADS
 
   /**
    * This is one of two main functions of the WorkStream concept, doing work
@@ -966,9 +966,9 @@ namespace WorkStream
 
       // we want to use TBB if we have support and if it is not disabled at
       // runtime:
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     if(MultithreadInfo::n_threads() == 1)
-#  endif
+#endif
       {
         // need to copy the sample since it is marked const
         ScratchData scratch_data = sample_scratch_data;
@@ -985,7 +985,7 @@ namespace WorkStream
               copier(copy_data);
           }
       }
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     else // have TBB and use more than one thread
       {
         // Check that the copier exist
@@ -1046,7 +1046,7 @@ namespace WorkStream
                 chunk_size);
           }
       }
-#  endif
+#endif
   }
 
   // Implementation 3:
@@ -1073,9 +1073,9 @@ namespace WorkStream
 
     // we want to use TBB if we have support and if it is not disabled at
     // runtime:
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     if(MultithreadInfo::n_threads() == 1)
-#  endif
+#endif
       {
         // need to copy the sample since it is marked const
         ScratchData scratch_data = sample_scratch_data;
@@ -1097,7 +1097,7 @@ namespace WorkStream
                 copier(copy_data);
             }
       }
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
     else // have TBB and use more than one thread
       {
         // loop over the various colors of what we're given
@@ -1123,7 +1123,7 @@ namespace WorkStream
                 tbb::auto_partitioner());
             }
       }
-#  endif
+#endif
   }
 
   /**

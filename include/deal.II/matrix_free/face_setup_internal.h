@@ -157,7 +157,7 @@ namespace internal
       use_active_cells
         = additional_data.level_mg_handler == numbers::invalid_unsigned_int;
 
-#  ifdef DEBUG
+#ifdef DEBUG
       // safety check
       if(use_active_cells)
         for(unsigned int i = 0; i < cell_levels.size(); ++i)
@@ -166,7 +166,7 @@ namespace internal
               &triangulation, cell_levels[i].first, cell_levels[i].second);
             Assert(dcell->active(), ExcInternalError());
           }
-#  endif
+#endif
 
       // step 1: add ghost cells for those cells that we identify as
       // interesting
@@ -275,7 +275,7 @@ namespace internal
               // safety check: both involved processors should see the same list
               // because the pattern of ghosting is symmetric. We test this by
               // looking at the length of the lists of faces
-#  if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
+#if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
               MPI_Comm comm = MPI_COMM_SELF;
               if(const parallel::Triangulation<dim>* ptria
                  = dynamic_cast<const parallel::Triangulation<dim>*>(
@@ -326,7 +326,7 @@ namespace internal
                            comm,
                            &status);
               AssertDimension(mysize, othersize);
-#  endif
+#endif
 
               // Arrange the face "ownership" such that cells that are access
               // by more than one face (think of a cell in a corner) get
@@ -448,7 +448,7 @@ namespace internal
                               - n_faces_higher_proc - n_faces_lower_proc;
 
                 // make sure the splitting is consistent between both sides
-#  if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
+#if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
               MPI_Sendrecv(&split_index,
                            1,
                            MPI_UNSIGNED,
@@ -488,7 +488,7 @@ namespace internal
                            comm,
                            &status);
               AssertDimension(n_faces_higher_proc, othersize);
-#  endif
+#endif
 
               // collect the faces on both sides
               std::vector<std::pair<CellId, CellId>> owned_faces_lower,
@@ -516,7 +516,7 @@ namespace internal
                     owned_faces_higher.push_back(it->second.shared_faces[i]);
                   }
 
-#  ifdef DEBUG
+#ifdef DEBUG
               // check consistency of faces on both sides
               std::vector<std::pair<CellId, CellId>> check_faces;
               check_faces.insert(check_faces.end(),
@@ -531,7 +531,7 @@ namespace internal
               for(unsigned int i = 0; i < check_faces.size(); ++i)
                 Assert(check_faces[i] == it->second.shared_faces[i],
                        ExcInternalError());
-#  endif
+#endif
 
               // now only set half of the faces as the ones to keep
               if(my_domain < it->first)
@@ -1191,7 +1191,7 @@ namespace internal
           faces_type = std::move(new_faces_type);
         }
 
-#  ifdef DEBUG
+#ifdef DEBUG
       // final safety checks
       for(unsigned int i = 0; i < faces_type.size(); ++i)
         AssertDimension(faces_type[i].size(), 0U);
@@ -1227,7 +1227,7 @@ namespace internal
           AssertDimension(in_faces[i].first, out_faces[i].first);
           AssertDimension(in_faces[i].second, out_faces[i].second);
         }
-#  endif
+#endif
     }
 
 #endif // ifndef DOXYGEN

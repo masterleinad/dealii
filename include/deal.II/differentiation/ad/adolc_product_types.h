@@ -20,10 +20,10 @@
 
 #ifdef DEAL_II_WITH_ADOLC
 
-#  include <deal.II/base/template_constraints.h>
+#include <deal.II/base/template_constraints.h>
 
-#  include <adolc/adouble.h> // Taped double
-#  include <adolc/adtl.h>    // Tapeless double
+#include <adolc/adouble.h> // Taped double
+#include <adolc/adtl.h>    // Tapeless double
 
 DEAL_II_NAMESPACE_OPEN
 

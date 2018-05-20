@@ -23,8 +23,8 @@
 #include <deal.II/grid/tria.h>
 
 #if defined(__linux__)
-#  include <sched.h>
-#  include <sys/sysinfo.h>
+#include <sched.h>
+#include <sys/sysinfo.h>
 #endif
 
 bool

@@ -18,30 +18,30 @@
 
 #ifdef DEAL_II_WITH_SUNDIALS
 
-#  include <deal.II/base/utilities.h>
-#  include <deal.II/lac/block_vector.h>
-#  ifdef DEAL_II_WITH_TRILINOS
-#    include <deal.II/lac/trilinos_parallel_block_vector.h>
-#    include <deal.II/lac/trilinos_vector.h>
-#  endif
-#  ifdef DEAL_II_WITH_PETSC
-#    include <deal.II/lac/petsc_parallel_block_vector.h>
-#    include <deal.II/lac/petsc_parallel_vector.h>
-#  endif
-#  include <deal.II/base/utilities.h>
-#  include <deal.II/sundials/copy.h>
+#include <deal.II/base/utilities.h>
+#include <deal.II/lac/block_vector.h>
+#ifdef DEAL_II_WITH_TRILINOS
+#include <deal.II/lac/trilinos_parallel_block_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
+#endif
+#ifdef DEAL_II_WITH_PETSC
+#include <deal.II/lac/petsc_parallel_block_vector.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#endif
+#include <deal.II/base/utilities.h>
+#include <deal.II/sundials/copy.h>
 
-#  include <sundials/sundials_config.h>
-#  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
-#    include <kinsol/kinsol_direct.h>
-#    include <sunlinsol/sunlinsol_dense.h>
-#    include <sunmatrix/sunmatrix_dense.h>
-#  else
-#    include <kinsol/kinsol_dense.h>
-#  endif
+#include <sundials/sundials_config.h>
+#if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
+#include <kinsol/kinsol_direct.h>
+#include <sunlinsol/sunlinsol_dense.h>
+#include <sunmatrix/sunmatrix_dense.h>
+#else
+#include <kinsol/kinsol_dense.h>
+#endif
 
-#  include <iomanip>
-#  include <iostream>
+#include <iomanip>
+#include <iostream>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -161,14 +161,14 @@ namespace SUNDIALS
   {
     if(kinsol_mem)
       KINFree(&kinsol_mem);
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
         const int ierr = MPI_Comm_free(&communicator);
         (void) ierr;
         AssertNothrow(ierr == MPI_SUCCESS, ExcMPI(ierr));
       }
-#  endif
+#endif
   }
 
   template <typename VectorType>
@@ -180,7 +180,7 @@ namespace SUNDIALS
     // The solution is stored in
     // solution. Here we take only a
     // view of it.
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is = initial_guess_and_solution.locally_owned_elements();
@@ -196,7 +196,7 @@ namespace SUNDIALS
         N_VConst_Parallel(1.e0, f_scale);
       }
     else
-#  endif
+#endif
       {
         Assert(is_serial_vector<VectorType>::value,
                ExcInternalError(
@@ -255,10 +255,10 @@ namespace SUNDIALS
     status = KINSetRelErrFunc(kinsol_mem, data.dq_relative_error);
     AssertKINSOL(status);
 
-#  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
     SUNMatrix       J  = nullptr;
     SUNLinearSolver LS = nullptr;
-#  endif
+#endif
 
     if(solve_jacobian_system)
       {
@@ -267,20 +267,20 @@ namespace SUNDIALS
         if(setup_jacobian)
           {
             KIN_mem->kin_lsetup = t_kinsol_setup_jacobian<VectorType>;
-#  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
             KIN_mem->kin_setupNonNull = true;
-#  endif
+#endif
           }
       }
     else
       {
-#  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
         J      = SUNDenseMatrix(system_size, system_size);
         LS     = SUNDenseLinearSolver(u_scale, J);
         status = KINDlsSetLinearSolver(kinsol_mem, LS, J);
-#  else
+#else
         status = KINDense(kinsol_mem, system_size);
-#  endif
+#endif
         AssertKINSOL(status);
       }
 
@@ -300,7 +300,7 @@ namespace SUNDIALS
     copy(initial_guess_and_solution, solution);
 
     // Free the vectors which are no longer used.
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
         N_VDestroy_Parallel(solution);
@@ -308,7 +308,7 @@ namespace SUNDIALS
         N_VDestroy_Parallel(f_scale);
       }
     else
-#  endif
+#endif
       {
         N_VDestroy_Serial(solution);
         N_VDestroy_Serial(u_scale);
@@ -319,10 +319,10 @@ namespace SUNDIALS
     status = KINGetNumNonlinSolvIters(kinsol_mem, &nniters);
     AssertKINSOL(status);
 
-#  if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_GTE(3, 0, 0)
     SUNMatDestroy(J);
     SUNLinSolFree(LS);
-#  endif
+#endif
     KINFree(&kinsol_mem);
 
     return (unsigned int) nniters;
@@ -340,21 +340,21 @@ namespace SUNDIALS
   template class KINSOL<Vector<double>>;
   template class KINSOL<BlockVector<double>>;
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
-#    ifdef DEAL_II_WITH_TRILINOS
+#ifdef DEAL_II_WITH_TRILINOS
   template class KINSOL<TrilinosWrappers::MPI::Vector>;
   template class KINSOL<TrilinosWrappers::MPI::BlockVector>;
-#    endif
+#endif
 
-#    ifdef DEAL_II_WITH_PETSC
-#      ifndef PETSC_USE_COMPLEX
+#ifdef DEAL_II_WITH_PETSC
+#ifndef PETSC_USE_COMPLEX
   template class KINSOL<PETScWrappers::MPI::Vector>;
   template class KINSOL<PETScWrappers::MPI::BlockVector>;
-#      endif
-#    endif
+#endif
+#endif
 
-#  endif
+#endif
 
 } // namespace SUNDIALS
 

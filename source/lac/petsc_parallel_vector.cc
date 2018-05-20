@@ -18,8 +18,8 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <algorithm>
-#  include <cmath>
+#include <algorithm>
+#include <cmath>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -254,7 +254,7 @@ namespace PETScWrappers
 
       Assert(size() == n, ExcDimensionMismatch(size(), n));
 
-#  if DEBUG
+#if DEBUG
       {
         // test ghost allocation in debug mode
         PetscInt begin, end;
@@ -278,32 +278,32 @@ namespace PETScWrappers
         Assert(lsize == end - begin + (PetscInt) ghost_indices.n_elements(),
                ExcInternalError());
       }
-#  endif
+#endif
 
       // in PETSc versions up to 3.5, VecCreateGhost zeroed out the locally
       // owned vector elements but forgot about the ghost elements. we need to
       // do this ourselves
       //
       // see https://code.google.com/p/dealii/issues/detail?id=233
-#  if DEAL_II_PETSC_VERSION_LT(3, 6, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 6, 0)
       PETScWrappers::MPI::Vector zero;
       zero.reinit(communicator, this->size(), local_size);
       *this = zero;
-#  endif
+#endif
     }
 
     bool
     Vector::all_zero() const
     {
       unsigned int has_nonzero = VectorBase::all_zero() ? 0 : 1;
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
       // in parallel, check that the vector
       // is zero on _all_ processors.
       unsigned int num_nonzero = Utilities::MPI::sum(has_nonzero, communicator);
       return num_nonzero == 0;
-#  else
+#else
       return has_nonzero == 0;
-#  endif
+#endif
     }
 
     void

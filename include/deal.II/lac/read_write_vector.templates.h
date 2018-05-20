@@ -27,19 +27,19 @@
 #include <boost/io/ios_state.hpp>
 
 #ifdef DEAL_II_WITH_PETSC
-#  include <deal.II/lac/petsc_parallel_vector.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <Epetra_Import.h>
-#  include <deal.II/lac/trilinos_epetra_communication_pattern.h>
-#  include <deal.II/lac/trilinos_epetra_vector.h>
-#  include <deal.II/lac/trilinos_vector.h>
+#include <Epetra_Import.h>
+#include <deal.II/lac/trilinos_epetra_communication_pattern.h>
+#include <deal.II/lac/trilinos_epetra_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
 #endif
 
 #ifdef DEAL_II_WITH_CUDA
-#  include <cuda_runtime_api.h>
-#  include <deal.II/lac/cuda_vector.h>
+#include <cuda_runtime_api.h>
+#include <deal.II/lac/cuda_vector.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

@@ -20,11 +20,11 @@
 
 #ifdef DEAL_II_WITH_NANOFLANN
 
-#  include <deal.II/base/point.h>
+#include <deal.II/base/point.h>
 
-#  include <memory>
+#include <memory>
 
-#  include <nanoflann.hpp>
+#include <nanoflann.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -236,7 +236,7 @@ private:
 };
 
 //------------ inline functions -------------
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
 template <int dim>
 inline unsigned int
@@ -296,7 +296,7 @@ KDTree<dim>::PointCloudAdaptor::kdtree_distance(const double* p1,
     res += (p1[d] - points[idx_p2][d]) * (p1[d] - points[idx_p2][d]);
   return std::sqrt(res);
 }
-#  endif
+#endif
 
 DEAL_II_NAMESPACE_CLOSE
 

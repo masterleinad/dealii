@@ -18,14 +18,14 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/base/utilities.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/base/utilities.h>
 
-#  include <deal.II/lac/dynamic_sparsity_pattern.h>
-#  include <deal.II/lac/sparsity_pattern.h>
-#  include <deal.II/lac/trilinos_index_access.h>
+#include <deal.II/lac/dynamic_sparsity_pattern.h>
+#include <deal.II/lac/sparsity_pattern.h>
+#include <deal.II/lac/trilinos_index_access.h>
 
-#  include <Epetra_Export.h>
+#include <Epetra_Export.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -564,7 +564,7 @@ namespace TrilinosWrappers
     IndexSet nonlocal_partitioner = writable_rows;
     AssertDimension(nonlocal_partitioner.size(),
                     row_parallel_partitioning.size());
-#  ifdef DEBUG
+#ifdef DEBUG
     {
       IndexSet tmp = writable_rows & row_parallel_partitioning;
       Assert(
@@ -572,7 +572,7 @@ namespace TrilinosWrappers
         ExcMessage("The set of writable rows passed to this method does not "
                    "contain the locally owned rows, which is not allowed."));
     }
-#  endif
+#endif
     nonlocal_partitioner.subtract_set(row_parallel_partitioning);
     if(Utilities::MPI::n_mpi_processes(communicator) > 1)
       {
@@ -973,17 +973,17 @@ namespace TrilinosWrappers
   MPI_Comm
   SparsityPattern::get_mpi_communicator() const
   {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
     const Epetra_MpiComm* mpi_comm
       = dynamic_cast<const Epetra_MpiComm*>(&graph->RangeMap().Comm());
     Assert(mpi_comm != nullptr, ExcInternalError());
     return mpi_comm->Comm();
-#  else
+#else
 
     return MPI_COMM_SELF;
 
-#  endif
+#endif
   }
 
   void

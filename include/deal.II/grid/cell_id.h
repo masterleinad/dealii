@@ -25,7 +25,7 @@
 #include <vector>
 
 #ifdef DEAL_II_WITH_P4EST
-#  include <deal.II/distributed/p4est_wrappers.h>
+#include <deal.II/distributed/p4est_wrappers.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

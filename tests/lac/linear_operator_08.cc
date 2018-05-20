@@ -43,7 +43,7 @@
 #include <deal.II/lac/solver_richardson.h>
 #include <deal.II/lac/solver_selector.h>
 #ifdef DEAL_II_WITH_UMFPACK
-#  include <deal.II/lac/sparse_direct.h>
+#include <deal.II/lac/sparse_direct.h>
 #endif
 
 using namespace dealii;

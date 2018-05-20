@@ -47,7 +47,7 @@ template <int dim, int spacedim>
 using HpDoFHandler = ::dealii::hp::DoFHandler<dim, spacedim>;
 #else
 // When using older Visual Studio or a different compiler just fall back.
-#  define HpDoFHandler DoFHandler
+#define HpDoFHandler DoFHandler
 #endif
 
 namespace parallel

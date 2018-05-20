@@ -30,7 +30,7 @@ DEAL_II_NAMESPACE_OPEN
 
 // include UMFPACK file.
 #ifdef DEAL_II_WITH_UMFPACK
-#  include <umfpack.h>
+#include <umfpack.h>
 #endif
 
 SparseDirectUMFPACK::~SparseDirectUMFPACK()

@@ -41,13 +41,13 @@ namespace SUNDIALS
               length = NV_LENGTH_S(vec);
               break;
             }
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
           case SUNDIALS_NVEC_PARALLEL:
             {
               length = NV_LOCLENGTH_P(vec);
               break;
             }
-#  endif
+#endif
           default:
             Assert(false, ExcNotImplemented());
         }
@@ -56,9 +56,9 @@ namespace SUNDIALS
       return static_cast<std::size_t>(length);
     }
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
-#    ifdef DEAL_II_WITH_TRILINOS
+#ifdef DEAL_II_WITH_TRILINOS
 
     void
     copy(TrilinosWrappers::MPI::Vector& dst, const N_Vector& src)
@@ -110,10 +110,10 @@ namespace SUNDIALS
         }
     }
 
-#    endif //DEAL_II_WITH_TRILINOS
+#endif //DEAL_II_WITH_TRILINOS
 
-#    ifdef DEAL_II_WITH_PETSC
-#      ifndef PETSC_USE_COMPLEX
+#ifdef DEAL_II_WITH_PETSC
+#ifndef PETSC_USE_COMPLEX
 
     void
     copy(PETScWrappers::MPI::Vector& dst, const N_Vector& src)
@@ -165,10 +165,10 @@ namespace SUNDIALS
         }
     }
 
-#      endif //PETSC_USE_COMPLEX
-#    endif   //DEAL_II_WITH_PETSC
+#endif //PETSC_USE_COMPLEX
+#endif //DEAL_II_WITH_PETSC
 
-#  endif //mpi
+#endif //mpi
 
     void
     copy(BlockVector<double>& dst, const N_Vector& src)

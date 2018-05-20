@@ -45,7 +45,7 @@ namespace Gmsh
                       "are no longer used.");
   }
 
-#  ifdef DEAL_II_WITH_OPENCASCADE
+#ifdef DEAL_II_WITH_OPENCASCADE
   template <int spacedim>
   void
   create_triangulation_from_boundary_curve(const TopoDS_Edge&          boundary,
@@ -124,12 +124,12 @@ namespace Gmsh
           ExcMessage("Failed to remove " + std::string(dir_template)));
       }
   }
-#  endif
+#endif
 
   // explicit instantiations
-#  ifdef DEAL_II_WITH_OPENCASCADE
-#    include "utilities.inst"
-#  endif
+#ifdef DEAL_II_WITH_OPENCASCADE
+#include "utilities.inst"
+#endif
 } // namespace Gmsh
 
 DEAL_II_NAMESPACE_CLOSE

@@ -21,7 +21,7 @@
 
 #ifndef DEAL_II_WITH_CXX14
 // needed for array type check
-#  include <type_traits>
+#include <type_traits>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

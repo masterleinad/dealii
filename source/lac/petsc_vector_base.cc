@@ -17,12 +17,12 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <cmath>
-#  include <deal.II/base/memory_consumption.h>
-#  include <deal.II/base/multithread_info.h>
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/petsc_compatibility.h>
-#  include <deal.II/lac/petsc_parallel_vector.h>
+#include <cmath>
+#include <deal.II/base/memory_consumption.h>
+#include <deal.II/base/multithread_info.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_compatibility.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -323,8 +323,8 @@ namespace PETScWrappers
   VectorBase::compress(const VectorOperation::values operation)
   {
     {
-#  ifdef DEBUG
-#    ifdef DEAL_II_WITH_MPI
+#ifdef DEBUG
+#ifdef DEAL_II_WITH_MPI
       // Check that all processors agree that last_action is the same (or none!)
 
       int my_int_last_action = last_action;
@@ -343,8 +343,8 @@ namespace PETScWrappers
                         | ::dealii::VectorOperation::insert),
                   ExcMessage("Error: not all processors agree on the last "
                              "VectorOperation before this compress() call."));
-#    endif
-#  endif
+#endif
+#endif
     }
 
     AssertThrow(

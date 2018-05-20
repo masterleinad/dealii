@@ -18,24 +18,24 @@
 
 #ifdef DEAL_II_WITH_SUNDIALS
 
-#  include <deal.II/base/utilities.h>
-#  include <deal.II/lac/block_vector.h>
-#  ifdef DEAL_II_WITH_TRILINOS
-#    include <deal.II/lac/trilinos_parallel_block_vector.h>
-#    include <deal.II/lac/trilinos_vector.h>
-#  endif
-#  ifdef DEAL_II_WITH_PETSC
-#    include <deal.II/lac/petsc_parallel_block_vector.h>
-#    include <deal.II/lac/petsc_parallel_vector.h>
-#  endif
-#  include <deal.II/base/utilities.h>
-#  include <deal.II/sundials/copy.h>
+#include <deal.II/base/utilities.h>
+#include <deal.II/lac/block_vector.h>
+#ifdef DEAL_II_WITH_TRILINOS
+#include <deal.II/lac/trilinos_parallel_block_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
+#endif
+#ifdef DEAL_II_WITH_PETSC
+#include <deal.II/lac/petsc_parallel_block_vector.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#endif
+#include <deal.II/base/utilities.h>
+#include <deal.II/sundials/copy.h>
 
-#  include <sundials/sundials_config.h>
+#include <sundials/sundials_config.h>
 
-#  include <arkode/arkode_impl.h>
-#  include <iomanip>
-#  include <iostream>
+#include <arkode/arkode_impl.h>
+#include <iomanip>
+#include <iostream>
 
 // Make sure we know how to call sundials own ARKode() function
 const auto& SundialsARKode = ARKode;
@@ -136,9 +136,9 @@ namespace SUNDIALS
     int
     t_arkode_solve_jacobian(ARKodeMem arkode_mem,
                             N_Vector  b,
-#  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
                             N_Vector,
-#  endif
+#endif
                             N_Vector ycur,
                             N_Vector fcur)
     {
@@ -186,12 +186,12 @@ namespace SUNDIALS
     template <typename VectorType>
     int
     t_arkode_solve_mass(ARKodeMem arkode_mem,
-#  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
                         N_Vector b,
                         N_Vector
-#  else
+#else
                         N_Vector b
-#  endif
+#endif
     )
     {
       ARKode<VectorType>& solver
@@ -232,14 +232,14 @@ namespace SUNDIALS
   {
     if(arkode_mem)
       ARKodeFree(&arkode_mem);
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
         const int ierr = MPI_Comm_free(&communicator);
         (void) ierr;
         AssertNothrow(ierr == MPI_SUCCESS, ExcMPI(ierr));
       }
-#  endif
+#endif
   }
 
   template <typename VectorType>
@@ -258,7 +258,7 @@ namespace SUNDIALS
     // The solution is stored in
     // solution. Here we take only a
     // view of it.
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is                = solution.locally_owned_elements();
@@ -270,7 +270,7 @@ namespace SUNDIALS
           = N_VNew_Parallel(communicator, local_system_size, system_size);
       }
     else
-#  endif
+#endif
       {
         Assert(is_serial_vector<VectorType>::value,
                ExcInternalError(
@@ -307,14 +307,14 @@ namespace SUNDIALS
       }
 
       // Free the vectors which are no longer used.
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
         N_VDestroy_Parallel(yy);
         N_VDestroy_Parallel(abs_tolls);
       }
     else
-#  endif
+#endif
       {
         N_VDestroy_Serial(yy);
         N_VDestroy_Serial(abs_tolls);
@@ -339,14 +339,14 @@ namespace SUNDIALS
     // Free the vectors which are no longer used.
     if(yy)
       {
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
         if(is_serial_vector<VectorType>::value == false)
           {
             N_VDestroy_Parallel(yy);
             N_VDestroy_Parallel(abs_tolls);
           }
         else
-#  endif
+#endif
           {
             N_VDestroy_Serial(yy);
             N_VDestroy_Serial(abs_tolls);
@@ -356,7 +356,7 @@ namespace SUNDIALS
     int status;
     (void) status;
     system_size = solution.size();
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is                = solution.locally_owned_elements();
@@ -368,7 +368,7 @@ namespace SUNDIALS
           = N_VNew_Parallel(communicator, local_system_size, system_size);
       }
     else
-#  endif
+#endif
       {
         yy        = N_VNew_Serial(system_size);
         abs_tolls = N_VNew_Serial(system_size);
@@ -432,9 +432,9 @@ namespace SUNDIALS
         if(setup_jacobian)
           {
             ARKode_mem->ark_lsetup = t_arkode_setup_jacobian<VectorType>;
-#  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
             ARKode_mem->ark_setupNonNull = true;
-#  endif
+#endif
           }
       }
     else
@@ -451,9 +451,9 @@ namespace SUNDIALS
         if(setup_mass)
           {
             ARKode_mem->ark_msetup = t_arkode_setup_mass<VectorType>;
-#  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
+#if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
             ARKode_mem->ark_MassSetupNonNull = true;
-#  endif
+#endif
           }
       }
 
@@ -476,21 +476,21 @@ namespace SUNDIALS
   template class ARKode<Vector<double>>;
   template class ARKode<BlockVector<double>>;
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
-#    ifdef DEAL_II_WITH_TRILINOS
+#ifdef DEAL_II_WITH_TRILINOS
   template class ARKode<TrilinosWrappers::MPI::Vector>;
   template class ARKode<TrilinosWrappers::MPI::BlockVector>;
-#    endif // DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
-#    ifdef DEAL_II_WITH_PETSC
-#      ifndef PETSC_USE_COMPLEX
+#ifdef DEAL_II_WITH_PETSC
+#ifndef PETSC_USE_COMPLEX
   template class ARKode<PETScWrappers::MPI::Vector>;
   template class ARKode<PETScWrappers::MPI::BlockVector>;
-#      endif // PETSC_USE_COMPLEX
-#    endif   // DEAL_II_WITH_PETSC
+#endif // PETSC_USE_COMPLEX
+#endif // DEAL_II_WITH_PETSC
 
-#  endif //DEAL_II_WITH_MPI
+#endif //DEAL_II_WITH_MPI
 
 } // namespace SUNDIALS
 

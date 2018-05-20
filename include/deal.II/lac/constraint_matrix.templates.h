@@ -785,15 +785,15 @@ namespace internal
       const std::integral_constant<bool, false> /*is_block_vector*/)
     {
       Assert(!vec.has_ghost_elements(), ExcGhostsPresent());
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
       const Epetra_MpiComm* mpi_comm
         = dynamic_cast<const Epetra_MpiComm*>(&vec.trilinos_vector().Comm());
 
       Assert(mpi_comm != nullptr, ExcInternalError());
       output.reinit(needed_elements, mpi_comm->GetMpiComm());
-#  else
+#else
       output.reinit(needed_elements, MPI_COMM_SELF);
-#  endif
+#endif
       output = vec;
     }
 #endif

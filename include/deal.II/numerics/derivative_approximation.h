@@ -24,7 +24,7 @@
 #include <deal.II/grid/filtered_iterator.h>
 #include <deal.II/lac/vector.h>
 #ifdef _MSC_VER
-#  include <deal.II/dofs/dof_accessor.h>
+#include <deal.II/dofs/dof_accessor.h>
 #endif
 #include <utility>
 

@@ -14,12 +14,12 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_multithread_info_h
-#  define dealii_multithread_info_h
+#define dealii_multithread_info_h
 //---------------------------------------------------------------------------
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/types.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/types.h>
 
 DEAL_II_NAMESPACE_OPEN
 

@@ -3530,17 +3530,17 @@ namespace internal
                        VectorizedArray<Number>& res,
                        std::integral_constant<bool, true>) const
     {
-#  if DEAL_II_COMPILER_VECTORIZATION_LEVEL < 3
+#if DEAL_II_COMPILER_VECTORIZATION_LEVEL < 3
       for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements;
           ++v)
         vector_access(vec, indices[v] + constant_offset) += res[v];
-#  else
+#else
       // only use gather in case there is also scatter.
       VectorizedArray<Number> tmp;
       tmp.gather(vec.begin() + constant_offset, indices);
       tmp += res;
       tmp.scatter(indices, vec.begin() + constant_offset);
-#  endif
+#endif
     }
 
     // variant where VectorType::value_type is not the same as Number -> must
@@ -4290,9 +4290,9 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::read_dof_values(
   internal::VectorReader<Number> reader;
   read_write_operation(reader, src_data, true);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   dof_values_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim, int n_components_, typename Number, bool is_face>
@@ -4316,9 +4316,9 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::read_dof_values_plain(
   internal::VectorReader<Number> reader;
   read_write_operation(reader, src_data, false);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   dof_values_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim, int n_components_, typename Number, bool is_face>
@@ -4401,9 +4401,9 @@ template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_dof_values()
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   dof_values_initialized = true;
-#  endif
+#endif
   return &values_dofs[0][0];
 }
 
@@ -4419,10 +4419,10 @@ template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_values()
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   values_quad_initialized = true;
   values_quad_submitted   = true;
-#  endif
+#endif
   return &values_quad[0][0];
 }
 
@@ -4439,10 +4439,10 @@ template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_gradients()
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   gradients_quad_submitted   = true;
   gradients_quad_initialized = true;
-#  endif
+#endif
   return &gradients_quad[0][0][0];
 }
 
@@ -4458,9 +4458,9 @@ template <int dim, int n_components, typename Number, bool is_face>
 inline VectorizedArray<Number>*
 FEEvaluationBase<dim, n_components, Number, is_face>::begin_hessians()
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   hessians_quad_initialized = true;
-#  endif
+#endif
   return &hessians_quad[0][0][0];
 }
 
@@ -4858,9 +4858,9 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_dof_value(
   const Tensor<1, n_components_, VectorizedArray<Number>> val_in,
   const unsigned int                                      dof)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized = true;
-#  endif
+#endif
   AssertIndexRange(dof, this->data->dofs_per_component_on_cell);
   for(unsigned int comp = 0; comp < n_components; comp++)
     this->values_dofs[comp][dof] = val_in[comp];
@@ -4872,12 +4872,12 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_value(
   const Tensor<1, n_components_, VectorizedArray<Number>> val_in,
   const unsigned int                                      q_point)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_point, this->n_quadrature_points);
   Assert(this->J_value != nullptr, ExcNotInitialized());
   this->values_quad_submitted = true;
-#  endif
+#endif
 
   if(this->cell_type <= internal::MatrixFreeFunctions::affine)
     {
@@ -4901,13 +4901,13 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_gradient(
                      grad_in,
   const unsigned int q_point)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_point, this->n_quadrature_points);
   this->gradients_quad_submitted = true;
   Assert(this->J_value != nullptr, ExcNotInitialized());
   Assert(this->jacobian != nullptr, ExcNotInitialized());
-#  endif
+#endif
 
   if(!is_face && this->cell_type == internal::MatrixFreeFunctions::cartesian)
     {
@@ -4945,11 +4945,11 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::submit_normal_derivative(
   const Tensor<1, n_components_, VectorizedArray<Number>> grad_in,
   const unsigned int                                      q_point)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   AssertIndexRange(q_point, this->n_quadrature_points);
   this->gradients_quad_submitted = true;
   Assert(this->normal_x_jacobian != nullptr, ExcNotInitialized());
-#  endif
+#endif
 
   if(this->cell_type == internal::MatrixFreeFunctions::cartesian)
     for(unsigned int comp = 0; comp < n_components; comp++)
@@ -4982,11 +4982,11 @@ template <int dim, int n_components_, typename Number, bool is_face>
 inline Tensor<1, n_components_, VectorizedArray<Number>>
 FEEvaluationBase<dim, n_components_, Number, is_face>::integrate_value() const
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   Assert(this->values_quad_submitted == true,
          internal::ExcAccessToUninitializedField());
-#  endif
+#endif
   Tensor<1, n_components_, VectorizedArray<Number>> return_value;
   for(unsigned int comp = 0; comp < n_components; ++comp)
     return_value[comp] = this->values_quad[comp][0];
@@ -5203,10 +5203,10 @@ inline void DEAL_II_ALWAYS_INLINE
   const VectorizedArray<Number> val_in,
   const unsigned int            dof)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized = true;
   AssertIndexRange(dof, this->data->dofs_per_component_on_cell);
-#  endif
+#endif
   this->values_dofs[0][dof] = val_in;
 }
 
@@ -5216,12 +5216,12 @@ inline void DEAL_II_ALWAYS_INLINE
   const VectorizedArray<Number> val_in,
   const unsigned int            q_index)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_index, this->n_quadrature_points);
   Assert(this->J_value != nullptr, ExcNotInitialized());
   this->values_quad_submitted = true;
-#  endif
+#endif
   if(this->cell_type <= internal::MatrixFreeFunctions::affine)
     {
       const VectorizedArray<Number> JxW
@@ -5260,13 +5260,13 @@ FEEvaluationAccess<dim, 1, Number, is_face>::submit_gradient(
   const Tensor<1, dim, VectorizedArray<Number>> grad_in,
   const unsigned int                            q_index)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_index, this->n_quadrature_points);
   this->gradients_quad_submitted = true;
   Assert(this->J_value != nullptr, ExcNotInitialized());
   Assert(this->jacobian != nullptr, ExcNotInitialized());
-#  endif
+#endif
 
   if(!is_face && this->cell_type == internal::MatrixFreeFunctions::cartesian)
     {
@@ -5508,13 +5508,13 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_divergence(
   const VectorizedArray<Number> div_in,
   const unsigned int            q_point)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_point, this->n_quadrature_points);
   this->gradients_quad_submitted = true;
   Assert(this->J_value != nullptr, ExcNotInitialized());
   Assert(this->jacobian != nullptr, ExcNotInitialized());
-#  endif
+#endif
 
   if(!is_face && this->cell_type == internal::MatrixFreeFunctions::cartesian)
     {
@@ -5558,13 +5558,13 @@ FEEvaluationAccess<dim, dim, Number, is_face>::submit_symmetric_gradient(
   // could have used base class operator, but that involves some overhead
   // which is inefficient. it is nice to have the symmetric tensor because
   // that saves some operations
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_point, this->n_quadrature_points);
   this->gradients_quad_submitted = true;
   Assert(this->J_value != nullptr, ExcNotInitialized());
   Assert(this->jacobian != nullptr, ExcNotInitialized());
-#  endif
+#endif
 
   if(!is_face && this->cell_type == internal::MatrixFreeFunctions::cartesian)
     {
@@ -5782,10 +5782,10 @@ inline DEAL_II_ALWAYS_INLINE void DEAL_II_ALWAYS_INLINE
   const VectorizedArray<Number> val_in,
   const unsigned int            dof)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized = true;
   AssertIndexRange(dof, this->data->dofs_per_component_on_cell);
-#  endif
+#endif
   this->values_dofs[0][dof] = val_in;
 }
 
@@ -5795,11 +5795,11 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_value(
   const VectorizedArray<Number> val_in,
   const unsigned int            q_point)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_point, this->n_quadrature_points);
   this->values_quad_submitted = true;
-#  endif
+#endif
   if(this->cell_type == internal::MatrixFreeFunctions::general)
     {
       const VectorizedArray<Number> JxW = this->J_value[q_point];
@@ -5837,11 +5837,11 @@ FEEvaluationAccess<1, 1, Number, is_face>::submit_gradient(
   const VectorizedArray<Number> grad_in,
   const unsigned int            q_point)
 {
-#  ifdef DEBUG
+#ifdef DEBUG
   Assert(this->cell != numbers::invalid_unsigned_int, ExcNotInitialized());
   AssertIndexRange(q_point, this->n_quadrature_points);
   this->gradients_quad_submitted = true;
-#  endif
+#endif
 
   const Tensor<2, 1, VectorizedArray<Number>>& jac
     = this->cell_type == internal::MatrixFreeFunctions::general ?
@@ -6019,7 +6019,7 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   (void) dof_no;
   (void) first_selected_component;
 
-#  ifdef DEBUG
+#ifdef DEBUG
   // print error message when the dimensions do not match. Propose a possible
   // fix
   if((static_cast<unsigned int>(fe_degree) != numbers::invalid_unsigned_int
@@ -6159,7 +6159,7 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
     AssertDimension(
       n_q_points,
       this->mapping_data->descriptor[this->active_quad_index].n_q_points);
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6188,12 +6188,12 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
   this->jacobian = &this->mapping_data->jacobians[0][offsets];
   this->J_value  = &this->mapping_data->JxW_values[offsets];
 
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized     = false;
   this->values_quad_initialized    = false;
   this->gradients_quad_initialized = false;
   this->hessians_quad_initialized  = false;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6347,14 +6347,14 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::evaluate(
                                        evaluate_gradients,
                                        evaluate_hessians);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   if(evaluate_values == true)
     this->values_quad_initialized = true;
   if(evaluate_gradients == true)
     this->gradients_quad_initialized = true;
   if(evaluate_hessians == true)
     this->hessians_quad_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6389,9 +6389,9 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::integrate(
 {
   integrate(integrate_values, integrate_gradients, this->values_dofs[0]);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6428,9 +6428,9 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::integrate(
                                                       integrate_values,
                                                       integrate_gradients);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6545,12 +6545,12 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
     = &this->mapping_data
          ->normals_times_jacobians[!this->is_interior_face][offsets];
 
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized     = false;
   this->values_quad_initialized    = false;
   this->gradients_quad_initialized = false;
   this->hessians_quad_initialized  = false;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6612,12 +6612,12 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::reinit(
                                .face_data_by_cells[this->quad_no]
                                .normals_times_jacobians[0][offsets];
 
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized     = false;
   this->values_quad_initialized    = false;
   this->gradients_quad_initialized = false;
   this->hessians_quad_initialized  = false;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6723,12 +6723,12 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::evaluate(
   if(this->face_orientation)
     adjust_for_face_orientation(false, evaluate_values, evaluate_gradients);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   if(evaluate_values == true)
     this->values_quad_initialized = true;
   if(evaluate_gradients == true)
     this->gradients_quad_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -6742,9 +6742,9 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components, Number>::
 {
   integrate(integrate_values, integrate_gradients, this->values_dofs[0]);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -7010,12 +7010,12 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
   if(this->face_orientation)
     adjust_for_face_orientation(false, evaluate_values, evaluate_gradients);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   if(evaluate_values == true)
     this->values_quad_initialized = true;
   if(evaluate_gradients == true)
     this->gradients_quad_initialized = true;
-#  endif
+#endif
 }
 
 template <int dim,
@@ -7086,9 +7086,9 @@ FEFaceEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
                                                   integrate_gradients,
                                                   this->subface_index);
 
-#  ifdef DEBUG
+#ifdef DEBUG
   this->dof_values_initialized = true;
-#  endif
+#endif
 
   internal::VectorDistributorLocalToGlobal<Number> writer;
 

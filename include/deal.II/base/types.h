@@ -72,7 +72,7 @@ namespace types
    * An identifier that denotes the MPI type associated with
    * types::global_dof_index.
    */
-#  define DEAL_II_DOF_INDEX_MPI_TYPE MPI_UNSIGNED_LONG_LONG
+#define DEAL_II_DOF_INDEX_MPI_TYPE MPI_UNSIGNED_LONG_LONG
 #else
   /**
    * The type used for global indices of degrees of freedom. While in
@@ -89,7 +89,7 @@ namespace types
    * An identifier that denotes the MPI type associated with
    * types::global_dof_index.
    */
-#  define DEAL_II_DOF_INDEX_MPI_TYPE MPI_UNSIGNED
+#define DEAL_II_DOF_INDEX_MPI_TYPE MPI_UNSIGNED
 #endif
 
   /**

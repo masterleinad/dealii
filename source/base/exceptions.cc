@@ -25,15 +25,15 @@
 #include <string>
 
 #ifdef DEAL_II_WITH_MPI
-#  include <mpi.h>
+#include <mpi.h>
 #endif
 
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
-#  include <execinfo.h>
+#include <execinfo.h>
 #endif
 
 #ifdef DEAL_II_HAVE_LIBSTDCXX_DEMANGLER
-#  include <cxxabi.h>
+#include <cxxabi.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

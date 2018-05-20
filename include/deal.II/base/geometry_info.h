@@ -4294,12 +4294,12 @@ template <int dim>
 template <int spacedim>
 inline void
 GeometryInfo<dim>::alternating_form_at_vertices
-#  ifndef DEAL_II_CONSTEXPR_BUG
+#ifndef DEAL_II_CONSTEXPR_BUG
   (const Point<spacedim> (&vertices)[vertices_per_cell],
    Tensor<spacedim - dim, spacedim> (&forms)[vertices_per_cell])
-#  else
+#else
   (const Point<spacedim>* vertices, Tensor<spacedim - dim, spacedim>* forms)
-#  endif
+#endif
 {
   // for each of the vertices,
   // compute the alternating form

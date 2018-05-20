@@ -821,7 +821,8 @@ QTelles<dim>::QTelles(const unsigned int n, const Point<dim>& singularity)
 {}
 
 template <>
-QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
+QTelles<1>::QTelles(const Quadrature<1>& base_quad,
+                    const Point<1>&      singularity)
   : // We explicitly implement the Telles' variable change if dim == 1.
     Quadrature<1>(base_quad)
 {

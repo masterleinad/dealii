@@ -20,17 +20,17 @@
 
 #ifdef DEAL_II_WITH_GMSH
 
-#  ifdef DEAL_II_WITH_OPENCASCADE
-#    include <TopoDS_CompSolid.hxx>
-#    include <TopoDS_Compound.hxx>
-#    include <TopoDS_Edge.hxx>
-#    include <TopoDS_Face.hxx>
-#    include <TopoDS_Shape.hxx>
-#    include <TopoDS_Vertex.hxx>
-#  endif
+#ifdef DEAL_II_WITH_OPENCASCADE
+#include <TopoDS_CompSolid.hxx>
+#include <TopoDS_Compound.hxx>
+#include <TopoDS_Edge.hxx>
+#include <TopoDS_Face.hxx>
+#include <TopoDS_Shape.hxx>
+#include <TopoDS_Vertex.hxx>
+#endif
 
-#  include <deal.II/base/parameter_handler.h>
-#  include <deal.II/grid/tria.h>
+#include <deal.II/base/parameter_handler.h>
+#include <deal.II/grid/tria.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -78,7 +78,7 @@ namespace Gmsh
     std::string output_base_name = "";
   };
 
-#  ifdef DEAL_II_WITH_OPENCASCADE
+#ifdef DEAL_II_WITH_OPENCASCADE
   /**
    * Given a smooth closed curve creates a triangulation from it using
    * Gmsh.
@@ -93,7 +93,7 @@ namespace Gmsh
                                            Triangulation<2, spacedim>& tria,
                                            const AdditionalParameters& prm
                                            = AdditionalParameters());
-#  endif
+#endif
 } // namespace Gmsh
 
 DEAL_II_NAMESPACE_CLOSE

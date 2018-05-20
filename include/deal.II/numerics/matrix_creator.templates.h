@@ -37,17 +37,17 @@
 #include <deal.II/numerics/matrix_tools.h>
 
 #ifdef DEAL_II_WITH_PETSC
-#  include <deal.II/lac/petsc_parallel_block_sparse_matrix.h>
-#  include <deal.II/lac/petsc_parallel_sparse_matrix.h>
-#  include <deal.II/lac/petsc_parallel_vector.h>
-#  include <deal.II/lac/petsc_sparse_matrix.h>
+#include <deal.II/lac/petsc_parallel_block_sparse_matrix.h>
+#include <deal.II/lac/petsc_parallel_sparse_matrix.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#include <deal.II/lac/petsc_sparse_matrix.h>
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  include <deal.II/lac/trilinos_block_sparse_matrix.h>
-#  include <deal.II/lac/trilinos_parallel_block_vector.h>
-#  include <deal.II/lac/trilinos_sparse_matrix.h>
-#  include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/trilinos_block_sparse_matrix.h>
+#include <deal.II/lac/trilinos_parallel_block_vector.h>
+#include <deal.II/lac/trilinos_sparse_matrix.h>
+#include <deal.II/lac/trilinos_vector.h>
 #endif
 
 #include <algorithm>

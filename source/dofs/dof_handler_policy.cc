@@ -32,11 +32,11 @@
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #ifdef DEAL_II_WITH_ZLIB
-#  include <boost/iostreams/device/back_inserter.hpp>
-#  include <boost/iostreams/filter/gzip.hpp>
-#  include <boost/iostreams/filtering_stream.hpp>
-#  include <boost/iostreams/stream.hpp>
-#  include <boost/serialization/array.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/stream.hpp>
+#include <boost/serialization/array.hpp>
 #endif
 
 #include <algorithm>
@@ -3213,7 +3213,7 @@ namespace internal
             // stream into which we serialize the current object
             std::vector<char> buffer;
             {
-#  ifdef DEAL_II_WITH_ZLIB
+#ifdef DEAL_II_WITH_ZLIB
               boost::iostreams::filtering_ostream out;
               out.push(
                 boost::iostreams::gzip_compressor(boost::iostreams::gzip_params(
@@ -3224,14 +3224,14 @@ namespace internal
 
               archive << *this;
               out.flush();
-#  else
+#else
               std::ostringstream              out;
               boost::archive::binary_oarchive archive(out);
               archive << *this;
               const std::string& s = out.str();
               buffer.reserve(s.size());
               buffer.assign(s.begin(), s.end());
-#  endif
+#endif
             }
 
             return buffer;
@@ -3249,15 +3249,15 @@ namespace internal
 
             // first decompress the buffer
             {
-#  ifdef DEAL_II_WITH_ZLIB
+#ifdef DEAL_II_WITH_ZLIB
               boost::iostreams::filtering_ostream decompressing_stream;
               decompressing_stream.push(boost::iostreams::gzip_decompressor());
               decompressing_stream.push(
                 boost::iostreams::back_inserter(decompressed_buffer));
               decompressing_stream.write(buffer.data(), buffer.size());
-#  else
+#else
               decompressed_buffer.assign(buffer.begin(), buffer.end());
-#  endif
+#endif
             }
 
             // then restore the object from the buffer
@@ -3712,10 +3712,10 @@ namespace internal
           const std::vector<dealii::types::global_dof_index>&,
           const std::vector<dealii::types::global_dof_index>&)
         {
-#  ifndef DEAL_II_WITH_MPI
+#ifndef DEAL_II_WITH_MPI
           (void) vertices_with_ghost_neighbors;
           Assert(false, ExcNotImplemented());
-#  else
+#else
           const unsigned int dim = DoFHandlerType::dimension;
           const unsigned int spacedim = DoFHandlerType::space_dimension;
 
@@ -3763,7 +3763,7 @@ namespace internal
                 // nothing we need to send that hasn't been sent so far.
                 // so return an empty array, but also verify that indeed
                 // the cell is complete
-#    ifdef DEBUG
+#ifdef DEBUG
                 std::vector<types::global_dof_index> local_dof_indices(
                   cell->get_fe().dofs_per_cell);
                 cell->get_dof_indices(local_dof_indices);
@@ -3773,7 +3773,7 @@ namespace internal
                                                     numbers::invalid_dof_index)
                                           == local_dof_indices.end());
                 Assert(is_complete, ExcInternalError());
-#    endif
+#endif
                 return boost::optional<std::vector<types::global_dof_index>>();
               }
           };
@@ -3869,7 +3869,7 @@ namespace internal
                        "The function communicate_dof_indices_on_marked_cells() "
                        "only works with parallel distributed triangulations."));
             }
-#  endif
+#endif
         }
 
       } // namespace
@@ -4087,15 +4087,15 @@ namespace internal
 
           // at this point, we must have taken care of the data transfer
           // on all cells we had previously marked. verify this
-#  ifdef DEBUG
+#ifdef DEBUG
           for(auto cell : dof_handler->active_cell_iterators())
             Assert(cell->user_flag_set() == false, ExcInternalError());
-#  endif
+#endif
 
           triangulation->load_user_flags(user_flags);
         }
 
-#  ifdef DEBUG
+#ifdef DEBUG
         // check that we are really done
         {
           std::vector<dealii::types::global_dof_index> local_dof_indices;
@@ -4130,9 +4130,9 @@ namespace internal
                   }
               }
         }
-#  endif // DEBUG
+#endif // DEBUG
         return number_cache;
-#endif   // DEAL_II_WITH_P4EST
+#endif // DEAL_II_WITH_P4EST
       }
 
       template <class DoFHandlerType>
@@ -4370,7 +4370,7 @@ namespace internal
             triangulation->coarse_cell_to_p4est_tree_permutation,
             triangulation->p4est_tree_to_coarse_cell_permutation);
 
-#  ifdef DEBUG
+#ifdef DEBUG
           // make sure we have removed all flags:
           {
             typename DoFHandlerType::level_cell_iterator cell,
@@ -4381,12 +4381,12 @@ namespace internal
                  && !cell->is_locally_owned_on_level())
                 Assert(cell->user_flag_set() == false, ExcInternalError());
           }
-#  endif
+#endif
 
           triangulation->load_user_flags(user_flags);
         }
 
-#  ifdef DEBUG
+#ifdef DEBUG
         // check that we are really done
         {
           std::vector<dealii::types::global_dof_index> local_dof_indices;
@@ -4408,7 +4408,7 @@ namespace internal
                   }
               }
         }
-#  endif // DEBUG
+#endif // DEBUG
 
         return number_caches;
 
@@ -4561,7 +4561,7 @@ namespace internal
           // serialize our own IndexSet
           std::vector<char> my_data;
           {
-#  ifdef DEAL_II_WITH_ZLIB
+#ifdef DEAL_II_WITH_ZLIB
 
             boost::iostreams::filtering_ostream out;
             out.push(
@@ -4573,14 +4573,14 @@ namespace internal
 
             archive << my_locally_owned_new_dof_indices;
             out.flush();
-#  else
+#else
             std::ostringstream              out;
             boost::archive::binary_oarchive archive(out);
             archive << my_locally_owned_new_dof_indices;
             const std::string& s = out.str();
             my_data.reserve(s.size());
             my_data.assign(s.begin(), s.end());
-#  endif
+#endif
           }
 
           // determine maximum size of IndexSet
@@ -4616,7 +4616,7 @@ namespace internal
 
                 // first decompress the buffer
                 {
-#  ifdef DEAL_II_WITH_ZLIB
+#ifdef DEAL_II_WITH_ZLIB
 
                   boost::iostreams::filtering_ostream decompressing_stream;
                   decompressing_stream.push(
@@ -4625,9 +4625,9 @@ namespace internal
                     boost::iostreams::back_inserter(decompressed_buffer));
 
                   decompressing_stream.write(&buffer[i * max_size], max_size);
-#  else
+#else
                   decompressed_buffer.assign(&buffer[i * max_size], max_size);
-#  endif
+#endif
                 }
 
                 // then restore the object from the buffer
@@ -4667,7 +4667,7 @@ namespace internal
         const unsigned int my_rank
           = Utilities::MPI::this_mpi_process(tr->get_communicator());
 
-#  ifdef DEBUG
+#ifdef DEBUG
         for(types::global_dof_index i : new_numbers)
           {
             Assert(index_sets[my_rank].is_element(i),
@@ -4676,7 +4676,7 @@ namespace internal
                      "partitioning are currently not implemented for "
                      "the multigrid levels"));
           }
-#  endif
+#endif
 
         // we need to access all locally relevant degrees of freedom. we
         // use Utilities::MPI::Partitioner for handling the data exchange

@@ -20,11 +20,11 @@
 #include <vector>
 
 #ifdef DEAL_II_WITH_TRILINOS
-#  ifdef DEAL_II_WITH_MPI
-#    include <Epetra_MpiComm.h>
-#  endif
-#  include <Epetra_Map.h>
-#  include <Epetra_SerialComm.h>
+#ifdef DEAL_II_WITH_MPI
+#include <Epetra_MpiComm.h>
+#endif
+#include <Epetra_Map.h>
+#include <Epetra_SerialComm.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -34,7 +34,7 @@ DEAL_II_NAMESPACE_OPEN
 // the 64-bit path uses a few different names, so put that into a separate
 // implementation
 
-#  ifdef DEAL_II_WITH_64BIT_INDICES
+#ifdef DEAL_II_WITH_64BIT_INDICES
 
 IndexSet::IndexSet(const Epetra_Map& map)
   : is_compressed(true),
@@ -58,7 +58,7 @@ IndexSet::IndexSet(const Epetra_Map& map)
   compress();
 }
 
-#  else
+#else
 
 // this is the standard 32-bit implementation
 
@@ -84,7 +84,7 @@ IndexSet::IndexSet(const Epetra_Map& map)
   compress();
 }
 
-#  endif
+#endif
 
 #endif // ifdef DEAL_II_WITH_TRILINOS
 
@@ -496,7 +496,7 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
   compress();
   (void) communicator;
 
-#  ifdef DEBUG
+#ifdef DEBUG
   if(!overlapping)
     {
       const size_type n_global_elements
@@ -518,7 +518,7 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
                           "by any processor, or there are indices that are "
                           "claimed by multiple processors."));
     }
-#  endif
+#endif
 
   // Find out if the IndexSet is ascending and 1:1. This corresponds to a
   // linear EpetraMap. Overlapping IndexSets are never 1:1.
@@ -529,11 +529,11 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
     return Epetra_Map(TrilinosWrappers::types::int_type(size()),
                       TrilinosWrappers::types::int_type(n_elements()),
                       0,
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
                       Epetra_MpiComm(communicator)
-#  else
+#else
                       Epetra_SerialComm()
-#  endif
+#endif
     );
   else
     {
@@ -546,11 +546,11 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
                              indices.data()) :
                            nullptr),
                         0,
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
                         Epetra_MpiComm(communicator)
-#  else
+#else
                         Epetra_SerialComm()
-#  endif
+#endif
       );
     }
 }

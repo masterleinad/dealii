@@ -332,16 +332,16 @@ private:
    * storing a unique_ptr so that we don't need to include the definition of
    * mu::Parser in this header.
    */
-#  if TBB_VERSION_MAJOR >= 4
+#if TBB_VERSION_MAJOR >= 4
   mutable Threads::ThreadLocalStorage<std::vector<std::unique_ptr<mu::Parser>>>
     fp;
-#  else
+#else
   // older TBBs have a bug in which they want to return thread-local
   // objects by value. this doesn't work for std::unique_ptr, so use a
   // std::shared_ptr
   mutable Threads::ThreadLocalStorage<std::vector<std::shared_ptr<mu::Parser>>>
     fp;
-#  endif
+#endif
 
   /**
    * An array to keep track of all the constants, required to initialize fp in

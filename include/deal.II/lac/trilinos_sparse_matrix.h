@@ -14,39 +14,39 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_trilinos_sparse_matrix_h
-#  define dealii_trilinos_sparse_matrix_h
+#define dealii_trilinos_sparse_matrix_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_TRILINOS
+#ifdef DEAL_II_WITH_TRILINOS
 
-#    include <deal.II/base/index_set.h>
-#    include <deal.II/base/subscriptor.h>
-#    include <deal.II/lac/exceptions.h>
-#    include <deal.II/lac/full_matrix.h>
-#    include <deal.II/lac/trilinos_epetra_vector.h>
-#    include <deal.II/lac/trilinos_vector.h>
-#    include <deal.II/lac/vector_memory.h>
-#    include <deal.II/lac/vector_operation.h>
+#include <deal.II/base/index_set.h>
+#include <deal.II/base/subscriptor.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/full_matrix.h>
+#include <deal.II/lac/trilinos_epetra_vector.h>
+#include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/vector_memory.h>
+#include <deal.II/lac/vector_operation.h>
 
-#    include <cmath>
-#    include <memory>
-#    include <type_traits>
-#    include <vector>
+#include <cmath>
+#include <memory>
+#include <type_traits>
+#include <vector>
 
-#    include <Epetra_Comm.h>
-#    include <Epetra_CrsGraph.h>
-#    include <Epetra_Export.h>
-#    include <Epetra_FECrsMatrix.h>
-#    include <Epetra_Map.h>
-#    include <Epetra_MultiVector.h>
-#    include <Epetra_Operator.h>
-#    ifdef DEAL_II_WITH_MPI
-#      include <Epetra_MpiComm.h>
-#      include <mpi.h>
-#    else
-#      include <Epetra_SerialComm.h>
-#    endif
+#include <Epetra_Comm.h>
+#include <Epetra_CrsGraph.h>
+#include <Epetra_Export.h>
+#include <Epetra_FECrsMatrix.h>
+#include <Epetra_Map.h>
+#include <Epetra_MultiVector.h>
+#include <Epetra_Operator.h>
+#ifdef DEAL_II_WITH_MPI
+#include <Epetra_MpiComm.h>
+#include <mpi.h>
+#else
+#include <Epetra_SerialComm.h>
+#endif
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -2555,11 +2555,11 @@ namespace TrilinosWrappers
          * Internal communication pattern in case the matrix needs to be copied
          * from deal.II format.
          */
-#    ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
         Epetra_MpiComm communicator;
-#    else
+#else
         Epetra_SerialComm communicator;
-#    endif
+#endif
 
         /**
          * Epetra_Map that sets the partitioning of the domain space of
@@ -2615,7 +2615,7 @@ namespace TrilinosWrappers
 
   // -------------------------- inline and template functions ----------------------
 
-#    ifndef DOXYGEN
+#ifndef DOXYGEN
 
   namespace SparseMatrixIterators
   {
@@ -2909,13 +2909,13 @@ namespace TrilinosWrappers
   SparseMatrix::in_local_range(const size_type index) const
   {
     TrilinosWrappers::types::int_type begin, end;
-#      ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
     begin = matrix->RowMap().MinMyGID();
     end   = matrix->RowMap().MaxMyGID() + 1;
-#      else
+#else
     begin = matrix->RowMap().MinMyGID64();
     end   = matrix->RowMap().MaxMyGID64() + 1;
-#      endif
+#endif
 
     return ((index >= static_cast<size_type>(begin))
             && (index < static_cast<size_type>(end)));
@@ -2995,11 +2995,11 @@ namespace TrilinosWrappers
   inline SparseMatrix::size_type
   SparseMatrix::m() const
   {
-#      ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
     return matrix->NumGlobalRows();
-#      else
+#else
     return matrix->NumGlobalRows64();
-#      endif
+#endif
   }
 
   inline SparseMatrix::size_type
@@ -3009,11 +3009,11 @@ namespace TrilinosWrappers
     // sparsity pattern), it does not know about the number of columns so we
     // must always take this from the additional column space map
     Assert(column_space_map.get() != nullptr, ExcInternalError());
-#      ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
     return column_space_map->NumGlobalElements();
-#      else
+#else
     return column_space_map->NumGlobalElements64();
-#      endif
+#endif
   }
 
   inline unsigned int
@@ -3026,13 +3026,13 @@ namespace TrilinosWrappers
   SparseMatrix::local_range() const
   {
     size_type begin, end;
-#      ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
     begin = matrix->RowMap().MinMyGID();
     end   = matrix->RowMap().MaxMyGID() + 1;
-#      else
+#else
     begin = matrix->RowMap().MinMyGID64();
     end   = matrix->RowMap().MaxMyGID64() + 1;
-#      endif
+#endif
 
     return std::make_pair(begin, end);
   }
@@ -3040,11 +3040,11 @@ namespace TrilinosWrappers
   inline SparseMatrix::size_type
   SparseMatrix::n_nonzero_elements() const
   {
-#      ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
     return matrix->NumGlobalNonzeros();
-#      else
+#else
     return matrix->NumGlobalNonzeros64();
-#      endif
+#endif
   }
 
   template <typename SparsityPatternType>
@@ -3200,13 +3200,13 @@ namespace TrilinosWrappers
     } // namespace LinearOperatorImplementation
   }   // namespace internal
 
-#    endif // DOXYGEN
+#endif // DOXYGEN
 
 } /* namespace TrilinosWrappers */
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
 /*-----------------------   trilinos_sparse_matrix.h     --------------------*/
 

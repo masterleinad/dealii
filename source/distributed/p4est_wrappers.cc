@@ -365,7 +365,7 @@ namespace internal
       types<2>::topidx num_vtt)
       = p4est_connectivity_new;
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 1)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 1)
     void (&functions<2>::connectivity_join_faces)(types<2>::connectivity* conn,
                                                   types<2>::topidx tree_left,
                                                   types<2>::topidx tree_right,
@@ -373,7 +373,7 @@ namespace internal
                                                   int              face_right,
                                                   int              orientation)
       = p4est_connectivity_join_faces;
-#  endif
+#endif
 
     void (&functions<2>::connectivity_destroy)(
       p4est_connectivity_t* connectivity)
@@ -408,25 +408,25 @@ namespace internal
                                   types<2>::balance_type btype,
                                   p4est_init_t           init_fn)
       = p4est_balance;
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     p4est_gloidx_t (&functions<2>::partition)(types<2>::forest* p4est,
                                               int partition_for_coarsening,
                                               p4est_weight_t weight_fn)
       = p4est_partition_ext;
-#  else
+#else
 
     void (&functions<2>::partition)(types<2>::forest* p4est,
                                     int               partition_for_coarsening,
                                     p4est_weight_t    weight_fn)
       = p4est_partition_ext;
-#  endif
+#endif
 
     void (&functions<2>::save)(const char*       filename,
                                types<2>::forest* p4est,
                                int               save_data)
       = p4est_save;
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<2>::forest* (&functions<2>::load_ext)(const char* filename,
                                                 MPI_Comm    mpicomm,
                                                 std::size_t data_size,
@@ -436,7 +436,7 @@ namespace internal
                                                 void*       user_pointer,
                                                 types<2>::connectivity** p4est)
       = p4est_load_ext;
-#  else
+#else
     types<2>::forest* (&functions<2>::load)(const char* filename,
                                             MPI_Comm    mpicomm,
                                             std::size_t data_size,
@@ -444,36 +444,36 @@ namespace internal
                                             void*       user_pointer,
                                             types<2>::connectivity** p4est)
       = p4est_load;
-#  endif
+#endif
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     int (&functions<2>::connectivity_save)(const char*             filename,
                                            types<2>::connectivity* connectivity)
       = p4est_connectivity_save;
-#  else
+#else
     void (&functions<2>::connectivity_save)(
       const char*             filename,
       types<2>::connectivity* connectivity)
       = p4est_connectivity_save;
-#  endif
+#endif
 
     int (&functions<2>::connectivity_is_valid)(
       types<2>::connectivity* connectivity)
       = p4est_connectivity_is_valid;
-#  if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
+#if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
     types<2>::connectivity* (
       &functions<2>::connectivity_load)(const char* filename, size_t* length)
       = p4est_connectivity_load;
-#  elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<2>::connectivity* (&functions<2>::connectivity_load)(
       const char*    filename,
       long unsigned* length)
       = p4est_connectivity_load;
-#  else
+#else
     types<2>::connectivity* (
       &functions<2>::connectivity_load)(const char* filename, long* length)
       = p4est_connectivity_load;
-#  endif
+#endif
 
     unsigned int (&functions<2>::checksum)(types<2>::forest* p4est)
       = p4est_checksum;
@@ -609,7 +609,7 @@ namespace internal
       p8est_connectivity_t* connectivity)
       = p8est_connectivity_destroy;
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 1)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 1)
     void (&functions<3>::connectivity_join_faces)(types<3>::connectivity* conn,
                                                   types<3>::topidx tree_left,
                                                   types<3>::topidx tree_right,
@@ -617,7 +617,7 @@ namespace internal
                                                   int              face_right,
                                                   int              orientation)
       = p8est_connectivity_join_faces;
-#  endif
+#endif
 
     types<3>::forest* (&functions<3>::new_forest)(
       MPI_Comm                mpicomm,
@@ -649,24 +649,24 @@ namespace internal
                                   p8est_init_t           init_fn)
       = p8est_balance;
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     p4est_gloidx_t (&functions<3>::partition)(types<3>::forest* p8est,
                                               int partition_for_coarsening,
                                               p8est_weight_t weight_fn)
       = p8est_partition_ext;
-#  else
+#else
     void (&functions<3>::partition)(types<3>::forest* p8est,
                                     int               partition_for_coarsening,
                                     p8est_weight_t    weight_fn)
       = p8est_partition_ext;
-#  endif
+#endif
 
     void (&functions<3>::save)(const char*       filename,
                                types<3>::forest* p4est,
                                int               save_data)
       = p8est_save;
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<3>::forest* (&functions<3>::load_ext)(const char* filename,
                                                 MPI_Comm    mpicomm,
                                                 std::size_t data_size,
@@ -676,7 +676,7 @@ namespace internal
                                                 void*       user_pointer,
                                                 types<3>::connectivity** p4est)
       = p8est_load_ext;
-#  else
+#else
     types<3>::forest* (&functions<3>::load)(const char* filename,
                                             MPI_Comm    mpicomm,
                                             std::size_t data_size,
@@ -684,37 +684,37 @@ namespace internal
                                             void*       user_pointer,
                                             types<3>::connectivity** p4est)
       = p8est_load;
-#  endif
+#endif
 
-#  if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#if DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     int (&functions<3>::connectivity_save)(const char*             filename,
                                            types<3>::connectivity* connectivity)
       = p8est_connectivity_save;
-#  else
+#else
     void (&functions<3>::connectivity_save)(
       const char*             filename,
       types<3>::connectivity* connectivity)
       = p8est_connectivity_save;
-#  endif
+#endif
 
     int (&functions<3>::connectivity_is_valid)(
       types<3>::connectivity* connectivity)
       = p8est_connectivity_is_valid;
 
-#  if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
+#if DEAL_II_P4EST_VERSION_GTE(1, 0, 0, 0)
     types<3>::connectivity* (
       &functions<3>::connectivity_load)(const char* filename, size_t* length)
       = p8est_connectivity_load;
-#  elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
+#elif DEAL_II_P4EST_VERSION_GTE(0, 3, 4, 3)
     types<3>::connectivity* (&functions<3>::connectivity_load)(
       const char*    filename,
       long unsigned* length)
       = p8est_connectivity_load;
-#  else
+#else
     types<3>::connectivity* (
       &functions<3>::connectivity_load)(const char* filename, long* length)
       = p8est_connectivity_load;
-#  endif
+#endif
 
     unsigned int (&functions<3>::checksum)(types<3>::forest* p8est)
       = p8est_checksum;

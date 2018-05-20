@@ -17,12 +17,12 @@
 
 #ifdef DEAL_II_WITH_PETSC
 
-#  include <deal.II/lac/exceptions.h>
-#  include <deal.II/lac/petsc_compatibility.h>
-#  include <deal.II/lac/petsc_full_matrix.h>
-#  include <deal.II/lac/petsc_parallel_sparse_matrix.h>
-#  include <deal.II/lac/petsc_sparse_matrix.h>
-#  include <deal.II/lac/petsc_vector_base.h>
+#include <deal.II/lac/exceptions.h>
+#include <deal.II/lac/petsc_compatibility.h>
+#include <deal.II/lac/petsc_full_matrix.h>
+#include <deal.II/lac/petsc_parallel_sparse_matrix.h>
+#include <deal.II/lac/petsc_sparse_matrix.h>
+#include <deal.II/lac/petsc_vector_base.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -173,8 +173,8 @@ namespace PETScWrappers
   MatrixBase::compress(const VectorOperation::values operation)
   {
     {
-#  ifdef DEBUG
-#    ifdef DEAL_II_WITH_MPI
+#ifdef DEBUG
+#ifdef DEAL_II_WITH_MPI
       // Check that all processors agree that last_action is the same (or none!)
 
       int my_int_last_action = last_action;
@@ -192,8 +192,8 @@ namespace PETScWrappers
                     != (VectorOperation::add | VectorOperation::insert),
                   ExcMessage("Error: not all processors agree on the last "
                              "VectorOperation before this compress() call."));
-#    endif
-#  endif
+#endif
+#endif
     }
 
     AssertThrow(
@@ -485,11 +485,11 @@ namespace PETScWrappers
           AssertThrow(ierr == 0, ExcPETScError(ierr));
           if(transpose_left)
             {
-#  if DEAL_II_PETSC_VERSION_LT(3, 8, 0)
+#if DEAL_II_PETSC_VERSION_LT(3, 8, 0)
               ierr = MatTranspose(tmp, MAT_REUSE_MATRIX, &tmp);
-#  else
+#else
               ierr = MatTranspose(tmp, MAT_INPLACE_MATRIX, &tmp);
-#  endif
+#endif
               AssertThrow(ierr == 0, ExcPETScError(ierr));
             }
           ierr = MatDiagonalScale(tmp, nullptr, V);

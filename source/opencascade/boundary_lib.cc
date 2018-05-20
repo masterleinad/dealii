@@ -46,7 +46,7 @@ namespace OpenCASCADE
       new NormalToMeshProjectionBoundary(this->sh, this->tolerance));
   }
 // Explicit instantiations
-#  include "boundary_lib.inst"
+#include "boundary_lib.inst"
 } // namespace OpenCASCADE
 
 DEAL_II_NAMESPACE_CLOSE

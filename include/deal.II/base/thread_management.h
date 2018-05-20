@@ -14,34 +14,34 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_thread_management_h
-#  define dealii_thread_management_h
+#define dealii_thread_management_h
 
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/multithread_info.h>
-#  include <deal.II/base/template_constraints.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/multithread_info.h>
+#include <deal.II/base/template_constraints.h>
 
-#  ifdef DEAL_II_WITH_THREADS
-#    include <condition_variable>
-#    include <mutex>
-#    include <thread>
-#  endif
+#ifdef DEAL_II_WITH_THREADS
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+#endif
 
-#  include <functional>
-#  include <iterator>
-#  include <list>
-#  include <memory>
-#  include <tuple>
-#  include <utility>
-#  include <vector>
+#include <functional>
+#include <iterator>
+#include <list>
+#include <memory>
+#include <tuple>
+#include <utility>
+#include <vector>
 
-#  ifdef DEAL_II_WITH_THREADS
-#    ifdef DEAL_II_USE_MT_POSIX
-#      include <pthread.h>
-#    endif
-#    include <tbb/task.h>
-#    include <tbb/tbb_stddef.h>
-#  endif
+#ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_USE_MT_POSIX
+#include <pthread.h>
+#endif
+#include <tbb/task.h>
+#include <tbb/tbb_stddef.h>
+#endif
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -234,7 +234,7 @@ namespace Threads
     //@}
   };
 
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
 
   /**
    * Class implementing a Mutex. Mutexes are used to lock data structures to
@@ -445,11 +445,11 @@ namespace Threads
      * Data object storing the POSIX data which we need to call the POSIX
      * functions.
      */
-#    ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
+#ifndef DEAL_II_USE_MT_POSIX_NO_BARRIERS
     pthread_barrier_t barrier;
-#    else
+#else
     unsigned int count;
-#    endif
+#endif
   };
 
   /**
@@ -458,7 +458,7 @@ namespace Threads
    */
   typedef PosixThreadBarrier Barrier;
 
-#  else
+#else
   /**
    * In non-multithread mode, the mutex and thread management classes are
    * aliased to dummy classes that actually do nothing, in particular not lock
@@ -479,7 +479,7 @@ namespace Threads
    * objects. Likewise for the barrier class.
    */
   typedef DummyBarrier Barrier;
-#  endif
+#endif
 
 } // namespace Threads
 
@@ -633,7 +633,7 @@ namespace Threads
 } // namespace Threads
 
 /* ----------- implementation of functions in namespace Threads ---------- */
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 namespace Threads
 {
   template <typename ForwardIterator>
@@ -684,7 +684,7 @@ namespace Threads
   }
 } // namespace Threads
 
-#  endif // DOXYGEN
+#endif // DOXYGEN
 
 namespace Threads
 {
@@ -795,7 +795,7 @@ namespace Threads
 
   namespace internal
   {
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
 
     /**
      * A class that represents threads. For each thread, we create exactly one
@@ -940,7 +940,7 @@ namespace Threads
       }
     };
 
-#  else
+#else
     /**
      * A class that represents threads. For each thread, we create exactly one
      * of these objects -- exactly one because it carries the returned value
@@ -977,7 +977,7 @@ namespace Threads
       {}
     };
 
-#  endif
+#endif
   } // namespace internal
 
   /**
@@ -1272,7 +1272,7 @@ namespace Threads
       fun_ptr, std::ref(c), internal::maybe_make_ref<Args>::act(args)...)));
   }
 
-#  ifndef DEAL_II_CONST_MEMBER_DEDUCTION_BUG
+#ifndef DEAL_II_CONST_MEMBER_DEDUCTION_BUG
   /**
    * Overload of the new_thread function for const member functions.
    *
@@ -1287,7 +1287,7 @@ namespace Threads
     return new_thread(std::function<RT()>(std::bind(
       fun_ptr, std::cref(c), internal::maybe_make_ref<Args>::act(args)...)));
   }
-#  endif
+#endif
 
   // ------------------------ ThreadGroup -------------------------------------
 
@@ -1340,7 +1340,7 @@ namespace Threads
 
   namespace internal
   {
-#  ifdef DEAL_II_WITH_THREADS
+#ifdef DEAL_II_WITH_THREADS
 
     template <typename>
     struct TaskDescriptor;
@@ -1506,11 +1506,11 @@ namespace Threads
       // into a static function. we could always call it as a regular member
       // function of *task, but that appears to confuse the NVidia nvcc
       // compiler. consequently, the following work-around:
-#    if TBB_VERSION_MAJOR >= 4
+#if TBB_VERSION_MAJOR >= 4
       tbb::task::spawn(*worker);
-#    else
+#else
       task->spawn(*worker);
-#    endif
+#endif
     }
 
     template <typename RT>
@@ -1580,7 +1580,7 @@ namespace Threads
       task->wait_for_all();
     }
 
-#  else // no threading enabled
+#else // no threading enabled
 
     /**
      * A way to describe tasks. Since we are in non-MT mode at this place,
@@ -1620,7 +1620,7 @@ namespace Threads
       {}
     };
 
-#  endif
+#endif
 
   } // namespace internal
 
@@ -1910,7 +1910,7 @@ namespace Threads
       fun_ptr, std::ref(c), internal::maybe_make_ref<Args>::act(args)...)));
   }
 
-#  ifndef DEAL_II_CONST_MEMBER_DEDUCTION_BUG
+#ifndef DEAL_II_CONST_MEMBER_DEDUCTION_BUG
   /**
    * Overload of the new_task function.
    *
@@ -1925,7 +1925,7 @@ namespace Threads
     return new_task(std::function<RT()>(std::bind(
       fun_ptr, std::cref(c), internal::maybe_make_ref<Args>::act(args)...)));
   }
-#  endif
+#endif
 
   // ------------------------ TaskGroup -------------------------------------
 

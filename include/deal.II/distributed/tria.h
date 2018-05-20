@@ -34,17 +34,17 @@
 #include <vector>
 
 #ifdef DEAL_II_WITH_MPI
-#  include <mpi.h>
+#include <mpi.h>
 #endif
 
 #ifdef DEAL_II_WITH_P4EST
-#  include <p4est.h>
-#  include <p4est_connectivity.h>
-#  include <p4est_ghost.h>
+#include <p4est.h>
+#include <p4est_connectivity.h>
+#include <p4est_ghost.h>
 
-#  include <p8est.h>
-#  include <p8est_connectivity.h>
-#  include <p8est_ghost.h>
+#include <p8est.h>
+#include <p8est_connectivity.h>
+#include <p8est_ghost.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

@@ -21,17 +21,17 @@
 
 #ifdef DEAL_II_WITH_P4EST
 
-#  include <deal.II/grid/grid_refinement.h>
-#  include <deal.II/grid/tria.h>
-#  include <deal.II/grid/tria_accessor.h>
-#  include <deal.II/grid/tria_iterator.h>
+#include <deal.II/grid/grid_refinement.h>
+#include <deal.II/grid/tria.h>
+#include <deal.II/grid/tria_accessor.h>
+#include <deal.II/grid/tria_iterator.h>
 
-#  include <deal.II/distributed/grid_refinement.h>
+#include <deal.II/distributed/grid_refinement.h>
 
-#  include <algorithm>
-#  include <functional>
-#  include <limits>
-#  include <numeric>
+#include <algorithm>
+#include <functional>
+#include <limits>
+#include <numeric>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -535,7 +535,7 @@ namespace parallel
 } // namespace parallel
 
 // explicit instantiations
-#  include "grid_refinement.inst"
+#include "grid_refinement.inst"
 
 DEAL_II_NAMESPACE_CLOSE
 

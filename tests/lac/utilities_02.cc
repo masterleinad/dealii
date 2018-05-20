@@ -55,7 +55,7 @@
 // #define PARPACK
 
 #ifdef PARPACK
-#  include <deal.II/lac/parpack_solver.h>
+#include <deal.II/lac/parpack_solver.h>
 #endif
 
 #include <iostream>

@@ -18,13 +18,13 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
 
-#    include <deal.II/base/index_set.h>
+#include <deal.II/base/index_set.h>
 
-#    include <Epetra_Map.h>
+#include <Epetra_Map.h>
 
-#    include <memory>
+#include <memory>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -80,6 +80,6 @@ namespace LinearAlgebra
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif
+#endif
 
 #endif

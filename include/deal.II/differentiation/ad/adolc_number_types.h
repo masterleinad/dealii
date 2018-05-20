@@ -64,20 +64,20 @@ DEAL_II_NAMESPACE_CLOSE
 
 #ifdef DEAL_II_WITH_ADOLC
 
-#  include <adolc/internal/adolc_settings.h>
-#  include <adolc/internal/adubfunc.h> // Taped double math functions
+#include <adolc/internal/adolc_settings.h>
+#include <adolc/internal/adubfunc.h> // Taped double math functions
 
-#  include <adolc/adouble.h> // Taped double
-#  include <adolc/adtl.h>    // Tapeless double
+#include <adolc/adouble.h> // Taped double
+#include <adolc/adtl.h>    // Tapeless double
 
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/numbers.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/numbers.h>
 
-#  include <deal.II/differentiation/ad/ad_number_traits.h>
-#  include <deal.II/differentiation/ad/ad_number_types.h>
+#include <deal.II/differentiation/ad/ad_number_traits.h>
+#include <deal.II/differentiation/ad/ad_number_types.h>
 
-#  include <complex>
-#  include <type_traits>
+#include <complex>
+#include <type_traits>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -93,7 +93,7 @@ DeclExceptionMsg(ExcADOLCAdvancedBranching,
 
 /* --------------------------- inline and template functions and specializations ------------------------- */
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
 namespace Differentiation
 {
@@ -484,7 +484,7 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
-#  endif // DOXYGEN
+#endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE
 

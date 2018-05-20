@@ -66,24 +66,24 @@ DEAL_II_NAMESPACE_CLOSE
 #ifdef DEAL_II_WITH_TRILINOS
 
 DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
-#  include <Sacado.hpp>
+#include <Sacado.hpp>
 // It appears that some versions of Trilinos do not directly or indirectly
 // include all the headers for all forward and reverse Sacado AD types.
 // So we directly include these both here as a precaution.
 // Standard forward AD classes (templated)
-#  include <Sacado_Fad_DFad.hpp>
+#include <Sacado_Fad_DFad.hpp>
 // Reverse AD classes (templated)
-#  include <Sacado_trad.hpp>
+#include <Sacado_trad.hpp>
 DEAL_II_ENABLE_EXTRA_DIAGNOSTICS
 
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/numbers.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/numbers.h>
 
-#  include <deal.II/differentiation/ad/ad_number_traits.h>
-#  include <deal.II/differentiation/ad/ad_number_types.h>
+#include <deal.II/differentiation/ad/ad_number_traits.h>
+#include <deal.II/differentiation/ad/ad_number_types.h>
 
-#  include <complex>
-#  include <type_traits>
+#include <complex>
+#include <type_traits>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -111,7 +111,7 @@ namespace Differentiation
 
 /* --------------------------- inline and template functions and specializations ------------------------- */
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
 namespace Differentiation
 {
@@ -590,7 +590,7 @@ namespace Differentiation
           NumberTypes::sacado_rad>
     {};
 
-#    ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
+#ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -634,7 +634,7 @@ namespace Differentiation
                      NumberTypes::sacado_rad>
     {};
 
-#    endif
+#endif
 
     /* -------------- NumberTypes::sacado_dfad_dfad -------------- */
 
@@ -769,7 +769,7 @@ namespace Differentiation
                      NumberTypes::sacado_rad_dfad>
     {};
 
-#    ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
+#ifdef DEAL_II_TRILINOS_CXX_SUPPORTS_SACADO_COMPLEX_RAD
 
     /**
      * Specialization of the general ADNumberTraits class that
@@ -817,7 +817,7 @@ namespace Differentiation
                      NumberTypes::sacado_rad_dfad>
     {};
 
-#    endif
+#endif
 
     /* -------------- Additional type traits -------------- */
 
@@ -852,7 +852,7 @@ namespace Differentiation
   } // namespace AD
 } // namespace Differentiation
 
-#  endif // DOXYGEN
+#endif // DOXYGEN
 
 DEAL_II_NAMESPACE_CLOSE
 

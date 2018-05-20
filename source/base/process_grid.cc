@@ -17,7 +17,7 @@
 
 #ifdef DEAL_II_WITH_SCALAPACK
 
-#  include <deal.II/lac/scalapack.templates.h>
+#include <deal.II/lac/scalapack.templates.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -191,13 +191,13 @@ namespace Utilities
       AssertThrowMPI(ierr);
 
       // Double check that the process with rank 0 in subgroup is active:
-#  ifdef DEBUG
+#ifdef DEBUG
       if(mpi_communicator_inactive_with_root != MPI_COMM_NULL
          && Utilities::MPI::this_mpi_process(
               mpi_communicator_inactive_with_root)
               == 0)
         Assert(mpi_process_is_active, ExcInternalError());
-#  endif
+#endif
     }
 
     ProcessGrid::ProcessGrid(MPI_Comm           mpi_comm,

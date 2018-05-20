@@ -14,37 +14,37 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_grid_tools_h
-#  define dealii_grid_tools_h
+#define dealii_grid_tools_h
 
-#  include <deal.II/base/bounding_box.h>
-#  include <deal.II/base/config.h>
-#  include <deal.II/base/geometry_info.h>
-#  include <deal.II/dofs/dof_handler.h>
-#  include <deal.II/fe/mapping.h>
-#  include <deal.II/fe/mapping_q1.h>
-#  include <deal.II/grid/manifold.h>
-#  include <deal.II/grid/tria.h>
-#  include <deal.II/grid/tria_accessor.h>
-#  include <deal.II/grid/tria_iterator.h>
-#  include <deal.II/hp/dof_handler.h>
-#  include <deal.II/lac/sparsity_tools.h>
+#include <deal.II/base/bounding_box.h>
+#include <deal.II/base/config.h>
+#include <deal.II/base/geometry_info.h>
+#include <deal.II/dofs/dof_handler.h>
+#include <deal.II/fe/mapping.h>
+#include <deal.II/fe/mapping_q1.h>
+#include <deal.II/grid/manifold.h>
+#include <deal.II/grid/tria.h>
+#include <deal.II/grid/tria_accessor.h>
+#include <deal.II/grid/tria_iterator.h>
+#include <deal.II/hp/dof_handler.h>
+#include <deal.II/lac/sparsity_tools.h>
 
-#  include <boost/archive/binary_iarchive.hpp>
-#  include <boost/archive/binary_oarchive.hpp>
-#  include <boost/optional.hpp>
-#  include <boost/serialization/array.hpp>
-#  include <boost/serialization/vector.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/optional.hpp>
+#include <boost/serialization/array.hpp>
+#include <boost/serialization/vector.hpp>
 
-#  ifdef DEAL_II_WITH_ZLIB
-#    include <boost/iostreams/device/back_inserter.hpp>
-#    include <boost/iostreams/filter/gzip.hpp>
-#    include <boost/iostreams/filtering_stream.hpp>
-#    include <boost/iostreams/stream.hpp>
-#  endif
+#ifdef DEAL_II_WITH_ZLIB
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/stream.hpp>
+#endif
 
-#  include <bitset>
-#  include <list>
-#  include <set>
+#include <bitset>
+#include <list>
+#include <set>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -71,14 +71,14 @@ namespace internal
   class ActiveCellIterator
   {
   public:
-#  ifndef _MSC_VER
+#ifndef _MSC_VER
     typedef typename MeshType::active_cell_iterator type;
-#  else
+#else
     typedef TriaActiveIterator<dealii::CellAccessor<dim, spacedim>> type;
-#  endif
+#endif
   };
 
-#  ifdef _MSC_VER
+#ifdef _MSC_VER
   template <int dim, int spacedim>
   class ActiveCellIterator<dim, spacedim, dealii::DoFHandler<dim, spacedim>>
   {
@@ -96,7 +96,7 @@ namespace internal
       dealii::DoFCellAccessor<dealii::hp::DoFHandler<dim, spacedim>, false>>
       type;
   };
-#  endif
+#endif
 } // namespace internal
 
 /**
@@ -692,14 +692,14 @@ namespace GridTools
    * @author Giovanni Alzetta, 2017
    */
   template <int dim, int spacedim>
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
   std::tuple<
     std::vector<typename Triangulation<dim, spacedim>::active_cell_iterator>,
     std::vector<std::vector<Point<dim>>>,
     std::vector<std::vector<unsigned int>>>
-#  else
+#else
   return_type
-#  endif
+#endif
   compute_point_locations(
     const Cache<dim, spacedim>&                                        cache,
     const std::vector<Point<spacedim>>&                                points,
@@ -768,16 +768,16 @@ namespace GridTools
    * @author Giovanni Alzetta, 2017-2018
    */
   template <int dim, int spacedim>
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
   std::tuple<
     std::vector<typename Triangulation<dim, spacedim>::active_cell_iterator>,
     std::vector<std::vector<Point<dim>>>,
     std::vector<std::vector<unsigned int>>,
     std::vector<std::vector<Point<spacedim>>>,
     std::vector<std::vector<unsigned int>>>
-#  else
+#else
   return_type
-#  endif
+#endif
   distributed_compute_point_locations(
     const GridTools::Cache<dim, spacedim>&                 cache,
     const std::vector<Point<spacedim>>&                    local_points,
@@ -924,13 +924,13 @@ namespace GridTools
    * for this case.
    */
   template <int dim, template <int, int> class MeshType, int spacedim>
-#  ifndef _MSC_VER
+#ifndef _MSC_VER
   std::vector<typename MeshType<dim, spacedim>::active_cell_iterator>
-#  else
+#else
   std::vector<
     typename dealii::internal::
       ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type>
-#  endif
+#endif
   find_cells_adjacent_to_vertex(const MeshType<dim, spacedim>& container,
                                 const unsigned int             vertex_index);
 
@@ -959,12 +959,12 @@ namespace GridTools
    * to do in that case.
    */
   template <int dim, template <int, int> class MeshType, int spacedim>
-#  ifndef _MSC_VER
+#ifndef _MSC_VER
   typename MeshType<dim, spacedim>::active_cell_iterator
-#  else
+#else
   typename dealii::internal::
     ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type
-#  endif
+#endif
   find_active_cell_around_point(const MeshType<dim, spacedim>& mesh,
                                 const Point<spacedim>&         p,
                                 const std::vector<bool>&       marked_vertices
@@ -1055,13 +1055,13 @@ namespace GridTools
    * a ghost cell.
    */
   template <int dim, template <int, int> class MeshType, int spacedim>
-#  ifndef _MSC_VER
+#ifndef _MSC_VER
   std::pair<typename MeshType<dim, spacedim>::active_cell_iterator, Point<dim>>
-#  else
+#else
   std::pair<typename dealii::internal::
               ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type,
             Point<dim>>
-#  endif
+#endif
   find_active_cell_around_point(const Mapping<dim, spacedim>&  mapping,
                                 const MeshType<dim, spacedim>& mesh,
                                 const Point<spacedim>&         p,
@@ -1077,13 +1077,13 @@ namespace GridTools
    * @author Luca Heltai, Rene Gassmoeller, 2017
    */
   template <int dim, template <int, int> class MeshType, int spacedim>
-#  ifndef _MSC_VER
+#ifndef _MSC_VER
   std::pair<typename MeshType<dim, spacedim>::active_cell_iterator, Point<dim>>
-#  else
+#else
   std::pair<typename dealii::internal::
               ActiveCellIterator<dim, spacedim, MeshType<dim, spacedim>>::type,
             Point<dim>>
-#  endif
+#endif
   find_active_cell_around_point(
     const Mapping<dim, spacedim>&  mapping,
     const MeshType<dim, spacedim>& mesh,
@@ -1467,13 +1467,13 @@ namespace GridTools
    * @author Giovanni Alzetta, 2017
    */
   template <int spacedim>
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
   std::tuple<std::vector<std::vector<unsigned int>>,
              std::map<unsigned int, unsigned int>,
              std::map<unsigned int, std::vector<unsigned int>>>
-#  else
+#else
   return_type
-#  endif
+#endif
   guess_point_owner(
     const std::vector<std::vector<BoundingBox<spacedim>>>& global_bboxes,
     const std::vector<Point<spacedim>>&                    points);
@@ -2667,7 +2667,7 @@ namespace GridTools
 
 /* ----------------- Template function --------------- */
 
-#  ifndef DOXYGEN
+#ifndef DOXYGEN
 
 namespace GridTools
 {
@@ -3418,14 +3418,14 @@ namespace GridTools
     const std::function<void(const typename MeshType::active_cell_iterator&,
                              const DataType&)>&         unpack)
   {
-#    ifndef DEAL_II_WITH_MPI
+#ifndef DEAL_II_WITH_MPI
     (void) mesh;
     (void) pack;
     (void) unpack;
     Assert(
       false,
       ExcMessage("GridTools::exchange_cell_data_to_ghosts() requires MPI."));
-#    else
+#else
     constexpr int dim      = MeshType::dimension;
     constexpr int spacedim = MeshType::space_dimension;
     auto tria = static_cast<const parallel::Triangulation<dim, spacedim>*>(
@@ -3573,11 +3573,11 @@ namespace GridTools
           = MPI_Waitall(requests.size(), requests.data(), MPI_STATUSES_IGNORE);
         AssertThrowMPI(ierr);
       }
-#    endif // DEAL_II_WITH_MPI
+#endif // DEAL_II_WITH_MPI
   }
 } // namespace GridTools
 
-#  endif
+#endif
 
 DEAL_II_NAMESPACE_CLOSE
 

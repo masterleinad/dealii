@@ -30,11 +30,11 @@
 #include <type_traits>
 
 #ifdef DEAL_II_HAVE_SYS_RESOURCE_H
-#  include <sys/resource.h>
+#include <sys/resource.h>
 #endif
 
 #ifdef DEAL_II_MSVC
-#  include <windows.h>
+#include <windows.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN
@@ -122,7 +122,7 @@ CPUClock::now() noexcept
   getrusage(RUSAGE_SELF, &usage);
   system_cpu_duration = usage.ru_utime.tv_sec + 1.e-6 * usage.ru_utime.tv_usec;
 #else
-#  warning "Unsupported platform. Porting not finished."
+#warning "Unsupported platform. Porting not finished."
 #endif
   return time_point(
     internal::TimerImplementation::from_seconds<duration>(system_cpu_duration));

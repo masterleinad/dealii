@@ -26,8 +26,8 @@
 #include <vector>
 
 #ifdef DEAL_II_WITH_MPI
-#  include <deal.II/base/index_set.h>
-#  include <mpi.h>
+#include <deal.II/base/index_set.h>
+#include <mpi.h>
 #endif
 
 DEAL_II_NAMESPACE_OPEN

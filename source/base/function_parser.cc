@@ -24,7 +24,7 @@
 #include <boost/random.hpp>
 
 #ifdef DEAL_II_WITH_MUPARSER
-#  include <muParser.h>
+#include <muParser.h>
 #else
 
 namespace fparser

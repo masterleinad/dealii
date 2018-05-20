@@ -121,7 +121,7 @@ namespace internal
     }
   };
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
   template <>
   struct MatrixSelector<dealii::LinearAlgebra::EpetraWrappers::Vector>
   {
@@ -151,7 +151,7 @@ namespace internal
                     true);
     }
   };
-#  endif
+#endif
 
 #else
   // ! DEAL_II_WITH_TRILINOS

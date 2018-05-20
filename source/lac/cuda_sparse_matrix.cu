@@ -20,7 +20,7 @@
 
 #ifdef DEAL_II_WITH_CUDA
 
-#  include <cusparse.h>
+#include <cusparse.h>
 
 DEAL_II_NAMESPACE_OPEN
 

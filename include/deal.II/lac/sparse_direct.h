@@ -26,10 +26,10 @@
 #include <deal.II/lac/vector.h>
 
 #ifdef DEAL_II_WITH_UMFPACK
-#  include <umfpack.h>
+#include <umfpack.h>
 #endif
 #ifndef SuiteSparse_long
-#  define SuiteSparse_long long int
+#define SuiteSparse_long long int
 #endif
 
 DEAL_II_NAMESPACE_OPEN

@@ -18,18 +18,18 @@
 
 #ifdef DEAL_II_WITH_TRILINOS
 
-#  include <deal.II/lac/sparse_matrix.h>
-#  include <deal.II/lac/trilinos_index_access.h>
-#  include <deal.II/lac/trilinos_sparse_matrix.h>
-#  include <deal.II/lac/vector.h>
+#include <deal.II/lac/sparse_matrix.h>
+#include <deal.II/lac/trilinos_index_access.h>
+#include <deal.II/lac/trilinos_sparse_matrix.h>
+#include <deal.II/lac/vector.h>
 
-#  include <Epetra_MultiVector.h>
-#  include <Ifpack.h>
-#  include <Ifpack_Chebyshev.h>
-#  include <Teuchos_ParameterList.hpp>
-#  include <Teuchos_RCP.hpp>
-#  include <ml_MultiLevelPreconditioner.h>
-#  include <ml_include.h>
+#include <Epetra_MultiVector.h>
+#include <Ifpack.h>
+#include <Ifpack_Chebyshev.h>
+#include <Teuchos_ParameterList.hpp>
+#include <Teuchos_RCP.hpp>
+#include <ml_MultiLevelPreconditioner.h>
+#include <ml_include.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -109,9 +109,9 @@ namespace TrilinosWrappers
 
     // Force re-initialization of the random seed to make ML deterministic
     // (only supported in trilinos >12.2):
-#  if DEAL_II_TRILINOS_VERSION_GTE(12, 4, 0)
+#if DEAL_II_TRILINOS_VERSION_GTE(12, 4, 0)
     parameter_list.set("initialize random seed", true);
-#  endif
+#endif
 
     parameter_list.set("smoother: sweeps",
                        static_cast<int>(additional_data.smoother_sweeps));

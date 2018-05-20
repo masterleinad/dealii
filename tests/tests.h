@@ -37,7 +37,7 @@
 #include <vector>
 
 #if defined(DEBUG) && defined(DEAL_II_HAVE_FP_EXCEPTIONS)
-#  include <cfenv>
+#include <cfenv>
 #endif
 
 // silence extra diagnostics in the testsuite
@@ -48,7 +48,7 @@ DEAL_II_DISABLE_EXTRA_DIAGNOSTICS
 #ifdef DEAL_II_MSVC
 // Under windows tests will hang and show a debugging dialog box from the
 // debug CRT if an exception is encountered. Disable this:
-#  include <stdlib.h>
+#include <stdlib.h>
 
 struct DisableWindowsDebugRuntimeDialog
 {
@@ -110,7 +110,7 @@ filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
  * its imaginary part is zero.
  */
 #ifdef DEAL_II_WITH_PETSC
-#  include <deal.II/lac/petsc_vector_base.h>
+#include <deal.II/lac/petsc_vector_base.h>
 PetscReal
 get_real_assert_zero_imag(const PETScWrappers::internal::VectorReference& a)
 {
@@ -400,14 +400,14 @@ struct LimitConcurrency
 } limit_concurrency;
 
 #ifdef DEAL_II_WITH_PETSC
-#  include <petscsys.h>
+#include <petscsys.h>
 
 namespace
 {
   void
   check_petsc_allocations()
   {
-#  if DEAL_II_PETSC_VERSION_GTE(3, 2, 0)
+#if DEAL_II_PETSC_VERSION_GTE(3, 2, 0)
     PetscStageLog stageLog;
     PetscLogGetStageLog(&stageLog);
 
@@ -438,7 +438,7 @@ namespace
 
     if(errors)
       throw dealii::ExcMessage("PETSc memory leak");
-#  endif
+#endif
   }
 } // namespace
 #endif
@@ -536,10 +536,10 @@ struct MPILogInitAll
 
     MPI_Barrier(MPI_COMM_WORLD);
 
-#  ifdef DEAL_II_WITH_PETSC
+#ifdef DEAL_II_WITH_PETSC
     check_petsc_allocations();
     MPI_Barrier(MPI_COMM_WORLD);
-#  endif
+#endif
 
     if(myid == 0)
       {
@@ -562,7 +562,7 @@ struct MPILogInitAll
 
 #ifdef TBB_DO_ASSERT
 
-#  include <tbb/tbb_stddef.h>
+#include <tbb/tbb_stddef.h>
 
 DEAL_II_NAMESPACE_OPEN
 namespace deal_II_exceptions

@@ -20,41 +20,41 @@
 #include <deal.II/base/mpi.h>
 #ifdef DEAL_II_WITH_SUNDIALS
 
-#  include <deal.II/base/conditional_ostream.h>
-#  include <deal.II/base/exceptions.h>
-#  include <deal.II/base/logstream.h>
-#  include <deal.II/base/mpi.h>
-#  include <deal.II/base/parameter_handler.h>
-#  ifdef DEAL_II_WITH_PETSC
-#    include <deal.II/lac/petsc_parallel_block_vector.h>
-#    include <deal.II/lac/petsc_parallel_vector.h>
-#  endif
-#  include <deal.II/lac/vector.h>
-#  include <deal.II/lac/vector_memory.h>
+#include <deal.II/base/conditional_ostream.h>
+#include <deal.II/base/exceptions.h>
+#include <deal.II/base/logstream.h>
+#include <deal.II/base/mpi.h>
+#include <deal.II/base/parameter_handler.h>
+#ifdef DEAL_II_WITH_PETSC
+#include <deal.II/lac/petsc_parallel_block_vector.h>
+#include <deal.II/lac/petsc_parallel_vector.h>
+#endif
+#include <deal.II/lac/vector.h>
+#include <deal.II/lac/vector_memory.h>
 
-#  ifdef DEAL_II_SUNDIALS_WITH_IDAS
-#    include <idas/idas.h>
-#  else
-#    include <ida/ida.h>
-#  endif
+#ifdef DEAL_II_SUNDIALS_WITH_IDAS
+#include <idas/idas.h>
+#else
+#include <ida/ida.h>
+#endif
 
-#  include <sundials/sundials_config.h>
-#  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
-#    include <ida/ida_spbcgs.h>
-#    include <ida/ida_spgmr.h>
-#    include <ida/ida_sptfqmr.h>
-#  endif
-#  include <nvector/nvector_serial.h>
-#  include <sundials/sundials_math.h>
-#  include <sundials/sundials_types.h>
+#include <sundials/sundials_config.h>
+#if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
+#include <ida/ida_spbcgs.h>
+#include <ida/ida_spgmr.h>
+#include <ida/ida_sptfqmr.h>
+#endif
+#include <nvector/nvector_serial.h>
+#include <sundials/sundials_math.h>
+#include <sundials/sundials_types.h>
 
-#  include <boost/signals2.hpp>
-#  include <memory>
+#include <boost/signals2.hpp>
+#include <memory>
 
 DEAL_II_NAMESPACE_OPEN
 
 // Shorthand notation for IDA error codes.
-#  define AssertIDA(code) Assert(code >= 0, ExcIDAError(code))
+#define AssertIDA(code) Assert(code >= 0, ExcIDAError(code))
 
 namespace SUNDIALS
 {
@@ -822,8 +822,8 @@ namespace SUNDIALS
      */
     GrowingVectorMemory<VectorType> mem;
 
-#  ifdef DEAL_II_WITH_PETSC
-#    ifdef PETSC_USE_COMPLEX
+#ifdef DEAL_II_WITH_PETSC
+#ifdef PETSC_USE_COMPLEX
     static_assert(!std::is_same<VectorType, PETScWrappers::MPI::Vector>::value,
                   "Sundials does not support complex scalar types, "
                   "but PETSc is configured to use a complex scalar type!");
@@ -832,8 +832,8 @@ namespace SUNDIALS
       !std::is_same<VectorType, PETScWrappers::MPI::BlockVector>::value,
       "Sundials does not support complex scalar types, "
       "but PETSc is configured to use a complex scalar type!");
-#    endif // PETSC_USE_COMPLEX
-#  endif   // DEAL_II_WITH_PETSC
+#endif // PETSC_USE_COMPLEX
+#endif // DEAL_II_WITH_PETSC
   };
 
 } // namespace SUNDIALS

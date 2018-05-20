@@ -14,28 +14,28 @@
 // ---------------------------------------------------------------------
 
 #ifndef dealii_trilinos_sparsity_pattern_h
-#  define dealii_trilinos_sparsity_pattern_h
+#define dealii_trilinos_sparsity_pattern_h
 
-#  include <deal.II/base/config.h>
+#include <deal.II/base/config.h>
 
-#  ifdef DEAL_II_WITH_TRILINOS
+#ifdef DEAL_II_WITH_TRILINOS
 
-#    include <deal.II/base/index_set.h>
-#    include <deal.II/base/subscriptor.h>
-#    include <deal.II/lac/exceptions.h>
+#include <deal.II/base/index_set.h>
+#include <deal.II/base/subscriptor.h>
+#include <deal.II/lac/exceptions.h>
 
-#    include <cmath>
-#    include <memory>
-#    include <vector>
+#include <cmath>
+#include <memory>
+#include <vector>
 
-#    include <Epetra_FECrsGraph.h>
-#    include <Epetra_Map.h>
-#    ifdef DEAL_II_WITH_MPI
-#      include <Epetra_MpiComm.h>
-#      include <mpi.h>
-#    else
-#      include <Epetra_SerialComm.h>
-#    endif
+#include <Epetra_FECrsGraph.h>
+#include <Epetra_Map.h>
+#ifdef DEAL_II_WITH_MPI
+#include <Epetra_MpiComm.h>
+#include <mpi.h>
+#else
+#include <Epetra_SerialComm.h>
+#endif
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -1227,7 +1227,7 @@ namespace TrilinosWrappers
 
   // -------------------------- inline and template functions ----------------------
 
-#    ifndef DOXYGEN
+#ifndef DOXYGEN
 
   namespace SparsityPatternIterators
   {
@@ -1383,13 +1383,13 @@ namespace TrilinosWrappers
   SparsityPattern::in_local_range(const size_type index) const
   {
     TrilinosWrappers::types::int_type begin, end;
-#      ifndef DEAL_II_WITH_64BIT_INDICES
+#ifndef DEAL_II_WITH_64BIT_INDICES
     begin = graph->RowMap().MinMyGID();
     end   = graph->RowMap().MaxMyGID() + 1;
-#      else
+#else
     begin = graph->RowMap().MinMyGID64();
     end   = graph->RowMap().MaxMyGID64() + 1;
-#      endif
+#endif
 
     return ((index >= static_cast<size_type>(begin))
             && (index < static_cast<size_type>(end)));
@@ -1480,12 +1480,12 @@ namespace TrilinosWrappers
     return IndexSet(static_cast<const Epetra_Map&>(graph->RangeMap()));
   }
 
-#    endif // DOXYGEN
+#endif // DOXYGEN
 } // namespace TrilinosWrappers
 
 DEAL_II_NAMESPACE_CLOSE
 
-#  endif // DEAL_II_WITH_TRILINOS
+#endif // DEAL_II_WITH_TRILINOS
 
 /*--------------------   trilinos_sparsity_pattern.h     --------------------*/
 

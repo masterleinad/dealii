@@ -282,7 +282,7 @@ namespace Particles
       = get_next_free_particle_index();
     types::particle_index local_start_index = 0;
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     types::particle_index particles_to_add_locally = positions.size();
     const int             ierr = MPI_Scan(&particles_to_add_locally,
                               &local_start_index,
@@ -292,7 +292,7 @@ namespace Particles
                               triangulation->get_communicator());
     AssertThrowMPI(ierr);
     local_start_index -= particles_to_add_locally;
-#  endif
+#endif
 
     local_start_index += local_next_particle_index;
 
@@ -627,12 +627,12 @@ namespace Particles
       sorted_particles_map;
 
     // Exchange particles between processors if we have more than one process
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     if(dealii::Utilities::MPI::n_mpi_processes(
          triangulation->get_communicator())
        > 1)
       send_recv_particles(moved_particles, sorted_particles_map, moved_cells);
-#  endif
+#endif
 
     sorted_particles_map.insert(sorted_particles.begin(),
                                 sorted_particles.end());
@@ -654,7 +654,7 @@ namespace Particles
        == 1)
       return;
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
     // First clear the current ghost_particle information
     ghost_particles.clear();
 
@@ -719,10 +719,10 @@ namespace Particles
       }
 
     send_recv_particles(ghost_particles_by_domain, ghost_particles);
-#  endif
+#endif
   }
 
-#  ifdef DEAL_II_WITH_MPI
+#ifdef DEAL_II_WITH_MPI
   template <int dim, int spacedim>
   void
   ParticleHandler<dim, spacedim>::send_recv_particles(
@@ -933,7 +933,7 @@ namespace Particles
       ExcMessage("The amount of data that was read into new particles "
                  "does not match the amount of data sent around."));
   }
-#  endif
+#endif
 
   template <int dim, int spacedim>
   void
@@ -1172,18 +1172,18 @@ namespace Particles
             // particles. This is a C++11 function, but not all compilers
             // that report a -std=c++11 (like gcc 4.6) implement it, so
             // require C++14 instead.
-#  ifdef DEAL_II_WITH_CXX14
+#ifdef DEAL_II_WITH_CXX14
             position_hint = particles.emplace_hint(
               position_hint,
               std::make_pair(cell->level(), cell->index()),
               Particle<dim, spacedim>(pdata, property_pool.get()));
-#  else
+#else
             position_hint = particles.insert(
               position_hint,
               std::make_pair(
                 std::make_pair(cell->level(), cell->index()),
                 Particle<dim, spacedim>(pdata, property_pool.get())));
-#  endif
+#endif
             ++position_hint;
           }
       }
@@ -1201,18 +1201,18 @@ namespace Particles
             // particles. This is a C++11 function, but not all compilers
             // that report a -std=c++11 (like gcc 4.6) implement it, so
             // require C++14 instead.
-#  ifdef DEAL_II_WITH_CXX14
+#ifdef DEAL_II_WITH_CXX14
             position_hint = particles.emplace_hint(
               position_hint,
               std::make_pair(cell->level(), cell->index()),
               Particle<dim, spacedim>(pdata, property_pool.get()));
-#  else
+#else
             position_hint = particles.insert(
               position_hint,
               std::make_pair(
                 std::make_pair(cell->level(), cell->index()),
                 Particle<dim, spacedim>(pdata, property_pool.get())));
-#  endif
+#endif
             const Point<dim> p_unit = mapping->transform_real_to_unit_cell(
               cell, position_hint->second.get_location());
             position_hint->second.set_reference_location(p_unit);
@@ -1258,17 +1258,17 @@ namespace Particles
                         // particles. This is a C++11 function, but not all compilers
                         // that report a -std=c++11 (like gcc 4.6) implement it, so
                         // require C++14 instead.
-#  ifdef DEAL_II_WITH_CXX14
+#ifdef DEAL_II_WITH_CXX14
                         position_hints[child_index] = particles.emplace_hint(
                           position_hints[child_index],
                           std::make_pair(child->level(), child->index()),
                           std::move(p));
-#  else
+#else
                         position_hints[child_index] = particles.insert(
                           position_hints[child_index],
                           std::make_pair(
                             std::make_pair(child->level(), child->index()), p));
-#  endif
+#endif
                         ++position_hints[child_index];
                         break;
                       }
@@ -1288,7 +1288,7 @@ DEAL_II_NAMESPACE_CLOSE
 DEAL_II_NAMESPACE_OPEN
 
 #ifdef DEAL_II_WITH_P4EST
-#  include "particle_handler.inst"
+#include "particle_handler.inst"
 #endif
 
 DEAL_II_NAMESPACE_CLOSE

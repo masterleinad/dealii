@@ -20,15 +20,15 @@
 
 #ifdef DEAL_II_WITH_OPENCASCADE
 
-#  include <deal.II/grid/manifold.h>
-#  include <deal.II/opencascade/utilities.h>
+#include <deal.II/grid/manifold.h>
+#include <deal.II/opencascade/utilities.h>
 
 // opencascade needs "HAVE_CONFIG_H" to be exported...
-#  define HAVE_CONFIG_H
-#  include <Adaptor3d_Curve.hxx>
-#  include <Adaptor3d_HCurve.hxx>
-#  include <BRepAdaptor_Curve.hxx>
-#  undef HAVE_CONFIG_H
+#define HAVE_CONFIG_H
+#include <Adaptor3d_Curve.hxx>
+#include <Adaptor3d_HCurve.hxx>
+#include <BRepAdaptor_Curve.hxx>
+#undef HAVE_CONFIG_H
 
 DEAL_II_NAMESPACE_OPEN
 

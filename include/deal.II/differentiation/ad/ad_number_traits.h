@@ -722,7 +722,7 @@ namespace Differentiation
       // fail with linking errors). However, GCC complains
       // about the use of non-constant expressions in
       // std::conditional.
-#  ifdef __clang__
+#ifdef __clang__
 
       /**
        * A flag to indicate whether the number is of
@@ -754,7 +754,7 @@ namespace Differentiation
        */
       static const unsigned int n_supported_derivative_levels;
 
-#  else
+#else
 
       /**
        * A flag to indicate whether the number is of
@@ -794,7 +794,7 @@ namespace Differentiation
           typename internal::RemoveComplexWrapper<ScalarType>::type,
           ADNumberTypeCode>::n_supported_derivative_levels;
 
-#  endif
+#endif
 
       /**
        * Underlying floating point value type.
@@ -882,7 +882,7 @@ namespace Differentiation
         "Expected a complex ad_type");
     };
 
-#  ifdef __clang__
+#ifdef __clang__
 
     template <typename ScalarType, enum NumberTypes ADNumberTypeCode>
     const bool NumberTraits<
@@ -944,7 +944,7 @@ namespace Differentiation
         typename internal::RemoveComplexWrapper<ScalarType>::type,
         ADNumberTypeCode>::n_supported_derivative_levels;
 
-#  endif
+#endif
 
     /**
      * A dummy specialization for floating point numbers. This is necessary to
