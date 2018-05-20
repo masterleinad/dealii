@@ -31,13 +31,13 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
   unsigned int rank = Utilities::MPI::this_mpi_process(mpi_comm);
-  if(rank == 0)
+  if (rank == 0)
     {
       typename Triangulation<2>::active_cell_iterator cell
         = tria.begin_active(),
         end_cell = tria.end();
-      for(; cell != end_cell; ++cell)
-        if(cell->is_locally_owned())
+      for (; cell != end_cell; ++cell)
+        if (cell->is_locally_owned())
           cell->set_refine_flag();
     }
 
@@ -49,17 +49,17 @@ test()
   std::vector<types::global_vertex_index>         vertex_global_index;
   typename Triangulation<2>::active_cell_iterator cell = tria.begin_active(),
                                                   endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->is_locally_owned())
+      if (cell->is_locally_owned())
         {
-          for(unsigned int i = 0; i < GeometryInfo<2>::lines_per_cell; ++i)
+          for (unsigned int i = 0; i < GeometryInfo<2>::lines_per_cell; ++i)
             {
               vertex_global_index.push_back(
                 local_to_global_id[cell->line(i)->vertex_index(0)]);
               vertex_global_index.push_back(
                 local_to_global_id[cell->line(i)->vertex_index(1)]);
-              if(cell->line(i)->has_children())
+              if (cell->line(i)->has_children())
                 vertex_global_index.push_back(
                   local_to_global_id[cell->line(i)->child(0)->vertex_index(1)]);
             }
@@ -70,16 +70,16 @@ test()
   it = std::unique(vertex_global_index.begin(), vertex_global_index.end());
   vertex_global_index.resize(it - vertex_global_index.begin());
 
-  if(rank == 0)
+  if (rank == 0)
     {
       std::vector<types::global_vertex_index> reference;
-      for(unsigned int i = 0; i < 31; ++i)
+      for (unsigned int i = 0; i < 31; ++i)
         reference.push_back(i);
-      for(unsigned int i = 0; i < vertex_global_index.size(); ++i)
+      for (unsigned int i = 0; i < vertex_global_index.size(); ++i)
         AssertThrow(reference[i] == vertex_global_index[i],
                     ExcMessage("Wrong global index"));
     }
-  if(rank == 1)
+  if (rank == 1)
     {
       std::vector<types::global_vertex_index> reference;
       reference.push_back(14);
@@ -89,9 +89,9 @@ test()
       reference.push_back(22);
       reference.push_back(23);
       reference.push_back(24);
-      for(unsigned int i = 27; i < 55; ++i)
+      for (unsigned int i = 27; i < 55; ++i)
         reference.push_back(i);
-      for(unsigned int i = 0; i < vertex_global_index.size(); ++i)
+      for (unsigned int i = 0; i < vertex_global_index.size(); ++i)
         AssertThrow(reference[i] == vertex_global_index[i],
                     ExcMessage("Wrong global index"));
     }

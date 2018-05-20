@@ -61,7 +61,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     {
       GridGenerator::hyper_ball(tr, Point<dim>(), 1);
       tr.reset_manifold(0);
@@ -71,7 +71,7 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
@@ -88,7 +88,7 @@ check()
 
   Vector<double> rhs(dof.n_dofs());
   VectorTools::create_point_source_vector(dof, tr.begin()->center(), rhs);
-  for(unsigned int i = 0; i < rhs.size(); ++i)
+  for (unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

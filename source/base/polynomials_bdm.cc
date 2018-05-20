@@ -31,13 +31,13 @@ PolynomialsBDM<dim>::PolynomialsBDM(const unsigned int k)
     p_grads(polynomial_space.n()),
     p_grad_grads(polynomial_space.n())
 {
-  switch(dim)
+  switch (dim)
     {
       case 2:
         monomials[0] = Polynomials::Monomial<double>(k + 1);
         break;
       case 3:
-        for(unsigned int i = 0; i < monomials.size(); ++i)
+        for (unsigned int i = 0; i < monomials.size(); ++i)
           monomials[i] = Polynomials::Monomial<double>(i);
         break;
       default:
@@ -99,18 +99,18 @@ PolynomialsBDM<dim>::compute(
                              p_fourth_derivatives);
 
     std::fill(values.begin(), values.end(), Tensor<1, dim>());
-    for(unsigned int i = 0; i < p_values.size(); ++i)
-      for(unsigned int j = 0; j < dim; ++j)
+    for (unsigned int i = 0; i < p_values.size(); ++i)
+      for (unsigned int j = 0; j < dim; ++j)
         values[i + j * n_sub][j] = p_values[i];
 
     std::fill(grads.begin(), grads.end(), Tensor<2, dim>());
-    for(unsigned int i = 0; i < p_grads.size(); ++i)
-      for(unsigned int j = 0; j < dim; ++j)
+    for (unsigned int i = 0; i < p_grads.size(); ++i)
+      for (unsigned int j = 0; j < dim; ++j)
         grads[i + j * n_sub][j] = p_grads[i];
 
     std::fill(grad_grads.begin(), grad_grads.end(), Tensor<3, dim>());
-    for(unsigned int i = 0; i < p_grad_grads.size(); ++i)
-      for(unsigned int j = 0; j < dim; ++j)
+    for (unsigned int i = 0; i < p_grad_grads.size(); ++i)
+      for (unsigned int j = 0; j < dim; ++j)
         grad_grads[i + j * n_sub][j] = p_grad_grads[i];
   }
 
@@ -124,18 +124,18 @@ PolynomialsBDM<dim>::compute(
   std::vector<std::vector<double>> monovali(dim, std::vector<double>(4));
   std::vector<std::vector<double>> monovalk(dim, std::vector<double>(4));
 
-  if(dim == 2)
+  if (dim == 2)
     {
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         monomials[0].value(unit_point(d), monovali[d]);
-      if(values.size() != 0)
+      if (values.size() != 0)
         {
           values[start][0]     = monovali[0][0];
           values[start][1]     = -unit_point(1) * monovali[0][1];
           values[start + 1][0] = unit_point(0) * monovali[1][1];
           values[start + 1][1] = -monovali[1][0];
         }
-      if(grads.size() != 0)
+      if (grads.size() != 0)
         {
           grads[start][0][0]     = monovali[0][1];
           grads[start][0][1]     = 0.;
@@ -146,7 +146,7 @@ PolynomialsBDM<dim>::compute(
           grads[start + 1][1][0] = 0.;
           grads[start + 1][1][1] = -monovali[1][1];
         }
-      if(grad_grads.size() != 0)
+      if (grad_grads.size() != 0)
         {
           grad_grads[start][0][0][0]     = monovali[0][2];
           grad_grads[start][0][0][1]     = 0.;
@@ -179,16 +179,16 @@ PolynomialsBDM<dim>::compute(
       // from the previous by cyclic
       // rotation of the coordinates
       const unsigned int n_curls = monomials.size() - 1;
-      for(unsigned int i = 0; i < n_curls; ++i, start += dim)
+      for (unsigned int i = 0; i < n_curls; ++i, start += dim)
         {
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             {
               // p(t) = t^(i+1)
               monomials[i + 1].value(unit_point(d), monovali[d]);
               // q(t) = t^(k-i)
               monomials[degree() - i].value(unit_point(d), monovalk[d]);
             }
-          if(values.size() != 0)
+          if (values.size() != 0)
             {
               // x p'(y) q(z)
               values[start][0]
@@ -211,7 +211,7 @@ PolynomialsBDM<dim>::compute(
               values[start + 2][0] = -monovali[0][0] * monovalk[1][0];
               values[start + 2][1] = 0.;
             }
-          if(grads.size() != 0)
+          if (grads.size() != 0)
             {
               grads[start][0][0] = monovali[1][1] * monovalk[2][0];
               grads[start][0][1]
@@ -249,7 +249,7 @@ PolynomialsBDM<dim>::compute(
               grads[start + 2][1][0] = 0.;
               grads[start + 2][1][1] = 0.;
             }
-          if(grad_grads.size() != 0)
+          if (grad_grads.size() != 0)
             {
               grad_grads[start][0][0][0] = 0.;
               grad_grads[start][0][0][1] = monovali[1][2] * monovalk[2][0];
@@ -424,11 +424,11 @@ template <int dim>
 unsigned int
 PolynomialsBDM<dim>::compute_n_pols(unsigned int k)
 {
-  if(dim == 1)
+  if (dim == 1)
     return k + 1;
-  if(dim == 2)
+  if (dim == 2)
     return (k + 1) * (k + 2) + 2;
-  if(dim == 3)
+  if (dim == 3)
     return ((k + 1) * (k + 2) * (k + 3)) / 2 + 3 * (k + 1);
   Assert(false, ExcNotImplemented());
   return 0;

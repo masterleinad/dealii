@@ -28,7 +28,7 @@ check_value(const int    dim,
             const double tol = 1e-12)
 {
   const double rel_error = std::abs(expected - actual) / std::abs(actual);
-  if(rel_error > tol)
+  if (rel_error > tol)
     {
       deallog << "Incorrect eigenvalue calculated: "
               << "Dim " << dim << ", index " << index << ". Expected "
@@ -63,7 +63,7 @@ check_vector(const int            index,
 {
   const bool orientation = check_orientation(expected, actual);
   const bool unit_vec    = is_unit_vector(actual);
-  if(!(orientation & unit_vec))
+  if (!(orientation & unit_vec))
     {
       deallog << "Incorrect eigenvector calculated: "
               << "Dim " << dim << ", index " << index << ". Expected "

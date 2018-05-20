@@ -56,7 +56,7 @@ test()
 
   hp::FECollection<dim> fe_collection;
   hp::QCollection<dim>  q_collection;
-  for(unsigned int i = 1; i <= 4; ++i)
+  for (unsigned int i = 1; i <= 4; ++i)
     {
       fe_collection.push_back(FESystem<dim>(FE_Q<dim>(i), dim));
       q_collection.push_back(QGauss<dim>(i + 2));
@@ -64,10 +64,10 @@ test()
 
   hp::DoFHandler<dim> dof_handler(tria);
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % fe_collection.size());
 
   dof_handler.distribute_dofs(fe_collection);

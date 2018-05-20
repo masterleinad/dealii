@@ -41,7 +41,7 @@ test()
   const double value = 1;
   x1.ReplaceGlobalValues(1, &GID, &value);
   x1.GlobalAssemble(Insert);
-  if(Comm.MyPID() == 0)
+  if (Comm.MyPID() == 0)
     AssertThrow(x1[0][0] == 1, ExcInternalError());
 
   // copy vector
@@ -54,11 +54,11 @@ test()
   // the value (as non-local data in x1 should
   // be been eliminated after calling
   // GlobalAssemble).
-  if(Comm.MyPID() == 0)
+  if (Comm.MyPID() == 0)
     x2.ReplaceGlobalValues(1, &GID, &value);
   x2.GlobalAssemble(Insert);
 
-  if(Comm.MyPID() == 0)
+  if (Comm.MyPID() == 0)
     AssertThrow(x1[0][0] == 1, ExcInternalError());
 }
 
@@ -71,7 +71,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

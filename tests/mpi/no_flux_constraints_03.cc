@@ -48,12 +48,12 @@ test()
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
   triangulation.refine_global(3);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    if(!cell->is_ghost() && !cell->is_artificial())
-      if(cell->center().norm() < 0.3)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    if (!cell->is_ghost() && !cell->is_artificial())
+      if (cell->center().norm() < 0.3)
         {
           cell->set_refine_flag();
         }
@@ -61,7 +61,7 @@ test()
   triangulation.prepare_coarsening_and_refinement();
   triangulation.execute_coarsening_and_refinement();
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "#cells = " << triangulation.n_global_active_cells()
             << std::endl;
 
@@ -72,7 +72,7 @@ test()
   dofh.distribute_dofs(fe);
   DoFRenumbering::hierarchical(dofh);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "#dofs = " << dofh.locally_owned_dofs().size() << std::endl;
 
   IndexSet relevant_set;
@@ -100,7 +100,7 @@ test()
   }
   MPI_Barrier(MPI_COMM_WORLD);
   sleep(1);
-  if(myid == 0)
+  if (myid == 0)
     {
       //sort and merge the constraint matrices on proc 0, generate a checksum
       //and output that into the deallog
@@ -138,8 +138,8 @@ test()
              MPI_UNSIGNED,
              0,
              MPI_COMM_WORLD);
-  if(myid == 0)
-    for(unsigned int i = 0; i < numprocs; ++i)
+  if (myid == 0)
+    for (unsigned int i = 0; i < numprocs; ++i)
       deallog << "#constraints on " << i << ": " << n_constraints_glob[i]
               << std::endl;
 
@@ -151,12 +151,12 @@ test()
     const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
     Vector<double>                       local_vector(dofs_per_cell);
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < dofs_per_cell; ++i)
       local_vector(i) = 1.;
     typename DoFHandler<dim>::active_cell_iterator cell = dofh.begin_active(),
                                                    endc = dofh.end();
-    for(; cell != endc; ++cell)
-      if(cell->subdomain_id() == triangulation.locally_owned_subdomain())
+    for (; cell != endc; ++cell)
+      if (cell->subdomain_id() == triangulation.locally_owned_subdomain())
         {
           cell->get_dof_indices(local_dof_indices);
           constraints.distribute_local_to_global(
@@ -169,11 +169,11 @@ test()
   // for constrained entries on the locally
   // owned range.
   const std::pair<unsigned int, unsigned int> range = vector.local_range();
-  for(unsigned int i = range.first; i < range.second; ++i)
-    if(constraints.is_constrained(i))
+  for (unsigned int i = range.first; i < range.second; ++i)
+    if (constraints.is_constrained(i))
       AssertThrow(vector(i) == 0, ExcInternalError());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -187,7 +187,7 @@ main(int argc, char* argv[])
 
     deallog.push(Utilities::int_to_string(myid));
 
-    if(myid == 0)
+    if (myid == 0)
       {
         initlog();
 

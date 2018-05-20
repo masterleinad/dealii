@@ -34,7 +34,7 @@ extract(const AnyData& data)
 {
   // This set of tests with old functionality. Remove when deprecating
   // index access
-  for(unsigned int i = 0; i < data.size(); ++i)
+  for (unsigned int i = 0; i < data.size(); ++i)
     deallog << i << '\t' << data.name(i) << std::endl;
   deallog << data.name(0) << '\t' << data.entry<int>(0) << std::endl;
   deallog << data.name(1) << '\t' << data.entry<double>(1) << std::endl;
@@ -56,12 +56,12 @@ extract(const AnyData& data)
 
   deallog << *data.try_read<double>(" d  17.") << std::endl;
 
-  if(data.try_read<char*>(" d  17.") == nullptr)
+  if (data.try_read<char*>(" d  17.") == nullptr)
     deallog << "(nil)" << std::endl;
   else
     AssertThrow(false, ExcInternalError());
 
-  if(data.try_read<double>("does not exist") == nullptr)
+  if (data.try_read<double>("does not exist") == nullptr)
     deallog << "(nil)" << std::endl;
   else
     AssertThrow(false, ExcInternalError());

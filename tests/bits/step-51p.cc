@@ -96,7 +96,7 @@ namespace Step51
   Solution<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     double return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for (unsigned int i = 0; i < this->n_source_centers; ++i)
       {
         const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
         return_value
@@ -114,7 +114,7 @@ namespace Step51
   {
     Tensor<1, dim> return_value;
 
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for (unsigned int i = 0; i < this->n_source_centers; ++i)
       {
         const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
 
@@ -148,7 +148,7 @@ namespace Step51
     AssertDimension(v.size(), dim + 1);
     Solution<dim>  solution;
     Tensor<1, dim> grad = solution.gradient(p);
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       v[d] = -grad[d];
     v[dim] = solution.value(p);
   }
@@ -169,7 +169,7 @@ namespace Step51
   ConvectionVelocity<dim>::value(const Point<dim>& p) const
   {
     Tensor<1, dim> convection;
-    switch(dim)
+    switch (dim)
       {
         case 1:
           convection[0] = 1;
@@ -209,7 +209,7 @@ namespace Step51
   {
     Tensor<1, dim> convection   = convection_velocity.value(p);
     double         return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for (unsigned int i = 0; i < this->n_source_centers; ++i)
       {
         const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
 
@@ -406,21 +406,21 @@ namespace Step51
         fe_local_support_on_face(GeometryInfo<dim>::faces_per_cell),
         fe_support_on_face(GeometryInfo<dim>::faces_per_cell)
     {
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        for(unsigned int i = 0; i < fe_local.dofs_per_cell; ++i)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        for (unsigned int i = 0; i < fe_local.dofs_per_cell; ++i)
           {
-            if(fe_local.has_support_on_face(i, face))
+            if (fe_local.has_support_on_face(i, face))
               {
                 fe_local_support_on_face[face].push_back(i);
               }
           }
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
           {
-            if(fe.has_support_on_face(i, face))
+            if (fe.has_support_on_face(i, face))
               {
                 fe_support_on_face[face].push_back(i);
               }
@@ -553,7 +553,7 @@ namespace Step51
 
     scratch.ll_matrix = 0;
     scratch.l_rhs     = 0;
-    if(!task_data.trace_reconstruct)
+    if (!task_data.trace_reconstruct)
       {
         scratch.lf_matrix     = 0;
         scratch.fl_matrix     = 0;
@@ -562,14 +562,14 @@ namespace Step51
       }
     scratch.fe_values_local.reinit(loc_cell);
 
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for (unsigned int q = 0; q < n_q_points; ++q)
       {
         const double rhs_value = scratch.right_hand_side.value(
           scratch.fe_values_local.quadrature_point(q));
         const Tensor<1, dim> convection = scratch.convection_velocity.value(
           scratch.fe_values_local.quadrature_point(q));
         const double JxW = scratch.fe_values_local.JxW(q);
-        for(unsigned int k = 0; k < loc_dofs_per_cell; ++k)
+        for (unsigned int k = 0; k < loc_dofs_per_cell; ++k)
           {
             scratch.q_phi[k] = scratch.fe_values_local[fluxes].value(k, q);
             scratch.q_phi_div[k]
@@ -578,9 +578,9 @@ namespace Step51
             scratch.u_phi_grad[k]
               = scratch.fe_values_local[scalar].gradient(k, q);
           }
-        for(unsigned int i = 0; i < loc_dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < loc_dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < loc_dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < loc_dofs_per_cell; ++j)
               scratch.ll_matrix(i, j)
                 += (scratch.q_phi[i] * scratch.q_phi[j]
                     - scratch.q_phi_div[i] * scratch.u_phi[j]
@@ -591,16 +591,17 @@ namespace Step51
           }
       }
 
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+         ++face)
       {
         scratch.fe_face_values_local.reinit(loc_cell, face);
         scratch.fe_face_values.reinit(cell, face);
 
-        if(task_data.trace_reconstruct)
+        if (task_data.trace_reconstruct)
           scratch.fe_face_values.get_function_values(solution,
                                                      scratch.trace_values);
 
-        for(unsigned int q = 0; q < n_face_q_points; ++q)
+        for (unsigned int q = 0; q < n_face_q_points; ++q)
           {
             const double     JxW = scratch.fe_face_values.JxW(q);
             const Point<dim> quadrature_point
@@ -612,9 +613,9 @@ namespace Step51
 
             const double tau_stab = (5. + std::abs(convection * normal));
 
-            for(unsigned int k = 0;
-                k < scratch.fe_local_support_on_face[face].size();
-                ++k)
+            for (unsigned int k = 0;
+                 k < scratch.fe_local_support_on_face[face].size();
+                 ++k)
               {
                 const unsigned int kk
                   = scratch.fe_local_support_on_face[face][k];
@@ -624,19 +625,19 @@ namespace Step51
                   = scratch.fe_face_values_local[scalar].value(kk, q);
               }
 
-            if(!task_data.trace_reconstruct)
+            if (!task_data.trace_reconstruct)
               {
-                for(unsigned int k = 0;
-                    k < scratch.fe_support_on_face[face].size();
-                    ++k)
+                for (unsigned int k = 0;
+                     k < scratch.fe_support_on_face[face].size();
+                     ++k)
                   scratch.tr_phi[k] = scratch.fe_face_values.shape_value(
                     scratch.fe_support_on_face[face][k], q);
-                for(unsigned int i = 0;
-                    i < scratch.fe_local_support_on_face[face].size();
-                    ++i)
-                  for(unsigned int j = 0;
-                      j < scratch.fe_support_on_face[face].size();
-                      ++j)
+                for (unsigned int i = 0;
+                     i < scratch.fe_local_support_on_face[face].size();
+                     ++i)
+                  for (unsigned int j = 0;
+                       j < scratch.fe_support_on_face[face].size();
+                       ++j)
                     {
                       const unsigned int ii
                         = scratch.fe_local_support_on_face[face][i];
@@ -656,12 +657,12 @@ namespace Step51
                            * JxW;
                     }
 
-                for(unsigned int i = 0;
-                    i < scratch.fe_support_on_face[face].size();
-                    ++i)
-                  for(unsigned int j = 0;
-                      j < scratch.fe_support_on_face[face].size();
-                      ++j)
+                for (unsigned int i = 0;
+                     i < scratch.fe_support_on_face[face].size();
+                     ++i)
+                  for (unsigned int j = 0;
+                       j < scratch.fe_support_on_face[face].size();
+                       ++j)
                     {
                       const unsigned int ii
                         = scratch.fe_support_on_face[face][i];
@@ -673,17 +674,17 @@ namespace Step51
                            * JxW;
                     }
 
-                if(cell->face(face)->at_boundary()
-                   && (cell->face(face)->boundary_id() == 1))
+                if (cell->face(face)->at_boundary()
+                    && (cell->face(face)->boundary_id() == 1))
                   {
                     const double neumann_value
                       = -scratch.exact_solution.gradient(quadrature_point)
                           * normal
                         + convection * normal
                             * scratch.exact_solution.value(quadrature_point);
-                    for(unsigned int i = 0;
-                        i < scratch.fe_support_on_face[face].size();
-                        ++i)
+                    for (unsigned int i = 0;
+                         i < scratch.fe_support_on_face[face].size();
+                         ++i)
                       {
                         const unsigned int ii
                           = scratch.fe_support_on_face[face][i];
@@ -693,12 +694,12 @@ namespace Step51
                   }
               }
 
-            for(unsigned int i = 0;
-                i < scratch.fe_local_support_on_face[face].size();
-                ++i)
-              for(unsigned int j = 0;
-                  j < scratch.fe_local_support_on_face[face].size();
-                  ++j)
+            for (unsigned int i = 0;
+                 i < scratch.fe_local_support_on_face[face].size();
+                 ++i)
+              for (unsigned int j = 0;
+                   j < scratch.fe_local_support_on_face[face].size();
+                   ++j)
                 {
                   const unsigned int ii
                     = scratch.fe_local_support_on_face[face][i];
@@ -708,10 +709,10 @@ namespace Step51
                     += tau_stab * scratch.u_phi[i] * scratch.u_phi[j] * JxW;
                 }
 
-            if(task_data.trace_reconstruct)
-              for(unsigned int i = 0;
-                  i < scratch.fe_local_support_on_face[face].size();
-                  ++i)
+            if (task_data.trace_reconstruct)
+              for (unsigned int i = 0;
+                   i < scratch.fe_local_support_on_face[face].size();
+                   ++i)
                 {
                   const unsigned int ii
                     = scratch.fe_local_support_on_face[face][i];
@@ -725,7 +726,7 @@ namespace Step51
 
     scratch.ll_matrix.gauss_jordan();
 
-    if(task_data.trace_reconstruct == false)
+    if (task_data.trace_reconstruct == false)
       {
         scratch.fl_matrix.mmult(scratch.tmp_matrix, scratch.ll_matrix);
         scratch.tmp_matrix.vmult_add(task_data.cell_vector, scratch.l_rhs);
@@ -744,7 +745,7 @@ namespace Step51
   void
   HDG<dim>::copy_local_to_global(const PerTaskData& data)
   {
-    if(data.trace_reconstruct == false)
+    if (data.trace_reconstruct == false)
       constraints.distribute_local_to_global(data.cell_matrix,
                                              data.cell_vector,
                                              data.dof_indices,
@@ -859,12 +860,12 @@ namespace Step51
                                                         scratch.u_gradients);
 
     double sum = 0;
-    for(unsigned int i = 1; i < dofs_per_cell; ++i)
+    for (unsigned int i = 1; i < dofs_per_cell; ++i)
       {
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
           {
             sum = 0;
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for (unsigned int q = 0; q < n_q_points; ++q)
               sum += (scratch.fe_values.shape_grad(i, q)
                       * scratch.fe_values.shape_grad(j, q))
                      * scratch.fe_values.JxW(q);
@@ -872,21 +873,21 @@ namespace Step51
           }
 
         sum = 0;
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           sum -= (scratch.fe_values.shape_grad(i, q) * scratch.u_gradients[q])
                  * scratch.fe_values.JxW(q);
         scratch.cell_rhs(i) = sum;
       }
-    for(unsigned int j = 0; j < dofs_per_cell; ++j)
+    for (unsigned int j = 0; j < dofs_per_cell; ++j)
       {
         sum = 0;
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           sum += scratch.fe_values.shape_value(j, q) * scratch.fe_values.JxW(q);
         scratch.cell_matrix(0, j) = sum;
       }
     {
       sum = 0;
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int q = 0; q < n_q_points; ++q)
         sum += scratch.u_values[q] * scratch.fe_values.JxW(q);
       scratch.cell_rhs(0) = sum;
     }
@@ -914,12 +915,12 @@ namespace Step51
 
     typename Triangulation<dim>::cell_iterator cell = triangulation.begin(),
                                                endc = triangulation.end();
-    for(; cell != endc; ++cell)
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        if(cell->face(face)->at_boundary())
-          for(unsigned int d = 0; d < dim; ++d)
-            if((std::fabs(cell->face(face)->center()(d) - (1)) < 1e-12))
+    for (; cell != endc; ++cell)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        if (cell->face(face)->at_boundary())
+          for (unsigned int d = 0; d < dim; ++d)
+            if ((std::fabs(cell->face(face)->center()(d) - (1)) < 1e-12))
               cell->face(face)->set_boundary_id(1);
   }
 
@@ -927,7 +928,7 @@ namespace Step51
   void
   HDG<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 11 - 3 * dim; ++cycle)
+    for (unsigned int cycle = 0; cycle < 11 - 3 * dim; ++cycle)
       {
         refine_grid(cycle);
         setup_system();

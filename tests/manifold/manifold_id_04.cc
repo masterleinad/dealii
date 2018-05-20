@@ -40,16 +40,16 @@ test(unsigned int ref = 1)
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
   tria.begin_active()->set_manifold_id(3);
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     tria.begin_active()->face(f)->set_manifold_id(2);
 
   tria.refine_global(1);
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
       deallog << "C: " << cell << ", mid: " << (int) cell->manifold_id()
               << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         deallog << "f: " << cell->face(f)
                 << ", mid: " << (int) cell->face(f)->manifold_id() << std::endl;
     }

@@ -64,20 +64,20 @@ test()
       = triangulation.begin_active(),
       endc = triangulation.end();
 
-    for(; cell != endc; cell++)
+    for (; cell != endc; cell++)
       {
         Point<dim> center = cell->center();
 
-        if(center[0] < 0)
+        if (center[0] < 0)
           {
             cell->set_subdomain_id(1);
           }
 
         double h = 0;
-        for(unsigned d = 0; d < dim; ++d)
+        for (unsigned d = 0; d < dim; ++d)
           h += center[d];
 
-        if(std::fabs(h) + 1e-6 > 0.25 * dim)
+        if (std::fabs(h) + 1e-6 > 0.25 * dim)
           cell->set_refine_flag();
       }
 
@@ -106,9 +106,9 @@ test()
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; cell++)
+    for (; cell != endc; cell++)
       {
-        if(cell->subdomain_id() == 1)
+        if (cell->subdomain_id() == 1)
           cell->set_active_fe_index(1);
         else
           cell->set_active_fe_index(0);

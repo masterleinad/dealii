@@ -43,9 +43,9 @@ test()
   // this creates a matrix with optimized path for off-processor entries
   sp.reinit(rows, columns, writable_rows, MPI_COMM_WORLD, 0u);
 
-  for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-    for(unsigned int j = 0; j < 3 * n_procs; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+    for (unsigned int j = 0; j < 3 * n_procs; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
 
   sp.add(1, 0);
@@ -64,9 +64,9 @@ test()
     TrilinosWrappers::SparseMatrix matrix;
     matrix.reinit(sp);
     double c = 0;
-    for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-      for(unsigned int j = 0; j < 3 * n_procs; ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+      for (unsigned int j = 0; j < 3 * n_procs; ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           matrix.add(i, j, c++);
 
     matrix.add(1, 0, c++);
@@ -81,9 +81,9 @@ test()
   // ghost entries and throw away the off-processor sparsity pattern
   sp.reinit(rows, columns, MPI_COMM_WORLD, 0u);
 
-  for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-    for(unsigned int j = 0; j < 3 * n_procs; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+    for (unsigned int j = 0; j < 3 * n_procs; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
 
   sp.add(1, 0);
@@ -98,9 +98,9 @@ test()
     TrilinosWrappers::SparseMatrix matrix;
     matrix.reinit(sp);
     double c = 0;
-    for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-      for(unsigned int j = 0; j < 3 * n_procs; ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+      for (unsigned int j = 0; j < 3 * n_procs; ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           matrix.add(i, j, c++);
 
     matrix.add(1, 0, c++);
@@ -116,9 +116,9 @@ test()
   // now create again a pattern with writable rows
   sp.reinit(rows, columns, writable_rows, MPI_COMM_WORLD, 0u);
 
-  for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-    for(unsigned int j = 0; j < 3 * n_procs; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+    for (unsigned int j = 0; j < 3 * n_procs; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
 
   sp.add(1, 0);
@@ -132,9 +132,9 @@ test()
     TrilinosWrappers::SparseMatrix matrix;
     matrix.reinit(sp);
     double c = 0;
-    for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-      for(unsigned int j = 0; j < 3 * n_procs; ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+      for (unsigned int j = 0; j < 3 * n_procs; ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           matrix.add(i, j, c++);
 
     matrix.add(1, 0, c++);
@@ -150,9 +150,9 @@ test()
   writable_rows.add_index(2);
   writable_rows.compress();
   DynamicSparsityPattern dsp(rows.size(), columns.size(), writable_rows);
-  for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-    for(unsigned int j = 0; j < 3 * n_procs; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+    for (unsigned int j = 0; j < 3 * n_procs; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         dsp.add(i, j);
 
   dsp.add(1, 0);
@@ -168,9 +168,9 @@ test()
     TrilinosWrappers::SparseMatrix matrix;
     matrix.reinit(sp);
     double c = 0;
-    for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-      for(unsigned int j = 0; j < 3 * n_procs; ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+      for (unsigned int j = 0; j < 3 * n_procs; ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           matrix.add(i, j, c++);
 
     matrix.add(1, 0, c++);
@@ -192,7 +192,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       std::ofstream logfile("output");
       deallog.attach(logfile);

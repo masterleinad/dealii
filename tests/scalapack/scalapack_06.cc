@@ -78,8 +78,8 @@ test(const unsigned int size,
   //Lapack as reference
   {
     std::vector<NumberType> lapack_A(size * size);
-    for(unsigned int i = 0; i < size; ++i)
-      for(unsigned int j = 0; j < size; ++j)
+    for (unsigned int i = 0; i < size; ++i)
+      for (unsigned int j = 0; j < size; ++j)
         lapack_A[i * size + j] = full_A(i, j);
 
     int
@@ -116,8 +116,8 @@ test(const unsigned int size,
          &info);
 
     AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("syev", info));
-    for(int i = 0; i < max_n_eigenvalues; ++i)
-      for(int j = 0; j < size; ++j)
+    for (int i = 0; i < max_n_eigenvalues; ++i)
+      for (int j = 0; j < size; ++j)
         s_eigenvectors_[i][j] = lapack_A[(size - 1 - i) * size + j];
   }
 
@@ -131,7 +131,7 @@ test(const unsigned int size,
     = scalapack_syev.eigenpairs_symmetric_by_index(std::make_pair(0, size - 1),
                                                    true);
   scalapack_syev.copy_to(p_eigenvectors);
-  for(unsigned int i = 0; i < max_n_eigenvalues; ++i)
+  for (unsigned int i = 0; i < max_n_eigenvalues; ++i)
     AssertThrow(std::abs(eigenvalues_psyev[n_eigenvalues - i - 1]
                          - eigenvalues_Lapack[n_eigenvalues - i - 1])
                     / std::abs(eigenvalues_Lapack[n_eigenvalues - i - 1])
@@ -141,12 +141,12 @@ test(const unsigned int size,
   pcout << "   with respect to the given tolerance the eigenvalues coincide"
         << std::endl;
 
-  for(unsigned int i = 0; i < max_n_eigenvalues; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for (unsigned int i = 0; i < max_n_eigenvalues; ++i)
+    for (unsigned int j = 0; j < size; ++j)
       p_eigenvectors_[i][j] = p_eigenvectors(j, size - 1 - i);
 
   //product of eigenvectors computed using Lapack and ScaLapack has to be either 1 or -1
-  for(unsigned int i = 0; i < max_n_eigenvalues; ++i)
+  for (unsigned int i = 0; i < max_n_eigenvalues; ++i)
     {
       const NumberType product = p_eigenvectors_[i] * s_eigenvectors_[i];
       //the requirement for alignment of the eigenvectors has to be released (primarily for floats)
@@ -170,8 +170,8 @@ main(int argc, char** argv)
 
   const double tol = 1e-10;
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol);
 }

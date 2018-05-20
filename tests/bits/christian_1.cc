@@ -70,9 +70,9 @@ DoFToolsEx::transfer(const DoFHandler<dim>& source_dof,
   // iterate over all active source cells
   typedef typename DoFHandler<dim>::active_cell_iterator cell_iterator;
   cell_iterator cell = source_dof.begin_active(), endc = source_dof.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->level() == source2target[cell]->level())
+      if (cell->level() == source2target[cell]->level())
         {
           // cell has not been coarsend, but possibly been refined
           cell->get_dof_values(source_vector, local_dofs);
@@ -129,7 +129,7 @@ main()
   Triangulation<2>::active_cell_iterator it = both_tria.begin_active();
   it->set_refine_flag();
   (++it)->set_refine_flag();
-  for(int i = 1; i < 8; ++i, ++it)
+  for (int i = 1; i < 8; ++i, ++it)
     ;
   it->set_coarsen_flag();
   (++it)->set_coarsen_flag();

@@ -189,7 +189,7 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
   //At this point level_constraint and refinement_edge_indices are empty.
   level_constraints.resize(nlevels);
   refinement_edge_indices.resize(nlevels);
-  for(unsigned int l = 0; l < nlevels; ++l)
+  for (unsigned int l = 0; l < nlevels; ++l)
     {
       IndexSet relevant_dofs;
       DoFTools::extract_locally_relevant_level_dofs(dof, l, relevant_dofs);
@@ -198,13 +198,13 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
       // Loop through relevant cells and faces finding those which are periodic neighbors.
       typename DoFHandler<dim, spacedim>::cell_iterator cell = dof.begin(l),
                                                         endc = dof.end(l);
-      for(; cell != endc; ++cell)
-        if(cell->level_subdomain_id() != numbers::artificial_subdomain_id)
+      for (; cell != endc; ++cell)
+        if (cell->level_subdomain_id() != numbers::artificial_subdomain_id)
           {
-            for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-              if(cell->has_periodic_neighbor(f))
+            for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+              if (cell->has_periodic_neighbor(f))
                 {
-                  if(cell->is_locally_owned_on_level())
+                  if (cell->is_locally_owned_on_level())
                     {
                       Assert(
                         cell->periodic_neighbor(f)->level_subdomain_id()
@@ -214,8 +214,8 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
                     }
                   // Cell is a level-ghost and its neighbor is a level-artificial cell
                   // nothing to do here
-                  else if(cell->periodic_neighbor(f)->level_subdomain_id()
-                          == numbers::artificial_subdomain_id)
+                  else if (cell->periodic_neighbor(f)->level_subdomain_id()
+                           == numbers::artificial_subdomain_id)
                     {
                       Assert(cell->is_locally_owned_on_level() == false,
                              ExcInternalError());
@@ -235,11 +235,11 @@ MGConstrainedDoFs::initialize(const DoFHandler<dim, spacedim>& dof)
                   // Skip DoFs for which we've previously entered periodicity constraints already;
                   // this can happen, for example, for a vertex dof at a periodic boundary that we
                   // visit from more than one cell
-                  for(unsigned int i = 0; i < dofs_per_face; ++i)
-                    if(level_constraints[l].can_store_line(dofs_2[i])
-                       && level_constraints[l].can_store_line(dofs_1[i])
-                       && !level_constraints[l].is_constrained(dofs_2[i])
-                       && !level_constraints[l].is_constrained(dofs_1[i]))
+                  for (unsigned int i = 0; i < dofs_per_face; ++i)
+                    if (level_constraints[l].can_store_line(dofs_2[i])
+                        && level_constraints[l].can_store_line(dofs_1[i])
+                        && !level_constraints[l].is_constrained(dofs_2[i])
+                        && !level_constraints[l].is_constrained(dofs_1[i]))
                       {
                         level_constraints[l].add_line(dofs_2[i]);
                         level_constraints[l].add_entry(
@@ -304,7 +304,7 @@ inline bool
 MGConstrainedDoFs::is_boundary_index(const unsigned int            level,
                                      const types::global_dof_index index) const
 {
-  if(boundary_indices.size() == 0)
+  if (boundary_indices.size() == 0)
     return false;
 
   AssertIndexRange(level, boundary_indices.size());

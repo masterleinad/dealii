@@ -47,8 +47,8 @@ public:
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         val += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return val;
   }
@@ -58,9 +58,9 @@ public:
   {
     VectorizedArray<double> res = make_vectorized_array(0.);
     Point<dim>              p;
-    for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+    for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
       {
-        for(unsigned int d = 0; d < dim; d++)
+        for (unsigned int d = 0; d < dim; d++)
           p[d] = p_vec[d][v];
         res[v] = value(p);
       }
@@ -84,28 +84,28 @@ test()
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
   cell                                                   = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->is_locally_owned())
-      if(cell->center().norm() < 0.2)
+  for (; cell != endc; ++cell)
+    if (cell->is_locally_owned())
+      if (cell->center().norm() < 0.2)
         cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  if(dim < 3 && fe_degree < 2)
+  if (dim < 3 && fe_degree < 2)
     tria.refine_global(2);
   else
     tria.refine_global(1);
-  if(tria.begin(tria.n_levels() - 1)->is_locally_owned())
+  if (tria.begin(tria.n_levels() - 1)->is_locally_owned())
     tria.begin(tria.n_levels() - 1)->set_refine_flag();
-  if(tria.last()->is_locally_owned())
+  if (tria.last()->is_locally_owned())
     tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       cell                 = tria.begin_active();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(cell->is_locally_owned())
-          if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (cell->is_locally_owned())
+          if (counter % (7 - i) == 0)
             cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -150,10 +150,10 @@ test()
     const unsigned int n_q_points = fe_eval.n_q_points;
 
     coefficient->reinit(n_cells, n_q_points);
-    for(unsigned int cell = 0; cell < n_cells; ++cell)
+    for (unsigned int cell = 0; cell < n_cells; ++cell)
       {
         fe_eval.reinit(cell);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           (*coefficient)(cell, q) = function.value(fe_eval.quadrature_point(q));
       }
   }
@@ -173,10 +173,10 @@ test()
   out.reinit(in);
   ref.reinit(in);
 
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for (unsigned int i = 0; i < in.local_size(); ++i)
     {
       const unsigned int glob_index = owned_set.nth_index_in_set(i);
-      if(constraints.is_constrained(glob_index))
+      if (constraints.is_constrained(glob_index))
         continue;
       in.local_element(i) = random_value<double>();
     }
@@ -213,16 +213,16 @@ test()
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   cell_matrix(i, j)
                     += (fe_values.shape_grad(i, q_point)
                         * fe_values.shape_grad(j, q_point))
@@ -253,7 +253,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

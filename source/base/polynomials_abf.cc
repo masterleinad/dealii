@@ -29,11 +29,11 @@ namespace
     std::vector<std::vector<Polynomials::Polynomial<double>>> pols(dim);
     pols[0] = Polynomials::LagrangeEquidistant::generate_complete_basis(k + 2);
 
-    if(k == 0)
-      for(unsigned int d = 1; d < dim; ++d)
+    if (k == 0)
+      for (unsigned int d = 1; d < dim; ++d)
         pols[d] = Polynomials::Legendre::generate_complete_basis(0);
     else
-      for(unsigned int d = 1; d < dim; ++d)
+      for (unsigned int d = 1; d < dim; ++d)
         pols[d] = Polynomials::LagrangeEquidistant::generate_complete_basis(k);
 
     return pols;
@@ -87,7 +87,7 @@ PolynomialsABF<dim>::compute(
   p_third_derivatives.resize((third_derivatives.size() == 0) ? 0 : n_sub);
   p_fourth_derivatives.resize((fourth_derivatives.size() == 0) ? 0 : n_sub);
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       // First we copy the point. The
       // polynomial space for
@@ -101,7 +101,7 @@ PolynomialsABF<dim>::compute(
       // coordinates through all
       // directions.
       Point<dim> p;
-      for(unsigned int c = 0; c < dim; ++c)
+      for (unsigned int c = 0; c < dim; ++c)
         p(c) = unit_point((c + d) % dim);
 
       polynomial_space.compute(p,
@@ -111,32 +111,32 @@ PolynomialsABF<dim>::compute(
                                p_third_derivatives,
                                p_fourth_derivatives);
 
-      for(unsigned int i = 0; i < p_values.size(); ++i)
+      for (unsigned int i = 0; i < p_values.size(); ++i)
         values[i + d * n_sub][d] = p_values[i];
 
-      for(unsigned int i = 0; i < p_grads.size(); ++i)
-        for(unsigned int d1 = 0; d1 < dim; ++d1)
+      for (unsigned int i = 0; i < p_grads.size(); ++i)
+        for (unsigned int d1 = 0; d1 < dim; ++d1)
           grads[i + d * n_sub][d][(d1 + d) % dim] = p_grads[i][d1];
 
-      for(unsigned int i = 0; i < p_grad_grads.size(); ++i)
-        for(unsigned int d1 = 0; d1 < dim; ++d1)
-          for(unsigned int d2 = 0; d2 < dim; ++d2)
+      for (unsigned int i = 0; i < p_grad_grads.size(); ++i)
+        for (unsigned int d1 = 0; d1 < dim; ++d1)
+          for (unsigned int d2 = 0; d2 < dim; ++d2)
             grad_grads[i + d * n_sub][d][(d1 + d) % dim][(d2 + d) % dim]
               = p_grad_grads[i][d1][d2];
 
-      for(unsigned int i = 0; i < p_third_derivatives.size(); ++i)
-        for(unsigned int d1 = 0; d1 < dim; ++d1)
-          for(unsigned int d2 = 0; d2 < dim; ++d2)
-            for(unsigned int d3 = 0; d3 < dim; ++d3)
+      for (unsigned int i = 0; i < p_third_derivatives.size(); ++i)
+        for (unsigned int d1 = 0; d1 < dim; ++d1)
+          for (unsigned int d2 = 0; d2 < dim; ++d2)
+            for (unsigned int d3 = 0; d3 < dim; ++d3)
               third_derivatives[i + d * n_sub][d][(d1 + d) % dim]
                                [(d2 + d) % dim][(d3 + d) % dim]
                 = p_third_derivatives[i][d1][d2][d3];
 
-      for(unsigned int i = 0; i < p_fourth_derivatives.size(); ++i)
-        for(unsigned int d1 = 0; d1 < dim; ++d1)
-          for(unsigned int d2 = 0; d2 < dim; ++d2)
-            for(unsigned int d3 = 0; d3 < dim; ++d3)
-              for(unsigned int d4 = 0; d4 < dim; ++d4)
+      for (unsigned int i = 0; i < p_fourth_derivatives.size(); ++i)
+        for (unsigned int d1 = 0; d1 < dim; ++d1)
+          for (unsigned int d2 = 0; d2 < dim; ++d2)
+            for (unsigned int d3 = 0; d3 < dim; ++d3)
+              for (unsigned int d4 = 0; d4 < dim; ++d4)
                 fourth_derivatives[i + d * n_sub][d][(d1 + d) % dim]
                                   [(d2 + d) % dim][(d3 + d) % dim]
                                   [(d4 + d) % dim]
@@ -148,7 +148,7 @@ template <int dim>
 unsigned int
 PolynomialsABF<dim>::compute_n_pols(const unsigned int k)
 {
-  switch(dim)
+  switch (dim)
     {
       case 1:
         // in 1d, we simply have Q_{k+2}, which has dimension k+3

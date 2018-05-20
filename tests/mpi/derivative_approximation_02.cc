@@ -82,7 +82,7 @@ test()
   // how many processors we use. So, the sum of absolute values must
   // be the same for any processor number
   const double sum = Utilities::MPI::sum(indicators.l1_norm(), MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     deallog << sum << std::endl;
 }
 

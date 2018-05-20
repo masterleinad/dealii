@@ -147,7 +147,7 @@ namespace pdd
     data_out.build_patches();
 
     // on processor 0 also output some data so we can compare
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       data_out.write_vtk(deallog.get_file_stream());
 
     // Then generate the output for the faces.
@@ -158,7 +158,7 @@ namespace pdd
     data_out_faces.build_patches(fe.degree);
 
     // on processor 0 also output some data so we can compare
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       data_out_faces.write_vtk(deallog.get_file_stream());
   }
   // @sect4{PDDProblem::run}
@@ -185,7 +185,7 @@ main(int argc, char* argv[])
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -198,7 +198,7 @@ main(int argc, char* argv[])
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

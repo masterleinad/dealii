@@ -70,7 +70,7 @@ LaplaceProblem<dim>::make_grid_and_dofs()
 {
   GridGenerator::hyper_cube(triangulation, 0, 1);
   triangulation.refine_global(1);
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       triangulation.begin_active()->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -95,7 +95,7 @@ LaplaceProblem<dim>::solve()
 {
   // dummy solve. just insert some
   // arbitrary values
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for (unsigned int i = 0; i < solution.size(); ++i)
     solution(i) = i;
 }
 
@@ -106,7 +106,7 @@ LaplaceProblem<2>::output_results() const
   const unsigned int dim = 2;
 
   // test regular output in 2d
-  if(true)
+  if (true)
     {
       DataOut<dim> data_out;
       data_out.attach_dof_handler(dof_handler);
@@ -133,7 +133,7 @@ LaplaceProblem<2>::output_results() const
     };
 
   // test DataOutRotation in 2d
-  if(true)
+  if (true)
     {
       DataOutRotation<dim> data_out;
       data_out.attach_dof_handler(dof_handler);
@@ -154,7 +154,7 @@ LaplaceProblem<3>::output_results() const
   const unsigned int dim = 3;
 
   // test regular output in 3d
-  if(true)
+  if (true)
     {
       DataOut<dim> data_out;
       data_out.attach_dof_handler(dof_handler);
@@ -170,7 +170,7 @@ LaplaceProblem<3>::output_results() const
   // test DataOutFaces in 3d. note:
   // not all output formats support
   // this
-  if(true)
+  if (true)
     {
       DataOutFaces<dim> data_out;
       data_out.attach_dof_handler(dof_handler);

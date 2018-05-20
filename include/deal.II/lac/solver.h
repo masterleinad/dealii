@@ -458,10 +458,10 @@ Solver<VectorType>::StateCombiner::
 operator()(const SolverControl::State state1,
            const SolverControl::State state2) const
 {
-  if((state1 == SolverControl::failure) || (state2 == SolverControl::failure))
+  if ((state1 == SolverControl::failure) || (state2 == SolverControl::failure))
     return SolverControl::failure;
-  else if((state1 == SolverControl::iterate)
-          || (state2 == SolverControl::iterate))
+  else if ((state1 == SolverControl::iterate)
+           || (state2 == SolverControl::iterate))
     return SolverControl::iterate;
   else
     return SolverControl::success;
@@ -480,7 +480,7 @@ Solver<VectorType>::StateCombiner::operator()(const Iterator begin,
   SolverControl::State state = *begin;
   Iterator             p     = begin;
   ++p;
-  for(; p != end; ++p)
+  for (; p != end; ++p)
     state = this->operator()(state, *p);
 
   return state;

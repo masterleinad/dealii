@@ -142,7 +142,7 @@ second_grid()
   //
   // In order to demonstrate how to write a loop over all cells, we will
   // refine the grid in five steps towards the inner circle of the domain:
-  for(unsigned int step = 0; step < 5; ++step)
+  for (unsigned int step = 0; step < 5; ++step)
     {
       // Next, we need to loop over the active cells of the triangulation. You
       // can think of a triangulation as a collection of cells. If it were an
@@ -194,7 +194,7 @@ second_grid()
       // <a href="http://en.cppreference.com/w/cpp/language/range-for">range-
       // based for loops</a>, which wrap up all of the syntax shown above into a
       // much shorter form:
-      for(auto cell : triangulation.active_cell_iterators())
+      for (auto cell : triangulation.active_cell_iterators())
         {
           // @note See @ref Iterators for more information about the iterator
           // classes used in deal.II, and @ref CPP11 for more information about
@@ -210,7 +210,7 @@ second_grid()
           // of <code>&lt;2&gt;</code> to <code>&lt;3&gt;</code>, and do not
           // have to audit our code for the hidden appearance of magic numbers
           // like a 4 that needs to be replaced by an 8:
-          for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
+          for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
             {
               // If this cell is at the inner boundary, then at least one of its
               // vertices must sit on the inner ring and therefore have a radial
@@ -222,7 +222,7 @@ second_grid()
               const double distance_from_center
                 = center.distance(cell->vertex(v));
 
-              if(std::fabs(distance_from_center - inner_radius) < 1e-10)
+              if (std::fabs(distance_from_center - inner_radius) < 1e-10)
                 {
                   cell->set_refine_flag();
                   break;

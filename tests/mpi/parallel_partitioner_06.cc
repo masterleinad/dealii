@@ -35,10 +35,10 @@ test()
   const unsigned int      local_size  = set - myid;
   types::global_dof_index global_size = 0;
   types::global_dof_index my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  for (unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
-      if(i < myid)
+      if (i < myid)
         my_start += set - i;
     }
 
@@ -60,17 +60,17 @@ test()
                                                2 * set + 1,
                                                2 * set + 3};
   local_relevant_1.add_indices(&ghost_indices[0], ghost_indices + 10);
-  if(myid > 0)
+  if (myid > 0)
     local_relevant_1.add_range(my_start - 10, my_start);
-  if(myid < numproc - 1)
+  if (myid < numproc - 1)
     local_relevant_1.add_range(my_start + local_size,
                                my_start + local_size + 10);
 
   local_relevant_2 = local_owned;
   local_relevant_2.add_indices(&ghost_indices[0], ghost_indices + 10);
-  if(myid > 0)
+  if (myid > 0)
     local_relevant_2.add_index(my_start - 10);
-  if(myid < numproc - 1)
+  if (myid < numproc - 1)
     local_relevant_2.add_index(my_start + local_size + 9);
 
   Utilities::MPI::Partitioner v(local_owned, local_relevant_1, MPI_COMM_WORLD);
@@ -79,14 +79,14 @@ test()
 
   IndexSet local_relevant_3(global_size);
   local_relevant_3.add_index(2);
-  if(myid > 0 < my_start)
+  if (myid > 0 < my_start)
     local_relevant_3.add_range(my_start - 10, my_start);
   Utilities::MPI::Partitioner x(local_owned, MPI_COMM_WORLD);
   x.set_ghost_indices(local_relevant_3, v.ghost_indices());
 
   // set up a locally owned array with some entries
   std::vector<unsigned int> locally_owned_data_field(local_size);
-  for(unsigned int i = 0; i < local_size; ++i)
+  for (unsigned int i = 0; i < local_size; ++i)
     locally_owned_data_field[i] = my_start + i;
   const std::vector<unsigned int>& locally_owned_data(locally_owned_data_field);
 
@@ -103,7 +103,7 @@ test()
                                   requests);
   v.export_to_ghosted_array_finish(make_array_view(ghosts), requests);
   deallog << "All ghosts: ";
-  for(unsigned int i = 0; i < ghosts.size(); ++i)
+  for (unsigned int i = 0; i < ghosts.size(); ++i)
     deallog << ghosts[i] << " ";
   deallog << std::endl;
 
@@ -131,7 +131,7 @@ test()
 
   w.export_to_ghosted_array_finish(make_array_view(ghosts), requests);
   deallog << "Ghosts on reduced 1: ";
-  for(unsigned int i = 0; i < ghosts.size(); ++i)
+  for (unsigned int i = 0; i < ghosts.size(); ++i)
     deallog << ghosts[i] << " ";
   deallog << std::endl;
 
@@ -145,13 +145,13 @@ test()
                                   requests);
   x.export_to_ghosted_array_finish(make_array_view(ghosts), requests);
   deallog << "Ghosts on reduced 2: ";
-  for(unsigned int i = 0; i < ghosts.size(); ++i)
+  for (unsigned int i = 0; i < ghosts.size(); ++i)
     deallog << ghosts[i] << " ";
   deallog << std::endl;
 
   x.export_to_ghosted_array_finish(make_array_view(ghosts2), requests2);
   deallog << "Ghosts on reduced 2 without excess entries: ";
-  for(unsigned int i = 0; i < ghosts2.size(); ++i)
+  for (unsigned int i = 0; i < ghosts2.size(); ++i)
     deallog << ghosts2[i] << " ";
   deallog << std::endl;
 
@@ -162,7 +162,7 @@ test()
                                   requests);
   x.export_to_ghosted_array_finish(make_array_view(ghosts), requests);
   deallog << "Ghosts on reduced 2: ";
-  for(unsigned int i = 0; i < ghosts.size(); ++i)
+  for (unsigned int i = 0; i < ghosts.size(); ++i)
     deallog << ghosts[i] << " ";
   deallog << std::endl;
 }

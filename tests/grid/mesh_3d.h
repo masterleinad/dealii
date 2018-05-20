@@ -33,18 +33,18 @@ void create_two_cubes(Triangulation<3>& coarse_grid)
                               Point<3>(2, 0, 0),
                               Point<3>(2, 1, 0)};
   std::vector<Point<3>> vertices;
-  for(unsigned int i = 0; i < 6; ++i)
+  for (unsigned int i = 0; i < 6; ++i)
     vertices.push_back(points[i]);
-  for(unsigned int i = 0; i < 6; ++i)
+  for (unsigned int i = 0; i < 6; ++i)
     vertices.push_back(points[i] + Point<3>(0, 0, -1));
 
   std::vector<CellData<3>> cells;
 
   const unsigned int connectivity[2][4] = {{0, 1, 2, 3}, {4, 5, 2, 1}};
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       CellData<3> cell;
-      for(unsigned int j = 0; j < 4; ++j)
+      for (unsigned int j = 0; j < 4; ++j)
         {
           cell.vertices[j]     = connectivity[i][j];
           cell.vertices[j + 4] = connectivity[i][j] + 6;
@@ -75,9 +75,9 @@ void create_two_cubes_rotation(Triangulation<3>&  coarse_grid,
                               Point<3>(2, 0, 0),
                               Point<3>(2, 1, 0)};
   std::vector<Point<3>> vertices;
-  for(unsigned int i = 0; i < 6; ++i)
+  for (unsigned int i = 0; i < 6; ++i)
     vertices.push_back(points[i]);
-  for(unsigned int i = 0; i < 6; ++i)
+  for (unsigned int i = 0; i < 6; ++i)
     vertices.push_back(points[i] + Point<3>(0, 0, -1));
 
   std::vector<CellData<3>> cells(2);
@@ -93,7 +93,7 @@ void create_two_cubes_rotation(Triangulation<3>&  coarse_grid,
        {2, 5, 11, 8, 1, 4, 10, 7},
        {8, 11, 10, 7, 2, 5, 4, 1},
        {7, 10, 4, 1, 8, 11, 5, 2}};
-  for(unsigned int j = 0; j < 8; ++j)
+  for (unsigned int j = 0; j < 8; ++j)
     {
       cells[0].vertices[j] = connectivity[0][j];
       cells[1].vertices[j] = connectivity[1 + n_rotations][j];
@@ -121,12 +121,12 @@ void create_L_shape(Triangulation<3>& coarse_grid)
   // and the rest of those on the
   // upper surface
   vertices.push_back(Point<3>(0, 0, 0));
-  for(unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i)
     vertices.push_back(outer_points[i]);
 
   // then points on lower surface
   vertices.push_back(Point<3>(0, 0, -1));
-  for(unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i)
     vertices.push_back(outer_points[i] + Point<3>(0, 0, -1));
 
   const unsigned int n_vertices_per_surface = 8;
@@ -134,10 +134,10 @@ void create_L_shape(Triangulation<3>& coarse_grid)
 
   const unsigned int connectivity[3][4]
     = {{1, 2, 3, 0}, {3, 4, 5, 0}, {0, 5, 6, 7}};
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     {
       CellData<3> cell;
-      for(unsigned int j = 0; j < 4; ++j)
+      for (unsigned int j = 0; j < 4; ++j)
         {
           cell.vertices[j]     = connectivity[i][j];
           cell.vertices[j + 4] = connectivity[i][j] + n_vertices_per_surface;
@@ -154,9 +154,9 @@ void create_L_shape(Triangulation<3>& coarse_grid)
 
 void coarsen_global(Triangulation<3>& grid)
 {
-  for(Triangulation<3>::active_cell_iterator c = grid.begin_active();
-      c != grid.end();
-      ++c)
+  for (Triangulation<3>::active_cell_iterator c = grid.begin_active();
+       c != grid.end();
+       ++c)
     c->set_coarsen_flag();
   grid.execute_coarsening_and_refinement();
 }

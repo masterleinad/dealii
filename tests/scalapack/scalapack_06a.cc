@@ -73,8 +73,8 @@ test(const unsigned int size,
   //Lapack as reference
   {
     std::vector<NumberType> lapack_A(size * size);
-    for(unsigned int i = 0; i < size; ++i)
-      for(unsigned int j = 0; j < size; ++j)
+    for (unsigned int i = 0; i < size; ++i)
+      for (unsigned int j = 0; j < size; ++j)
         lapack_A[i * size + j] = full_A(i, j);
 
     int
@@ -121,7 +121,7 @@ test(const unsigned int size,
   const std::vector<NumberType> eigenvalues_psyev
     = scalapack_syev.eigenpairs_symmetric_by_index(std::make_pair(0, size - 1),
                                                    false);
-  for(unsigned int i = 0; i < max_n_eigenvalues; ++i)
+  for (unsigned int i = 0; i < max_n_eigenvalues; ++i)
     AssertThrow(std::abs(eigenvalues_psyev[n_eigenvalues - i - 1]
                          - eigenvalues_Lapack[n_eigenvalues - i - 1])
                     / std::abs(eigenvalues_Lapack[n_eigenvalues - i - 1])
@@ -143,8 +143,8 @@ main(int argc, char** argv)
 
   const double tol = 1e-10;
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol);
 }

@@ -49,10 +49,10 @@ test()
 
   // refine all cells at the lower
   // boundary. we then have 600 cells
-  for(Triangulation<2>::cell_iterator cell = triangulation.begin();
-      cell != triangulation.end();
-      ++cell)
-    if(cell->center()[1] < 1)
+  for (Triangulation<2>::cell_iterator cell = triangulation.begin();
+       cell != triangulation.end();
+       ++cell)
+    if (cell->center()[1] < 1)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
   deallog << "n_active_cells = " << triangulation.n_active_cells() << std::endl;
@@ -78,11 +78,11 @@ test()
   // other things). after the changes
   // to tria.cc, we now need 2
   // iterations
-  for(Triangulation<2>::cell_iterator cell = triangulation.begin();
-      cell != triangulation.end();
-      ++cell)
-    if(cell->center()[1] > 2)
-      if(cell->center()[0] < 99)
+  for (Triangulation<2>::cell_iterator cell = triangulation.begin();
+       cell != triangulation.end();
+       ++cell)
+    if (cell->center()[1] > 2)
+      if (cell->center()[0] < 99)
         cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 
@@ -107,7 +107,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -121,7 +121,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

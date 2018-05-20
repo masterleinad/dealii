@@ -26,7 +26,7 @@ test(TrilinosWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
   TrilinosScalar sum = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     {
       v(i) = i;
       sum += i;
@@ -57,7 +57,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -71,7 +71,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

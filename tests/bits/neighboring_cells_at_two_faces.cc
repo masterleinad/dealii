@@ -68,7 +68,7 @@ void create_grid(Triangulation<2>& tria)
     {
       tria.create_triangulation_compatibility(vertices, cells, SubCellData());
     }
-  catch(Triangulation<2>::DistortedCellList& dcv)
+  catch (Triangulation<2>::DistortedCellList& dcv)
     {
       // ignore the exception
     }
@@ -78,8 +78,8 @@ void
 check_neighbors(const Triangulation<2>& tria)
 {
   Triangulation<2>::cell_iterator cell = tria.begin();
-  for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
-    if(cell->neighbor(f).state() == IteratorState::valid)
+  for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+    if (cell->neighbor(f).state() == IteratorState::valid)
       {
         const unsigned int neighbor_neighbor = cell->neighbor_of_neighbor(f);
         deallog << "At face " << f

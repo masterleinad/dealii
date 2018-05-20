@@ -53,9 +53,9 @@ test()
 
   Vector<double> in(dof.n_dofs()), out(dof.n_dofs());
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       in(i) = 1.;
     }

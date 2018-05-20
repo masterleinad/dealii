@@ -119,7 +119,7 @@ test6(const bool         do_href,
   }
   dof_handler.distribute_dofs(fe_collection);
 
-  if(do_href)
+  if (do_href)
     {
       triangulation.begin_active()->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -139,14 +139,14 @@ test6(const bool         do_href,
   // output to check if all is good:
   std::vector<Vector<double>> shape_functions;
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
+  for (unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;
       shape_function.reinit(dof_handler.n_dofs());
       shape_function[s] = 1.0;
 
       // if the dof is constrained, first output unconstrained vector
-      if(constraints.is_constrained(s))
+      if (constraints.is_constrained(s))
         {
           names.push_back(std::string("UN_")
                           + dealii::Utilities::int_to_string(s, 2));
@@ -169,13 +169,13 @@ test6(const bool         do_href,
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(unsigned int index = 0; cell != endc; ++cell, ++index)
+  for (unsigned int index = 0; cell != endc; ++cell, ++index)
     {
       fe_index[index] = cell->active_fe_index();
     }
   data_out.add_data_vector(fe_index, "fe_index");
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for (unsigned int i = 0; i < shape_functions.size(); i++)
     data_out.add_data_vector(shape_functions[i], names[i]);
 
   data_out.build_patches(patches);
@@ -204,7 +204,7 @@ main(int argc, char** argv)
     {
       test6<2>(false, 1, 2); // 1 vs 2+1
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -218,7 +218,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

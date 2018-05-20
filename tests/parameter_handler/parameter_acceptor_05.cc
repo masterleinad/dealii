@@ -71,6 +71,6 @@ main()
 
   std::string str;
   deallog << "reading " << output_name << std::endl;
-  while(std::getline(file, str))
+  while (std::getline(file, str))
     deallog << str << std::endl;
 }

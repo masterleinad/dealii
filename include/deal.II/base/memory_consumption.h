@@ -274,7 +274,7 @@ namespace MemoryConsumption
   inline std::size_t
   memory_consumption(const char* string)
   {
-    if(string == nullptr)
+    if (string == nullptr)
       {
         return 0;
       }
@@ -309,14 +309,14 @@ namespace MemoryConsumption
   memory_consumption(const std::vector<T>& v)
   {
     // shortcut for types that do not allocate memory themselves
-    if(std::is_fundamental<T>::value || std::is_pointer<T>::value)
+    if (std::is_fundamental<T>::value || std::is_pointer<T>::value)
       {
         return v.capacity() * sizeof(T) + sizeof(v);
       }
     else
       {
         std::size_t mem = sizeof(std::vector<T>);
-        for(unsigned int i = 0; i < v.size(); ++i)
+        for (unsigned int i = 0; i < v.size(); ++i)
           {
             mem += memory_consumption(v[i]);
           }
@@ -330,14 +330,14 @@ namespace MemoryConsumption
   memory_consumption(const std::array<T, N>& v)
   {
     // shortcut for types that do not allocate memory themselves
-    if(std::is_fundamental<T>::value || std::is_pointer<T>::value)
+    if (std::is_fundamental<T>::value || std::is_pointer<T>::value)
       {
         return sizeof(v);
       }
     else
       {
         std::size_t mem = 0;
-        for(std::size_t i = 0; i != N; ++i)
+        for (std::size_t i = 0; i != N; ++i)
           mem += memory_consumption(v[i]);
         return mem;
       }
@@ -348,7 +348,7 @@ namespace MemoryConsumption
   memory_consumption(const T (&v)[N])
   {
     std::size_t mem = 0;
-    for(unsigned int i = 0; i < N; ++i)
+    for (unsigned int i = 0; i < N; ++i)
       mem += memory_consumption(v[i]);
     return mem;
   }

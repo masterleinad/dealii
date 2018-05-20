@@ -40,7 +40,7 @@
 #  include <TopoDS_Shape.hxx>
 
 #  include <Standard_Version.hxx>
-#  if(OCC_VERSION_MAJOR < 7)
+#  if (OCC_VERSION_MAJOR < 7)
 #    include <Handle_Standard_Transient.hxx>
 #  else
 #    include <Standard_Transient.hxx>
@@ -88,13 +88,13 @@ namespace OpenCASCADE
   {
     TopExp_Explorer exp;
     unsigned int    n_faces = 0, n_edges = 0, n_vertices = 0;
-    for(exp.Init(shape, TopAbs_FACE); exp.More(); exp.Next(), ++n_faces)
+    for (exp.Init(shape, TopAbs_FACE); exp.More(); exp.Next(), ++n_faces)
       {
       }
-    for(exp.Init(shape, TopAbs_EDGE); exp.More(); exp.Next(), ++n_edges)
+    for (exp.Init(shape, TopAbs_EDGE); exp.More(); exp.Next(), ++n_edges)
       {
       }
-    for(exp.Init(shape, TopAbs_VERTEX); exp.More(); exp.Next(), ++n_vertices)
+    for (exp.Init(shape, TopAbs_VERTEX); exp.More(); exp.Next(), ++n_vertices)
       {
       }
     return std::tuple<unsigned int, unsigned int, unsigned int>(
@@ -112,15 +112,15 @@ namespace OpenCASCADE
     vertices.resize(0);
 
     TopExp_Explorer exp;
-    for(exp.Init(shape, TopAbs_FACE); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_FACE); exp.More(); exp.Next())
       {
         faces.push_back(TopoDS::Face(exp.Current()));
       }
-    for(exp.Init(shape, TopAbs_EDGE); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_EDGE); exp.More(); exp.Next())
       {
         edges.push_back(TopoDS::Edge(exp.Current()));
       }
-    for(exp.Init(shape, TopAbs_VERTEX); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_VERTEX); exp.More(); exp.Next())
       {
         vertices.push_back(TopoDS::Vertex(exp.Current()));
       }
@@ -141,23 +141,23 @@ namespace OpenCASCADE
     wires.resize(0);
 
     TopExp_Explorer exp;
-    for(exp.Init(shape, TopAbs_COMPOUND); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_COMPOUND); exp.More(); exp.Next())
       {
         compounds.push_back(TopoDS::Compound(exp.Current()));
       }
-    for(exp.Init(shape, TopAbs_COMPSOLID); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_COMPSOLID); exp.More(); exp.Next())
       {
         compsolids.push_back(TopoDS::CompSolid(exp.Current()));
       }
-    for(exp.Init(shape, TopAbs_SOLID); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_SOLID); exp.More(); exp.Next())
       {
         solids.push_back(TopoDS::Solid(exp.Current()));
       }
-    for(exp.Init(shape, TopAbs_SHELL); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_SHELL); exp.More(); exp.Next())
       {
         shells.push_back(TopoDS::Shell(exp.Current()));
       }
-    for(exp.Init(shape, TopAbs_WIRE); exp.More(); exp.Next())
+    for (exp.Init(shape, TopAbs_WIRE); exp.More(); exp.Next())
       {
         wires.push_back(TopoDS::Wire(exp.Current()));
       }
@@ -167,7 +167,7 @@ namespace OpenCASCADE
   gp_Pnt
   point(const Point<spacedim>& p)
   {
-    switch(spacedim)
+    switch (spacedim)
       {
         case 1:
           return gp_Pnt(p[0], 0, 0);
@@ -185,7 +185,7 @@ namespace OpenCASCADE
   point(const gp_Pnt& p, const double& tolerance)
   {
     (void) tolerance;
-    switch(spacedim)
+    switch (spacedim)
       {
         case 1:
           Assert(std::abs(p.Y()) <= tolerance,
@@ -216,13 +216,13 @@ namespace OpenCASCADE
   {
     const double rel_tol
       = std::max(tolerance, std::max(p1.norm(), p2.norm()) * tolerance);
-    if(direction.norm() > 0.0)
+    if (direction.norm() > 0.0)
       return (p1 * direction < p2 * direction - rel_tol);
     else
-      for(int d = dim; d >= 0; --d)
-        if(p1[d] < p2[d] - rel_tol)
+      for (int d = dim; d >= 0; --d)
+        if (p1[d] < p2[d] - rel_tol)
           return true;
-        else if(p2[d] < p1[d] - rel_tol)
+        else if (p2[d] < p1[d] - rel_tol)
           return false;
 
     // If we got here, for all d, none of the conditions above was
@@ -327,13 +327,13 @@ namespace OpenCASCADE
 
     extract_geometrical_shapes(shape, faces, edges, vertices);
 
-    for(unsigned int i = 0; i < vertices.size(); ++i)
+    for (unsigned int i = 0; i < vertices.size(); ++i)
       tolerance = fmax(tolerance, BRep_Tool::Tolerance(vertices[i]));
 
-    for(unsigned int i = 0; i < edges.size(); ++i)
+    for (unsigned int i = 0; i < edges.size(); ++i)
       tolerance = fmax(tolerance, BRep_Tool::Tolerance(edges[i]));
 
-    for(unsigned int i = 0; i < faces.size(); ++i)
+    for (unsigned int i = 0; i < faces.size(); ++i)
       tolerance = fmax(tolerance, BRep_Tool::Tolerance(faces[i]));
 
     return tolerance;
@@ -367,7 +367,7 @@ namespace OpenCASCADE
     gp_Pnt                                PMid(0.0, 0.0, 0.0);
     TopExp_Explorer                       edgeExplorer(edges, TopAbs_EDGE);
     TopoDS_Edge                           edge;
-    while(edgeExplorer.More())
+    while (edgeExplorer.More())
       {
         edge                     = TopoDS::Edge(edgeExplorer.Current());
         Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, L, First, Last);
@@ -385,19 +385,19 @@ namespace OpenCASCADE
     bool              check = false, one_added = true, one_failed = true;
     std::vector<bool> added(numIntersEdges, false);
     added[0] = true;
-    while(one_added == true)
+    while (one_added == true)
       {
         one_added  = false;
         one_failed = false;
-        for(unsigned int i = 1; i < numIntersEdges; ++i)
-          if(added[i] == false)
+        for (unsigned int i = 1; i < numIntersEdges; ++i)
+          if (added[i] == false)
             {
               Handle(Geom_Curve) curve = intersections[i];
               Handle(Geom_BoundedCurve) bcurve
                 = Handle(Geom_BoundedCurve)::DownCast(curve);
               check = convert_bspline.Add(bcurve, tolerance, false, true, 0);
-              if(check
-                 == false) // If we failed, try again with the reversed curve
+              if (check
+                  == false) // If we failed, try again with the reversed curve
                 {
                   curve->Reverse();
                   Handle(Geom_BoundedCurve) bcurve
@@ -451,11 +451,11 @@ namespace OpenCASCADE
 
     double     minDistance = 1e7;
     Point<dim> result;
-    for(int i = 0; i < Inters.NbPnt(); ++i)
+    for (int i = 0; i < Inters.NbPnt(); ++i)
       {
         const double distance = point(origin).Distance(Inters.Pnt(i + 1));
         //cout<<"Point "<<i<<": "<<point(Inters.Pnt(i+1))<<"  distance: "<<distance<<endl;
-        if(distance < minDistance)
+        if (distance < minDistance)
           {
             minDistance = distance;
             result      = point<dim>(Inters.Pnt(i + 1));
@@ -474,7 +474,7 @@ namespace OpenCASCADE
   {
     unsigned int n_vertices = curve_points.size();
 
-    if(direction * direction > 0)
+    if (direction * direction > 0)
       {
         std::sort(curve_points.begin(),
                   curve_points.end(),
@@ -487,7 +487,7 @@ namespace OpenCASCADE
     // set up array of vertices
     Handle(TColgp_HArray1OfPnt) vertices
       = new TColgp_HArray1OfPnt(1, n_vertices);
-    for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
+    for (unsigned int vertex = 0; vertex < n_vertices; ++vertex)
       {
         vertices->SetValue(vertex + 1, point(curve_points[vertex]));
       }
@@ -518,9 +518,9 @@ namespace OpenCASCADE
 
     unsigned int face_index;
 
-    for(auto cell : triangulation.active_cell_iterators())
-      for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
-        if(cell->face(f)->at_boundary())
+    for (auto cell : triangulation.active_cell_iterators())
+      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+        if (cell->face(f)->at_boundary())
           {
             // get global face and vertex indices
             face_index                       = cell->face(f)->index();
@@ -539,7 +539,7 @@ namespace OpenCASCADE
               f, 1, true, false, false)];
 
             // distribute indices into maps
-            if(vert_to_faces.find(v0) == vert_to_faces.end())
+            if (vert_to_faces.find(v0) == vert_to_faces.end())
               {
                 vert_to_faces[v0].first = face_index;
               }
@@ -547,7 +547,7 @@ namespace OpenCASCADE
               {
                 vert_to_faces[v0].second = face_index;
               }
-            if(vert_to_faces.find(v1) == vert_to_faces.end())
+            if (vert_to_faces.find(v1) == vert_to_faces.end())
               {
                 vert_to_faces[v1].first = face_index;
               }
@@ -563,7 +563,7 @@ namespace OpenCASCADE
     bool                     finished = (face_to_verts.size() == 0);
     face_index = finished ? 0 : face_to_verts.begin()->first;
 
-    while(finished == false)
+    while (finished == false)
       {
         const unsigned int start_point_index = face_to_verts[face_index].first;
         unsigned int       point_index       = start_point_index;
@@ -577,25 +577,25 @@ namespace OpenCASCADE
             pointlist.push_back(current_point);
 
             // Get next point
-            if(face_to_verts[face_index].first != point_index)
+            if (face_to_verts[face_index].first != point_index)
               point_index = face_to_verts[face_index].first;
             else
               point_index = face_to_verts[face_index].second;
 
             // Get next face
-            if(vert_to_faces[point_index].first != face_index)
+            if (vert_to_faces[point_index].first != face_index)
               face_index = vert_to_faces[point_index].first;
             else
               face_index = vert_to_faces[point_index].second;
           }
-        while(point_index != start_point_index);
+        while (point_index != start_point_index);
 
         interpolation_curves.push_back(
           interpolation_curve(pointlist, Tensor<1, spacedim>(), true));
 
         finished = true;
-        for(const auto& f : visited_faces)
-          if(f.second == false)
+        for (const auto& f : visited_faces)
+          if (f.second == false)
             {
               face_index = f.first;
               finished   = false;
@@ -624,7 +624,7 @@ namespace OpenCASCADE
     double       u = 0;
     double       v = 0;
 
-    for(exp.Init(in_shape, TopAbs_FACE); exp.More(); exp.Next())
+    for (exp.Init(in_shape, TopAbs_FACE); exp.More(); exp.Next())
       {
         TopoDS_Face face = TopoDS::Face(exp.Current());
 
@@ -638,7 +638,7 @@ namespace OpenCASCADE
         SurfToProj->D0(proj_params.X(), proj_params.Y(), tmp_proj);
 
         double distance = point<dim>(tmp_proj).distance(origin);
-        if(distance < minDistance)
+        if (distance < minDistance)
           {
             minDistance = distance;
             Pproj       = tmp_proj;
@@ -654,11 +654,11 @@ namespace OpenCASCADE
     // to loop on edges. Even if the closest point lies on the boundary of a parametric surface,
     // we need in fact to retain the face and both u and v, if we want to use this method to
     // retrieve the surface normal
-    if(face_counter == 0)
-      for(exp.Init(in_shape, TopAbs_EDGE); exp.More(); exp.Next())
+    if (face_counter == 0)
+      for (exp.Init(in_shape, TopAbs_EDGE); exp.More(); exp.Next())
         {
           TopoDS_Edge edge = TopoDS::Edge(exp.Current());
-          if(!BRep_Tool::Degenerated(edge))
+          if (!BRep_Tool::Degenerated(edge))
             {
               TopLoc_Location L;
               Standard_Real   First;
@@ -671,7 +671,7 @@ namespace OpenCASCADE
 
               GeomAPI_ProjectPointOnCurve Proj(point(origin), CurveToProj);
               unsigned int                num_proj_points = Proj.NbPoints();
-              if((num_proj_points > 0) && (Proj.LowerDistance() < minDistance))
+              if ((num_proj_points > 0) && (Proj.LowerDistance() < minDistance))
                 {
                   minDistance = Proj.LowerDistance();
                   Pproj       = Proj.NearestPoint();
@@ -736,7 +736,7 @@ namespace OpenCASCADE
   Point<dim>
   push_forward(const TopoDS_Shape& in_shape, const double u, const double v)
   {
-    switch(in_shape.ShapeType())
+    switch (in_shape.ShapeType())
       {
         case TopAbs_FACE:
           {
@@ -775,7 +775,7 @@ namespace OpenCASCADE
     // the normal could jump from "inner" to "outer" normal.
     // However, you should be able to change the normal sense preserving
     // the manifold orientation:
-    if(face.Orientation() == TopAbs_REVERSED)
+    if (face.Orientation() == TopAbs_REVERSED)
       {
         normal *= -1;
         Min_Curvature *= -1;
@@ -807,7 +807,7 @@ namespace OpenCASCADE
     vertices.push_back(point<spacedim>(surf.Value(u1, v1)));
 
     CellData<2> cell;
-    for(unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < 4; ++i)
       cell.vertices[i] = i;
 
     cells.push_back(cell);

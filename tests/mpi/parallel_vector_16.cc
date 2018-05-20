@@ -31,7 +31,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   types::global_dof_index min_index  = 0xffffffffU - 39;
@@ -54,9 +54,9 @@ test()
           << v.local_range().second << std::endl;
 
   // set local values
-  for(types::global_dof_index i = min_index + myid * local_size;
-      i < min_index + (myid + 1) * local_size;
-      ++i)
+  for (types::global_dof_index i = min_index + myid * local_size;
+       i < min_index + (myid + 1) * local_size;
+       ++i)
     v(i) = (double) i;
 
   deallog << "vector norm: " << v.l2_norm() << std::endl;
@@ -93,7 +93,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(12);

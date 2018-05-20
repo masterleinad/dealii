@@ -48,8 +48,8 @@ main(int argc, char** argv)
   std::iota(gdi.begin(), gdi.end(), 0);
   std::iota(cell_rhs.begin(), cell_rhs.end(), 0);
 
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < n; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       cell_matrix(i, j) = i * n + j;
 
   constraints.distribute_local_to_global(

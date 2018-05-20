@@ -34,7 +34,7 @@ test()
   float_sum  = Utilities::MPI::sum<float>(myid + 1, MPI_COMM_WORLD);
   double_sum = Utilities::MPI::sum<double>(myid + 1, MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << int_sum << ' ' << uint_sum << ' ' << double_sum << ' '
             << float_sum << std::endl;
 }
@@ -52,7 +52,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

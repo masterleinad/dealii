@@ -107,7 +107,7 @@ main(int argc, char** argv)
       y.reinit(complete_index_set(rc));
       VectorType g;
       g.reinit(complete_index_set(rc));
-      for(unsigned int i = 0; i < rc; ++i)
+      for (unsigned int i = 0; i < rc; ++i)
         {
           A.set(i, i, 1.0 * (i + 1));
           B.set(i, i, 2.0 * (i + 1));

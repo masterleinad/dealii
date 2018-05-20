@@ -28,9 +28,9 @@ main()
 
   deallog << "Sizes: " << t.size(0) << ", " << t.size(1) << std::endl;
   deallog << "Contents:" << std::endl;
-  for(unsigned int i = 0; i < t.size(0); ++i)
+  for (unsigned int i = 0; i < t.size(0); ++i)
     {
-      for(unsigned int j = 0; j < t.size(1); ++j)
+      for (unsigned int j = 0; j < t.size(1); ++j)
         deallog << t[i][j] << ' ';
       deallog << std::endl;
     }
@@ -43,9 +43,9 @@ main()
           << std::endl;
 
   deallog << "Contents of moved-to table:" << std::endl;
-  for(unsigned int i = 0; i < s.size(0); ++i)
+  for (unsigned int i = 0; i < s.size(0); ++i)
     {
-      for(unsigned int j = 0; j < s.size(1); ++j)
+      for (unsigned int j = 0; j < s.size(1); ++j)
         deallog << s[i][j] << ' ';
       deallog << std::endl;
     }
@@ -58,9 +58,9 @@ main()
   deallog << "Sizes of new table: " << s.size(0) << ", " << s.size(1)
           << std::endl;
   deallog << "Contents of new table:" << std::endl;
-  for(unsigned int i = 0; i < s.size(0); ++i)
+  for (unsigned int i = 0; i < s.size(0); ++i)
     {
-      for(unsigned int j = 0; j < s.size(1); ++j)
+      for (unsigned int j = 0; j < s.size(1); ++j)
         deallog << s[i][j] << ' ';
       deallog << std::endl;
     }
@@ -73,9 +73,9 @@ main()
           << std::endl;
 
   deallog << "Contents of moved-to table:" << std::endl;
-  for(unsigned int i = 0; i < t.size(0); ++i)
+  for (unsigned int i = 0; i < t.size(0); ++i)
     {
-      for(unsigned int j = 0; j < t.size(1); ++j)
+      for (unsigned int j = 0; j < t.size(1); ++j)
         deallog << t[i][j] << ' ';
       deallog << std::endl;
     }

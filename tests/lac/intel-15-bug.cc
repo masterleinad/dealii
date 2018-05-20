@@ -33,15 +33,15 @@ struct Vectorization_add_v
   void
   operator()(const tbb::blocked_range<size_type>& range) const
   {
-    if(dealii::parallel::internal::EnableOpenMPSimdFor<Number>::value)
+    if (dealii::parallel::internal::EnableOpenMPSimdFor<Number>::value)
       {
         DEAL_II_OPENMP_SIMD_PRAGMA
-        for(size_type i = range.begin(); i < range.end(); ++i)
+        for (size_type i = range.begin(); i < range.end(); ++i)
           val[i] += v_val[i];
       }
     else
       {
-        for(size_type i = range.begin(); i < range.end(); ++i)
+        for (size_type i = range.begin(); i < range.end(); ++i)
           val[i] += v_val[i];
       }
   }
@@ -53,7 +53,7 @@ void
 check()
 {
   std::vector<long double> d1(N), d2(N);
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       d1[i] = 1.0;
       d2[i] = i;
@@ -63,7 +63,7 @@ check()
   vector_add.val   = &d1[0];
   vector_add.v_val = &d2[0];
 
-  if(1)
+  if (1)
     {
       //fails:
       tbb::parallel_for(tbb::blocked_range<size_type>(0, N, 2),

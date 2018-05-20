@@ -50,18 +50,18 @@ void
 check(const T& object)
 {
   const std::vector<char> buffer = Utilities::pack(object);
-  if(buffer.size() != sizeof(object))
+  if (buffer.size() != sizeof(object))
     deallog << buffer.size() << " should be " << sizeof(object) << "!"
             << std::endl;
   else
     deallog << "same size!" << std::endl;
 
-  if(std::memcmp(buffer.data(), &object, buffer.size()) != 0)
+  if (std::memcmp(buffer.data(), &object, buffer.size()) != 0)
     deallog << "std::memcmp failed!" << std::endl;
   else
     deallog << "std::memcmp passed!" << std::endl;
 
-  if(Utilities::unpack<T>(buffer) != object)
+  if (Utilities::unpack<T>(buffer) != object)
     deallog << "Comparing the objects failed!" << std::endl;
   else
     deallog << "Comparing the objects passed!" << std::endl;

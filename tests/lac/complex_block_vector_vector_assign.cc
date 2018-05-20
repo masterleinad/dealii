@@ -26,10 +26,10 @@ template <typename Vector1, typename Vector2>
 bool
 operator==(const Vector1& v1, const Vector2& v2)
 {
-  if(v1.size() != v2.size())
+  if (v1.size() != v2.size())
     return false;
-  for(unsigned int i = 0; i < v1.size(); ++i)
-    if(v1(i) != v2(i))
+  for (unsigned int i = 0; i < v1.size(); ++i)
+    if (v1(i) != v2(i))
       return false;
   return true;
 }
@@ -46,7 +46,7 @@ test()
   BlockVector<std::complex<double>> v1(ivector);
   Vector<std::complex<double>>      v2(v1.size());
 
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = 1 + i * i;
 
   v2 = v1;
@@ -72,7 +72,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       deallog << std::endl
               << std::endl
@@ -85,7 +85,7 @@ main()
       // abort
       return 2;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

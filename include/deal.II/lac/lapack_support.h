@@ -78,7 +78,7 @@ namespace LAPACKSupport
   inline const char*
   state_name(State s)
   {
-    switch(s)
+    switch (s)
       {
         case matrix:
           return "matrix";
@@ -127,7 +127,7 @@ namespace LAPACKSupport
   inline const char*
   property_name(const Property s)
   {
-    switch(s)
+    switch (s)
       {
         case general:
           return "general";

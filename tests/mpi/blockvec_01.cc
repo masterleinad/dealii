@@ -29,7 +29,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   std::vector<IndexSet> local_active(2);
@@ -66,11 +66,11 @@ test()
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int i = 0;
-          i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-          ++i)
+      for (unsigned int i = 0;
+           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+           ++i)
         {
           cat_file((std::string("dat.") + Utilities::int_to_string(i)).c_str());
         }
@@ -79,7 +79,7 @@ test()
   // now test the constructor
 
   IndexSet id(7);
-  if(myid == 0)
+  if (myid == 0)
     id.add_range(0, 7);
   local_active.push_back(id);
 
@@ -91,7 +91,7 @@ test()
   deallog << "size[2]: " << xy.block(2).size() << std::endl;
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -103,7 +103,7 @@ main(int argc, char** argv)
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

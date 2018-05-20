@@ -147,7 +147,7 @@ main(int argc, char* argv[])
 
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
           std::ofstream logfile("output");
           deallog.attach(logfile, false);
@@ -162,7 +162,7 @@ main(int argc, char* argv[])
           flow_problem.run();
         }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -176,7 +176,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -56,7 +56,7 @@ namespace PETScWrappers
 
     // first create a solver object if this
     // is necessary
-    if(solver_data.get() == nullptr)
+    if (solver_data.get() == nullptr)
       {
         solver_data = std_cxx14::make_unique<SolverData>();
 
@@ -126,7 +126,7 @@ namespace PETScWrappers
 
     // in case of failure: throw
     // exception
-    if(solver_control.last_check() != SolverControl::success)
+    if (solver_control.last_check() != SolverControl::success)
       AssertThrow(false,
                   SolverControl::NoConvergence(solver_control.last_step(),
                                                solver_control.last_value()));
@@ -164,7 +164,7 @@ namespace PETScWrappers
     const SolverControl::State state
       = solver_control.check(iteration, residual_norm);
 
-    switch(state)
+    switch (state)
       {
         case ::dealii::SolverControl::iterate:
           *reason = KSP_CONVERGED_ITERATING;
@@ -175,7 +175,7 @@ namespace PETScWrappers
           break;
 
         case ::dealii::SolverControl::failure:
-          if(solver_control.last_step() > solver_control.max_steps())
+          if (solver_control.last_step() > solver_control.max_steps())
             *reason = KSP_DIVERGED_ITS;
           else
             *reason = KSP_DIVERGED_DTOL;
@@ -388,7 +388,7 @@ namespace PETScWrappers
 
     // Set preconditioning side to
     // right
-    if(additional_data.right_preconditioning)
+    if (additional_data.right_preconditioning)
       {
         ierr = KSPSetPCSide(ksp, PC_RIGHT);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -631,7 +631,7 @@ namespace PETScWrappers
     /**
      * creating a solver object if this is necessary
      */
-    if(solver_data == nullptr)
+    if (solver_data == nullptr)
       {
         solver_data = std_cxx14::make_unique<SolverDataMUMPS>();
 
@@ -669,7 +669,7 @@ namespace PETScWrappers
          * build PETSc PC for particular PCLU or PCCHOLESKY preconditioner
          * depending on whether the symmetric mode has been set
          */
-        if(symmetric_mode)
+        if (symmetric_mode)
           ierr = PCSetType(solver_data->pc, PCCHOLESKY);
         else
           ierr = PCSetType(solver_data->pc, PCLU);
@@ -744,7 +744,7 @@ namespace PETScWrappers
     /**
     * in case of failure throw exception
     */
-    if(solver_control.last_check() != SolverControl::success)
+    if (solver_control.last_check() != SolverControl::success)
       {
         AssertThrow(false,
                     SolverControl::NoConvergence(solver_control.last_step(),
@@ -791,7 +791,7 @@ namespace PETScWrappers
     const SolverControl::State state
       = solver_control.check(iteration, residual_norm);
 
-    switch(state)
+    switch (state)
       {
         case ::dealii::SolverControl::iterate:
           *reason = KSP_CONVERGED_ITERATING;
@@ -802,7 +802,7 @@ namespace PETScWrappers
           break;
 
         case ::dealii::SolverControl::failure:
-          if(solver_control.last_step() > solver_control.max_steps())
+          if (solver_control.last_step() > solver_control.max_steps())
             *reason = KSP_DIVERGED_ITS;
           else
             *reason = KSP_DIVERGED_DTOL;

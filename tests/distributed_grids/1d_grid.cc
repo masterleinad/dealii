@@ -29,7 +29,7 @@ main(int argc, char* argv[])
     {
       parallel::distributed::Triangulation<1> tr(MPI_COMM_WORLD);
     }
-  catch(const std::exception& exc)
+  catch (const std::exception& exc)
     {
       deallog << "This test has to throw an exception" << std::endl;
     }

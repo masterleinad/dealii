@@ -594,7 +594,7 @@ namespace internal
       // in order to make
       // sure we get all
       // bits
-      if(sizeof(material_id) > sizeof(boundary_id))
+      if (sizeof(material_id) > sizeof(boundary_id))
         ar& material_id;
       else
         ar& boundary_id;
@@ -677,7 +677,7 @@ namespace internal
     TriaObjects<G>::clear_user_data()
     {
       user_data_type = data_unknown;
-      for(unsigned int i = 0; i < user_data.size(); ++i)
+      for (unsigned int i = 0; i < user_data.size(); ++i)
         user_data[i].p = nullptr;
     }
 
@@ -766,19 +766,19 @@ namespace internal
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 
       int pos = next_free_single, last = used.size() - 1;
-      if(!reverse_order_next_free_single)
+      if (!reverse_order_next_free_single)
         {
           // first sweep forward, only use really single slots, do not use
           // pair slots
-          for(; pos < last; ++pos)
-            if(!used[pos])
-              if(used[++pos])
+          for (; pos < last; ++pos)
+            if (!used[pos])
+              if (used[++pos])
                 {
                   // this was a single slot
                   pos -= 1;
                   break;
                 }
-          if(pos >= last)
+          if (pos >= last)
             {
               reverse_order_next_free_single = true;
               next_free_single               = used.size() - 1;
@@ -788,14 +788,14 @@ namespace internal
             next_free_single = pos + 1;
         }
 
-      if(reverse_order_next_free_single)
+      if (reverse_order_next_free_single)
         {
           // second sweep, use all slots, even
           // in pairs
-          for(; pos >= 0; --pos)
-            if(!used[pos])
+          for (; pos >= 0; --pos)
+            if (!used[pos])
               break;
-          if(pos > 0)
+          if (pos > 0)
             next_free_single = pos - 1;
           else
             // no valid single object anymore
@@ -816,15 +816,15 @@ namespace internal
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 
       int pos = next_free_pair, last = used.size() - 1;
-      for(; pos < last; ++pos)
-        if(!used[pos])
-          if(!used[++pos])
+      for (; pos < last; ++pos)
+        if (!used[pos])
+          if (!used[++pos])
             {
               // this was a pair slot
               pos -= 1;
               break;
             }
-      if(pos >= last)
+      if (pos >= last)
         // no free slot
         return dealii::TriaRawIterator<
           dealii::TriaAccessor<G::dimension, dim, spacedim>>(&tria, -1, -1);

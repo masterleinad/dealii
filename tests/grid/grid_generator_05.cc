@@ -28,25 +28,25 @@ test(std::ostream& out)
 {
   Point<dim> p1;
   p1[0] = 2.;
-  if(dim > 1)
+  if (dim > 1)
     p1[1] = -1.;
-  if(dim > 2)
+  if (dim > 2)
     p1[2] = 0.;
   Point<dim> p2;
   p2[0] = 3.;
-  if(dim > 1)
+  if (dim > 1)
     p2[1] = 2.;
-  if(dim > 2)
+  if (dim > 2)
     p2[2] = 4.;
   Point<dim> p3;
   p3[0] = 2.;
-  if(dim > 1)
+  if (dim > 1)
     p3[1] = 1.;
-  if(dim > 2)
+  if (dim > 2)
     p3[2] = 4.;
 
   // loop without rotation
-  if(true)
+  if (true)
     {
       deallog << "moebius, no rotation" << std::endl;
       Triangulation<dim> tr;
@@ -57,7 +57,7 @@ test(std::ostream& out)
     }
 
   // loop with quarter rotation (1 * pi/2)
-  if(true)
+  if (true)
     {
       deallog << "---------------------------" << std::endl
               << "moebius, quarter rotation (1* Pi/2)" << std::endl;
@@ -69,7 +69,7 @@ test(std::ostream& out)
     }
 
   // loop with half rotation (2 * pi/2)
-  if(true)
+  if (true)
     {
       deallog << "---------------------------" << std::endl
               << "moebius, half rotation (2* Pi/2)" << std::endl;
@@ -81,7 +81,7 @@ test(std::ostream& out)
     }
 
   // loop with three quarter rotation (3 * pi/2)
-  if(true)
+  if (true)
     {
       deallog << "---------------------------" << std::endl
               << "moebius, three quarter rotation (3* Pi/2)" << std::endl;
@@ -93,7 +93,7 @@ test(std::ostream& out)
     }
 
   // loop with full rotation (1 * pi/2)
-  if(true)
+  if (true)
     {
       deallog << "---------------------------" << std::endl
               << "moebius, full rotation (2* Pi)" << std::endl;

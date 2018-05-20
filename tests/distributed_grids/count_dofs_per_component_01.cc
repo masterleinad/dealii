@@ -55,10 +55,10 @@ test()
     ExcInternalError());
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "Total number of dofs: " << dof_handler.n_dofs() << std::endl;
-      for(unsigned int i = 0; i < dofs_per_component.size(); ++i)
+      for (unsigned int i = 0; i < dofs_per_component.size(); ++i)
         deallog << "Block " << i << " has " << dofs_per_component[i]
                 << " global dofs" << std::endl;
     }
@@ -70,7 +70,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

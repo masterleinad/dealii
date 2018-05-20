@@ -40,7 +40,7 @@ do_test(MPI_Comm communicator)
 
   VectorType v1;
   v1.reinit(dof.locally_owned_dofs(), communicator);
-  if(dof.locally_owned_dofs().n_elements() > 0)
+  if (dof.locally_owned_dofs().n_elements() > 0)
     v1.local_element(0) = 1;
 
   GrowingVectorMemory<VectorType>            memory;

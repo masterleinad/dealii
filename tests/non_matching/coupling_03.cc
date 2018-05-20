@@ -113,7 +113,7 @@ test()
   // matrix couples only the first component of the immersed space, with the
   // last component of the embedding space.
   Vector<double> real_ones(dh.n_dofs());
-  for(unsigned int i = 0; i < dh.n_dofs() / (spacedim + 1); ++i)
+  for (unsigned int i = 0; i < dh.n_dofs() / (spacedim + 1); ++i)
     real_ones((spacedim + 1) * i) = 1.0;
 
   ones -= real_ones;

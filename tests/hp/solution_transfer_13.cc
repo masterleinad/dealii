@@ -88,7 +88,7 @@ main()
   Vector<double> FE_Type(triangulation.n_active_cells());
   unsigned int   cnt_cells(0);
   cell = dof_handler.begin_active(), endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int fe_index = cell->active_fe_index();
       FE_Type[cnt_cells]    = fe_index;
@@ -135,7 +135,7 @@ main()
   FE_Type.reinit(triangulation.n_active_cells());
   cnt_cells = 0;
   cell = dof_handler.begin_active(), endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int fe_index = cell->active_fe_index();
       FE_Type[cnt_cells]    = fe_index;
@@ -165,8 +165,8 @@ main()
    */
 
   endc = dof_handler.end();
-  for(cell = dof_handler.begin_active(); cell != endc; cell++)
-    if(cell->level() > 1)
+  for (cell = dof_handler.begin_active(); cell != endc; cell++)
+    if (cell->level() > 1)
       cell->set_coarsen_flag();
 
   triangulation.prepare_coarsening_and_refinement();
@@ -186,7 +186,7 @@ main()
   FE_Type.reinit(triangulation.n_active_cells());
   cnt_cells = 0;
   cell = dof_handler.begin_active(), endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int fe_index = cell->active_fe_index();
       FE_Type[cnt_cells]    = fe_index;

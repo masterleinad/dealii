@@ -39,7 +39,7 @@ write_mesh(const parallel::shared::Triangulation<dim, spacedim>& tria,
   DataOut<dim> data_out;
   data_out.attach_triangulation(tria);
   Vector<float> subdomain(tria.n_active_cells());
-  for(unsigned int i = 0; i < subdomain.size(); ++i)
+  for (unsigned int i = 0; i < subdomain.size(); ++i)
     subdomain(i) = tria.locally_owned_subdomain();
   data_out.add_data_vector(subdomain, "subdomain");
 

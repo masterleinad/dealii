@@ -37,15 +37,15 @@ test()
   Table<5, int> t3(index1, index2, index3, index4, index5);
 
   unsigned int counter = 0;
-  for(unsigned int i1 = 0; i1 < indices1[0]; ++i1)
+  for (unsigned int i1 = 0; i1 < indices1[0]; ++i1)
     {
-      for(unsigned int i2 = 0; i2 < indices1[1]; ++i2)
+      for (unsigned int i2 = 0; i2 < indices1[1]; ++i2)
         {
-          for(unsigned int i3 = 0; i3 < indices1[2]; ++i3)
+          for (unsigned int i3 = 0; i3 < indices1[2]; ++i3)
             {
-              for(unsigned int i4 = 0; i4 < indices1[3]; ++i4)
+              for (unsigned int i4 = 0; i4 < indices1[3]; ++i4)
                 {
-                  for(unsigned int i5 = 0; i5 < indices1[4]; ++i5)
+                  for (unsigned int i5 = 0; i5 < indices1[4]; ++i5)
                     {
                       t1[i1][i2][i3][i4][i5] = counter++;
                       t2[i1][i2][i3][i4][i5] = counter + sum_of_indices;

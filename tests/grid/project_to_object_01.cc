@@ -46,9 +46,9 @@ main()
                + std::cos(weights[2]);
       };
     Tensor<1, GeometryInfo<structdim>::vertices_per_cell> c0;
-    for(unsigned int row_n = 0;
-        row_n < GeometryInfo<structdim>::vertices_per_cell;
-        ++row_n)
+    for (unsigned int row_n = 0;
+         row_n < GeometryInfo<structdim>::vertices_per_cell;
+         ++row_n)
       c0[row_n] = 1.0;
 
     const std::array<double, 3> exact{
@@ -60,15 +60,15 @@ main()
     const std::array<CrossDerivative, 3> cross_derivatives{
       {{0, 1}, {1, 0}, {1, 2}}};
 
-    for(unsigned int cross_derivative_n = 0;
-        cross_derivative_n < cross_derivatives.size();
-        ++cross_derivative_n)
+    for (unsigned int cross_derivative_n = 0;
+         cross_derivative_n < cross_derivatives.size();
+         ++cross_derivative_n)
       {
         deallog << "testing cross derivative " << cross_derivative_n
                 << std::endl;
         std::vector<double> steps;
         std::vector<double> errors;
-        for(unsigned int step_n = 5; step_n < 10; ++step_n)
+        for (unsigned int step_n = 5; step_n < 10; ++step_n)
           {
             const double current_step = std::pow(0.5, double(step_n));
             steps.push_back(std::log(current_step));
@@ -87,7 +87,7 @@ main()
 
         double numerator   = 0.0;
         double denominator = 0.0;
-        for(std::size_t i = 0; i < steps.size(); ++i)
+        for (std::size_t i = 0; i < steps.size(); ++i)
           {
             numerator += (steps[i] - mean_step) * (errors[i] - mean_error);
             denominator += Utilities::fixed_power<2>(steps[i] - mean_step);
@@ -110,10 +110,10 @@ main()
     triangulation.refine_global(2);
 
     auto cell = triangulation.begin_active();
-    while(!cell->at_boundary())
+    while (!cell->at_boundary())
       ++cell;
     unsigned int face_n = 0;
-    while(!cell->face(face_n)->at_boundary())
+    while (!cell->face(face_n)->at_boundary())
       ++face_n;
     const auto face = cell->face(face_n);
 
@@ -225,7 +225,7 @@ main()
             << std::endl;
 
     MappingQGeneric<2, 3> mapping(6);
-    for(auto cell : triangulation.active_cell_iterators())
+    for (auto cell : triangulation.active_cell_iterators())
       {
         const Point<3> projected_point
           = GridTools::project_to_object(cell, trial_point);
@@ -247,7 +247,7 @@ main()
 
   // refine in 3D a few times so that we can observe that the projection error
   // drops proportionally as the grid is refined
-  for(unsigned int n_refinements = 4; n_refinements < 7; ++n_refinements)
+  for (unsigned int n_refinements = 4; n_refinements < 7; ++n_refinements)
     {
       deallog << "====================================================="
               << std::endl
@@ -265,10 +265,10 @@ main()
       triangulation.refine_global(n_refinements);
 
       auto cell = triangulation.begin_active();
-      while(!cell->at_boundary())
+      while (!cell->at_boundary())
         ++cell;
       unsigned int face_n = 0;
-      while(!cell->face(face_n)->at_boundary())
+      while (!cell->face(face_n)->at_boundary())
         ++face_n;
       const auto face = cell->face(face_n);
 

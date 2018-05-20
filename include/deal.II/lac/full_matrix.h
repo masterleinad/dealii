@@ -1214,7 +1214,7 @@ FullMatrix<number>::operator=(const number d)
   Assert(d == number(0), ExcScalarAssignmentOnlyForZeroValue());
   (void) d; // removes -Wunused-parameter warning in optimized mode
 
-  if(this->n_elements() != 0)
+  if (this->n_elements() != 0)
     this->reset_values();
 
   return *this;
@@ -1238,12 +1238,12 @@ FullMatrix<number>::copy_from(const MatrixType& M)
   // loop over the elements of the argument matrix row by row, as suggested
   // in the documentation of the sparse matrix iterator class, and
   // copy them into the current object
-  for(size_type row = 0; row < M.m(); ++row)
+  for (size_type row = 0; row < M.m(); ++row)
     {
       const typename MatrixType::const_iterator end_row = M.end(row);
-      for(typename MatrixType::const_iterator entry = M.begin(row);
-          entry != end_row;
-          ++entry)
+      for (typename MatrixType::const_iterator entry = M.begin(row);
+           entry != end_row;
+           ++entry)
         this->el(row, entry->column()) = entry->value();
     }
 }
@@ -1258,12 +1258,12 @@ FullMatrix<number>::copy_transposed(const MatrixType& M)
   // loop over the elements of the argument matrix row by row, as suggested
   // in the documentation of the sparse matrix iterator class, and
   // copy them into the current object
-  for(size_type row = 0; row < M.m(); ++row)
+  for (size_type row = 0; row < M.m(); ++row)
     {
       const typename MatrixType::const_iterator end_row = M.end(row);
-      for(typename MatrixType::const_iterator entry = M.begin(row);
-          entry != end_row;
-          ++entry)
+      for (typename MatrixType::const_iterator entry = M.begin(row);
+           entry != end_row;
+           ++entry)
         this->el(entry->column(), row) = entry->value();
     }
 }
@@ -1282,8 +1282,8 @@ FullMatrix<number>::extract_submatrix_from(
   const size_type n_rows_submatrix = row_index_set.size();
   const size_type n_cols_submatrix = column_index_set.size();
 
-  for(size_type sub_row = 0; sub_row < n_rows_submatrix; ++sub_row)
-    for(size_type sub_col = 0; sub_col < n_cols_submatrix; ++sub_col)
+  for (size_type sub_row = 0; sub_row < n_rows_submatrix; ++sub_row)
+    for (size_type sub_col = 0; sub_col < n_cols_submatrix; ++sub_col)
       (*this)(sub_row, sub_col)
         = matrix.el(row_index_set[sub_row], column_index_set[sub_col]);
 }
@@ -1302,8 +1302,8 @@ FullMatrix<number>::scatter_matrix_to(
   const size_type n_rows_submatrix = row_index_set.size();
   const size_type n_cols_submatrix = column_index_set.size();
 
-  for(size_type sub_row = 0; sub_row < n_rows_submatrix; ++sub_row)
-    for(size_type sub_col = 0; sub_col < n_cols_submatrix; ++sub_col)
+  for (size_type sub_row = 0; sub_row < n_rows_submatrix; ++sub_row)
+    for (size_type sub_col = 0; sub_col < n_cols_submatrix; ++sub_col)
       matrix.set(row_index_set[sub_row],
                  column_index_set[sub_col],
                  (*this)(sub_row, sub_col));
@@ -1382,7 +1382,7 @@ FullMatrix<number>::const_iterator::operator++()
   Assert(accessor.a_row < accessor.matrix->m(), ExcIteratorPastEnd());
 
   ++accessor.a_col;
-  if(accessor.a_col >= accessor.matrix->n())
+  if (accessor.a_col >= accessor.matrix->n())
     {
       accessor.a_col = 0;
       accessor.a_row++;
@@ -1498,7 +1498,7 @@ FullMatrix<number>::add(const size_type   row,
                         const bool)
 {
   AssertIndexRange(row, this->m());
-  for(size_type col = 0; col < n_cols; ++col)
+  for (size_type col = 0; col < n_cols; ++col)
     {
       AssertIndexRange(col_indices[col], this->n());
       this->operator()(row, col_indices[col]) += values[col];
@@ -1518,9 +1518,9 @@ FullMatrix<number>::print(StreamType&        s,
   const std::streamsize old_precision = s.precision(p);
   const std::streamsize old_width     = s.width(w);
 
-  for(size_type i = 0; i < this->m(); ++i)
+  for (size_type i = 0; i < this->m(); ++i)
     {
-      for(size_type j = 0; j < this->n(); ++j)
+      for (size_type j = 0; j < this->n(); ++j)
         {
           s.width(w);
           s.precision(p);

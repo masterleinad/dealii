@@ -116,7 +116,7 @@ test3()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
@@ -127,7 +127,7 @@ test3()
       fe_values.get_function_values(solution_pou, solution_values_pou);
       fe_values.get_function_values(solution, solution_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         deallog << " qp=" << q_points[q_point]
                 << " f(qp)=" << function.value(q_points[q_point])
                 << " U_fe(qp)=" << solution_values_fe[q_point]
@@ -152,7 +152,7 @@ plot_shape_function()
 
   std::vector<Vector<double>> shape_functions(dof_handler.n_dofs());
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < shape_functions.size(); s++)
+  for (unsigned int s = 0; s < shape_functions.size(); s++)
     {
       names.push_back(std::string("N_") + dealii::Utilities::int_to_string(s));
 
@@ -163,7 +163,7 @@ plot_shape_function()
 
       // zero everywhere but
       // the DoF corresponding to this shape function
-      if(group == 0)
+      if (group == 0)
         shape_functions[s][s] = 1.0;
       else
         shape_functions[s][s] = 1.0; //can potentially put another value here
@@ -172,7 +172,7 @@ plot_shape_function()
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for (unsigned int i = 0; i < shape_functions.size(); i++)
     {
       data_out.add_data_vector(shape_functions[i], names[i]);
     }
@@ -205,7 +205,7 @@ main(int argc, char** argv)
       plot_shape_function<3>();
 #endif
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -219,7 +219,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

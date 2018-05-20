@@ -49,11 +49,11 @@ test()
   */
   typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active();
-  if(cell->is_locally_owned())
+  if (cell->is_locally_owned())
     cell->set_refine_flag();
 
   triangulation.execute_coarsening_and_refinement();
-  if(myid == 0)
+  if (myid == 0)
     deallog << "#cells = " << triangulation.n_global_active_cells()
             << std::endl;
 
@@ -80,7 +80,7 @@ test()
 
   vec.print(deallog.get_file_stream());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

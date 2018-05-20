@@ -30,7 +30,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -60,7 +60,7 @@ test()
   vb.reinit(2);
   v.reinit(2);
   LinearAlgebra::distributed::BlockVector<double> copied(2);
-  for(unsigned int bl = 0; bl < 2; ++bl)
+  for (unsigned int bl = 0; bl < 2; ++bl)
     {
       vb.block(bl)     = vb_one;
       v.block(bl)      = v_one;
@@ -73,13 +73,13 @@ test()
   copied = vb;
 
   // check local values
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog << myid * 2 << ":" << copied(myid * 2) << std::endl;
       deallog << myid * 2 + 1 << ":" << copied(myid * 2 + 1) << std::endl;
     }
 
-  for(unsigned int bl = 0; bl < 2; ++bl)
+  for (unsigned int bl = 0; bl < 2; ++bl)
     {
       Assert(copied.block(bl)(myid * 2) == myid * 4.0, ExcInternalError());
       Assert(copied.block(bl)(myid * 2 + 1) == myid * 4.0 + 2.0,
@@ -89,19 +89,19 @@ test()
   copied = v;
 
   // check ghost values
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "ghost: " << copied(1) << std::endl;
   Assert(copied(1) == 2.0, ExcInternalError());
   Assert(copied.block(1)(1) == 2.0, ExcInternalError());
 
   // check local values
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog << myid * 2 << ":" << copied(myid * 2) << std::endl;
       deallog << myid * 2 + 1 << ":" << copied(myid * 2 + 1) << std::endl;
     }
 
-  for(unsigned int bl = 0; bl < 2; ++bl)
+  for (unsigned int bl = 0; bl < 2; ++bl)
     {
       Assert(copied.block(bl)(myid * 2) == myid * 4.0, ExcInternalError());
       Assert(copied.block(bl)(myid * 2 + 1) == myid * 4.0 + 2.0,
@@ -109,7 +109,7 @@ test()
     }
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -121,7 +121,7 @@ main(int argc, char** argv)
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

@@ -517,9 +517,9 @@ check(Epetra_FECrsMatrix&     mat,
     ierr = prec.ApplyInverse(b, x2);
     assert(ierr == 0);
   }
-  for(unsigned int j = 0; j < 5; ++j)
+  for (unsigned int j = 0; j < 5; ++j)
     {
-      if(x1[0][j] != x2[0][j])
+      if (x1[0][j] != x2[0][j])
         deallog << "FAIL: j=" << j << ": " << x1[0][j] << " != " << x2[0][j]
                 << std::endl;
     }
@@ -537,7 +537,7 @@ run()
 
   unsigned int n = sizeof(mati) / sizeof(*mati);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       ierr = mat.InsertGlobalValues(mati[i], 1, &matv[i], (int*) &matj[i]);
       assert(ierr == 0);

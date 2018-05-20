@@ -42,19 +42,19 @@ main()
   //           m  i  j
   double error[5][6][6] = {{{0}}};
 
-  for(unsigned int m = 0; m < 5; ++m)
+  for (unsigned int m = 0; m < 5; ++m)
     {
       auto split_point = Point<2>(.5, .5);
 
       QSplit<2> quad(QTrianglePolar(m + 1), split_point);
 
-      for(unsigned int i = 0; i < 6; ++i)
-        for(unsigned int j = 0; j < 6; ++j)
+      for (unsigned int i = 0; i < 6; ++i)
+        for (unsigned int j = 0; j < 6; ++j)
           {
             double exact_integral  = exact_integral_one_over_r_middle(i, j);
             double approx_integral = 0;
 
-            for(unsigned int q = 0; q < quad.size(); ++q)
+            for (unsigned int q = 0; q < quad.size(); ++q)
               {
                 double x = quad.point(q)[0];
                 double y = quad.point(q)[1];
@@ -66,12 +66,12 @@ main()
           }
     }
 
-  for(unsigned int i = 0; i < 6; ++i)
-    for(unsigned int j = 0; j < 6; ++j)
+  for (unsigned int i = 0; i < 6; ++i)
+    for (unsigned int j = 0; j < 6; ++j)
       {
         deallog << "======= f(x,y) = x^" << i << " y^" << j << std::endl;
 
-        for(unsigned int m = 0; m < 5; ++m)
+        for (unsigned int m = 0; m < 5; ++m)
           deallog << "Order[" << m + 1 << "], error = " << error[m][i][j]
                   << std::endl;
       }

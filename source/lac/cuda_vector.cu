@@ -40,11 +40,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               val[idx] *= a;
           }
       }
@@ -77,11 +77,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               v1[idx] = Binop::operation(v1[idx], v2[idx]);
           }
       }
@@ -148,7 +148,7 @@ namespace LinearAlgebra
         __device__ static Number
         reduction_op(const Number a, const Number b)
         {
-          if(a > b)
+          if (a > b)
             return a;
           else
             return b;
@@ -178,22 +178,22 @@ namespace LinearAlgebra
       reduce_within_warp(volatile Number*                   result_buffer,
                          typename Vector<Number>::size_type local_idx)
       {
-        if(block_size >= 64)
+        if (block_size >= 64)
           result_buffer[local_idx] = Operation::reduction_op(
             result_buffer[local_idx], result_buffer[local_idx + 32]);
-        if(block_size >= 32)
+        if (block_size >= 32)
           result_buffer[local_idx] = Operation::reduction_op(
             result_buffer[local_idx], result_buffer[local_idx + 16]);
-        if(block_size >= 16)
+        if (block_size >= 16)
           result_buffer[local_idx] = Operation::reduction_op(
             result_buffer[local_idx], result_buffer[local_idx + 8]);
-        if(block_size >= 8)
+        if (block_size >= 8)
           result_buffer[local_idx] = Operation::reduction_op(
             result_buffer[local_idx], result_buffer[local_idx + 4]);
-        if(block_size >= 4)
+        if (block_size >= 4)
           result_buffer[local_idx] = Operation::reduction_op(
             result_buffer[local_idx], result_buffer[local_idx + 2]);
-        if(block_size >= 2)
+        if (block_size >= 2)
           result_buffer[local_idx] = Operation::reduction_op(
             result_buffer[local_idx], result_buffer[local_idx + 1]);
       }
@@ -206,19 +206,19 @@ namespace LinearAlgebra
              const typename Vector<Number>::size_type global_idx,
              const typename Vector<Number>::size_type N)
       {
-        for(typename Vector<Number>::size_type s = block_size / 2; s > 32;
-            s                                    = s >> 1)
+        for (typename Vector<Number>::size_type s = block_size / 2; s > 32;
+             s                                    = s >> 1)
           {
-            if(local_idx < s)
+            if (local_idx < s)
               result_buffer[local_idx] = Operation::reduction_op(
                 result_buffer[local_idx], result_buffer[local_idx + s]);
             __syncthreads();
           }
 
-        if(local_idx < 32)
+        if (local_idx < 32)
           reduce_within_warp<Number, Operation>(result_buffer, local_idx);
 
-        if(local_idx == 0)
+        if (local_idx == 0)
           Operation::atomic_op(result, result_buffer[0]);
       }
 
@@ -234,7 +234,7 @@ namespace LinearAlgebra
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
         const typename Vector<Number>::size_type local_idx = threadIdx.x;
 
-        if(global_idx < N)
+        if (global_idx < N)
           result_buffer[local_idx] = Operation::element_wise_op(v[global_idx]);
         else
           result_buffer[local_idx] = Operation::null_value();
@@ -286,17 +286,17 @@ namespace LinearAlgebra
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
         const typename Vector<Number>::size_type local_idx = threadIdx.x;
 
-        if(global_idx < N)
+        if (global_idx < N)
           result_buffer[local_idx]
             = Operation::binary_op(v1[global_idx], v2[global_idx]);
         else
           result_buffer[local_idx] = Operation::null_value();
 
-        for(unsigned int i = 1; i < chunk_size; ++i)
+        for (unsigned int i = 1; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = global_idx + i * block_size;
-            if(idx < N)
+            if (idx < N)
               result_buffer[local_idx] = Operation::reduction_op(
                 result_buffer[local_idx],
                 Operation::binary_op(v1[idx], v2[idx]));
@@ -316,11 +316,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               val[idx] += a;
           }
       }
@@ -334,11 +334,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               val[idx] += a * V_val[idx];
           }
       }
@@ -354,11 +354,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               val[idx] += a * V_val[idx] + b * W_val[idx];
           }
       }
@@ -373,11 +373,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               val[idx] = s * val[idx] + a * V_val[idx];
           }
       }
@@ -390,11 +390,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               val[idx] *= V_val[idx];
           }
       }
@@ -408,11 +408,11 @@ namespace LinearAlgebra
       {
         const typename Vector<Number>::size_type idx_base
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
-        for(unsigned int i = 0; i < chunk_size; ++i)
+        for (unsigned int i = 0; i < chunk_size; ++i)
           {
             const typename Vector<Number>::size_type idx
               = idx_base + i * block_size;
-            if(idx < N)
+            if (idx < N)
               val[idx] = a * V_val[idx];
           }
       }
@@ -431,7 +431,7 @@ namespace LinearAlgebra
         const unsigned int global_idx
           = threadIdx.x + blockIdx.x * (blockDim.x * chunk_size);
         const unsigned int local_idx = threadIdx.x;
-        if(global_idx < N)
+        if (global_idx < N)
           {
             v1[global_idx] += a * v2[global_idx];
             res_buf[local_idx]
@@ -442,10 +442,10 @@ namespace LinearAlgebra
         else
           res_buf[local_idx] = 0.;
 
-        for(unsigned int i = 1; i < block_size; ++i)
+        for (unsigned int i = 1; i < block_size; ++i)
           {
             const unsigned int idx = global_idx + i * block_size;
-            if(idx < N)
+            if (idx < N)
               {
                 v1[idx] += a * v2[idx];
                 res_buf[local_idx] += v1[idx] * v3[idx];
@@ -484,7 +484,7 @@ namespace LinearAlgebra
     template <typename Number>
     Vector<Number>::~Vector()
     {
-      if(val != nullptr)
+      if (val != nullptr)
         {
           cudaError_t error_code = cudaFree(val);
           AssertCuda(error_code);
@@ -498,9 +498,9 @@ namespace LinearAlgebra
     Vector<Number>::reinit(const size_type n, const bool omit_zeroing_entries)
     {
       // Resize the underlying array if necessary
-      if(n == 0)
+      if (n == 0)
         {
-          if(val != nullptr)
+          if (val != nullptr)
             {
               cudaError_t error_code = cudaFree(val);
               AssertCuda(error_code);
@@ -509,7 +509,7 @@ namespace LinearAlgebra
         }
       else
         {
-          if((n_elements != n) && (val != nullptr))
+          if ((n_elements != n) && (val != nullptr))
             {
               cudaError_t error_code = cudaFree(val);
               AssertCuda(error_code);
@@ -519,7 +519,7 @@ namespace LinearAlgebra
           AssertCuda(error_code);
 
           // If necessary set the elements to zero
-          if(omit_zeroing_entries == false)
+          if (omit_zeroing_entries == false)
             {
               cudaError_t error_code = cudaMemset(val, 0, n * sizeof(Number));
               AssertCuda(error_code);
@@ -542,7 +542,7 @@ namespace LinearAlgebra
                            VectorOperation::values        operation,
                            std::shared_ptr<const CommunicationPatternBase>)
     {
-      if(operation == VectorOperation::insert)
+      if (operation == VectorOperation::insert)
         {
           cudaError_t error_code = cudaMemcpy(val,
                                               V.begin(),
@@ -1029,7 +1029,7 @@ namespace LinearAlgebra
       unsigned int       old_precision = out.precision(precision);
 
       out.precision(precision);
-      if(scientific)
+      if (scientific)
         out.setf(std::ios::scientific, std::ios::floatfield);
       else
         out.setf(std::ios::fixed, std::ios::floatfield);
@@ -1043,7 +1043,7 @@ namespace LinearAlgebra
       cudaError_t error_code = cudaMemcpy(
         cpu_val, val, n_elements * sizeof(Number), cudaMemcpyHostToDevice);
       AssertCuda(error_code);
-      for(unsigned int i = 0; i < n_elements; ++i)
+      for (unsigned int i = 0; i < n_elements; ++i)
         out << cpu_val[i] << std::endl;
       out << std::flush;
       delete[] cpu_val;

@@ -45,7 +45,7 @@ public:
     std::pair<unsigned int, unsigned int> subrange_deg;
 #define CALL_METHOD(degree)                                        \
   subrange_deg = data.create_cell_subrange_hp(cell_range, degree); \
-  if(subrange_deg.second > subrange_deg.first)                     \
+  if (subrange_deg.second > subrange_deg.first)                    \
   helmholtz_operator<dim, degree, Vector<Number>, degree + 1>(     \
     data, dst, src, subrange_deg)
 
@@ -83,13 +83,13 @@ do_test(const unsigned int parallel_option)
 #endif
 
   // refine a few cells
-  for(unsigned int i = 0; i < 11 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 11 - 3 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
         endc = tria.end();
-      for(; cell != endc; ++cell)
-        if(Testing::rand() % (7 - i) == 0)
+      for (; cell != endc; ++cell)
+        if (Testing::rand() % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -99,7 +99,7 @@ do_test(const unsigned int parallel_option)
   hp::FECollection<dim> fe_collection;
   hp::QCollection<1>    quadrature_collection_mf;
 
-  for(unsigned int deg = 1; deg <= max_degree; ++deg)
+  for (unsigned int deg = 1; deg <= max_degree; ++deg)
     {
       fe_collection.push_back(FE_Q<dim>(QGaussLobatto<1>(deg + 1)));
       quadrature_collection_mf.push_back(QGauss<1>(deg + 1));
@@ -111,7 +111,7 @@ do_test(const unsigned int parallel_option)
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof.begin_active(),
       endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const unsigned int fe_index = Testing::rand() % max_degree;
         cell->set_active_fe_index(fe_index);
@@ -139,17 +139,17 @@ do_test(const unsigned int parallel_option)
 
   // test different block sizes, starting from
   // auto setting (= 0)
-  for(unsigned int block_size = 0; block_size < 5; ++block_size)
+  for (unsigned int block_size = 0; block_size < 5; ++block_size)
     {
       deallog.push("blk_" + Utilities::int_to_string(block_size, 1));
       MatrixFree<dim, number> mf_data_par;
-      if(parallel_option == 0)
+      if (parallel_option == 0)
         {
           data.tasks_parallel_scheme
             = MatrixFree<dim, number>::AdditionalData::partition_partition;
           deallog << "Parallel option partition/partition" << std::endl;
         }
-      else if(parallel_option == 1)
+      else if (parallel_option == 1)
         {
           data.tasks_parallel_scheme
             = MatrixFree<dim, number>::AdditionalData::partition_color;
@@ -170,9 +170,9 @@ do_test(const unsigned int parallel_option)
       Vector<number> src(dof.n_dofs());
       Vector<number> result_ref(src), result_mf(src);
 
-      for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+      for (unsigned int i = 0; i < dof.n_dofs(); ++i)
         {
-          if(constraints.is_constrained(i) == false)
+          if (constraints.is_constrained(i) == false)
             src(i) = random_value<double>();
         }
 
@@ -182,7 +182,7 @@ do_test(const unsigned int parallel_option)
       // error)
       mf.vmult(result_ref, src);
       deallog << "Norm of difference: ";
-      for(unsigned int i = 0; i < 50; ++i)
+      for (unsigned int i = 0; i < 50; ++i)
         {
           mf_par.vmult(result_mf, src);
           result_mf -= result_ref;
@@ -204,9 +204,9 @@ test()
   // 'misuse' fe_degree for setting the parallel
   // option here
   unsigned int parallel_option = 0;
-  if(fe_degree == 1)
+  if (fe_degree == 1)
     parallel_option = 0;
-  else if(fe_degree == 2)
+  else if (fe_degree == 2)
     parallel_option = 1;
   else
     return;

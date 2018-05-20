@@ -68,12 +68,12 @@ output(DoFHandler<dim>&  dh,
 
   std::ofstream output(filename.str().c_str());
   data_out.write_vtu(output);
-  if(myid)
+  if (myid)
     {
       std::vector<std::string> filenames;
-      for(unsigned int i = 0;
-          i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-          ++i)
+      for (unsigned int i = 0;
+           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+           ++i)
         filenames.push_back(filename_ + Utilities::int_to_string(loop, 2) + "."
                             + Utilities::int_to_string(i, 2) + ".vtu");
       const std::string pvtu_master_filename
@@ -110,21 +110,21 @@ test()
 
   SomeFunction<dim> func;
 
-  for(unsigned int loop = 0; loop < 5; ++loop)
+  for (unsigned int loop = 0; loop < 5; ++loop)
     {
       // randomly refine:
       std::vector<bool> r_flags(tr.n_active_cells() * dim, false);
       std::vector<bool> c_flags(tr.n_active_cells(), false);
 
-      for(unsigned int i = 0; i < c_flags.size(); ++i)
+      for (unsigned int i = 0; i < c_flags.size(); ++i)
         {
           int roll = Testing::rand() % 4;
-          if(roll >= 2)
+          if (roll >= 2)
             {
-              for(unsigned int j = 0; j < dim; ++j)
+              for (unsigned int j = 0; j < dim; ++j)
                 r_flags[i * dim + j] = true;
             }
-          else if(roll == 1)
+          else if (roll == 1)
             c_flags[i] = true;
         }
 
@@ -162,7 +162,7 @@ test()
         double       total_local_error  = local_errors.l2_norm();
         const double total_global_error = std::sqrt(Utilities::MPI::sum(
           total_local_error * total_local_error, MPI_COMM_WORLD));
-        if(myid == 0)
+        if (myid == 0)
           deallog << "err: " << total_global_error << std::endl;
       }
 
@@ -181,7 +181,7 @@ test()
       // checks:
       const unsigned int checksum  = tr.get_checksum();
       const unsigned int checksum2 = tr2.get_checksum();
-      if(myid == 0)
+      if (myid == 0)
         deallog << "Checksum: " << checksum << " " << checksum2 << std::endl;
     }
 }

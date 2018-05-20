@@ -43,9 +43,9 @@ test()
   dof2.distribute_dofs(fe2);
 
   Vector<double> v1(dof1.n_dofs()), v2(dof2.n_dofs());
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = i;
-  for(unsigned int i = 0; i < v2.size(); ++i)
+  for (unsigned int i = 0; i < v2.size(); ++i)
     v2(i) = i;
 
   DataOut<dim> data_out;
@@ -78,7 +78,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -91,7 +91,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

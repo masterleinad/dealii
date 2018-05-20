@@ -45,13 +45,13 @@ test()
 
   Vector<double> v1(dof1.n_dofs()), v2(dof2.n_dofs()), v3(dof1.n_dofs()),
     v4(dof2.n_dofs());
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = i;
-  for(unsigned int i = 0; i < v2.size(); ++i)
+  for (unsigned int i = 0; i < v2.size(); ++i)
     v2(i) = i;
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v3(i) = -v1(i);
-  for(unsigned int i = 0; i < v2.size(); ++i)
+  for (unsigned int i = 0; i < v2.size(); ++i)
     v4(i) = -v2(i);
 
   std::vector<DataComponentInterpretation::DataComponentInterpretation>
@@ -89,7 +89,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -102,7 +102,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

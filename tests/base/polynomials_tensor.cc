@@ -40,14 +40,14 @@ check_point(const Point<dim>& x, const PolynomialType& p)
   p.compute(x, values, gradients, seconds, thirds, fourths);
 
   deallog << "Point " << x << std::endl;
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       deallog << "p[" << i << "] value ";
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         deallog << (int) (values[i][d] + .5) << ' ';
       deallog << " first ";
-      for(unsigned int d1 = 0; d1 < dim; ++d1)
-        for(unsigned int d2 = 0; d2 < dim; ++d2)
+      for (unsigned int d1 = 0; d1 < dim; ++d1)
+        for (unsigned int d2 = 0; d2 < dim; ++d2)
           deallog << (int) (gradients[i][d1][d2] + .5) << ' ';
       deallog << std::endl;
     }
@@ -66,7 +66,7 @@ check_bdm()
 
   x(0) = 2.;
   x(1) = 3.;
-  if(dim > 2)
+  if (dim > 2)
     x(2) = 4;
 
   check_point(x, p1);
@@ -88,7 +88,7 @@ check_rt()
 
   x(0) = 2.;
   x(1) = 3.;
-  if(dim > 2)
+  if (dim > 2)
     x(2) = 4;
 
   check_point(x, p0);

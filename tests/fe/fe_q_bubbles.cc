@@ -79,7 +79,7 @@ double
 BubbleFunction<dim>::value(const Point<dim>& p, const unsigned int) const
 {
   double return_value = 1.;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     return_value *= (1 - p(i) * p(i));
   return_value *= std::pow(p(m_direction), m_degree - 1);
 
@@ -92,21 +92,21 @@ BubbleFunction<dim>::gradient(const Point<dim>& p, const unsigned int) const
 {
   Tensor<1, dim> grad;
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       grad[d] = 1.;
       //compute grad(\prod_{i=1}^d (1-x_i^2))(p)
-      for(unsigned j = 0; j < dim; ++j)
+      for (unsigned j = 0; j < dim; ++j)
         grad[d] *= (d == j ? -2 * p(j) : (1 - p(j) * p(j)));
       // and multiply with x_i^{r-1}
       grad[d] *= std::pow(p(m_direction), m_degree - 1);
     }
 
-  if(m_degree >= 2)
+  if (m_degree >= 2)
     {
       //add \prod_{i=1}^d (1-x_i^2))(p)
       double value = 1.;
-      for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int j = 0; j < dim; ++j)
         value *= (1 - p(j) * p(j));
       //and multiply with grad(x_i^{r-1})
       grad[m_direction]
@@ -206,17 +206,17 @@ Step3<dim>::assemble_system(unsigned int i)
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
       cell_matrix = 0;
       cell_rhs    = 0;
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += (fe_values.shape_value(i, q_point)
                                     * fe_values.shape_value(j, q_point)
                                     * fe_values.JxW(q_point));
@@ -228,12 +228,12 @@ Step3<dim>::assemble_system(unsigned int i)
 
       cell->get_dof_indices(local_dof_indices);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
           system_matrix.add(
             local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         system_rhs(local_dof_indices[i]) += cell_rhs(i);
     }
 }
@@ -303,7 +303,7 @@ Step3<dim>::run()
 {
   make_grid();
   setup_system();
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       assemble_system(i);
       solve();
@@ -316,7 +316,7 @@ main()
 {
   initlog();
   deallog.depth_file(1);
-  for(unsigned int degree = 1; degree <= 3; ++degree)
+  for (unsigned int degree = 1; degree <= 3; ++degree)
     {
       //     {
       //       FiniteElement<2> *fe = new FE_Q<2>(degree);

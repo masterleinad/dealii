@@ -36,17 +36,17 @@ plot(const PolynomialsRaviartThomas<dim>& poly)
   std::vector<Tensor<4, dim>> thirds;
   std::vector<Tensor<5, dim>> fourths;
 
-  for(unsigned int k = 0; k < quadrature.size(); ++k)
+  for (unsigned int k = 0; k < quadrature.size(); ++k)
     {
-      if(k % (poly.degree() + 4) == 0)
+      if (k % (poly.degree() + 4) == 0)
         deallog << "RT" << poly.degree() << '<' << dim << '>' << std::endl;
 
       deallog << "RT" << poly.degree() << '<' << dim << '>' << '\t'
               << quadrature.point(k);
       poly.compute(quadrature.point(k), values, grads, grads2, thirds, fourths);
 
-      for(unsigned int i = 0; i < poly.n(); ++i)
-        for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i < poly.n(); ++i)
+        for (unsigned int d = 0; d < dim; ++d)
           deallog << '\t' << values[i][d];
       deallog << std::endl;
     }

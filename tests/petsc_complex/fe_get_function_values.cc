@@ -104,7 +104,7 @@ test()
   constraints.close();
   //set vector:
   unsigned int myid = Utilities::MPI::this_mpi_process(mpi_communicator);
-  for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); i++)
+  for (unsigned int i = 0; i < locally_owned_dofs.n_elements(); i++)
     {
       const PetscScalar val = 1.0 + myid + (myid + i % 2) * 2.0 * PETSC_i;
       vector(locally_owned_dofs.nth_index_in_set(i))    = val;
@@ -139,15 +139,15 @@ test()
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           fe_values.get_function_values(vector_locally_relevant, values);
           fe_values.get_function_values(vector_Re_locally_relevant, values_Re);
           fe_values.get_function_values(vector_Im_locally_relevant, values_Im);
 
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int q = 0; q < n_q_points; ++q)
             {
               AssertThrow(PetscRealPart(values[q]) == values_Re[q],
                           ExcInternalError());

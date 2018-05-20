@@ -45,8 +45,8 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double v = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         v += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return v;
   }
@@ -63,18 +63,18 @@ test()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(3);
   std::map<types::material_id, const Function<dim>*> functions;
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     {
       cell->set_material_id(cell->index() % 128);
-      if(functions.find(cell->index() % 128) == functions.end())
+      if (functions.find(cell->index() % 128) == functions.end())
         functions[cell->index() % 128]
           = new Functions::ConstantFunction<dim>(cell->index() % 128);
     }
 
-  for(unsigned int p = 1; p < 7 - dim; ++p)
+  for (unsigned int p = 1; p < 7 - dim; ++p)
     {
       FE_DGQ<dim>     fe(p);
       DoFHandler<dim> dof_handler(triangulation);
@@ -83,22 +83,22 @@ test()
       Vector<double> interpolant(dof_handler.n_dofs());
       VectorTools::interpolate_based_on_material_id(
         MappingQGeneric<dim>(1), dof_handler, functions, interpolant);
-      for(typename DoFHandler<dim>::active_cell_iterator cell
-          = dof_handler.begin_active();
-          cell != dof_handler.end();
-          ++cell)
+      for (typename DoFHandler<dim>::active_cell_iterator cell
+           = dof_handler.begin_active();
+           cell != dof_handler.end();
+           ++cell)
         {
           Vector<double> values(fe.dofs_per_cell);
           cell->get_dof_values(interpolant, values);
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
             AssertThrow(values[i] == cell->index() % 128, ExcInternalError());
         }
     }
 
-  for(typename std::map<types::material_id, const Function<dim>*>::iterator p
-      = functions.begin();
-      p != functions.end();
-      ++p)
+  for (typename std::map<types::material_id, const Function<dim>*>::iterator p
+       = functions.begin();
+       p != functions.end();
+       ++p)
     delete p->second;
 
   deallog << "OK" << std::endl;

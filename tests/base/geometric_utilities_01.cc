@@ -27,11 +27,11 @@ void
 print(T point1, T point2)
 {
   deallog << std::endl << "Point 1: ";
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     deallog << point1[i] << " ";
 
   deallog << std::endl << "Point 2: ";
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     deallog << point2[i] << " ";
 
   deallog << std::endl;
@@ -46,17 +46,17 @@ test()
   const Point<dim> origin;
 
   std::array<double, dim> sorigin;
-  for(unsigned int d = 0; d < dim; d++)
+  for (unsigned int d = 0; d < dim; d++)
     sorigin[d] = 0.;
 
   Point<dim> one;
-  for(unsigned int d = 0; d < dim; d++)
+  for (unsigned int d = 0; d < dim; d++)
     one[d] = 1.;
 
   std::array<double, dim> sone;
   sone[0] = std::sqrt(1. * dim);
   sone[1] = numbers::PI / 4;
-  if(dim == 3)
+  if (dim == 3)
     sone[2] = std::acos(1 / std::sqrt(3.));
 
   print<dim>(to_spherical(origin), sorigin);

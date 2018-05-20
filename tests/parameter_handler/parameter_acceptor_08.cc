@@ -32,7 +32,7 @@ public:
     deallog << "Section Name    : " << sec_name << std::endl;
     deallog << "N sections      : " << get_section_path().size() << std::endl;
     deallog << "Sections        : ";
-    for(auto s : get_section_path())
+    for (auto s : get_section_path())
       deallog << "\"" << s << "\"    ";
     deallog << std::endl << std::endl;
   };

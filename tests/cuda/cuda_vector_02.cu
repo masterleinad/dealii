@@ -35,7 +35,7 @@ test()
   LinearAlgebra::ReadWriteVector<double> read_write_2(size);
   LinearAlgebra::ReadWriteVector<double> read_write_3(size);
 
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     {
       read_write_1[i] = i;
       read_write_2[i] = 5. + i;
@@ -47,20 +47,20 @@ test()
 
   a.add(1.);
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(1. + read_write_1[i] == read_write_3[i],
                 ExcMessage("Problem in add(scalar)."));
 
   a.add(2., b);
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(1. + read_write_1[i] + 2. * read_write_2[i] == read_write_3[i],
                 ExcMessage("Problem in add(scalar,Vector)."));
 
   LinearAlgebra::CUDAWrappers::Vector<double> d(a);
   a.add(2., b, 3., d);
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(4. + 4. * read_write_1[i] + 10. * read_write_2[i]
                   == read_write_3[i],
                 ExcMessage("Problem in add(scalar,Vector,scalar,Vector)."));
@@ -68,20 +68,20 @@ test()
   a.import(read_write_1, VectorOperation::insert);
   a.sadd(3., 2., c);
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(3. * read_write_1[i] + 2. * read_write_2[i] == read_write_3[i],
                 ExcMessage("Problem in sadd(scalar,scalar,Vector)."));
 
   a.import(read_write_1, VectorOperation::insert);
   a.scale(b);
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(read_write_1[i] * read_write_2[i] == read_write_3[i],
                 ExcMessage("Problem in scale."));
 
   a.equ(2., c);
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(2. * read_write_2[i] == read_write_3[i],
                 ExcMessage("Problem in equ."));
 

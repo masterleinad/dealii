@@ -3244,12 +3244,12 @@ test()
   const unsigned int N = 578;
 
   SparsityPattern sp(N, N, 30);
-  for(unsigned int i = 0; i < n_entries; ++i)
+  for (unsigned int i = 0; i < n_entries; ++i)
     sp.add(entries[i].row, entries[i].col);
   sp.compress();
 
   SparseMatrix<double> sm(sp);
-  for(unsigned int i = 0; i < n_entries; ++i)
+  for (unsigned int i = 0; i < n_entries; ++i)
     sm.set(entries[i].row, entries[i].col, entries[i].val);
 
   // solve for a unit right hand side vector

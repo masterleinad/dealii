@@ -33,10 +33,10 @@ test()
   // subdivide into 5 subdomains
   deallog << "RECURSIVE" << std::endl;
   GridTools::partition_triangulation(5, triangulation);
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     deallog << cell << ' ' << cell->subdomain_id() << std::endl;
 
   // subdivide into 9 subdomains. note that
@@ -45,10 +45,10 @@ test()
   // recursive one
   deallog << "K-WAY" << std::endl;
   GridTools::partition_triangulation(9, triangulation);
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     deallog << cell << ' ' << cell->subdomain_id() << std::endl;
 }
 
@@ -63,7 +63,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -77,7 +77,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

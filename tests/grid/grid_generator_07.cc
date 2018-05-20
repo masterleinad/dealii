@@ -34,10 +34,10 @@ test(std::ostream& out)
   // remove all cells but the first. this is the hardest case to handle as it
   // makes a bunch of vertices unused
   std::set<typename Triangulation<dim>::active_cell_iterator> cells_to_remove;
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = ++triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = ++triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     cells_to_remove.insert(cell);
 
   GridGenerator::create_triangulation_with_removed_cells(

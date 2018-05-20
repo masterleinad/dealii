@@ -32,7 +32,7 @@ namespace TrilinosWrappers
       {
         clear();
       }
-    catch(...)
+    catch (...)
       {}
   }
 
@@ -52,8 +52,8 @@ namespace TrilinosWrappers
     this->column_block_indices.reinit(n_block_columns, 0);
 
     // and reinitialize the blocks
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
-      for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for (size_type r = 0; r < this->n_block_rows(); ++r)
+      for (size_type c = 0; c < this->n_block_cols(); ++c)
         {
           BlockType* p = new BlockType();
 
@@ -98,8 +98,8 @@ namespace TrilinosWrappers
 
     // ... and then assign the correct
     // data to the blocks.
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
-      for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for (size_type r = 0; r < this->n_block_rows(); ++r)
+      for (size_type c = 0; c < this->n_block_cols(); ++c)
         {
           this->sub_objects[r][c]->reinit(parallel_partitioning[r],
                                           parallel_partitioning[c],
@@ -117,7 +117,7 @@ namespace TrilinosWrappers
     const bool                      exchange_data)
   {
     std::vector<Epetra_Map> epetra_maps;
-    for(size_type i = 0; i < block_sparsity_pattern.n_block_rows(); ++i)
+    for (size_type i = 0; i < block_sparsity_pattern.n_block_rows(); ++i)
       epetra_maps.push_back(
         parallel_partitioning[i].make_trilinos_map(communicator, false));
 
@@ -130,7 +130,7 @@ namespace TrilinosWrappers
     const BlockSparsityPatternType& block_sparsity_pattern)
   {
     std::vector<Epetra_Map> parallel_partitioning;
-    for(size_type i = 0; i < block_sparsity_pattern.n_block_rows(); ++i)
+    for (size_type i = 0; i < block_sparsity_pattern.n_block_rows(); ++i)
       parallel_partitioning.emplace_back(
         static_cast<TrilinosWrappers::types::int_type>(
           block_sparsity_pattern.block(i, 0).n_rows()),
@@ -154,8 +154,8 @@ namespace TrilinosWrappers
 
     // ... and then assign the correct
     // data to the blocks.
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
-      for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for (size_type r = 0; r < this->n_block_rows(); ++r)
+      for (size_type c = 0; c < this->n_block_cols(); ++c)
         {
           this->sub_objects[r][c]->reinit(block_sparsity_pattern.block(r, c));
         }
@@ -181,8 +181,8 @@ namespace TrilinosWrappers
 
     // ... and then assign the correct
     // data to the blocks.
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
-      for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for (size_type r = 0; r < this->n_block_rows(); ++r)
+      for (size_type c = 0; c < this->n_block_cols(); ++c)
         {
           this->sub_objects[r][c]->reinit(
             parallel_partitioning[r],
@@ -216,7 +216,7 @@ namespace TrilinosWrappers
 #  endif
 
     std::vector<Epetra_Map> parallel_partitioning;
-    for(size_type i = 0; i < dealii_block_sparse_matrix.n_block_rows(); ++i)
+    for (size_type i = 0; i < dealii_block_sparse_matrix.n_block_rows(); ++i)
       parallel_partitioning.emplace_back(
         static_cast<TrilinosWrappers::types::int_type>(
           dealii_block_sparse_matrix.block(i, 0).m()),
@@ -237,8 +237,8 @@ namespace TrilinosWrappers
   BlockSparseMatrix::n_nonzero_elements() const
   {
     size_type n_nonzero = 0;
-    for(size_type rows = 0; rows < this->n_block_rows(); ++rows)
-      for(size_type cols = 0; cols < this->n_block_cols(); ++cols)
+    for (size_type rows = 0; rows < this->n_block_rows(); ++rows)
+      for (size_type cols = 0; cols < this->n_block_cols(); ++cols)
         n_nonzero += this->block(rows, cols).n_nonzero_elements();
 
     return n_nonzero;
@@ -303,7 +303,7 @@ namespace TrilinosWrappers
     Assert(this->n_block_rows() != 0, ExcNotInitialized());
 
     std::vector<Epetra_Map> domain_partitioner;
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
       domain_partitioner.push_back(
         this->sub_objects[0][c]->domain_partitioner());
 
@@ -317,7 +317,7 @@ namespace TrilinosWrappers
     Assert(this->n_block_rows() != 0, ExcNotInitialized());
 
     std::vector<Epetra_Map> range_partitioner;
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type r = 0; r < this->n_block_rows(); ++r)
       range_partitioner.push_back(this->sub_objects[r][0]->range_partitioner());
 
     return range_partitioner;

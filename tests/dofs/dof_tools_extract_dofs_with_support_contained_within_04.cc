@@ -72,11 +72,11 @@ test()
   triangulation.refine_global(1);
 
   // Extra refinement to generate hanging nodes
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    if(cell->is_locally_owned() && pred_r<dim>(cell))
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    if (cell->is_locally_owned() && pred_r<dim>(cell))
       cell->set_refine_flag();
 
   triangulation.prepare_coarsening_and_refinement();
@@ -125,10 +125,10 @@ test()
                           quadrature,
                           update_values | update_JxW_values
                             | update_quadrature_points);
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-      cell != dh.end();
-      ++cell)
-    if(cell->is_locally_owned() && pred_d<dim>(cell))
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+       cell != dh.end();
+       ++cell)
+    if (cell->is_locally_owned() && pred_d<dim>(cell))
       {
         fe_values.reinit(cell);
         cell->get_dof_indices(local_dof_indices);
@@ -137,8 +137,8 @@ test()
           = fe_values.get_quadrature_points();
 
         local_rhs = 0.;
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-          for(unsigned int q = 0; q < quadrature.size(); ++q)
+        for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for (unsigned int q = 0; q < quadrature.size(); ++q)
             local_rhs[i] += fe_values.shape_value(i, q) * rhs_func(q_points[q])
                             * fe_values.JxW(q);
 
@@ -150,20 +150,20 @@ test()
         const auto local_vector_end    = local_rhs.end();
         auto       local_indices_begin = local_dof_indices.begin();
         const std::vector<std::pair<types::global_dof_index, double>>* line_ptr;
-        for(; local_vector_begin != local_vector_end;
-            ++local_vector_begin, ++local_indices_begin)
+        for (; local_vector_begin != local_vector_end;
+             ++local_vector_begin, ++local_indices_begin)
           {
             line_ptr = cm.get_constraint_entries(*local_indices_begin);
-            if(line_ptr == NULL) // unconstrained
+            if (line_ptr == NULL) // unconstrained
               {
-                if(support.is_element(*local_indices_begin))
+                if (support.is_element(*local_indices_begin))
                   sparse_rhs(*local_indices_begin) += *local_vector_begin;
               }
             else
               {
                 const unsigned int line_size = line_ptr->size();
-                for(unsigned int j = 0; j < line_size; ++j)
-                  if(support.is_element((*line_ptr)[j].first))
+                for (unsigned int j = 0; j < line_size; ++j)
+                  if (support.is_element((*line_ptr)[j].first))
                     sparse_rhs((*line_ptr)[j].first)
                       += *local_vector_begin * (*line_ptr)[j].second;
               }
@@ -184,17 +184,17 @@ test()
   rhs.add(-1., sparse_rhs);
 
   // print grid and DoFs for visual inspection
-  if(false)
+  if (false)
     {
       const unsigned int this_mpi_process
         = dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
       const unsigned int n_mpi_processes
         = dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-      for(unsigned int i = 0; i < n_mpi_processes; ++i)
+      for (unsigned int i = 0; i < n_mpi_processes; ++i)
         {
           MPI_Barrier(MPI_COMM_WORLD);
-          if(i == this_mpi_process)
+          if (i == this_mpi_process)
             {
               std::cout << "-------------------- " << this_mpi_process
                         << std::endl;
@@ -243,12 +243,12 @@ test()
 
         std::vector<LinearAlgebra::distributed::Vector<double>> shape_functions(
           dh.n_dofs());
-        for(unsigned int i = 0; i < dh.n_dofs(); ++i)
+        for (unsigned int i = 0; i < dh.n_dofs(); ++i)
           {
             LinearAlgebra::distributed::Vector<double> sl(locally_owned_set,
                                                           MPI_COMM_WORLD);
             sl = 0.;
-            if(locally_owned_set.is_element(i))
+            if (locally_owned_set.is_element(i))
               sl[i] = 1.0;
             cm.distribute(sl);
 
@@ -262,7 +262,7 @@ test()
           }
 
         Vector<float> subdomain(triangulation.n_active_cells());
-        for(unsigned int i = 0; i < subdomain.size(); ++i)
+        for (unsigned int i = 0; i < subdomain.size(); ++i)
           subdomain(i) = triangulation.locally_owned_subdomain();
         data_out.add_data_vector(subdomain, "subdomain");
         data_out.build_patches();
@@ -273,12 +273,12 @@ test()
         std::ofstream output(filename.c_str());
         data_out.write_vtu(output);
 
-        if(dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+        if (dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
           {
             std::vector<std::string> filenames;
-            for(unsigned int i = 0;
-                i < dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-                ++i)
+            for (unsigned int i = 0;
+                 i < dealii::Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+                 ++i)
               filenames.push_back(output_name(i));
 
             const std::string master_name = "output.pvtu";
@@ -288,7 +288,7 @@ test()
       }
     }
 
-  for(unsigned int i = 0; i < locally_owned_set.n_elements(); ++i)
+  for (unsigned int i = 0; i < locally_owned_set.n_elements(); ++i)
     {
       const unsigned int ind = locally_owned_set.nth_index_in_set(i);
       const double       v   = rhs[ind];
@@ -300,7 +300,7 @@ test()
                        MPI_COMM_WORLD))));
     }
 
-  if(dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "Ok" << std::endl;
 
   dh.clear();

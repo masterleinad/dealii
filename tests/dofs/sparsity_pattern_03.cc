@@ -40,7 +40,7 @@ check()
 {
   // create two different triangulations
   Triangulation<dim> triangulation_1;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(triangulation_1, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(triangulation_1, -1, 1);
@@ -49,11 +49,11 @@ check()
   triangulation_1.execute_coarsening_and_refinement();
   triangulation_1.begin_active(2)->set_refine_flag();
   triangulation_1.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     triangulation_1.refine_global(2);
 
   Triangulation<dim> triangulation_2;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(triangulation_2, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(triangulation_2, -1, 1);
@@ -62,7 +62,7 @@ check()
   triangulation_2.execute_coarsening_and_refinement();
   (++triangulation_2.begin_active(2))->set_refine_flag();
   triangulation_2.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     triangulation_2.refine_global(2);
 
   FESystem<dim>   element_1(FE_Q<dim>(1), 2, FE_Q<dim>(2), 1);

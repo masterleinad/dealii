@@ -21,7 +21,7 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int i = 1; i < 4; ++i)
-    for(unsigned int j = i; j < 4; ++j)
+  for (unsigned int i = 1; i < 4; ++i)
+    for (unsigned int j = i; j < 4; ++j)
       do_check(FE_DGPNonparametric<dim>(i), FE_DGPNonparametric<dim>(j));
 }

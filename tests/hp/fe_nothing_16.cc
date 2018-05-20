@@ -58,8 +58,8 @@ test()
   // the following (second) call to reinit
   // used to abort
   fe_values.reinit(dof_handler.begin_active(), 1);
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-    for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+  for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
       deallog << "i=" << i << ", q=" << q
               << ", value=" << fe_values[nothing].value(i, q) << std::endl;
 }

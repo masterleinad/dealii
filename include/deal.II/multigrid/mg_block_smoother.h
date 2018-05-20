@@ -174,7 +174,7 @@ inline void
 MGSmootherBlock<MatrixType, RelaxationType, number>::clear()
 {
   unsigned int i = matrices.min_level(), max_level = matrices.max_level();
-  for(; i <= max_level; ++i)
+  for (; i <= max_level; ++i)
     {
       smoothers[i] = LinearOperator<BlockVector<number>>();
       matrices[i]  = LinearOperator<BlockVector<number>>();
@@ -194,7 +194,7 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a
       // rich enough interface to populate reinit_(domain|range)_vector.
@@ -234,7 +234,7 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::smooth(
   unsigned int maxlevel = matrices.max_level();
   unsigned int steps2   = this->steps;
 
-  if(this->variable)
+  if (this->variable)
     steps2 *= (1 << (maxlevel - level));
 
   typename VectorMemory<BlockVector<number>>::Pointer r(*this->mem);
@@ -243,12 +243,12 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::smooth(
   d->reinit(u);
 
   bool T = this->transpose;
-  if(this->symmetric && (steps2 % 2 == 0))
+  if (this->symmetric && (steps2 % 2 == 0))
     T = false;
 
-  for(unsigned int i = 0; i < steps2; ++i)
+  for (unsigned int i = 0; i < steps2; ++i)
     {
-      if(T)
+      if (T)
         {
           matrices[level].vmult(*r, u);
           r->sadd(-1., 1., rhs);
@@ -261,7 +261,7 @@ MGSmootherBlock<MatrixType, RelaxationType, number>::smooth(
           smoothers[level].vmult(*d, *r);
         }
       u += *d;
-      if(this->symmetric)
+      if (this->symmetric)
         T = !T;
     }
 }

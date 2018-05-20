@@ -32,10 +32,10 @@ check_this(const DoFHandler<dim>& dof_handler)
   // set up X-shape mask
   const unsigned int n_components = dof_handler.get_fe().n_components();
   Table<2, DoFTools::Coupling> mask(n_components, n_components);
-  for(unsigned int i = 0; i < n_components; ++i)
-    for(unsigned int j = 0; j < n_components; ++j)
+  for (unsigned int i = 0; i < n_components; ++i)
+    for (unsigned int j = 0; j < n_components; ++j)
       mask[i][j] = DoFTools::none;
-  for(unsigned int i = 0; i < n_components; ++i)
+  for (unsigned int i = 0; i < n_components; ++i)
     mask[i][i] = mask[i][n_components - i - 1] = DoFTools::always;
 
   // create sparsity pattern
@@ -53,10 +53,10 @@ check_this(const DoFHandler<dim>& dof_handler)
   // pattern (if we write out the
   // whole pattern, the output file
   // would be in the range of 40 MB)
-  for(unsigned int l = 0; l < 10; ++l)
+  for (unsigned int l = 0; l < 10; ++l)
     {
       const unsigned int line = l * (sp.n_rows() / 10);
-      for(unsigned int c = 0; c < sp.row_length(line); ++c)
+      for (unsigned int c = 0; c < sp.row_length(line); ++c)
         deallog << sp.column_number(line, c) << " ";
       deallog << std::endl;
     }
@@ -67,7 +67,7 @@ check_this(const DoFHandler<dim>& dof_handler)
           << sp.n_nonzero_elements() << std::endl;
 
   unsigned int hash = 0;
-  for(unsigned int l = 0; l < sp.n_rows(); ++l)
+  for (unsigned int l = 0; l < sp.n_rows(); ++l)
     hash
       += l
          * (sp.row_length(l) + (sp.begin(l) - sp.begin())

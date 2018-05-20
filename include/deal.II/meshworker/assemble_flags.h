@@ -112,19 +112,19 @@ namespace MeshWorker
   operator<<(StreamType& s, AssembleFlags u)
   {
     s << " AssembleFlags";
-    if(u & assemble_own_cells)
+    if (u & assemble_own_cells)
       s << "|own_cells";
-    if(u & assemble_own_interior_faces_once)
+    if (u & assemble_own_interior_faces_once)
       s << "|own_faces_once";
-    if(u & assemble_own_interior_faces_both)
+    if (u & assemble_own_interior_faces_both)
       s << "|own_faces_both";
-    if(u & assemble_ghost_cells)
+    if (u & assemble_ghost_cells)
       s << "|ghost_cells";
-    if(u & assemble_ghost_faces_once)
+    if (u & assemble_ghost_faces_once)
       s << "|ghost_faces_once";
-    if(u & assemble_ghost_faces_both)
+    if (u & assemble_ghost_faces_both)
       s << "|ghost_faces_both";
-    if(u & assemble_boundary_faces)
+    if (u & assemble_boundary_faces)
       s << "|boundary_faces";
     return s;
   }

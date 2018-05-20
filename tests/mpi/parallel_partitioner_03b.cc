@@ -29,7 +29,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   const unsigned int set = 20;
@@ -37,10 +37,10 @@ test()
   const unsigned int local_size  = set - myid;
   unsigned int       global_size = 0;
   unsigned int       my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  for (unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
-      if(i < myid)
+      if (i < myid)
         my_start += set - i;
     }
   // each processor owns some indices and all
@@ -53,7 +53,7 @@ test()
   IndexSet local_relevant(global_size);
   local_relevant = local_owned;
 
-  if(myid == 0)
+  if (myid == 0)
     {
       std::vector<unsigned int> ghost_indices = {1,
                                                  2,
@@ -67,7 +67,7 @@ test()
                                                  2 * set + 3};
       local_relevant.add_indices(ghost_indices.begin(), ghost_indices.end());
     }
-  else if(myid == 1)
+  else if (myid == 1)
     {
       std::vector<unsigned int> ghost_indices = {1,
                                                  2,
@@ -82,7 +82,7 @@ test()
                                                  3 * set};
       local_relevant.add_indices(ghost_indices.begin(), ghost_indices.end());
     }
-  else if(myid == 2)
+  else if (myid == 2)
     {
       std::vector<unsigned int> ghost_indices
         = {set - 2, set - 1, set, set + 1, 2 * set, 2 * set + 1, 2 * set + 3};
@@ -106,17 +106,17 @@ test()
     file << "relevant:" << std::endl;
     local_relevant.print(file);
     file << "ghost targets: ";
-    for(unsigned int i = 0; i < v.ghost_targets().size(); ++i)
+    for (unsigned int i = 0; i < v.ghost_targets().size(); ++i)
       file << "[" << v.ghost_targets()[i].first << "/"
            << v.ghost_targets()[i].second << "] ";
     file << std::endl;
     file << "import targets: ";
-    for(unsigned int i = 0; i < v.import_targets().size(); ++i)
+    for (unsigned int i = 0; i < v.import_targets().size(); ++i)
       file << "[" << v.import_targets()[i].first << "/"
            << v.import_targets()[i].second << "] ";
     file << std::endl;
     file << "import indices:" << std::endl;
-    for(unsigned int i = 0; i < v.import_indices().size(); ++i)
+    for (unsigned int i = 0; i < v.import_indices().size(); ++i)
       file << "[" << v.import_indices()[i].first << "/"
            << v.import_indices()[i].second << ")" << std::endl;
     file << "****" << std::endl;
@@ -124,9 +124,9 @@ test()
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int i = 0; i < numproc; ++i)
+      for (unsigned int i = 0; i < numproc; ++i)
         {
           cat_file((std::string("dat.") + Utilities::int_to_string(i)).c_str());
         }
@@ -142,7 +142,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

@@ -56,13 +56,13 @@ print_matrix(Triangulation<dim>&       tr,
   Vector<double> in(n_fine);
   Vector<double> out(n_coarse);
 
-  for(unsigned int i = 0; i < n_fine; ++i)
+  for (unsigned int i = 0; i < n_fine; ++i)
     {
       in    = 0.;
       out   = 0.;
       in(i) = 1.;
       transfer.restrict_and_add(level, out, in);
-      for(unsigned int k = 0; k < out.size(); ++k)
+      for (unsigned int k = 0; k < out.size(); ++k)
         deallog << '\t' << out(k);
       deallog << std::endl;
     }

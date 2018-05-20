@@ -108,7 +108,7 @@ main(int argc, char** argv)
       test(-0.1, 0.1);
       test(9.1, -6.1);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -121,7 +121,7 @@ main(int argc, char** argv)
                 << std::endl;
       throw;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

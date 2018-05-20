@@ -30,7 +30,7 @@ PolynomialsRT_Bubbles<dim>::PolynomialsRT_Bubbles(const unsigned int k)
 {
   Assert(dim >= 2, ExcImpossibleInDim(dim));
 
-  for(unsigned int i = 0; i < monomials.size(); ++i)
+  for (unsigned int i = 0; i < monomials.size(); ++i)
     monomials[i] = Polynomials::Monomial<double>(i);
 }
 
@@ -87,11 +87,11 @@ PolynomialsRT_Bubbles<dim>::compute(
                                  p_grad_grads,
                                  p_third_derivatives,
                                  p_fourth_derivatives);
-    for(unsigned int i = 0; i < p_values.size(); ++i)
+    for (unsigned int i = 0; i < p_values.size(); ++i)
       values[i] = p_values[i];
-    for(unsigned int i = 0; i < p_grads.size(); ++i)
+    for (unsigned int i = 0; i < p_grads.size(); ++i)
       grads[i] = p_grads[i];
-    for(unsigned int i = 0; i < p_grad_grads.size(); ++i)
+    for (unsigned int i = 0; i < p_grad_grads.size(); ++i)
       grad_grads[i] = p_grad_grads[i];
   }
 
@@ -107,7 +107,7 @@ PolynomialsRT_Bubbles<dim>::compute(
 
   unsigned int start = n_sub;
 
-  if(dim == 2)
+  if (dim == 2)
     {
       // In 2d the curl part of the space is spanned by the vectors
       // of two types. The first one is
@@ -117,16 +117,16 @@ PolynomialsRT_Bubbles<dim>::compute(
       // rotation of the coordinates.
       //  monoval_i = x^i,
       //  monoval_plus = x^(k+1)
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         monomials[my_degree + 1].value(
           unit_point(d), n_derivatives, monoval_plus[d]);
 
-      for(unsigned int i = 0; i <= my_degree; ++i, ++start)
+      for (unsigned int i = 0; i <= my_degree; ++i, ++start)
         {
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             monomials[i].value(unit_point(d), n_derivatives, monoval_i[d]);
 
-          if(values.size() != 0)
+          if (values.size() != 0)
             {
               values[start][0] = monoval_i[0][0] * monoval_plus[1][1];
               values[start][1] = -monoval_i[0][1] * monoval_plus[1][0];
@@ -137,7 +137,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                 = monoval_plus[0][1] * monoval_i[1][0];
             }
 
-          if(grads.size() != 0)
+          if (grads.size() != 0)
             {
               grads[start][0][0] = monoval_i[0][1] * monoval_plus[1][1];
               grads[start][0][1] = monoval_i[0][0] * monoval_plus[1][2];
@@ -154,7 +154,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                 = monoval_plus[0][1] * monoval_i[1][1];
             }
 
-          if(grad_grads.size() != 0)
+          if (grad_grads.size() != 0)
             {
               grad_grads[start][0][0][0] = monoval_i[0][2] * monoval_plus[1][1];
               grad_grads[start][0][0][1] = monoval_i[0][1] * monoval_plus[1][2];
@@ -189,7 +189,7 @@ PolynomialsRT_Bubbles<dim>::compute(
         }
       Assert(start == n_pols - my_degree - 1, ExcInternalError());
     }
-  else if(dim == 3)
+  else if (dim == 3)
     {
       // In 3d the first type of basis vector is
       //  [ x^i * y^j * z^k * (j+k+2) ]
@@ -201,7 +201,7 @@ PolynomialsRT_Bubbles<dim>::compute(
       // of the coordinates.
       //  monoval = x^k,   monoval_plus = x^(k+1)
       //  monoval_* = x^*, monoval_jplus = x^(j+1)
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         {
           monomials[my_degree + 1].value(
             unit_point(d), n_derivatives, monoval_plus[d]);
@@ -210,14 +210,14 @@ PolynomialsRT_Bubbles<dim>::compute(
 
       const unsigned int n_curls = (my_degree + 1) * (2 * my_degree + 1);
       // Span of $\tilde{B}$
-      for(unsigned int i = 0; i <= my_degree; ++i)
+      for (unsigned int i = 0; i <= my_degree; ++i)
         {
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             monomials[i].value(unit_point(d), n_derivatives, monoval_i[d]);
 
-          for(unsigned int j = 0; j <= my_degree; ++j)
+          for (unsigned int j = 0; j <= my_degree; ++j)
             {
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 {
                   monomials[j].value(
                     unit_point(d), n_derivatives, monoval_j[d]);
@@ -225,7 +225,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     unit_point(d), n_derivatives, monoval_jplus[d]);
                 }
 
-              if(values.size() != 0)
+              if (values.size() != 0)
                 {
                   values[start][0] = monoval_i[0][0] * monoval_j[1][0]
                                      * monoval[2][0]
@@ -253,7 +253,7 @@ PolynomialsRT_Bubbles<dim>::compute(
 
                   // Only unique triples of powers (i j k)
                   // and (i k j) are allowed, 0 <= i,j <= k
-                  if(j != my_degree)
+                  if (j != my_degree)
                     {
                       values[start + 1][0]
                         = monoval_i[0][0] * monoval[1][0] * monoval_j[2][0]
@@ -286,7 +286,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     }
                 }
 
-              if(grads.size() != 0)
+              if (grads.size() != 0)
                 {
                   grads[start][0][0] = monoval_i[0][1] * monoval_j[1][0]
                                        * monoval[2][0]
@@ -354,7 +354,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     = monoval_j[0][0] * monoval[1][0] * monoval_i[2][1]
                       * static_cast<double>(j + my_degree + 2);
 
-                  if(j != my_degree)
+                  if (j != my_degree)
                     {
                       grads[start + 1][0][0]
                         = monoval_i[0][1] * monoval[1][0] * monoval_j[2][0]
@@ -439,7 +439,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     }
                 }
 
-              if(grad_grads.size() != 0)
+              if (grad_grads.size() != 0)
                 {
                   grad_grads[start][0][0][0]
                     = monoval_i[0][2] * monoval_j[1][0] * monoval[2][0]
@@ -633,7 +633,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     = monoval_j[0][0] * monoval[1][0] * monoval_i[2][2]
                       * static_cast<double>(j + my_degree + 2);
 
-                  if(j != my_degree)
+                  if (j != my_degree)
                     {
                       grad_grads[start + 1][0][0][0]
                         = monoval_i[0][2] * monoval[1][0] * monoval_j[2][0]
@@ -883,7 +883,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     }
                 }
 
-              if(j == my_degree)
+              if (j == my_degree)
                 start += 1;
               else
                 start += 2;
@@ -897,7 +897,7 @@ template <int dim>
 unsigned int
 PolynomialsRT_Bubbles<dim>::compute_n_pols(const unsigned int k)
 {
-  if(dim == 1 || dim == 2 || dim == 3)
+  if (dim == 1 || dim == 2 || dim == 3)
     return dim * Utilities::fixed_power<dim>(k + 1);
 
   Assert(false, ExcNotImplemented());

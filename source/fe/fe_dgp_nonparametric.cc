@@ -44,11 +44,11 @@ FE_DGPNonparametric<dim, spacedim>::FE_DGPNonparametric(
     polynomial_space(Polynomials::Legendre::generate_complete_basis(degree))
 {
   const unsigned int n_dofs = this->dofs_per_cell;
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
-      ref_case < RefinementCase<dim>::isotropic_refinement + 1;
-      ++ref_case)
+  for (unsigned int ref_case = RefinementCase<dim>::cut_x;
+       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
+       ++ref_case)
     {
-      if(dim != 2 && ref_case != RefinementCase<dim>::isotropic_refinement)
+      if (dim != 2 && ref_case != RefinementCase<dim>::isotropic_refinement)
         // do nothing, as anisotropic
         // refinement is not
         // implemented so far
@@ -56,12 +56,12 @@ FE_DGPNonparametric<dim, spacedim>::FE_DGPNonparametric(
 
       const unsigned int nc
         = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
-      for(unsigned int i = 0; i < nc; ++i)
+      for (unsigned int i = 0; i < nc; ++i)
         {
           this->prolongation[ref_case - 1][i].reinit(n_dofs, n_dofs);
           // Fill prolongation matrices with
           // embedding operators
-          for(unsigned int j = 0; j < n_dofs; ++j)
+          for (unsigned int j = 0; j < n_dofs; ++j)
             this->prolongation[ref_case - 1][i](j, j) = 1.;
         }
     }
@@ -220,7 +220,7 @@ FE_DGPNonparametric<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, static_cast<unsigned int>(0));
   dpo[dim] = deg + 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     {
       dpo[dim] *= deg + 1 + i;
       dpo[dim] /= i + 1;
@@ -235,7 +235,7 @@ FE_DGPNonparametric<dim, spacedim>::requires_update_flags(
 {
   UpdateFlags out = flags;
 
-  if(flags & (update_values | update_gradients | update_hessians))
+  if (flags & (update_values | update_gradients | update_hessians))
     out |= update_quadrature_points;
 
   return out;
@@ -299,8 +299,8 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_values(
   std::vector<Tensor<3, dim>> empty_vector_of_3rd_order_tensors;
   std::vector<Tensor<4, dim>> empty_vector_of_4th_order_tensors;
 
-  if(fe_internal.update_each & (update_values | update_gradients))
-    for(unsigned int i = 0; i < n_q_points; ++i)
+  if (fe_internal.update_each & (update_values | update_gradients))
+    for (unsigned int i = 0; i < n_q_points; ++i)
       {
         polynomial_space.compute(mapping_data.quadrature_points[i],
                                  values,
@@ -309,16 +309,16 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_values(
                                  empty_vector_of_3rd_order_tensors,
                                  empty_vector_of_4th_order_tensors);
 
-        if(fe_internal.update_each & update_values)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_values)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_values[k][i] = values[k];
 
-        if(fe_internal.update_each & update_gradients)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_gradients)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_gradients[k][i] = grads[k];
 
-        if(fe_internal.update_each & update_hessians)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_hessians)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_hessians[k][i] = grad_grads[k];
       }
 }
@@ -353,8 +353,8 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
   std::vector<Tensor<3, dim>> empty_vector_of_3rd_order_tensors;
   std::vector<Tensor<4, dim>> empty_vector_of_4th_order_tensors;
 
-  if(fe_internal.update_each & (update_values | update_gradients))
-    for(unsigned int i = 0; i < n_q_points; ++i)
+  if (fe_internal.update_each & (update_values | update_gradients))
+    for (unsigned int i = 0; i < n_q_points; ++i)
       {
         polynomial_space.compute(mapping_data.quadrature_points[i],
                                  values,
@@ -363,16 +363,16 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_face_values(
                                  empty_vector_of_3rd_order_tensors,
                                  empty_vector_of_4th_order_tensors);
 
-        if(fe_internal.update_each & update_values)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_values)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_values[k][i] = values[k];
 
-        if(fe_internal.update_each & update_gradients)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_gradients)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_gradients[k][i] = grads[k];
 
-        if(fe_internal.update_each & update_hessians)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_hessians)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_hessians[k][i] = grad_grads[k];
       }
 }
@@ -408,8 +408,8 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_subface_values(
   std::vector<Tensor<3, dim>> empty_vector_of_3rd_order_tensors;
   std::vector<Tensor<4, dim>> empty_vector_of_4th_order_tensors;
 
-  if(fe_internal.update_each & (update_values | update_gradients))
-    for(unsigned int i = 0; i < n_q_points; ++i)
+  if (fe_internal.update_each & (update_values | update_gradients))
+    for (unsigned int i = 0; i < n_q_points; ++i)
       {
         polynomial_space.compute(mapping_data.quadrature_points[i],
                                  values,
@@ -418,16 +418,16 @@ FE_DGPNonparametric<dim, spacedim>::fill_fe_subface_values(
                                  empty_vector_of_3rd_order_tensors,
                                  empty_vector_of_4th_order_tensors);
 
-        if(fe_internal.update_each & update_values)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_values)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_values[k][i] = values[k];
 
-        if(fe_internal.update_each & update_gradients)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_gradients)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_gradients[k][i] = grads[k];
 
-        if(fe_internal.update_each & update_hessians)
-          for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        if (fe_internal.update_each & update_hessians)
+          for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
             output_data.shape_hessians[k][i] = grad_grads[k];
       }
 }
@@ -497,8 +497,8 @@ FE_DGPNonparametric<dim, spacedim>::hp_vertex_dof_identities(
 {
   // there are no such constraints for DGPNonparametric
   // elements at all
-  if(dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
-     != nullptr)
+  if (dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
+      != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -514,8 +514,8 @@ FE_DGPNonparametric<dim, spacedim>::hp_line_dof_identities(
 {
   // there are no such constraints for DGPNonparametric
   // elements at all
-  if(dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
-     != nullptr)
+  if (dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
+      != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -531,8 +531,8 @@ FE_DGPNonparametric<dim, spacedim>::hp_quad_dof_identities(
 {
   // there are no such constraints for DGPNonparametric
   // elements at all
-  if(dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
-     != nullptr)
+  if (dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
+      != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -549,8 +549,8 @@ FE_DGPNonparametric<dim, spacedim>::compare_for_face_domination(
   // check whether both are discontinuous
   // elements, see the description of
   // FiniteElementDomination::Domination
-  if(dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
-     != nullptr)
+  if (dynamic_cast<const FE_DGPNonparametric<dim, spacedim>*>(&fe_other)
+      != nullptr)
     return FiniteElementDomination::no_requirements;
 
   Assert(false, ExcNotImplemented());

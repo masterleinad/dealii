@@ -67,7 +67,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   Vector<double> v1(m);
   Vector<double> v2(m);
 
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     u(i) = i * i;
 
   deallog << "operator= (const FullMatrix<number>&) ok" << std::endl;
@@ -75,26 +75,26 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   A.vmult(v1, u);
   LA.vmult(v2, u);
   v1 -= v2;
-  if(v1.l2_norm() < 1.e-14)
+  if (v1.l2_norm() < 1.e-14)
     deallog << "vmult ok" << std::endl;
   v1 = v2;
 
   A.vmult_add(v1, u);
   LA.vmult_add(v2, u);
   v1 -= v2;
-  if(v1.l2_norm() < 1.e-14)
+  if (v1.l2_norm() < 1.e-14)
     deallog << "vmult_add ok" << std::endl;
 
   LA.Tvmult(u, v2);
   u *= -1;
   A.Tvmult_add(u, v2);
-  if(u.l2_norm() < 1.e-14)
+  if (u.l2_norm() < 1.e-14)
     deallog << "Tvmult ok" << std::endl;
 
   A.Tvmult(u, v2);
   u *= -1;
   LA.Tvmult_add(u, v2);
-  if(u.l2_norm() < 1.e-14)
+  if (u.l2_norm() < 1.e-14)
     deallog << "Tvmult_add ok" << std::endl;
 
   deallog.pop();
@@ -118,7 +118,7 @@ main()
   A.fill(symm);
   LA = A;
   LA.compute_eigenvalues();
-  for(unsigned int i = 0; i < A.m(); ++i)
+  for (unsigned int i = 0; i < A.m(); ++i)
     {
       std::complex<double> lambda = LA.eigenvalue(i);
       deallog << "Eigenvalues " << (int) (lambda.real() + .0001) << '\t'

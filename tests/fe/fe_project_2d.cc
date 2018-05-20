@@ -110,7 +110,7 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 
   const double PI  = numbers::PI;
   double       val = 0.0;
-  switch(component)
+  switch (component)
     {
       case 0:
         val = cos(PI * p(0)) * sin(PI * p(1));
@@ -127,7 +127,7 @@ void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
                                   Vector<double>&   values) const
 {
-  for(int i = 0; i < dim; ++i)
+  for (int i = 0; i < dim; ++i)
     values(i) = value(p, i);
 }
 
@@ -141,9 +141,9 @@ void create_tria(Triangulation<2>& triangulation,
     = {{0, 1, 3, 4}, {1, 2, 4, 5}, {3, 4, 6, 7}, {4, 5, 7, 8}};
 
   std::vector<CellData<2>> cells(n_cells, CellData<2>());
-  for(unsigned i = 0; i < cells.size(); ++i)
+  for (unsigned i = 0; i < cells.size(); ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     }
@@ -177,7 +177,7 @@ test(const FiniteElement<dim>& fe,
   std::vector<typename FEValuesViews::Vector<dim>::curl_type> curl_v(
     n_q_points);
 
-  for(unsigned cycle = 0; cycle < n_cycles; ++cycle)
+  for (unsigned cycle = 0; cycle < n_cycles; ++cycle)
     {
       dof_handler.distribute_dofs(fe);
 
@@ -209,16 +209,16 @@ test(const FiniteElement<dim>& fe,
                                 | update_values | update_gradients);
       unsigned int  cell_index = 0;
 
-      for(typename DoFHandler<dim>::active_cell_iterator cell
-          = dof_handler.begin_active();
-          cell != dof_handler.end();
-          ++cell, ++cell_index)
+      for (typename DoFHandler<dim>::active_cell_iterator cell
+           = dof_handler.begin_active();
+           cell != dof_handler.end();
+           ++cell, ++cell_index)
         {
           fe_values.reinit(cell);
           const std::vector<double>& JxW_values = fe_values.get_JxW_values();
           fe_values[vec].get_function_divergences(v, div_v);
           fe_values[vec].get_function_curls(v, curl_v);
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             {
               total_div += JxW_values[q_point] * div_v[q_point];
               total_curl += JxW_values[q_point] * curl_v[q_point];
@@ -228,7 +228,7 @@ test(const FiniteElement<dim>& fe,
       deallog << dof_handler.n_dofs() << "\t\t" << diff.l2_norm() << "\t"
               << total_curl << "\t" << total_div << std::endl;
 
-      if(global)
+      if (global)
         triangulation.refine_global();
       else
         {

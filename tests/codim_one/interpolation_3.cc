@@ -64,7 +64,7 @@ test(std::string filename)
 
   FunctionParser<spacedim>      func(spacedim);
   std::map<std::string, double> maps;
-  if(spacedim == 2)
+  if (spacedim == 2)
     func.initialize("x,y", "x^2; y^2", maps);
   else
     func.initialize("x,y,z", "x^2; y^2; z^2", maps);

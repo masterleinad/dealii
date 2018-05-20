@@ -102,7 +102,7 @@ test(const unsigned int size_1,
   scalapack_result.add(-1, scalapack_A);
   const double norm = scalapack_result.frobenius_norm();
 
-  if(this_mpi_process == 0)
+  if (this_mpi_process == 0)
     {
       std::cout << "rank=" << rank << "/" << std::min(size_1, size_2)
                 << std::endl;
@@ -123,9 +123,9 @@ main(int argc, char** argv)
 
   const double tol = 1e-10;
 
-  for(const auto& s_1 : sizes_1)
-    for(const auto& s_2 : sizes_2)
-      for(const auto& b : blocks)
-        if(b <= s_1 && b <= s_2)
+  for (const auto& s_1 : sizes_1)
+    for (const auto& s_2 : sizes_2)
+      for (const auto& b : blocks)
+        if (b <= s_1 && b <= s_2)
           test<double>(s_1, s_2, b, tol);
 }

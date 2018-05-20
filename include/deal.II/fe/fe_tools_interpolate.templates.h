@@ -142,9 +142,9 @@ namespace FETools
     const types::subdomain_id subdomain_id
       = dof1.get_triangulation().locally_owned_subdomain();
 
-    for(; cell1 != endc1; ++cell1, ++cell2)
-      if((cell1->subdomain_id() == subdomain_id)
-         || (subdomain_id == numbers::invalid_subdomain_id))
+    for (; cell1 != endc1; ++cell1, ++cell2)
+      if ((cell1->subdomain_id() == subdomain_id)
+          || (subdomain_id == numbers::invalid_subdomain_id))
         {
           Assert(cell1->get_fe().n_components()
                    == cell2->get_fe().n_components(),
@@ -162,9 +162,10 @@ namespace FETools
             = ((cell2->get_fe().dofs_per_vertex != 0)
                && (constraints.n_constraints() == 0));
 
-          if(hanging_nodes_not_allowed)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-                ++face)
+          if (hanging_nodes_not_allowed)
+            for (unsigned int face = 0;
+                 face < GeometryInfo<dim>::faces_per_cell;
+                 ++face)
               Assert(cell1->at_boundary(face)
                        || cell1->neighbor(face)->level() == cell1->level(),
                      ExcHangingNodesNotAllowed(0));
@@ -178,8 +179,8 @@ namespace FETools
           // matrix for this particular
           // pair of elements is already
           // there
-          if(interpolation_matrices[&cell1->get_fe()][&cell2->get_fe()].get()
-             == nullptr)
+          if (interpolation_matrices[&cell1->get_fe()][&cell2->get_fe()].get()
+              == nullptr)
             {
               auto interpolation_matrix
                 = std_cxx14::make_unique<FullMatrix<double>>(dofs_per_cell2,
@@ -199,11 +200,11 @@ namespace FETools
           dofs.resize(dofs_per_cell2);
           cell2->get_dof_indices(dofs);
 
-          for(unsigned int i = 0; i < dofs_per_cell2; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell2; ++i)
             {
               // if dof is locally_owned
               const types::global_dof_index gdi = dofs[i];
-              if(u2_elements.is_element(gdi))
+              if (u2_elements.is_element(gdi))
                 {
                   ::dealii::internal::ElementAccess<OutVector>::add(
                     u2_local(i), dofs[i], u2);
@@ -230,8 +231,8 @@ namespace FETools
     // for parallel vectors check,
     // if this component is owned by
     // this processor.
-    for(types::global_dof_index i = 0; i < dof2.n_dofs(); ++i)
-      if(locally_owned_dofs.is_element(i))
+    for (types::global_dof_index i = 0; i < dof2.n_dofs(); ++i)
+      if (locally_owned_dofs.is_element(i))
         {
           Assert(
             static_cast<typename OutVector::value_type>(
@@ -305,9 +306,9 @@ namespace FETools
     std::map<const FiniteElement<dim>*, std::unique_ptr<FullMatrix<double>>>
       interpolation_matrices;
 
-    for(; cell != endc; ++cell)
-      if((cell->subdomain_id() == subdomain_id)
-         || (subdomain_id == numbers::invalid_subdomain_id))
+    for (; cell != endc; ++cell)
+      if ((cell->subdomain_id() == subdomain_id)
+          || (subdomain_id == numbers::invalid_subdomain_id))
         {
           // For continuous elements on
           // grids with hanging nodes we
@@ -320,9 +321,10 @@ namespace FETools
             = (cell->get_fe().dofs_per_vertex != 0)
               || (fe2.dofs_per_vertex != 0);
 
-          if(hanging_nodes_not_allowed)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-                ++face)
+          if (hanging_nodes_not_allowed)
+            for (unsigned int face = 0;
+                 face < GeometryInfo<dim>::faces_per_cell;
+                 ++face)
               Assert(cell->at_boundary(face)
                        || cell->neighbor(face)->level() == cell->level(),
                      ExcHangingNodesNotAllowed(0));
@@ -331,7 +333,7 @@ namespace FETools
 
           // make sure back_interpolation
           // matrix is available
-          if(interpolation_matrices[&cell->get_fe()] == nullptr)
+          if (interpolation_matrices[&cell->get_fe()] == nullptr)
             {
               interpolation_matrices[&cell->get_fe()]
                 = std_cxx14::make_unique<FullMatrix<double>>(dofs_per_cell1,
@@ -470,9 +472,9 @@ namespace FETools
   {
     // For discontinuous elements without constraints take the simpler version
     // of the back_interpolate function.
-    if(dof1.get_fe().dofs_per_vertex == 0 && dof2.get_fe().dofs_per_vertex == 0
-       && constraints1.n_constraints() == 0
-       && constraints2.n_constraints() == 0)
+    if (dof1.get_fe().dofs_per_vertex == 0 && dof2.get_fe().dofs_per_vertex == 0
+        && constraints1.n_constraints() == 0
+        && constraints2.n_constraints() == 0)
       back_interpolate(dof1, u1, dof2.get_fe(), u1_interpolated);
     else
       {
@@ -545,13 +547,14 @@ namespace FETools
       = dof1.begin_active(),
       endc = dof1.end();
 
-    for(; cell != endc; ++cell)
-      if((cell->subdomain_id() == subdomain_id)
-         || (subdomain_id == numbers::invalid_subdomain_id))
+    for (; cell != endc; ++cell)
+      if ((cell->subdomain_id() == subdomain_id)
+          || (subdomain_id == numbers::invalid_subdomain_id))
         {
-          if(hanging_nodes_not_allowed)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-                ++face)
+          if (hanging_nodes_not_allowed)
+            for (unsigned int face = 0;
+                 face < GeometryInfo<dim>::faces_per_cell;
+                 ++face)
               Assert(cell->at_boundary(face)
                        || cell->neighbor(face)->level() == cell->level(),
                      ExcHangingNodesNotAllowed(0));
@@ -626,9 +629,9 @@ namespace FETools
     // without constraints take the
     // cheaper version of the
     // interpolation_difference function.
-    if(dof1.get_fe().dofs_per_vertex == 0 && dof2.get_fe().dofs_per_vertex == 0
-       && constraints1.n_constraints() == 0
-       && constraints2.n_constraints() == 0)
+    if (dof1.get_fe().dofs_per_vertex == 0 && dof2.get_fe().dofs_per_vertex == 0
+        && constraints1.n_constraints() == 0
+        && constraints2.n_constraints() == 0)
       interpolation_difference(dof1, u1, dof2.get_fe(), u1_difference);
     else
       {
@@ -671,12 +674,12 @@ namespace FETools
     get_projection_matrix(dof1.get_fe(), dof2.get_fe(), matrix);
 
     u2 = typename OutVector::value_type(0.);
-    while(cell2 != end)
+    while (cell2 != end)
       {
         cell1->get_dof_values(u1, u1_local);
         matrix.vmult(u2_local, u1_local);
         cell2->get_dof_indices(dofs);
-        for(unsigned int i = 0; i < n2; ++i)
+        for (unsigned int i = 0; i < n2; ++i)
           {
             ::dealii::internal::ElementAccess<OutVector>::add(
               u2_local(i), dofs[i], u2);

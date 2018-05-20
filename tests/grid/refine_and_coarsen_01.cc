@@ -37,7 +37,7 @@ check()
 
   Vector<float> estimated_error_per_cell;
   estimated_error_per_cell.reinit(tria.n_active_cells());
-  for(unsigned int j = 0; j < estimated_error_per_cell.size(); ++j)
+  for (unsigned int j = 0; j < estimated_error_per_cell.size(); ++j)
     estimated_error_per_cell(j) = 1.;
 
   deallog << "n_active_cells: " << tria.n_active_cells() << std::endl;

@@ -37,9 +37,9 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
     m.compress(VectorOperation::insert);
@@ -49,14 +49,14 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j + 1.);
 
     m.compress(VectorOperation::insert);
@@ -66,12 +66,12 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
-    if(myid == 1)
+    if (myid == 1)
       m.set(1, 3, 10.);
 
     m.compress(VectorOperation::insert);
@@ -81,9 +81,9 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
     m.set(1, 3, 10.);
@@ -95,9 +95,9 @@ test()
 
   {
     TrilinosWrappers::SparseMatrix m(rows, columns, MPI_COMM_WORLD);
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
     m.set(1, 3, 10.);
@@ -107,9 +107,9 @@ test()
     deallog << "Matrix norm set non-local twice: " << m.frobenius_norm()
             << std::endl;
 
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
     m.set(1, 3, 10.);
@@ -119,9 +119,9 @@ test()
     deallog << "Matrix norm set twice, 2nd attempt: " << m.frobenius_norm()
             << std::endl;
 
-    for(unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
-      for(unsigned int j = 0; j < m.n(); ++j)
-        if((i + 2 * j + 1) % 3 == 0)
+    for (unsigned int i = 5 * myid; i < 5 * (myid + 1); ++i)
+      for (unsigned int j = 0; j < m.n(); ++j)
+        if ((i + 2 * j + 1) % 3 == 0)
           m.set(i, j, i * j * .5 + .5);
 
     m.set(1, 3, 10.);
@@ -142,7 +142,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       std::ofstream logfile("output");
       deallog.attach(logfile);

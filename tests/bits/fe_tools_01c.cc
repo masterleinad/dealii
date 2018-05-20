@@ -43,7 +43,7 @@ check(const FE_Q<dim>& fe, const std::string& name)
   std::vector<unsigned int> n2(fe.dofs_per_cell);
   FETools::lexicographic_to_hierarchic_numbering(fe, n2);
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
     {
       Assert(n1[i] < fe.dofs_per_cell, ExcInternalError());
       Assert(n2[i] < fe.dofs_per_cell, ExcInternalError());
@@ -84,7 +84,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -97,7 +97,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

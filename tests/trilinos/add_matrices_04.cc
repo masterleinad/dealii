@@ -26,9 +26,9 @@ test(TrilinosWrappers::SparseMatrix& m)
   TrilinosWrappers::SparseMatrix m2(m.m(), m.n(), 0);
 
   // first set a few entries one-by-one
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         {
           m.set(i, j, i * j * .5 + .5);
           m2.set(i, j, 1.);
@@ -72,7 +72,7 @@ main(int argc, char** argv)
         test(m);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -86,7 +86,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -49,7 +49,7 @@ my_check_this(const DoFHandler<dim>& dof_handler,
   data_out_rotation.write_deal_II_intermediate(deallog.get_file_stream());
 
   // following only implemented for 1d+rotation=2d
-  if(dim == 1)
+  if (dim == 1)
     {
       data_out_rotation.write_povray(deallog.get_file_stream());
       data_out_rotation.write_eps(deallog.get_file_stream());

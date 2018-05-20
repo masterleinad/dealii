@@ -80,9 +80,9 @@ run(bool random_p, unsigned int* indx)
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  if(random_p)
+  if (random_p)
     {
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
           cell->set_active_fe_index((int) (4.0 * random_value<double>()));
         }
@@ -90,9 +90,9 @@ run(bool random_p, unsigned int* indx)
   else
     {
       unsigned int cell_no = 0;
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
-          if(cell_no >= triangulation.n_active_cells() / 2)
+          if (cell_no >= triangulation.n_active_cells() / 2)
             cell->set_active_fe_index(1);
           else
             cell->set_active_fe_index(0);

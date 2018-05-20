@@ -89,7 +89,7 @@ FunctionParser<dim>::initialize(const std::string&              variables,
   // parsed the variables string, if
   // none of this is the case, then
   // an exception is thrown.
-  if(time_dependent)
+  if (time_dependent)
     n_vars = dim + 1;
   else
     n_vars = dim;
@@ -117,7 +117,7 @@ namespace internal
   double
   mu_if(double condition, double thenvalue, double elsevalue)
   {
-    if(mu_round(condition))
+    if (mu_round(condition))
       return thenvalue;
     else
       return elsevalue;
@@ -204,7 +204,7 @@ namespace internal
     // which is initialized with the seed itself
     static std::map<double, boost::random::mt19937> rng_map;
 
-    if(rng_map.find(seed) == rng_map.end())
+    if (rng_map.find(seed) == rng_map.end())
       rng_map[seed] = boost::random::mt19937(static_cast<unsigned int>(seed));
 
     return uniform_distribution(rng_map[seed]);
@@ -238,20 +238,20 @@ FunctionParser<dim>::init_muparser() const
   // vars.get())
   fp.get().reserve(this->n_components);
   vars.get().resize(var_names.size());
-  for(unsigned int component = 0; component < this->n_components; ++component)
+  for (unsigned int component = 0; component < this->n_components; ++component)
     {
       fp.get().emplace_back(new mu::Parser());
 
-      for(std::map<std::string, double>::const_iterator constant
-          = constants.begin();
-          constant != constants.end();
-          ++constant)
+      for (std::map<std::string, double>::const_iterator constant
+           = constants.begin();
+           constant != constants.end();
+           ++constant)
         {
           fp.get()[component]->DefineConst(constant->first.c_str(),
                                            constant->second);
         }
 
-      for(unsigned int iv = 0; iv < var_names.size(); ++iv)
+      for (unsigned int iv = 0; iv < var_names.size(); ++iv)
         fp.get()[component]->DefineVar(var_names[iv].c_str(), &vars.get()[iv]);
 
       // define some compatibility functions:
@@ -320,23 +320,23 @@ FunctionParser<dim>::init_muparser() const
                                           "erfc",
                                           "rand",
                                           "rand_seed"};
-          for(unsigned int f = 0;
-              f < sizeof(function_names) / sizeof(function_names[0]);
-              ++f)
+          for (unsigned int f = 0;
+               f < sizeof(function_names) / sizeof(function_names[0]);
+               ++f)
             {
               const std::string  function_name        = function_names[f];
               const unsigned int function_name_length = function_name.size();
 
               std::string::size_type pos = 0;
-              while(true)
+              while (true)
                 {
                   // try to find any occurrences of the function name
                   pos = transformed_expression.find(function_name, pos);
-                  if(pos == std::string::npos)
+                  if (pos == std::string::npos)
                     break;
 
                   // replace whitespace until there no longer is any
-                  while(
+                  while (
                     (pos + function_name_length < transformed_expression.size())
                     && ((transformed_expression[pos + function_name_length]
                          == ' ')
@@ -354,7 +354,7 @@ FunctionParser<dim>::init_muparser() const
           // now use the transformed expression
           fp.get()[component]->SetExpr(transformed_expression);
         }
-      catch(mu::ParserError& e)
+      catch (mu::ParserError& e)
         {
           std::cerr << "Message:  <" << e.GetMsg() << ">\n";
           std::cerr << "Formula:  <" << e.GetExpr() << ">\n";
@@ -389,19 +389,19 @@ FunctionParser<dim>::value(const Point<dim>&  p,
          ExcIndexRange(component, 0, this->n_components));
 
   // initialize the parser if that hasn't happened yet on the current thread
-  if(fp.get().size() == 0)
+  if (fp.get().size() == 0)
     init_muparser();
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     vars.get()[i] = p(i);
-  if(dim != n_vars)
+  if (dim != n_vars)
     vars.get()[dim] = this->get_time();
 
   try
     {
       return fp.get()[component]->Eval();
     }
-  catch(mu::ParserError& e)
+  catch (mu::ParserError& e)
     {
       std::cerr << "Message:  <" << e.GetMsg() << ">\n";
       std::cerr << "Formula:  <" << e.GetExpr() << ">\n";
@@ -423,15 +423,15 @@ FunctionParser<dim>::vector_value(const Point<dim>& p,
          ExcDimensionMismatch(values.size(), this->n_components));
 
   // initialize the parser if that hasn't happened yet on the current thread
-  if(fp.get().size() == 0)
+  if (fp.get().size() == 0)
     init_muparser();
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     vars.get()[i] = p(i);
-  if(dim != n_vars)
+  if (dim != n_vars)
     vars.get()[dim] = this->get_time();
 
-  for(unsigned int component = 0; component < this->n_components; ++component)
+  for (unsigned int component = 0; component < this->n_components; ++component)
     values(component) = fp.get()[component]->Eval();
 }
 

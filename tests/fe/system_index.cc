@@ -36,21 +36,21 @@ check_fe(const FiniteElement<dim>& fe)
   const unsigned int n_blocks = fe.n_blocks();
 
   deallog << "Base elements:  " << n_base << std::endl << "Multiplicities:";
-  for(unsigned int b = 0; b < n_base; ++b)
+  for (unsigned int b = 0; b < n_base; ++b)
     deallog << ' ' << fe.element_multiplicity(b);
   deallog << std::endl << "First block   :";
-  for(unsigned int b = 0; b < n_base; ++b)
+  for (unsigned int b = 0; b < n_base; ++b)
     deallog << ' ' << fe.first_block_of_base(b);
 
   deallog << std::endl << "Blocks : " << n_blocks << std::endl;
 
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     {
       deallog << std::setw(3) << i;
       // Check consistency of
       // functions and inverse
       std::pair<unsigned int, unsigned int> p;
-      if(fe.is_primitive(i))
+      if (fe.is_primitive(i))
         {
           p = fe.system_to_component_index(i);
           Assert(fe.component_to_system_index(p.first, p.second) == i,
@@ -61,48 +61,48 @@ check_fe(const FiniteElement<dim>& fe)
   deallog << std::endl;
 
   deallog << "Next two lines: block index_in_block" << std::endl;
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     deallog << std::setw(3) << fe.system_to_block_index(i).first;
   deallog << std::endl;
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     deallog << std::setw(3) << fe.system_to_block_index(i).second;
   deallog << std::endl;
   deallog << "Next three lines: base block_in_base index_in_block" << std::endl;
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     deallog << std::setw(3) << fe.system_to_base_index(i).first.first;
   deallog << std::endl;
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     deallog << std::setw(3) << fe.system_to_base_index(i).first.second;
   deallog << std::endl;
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     deallog << std::setw(3) << fe.system_to_base_index(i).second;
   deallog << std::endl;
 
   deallog << "Next two lines: component index_in_component" << std::endl;
-  for(unsigned int i = 0; i < n_dofs; ++i)
-    if(fe.is_primitive(i))
+  for (unsigned int i = 0; i < n_dofs; ++i)
+    if (fe.is_primitive(i))
       deallog << std::setw(3) << fe.system_to_component_index(i).first;
     else
       deallog << std::setw(3) << 'x';
   deallog << std::endl;
-  for(unsigned int i = 0; i < n_dofs; ++i)
-    if(fe.is_primitive(i))
+  for (unsigned int i = 0; i < n_dofs; ++i)
+    if (fe.is_primitive(i))
       deallog << std::setw(3) << fe.system_to_component_index(i).second;
     else
       deallog << std::setw(3) << 'x';
   deallog << std::endl;
 
-  if(true || fe.is_primitive())
+  if (true || fe.is_primitive())
     {
       deallog << "Next two lines: component_to_base" << std::endl;
-      for(unsigned int i = 0; i < n_comp; ++i)
+      for (unsigned int i = 0; i < n_comp; ++i)
         deallog << std::setw(3) << fe.component_to_base_index(i).first;
       deallog << std::endl;
-      for(unsigned int i = 0; i < n_comp; ++i)
+      for (unsigned int i = 0; i < n_comp; ++i)
         deallog << std::setw(3) << fe.component_to_base_index(i).second;
       deallog << std::endl;
       deallog << "Next line: component_to_block_index" << std::endl;
-      for(unsigned int i = 0; i < n_comp; ++i)
+      for (unsigned int i = 0; i < n_comp; ++i)
         deallog << std::setw(3) << fe.component_to_block_index(i);
       deallog << std::endl;
     }

@@ -41,7 +41,7 @@ check_this(const DoFHandler<dim>& dof_handler,
 
   // the following is only
   // implemented for 2d
-  if(dim == 2)
+  if (dim == 2)
     {
       data_out.write_povray(deallog.get_file_stream());
       data_out.write_eps(deallog.get_file_stream());

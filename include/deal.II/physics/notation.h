@@ -631,7 +631,7 @@ namespace Physics
         indices_from_component<2>(const unsigned int component_n,
                                   const bool         symmetric)
         {
-          if(symmetric == true)
+          if (symmetric == true)
             {
               Assert(
                 (component_n < SymmetricTensor<2, 2>::n_independent_components),
@@ -657,7 +657,7 @@ namespace Physics
         indices_from_component<3>(const unsigned int component_n,
                                   const bool         symmetric)
         {
-          if(symmetric == true)
+          if (symmetric == true)
             {
               Assert(
                 (component_n < SymmetricTensor<2, 3>::n_independent_components),
@@ -694,10 +694,10 @@ namespace Physics
         vector_component_factor(const unsigned int component_i,
                                 const bool         symmetric)
         {
-          if(symmetric == false)
+          if (symmetric == false)
             return 1.0;
 
-          if(component_i < dim)
+          if (component_i < dim)
             return 1.0;
           else
             return numbers::SQRT2;
@@ -713,14 +713,14 @@ namespace Physics
                                 const unsigned int component_j,
                                 const bool         symmetric)
         {
-          if(symmetric == false)
+          if (symmetric == false)
             return 1.0;
 
           // This case check returns equivalent of this result:
           // internal::vector_component_factor<dim>(component_i,symmetric)*internal::vector_component_factor<dim>(component_j,symmetric);
-          if(component_i < dim && component_j < dim)
+          if (component_i < dim && component_j < dim)
             return 1.0;
-          else if(component_i >= dim && component_j >= dim)
+          else if (component_i >= dim && component_j >= dim)
             return 2.0;
           else // ((component_i >= dim && component_j < dim) || (component_i < dim && component_j >= dim))
             return numbers::SQRT2;
@@ -734,7 +734,7 @@ namespace Physics
       {
         Vector<Number>     out(1);
         const unsigned int n_rows = out.size();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           out(r) = s;
         return out;
       }
@@ -752,7 +752,7 @@ namespace Physics
       {
         Vector<Number>     out(v.n_independent_components);
         const unsigned int n_rows = out.size();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, false);
@@ -769,7 +769,7 @@ namespace Physics
       {
         Vector<Number>     out(t.n_independent_components);
         const unsigned int n_rows = out.size();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, false);
@@ -788,7 +788,7 @@ namespace Physics
       {
         Vector<Number>     out(st.n_independent_components);
         const unsigned int n_rows = out.size();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, true);
@@ -829,14 +829,14 @@ namespace Physics
         FullMatrix<Number> out(v.n_independent_components, 1);
         const unsigned int n_rows = out.m();
         const unsigned int n_cols = out.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, false);
             Assert(indices.first < dim, ExcInternalError());
             const unsigned int i = indices.first;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 Assert(c < 1, ExcInternalError());
                 out(r, c) = v[i];
@@ -852,7 +852,7 @@ namespace Physics
         FullMatrix<Number> out(dim, dim);
         const unsigned int n_rows = out.m();
         const unsigned int n_cols = out.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices_i
               = internal::indices_from_component<dim>(r, false);
@@ -860,7 +860,7 @@ namespace Physics
             Assert(indices_i.second < dim, ExcInternalError());
             const unsigned int i = indices_i.first;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 const std::pair<unsigned int, unsigned int> indices_j
                   = internal::indices_from_component<dim>(c, false);
@@ -917,19 +917,19 @@ namespace Physics
         const unsigned int n_rows = out.m();
         const unsigned int n_cols = out.n();
 
-        if(SubTensor1::rank == 2 && SubTensor2::rank == 1)
+        if (SubTensor1::rank == 2 && SubTensor2::rank == 1)
           {
             const bool subtensor_is_rank_2_symmetric_tensor
               = internal::is_rank_2_symmetric_tensor<SubTensor1>::value;
 
-            for(unsigned int r = 0; r < n_rows; ++r)
+            for (unsigned int r = 0; r < n_rows; ++r)
               {
                 const std::pair<unsigned int, unsigned int> indices_ij
                   = internal::indices_from_component<dim>(
                     r, subtensor_is_rank_2_symmetric_tensor);
                 Assert(indices_ij.first < dim, ExcInternalError());
                 Assert(indices_ij.second < dim, ExcInternalError());
-                if(subtensor_is_rank_2_symmetric_tensor)
+                if (subtensor_is_rank_2_symmetric_tensor)
                   {
                     Assert(indices_ij.second >= indices_ij.first,
                            ExcInternalError());
@@ -940,40 +940,40 @@ namespace Physics
                 const double factor = internal::vector_component_factor<dim>(
                   r, subtensor_is_rank_2_symmetric_tensor);
 
-                for(unsigned int c = 0; c < n_cols; ++c)
+                for (unsigned int c = 0; c < n_cols; ++c)
                   {
                     const std::pair<unsigned int, unsigned int> indices_k
                       = internal::indices_from_component<dim>(c, false);
                     Assert(indices_k.first < dim, ExcInternalError());
                     const unsigned int k = indices_k.first;
 
-                    if(subtensor_is_rank_2_symmetric_tensor)
+                    if (subtensor_is_rank_2_symmetric_tensor)
                       out(r, c) = factor * t[i][j][k];
                     else
                       out(r, c) = t[i][j][k];
                   }
               }
           }
-        else if(SubTensor1::rank == 1 && SubTensor2::rank == 2)
+        else if (SubTensor1::rank == 1 && SubTensor2::rank == 2)
           {
             const bool subtensor_is_rank_2_symmetric_tensor
               = internal::is_rank_2_symmetric_tensor<SubTensor2>::value;
 
-            for(unsigned int r = 0; r < n_rows; ++r)
+            for (unsigned int r = 0; r < n_rows; ++r)
               {
                 const std::pair<unsigned int, unsigned int> indices_k
                   = internal::indices_from_component<dim>(r, false);
                 Assert(indices_k.first < dim, ExcInternalError());
                 const unsigned int k = indices_k.first;
 
-                for(unsigned int c = 0; c < n_cols; ++c)
+                for (unsigned int c = 0; c < n_cols; ++c)
                   {
                     const std::pair<unsigned int, unsigned int> indices_ij
                       = internal::indices_from_component<dim>(
                         c, subtensor_is_rank_2_symmetric_tensor);
                     Assert(indices_ij.first < dim, ExcInternalError());
                     Assert(indices_ij.second < dim, ExcInternalError());
-                    if(subtensor_is_rank_2_symmetric_tensor)
+                    if (subtensor_is_rank_2_symmetric_tensor)
                       {
                         Assert(indices_ij.second >= indices_ij.first,
                                ExcInternalError());
@@ -981,7 +981,7 @@ namespace Physics
                     const unsigned int i = indices_ij.first;
                     const unsigned int j = indices_ij.second;
 
-                    if(subtensor_is_rank_2_symmetric_tensor)
+                    if (subtensor_is_rank_2_symmetric_tensor)
                       {
                         const double factor
                           = internal::vector_component_factor<dim>(
@@ -1010,7 +1010,7 @@ namespace Physics
           Tensor<2, dim, Number>::n_independent_components);
         const unsigned int n_rows = out.m();
         const unsigned int n_cols = out.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices_ij
               = internal::indices_from_component<dim>(r, false);
@@ -1019,7 +1019,7 @@ namespace Physics
             const unsigned int i = indices_ij.first;
             const unsigned int j = indices_ij.second;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 const std::pair<unsigned int, unsigned int> indices_kl
                   = internal::indices_from_component<dim>(c, false);
@@ -1043,7 +1043,7 @@ namespace Physics
           SymmetricTensor<2, dim, Number>::n_independent_components);
         const unsigned int n_rows = out.m();
         const unsigned int n_cols = out.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices_ij
               = internal::indices_from_component<dim>(r, true);
@@ -1053,7 +1053,7 @@ namespace Physics
             const unsigned int i = indices_ij.first;
             const unsigned int j = indices_ij.second;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 const std::pair<unsigned int, unsigned int> indices_kl
                   = internal::indices_from_component<dim>(c, true);
@@ -1095,7 +1095,7 @@ namespace Physics
         Assert(vec.size() == v.n_independent_components,
                ExcDimensionMismatch(vec.size(), v.n_independent_components));
         const unsigned int n_rows = vec.size();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, false);
@@ -1112,7 +1112,7 @@ namespace Physics
         Assert(vec.size() == t.n_independent_components,
                ExcDimensionMismatch(vec.size(), t.n_independent_components));
         const unsigned int n_rows = vec.size();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, false);
@@ -1131,7 +1131,7 @@ namespace Physics
         Assert(vec.size() == st.n_independent_components,
                ExcDimensionMismatch(vec.size(), st.n_independent_components));
         const unsigned int n_rows = vec.size();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, true);
@@ -1178,7 +1178,7 @@ namespace Physics
 
         const unsigned int n_rows = mtrx.m();
         const unsigned int n_cols = mtrx.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices
               = internal::indices_from_component<dim>(r, false);
@@ -1186,7 +1186,7 @@ namespace Physics
             Assert(indices.second == 0, ExcInternalError());
             const unsigned int i = indices.first;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 Assert(c < 1, ExcInternalError());
                 v[i] = mtrx(r, c);
@@ -1206,7 +1206,7 @@ namespace Physics
 
         const unsigned int n_rows = mtrx.m();
         const unsigned int n_cols = mtrx.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices_i
               = internal::indices_from_component<dim>(r, false);
@@ -1214,7 +1214,7 @@ namespace Physics
             Assert(indices_i.second < dim, ExcInternalError());
             const unsigned int i = indices_i.first;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 const std::pair<unsigned int, unsigned int> indices_j
                   = internal::indices_from_component<dim>(c, false);
@@ -1278,7 +1278,7 @@ namespace Physics
 
         const unsigned int n_rows = mtrx.m();
         const unsigned int n_cols = mtrx.n();
-        if(mtrx.n() == Tensor<1, dim, Number>::n_independent_components)
+        if (mtrx.n() == Tensor<1, dim, Number>::n_independent_components)
           {
             Assert(
               (mtrx.m() == Tensor<2, dim, Number>::n_independent_components)
@@ -1294,14 +1294,14 @@ namespace Physics
               = (mtrx.m()
                  == SymmetricTensor<2, dim, Number>::n_independent_components);
 
-            for(unsigned int r = 0; r < n_rows; ++r)
+            for (unsigned int r = 0; r < n_rows; ++r)
               {
                 const std::pair<unsigned int, unsigned int> indices_ij
                   = internal::indices_from_component<dim>(
                     r, subtensor_is_rank_2_symmetric_tensor);
                 Assert(indices_ij.first < dim, ExcInternalError());
                 Assert(indices_ij.second < dim, ExcInternalError());
-                if(subtensor_is_rank_2_symmetric_tensor)
+                if (subtensor_is_rank_2_symmetric_tensor)
                   {
                     Assert(indices_ij.second >= indices_ij.first,
                            ExcInternalError());
@@ -1314,14 +1314,14 @@ namespace Physics
                     / internal::vector_component_factor<dim>(
                         r, subtensor_is_rank_2_symmetric_tensor);
 
-                for(unsigned int c = 0; c < n_cols; ++c)
+                for (unsigned int c = 0; c < n_cols; ++c)
                   {
                     const std::pair<unsigned int, unsigned int> indices_k
                       = internal::indices_from_component<dim>(c, false);
                     Assert(indices_k.first < dim, ExcInternalError());
                     const unsigned int k = indices_k.first;
 
-                    if(subtensor_is_rank_2_symmetric_tensor)
+                    if (subtensor_is_rank_2_symmetric_tensor)
                       {
                         t[i][j][k] = inv_factor * mtrx(r, c);
                         t[j][i][k] = t[i][j][k];
@@ -1351,21 +1351,21 @@ namespace Physics
               = (mtrx.n()
                  == SymmetricTensor<2, dim, Number>::n_independent_components);
 
-            for(unsigned int r = 0; r < n_rows; ++r)
+            for (unsigned int r = 0; r < n_rows; ++r)
               {
                 const std::pair<unsigned int, unsigned int> indices_k
                   = internal::indices_from_component<dim>(r, false);
                 Assert(indices_k.first < dim, ExcInternalError());
                 const unsigned int k = indices_k.first;
 
-                for(unsigned int c = 0; c < n_cols; ++c)
+                for (unsigned int c = 0; c < n_cols; ++c)
                   {
                     const std::pair<unsigned int, unsigned int> indices_ij
                       = internal::indices_from_component<dim>(
                         c, subtensor_is_rank_2_symmetric_tensor);
                     Assert(indices_ij.first < dim, ExcInternalError());
                     Assert(indices_ij.second < dim, ExcInternalError());
-                    if(subtensor_is_rank_2_symmetric_tensor)
+                    if (subtensor_is_rank_2_symmetric_tensor)
                       {
                         Assert(indices_ij.second >= indices_ij.first,
                                ExcInternalError());
@@ -1373,7 +1373,7 @@ namespace Physics
                     const unsigned int i = indices_ij.first;
                     const unsigned int j = indices_ij.second;
 
-                    if(subtensor_is_rank_2_symmetric_tensor)
+                    if (subtensor_is_rank_2_symmetric_tensor)
                       {
                         const double inv_factor
                           = 1.0
@@ -1405,7 +1405,7 @@ namespace Physics
 
         const unsigned int n_rows = mtrx.m();
         const unsigned int n_cols = mtrx.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices_ij
               = internal::indices_from_component<dim>(r, false);
@@ -1414,7 +1414,7 @@ namespace Physics
             const unsigned int i = indices_ij.first;
             const unsigned int j = indices_ij.second;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 const std::pair<unsigned int, unsigned int> indices_kl
                   = internal::indices_from_component<dim>(c, false);
@@ -1449,7 +1449,7 @@ namespace Physics
 
         const unsigned int n_rows = mtrx.m();
         const unsigned int n_cols = mtrx.n();
-        for(unsigned int r = 0; r < n_rows; ++r)
+        for (unsigned int r = 0; r < n_rows; ++r)
           {
             const std::pair<unsigned int, unsigned int> indices_ij
               = internal::indices_from_component<dim>(r, false);
@@ -1458,7 +1458,7 @@ namespace Physics
             const unsigned int i = indices_ij.first;
             const unsigned int j = indices_ij.second;
 
-            for(unsigned int c = 0; c < n_cols; ++c)
+            for (unsigned int c = 0; c < n_cols; ++c)
               {
                 const std::pair<unsigned int, unsigned int> indices_kl
                   = internal::indices_from_component<dim>(c, false);

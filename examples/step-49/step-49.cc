@@ -72,19 +72,19 @@ print_mesh_info(const Triangulation<dim>& triangulation,
   // we then increment it):
   {
     std::map<types::boundary_id, unsigned int> boundary_count;
-    for(auto cell : triangulation.active_cell_iterators())
+    for (auto cell : triangulation.active_cell_iterators())
       {
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-            ++face)
+        for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+             ++face)
           {
-            if(cell->face(face)->at_boundary())
+            if (cell->face(face)->at_boundary())
               boundary_count[cell->face(face)->boundary_id()]++;
           }
       }
 
     std::cout << " boundary indicators: ";
-    for(const std::pair<const types::boundary_id, unsigned int>& pair :
-        boundary_count)
+    for (const std::pair<const types::boundary_id, unsigned int>& pair :
+         boundary_count)
       {
         std::cout << pair.first << "(" << pair.second << " times) ";
       }
@@ -171,12 +171,12 @@ grid_3()
   Triangulation<2> triangulation;
   GridGenerator::hyper_cube_with_cylindrical_hole(triangulation, 0.25, 1.0);
 
-  for(const auto& cell : triangulation.active_cell_iterators())
+  for (const auto& cell : triangulation.active_cell_iterators())
     {
-      for(unsigned int i = 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
+      for (unsigned int i = 0; i < GeometryInfo<2>::vertices_per_cell; ++i)
         {
           Point<2>& v = cell->vertex(i);
-          if(std::abs(v(1) - 1.0) < 1e-5)
+          if (std::abs(v(1) - 1.0) < 1e-5)
             v(1) += 0.5;
         }
     }
@@ -328,7 +328,7 @@ main()
       grid_6();
       grid_7();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -342,7 +342,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

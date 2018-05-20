@@ -417,11 +417,11 @@ namespace MeshWorker
                       const bool         gradients,
                       const bool         hessians)
   {
-    if(values)
+    if (values)
       value_selection.add(name);
-    if(gradients)
+    if (gradients)
       gradient_selection.add(name);
-    if(hessians)
+    if (hessians)
       hessian_selection.add(name);
   }
 
@@ -517,13 +517,13 @@ namespace MeshWorker
   VectorSelector::print(StreamType& s, const AnyData& v) const
   {
     s << "values:   ";
-    for(unsigned int i = 0; i < n_values(); ++i)
+    for (unsigned int i = 0; i < n_values(); ++i)
       s << " '" << v.name(value_selection(i)) << '\'';
     s << std::endl << "gradients:";
-    for(unsigned int i = 0; i < n_gradients(); ++i)
+    for (unsigned int i = 0; i < n_gradients(); ++i)
       s << " '" << v.name(gradient_selection(i)) << '\'';
     s << std::endl << "hessians: ";
-    for(unsigned int i = 0; i < n_hessians(); ++i)
+    for (unsigned int i = 0; i < n_hessians(); ++i)
       s << " '" << v.name(hessian_selection(i)) << '\'';
     s << std::endl;
   }

@@ -37,14 +37,14 @@ test()
   // need to make sure that the adjacent edges are also all
   // correct. for the other boundaries, don't bother with adjacent
   // edges
-  for(Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->face(f)->at_boundary())
+  for (Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->face(f)->at_boundary())
         {
-          if(cell->face(f)->boundary_id() == 0)
+          if (cell->face(f)->boundary_id() == 0)
             cell->face(f)->set_all_manifold_ids(0);
           else
             cell->face(f)->set_manifold_id(cell->face(f)->boundary_id());

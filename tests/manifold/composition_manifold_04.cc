@@ -66,10 +66,10 @@ main()
       << "set size ratio -1" << std::endl
       << "plot '-' with vectors " << std::endl;
 
-  for(unsigned int v = 0; v < sp.size(); ++v)
+  for (unsigned int v = 0; v < sp.size(); ++v)
     out << center << " " << sp[v] << std::endl;
 
-  for(unsigned int i = 0; i < n_intermediates + 1; ++i)
+  for (unsigned int i = 0; i < n_intermediates + 1; ++i)
     {
       w[0] = 1.0 - (double) i / ((double) n_intermediates);
       w[1] = 1.0 - w[0];
@@ -88,7 +88,7 @@ main()
       << "set size ratio -1" << std::endl
       << "plot '-' w lp " << std::endl;
 
-  for(unsigned int i = 0; i < n_intermediates + 1; ++i)
+  for (unsigned int i = 0; i < n_intermediates + 1; ++i)
     {
       w[0] = 1.0 - (double) i / ((double) n_intermediates);
       w[1] = 1.0 - w[0];

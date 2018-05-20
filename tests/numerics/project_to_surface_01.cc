@@ -36,7 +36,7 @@ public:
     Point<spacedim> q;
     q[0] = std::cos(angle) * p(0) - std::sin(angle) * p(1);
     q[1] = std::sin(angle) * p(0) + std::cos(angle) * p(1);
-    for(unsigned d = 2; d < spacedim; ++d)
+    for (unsigned d = 2; d < spacedim; ++d)
       q[d] = p[d];
     return q;
   }
@@ -61,7 +61,7 @@ create_triangulation(const bool rotate, Triangulation<dim>& tria)
 {
   GridGenerator::hyper_cube(tria, 1., 3.);
 
-  if(rotate)
+  if (rotate)
     do_rotate(tria);
 }
 
@@ -73,7 +73,7 @@ test()
 
   Triangulation<dim> tria;
 
-  for(unsigned int case_no = 0; case_no < 2; ++case_no)
+  for (unsigned int case_no = 0; case_no < 2; ++case_no)
     {
       deallog << "  Case " << case_no << std::endl;
       create_triangulation((case_no == 1), tria);
@@ -81,24 +81,24 @@ test()
       const typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active();
       Point<dim> trial_point;
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         trial_point[i] = 1.5;
 
-      for(unsigned int e = 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
+      for (unsigned int e = 0; e < GeometryInfo<dim>::lines_per_cell; ++e)
         {
           deallog << "    Line " << e << ", projected point=";
-          if(dim > 1)
+          if (dim > 1)
             deallog << GridTools::project_to_object(cell->line(e), trial_point);
           else
             deallog << GridTools::project_to_object(cell, trial_point);
 
           deallog << "  (line is from ";
-          if(dim > 1)
+          if (dim > 1)
             deallog << cell->line(e)->vertex(0);
           else
             deallog << cell->vertex(0);
           deallog << " to ";
-          if(dim > 1)
+          if (dim > 1)
             deallog << cell->line(e)->vertex(1);
           else
             deallog << cell->vertex(1);

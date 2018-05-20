@@ -57,8 +57,8 @@ public:
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         val += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return val;
   }
@@ -66,11 +66,11 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    for(unsigned int c = 0; c < v.size(); ++c)
+    for (unsigned int c = 0; c < v.size(); ++c)
       {
         v(c) = 0;
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int i = 0; i <= q; ++i)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int i = 0; i <= q; ++i)
             v(c) += (d + 1) * (i + 1) * std::pow(p[d], 1. * i) + c;
       }
   }
@@ -102,7 +102,7 @@ do_project(const Triangulation<dim>& triangulation,
 
   Vector<double> projection(dof_handler.n_dofs());
   Vector<float>  error(triangulation.n_active_cells());
-  for(unsigned int q = 0; q <= p + 2 - order_difference; ++q)
+  for (unsigned int q = 0; q <= p + 2 - order_difference; ++q)
     {
       // project the function
       VectorTools::project(dof_handler,
@@ -126,7 +126,7 @@ do_project(const Triangulation<dim>& triangulation,
               << ", rel. error=" << error.l2_norm() / projection.l2_norm()
               << std::endl;
 
-      if(q <= p - order_difference)
+      if (q <= p - order_difference)
         AssertThrow(
           error.l2_norm() <= 1e-10 * projection.l2_norm(),
           ExcFailedProjection(error.l2_norm() / projection.l2_norm()));
@@ -150,19 +150,19 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
                                  const unsigned int        p,
                                  const unsigned int        order_difference = 0)
 {
-  if(dim != 3)
+  if (dim != 3)
     return;
-  for(unsigned int j = 1; j < 4; ++j)
+  for (unsigned int j = 1; j < 4; ++j)
     // j=1: face_rotation=true,  face_flip=true
     // j=2: face_rotation=false, face_flip=true
     // j=3: face_rotation=true,  face_flip=false
-    for(unsigned int i = 0; i < 2; ++i)
+    for (unsigned int i = 0; i < 2; ++i)
       {
         Triangulation<dim> triangulation;
         GridGenerator::moebius(triangulation, 7, j, 1.0, 0.2);
         typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
-        if(i == 0)
+        if (i == 0)
           {
             std::advance(cell, 6);
             deallog << "face_rotation=" << cell->face_rotation(2)

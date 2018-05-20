@@ -138,7 +138,7 @@ template <int dim>
 double
 coefficient(const Point<dim>& p)
 {
-  if(p.square() < 0.5 * 0.5)
+  if (p.square() < 0.5 * 0.5)
     return 20;
   else
     return 1;
@@ -347,20 +347,20 @@ Step6<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
 
       fe_values.reinit(cell);
 
-      for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+      for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
         {
           const double current_coefficient
             = coefficient<dim>(fe_values.quadrature_point(q_index));
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j)
                   += (current_coefficient * fe_values.shape_grad(i, q_index)
                       * fe_values.shape_grad(j, q_index)
@@ -593,11 +593,11 @@ template <int dim>
 void
 Step6<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 8; ++cycle)
+  for (unsigned int cycle = 0; cycle < 8; ++cycle)
     {
       std::cout << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_ball(triangulation);
           triangulation.refine_global(1);
@@ -668,7 +668,7 @@ main()
   // Apart from this, there isn't much that we can do except exiting the
   // program with an error code (this is what the <code>return 1;</code>
   // does):
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -685,7 +685,7 @@ main()
   // If the exception that was thrown somewhere was not an object of a class
   // derived from the standard <code>exception</code> class, then we can't do
   // anything at all. We then simply print an error message and exit.
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

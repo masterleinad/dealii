@@ -51,8 +51,8 @@ test()
   dofh.distribute_dofs(fe);
 
   deallog << "Before:" << std::endl;
-  for(const auto& cell : dofh.active_cell_iterators())
-    if(cell->is_locally_owned())
+  for (const auto& cell : dofh.active_cell_iterators())
+    if (cell->is_locally_owned())
       {
         deallog << "locally owned cell: " << cell << std::endl;
         deallog << "       dof indices: ";
@@ -61,23 +61,23 @@ test()
           cell->get_fe().dofs_per_cell);
         cell->get_dof_indices(cell_dofs);
 
-        for(auto i : cell_dofs)
+        for (auto i : cell_dofs)
           deallog << i << ' ';
         deallog << std::endl;
       }
 
   std::set<types::global_dof_index> starting_indices;
-  for(const auto& cell : dofh.active_cell_iterators())
-    if(cell->is_locally_owned())
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(!cell->at_boundary(f) && cell->neighbor(f)->is_ghost())
+  for (const auto& cell : dofh.active_cell_iterators())
+    if (cell->is_locally_owned())
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (!cell->at_boundary(f) && cell->neighbor(f)->is_ghost())
           {
             // we've identified a subdomain interface. use these DoFs
             // as starting indices
             std::vector<types::global_dof_index> face_dofs(
               cell->get_fe().dofs_per_face);
             cell->face(f)->get_dof_indices(face_dofs);
-            for(auto i : face_dofs)
+            for (auto i : face_dofs)
               starting_indices.insert(i);
           }
 
@@ -90,8 +90,8 @@ test()
 
   // output the renumbered DoF indices
   deallog << "After:" << std::endl;
-  for(const auto& cell : dofh.active_cell_iterators())
-    if(cell->is_locally_owned())
+  for (const auto& cell : dofh.active_cell_iterators())
+    if (cell->is_locally_owned())
       {
         deallog << "locally owned cell: " << cell << std::endl;
         deallog << "       dof indices: ";
@@ -100,7 +100,7 @@ test()
           cell->get_fe().dofs_per_cell);
         cell->get_dof_indices(cell_dofs);
 
-        for(auto i : cell_dofs)
+        for (auto i : cell_dofs)
           deallog << i << ' ';
         deallog << std::endl;
       }

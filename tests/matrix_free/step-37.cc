@@ -101,7 +101,7 @@ namespace Step37
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
     const unsigned int n_points = points.size();
-    for(unsigned int i = 0; i < n_points; ++i)
+    for (unsigned int i = 0; i < n_points; ++i)
       values[i] = value<double>(points[i], component);
   }
 
@@ -208,10 +208,10 @@ namespace Step37
     const unsigned int n_cells = data.n_macro_cells();
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
     coefficient.resize(n_cells * phi.n_q_points);
-    for(unsigned int cell = 0; cell < n_cells; ++cell)
+    for (unsigned int cell = 0; cell < n_cells; ++cell)
       {
         phi.reinit(cell);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           coefficient[cell * phi.n_q_points + q]
             = coefficient_function.value(phi.quadrature_point(q));
       }
@@ -228,12 +228,12 @@ namespace Step37
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
     AssertDimension(coefficient.size(), data.n_macro_cells() * phi.n_q_points);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values(src);
         phi.evaluate(false, true, false);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(
             coefficient[cell * phi.n_q_points + q] * phi.get_gradient(q), q);
         phi.integrate(false, true);
@@ -280,7 +280,7 @@ namespace Step37
 
     const std::vector<unsigned int>& constrained_dofs
       = data.get_constrained_dofs();
-    for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
+    for (unsigned int i = 0; i < constrained_dofs.size(); ++i)
       dst(constrained_dofs[i]) += src(constrained_dofs[i]);
   }
 
@@ -305,7 +305,7 @@ namespace Step37
 
     const std::vector<unsigned int>& constrained_dofs
       = data.get_constrained_dofs();
-    for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
+    for (unsigned int i = 0; i < constrained_dofs.size(); ++i)
       diagonal_values(constrained_dofs[i]) = 1.0;
 
     diagonal_is_available = true;
@@ -390,11 +390,11 @@ namespace Step37
       triangulation.n_levels());
     MGTools::make_boundary_list(
       dof_handler, dirichlet_boundary, boundary_indices);
-    for(unsigned int level = 0; level < nlevels; ++level)
+    for (unsigned int level = 0; level < nlevels; ++level)
       {
         std::set<types::global_dof_index>::iterator bc_it
           = boundary_indices[level].begin();
-        for(; bc_it != boundary_indices[level].end(); ++bc_it)
+        for (; bc_it != boundary_indices[level].end(); ++bc_it)
           mg_constraints[level].add_line(*bc_it);
 
         mg_constraints[level].close();
@@ -421,14 +421,14 @@ namespace Step37
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell->get_dof_indices(local_dof_indices);
         fe_values.reinit(cell);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             double rhs_val = 0;
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for (unsigned int q = 0; q < n_q_points; ++q)
               rhs_val += (fe_values.shape_value(i, q) * 1.0 * fe_values.JxW(q));
             system_rhs(local_dof_indices[i]) += rhs_val;
           }
@@ -458,13 +458,13 @@ namespace Step37
 
     const unsigned int         n_levels = triangulation.n_levels();
     std::vector<Vector<float>> diagonals(n_levels);
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for (unsigned int level = 0; level < n_levels; ++level)
       diagonals[level].reinit(dof_handler.n_dofs(level));
 
     std::vector<unsigned int>               cell_no(triangulation.n_levels());
     typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(),
                                             endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const unsigned int level = cell->level();
         cell->get_mg_dof_indices(local_dof_indices);
@@ -472,10 +472,10 @@ namespace Step37
         coefficient.value_list(fe_values.get_quadrature_points(),
                                coefficient_values);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             double local_diag = 0;
-            for(unsigned int q = 0; q < n_q_points; ++q)
+            for (unsigned int q = 0; q < n_q_points; ++q)
               local_diag
                 += ((fe_values.shape_grad(i, q) * fe_values.shape_grad(i, q))
                     * coefficient_values[q] * fe_values.JxW(q));
@@ -484,15 +484,15 @@ namespace Step37
         mg_constraints[level].distribute_local_to_global(
           local_diagonal, local_dof_indices, diagonals[level]);
 
-        if(level == 0)
+        if (level == 0)
           {
             local_matrix = 0;
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
                   double add_value = 0;
-                  for(unsigned int q = 0; q < n_q_points; ++q)
+                  for (unsigned int q = 0; q < n_q_points; ++q)
                     add_value += (fe_values.shape_grad(i, q)
                                   * fe_values.shape_grad(j, q)
                                   * coefficient_values[q] * fe_values.JxW(q));
@@ -503,7 +503,7 @@ namespace Step37
           }
       }
 
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for (unsigned int level = 0; level < n_levels; ++level)
       mg_matrices[level].set_diagonal(diagonals[level]);
   }
 
@@ -544,11 +544,11 @@ namespace Step37
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 3; ++cycle)
+    for (unsigned int cycle = 0; cycle < 3; ++cycle)
       {
         deallog << "Cycle " << cycle << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation, 0., 1.);
             triangulation.refine_global(3 - dim);

@@ -46,13 +46,13 @@ test_vertices_orientation(
     endc = boundary_mesh.end();
   typename Triangulation<s_dim + 1, spacedim>::face_iterator face;
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       face = surface_to_volume_mapping[cell];
       Assert(face->at_boundary(), ExcInternalError());
 
       deallog << "Surface cell: " << cell << " with vertices:" << std::endl;
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for (unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           deallog << "  " << cell->vertex(k) << std::endl;
           Assert(std::fabs(cell->vertex(k).distance(Point<spacedim>()) - 1)
@@ -61,7 +61,7 @@ test_vertices_orientation(
         }
 
       deallog << "Volume face: " << face << " with vertices:" << std::endl;
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for (unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           deallog << "  " << face->vertex(k) << std::endl;
           Assert(std::fabs(face->vertex(k).distance(Point<spacedim>()) - 1)
@@ -69,7 +69,7 @@ test_vertices_orientation(
                  ExcInternalError());
         }
 
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for (unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           Point<spacedim> diff(face->vertex(k));
           diff -= cell->vertex(k);
@@ -105,12 +105,12 @@ main()
     const SphericalManifold<dim> boundary_description;
     Triangulation<dim>           volume_mesh;
     GridGenerator::hyper_ball(volume_mesh);
-    for(Triangulation<dim>::active_cell_iterator cell
-        = volume_mesh.begin_active();
-        cell != volume_mesh.end();
-        ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(cell->at_boundary(f))
+    for (Triangulation<dim>::active_cell_iterator cell
+         = volume_mesh.begin_active();
+         cell != volume_mesh.end();
+         ++cell)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (cell->at_boundary(f))
           cell->face(f)->set_all_boundary_ids(1);
     GridTools::copy_boundary_to_manifold_id(volume_mesh);
     volume_mesh.set_manifold(1, boundary_description);

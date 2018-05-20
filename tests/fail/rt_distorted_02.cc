@@ -80,9 +80,9 @@ TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
   // u = x^2, v = y^2, dudx = 2 x, dvdy = 2 y, div u = 2x + 2y
   // I.e. \int div u = 2 (for unit square)
 
-  if(component == 0)
+  if (component == 0)
     return (p(0) * p(0));
-  if(component == 1)
+  if (component == 1)
     return (p(1) * p(1));
 
   return (0);
@@ -97,7 +97,7 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
          ExcDimensionMismatch(return_value.size(), this->n_components));
 
   // Just fill the vector with the appropriate components
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -134,7 +134,7 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
   double rad   = p.distance(center),
          phi_p = atan2(p(0) - center(0), p(1) - center(1));
 
-  if(component == 0)
+  if (component == 0)
     return rad * (sin(phi + phi_p) - sin(phi_p));
   else
     return rad * (cos(phi + phi_p) - cos(phi_p));
@@ -147,7 +147,7 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -180,7 +180,7 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   double x = p(0), y = p(1);
 
-  if(component == 0)
+  if (component == 0)
     return scale * x;
   else
     return scale * y;
@@ -193,7 +193,7 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -227,7 +227,7 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   double y = p(1);
 
-  if(component == 0)
+  if (component == 0)
     return scale * y;
   else
     return 0;
@@ -240,7 +240,7 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -269,7 +269,7 @@ double EvaluateDiver(Mapping<2>&     mapping,
                                       endc = dof_handler.end();
   double result                            = 0;
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
@@ -282,7 +282,7 @@ double EvaluateDiver(Mapping<2>&     mapping,
         n_q_points, std::vector<Tensor<1, 2>>(n_components));
       fe_values.get_function_gradients(solution, grads_here);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
           double JxW  = fe_values.JxW(q_point);
           double dudx = grads_here[q_point][0][0];
@@ -364,7 +364,7 @@ main()
   deallog << buf;
 
   // Try rotating the elements
-  for(double rotat = 0; rotat < 2 * numbers::PI; rotat += 0.25 * numbers::PI)
+  for (double rotat = 0; rotat < 2 * numbers::PI; rotat += 0.25 * numbers::PI)
     {
       // Rotate element
       VectorTools::project(dof_handler_def,
@@ -381,7 +381,7 @@ main()
     }
 
   // Try resizing the elements
-  for(double scale = -0.75; scale < 4.0; scale += 0.25)
+  for (double scale = -0.75; scale < 4.0; scale += 0.25)
     {
       VectorTools::project(dof_handler_def,
                            hn_constraints_def,
@@ -397,7 +397,7 @@ main()
     }
 
   // Try paralellogramming the elements
-  for(double scale = -1.0; scale < 1.0; scale += 0.25)
+  for (double scale = -1.0; scale < 1.0; scale += 0.25)
     {
       VectorTools::project(dof_handler_def,
                            hn_constraints_def,

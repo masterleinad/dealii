@@ -148,7 +148,7 @@ template <class T>
 inline const ConditionalOStream&
 ConditionalOStream::operator<<(const T& t) const
 {
-  if(active_flag == true)
+  if (active_flag == true)
     output_stream << t;
 
   return *this;
@@ -157,7 +157,7 @@ ConditionalOStream::operator<<(const T& t) const
 inline const ConditionalOStream&
 ConditionalOStream::operator<<(std::ostream& (*p)(std::ostream&) ) const
 {
-  if(active_flag == true)
+  if (active_flag == true)
     output_stream << p;
 
   return *this;

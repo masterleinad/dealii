@@ -22,11 +22,11 @@ template <typename number>
 void
 check()
 {
-  for(unsigned int test = 0; test < 5; ++test)
+  for (unsigned int test = 0; test < 5; ++test)
     {
       const unsigned int size = 17 + test * 1101;
       Vector<number>     v1(size), v2(size), v3(size), check(size);
-      for(unsigned int i = 0; i < size; ++i)
+      for (unsigned int i = 0; i < size; ++i)
         {
           v1(i) = 0.1 + 0.005 * i;
           v2(i) = -5.2 + 0.18 * i;
@@ -41,7 +41,7 @@ check()
 
       // then do it a second time with the add_and_dot function
       const number prod_check = check.add_and_dot(factor, v2, v3);
-      if(test == 0 && std::is_same<number, double>::value)
+      if (test == 0 && std::is_same<number, double>::value)
         {
           deallog << "Vector add reference:   ";
           v1.print(deallog);

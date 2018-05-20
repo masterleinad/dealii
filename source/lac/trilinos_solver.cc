@@ -286,7 +286,7 @@ namespace TrilinosWrappers
           current_residual
             = (CurrentResNormEst < 0.0 ? compute_residual(CurrentResVector) :
                                          CurrentResNormEst);
-          if(CurrentIter == 0)
+          if (CurrentIter == 0)
             initial_residual = current_residual;
 
           return status_test_collection->CheckStatus(
@@ -388,7 +388,7 @@ namespace TrilinosWrappers
     solver.SetProblem(*linear_problem);
 
     // ... and we can specify the solver to be used.
-    switch(solver_name)
+    switch (solver_name)
       {
         case cg:
           solver.SetAztecOption(AZ_solver, AZ_cg);
@@ -432,10 +432,10 @@ namespace TrilinosWrappers
     // In the case that the SolverControl wants to perform ReductionControl,
     // then we have to do a little extra something by prescribing a custom
     // status test.
-    if(!status_test)
+    if (!status_test)
       {
-        if(const ReductionControl* const reduction_control
-           = dynamic_cast<const ReductionControl* const>(&solver_control))
+        if (const ReductionControl* const reduction_control
+            = dynamic_cast<const ReductionControl* const>(&solver_control))
           {
             status_test
               = std_cxx14::make_unique<internal::TrilinosReductionControl>(
@@ -454,7 +454,7 @@ namespace TrilinosWrappers
     // report errors in more detail than just by checking whether the return
     // status is zero or greater. the error strings are taken from the
     // implementation of the AztecOO::Iterate function
-    switch(ierr)
+    switch (ierr)
       {
         case -1:
           AssertThrow(false,
@@ -487,9 +487,9 @@ namespace TrilinosWrappers
     // certain choices of solver or if a custom status test is set, then the
     // result returned by TrueResidual() is equal to -1. In this case we must
     // compute it ourself.
-    if(const internal::TrilinosReductionControl* const reduction_control_status
-       = dynamic_cast<const internal::TrilinosReductionControl* const>(
-         status_test.get()))
+    if (const internal::TrilinosReductionControl* const reduction_control_status
+        = dynamic_cast<const internal::TrilinosReductionControl* const>(
+          status_test.get()))
       {
         Assert(dynamic_cast<const ReductionControl* const>(&solver_control),
                ExcInternalError());
@@ -497,7 +497,7 @@ namespace TrilinosWrappers
         // Check to see if solver converged in one step
         // This can happen if the matrix is diagonal and a non-trivial
         // preconditioner is used.
-        if(solver.NumIters() > 0)
+        if (solver.NumIters() > 0)
           {
             // For ReductionControl, we must first register the initial residual
             // value. This is the basis from which it will determine whether the
@@ -519,7 +519,7 @@ namespace TrilinosWrappers
         solver_control.check(solver.NumIters(), solver.TrueResidual());
       }
 
-    if(solver_control.last_check() != SolverControl::success)
+    if (solver_control.last_check() != SolverControl::success)
       AssertThrow(false,
                   SolverControl::NoConvergence(solver_control.last_step(),
                                                solver_control.last_value()));
@@ -532,7 +532,7 @@ namespace TrilinosWrappers
   {
     // Introduce the preconditioner, if the identity preconditioner is used,
     // the precondioner is set to none, ...
-    if(preconditioner.preconditioner.use_count() != 0)
+    if (preconditioner.preconditioner.use_count() != 0)
       {
         const int ierr = solver.SetPrecOperator(
           const_cast<Epetra_Operator*>(preconditioner.preconditioner.get()));
@@ -778,7 +778,7 @@ namespace TrilinosWrappers
     // turn into SolverControl::success.
     solver_control.check(0, 0);
 
-    if(solver_control.last_check() != SolverControl::success)
+    if (solver_control.last_check() != SolverControl::success)
       AssertThrow(false,
                   SolverControl::NoConvergence(solver_control.last_step(),
                                                solver_control.last_value()));

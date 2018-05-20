@@ -31,7 +31,7 @@ check()
 {
   const unsigned int  n_points = 10;
   std::vector<double> x(n_points), y(n_points);
-  for(unsigned int i = 0; i < n_points; i++)
+  for (unsigned int i = 0; i < n_points; i++)
     {
       x[i] = i + 0.5 * std::sin(i);
       y[i] = i + std::cos(i * i);
@@ -39,7 +39,7 @@ check()
 
   std::vector<double>     y_dealii;
   Functions::CSpline<dim> cspline(x, y);
-  for(double xi = x[0]; xi <= x.back(); xi += 0.01)
+  for (double xi = x[0]; xi <= x.back(); xi += 0.01)
     {
       const double yi = cspline.value(Point<dim>(xi));
       y_dealii.push_back(yi);

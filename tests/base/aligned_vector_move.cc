@@ -34,7 +34,7 @@ test()
   deallog << "Size of moved VEC: " << a.size() << std::endl;
 
   deallog << "Contents of new VEC: ";
-  for(unsigned int i = 0; i < b.size(); ++i)
+  for (unsigned int i = 0; i < b.size(); ++i)
     deallog << b[i] << " ";
   deallog << std::endl;
 
@@ -43,7 +43,7 @@ test()
   deallog << "Size of moved VEC after resize: " << a.size() << std::endl;
 
   deallog << "Contents of new VEC: ";
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for (unsigned int i = 0; i < a.size(); ++i)
     deallog << a[i] << " ";
   deallog << std::endl;
 

@@ -1108,7 +1108,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::merge_patches(
            == source.get_vector_data_ranges().size(),
          ExcMessage("Both sources need to declare the same components "
                     "as vectors."));
-  for(unsigned int i = 0; i < get_vector_data_ranges().size(); ++i)
+  for (unsigned int i = 0; i < get_vector_data_ranges().size(); ++i)
     {
       Assert(std::get<0>(get_vector_data_ranges()[i])
                == std::get<0>(source.get_vector_data_ranges()[i]),
@@ -1132,20 +1132,20 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::merge_patches(
   patches.insert(patches.end(), source_patches.begin(), source_patches.end());
 
   // perform shift, if so desired
-  if(shift != Point<patch_space_dim>())
-    for(unsigned int i = old_n_patches; i < patches.size(); ++i)
-      for(unsigned int v = 0; v < GeometryInfo<patch_dim>::vertices_per_cell;
-          ++v)
+  if (shift != Point<patch_space_dim>())
+    for (unsigned int i = old_n_patches; i < patches.size(); ++i)
+      for (unsigned int v = 0; v < GeometryInfo<patch_dim>::vertices_per_cell;
+           ++v)
         patches[i].vertices[v] += shift;
 
   // adjust patch numbers
-  for(unsigned int i = old_n_patches; i < patches.size(); ++i)
+  for (unsigned int i = old_n_patches; i < patches.size(); ++i)
     patches[i].patch_index += old_n_patches;
 
   // adjust patch neighbors
-  for(unsigned int i = old_n_patches; i < patches.size(); ++i)
-    for(unsigned int n = 0; n < GeometryInfo<patch_dim>::faces_per_cell; ++n)
-      if(patches[i].neighbors[n] != Patch::no_neighbor)
+  for (unsigned int i = old_n_patches; i < patches.size(); ++i)
+    for (unsigned int n = 0; n < GeometryInfo<patch_dim>::faces_per_cell; ++n)
+      if (patches[i].neighbors[n] != Patch::no_neighbor)
         patches[i].neighbors[n] += old_n_patches;
 }
 

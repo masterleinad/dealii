@@ -28,7 +28,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   TrilinosWrappers::MPI::Vector test1, test2;
@@ -39,7 +39,7 @@ test()
   // first processor owns 2 indices, second
   // processor owns none
   IndexSet local_owned(2);
-  if(myid == 0)
+  if (myid == 0)
     local_owned.add_range(0, 2);
 
   test1.reinit(local_owned, MPI_COMM_WORLD);
@@ -50,7 +50,7 @@ test()
   AssertThrow(test1.vector_partitioner().SameAs(test2.vector_partitioner()),
               ExcInternalError());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -63,7 +63,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

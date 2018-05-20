@@ -204,14 +204,14 @@ void
 do_test(const std::vector<const DoFHandler<dim>*>& dof)
 {
   const unsigned int nb = 2;
-  if(types_are_equal<number, float>::value == true)
+  if (types_are_equal<number, float>::value == true)
     {
       deallog.push("float");
     }
   else
     {}
 
-  for(unsigned int i = 0; i < dof.size(); ++i)
+  for (unsigned int i = 0; i < dof.size(); ++i)
     {
       deallog << "Testing " << dof[i]->get_fe().get_name();
       deallog << std::endl;
@@ -220,7 +220,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
     }
 
   std::vector<IndexSet> locally_relevant_dofs(dof.size());
-  for(unsigned int i = 0; i < dof.size(); ++i)
+  for (unsigned int i = 0; i < dof.size(); ++i)
     DoFTools::extract_locally_relevant_dofs(*dof[i], locally_relevant_dofs[i]);
 
   // Dirichlet BC
@@ -231,7 +231,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
   // fine-level constraints
   std::vector<ConstraintMatrix>        constraints(dof.size());
   std::vector<const ConstraintMatrix*> constraints_ptrs(dof.size());
-  for(unsigned int i = 0; i < dof.size(); ++i)
+  for (unsigned int i = 0; i < dof.size(); ++i)
     {
       constraints[i].reinit(locally_relevant_dofs[i]);
       DoFTools::make_hanging_node_constraints(*dof[i], constraints[i]);
@@ -265,7 +265,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
   fine_matrix.compute_diagonal();
 
   LinearAlgebra::distributed::BlockVector<number> in(nb), sol(nb);
-  for(unsigned int b = 0; b < nb; ++b)
+  for (unsigned int b = 0; b < nb; ++b)
     {
       fine_level_data->initialize_dof_vector(in.block(b), b);
       fine_level_data->initialize_dof_vector(sol.block(b), b);
@@ -276,7 +276,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
 
   // set constant rhs vector
   {
-    for(unsigned int b = 0; b < nb; ++b)
+    for (unsigned int b = 0; b < nb; ++b)
       {
         // this is to make it consistent with parallel_multigrid_adaptive.cc
         ConstraintMatrix hanging_node_constraints;
@@ -286,16 +286,16 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
                                                 hanging_node_constraints);
         hanging_node_constraints.close();
 
-        for(unsigned int i = 0; i < in.block(b).local_size(); ++i)
-          if(!hanging_node_constraints.is_constrained(
-               in.block(b).get_partitioner()->local_to_global(i)))
+        for (unsigned int i = 0; i < in.block(b).local_size(); ++i)
+          if (!hanging_node_constraints.is_constrained(
+                in.block(b).get_partitioner()->local_to_global(i)))
             in.block(b).local_element(i) = 1.;
       }
   }
 
   // level constraints:
   std::vector<MGConstrainedDoFs> mg_constrained_dofs(dof.size());
-  for(unsigned int i = 0; i < dof.size(); ++i)
+  for (unsigned int i = 0; i < dof.size(); ++i)
     mg_constrained_dofs[i].initialize(*dof[i], dirichlet_boundary);
 
   // set up multigrid in analogy to step-37
@@ -310,9 +310,9 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
   MGLevelObject<MatrixFree<dim, number>> mg_level_data;
   mg_matrices.resize(0, dof[0]->get_triangulation().n_global_levels() - 1);
   mg_level_data.resize(0, dof[0]->get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0;
-      level < dof[0]->get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof[0]->get_triangulation().n_global_levels();
+       ++level)
     {
       typename MatrixFree<dim, number>::AdditionalData mg_additional_data;
       mg_additional_data.tasks_parallel_scheme
@@ -322,7 +322,7 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
 
       std::vector<ConstraintMatrix>        level_constraints(dof.size());
       std::vector<const ConstraintMatrix*> level_constraints_ptrs(dof.size());
-      for(unsigned int i = 0; i < dof.size(); ++i)
+      for (unsigned int i = 0; i < dof.size(); ++i)
         {
           IndexSet relevant_dofs;
           DoFTools::extract_locally_relevant_level_dofs(
@@ -346,9 +346,9 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
   MGLevelObject<MGInterfaceOperator<LevelMatrixType>> mg_interface_matrices;
   mg_interface_matrices.resize(
     0, dof[0]->get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0;
-      level < dof[0]->get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof[0]->get_triangulation().n_global_levels();
+       ++level)
     mg_interface_matrices[level].initialize(mg_matrices[level]);
 
   MGTransferBlockMatrixFree<dim, number> mg_transfer(mg_constrained_dofs);
@@ -387,13 +387,13 @@ do_test(const std::vector<const DoFHandler<dim>*>& dof)
     solver.solve(fine_matrix, sol, in, preconditioner);
   }
 
-  if(types_are_equal<number, float>::value == true)
+  if (types_are_equal<number, float>::value == true)
     deallog.pop();
 
   fine_matrix.clear();
-  for(unsigned int level = 0;
-      level < dof[0]->get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof[0]->get_triangulation().n_global_levels();
+       ++level)
     mg_matrices[level].clear();
 }
 
@@ -409,16 +409,16 @@ test()
   tria.refine_global(6 - dim);
   constexpr int      max_degree = std_cxx14::max(fe_degree_1, fe_degree_2);
   const unsigned int n_runs     = max_degree == 1 ? 6 - dim : 5 - dim;
-  for(unsigned int i = 0; i < n_runs; ++i)
+  for (unsigned int i = 0; i < n_runs; ++i)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
-        if(cell->is_locally_owned()
-           && (((cell->center().norm() < 0.5
-                 && (cell->level() < 5 || cell->center().norm() > 0.45))
-                || (dim == 2 && cell->center().norm() > 1.2))))
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
+        if (cell->is_locally_owned()
+            && (((cell->center().norm() < 0.5
+                  && (cell->level() < 5 || cell->center().norm() > 0.45))
+                 || (dim == 2 && cell->center().norm() > 1.2))))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
       FE_Q<dim>       fe_1(fe_degree_1);
@@ -444,7 +444,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog.attach(logfile);
       deallog << std::setprecision(4);

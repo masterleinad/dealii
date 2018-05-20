@@ -56,10 +56,10 @@ test_compute_pt_loc(unsigned int n_points)
   // Creating the random points
   std::vector<Point<dim>> points;
 
-  for(size_t i = 0; i < n_points; ++i)
+  for (size_t i = 0; i < n_points; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         p[d] = double(Testing::rand()) / RAND_MAX; //Normalizing the value
       points.push_back(p);
     }
@@ -77,7 +77,7 @@ test_compute_pt_loc(unsigned int n_points)
   // testing if the transformation is correct:
   // For each cell check if the quadrature points in the i-th FE
   // are the same as std::get<2>(cell_qpoint_map)[i]
-  for(unsigned int i = 0; i < std::get<0>(cell_qpoint_map).size(); ++i)
+  for (unsigned int i = 0; i < std::get<0>(cell_qpoint_map).size(); ++i)
     {
       auto& cell      = std::get<0>(cell_qpoint_map)[i];
       auto& quad      = std::get<1>(cell_qpoint_map)[i];
@@ -88,10 +88,10 @@ test_compute_pt_loc(unsigned int n_points)
       fev.reinit(cell);
       const auto& real_quad = fev.get_quadrature_points();
 
-      for(unsigned int q = 0; q < real_quad.size(); ++q)
+      for (unsigned int q = 0; q < real_quad.size(); ++q)
         {
           // Check if points are the same as real points
-          if(real_quad[q].distance(points[local_map[q]]) > 1e-10)
+          if (real_quad[q].distance(points[local_map[q]]) > 1e-10)
             deallog << "Error on cell : " << cell << " at local point " << i
                     << ", corresponding to real point " << points[local_map[q]]
                     << ", that got transformed to " << real_quad[q]

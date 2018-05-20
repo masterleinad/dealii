@@ -30,7 +30,7 @@ test()
   Assert(inout[0] == 0, ExcInternalError());
   Assert(inout[1] == numprocs, ExcInternalError());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << inout[0] << ' ' << inout[1] << std::endl;
 }
 
@@ -47,7 +47,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

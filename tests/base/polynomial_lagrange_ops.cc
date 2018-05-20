@@ -27,7 +27,7 @@ void
 check_scale(const std::vector<Polynomial<double>>& p)
 {
   deallog << "Scale operation";
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for (unsigned int i = 0; i < p.size(); ++i)
     {
       Polynomial<double> q      = p[i];
       double             x      = random_value<double>();
@@ -35,8 +35,8 @@ check_scale(const std::vector<Polynomial<double>>& p)
       q.scale(factor);
       double value1 = p[i].value(factor * x);
       double value2 = q.value(x);
-      if(std::fabs(value1 - value2)
-         > std::max(1e-13, 1e-13 * std::fabs(value1)))
+      if (std::fabs(value1 - value2)
+          > std::max(1e-13, 1e-13 * std::fabs(value1)))
         deallog << "Error scale at x=" << x << ": p(t)=" << value1
                 << ", q(x)=" << value2 << std::endl;
       deallog << ".";
@@ -48,11 +48,11 @@ void
 check_shift(const std::vector<Polynomial<double>>& p)
 {
   // shift does not work for too high orders
-  if(p.size() > 30)
+  if (p.size() > 30)
     return;
 
   deallog << "Shift operation";
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for (unsigned int i = 0; i < p.size(); ++i)
     {
       Polynomial<double> q = p[i];
       double             x = random_value<double>();
@@ -60,8 +60,8 @@ check_shift(const std::vector<Polynomial<double>>& p)
       q.shift(a);
       double value1 = p[i].value(x + a);
       double value2 = q.value(x);
-      if(std::fabs(value1 - value2)
-         > std::max(1e-13, 1e-13 * std::fabs(value1)))
+      if (std::fabs(value1 - value2)
+          > std::max(1e-13, 1e-13 * std::fabs(value1)))
         deallog << "Error shift at x=" << x << ": p(t)=" << value1
                 << ", q(x)=" << value2 << std::endl;
       deallog << ".";
@@ -73,7 +73,7 @@ void
 check_mult_scalar(const std::vector<Polynomial<double>>& p)
 {
   deallog << "Multiply by scalar";
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for (unsigned int i = 0; i < p.size(); ++i)
     {
       Polynomial<double> q = p[i];
       double             x = random_value<double>();
@@ -81,8 +81,8 @@ check_mult_scalar(const std::vector<Polynomial<double>>& p)
       q *= a;
       double value1 = p[i].value(x) * a;
       double value2 = q.value(x);
-      if(std::fabs(value1 - value2)
-         > std::max(1e-13, 1e-13 * std::fabs(value1)))
+      if (std::fabs(value1 - value2)
+          > std::max(1e-13, 1e-13 * std::fabs(value1)))
         deallog << "Error multiply at x=" << x << ": a*p(x)=" << value1
                 << ", q(x)=" << value2 << std::endl;
       deallog << ".";
@@ -94,17 +94,17 @@ void
 check_mult(const std::vector<Polynomial<double>>& p)
 {
   deallog << "Multiply by polynomial";
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for (unsigned int i = 0; i < p.size(); ++i)
     {
-      for(unsigned int j = 0; j < p.size(); ++j)
+      for (unsigned int j = 0; j < p.size(); ++j)
         {
           Polynomial<double> q = p[i];
           q *= p[j];
           double x      = random_value<double>();
           double value1 = p[i].value(x) * p[j].value(x);
           double value2 = q.value(x);
-          if(std::fabs(value1 - value2)
-             > std::max(1e-13, 1e-13 * std::fabs(value1)))
+          if (std::fabs(value1 - value2)
+              > std::max(1e-13, 1e-13 * std::fabs(value1)))
             deallog << "Error multiply at x=" << x
                     << ": p_1(x)*p_2(x)=" << value1 << ", q(x)=" << value2
                     << std::endl;
@@ -117,7 +117,7 @@ check_mult(const std::vector<Polynomial<double>>& p)
 void
 check_expand(const std::vector<Polynomial<double>>& p)
 {
-  if(p.size() > 10)
+  if (p.size() > 10)
     return;
   // this checks whether the Lagrange product
   // form and the usual form with factors for
@@ -130,15 +130,15 @@ check_expand(const std::vector<Polynomial<double>>& p)
   // form is unstable
   deallog << "Expansion operation";
   Monomial<double> zero(0, 0.);
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for (unsigned int i = 0; i < p.size(); ++i)
     {
       Polynomial<double> q = p[i];
       double             x = random_value<double>();
       q += zero;
       double value1 = p[i].value(x);
       double value2 = q.value(x);
-      if(std::fabs(value1 - value2)
-         > std::max(1e-10, 1e-10 * std::fabs(value1)))
+      if (std::fabs(value1 - value2)
+          > std::max(1e-10, 1e-10 * std::fabs(value1)))
         deallog << "Error expansion at x=" << x << ": p(x)=" << value1
                 << ", q(x)=" << value2 << std::endl;
       deallog << ".";
@@ -149,13 +149,13 @@ check_expand(const std::vector<Polynomial<double>>& p)
 void
 check_mult_expand(const std::vector<Polynomial<double>>& p)
 {
-  if(p.size() > 6)
+  if (p.size() > 6)
     return;
   deallog << "Multiply by polynomial expanding";
   Monomial<double> zero(0, 0.);
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for (unsigned int i = 0; i < p.size(); ++i)
     {
-      for(unsigned int j = 0; j < p.size(); ++j)
+      for (unsigned int j = 0; j < p.size(); ++j)
         {
           Polynomial<double> q = p[i];
           q += zero;
@@ -163,8 +163,8 @@ check_mult_expand(const std::vector<Polynomial<double>>& p)
           double x      = random_value<double>();
           double value1 = p[i].value(x) * p[j].value(x);
           double value2 = q.value(x);
-          if(std::fabs(value1 - value2)
-             > std::max(1e-9, 1e-9 * std::fabs(value1)))
+          if (std::fabs(value1 - value2)
+              > std::max(1e-9, 1e-9 * std::fabs(value1)))
             deallog << "Error multiply at x=" << x << ": p_" << i << "(x)*p_"
                     << j << "(x)=" << value1 << ", q(x)=" << value2
                     << std::endl;
@@ -212,7 +212,7 @@ main()
   deallog.attach(logfile);
 
   deallog.push("LagrangeEquidistant");
-  for(unsigned i = 1; i < 10; i += 2)
+  for (unsigned i = 1; i < 10; i += 2)
     check_lge(i);
   deallog.pop();
   deallog << std::endl;
@@ -221,7 +221,7 @@ main()
   // conditioning, so test to some very high
   // orders
   deallog.push("GaussLobatto");
-  for(unsigned i = 1; i < 40; i += 3)
+  for (unsigned i = 1; i < 40; i += 3)
     check_poly(QGaussLobatto<1>(i + 1));
   deallog.pop();
 }

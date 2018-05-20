@@ -87,9 +87,9 @@ namespace mg
     AssertIndexRange(sparsity.max_level(),
                      dof_handler.get_triangulation().n_levels());
 
-    for(unsigned int level = sparsity.min_level();
-        level <= sparsity.max_level();
-        ++level)
+    for (unsigned int level = sparsity.min_level();
+         level <= sparsity.max_level();
+         ++level)
       {
         DynamicSparsityPattern dsp(dof_handler.n_dofs(level));
         MGTools::make_flux_sparsity_pattern(dof_handler, dsp, level);
@@ -97,7 +97,7 @@ namespace mg
         matrix[level].reinit(sparsity[level]);
         matrix_in[level].reinit(sparsity[level]);
         matrix_out[level].reinit(sparsity[level]);
-        if(level > 0)
+        if (level > 0)
           {
             DynamicSparsityPattern ci_sparsity;
             ci_sparsity.reinit(dof_handler.n_dofs(level - 1),

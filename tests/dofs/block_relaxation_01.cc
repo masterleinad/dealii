@@ -64,20 +64,20 @@ make_stokes_matrix(const DoFHandler<dim>& dof_handler,
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       local_matrix = 0;
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int q = 0; q < n_q_points; ++q)
         {
-          for(unsigned int k = 0; k < dofs_per_cell; ++k)
+          for (unsigned int k = 0; k < dofs_per_cell; ++k)
             {
               symgrad_phi_u[k] = fe_values[velocities].symmetric_gradient(k, q);
               div_phi_u[k]     = fe_values[velocities].divergence(k, q);
               phi_p[k]         = fe_values[pressure].value(k, q);
             }
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               local_matrix(i, j)
                 += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
                     - div_phi_u[i] * phi_p[j] + phi_p[i] * div_phi_u[j])

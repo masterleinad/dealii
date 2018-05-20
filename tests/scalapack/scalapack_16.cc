@@ -60,7 +60,7 @@ test(const unsigned int size,
   create_spd(full_A);
   singular_A = full_A;
   // Setting last row and column of the matrix to zero to make the matrix singular.
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     {
       singular_A(i, size - 1) = 0;
       singular_A(size - 1, i) = 0;
@@ -86,7 +86,7 @@ test(const unsigned int size,
   FullMatrix<NumberType> full_pseudo_inverse(size);
   scalapack_A_2.copy_to(full_pseudo_inverse);
 
-  if(this_mpi_process == 0)
+  if (this_mpi_process == 0)
     {
       std::cout << "ranks: " << rank_1 << "/" << size << "  &  ";
       std::cout << rank_2 << "/" << size << std::endl;
@@ -109,8 +109,8 @@ main(int argc, char** argv)
 
   const double tol = 1e-10;
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol);
 }

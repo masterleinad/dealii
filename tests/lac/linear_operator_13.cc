@@ -105,16 +105,16 @@ build_matrix_vector(TrilinosWrappers::BlockSparseMatrix& matrix,
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       cell_matrix = 0;
       cell_rhs    = 0;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               // Globally symmetric contributions, but the off-diagonal
               // blocks are non-square
               // This is useful for checking implementation of transpose operator

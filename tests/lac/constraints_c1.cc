@@ -48,27 +48,27 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
     std::vector<std::vector<double>>(
       dim + 1, std::vector<double>(fe.dofs_per_cell, 0.)));
 
-  for(unsigned int vertex = 0; vertex < GeometryInfo<dim>::vertices_per_cell;
-      ++vertex)
+  for (unsigned int vertex = 0; vertex < GeometryInfo<dim>::vertices_per_cell;
+       ++vertex)
     {
       Point<dim> v;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         {
           const unsigned int ds = 1 << d;
           const unsigned int id = vertex / ds;
           v[d]                  = (id % 2 != 0) ? 1. : 0.;
         }
 
-      for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
         {
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             {
               const double f = fe.shape_grad(j, v)[d];
-              if(std::fabs(f) > 1.e-12)
+              if (std::fabs(f) > 1.e-12)
                 vertex_constraints[vertex][d][j] = f;
             }
           const double f = fe.shape_grad_grad(j, v)[0][1];
-          if(std::fabs(f) > 1.e-12)
+          if (std::fabs(f) > 1.e-12)
             vertex_constraints[vertex][dim][j] = f;
         }
     }
@@ -76,10 +76,10 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
   std::vector<types::global_dof_index> cell_indices(fe.dofs_per_cell);
   std::vector<types::global_dof_index> neighbor_indices(fe.dofs_per_cell);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       deallog << "New cell" << std::endl;
 
@@ -87,18 +87,18 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
 
       // Do lower left and upper
       // right vertex
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          face += 2)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           face += 2)
         {
-          if(cell->at_boundary(face))
+          if (cell->at_boundary(face))
             continue;
-          for(unsigned int fvertex = 0;
-              fvertex < GeometryInfo<dim>::vertices_per_face;
-              ++fvertex)
+          for (unsigned int fvertex = 0;
+               fvertex < GeometryInfo<dim>::vertices_per_face;
+               ++fvertex)
             {
               const unsigned int other_face
                 = (face == 0) ? (2 + fvertex) : fvertex;
-              if(cell->at_boundary(other_face))
+              if (cell->at_boundary(other_face))
                 continue;
 
               const unsigned int vertex
@@ -120,14 +120,14 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
                 (fvertex == 0) ? 2 : fe.dofs_per_face - 1, face);
               double constrained_weight = 0.;
 
-              for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
                 {
-                  if(i == constrained)
+                  if (i == constrained)
                     constrained_weight = vertex_constraints[vertex][d][i];
-                  else if(vertex_constraints[vertex][d][i] != 0.)
+                  else if (vertex_constraints[vertex][d][i] != 0.)
                     rhs.push_back(std::make_pair(
                       cell_indices[i], -vertex_constraints[vertex][d][i]));
-                  if(vertex_constraints[neighbor_vertex][d][i] != 0.)
+                  if (vertex_constraints[neighbor_vertex][d][i] != 0.)
                     rhs.push_back(std::make_pair(
                       neighbor_indices[i],
                       vertex_constraints[neighbor_vertex][d][i]));
@@ -137,10 +137,10 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
                       << cell_indices[constrained]
                       //          << " w " << constrained_weight
                       << " rhs ";
-              for(unsigned int i = 0; i < rhs.size(); ++i)
+              for (unsigned int i = 0; i < rhs.size(); ++i)
                 deallog << ' ' << rhs[i].first;
               deallog << std::endl;
-              for(unsigned int i = 0; i < rhs.size(); ++i)
+              for (unsigned int i = 0; i < rhs.size(); ++i)
                 rhs[i].second /= constrained_weight;
               constraints.add_line(cell_indices[constrained]);
               constraints.add_entries(cell_indices[constrained], rhs);
@@ -153,7 +153,7 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
     {
       constraints.close();
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

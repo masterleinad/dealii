@@ -65,10 +65,10 @@ test()
 
   std::vector<Point<dim>> points;
 
-  for(int i = 0; i < 2; i++)
-    for(int j = 0; j < 2; j++)
-      if(dim == 3)
-        for(int k = 0; k < 2; k++)
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 2; j++)
+      if (dim == 3)
+        for (int k = 0; k < 2; k++)
           points.push_back(
             Point<dim>(.25 + .5 * i, .25 + .5 * j, .25 + .5 * k));
       else
@@ -80,21 +80,21 @@ test()
 
   Vector<double> value(1);
 
-  for(; point_iterator != points_end; point_iterator++)
+  for (; point_iterator != points_end; point_iterator++)
     {
       try
         {
           VectorTools::point_value(
             dof_handler, locally_owned_solution, *point_iterator, value);
-          if(std::abs(value[0] - 1.) > 1e-8)
+          if (std::abs(value[0] - 1.) > 1e-8)
             ExcInternalError();
         }
-      catch(const VectorTools::ExcPointNotAvailableHere&)
+      catch (const VectorTools::ExcPointNotAvailableHere&)
         {}
 
       MPI_Barrier(MPI_COMM_WORLD);
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << *point_iterator << " OK" << std::endl;
     }
 }
@@ -105,7 +105,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       std::ofstream logfile("output");
       deallog.attach(logfile, false);

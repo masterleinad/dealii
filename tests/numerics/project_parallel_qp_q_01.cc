@@ -28,7 +28,7 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int p = 1; p < 7 - dim; ++p)
+  for (unsigned int p = 1; p < 7 - dim; ++p)
     test_no_hanging_nodes<LA::MPI::Vector>(FE_Q<dim>(p), p);
 }
 

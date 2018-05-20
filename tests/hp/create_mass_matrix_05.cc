@@ -41,7 +41,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
@@ -49,7 +49,7 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
@@ -58,15 +58,15 @@ check()
   element.push_back(FESystem<dim>(FE_RaviartThomasNodal<dim>(1), 2));
   element.push_back(FESystem<dim>(FE_RaviartThomasNodal<dim>(2), 2));
 
-  if(dim < 3)
+  if (dim < 3)
     element.push_back(FESystem<dim>(FE_RaviartThomasNodal<dim>(3), 2));
 
   hp::DoFHandler<dim> dof(tr);
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % element.size());
 
   dof.distribute_dofs(element);
@@ -83,14 +83,14 @@ check()
   // not couple, so use pattern
   SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
   Table<2, DoFTools::Coupling> mask(2 * dim, 2 * dim);
-  for(unsigned int i = 0; i < 2 * dim; ++i)
-    for(unsigned int j = 0; j < 2 * dim; ++j)
+  for (unsigned int i = 0; i < 2 * dim; ++i)
+    for (unsigned int j = 0; j < 2 * dim; ++j)
       mask[i][j] = DoFTools::none;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       mask[i][j] = DoFTools::always;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       mask[dim + i][dim + j] = DoFTools::always;
   DoFTools::make_sparsity_pattern(dof, mask, sparsity);
 
@@ -116,9 +116,9 @@ check()
   // multiply matrix by 100 to
   // make test more sensitive
   deallog << "Matrix: " << std::endl;
-  for(SparseMatrix<double>::const_iterator p = matrix.begin();
-      p != matrix.end();
-      ++p)
+  for (SparseMatrix<double>::const_iterator p = matrix.begin();
+       p != matrix.end();
+       ++p)
     deallog << p->value() * 100 << std::endl;
 }
 

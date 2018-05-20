@@ -30,10 +30,10 @@ bool
 operator==(const TrilinosWrappers::MPI::BlockVector& v1,
            const TrilinosWrappers::MPI::BlockVector& v2)
 {
-  if(v1.size() != v2.size())
+  if (v1.size() != v2.size())
     return false;
-  for(unsigned int i = 0; i < v1.size(); ++i)
-    if(v1(i) != v2(i))
+  for (unsigned int i = 0; i < v1.size(); ++i)
+    if (v1(i) != v2(i))
       return false;
   return true;
 }
@@ -49,7 +49,7 @@ test()
 
   // Check 1: initialization via
   // iterators
-  if(true)
+  if (true)
     {
       TrilinosWrappers::MPI::BlockVector v1;
       v1.reinit(ivector);
@@ -58,12 +58,12 @@ test()
 
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
       // initialize other vector
       // through iterators
       TrilinosWrappers::MPI::BlockVector::iterator p2 = v2.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p2)
+      for (unsigned int i = 0; i < v1.size(); ++i, ++p2)
         *p2 = i;
       AssertThrow(p2 == v2.end(), ExcInternalError());
 
@@ -74,17 +74,17 @@ test()
   // Check 2: loop forward and back
   // and check that things are the
   // same
-  if(true)
+  if (true)
     {
       TrilinosWrappers::MPI::BlockVector v1;
       v1.reinit(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       TrilinosWrappers::MPI::BlockVector::iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, ++p1)
         AssertThrow(*p1 == i, ExcInternalError());
 
       AssertThrow(p1 == v1.end(), ExcInternalError());
@@ -94,7 +94,7 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, --p1)
         AssertThrow(*p1 == v1.size() - i - 1, ExcInternalError());
 
       // if we came thus far,
@@ -104,17 +104,17 @@ test()
 
   // Check 3: same, but this time
   // with const iterators
-  if(true)
+  if (true)
     {
       TrilinosWrappers::MPI::BlockVector v1;
       v1.reinit(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       TrilinosWrappers::MPI::BlockVector::const_iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, ++p1)
         AssertThrow(*p1 == i, ExcInternalError());
 
       AssertThrow(p1 == v1.end(), ExcInternalError());
@@ -124,7 +124,7 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, --p1)
         {
           const double val = *p1;
           const double ref = v1.size() - i - 1;
@@ -138,13 +138,13 @@ test()
 
   // Checks 4-13: use some standard
   // algorithms
-  if(true)
+  if (true)
     {
       TrilinosWrappers::MPI::BlockVector v1;
       v1.reinit(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       // check std::distance
@@ -206,18 +206,18 @@ test()
     };
 
   // Check 15: operator[]
-  if(true)
+  if (true)
     {
       TrilinosWrappers::MPI::BlockVector v1;
       v1.reinit(ivector);
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         {
           const TrilinosWrappers::MPI::BlockVector::iterator p
             = (v1.begin() + i);
-          for(unsigned int j = 0; j < v1.size(); ++j)
+          for (unsigned int j = 0; j < v1.size(); ++j)
             AssertThrow(p[(signed) j - (signed) i] == j, ExcInternalError());
         };
 
@@ -244,7 +244,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       std::cerr << std::endl
                 << std::endl
@@ -257,7 +257,7 @@ main(int argc, char** argv)
       // abort
       return 2;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

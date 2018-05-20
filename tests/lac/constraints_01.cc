@@ -35,7 +35,7 @@ test()
                            18069, 18072, 18075, 18086, 18089, 18092, 18095,
                            18138, 18141, 18144, 18147, 18158, 18161, 18164};
 
-  for(unsigned int i = 0; i < sizeof(inhoms) / sizeof(inhoms[0]); ++i)
+  for (unsigned int i = 0; i < sizeof(inhoms) / sizeof(inhoms[0]); ++i)
     {
       deallog << inhoms[i] << std::endl;
       cm.add_line(inhoms[i]);

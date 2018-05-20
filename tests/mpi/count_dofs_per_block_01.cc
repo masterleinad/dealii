@@ -49,8 +49,8 @@ test()
   std::vector<types::global_dof_index> dofs_per_block(fe.n_blocks());
   DoFTools::count_dofs_per_block(dof_handler, dofs_per_block);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-    for(unsigned int i = 0; i < fe.n_blocks(); ++i)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    for (unsigned int i = 0; i < fe.n_blocks(); ++i)
       deallog << "Block " << i << " has " << dofs_per_block[i] << " dofs"
               << std::endl;
 }
@@ -61,7 +61,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

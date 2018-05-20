@@ -35,14 +35,14 @@ check()
   Point<dim> orientation;
   Point<dim> p(tria.begin_active()->center());
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     orientation(i) = i;
 
   Vector<double> vector(dof.n_dofs());
 
   VectorTools::create_point_source_vector(dof, p, orientation, vector);
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     deallog << vector(i) << std::endl;
 }
 

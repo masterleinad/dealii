@@ -97,7 +97,7 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   // stress -> 0 gamma -> 1
   std::vector<unsigned int> block_component(
     n_stress_components + n_gamma_components, 1);
-  for(unsigned int ii = 0; ii < n_stress_components; ii++)
+  for (unsigned int ii = 0; ii < n_stress_components; ii++)
     block_component[ii] = 0;
 
   DoFRenumbering::component_wise(dof_handler);
@@ -178,7 +178,7 @@ MixedElastoPlasticity<dim>::assemble_system()
   std::vector<Tensor<2, dim>> stress_values(n_q_points);
 
   unsigned int cc = 0;
-  for(; cell != endc; ++cell) //loop over all cells
+  for (; cell != endc; ++cell) //loop over all cells
     {
       deallog << ++cc << " ";
       cell_matrix = 0;
@@ -205,9 +205,9 @@ check()
 {
   static const unsigned int dim = 3;
   {
-    for(unsigned int i = 0; i < dim; i++)
+    for (unsigned int i = 0; i < dim; i++)
       {
-        for(unsigned int j = 0; j < dim; j++)
+        for (unsigned int j = 0; j < dim; j++)
           {
             TableIndices<2> indices(i, j);
             unsigned int    unrolled

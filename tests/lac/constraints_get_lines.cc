@@ -44,10 +44,10 @@ test()
   // now close the constraint matrix
   cm.close();
 
-  for(auto line : cm.get_lines())
+  for (auto line : cm.get_lines())
     {
       deallog << line.index;
-      for(auto entry : line.entries)
+      for (auto entry : line.entries)
         {
           deallog << " (" << entry.first << "," << entry.second << ")";
         }

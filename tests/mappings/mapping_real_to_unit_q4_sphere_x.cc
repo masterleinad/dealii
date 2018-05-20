@@ -51,12 +51,12 @@ test_real_to_unit_cell()
   // enough digits to have the same
   // outer radius, so normalize the
   // four outer ones
-  for(unsigned int v = 4; v < 8; ++v)
+  for (unsigned int v = 4; v < 8; ++v)
     vertices[v] *= radius / vertices[v].norm();
   std::vector<CellData<dim>> cells;
   {
     CellData<dim> d;
-    for(unsigned int i = 0; i < 8; ++i)
+    for (unsigned int i = 0; i < 8; ++i)
       d.vertices[i] = i;
     cells.push_back(d);
   }
@@ -80,7 +80,7 @@ test_real_to_unit_cell()
     {
       map.transform_real_to_unit_cell(cell, p);
     }
-  catch(const Mapping<dim>::ExcTransformationFailed&)
+  catch (const Mapping<dim>::ExcTransformationFailed&)
     {
       deallog << "Point is outside!" << std::endl;
     }

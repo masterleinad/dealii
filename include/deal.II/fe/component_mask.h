@@ -278,7 +278,7 @@ inline bool ComponentMask::operator[](const unsigned int component_index) const
 {
   // if the mask represents the all-component mask
   // then always return true
-  if(component_mask.size() == 0)
+  if (component_mask.size() == 0)
     return true;
   else
     {
@@ -298,18 +298,18 @@ ComponentMask::represents_n_components(const unsigned int n) const
 inline unsigned int
 ComponentMask::n_selected_components(const unsigned int n) const
 {
-  if((n != numbers::invalid_unsigned_int) && (size() > 0))
+  if ((n != numbers::invalid_unsigned_int) && (size() > 0))
     AssertDimension(n, size());
 
   const unsigned int real_n = (n != numbers::invalid_unsigned_int ? n : size());
-  if(component_mask.size() == 0)
+  if (component_mask.size() == 0)
     return real_n;
   else
     {
       AssertDimension(real_n, component_mask.size());
       unsigned int c = 0;
-      for(unsigned int i = 0; i < component_mask.size(); ++i)
-        if(component_mask[i] == true)
+      for (unsigned int i = 0; i < component_mask.size(); ++i)
+        if (component_mask[i] == true)
           ++c;
       return c;
     }
@@ -318,15 +318,15 @@ ComponentMask::n_selected_components(const unsigned int n) const
 inline unsigned int
 ComponentMask::first_selected_component(const unsigned int n) const
 {
-  if((n != numbers::invalid_unsigned_int) && (size() > 0))
+  if ((n != numbers::invalid_unsigned_int) && (size() > 0))
     AssertDimension(n, size());
 
-  if(component_mask.size() == 0)
+  if (component_mask.size() == 0)
     return 0;
   else
     {
-      for(unsigned int c = 0; c < component_mask.size(); ++c)
-        if(component_mask[c] == true)
+      for (unsigned int c = 0; c < component_mask.size(); ++c)
+        if (component_mask[c] == true)
           return c;
 
       Assert(false, ExcMessage("No component is selected at all!"));
@@ -345,9 +345,9 @@ ComponentMask::operator|(const ComponentMask& mask) const
 {
   // if one of the two masks denotes the all-component mask,
   // then return the other one
-  if(component_mask.size() == 0)
+  if (component_mask.size() == 0)
     return mask;
-  else if(mask.component_mask.size() == 0)
+  else if (mask.component_mask.size() == 0)
     return *this;
   else
     {
@@ -355,7 +355,7 @@ ComponentMask::operator|(const ComponentMask& mask) const
       // the combination of the two
       AssertDimension(component_mask.size(), mask.component_mask.size());
       std::vector<bool> new_mask(component_mask.size());
-      for(unsigned int i = 0; i < component_mask.size(); ++i)
+      for (unsigned int i = 0; i < component_mask.size(); ++i)
         new_mask[i] = (component_mask[i] || mask.component_mask[i]);
 
       return new_mask;
@@ -366,9 +366,9 @@ inline ComponentMask ComponentMask::operator&(const ComponentMask& mask) const
 {
   // if one of the two masks denotes the all-component mask,
   // then return the other one
-  if(component_mask.size() == 0)
+  if (component_mask.size() == 0)
     return mask;
-  else if(mask.component_mask.size() == 0)
+  else if (mask.component_mask.size() == 0)
     return *this;
   else
     {
@@ -376,7 +376,7 @@ inline ComponentMask ComponentMask::operator&(const ComponentMask& mask) const
       // the combination of the two
       AssertDimension(component_mask.size(), mask.component_mask.size());
       std::vector<bool> new_mask(component_mask.size());
-      for(unsigned int i = 0; i < component_mask.size(); ++i)
+      for (unsigned int i = 0; i < component_mask.size(); ++i)
         new_mask[i] = (component_mask[i] && mask.component_mask[i]);
 
       return new_mask;

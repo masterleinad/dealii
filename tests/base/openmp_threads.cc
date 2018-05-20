@@ -30,7 +30,7 @@ main()
   AssertThrow(omp_env_variable != nullptr,
               ExcMessage("The environment variable OMP_NUM_THREADS should be "
                          "defined when running the test suite."));
-  if(std::string(omp_env_variable) == "2")
+  if (std::string(omp_env_variable) == "2")
     {
       deallog << "OK" << std::endl;
     }

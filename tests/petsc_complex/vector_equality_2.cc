@@ -25,10 +25,10 @@ void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   // set only certain elements of each vector
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     {
       v(k) = PetscScalar(k, k);
-      if(k % 3 == 0)
+      if (k % 3 == 0)
         w(k) = std::complex<double>(k + 1., k + 1);
     }
   v.compress(VectorOperation::insert);
@@ -63,7 +63,7 @@ main(int argc, char** argv)
         deallog << "OK" << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -77,7 +77,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

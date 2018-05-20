@@ -2522,16 +2522,16 @@ GeometryInfo<2>::cell_to_child_coordinates(const Point<2>&         p,
     ExcIndexRange(child_index, 0, GeometryInfo<2>::n_children(refine_case)));
 
   Point<2> point = p;
-  switch(refine_case)
+  switch (refine_case)
     {
       case RefinementCase<2>::cut_x:
         point[0] *= 2.0;
-        if(child_index == 1)
+        if (child_index == 1)
           point[0] -= 1.0;
         break;
       case RefinementCase<2>::cut_y:
         point[1] *= 2.0;
-        if(child_index == 1)
+        if (child_index == 1)
           point[1] -= 1.0;
         break;
       case RefinementCase<2>::cut_xy:
@@ -2562,29 +2562,29 @@ GeometryInfo<3>::cell_to_child_coordinates(const Point<3>&         p,
   // in very few places for initialization
   // purposes only, I don't care at the
   // moment
-  switch(refine_case)
+  switch (refine_case)
     {
       case RefinementCase<3>::cut_x:
         point[0] *= 2.0;
-        if(child_index == 1)
+        if (child_index == 1)
           point[0] -= 1.0;
         break;
       case RefinementCase<3>::cut_y:
         point[1] *= 2.0;
-        if(child_index == 1)
+        if (child_index == 1)
           point[1] -= 1.0;
         break;
       case RefinementCase<3>::cut_z:
         point[2] *= 2.0;
-        if(child_index == 1)
+        if (child_index == 1)
           point[2] -= 1.0;
         break;
       case RefinementCase<3>::cut_xy:
         point[0] *= 2.0;
         point[1] *= 2.0;
-        if(child_index % 2 == 1)
+        if (child_index % 2 == 1)
           point[0] -= 1.0;
-        if(child_index / 2 == 1)
+        if (child_index / 2 == 1)
           point[1] -= 1.0;
         break;
       case RefinementCase<3>::cut_xz:
@@ -2594,17 +2594,17 @@ GeometryInfo<3>::cell_to_child_coordinates(const Point<3>&         p,
         // children!
         point[0] *= 2.0;
         point[2] *= 2.0;
-        if(child_index / 2 == 1)
+        if (child_index / 2 == 1)
           point[0] -= 1.0;
-        if(child_index % 2 == 1)
+        if (child_index % 2 == 1)
           point[2] -= 1.0;
         break;
       case RefinementCase<3>::cut_yz:
         point[1] *= 2.0;
         point[2] *= 2.0;
-        if(child_index % 2 == 1)
+        if (child_index % 2 == 1)
           point[1] -= 1.0;
-        if(child_index / 2 == 1)
+        if (child_index / 2 == 1)
           point[2] -= 1.0;
         break;
       case RefinementCase<3>::cut_xyz:
@@ -2661,27 +2661,27 @@ GeometryInfo<3>::child_to_cell_coordinates(const Point<3>&         p,
   // in very few places for initialization
   // purposes only, I don't care at the
   // moment
-  switch(refine_case)
+  switch (refine_case)
     {
       case RefinementCase<3>::cut_x:
-        if(child_index == 1)
+        if (child_index == 1)
           point[0] += 1.0;
         point[0] *= 0.5;
         break;
       case RefinementCase<3>::cut_y:
-        if(child_index == 1)
+        if (child_index == 1)
           point[1] += 1.0;
         point[1] *= 0.5;
         break;
       case RefinementCase<3>::cut_z:
-        if(child_index == 1)
+        if (child_index == 1)
           point[2] += 1.0;
         point[2] *= 0.5;
         break;
       case RefinementCase<3>::cut_xy:
-        if(child_index % 2 == 1)
+        if (child_index % 2 == 1)
           point[0] += 1.0;
-        if(child_index / 2 == 1)
+        if (child_index / 2 == 1)
           point[1] += 1.0;
         point[0] *= 0.5;
         point[1] *= 0.5;
@@ -2691,17 +2691,17 @@ GeometryInfo<3>::child_to_cell_coordinates(const Point<3>&         p,
         // different from xy and yz due to
         // different internal numbering of
         // children!
-        if(child_index / 2 == 1)
+        if (child_index / 2 == 1)
           point[0] += 1.0;
-        if(child_index % 2 == 1)
+        if (child_index % 2 == 1)
           point[2] += 1.0;
         point[0] *= 0.5;
         point[2] *= 0.5;
         break;
       case RefinementCase<3>::cut_yz:
-        if(child_index % 2 == 1)
+        if (child_index % 2 == 1)
           point[1] += 1.0;
-        if(child_index / 2 == 1)
+        if (child_index / 2 == 1)
           point[2] += 1.0;
         point[1] *= 0.5;
         point[2] *= 0.5;
@@ -2728,15 +2728,15 @@ GeometryInfo<2>::child_to_cell_coordinates(const Point<2>&         p,
     ExcIndexRange(child_index, 0, GeometryInfo<2>::n_children(refine_case)));
 
   Point<2> point = p;
-  switch(refine_case)
+  switch (refine_case)
     {
       case RefinementCase<2>::cut_x:
-        if(child_index == 1)
+        if (child_index == 1)
           point[0] += 1.0;
         point[0] *= 0.5;
         break;
       case RefinementCase<2>::cut_y:
-        if(child_index == 1)
+        if (child_index == 1)
           point[1] += 1.0;
         point[1] *= 0.5;
         break;
@@ -3008,7 +3008,7 @@ GeometryInfo<2>::subface_ratio(const internal::SubfaceCase<2>& subface_case,
                                const unsigned int)
 {
   double ratio = 1;
-  switch(subface_case)
+  switch (subface_case)
     {
       case internal::SubfaceCase<2>::case_none:
         // Here, an
@@ -3047,7 +3047,7 @@ GeometryInfo<3>::subface_ratio(const internal::SubfaceCase<3>& subface_case,
                                const unsigned int              subface_no)
 {
   double ratio = 1;
-  switch(subface_case)
+  switch (subface_case)
     {
       case internal::SubfaceCase<3>::case_none:
         // Here, an
@@ -3075,14 +3075,14 @@ GeometryInfo<3>::subface_ratio(const internal::SubfaceCase<3>& subface_case,
         break;
       case internal::SubfaceCase<3>::case_x1y:
       case internal::SubfaceCase<3>::case_y1x:
-        if(subface_no < 2)
+        if (subface_no < 2)
           ratio = 0.25;
         else
           ratio = 0.5;
         break;
       case internal::SubfaceCase<3>::case_x2y:
       case internal::SubfaceCase<3>::case_y2x:
-        if(subface_no == 0)
+        if (subface_no == 0)
           ratio = 0.5;
         else
           ratio = 0.25;
@@ -3352,7 +3352,7 @@ GeometryInfo<2>::min_cell_refinement_case_for_face_refinement(
   Assert(face_no < GeometryInfo<dim>::faces_per_cell,
          ExcIndexRange(face_no, 0, GeometryInfo<dim>::faces_per_cell));
 
-  if(face_refinement_case == RefinementCase<dim>::cut_x)
+  if (face_refinement_case == RefinementCase<dim>::cut_x)
     return (face_no / 2) ? RefinementCase<dim>::cut_x :
                            RefinementCase<dim>::cut_y;
   else
@@ -3921,8 +3921,8 @@ GeometryInfo<3>::child_cell_on_face(const RefinementCase<3>& ref_case,
   // face refinement cases here and thus must
   // not pass the given orientation, flip and
   // rotation flags
-  if((std_face_ref & face_refinement_case(ref_case, face))
-     == face_refinement_case(ref_case, face))
+  if ((std_face_ref & face_refinement_case(ref_case, face))
+      == face_refinement_case(ref_case, face))
     {
       // all is fine. for anisotropic face
       // refine cases, select one of the
@@ -4058,10 +4058,10 @@ inline Point<dim>
 GeometryInfo<dim>::project_to_unit_cell(const Point<dim>& q)
 {
   Point<dim> p = q;
-  for(unsigned int i = 0; i < dim; i++)
-    if(p[i] < 0.)
+  for (unsigned int i = 0; i < dim; i++)
+    if (p[i] < 0.)
       p[i] = 0.;
-    else if(p[i] > 1.)
+    else if (p[i] > 1.)
       p[i] = 1.;
 
   return p;
@@ -4073,10 +4073,10 @@ GeometryInfo<dim>::distance_to_unit_cell(const Point<dim>& p)
 {
   double result = 0.0;
 
-  for(unsigned int i = 0; i < dim; i++)
-    if((-p[i]) > result)
+  for (unsigned int i = 0; i < dim; i++)
+    if ((-p[i]) > result)
       result = -p[i];
-    else if((p[i] - 1.) > result)
+    else if ((p[i] - 1.) > result)
       result = (p[i] - 1.);
 
   return result;
@@ -4090,12 +4090,12 @@ GeometryInfo<dim>::d_linear_shape_function(const Point<dim>&  xi,
   Assert(i < GeometryInfo<dim>::vertices_per_cell,
          ExcIndexRange(i, 0, GeometryInfo<dim>::vertices_per_cell));
 
-  switch(dim)
+  switch (dim)
     {
       case 1:
         {
           const double x = xi[0];
-          switch(i)
+          switch (i)
             {
               case 0:
                 return 1 - x;
@@ -4109,7 +4109,7 @@ GeometryInfo<dim>::d_linear_shape_function(const Point<dim>&  xi,
         {
           const double x = xi[0];
           const double y = xi[1];
-          switch(i)
+          switch (i)
             {
               case 0:
                 return (1 - x) * (1 - y);
@@ -4128,7 +4128,7 @@ GeometryInfo<dim>::d_linear_shape_function(const Point<dim>&  xi,
           const double x = xi[0];
           const double y = xi[1];
           const double z = xi[2];
-          switch(i)
+          switch (i)
             {
               case 0:
                 return (1 - x) * (1 - y) * (1 - z);
@@ -4164,7 +4164,7 @@ Tensor<1, 1> inline GeometryInfo<1>::d_linear_shape_function_gradient(
   Assert(i < GeometryInfo<1>::vertices_per_cell,
          ExcIndexRange(i, 0, GeometryInfo<1>::vertices_per_cell));
 
-  switch(i)
+  switch (i)
     {
       case 0:
         return Point<1>(-1.);
@@ -4185,7 +4185,7 @@ Tensor<1, 2> inline GeometryInfo<2>::d_linear_shape_function_gradient(
 
   const double x = xi[0];
   const double y = xi[1];
-  switch(i)
+  switch (i)
     {
       case 0:
         return Point<2>(-(1 - y), -(1 - x));
@@ -4210,7 +4210,7 @@ Tensor<1, 3> inline GeometryInfo<3>::d_linear_shape_function_gradient(
   const double x = xi[0];
   const double y = xi[1];
   const double z = xi[2];
-  switch(i)
+  switch (i)
     {
       case 0:
         return Point<3>(
@@ -4282,7 +4282,7 @@ namespace internal
     wedge_product(const Tensor<1, dim> (&derivative)[dim])
     {
       Tensor<2, dim> jacobian;
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         jacobian[i] = derivative[i];
 
       return determinant(jacobian);
@@ -4330,15 +4330,15 @@ GeometryInfo<dim>::alternating_form_at_vertices
   // compute the wedge product of
   // the columns of the
   // derivatives
-  for(unsigned int i = 0; i < vertices_per_cell; ++i)
+  for (unsigned int i = 0; i < vertices_per_cell; ++i)
     {
       Tensor<1, spacedim> derivatives[dim];
 
-      for(unsigned int j = 0; j < vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < vertices_per_cell; ++j)
         {
           const Tensor<1, dim> grad_phi_j
             = d_linear_shape_function_gradient(unit_cell_vertex(i), j);
-          for(unsigned int l = 0; l < dim; ++l)
+          for (unsigned int l = 0; l < dim; ++l)
             derivatives[l] += vertices[j] * grad_phi_j[l];
         }
 

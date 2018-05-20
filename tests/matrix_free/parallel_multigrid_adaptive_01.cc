@@ -66,7 +66,7 @@ public:
     addit_data.tasks_block_size = 3;
     addit_data.level_mg_handler = level;
     ConstraintMatrix constraints;
-    if(level == numbers::invalid_unsigned_int)
+    if (level == numbers::invalid_unsigned_int)
       {
         IndexSet relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dof_handler, relevant_dofs);
@@ -91,8 +91,8 @@ public:
         edge_constrained_values.resize(interface_indices.size());
         const IndexSet& locally_owned
           = dof_handler.locally_owned_mg_dofs(level);
-        for(unsigned int i = 0; i < interface_indices.size(); ++i)
-          if(locally_owned.is_element(interface_indices[i]))
+        for (unsigned int i = 0; i < interface_indices.size(); ++i)
+          if (locally_owned.is_element(interface_indices[i]))
             edge_constrained_indices.push_back(
               locally_owned.index_within_set(interface_indices[i]));
         have_interface_matrices
@@ -104,7 +104,7 @@ public:
 
     data.reinit(mapping, dof_handler, constraints, quad, addit_data);
 
-    if(level != numbers::invalid_unsigned_int)
+    if (level != numbers::invalid_unsigned_int)
       compute_inverse_diagonal();
   }
 
@@ -144,7 +144,7 @@ public:
 
     // set zero Dirichlet values on the input vector (and remember the src and
     // dst values because we need to reset them at the end)
-    for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
+    for (unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
         edge_constrained_values[i] = std::pair<number, number>(
           src.local_element(edge_constrained_indices[i]),
@@ -158,13 +158,13 @@ public:
 
     const std::vector<unsigned int>& constrained_dofs
       = data.get_constrained_dofs();
-    for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
+    for (unsigned int i = 0; i < constrained_dofs.size(); ++i)
       dst.local_element(constrained_dofs[i])
         += src.local_element(constrained_dofs[i]);
 
     // reset edge constrained values, multiply by unit matrix and add into
     // destination
-    for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
+    for (unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
         const_cast<LinearAlgebra::distributed::Vector<double>&>(src)
           .local_element(edge_constrained_indices[i])
@@ -189,12 +189,12 @@ public:
 
     dst = 0;
 
-    if(!have_interface_matrices)
+    if (!have_interface_matrices)
       return;
 
     // set zero Dirichlet values on the input vector (and remember the src and
     // dst values because we need to reset them at the end)
-    for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
+    for (unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
         const double src_val = src.local_element(edge_constrained_indices[i]);
         const_cast<LinearAlgebra::distributed::Vector<double>&>(src)
@@ -207,9 +207,9 @@ public:
     data.cell_loop(&LaplaceOperator::local_apply, this, dst, src);
 
     unsigned int c = 0;
-    for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
+    for (unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
-        for(; c < edge_constrained_indices[i]; ++c)
+        for (; c < edge_constrained_indices[i]; ++c)
           dst.local_element(c) = 0.;
         ++c;
 
@@ -218,7 +218,7 @@ public:
           .local_element(edge_constrained_indices[i])
           = edge_constrained_values[i].first;
       }
-    for(; c < dst.local_size(); ++c)
+    for (; c < dst.local_size(); ++c)
       dst.local_element(c) = 0.;
   }
 
@@ -236,22 +236,22 @@ public:
 
     dst = 0;
 
-    if(!have_interface_matrices)
+    if (!have_interface_matrices)
       return;
 
     LinearAlgebra::distributed::Vector<double> src_cpy(src);
     unsigned int                               c = 0;
-    for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
+    for (unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
-        for(; c < edge_constrained_indices[i]; ++c)
+        for (; c < edge_constrained_indices[i]; ++c)
           src_cpy.local_element(c) = 0.;
         ++c;
       }
-    for(; c < src_cpy.local_size(); ++c)
+    for (; c < src_cpy.local_size(); ++c)
       src_cpy.local_element(c) = 0.;
 
     data.cell_loop(&LaplaceOperator::local_apply, this, dst, src_cpy);
-    for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
+    for (unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
         dst.local_element(edge_constrained_indices[i]) = 0.;
       }
@@ -281,8 +281,8 @@ public:
   initialize_dof_vector(
     LinearAlgebra::distributed::Vector<number>& vector) const
   {
-    if(!vector.partitioners_are_compatible(
-         *data.get_dof_info(0).vector_partitioner))
+    if (!vector.partitioners_are_compatible(
+          *data.get_dof_info(0).vector_partitioner))
       data.initialize_dof_vector(vector);
     Assert(vector.partitioners_are_globally_compatible(
              *data.get_dof_info(0).vector_partitioner),
@@ -305,12 +305,12 @@ private:
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values(src);
         phi.evaluate(false, true, false);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(phi.get_gradient(q), q);
         phi.integrate(false, true);
         phi.distribute_local_to_global(dst);
@@ -329,16 +329,16 @@ private:
 
     const std::vector<unsigned int>& constrained_dofs
       = data.get_constrained_dofs();
-    for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
+    for (unsigned int i = 0; i < constrained_dofs.size(); ++i)
       inverse_diagonal_entries.local_element(constrained_dofs[i]) = 1.;
-    for(unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
+    for (unsigned int i = 0; i < edge_constrained_indices.size(); ++i)
       {
         inverse_diagonal_entries.local_element(edge_constrained_indices[i])
           = 1.;
       }
 
-    for(unsigned int i = 0; i < inverse_diagonal_entries.local_size(); ++i)
-      if(std::abs(inverse_diagonal_entries.local_element(i)) > 1e-10)
+    for (unsigned int i = 0; i < inverse_diagonal_entries.local_size(); ++i)
+      if (std::abs(inverse_diagonal_entries.local_element(i)) > 1e-10)
         inverse_diagonal_entries.local_element(i)
           = 1. / inverse_diagonal_entries.local_element(i);
       else
@@ -354,23 +354,23 @@ private:
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, number> phi(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
 
         VectorizedArray<number> local_diagonal_vector[phi.tensor_dofs_per_cell];
-        for(unsigned int i = 0; i < phi.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < phi.dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < phi.dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < phi.dofs_per_cell; ++j)
               phi.begin_dof_values()[j] = VectorizedArray<number>();
             phi.begin_dof_values()[i] = 1.;
             phi.evaluate(false, true, false);
-            for(unsigned int q = 0; q < phi.n_q_points; ++q)
+            for (unsigned int q = 0; q < phi.n_q_points; ++q)
               phi.submit_gradient(phi.get_gradient(q), q);
             phi.integrate(false, true);
             local_diagonal_vector[i] = phi.begin_dof_values()[i];
           }
-        for(unsigned int i = 0; i < phi.tensor_dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < phi.tensor_dofs_per_cell; ++i)
           phi.begin_dof_values()[i] = local_diagonal_vector[i];
         phi.distribute_local_to_global(dst);
       }
@@ -434,7 +434,8 @@ public:
              MGLevelObject<LinearAlgebra::distributed::Vector<double>>& dst,
              const InVector& src) const
   {
-    for(unsigned int level = dst.min_level(); level <= dst.max_level(); ++level)
+    for (unsigned int level = dst.min_level(); level <= dst.max_level();
+         ++level)
       laplace_operator[level].initialize_dof_vector(dst[level]);
     MGTransferPrebuilt<LinearAlgebra::distributed::Vector<double>>::copy_to_mg(
       mg_dof_handler, dst, src);
@@ -476,7 +477,7 @@ template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
 do_test(const DoFHandler<dim>& dof)
 {
-  if(std::is_same<number, float>::value == true)
+  if (std::is_same<number, float>::value == true)
     {
       deallog.push("float");
     }
@@ -513,9 +514,9 @@ do_test(const DoFHandler<dim>& dof)
   fine_matrix.initialize_dof_vector(sol);
 
   // set constant rhs vector
-  for(unsigned int i = 0; i < in.local_size(); ++i)
-    if(!hanging_node_constraints.is_constrained(
-         in.get_partitioner()->local_to_global(i)))
+  for (unsigned int i = 0; i < in.local_size(); ++i)
+    if (!hanging_node_constraints.is_constrained(
+          in.get_partitioner()->local_to_global(i)))
       in.local_element(i) = 1.;
 
   // set up multigrid in analogy to step-37
@@ -524,8 +525,9 @@ do_test(const DoFHandler<dim>& dof)
 
   MGLevelObject<LevelMatrixType> mg_matrices;
   mg_matrices.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     {
       mg_matrices[level].initialize(
         mapping, dof, mg_constrained_dofs, dirichlet_boundary, level);
@@ -533,8 +535,9 @@ do_test(const DoFHandler<dim>& dof)
   MGLevelObject<MGInterfaceMatrix<LevelMatrixType>> mg_interface_matrices;
   mg_interface_matrices.resize(0,
                                dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     mg_interface_matrices[level].initialize(mg_matrices[level]);
 
   MGTransferMF<LevelMatrixType> mg_transfer(mg_matrices, mg_constrained_dofs);
@@ -553,8 +556,9 @@ do_test(const DoFHandler<dim>& dof)
 
   MGLevelObject<typename SMOOTHER::AdditionalData> smoother_data;
   smoother_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     {
       smoother_data[level].smoothing_range     = 15.;
       smoother_data[level].degree              = 5;
@@ -587,7 +591,7 @@ do_test(const DoFHandler<dim>& dof)
     solver.solve(fine_matrix, sol, in, preconditioner);
   }
 
-  if(std::is_same<number, float>::value == true)
+  if (std::is_same<number, float>::value == true)
     deallog.pop();
 }
 
@@ -602,16 +606,16 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(6 - dim);
   const unsigned int n_runs = fe_degree == 1 ? 6 - dim : 5 - dim;
-  for(unsigned int i = 0; i < n_runs; ++i)
+  for (unsigned int i = 0; i < n_runs; ++i)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
-        if(cell->is_locally_owned()
-           && ((cell->center().norm() < 0.5
-                && (cell->level() < 5 || cell->center().norm() > 0.45))
-               || (dim == 2 && cell->center().norm() > 1.2)))
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
+        if (cell->is_locally_owned()
+            && ((cell->center().norm() < 0.5
+                 && (cell->level() < 5 || cell->center().norm() > 0.45))
+                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
       FE_Q<dim>       fe(fe_degree);
@@ -628,7 +632,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog.attach(logfile);
       deallog << std::setprecision(4);

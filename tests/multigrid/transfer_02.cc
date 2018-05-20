@@ -44,7 +44,7 @@ void
 reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
               MGLevelObject<dealii::Vector<number>>&   v)
 {
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
       unsigned int n = mg_dof.n_dofs(level);
       v[level].reinit(n);
@@ -56,24 +56,24 @@ void
 refine_mesh(Triangulation<dim>& triangulation)
 {
   bool cell_refined = false;
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     {
       const Point<dim> p        = cell->center();
       bool             positive = p(0) > 0;
-      if(positive)
+      if (positive)
         {
           cell->set_refine_flag();
           cell_refined = true;
         }
     }
-  if(!cell_refined) //if no cell was selected for refinement, refine global
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
+  if (!cell_refined) //if no cell was selected for refinement, refine global
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 }
@@ -118,7 +118,7 @@ check_simple(const FiniteElement<dim>& fe)
 
   // Now the same for a non-constant
   // vector
-  for(unsigned int i = 0; i < u[0].size(); ++i)
+  for (unsigned int i = 0; i < u[0].size(); ++i)
     u[0](i) = i;
   transfer.prolongate(1, u[1], u[0]);
   transfer.prolongate(2, u[2], u[1]);
@@ -137,11 +137,11 @@ check_simple(const FiniteElement<dim>& fe)
   // from one up
   Vector<double> v;
   v.reinit(mgdof.n_dofs());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i + 1;
 
   transfer.copy_to_mg(mgdof, u, v);
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     deallog << ' ' << (int) u[2](i);
   deallog << std::endl;
 
@@ -149,10 +149,10 @@ check_simple(const FiniteElement<dim>& fe)
   // multigrid vector counting the
   // dofs and see where the numbers go
   v = 0.;
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     u[2](i) = i + 1;
   transfer.copy_from_mg(mgdof, v, u);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << (int) v(i);
   deallog << std::endl;
   v.equ(-1., v);

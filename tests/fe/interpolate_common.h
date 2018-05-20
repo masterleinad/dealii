@@ -39,10 +39,10 @@ difference(const FiniteElement<dim>& fe,
   std::vector<double> f(quadrature.size());
   function.value_list(quadrature.get_points(), f);
 
-  for(unsigned int k = 0; k < quadrature.size(); ++k)
+  for (unsigned int k = 0; k < quadrature.size(); ++k)
     {
       double diff = f[k];
-      for(unsigned int i = 0; i < dofs.size(); ++i)
+      for (unsigned int i = 0; i < dofs.size(); ++i)
         diff -= dofs[i] * fe.shape_value(i, quadrature.point(k));
       diff   = std::abs(diff);
       result = std::max(result, diff);
@@ -65,11 +65,11 @@ vector_difference(const FiniteElement<dim>& fe,
 
   function.vector_value_list(quadrature.get_points(), f);
 
-  for(unsigned int k = 0; k < quadrature.size(); ++k)
-    for(unsigned int comp = 0; comp < fe.n_components(); ++comp)
+  for (unsigned int k = 0; k < quadrature.size(); ++k)
+    for (unsigned int comp = 0; comp < fe.n_components(); ++comp)
       {
         double diff = f[k](comp + offset);
-        for(unsigned int i = 0; i < dofs.size(); ++i)
+        for (unsigned int i = 0; i < dofs.size(); ++i)
           diff
             -= dofs[i] * fe.shape_value_component(i, quadrature.point(k), comp);
         diff   = std::abs(diff);
@@ -91,8 +91,8 @@ public:
   value(const Point<dim>& p, const unsigned int c) const
   {
     double result = 1.;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int k = 0; k < degree; ++k)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int k = 0; k < degree; ++k)
         result *= p(d) + c;
     return result;
   }
@@ -105,12 +105,12 @@ public:
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for (unsigned int i = 0; i < points.size(); ++i)
       {
         const Point<dim>& p      = points[i];
         double            result = 1.;
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int k = 0; k < degree; ++k)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int k = 0; k < degree; ++k)
             result *= p(d) + c;
         values[i] = result;
       }
@@ -125,14 +125,14 @@ public:
     Assert(values[0].size() == this->n_components,
            ExcDimensionMismatch(values.size(), this->n_components));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for (unsigned int i = 0; i < points.size(); ++i)
       {
         const Point<dim>& p = points[i];
-        for(unsigned int c = 0; c < COMP; ++c)
+        for (unsigned int c = 0; c < COMP; ++c)
           {
             double result = 1.;
-            for(unsigned int d = 0; d < dim; ++d)
-              for(unsigned int k = 0; k < degree; ++k)
+            for (unsigned int d = 0; d < dim; ++d)
+              for (unsigned int k = 0; k < degree; ++k)
                 result *= p(d);
             values[i](c) = result;
           }

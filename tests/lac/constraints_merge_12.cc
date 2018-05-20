@@ -34,8 +34,8 @@ merge_check()
 
   // works correctly
   ConstraintMatrix c1(local_lines), c2(local_lines);
-  for(types::global_dof_index i = 99999800; i < local_lines.size(); ++i)
-    if(i % 2 == 1)
+  for (types::global_dof_index i = 99999800; i < local_lines.size(); ++i)
+    if (i % 2 == 1)
       c1.add_line(i);
 
   c2.add_line(99999800);

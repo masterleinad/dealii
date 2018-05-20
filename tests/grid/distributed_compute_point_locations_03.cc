@@ -54,7 +54,7 @@ test_distributed_cpt(unsigned int ref_cube)
   Triangulation<dim>      cube;
   GridGenerator::hyper_cube(cube);
   cube.refine_global(ref_cube);
-  for(auto cell : cube.active_cell_iterators())
+  for (auto cell : cube.active_cell_iterators())
     test_points.emplace_back(cell->center());
 
   deallog << " Testing on " << test_points.size() << " points" << std::endl;
@@ -86,10 +86,10 @@ test_distributed_cpt(unsigned int ref_cube)
   // Testing the results: if the map in maps is correct test_points[maps[i][j]] == points[i][j]
   bool test_passed = true;
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     {
-      for(unsigned int j = 0; j < maps[i].size(); ++j)
-        if((test_points[maps[i][j]] - points[i][j]).norm() > 1e-10)
+      for (unsigned int j = 0; j < maps[i].size(); ++j)
+        if ((test_points[maps[i][j]] - points[i][j]).norm() > 1e-10)
           {
             deallog << " Error in cell " << i << " with position " << j
                     << std::endl;
@@ -99,7 +99,7 @@ test_distributed_cpt(unsigned int ref_cube)
           }
     }
 
-  if(test_passed)
+  if (test_passed)
     deallog << "Test passed" << std::endl;
   else
     deallog << "Test FAILED" << std::endl;

@@ -85,18 +85,18 @@ namespace Step48
     FEEvaluation<dim, fe_degree> fe_eval(data);
     const unsigned int           n_q_points = fe_eval.n_q_points;
 
-    for(unsigned int cell = 0; cell < data.n_macro_cells(); ++cell)
+    for (unsigned int cell = 0; cell < data.n_macro_cells(); ++cell)
       {
         fe_eval.reinit(cell);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           fe_eval.submit_value(one, q);
         fe_eval.integrate(true, false);
         fe_eval.distribute_local_to_global(inv_mass_matrix);
       }
 
     inv_mass_matrix.compress(VectorOperation::add);
-    for(unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
-      if(inv_mass_matrix.local_element(k) > 1e-15)
+    for (unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
+      if (inv_mass_matrix.local_element(k) > 1e-15)
         inv_mass_matrix.local_element(k)
           = 1. / inv_mass_matrix.local_element(k);
       else
@@ -113,7 +113,7 @@ namespace Step48
   {
     AssertDimension(src.size(), 2);
     FEEvaluation<dim, fe_degree> current(data), old(data);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         current.reinit(cell);
         old.reinit(cell);
@@ -124,7 +124,7 @@ namespace Step48
         current.evaluate(true, true, false);
         old.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < current.n_q_points; ++q)
+        for (unsigned int q = 0; q < current.n_q_points; ++q)
           {
             const VectorizedArray<double> current_value = current.get_value(q);
             const VectorizedArray<double> old_value     = old.get_value(q);
@@ -312,14 +312,14 @@ namespace Step48
 
     unsigned int timestep_number = 1;
 
-    for(time += time_step; time <= final_time;
-        time += time_step, ++timestep_number)
+    for (time += time_step; time <= final_time;
+         time += time_step, ++timestep_number)
       {
         old_old_solution.swap(old_solution);
         old_solution.swap(solution);
         sine_gordon_op.apply(solution, previous_solutions);
 
-        if(timestep_number % output_timestep_skip == 0)
+        if (timestep_number % output_timestep_skip == 0)
           output_results(timestep_number / output_timestep_skip);
       }
     output_results(timestep_number / output_timestep_skip + 1);
@@ -339,7 +339,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

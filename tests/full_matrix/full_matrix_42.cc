@@ -22,7 +22,7 @@ template <typename number>
 void
 check()
 {
-  for(unsigned int n = 1; n <= 5; ++n)
+  for (unsigned int n = 1; n <= 5; ++n)
     {
       const number array[] = {50, 2, 3, 4, 5, 6,  50, 8, 9, 0, 1, 2, 50,
                               4,  5, 6, 7, 8, 50, 0,  1, 2, 3, 4, 50};

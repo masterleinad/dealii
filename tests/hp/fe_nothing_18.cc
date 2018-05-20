@@ -125,10 +125,10 @@ SymmetricTensor<4, dim>
 get_stress_strain_tensor(const double lambda, const double mu)
 {
   SymmetricTensor<4, dim> tmp;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           tmp[i][j][k][l] = (((i == k) && (j == l) ? mu : 0.0)
                              + ((i == l) && (j == k) ? mu : 0.0)
                              + ((i == j) && (k == l) ? lambda : 0.0));
@@ -216,7 +216,7 @@ ConstrainValues<dim>::vector_value_list(
   const unsigned int n_points
     = points.size(); //number of points at which the function is to be evaluated
 
-  for(unsigned int p = 0; p < n_points; ++p)
+  for (unsigned int p = 0; p < n_points; ++p)
     ConstrainValues<dim>::vector_value(points[p], value_list[p]);
 }
 
@@ -281,7 +281,7 @@ ElasticProblem<dim>::make_grid()
   triangulationL.begin_active()->set_material_id(0);
   triangulationR.begin_active()->set_material_id(id_of_lagrange_mult);
 
-  for(unsigned int i = 0; i < n_faces_per_cell; i++)
+  for (unsigned int i = 0; i < n_faces_per_cell; i++)
     {
       triangulationL.begin_active()->face(i)->set_boundary_id(i);
       triangulationR.begin_active()->face(i)->set_boundary_id(n_faces_per_cell
@@ -300,7 +300,7 @@ ElasticProblem<dim>::setup_system()
 {
   std::vector<unsigned int> block_component(
     n_components, u_block); // init to represent u everywhere
-  for(unsigned int i = 0; i < dim; i++)
+  for (unsigned int i = 0; i < dim; i++)
     block_component[i + dim] = lambda_block;
 
   //(1) set active FE indices based in material id...
@@ -309,9 +309,9 @@ ElasticProblem<dim>::setup_system()
     endc                          = dof_handler.end();
   unsigned int n_lagrange_cells   = 0;
   unsigned int n_elasticity_cells = 0;
-  for(; cell != endc; ++cell) //loop over all cells
+  for (; cell != endc; ++cell) //loop over all cells
     {
-      if(cell->material_id() == id_of_lagrange_mult)
+      if (cell->material_id() == id_of_lagrange_mult)
         {
           cell->set_active_fe_index(1); // for lagrangian cells..
           n_lagrange_cells++;
@@ -365,11 +365,11 @@ ElasticProblem<dim>::setup_system()
   dynamic_sparsity_pattern.collect_sizes();
 
   Table<2, DoFTools::Coupling> coupling(n_components, n_components);
-  for(unsigned int ii = 0; ii < n_components; ++ii)
-    for(unsigned int jj = 0; jj < n_components; ++jj)
+  for (unsigned int ii = 0; ii < n_components; ++ii)
+    for (unsigned int jj = 0; jj < n_components; ++jj)
       {
-        if((block_component[ii] == lambda_block)
-           && (block_component[jj] == lambda_block))
+        if ((block_component[ii] == lambda_block)
+            && (block_component[jj] == lambda_block))
           coupling[ii][jj] = DoFTools::none; //diagonal = 0
         else
           coupling[ii][jj] = DoFTools::always; //full coupling (u,u), (u,lambda)

@@ -69,15 +69,15 @@ test()
   /*typename*/ Triangulation<dim>::active_cell_iterator cell
     = tria.begin_active(),
     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       try
         {
           fe_val.reinit(cell);
-          for(unsigned int q = 0; q < quad.size(); ++q)
+          for (unsigned int q = 0; q < quad.size(); ++q)
             integral += fe_val.JxW(q);
         }
-      catch(ExceptionBase& e)
+      catch (ExceptionBase& e)
         {
           deallog << e.get_exc_name() << std::endl;
         }

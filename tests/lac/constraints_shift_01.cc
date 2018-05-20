@@ -62,7 +62,7 @@ test()
   constraints1.print(deallog.get_file_stream());
 
   Vector<double> vec(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     vec(i) = i;
   constraints1.distribute(vec);
   vec.print(deallog.get_file_stream(), 3, true, false);

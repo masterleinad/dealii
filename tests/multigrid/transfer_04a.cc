@@ -47,34 +47,34 @@ setup_tria(parallel::distributed::Triangulation<dim>& tr)
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
 
-  for(typename parallel::distributed::Triangulation<dim>::active_cell_iterator
-        cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
+  for (typename parallel::distributed::Triangulation<dim>::active_cell_iterator
+         cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
     {
-      if(cell->id().to_string() != "0_1:3")
+      if (cell->id().to_string() != "0_1:3")
         cell->set_refine_flag();
     }
   tr.execute_coarsening_and_refinement();
 
-  for(typename parallel::distributed::Triangulation<dim>::active_cell_iterator
-        cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
+  for (typename parallel::distributed::Triangulation<dim>::active_cell_iterator
+         cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
     {
-      if(cell->id().to_string() == "0_2:00"
-         || cell->id().to_string() == "0_2:01"
-         || cell->id().to_string() == "0_2:02")
+      if (cell->id().to_string() == "0_2:00"
+          || cell->id().to_string() == "0_2:01"
+          || cell->id().to_string() == "0_2:02")
         cell->set_refine_flag();
     }
   tr.execute_coarsening_and_refinement();
 
-  for(typename parallel::distributed::Triangulation<dim>::cell_iterator cell
-      = tr.begin();
-      cell != tr.end();
-      ++cell)
+  for (typename parallel::distributed::Triangulation<dim>::cell_iterator cell
+       = tr.begin();
+       cell != tr.end();
+       ++cell)
     {
       deallog << "cell=" << cell->id()
               << " level_subdomain_id=" << cell->level_subdomain_id()
@@ -94,11 +94,11 @@ check_fe(FiniteElement<dim>& fe)
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   setup_tria(tr);
 
-  if(false)
+  if (false)
     {
       DataOut<dim>  data_out;
       Vector<float> subdomain(tr.n_active_cells());
-      for(unsigned int i = 0; i < subdomain.size(); ++i)
+      for (unsigned int i = 0; i < subdomain.size(); ++i)
         subdomain(i) = tr.locally_owned_subdomain();
       data_out.attach_triangulation(tr);
       data_out.add_data_vector(subdomain, "subdomain");
@@ -125,12 +125,12 @@ check_fe(FiniteElement<dim>& fe)
   transfer.print_indices(deallog.get_file_stream());
 
   MGLevelObject<vector_t> u(0, tr.n_global_levels() - 1);
-  for(unsigned int level = u.min_level(); level <= u.max_level(); ++level)
+  for (unsigned int level = u.min_level(); level <= u.max_level(); ++level)
     {
       u[level].reinit(dofh.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
-      for(unsigned int i = 0;
-          i < dofh.locally_owned_mg_dofs(level).n_elements();
-          ++i)
+      for (unsigned int i = 0;
+           i < dofh.locally_owned_mg_dofs(level).n_elements();
+           ++i)
         {
           unsigned int index
             = dofh.locally_owned_mg_dofs(level).nth_index_in_set(i);
@@ -145,7 +145,7 @@ check_fe(FiniteElement<dim>& fe)
   transfer.copy_from_mg(dofh, v, u);
 
   {
-    for(unsigned int i = 0; i < dofh.locally_owned_dofs().n_elements(); ++i)
+    for (unsigned int i = 0; i < dofh.locally_owned_dofs().n_elements(); ++i)
       {
         unsigned int index = dofh.locally_owned_dofs().nth_index_in_set(i);
         deallog << v[index] << " ";

@@ -45,17 +45,17 @@ test()
 
   // Mark a small block at the corner of the hypercube
   cell_iterator cell = tria.begin_active(), endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       bool mark = true;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()[d] > 0.33)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()[d] > 0.33)
           {
             mark = false;
             break;
           }
 
-      if(mark == true)
+      if (mark == true)
         cell->set_material_id(2);
       else
         cell->set_material_id(1);

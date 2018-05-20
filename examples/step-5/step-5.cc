@@ -108,7 +108,7 @@ template <int dim>
 double
 coefficient(const Point<dim>& p)
 {
-  if(p.square() < 0.5 * 0.5)
+  if (p.square() < 0.5 * 0.5)
     return 20;
   else
     return 1;
@@ -186,20 +186,20 @@ Step5<dim>::assemble_system()
   // change in this part, compared to step-4, is that we will use the
   // <code>coefficient</code> function defined above to compute the
   // coefficient value at each quadrature point.
-  for(const auto& cell : dof_handler.active_cell_iterators())
+  for (const auto& cell : dof_handler.active_cell_iterators())
     {
       cell_matrix = 0;
       cell_rhs    = 0;
 
       fe_values.reinit(cell);
 
-      for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+      for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
         {
           const double current_coefficient
             = coefficient<dim>(fe_values.quadrature_point(q_index));
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j)
                   += (current_coefficient * fe_values.shape_grad(i, q_index)
                       * fe_values.shape_grad(j, q_index)
@@ -211,9 +211,9 @@ Step5<dim>::assemble_system()
         }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
@@ -440,11 +440,11 @@ Step5<dim>::run()
   triangulation.set_all_manifold_ids_on_boundary(0);
   triangulation.set_manifold(0, boundary);
 
-  for(unsigned int cycle = 0; cycle < 6; ++cycle)
+  for (unsigned int cycle = 0; cycle < 6; ++cycle)
     {
       std::cout << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle != 0)
+      if (cycle != 0)
         triangulation.refine_global(1);
 
       // Now that we have a mesh for sure, we write some output and do all the

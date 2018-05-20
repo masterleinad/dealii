@@ -26,17 +26,17 @@ test()
 {
   const unsigned int  n_vectors = VectorizedArray<Number>::n_array_elements;
   std::vector<Number> values(n_vectors * 5);
-  for(unsigned int i = 0; i < values.size(); ++i)
+  for (unsigned int i = 0; i < values.size(); ++i)
     values[i] = i;
   AlignedVector<VectorizedArray<Number>> copied(4);
 
   // test load operation for all possible values of alignment
-  for(unsigned int shift = 0; shift < n_vectors; ++shift)
+  for (unsigned int shift = 0; shift < n_vectors; ++shift)
     {
-      for(unsigned int i = 0; i < 4; ++i)
+      for (unsigned int i = 0; i < 4; ++i)
         copied[i].load(&values[i * n_vectors + shift]);
-      for(unsigned int i = 0; i < 4; ++i)
-        for(unsigned int v = 0; v < n_vectors; ++v)
+      for (unsigned int i = 0; i < 4; ++i)
+        for (unsigned int v = 0; v < n_vectors; ++v)
           AssertThrow(copied[i][v] == values[i * n_vectors + v + shift],
                       ExcInternalError());
     }
@@ -44,15 +44,15 @@ test()
 
   // test store operation
   std::vector<Number> stored(n_vectors * 5);
-  for(unsigned int shift = 0; shift < n_vectors; ++shift)
+  for (unsigned int shift = 0; shift < n_vectors; ++shift)
     {
-      for(unsigned int i = 0; i < 4; ++i)
+      for (unsigned int i = 0; i < 4; ++i)
         {
           VectorizedArray<Number> tmp;
           tmp.load(&values[i * n_vectors]);
           tmp.store(&stored[i * n_vectors + shift]);
         }
-      for(unsigned int i = 0; i < 4 * n_vectors; ++i)
+      for (unsigned int i = 0; i < 4 * n_vectors; ++i)
         AssertThrow(stored[i + shift] == i, ExcInternalError());
     }
   deallog << "store OK" << std::endl;

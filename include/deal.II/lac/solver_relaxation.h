@@ -122,7 +122,7 @@ SolverRelaxation<VectorType>::solve(const MatrixType&     A,
 
   int iter = 0;
   // Main loop
-  for(; conv == SolverControl::iterate; iter++)
+  for (; conv == SolverControl::iterate; iter++)
     {
       // Compute residual
       A.vmult(r, x);
@@ -134,7 +134,7 @@ SolverRelaxation<VectorType>::solve(const MatrixType&     A,
       // criterion() and stored
       // in res.
       conv = this->iteration_status(iter, r.l2_norm(), x);
-      if(conv != SolverControl::iterate)
+      if (conv != SolverControl::iterate)
         break;
       R.step(x, b);
     }

@@ -46,7 +46,7 @@ output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
                    const std::string&         text)
 {
   deallog << text;
-  for(unsigned int j = 0; j < eigenvalues.size(); ++j)
+  for (unsigned int j = 0; j < eigenvalues.size(); ++j)
     {
       deallog << ' ' << eigenvalues.at(j);
     }
@@ -58,9 +58,9 @@ void
 output_hessenberg_matrix(const FullMatrix<NUMBER>& H, const std::string& text)
 {
   deallog << text << std::endl;
-  for(unsigned int i = 0; i < H.m(); ++i)
+  for (unsigned int i = 0; i < H.m(); ++i)
     {
-      for(unsigned int j = 0; j < H.n(); ++j)
+      for (unsigned int j = 0; j < H.n(); ++j)
         deallog << H(i, j) << " ";
       deallog << std::endl;
     }
@@ -74,7 +74,7 @@ output_arnoldi_vectors_norms(
   const std::string& text)
 {
   deallog << text << std::endl;
-  for(unsigned int i = 0; i < tmp_vector.size(); ++i)
+  for (unsigned int i = 0; i < tmp_vector.size(); ++i)
     deallog << tmp_vector[i].l2_norm() << std::endl;
 }
 
@@ -95,7 +95,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch (dealii::SolverControl::NoConvergence& e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -178,7 +178,7 @@ main()
                   "Arnoldi vectors norms: "));
       solver_gmres.solve(A, u, f, PreconditionIdentity());
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       std::cerr << "Exception: " << e.what() << std::endl;
     }

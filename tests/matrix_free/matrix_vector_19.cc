@@ -52,11 +52,11 @@ test()
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
   cell                                                   = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 0.2)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 0.2)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  if(dim < 3 && fe_degree < 2)
+  if (dim < 3 && fe_degree < 2)
     tria.refine_global(2);
   else
     tria.refine_global(1);
@@ -64,12 +64,12 @@ test()
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       cell                 = tria.begin_active();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -112,10 +112,10 @@ test()
   out.reinit(in);
   ref.reinit(in);
 
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for (unsigned int i = 0; i < in.local_size(); ++i)
     {
       const unsigned int glob_index = owned_set.nth_index_in_set(i);
-      if(constraints.is_constrained(glob_index))
+      if (constraints.is_constrained(glob_index))
         continue;
       in.local_element(i) = random_value<double>();
     }
@@ -153,16 +153,16 @@ test()
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   cell_matrix(i, j)
                     += ((fe_values.shape_grad(i, q_point)
                            * fe_values.shape_grad(j, q_point)
@@ -194,7 +194,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

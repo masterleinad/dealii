@@ -36,7 +36,7 @@ check(const T (&object)[N])
   const bool equal_sizes = (buffer.size() == sizeof(T) * N);
   deallog << "Buffer size check: " << (equal_sizes ? "OK" : "Failed")
           << std::endl;
-  if(equal_sizes)
+  if (equal_sizes)
     deallog << "memcmp check: "
             << (std::memcmp(buffer.data(), &object, buffer.size()) == 0 ?
                   "OK" :
@@ -44,8 +44,8 @@ check(const T (&object)[N])
             << std::endl;
 
   bool equal = true;
-  for(unsigned int i = 0; i < N; ++i)
-    if(unpacked[i] != object[i])
+  for (unsigned int i = 0; i < N; ++i)
+    if (unpacked[i] != object[i])
       {
         equal = false;
         break;
@@ -64,7 +64,7 @@ test()
   // using BOOST
   const unsigned int N = 10000;
   double             y[N];
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     y[i] = i;
   check(y);
 

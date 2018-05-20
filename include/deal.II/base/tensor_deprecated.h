@@ -224,7 +224,7 @@ double_contract(const Tensor<2, dim, Number>& src1,
                 const Tensor<2, dim, Number>& src2)
 {
   Number res = internal::NumberType<Number>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     res += src1[i] * src2[i];
 
   return res;
@@ -236,10 +236,10 @@ inline void double_contract(Tensor<2, dim, Number>&       dest,
                             const Tensor<2, dim, Number>& src2)
 {
   dest.clear();
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           dest[i][j] += src1[i][j][k][l] * src2[k][l];
 }
 
@@ -252,21 +252,21 @@ inline void contract(Tensor<2, dim, Number>&       dest,
 {
   dest.clear();
 
-  switch(index1)
+  switch (index1)
     {
       case 1:
-        switch(index2)
+        switch (index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
                     dest[i][j] += src1[k][i] * src2[k][j];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
                     dest[i][j] += src1[k][i] * src2[j][k];
               break;
 
@@ -275,18 +275,18 @@ inline void contract(Tensor<2, dim, Number>&       dest,
           };
         break;
       case 2:
-        switch(index2)
+        switch (index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
                     dest[i][j] += src1[i][k] * src2[k][j];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
                     dest[i][j] += src1[i][k] * src2[j][k];
               break;
 
@@ -308,26 +308,26 @@ inline void contract(Tensor<2, dim, Number>&       dest,
 {
   dest.clear();
 
-  switch(index1)
+  switch (index1)
     {
       case 1:
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = 0; j < dim; ++j)
-            for(unsigned int k = 0; k < dim; ++k)
+        for (unsigned int i = 0; i < dim; ++i)
+          for (unsigned int j = 0; j < dim; ++j)
+            for (unsigned int k = 0; k < dim; ++k)
               dest[i][j] += src1[k][i][j] * src2[k];
         break;
 
       case 2:
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = 0; j < dim; ++j)
-            for(unsigned int k = 0; k < dim; ++k)
+        for (unsigned int i = 0; i < dim; ++i)
+          for (unsigned int j = 0; j < dim; ++j)
+            for (unsigned int k = 0; k < dim; ++k)
               dest[i][j] += src1[i][k][j] * src2[k];
         break;
 
       case 3:
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = 0; j < dim; ++j)
-            for(unsigned int k = 0; k < dim; ++k)
+        for (unsigned int i = 0; i < dim; ++i)
+          for (unsigned int j = 0; j < dim; ++j)
+            for (unsigned int k = 0; k < dim; ++k)
               dest[i][j] += src1[i][j][k] * src2[k];
         break;
 
@@ -345,23 +345,23 @@ inline void contract(Tensor<3, dim, Number>&       dest,
 {
   dest.clear();
 
-  switch(index1)
+  switch (index1)
     {
       case 1:
-        switch(index2)
+        switch (index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
+                    for (unsigned int l = 0; l < dim; ++l)
                       dest[i][j][k] += src1[l][i][j] * src2[l][k];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
+                    for (unsigned int l = 0; l < dim; ++l)
                       dest[i][j][k] += src1[l][i][j] * src2[k][l];
               break;
             default:
@@ -370,20 +370,20 @@ inline void contract(Tensor<3, dim, Number>&       dest,
 
         break;
       case 2:
-        switch(index2)
+        switch (index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
+                    for (unsigned int l = 0; l < dim; ++l)
                       dest[i][j][k] += src1[i][l][j] * src2[l][k];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
+                    for (unsigned int l = 0; l < dim; ++l)
                       dest[i][j][k] += src1[i][l][j] * src2[k][l];
               break;
             default:
@@ -392,20 +392,20 @@ inline void contract(Tensor<3, dim, Number>&       dest,
 
         break;
       case 3:
-        switch(index2)
+        switch (index2)
           {
             case 1:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
+                    for (unsigned int l = 0; l < dim; ++l)
                       dest[i][j][k] += src1[i][j][l] * src2[l][k];
               break;
             case 2:
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = 0; j < dim; ++j)
-                  for(unsigned int k = 0; k < dim; ++k)
-                    for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = 0; j < dim; ++j)
+                  for (unsigned int k = 0; k < dim; ++k)
+                    for (unsigned int l = 0; l < dim; ++l)
                       dest[i][j][k] += src1[i][j][l] * src2[k][l];
               break;
             default:
@@ -436,7 +436,7 @@ contract(const Tensor<1, dim, Number>&      src1,
 {
   typename ProductType<Number, OtherNumber>::type res =
     typename ProductType<Number, OtherNumber>::type();
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     res += src1[i] * src2[i];
 
   return res;
@@ -471,7 +471,7 @@ inline void outer_product(Tensor<1, dim, Number>&       dst,
                           const Number                  src1,
                           const Tensor<1, dim, Number>& src2)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     dst[i] = src1 * src2[i];
 }
 
@@ -480,7 +480,7 @@ inline void outer_product(Tensor<1, dim, Number>&      dst,
                           const Tensor<1, dim, Number> src1,
                           const Number                 src2)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     dst[i] = src1[i] * src2;
 }
 

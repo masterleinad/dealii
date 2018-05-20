@@ -1449,7 +1449,7 @@ namespace FETools
             multiplicities.push_back(fe_system.second);
           };
 
-      for(const auto& p : fe_systems)
+      for (const auto& p : fe_systems)
         extract(p);
 
       return compute_restriction_is_additive_flags(fes, multiplicities);
@@ -1473,7 +1473,7 @@ namespace FETools
             multiplicities.push_back(fe_system.second);
           };
 
-      for(const auto& p : fe_systems)
+      for (const auto& p : fe_systems)
         extract(p);
 
       return multiply_dof_numbers(fes, multiplicities, true);
@@ -1497,7 +1497,7 @@ namespace FETools
             multiplicities.push_back(fe_system.second);
           };
 
-      for(const auto& p : fe_systems)
+      for (const auto& p : fe_systems)
         extract(p);
 
       return compute_nonzero_components(fes, multiplicities, true);

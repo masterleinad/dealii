@@ -56,7 +56,7 @@ namespace SLEPcWrappers
 
   SolverBase::~SolverBase()
   {
-    if(eps != nullptr)
+    if (eps != nullptr)
       {
         // Destroy the solver object.
         const PetscErrorCode ierr = EPSDestroy(&eps);
@@ -97,9 +97,9 @@ namespace SLEPcWrappers
     // From 3.8.0 SLEPc insists that when looking for smallest eigenvalues with shift-and-invert
     // users should (a) set target (b) use EPS_TARGET_MAGNITUDE
     // The former, however, needs to be applied to eps object and not spectral transformation.
-    if(SLEPcWrappers::TransformationShiftInvert* sinv
-       = dynamic_cast<SLEPcWrappers::TransformationShiftInvert*>(
-         &transformation))
+    if (SLEPcWrappers::TransformationShiftInvert* sinv
+        = dynamic_cast<SLEPcWrappers::TransformationShiftInvert*>(
+          &transformation))
       {
         ierr = EPSSetTarget(eps, sinv->additional_data.shift_parameter);
         AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
@@ -190,7 +190,7 @@ namespace SLEPcWrappers
       AssertThrow(ierr == 0, ExcSLEPcError(ierr));
 
       // get the maximum of residual norm among converged eigenvectors.
-      for(unsigned int i = 0; i < *n_converged; i++)
+      for (unsigned int i = 0; i < *n_converged; i++)
         {
           double residual_norm_i = 0.0;
           // EPSComputeError (or, in older versions of SLEPc,
@@ -283,7 +283,7 @@ namespace SLEPcWrappers
   void
   SolverBase::get_solver_state(const SolverControl::State state)
   {
-    switch(state)
+    switch (state)
       {
         case ::dealii::SolverControl::iterate:
           reason = EPS_CONVERGED_ITERATING;
@@ -294,7 +294,7 @@ namespace SLEPcWrappers
           break;
 
         case ::dealii::SolverControl::failure:
-          if(solver_control.last_step() > solver_control.max_steps())
+          if (solver_control.last_step() > solver_control.max_steps())
             reason = EPS_DIVERGED_ITS;
           else
             reason = EPS_DIVERGED_BREAKDOWN;
@@ -356,7 +356,7 @@ namespace SLEPcWrappers
 
     // if requested, set delayed reorthogonalization in the Arnoldi
     // iteration.
-    if(additional_data.delayed_reorthogonalization)
+    if (additional_data.delayed_reorthogonalization)
       {
         ierr = EPSArnoldiSetDelayed(eps, PETSC_TRUE);
         AssertThrow(ierr == 0, ExcSLEPcError(ierr));
@@ -405,7 +405,7 @@ namespace SLEPcWrappers
     PetscErrorCode ierr = EPSSetType(eps, const_cast<char*>(EPSGD));
     AssertThrow(ierr == 0, ExcSLEPcError(ierr));
 
-    if(additional_data.double_expansion)
+    if (additional_data.double_expansion)
       {
         ierr = EPSGDSetDoubleExpansion(eps, PETSC_TRUE);
         AssertThrow(ierr == 0, ExcSLEPcError(ierr));

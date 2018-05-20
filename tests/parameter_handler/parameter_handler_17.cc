@@ -30,7 +30,7 @@ check()
     {
       prm.get_double("a");
     }
-  catch(...)
+  catch (...)
     {
       deallog << "get_double() detected the mistake" << std::endl;
     }
@@ -39,7 +39,7 @@ check()
     {
       prm.get_integer("a");
     }
-  catch(...)
+  catch (...)
     {
       deallog << "get_integer() detected the mistake" << std::endl;
     }
@@ -48,7 +48,7 @@ check()
     {
       prm.get_bool("a");
     }
-  catch(...)
+  catch (...)
     {
       deallog << "get_bool() detected the mistake" << std::endl;
     }

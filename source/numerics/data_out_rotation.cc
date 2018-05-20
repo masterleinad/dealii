@@ -76,7 +76,7 @@ namespace internal
       const std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>>& new_patches,
       std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>>&       patches)
     {
-      for(unsigned int i = 0; i < new_patches.size(); ++i)
+      for (unsigned int i = 0; i < new_patches.size(); ++i)
         {
           patches.push_back(new_patches[i]);
           patches.back().patch_index = patches.size() - 1;
@@ -94,7 +94,7 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
   std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>&
     my_patches)
 {
-  if(dim == 3)
+  if (dim == 3)
     {
       // would this function make any sense after all? who would want to
       // output/compute in four space dimensions?
@@ -114,7 +114,7 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
   // reduced one in which the computation took place. for simplicity add the
   // initial direction at the end again
   std::vector<Point<dimension + 1>> angle_directions(n_patches_per_circle + 1);
-  for(unsigned int i = 0; i <= n_patches_per_circle; ++i)
+  for (unsigned int i = 0; i <= n_patches_per_circle; ++i)
     {
       angle_directions[i][dimension - 1]
         = std::cos(2 * numbers::PI * i / n_patches_per_circle);
@@ -122,12 +122,12 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
         = std::sin(2 * numbers::PI * i / n_patches_per_circle);
     }
 
-  for(unsigned int angle = 0; angle < n_patches_per_circle; ++angle)
+  for (unsigned int angle = 0; angle < n_patches_per_circle; ++angle)
     {
       // first compute the vertices of the patch. note that they will have to
       // be computed from the vertices of the cell, which has one dimension
       // less, however.
-      switch(dimension)
+      switch (dimension)
         {
           case 1:
             {
@@ -146,9 +146,9 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
 
           case 2:
             {
-              for(unsigned int vertex = 0;
-                  vertex < GeometryInfo<dimension>::vertices_per_cell;
-                  ++vertex)
+              for (unsigned int vertex = 0;
+                   vertex < GeometryInfo<dimension>::vertices_per_cell;
+                   ++vertex)
                 {
                   const Point<dimension> v = (*cell)->vertex(vertex);
 
@@ -178,14 +178,14 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
         };
 
       // then fill in data
-      if(data.n_datasets > 0)
+      if (data.n_datasets > 0)
         {
           unsigned int offset = 0;
 
           data.reinit_all_fe_values(this->dof_data, *cell);
           // first fill dof_data
-          for(unsigned int dataset = 0; dataset < this->dof_data.size();
-              ++dataset)
+          for (unsigned int dataset = 0; dataset < this->dof_data.size();
+               ++dataset)
             {
               const FEValuesBase<dimension>& fe_patch_values
                 = data.get_present_fe_values(dataset);
@@ -193,7 +193,7 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                 = fe_patch_values.get_fe().n_components();
               const DataPostprocessor<dim>* postprocessor
                 = this->dof_data[dataset]->postprocessor;
-              if(postprocessor != nullptr)
+              if (postprocessor != nullptr)
                 {
                   // we have to postprocess the
                   // data, so determine, which
@@ -201,31 +201,31 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                   const UpdateFlags update_flags
                     = postprocessor->get_needed_update_flags();
 
-                  if(n_components == 1)
+                  if (n_components == 1)
                     {
                       // at each point there is
                       // only one component of
                       // value, gradient etc.
-                      if(update_flags & update_values)
+                      if (update_flags & update_values)
                         this->dof_data[dataset]->get_function_values(
                           fe_patch_values,
                           internal::DataOutImplementation::ComponentExtractor::
                             real_part,
                           data.patch_values_scalar.solution_values);
-                      if(update_flags & update_gradients)
+                      if (update_flags & update_gradients)
                         this->dof_data[dataset]->get_function_gradients(
                           fe_patch_values,
                           internal::DataOutImplementation::ComponentExtractor::
                             real_part,
                           data.patch_values_scalar.solution_gradients);
-                      if(update_flags & update_hessians)
+                      if (update_flags & update_hessians)
                         this->dof_data[dataset]->get_function_hessians(
                           fe_patch_values,
                           internal::DataOutImplementation::ComponentExtractor::
                             real_part,
                           data.patch_values_scalar.solution_hessians);
 
-                      if(update_flags & update_quadrature_points)
+                      if (update_flags & update_quadrature_points)
                         data.patch_values_scalar.evaluation_points
                           = fe_patch_values.get_quadrature_points();
 
@@ -247,26 +247,26 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
 
                       // at each point there is a vector valued function and
                       // its derivative...
-                      if(update_flags & update_values)
+                      if (update_flags & update_values)
                         this->dof_data[dataset]->get_function_values(
                           fe_patch_values,
                           internal::DataOutImplementation::ComponentExtractor::
                             real_part,
                           data.patch_values_system.solution_values);
-                      if(update_flags & update_gradients)
+                      if (update_flags & update_gradients)
                         this->dof_data[dataset]->get_function_gradients(
                           fe_patch_values,
                           internal::DataOutImplementation::ComponentExtractor::
                             real_part,
                           data.patch_values_system.solution_gradients);
-                      if(update_flags & update_hessians)
+                      if (update_flags & update_hessians)
                         this->dof_data[dataset]->get_function_hessians(
                           fe_patch_values,
                           internal::DataOutImplementation::ComponentExtractor::
                             real_part,
                           data.patch_values_system.solution_hessians);
 
-                      if(update_flags & update_quadrature_points)
+                      if (update_flags & update_quadrature_points)
                         data.patch_values_system.evaluation_points
                           = fe_patch_values.get_quadrature_points();
 
@@ -283,15 +283,15 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                         data.postprocessed_values[dataset]);
                     }
 
-                  for(unsigned int component = 0;
-                      component < this->dof_data[dataset]->n_output_variables;
-                      ++component)
+                  for (unsigned int component = 0;
+                       component < this->dof_data[dataset]->n_output_variables;
+                       ++component)
                     {
-                      switch(dimension)
+                      switch (dimension)
                         {
                           case 1:
-                            for(unsigned int x = 0; x < n_points; ++x)
-                              for(unsigned int y = 0; y < n_points; ++y)
+                            for (unsigned int x = 0; x < n_points; ++x)
+                              for (unsigned int y = 0; y < n_points; ++y)
                                 my_patches[angle].data(offset + component,
                                                        x * n_points + y)
                                   = data.postprocessed_values[dataset][x](
@@ -299,9 +299,9 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                             break;
 
                           case 2:
-                            for(unsigned int x = 0; x < n_points; ++x)
-                              for(unsigned int y = 0; y < n_points; ++y)
-                                for(unsigned int z = 0; z < n_points; ++z)
+                            for (unsigned int x = 0; x < n_points; ++x)
+                              for (unsigned int y = 0; y < n_points; ++y)
+                                for (unsigned int z = 0; z < n_points; ++z)
                                   my_patches[angle].data(offset + component,
                                                          x * n_points * n_points
                                                            + y * n_points + z)
@@ -316,7 +316,7 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                         }
                     }
                 }
-              else if(n_components == 1)
+              else if (n_components == 1)
                 {
                   this->dof_data[dataset]->get_function_values(
                     fe_patch_values,
@@ -324,19 +324,19 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                       real_part,
                     data.patch_values_scalar.solution_values);
 
-                  switch(dimension)
+                  switch (dimension)
                     {
                       case 1:
-                        for(unsigned int x = 0; x < n_points; ++x)
-                          for(unsigned int y = 0; y < n_points; ++y)
+                        for (unsigned int x = 0; x < n_points; ++x)
+                          for (unsigned int y = 0; y < n_points; ++y)
                             my_patches[angle].data(offset, x * n_points + y)
                               = data.patch_values_scalar.solution_values[x];
                         break;
 
                       case 2:
-                        for(unsigned int x = 0; x < n_points; ++x)
-                          for(unsigned int y = 0; y < n_points; ++y)
-                            for(unsigned int z = 0; z < n_points; ++z)
+                        for (unsigned int x = 0; x < n_points; ++x)
+                          for (unsigned int y = 0; y < n_points; ++y)
+                            for (unsigned int z = 0; z < n_points; ++z)
                               my_patches[angle].data(offset,
                                                      x * n_points * n_points + y
                                                        + z * n_points)
@@ -358,14 +358,14 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                       real_part,
                     data.patch_values_system.solution_values);
 
-                  for(unsigned int component = 0; component < n_components;
-                      ++component)
+                  for (unsigned int component = 0; component < n_components;
+                       ++component)
                     {
-                      switch(dimension)
+                      switch (dimension)
                         {
                           case 1:
-                            for(unsigned int x = 0; x < n_points; ++x)
-                              for(unsigned int y = 0; y < n_points; ++y)
+                            for (unsigned int x = 0; x < n_points; ++x)
+                              for (unsigned int y = 0; y < n_points; ++y)
                                 my_patches[angle].data(offset + component,
                                                        x * n_points + y)
                                   = data.patch_values_system.solution_values[x](
@@ -373,9 +373,9 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                             break;
 
                           case 2:
-                            for(unsigned int x = 0; x < n_points; ++x)
-                              for(unsigned int y = 0; y < n_points; ++y)
-                                for(unsigned int z = 0; z < n_points; ++z)
+                            for (unsigned int x = 0; x < n_points; ++x)
+                              for (unsigned int y = 0; y < n_points; ++y)
+                                for (unsigned int z = 0; z < n_points; ++z)
                                   my_patches[angle].data(offset + component,
                                                          x * n_points * n_points
                                                            + y * n_points + z)
@@ -393,8 +393,8 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
             }
 
           // then do the cell data
-          for(unsigned int dataset = 0; dataset < this->cell_data.size();
-              ++dataset)
+          for (unsigned int dataset = 0; dataset < this->cell_data.size();
+               ++dataset)
             {
               // we need to get at the number of the cell to which this face
               // belongs in order to access the cell data. this is not readily
@@ -410,20 +410,20 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
                   cell_number,
                   internal::DataOutImplementation::ComponentExtractor::
                     real_part);
-              switch(dimension)
+              switch (dimension)
                 {
                   case 1:
-                    for(unsigned int x = 0; x < n_points; ++x)
-                      for(unsigned int y = 0; y < n_points; ++y)
+                    for (unsigned int x = 0; x < n_points; ++x)
+                      for (unsigned int y = 0; y < n_points; ++y)
                         my_patches[angle].data(dataset + offset,
                                                x * n_points + y)
                           = value;
                     break;
 
                   case 2:
-                    for(unsigned int x = 0; x < n_points; ++x)
-                      for(unsigned int y = 0; y < n_points; ++y)
-                        for(unsigned int z = 0; z < n_points; ++z)
+                    for (unsigned int x = 0; x < n_points; ++x)
+                      for (unsigned int y = 0; y < n_points; ++y)
+                        for (unsigned int z = 0; z < n_points; ++z)
                           my_patches[angle].data(dataset + offset,
                                                  x * n_points * n_points
                                                    + y * n_points + z)
@@ -459,12 +459,12 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
   this->validate_dataset_names();
 
   unsigned int n_datasets = this->cell_data.size();
-  for(unsigned int i = 0; i < this->dof_data.size(); ++i)
+  for (unsigned int i = 0; i < this->dof_data.size(); ++i)
     n_datasets += this->dof_data[i]->n_output_variables;
 
   UpdateFlags update_flags = update_values | update_quadrature_points;
-  for(unsigned int i = 0; i < this->dof_data.size(); ++i)
-    if(this->dof_data[i]->postprocessor)
+  for (unsigned int i = 0; i < this->dof_data.size(); ++i)
+    if (this->dof_data[i]->postprocessor)
       update_flags
         |= this->dof_data[i]->postprocessor->get_needed_update_flags();
   // perhaps update_normal_vectors is present,
@@ -478,8 +478,8 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
   // create patches of and make sure
   // there is enough memory for that
   std::vector<cell_iterator> all_cells;
-  for(cell_iterator cell = first_cell(); cell != this->triangulation->end();
-      cell               = next_cell(cell))
+  for (cell_iterator cell = first_cell(); cell != this->triangulation->end();
+       cell               = next_cell(cell))
     all_cells.push_back(cell);
 
   // then also take into account that
@@ -491,8 +491,8 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
   this->patches.reserve(all_cells.size() * n_patches_per_circle);
 
   std::vector<unsigned int> n_postprocessor_outputs(this->dof_data.size());
-  for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
-    if(this->dof_data[dataset]->postprocessor)
+  for (unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
+    if (this->dof_data[dataset]->postprocessor)
       n_postprocessor_outputs[dataset]
         = this->dof_data[dataset]->n_output_variables;
     else
@@ -509,7 +509,7 @@ DataOutRotation<dim, DoFHandlerType>::build_patches(
                 update_flags);
   std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>
     new_patches(n_patches_per_circle);
-  for(unsigned int i = 0; i < new_patches.size(); ++i)
+  for (unsigned int i = 0; i < new_patches.size(); ++i)
     {
       new_patches[i].n_subdivisions = n_subdivisions;
       new_patches[i].data.reinit(

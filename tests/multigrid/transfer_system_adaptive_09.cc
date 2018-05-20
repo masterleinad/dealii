@@ -41,24 +41,24 @@ void
 refine_mesh(Triangulation<dim>& triangulation)
 {
   bool cell_refined = false;
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     {
       const Point<dim> p        = cell->center();
       bool             positive = p(0) > 0;
-      if(positive)
+      if (positive)
         {
           cell->set_refine_flag();
           cell_refined = true;
         }
     }
-  if(!cell_refined) //if no cell was selected for refinement, refine global
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
+  if (!cell_refined) //if no cell was selected for refinement, refine global
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
 }
@@ -98,7 +98,7 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
   block_component[4] = 2;
 
   DoFRenumbering::component_wise(mg_dof_handler, block_component);
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for (unsigned int level = 0; level < tr.n_levels(); ++level)
     DoFRenumbering::component_wise(mg_dof_handler, level, block_component);
 
   MGTransferSelect<double> transfer;
@@ -119,46 +119,46 @@ check(const FiniteElement<dim>& fe, const unsigned int selected_block)
     mg_dof_handler, mg_dofs_per_block, block_component);
 
   deallog << "Global  dofs:";
-  for(unsigned int i = 0; i < dofs_per_block.size(); ++i)
+  for (unsigned int i = 0; i < dofs_per_block.size(); ++i)
     deallog << ' ' << dofs_per_block[i];
   deallog << std::endl;
-  for(unsigned int l = 0; l < mg_dofs_per_block.size(); ++l)
+  for (unsigned int l = 0; l < mg_dofs_per_block.size(); ++l)
     {
       deallog << "Level " << l << " dofs:";
-      for(unsigned int i = 0; i < mg_dofs_per_block[l].size(); ++i)
+      for (unsigned int i = 0; i < mg_dofs_per_block[l].size(); ++i)
         deallog << ' ' << mg_dofs_per_block[l][i];
       deallog << std::endl;
     }
 
   BlockVector<double> u;
   u.reinit(dofs_per_block);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     u(i) = i;
 
   MGLevelObject<Vector<double>> v(0, tr.n_levels() - 1);
-  for(unsigned int l = 0; l < tr.n_levels() - 1; ++l)
+  for (unsigned int l = 0; l < tr.n_levels() - 1; ++l)
     v[l].reinit(mg_dofs_per_block[l][2]);
 
   transfer.copy_to_mg(mg_dof_handler, v, u);
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     {
       deallog << "Level " << l << std::endl;
-      for(unsigned int i = 0; i < v[l].size(); ++i)
+      for (unsigned int i = 0; i < v[l].size(); ++i)
         deallog << ' ' << (int) v[l](i);
       deallog << std::endl;
     }
 
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
-    for(unsigned int i = 0; i < v[l].size(); ++i)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
+    for (unsigned int i = 0; i < v[l].size(); ++i)
       v[l](i) = i;
 
   u = 0;
   transfer.copy_from_mg(mg_dof_handler, u, v);
   deallog << "Global" << std::endl;
-  for(unsigned int i = 0; i < u.block(selected_block).size(); ++i)
+  for (unsigned int i = 0; i < u.block(selected_block).size(); ++i)
     deallog << ' ' << (int) u.block(selected_block)(i);
   deallog << std::endl;
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     deallog << ' ' << (int) u(i);
   deallog << std::endl;
 }

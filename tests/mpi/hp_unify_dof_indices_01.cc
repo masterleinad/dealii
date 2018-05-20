@@ -43,7 +43,7 @@ test()
   std::vector<unsigned int> reps(dim, 1U);
   reps[0] = 2;
   Point<dim> top_right;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     top_right[d] = (d == 0 ? 2 : 1);
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, reps, Point<dim>(), top_right);
@@ -55,15 +55,15 @@ test()
   fe.push_back(FE_Q<dim>(2));
 
   hp::DoFHandler<dim> dof_handler(triangulation);
-  if(dof_handler.begin_active()->is_locally_owned())
+  if (dof_handler.begin_active()->is_locally_owned())
     dof_handler.begin_active()->set_active_fe_index(0);
-  if((++dof_handler.begin_active())->is_locally_owned())
+  if ((++dof_handler.begin_active())->is_locally_owned())
     (++dof_handler.begin_active())->set_active_fe_index(1);
   dof_handler.distribute_dofs(fe);
 
   deallog << "Processor: " << Utilities::MPI::this_mpi_process(MPI_COMM_WORLD)
           << std::endl;
-  for(auto cell : dof_handler.active_cell_iterators())
+  for (auto cell : dof_handler.active_cell_iterators())
     {
       deallog << "  Cell: " << cell << std::endl;
 
@@ -71,7 +71,7 @@ test()
         cell->get_fe().dofs_per_cell);
       cell->get_dof_indices(dof_indices);
       deallog << "    ";
-      for(auto i : dof_indices)
+      for (auto i : dof_indices)
         deallog << i << ' ';
       deallog << std::endl;
     }

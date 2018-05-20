@@ -60,8 +60,8 @@ void
 test_standard_tensors()
 {
   SymmetricTensor<2, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = i; j < dim; ++j)
       t[i][j] = dim * i + j + 1.0;
 
   // Check second-order identity tensor I:

@@ -714,7 +714,7 @@ namespace Utilities
       const types::global_dof_index global_index) const
     {
       // if the index is in the global range, it is trivially not a ghost
-      if(in_local_range(global_index) == true)
+      if (in_local_range(global_index) == true)
         return false;
       else
         return ghost_indices().is_element(global_index);
@@ -726,9 +726,9 @@ namespace Utilities
     {
       Assert(in_local_range(global_index) || is_ghost_entry(global_index),
              ExcIndexNotPresent(global_index, my_pid));
-      if(in_local_range(global_index))
+      if (in_local_range(global_index))
         return static_cast<unsigned int>(global_index - local_range_data.first);
-      else if(is_ghost_entry(global_index))
+      else if (is_ghost_entry(global_index))
         return (local_size()
                 + static_cast<unsigned int>(
                     ghost_indices_data.index_within_set(global_index)));
@@ -743,7 +743,7 @@ namespace Utilities
     Partitioner::local_to_global(const unsigned int local_index) const
     {
       AssertIndexRange(local_index, local_size() + n_ghost_indices_data);
-      if(local_index < local_size())
+      if (local_index < local_size())
         return local_range_data.first + types::global_dof_index(local_index);
       else
         return ghost_indices_data.nth_index_in_set(local_index - local_size());

@@ -28,7 +28,7 @@ MeanValueFilter::filter(Vector<number>& v) const
 {
   number mean = v.mean_value();
 
-  for(size_type i = 0; i < v.size(); ++i)
+  for (size_type i = 0; i < v.size(); ++i)
     v(i) -= mean;
 }
 
@@ -41,7 +41,7 @@ MeanValueFilter::vmult(Vector<number>& dst, const Vector<number>& src) const
 
   number mean = src.mean_value();
 
-  for(size_type i = 0; i < dst.size(); ++i)
+  for (size_type i = 0; i < dst.size(); ++i)
     dst(i) = src(i) - mean;
 }
 
@@ -54,7 +54,7 @@ MeanValueFilter::vmult_add(Vector<number>& dst, const Vector<number>& src) const
 
   number mean = src.mean_value();
 
-  for(size_type i = 0; i < dst.size(); ++i)
+  for (size_type i = 0; i < dst.size(); ++i)
     dst(i) += src(i) - mean;
 }
 
@@ -64,8 +64,8 @@ MeanValueFilter::filter(BlockVector<number>& v) const
 {
   Assert(component != numbers::invalid_unsigned_int, ExcNotInitialized());
 
-  for(unsigned int i = 0; i < v.n_blocks(); ++i)
-    if(i == component)
+  for (unsigned int i = 0; i < v.n_blocks(); ++i)
+    if (i == component)
       vmult(v.block(i), v.block(i));
 }
 
@@ -79,8 +79,8 @@ MeanValueFilter::vmult(BlockVector<number>&       dst,
   Assert(dst.n_blocks() == src.n_blocks(),
          ExcDimensionMismatch(dst.n_blocks(), src.n_blocks()));
 
-  for(unsigned int i = 0; i < dst.n_blocks(); ++i)
-    if(i == component)
+  for (unsigned int i = 0; i < dst.n_blocks(); ++i)
+    if (i == component)
       vmult(dst.block(i), src.block(i));
     else
       dst.block(i) = src.block(i);
@@ -96,8 +96,8 @@ MeanValueFilter::vmult_add(BlockVector<number>&       dst,
   Assert(dst.n_blocks() == src.n_blocks(),
          ExcDimensionMismatch(dst.n_blocks(), src.n_blocks()));
 
-  for(unsigned int i = 0; i < dst.n_blocks(); ++i)
-    if(i == component)
+  for (unsigned int i = 0; i < dst.n_blocks(); ++i)
+    if (i == component)
       vmult_add(dst.block(i), src.block(i));
     else
       dst.block(i) += src.block(i);

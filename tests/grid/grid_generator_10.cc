@@ -48,7 +48,7 @@ void my_cylinder(Triangulation<3>& tria,
     Point<3>(d, half_length, d),
   };
   // Turn cylinder such that y->x
-  for(unsigned int i = 0; i < 16; ++i)
+  for (unsigned int i = 0; i < 16; ++i)
     {
       const double h = vertices[i](1);
       vertices[i](1) = -vertices[i](0);
@@ -63,9 +63,9 @@ void my_cylinder(Triangulation<3>& tria,
 
   std::vector<CellData<3>> cells(5, CellData<3>());
 
-  for(unsigned int i = 0; i < 5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     {
-      for(unsigned int j = 0; j < 8; ++j)
+      for (unsigned int j = 0; j < 8; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     };
@@ -86,11 +86,11 @@ check_grid()
 
   Triangulation<dim>::active_cell_iterator cell = triangulation.begin(),
                                            endc = triangulation.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       deallog << cell << std::endl;
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
         {
           deallog << face << ": "
                   << (cell->face_orientation(face) ? "true " : "false ")
@@ -98,8 +98,8 @@ check_grid()
                   << (cell->face_rotation(face) ? "true" : "false")
                   << std::endl;
         }
-      for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
-          ++line)
+      for (unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+           ++line)
         {
           deallog << line << ": "
                   << (cell->line_orientation(line) ? "true" : "false")

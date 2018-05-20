@@ -26,7 +26,7 @@ public:
   Test()
   {
     std::string def = "0.";
-    for(int i = 1; i < dim; ++i)
+    for (int i = 1; i < dim; ++i)
       def += ",0.";
     add_parameter("A point", p);
   };

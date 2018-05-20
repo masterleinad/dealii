@@ -34,7 +34,7 @@ test()
   std::vector<GridTools::PeriodicFacePair<
     typename parallel::distributed::Triangulation<dim>::cell_iterator>>
     periodicity_vector;
-  for(int i = 0; i < dim; ++i)
+  for (int i = 0; i < dim; ++i)
     GridTools::collect_periodic_faces(
       triangulation, 2 * i, 2 * i + 1, i, periodicity_vector);
   triangulation.add_periodicity(periodicity_vector);
@@ -45,26 +45,26 @@ test()
   const auto endc = triangulation.end();
 
   std::map<unsigned int, Point<dim>> non_artificial_vertices_old;
-  for(cell = triangulation.begin_active(); cell != endc; ++cell)
-    if(!cell->is_artificial())
-      for(unsigned int vertex_no = 0;
-          vertex_no < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex_no)
+  for (cell = triangulation.begin_active(); cell != endc; ++cell)
+    if (!cell->is_artificial())
+      for (unsigned int vertex_no = 0;
+           vertex_no < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex_no)
         non_artificial_vertices_old[cell->vertex_index(vertex_no)]
           = cell->vertex(vertex_no);
 
   std::vector<bool>       vertex_moved(triangulation.n_vertices(), false);
   const std::vector<bool> locally_owned_vertices
     = GridTools::get_locally_owned_vertices(triangulation);
-  for(cell = triangulation.begin_active(); cell != endc; ++cell)
-    if(cell->is_locally_owned())
-      for(unsigned int vertex_no = 0;
-          vertex_no < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex_no)
+  for (cell = triangulation.begin_active(); cell != endc; ++cell)
+    if (cell->is_locally_owned())
+      for (unsigned int vertex_no = 0;
+           vertex_no < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex_no)
         {
           const unsigned global_vertex_no = cell->vertex_index(vertex_no);
-          if(!vertex_moved[global_vertex_no]
-             && locally_owned_vertices[global_vertex_no])
+          if (!vertex_moved[global_vertex_no]
+              && locally_owned_vertices[global_vertex_no])
             {
               cell->vertex(vertex_no)(0) += 1.e-1;
               vertex_moved[global_vertex_no] = true;
@@ -74,20 +74,20 @@ test()
   triangulation.communicate_locally_moved_vertices(vertex_moved);
 
   std::map<unsigned int, Point<dim>> non_artificial_vertices_new;
-  for(cell = triangulation.begin_active(); cell != endc; ++cell)
-    if(!cell->is_artificial())
-      for(unsigned int vertex_no = 0;
-          vertex_no < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex_no)
+  for (cell = triangulation.begin_active(); cell != endc; ++cell)
+    if (!cell->is_artificial())
+      for (unsigned int vertex_no = 0;
+           vertex_no < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex_no)
         {
           Point<dim> point = cell->vertex(vertex_no);
           point(0) -= 1.e-1;
           non_artificial_vertices_new[cell->vertex_index(vertex_no)] = point;
         }
 
-  for(const auto& pair : non_artificial_vertices_new)
-    if((non_artificial_vertices_old[pair.first] - pair.second).norm_square()
-       > 1.e-6)
+  for (const auto& pair : non_artificial_vertices_new)
+    if ((non_artificial_vertices_old[pair.first] - pair.second).norm_square()
+        > 1.e-6)
       {
         deallog << pair.first << ": " << non_artificial_vertices_old[pair.first]
                 << " vs. " << pair.second << std::endl;

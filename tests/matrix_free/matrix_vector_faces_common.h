@@ -85,12 +85,12 @@ private:
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, number> phi(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values(src);
         phi.evaluate(false, true, false);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(phi.get_gradient(q), q);
         phi.integrate(false, true);
         phi.distribute_local_to_global(dst);
@@ -115,7 +115,7 @@ private:
                                       number>::value_type value_type;
     const int actual_degree = data.get_dof_handler().get_fe().degree;
 
-    for(unsigned int face = face_range.first; face < face_range.second; face++)
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
         fe_eval.reinit(face);
         fe_eval_neighbor.reinit(face);
@@ -131,7 +131,7 @@ private:
                          * fe_eval_neighbor.inverse_jacobian(0))[dim - 1]))
             * (number)(std::max(actual_degree, 1) * (actual_degree + 1.0));
 
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
           {
             value_type average_value
               = (fe_eval.get_value(q) - fe_eval_neighbor.get_value(q))
@@ -169,7 +169,7 @@ private:
                                       n_components,
                                       number>::value_type value_type;
     const int actual_degree = data.get_dof_handler().get_fe().degree;
-    for(unsigned int face = face_range.first; face < face_range.second; face++)
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
         fe_eval.reinit(face);
         fe_eval.read_dof_values(src);
@@ -180,7 +180,7 @@ private:
                         * fe_eval.inverse_jacobian(0))[dim - 1])
             * number(std::max(actual_degree, 1) * (actual_degree + 1.0));
 
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
           {
             value_type average_value   = fe_eval.get_value(q);
             value_type average_valgrad = -fe_eval.get_normal_derivative(q);
@@ -219,7 +219,7 @@ public:
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    if(!zero_within_loop)
+    if (!zero_within_loop)
       dst = 0;
     data.loop(&MatrixFreeVariant::local_apply,
               &MatrixFreeVariant::local_apply_face,
@@ -256,11 +256,11 @@ private:
     FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, number> phi(
       data, 0, 0, start_vector_component);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.gather_evaluate(src, false, true);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(phi.get_gradient(q), q);
         phi.integrate_scatter(false, true, dst);
       }
@@ -284,7 +284,7 @@ private:
                                       number>::value_type value_type;
     const int actual_degree = data.get_dof_handler().get_fe().degree;
 
-    for(unsigned int face = face_range.first; face < face_range.second; face++)
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
         fe_eval.reinit(face);
         fe_eval_neighbor.reinit(face);
@@ -299,7 +299,7 @@ private:
                          * fe_eval_neighbor.inverse_jacobian(0))[dim - 1]))
             * (number)(std::max(actual_degree, 1) * (actual_degree + 1.0));
 
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
           {
             value_type average_value
               = (fe_eval.get_value(q) - fe_eval_neighbor.get_value(q))
@@ -335,7 +335,7 @@ private:
                                       n_components,
                                       number>::value_type value_type;
     const int actual_degree = data.get_dof_handler().get_fe().degree;
-    for(unsigned int face = face_range.first; face < face_range.second; face++)
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
         fe_eval.reinit(face);
         fe_eval.gather_evaluate(src, true, true);
@@ -344,7 +344,7 @@ private:
                       * fe_eval.inverse_jacobian(0))[dim - 1])
             * number(std::max(actual_degree, 1) * (actual_degree + 1.0)) * 2.0;
 
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
           {
             value_type average_value   = fe_eval.get_value(q);
             value_type average_valgrad = -fe_eval.get_normal_derivative(q);
@@ -368,8 +368,8 @@ multiply_by_advection(const Tensor<1, dim, Number>&          advection,
                       const Tensor<1, n_components, Number>& values)
 {
   Tensor<1, n_components, Tensor<1, dim, Number>> out;
-  for(unsigned int c = 0; c < n_components; ++c)
-    for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int c = 0; c < n_components; ++c)
+    for (unsigned int d = 0; d < dim; ++d)
       out[c][d] = advection[d] * values[c];
   return out;
 }
@@ -380,7 +380,7 @@ multiply_by_advection(const Tensor<1, dim, Number>& advection,
                       const Number&                 values)
 {
   Tensor<1, dim, Number> out;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     out[d] = advection[d] * values;
   return out;
 }
@@ -402,14 +402,14 @@ public:
       zero_within_loop(zero_within_loop),
       start_vector_component(start_vector_component)
   {
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       advection[d] = 0.4 + 0.12 * d;
   }
 
   void
   vmult(VectorType& dst, const VectorType& src) const
   {
-    if(!zero_within_loop)
+    if (!zero_within_loop)
       dst = 0;
     data.loop(&MatrixFreeAdvection::local_apply,
               &MatrixFreeAdvection::local_apply_face,
@@ -446,11 +446,11 @@ private:
     FEEvaluation<dim, fe_degree, n_q_points_1d, n_components, number> phi(
       data, 0, 0, start_vector_component);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.gather_evaluate(src, true, false);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(
             multiply_by_advection(advection, phi.get_value(q)), q);
         phi.integrate_scatter(false, true, dst);
@@ -474,14 +474,14 @@ private:
                                       n_components,
                                       number>::value_type value_type;
 
-    for(unsigned int face = face_range.first; face < face_range.second; face++)
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
         phi_m.reinit(face);
         phi_m.gather_evaluate(src, true, false);
         phi_p.reinit(face);
         phi_p.gather_evaluate(src, true, false);
 
-        for(unsigned int q = 0; q < phi_m.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi_m.n_q_points; ++q)
           {
             value_type u_minus = phi_m.get_value(q),
                        u_plus  = phi_p.get_value(q);
@@ -517,12 +517,12 @@ private:
     value_type                                            u_plus;
     u_plus = make_vectorized_array<number>(1.3);
 
-    for(unsigned int face = face_range.first; face < face_range.second; face++)
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
         fe_eval.reinit(face);
         fe_eval.gather_evaluate(src, true, false);
 
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
           {
             value_type                    u_minus = fe_eval.get_value(q);
             const VectorizedArray<number> normal_times_advection
@@ -630,7 +630,7 @@ do_test(const DoFHandler<dim>&  dof,
         const ConstraintMatrix& constraints,
         const bool              also_test_parallel = false)
 {
-  if(types_are_equal<number, float>::value == true)
+  if (types_are_equal<number, float>::value == true)
     deallog.push("float");
 
   deallog << "Testing " << dof.get_fe().get_name();
@@ -646,9 +646,9 @@ do_test(const DoFHandler<dim>&  dof,
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = Testing::rand() / (double) RAND_MAX;
       in(i)              = entry;
@@ -702,7 +702,7 @@ do_test(const DoFHandler<dim>&  dof,
   const double diff_norm = out_dist.linfty_norm() / out.linfty_norm();
   deallog << "Norm of difference:          " << diff_norm << std::endl;
 
-  if(also_test_parallel)
+  if (also_test_parallel)
     {
       mf_data.clear();
       data.tasks_parallel_scheme
@@ -718,7 +718,7 @@ do_test(const DoFHandler<dim>&  dof,
     }
   deallog << std::endl;
 
-  if(types_are_equal<number, float>::value == true)
+  if (types_are_equal<number, float>::value == true)
     deallog.pop();
 }
 

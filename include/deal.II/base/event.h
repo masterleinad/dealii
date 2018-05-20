@@ -172,11 +172,11 @@ namespace Algorithms
   inline bool
   Event::any() const
   {
-    if(all_true)
+    if (all_true)
       return true;
-    for(std::vector<bool>::const_iterator i = flags.begin(); i != flags.end();
-        ++i)
-      if(*i)
+    for (std::vector<bool>::const_iterator i = flags.begin(); i != flags.end();
+         ++i)
+      if (*i)
         return true;
     return false;
   }
@@ -185,7 +185,7 @@ namespace Algorithms
   Event::test(const Event& event) const
   {
     // First, test all_true in this
-    if(all_true)
+    if (all_true)
       return true;
 
     const unsigned int n     = flags.size();
@@ -195,20 +195,20 @@ namespace Algorithms
     // Now, if all_true set in the
     // other, then all must be true
     // in this
-    if(event.all_true)
+    if (event.all_true)
       {
         // Non existing flags are
         // always assumed false
-        if(m > n)
+        if (m > n)
           return false;
 
         // Test all flags separately
         // and return false if one is
         // not set
-        for(std::vector<bool>::const_iterator i = flags.begin();
-            i != flags.end();
-            ++i)
-          if(!*i)
+        for (std::vector<bool>::const_iterator i = flags.begin();
+             i != flags.end();
+             ++i)
+          if (!*i)
             return false;
         // All flags are set
         return true;
@@ -216,11 +216,11 @@ namespace Algorithms
 
     // Finally, compare each flag
     // separately
-    for(unsigned int i = 0; i < n_min; ++i)
-      if(event.flags[i] && !flags[i])
+    for (unsigned int i = 0; i < n_min; ++i)
+      if (event.flags[i] && !flags[i])
         return false;
-    for(unsigned int i = n_min; i < m; ++i)
-      if(event.flags[i])
+    for (unsigned int i = n_min; i < m; ++i)
+      if (event.flags[i])
         return false;
     return true;
   }
@@ -229,12 +229,12 @@ namespace Algorithms
   Event::operator+=(const Event& event)
   {
     all_true |= event.all_true;
-    if(all_true)
+    if (all_true)
       return *this;
 
-    if(flags.size() < event.flags.size())
+    if (flags.size() < event.flags.size())
       flags.resize(event.flags.size());
-    for(unsigned int i = 0; i < event.flags.size(); ++i)
+    for (unsigned int i = 0; i < event.flags.size(); ++i)
       flags[i] = flags[i] || event.flags[i];
 
     return *this;
@@ -243,22 +243,22 @@ namespace Algorithms
   inline Event&
   Event::operator-=(const Event& event)
   {
-    if(!event.any())
+    if (!event.any())
       return *this;
 
     all_true = false;
-    if(event.all_true)
+    if (event.all_true)
       {
-        for(std::vector<bool>::iterator i = flags.begin(); i != flags.end();
-            ++i)
+        for (std::vector<bool>::iterator i = flags.begin(); i != flags.end();
+             ++i)
           *i = false;
         return *this;
       }
 
-    if(flags.size() < event.flags.size())
+    if (flags.size() < event.flags.size())
       flags.resize(event.flags.size());
-    for(unsigned int i = 0; i < event.flags.size(); ++i)
-      if(event.flags[i])
+    for (unsigned int i = 0; i < event.flags.size(); ++i)
+      if (event.flags[i])
         flags[i] = false;
 
     return *this;
@@ -268,11 +268,11 @@ namespace Algorithms
   inline void
   Event::print(OS& os) const
   {
-    if(all_true)
+    if (all_true)
       os << " ALL";
 
-    for(unsigned int i = 0; i < flags.size(); ++i)
-      if(flags[i])
+    for (unsigned int i = 0; i < flags.size(); ++i)
+      if (flags[i])
         os << ' ' << names[i];
   }
 
@@ -280,7 +280,7 @@ namespace Algorithms
   inline void
   Event::print_assigned(OS& os)
   {
-    for(unsigned int i = 0; i < names.size(); ++i)
+    for (unsigned int i = 0; i < names.size(); ++i)
       os << i << '\t' << names[i] << std::endl;
   }
 

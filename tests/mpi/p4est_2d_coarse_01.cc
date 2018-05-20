@@ -32,7 +32,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
       GridIn<dim>                               gi;
@@ -42,7 +42,7 @@ test()
         {
           gi.read_xda(in);
         }
-      catch(
+      catch (
         const typename Triangulation<dim>::DistortedCellList& distorted_cells)
         {
           // ignore distorted cells
@@ -50,7 +50,7 @@ test()
                   << " distorted cells after creating mesh." << std::endl;
         }
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "subdomainid = " << tr.begin_active()->subdomain_id()
                 << std::endl;
 
@@ -61,7 +61,7 @@ test()
       //  deallog << cell_subd[i] << " ";
       //       deallog << std::endl;
 
-      if(myid == 0)
+      if (myid == 0)
         {
           deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
 
@@ -70,11 +70,11 @@ test()
         }
 
       const unsigned int checksum = tr.get_checksum();
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -87,7 +87,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

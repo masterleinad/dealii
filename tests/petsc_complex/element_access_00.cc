@@ -33,14 +33,14 @@ test_vector(PETScWrappers::MPI::Vector& v)
   deallog << "Check vector access" << std::endl;
 
   // fill up a vector with some numbers
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     v(k) = std::complex<double>(k, v.size() - k);
 
   v.compress(VectorOperation::insert);
 
   // check that is what we get by casting PetscScalar to std::real()
   // and std::imag()
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     AssertThrow(
       (static_cast<std::complex<double>>(v(k)).real() == k)
         && (static_cast<std::complex<double>>(v(k)).imag() == v.size() - k),
@@ -49,7 +49,7 @@ test_vector(PETScWrappers::MPI::Vector& v)
   // check that is what we get by
   // dealii::internal::VectorReference::real() and
   // dealii::internal::VectorReference::imag()
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     AssertThrow((v(k).real() == k) && (v(k).imag() == v.size() - k),
                 ExcInternalError());
 
@@ -75,7 +75,7 @@ main(int argc, char** argv)
       }
     }
 
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -89,7 +89,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

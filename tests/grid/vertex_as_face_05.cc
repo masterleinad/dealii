@@ -47,10 +47,10 @@ test()
   tria.refine_global(2);
   dof_handler.distribute_dofs(fe);
 
-  for(typename DoFHandler<1, spacedim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<1, spacedim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       deallog << "Cell: " << cell << std::endl;
       deallog << "Left vertex=" << cell->face(0)->vertex(0) << std::endl;

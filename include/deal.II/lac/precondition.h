@@ -1489,11 +1489,11 @@ PreconditionSSOR<MatrixType>::initialize(
       &*this->A);
 
   // calculate the positions first after the diagonal.
-  if(mat != nullptr)
+  if (mat != nullptr)
     {
       const size_type n = this->A->n();
       pos_right_of_diagonal.resize(n, static_cast<std::size_t>(-1));
-      for(size_type row = 0; row < n; ++row)
+      for (size_type row = 0; row < n; ++row)
         {
           // find the first element in this line which is on the right of the
           // diagonal.  we need to precondition with the elements on the left
@@ -1502,8 +1502,8 @@ PreconditionSSOR<MatrixType>::initialize(
           typename SparseMatrix<typename MatrixType::value_type>::const_iterator
             it
             = mat->begin(row) + 1;
-          for(; it < mat->end(row); ++it)
-            if(it->column() > row)
+          for (; it < mat->end(row); ++it)
+            if (it->column() > row)
               break;
           pos_right_of_diagonal[row] = it - mat->begin();
         }
@@ -1686,7 +1686,7 @@ namespace internal
                    VectorType&               update3,
                    VectorType&               dst)
     {
-      if(start_zero)
+      if (start_zero)
         {
           update1.equ(factor2, src);
           preconditioner.vmult(dst, update1);
@@ -1697,7 +1697,7 @@ namespace internal
           update2 -= src;
           preconditioner.vmult(update3, update2);
           update2 = update3;
-          if(factor1 == 0.)
+          if (factor1 == 0.)
             update1.equ(factor2, update2);
           else
             update1.sadd(factor1, factor2, update2);
@@ -1739,17 +1739,17 @@ namespace internal
         // factor1.
         const Number factor1 = this->factor1;
         const Number factor2 = this->factor2;
-        if(do_startup)
+        if (do_startup)
           {
-            if(start_zero)
+            if (start_zero)
               DEAL_II_OPENMP_SIMD_PRAGMA
-            for(std::size_t i = begin; i < end; ++i)
+            for (std::size_t i = begin; i < end; ++i)
               {
                 dst[i]     = factor2 * src[i] * matrix_diagonal_inverse[i];
                 update1[i] = -dst[i];
               }
-            else DEAL_II_OPENMP_SIMD_PRAGMA for(std::size_t i = begin; i < end;
-                                                ++i)
+            else DEAL_II_OPENMP_SIMD_PRAGMA for (std::size_t i = begin; i < end;
+                                                 ++i)
             {
               update1[i] = ((update2[i] - src[i]) * factor2
                             * matrix_diagonal_inverse[i]);
@@ -1758,7 +1758,7 @@ namespace internal
           }
         else
           DEAL_II_OPENMP_SIMD_PRAGMA
-        for(std::size_t i = begin; i < end; ++i)
+        for (std::size_t i = begin; i < end; ++i)
           {
             const Number update
               = factor1 * update1[i]
@@ -1787,7 +1787,7 @@ namespace internal
                          const std::size_t            size)
         : updater(updater)
       {
-        if(size < internal::VectorImplementation::minimum_parallel_grain_size)
+        if (size < internal::VectorImplementation::minimum_parallel_grain_size)
           apply_to_subrange(0, size);
         else
           apply_parallel(
@@ -1878,9 +1878,9 @@ namespace internal
       std::shared_ptr<DiagonalMatrix<VectorType>>& preconditioner,
       VectorType&                                  diagonal_inverse)
     {
-      if(preconditioner.get() == nullptr || preconditioner->m() != matrix.m())
+      if (preconditioner.get() == nullptr || preconditioner->m() != matrix.m())
         {
-          if(preconditioner.get() == nullptr)
+          if (preconditioner.get() == nullptr)
             preconditioner = std::make_shared<DiagonalMatrix<VectorType>>();
 
           Assert(
@@ -1897,10 +1897,10 @@ namespace internal
           }
 
           // This part only works in serial
-          if(preconditioner->m() != matrix.m())
+          if (preconditioner->m() != matrix.m())
             {
               preconditioner->get_vector().reinit(matrix.m());
-              for(typename VectorType::size_type i = 0; i < matrix.m(); ++i)
+              for (typename VectorType::size_type i = 0; i < matrix.m(); ++i)
                 preconditioner->get_vector()(i) = 1. / matrix.el(i, i);
             }
         }
@@ -1911,7 +1911,7 @@ namespace internal
     set_initial_guess(VectorType& vector)
     {
       vector = 1. / std::sqrt(static_cast<double>(vector.size()));
-      if(vector.locally_owned_elements().is_element(0))
+      if (vector.locally_owned_elements().is_element(0))
         vector(0) = 0.;
     }
 
@@ -1923,7 +1923,7 @@ namespace internal
       // that is cheap to compute (cheaper than random numbers) but avoids
       // obviously re-occurring numbers in multi-component systems by choosing
       // a period of 11
-      for(unsigned int i = 0; i < vector.size(); ++i)
+      for (unsigned int i = 0; i < vector.size(); ++i)
         vector(i) = i % 11;
 
       const Number mean_value = vector.mean_value();
@@ -1942,9 +1942,9 @@ namespace internal
       // Make initial guess robust with respect to number of processors
       // by operating on the global index.
       types::global_dof_index first_local_range = 0;
-      if(!vector.locally_owned_elements().is_empty())
+      if (!vector.locally_owned_elements().is_empty())
         first_local_range = vector.locally_owned_elements().nth_index_in_set(0);
-      for(unsigned int i = 0; i < vector.local_size(); ++i)
+      for (unsigned int i = 0; i < vector.local_size(); ++i)
         vector.local_element(i) = (i + first_local_range) % 11;
 
       const Number mean_value = vector.mean_value();
@@ -2040,7 +2040,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   // matrix weighted by its diagonal. we start with a vector that consists of
   // ones only, weighted by the length.
   double max_eigenvalue, min_eigenvalue;
-  if(data.eig_cg_n_iterations > 0)
+  if (data.eig_cg_n_iterations > 0)
     {
       Assert(
         data.eig_cg_n_iterations > 2,
@@ -2071,11 +2071,11 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
         {
           solver.solve(*matrix_ptr, update1, update2, *data.preconditioner);
         }
-      catch(SolverControl::NoConvergence&)
+      catch (SolverControl::NoConvergence&)
         {}
 
       // read the eigenvalues from the attached eigenvalue tracker
-      if(eigenvalue_tracker.values.empty())
+      if (eigenvalue_tracker.values.empty())
         min_eigenvalue = max_eigenvalue = 1;
       else
         {
@@ -2101,7 +2101,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   // estimate, given the target tolerance specified by smoothing_range. This
   // estimate is based on the error formula given in section 5.1 of
   // R. S. Varga, Matrix iterative analysis, 2nd ed., Springer, 2009
-  if(data.degree == numbers::invalid_unsigned_int)
+  if (data.degree == numbers::invalid_unsigned_int)
     {
       const double actual_range = max_eigenvalue / alpha;
       const double sigma        = (1. - std::sqrt(1. / actual_range))
@@ -2127,15 +2127,15 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
 
   // We do not need the third auxiliary vector in case we have a
   // DiagonalMatrix as preconditioner and use deal.II's own vectors
-  if(std::is_same<PreconditionerType, DiagonalMatrix<VectorType>>::value
-       == false
-     || (std::is_same<VectorType,
-                      dealii::Vector<typename VectorType::value_type>>::value
-           == false
-         && std::is_same<VectorType,
-                         LinearAlgebra::distributed::Vector<
-                           typename VectorType::value_type>>::value
-              == false))
+  if (std::is_same<PreconditionerType, DiagonalMatrix<VectorType>>::value
+        == false
+      || (std::is_same<VectorType,
+                       dealii::Vector<typename VectorType::value_type>>::value
+            == false
+          && std::is_same<VectorType,
+                          LinearAlgebra::distributed::Vector<
+                            typename VectorType::value_type>>::value
+               == false))
     update3.reinit(src, true);
 
   const_cast<
@@ -2151,11 +2151,11 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
 {
   // if delta is zero, we do not need to iterate because the updates will be
   // zero
-  if(std::abs(delta) < 1e-40)
+  if (std::abs(delta) < 1e-40)
     return;
 
   double rhok = delta / theta, sigma = theta / delta;
-  for(unsigned int k = 0; k < data.degree; ++k)
+  for (unsigned int k = 0; k < data.degree; ++k)
     {
       matrix_ptr->vmult(update2, dst);
       const double rhokp   = 1. / (2. * sigma - rhok);
@@ -2180,7 +2180,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
   do_transpose_chebyshev_loop(VectorType& dst, const VectorType& src) const
 {
   double rhok = delta / theta, sigma = theta / delta;
-  for(unsigned int k = 0; k < data.degree; ++k)
+  for (unsigned int k = 0; k < data.degree; ++k)
     {
       matrix_ptr->Tvmult(update2, dst);
       const double rhokp   = 1. / (2. * sigma - rhok);
@@ -2206,7 +2206,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::vmult(
   const VectorType& src) const
 {
   Threads::Mutex::ScopedLock lock(mutex);
-  if(eigenvalues_are_initialized == false)
+  if (eigenvalues_are_initialized == false)
     estimate_eigenvalues(src);
 
   internal::PreconditionChebyshevImplementation::vector_updates(
@@ -2230,7 +2230,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::Tvmult(
   const VectorType& src) const
 {
   Threads::Mutex::ScopedLock lock(mutex);
-  if(eigenvalues_are_initialized == false)
+  if (eigenvalues_are_initialized == false)
     estimate_eigenvalues(src);
 
   internal::PreconditionChebyshevImplementation::vector_updates(
@@ -2254,7 +2254,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::step(
   const VectorType& src) const
 {
   Threads::Mutex::ScopedLock lock(mutex);
-  if(eigenvalues_are_initialized == false)
+  if (eigenvalues_are_initialized == false)
     estimate_eigenvalues(src);
 
   matrix_ptr->vmult(update2, dst);
@@ -2279,7 +2279,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::Tstep(
   const VectorType& src) const
 {
   Threads::Mutex::ScopedLock lock(mutex);
-  if(eigenvalues_are_initialized == false)
+  if (eigenvalues_are_initialized == false)
     estimate_eigenvalues(src);
 
   matrix_ptr->Tvmult(update2, dst);

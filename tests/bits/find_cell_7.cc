@@ -37,9 +37,10 @@
 
 bool inside(Triangulation<3>& tria, Point<3>& p)
 {
-  for(Triangulation<3>::cell_iterator cell = tria.begin(0); cell != tria.end(0);
-      ++cell)
-    if(cell->point_inside(p))
+  for (Triangulation<3>::cell_iterator cell = tria.begin(0);
+       cell != tria.end(0);
+       ++cell)
+    if (cell->point_inside(p))
       return true;
 
   return false;
@@ -57,11 +58,11 @@ check2()
   Point<3> p2(304.767, -57.0113, 254.766);
 
   int idx = 0;
-  for(Triangulation<3>::active_cell_iterator cell = tria.begin_active();
-      cell != tria.end();
-      ++cell, ++idx)
+  for (Triangulation<3>::active_cell_iterator cell = tria.begin_active();
+       cell != tria.end();
+       ++cell, ++idx)
     {
-      if(idx == 21)
+      if (idx == 21)
         cell->set_refine_flag();
     }
   tria.execute_coarsening_and_refinement();
@@ -92,7 +93,7 @@ main()
     {
       check2();
     }
-  catch(const std::exception& exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

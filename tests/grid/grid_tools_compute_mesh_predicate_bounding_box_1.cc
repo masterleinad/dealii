@@ -63,10 +63,10 @@ test_hypercube(unsigned int ref, unsigned int max_bbox)
       parallel::distributed::Triangulation<spacedim>>(
       tria, predicate, ref, true, max_bbox);
 
-  if(local_bbox.size() > 0)
+  if (local_bbox.size() > 0)
     {
       deallog << "Computed Bounding Boxes:" << std::endl;
-      for(BoundingBox<spacedim> b_box : local_bbox)
+      for (BoundingBox<spacedim> b_box : local_bbox)
         {
           deallog << b_box.get_boundary_points().first << std::endl;
           deallog << b_box.get_boundary_points().second << std::endl;
@@ -89,18 +89,18 @@ test_hypercube(unsigned int ref, unsigned int max_bbox)
     = tria.last_active();
 
   //Looking if every point is at least inside a bounding box
-  for(; cell < endc; ++cell)
-    if(cell->is_locally_owned())
-      for(unsigned int v = 0; v < GeometryInfo<spacedim>::vertices_per_cell;
-          ++v)
+  for (; cell < endc; ++cell)
+    if (cell->is_locally_owned())
+      for (unsigned int v = 0; v < GeometryInfo<spacedim>::vertices_per_cell;
+           ++v)
         {
           bool inside_a_box = false;
-          for(unsigned int i = 0; i < local_bbox.size(); ++i)
+          for (unsigned int i = 0; i < local_bbox.size(); ++i)
             {
-              if(local_bbox[i].point_inside(cell->vertex(v)))
+              if (local_bbox[i].point_inside(cell->vertex(v)))
                 inside_a_box = true;
             }
-          if(!inside_a_box)
+          if (!inside_a_box)
             {
               check = false;
               deallog << "Point outside " << cell->vertex(v) << std::endl;

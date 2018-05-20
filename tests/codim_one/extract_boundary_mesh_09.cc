@@ -48,7 +48,7 @@ void cylinder(Triangulation<3>& tria,
     Point<3>(d, 0, d),
   };
   // Turn cylinder such that y->x
-  for(unsigned int i = 0; i < 16; ++i)
+  for (unsigned int i = 0; i < 16; ++i)
     {
       const double h = vertices[i](1);
       vertices[i](1) = -vertices[i](0);
@@ -63,9 +63,9 @@ void cylinder(Triangulation<3>& tria,
 
   std::vector<CellData<3>> cells(5, CellData<3>());
 
-  for(unsigned int i = 0; i < 5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     {
-      for(unsigned int j = 0; j < 8; ++j)
+      for (unsigned int j = 0; j < 8; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     };

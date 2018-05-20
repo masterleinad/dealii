@@ -32,8 +32,8 @@ test(const unsigned int n)
   // data structures of a sparse matrix
   SparsityPattern sp(n, n);
   SparsityPattern C_sp(n, n);
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < n; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       {
         sp.add(i, j);
         C_sp.add(i, j);
@@ -45,11 +45,11 @@ test(const unsigned int n)
   SparseMatrix<double> B(sp);
   SparseMatrix<double> C(C_sp);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
-      for(unsigned int j = 0; j < n; ++j)
+      for (unsigned int j = 0; j < n; ++j)
         A.set(i, j, Testing::rand());
-      for(unsigned int j = 0; j < n; ++j)
+      for (unsigned int j = 0; j < n; ++j)
         B.set(i, j, Testing::rand());
     }
 
@@ -58,7 +58,7 @@ test(const unsigned int n)
   A.mmult(C, B);
 
   Vector<double> x(n), y(n), z(n), tmp(n);
-  for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int j = 0; j < n; ++j)
     x(j) = Testing::rand();
 
   // then test for correctness

@@ -104,7 +104,7 @@ MySimulator<dim>::VectorElementDestroyer::VectorElementDestroyer(
 template <int dim>
 MySimulator<dim>::VectorElementDestroyer::~VectorElementDestroyer()
 {
-  for(unsigned int i = 0; i < data.size(); ++i)
+  for (unsigned int i = 0; i < data.size(); ++i)
     {
       deallog << "Destroying element " << data[i]->get_name() << std::endl;
       delete data[i];

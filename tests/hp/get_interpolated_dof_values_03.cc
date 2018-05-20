@@ -49,21 +49,21 @@ test()
   tr.refine_global(2);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i < 5; ++i)
+  for (unsigned int i = 1; i < 5; ++i)
     fe.push_back(FE_Q<dim>(i));
 
   hp::DoFHandler<dim> dof_handler(tr);
-  for(typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
-      cell != dof_handler.end();
-      ++cell)
-    if(cell->has_children() == false)
+  for (typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+       cell != dof_handler.end();
+       ++cell)
+    if (cell->has_children() == false)
       cell->set_active_fe_index(cell->index() % fe.size());
 
   dof_handler.distribute_dofs(fe);
 
   // create a mostly arbitrary FE field
   Vector<double> solution(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for (unsigned int i = 0; i < solution.size(); ++i)
     solution(i) = i;
 
   // do the test where we request interpolation onto the coarsest cell with an
@@ -71,20 +71,20 @@ test()
   typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin(0);
   Vector<double>                              local(fe[0].dofs_per_cell);
   cell->get_interpolated_dof_values(solution, local, 0);
-  for(unsigned int i = 0; i < local.size(); ++i)
+  for (unsigned int i = 0; i < local.size(); ++i)
     deallog << local[i] << ' ';
   deallog << std::endl;
 
   // for comparison purposes, also output the values of DoFs on all cells
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       Vector<double> x(cell->get_fe().dofs_per_cell);
       cell->get_dof_values(solution, x);
       deallog << "cell =" << cell << ":  ";
-      for(unsigned int i = 0; i < x.size(); ++i)
+      for (unsigned int i = 0; i < x.size(); ++i)
         deallog << x[i] << ' ';
       deallog << std::endl;
     }

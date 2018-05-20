@@ -44,7 +44,7 @@ test(std::string filename)
 
   GridOut grid_out;
   grid_out.set_flags(GridOutFlags::Ucd(true));
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for (unsigned int cycle = 0; cycle < 3; ++cycle)
     {
       tria.refine_global(1);
       grid_out.write_msh(tria, logfile);

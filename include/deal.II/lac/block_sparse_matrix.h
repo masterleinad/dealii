@@ -372,8 +372,8 @@ BlockSparseMatrix<number>::operator=(const double d)
 {
   Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-  for(size_type r = 0; r < this->n_block_rows(); ++r)
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+  for (size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
       this->block(r, c) = d;
 
   return *this;
@@ -466,7 +466,7 @@ BlockSparseMatrix<number>::precondition_Jacobi(BlockVectorType&       dst,
 
   // do a diagonal preconditioning. uses only
   // the diagonal blocks of the matrix
-  for(size_type i = 0; i < this->n_block_rows(); ++i)
+  for (size_type i = 0; i < this->n_block_rows(); ++i)
     this->block(i, i).precondition_Jacobi(dst.block(i), src.block(i), omega);
 }
 

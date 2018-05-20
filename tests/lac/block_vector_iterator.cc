@@ -25,10 +25,10 @@ template <typename number>
 bool
 operator==(const BlockVector<number>& v1, const BlockVector<number>& v2)
 {
-  if(v1.size() != v2.size())
+  if (v1.size() != v2.size())
     return false;
-  for(unsigned int i = 0; i < v1.size(); ++i)
-    if(v1(i) != v2(i))
+  for (unsigned int i = 0; i < v1.size(); ++i)
+    if (v1(i) != v2(i))
       return false;
   return true;
 }
@@ -44,19 +44,19 @@ test()
 
   // Check 1: initialization via
   // iterators
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
       BlockVector<double> v2(ivector);
 
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
       // initialize other vector
       // through iterators
       BlockVector<double>::iterator p2 = v2.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p2)
+      for (unsigned int i = 0; i < v1.size(); ++i, ++p2)
         *p2 = i;
       Assert(p2 == v2.end(), ExcInternalError());
 
@@ -66,13 +66,13 @@ test()
 
   // Check 1: initialization via
   // iterators
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
 
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
       // initialize other vector
       // through iterators into first
@@ -85,16 +85,16 @@ test()
   // Check 3: loop forward and back
   // and check that things are the
   // same
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       BlockVector<double>::iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, ++p1)
         Assert(*p1 == i, ExcInternalError());
 
       Assert(p1 == v1.end(), ExcInternalError());
@@ -104,7 +104,7 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, --p1)
         Assert(*p1 == v1.size() - i - 1, ExcInternalError());
 
       // if we came thus far,
@@ -114,16 +114,16 @@ test()
 
   // Check 4: same, but this time
   // with const iterators
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       BlockVector<double>::const_iterator p1 = v1.begin();
-      for(unsigned int i = 0; i < v1.size(); ++i, ++p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, ++p1)
         Assert(*p1 == i, ExcInternalError());
 
       Assert(p1 == v1.end(), ExcInternalError());
@@ -133,7 +133,7 @@ test()
       --p1;
 
       // check backwards
-      for(unsigned int i = 0; i < v1.size(); ++i, --p1)
+      for (unsigned int i = 0; i < v1.size(); ++i, --p1)
         {
           const double val = *p1;
           const double ref = v1.size() - i - 1;
@@ -147,12 +147,12 @@ test()
 
   // Checks 5-14: use some standard
   // algorithms
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       // check std::distance
@@ -214,12 +214,12 @@ test()
 
   // Check 15: initialization through
   // iterators
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       // initialize a normal vector
@@ -234,12 +234,12 @@ test()
   // Check 16: initialization through
   // iterators. variant with one
   // constant object
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       // initialize a normal vector
@@ -254,12 +254,12 @@ test()
   // Check 17: initialization through
   // iterators. variant with two
   // constant object
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
       // initialize a normal vector
@@ -274,12 +274,12 @@ test()
   // Check 18: initialization through
   // iterators. variant with three
   // constant object
-  if(true)
+  if (true)
     {
       BlockVector<double> v0(ivector);
       // initialize first vector with
       // simple loop
-      for(unsigned int i = 0; i < v0.size(); ++i)
+      for (unsigned int i = 0; i < v0.size(); ++i)
         v0(i) = i;
 
       const BlockVector<double> v1 = v0;
@@ -294,16 +294,16 @@ test()
     };
 
   // Check 19: operator[]
-  if(true)
+  if (true)
     {
       BlockVector<double> v1(ivector);
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         v1(i) = i;
 
-      for(unsigned int i = 0; i < v1.size(); ++i)
+      for (unsigned int i = 0; i < v1.size(); ++i)
         {
           const BlockVector<double>::iterator p = (v1.begin() + i);
-          for(unsigned int j = 0; j < v1.size(); ++j)
+          for (unsigned int j = 0; j < v1.size(); ++j)
             Assert(p[(signed) j - (signed) i] == j, ExcInternalError());
         };
 
@@ -325,7 +325,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       deallog << std::endl
               << std::endl
@@ -338,7 +338,7 @@ main()
       // abort
       return 2;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

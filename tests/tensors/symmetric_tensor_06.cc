@@ -27,32 +27,32 @@ test()
   const double            lambda = 5, mu = 7;
   SymmetricTensor<4, dim> ts;
   Tensor<4, dim>          ta;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         ta[i][j][i][j] += mu;
         ta[i][j][j][i] += mu;
         ta[i][i][j][j] += lambda;
       }
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           ts[i][j][k][l] = ta[i][j][k][l];
 
   SymmetricTensor<2, dim> as, bs;
   Tensor<2, dim>          aa, ba;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       as[i][j] = aa[i][j] = (1. + (i + 1) * (j + 1));
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         double tmp_ij = 0;
-        for(unsigned int k = 0; k < dim; ++k)
-          for(unsigned int l = 0; l < dim; ++l)
+        for (unsigned int k = 0; k < dim; ++k)
+          for (unsigned int l = 0; l < dim; ++l)
             {
               deallog << i << ' ' << j << ' ' << k << ' ' << l << ": "
                       << ta[i][j][k][l] << ' ' << ts[i][j][k][l] << ' '
@@ -63,8 +63,8 @@ test()
       }
   ba = double_contract<2, 0, 3, 1>(ta, aa);
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         AssertThrow(as[i][j] == aa[i][j], ExcInternalError());
         AssertThrow(bs[i][j] == ba[i][j], ExcInternalError());

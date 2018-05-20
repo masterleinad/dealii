@@ -67,7 +67,7 @@ main()
 
   double       u, v;
   TopoDS_Shape sh;
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     {
       std::tuple<Point<3>, TopoDS_Shape, double, double> ref
         = project_point_and_pull_back(edge, points[i]);

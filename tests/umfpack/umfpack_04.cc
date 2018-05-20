@@ -64,7 +64,7 @@ assemble_laplace(MatrixType&         B,
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
@@ -73,31 +73,31 @@ assemble_laplace(MatrixType&         B,
 
       unsigned int comp_i, comp_j;
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
           comp_i = fe.system_to_component_index(i).first;
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             {
               comp_j = fe.system_to_component_index(j).first;
-              if(comp_i == comp_j)
-                for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              if (comp_i == comp_j)
+                for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                   cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                         * fe_values.shape_grad(j, q_point)
                                         * fe_values.JxW(q_point));
             }
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
               cell_rhs(i) += (fe_values.shape_value(i, q_point) * 1
                               * fe_values.JxW(q_point));
         }
 
       cell->get_dof_indices(local_dof_indices);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
           B.add(local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         bb(local_dof_indices[i]) += cell_rhs(i);
     }
 }
@@ -132,8 +132,8 @@ test()
   SparsityPattern      sparsity_pattern;
 
   b_sparsity_pattern.reinit(size.size(), size.size());
-  for(unsigned int k = 0; k < size.size(); ++k)
-    for(unsigned int l = 0; l < size.size(); ++l)
+  for (unsigned int k = 0; k < size.size(); ++k)
+    for (unsigned int l = 0; l < size.size(); ++l)
       b_sparsity_pattern.block(k, l).reinit(
         size[k], size[l], dof_handler.max_couplings_between_dofs());
   b_sparsity_pattern.collect_sizes();
@@ -174,7 +174,7 @@ test()
   SolverCG<BlockVector<double>> bcg(
     control, SolverCG<BlockVector<double>>::AdditionalData());
 
-  switch(dim)
+  switch (dim)
     {
       case 1:
         check_solver_within_range(bcg.solve(Bb, bx, bb, PreconditionIdentity()),
@@ -201,7 +201,7 @@ test()
   SolverCG<Vector<double>> cg(control,
                               SolverCG<Vector<double>>::AdditionalData());
 
-  switch(dim)
+  switch (dim)
     {
       case 1:
         check_solver_within_range(cg.solve(B, x, b, PreconditionIdentity()),

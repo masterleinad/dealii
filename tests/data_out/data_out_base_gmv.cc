@@ -56,7 +56,7 @@ check_all(std::ostream& log)
 
   char                  name[100];
   DataOutBase::GmvFlags flags;
-  if(true)
+  if (true)
     {
       sprintf(name, "%d%d.gmv", dim, spacedim);
 #if SEPARATE_FILES == 1

@@ -50,11 +50,11 @@ test()
   // (octant)
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int subdomain = 0;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()(d) > 0)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()(d) > 0)
           subdomain |= (1 << d);
       AssertThrow(subdomain < (1 << dim), ExcInternalError());
 
@@ -65,17 +65,17 @@ test()
   // and count again the numbers of
   // cells in each subdomain
   tria.refine_global((dim != 3) ? 2 : 1);
-  if(true)
+  if (true)
     {
       cell = tria.begin_active();
       endc = tria.end();
       std::vector<unsigned int> subdomain_cells(1 << dim, 0);
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
           AssertThrow(cell->subdomain_id() < (1 << dim), ExcInternalError());
           ++subdomain_cells[cell->subdomain_id()];
         };
-      for(unsigned int i = 0; i < (1 << dim); ++i)
+      for (unsigned int i = 0; i < (1 << dim); ++i)
         AssertThrow(subdomain_cells[i] == tria.n_active_cells() / (1 << dim),
                     ExcNumberMismatch(subdomain_cells[i],
                                       tria.n_active_cells() / (1 << dim)));
@@ -83,23 +83,23 @@ test()
     };
 
   // coarsen once and check again
-  if(true)
+  if (true)
     {
       cell = tria.begin_active();
       endc = tria.end();
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         cell->set_coarsen_flag();
       tria.execute_coarsening_and_refinement();
 
       cell = tria.begin_active();
       endc = tria.end();
       std::vector<unsigned int> subdomain_cells(1 << dim, 0);
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
           AssertThrow(cell->subdomain_id() < (1 << dim), ExcInternalError());
           ++subdomain_cells[cell->subdomain_id()];
         };
-      for(unsigned int i = 0; i < (1 << dim); ++i)
+      for (unsigned int i = 0; i < (1 << dim); ++i)
         AssertThrow(subdomain_cells[i] == tria.n_active_cells() / (1 << dim),
                     ExcNumberMismatch(subdomain_cells[i],
                                       tria.n_active_cells() / (1 << dim)));
@@ -110,13 +110,13 @@ test()
   // cells and count degrees of
   // freedom associated with each
   // subdomain
-  if(true)
+  if (true)
     {
       FE_DGQ<dim>     fe(2);
       DoFHandler<dim> dof_handler(tria);
       dof_handler.distribute_dofs(fe);
       std::vector<bool> selected_dofs(dof_handler.n_dofs());
-      for(unsigned int subdomain = 0; subdomain < (1 << dim); ++subdomain)
+      for (unsigned int subdomain = 0; subdomain < (1 << dim); ++subdomain)
         {
           DoFTools::extract_subdomain_dofs(
             dof_handler, subdomain, selected_dofs);
@@ -136,7 +136,7 @@ test()
   // the number of dofs here is
   // different, since dofs can be on
   // several subdomain at once
-  if(true)
+  if (true)
     {
       FE_Q<dim>       fe(1);
       DoFHandler<dim> dof_handler(tria);
@@ -146,7 +146,7 @@ test()
         rint(std::pow(tria.n_active_cells(), 1. / dim)));
 
       std::vector<bool> selected_dofs(dof_handler.n_dofs());
-      for(unsigned int subdomain = 0; subdomain < (1 << dim); ++subdomain)
+      for (unsigned int subdomain = 0; subdomain < (1 << dim); ++subdomain)
         {
           DoFTools::extract_subdomain_dofs(
             dof_handler, subdomain, selected_dofs);

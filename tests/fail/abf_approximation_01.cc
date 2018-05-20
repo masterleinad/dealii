@@ -83,9 +83,9 @@ TestMap1<dim>::value(const Point<dim>& p, const unsigned int component) const
   // u = x^2, v = y^2, dudx = 2 x, dvdy = 2 y, div u = 2x + 2y
   // I.e. \int div u = 2 (for unit square)
 
-  if(component == 0)
+  if (component == 0)
     return (p(0) * p(0));
-  if(component == 1)
+  if (component == 1)
     return (p(1) * p(1));
 
   return (0);
@@ -100,7 +100,7 @@ TestMap1<dim>::vector_value(const Point<dim>& p,
          ExcDimensionMismatch(return_value.size(), this->n_components));
 
   // Just fill the vector with the appropriate components
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -137,7 +137,7 @@ TestDef1<dim>::value(const Point<dim>& p, const unsigned int component) const
   double rad   = p.distance(center),
          phi_p = atan2(p(0) - center(0), p(1) - center(1));
 
-  if(component == 0)
+  if (component == 0)
     return rad * (sin(phi + phi_p) - sin(phi_p));
   else
     return rad * (cos(phi + phi_p) - cos(phi_p));
@@ -150,7 +150,7 @@ TestDef1<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -183,7 +183,7 @@ TestDef2<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   double x = p(0), y = p(1);
 
-  if(component == 0)
+  if (component == 0)
     return scale * x;
   else
     return scale * y;
@@ -196,7 +196,7 @@ TestDef2<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -230,7 +230,7 @@ TestDef3<dim>::value(const Point<dim>& p, const unsigned int component) const
 {
   double y = p(1);
 
-  if(component == 0)
+  if (component == 0)
     return scale * y;
   else
     return 0;
@@ -243,7 +243,7 @@ TestDef3<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -259,9 +259,9 @@ public:
   TestPoly(unsigned int deg) : Function<dim>(2)
   {
     std::vector<double> coeff(deg, 0.0);
-    for(unsigned int p = 0; p < 4; ++p)
+    for (unsigned int p = 0; p < 4; ++p)
       {
-        for(unsigned int i = 0; i < deg; ++i)
+        for (unsigned int i = 0; i < deg; ++i)
           {
             double c = ((double) Testing::rand()) / ((double) RAND_MAX + 1);
             coeff[i] = c;
@@ -287,7 +287,7 @@ TestPoly<dim>::value(const Point<dim>& p, const unsigned int component) const
   double x = p(0), y = p(1);
 
   // Ugly hack, but should do the job ...
-  if(component == 0)
+  if (component == 0)
     return polys[0].value(x) + polys[1].value(y);
   else
     return polys[2].value(x) + polys[3].value(y);
@@ -300,7 +300,7 @@ TestPoly<dim>::vector_value(const Point<dim>& p,
 {
   Assert(return_value.size() == this->n_components,
          ExcDimensionMismatch(return_value.size(), this->n_components));
-  for(unsigned int iCount = 0; iCount < this->n_components; iCount++)
+  for (unsigned int iCount = 0; iCount < this->n_components; iCount++)
     return_value(iCount) = value(p, iCount);
 }
 
@@ -317,7 +317,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
   // If the error is in the range of machine precision, this polynomial
   // degree can obviously be represented by projected field.
 
-  for(unsigned int deg = 1; deg < 4; ++deg)
+  for (unsigned int deg = 1; deg < 4; ++deg)
     {
       TestPoly<2> pol(deg);
 
@@ -348,7 +348,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
 
       double err_u = 0, err_v = 0;
 
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
           fe_values.reinit(cell);
 
@@ -357,7 +357,7 @@ double TestProjection(Mapping<2>& mapping, DoFHandler<2>* dof_handler)
                                                  Vector<double>(n_components));
           fe_values.get_function_values(solution, this_value);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             {
               double   u = this_value[q_point](0), v = this_value[q_point](1);
               Point<2> p = fe_values.quadrature_point(q_point);
@@ -438,7 +438,7 @@ main()
     MappingQ1Eulerian<2> mapping_euler(deformation, *dof_handler_def);
 
     // Try rotating the elements
-    for(double rotat = 0; rotat < 2 * numbers::PI; rotat += 0.25 * numbers::PI)
+    for (double rotat = 0; rotat < 2 * numbers::PI; rotat += 0.25 * numbers::PI)
       {
         // Rotate element
         VectorTools::project(*dof_handler_def,
@@ -452,7 +452,7 @@ main()
       }
 
     // Try resizing the elements
-    for(double scale = -0.75; scale < 4.0; scale += 0.25)
+    for (double scale = -0.75; scale < 4.0; scale += 0.25)
       {
         VectorTools::project(*dof_handler_def,
                              hn_constraints_def,
@@ -465,7 +465,7 @@ main()
       }
 
     // Try paralellogramming the elements
-    for(double scale = -1.0; scale < 1.0; scale += 0.25)
+    for (double scale = -1.0; scale < 1.0; scale += 0.25)
       {
         VectorTools::project(*dof_handler_def,
                              hn_constraints_def,
@@ -478,7 +478,7 @@ main()
       }
 
     // Try arbitrary deformation ...
-    for(unsigned int i = 0; i < deformation.size(); ++i)
+    for (unsigned int i = 0; i < deformation.size(); ++i)
       {
         double c       = ((double) Testing::rand()) / ((double) RAND_MAX + 1);
         deformation(i) = 0.35 * (c - 0.5);
@@ -489,8 +489,8 @@ main()
     TestProjection(mapping_euler, dof_handler);
   }
 
-  delete(dof_handler);
-  delete(dof_handler_def);
+  delete (dof_handler);
+  delete (dof_handler_def);
 
   return (0);
 }

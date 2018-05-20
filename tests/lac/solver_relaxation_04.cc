@@ -44,7 +44,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(SolverControl::NoConvergence& e)
+  catch (SolverControl::NoConvergence& e)
     {
       result = e.last_residual;
     }
@@ -64,7 +64,7 @@ main()
   SolverRelaxation<> relax(control);
 
   // Solve non-symmetric laplace with five-point FD
-  for(unsigned int size = 33; size <= 33; size *= 3)
+  for (unsigned int size = 33; size <= 33; size *= 3)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -78,7 +78,7 @@ main()
       SparseMatrix<double> A(structure);
       testproblem.five_point(A, true);
 
-      for(unsigned int blocksize = 4; blocksize < 32; blocksize <<= 1)
+      for (unsigned int blocksize = 4; blocksize < 32; blocksize <<= 1)
         {
           deallog << "Block size " << blocksize << std::endl;
 
@@ -90,11 +90,11 @@ main()
 
           relax_data.block_list.reinit(n_blocks, dim, blocksize + 2);
           relax_data_reorder.block_list.reinit(n_blocks, dim, blocksize + 2);
-          for(unsigned int block = 0; block < n_blocks; ++block)
+          for (unsigned int block = 0; block < n_blocks; ++block)
             {
-              for(int i = -1; i < (int) blocksize + 1; ++i)
-                if((int) (i + block * blocksize) > -1
-                   && (i + block * blocksize) < dim)
+              for (int i = -1; i < (int) blocksize + 1; ++i)
+                if ((int) (i + block * blocksize) > -1
+                    && (i + block * blocksize) < dim)
                   {
                     relax_data.block_list.add(block, i + block * blocksize);
                     relax_data_reorder.block_list.add(block,
@@ -110,7 +110,7 @@ main()
           // reverse the order of the blocks
           relax_data_reorder.order.resize(1);
           relax_data_reorder.order[0].resize(n_blocks);
-          for(unsigned int i = 0; i < n_blocks; ++i)
+          for (unsigned int i = 0; i < n_blocks; ++i)
             relax_data_reorder.order[0][i] = n_blocks - 1 - i;
 
           RelaxationBlockJacobi<SparseMatrix<double>, double>
@@ -134,7 +134,7 @@ main()
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
               deallog.pop();
             }
-          catch(std::exception& e)
+          catch (std::exception& e)
             {
               std::cerr << "Exception: " << e.what() << std::endl;
             }

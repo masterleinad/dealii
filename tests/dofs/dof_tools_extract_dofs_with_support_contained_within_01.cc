@@ -48,7 +48,7 @@ test(const unsigned int flag)
   GridGenerator::hyper_rectangle(
     triangulation, Point<dim>(0, 0), Point<dim>(1, 1));
 
-  if(flag == 0)
+  if (flag == 0)
     triangulation.refine_global(2);
   else
     triangulation.refine_global(1);
@@ -56,10 +56,10 @@ test(const unsigned int flag)
   DoFHandler<dim> dh(triangulation);
 
   // Extra refinement to generate hanging nodes
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-      cell != dh.end();
-      ++cell)
-    if((flag == 1 && pred_d<dim>(cell)) || (flag == 2 && !pred_d<dim>(cell)))
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+       cell != dh.end();
+       ++cell)
+    if ((flag == 1 && pred_d<dim>(cell)) || (flag == 2 && !pred_d<dim>(cell)))
       cell->set_refine_flag();
 
   triangulation.prepare_coarsening_and_refinement();
@@ -79,7 +79,7 @@ test(const unsigned int flag)
   support.print(deallog);
 
   // print grid and DoFs for visual inspection
-  if(false)
+  if (false)
     {
       std::cout << "-------------------- " << Utilities::int_to_string(dim)
                 << Utilities::int_to_string(flag) << std::endl;

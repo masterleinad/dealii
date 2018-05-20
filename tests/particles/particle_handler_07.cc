@@ -39,10 +39,10 @@ test()
     Particles::ParticleHandler<dim, spacedim> particle_handler(tr, mapping);
 
     std::vector<Point<spacedim>> points(10);
-    for(unsigned int i = 0; i < 10; ++i)
+    for (unsigned int i = 0; i < 10; ++i)
       {
         const double coordinate = static_cast<double>(i) / 10.0;
-        for(unsigned int j = 0; j < spacedim; ++j)
+        for (unsigned int j = 0; j < spacedim; ++j)
           points[i][j] = 0.05 + coordinate;
       }
 
@@ -52,9 +52,9 @@ test()
     deallog << "Particle number: " << particle_handler.n_global_particles()
             << std::endl;
 
-    for(auto particle = particle_handler.begin();
-        particle != particle_handler.end();
-        ++particle)
+    for (auto particle = particle_handler.begin();
+         particle != particle_handler.end();
+         ++particle)
       deallog << "Particle id " << particle->get_id() << " is in cell "
               << particle->get_surrounding_cell(tr) << std::endl
               << "     at location " << particle->get_location() << std::endl

@@ -136,7 +136,7 @@ test()
       = tria.begin_active();
     const typename Triangulation<dim, spacedim>::active_cell_iterator endc
       = tria.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell->set_coarsen_flag();
       }

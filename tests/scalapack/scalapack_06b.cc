@@ -78,8 +78,8 @@ test(const unsigned int size,
   //Lapack as reference
   {
     std::vector<NumberType> lapack_A(size * size);
-    for(unsigned int i = 0; i < size; ++i)
-      for(unsigned int j = 0; j < size; ++j)
+    for (unsigned int i = 0; i < size; ++i)
+      for (unsigned int j = 0; j < size; ++j)
         lapack_A[i * size + j] = full_A(i, j);
 
     int
@@ -116,8 +116,8 @@ test(const unsigned int size,
          &info);
 
     AssertThrow(info == 0, LAPACKSupport::ExcErrorCode("syev", info));
-    for(int i = 0; i < max_n_eigenvalues; ++i)
-      for(int j = 0; j < size; ++j)
+    for (int i = 0; i < max_n_eigenvalues; ++i)
+      for (int j = 0; j < size; ++j)
         s_eigenvectors_[i][j] = lapack_A[(size - 1 - i) * size + j];
   }
 
@@ -131,13 +131,13 @@ test(const unsigned int size,
     = scalapack_syevx.eigenpairs_symmetric_by_index(
       std::make_pair(size - max_n_eigenvalues, size - 1), true);
   scalapack_syevx.copy_to(p_eigenvectors);
-  for(unsigned int i = eigenvalues_psyevx.size() - 1; i > 0; --i)
+  for (unsigned int i = eigenvalues_psyevx.size() - 1; i > 0; --i)
     {
-      if(!(std::abs(eigenvalues_psyevx[i]
-                    - eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
-             / std::abs(
-                 eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
-           < tol))
+      if (!(std::abs(eigenvalues_psyevx[i]
+                     - eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
+              / std::abs(
+                  eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
+            < tol))
         {
           std::cout << "process #" << this_mpi_process
                     << ": eigenvalues do not fit: " << eigenvalues_psyevx[i]
@@ -159,15 +159,15 @@ test(const unsigned int size,
   // FIXME: run-time error on macOS if code between "pcout << comparing" and this line is executed.
   // Happens at the end of the program run while freeing the MPI communicator.
 
-  for(unsigned int i = 0; i < max_n_eigenvalues; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for (unsigned int i = 0; i < max_n_eigenvalues; ++i)
+    for (unsigned int j = 0; j < size; ++j)
       p_eigenvectors_[i][j] = p_eigenvectors(j, max_n_eigenvalues - 1 - i);
 
   //product of eigenvectors computed using Lapack and ScaLapack has to be either 1 or -1
-  for(unsigned int i = 0; i < max_n_eigenvalues; ++i)
+  for (unsigned int i = 0; i < max_n_eigenvalues; ++i)
     {
       const NumberType product = p_eigenvectors_[i] * s_eigenvectors_[i];
-      if(!(std::abs(std::abs(product) - 1) < tol * 10))
+      if (!(std::abs(std::abs(product) - 1) < tol * 10))
         std::cout << "process #" << this_mpi_process
                   << ": eigenvectors do not coincide: abs(" << product
                   << ") != 1" << std::endl;
@@ -193,8 +193,8 @@ main(int argc, char** argv)
 
   const double tol = 1e-10;
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol);
 }

@@ -51,7 +51,7 @@ test_vertices_orientation(
 
   bool success = true;
 
-  if(verbosity > 1)
+  if (verbosity > 1)
     {
       deallog << "The last column should be 0" << endl;
       deallog << "Vol faces"
@@ -62,26 +62,26 @@ test_vertices_orientation(
               << endl;
     }
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       face = surface_to_volume_mapping[cell];
 
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for (unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           Point<spacedim> diff(face->vertex(k));
           diff -= cell->vertex(k);
-          if(verbosity > 1)
+          if (verbosity > 1)
             {
               deallog << face->vertex(k) << "\t\t";
               deallog << cell->vertex(k) << "\t\t\t" << diff.square() << endl;
             }
-          if(diff.square() > 0)
+          if (diff.square() > 0)
             {
               success = false;
               break;
             }
         }
-      if(verbosity > 1)
+      if (verbosity > 1)
         deallog << endl;
     }
   return success;
@@ -121,7 +121,7 @@ main()
     surface_to_volume_mapping
       = GridGenerator::extract_boundary_mesh(volume_mesh, boundary_mesh);
 
-    if(!test_vertices_orientation(boundary_mesh, surface_to_volume_mapping, 2))
+    if (!test_vertices_orientation(boundary_mesh, surface_to_volume_mapping, 2))
       Assert(false, ExcInternalError());
     save_mesh(boundary_mesh);
   }

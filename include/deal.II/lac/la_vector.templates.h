@@ -73,11 +73,11 @@ namespace LinearAlgebra
   Vector<Number>&
   Vector<Number>::operator=(const Vector<Number>& in_vector)
   {
-    if(PointerComparison::equal(this, &in_vector))
+    if (PointerComparison::equal(this, &in_vector))
       return *this;
 
     this->thread_loop_partitioner = in_vector.thread_loop_partitioner;
-    if(this->size() != in_vector.size())
+    if (this->size() != in_vector.size())
       this->reinit(in_vector, true);
 
     dealii::internal::VectorOperations::Vector_copy<Number, Number> copier(
@@ -94,7 +94,7 @@ namespace LinearAlgebra
   Vector<Number>::operator=(const Vector<Number2>& in_vector)
   {
     this->thread_loop_partitioner = in_vector.thread_loop_partitioner;
-    if(this->size() != in_vector.size())
+    if (this->size() != in_vector.size())
       ReadWriteVector<Number>::reinit(in_vector, true);
 
     dealii::internal::VectorOperations::Vector_copy<Number, Number2> copier(
@@ -352,8 +352,8 @@ namespace LinearAlgebra
     Assert(this->size(), ExcEmptyObject());
 
     const size_type size = this->size();
-    for(size_type i = 0; i < size; ++i)
-      if(this->values[i] != Number())
+    for (size_type i = 0; i < size; ++i)
+      if (this->values[i] != Number())
         return false;
 
     return true;
@@ -408,21 +408,21 @@ namespace LinearAlgebra
       this->values.get());
     internal::VectorOperations::parallel_reduce(
       norm2, 0, this->size(), norm_square, this->thread_loop_partitioner);
-    if(numbers::is_finite(norm_square)
-       && norm_square >= std::numeric_limits<real_type>::min())
+    if (numbers::is_finite(norm_square)
+        && norm_square >= std::numeric_limits<real_type>::min())
       return std::sqrt(norm_square);
     else
       {
         real_type       scale = 0.;
         real_type       sum   = 1.;
         const size_type size  = this->size();
-        for(size_type i = 0; i < size; ++i)
+        for (size_type i = 0; i < size; ++i)
           {
-            if(this->values[i] != Number())
+            if (this->values[i] != Number())
               {
                 const real_type abs_x
                   = numbers::NumberTraits<Number>::abs(this->values[i]);
-                if(scale < abs_x)
+                if (scale < abs_x)
                   {
                     sum   = 1. + sum * (scale / abs_x) * (scale / abs_x);
                     scale = abs_x;
@@ -442,7 +442,7 @@ namespace LinearAlgebra
   {
     typename ReadWriteVector<Number>::real_type norm = 0.;
     const size_type                             size = this->size();
-    for(size_type i = 0; i < size; ++i)
+    for (size_type i = 0; i < size; ++i)
       norm = std::max(std::abs(this->values[i]), norm);
 
     return norm;

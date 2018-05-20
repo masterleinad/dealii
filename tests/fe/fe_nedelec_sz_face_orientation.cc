@@ -54,11 +54,11 @@ void create_triangulation(Triangulation<3>& tria,
   cells[0].vertices[7] = 10;
   cells[0].material_id = 0;
 
-  if(face_orientation)
+  if (face_orientation)
     {
-      if(face_flip)
+      if (face_flip)
         {
-          if(face_rotation)
+          if (face_rotation)
             {
               cells[1].vertices[0] = 7;
               cells[1].vertices[1] = 8;
@@ -83,7 +83,7 @@ void create_triangulation(Triangulation<3>& tria,
             }
         }
 
-      else if(face_rotation)
+      else if (face_rotation)
         {
           cells[1].vertices[0] = 4;
           cells[1].vertices[1] = 5;
@@ -108,9 +108,9 @@ void create_triangulation(Triangulation<3>& tria,
         }
     }
 
-  else if(face_flip)
+  else if (face_flip)
     {
-      if(face_rotation)
+      if (face_rotation)
         {
           cells[1].vertices[0] = 8;
           cells[1].vertices[1] = 7;
@@ -135,7 +135,7 @@ void create_triangulation(Triangulation<3>& tria,
         }
     }
 
-  else if(face_rotation)
+  else if (face_rotation)
     {
       cells[1].vertices[0] = 5;
       cells[1].vertices[1] = 4;
@@ -188,13 +188,13 @@ evaluate(const FiniteElement<3>& fe, const DoFHandler<3>& dof_handler)
                         update_quadrature_points | update_values
                           | update_gradients);
 
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       fe_values.reinit(cell);
 
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         {
           deallog << "DoF#" << i << ", value=["
                   << fe_values[component].value(i, 0) << "], curl=["
@@ -227,9 +227,9 @@ main()
 {
   initlog();
 
-  for(int face_orientation = 0; face_orientation <= 1; ++face_orientation)
-    for(int face_flip = 0; face_flip <= 1; ++face_flip)
-      for(int face_rotation = 0; face_rotation <= 1; ++face_rotation)
+  for (int face_orientation = 0; face_orientation <= 1; ++face_orientation)
+    for (int face_flip = 0; face_flip <= 1; ++face_flip)
+      for (int face_rotation = 0; face_rotation <= 1; ++face_rotation)
         {
           deallog << face_orientation << face_flip << face_rotation
                   << std::endl;

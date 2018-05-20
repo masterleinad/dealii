@@ -46,12 +46,12 @@ output(const parallel::shared::Triangulation<dim>& tr,
   // copy the .pvtu and .vtu files
   // into the logstream
   int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       cat_file((std::string(filename) + ".pvtu").c_str());
       cat_file((std::string(filename) + ".proc0000.vtu").c_str());
     }
-  else if(myid == 1)
+  else if (myid == 1)
     cat_file((std::string(filename) + ".proc0001.vtu").c_str());
   else
     AssertThrow(false, ExcNotImplemented());
@@ -62,7 +62,7 @@ void
 test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::shared::Triangulation<dim> tr(
@@ -74,18 +74,18 @@ test()
   tr.refine_global(1);
   typename Triangulation<dim>::active_cell_iterator cell = tr.begin_active(),
                                                     endc = tr.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->index() < 2)
+      if (cell->index() < 2)
         cell->set_subdomain_id(cell->index());
       else
         cell->set_subdomain_id(numbers::artificial_subdomain_id);
 
-      if(cell->index() == 0 || cell->index() == 2)
+      if (cell->index() == 0 || cell->index() == 2)
         cell->set_level_subdomain_id(numbers::artificial_subdomain_id);
-      else if(cell->index() == 1)
+      else if (cell->index() == 1)
         cell->set_level_subdomain_id(0);
-      else if(cell->index() == 3)
+      else if (cell->index() == 3)
         cell->set_level_subdomain_id(1);
     }
 

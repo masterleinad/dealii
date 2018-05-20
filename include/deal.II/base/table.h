@@ -1915,7 +1915,7 @@ template <typename T2>
 TableBase<N, T>::TableBase(const TableBase<N, T2>& src)
 {
   reinit(src.table_size);
-  if(src.n_elements() != 0)
+  if (src.n_elements() != 0)
     std::copy(src.values.begin(), src.values.end(), values.begin());
 }
 
@@ -1962,7 +1962,7 @@ namespace internal
       // access i-th
       // subobject. optimize on the
       // case i==0
-      if(i == 0)
+      if (i == 0)
         return Accessor<N, T, C, P - 1>(table, data);
       else
         {
@@ -1970,7 +1970,7 @@ namespace internal
           // specialization would have
           // been taken!
           size_type subobject_size = table.size()[N - 1];
-          for(int p = P - 1; p > 1; --p)
+          for (int p = P - 1; p > 1; --p)
             subobject_size *= table.size()[N - p];
           const iterator new_data = data + i * subobject_size;
           return Accessor<N, T, C, P - 1>(table, new_data);
@@ -2023,7 +2023,7 @@ template <int N, typename T>
 inline TableBase<N, T>&
 TableBase<N, T>::operator=(const TableBase<N, T>& m)
 {
-  if(!m.empty())
+  if (!m.empty())
     values = m.values;
   reinit(m.size(), true);
 
@@ -2036,7 +2036,7 @@ inline TableBase<N, T>&
 TableBase<N, T>::operator=(const TableBase<N, T2>& m)
 {
   reinit(m.size(), true);
-  if(!empty())
+  if (!empty())
     std::copy(
       m.values.begin(), m.values.begin() + n_elements(), values.begin());
 
@@ -2067,7 +2067,7 @@ inline void
 TableBase<N, T>::reset_values()
 {
   // use parallel set operation
-  if(n_elements() != 0)
+  if (n_elements() != 0)
     values.fill(T());
 }
 
@@ -2075,7 +2075,7 @@ template <int N, typename T>
 inline void
 TableBase<N, T>::fill(const T& value)
 {
-  if(n_elements() != 0)
+  if (n_elements() != 0)
     values.fill(value);
 }
 
@@ -2089,7 +2089,7 @@ TableBase<N, T>::reinit(const TableIndices<N>& new_sizes,
   const size_type new_size = n_elements();
 
   // if zero size was given: free all memory
-  if(new_size == 0)
+  if (new_size == 0)
     {
       values.resize(0);
       // set all sizes to zero, even
@@ -2107,9 +2107,9 @@ TableBase<N, T>::reinit(const TableIndices<N>& new_sizes,
   // class. (Selecting another code for the empty case ensures that we touch
   // the memory only once for non-trivial classes that need to initialize the
   // memory also in resize_fast.)
-  if(!omit_default_initialization)
+  if (!omit_default_initialization)
     {
-      if(values.empty())
+      if (values.empty())
         values.resize(new_size);
       else
         {
@@ -2141,7 +2141,7 @@ inline typename TableBase<N, T>::size_type
 TableBase<N, T>::n_elements() const
 {
   size_type s = 1;
-  for(unsigned int n = 0; n < N; ++n)
+  for (unsigned int n = 0; n < N; ++n)
     s *= table_size[n];
   return s;
 }
@@ -2162,7 +2162,7 @@ namespace internal
     fill_Fortran_style(InputIterator entries, TableBase<1, T>& table)
     {
       using size_type = typename TableBase<1, T>::size_type;
-      for(size_type i = 0; i < table.size()[0]; ++i)
+      for (size_type i = 0; i < table.size()[0]; ++i)
         table(TableIndices<1>(i)) = *entries++;
     }
 
@@ -2171,8 +2171,8 @@ namespace internal
     fill_Fortran_style(InputIterator entries, TableBase<2, T>& table)
     {
       using size_type = typename TableBase<2, T>::size_type;
-      for(size_type j = 0; j < table.size()[1]; ++j)
-        for(size_type i = 0; i < table.size()[0]; ++i)
+      for (size_type j = 0; j < table.size()[1]; ++j)
+        for (size_type i = 0; i < table.size()[0]; ++i)
           table(TableIndices<2>(i, j)) = *entries++;
     }
 
@@ -2181,9 +2181,9 @@ namespace internal
     fill_Fortran_style(InputIterator entries, TableBase<3, T>& table)
     {
       using size_type = typename TableBase<3, T>::size_type;
-      for(size_type k = 0; k < table.size()[2]; ++k)
-        for(size_type j = 0; j < table.size()[1]; ++j)
-          for(size_type i = 0; i < table.size()[0]; ++i)
+      for (size_type k = 0; k < table.size()[2]; ++k)
+        for (size_type j = 0; j < table.size()[1]; ++j)
+          for (size_type i = 0; i < table.size()[0]; ++i)
             table(TableIndices<3>(i, j, k)) = *entries++;
     }
 
@@ -2203,10 +2203,10 @@ TableBase<N, T>::fill(InputIterator entries, const bool C_style_indexing)
 {
   Assert(n_elements() != 0, ExcMessage("Trying to fill an empty matrix."));
 
-  if(C_style_indexing)
-    for(typename AlignedVector<T>::iterator p = values.begin();
-        p != values.end();
-        ++p)
+  if (C_style_indexing)
+    for (typename AlignedVector<T>::iterator p = values.begin();
+         p != values.end();
+         ++p)
       *p = *entries++;
   else
     internal::TableImplementation::fill_Fortran_style(entries, *this);
@@ -2236,7 +2236,7 @@ TableBase<N, T>::position(const TableIndices<N>& indices) const
   // to make the job somewhat easier
   // for the compiler. have the
   // general formula nevertheless:
-  switch(N)
+  switch (N)
     {
       case 1:
         return indices[0];
@@ -2249,7 +2249,7 @@ TableBase<N, T>::position(const TableIndices<N>& indices) const
       default:
         {
           unsigned int s = indices[0];
-          for(unsigned int n = 1; n < N; ++n)
+          for (unsigned int n = 1; n < N; ++n)
             s = s * table_size[n] + indices[n];
           return s;
         }
@@ -2260,7 +2260,7 @@ template <int N, typename T>
 inline typename AlignedVector<T>::const_reference
 TableBase<N, T>::operator()(const TableIndices<N>& indices) const
 {
-  for(unsigned int n = 0; n < N; ++n)
+  for (unsigned int n = 0; n < N; ++n)
     AssertIndexRange(indices[n], table_size[n]);
   return el(indices);
 }
@@ -2269,7 +2269,7 @@ template <int N, typename T>
 inline typename AlignedVector<T>::reference
 TableBase<N, T>::operator()(const TableIndices<N>& indices)
 {
-  for(unsigned int n = 0; n < N; ++n)
+  for (unsigned int n = 0; n < N; ++n)
     AssertIndexRange(indices[n], table_size[n]);
   return el(indices);
 }

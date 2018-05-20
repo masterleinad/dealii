@@ -45,10 +45,10 @@ test(const double max_n_cell_ratio)
   {
     unsigned int cell_index    = 0;
     unsigned int my_cell_index = 0;
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-        cell != tr.end();
-        ++cell, ++cell_index)
-      if(cell->subdomain_id() == myid)
+    for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+         cell != tr.end();
+         ++cell, ++cell_index)
+      if (cell->subdomain_id() == myid)
         {
           ++my_cell_index;
           indicators(cell_index) = my_cell_index;
@@ -65,12 +65,12 @@ test(const double max_n_cell_ratio)
   // coarsening. we have to
   // accumulate over all processors
   unsigned int my_refined = 0, my_coarsened = 0;
-  for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-      cell != tr.end();
-      ++cell)
-    if(cell->refine_flag_set())
+  for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+       cell != tr.end();
+       ++cell)
+    if (cell->refine_flag_set())
       ++my_refined;
-    else if(cell->coarsen_flag_set())
+    else if (cell->coarsen_flag_set())
       ++my_coarsened;
 
   unsigned int n_refined = 0, n_coarsened = 0;
@@ -81,7 +81,7 @@ test(const double max_n_cell_ratio)
 
   // make sure we have indeed flagged
   // exactly 20% of cells
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "total active cells = " << tr.n_global_active_cells()
               << std::endl;
@@ -90,7 +90,7 @@ test(const double max_n_cell_ratio)
     }
 
   tr.execute_coarsening_and_refinement();
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "total active cells = " << tr.n_global_active_cells()
               << std::endl;
@@ -111,7 +111,7 @@ main(int argc, char* argv[])
   {
     const double max_n_cell_ratio = 1.1;
 
-    if(myid == 0)
+    if (myid == 0)
       {
         std::ofstream logfile("output");
         deallog.attach(logfile);
@@ -126,7 +126,7 @@ main(int argc, char* argv[])
   // cell number already exceeded maximal cell number limit
   {
     const double max_n_cell_ratio = 0.8;
-    if(myid == 0)
+    if (myid == 0)
       {
         std::ofstream logfile("output", std::ofstream::app);
         deallog.attach(logfile);
@@ -141,7 +141,7 @@ main(int argc, char* argv[])
   // test non-effective maximal cell number limit
   {
     const double max_n_cell_ratio = 100;
-    if(myid == 0)
+    if (myid == 0)
       {
         std::ofstream logfile("output", std::ofstream::app);
         deallog.attach(logfile);

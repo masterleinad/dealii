@@ -63,11 +63,11 @@ test()
   // particular we take the quadrant
   // (octant)
   active_cell_iterator cell = tria.begin_active(), endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int subdomain = 0;
-      for(unsigned int d = 0; d < 2; ++d)
-        if(cell->center()(d) > 0)
+      for (unsigned int d = 0; d < 2; ++d)
+        if (cell->center()(d) > 0)
           subdomain |= (1 << d);
       AssertThrow(subdomain < (1 << 2), ExcInternalError());
 
@@ -78,7 +78,7 @@ test()
 
   // check 1: count number of cells
   // on some level
-  if(true)
+  if (true)
     {
       const IteratorFilters::LevelEqualTo    predicate(3);
       FilteredIterator<active_cell_iterator> begin(predicate),
@@ -98,7 +98,7 @@ test()
 
   // check 2: count number of cells
   // on some level in a different way
-  if(true)
+  if (true)
     {
       bool (*predicate)(const active_cell_iterator)
         = &level_equal_to_3<active_cell_iterator>;
@@ -120,7 +120,7 @@ test()
   // check 3: count number of cells
   // on some level in yet a different
   // way
-  if(true)
+  if (true)
     {
       bool (*predicate)(const active_cell_iterator, const unsigned int)
         = &level_equal_to<active_cell_iterator>;
@@ -140,7 +140,7 @@ test()
     };
 
   // check 4: and yet another possibility
-  if(true)
+  if (true)
     {
       typedef FilteredIterator<active_cell_iterator> FI;
 
@@ -167,7 +167,7 @@ test()
   // check 5: check that we loop over
   // all cells with a given subdomain
   // id
-  if(true)
+  if (true)
     {
       typedef FilteredIterator<active_cell_iterator> FI;
       const IteratorFilters::SubdomainEqualTo        predicate(1);
@@ -176,23 +176,23 @@ test()
       active_cell_iterator endc(tria.end());
       active_cell_iterator cell1 = tria.begin_active();
 
-      while(cell1->subdomain_id() != 1)
+      while (cell1->subdomain_id() != 1)
         ++cell1;
 
-      while(true)
+      while (true)
         {
           // move filtered iterator ahead
           ++cell;
           // move unfiltered iterator
           // ahead
           ++cell1;
-          while((cell1 != endc) && (cell1->subdomain_id() != 1))
+          while ((cell1 != endc) && (cell1->subdomain_id() != 1))
             ++cell1;
 
           AssertThrow(cell == cell1, ExcInternalError());
           AssertThrow(cell1 == cell, ExcInternalError());
 
-          if(cell.state() != IteratorState::valid)
+          if (cell.state() != IteratorState::valid)
             break;
         };
       AssertThrow(cell == endc, ExcInternalError());

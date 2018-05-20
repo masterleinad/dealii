@@ -66,7 +66,7 @@ public:
                                                                         0);
     FEEvaluation<dim, degree_p, degree_p + 2, 1, Number> pressure(data, 1);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         velocity.reinit(cell);
         velocity.read_dof_values(src, 0);
@@ -75,7 +75,7 @@ public:
         pressure.read_dof_values(src, dim);
         pressure.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for (unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             Tensor<2, dim, vector_t> grad_u = velocity.get_gradient(q);
             vector_t                 pres   = pressure.get_value(q);
@@ -83,7 +83,7 @@ public:
             pressure.submit_value(div, q);
 
             // subtract p * I
-            for(unsigned int d = 0; d < dim; ++d)
+            for (unsigned int d = 0; d < dim; ++d)
               grad_u[d][d] -= pres;
 
             velocity.submit_gradient(grad_u, q);
@@ -100,7 +100,7 @@ public:
   vmult(VectorType& dst, const VectorType& src) const
   {
     AssertDimension(dst.size(), dim + 1);
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       dst[d] = 0;
     data.cell_loop(
       &MatrixFreeTest<dim, degree_p, VectorType>::local_apply, this, dst, src);
@@ -116,7 +116,7 @@ test()
 {
   Triangulation<dim> triangulation;
   create_mesh(triangulation);
-  if(fe_degree == 1)
+  if (fe_degree == 1)
     triangulation.refine_global(4 - dim);
   else
     triangulation.refine_global(3 - dim);
@@ -160,8 +160,8 @@ test()
   {
     BlockDynamicSparsityPattern csp(dim + 1, dim + 1);
 
-    for(unsigned int d = 0; d < dim + 1; ++d)
-      for(unsigned int e = 0; e < dim + 1; ++e)
+    for (unsigned int d = 0; d < dim + 1; ++d)
+      for (unsigned int e = 0; e < dim + 1; ++e)
         csp.block(d, e).reinit(dofs_per_block[d], dofs_per_block[e]);
 
     csp.collect_sizes();
@@ -173,7 +173,7 @@ test()
   system_matrix.reinit(sparsity_pattern);
 
   solution.reinit(dim + 1);
-  for(unsigned int i = 0; i < dim + 1; ++i)
+  for (unsigned int i = 0; i < dim + 1; ++i)
     solution.block(i).reinit(dofs_per_block[i]);
   solution.collect_sizes();
 
@@ -183,7 +183,7 @@ test()
   vec2.resize(dim + 1);
   vec1[0].reinit(dofs_per_block[0]);
   vec2[0].reinit(vec1[0]);
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     {
       vec1[i].reinit(vec1[0]);
       vec2[i].reinit(vec1[0]);
@@ -217,23 +217,23 @@ test()
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 phi_grad_u[k] = fe_values[velocities].gradient(k, q);
                 div_phi_u[k]  = fe_values[velocities].divergence(k, q);
                 phi_p[k]      = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for (unsigned int j = 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (scalar_product(phi_grad_u[i], phi_grad_u[j])
@@ -242,8 +242,8 @@ test()
                   }
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             local_matrix(i, j) = local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
@@ -253,8 +253,8 @@ test()
   }
 
   // first system_rhs with random numbers
-  for(unsigned int i = 0; i < dim + 1; ++i)
-    for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
+  for (unsigned int i = 0; i < dim + 1; ++i)
+    for (unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       {
         const double val       = -1. + 2. * random_value<double>();
         system_rhs.block(i)(j) = val;
@@ -287,8 +287,8 @@ test()
 
   // Verification
   double error = 0.;
-  for(unsigned int i = 0; i < dim + 1; ++i)
-    for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
+  for (unsigned int i = 0; i < dim + 1; ++i)
+    for (unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       error += std::fabs(solution.block(i)(j) - vec2[i](j));
   double relative = solution.block(0).l1_norm();
   deallog << "  Verification fe degree " << fe_degree << ": "

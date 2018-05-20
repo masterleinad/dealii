@@ -25,8 +25,8 @@ test()
   deallog << "Checking in " << dim << "d" << std::endl;
 
   // check phi_i(v_j) = delta_{ij}
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       {
         const double phi_i = GeometryInfo<dim>::d_linear_shape_function(
           GeometryInfo<dim>::unit_cell_vertex(v), i);
@@ -39,10 +39,10 @@ test()
   //    sum_i phi_i(x) == 1
   // at all points. do so at every
   // vertex, and then at the center
-  for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
     {
       double s = 0;
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         s += GeometryInfo<dim>::d_linear_shape_function(
           GeometryInfo<dim>::unit_cell_vertex(v), i);
       AssertThrow(s == 1, ExcInternalError());
@@ -51,11 +51,11 @@ test()
     }
   {
     Point<dim> center;
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       center[i] = 0.5;
 
     double s = 0;
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       s += GeometryInfo<dim>::d_linear_shape_function(center, i);
     AssertThrow(s == 1, ExcInternalError());
 

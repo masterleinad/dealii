@@ -28,7 +28,7 @@ main()
 {
   initlog();
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       ParameterHandler prm;
       prm.enter_subsection("Testing");
@@ -44,7 +44,7 @@ main()
       // specific exception.
       try
         {
-          if(i == 0)
+          if (i == 0)
             {
               prm.parse_input("prm/parameter_handler_backslash_04.prm");
             }
@@ -62,7 +62,7 @@ main()
 
           deallog << list << std::endl;
         }
-      catch(ParameterHandler::ExcInvalidEntryForPattern& exc)
+      catch (ParameterHandler::ExcInvalidEntryForPattern& exc)
         {
           deallog << exc.get_exc_name() << std::endl;
           exc.print_info(deallog.get_file_stream());

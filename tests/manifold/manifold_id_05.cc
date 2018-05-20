@@ -34,7 +34,7 @@ test(unsigned int ref = 1)
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   Point<spacedim> center;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     center[i] = .5;
 
   SphericalManifold<dim, spacedim> boundary(center);
@@ -47,10 +47,10 @@ test(unsigned int ref = 1)
 
   tria.refine_global(2);
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
       deallog << "C: " << cell << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         deallog << "F: " << cell->face(f)
                 << ", mid: " << (int) cell->face(f)->manifold_id() << std::endl;
     }

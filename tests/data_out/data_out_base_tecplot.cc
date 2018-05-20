@@ -56,7 +56,7 @@ check_all(std::ostream& log)
 
   char                      name[100];
   DataOutBase::TecplotFlags flags;
-  if(true)
+  if (true)
     {
       sprintf(name, "%d%d.tecplot", dim, spacedim);
 #if SEPARATE_FILES == 1

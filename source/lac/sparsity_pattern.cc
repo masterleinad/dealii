@@ -115,7 +115,7 @@ SparsityPattern::SparsityPattern(const SparsityPattern& original,
   reinit(original.rows, original.cols, max_per_row);
 
   // now copy the entries from the other object
-  for(size_type row = 0; row < original.rows; ++row)
+  for (size_type row = 0; row < original.rows; ++row)
     {
       // copy the elements of this row of the other object
       //
@@ -161,11 +161,11 @@ SparsityPattern::SparsityPattern(const SparsityPattern& original,
                                  next_free_slot);
 
       // insert left and right side-diagonals
-      for(size_type i = 1; i <= std::min(row, extra_off_diagonals);
-          ++i, ++next_free_slot)
+      for (size_type i = 1; i <= std::min(row, extra_off_diagonals);
+           ++i, ++next_free_slot)
         *next_free_slot = row - i;
-      for(size_type i = 1; i <= std::min(extra_off_diagonals, rows - row - 1);
-          ++i, ++next_free_slot)
+      for (size_type i = 1; i <= std::min(extra_off_diagonals, rows - row - 1);
+           ++i, ++next_free_slot)
         *next_free_slot = row + i;
 
       // copy rest
@@ -219,7 +219,7 @@ SparsityPattern::reinit(
   cols = n;
 
   // delete empty matrices
-  if((m == 0) || (n == 0))
+  if ((m == 0) || (n == 0))
     {
       rowstart.reset();
       colnums.reset();
@@ -245,7 +245,7 @@ SparsityPattern::reinit(
   // columns
   //
   std::size_t vec_len = 0;
-  for(size_type i = 0; i < m; ++i)
+  for (size_type i = 0; i < m; ++i)
     vec_len += std::min(static_cast<size_type>(store_diagonal_first_in_row ?
                                                  std::max(row_lengths[i], 1U) :
                                                  row_lengths[i]),
@@ -254,7 +254,7 @@ SparsityPattern::reinit(
   // sometimes, no entries are requested in the matrix (this most often
   // happens when blocks in a block matrix are simply zero). in that case,
   // allocate exactly one element, to have a valid pointer to some memory
-  if(vec_len == 0)
+  if (vec_len == 0)
     {
       vec_len     = 1;
       max_vec_len = vec_len;
@@ -267,7 +267,7 @@ SparsityPattern::reinit(
                                  row_lengths.begin(), row_lengths.end())),
                                n));
 
-  if(store_diagonal_first_in_row && (max_row_length == 0) && (m != 0))
+  if (store_diagonal_first_in_row && (max_row_length == 0) && (m != 0))
     max_row_length = 1;
 
   // allocate memory for the rowstart values, if necessary. even though we
@@ -276,14 +276,14 @@ SparsityPattern::reinit(
   // case we get an exception and the destructor of this object will be called
   // -- where we look at the non-nullness of the (now invalid) pointer again
   // and try to delete the memory a second time.
-  if(rows > max_dim)
+  if (rows > max_dim)
     {
       max_dim  = rows;
       rowstart = std_cxx14::make_unique<std::size_t[]>(max_dim + 1);
     }
 
   // allocate memory for the column numbers if necessary
-  if(vec_len > max_vec_len)
+  if (vec_len > max_vec_len)
     {
       max_vec_len = vec_len;
       colnums     = std_cxx14::make_unique<size_type[]>(max_vec_len);
@@ -291,7 +291,7 @@ SparsityPattern::reinit(
 
   // set the rowstart array
   rowstart[0] = 0;
-  for(size_type i = 1; i <= rows; ++i)
+  for (size_type i = 1; i <= rows; ++i)
     rowstart[i]
       = rowstart[i - 1]
         + (store_diagonal_first_in_row ?
@@ -307,8 +307,8 @@ SparsityPattern::reinit(
 
   // if diagonal elements are special: let the first entry in each row be the
   // diagonal value
-  if(store_diagonal_first_in_row)
-    for(size_type i = 0; i < rows; i++)
+  if (store_diagonal_first_in_row)
+    for (size_type i = 0; i < rows; i++)
       colnums[rowstart[i]] = i;
 
   compressed = false;
@@ -318,14 +318,14 @@ void
 SparsityPattern::compress()
 {
   // nothing to do if the object corresponds to an empty matrix
-  if((rowstart == nullptr) && (colnums == nullptr))
+  if ((rowstart == nullptr) && (colnums == nullptr))
     {
       compressed = true;
       return;
     }
 
   // do nothing if already compressed
-  if(compressed)
+  if (compressed)
     return;
 
   size_type next_free_entry = 0, next_row_start = 0, row_length = 0;
@@ -344,13 +344,13 @@ SparsityPattern::compress()
   std::vector<size_type> tmp_entries(max_row_length);
 
   // Traverse all rows
-  for(size_type line = 0; line < rows; ++line)
+  for (size_type line = 0; line < rows; ++line)
     {
       // copy used entries, break if first unused entry is reached
       row_length = 0;
-      for(size_type j = rowstart[line]; j < rowstart[line + 1];
-          ++j, ++row_length)
-        if(colnums[j] != invalid_entry)
+      for (size_type j = rowstart[line]; j < rowstart[line + 1];
+           ++j, ++row_length)
+        if (colnums[j] != invalid_entry)
           tmp_entries[row_length] = colnums[j];
         else
           break;
@@ -360,13 +360,13 @@ SparsityPattern::compress()
       // diagonal entries is on.
 
       // if this line is empty or has only one entry, don't sort
-      if(row_length > 1)
+      if (row_length > 1)
         std::sort((store_diagonal_first_in_row) ? tmp_entries.begin() + 1 :
                                                   tmp_entries.begin(),
                   tmp_entries.begin() + row_length);
 
       // insert column numbers into the new field
-      for(size_type j = 0; j < row_length; ++j)
+      for (size_type j = 0; j < row_length; ++j)
         new_colnums[next_free_entry++] = tmp_entries[j];
 
       // note new start of this and the next row
@@ -425,10 +425,10 @@ SparsityPattern::copy_from(const SparsityPattern& sp)
   // bother to check whether that diagonal entry is in a certain row or not
   const bool                do_diag_optimize = (sp.n_rows() == sp.n_cols());
   std::vector<unsigned int> row_lengths(sp.n_rows());
-  for(size_type i = 0; i < sp.n_rows(); ++i)
+  for (size_type i = 0; i < sp.n_rows(); ++i)
     {
       row_lengths[i] = sp.row_length(i);
-      if(do_diag_optimize && !sp.exists(i, i))
+      if (do_diag_optimize && !sp.exists(i, i))
         ++row_lengths[i];
     }
   reinit(sp.n_rows(), sp.n_cols(), row_lengths);
@@ -436,17 +436,17 @@ SparsityPattern::copy_from(const SparsityPattern& sp)
   // now enter all the elements into the matrix, if there are any. note that
   // if the matrix is quadratic, then we already have the diagonal element
   // preallocated
-  if(n_rows() != 0 && n_cols() != 0)
-    for(size_type row = 0; row < sp.n_rows(); ++row)
+  if (n_rows() != 0 && n_cols() != 0)
+    for (size_type row = 0; row < sp.n_rows(); ++row)
       {
         size_type* cols = &colnums[rowstart[row]] + (do_diag_optimize ? 1 : 0);
         typename SparsityPattern::iterator col_num = sp.begin(row),
                                            end_row = sp.end(row);
 
-        for(; col_num != end_row; ++col_num)
+        for (; col_num != end_row; ++col_num)
           {
             const size_type col = col_num->column();
-            if((col != row) || !do_diag_optimize)
+            if ((col != row) || !do_diag_optimize)
               *cols++ = col;
           }
       }
@@ -467,23 +467,23 @@ SparsityPattern::copy_from(const DynamicSparsityPattern& dsp)
 {
   const bool                do_diag_optimize = (dsp.n_rows() == dsp.n_cols());
   std::vector<unsigned int> row_lengths(dsp.n_rows());
-  for(size_type i = 0; i < dsp.n_rows(); ++i)
+  for (size_type i = 0; i < dsp.n_rows(); ++i)
     {
       row_lengths[i] = dsp.row_length(i);
-      if(do_diag_optimize && !dsp.exists(i, i))
+      if (do_diag_optimize && !dsp.exists(i, i))
         ++row_lengths[i];
     }
   reinit(dsp.n_rows(), dsp.n_cols(), row_lengths);
 
-  if(n_rows() != 0 && n_cols() != 0)
-    for(size_type row = 0; row < dsp.n_rows(); ++row)
+  if (n_rows() != 0 && n_cols() != 0)
+    for (size_type row = 0; row < dsp.n_rows(); ++row)
       {
         size_type* cols = &colnums[rowstart[row]] + (do_diag_optimize ? 1 : 0);
         const unsigned int row_length = dsp.row_length(row);
-        for(unsigned int index = 0; index < row_length; ++index)
+        for (unsigned int index = 0; index < row_length; ++index)
           {
             const size_type col = dsp.column_number(row, index);
-            if((col != row) || !do_diag_optimize)
+            if ((col != row) || !do_diag_optimize)
               *cols++ = col;
           }
       }
@@ -504,12 +504,12 @@ SparsityPattern::copy_from(const FullMatrix<number>& matrix)
   const bool matrix_is_square = (matrix.m() == matrix.n());
 
   std::vector<unsigned int> entries_per_row(matrix.m(), 0);
-  for(size_type row = 0; row < matrix.m(); ++row)
+  for (size_type row = 0; row < matrix.m(); ++row)
     {
-      for(size_type col = 0; col < matrix.n(); ++col)
-        if(matrix(row, col) != 0)
+      for (size_type col = 0; col < matrix.n(); ++col)
+        if (matrix(row, col) != 0)
           ++entries_per_row[row];
-      if(matrix_is_square && (matrix(row, row) == 0))
+      if (matrix_is_square && (matrix(row, row) == 0))
         ++entries_per_row[row];
     }
 
@@ -525,13 +525,13 @@ SparsityPattern::copy_from(const FullMatrix<number>& matrix)
     entries_per_row.size() > 0 ?
       *std::max_element(entries_per_row.begin(), entries_per_row.end()) :
       0);
-  for(size_type row = 0; row < matrix.m(); ++row)
+  for (size_type row = 0; row < matrix.m(); ++row)
     {
       column_indices.resize(entries_per_row[row]);
 
       size_type current_index = 0;
-      for(size_type col = 0; col < matrix.n(); ++col)
-        if(matrix(row, col) != 0)
+      for (size_type col = 0; col < matrix.n(); ++col)
+        if (matrix(row, col) != 0)
           {
             column_indices[current_index] = col;
             ++current_index;
@@ -540,7 +540,7 @@ SparsityPattern::copy_from(const FullMatrix<number>& matrix)
           // the (row,col) entry is zero; check if we need to add it
           // anyway because it's the diagonal entry of a square
           // matrix
-          if(matrix_is_square && (col == row))
+          if (matrix_is_square && (col == row))
           {
             column_indices[current_index] = row;
             ++current_index;
@@ -573,7 +573,7 @@ SparsityPattern::empty() const
   // and freeing memory was not present in the original implementation and I
   // don't know at how many places I missed something in adding it, so I try
   // to be cautious. wb)
-  if((rowstart == nullptr) || (rows == 0) || (cols == 0))
+  if ((rowstart == nullptr) || (rows == 0) || (cols == 0))
     {
       Assert(rowstart == nullptr, ExcInternalError());
       Assert(rows == 0, ExcInternalError());
@@ -591,13 +591,13 @@ SparsityPattern::max_entries_per_row() const
 {
   // if compress() has not yet been called, we can get the maximum number of
   // elements per row using the stored value
-  if(!compressed)
+  if (!compressed)
     return max_row_length;
 
   // if compress() was called, we use a better algorithm which gives us a
   // sharp bound
   size_type m = 0;
-  for(size_type i = 1; i <= rows; ++i)
+  for (size_type i = 1; i <= rows; ++i)
     m = std::max(m, static_cast<size_type>(rowstart[i] - rowstart[i - 1]));
 
   return m;
@@ -612,12 +612,12 @@ SparsityPattern::operator()(const size_type i, const size_type j) const
   Assert(compressed, ExcNotCompressed());
 
   // let's see whether there is something in this line
-  if(rowstart[i] == rowstart[i + 1])
+  if (rowstart[i] == rowstart[i + 1])
     return invalid_entry;
 
   // If special storage of diagonals was requested, we can get the diagonal
   // element faster by this query.
-  if(store_diagonal_first_in_row && (i == j))
+  if (store_diagonal_first_in_row && (i == j))
     return rowstart[i];
 
   // all other entries are sorted, so we can use a binary search algorithm
@@ -631,7 +631,7 @@ SparsityPattern::operator()(const size_type i, const size_type j) const
                                      &colnums[rowstart[i]]);
   const size_type* const p = Utilities::lower_bound<const size_type*>(
     sorted_region_start, &colnums[rowstart[i + 1]], j);
-  if((p != &colnums[rowstart[i + 1]]) && (*p == j))
+  if ((p != &colnums[rowstart[i + 1]]) && (*p == j))
     return (p - colnums.get());
   else
     return invalid_entry;
@@ -645,13 +645,13 @@ SparsityPattern::add(const size_type i, const size_type j)
   Assert(j < cols, ExcIndexRange(j, 0, cols));
   Assert(compressed == false, ExcMatrixIsCompressed());
 
-  for(std::size_t k = rowstart[i]; k < rowstart[i + 1]; k++)
+  for (std::size_t k = rowstart[i]; k < rowstart[i + 1]; k++)
     {
       // entry already exists
-      if(colnums[k] == j)
+      if (colnums[k] == j)
         return;
       // empty entry found, put new entry here
-      if(colnums[k] == invalid_entry)
+      if (colnums[k] == invalid_entry)
         {
           colnums[k] = j;
           return;
@@ -670,26 +670,26 @@ SparsityPattern::add_entries(const size_type row,
                              ForwardIterator end,
                              const bool      indices_are_sorted)
 {
-  if(indices_are_sorted == true)
+  if (indices_are_sorted == true)
     {
-      if(begin != end)
+      if (begin != end)
         {
           ForwardIterator it                 = begin;
           bool            has_larger_entries = false;
           // skip diagonal
           std::size_t k = rowstart[row] + store_diagonal_first_in_row;
-          for(; k < rowstart[row + 1]; k++)
-            if(colnums[k] == invalid_entry)
+          for (; k < rowstart[row + 1]; k++)
+            if (colnums[k] == invalid_entry)
               break;
-            else if(colnums[k] >= *it)
+            else if (colnums[k] >= *it)
               {
                 has_larger_entries = true;
                 break;
               }
-          if(has_larger_entries == false)
-            for(; it != end; ++it)
+          if (has_larger_entries == false)
+            for (; it != end; ++it)
               {
-                if(store_diagonal_first_in_row && *it == row)
+                if (store_diagonal_first_in_row && *it == row)
                   continue;
                 Assert(
                   k <= rowstart[row + 1],
@@ -699,14 +699,14 @@ SparsityPattern::add_entries(const size_type row,
           else
             // cannot just append the new range at the end, forward to the
             // other function
-            for(ForwardIterator p = begin; p != end; ++p)
+            for (ForwardIterator p = begin; p != end; ++p)
               add(row, *p);
         }
     }
   else
     {
       // forward to the other function.
-      for(ForwardIterator it = begin; it != end; ++it)
+      for (ForwardIterator it = begin; it != end; ++it)
         add(row, *it);
     }
 }
@@ -718,10 +718,10 @@ SparsityPattern::exists(const size_type i, const size_type j) const
   Assert(i < rows, ExcIndexRange(i, 0, rows));
   Assert(j < cols, ExcIndexRange(j, 0, cols));
 
-  for(size_type k = rowstart[i]; k < rowstart[i + 1]; k++)
+  for (size_type k = rowstart[i]; k < rowstart[i + 1]; k++)
     {
       // entry already exists
-      if(colnums[k] == j)
+      if (colnums[k] == j)
         return true;
     }
   return false;
@@ -734,10 +734,10 @@ SparsityPattern::row_position(const size_type i, const size_type j) const
   Assert(i < rows, ExcIndexRange(i, 0, rows));
   Assert(j < cols, ExcIndexRange(j, 0, cols));
 
-  for(size_type k = rowstart[i]; k < rowstart[i + 1]; k++)
+  for (size_type k = rowstart[i]; k < rowstart[i + 1]; k++)
     {
       // entry exists
-      if(colnums[k] == j)
+      if (colnums[k] == j)
         return k - rowstart[i];
     }
   return numbers::invalid_size_type;
@@ -783,17 +783,17 @@ SparsityPattern::symmetrize()
   //
   // 2. that the @p{add} function can be called on elements that already exist
   // without any harm
-  for(size_type row = 0; row < rows; ++row)
-    for(size_type k = rowstart[row]; k < rowstart[row + 1]; k++)
+  for (size_type row = 0; row < rows; ++row)
+    for (size_type k = rowstart[row]; k < rowstart[row + 1]; k++)
       {
         // check whether we are at the end of the entries of this row. if so,
         // go to next row
-        if(colnums[k] == invalid_entry)
+        if (colnums[k] == invalid_entry)
           break;
 
         // otherwise add the transpose entry if this is not the diagonal (that
         // would not harm, only take time to check up)
-        if(colnums[k] != row)
+        if (colnums[k] != row)
           add(colnums[k], row);
       };
 }
@@ -805,11 +805,11 @@ SparsityPattern::print(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 
-  for(size_type i = 0; i < rows; ++i)
+  for (size_type i = 0; i < rows; ++i)
     {
       out << '[' << i;
-      for(size_type j = rowstart[i]; j < rowstart[i + 1]; ++j)
-        if(colnums[j] != invalid_entry)
+      for (size_type j = rowstart[i]; j < rowstart[i + 1]; ++j)
+        if (colnums[j] != invalid_entry)
           out << ',' << colnums[j];
       out << ']' << std::endl;
     }
@@ -824,9 +824,9 @@ SparsityPattern::print_gnuplot(std::ostream& out) const
 
   AssertThrow(out, ExcIO());
 
-  for(size_type i = 0; i < rows; ++i)
-    for(size_type j = rowstart[i]; j < rowstart[i + 1]; ++j)
-      if(colnums[j] != invalid_entry)
+  for (size_type i = 0; i < rows; ++i)
+    for (size_type j = rowstart[i]; j < rowstart[i + 1]; ++j)
+      if (colnums[j] != invalid_entry)
         // while matrix entries are usually written (i,j), with i vertical and
         // j horizontal, gnuplot output is x-y, that is we have to exchange
         // the order of output
@@ -859,7 +859,7 @@ SparsityPattern::print_svg(std::ostream& out) const
     << "\" fill=\"rgb(255, 255, 255)\"/>\n\n";
 
   SparsityPattern::iterator it = this->begin(), end = this->end();
-  for(; it != end; ++it)
+  for (; it != end; ++it)
     {
       out << "  <rect class=\"pixel\" x=\"" << it->column() + 1 << "\" y=\""
           << it->row() + 1 << "\" width=\".9\" height=\".9\"/>\n";
@@ -872,12 +872,12 @@ SparsityPattern::bandwidth() const
 {
   Assert((rowstart != nullptr) && (colnums != nullptr), ExcEmptyObject());
   size_type b = 0;
-  for(size_type i = 0; i < rows; ++i)
-    for(size_type j = rowstart[i]; j < rowstart[i + 1]; ++j)
-      if(colnums[j] != invalid_entry)
+  for (size_type i = 0; i < rows; ++i)
+    for (size_type j = rowstart[i]; j < rowstart[i + 1]; ++j)
+      if (colnums[j] != invalid_entry)
         {
-          if(static_cast<size_type>(std::abs(static_cast<int>(i - colnums[j])))
-             > b)
+          if (static_cast<size_type>(std::abs(static_cast<int>(i - colnums[j])))
+              > b)
             b = std::abs(static_cast<signed int>(i - colnums[j]));
         }
       else

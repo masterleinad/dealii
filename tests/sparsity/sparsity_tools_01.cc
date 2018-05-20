@@ -30,7 +30,7 @@ main()
   deallog.attach(logfile);
 
   DynamicSparsityPattern dsp(4, 4);
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     dsp.add(i, i);
 
   // create a graph with components 0,2 and 1,3 that are disconnected
@@ -44,6 +44,6 @@ main()
   std::vector<types::global_dof_index> permutation(4);
   SparsityTools::reorder_Cuthill_McKee(dsp, permutation);
 
-  for(unsigned int i = 0; i < permutation.size(); ++i)
+  for (unsigned int i = 0; i < permutation.size(); ++i)
     deallog << permutation[i] << std::endl;
 }

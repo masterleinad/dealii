@@ -47,10 +47,10 @@ test()
   Point<spacedim>                 p1;
   Point<spacedim>                 p2;
   Point<spacedim>                 p3;
-  for(unsigned int d = 0; d < spacedim; ++d)
+  for (unsigned int d = 0; d < spacedim; ++d)
     {
       p1[d] = a;
-      if(d == 1)
+      if (d == 1)
         p2[d] = b;
       else
         p2[d] = (a + b) * 0.5;
@@ -76,11 +76,11 @@ test()
 
   deallog << "Cache find active cell around point: OK " << std::endl;
 
-  if(res_1.first != res_c_1.first)
+  if (res_1.first != res_c_1.first)
     deallog << "Different cells were found for p1" << std::endl;
-  else if(res_2.first != res_c_2.first)
+  else if (res_2.first != res_c_2.first)
     deallog << "Different cells were found for p2" << std::endl;
-  else if(res_3.first != res_c_3.first)
+  else if (res_3.first != res_c_3.first)
     deallog << "Different cells were found for p3" << std::endl;
 
   deallog << "Test: OK " << std::endl;

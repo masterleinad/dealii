@@ -33,7 +33,7 @@ main(int argc, char** argv)
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       {
         PETScWrappers::MPI::Vector v(MPI_COMM_WORLD, 5, 5);
-        for(unsigned int k = 0; k < v.size(); ++k)
+        for (unsigned int k = 0; k < v.size(); ++k)
           v(k)
             = PetscScalar(k * 1.2345678901234567, 2. * k * 1.2345678901234567);
 
@@ -45,7 +45,7 @@ main(int argc, char** argv)
         v.print(logfile, 3, false, true);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -59,7 +59,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

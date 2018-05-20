@@ -117,7 +117,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
   double product = 1;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     product *= (p[d] + 1);
   return product;
 }
@@ -125,7 +125,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
 template <int dim>
 LaplaceProblem<dim>::LaplaceProblem() : dof_handler(triangulation)
 {
-  for(unsigned int degree = 2; degree < 5; ++degree)
+  for (unsigned int degree = 2; degree < 5; ++degree)
     {
       fe_collection.push_back(FE_Q<dim>(QIterated<1>(QTrapez<1>(), degree)));
       quadrature_collection.push_back(QGauss<dim>(degree + 2));
@@ -160,7 +160,7 @@ LaplaceProblem<dim>::setup_system()
   hanging_node_constraints.close();
   hang.stop();
 
-  if(dim < 3)
+  if (dim < 3)
     {
       sparsity_pattern.reinit(dof_handler.n_dofs(),
                               dof_handler.n_dofs(),
@@ -204,7 +204,7 @@ LaplaceProblem<dim>::assemble_system()
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
       FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
@@ -222,11 +222,11 @@ LaplaceProblem<dim>::assemble_system()
       std::vector<double> rhs_values(fe_values.n_quadrature_points);
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
-      for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
-          ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+           ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                     * fe_values.shape_grad(j, q_point)
                                     * fe_values.JxW(q_point));
@@ -236,9 +236,9 @@ LaplaceProblem<dim>::assemble_system()
           }
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
@@ -276,7 +276,7 @@ unsigned int
 int_pow(const unsigned int x, const unsigned int n)
 {
   unsigned int p = 1;
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     p *= x;
   return p;
 }
@@ -295,13 +295,13 @@ LaplaceProblem<dim>::estimate_smoothness(
   // logarithms of |k|
   std::vector<Tensor<1, dim>> k_vectors;
   std::vector<unsigned int>   k_vectors_magnitude;
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
-          for(unsigned int i = 0; i < N; ++i)
-            for(unsigned int j = 0; j < N; ++j)
-              if(!((i == 0) && (j == 0)) && (i * i + j * j < N * N))
+          for (unsigned int i = 0; i < N; ++i)
+            for (unsigned int j = 0; j < N; ++j)
+              if (!((i == 0) && (j == 0)) && (i * i + j * j < N * N))
                 {
                   k_vectors.push_back(
                     Point<dim>(numbers::PI * i, numbers::PI * j));
@@ -313,11 +313,11 @@ LaplaceProblem<dim>::estimate_smoothness(
 
       case 3:
         {
-          for(unsigned int i = 0; i < N; ++i)
-            for(unsigned int j = 0; j < N; ++j)
-              for(unsigned int k = 0; k < N; ++k)
-                if(!((i == 0) && (j == 0) && (k == 0))
-                   && (i * i + j * j + k * k < N * N))
+          for (unsigned int i = 0; i < N; ++i)
+            for (unsigned int j = 0; j < N; ++j)
+              for (unsigned int k = 0; k < N; ++k)
+                if (!((i == 0) && (j == 0) && (k == 0))
+                    && (i * i + j * j + k * k < N * N))
                   {
                     k_vectors.push_back(Point<dim>(
                       numbers::PI * i, numbers::PI * j, numbers::PI * k));
@@ -333,7 +333,7 @@ LaplaceProblem<dim>::estimate_smoothness(
 
   const unsigned      n_fourier_modes = k_vectors.size();
   std::vector<double> ln_k(n_fourier_modes);
-  for(unsigned int i = 0; i < n_fourier_modes; ++i)
+  for (unsigned int i = 0; i < n_fourier_modes; ++i)
     ln_k[i] = std::log(k_vectors[i].norm());
 
   // assemble the matrices that do
@@ -347,16 +347,16 @@ LaplaceProblem<dim>::estimate_smoothness(
 
   std::vector<Table<2, std::complex<double>>> fourier_transform_matrices(
     fe_collection.size());
-  for(unsigned int fe = 0; fe < fe_collection.size(); ++fe)
+  for (unsigned int fe = 0; fe < fe_collection.size(); ++fe)
     {
       fourier_transform_matrices[fe].reinit(n_fourier_modes,
                                             fe_collection[fe].dofs_per_cell);
 
-      for(unsigned int k = 0; k < n_fourier_modes; ++k)
-        for(unsigned int i = 0; i < fe_collection[fe].dofs_per_cell; ++i)
+      for (unsigned int k = 0; k < n_fourier_modes; ++k)
+        for (unsigned int i = 0; i < fe_collection[fe].dofs_per_cell; ++i)
           {
             std::complex<double> sum = 0;
-            for(unsigned int q = 0; q < quadrature.size(); ++q)
+            for (unsigned int q = 0; q < quadrature.size(); ++q)
               {
                 const Point<dim> x_q = quadrature.point(q);
                 sum
@@ -380,7 +380,7 @@ LaplaceProblem<dim>::estimate_smoothness(
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(unsigned int index = 0; cell != endc; ++cell, ++index)
+  for (unsigned int index = 0; cell != endc; ++cell, ++index)
     {
       local_dof_values.reinit(cell->get_fe().dofs_per_cell);
       cell->get_dof_values(solution, local_dof_values);
@@ -389,8 +389,8 @@ LaplaceProblem<dim>::estimate_smoothness(
       // transform of the local
       // solution
       std::fill(fourier_coefficients.begin(), fourier_coefficients.end(), 0);
-      for(unsigned int f = 0; f < n_fourier_modes; ++f)
-        for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
+      for (unsigned int f = 0; f < n_fourier_modes; ++f)
+        for (unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
           fourier_coefficients[f]
             += fourier_transform_matrices[cell->active_fe_index()](f, i)
                * local_dof_values(i);
@@ -402,10 +402,11 @@ LaplaceProblem<dim>::estimate_smoothness(
       // largest magnitude for each
       // value of |k|
       std::map<unsigned int, double> k_to_max_U_map;
-      for(unsigned int f = 0; f < n_fourier_modes; ++f)
-        if((k_to_max_U_map.find(k_vectors_magnitude[f]) == k_to_max_U_map.end())
-           || (k_to_max_U_map[k_vectors_magnitude[f]]
-               < std::abs(fourier_coefficients[f])))
+      for (unsigned int f = 0; f < n_fourier_modes; ++f)
+        if ((k_to_max_U_map.find(k_vectors_magnitude[f])
+             == k_to_max_U_map.end())
+            || (k_to_max_U_map[k_vectors_magnitude[f]]
+                < std::abs(fourier_coefficients[f])))
           k_to_max_U_map[k_vectors_magnitude[f]]
             = std::abs(fourier_coefficients[f]);
 
@@ -418,9 +419,9 @@ LaplaceProblem<dim>::estimate_smoothness(
       // |k|
       double sum_1 = 0, sum_ln_k = 0, sum_ln_k_square = 0, sum_ln_U = 0,
              sum_ln_U_ln_k = 0;
-      for(unsigned int f = 0; f < n_fourier_modes; ++f)
-        if(k_to_max_U_map[k_vectors_magnitude[f]]
-           == std::abs(fourier_coefficients[f]))
+      for (unsigned int f = 0; f < n_fourier_modes; ++f)
+        if (k_to_max_U_map[k_vectors_magnitude[f]]
+            == std::abs(fourier_coefficients[f]))
           {
             sum_1 += 1;
             sum_ln_k += ln_k[f];
@@ -460,8 +461,8 @@ LaplaceProblem<dim>::refine_grid()
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(unsigned int index = 0; cell != endc; ++cell, ++index)
-      if(cell->refine_flag_set())
+    for (unsigned int index = 0; cell != endc; ++cell, ++index)
+      if (cell->refine_flag_set())
         {
           max_smoothness
             = std::max(max_smoothness, smoothness_indicators(index));
@@ -474,10 +475,10 @@ LaplaceProblem<dim>::refine_grid()
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(unsigned int index = 0; cell != endc; ++cell, ++index)
-      if(cell->refine_flag_set()
-         && (smoothness_indicators(index) > cutoff_smoothness)
-         && !(cell->active_fe_index() == fe_collection.size() - 1))
+    for (unsigned int index = 0; cell != endc; ++cell, ++index)
+      if (cell->refine_flag_set()
+          && (smoothness_indicators(index) > cutoff_smoothness)
+          && !(cell->active_fe_index() == fe_collection.size() - 1))
         {
           cell->clear_refine_flag();
           cell->set_active_fe_index(
@@ -516,7 +517,7 @@ LaplaceProblem<dim>::output_results(const unsigned int cycle) const
       typename hp::DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
         endc = dof_handler.end();
-      for(unsigned int index = 0; cell != endc; ++cell, ++index)
+      for (unsigned int index = 0; cell != endc; ++cell, ++index)
         {
           fe_indices(index) = cell->active_fe_index();
           //    smoothness_indicators(index) *= std::sqrt(cell->diameter());
@@ -583,9 +584,9 @@ LaplaceProblem<2>::create_coarse_grid()
   const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
   std::vector<CellData<dim>> cells(n_cells, CellData<dim>());
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for (unsigned int i = 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     }
@@ -606,11 +607,11 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 4; ++cycle)
+  for (unsigned int cycle = 0; cycle < 4; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle == 0)
+      if (cycle == 0)
         create_coarse_grid();
       else
         refine_grid();
@@ -646,7 +647,7 @@ main()
       LaplaceProblem<3> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -660,7 +661,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

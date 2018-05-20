@@ -53,12 +53,12 @@ public:
     FEEvaluation<dim, fe_degree, fe_degree + 1, dim, Number> fe_eval(data);
     const unsigned int n_q_points = fe_eval.n_q_points;
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src);
         fe_eval.evaluate(true, false);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           fe_eval.submit_value(fe_eval.get_value(q), q);
         fe_eval.integrate(true, false);
         fe_eval.distribute_local_to_global(dst);
@@ -78,7 +78,7 @@ public:
     const unsigned int                     n_q_points = fe_eval.n_q_points;
     AlignedVector<VectorizedArray<Number>> inverse_coefficients(n_q_points);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         mass_inv.fill_inverse_JxW_values(inverse_coefficients);
@@ -139,7 +139,7 @@ do_test(const DoFHandler<dim>& dof)
   Vector<number> in(dof.n_dofs()), inverse(dof.n_dofs()),
     reference(dof.n_dofs());
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
       const double entry = random_value<double>();
       in(i)              = entry;
@@ -167,15 +167,15 @@ test()
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria, -1, 1);
   tria.refine_global(1);
-  if(dim < 3 || fe_degree < 2)
+  if (dim < 3 || fe_degree < 2)
     tria.refine_global(1);
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 1e-8)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 

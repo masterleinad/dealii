@@ -163,7 +163,7 @@ inline BoundingBox<spacedim, Number>::BoundingBox(
     boundary_points)
 {
   //We check the Bounding Box is not degenerate
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     Assert(
       boundary_points.first[i] <= boundary_points.second[i],
       ExcMessage(

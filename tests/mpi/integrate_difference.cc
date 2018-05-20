@@ -80,7 +80,7 @@ test()
   double global
     = VectorTools::compute_global_error(tr, results, VectorTools::L2_norm);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "difference = " << global << std::endl;
 
   // we have f(\vec x)=x, so the difference
@@ -102,7 +102,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -27,7 +27,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -53,7 +53,7 @@ test()
   Assert(v.has_ghost_elements(), ExcInternalError());
 
   // check local values
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog << myid * 2 << ":" << get_real_assert_zero_imag(v(myid * 2))
               << std::endl;
@@ -67,12 +67,12 @@ test()
          ExcInternalError());
 
   // check ghost values
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "ghost: " << get_real_assert_zero_imag(v(1)) << std::endl;
   Assert(get_real_assert_zero_imag(v(1)) == 2.0, ExcInternalError());
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -84,7 +84,7 @@ main(int argc, char** argv)
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

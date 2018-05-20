@@ -40,12 +40,12 @@ getaffinity(unsigned int& bits_set, unsigned int& mask)
   unsigned int len = sizeof(my_set);
   int          ret = sched_getaffinity(0, len, &my_set);
 
-  if(ret != 0)
+  if (ret != 0)
     {
       printf("sched_getaffinity() failed, return value: %d\n", ret);
       return false;
     }
-  for(int i = 0; i < CPU_SETSIZE; ++i)
+  for (int i = 0; i < CPU_SETSIZE; ++i)
     bits_set += CPU_ISSET(i, &my_set);
 
   mask = *(int*) (&my_set);
@@ -60,14 +60,14 @@ int
 get_num_thread_env()
 {
   const char* penv = getenv("DEAL_II_NUM_THREADS");
-  if(penv != nullptr)
+  if (penv != nullptr)
     {
       int max_threads_env = -1;
       try
         {
           max_threads_env = dealii::Utilities::string_to_int(std::string(penv));
         }
-      catch(...)
+      catch (...)
         {
           return -1;
         }
@@ -84,7 +84,7 @@ main()
   dealii::Triangulation<2> test;
 
   unsigned int bits_set, mask;
-  if(!getaffinity(bits_set, mask))
+  if (!getaffinity(bits_set, mask))
     return 1;
 
   unsigned int nprocs   = dealii::MultithreadInfo::n_cores();
@@ -98,7 +98,7 @@ main()
     tbbprocs,
     env);
 
-  if(bits_set != 0 && bits_set != nprocs)
+  if (bits_set != 0 && bits_set != nprocs)
     {
       printf(
         "Warning: sched_getaffinity() returns that we can only use %d out of %d CPUs.\n",
@@ -106,14 +106,14 @@ main()
         nprocs);
       return 2;
     }
-  if(env != -1 && nprocs != tbbprocs)
+  if (env != -1 && nprocs != tbbprocs)
     {
       printf(
         "Warning: number of threads is set to %d in environment using DEAL_II_NUM_THREADS.\n",
         env);
       return 0; // do not return an error!
     }
-  if(nprocs != tbbprocs)
+  if (nprocs != tbbprocs)
     {
       printf(
         "Warning: for some reason TBB only wants to use %d out of %d CPUs.\n",

@@ -74,14 +74,14 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::get_vertices(
   Vector<double> mapping_values(shiftmap_dof_handler->get_fe().dofs_per_cell);
   dof_cell->get_dof_values(*euler_transform_vectors, mapping_values);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
     {
       Point<spacedim> shift_vector;
 
       // pick out the value of the shift vector at the present
       // vertex. since vertex dofs are always numbered first, we can
       // access them easily
-      for(unsigned int j = 0; j < spacedim; ++j)
+      for (unsigned int j = 0; j < spacedim; ++j)
         shift_vector[j] = mapping_values(i * spacedim + j);
 
       // compute new support point by old (reference) value and added
@@ -100,7 +100,7 @@ MappingQ1Eulerian<dim, VectorType, spacedim>::compute_mapping_support_points(
     vertices = this->get_vertices(cell);
 
   std::vector<Point<spacedim>> a(GeometryInfo<dim>::vertices_per_cell);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
     a[i] = vertices[i];
 
   return a;

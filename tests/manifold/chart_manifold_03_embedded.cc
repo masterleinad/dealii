@@ -48,7 +48,7 @@ public:
   pull_back(const Point<spacedim>& space_point) const override
   {
     Point<spacedim + 1> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       p[d] = space_point[d];
     return p;
   }
@@ -57,7 +57,7 @@ public:
   push_forward(const Point<spacedim + 1>& chart_point) const override
   {
     Point<spacedim> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       p[d] = chart_point[d];
     return p;
   }
@@ -66,7 +66,7 @@ public:
   push_forward_gradient(const Point<spacedim + 1>& chart_point) const override
   {
     DerivativeForm<1, spacedim + 1, spacedim> x;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       x[d][d] = 1;
     return x;
   }
@@ -125,7 +125,7 @@ test(unsigned int ref = 1)
   ps[9][0][0] = 5 + 1e-10;
   ps[9][1][0] = -1e-10;
 
-  for(unsigned int i = 0; i < ps.size(); ++i)
+  for (unsigned int i = 0; i < ps.size(); ++i)
     {
       middle
         = manifold.get_new_point(make_array_view(ps[i]), make_array_view(ws));

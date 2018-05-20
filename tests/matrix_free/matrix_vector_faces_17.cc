@@ -36,15 +36,15 @@ test()
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   create_mesh(tria);
 
-  if(dim == 2)
+  if (dim == 2)
     tria.refine_global(1);
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
     typename Triangulation<dim>::active_cell_iterator endc    = tria.end();
     unsigned int                                      counter = 0;
-    for(; cell != endc; ++cell, ++counter)
-      if(cell->is_locally_owned() && counter % 3 == 0)
+    for (; cell != endc; ++cell, ++counter)
+      if (cell->is_locally_owned() && counter % 3 == 0)
         cell->set_refine_flag();
     tria.execute_coarsening_and_refinement();
   }
@@ -101,7 +101,7 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < in_orig.local_size(); ++i)
+  for (unsigned int i = 0; i < in_orig.local_size(); ++i)
     {
       const double entry       = Testing::rand() / (double) RAND_MAX;
       in_orig.local_element(i) = entry;
@@ -124,7 +124,7 @@ test()
     mf2(mf_data);
   mf2.vmult(out, in);
 
-  for(unsigned int i = 0; i < out.local_size(); ++i)
+  for (unsigned int i = 0; i < out.local_size(); ++i)
     out(renumbering[i]) -= out_orig.local_element(i);
 
   double diff_norm = out.linfty_norm() / out_orig.linfty_norm();
@@ -133,7 +133,7 @@ test()
   // test again, now doing matrix-vector product twice
   mf2.vmult(out, in);
   mf2.vmult(out, in);
-  for(unsigned int i = 0; i < out.local_size(); ++i)
+  for (unsigned int i = 0; i < out.local_size(); ++i)
     out(renumbering[i]) -= out_orig.local_element(i);
   diff_norm = out.linfty_norm() / out_orig.linfty_norm();
   deallog << diff_norm << std::endl;

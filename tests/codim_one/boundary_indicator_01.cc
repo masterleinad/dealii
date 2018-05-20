@@ -63,20 +63,20 @@ main()
     // exclude one of the 6 faces
     // from the surface mesh
     // extraction
-    for(Triangulation<dim>::active_cell_iterator cell
-        = volume_mesh.begin_active();
-        cell != volume_mesh.end();
-        ++cell)
+    for (Triangulation<dim>::active_cell_iterator cell
+         = volume_mesh.begin_active();
+         cell != volume_mesh.end();
+         ++cell)
       {
         bool done = false;
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-          if(cell->at_boundary(f))
+        for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          if (cell->at_boundary(f))
             {
               cell->face(f)->set_boundary_id(1);
               done = true;
               break;
             }
-        if(done)
+        if (done)
           break;
       }
 
@@ -100,12 +100,12 @@ main()
     // of the mesh to 1 to force
     // straight line refinement, then
     // refine
-    for(Triangulation<dim - 1, dim>::active_cell_iterator cell
-        = boundary_mesh.begin_active();
-        cell != boundary_mesh.end();
-        ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim - 1>::faces_per_cell; ++f)
-        if(cell->at_boundary(f))
+    for (Triangulation<dim - 1, dim>::active_cell_iterator cell
+         = boundary_mesh.begin_active();
+         cell != boundary_mesh.end();
+         ++cell)
+      for (unsigned int f = 0; f < GeometryInfo<dim - 1>::faces_per_cell; ++f)
+        if (cell->at_boundary(f))
           cell->face(f)->set_boundary_id(1);
     GridTools::copy_boundary_to_manifold_id(boundary_mesh);
 

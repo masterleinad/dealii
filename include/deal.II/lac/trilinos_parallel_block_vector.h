@@ -334,7 +334,7 @@ namespace TrilinosWrappers
       this->components.resize(v.n_blocks());
       this->block_indices = v.block_indices;
 
-      for(size_type i = 0; i < this->n_blocks(); ++i)
+      for (size_type i = 0; i < this->n_blocks(); ++i)
         this->components[i] = v.components[i];
     }
 
@@ -349,15 +349,15 @@ namespace TrilinosWrappers
     BlockVector&
     BlockVector::operator=(const ::dealii::BlockVector<Number>& v)
     {
-      if(n_blocks() != v.n_blocks())
+      if (n_blocks() != v.n_blocks())
         {
           std::vector<size_type> block_sizes(v.n_blocks(), 0);
           block_indices.reinit(block_sizes);
-          if(components.size() != n_blocks())
+          if (components.size() != n_blocks())
             components.resize(n_blocks());
         }
 
-      for(size_type i = 0; i < this->n_blocks(); ++i)
+      for (size_type i = 0; i < this->n_blocks(); ++i)
         this->components[i] = v.block(i);
 
       collect_sizes();
@@ -370,7 +370,7 @@ namespace TrilinosWrappers
     {
       bool ghosted = block(0).has_ghost_elements();
 #  ifdef DEBUG
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         Assert(block(i).has_ghost_elements() == ghosted, ExcInternalError());
 #  endif
       return ghosted;

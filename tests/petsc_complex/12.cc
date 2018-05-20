@@ -28,7 +28,7 @@ test(PETScWrappers::MPI::Vector& v)
   // set only certain elements of the vector. have a bit pattern of
   // where we actually wrote elements to
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int k = 0; k < v.size(); k += 1 + k)
+  for (unsigned int k = 0; k < v.size(); k += 1 + k)
     {
       v(k)       = std::complex<double>(0., k);
       pattern[k] = true;
@@ -37,7 +37,7 @@ test(PETScWrappers::MPI::Vector& v)
   v.compress(VectorOperation::insert);
 
   // check that they are ok, and this time all of them
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     {
       const PetscScalar el = v(k);
       AssertThrow(((pattern[k] == true) && (PetscRealPart(el) == 0.)
@@ -64,7 +64,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -78,7 +78,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

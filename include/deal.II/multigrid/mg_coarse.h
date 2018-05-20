@@ -529,7 +529,7 @@ template <typename number, class VectorType>
 MGCoarseGridHouseholder<number, VectorType>::MGCoarseGridHouseholder(
   const FullMatrix<number>* A)
 {
-  if(A != nullptr)
+  if (A != nullptr)
     householder.initialize(*A);
 }
 
@@ -578,7 +578,7 @@ MGCoarseGridSVD<number, VectorType>::log() const
 {
   const unsigned int n = std::min(matrix.n_rows(), matrix.n_cols());
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     deallog << ' ' << matrix.singular_value(i);
   deallog << std::endl;
 }

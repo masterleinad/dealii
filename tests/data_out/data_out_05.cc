@@ -39,16 +39,16 @@ check_this(const DoFHandler<dim>& dof_handler,
       DataComponentInterpretation::component_is_scalar);
   // if possible, declare the last
   // dim components as vectors
-  if(dof_handler.get_fe().n_components() >= dim)
-    for(unsigned int i = dof_handler.get_fe().n_components() - dim;
-        i < dof_handler.get_fe().n_components();
-        ++i)
+  if (dof_handler.get_fe().n_components() >= dim)
+    for (unsigned int i = dof_handler.get_fe().n_components() - dim;
+         i < dof_handler.get_fe().n_components();
+         ++i)
       data_component_interpretation[i]
         = DataComponentInterpretation::component_is_part_of_vector;
 
   deallog << "Checking " << dof_handler.get_fe().get_name() << std::endl
           << "Component mask: ";
-  for(unsigned int i = 0; i < dof_handler.get_fe().n_components(); ++i)
+  for (unsigned int i = 0; i < dof_handler.get_fe().n_components(); ++i)
     deallog << (data_component_interpretation[i]
                     == DataComponentInterpretation::component_is_scalar ?
                   "scalar " :

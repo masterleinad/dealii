@@ -81,10 +81,10 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
   // static const RotatedSphericalManifold rotated_sphere;
   // triangulation.set_manifold (1, rotated_sphere);
 
-  for(Triangulation<2, 3>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (Triangulation<2, 3>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     {
       cell->set_all_manifold_ids(0);
       // deallog << "Setting SphericalManifold\n";
@@ -109,7 +109,7 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
   //           << std::endl;
 
   std::shared_ptr<Mapping<2, 3>> mapping;
-  switch(mapping_name)
+  switch (mapping_name)
     {
       case MappingEnum::MappingManifold:
         // deallog << " MappingManifold" << std::endl;
@@ -125,15 +125,15 @@ test(MappingEnum::type mapping_name, unsigned int refinements = 1)
   const unsigned int n_q_points = cell_quadrature.size();
 
   double surface_area = 0;
-  for(DoFHandler<2, 3>::active_cell_iterator cell = dof_handler.begin_active(),
-                                             endc = dof_handler.end();
-      cell != endc;
-      ++cell)
+  for (DoFHandler<2, 3>::active_cell_iterator cell = dof_handler.begin_active(),
+                                              endc = dof_handler.end();
+       cell != endc;
+       ++cell)
     {
       double patch_surface = 0;
       fe_values.reinit(cell);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
           patch_surface += fe_values.JxW(q_point);
           // deallog << "--> " << qp[q_point] << std::endl;
@@ -162,10 +162,10 @@ main()
   std::string bar(35, '-');
 
   deallog << bar << std::endl;
-  for(unsigned int i = 1; i < 8; ++i)
+  for (unsigned int i = 1; i < 8; ++i)
     test(MappingEnum::MappingManifold, i);
   deallog << bar << std::endl;
-  for(unsigned int i = 1; i < 8; ++i)
+  for (unsigned int i = 1; i < 8; ++i)
     test(MappingEnum::MappingQ, i);
   deallog << bar << std::endl;
 

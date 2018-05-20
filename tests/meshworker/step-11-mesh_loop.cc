@@ -146,8 +146,8 @@ namespace Step11
     constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
     constraints.add_line(first_boundary_dof);
-    for(unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
-      if(boundary_dofs[i] == true)
+    for (unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
+      if (boundary_dofs[i] == true)
         constraints.add_entry(first_boundary_dof, i, -1);
     constraints.close();
 
@@ -230,10 +230,10 @@ namespace Step11
 
       // ... and assemble the local contributions to the system matrix and
       // right hand side as also discussed above:
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               copy_data.cell_matrix(i, j)
                 += (scratch_data.fe_values.shape_grad(i, q_point)
                     * scratch_data.fe_values.shape_grad(j, q_point)
@@ -262,8 +262,8 @@ namespace Step11
         scratch_data.fe_face_values.get_quadrature_points(),
         face_boundary_values);
 
-      for(unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           copy_data.cell_rhs(i)
             -= (face_boundary_values[q_point]
                 * scratch_data.fe_face_values.shape_value(i, q_point)
@@ -360,9 +360,9 @@ namespace Step11
     triangulation.set_all_manifold_ids_on_boundary(0);
     triangulation.set_manifold(0, boundary);
 
-    for(unsigned int cycle = 0; cycle < 5; ++cycle)
+    for (unsigned int cycle = 0; cycle < 5; ++cycle)
       {
-        if(cycle > 0)
+        if (cycle > 0)
           triangulation.refine_global(1);
 
         setup_system();
@@ -383,7 +383,7 @@ main()
 {
   initlog();
 
-  for(unsigned int mapping_degree = 1; mapping_degree <= 3; ++mapping_degree)
+  for (unsigned int mapping_degree = 1; mapping_degree <= 3; ++mapping_degree)
     Step11::LaplaceProblem<2>(mapping_degree).run();
 
   return 0;

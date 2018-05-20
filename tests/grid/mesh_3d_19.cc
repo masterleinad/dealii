@@ -44,7 +44,7 @@ test_with_wrong_face_orientation()
   deallog << "cell->neighbor(3)=" << cell->neighbor(3) << std::endl;
   deallog << "cell->face(3)=" << cell->face(3) << std::endl;
 
-  for(unsigned int i = 0; i < 6; ++i)
+  for (unsigned int i = 0; i < 6; ++i)
     deallog << "cell->neighbor(3)->face(" << i
             << ")=" << cell->neighbor(3)->face(i) << std::endl;
 }

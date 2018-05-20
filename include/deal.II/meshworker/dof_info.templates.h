@@ -31,7 +31,7 @@ namespace MeshWorker
       level_cell(false)
   {
     indices_by_block.resize(info.local().size());
-    for(unsigned int i = 0; i < indices_by_block.size(); ++i)
+    for (unsigned int i = 0; i < indices_by_block.size(); ++i)
       indices_by_block[i].resize(info.local().block_size(i));
   }
 
@@ -39,7 +39,7 @@ namespace MeshWorker
   void
   DoFInfo<dim, spacedim, number>::set_block_indices()
   {
-    for(unsigned int i = 0; i < indices.size(); ++i)
+    for (unsigned int i = 0; i < indices.size(); ++i)
       {
         const std::pair<unsigned int, unsigned int> bi
           = block_info->local().global_to_local(this->block_info->renumber(i));
@@ -47,7 +47,7 @@ namespace MeshWorker
       }
     // Remove this after
     // changing block codes
-    for(unsigned int i = 0; i < indices.size(); ++i)
+    for (unsigned int i = 0; i < indices.size(); ++i)
       indices[this->block_info->renumber(i)] = indices_org[i];
   }
 } // namespace MeshWorker

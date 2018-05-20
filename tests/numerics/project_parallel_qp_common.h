@@ -58,8 +58,8 @@ public:
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         val += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return val;
   }
@@ -69,9 +69,9 @@ public:
   {
     VectorizedArray<double> res = make_vectorized_array(0.);
     Point<dim>              p;
-    for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+    for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
       {
-        for(unsigned int d = 0; d < dim; d++)
+        for (unsigned int d = 0; d < dim; d++)
           p[d] = p_vec[d][v];
         res[v] = value(p);
       }
@@ -108,7 +108,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
-  for(unsigned int q = 0; q <= p; ++q)
+  for (unsigned int q = 0; q <= p; ++q)
     {
       // setup quadrature data:
       F<dim>     function(q, fe.n_components());
@@ -129,14 +129,14 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
           typename DoFHandler<dim>::active_cell_iterator cell
             = dof_handler.begin_active(),
             endc = dof_handler.end();
-          for(; cell != endc; ++cell)
-            if(cell->is_locally_owned())
+          for (; cell != endc; ++cell)
+            if (cell->is_locally_owned())
               {
                 fe_values.reinit(cell);
                 qp_manager.initialize(cell, quadrature_formula.size());
                 std::vector<std::shared_ptr<QData>> qpd
                   = qp_manager.get_data(cell);
-                for(unsigned int q = 0; q < n_q_points; ++q)
+                for (unsigned int q = 0; q < n_q_points; ++q)
                   qpd[q]->density
                     = function.value(fe_values.quadrature_point(q));
               }
@@ -178,13 +178,13 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
         typename DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active(),
           endc = dof_handler.end();
-        for(; cell != endc; ++cell)
-          if(cell->is_locally_owned())
+        for (; cell != endc; ++cell)
+          if (cell->is_locally_owned())
             {
               fe_values.reinit(cell);
               fe_values.get_function_values(field_relevant, values);
 
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                 L2_norm
                   += Utilities::fixed_power<2>(
                        values[q_point]
@@ -199,8 +199,8 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
       deallog << fe.get_name() << ", P_" << q
               << ", rel. error=" << L2_norm / field_l2_norm << std::endl;
 
-      if(q <= p)
-        if(L2_norm > 1e-10 * field_l2_norm)
+      if (q <= p)
+        if (L2_norm > 1e-10 * field_l2_norm)
           deallog << "Projection failed with relative error "
                   << L2_norm / field_l2_norm << std::endl;
     }
@@ -229,7 +229,7 @@ test_with_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(2);
-  if(triangulation.begin_active()->is_locally_owned())
+  if (triangulation.begin_active()->is_locally_owned())
     triangulation.begin_active()->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
   triangulation.refine_global(1);

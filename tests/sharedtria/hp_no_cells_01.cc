@@ -50,7 +50,7 @@ test()
     parallel::shared::Triangulation<dim>::partition_custom_signal);
   triangulation.signals.post_refinement.connect([&triangulation]() {
     // partition the triangulation by hand
-    for(auto cell : triangulation.active_cell_iterators())
+    for (auto cell : triangulation.active_cell_iterators())
       cell->set_subdomain_id(cell->active_cell_index()
                              % Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD));
   });
@@ -72,7 +72,7 @@ test()
   std::vector<types::global_dof_index> v
     = dof_handler.n_locally_owned_dofs_per_processor();
   unsigned int sum = 0;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       deallog << v[i] << " ";
       sum += v[i];
@@ -101,9 +101,9 @@ test()
     ExcInternalError());
 
   IndexSet all(N);
-  for(unsigned int i = 0;
-      i < dof_handler.locally_owned_dofs_per_processor().size();
-      ++i)
+  for (unsigned int i = 0;
+       i < dof_handler.locally_owned_dofs_per_processor().size();
+       ++i)
     {
       IndexSet intersect
         = all & dof_handler.locally_owned_dofs_per_processor()[i];

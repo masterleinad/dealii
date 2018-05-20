@@ -308,7 +308,7 @@ namespace PETScWrappers
       this->components.resize(v.n_blocks());
       this->block_indices = v.block_indices;
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         this->components[i] = v.components[i];
     }
 
@@ -342,10 +342,10 @@ namespace PETScWrappers
       Assert(n_blocks() == 0 || n_blocks() == v.n_blocks(),
              ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
-      if(this->n_blocks() != v.n_blocks())
+      if (this->n_blocks() != v.n_blocks())
         reinit(v.n_blocks());
 
-      for(size_type i = 0; i < this->n_blocks(); ++i)
+      for (size_type i = 0; i < this->n_blocks(); ++i)
         this->components[i] = v.block(i);
 
       collect_sizes();
@@ -373,10 +373,10 @@ namespace PETScWrappers
                         const bool                    omit_zeroing_entries)
     {
       this->block_indices.reinit(block_sizes);
-      if(this->components.size() != this->n_blocks())
+      if (this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         this->components[i].reinit(
           communicator, block_sizes[i], local_sizes[i], omit_zeroing_entries);
     }
@@ -385,10 +385,10 @@ namespace PETScWrappers
     BlockVector::reinit(const BlockVector& v, const bool omit_zeroing_entries)
     {
       this->block_indices = v.get_block_indices();
-      if(this->components.size() != this->n_blocks())
+      if (this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         block(i).reinit(v.block(i), omit_zeroing_entries);
     }
 
@@ -397,14 +397,14 @@ namespace PETScWrappers
                         const MPI_Comm&              communicator)
     {
       std::vector<size_type> sizes(parallel_partitioning.size());
-      for(unsigned int i = 0; i < parallel_partitioning.size(); ++i)
+      for (unsigned int i = 0; i < parallel_partitioning.size(); ++i)
         sizes[i] = parallel_partitioning[i].size();
 
       this->block_indices.reinit(sizes);
-      if(this->components.size() != this->n_blocks())
+      if (this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         block(i).reinit(parallel_partitioning[i], communicator);
     }
 
@@ -414,14 +414,14 @@ namespace PETScWrappers
                         const MPI_Comm&              communicator)
     {
       std::vector<types::global_dof_index> sizes(parallel_partitioning.size());
-      for(unsigned int i = 0; i < parallel_partitioning.size(); ++i)
+      for (unsigned int i = 0; i < parallel_partitioning.size(); ++i)
         sizes[i] = parallel_partitioning[i].size();
 
       this->block_indices.reinit(sizes);
-      if(this->components.size() != this->n_blocks())
+      if (this->components.size() != this->n_blocks())
         this->components.resize(this->n_blocks());
 
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         block(i).reinit(
           parallel_partitioning[i], ghost_entries[i], communicator);
     }
@@ -437,7 +437,7 @@ namespace PETScWrappers
     {
       bool ghosted = block(0).has_ghost_elements();
 #  ifdef DEBUG
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         Assert(block(i).has_ghost_elements() == ghosted, ExcInternalError());
 #  endif
       return ghosted;
@@ -457,9 +457,9 @@ namespace PETScWrappers
                        const bool         scientific,
                        const bool         across) const
     {
-      for(unsigned int i = 0; i < this->n_blocks(); ++i)
+      for (unsigned int i = 0; i < this->n_blocks(); ++i)
         {
-          if(across)
+          if (across)
             out << 'C' << i << ':';
           else
             out << "Component " << i << std::endl;

@@ -28,7 +28,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   const unsigned int set = 200;
@@ -36,10 +36,10 @@ test()
   const unsigned int local_size  = set - myid;
   unsigned int       global_size = 0;
   unsigned int       my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  for (unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
-      if(i < myid)
+      if (i < myid)
         my_start += set - i;
     }
   // each processor owns some indices and all
@@ -68,15 +68,15 @@ test()
 
   // check number of ghosts everywhere (counted
   // the above)
-  if(myid == 0)
+  if (myid == 0)
     {
       AssertDimension(v.n_ghost_entries(), 5);
     }
-  else if(myid == 1)
+  else if (myid == 1)
     {
       AssertDimension(v.n_ghost_entries(), 8);
     }
-  else if(myid == 2)
+  else if (myid == 2)
     {
       AssertDimension(v.n_ghost_entries(), 7);
     }
@@ -87,7 +87,7 @@ test()
 
   // count that 13 is ghost only on non-owning
   // processors
-  if(myid == 0)
+  if (myid == 0)
     {
       Assert(v.is_ghost_entry(13) == false, ExcInternalError());
     }
@@ -98,7 +98,7 @@ test()
 
   // count that 27 is ghost nowhere
   Assert(v.is_ghost_entry(27) == false, ExcInternalError());
-  if(myid == 0)
+  if (myid == 0)
     {
       Assert(v.in_local_range(27) == true, ExcInternalError());
     }
@@ -108,7 +108,7 @@ test()
     }
 
   // element with number set is ghost
-  if(myid == 1)
+  if (myid == 1)
     {
       Assert(v.is_ghost_entry(set) == false, ExcInternalError());
     }
@@ -117,7 +117,7 @@ test()
       Assert(v.is_ghost_entry(set) == true, ExcInternalError());
     }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -130,7 +130,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

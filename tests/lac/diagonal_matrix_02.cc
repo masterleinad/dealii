@@ -45,9 +45,9 @@ test(const bool hanging_nodes = true)
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
 
-  if(hanging_nodes)
+  if (hanging_nodes)
     {
-      if(tria.begin_active()->is_locally_owned())
+      if (tria.begin_active()->is_locally_owned())
         tria.begin_active()->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -106,16 +106,16 @@ test(const bool hanging_nodes = true)
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                         * fe_values.shape_grad(j, q_point))
                                        * fe_values.JxW(q_point);
@@ -132,15 +132,15 @@ test(const bool hanging_nodes = true)
   diagonal_matrix.compress(VectorOperation::add);
 
   // compare elements:
-  for(unsigned int i = 0; i < owned_set.n_elements(); ++i)
+  for (unsigned int i = 0; i < owned_set.n_elements(); ++i)
     {
       const unsigned int glob_index = owned_set.nth_index_in_set(i);
-      if(constraints.is_constrained(glob_index))
+      if (constraints.is_constrained(glob_index))
         continue;
 
       const double d = diagonal_matrix(glob_index, glob_index);
       const double t = sparse_matrix.diag_element(glob_index);
-      if(std::abs(d - t) / t > 1e-10)
+      if (std::abs(d - t) / t > 1e-10)
         {
           deallog << glob_index << " " << d << " != " << t << std::endl;
         }

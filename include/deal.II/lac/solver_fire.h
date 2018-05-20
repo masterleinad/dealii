@@ -257,7 +257,7 @@ SolverFIRE<VectorType>::solve(
 
   SolverControl::State conv = SolverControl::iterate;
   conv = this->iteration_status(iter, gradients * gradients, x);
-  if(conv != SolverControl::iterate)
+  if (conv != SolverControl::iterate)
     return;
 
   // Refer to additional data members with some readable names.
@@ -269,7 +269,7 @@ SolverFIRE<VectorType>::solve(
 
   unsigned int previous_iter_with_positive_v_dot_g = 0;
 
-  while(conv == SolverControl::iterate)
+  while (conv == SolverControl::iterate)
     {
       ++iter;
       // Euler integration step.
@@ -282,13 +282,13 @@ SolverFIRE<VectorType>::solve(
 
       const real_type gradient_norm_squared = gradients * gradients;
       conv = this->iteration_status(iter, gradient_norm_squared, x);
-      if(conv != SolverControl::iterate)
+      if (conv != SolverControl::iterate)
         break;
 
       // v_dot_g = V * G
       const real_type v_dot_g = velocities * gradients;
 
-      if(v_dot_g < 0.)
+      if (v_dot_g < 0.)
         {
           const real_type velocities_norm_squared = velocities * velocities;
 
@@ -303,7 +303,7 @@ SolverFIRE<VectorType>::solve(
           // V = (1-alpha) V + beta G.
           velocities.sadd(1. - alpha, beta, gradients);
 
-          if(iter - previous_iter_with_positive_v_dot_g > DELAYSTEP)
+          if (iter - previous_iter_with_positive_v_dot_g > DELAYSTEP)
             {
               // Increase timestep and decrease alpha.
               timestep = std::min(timestep * TIMESTEP_GROW, maximum_timestep);
@@ -322,11 +322,11 @@ SolverFIRE<VectorType>::solve(
       real_type vmax = velocities.linfty_norm();
 
       // Change timestep if any dof would move more than maximum_linfty_norm.
-      if(vmax > 0.)
+      if (vmax > 0.)
         {
           const double minimal_timestep
             = additional_data.maximum_linfty_norm / vmax;
-          if(minimal_timestep < timestep)
+          if (minimal_timestep < timestep)
             timestep = minimal_timestep;
         }
 
@@ -335,7 +335,7 @@ SolverFIRE<VectorType>::solve(
     } // While we need to iterate.
 
   // In the case of failure: throw exception.
-  if(conv != SolverControl::success)
+  if (conv != SolverControl::success)
     AssertThrow(false,
                 SolverControl::NoConvergence(iter, gradients * gradients));
 }

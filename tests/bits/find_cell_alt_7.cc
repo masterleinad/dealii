@@ -32,7 +32,7 @@ void check(Triangulation<2>& tria)
   MappingQ<2> map(5);
 
   // Test for a number of points, every ten degrees
-  for(unsigned int i = 0; i < 200; i++)
+  for (unsigned int i = 0; i < 200; i++)
     {
       Point<2> p(std::sin((double) i / 100. * numbers::PI),
                  std::cos((double) i / 100. * numbers::PI));
@@ -42,7 +42,7 @@ void check(Triangulation<2>& tria)
         = GridTools::find_active_cell_around_point(map, tria, p);
 
       deallog << cell.first << std::endl;
-      for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
         deallog << "< " << cell.first->vertex(v) << " > ";
       deallog << "[ " << cell.second << " ] ";
 

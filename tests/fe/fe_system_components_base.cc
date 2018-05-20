@@ -42,10 +42,10 @@ test(const bool renumber = false)
   GridGenerator::hyper_cube(triangulation);
   dof_handler.distribute_dofs(fe_basis);
 
-  if(renumber)
+  if (renumber)
     {
       std::vector<unsigned int> component_to_block_indices(dim + 1);
-      for(int i = 0; i < dim; ++i)
+      for (int i = 0; i < dim; ++i)
         component_to_block_indices[i] = 0;
       component_to_block_indices[dim] = 1;
       DoFRenumbering::component_wise(dof_handler, component_to_block_indices);
@@ -59,7 +59,7 @@ test(const bool renumber = false)
     << " * | :----: | :--------: | :----------: | :------------------------: | :----------: |"
     << std::endl;
 
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     {
       const unsigned int component
         = fe_basis.system_to_component_index(i).first;
@@ -77,7 +77,7 @@ test(const bool renumber = false)
     }
 
   // print grid and DoFs for visual inspection
-  if(true)
+  if (true)
     {
       std::map<types::global_dof_index, Point<dim>> support_points;
       MappingQ1<dim>                                mapping;

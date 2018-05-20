@@ -160,20 +160,20 @@ namespace Step8
     point_1(0) = 0.5;
     point_2(0) = -0.5;
 
-    for(unsigned int point_n = 0; point_n < points.size(); ++point_n)
+    for (unsigned int point_n = 0; point_n < points.size(); ++point_n)
       {
         // If <code>points[point_n]</code> is in a circle (sphere) of radius
         // 0.2 around one of these points, then set the force in x-direction
         // to one, otherwise to zero:
-        if(((points[point_n] - point_1).norm_square() < 0.2 * 0.2)
-           || ((points[point_n] - point_2).norm_square() < 0.2 * 0.2))
+        if (((points[point_n] - point_1).norm_square() < 0.2 * 0.2)
+            || ((points[point_n] - point_2).norm_square() < 0.2 * 0.2))
           values[point_n][0] = 1.0;
         else
           values[point_n][0] = 0.0;
 
         // Likewise, if <code>points[point_n]</code> is in the vicinity of the
         // origin, then set the y-force to one, otherwise to zero:
-        if(points[point_n].norm_square() < 0.2 * 0.2)
+        if (points[point_n].norm_square() < 0.2 * 0.2)
           values[point_n][1] = 1.0;
         else
           values[point_n][1] = 0.0;
@@ -307,7 +307,7 @@ namespace Step8
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         cell_rhs    = 0;
@@ -342,17 +342,17 @@ namespace Step8
         //
         // With this knowledge, we can assemble the local matrix
         // contributions:
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
 
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
                 const unsigned int component_j
                   = fe.system_to_component_index(j).first;
 
-                for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+                for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                   {
                     cell_matrix(i, j) +=
                       // The first term is (lambda d_i u_i, d_j v_j) + (mu d_i
@@ -395,12 +395,12 @@ namespace Step8
 
         // Assembling the right hand side is also just as discussed in the
         // introduction:
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             const unsigned int component_i
               = fe.system_to_component_index(i).first;
 
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
               cell_rhs(i) += fe_values.shape_value(i, q_point)
                              * rhs_values[q_point][component_i]
                              * fe_values.JxW(q_point);
@@ -413,9 +413,9 @@ namespace Step8
         // the matrix and right hand side, once we are done with assembling
         // the entire linear system:
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
@@ -528,7 +528,7 @@ namespace Step8
     data_out.attach_dof_handler(dof_handler);
 
     std::vector<std::string> solution_names;
-    switch(dim)
+    switch (dim)
       {
         case 1:
           solution_names.emplace_back("displacement");
@@ -604,11 +604,11 @@ namespace Step8
   void
   ElasticProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 8; ++cycle)
+    for (unsigned int cycle = 0; cycle < 8; ++cycle)
       {
         std::cout << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation, -1, 1);
             triangulation.refine_global(2);
@@ -644,7 +644,7 @@ main()
       Step8::ElasticProblem<2> elastic_problem_2d;
       elastic_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -658,7 +658,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

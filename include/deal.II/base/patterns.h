@@ -1409,7 +1409,7 @@ namespace Patterns
     static_assert(sizeof...(ps) > 0,
                   "The number of PatternTypes must be greater than zero!");
     auto pattern_pointers = {(static_cast<const PatternBase*>(&ps))...};
-    for(auto p : pattern_pointers)
+    for (auto p : pattern_pointers)
       patterns.push_back(p->clone());
   }
 
@@ -1465,12 +1465,12 @@ namespace Patterns
       static std::unique_ptr<Patterns::PatternBase>
       to_pattern()
       {
-        if(std::is_same<T, bool>::value)
+        if (std::is_same<T, bool>::value)
           return std_cxx14::make_unique<Patterns::Bool>();
-        else if(std::is_integral<T>::value)
+        else if (std::is_integral<T>::value)
           return std_cxx14::make_unique<Patterns::Integer>(
             std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
-        else if(std::is_floating_point<T>::value)
+        else if (std::is_floating_point<T>::value)
           return std_cxx14::make_unique<Patterns::Double>(
             -std::numeric_limits<T>::max(), std::numeric_limits<T>::max());
 
@@ -1485,11 +1485,11 @@ namespace Patterns
                 = Convert<T>::to_pattern())
       {
         std::stringstream str;
-        if(std::is_same<T, unsigned char>::value
-           || std::is_same<T, signed char>::value
-           || std::is_same<T, char>::value)
+        if (std::is_same<T, unsigned char>::value
+            || std::is_same<T, signed char>::value
+            || std::is_same<T, char>::value)
           str << (int) value;
-        else if(std::is_same<T, bool>::value)
+        else if (std::is_same<T, bool>::value)
           str << (value ? "true" : "false");
         else
           str << value;
@@ -1504,14 +1504,14 @@ namespace Patterns
       {
         AssertThrow(p->match(s), ExcNoMatch(s, *p));
         T value;
-        if(std::is_same<T, bool>::value)
+        if (std::is_same<T, bool>::value)
           value = (s == "true");
         else
           {
             std::istringstream is(s);
-            if(std::is_same<T, unsigned char>::value
-               || std::is_same<T, signed char>::value
-               || std::is_same<T, char>::value)
+            if (std::is_same<T, unsigned char>::value
+                || std::is_same<T, signed char>::value
+                || std::is_same<T, char>::value)
               {
                 int i;
                 is >> i;
@@ -1737,13 +1737,13 @@ namespace Patterns
         std::vector<std::string> vec(t.size());
 
         unsigned int i = 0;
-        for(const auto& ti : t)
+        for (const auto& ti : t)
           vec[i++] = Convert<typename T::value_type>::to_string(ti, base_p);
 
         std::string s;
-        if(vec.size() > 0)
+        if (vec.size() > 0)
           s = vec[0];
-        for(unsigned int i = 1; i < vec.size(); ++i)
+        for (unsigned int i = 1; i < vec.size(); ++i)
           s += p->get_separator() + " " + vec[i];
 
         AssertThrow(pattern->match(s), ExcNoMatch(s, *p));
@@ -1766,7 +1766,7 @@ namespace Patterns
         T    t;
 
         auto v = Utilities::split_string_list(s, p->get_separator());
-        for(const auto& str : v)
+        for (const auto& str : v)
           t.insert(t.end(),
                    Convert<typename T::value_type>::to_value(str, base_p));
 
@@ -1810,16 +1810,16 @@ namespace Patterns
         std::vector<std::string> vec(t.size());
 
         unsigned int i = 0;
-        for(const auto& ti : t)
+        for (const auto& ti : t)
           vec[i++]
             = Convert<typename T::key_type>::to_string(ti.first, key_p)
               + p->get_key_value_separator()
               + Convert<typename T::mapped_type>::to_string(ti.second, val_p);
 
         std::string s;
-        if(vec.size() > 0)
+        if (vec.size() > 0)
           s = vec[0];
-        for(unsigned int i = 1; i < vec.size(); ++i)
+        for (unsigned int i = 1; i < vec.size(); ++i)
           s += p->get_separator() + " " + vec[i];
 
         AssertThrow(p->match(s), ExcNoMatch(s, *p));
@@ -1843,7 +1843,7 @@ namespace Patterns
         T    t;
 
         auto v = Utilities::split_string_list(s, p->get_separator());
-        for(const auto& str : v)
+        for (const auto& str : v)
           {
             auto key_val
               = Utilities::split_string_list(str, p->get_key_value_separator());
@@ -1887,13 +1887,13 @@ namespace Patterns
         auto                     base_p = p->get_base_pattern().clone();
         std::vector<std::string> vec(dim);
 
-        for(unsigned int i = 0; i < dim; ++i)
+        for (unsigned int i = 0; i < dim; ++i)
           vec[i] = Convert<typename T::value_type>::to_string(t[i], base_p);
 
         std::string s;
-        if(vec.size() > 0)
+        if (vec.size() > 0)
           s = vec[0];
-        for(unsigned int i = 1; i < vec.size(); ++i)
+        for (unsigned int i = 1; i < vec.size(); ++i)
           s += p->get_separator() + " " + vec[i];
 
         AssertThrow(p->match(s), ExcNoMatch(s, *p));
@@ -1917,7 +1917,7 @@ namespace Patterns
 
         auto         v = Utilities::split_string_list(s, p->get_separator());
         unsigned int i = 0;
-        for(const auto& str : v)
+        for (const auto& str : v)
           t[i++] = Convert<typename T::value_type>::to_value(str, base_p);
 
         return t;
@@ -2122,7 +2122,7 @@ namespace Patterns
 
         const auto  string_array = Convert<T>::to_string_internal_2(t, *p);
         std::string str;
-        for(unsigned int i = 0; i < string_array.size(); ++i)
+        for (unsigned int i = 0; i < string_array.size(); ++i)
           str += (i ? " " + p->get_separator() + " " : "") + string_array[i];
         AssertThrow(p->match(str), ExcNoMatch(str, *p));
         return str;

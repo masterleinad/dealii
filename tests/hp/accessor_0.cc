@@ -64,7 +64,7 @@ main()
   typename hp::DoFHandler<1>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       deallog << "===================================" << std::endl;
       deallog << "cell center: " << cell->center() << std::endl;
@@ -72,10 +72,10 @@ main()
       dof_indices.resize(fe_collection[cell->active_fe_index()].dofs_per_cell);
       cell->get_dof_indices(dof_indices);
       deallog << "cell dofs: ";
-      for(unsigned int dof_n = 0; dof_n < dof_indices.size(); ++dof_n)
+      for (unsigned int dof_n = 0; dof_n < dof_indices.size(); ++dof_n)
         {
           deallog << dof_indices[dof_n];
-          if(dof_n != dof_indices.size() - 1)
+          if (dof_n != dof_indices.size() - 1)
             {
               deallog << ", ";
             }
@@ -86,7 +86,7 @@ main()
       // should be associated with two FE indices.
       const typename hp::DoFHandler<1>::active_cell_iterator neighbor
         = cell->neighbor(1);
-      if(neighbor != dof_handler.end())
+      if (neighbor != dof_handler.end())
         {
           const unsigned int current_index  = cell->active_fe_index();
           const unsigned int neighbor_index = neighbor->active_fe_index();
@@ -101,21 +101,22 @@ main()
                   << std::endl;
         }
 
-      for(unsigned int fe_index = 0; fe_index < n_fe_indices; ++fe_index)
+      for (unsigned int fe_index = 0; fe_index < n_fe_indices; ++fe_index)
         {
           const bool index_is_active = cell->fe_index_is_active(fe_index);
           deallog << "cell uses fe index " << fe_index << ": "
                   << index_is_active << std::endl;
 
-          for(unsigned int face_n = 0; face_n < GeometryInfo<1>::faces_per_cell;
-              ++face_n)
+          for (unsigned int face_n = 0;
+               face_n < GeometryInfo<1>::faces_per_cell;
+               ++face_n)
             {
               AssertThrow(&cell->face(face_n)->get_fe(fe_index)
                             == &fe_collection[fe_index],
                           ExcMessage("The result of get_fe should always return"
                                      " a known finite element."));
 
-              if(index_is_active)
+              if (index_is_active)
                 {
                   deallog << "vertex dof index: "
                           << cell->face(face_n)->dof_index(0, fe_index)

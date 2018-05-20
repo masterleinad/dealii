@@ -185,11 +185,11 @@ namespace Step41
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    if(p(0) < -0.5)
+    if (p(0) < -0.5)
       return -0.2;
-    else if(p(0) >= -0.5 && p(0) < 0.0)
+    else if (p(0) >= -0.5 && p(0) < 0.0)
       return -0.4;
-    else if(p(0) >= 0.0 && p(0) < 0.5)
+    else if (p(0) >= 0.0 && p(0) < 0.5)
       return -0.6;
     else
       return -0.8;
@@ -265,7 +265,7 @@ namespace Step41
     mass_matrix.reinit(dsp);
     assemble_mass_matrix_diagonal(mass_matrix);
     diagonal_of_mass_matrix.reinit(solution_index_set);
-    for(unsigned int j = 0; j < solution.size(); j++)
+    for (unsigned int j = 0; j < solution.size(); j++)
       diagonal_of_mass_matrix(j) = mass_matrix.diag_element(j);
   }
 
@@ -304,16 +304,16 @@ namespace Step41
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         cell_matrix = 0;
         cell_rhs    = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                       * fe_values.shape_grad(j, q_point)
                                       * fe_values.JxW(q_point));
@@ -378,13 +378,13 @@ namespace Step41
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         cell_matrix = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             cell_matrix(i, i)
               += (fe_values.shape_value(i, q_point)
                   * fe_values.shape_value(i, q_point) * fe_values.JxW(q_point));
@@ -466,8 +466,8 @@ namespace Step41
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (; cell != endc; ++cell)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         {
           Assert(dof_handler.get_fe().dofs_per_cell
                    == GeometryInfo<dim>::vertices_per_cell,
@@ -475,7 +475,7 @@ namespace Step41
 
           const unsigned int dof_index = cell->vertex_dof_index(v, 0);
 
-          if(dof_touched[dof_index] == false)
+          if (dof_touched[dof_index] == false)
             dof_touched[dof_index] = true;
           else
             continue;
@@ -502,10 +502,10 @@ namespace Step41
           const double obstacle_value = obstacle.value(cell->vertex(v));
           const double solution_value = solution(dof_index);
 
-          if(lambda(dof_index)
-               + penalty_parameter * diagonal_of_mass_matrix(dof_index)
-                   * (solution_value - obstacle_value)
-             < 0)
+          if (lambda(dof_index)
+                + penalty_parameter * diagonal_of_mass_matrix(dof_index)
+                    * (solution_value - obstacle_value)
+              < 0)
             {
               active_set.add_index(dof_index);
               constraints.add_line(dof_index);
@@ -613,13 +613,13 @@ namespace Step41
     setup_system();
 
     IndexSet active_set_old(active_set);
-    for(unsigned int iteration = 0; iteration <= solution.size(); ++iteration)
+    for (unsigned int iteration = 0; iteration <= solution.size(); ++iteration)
       {
         std::cout << "Newton iteration " << iteration << std::endl;
 
         assemble_system();
 
-        if(iteration == 0)
+        if (iteration == 0)
           {
             complete_system_matrix.copy_from(system_matrix);
             complete_system_rhs = system_rhs;
@@ -629,7 +629,7 @@ namespace Step41
         update_solution_and_constraints();
         output_results(iteration);
 
-        if(active_set == active_set_old)
+        if (active_set == active_set_old)
           break;
 
         active_set_old = active_set;
@@ -663,7 +663,7 @@ main(int argc, char* argv[])
       ObstacleProblem<2> obstacle_problem;
       obstacle_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -677,7 +677,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

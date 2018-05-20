@@ -25,7 +25,7 @@ test()
   const char*                   filename = "test.txt";
   const unsigned int            size(10);
   LinearAlgebra::Vector<double> vec(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     vec[i] = i;
 
   // Check block_write and block_read
@@ -41,7 +41,7 @@ test()
   file_in.close();
   // Check the vector
   double eps = 1e-12;
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(
       std::abs(vec[i] - (double) i) < eps,
       ExcMessage(
@@ -63,7 +63,7 @@ test()
     ia >> vec;
   }
   // Check the vector
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(
       std::abs(vec[i] - (double) i) < eps,
       ExcMessage("Value in the vector has been changed by boost archive"));

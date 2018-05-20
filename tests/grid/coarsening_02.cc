@@ -38,11 +38,11 @@ satisfies_level1_at_vertex_rule(const Triangulation<dim>& tr)
                                                     tr.n_levels());
   std::vector<unsigned int> max_adjacent_cell_level(tr.n_vertices(), 0);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       {
         min_adjacent_cell_level[cell->vertex_index(v)] = std::min<unsigned int>(
           min_adjacent_cell_level[cell->vertex_index(v)], cell->level());
@@ -50,9 +50,9 @@ satisfies_level1_at_vertex_rule(const Triangulation<dim>& tr)
           min_adjacent_cell_level[cell->vertex_index(v)], cell->level());
       }
 
-  for(unsigned int k = 0; k < tr.n_vertices(); ++k)
-    if(tr.vertex_used(k))
-      if(max_adjacent_cell_level[k] - min_adjacent_cell_level[k] > 1)
+  for (unsigned int k = 0; k < tr.n_vertices(); ++k)
+    if (tr.vertex_used(k))
+      if (max_adjacent_cell_level[k] - min_adjacent_cell_level[k] > 1)
         return false;
   return true;
 }
@@ -68,11 +68,11 @@ test()
   triangulation.refine_global(2);
 
   const unsigned int n_refinements[] = {0, 13, 11, 6};
-  for(unsigned int i = 0; i < n_refinements[dim]; ++i)
+  for (unsigned int i = 0; i < n_refinements[dim]; ++i)
     {
       // refine one-fifth of cells randomly
       std::vector<bool> flags(triangulation.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
+      for (unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
         flags[Testing::rand() % flags.size()] = true;
       // make sure there's at least one that
       // will be refined
@@ -80,11 +80,11 @@ test()
 
       // refine triangulation
       unsigned int index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell, ++index)
-        if(flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell, ++index)
+        if (flags[index])
           cell->set_refine_flag();
       AssertThrow(index == triangulation.n_active_cells(), ExcInternalError());
 
@@ -93,11 +93,11 @@ test()
       // some of them will actually be
       // coarsened)
       index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell, ++index)
-        if(!flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell, ++index)
+        if (!flags[index])
           cell->set_coarsen_flag();
 
       triangulation.execute_coarsening_and_refinement();

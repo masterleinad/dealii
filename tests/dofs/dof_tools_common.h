@@ -43,7 +43,7 @@ check_this(const DoFHandler<dim>& dof_handler);
 void
 output_bool_vector(std::vector<bool>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << (v[i] ? '1' : '0');
   deallog << std::endl;
 }
@@ -52,7 +52,7 @@ template <int dim>
 void
 set_boundary_ids(Triangulation<dim>& tria)
 {
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     tria.begin_active()->face(f)->set_boundary_id(f);
 }
 
@@ -72,15 +72,15 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   GridGenerator::hyper_cube(tria, 0., 1.);
   set_boundary_ids(tria);
   tria.refine_global(1);
-  for(int i = 0; i < 2; ++i)
+  for (int i = 0; i < 2; ++i)
     {
       tria.begin_active()->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     cell->set_subdomain_id(cell->level());
   DoFHandler<dim> dof_handler(tria);
   dof_handler.distribute_dofs(fe);
@@ -210,7 +210,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -223,7 +223,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

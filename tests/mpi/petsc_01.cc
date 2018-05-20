@@ -33,11 +33,11 @@ test()
   unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
   DynamicSparsityPattern csp(2 * numprocs);
-  for(unsigned int i = 0; i < numprocs * 2; ++i)
+  for (unsigned int i = 0; i < numprocs * 2; ++i)
     csp.add(i, i);
   csp.add(1, 0);
 
@@ -59,7 +59,7 @@ test()
   mat.clear_rows(rows);
 
   //    mat.write_ascii();
-  if(myid == 0)
+  if (myid == 0)
     deallog << "2nd try" << std::endl;
 
   mat = 0;
@@ -73,7 +73,7 @@ test()
   mat.compress(VectorOperation::add);
   //    mat.write_ascii();
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "done" << std::endl;
 }
 
@@ -83,7 +83,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

@@ -1285,13 +1285,14 @@ namespace TrilinosWrappers
       // step, then cycle until we
       // find a row with a nonzero
       // number of entries.
-      if(accessor.a_index >= accessor.colnum_cache->size())
+      if (accessor.a_index >= accessor.colnum_cache->size())
         {
           accessor.a_index = 0;
           ++accessor.a_row;
 
-          while((accessor.a_row < accessor.sparsity_pattern->n_rows())
-                && (accessor.sparsity_pattern->row_length(accessor.a_row) == 0))
+          while (
+            (accessor.a_row < accessor.sparsity_pattern->n_rows())
+            && (accessor.sparsity_pattern->row_length(accessor.a_row) == 0))
             ++accessor.a_row;
 
           accessor.visit_present_row();
@@ -1356,7 +1357,7 @@ namespace TrilinosWrappers
   SparsityPattern::begin(const size_type r) const
   {
     Assert(r < n_rows(), ExcIndexRangeType<size_type>(r, 0, n_rows()));
-    if(row_length(r) > 0)
+    if (row_length(r) > 0)
       return const_iterator(this, r, 0);
     else
       return end(r);
@@ -1370,8 +1371,8 @@ namespace TrilinosWrappers
     // place the iterator on the first entry
     // past this line, or at the end of the
     // matrix
-    for(size_type i = r + 1; i < n_rows(); ++i)
-      if(row_length(i) > 0)
+    for (size_type i = r + 1; i < n_rows(); ++i)
+      if (row_length(i) > 0)
         return const_iterator(this, i, 0);
 
     // if there is no such line, then take the
@@ -1420,7 +1421,7 @@ namespace TrilinosWrappers
                                ForwardIterator end,
                                const bool /*indices_are_sorted*/)
   {
-    if(begin == end)
+    if (begin == end)
       return;
 
     // verify that the size of the data type Trilinos expects matches that the
@@ -1439,10 +1440,10 @@ namespace TrilinosWrappers
     const int n_cols = static_cast<int>(end - begin);
 
     int ierr;
-    if(graph->RowMap().LID(static_cast<TrilinosWrappers::types::int_type>(row))
-       != -1)
+    if (graph->RowMap().LID(static_cast<TrilinosWrappers::types::int_type>(row))
+        != -1)
       ierr = graph->InsertGlobalIndices(row, n_cols, col_index_ptr);
-    else if(nonlocal_graph.get() != nullptr)
+    else if (nonlocal_graph.get() != nullptr)
       {
         // this is the case when we have explicitly set the off-processor rows
         // and want to create a separate matrix object for them (to retain

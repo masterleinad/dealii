@@ -1019,7 +1019,7 @@ IndexSet::IntervalAccessor::end() const
   Assert(is_valid(), ExcMessage("invalid iterator"));
 
   // point to first index in next interval unless we are the last interval.
-  if(range_idx < index_set->ranges.size() - 1)
+  if (range_idx < index_set->ranges.size() - 1)
     return IndexSet::ElementIterator(
       index_set, range_idx + 1, index_set->ranges[range_idx + 1].begin);
   else
@@ -1074,7 +1074,7 @@ IndexSet::IntervalAccessor::advance()
   ++range_idx;
 
   // set ourselves to invalid if we walk off the end
-  if(range_idx >= index_set->ranges.size())
+  if (range_idx >= index_set->ranges.size())
     range_idx = numbers::invalid_dof_index;
 }
 
@@ -1169,7 +1169,7 @@ operator-(const IndexSet::IntervalIterator& other) const
         accessor.index_set->ranges.size() :
         other.accessor.range_idx;
 
-  if(lhs > rhs)
+  if (lhs > rhs)
     return static_cast<int>(lhs - rhs);
   else
     return -static_cast<int>(rhs - lhs);
@@ -1238,13 +1238,13 @@ IndexSet::ElementIterator::advance()
     is_valid(),
     ExcMessage(
       "Impossible to advance an IndexSet::ElementIterator that is invalid"));
-  if(idx < index_set->ranges[range_idx].end)
+  if (idx < index_set->ranges[range_idx].end)
     ++idx;
   // end of this range?
-  if(idx == index_set->ranges[range_idx].end)
+  if (idx == index_set->ranges[range_idx].end)
     {
       // point to first element in next interval if possible
-      if(range_idx < index_set->ranges.size() - 1)
+      if (range_idx < index_set->ranges.size() - 1)
         {
           ++range_idx;
           idx = index_set->ranges[range_idx].begin;
@@ -1298,9 +1298,9 @@ operator-(const IndexSet::ElementIterator& other) const
   Assert(
     index_set == other.index_set,
     ExcMessage("Can not compare iterators belonging to different IndexSets"));
-  if(*this == other)
+  if (*this == other)
     return 0;
-  if(!(*this < other))
+  if (!(*this < other))
     return -(other - *this);
 
   // only other can be equal to end() because of the checks above.
@@ -1312,9 +1312,9 @@ operator-(const IndexSet::ElementIterator& other) const
   std::ptrdiff_t c = index_set->ranges[range_idx].end - idx;
 
   // now walk in steps of ranges (need to start one behind our current one):
-  for(size_type range = range_idx + 1;
-      range < index_set->ranges.size() && range <= other.range_idx;
-      ++range)
+  for (size_type range = range_idx + 1;
+       range < index_set->ranges.size() && range <= other.range_idx;
+       ++range)
     c += index_set->ranges[range].end - index_set->ranges[range].begin;
 
   Assert(
@@ -1324,7 +1324,7 @@ operator-(const IndexSet::ElementIterator& other) const
       "Inconsistent iterator state. Did you invalidate iterators by modifying the IndexSet?"));
 
   // We might have walked too far because we went until the end of other.range_idx, so walk backwards to other.idx:
-  if(other.range_idx != numbers::invalid_dof_index)
+  if (other.range_idx != numbers::invalid_dof_index)
     c -= index_set->ranges[other.range_idx].end - other.idx;
 
   return -c;
@@ -1392,7 +1392,7 @@ inline IndexSet::ElementIterator
 IndexSet::begin() const
 {
   compress();
-  if(ranges.size() > 0)
+  if (ranges.size() > 0)
     return IndexSet::ElementIterator(this, 0, ranges[0].begin);
   else
     return end();
@@ -1405,7 +1405,7 @@ IndexSet::at(const size_type global_index) const
   Assert(global_index < size(),
          ExcIndexRangeType<size_type>(global_index, 0, size()));
 
-  if(ranges.empty())
+  if (ranges.empty())
     return end();
 
   std::vector<Range>::const_iterator main_range
@@ -1415,7 +1415,7 @@ IndexSet::at(const size_type global_index) const
   // This optimization makes the bounds for lower_bound smaller by checking
   // the largest range first.
   std::vector<Range>::const_iterator range_begin, range_end;
-  if(global_index < main_range->begin)
+  if (global_index < main_range->begin)
     {
       range_begin = ranges.begin();
       range_end   = main_range;
@@ -1433,7 +1433,7 @@ IndexSet::at(const size_type global_index) const
 
   // We couldn't find a range, which means we have no range that contains
   // global_index and also no range behind it, meaning we need to return end().
-  if(p == ranges.end())
+  if (p == ranges.end())
     return end();
 
   // Finally, we can have two cases: Either global_index is not in [a,b[,
@@ -1441,7 +1441,7 @@ IndexSet::at(const size_type global_index) const
   // a-1 is not in the IndexSet (if branch). Alternatively, global_index is in
   // [a,b[ and we will return an iterator pointing directly at global_index
   // (else branch).
-  if(global_index < p->begin)
+  if (global_index < p->begin)
     return IndexSet::ElementIterator(this, p - ranges.begin(), p->begin);
   else
     return IndexSet::ElementIterator(this, p - ranges.begin(), global_index);
@@ -1458,7 +1458,7 @@ inline IndexSet::IntervalIterator
 IndexSet::begin_intervals() const
 {
   compress();
-  if(ranges.size() > 0)
+  if (ranges.size() > 0)
     return IndexSet::IntervalIterator(this, 0);
   else
     return end_intervals();
@@ -1500,7 +1500,7 @@ IndexSet::size() const
 inline void
 IndexSet::compress() const
 {
-  if(is_compressed == true)
+  if (is_compressed == true)
     return;
 
   do_compress();
@@ -1513,9 +1513,9 @@ IndexSet::add_index(const size_type index)
          ExcIndexRangeType<size_type>(index, 0, index_space_size));
 
   const Range new_range(index, index + 1);
-  if(ranges.size() == 0 || index > ranges.back().end)
+  if (ranges.size() == 0 || index > ranges.back().end)
     ranges.push_back(new_range);
-  else if(index == ranges.back().end)
+  else if (index == ranges.back().end)
     ranges.back().end++;
   else
     ranges.insert(
@@ -1530,13 +1530,13 @@ IndexSet::add_indices(const ForwardIterator& begin, const ForwardIterator& end)
 {
   // insert each element of the range. if some of them happen to be
   // consecutive, merge them to a range
-  for(ForwardIterator p = begin; p != end;)
+  for (ForwardIterator p = begin; p != end;)
     {
       const size_type begin_index = *p;
       size_type       end_index   = begin_index + 1;
       ForwardIterator q           = p;
       ++q;
-      while((q != end) && (*q == end_index))
+      while ((q != end) && (*q == end_index))
         {
           ++end_index;
           ++q;
@@ -1550,14 +1550,14 @@ IndexSet::add_indices(const ForwardIterator& begin, const ForwardIterator& end)
 inline bool
 IndexSet::is_element(const size_type index) const
 {
-  if(ranges.empty() == false)
+  if (ranges.empty() == false)
     {
       compress();
 
       // fast check whether the index is in the largest range
       Assert(largest_range < ranges.size(), ExcInternalError());
-      if(index >= ranges[largest_range].begin
-         && index < ranges[largest_range].end)
+      if (index >= ranges[largest_range].begin
+          && index < ranges[largest_range].end)
         return true;
 
       // get the element after which we would have to insert a range that
@@ -1579,7 +1579,7 @@ IndexSet::is_element(const size_type index) const
                                               ranges.end(),
         Range(index, size() + 1));
 
-      if(p == ranges.begin())
+      if (p == ranges.begin())
         return ((index >= p->begin) && (index < p->end));
 
       Assert((p == ranges.end()) || (p->begin > index), ExcInternalError());
@@ -1615,7 +1615,7 @@ IndexSet::n_elements() const
   compress();
 
   size_type v = 0;
-  if(!ranges.empty())
+  if (!ranges.empty())
     {
       Range& r = ranges.back();
       v        = r.nth_index_in_set + r.end - r.begin;
@@ -1623,9 +1623,9 @@ IndexSet::n_elements() const
 
 #ifdef DEBUG
   size_type s = 0;
-  for(std::vector<Range>::iterator range = ranges.begin();
-      range != ranges.end();
-      ++range)
+  for (std::vector<Range>::iterator range = ranges.begin();
+       range != ranges.end();
+       ++range)
     s += (range->end - range->begin);
   Assert(s == v, ExcInternalError());
 #endif
@@ -1663,9 +1663,9 @@ IndexSet::nth_index_in_set(const unsigned int n) const
   Assert(largest_range < ranges.size(), ExcInternalError());
   std::vector<Range>::const_iterator main_range
     = ranges.begin() + largest_range;
-  if(n >= main_range->nth_index_in_set
-     && n < main_range->nth_index_in_set
-              + (main_range->end - main_range->begin))
+  if (n >= main_range->nth_index_in_set
+      && n < main_range->nth_index_in_set
+               + (main_range->end - main_range->begin))
     return main_range->begin + (n - main_range->nth_index_in_set);
 
   // find out which chunk the local index n belongs to by using a binary
@@ -1674,7 +1674,7 @@ IndexSet::nth_index_in_set(const unsigned int n) const
   Range r(n, n + 1);
   r.nth_index_in_set = n;
   std::vector<Range>::const_iterator range_begin, range_end;
-  if(n < main_range->nth_index_in_set)
+  if (n < main_range->nth_index_in_set)
     {
       range_begin = ranges.begin();
       range_end   = main_range;
@@ -1701,7 +1701,7 @@ IndexSet::index_within_set(const size_type n) const
   Assert(n < size(), ExcIndexRangeType<size_type>(n, 0, size()));
 
   // return immediately if the index set is empty
-  if(is_empty())
+  if (is_empty())
     return numbers::invalid_dof_index;
 
   // check whether the index is in the largest range. use the result to
@@ -1709,12 +1709,12 @@ IndexSet::index_within_set(const size_type n) const
   Assert(largest_range < ranges.size(), ExcInternalError());
   std::vector<Range>::const_iterator main_range
     = ranges.begin() + largest_range;
-  if(n >= main_range->begin && n < main_range->end)
+  if (n >= main_range->begin && n < main_range->end)
     return (n - main_range->begin) + main_range->nth_index_in_set;
 
   Range                              r(n, n);
   std::vector<Range>::const_iterator range_begin, range_end;
-  if(n < main_range->begin)
+  if (n < main_range->begin)
     {
       range_begin = ranges.begin();
       range_end   = main_range;
@@ -1729,7 +1729,7 @@ IndexSet::index_within_set(const size_type n) const
     = Utilities::lower_bound(range_begin, range_end, r, Range::end_compare);
 
   // if n is not in this set
-  if(p == range_end || p->end == n || p->begin > n)
+  if (p == range_end || p->end == n || p->begin > n)
     return numbers::invalid_dof_index;
 
   Assert(p != ranges.end(), ExcInternalError());
@@ -1772,9 +1772,9 @@ IndexSet::fill_binary_vector(Vector& vector) const
 
   // then write ones into the elements whose indices are contained in the
   // index set
-  for(std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();
-      ++it)
-    for(size_type i = it->begin; i < it->end; ++i)
+  for (std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();
+       ++it)
+    for (size_type i = it->begin; i < it->end; ++i)
       vector[i] = 1;
 }
 
@@ -1785,14 +1785,14 @@ IndexSet::print(StreamType& out) const
   compress();
   out << "{";
   std::vector<Range>::const_iterator p;
-  for(p = ranges.begin(); p != ranges.end(); ++p)
+  for (p = ranges.begin(); p != ranges.end(); ++p)
     {
-      if(p->end - p->begin == 1)
+      if (p->end - p->begin == 1)
         out << p->begin;
       else
         out << "[" << p->begin << "," << p->end - 1 << "]";
 
-      if(p != --ranges.end())
+      if (p != --ranges.end())
         out << ", ";
     }
   out << "}" << std::endl;

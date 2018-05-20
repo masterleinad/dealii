@@ -129,7 +129,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // set symmetric flag, if so requested
-    if(is_symmetric == true)
+    if (is_symmetric == true)
       {
         set_matrix_option(matrix, MAT_SYMMETRIC, PETSC_TRUE);
       }
@@ -160,7 +160,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // set symmetric flag, if so requested
-    if(is_symmetric == true)
+    if (is_symmetric == true)
       {
         set_matrix_option(matrix, MAT_SYMMETRIC, PETSC_TRUE);
       }
@@ -172,7 +172,7 @@ namespace PETScWrappers
                           const bool                 preset_nonzero_locations)
   {
     std::vector<size_type> row_lengths(sparsity_pattern.n_rows());
-    for(size_type i = 0; i < sparsity_pattern.n_rows(); ++i)
+    for (size_type i = 0; i < sparsity_pattern.n_rows(); ++i)
       row_lengths[i] = sparsity_pattern.row_length(i);
 
     do_reinit(
@@ -191,15 +191,15 @@ namespace PETScWrappers
     // for the usefulness of this option
     // read the documentation of this
     // class.
-    if(preset_nonzero_locations == true)
+    if (preset_nonzero_locations == true)
       {
         std::vector<PetscInt>    row_entries;
         std::vector<PetscScalar> row_values;
-        for(size_type i = 0; i < sparsity_pattern.n_rows(); ++i)
+        for (size_type i = 0; i < sparsity_pattern.n_rows(); ++i)
           {
             row_entries.resize(row_lengths[i]);
             row_values.resize(row_lengths[i], 0.0);
-            for(size_type j = 0; j < row_lengths[i]; ++j)
+            for (size_type j = 0; j < row_lengths[i]; ++j)
               row_entries[j] = sparsity_pattern.column_number(i, j);
 
             const PetscInt       int_row = i;

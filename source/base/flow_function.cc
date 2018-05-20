@@ -53,15 +53,15 @@ namespace Functions
     // variables in multithread mode
     Threads::Mutex::ScopedLock lock(mutex);
 
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       aux_values[d].resize(n_points);
     vector_values(points, aux_values);
 
-    for(unsigned int k = 0; k < n_points; ++k)
+    for (unsigned int k = 0; k < n_points; ++k)
       {
         Assert(values[k].size() == dim + 1,
                ExcDimensionMismatch(values[k].size(), dim + 1));
-        for(unsigned int d = 0; d < dim + 1; ++d)
+        for (unsigned int d = 0; d < dim + 1; ++d)
           values[k](d) = aux_values[d][k];
       }
   }
@@ -82,11 +82,11 @@ namespace Functions
     // variables in multithread mode
     Threads::Mutex::ScopedLock lock(mutex);
 
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       aux_values[d].resize(n_points);
     vector_values(points, aux_values);
 
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       value(d) = aux_values[d][0];
   }
 
@@ -104,7 +104,7 @@ namespace Functions
     // variables in multithread mode
     Threads::Mutex::ScopedLock lock(mutex);
 
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       aux_values[d].resize(n_points);
     vector_values(points, aux_values);
 
@@ -125,15 +125,15 @@ namespace Functions
     // variables in multithread mode
     Threads::Mutex::ScopedLock lock(mutex);
 
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       aux_gradients[d].resize(n_points);
     vector_gradients(points, aux_gradients);
 
-    for(unsigned int k = 0; k < n_points; ++k)
+    for (unsigned int k = 0; k < n_points; ++k)
       {
         Assert(values[k].size() == dim + 1,
                ExcDimensionMismatch(values[k].size(), dim + 1));
-        for(unsigned int d = 0; d < dim + 1; ++d)
+        for (unsigned int d = 0; d < dim + 1; ++d)
           values[k][d] = aux_gradients[d][k];
       }
   }
@@ -152,15 +152,15 @@ namespace Functions
     // variables in multithread mode
     Threads::Mutex::ScopedLock lock(mutex);
 
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       aux_values[d].resize(n_points);
     vector_laplacians(points, aux_values);
 
-    for(unsigned int k = 0; k < n_points; ++k)
+    for (unsigned int k = 0; k < n_points; ++k)
       {
         Assert(values[k].size() == dim + 1,
                ExcDimensionMismatch(values[k].size(), dim + 1));
-        for(unsigned int d = 0; d < dim + 1; ++d)
+        for (unsigned int d = 0; d < dim + 1; ++d)
           values[k](d) = aux_values[d][k];
       }
   }
@@ -193,10 +193,10 @@ namespace Functions
 
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<dim>& p = points[k];
         // First, compute the
@@ -204,13 +204,13 @@ namespace Functions
         // the x-axis divided by the
         // radius.
         double r2 = 0;
-        for(unsigned int d = 1; d < dim; ++d)
+        for (unsigned int d = 1; d < dim; ++d)
           r2 += p(d) * p(d) * stretch * stretch;
 
         // x-velocity
         values[0][k] = 1. - r2;
         // other velocities
-        for(unsigned int d = 1; d < dim; ++d)
+        for (unsigned int d = 1; d < dim; ++d)
           values[d][k] = 0.;
         // pressure
         values[dim][k] = -2 * (dim - 1) * stretch * stretch * p(0) / Reynolds
@@ -229,22 +229,22 @@ namespace Functions
 
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<dim>& p = points[k];
         // x-velocity
         values[0][k][0] = 0.;
-        for(unsigned int d = 1; d < dim; ++d)
+        for (unsigned int d = 1; d < dim; ++d)
           values[0][k][d] = -2. * p(d) * stretch * stretch;
         // other velocities
-        for(unsigned int d = 1; d < dim; ++d)
+        for (unsigned int d = 1; d < dim; ++d)
           values[d][k] = 0.;
         // pressure
         values[dim][k][0] = -2 * (dim - 1) * stretch * stretch / Reynolds;
-        for(unsigned int d = 1; d < dim; ++d)
+        for (unsigned int d = 1; d < dim; ++d)
           values[dim][k][d] = 0.;
       }
   }
@@ -259,11 +259,11 @@ namespace Functions
     (void) n;
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int d = 0; d < values.size(); ++d)
-      for(unsigned int k = 0; k < values[d].size(); ++k)
+    for (unsigned int d = 0; d < values.size(); ++d)
+      for (unsigned int k = 0; k < values[d].size(); ++k)
         values[d][k] = 0.;
   }
 
@@ -292,10 +292,10 @@ namespace Functions
 
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<dim>& p  = points[k];
         const double      x  = numbers::PI / 2. * p(0);
@@ -305,13 +305,13 @@ namespace Functions
         const double      sx = sin(x);
         const double      sy = sin(y);
 
-        if(dim == 2)
+        if (dim == 2)
           {
             values[0][k] = cx * cx * cy * sy;
             values[1][k] = -cx * sx * cy * cy;
             values[2][k] = cx * sx * cy * sy + this->mean_pressure;
           }
-        else if(dim == 3)
+        else if (dim == 3)
           {
             const double z  = numbers::PI / 2. * p(2);
             const double cz = cos(z);
@@ -339,10 +339,10 @@ namespace Functions
 
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<dim>& p   = points[k];
         const double      x   = numbers::PI / 2. * p(0);
@@ -354,7 +354,7 @@ namespace Functions
         const double      cx2 = .5 + .5 * c2x; // cos^2 x
         const double      cy2 = .5 + .5 * c2y; // cos^2 y
 
-        if(dim == 2)
+        if (dim == 2)
           {
             values[0][k][0] = -.25 * numbers::PI * s2x * s2y;
             values[0][k][1] = .5 * numbers::PI * cx2 * c2y;
@@ -363,7 +363,7 @@ namespace Functions
             values[2][k][0] = .25 * numbers::PI * c2x * s2y;
             values[2][k][1] = .25 * numbers::PI * s2x * c2y;
           }
-        else if(dim == 3)
+        else if (dim == 3)
           {
             const double z   = numbers::PI / 2. * p(2);
             const double c2z = cos(2 * z);
@@ -403,24 +403,24 @@ namespace Functions
 
     Assert(values.size() == dim + 1,
            ExcDimensionMismatch(values.size(), dim + 1));
-    for(unsigned int d = 0; d < dim + 1; ++d)
+    for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    if(reaction != 0.)
+    if (reaction != 0.)
       {
         vector_values(points, values);
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int k = 0; k < values[d].size(); ++k)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int k = 0; k < values[d].size(); ++k)
             values[d][k] *= -reaction;
       }
     else
       {
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int k = 0; k < values[d].size(); ++k)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int k = 0; k < values[d].size(); ++k)
             values[d][k] = 0.;
       }
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<dim>& p   = points[k];
         const double      x   = numbers::PI / 2. * p(0);
@@ -431,7 +431,7 @@ namespace Functions
         const double      s2y = sin(2 * y);
         const double      pi2 = .25 * numbers::PI * numbers::PI;
 
-        if(dim == 2)
+        if (dim == 2)
           {
             values[0][k] += -viscosity * pi2 * (1. + 2. * c2x) * s2y
                             - numbers::PI / 4. * c2x * s2y;
@@ -439,7 +439,7 @@ namespace Functions
                             - numbers::PI / 4. * s2x * c2y;
             values[2][k] = 0.;
           }
-        else if(dim == 3)
+        else if (dim == 3)
           {
             const double z   = numbers::PI * p(2);
             const double c2z = cos(2 * z);
@@ -515,16 +515,16 @@ namespace Functions
     unsigned int n = points.size();
 
     Assert(values.size() == 2 + 1, ExcDimensionMismatch(values.size(), 2 + 1));
-    for(unsigned int d = 0; d < 2 + 1; ++d)
+    for (unsigned int d = 0; d < 2 + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<2>& p = points[k];
         const double    x = p(0);
         const double    y = p(1);
 
-        if((x < 0) || (y < 0))
+        if ((x < 0) || (y < 0))
           {
             const double phi = std::atan2(y, -x) + numbers::PI;
             const double r2  = x * x + y * y;
@@ -539,7 +539,7 @@ namespace Functions
           }
         else
           {
-            for(unsigned int d = 0; d < 3; ++d)
+            for (unsigned int d = 0; d < 3; ++d)
               values[d][k] = 0.;
           }
       }
@@ -553,16 +553,16 @@ namespace Functions
     unsigned int n = points.size();
 
     Assert(values.size() == 2 + 1, ExcDimensionMismatch(values.size(), 2 + 1));
-    for(unsigned int d = 0; d < 2 + 1; ++d)
+    for (unsigned int d = 0; d < 2 + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<2>& p = points[k];
         const double    x = p(0);
         const double    y = p(1);
 
-        if((x < 0) || (y < 0))
+        if ((x < 0) || (y < 0))
           {
             const double phi  = std::atan2(y, -x) + numbers::PI;
             const double r2   = x * x + y * y;
@@ -599,7 +599,7 @@ namespace Functions
           }
         else
           {
-            for(unsigned int d = 0; d < 3; ++d)
+            for (unsigned int d = 0; d < 3; ++d)
               values[d][k] = 0.;
           }
       }
@@ -613,11 +613,11 @@ namespace Functions
     unsigned int n = points.size();
     (void) n;
     Assert(values.size() == 2 + 1, ExcDimensionMismatch(values.size(), 2 + 1));
-    for(unsigned int d = 0; d < 2 + 1; ++d)
+    for (unsigned int d = 0; d < 2 + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int d = 0; d < values.size(); ++d)
-      for(unsigned int k = 0; k < values[d].size(); ++k)
+    for (unsigned int d = 0; d < values.size(); ++d)
+      for (unsigned int k = 0; k < values[d].size(); ++k)
         values[d][k] = 0.;
   }
 
@@ -642,10 +642,10 @@ namespace Functions
     unsigned int n = points.size();
 
     Assert(values.size() == 2 + 1, ExcDimensionMismatch(values.size(), 2 + 1));
-    for(unsigned int d = 0; d < 2 + 1; ++d)
+    for (unsigned int d = 0; d < 2 + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for(unsigned int k = 0; k < n; ++k)
+    for (unsigned int k = 0; k < n; ++k)
       {
         const Point<2>& p   = points[k];
         const double    x   = p(0);
@@ -669,7 +669,7 @@ namespace Functions
     Assert(gradients[0].size() == n,
            ExcDimensionMismatch(gradients[0].size(), n));
 
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       {
         const double x = points[i](0);
         const double y = points[i](1);
@@ -695,13 +695,13 @@ namespace Functions
   {
     unsigned int n = points.size();
     Assert(values.size() == 2 + 1, ExcDimensionMismatch(values.size(), 2 + 1));
-    for(unsigned int d = 0; d < 2 + 1; ++d)
+    for (unsigned int d = 0; d < 2 + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    if(stokes)
+    if (stokes)
       {
         const double zp = 2. * numbers::PI;
-        for(unsigned int k = 0; k < n; ++k)
+        for (unsigned int k = 0; k < n; ++k)
           {
             const Point<2>& p   = points[k];
             const double    x   = p(0);
@@ -721,8 +721,8 @@ namespace Functions
       }
     else
       {
-        for(unsigned int d = 0; d < values.size(); ++d)
-          for(unsigned int k = 0; k < values[d].size(); ++k)
+        for (unsigned int d = 0; d < values.size(); ++d)
+          for (unsigned int k = 0; k < values[d].size(); ++k)
             values[d][k] = 0.;
       }
   }

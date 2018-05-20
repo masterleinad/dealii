@@ -988,12 +988,12 @@ LAPACKFullMatrix<number>::copy_from(const MatrixType& M)
   // loop over the elements of the argument matrix row by row, as suggested
   // in the documentation of the sparse matrix iterator class, and
   // copy them into the current object
-  for(size_type row = 0; row < M.m(); ++row)
+  for (size_type row = 0; row < M.m(); ++row)
     {
       const typename MatrixType::const_iterator end_row = M.end(row);
-      for(typename MatrixType::const_iterator entry = M.begin(row);
-          entry != end_row;
-          ++entry)
+      for (typename MatrixType::const_iterator entry = M.begin(row);
+           entry != end_row;
+           ++entry)
         this->el(row, entry->column()) = entry->value();
     }
 
@@ -1013,19 +1013,19 @@ LAPACKFullMatrix<number>::fill(const MatrixType& M,
 {
   // loop over the elements of the argument matrix row by row, as suggested
   // in the documentation of the sparse matrix iterator class
-  for(size_type row = src_offset_i; row < M.m(); ++row)
+  for (size_type row = src_offset_i; row < M.m(); ++row)
     {
       const typename MatrixType::const_iterator end_row = M.end(row);
-      for(typename MatrixType::const_iterator entry = M.begin(row);
-          entry != end_row;
-          ++entry)
+      for (typename MatrixType::const_iterator entry = M.begin(row);
+           entry != end_row;
+           ++entry)
         {
           const size_type i = transpose ? entry->column() : row;
           const size_type j = transpose ? row : entry->column();
 
           const size_type dst_i = dst_offset_i + i - src_offset_i;
           const size_type dst_j = dst_offset_j + j - src_offset_j;
-          if(dst_i < this->n_rows() && dst_j < this->n_cols())
+          if (dst_i < this->n_rows() && dst_j < this->n_cols())
             (*this)(dst_i, dst_j) = factor * entry->value();
         }
     }

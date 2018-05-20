@@ -63,17 +63,17 @@ test()
   static const SphericalManifold<dim> spherical_manifold;
   tr.set_manifold(99, spherical_manifold);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
     cell->set_all_manifold_ids(99);
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(numbers::invalid_manifold_id);
   //  static const SphericalManifold<dim> boundary_shell;
   //  tr.set_manifold (0, boundary_shell);
@@ -100,12 +100,12 @@ test()
 
   std::vector<Point<dim>> points;
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
     {
-      if(cell->is_artificial())
+      if (cell->is_artificial())
         continue;
 
       points.push_back(cell->center());
@@ -127,7 +127,7 @@ test()
                ExcInternalError());
       }
 
-      if(cell->is_locally_owned())
+      if (cell->is_locally_owned())
         {
           // more evil: use a corner so we can end up in a different cell
           Point<dim> p = cell->vertex(0);
@@ -149,7 +149,7 @@ test()
   std::vector<double> values(points.size());
   field_function.value_list(points, values, 0);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 
   tr.reset_manifold(99);

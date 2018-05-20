@@ -29,7 +29,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -57,7 +57,7 @@ test()
     {
       norm = v_tmp.linfty_norm();
     }
-  catch(TrilinosWrappers::MPI::Vector::ExcTrilinosError e)
+  catch (TrilinosWrappers::MPI::Vector::ExcTrilinosError e)
     {
       deallog << e.get_exc_name() << std::endl;
       exc = true;
@@ -66,7 +66,7 @@ test()
   Assert(exc == false, ExcInternalError());
   Assert(norm == 2. * Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD) - 1,
          ExcInternalError());
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog << norm << std::endl;
       deallog << "OK" << std::endl;
@@ -84,7 +84,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

@@ -33,16 +33,16 @@ test()
   GridGenerator::hyper_cube(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 1e-8)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 0.2)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 0.2)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  if(dim < 3 || fe_degree < 2)
+  if (dim < 3 || fe_degree < 2)
     tria.refine_global(2);
   else
     tria.refine_global(1);
@@ -50,12 +50,12 @@ test()
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       cell                 = tria.begin_active();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }

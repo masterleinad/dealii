@@ -48,13 +48,13 @@ check(const FE_Q<dim>& fe)
   // numbers of the degrees of
   // freedom in hierarchical and
   // lexicographical order
-  switch(dim)
+  switch (dim)
     {
       case 1:
         {
           hierarchic_to_lexicographic_numbering[0] = 0;
           hierarchic_to_lexicographic_numbering[1] = dofs_per_cell - 1;
-          for(unsigned int i = 2; i < dofs_per_cell; ++i)
+          for (unsigned int i = 2; i < dofs_per_cell; ++i)
             hierarchic_to_lexicographic_numbering[i] = i - 1;
 
           break;
@@ -70,28 +70,28 @@ check(const FE_Q<dim>& fe)
           hierarchic_to_lexicographic_numbering[next_index++] = n * n - 1;
 
           // left   line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++] = (1 + i) * n;
 
           // right  line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = (2 + i) * n - 1;
 
           // bottom line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++] = 1 + i;
 
           // top    line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = n * (n - 1) + i + 1;
 
           // inside quad
           Assert(fe.dofs_per_quad == fe.dofs_per_line * fe.dofs_per_line,
                  ExcInternalError());
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               hierarchic_to_lexicographic_numbering[next_index++]
                 = n * (i + 1) + j + 1;
 
@@ -121,51 +121,51 @@ check(const FE_Q<dim>& fe)
             = (n * n + n + 1) * degree; // 7
 
           // line 0
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++] = (i + 1) * n;
           // line 1
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = n - 1 + (i + 1) * n;
           // line 2
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++] = 1 + i;
           // line 3
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = 1 + i + n * (n - 1);
 
           // line 4
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = (n - 1) * n * n + (i + 1) * n;
           // line 5
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = (n - 1) * (n * n + 1) + (i + 1) * n;
           // line 6
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = n * n * (n - 1) + i + 1;
           // line 7
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = n * n * (n - 1) + i + 1 + n * (n - 1);
 
           // line 8
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = (i + 1) * n * n;
           // line 9
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = n - 1 + (i + 1) * n * n;
           // line 10
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = (i + 1) * n * n + n * (n - 1);
           // line 11
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             hierarchic_to_lexicographic_numbering[next_index++]
               = n - 1 + (i + 1) * n * n + n * (n - 1);
 
@@ -173,42 +173,42 @@ check(const FE_Q<dim>& fe)
           Assert(fe.dofs_per_quad == fe.dofs_per_line * fe.dofs_per_line,
                  ExcInternalError());
           // face 0
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               hierarchic_to_lexicographic_numbering[next_index++]
                 = (i + 1) * n * n + n * (j + 1);
           // face 1
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               hierarchic_to_lexicographic_numbering[next_index++]
                 = (i + 1) * n * n + n - 1 + n * (j + 1);
           // face 2, note the orientation!
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               hierarchic_to_lexicographic_numbering[next_index++]
                 = (j + 1) * n * n + i + 1;
           // face 3, note the orientation!
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               hierarchic_to_lexicographic_numbering[next_index++]
                 = (j + 1) * n * n + n * (n - 1) + i + 1;
           // face 4
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               hierarchic_to_lexicographic_numbering[next_index++]
                 = n * (i + 1) + j + 1;
           // face 5
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               hierarchic_to_lexicographic_numbering[next_index++]
                 = (n - 1) * n * n + n * (i + 1) + j + 1;
 
           // inside hex
           AssertThrow(fe.dofs_per_hex == fe.dofs_per_quad * fe.dofs_per_line,
                       ExcInternalError());
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
-              for(unsigned int k = 0; k < fe.dofs_per_line; ++k)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
+              for (unsigned int k = 0; k < fe.dofs_per_line; ++k)
                 hierarchic_to_lexicographic_numbering[next_index++]
                   = n * n * (i + 1) + n * (j + 1) + k + 1;
 
@@ -231,7 +231,7 @@ check(const FE_Q<dim>& fe)
   // automatic comparison
   std::vector<unsigned int> l2h(fe.dofs_per_cell);
   FETools::lexicographic_to_hierarchic_numbering(fe, l2h);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     {
       Assert(l2h[hierarchic_to_lexicographic_numbering[i]] == i,
              ExcInternalError());
@@ -251,7 +251,7 @@ template <int dim>
 void
 check_dim()
 {
-  for(unsigned int degree = 1; degree < 6; ++degree)
+  for (unsigned int degree = 1; degree < 6; ++degree)
     {
       FE_Q<dim> fe(degree);
       check(fe);

@@ -91,7 +91,7 @@ check_this(const DoFHandler<dim>& dof_handler,
   AssertThrow(data_out.get_patches().size() == reader.get_patches().size(),
               ExcInternalError());
 
-  for(unsigned int i = 0; i < reader.get_patches().size(); ++i)
+  for (unsigned int i = 0; i < reader.get_patches().size(); ++i)
     AssertThrow(data_out.get_patches()[i] == reader.get_patches()[i],
                 ExcInternalError());
 

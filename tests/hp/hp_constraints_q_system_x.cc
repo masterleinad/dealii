@@ -29,8 +29,8 @@ test()
 {
   deallog << "Test for dim = " << dim << std::endl << std::endl;
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i < 4; ++i)
-    for(unsigned int j = 0; j < 4; ++j)
+  for (unsigned int i = 1; i < 4; ++i)
+    for (unsigned int j = 0; j < 4; ++j)
       fe.push_back(FESystem<dim>(
         FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)), 1, FE_DGQ<dim>(j), 1));
 

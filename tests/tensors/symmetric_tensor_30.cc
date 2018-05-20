@@ -29,9 +29,9 @@ check_2()
 
   SymmetricTensor<2, dim> change_with_brackets;
   SymmetricTensor<2, dim> change_with_parentheses;
-  for(unsigned int k = 0; k < dim; ++k)
+  for (unsigned int k = 0; k < dim; ++k)
     {
-      for(unsigned int l = 0; l < dim; ++l)
+      for (unsigned int l = 0; l < dim; ++l)
         {
           const double    entry = double(Testing::rand());
           TableIndices<2> indices(k, l);
@@ -64,13 +64,13 @@ check_4()
 
   SymmetricTensor<4, dim> change_with_brackets;
   SymmetricTensor<4, dim> change_with_parentheses;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
-      for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int j = 0; j < dim; ++j)
         {
-          for(unsigned int k = 0; k < dim; ++k)
+          for (unsigned int k = 0; k < dim; ++k)
             {
-              for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int l = 0; l < dim; ++l)
                 {
                   const double    entry = double(Testing::rand());
                   TableIndices<4> indices(i, j, k, l);

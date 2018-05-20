@@ -26,7 +26,7 @@ test()
   typedef AlignedVector<unsigned int> VEC;
   VEC                                 a(4);
   deallog << "Constructor: ";
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for (unsigned int i = 0; i < a.size(); ++i)
     deallog << a[i] << " ";
   deallog << std::endl;
 
@@ -39,25 +39,25 @@ test()
   a.insert_back(b.begin(), b.end());
 
   deallog << "Insertion: ";
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for (unsigned int i = 0; i < a.size(); ++i)
     deallog << a[i] << " ";
   deallog << std::endl;
 
   a.resize(4);
   deallog << "Shrinking: ";
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for (unsigned int i = 0; i < a.size(); ++i)
     deallog << a[i] << " ";
   deallog << std::endl;
 
   a.reserve(100);
   deallog << "Reserve: ";
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for (unsigned int i = 0; i < a.size(); ++i)
     deallog << a[i] << " ";
   deallog << std::endl;
 
   a = b;
   deallog << "Assignment: ";
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for (unsigned int i = 0; i < a.size(); ++i)
     deallog << a[i] << " ";
   deallog << std::endl;
 
@@ -65,7 +65,7 @@ test()
   a.resize(0);
   a.resize(100000, 1);
   deallog << "Check large initialization: ";
-  for(unsigned int i = 0; i < 100000; ++i)
+  for (unsigned int i = 0; i < 100000; ++i)
     AssertDimension(a[i], 1);
   deallog << "OK" << std::endl;
 
@@ -73,11 +73,11 @@ test()
   deallog << "Check large resize: ";
   a.resize(200000, 2);
   a.resize(400000);
-  for(unsigned int i = 0; i < 100000; ++i)
+  for (unsigned int i = 0; i < 100000; ++i)
     AssertDimension(a[i], 1);
-  for(unsigned int i = 100000; i < 200000; ++i)
+  for (unsigned int i = 100000; i < 200000; ++i)
     AssertDimension(a[i], 2);
-  for(unsigned int i = 200000; i < 400000; ++i)
+  for (unsigned int i = 200000; i < 400000; ++i)
     AssertDimension(a[i], 0);
   deallog << "OK" << std::endl;
 }

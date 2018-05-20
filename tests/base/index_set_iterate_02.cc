@@ -27,7 +27,7 @@ test(IndexSet& index_set, unsigned int n)
   IndexSet::ElementIterator it = index_set.at(n);
 
   deallog << " end?" << (it == index_set.end());
-  if(it != index_set.end())
+  if (it != index_set.end())
     {
       deallog << " value=" << *it;
     }

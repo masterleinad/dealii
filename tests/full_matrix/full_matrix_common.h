@@ -40,8 +40,8 @@ void
 make_square_matrix(FullMatrix<number>& m)
 {
   m.reinit(n_rows, n_rows);
-  for(unsigned int i = 0; i < n_rows; ++i)
-    for(unsigned int j = 0; j < n_rows; ++j)
+  for (unsigned int i = 0; i < n_rows; ++i)
+    for (unsigned int j = 0; j < n_rows; ++j)
       m(i, j) = (i + 1) * (j + 2);
 }
 
@@ -50,8 +50,8 @@ void
 make_matrix(FullMatrix<number>& m)
 {
   m.reinit(n_rows, n_cols);
-  for(unsigned int i = 0; i < n_rows; ++i)
-    for(unsigned int j = 0; j < n_cols; ++j)
+  for (unsigned int i = 0; i < n_rows; ++i)
+    for (unsigned int j = 0; j < n_cols; ++j)
       m(i, j) = (i + 1) * (j + 2);
 }
 
@@ -60,8 +60,8 @@ void
 make_complex_square_matrix(FullMatrix<std::complex<number>>& m)
 {
   m.reinit(n_rows, n_rows);
-  for(unsigned int i = 0; i < n_rows; ++i)
-    for(unsigned int j = 0; j < n_rows; ++j)
+  for (unsigned int i = 0; i < n_rows; ++i)
+    for (unsigned int j = 0; j < n_rows; ++j)
       m(i, j) = std::complex<number>((i + 1) * (j + 2), (i + 3) * (j + 4));
 }
 
@@ -70,8 +70,8 @@ void
 make_complex_matrix(FullMatrix<std::complex<number>>& m)
 {
   m.reinit(n_rows, n_cols);
-  for(unsigned int i = 0; i < n_rows; ++i)
-    for(unsigned int j = 0; j < n_cols; ++j)
+  for (unsigned int i = 0; i < n_rows; ++i)
+    for (unsigned int j = 0; j < n_cols; ++j)
       m(i, j) = std::complex<number>((i + 1) * (j + 2), (i + 3) * (j + 4));
 }
 
@@ -80,7 +80,7 @@ void
 make_domain_vector(Vector<number>& v)
 {
   v.reinit(n_cols);
-  for(unsigned int i = 0; i < n_cols; ++i)
+  for (unsigned int i = 0; i < n_cols; ++i)
     v(i) = (i + 1);
 }
 
@@ -89,7 +89,7 @@ void
 make_range_vector(Vector<number>& v)
 {
   v.reinit(n_rows);
-  for(unsigned int i = 0; i < n_rows; ++i)
+  for (unsigned int i = 0; i < n_rows; ++i)
     v(i) = (i + 1);
 }
 
@@ -98,7 +98,7 @@ void
 make_complex_domain_vector(Vector<std::complex<number>>& v)
 {
   v.reinit(n_cols);
-  for(unsigned int i = 0; i < n_cols; ++i)
+  for (unsigned int i = 0; i < n_cols; ++i)
     v(i) = std::complex<number>(i + 1, i + 3);
 }
 
@@ -107,7 +107,7 @@ void
 make_complex_range_vector(Vector<std::complex<number>>& v)
 {
   v.reinit(n_rows);
-  for(unsigned int i = 0; i < n_rows; ++i)
+  for (unsigned int i = 0; i < n_rows; ++i)
     v(i) = std::complex<number>(i + 1, i + 3);
 }
 
@@ -116,8 +116,8 @@ void
 print_matrix(const FullMatrix<number>& m)
 {
   const number tolerance = 100. * std::numeric_limits<number>::epsilon();
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
       deallog << i << ' ' << j << ' '
               << filter_out_small_numbers(m(i, j), tolerance) << std::endl;
 }
@@ -127,8 +127,8 @@ void
 print_matrix(const FullMatrix<std::complex<number>>& m)
 {
   const number tolerance = 100. * std::numeric_limits<number>::epsilon();
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
       deallog << i << ' ' << j << ' '
               << filter_out_small_numbers(m(i, j), tolerance) << std::endl;
 }
@@ -141,7 +141,7 @@ print_vector(const Vector<number>& v)
     = 100.
       * std::numeric_limits<
           typename numbers::NumberTraits<number>::real_type>::epsilon();
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << i << ' ' << filter_out_small_numbers(v(i), tolerance)
             << std::endl;
 }
@@ -152,9 +152,9 @@ display_matrix(FullMatrix<number> M)
 {
   const number tolerance = 100. * std::numeric_limits<number>::epsilon();
   deallog << M.m() << "x" << M.n() << " matrix" << std::endl;
-  for(unsigned int i = 0; i < M.m(); i++)
+  for (unsigned int i = 0; i < M.m(); i++)
     {
-      for(unsigned int j = 0; j < M.n(); j++)
+      for (unsigned int j = 0; j < M.n(); j++)
         deallog << filter_out_small_numbers(M(i, j), tolerance) << " ";
       deallog << std::endl;
     }
@@ -166,9 +166,9 @@ display_matrix(FullMatrix<std::complex<number>> M)
 {
   const number tolerance = 100. * std::numeric_limits<number>::epsilon();
   deallog << M.m() << "x" << M.n() << " matrix" << std::endl;
-  for(unsigned int i = 0; i < M.m(); i++)
+  for (unsigned int i = 0; i < M.m(); i++)
     {
-      for(unsigned int j = 0; j < M.n(); j++)
+      for (unsigned int j = 0; j < M.n(); j++)
         deallog << filter_out_small_numbers(M(i, j), tolerance) << " ";
       deallog << std::endl;
     }
@@ -178,8 +178,8 @@ template <typename number>
 void
 fill_matrix(FullMatrix<number>& A)
 {
-  for(unsigned int i = 0; i < A.m(); i++)
-    for(unsigned int j = 0; j < A.n(); j++)
+  for (unsigned int i = 0; i < A.m(); i++)
+    for (unsigned int j = 0; j < A.n(); j++)
       A(i, j) = number(i * A.n() + j + 1);
 }
 
@@ -198,7 +198,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -211,7 +211,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

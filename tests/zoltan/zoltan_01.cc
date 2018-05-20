@@ -35,10 +35,10 @@ test()
   deallog << "Partitioning" << std::endl;
   GridTools::partition_triangulation(
     5, triangulation, SparsityTools::Partitioner::zoltan);
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     deallog << cell << ' ' << cell->subdomain_id() << std::endl;
 }
 

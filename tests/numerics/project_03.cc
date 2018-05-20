@@ -42,7 +42,7 @@ public:
   value(const Point<dim>& p, const unsigned int = 0) const
   {
     double s = 1;
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       s *= p[i];
     return s;
   }
@@ -74,10 +74,10 @@ test()
 
   VectorTools::project(dh, cm, QGauss<dim>(3), approximated_function, v);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-      cell != dh.end();
-      ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+       cell != dh.end();
+       ++cell)
+    for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       {
         deallog << cell->vertex(i) << ' ' << v(cell->vertex_dof_index(i, 0))
                 << std::endl;
@@ -86,9 +86,9 @@ test()
         // somewhat small. it won't
         // be zero since we project
         // and do not interpolate
-        if(std::fabs(v(cell->vertex_dof_index(i, 0))
-                     - F<dim>().value(cell->vertex(i)))
-           > 1e-4)
+        if (std::fabs(v(cell->vertex_dof_index(i, 0))
+                      - F<dim>().value(cell->vertex(i)))
+            > 1e-4)
           {
             deallog << "expected value: " << F<dim>().value(cell->vertex(i))
                     << std::endl;

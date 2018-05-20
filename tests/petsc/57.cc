@@ -26,7 +26,7 @@ test(PETScWrappers::MPI::Vector& v)
   // set only certain elements of the
   // vector. they are all positive
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     {
       v(i) += i;
       pattern[i] = true;
@@ -61,7 +61,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -75,7 +75,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

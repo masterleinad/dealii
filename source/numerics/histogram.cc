@@ -51,7 +51,7 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
     ExcMessage("Your input data needs to contain at least one input vector."));
   Assert(n_intervals > 0,
          ExcMessage("The number of intervals needs to be at least one."));
-  for(unsigned int i = 0; i < values.size(); ++i)
+  for (unsigned int i = 0; i < values.size(); ++i)
     Assert(values[i].size() > 0, ExcEmptyData());
   Assert(values.size() == y_values_.size(),
          ExcIncompatibleArraySize(values.size(), y_values_.size()));
@@ -62,14 +62,14 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
   // first find minimum and maximum value
   // in the indicators
   number min_value = 0, max_value = 0;
-  switch(interval_spacing)
+  switch (interval_spacing)
     {
       case linear:
         {
           min_value = *std::min_element(values[0].begin(), values[0].end());
           max_value = *std::max_element(values[0].begin(), values[0].end());
 
-          for(unsigned int i = 1; i < values.size(); ++i)
+          for (unsigned int i = 1; i < values.size(); ++i)
             {
               min_value = std::min(
                 min_value,
@@ -94,7 +94,7 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
           max_value = *std::max_element(
             values[0].begin(), values[0].end(), logarithmic_less_function);
 
-          for(unsigned int i = 1; i < values.size(); ++i)
+          for (unsigned int i = 1; i < values.size(); ++i)
             {
               min_value = std::min(min_value,
                                    *std::min_element(values[i].begin(),
@@ -121,7 +121,7 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
   // mode, max_value may be larger than
   // min_value, but only up to rounding
   // precision.
-  if(max_value <= min_value)
+  if (max_value <= min_value)
     max_value = min_value + 1;
 
   // now set up the intervals based on
@@ -134,13 +134,13 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
   // copying
   intervals.emplace_back();
 
-  switch(interval_spacing)
+  switch (interval_spacing)
     {
       case linear:
         {
           const float delta = (max_value - min_value) / n_intervals;
 
-          for(unsigned int n = 0; n < n_intervals; ++n)
+          for (unsigned int n = 0; n < n_intervals; ++n)
             intervals[0].emplace_back(min_value + n * delta,
                                       min_value + (n + 1) * delta);
 
@@ -152,7 +152,7 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
           const float delta
             = (std::log(max_value) - std::log(min_value)) / n_intervals;
 
-          for(unsigned int n = 0; n < n_intervals; ++n)
+          for (unsigned int n = 0; n < n_intervals; ++n)
             intervals[0].emplace_back(
               std::exp(std::log(min_value) + n * delta),
               std::exp(std::log(min_value) + (n + 1) * delta));
@@ -165,14 +165,14 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
     };
 
   // fill the other lists of intervals
-  for(unsigned int i = 1; i < values.size(); ++i)
+  for (unsigned int i = 1; i < values.size(); ++i)
     intervals.push_back(intervals[0]);
 
   // finally fill the intervals
-  for(unsigned int i = 0; i < values.size(); ++i)
-    for(typename Vector<number>::const_iterator p = values[i].begin();
-        p < values[i].end();
-        ++p)
+  for (unsigned int i = 0; i < values.size(); ++i)
+    for (typename Vector<number>::const_iterator p = values[i].begin();
+         p < values[i].end();
+         ++p)
       {
         // find the right place for *p in
         // intervals[i]. use regular
@@ -180,8 +180,8 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
         // the logarithmic one to
         // map negative or zero value
         // to the leftmost interval always
-        for(unsigned int n = 0; n < n_intervals; ++n)
-          if(*p <= intervals[i][n].right_point)
+        for (unsigned int n = 0; n < n_intervals; ++n)
+          if (*p <= intervals[i][n].right_point)
             {
               ++intervals[i][n].content;
               break;
@@ -210,9 +210,9 @@ Histogram::write_gnuplot(std::ostream& out) const
 
   // do a simple 2d plot, if only
   // one data set is available
-  if(intervals.size() == 1)
+  if (intervals.size() == 1)
     {
-      for(unsigned int n = 0; n < intervals[0].size(); ++n)
+      for (unsigned int n = 0; n < intervals[0].size(); ++n)
         out << intervals[0][n].left_point << ' ' << intervals[0][n].content
             << std::endl
             << intervals[0][n].right_point << ' ' << intervals[0][n].content
@@ -227,9 +227,9 @@ Histogram::write_gnuplot(std::ostream& out) const
     // gnuplot thinks the upper side is the
     // lower side and draws the diagram in
     // strange colors
-    for(int i = intervals.size() - 1; i >= 0; --i)
+    for (int i = intervals.size() - 1; i >= 0; --i)
       {
-        for(unsigned int n = 0; n < intervals[i].size(); ++n)
+        for (unsigned int n = 0; n < intervals[i].size(); ++n)
           out << intervals[i][n].left_point << ' '
               << (i < static_cast<int>(intervals.size()) - 1 ?
                     y_values[i + 1] :
@@ -242,7 +242,7 @@ Histogram::write_gnuplot(std::ostream& out) const
               << ' ' << intervals[i][n].content << std::endl;
 
         out << std::endl;
-        for(unsigned int n = 0; n < intervals[i].size(); ++n)
+        for (unsigned int n = 0; n < intervals[i].size(); ++n)
           out << intervals[i][n].left_point << ' ' << y_values[i] << ' '
               << intervals[i][n].content << std::endl
               << intervals[i][n].right_point << ' ' << y_values[i] << ' '
@@ -263,9 +263,9 @@ Histogram::get_interval_spacing_names()
 Histogram::IntervalSpacing
 Histogram::parse_interval_spacing(const std::string& name)
 {
-  if(name == "linear")
+  if (name == "linear")
     return linear;
-  else if(name == "logarithmic")
+  else if (name == "logarithmic")
     return logarithmic;
   else
     {

@@ -519,10 +519,10 @@ namespace internal
                                   const unsigned int fe_degree) const
     {
       const unsigned int n_indices = fe_index_conversion.size();
-      if(n_indices <= 1)
+      if (n_indices <= 1)
         return 0;
-      for(unsigned int i = 0; i < n_indices; ++i)
-        if(fe_index_conversion[i][first_selected_component] == fe_degree)
+      for (unsigned int i = 0; i < n_indices; ++i)
+        if (fe_index_conversion[i][first_selected_component] == fe_degree)
           return i;
       return numbers::invalid_unsigned_int;
     }

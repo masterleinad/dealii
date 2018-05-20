@@ -47,20 +47,20 @@ test()
   DoFHandler<dim> dofh(tr);
   dofh.distribute_dofs(fe);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "Total dofs=" << dofh.n_dofs() << std::endl;
 
   // extract constant modes and print
-  if(myid == 0)
+  if (myid == 0)
     {
       std::vector<bool> mask(fe.n_components(), true);
 
       std::vector<std::vector<bool>> constant_modes;
       DoFTools::extract_constant_modes(dofh, mask, constant_modes);
 
-      for(unsigned int i = 0; i < constant_modes.size(); ++i)
+      for (unsigned int i = 0; i < constant_modes.size(); ++i)
         {
-          for(unsigned int j = 0; j < constant_modes[i].size(); ++j)
+          for (unsigned int j = 0; j < constant_modes[i].size(); ++j)
             deallog << (constant_modes[i][j] ? '1' : '0') << ' ';
           deallog << std::endl;
         }
@@ -76,7 +76,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -44,7 +44,7 @@ check()
     const unsigned int n_components = fe.n_components();
 
     ComponentMask mask(n_components, false);
-    for(unsigned int i = first; i < first + n; ++i)
+    for (unsigned int i = first; i < first + n; ++i)
       mask.set(i, true);
 
     deallog << "<tr>\n"

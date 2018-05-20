@@ -69,7 +69,7 @@ test()
   triangulation.execute_coarsening_and_refinement();
 
   // now set the active_fe_index flags on the new set of fine level cells
-  for(unsigned int c = 0; c < dof_handler.begin(0)->n_children(); ++c)
+  for (unsigned int c = 0; c < dof_handler.begin(0)->n_children(); ++c)
     dof_handler.begin(0)->child(c)->set_active_fe_index(1);
 
   // distribute dofs and transfer solution there
@@ -79,7 +79,7 @@ test()
   solution_trans.interpolate(solution, new_solution);
 
   // we should now have only 1s in the new_solution vector
-  for(unsigned int i = 0; i < new_solution.size(); ++i)
+  for (unsigned int i = 0; i < new_solution.size(); ++i)
     AssertThrow(new_solution[i] == 1, ExcInternalError());
 
   // we are good if we made it to here

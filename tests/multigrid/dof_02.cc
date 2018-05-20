@@ -44,20 +44,21 @@ dofs(const DoFHandler<dim>& dof)
 
   std::vector<types::global_dof_index> indices;
 
-  for(cell = dof.begin(); cell != end; ++cell)
+  for (cell = dof.begin(); cell != end; ++cell)
     {
       indices.resize(cell->get_fe().dofs_per_face);
 
       deallog << "Level " << cell->level() << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           typename DoFHandler<dim>::face_iterator face = cell->face(f);
           face->get_mg_dof_indices(cell->level(), indices);
 
-          for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
+          for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face;
+               ++i)
             deallog << " v" << face->vertex(i);
           deallog << " dofs ";
-          for(unsigned int i = 0; i < indices.size(); ++i)
+          for (unsigned int i = 0; i < indices.size(); ++i)
             deallog << ' ' << indices[i];
           deallog << std::endl;
         }

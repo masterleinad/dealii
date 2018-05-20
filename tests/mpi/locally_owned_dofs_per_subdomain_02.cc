@@ -42,7 +42,7 @@ test()
   std::vector<IndexSet> locally_owned_dofs_per_proc
     = DoFTools::locally_owned_dofs_per_subdomain(dof_handler);
 
-  for(unsigned int p = 0; p < nproc; ++p)
+  for (unsigned int p = 0; p < nproc; ++p)
     {
       deallog << "proc " << p << ": " << std::endl;
       locally_owned_dofs_per_proc[p].print(deallog.get_file_stream());

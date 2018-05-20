@@ -37,12 +37,12 @@ helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type>& data,
   FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
 
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
       fe_eval.read_dof_values(src);
       fe_eval.evaluate(true, true, false);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int q = 0; q < n_q_points; ++q)
         {
           fe_eval.submit_value(Number(10) * fe_eval.get_value(q), q);
           fe_eval.submit_gradient(fe_eval.get_gradient(q), q);

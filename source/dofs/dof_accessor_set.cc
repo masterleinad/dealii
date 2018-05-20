@@ -44,18 +44,18 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
   OutputVector&         values,
   const unsigned int    fe_index) const
 {
-  if(!this->has_children() && !this->is_artificial())
+  if (!this->has_children() && !this->is_artificial())
     {
-      if((dynamic_cast<DoFHandler<DoFHandlerType::dimension,
-                                  DoFHandlerType::space_dimension>*>(
-            this->dof_handler)
-          != nullptr)
-         ||
-         // for hp-DoFHandlers, we need to require that on
-         // active cells, you either don't specify an fe_index,
-         // or that you specify the correct one
-         (fe_index == this->active_fe_index())
-         || (fe_index == DoFHandlerType::default_fe_index))
+      if ((dynamic_cast<DoFHandler<DoFHandlerType::dimension,
+                                   DoFHandlerType::space_dimension>*>(
+             this->dof_handler)
+           != nullptr)
+          ||
+          // for hp-DoFHandlers, we need to require that on
+          // active cells, you either don't specify an fe_index,
+          // or that you specify the correct one
+          (fe_index == this->active_fe_index())
+          || (fe_index == DoFHandlerType::default_fe_index))
         // simply set the values on this cell
         this->set_dof_values(local_values, values);
       else
@@ -75,7 +75,7 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
           // reasons, matrices are set to size 0x0 internally even
           // we reinit as 4x0, so we have to treat this case specially
           Vector<number> tmp(this->get_fe().dofs_per_cell);
-          if((tmp.size() > 0) && (local_values.size() > 0))
+          if ((tmp.size() > 0) && (local_values.size() > 0))
             interpolation.vmult(tmp, local_values);
 
           // now set the dof values in the global vector
@@ -111,9 +111,9 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
 
       Vector<number> tmp(dofs_per_cell);
 
-      for(unsigned int child = 0; child < this->n_children(); ++child)
+      for (unsigned int child = 0; child < this->n_children(); ++child)
         {
-          if(tmp.size() > 0)
+          if (tmp.size() > 0)
             fe.get_prolongation_matrix(child, this->refinement_case())
               .vmult(tmp, local_values);
           this->child(child)->set_dof_values_by_interpolation(

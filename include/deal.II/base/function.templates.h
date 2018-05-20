@@ -63,7 +63,7 @@ Function<dim, RangeNumberType>::vector_value(const Point<dim>&        p,
                                              Vector<RangeNumberType>& v) const
 {
   AssertDimension(v.size(), this->n_components);
-  for(unsigned int i = 0; i < this->n_components; ++i)
+  for (unsigned int i = 0; i < this->n_components; ++i)
     v(i) = value(p, i);
 }
 
@@ -79,7 +79,7 @@ Function<dim, RangeNumberType>::value_list(
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     values[i] = this->value(points[i], component);
 }
 
@@ -94,7 +94,7 @@ Function<dim, RangeNumberType>::vector_value_list(
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     this->vector_value(points[i], values[i]);
 }
 
@@ -106,7 +106,7 @@ Function<dim, RangeNumberType>::vector_values(
 {
   const unsigned int n = this->n_components;
   AssertDimension(values.size(), n);
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     value_list(points, values[i], i);
 }
 
@@ -126,7 +126,7 @@ Function<dim, RangeNumberType>::vector_gradient(
   std::vector<Tensor<1, dim, RangeNumberType>>& v) const
 {
   AssertDimension(v.size(), this->n_components);
-  for(unsigned int i = 0; i < this->n_components; ++i)
+  for (unsigned int i = 0; i < this->n_components; ++i)
     v[i] = gradient(p, i);
 }
 
@@ -140,7 +140,7 @@ Function<dim, RangeNumberType>::gradient_list(
   Assert(gradients.size() == points.size(),
          ExcDimensionMismatch(gradients.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     gradients[i] = gradient(points[i], component);
 }
 
@@ -153,7 +153,7 @@ Function<dim, RangeNumberType>::vector_gradient_list(
   Assert(gradients.size() == points.size(),
          ExcDimensionMismatch(gradients.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     {
       Assert(gradients[i].size() == n_components,
              ExcDimensionMismatch(gradients[i].size(), n_components));
@@ -169,7 +169,7 @@ Function<dim, RangeNumberType>::vector_gradients(
 {
   const unsigned int n = this->n_components;
   AssertDimension(values.size(), n);
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     gradient_list(points, values[i], i);
 }
 
@@ -202,7 +202,7 @@ Function<dim, RangeNumberType>::laplacian_list(
   Assert(laplacians.size() == points.size(),
          ExcDimensionMismatch(laplacians.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     laplacians[i] = this->laplacian(points[i], component);
 }
 
@@ -217,7 +217,7 @@ Function<dim, RangeNumberType>::vector_laplacian_list(
   Assert(laplacians.size() == points.size(),
          ExcDimensionMismatch(laplacians.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     this->vector_laplacian(points[i], laplacians[i]);
 }
 
@@ -237,7 +237,7 @@ Function<dim, RangeNumberType>::vector_hessian(
   std::vector<SymmetricTensor<2, dim, RangeNumberType>>& v) const
 {
   AssertDimension(v.size(), this->n_components);
-  for(unsigned int i = 0; i < this->n_components; ++i)
+  for (unsigned int i = 0; i < this->n_components; ++i)
     v[i] = hessian(p, i);
 }
 
@@ -251,7 +251,7 @@ Function<dim, RangeNumberType>::hessian_list(
   Assert(hessians.size() == points.size(),
          ExcDimensionMismatch(hessians.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     hessians[i] = hessian(points[i], component);
 }
 
@@ -265,7 +265,7 @@ Function<dim, RangeNumberType>::vector_hessian_list(
   Assert(hessians.size() == points.size(),
          ExcDimensionMismatch(hessians.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     {
       Assert(hessians[i].size() == n_components,
              ExcDimensionMismatch(hessians[i].size(), n_components));
@@ -388,7 +388,7 @@ namespace Functions
     Assert(return_values.size() == points.size(),
            ExcDimensionMismatch(return_values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for (unsigned int i = 0; i < points.size(); ++i)
       {
         Assert(
           return_values[i].size() == this->n_components,
@@ -424,7 +424,7 @@ namespace Functions
     Assert(gradients.size() == this->n_components,
            ExcDimensionMismatch(gradients.size(), this->n_components));
 
-    for(unsigned int c = 0; c < this->n_components; ++c)
+    for (unsigned int c = 0; c < this->n_components; ++c)
       gradients[c].clear();
   }
 
@@ -438,7 +438,7 @@ namespace Functions
     Assert(gradients.size() == points.size(),
            ExcDimensionMismatch(gradients.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for (unsigned int i = 0; i < points.size(); ++i)
       gradients[i].clear();
   }
 
@@ -450,11 +450,11 @@ namespace Functions
   {
     Assert(gradients.size() == points.size(),
            ExcDimensionMismatch(gradients.size(), points.size()));
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for (unsigned int i = 0; i < points.size(); ++i)
       {
         Assert(gradients[i].size() == this->n_components,
                ExcDimensionMismatch(gradients[i].size(), this->n_components));
-        for(unsigned int c = 0; c < this->n_components; ++c)
+        for (unsigned int c = 0; c < this->n_components; ++c)
           gradients[i][c].clear();
       };
   }
@@ -503,7 +503,7 @@ ComponentSelectFunction<dim, RangeNumberType>::substitute_function_value_with(
   const ConstantFunction<dim, RangeNumberType>& f)
 {
   Point<dim> p;
-  for(unsigned int i = 0; i < this->function_value_vector.size(); ++i)
+  for (unsigned int i = 0; i < this->function_value_vector.size(); ++i)
     this->function_value_vector[i] = f.value(p, i);
 }
 
@@ -531,7 +531,7 @@ ComponentSelectFunction<dim, RangeNumberType>::vector_value_list(
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     ComponentSelectFunction<dim, RangeNumberType>::vector_value(points[i],
                                                                 values[i]);
 }
@@ -591,7 +591,7 @@ VectorFunctionFromScalarFunctionObject<dim, RangeNumberType>::value(
   Assert(component < this->n_components,
          ExcIndexRange(component, 0, this->n_components));
 
-  if(component == selected_component)
+  if (component == selected_component)
     return function_object(p);
   else
     return 0;
@@ -642,8 +642,8 @@ VectorFunctionFromTensorFunction<dim, RangeNumberType>::value(
 
   // if the requested component is out of the range selected, then we can
   // return early
-  if((component < selected_component)
-     || (component >= selected_component + dim))
+  if ((component < selected_component)
+      || (component >= selected_component + dim))
     return 0;
 
   // otherwise retrieve the values from the <tt>tensor_function</tt> to be
@@ -675,7 +675,7 @@ VectorFunctionFromTensorFunction<dim, RangeNumberType>::vector_value(
 
   // Second we adjust the desired components to take on the values in
   // <tt>tensor_value</tt>.
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values(i + selected_component) = tensor_value[i];
 }
 
@@ -697,7 +697,7 @@ VectorFunctionFromTensorFunction<dim, RangeNumberType>::vector_value_list(
 
   const unsigned int n_points = points.size();
 
-  for(unsigned int p = 0; p < n_points; ++p)
+  for (unsigned int p = 0; p < n_points; ++p)
     VectorFunctionFromTensorFunction<dim, RangeNumberType>::vector_value(
       points[p], value_list[p]);
 }

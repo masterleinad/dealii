@@ -39,16 +39,16 @@ test()
   triangulation.refine_global(1);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i <= GeometryInfo<dim>::max_children_per_cell; ++i)
+  for (unsigned int i = 1; i <= GeometryInfo<dim>::max_children_per_cell; ++i)
     fe.push_back(FE_Q<dim>(i));
 
   hp::DoFHandler<dim> dof_handler(triangulation);
 
   unsigned int index = 0;
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell, ++index)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell, ++index)
     cell->set_active_fe_index(index);
 
   dof_handler.distribute_dofs(fe);

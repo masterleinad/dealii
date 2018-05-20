@@ -39,7 +39,7 @@ public:
   reinit(const FullMatrix<double> f)
   {
     diagonal.reinit(f.m());
-    for(unsigned int i = 0; i < f.m(); ++i)
+    for (unsigned int i = 0; i < f.m(); ++i)
       diagonal(i) = 1. / f(i, i);
     diagonal.print(deallog);
   }
@@ -66,11 +66,11 @@ check()
 {
   const unsigned int size = 10;
   FullMatrix<double> m(size, size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     m(i, i) = i + 1;
 
   Vector<double> in(size), out(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     in(i) = random_value<double>();
 
   PreconditionChebyshev<FullMatrix<double>,
@@ -87,19 +87,19 @@ check()
   prec.initialize(m, data);
 
   deallog << "Exact inverse:     ";
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     deallog << in(i) / m(i, i) << " ";
   deallog << std::endl;
 
   deallog << "Check  vmult ones: ";
   prec.vmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 
   deallog << "Check Tvmult ones: ";
   prec.Tvmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 
@@ -110,13 +110,13 @@ check()
 
   deallog << "Check  vmult diag: ";
   prec.vmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 
   deallog << "Check Tvmult diag: ";
   prec.Tvmult(out, in);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     deallog << out(i) << " ";
   deallog << std::endl;
 }

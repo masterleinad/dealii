@@ -37,10 +37,10 @@ public:
   virtual OutputOperator<VectorType>&
   operator<<(const AnyData& vectors)
   {
-    for(unsigned int i = 0; i < vectors.size(); ++i)
+    for (unsigned int i = 0; i < vectors.size(); ++i)
       {
         const VectorType* p = vectors.try_read_ptr<VectorType>(i);
-        if(p != nullptr)
+        if (p != nullptr)
           {
             // this should be equal to dof->n_dofs() otherwise
             // DoFOutputOperator will complain

@@ -207,7 +207,7 @@ namespace Step7
   Solution<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     double return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for (unsigned int i = 0; i < this->n_source_centers; ++i)
       {
         const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
         return_value
@@ -247,7 +247,7 @@ namespace Step7
   {
     Tensor<1, dim> return_value;
 
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for (unsigned int i = 0; i < this->n_source_centers; ++i)
       {
         const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
 
@@ -288,7 +288,7 @@ namespace Step7
   RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
   {
     double return_value = 0;
-    for(unsigned int i = 0; i < this->n_source_centers; ++i)
+    for (unsigned int i = 0; i < this->n_source_centers; ++i)
       {
         const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
 
@@ -627,7 +627,7 @@ namespace Step7
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         cell_rhs    = 0;
@@ -637,10 +637,10 @@ namespace Step7
         right_hand_side.value_list(fe_values.get_quadrature_points(),
                                    rhs_values);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 // The first thing that has changed is the bilinear form. It
                 // now contains the additional term from the Helmholtz
                 // equation:
@@ -663,11 +663,11 @@ namespace Step7
         // <code>run()</code> function further below. (The default value of
         // boundary indicators is <code>0</code>, so faces can only have an
         // indicator equal to <code>1</code> if we have explicitly set it.)
-        for(unsigned int face_number = 0;
-            face_number < GeometryInfo<dim>::faces_per_cell;
-            ++face_number)
-          if(cell->face(face_number)->at_boundary()
-             && (cell->face(face_number)->boundary_id() == 1))
+        for (unsigned int face_number = 0;
+             face_number < GeometryInfo<dim>::faces_per_cell;
+             ++face_number)
+          if (cell->face(face_number)->at_boundary()
+              && (cell->face(face_number)->boundary_id() == 1))
             {
               // If we came into here, then we have found an external face
               // belonging to Gamma2. Next, we have to compute the values of
@@ -687,15 +687,15 @@ namespace Step7
               // <code>fe_face_values</code> object. This is then used to
               // compute the additional contribution of this face to the right
               // hand side:
-              for(unsigned int q_point = 0; q_point < n_face_q_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_face_q_points;
+                   ++q_point)
                 {
                   const double neumann_value
                     = (exact_solution.gradient(
                          fe_face_values.quadrature_point(q_point))
                        * fe_face_values.normal_vector(q_point));
 
-                  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                  for (unsigned int i = 0; i < dofs_per_cell; ++i)
                     cell_rhs(i)
                       += (neumann_value * fe_face_values.shape_value(i, q_point)
                           * fe_face_values.JxW(q_point));
@@ -706,9 +706,9 @@ namespace Step7
         // transfer it to the global matrix and right hand side vector, as in
         // the examples before:
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
@@ -790,7 +790,7 @@ namespace Step7
   void
   HelmholtzProblem<dim>::refine_grid()
   {
-    switch(refinement_mode)
+    switch (refinement_mode)
       {
         case global_refinement:
           {
@@ -972,9 +972,9 @@ namespace Step7
   {
     const unsigned int n_cycles
       = (refinement_mode == global_refinement) ? 5 : 9;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation, -1, 1);
             triangulation.refine_global(3);
@@ -982,14 +982,14 @@ namespace Step7
             typename Triangulation<dim>::cell_iterator cell
               = triangulation.begin(),
               endc = triangulation.end();
-            for(; cell != endc; ++cell)
-              for(unsigned int face_number = 0;
-                  face_number < GeometryInfo<dim>::faces_per_cell;
-                  ++face_number)
-                if((std::fabs(cell->face(face_number)->center()(0) - (-1))
-                    < 1e-12)
-                   || (std::fabs(cell->face(face_number)->center()(1) - (-1))
-                       < 1e-12))
+            for (; cell != endc; ++cell)
+              for (unsigned int face_number = 0;
+                   face_number < GeometryInfo<dim>::faces_per_cell;
+                   ++face_number)
+                if ((std::fabs(cell->face(face_number)->center()(0) - (-1))
+                     < 1e-12)
+                    || (std::fabs(cell->face(face_number)->center()(1) - (-1))
+                        < 1e-12))
                   cell->face(face_number)->set_boundary_id(1);
           }
         else
@@ -1023,7 +1023,7 @@ namespace Step7
     // another refinement method is added and not handled by the following
     // switch statement:
     std::string vtk_filename;
-    switch(refinement_mode)
+    switch (refinement_mode)
       {
         case global_refinement:
           vtk_filename = "solution-global";
@@ -1046,7 +1046,7 @@ namespace Step7
     // safeguard against the case that the polynomial degree has an unexpected
     // value, using the <code>Assert (false, ExcNotImplemented())</code> idiom
     // in the default branch of the switch statement:
-    switch(fe->degree)
+    switch (fe->degree)
       {
         case 1:
           vtk_filename += "-q1";
@@ -1155,7 +1155,7 @@ namespace Step7
     // we will write output now. We construct the file name in the same way as
     // before, but with a different prefix "error":
     std::string error_filename = "error";
-    switch(refinement_mode)
+    switch (refinement_mode)
       {
         case global_refinement:
           error_filename += "-global";
@@ -1167,7 +1167,7 @@ namespace Step7
           Assert(false, ExcNotImplemented());
       }
 
-    switch(fe->degree)
+    switch (fe->degree)
       {
         case 1:
           error_filename += "-q1";
@@ -1193,7 +1193,7 @@ namespace Step7
     // determination of something like an order of convergence is somewhat
     // more involved. While we are at it, we also show a few other things that
     // can be done with tables.
-    if(refinement_mode == global_refinement)
+    if (refinement_mode == global_refinement)
       {
         // The first thing is that one can group individual columns together
         // to form so-called super columns. Essentially, the columns remain
@@ -1240,7 +1240,7 @@ namespace Step7
         convergence_table.write_text(std::cout);
 
         std::string conv_filename = "convergence";
-        switch(refinement_mode)
+        switch (refinement_mode)
           {
             case global_refinement:
               conv_filename += "-global";
@@ -1251,7 +1251,7 @@ namespace Step7
             default:
               Assert(false, ExcNotImplemented());
           }
-        switch(fe->degree)
+        switch (fe->degree)
           {
             case 1:
               conv_filename += "-q1";
@@ -1360,7 +1360,7 @@ main()
         std::cout << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1373,7 +1373,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

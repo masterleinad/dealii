@@ -74,11 +74,11 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   dof_handler.distribute_dofs(fe);
 
   Vector<double> v_node(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < v_node.size(); ++i)
+  for (unsigned int i = 0; i < v_node.size(); ++i)
     v_node(i) = i;
 
   Vector<double> v_cell(dof_handler.get_triangulation().n_active_cells());
-  for(unsigned int i = 0; i < v_cell.size(); ++i)
+  for (unsigned int i = 0; i < v_cell.size(); ++i)
     v_cell(i) = i;
 
   // call main function in .cc files
@@ -118,7 +118,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -131,7 +131,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

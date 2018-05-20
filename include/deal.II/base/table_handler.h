@@ -773,7 +773,7 @@ namespace internal
       {
         return boost::get<T>(value);
       }
-    catch(...)
+    catch (...)
       {
         Assert(false,
                ExcMessage(
@@ -789,28 +789,28 @@ namespace internal
     // write first an identifier for the kind
     // of data stored and then the actual
     // data, in its correct data type
-    if(const int* p = boost::get<int>(&value))
+    if (const int* p = boost::get<int>(&value))
       {
         char c = 'i';
         ar& c&* p;
       }
-    else if(const unsigned int* p = boost::get<unsigned int>(&value))
+    else if (const unsigned int* p = boost::get<unsigned int>(&value))
       {
         char c = 'u';
         ar& c&* p;
       }
-    else if(const double* p = boost::get<double>(&value))
+    else if (const double* p = boost::get<double>(&value))
       {
         char c = 'd';
         ar& c&* p;
       }
-    else if(const std::string* p = boost::get<std::string>(&value))
+    else if (const std::string* p = boost::get<std::string>(&value))
       {
         char c = 's';
         ar& c&* p;
       }
-    else if(const unsigned long long int* p
-            = boost::get<unsigned long long int>(&value))
+    else if (const unsigned long long int* p
+             = boost::get<unsigned long long int>(&value))
       {
         char c = 'l';
         ar& c&* p;
@@ -830,7 +830,7 @@ namespace internal
     char c;
     ar&  c;
 
-    switch(c)
+    switch (c)
       {
         case 'i':
           {
@@ -883,21 +883,21 @@ void
 TableHandler::add_value(const std::string& key, const T value)
 {
   // see if the column already exists
-  if(columns.find(key) == columns.end())
+  if (columns.find(key) == columns.end())
     declare_column(key);
 
-  if(auto_fill_mode == true)
+  if (auto_fill_mode == true)
     {
       // follow the algorithm given in the introduction to this class
       // of padding columns as necessary
       unsigned int max_col_length = 0;
-      for(std::map<std::string, Column>::iterator p = columns.begin();
-          p != columns.end();
-          ++p)
+      for (std::map<std::string, Column>::iterator p = columns.begin();
+           p != columns.end();
+           ++p)
         max_col_length = std::max(
           max_col_length, static_cast<unsigned int>(p->second.entries.size()));
 
-      while(columns[key].entries.size() + 1 < max_col_length)
+      while (columns[key].entries.size() + 1 < max_col_length)
         {
           columns[key].entries.push_back(internal::TableEntry(T()));
           internal::TableEntry& entry = columns[key].entries.back();

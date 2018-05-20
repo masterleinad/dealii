@@ -47,17 +47,17 @@ void check_this(Triangulation<3>& tria)
 
   // look at all faces, not only
   // active ones
-  for(DoFHandler<3>::cell_iterator cell = dof_handler.begin();
-      cell != dof_handler.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
-      if(!cell->at_boundary(f))
+  for (DoFHandler<3>::cell_iterator cell = dof_handler.begin();
+       cell != dof_handler.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+      if (!cell->at_boundary(f))
         {
           const unsigned int nn = cell->neighbor_of_neighbor(f);
           fe_face_values1.reinit(cell, f);
           fe_face_values2.reinit(cell->neighbor(f), nn);
 
-          for(unsigned int q = 0; q < quadrature.size(); ++q)
+          for (unsigned int q = 0; q < quadrature.size(); ++q)
             {
               // in order to reduce
               // output file size,
@@ -71,7 +71,7 @@ void check_this(Triangulation<3>& tria)
               // values wrongly, then
               // outputting some will
               // be ok, I guess
-              if(global_datum++ % 17 * 17 == 0)
+              if (global_datum++ % 17 * 17 == 0)
                 deallog << "Cell " << cell << ", face " << f << std::endl
                         << "  " << fe_face_values1.quadrature_point(q) << ", "
                         << fe_face_values1.JxW(q) << std::endl;
@@ -94,7 +94,7 @@ void check(Triangulation<3>& tria)
   deallog << "Initial check" << std::endl;
   check_this(tria);
 
-  for(unsigned int r = 0; r < 3; ++r)
+  for (unsigned int r = 0; r < 3; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

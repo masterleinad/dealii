@@ -1853,7 +1853,7 @@ template <int dim, typename Number>
 inline unsigned int
 MatrixFree<dim, Number>::n_inner_face_batches() const
 {
-  if(task_info.face_partition_data.size() == 0)
+  if (task_info.face_partition_data.size() == 0)
     return 0;
   return task_info.face_partition_data.back();
 }
@@ -1862,7 +1862,7 @@ template <int dim, typename Number>
 inline unsigned int
 MatrixFree<dim, Number>::n_boundary_face_batches() const
 {
-  if(task_info.face_partition_data.size() == 0)
+  if (task_info.face_partition_data.size() == 0)
     return 0;
   return task_info.boundary_partition_data.back()
          - task_info.face_partition_data.back();
@@ -1872,7 +1872,7 @@ template <int dim, typename Number>
 inline unsigned int
 MatrixFree<dim, Number>::n_ghost_inner_face_batches() const
 {
-  if(task_info.face_partition_data.size() == 0)
+  if (task_info.face_partition_data.size() == 0)
     return 0;
   return face_info.faces.size() - task_info.boundary_partition_data.back();
 }
@@ -1902,7 +1902,7 @@ MatrixFree<dim, Number>::get_faces_by_cells_boundary_id(
   std::array<types::boundary_id, VectorizedArray<Number>::n_array_elements>
     result;
   result.fill(numbers::invalid_boundary_id);
-  for(unsigned int v = 0; v < n_active_entries_per_cell_batch(macro_cell); ++v)
+  for (unsigned int v = 0; v < n_active_entries_per_cell_batch(macro_cell); ++v)
     result[v] = face_info.cell_and_face_boundary_id(macro_cell, face_number, v);
   return result;
 }
@@ -1956,13 +1956,13 @@ MatrixFree<dim, Number>::create_cell_subrange_hp(
   const unsigned int                           degree,
   const unsigned int                           dof_handler_component) const
 {
-  if(dof_info[dof_handler_component].cell_active_fe_index.empty())
+  if (dof_info[dof_handler_component].cell_active_fe_index.empty())
     {
       AssertDimension(
         dof_info[dof_handler_component].fe_index_conversion.size(), 1);
       AssertDimension(
         dof_info[dof_handler_component].fe_index_conversion[0].size(), 1);
-      if(dof_info[dof_handler_component].fe_index_conversion[0][0] == degree)
+      if (dof_info[dof_handler_component].fe_index_conversion[0][0] == degree)
         return range;
       else
         return std::pair<unsigned int, unsigned int>(range.second,
@@ -1971,7 +1971,7 @@ MatrixFree<dim, Number>::create_cell_subrange_hp(
 
   const unsigned int fe_index
     = dof_info[dof_handler_component].fe_index_from_degree(0, degree);
-  if(fe_index >= dof_info[dof_handler_component].max_fe_index)
+  if (fe_index >= dof_info[dof_handler_component].max_fe_index)
     return std::pair<unsigned int, unsigned int>(range.second, range.second);
   else
     return create_cell_subrange_hp_by_index(
@@ -2007,13 +2007,13 @@ MatrixFree<dim, Number>::n_active_entries_per_cell_batch(
 {
   AssertIndexRange(cell_batch_number, task_info.cell_partition_data.back());
   unsigned int n_components = VectorizedArray<Number>::n_array_elements;
-  while(n_components > 1
-        && cell_level_index[cell_batch_number
-                              * VectorizedArray<Number>::n_array_elements
-                            + n_components - 1]
-             == cell_level_index[cell_batch_number
-                                   * VectorizedArray<Number>::n_array_elements
-                                 + n_components - 2])
+  while (n_components > 1
+         && cell_level_index[cell_batch_number
+                               * VectorizedArray<Number>::n_array_elements
+                             + n_components - 1]
+              == cell_level_index[cell_batch_number
+                                    * VectorizedArray<Number>::n_array_elements
+                                  + n_components - 2])
     --n_components;
   AssertIndexRange(n_components - 1, VectorizedArray<Number>::n_array_elements);
   return n_components;
@@ -2026,9 +2026,9 @@ MatrixFree<dim, Number>::n_active_entries_per_face_batch(
 {
   AssertIndexRange(face_batch_number, face_info.faces.size());
   unsigned int n_components = VectorizedArray<Number>::n_array_elements;
-  while(n_components > 1
-        && face_info.faces[face_batch_number].cells_interior[n_components - 1]
-             == numbers::invalid_unsigned_int)
+  while (n_components > 1
+         && face_info.faces[face_batch_number].cells_interior[n_components - 1]
+              == numbers::invalid_unsigned_int)
     --n_components;
   AssertIndexRange(n_components - 1, VectorizedArray<Number>::n_array_elements);
   return n_components;
@@ -2150,7 +2150,7 @@ MatrixFree<dim, Number>::get_cell_category(const unsigned int macro_cell) const
 {
   AssertIndexRange(0, dof_info.size());
   AssertIndexRange(macro_cell, dof_info[0].cell_active_fe_index.size());
-  if(dof_info[0].cell_active_fe_index.empty())
+  if (dof_info[0].cell_active_fe_index.empty())
     return 0;
   else
     return dof_info[0].cell_active_fe_index[macro_cell];
@@ -2161,24 +2161,24 @@ inline std::pair<unsigned int, unsigned int>
 MatrixFree<dim, Number>::get_face_category(const unsigned int macro_face) const
 {
   AssertIndexRange(macro_face, face_info.faces.size());
-  if(dof_info[0].cell_active_fe_index.empty())
+  if (dof_info[0].cell_active_fe_index.empty())
     return std::make_pair(0U, 0U);
 
   std::pair<unsigned int, unsigned int> result;
-  for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements
-                          && face_info.faces[macro_face].cells_interior[v]
-                               != numbers::invalid_unsigned_int;
-      ++v)
+  for (unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements
+                           && face_info.faces[macro_face].cells_interior[v]
+                                != numbers::invalid_unsigned_int;
+       ++v)
     result.first = std::max(
       result.first,
       dof_info[0]
         .cell_active_fe_index[face_info.faces[macro_face].cells_interior[v]]);
-  if(face_info.faces[macro_face].cells_exterior[0]
-     != numbers::invalid_unsigned_int)
-    for(unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements
-                            && face_info.faces[macro_face].cells_exterior[v]
-                                 != numbers::invalid_unsigned_int;
-        ++v)
+  if (face_info.faces[macro_face].cells_exterior[0]
+      != numbers::invalid_unsigned_int)
+    for (unsigned int v = 0; v < VectorizedArray<Number>::n_array_elements
+                             && face_info.faces[macro_face].cells_exterior[v]
+                                  != numbers::invalid_unsigned_int;
+         ++v)
       result.second = std::max(
         result.first,
         dof_info[0]
@@ -2209,8 +2209,8 @@ MatrixFree<dim, Number>::acquire_scratch_data() const
   typedef std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>
              list_type;
   list_type& data = scratch_pad.get();
-  for(typename list_type::iterator it = data.begin(); it != data.end(); ++it)
-    if(it->first == false)
+  for (typename list_type::iterator it = data.begin(); it != data.end(); ++it)
+    if (it->first == false)
       {
         it->first = true;
         return &it->second;
@@ -2228,8 +2228,8 @@ MatrixFree<dim, Number>::release_scratch_data(
   typedef std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>
              list_type;
   list_type& data = scratch_pad.get();
-  for(typename list_type::iterator it = data.begin(); it != data.end(); ++it)
-    if(&it->second == scratch)
+  for (typename list_type::iterator it = data.begin(); it != data.end(); ++it)
+    if (&it->second == scratch)
       {
         Assert(it->first == true, ExcInternalError());
         it->first = false;
@@ -2242,11 +2242,11 @@ template <int dim, typename Number>
 AlignedVector<Number>*
 MatrixFree<dim, Number>::acquire_scratch_data_non_threadsafe() const
 {
-  for(typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it
-      = scratch_pad_non_threadsafe.begin();
-      it != scratch_pad_non_threadsafe.end();
-      ++it)
-    if(it->first == false)
+  for (typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it
+       = scratch_pad_non_threadsafe.begin();
+       it != scratch_pad_non_threadsafe.end();
+       ++it)
+    if (it->first == false)
       {
         it->first = true;
         return &it->second;
@@ -2261,11 +2261,11 @@ void
 MatrixFree<dim, Number>::release_scratch_data_non_threadsafe(
   const AlignedVector<Number>* scratch) const
 {
-  for(typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it
-      = scratch_pad_non_threadsafe.begin();
-      it != scratch_pad_non_threadsafe.end();
-      ++it)
-    if(&it->second == scratch)
+  for (typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it
+       = scratch_pad_non_threadsafe.begin();
+       it != scratch_pad_non_threadsafe.end();
+       ++it)
+    if (&it->second == scratch)
       {
         Assert(it->first == true, ExcInternalError());
         it->first = false;
@@ -2288,8 +2288,8 @@ namespace internal
     {
       std::vector<IndexSet> locally_owned_set;
       locally_owned_set.reserve(dofh.size());
-      for(unsigned int j = 0; j < dofh.size(); j++)
-        if(level == numbers::invalid_unsigned_int)
+      for (unsigned int j = 0; j < dofh.size(); j++)
+        if (level == numbers::invalid_unsigned_int)
           locally_owned_set.push_back(dofh[j]->locally_owned_dofs());
         else
           AssertThrow(false, ExcNotImplemented());
@@ -2304,8 +2304,8 @@ namespace internal
     {
       std::vector<IndexSet> locally_owned_set;
       locally_owned_set.reserve(dofh.size());
-      for(unsigned int j = 0; j < dofh.size(); j++)
-        if(level == numbers::invalid_unsigned_int)
+      for (unsigned int j = 0; j < dofh.size(); j++)
+        if (level == numbers::invalid_unsigned_int)
           locally_owned_set.push_back(dofh[j]->locally_owned_dofs());
         else
           locally_owned_set.push_back(dofh[j]->locally_owned_mg_dofs(level));
@@ -2390,7 +2390,7 @@ MatrixFree<dim, Number>::reinit(
     = internal::MatrixFreeImplementation::extract_locally_owned_index_sets(
       dof_handler, additional_data.level_mg_handler);
   std::vector<hp::QCollection<1>> quad_hp;
-  for(unsigned int q = 0; q < quad.size(); ++q)
+  for (unsigned int q = 0; q < quad.size(); ++q)
     quad_hp.emplace_back(quad[q]);
   internal_reinit(StaticMappingQ1<dim>::mapping,
                   dof_handler,
@@ -2459,7 +2459,7 @@ MatrixFree<dim, Number>::reinit(
     = internal::MatrixFreeImplementation::extract_locally_owned_index_sets(
       dof_handler, additional_data.level_mg_handler);
   std::vector<hp::QCollection<1>> quad_hp;
-  for(unsigned int q = 0; q < quad.size(); ++q)
+  for (unsigned int q = 0; q < quad.size(); ++q)
     quad_hp.emplace_back(quad[q]);
   internal_reinit(mapping,
                   dof_handler,
@@ -2482,7 +2482,7 @@ MatrixFree<dim, Number>::reinit(
 {
   // find out whether we use a hp Quadrature or a standard quadrature
   std::vector<hp::QCollection<1>> quad_hp;
-  for(unsigned int q = 0; q < quad.size(); ++q)
+  for (unsigned int q = 0; q < quad.size(); ++q)
     quad_hp.emplace_back(quad[q]);
   internal_reinit(mapping,
                   dof_handler,
@@ -2530,9 +2530,9 @@ namespace internal
 #  endif
     {
       (void) n_components;
-      if(this->vector_face_access
-         != dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified)
-        for(unsigned int c = 0; c < matrix_free.n_components(); ++c)
+      if (this->vector_face_access
+          != dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified)
+        for (unsigned int c = 0; c < matrix_free.n_components(); ++c)
           AssertDimension(
             matrix_free.get_dof_info(c).vector_partitioner_face_variants.size(),
             3);
@@ -2541,8 +2541,8 @@ namespace internal
     ~VectorDataExchange()
     {
 #  ifdef DEAL_II_WITH_MPI
-      for(unsigned int i = 0; i < tmp_data.size(); ++i)
-        if(tmp_data[i] != nullptr)
+      for (unsigned int i = 0; i < tmp_data.size(); ++i)
+        if (tmp_data[i] != nullptr)
           matrix_free.release_scratch_data_non_threadsafe(tmp_data[i]);
 #  endif
     }
@@ -2553,8 +2553,8 @@ namespace internal
     {
       unsigned int mf_component = numbers::invalid_unsigned_int;
       (void) check_global_compatibility;
-      for(unsigned int c = 0; c < matrix_free.n_components(); ++c)
-        if(
+      for (unsigned int c = 0; c < matrix_free.n_components(); ++c)
+        if (
 #  ifdef DEBUG
           check_global_compatibility ?
             vec.get_partitioner()->is_globally_compatible(
@@ -2575,12 +2575,12 @@ namespace internal
       AssertDimension(matrix_free.get_dof_info(mf_component)
                         .vector_partitioner_face_variants.size(),
                       3);
-      if(vector_face_access
-         == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::none)
+      if (vector_face_access
+          == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::none)
         return *matrix_free.get_dof_info(mf_component)
                   .vector_partitioner_face_variants[0];
-      else if(vector_face_access
-              == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::values)
+      else if (vector_face_access
+               == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::values)
         return *matrix_free.get_dof_info(mf_component)
                   .vector_partitioner_face_variants[1];
       else
@@ -2595,19 +2595,20 @@ namespace internal
     {
       (void) component_in_block_vector;
       bool ghosts_set = vec.has_ghost_elements();
-      if(ghosts_set)
+      if (ghosts_set)
         ghosts_were_set = true;
-      if(vector_face_access
-           == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
-         || vec.size() == 0)
+      if (vector_face_access
+            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
+          || vec.size() == 0)
         vec.update_ghost_values_start(component_in_block_vector
                                       + channel_shift);
       else
         {
 #  ifdef DEAL_II_WITH_MPI
           const unsigned int mf_component = find_vector_in_mf(vec);
-          if(&get_partitioner(mf_component)
-             == matrix_free.get_dof_info(mf_component).vector_partitioner.get())
+          if (&get_partitioner(mf_component)
+              == matrix_free.get_dof_info(mf_component)
+                   .vector_partitioner.get())
             {
               vec.update_ghost_values_start(component_in_block_vector
                                             + channel_shift);
@@ -2616,7 +2617,7 @@ namespace internal
 
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
-          if(part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
+          if (part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
             return;
 
           tmp_data[component_in_block_vector]
@@ -2644,9 +2645,9 @@ namespace internal
       const LinearAlgebra::distributed::Vector<Number>& vec)
     {
       (void) component_in_block_vector;
-      if(vector_face_access
-           == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
-         || vec.size() == 0)
+      if (vector_face_access
+            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
+          || vec.size() == 0)
         vec.update_ghost_values_finish();
       else
         {
@@ -2658,14 +2659,15 @@ namespace internal
           const unsigned int mf_component = find_vector_in_mf(vec);
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
-          if(&part
-             == matrix_free.get_dof_info(mf_component).vector_partitioner.get())
+          if (&part
+              == matrix_free.get_dof_info(mf_component)
+                   .vector_partitioner.get())
             {
               vec.update_ghost_values_finish();
               return;
             }
 
-          if(part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
+          if (part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
             return;
 
           part.export_to_ghosted_array_finish(
@@ -2687,9 +2689,9 @@ namespace internal
     {
       (void) component_in_block_vector;
       Assert(vec.has_ghost_elements() == false, ExcNotImplemented());
-      if(vector_face_access
-           == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
-         || vec.size() == 0)
+      if (vector_face_access
+            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
+          || vec.size() == 0)
         vec.compress_start(component_in_block_vector + channel_shift);
       else
         {
@@ -2698,14 +2700,15 @@ namespace internal
           const unsigned int mf_component = find_vector_in_mf(vec);
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
-          if(&part
-             == matrix_free.get_dof_info(mf_component).vector_partitioner.get())
+          if (&part
+              == matrix_free.get_dof_info(mf_component)
+                   .vector_partitioner.get())
             {
               vec.compress_start(component_in_block_vector + channel_shift);
               return;
             }
 
-          if(part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
+          if (part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
             return;
 
           tmp_data[component_in_block_vector]
@@ -2731,9 +2734,9 @@ namespace internal
                     LinearAlgebra::distributed::Vector<Number>& vec)
     {
       (void) component_in_block_vector;
-      if(vector_face_access
-           == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
-         || vec.size() == 0)
+      if (vector_face_access
+            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
+          || vec.size() == 0)
         vec.compress_finish(dealii::VectorOperation::add);
       else
         {
@@ -2745,14 +2748,15 @@ namespace internal
 
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
-          if(&part
-             == matrix_free.get_dof_info(mf_component).vector_partitioner.get())
+          if (&part
+              == matrix_free.get_dof_info(mf_component)
+                   .vector_partitioner.get())
             {
               vec.compress_finish(dealii::VectorOperation::add);
               return;
             }
 
-          if(part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
+          if (part.n_ghost_indices() == 0 && part.n_import_indices() == 0)
             return;
 
           part.import_from_ghosted_array_finish(
@@ -2776,12 +2780,12 @@ namespace internal
     reset_ghost_values(
       const LinearAlgebra::distributed::Vector<Number>& vec) const
     {
-      if(ghosts_were_set == true)
+      if (ghosts_were_set == true)
         return;
 
-      if(vector_face_access
-           == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
-         || vec.size() == 0)
+      if (vector_face_access
+            == dealii::MatrixFree<dim, Number>::DataAccessOnFaces::unspecified
+          || vec.size() == 0)
         vec.zero_out_ghosts();
       else
         {
@@ -2791,19 +2795,20 @@ namespace internal
           const unsigned int mf_component = find_vector_in_mf(vec);
           const Utilities::MPI::Partitioner& part
             = get_partitioner(mf_component);
-          if(&part
-             == matrix_free.get_dof_info(mf_component).vector_partitioner.get())
+          if (&part
+              == matrix_free.get_dof_info(mf_component)
+                   .vector_partitioner.get())
             vec.zero_out_ghosts();
-          else if(part.n_ghost_indices() > 0)
+          else if (part.n_ghost_indices() > 0)
             {
-              for(std::vector<std::pair<unsigned int,
-                                        unsigned int>>::const_iterator my_ghosts
-                  = part.ghost_indices_within_larger_ghost_set().begin();
-                  my_ghosts
-                  != part.ghost_indices_within_larger_ghost_set().end();
-                  ++my_ghosts)
-                for(unsigned int j = my_ghosts->first; j < my_ghosts->second;
-                    j++)
+              for (std::vector<std::pair<unsigned int, unsigned int>>::
+                     const_iterator my_ghosts
+                   = part.ghost_indices_within_larger_ghost_set().begin();
+                   my_ghosts
+                   != part.ghost_indices_within_larger_ghost_set().end();
+                   ++my_ghosts)
+                for (unsigned int j = my_ghosts->first; j < my_ghosts->second;
+                     j++)
                   {
                     const_cast<LinearAlgebra::distributed::Vector<Number>&>(vec)
                       .local_element(j + part.local_size())
@@ -2818,7 +2823,7 @@ namespace internal
     zero_vector_region(const unsigned int                          range_index,
                        LinearAlgebra::distributed::Vector<Number>& vec) const
     {
-      if(range_index == numbers::invalid_unsigned_int)
+      if (range_index == numbers::invalid_unsigned_int)
         vec = Number();
       else
         {
@@ -2832,10 +2837,10 @@ namespace internal
                  ExcInternalError());
           AssertIndexRange(range_index,
                            dof_info.vector_zero_range_list_index.size() - 1);
-          for(unsigned int id
-              = dof_info.vector_zero_range_list_index[range_index];
-              id != dof_info.vector_zero_range_list_index[range_index + 1];
-              ++id)
+          for (unsigned int id
+               = dof_info.vector_zero_range_list_index[range_index];
+               id != dof_info.vector_zero_range_list_index[range_index + 1];
+               ++id)
             {
               const unsigned int start_pos
                 = dof_info.vector_zero_range_list[id]
@@ -2874,7 +2879,7 @@ namespace internal
                      std::integral_constant<bool, true>)
   {
     unsigned int components = 0;
-    for(unsigned int bl = 0; bl < vec.n_blocks(); ++bl)
+    for (unsigned int bl = 0; bl < vec.n_blocks(); ++bl)
       components += n_components(vec.block(bl));
     return components;
   }
@@ -2899,7 +2904,7 @@ namespace internal
   n_components(const std::vector<VectorStruct>& vec)
   {
     unsigned int components = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       components += n_components_block(
         vec[comp],
         std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
@@ -2911,7 +2916,7 @@ namespace internal
   n_components(const std::vector<VectorStruct*>& vec)
   {
     unsigned int components = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       components += n_components_block(
         *vec[comp],
         std::integral_constant<bool, IsBlockVector<VectorStruct>::value>());
@@ -2995,7 +3000,7 @@ namespace internal
                            std::integral_constant<bool, false>,
                            VectorDataExchange<dim, Number>&)
   {
-    if(range_index == 0 || range_index == numbers::invalid_unsigned_int)
+    if (range_index == 0 || range_index == numbers::invalid_unsigned_int)
       vec = 0;
   }
 
@@ -3028,7 +3033,7 @@ namespace internal
                             VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         update_ghost_values_start(vec[comp], exchanger, component_index);
         component_index += n_components(vec[comp]);
@@ -3041,7 +3046,7 @@ namespace internal
                             VectorDataExchange<dim, Number>&  exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         update_ghost_values_start(*vec[comp], exchanger, component_index);
         component_index += n_components(*vec[comp]);
@@ -3055,7 +3060,7 @@ namespace internal
                                   std::integral_constant<bool, true>,
                                   VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       update_ghost_values_start(vec.block(i), exchanger, channel + i);
   }
 
@@ -3086,7 +3091,7 @@ namespace internal
   reset_ghost_values(const std::vector<VectorStruct>& vec,
                      VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       reset_ghost_values(vec[comp], exchanger);
   }
 
@@ -3095,7 +3100,7 @@ namespace internal
   reset_ghost_values(const std::vector<VectorStruct*>& vec,
                      VectorDataExchange<dim, Number>&  exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       reset_ghost_values(*vec[comp], exchanger);
   }
 
@@ -3105,7 +3110,7 @@ namespace internal
                            std::integral_constant<bool, true>,
                            VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       reset_ghost_values(vec.block(i), exchanger);
   }
 
@@ -3138,7 +3143,7 @@ namespace internal
                              VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         update_ghost_values_finish(vec[comp], exchanger, component_index);
         component_index += n_components(vec[comp]);
@@ -3151,7 +3156,7 @@ namespace internal
                              VectorDataExchange<dim, Number>&  exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         update_ghost_values_finish(*vec[comp], exchanger, component_index);
         component_index += n_components(*vec[comp]);
@@ -3165,7 +3170,7 @@ namespace internal
                                    std::integral_constant<bool, true>,
                                    VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       update_ghost_values_finish(vec.block(i), exchanger, channel + i);
   }
 
@@ -3197,7 +3202,7 @@ namespace internal
                  VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         compress_start(vec[comp], exchanger, component_index);
         component_index += n_components(vec[comp]);
@@ -3210,7 +3215,7 @@ namespace internal
                  VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         compress_start(*vec[comp], exchanger, component_index);
         component_index += n_components(*vec[comp]);
@@ -3224,7 +3229,7 @@ namespace internal
                        std::integral_constant<bool, true>,
                        VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       compress_start(vec.block(i), exchanger, channel + i);
   }
 
@@ -3256,7 +3261,7 @@ namespace internal
                   VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         compress_finish(vec[comp], exchanger, component_index);
         component_index += n_components(vec[comp]);
@@ -3269,7 +3274,7 @@ namespace internal
                   VectorDataExchange<dim, Number>& exchanger)
   {
     unsigned int component_index = 0;
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       {
         compress_finish(*vec[comp], exchanger, component_index);
         component_index += n_components(*vec[comp]);
@@ -3283,7 +3288,7 @@ namespace internal
                         std::integral_constant<bool, true>,
                         VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       compress_finish(vec.block(i), exchanger, channel + i);
   }
 
@@ -3315,7 +3320,7 @@ namespace internal
                      std::vector<VectorStruct>&       vec,
                      VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       zero_vector_region(range_index, vec[comp], exchanger);
   }
 
@@ -3325,7 +3330,7 @@ namespace internal
                      std::vector<VectorStruct*>&      vec,
                      VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int comp = 0; comp < vec.size(); comp++)
+    for (unsigned int comp = 0; comp < vec.size(); comp++)
       zero_vector_region(range_index, *vec[comp], exchanger);
   }
 
@@ -3336,7 +3341,7 @@ namespace internal
                            std::integral_constant<bool, true>,
                            VectorDataExchange<dim, Number>& exchanger)
   {
-    for(unsigned int i = 0; i < vec.n_blocks(); ++i)
+    for (unsigned int i = 0; i < vec.n_blocks(); ++i)
       zero_vector_region(range_index, vec.block(i), exchanger);
   }
 
@@ -3427,7 +3432,7 @@ namespace internal
     virtual void
     cell(const std::pair<unsigned int, unsigned int>& cell_range) override
     {
-      if(cell_function != nullptr && cell_range.second > cell_range.first)
+      if (cell_function != nullptr && cell_range.second > cell_range.first)
         (container
          .*cell_function)(matrix_free, this->dst, this->src, cell_range);
     }
@@ -3437,7 +3442,7 @@ namespace internal
     virtual void
     face(const std::pair<unsigned int, unsigned int>& face_range) override
     {
-      if(face_function != nullptr && face_range.second > face_range.first)
+      if (face_function != nullptr && face_range.second > face_range.first)
         (container
          .*face_function)(matrix_free, this->dst, this->src, face_range);
     }
@@ -3447,7 +3452,7 @@ namespace internal
     virtual void
     boundary(const std::pair<unsigned int, unsigned int>& face_range) override
     {
-      if(boundary_function != nullptr && face_range.second > face_range.first)
+      if (boundary_function != nullptr && face_range.second > face_range.first)
         (container
          .*boundary_function)(matrix_free, this->dst, this->src, face_range);
     }
@@ -3461,7 +3466,7 @@ namespace internal
     virtual void
     vector_update_ghosts_start() override
     {
-      if(!src_and_dst_are_same)
+      if (!src_and_dst_are_same)
         internal::update_ghost_values_start(src, src_data_exchanger);
     }
 
@@ -3469,7 +3474,7 @@ namespace internal
     virtual void
     vector_update_ghosts_finish() override
     {
-      if(!src_and_dst_are_same)
+      if (!src_and_dst_are_same)
         internal::update_ghost_values_finish(src, src_data_exchanger);
     }
 
@@ -3485,7 +3490,7 @@ namespace internal
     vector_compress_finish() override
     {
       internal::compress_finish(dst, dst_data_exchanger);
-      if(!src_and_dst_are_same)
+      if (!src_and_dst_are_same)
         internal::reset_ghost_values(src, src_data_exchanger);
     }
 
@@ -3493,7 +3498,7 @@ namespace internal
     virtual void
     zero_dst_vector_range(const unsigned int range_index) override
     {
-      if(zero_dst_vector_setting)
+      if (zero_dst_vector_setting)
         internal::zero_vector_region(range_index, dst, dst_data_exchanger);
     }
 
@@ -3539,7 +3544,7 @@ namespace internal
                     const InVector&                              src,
                     const std::pair<unsigned int, unsigned int>& range) const
     {
-      if(cell)
+      if (cell)
         cell(mf, dst, src, range);
     }
 
@@ -3549,7 +3554,7 @@ namespace internal
                     const InVector&                              src,
                     const std::pair<unsigned int, unsigned int>& range) const
     {
-      if(face)
+      if (face)
         face(mf, dst, src, range);
     }
 
@@ -3560,7 +3565,7 @@ namespace internal
       const InVector&                              src,
       const std::pair<unsigned int, unsigned int>& range) const
     {
-      if(boundary)
+      if (boundary)
         boundary(mf, dst, src, range);
     }
 

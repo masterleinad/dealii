@@ -44,7 +44,7 @@ SparseILU<number>::initialize(const SparseMatrix<somenumber>& matrix,
   this->prebuild_lower_bound();
   this->copy_from(matrix);
 
-  if(data.strengthen_diagonal > 0)
+  if (data.strengthen_diagonal > 0)
     this->strengthen_diagonal_impl();
 
   // in the following, we implement algorithm 10.4 in the book by Saad by
@@ -61,11 +61,11 @@ SparseILU<number>::initialize(const SparseMatrix<somenumber>& matrix,
 
   std::vector<size_type> iw(N, numbers::invalid_size_type);
 
-  for(size_type k = 0; k < N; ++k)
+  for (size_type k = 0; k < N; ++k)
     {
       const size_type j1 = ia[k], j2 = ia[k + 1] - 1;
 
-      for(size_type j = j1; j <= j2; ++j)
+      for (size_type j = j1; j <= j2; ++j)
         iw[ja[j]] = j;
 
       // the algorithm in the book works on the elements of row k left of the
@@ -76,13 +76,13 @@ SparseILU<number>::initialize(const SparseMatrix<somenumber>& matrix,
 
       // pathological case: the current row of the matrix has only the
       // diagonal entry. then we have nothing to do.
-      if(j > j2)
+      if (j > j2)
         goto label_200;
 
     label_150:
 
       jrow = ja[j];
-      if(jrow >= k)
+      if (jrow >= k)
         goto label_200;
 
       // actual computations:
@@ -92,17 +92,17 @@ SparseILU<number>::initialize(const SparseMatrix<somenumber>& matrix,
 
         // jj runs from just right of the diagonal to the end of the row
         size_type jj = ia[jrow] + 1;
-        while(ja[jj] < jrow)
+        while (ja[jj] < jrow)
           ++jj;
-        for(; jj < ia[jrow + 1]; ++jj)
+        for (; jj < ia[jrow + 1]; ++jj)
           {
             const size_type jw = iw[ja[jj]];
-            if(jw != numbers::invalid_size_type)
+            if (jw != numbers::invalid_size_type)
               luval[jw] -= t1 * luval[jj];
           }
 
         ++j;
-        if(j <= j2)
+        if (j <= j2)
           goto label_150;
       }
 
@@ -121,7 +121,7 @@ SparseILU<number>::initialize(const SparseMatrix<somenumber>& matrix,
 
       luval[ia[k]] = 1. / luval[ia[k]];
 
-      for(size_type j = j1; j <= j2; ++j)
+      for (size_type j = j1; j <= j2; ++j)
         iw[ja[j]] = numbers::invalid_size_type;
     }
 }
@@ -155,7 +155,7 @@ SparseILU<number>::vmult(Vector<somenumber>&       dst,
   // perform it at the outset of the
   // loop
   dst = src;
-  for(size_type row = 0; row < N; ++row)
+  for (size_type row = 0; row < N; ++row)
     {
       // get start of this row. skip the
       // diagonal element
@@ -169,8 +169,8 @@ SparseILU<number>::vmult(Vector<somenumber>&       dst,
       somenumber    dst_row = dst(row);
       const number* luval
         = this->SparseMatrix<number>::val.get() + (rowstart - column_numbers);
-      for(const size_type* col = rowstart; col != first_after_diagonal;
-          ++col, ++luval)
+      for (const size_type* col = rowstart; col != first_after_diagonal;
+           ++col, ++luval)
         dst_row -= *luval * dst(*col);
       dst(row) = dst_row;
     }
@@ -183,7 +183,7 @@ SparseILU<number>::vmult(Vector<somenumber>&       dst,
   // note that we need to scale now,
   // since the diagonal is not equal to
   // one now
-  for(int row = N - 1; row >= 0; --row)
+  for (int row = N - 1; row >= 0; --row)
     {
       // get end of this row
       const size_type* const rowend
@@ -196,8 +196,8 @@ SparseILU<number>::vmult(Vector<somenumber>&       dst,
       somenumber    dst_row = dst(row);
       const number* luval   = this->SparseMatrix<number>::val.get()
                             + (first_after_diagonal - column_numbers);
-      for(const size_type* col = first_after_diagonal; col != rowend;
-          ++col, ++luval)
+      for (const size_type* col = first_after_diagonal; col != rowend;
+           ++col, ++luval)
         dst_row -= *luval * dst(*col);
 
       // scale by the diagonal element.
@@ -234,7 +234,7 @@ SparseILU<number>::Tvmult(Vector<somenumber>&       dst,
   Vector<somenumber> tmp(N);
 
   dst = src;
-  for(size_type row = 0; row < N; ++row)
+  for (size_type row = 0; row < N; ++row)
     {
       dst(row) -= tmp(row);
       // scale by the diagonal element.
@@ -253,8 +253,8 @@ SparseILU<number>::Tvmult(Vector<somenumber>&       dst,
       const somenumber dst_row = dst(row);
       const number*    luval   = this->SparseMatrix<number>::val.get()
                             + (first_after_diagonal - column_numbers);
-      for(const size_type* col = first_after_diagonal; col != rowend;
-          ++col, ++luval)
+      for (const size_type* col = first_after_diagonal; col != rowend;
+           ++col, ++luval)
         tmp(*col) += *luval * dst_row;
     }
 
@@ -267,7 +267,7 @@ SparseILU<number>::Tvmult(Vector<somenumber>&       dst,
   // now, since the diagonal is one
   // now
   tmp = 0;
-  for(int row = N - 1; row >= 0; --row)
+  for (int row = N - 1; row >= 0; --row)
     {
       dst(row) -= tmp(row);
 
@@ -283,8 +283,8 @@ SparseILU<number>::Tvmult(Vector<somenumber>&       dst,
       const somenumber dst_row = dst(row);
       const number*    luval
         = this->SparseMatrix<number>::val.get() + (rowstart - column_numbers);
-      for(const size_type* col = rowstart; col != first_after_diagonal;
-          ++col, ++luval)
+      for (const size_type* col = rowstart; col != first_after_diagonal;
+           ++col, ++luval)
         tmp(*col) += *luval * dst_row;
     }
 }

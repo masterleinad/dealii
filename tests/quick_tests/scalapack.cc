@@ -37,12 +37,12 @@ create_spd(FullMatrix& A)
   const unsigned int size = A.n();
   Assert(size == A.m(), ExcDimensionMismatch(size, A.m()));
 
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = i; j < size; ++j)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = i; j < size; ++j)
       {
         const double val = random_value<typename FullMatrix::value_type>();
         Assert(val >= 0. && val <= 1., ExcInternalError());
-        if(i == j)
+        if (i == j)
           // since A(i,j) < 1 and
           // a symmetric diagonally dominant matrix is SPD
           A(i, j) = val + size;
@@ -95,7 +95,7 @@ test(const unsigned int size, const unsigned int block_size)
 
   const double error = diff.frobenius_norm();
 
-  if(error > 1e-10 && this_mpi_process == 0)
+  if (error > 1e-10 && this_mpi_process == 0)
     {
       std::cout << "Error!" << std::endl << "expected to have:" << std::endl;
       inverse.print_formatted(std::cout);

@@ -35,19 +35,19 @@ test()
 {
   // only run linears in 3D
 
-  if(dim == 2 || fe_degree > 1)
+  if (dim == 2 || fe_degree > 1)
     return;
 
   constexpr unsigned int mydim = 3;
 
   parallel::distributed::Triangulation<mydim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria);
-  for(unsigned int f = 0; f < GeometryInfo<mydim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<mydim>::faces_per_cell; ++f)
     tria.begin_active()->face(f)->set_all_boundary_ids(f);
   std::vector<
     GridTools::PeriodicFacePair<typename Triangulation<mydim>::cell_iterator>>
     periodic_faces;
-  for(unsigned int d = 0; d < mydim; ++d)
+  for (unsigned int d = 0; d < mydim; ++d)
     GridTools::collect_periodic_faces(
       tria, 2 * d, 2 * d + 1, d, periodic_faces);
   tria.add_periodicity(periodic_faces);
@@ -84,7 +84,7 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for (unsigned int i = 0; i < in.local_size(); ++i)
     {
       const double entry  = Testing::rand() / (double) RAND_MAX;
       in.local_element(i) = entry;
@@ -101,14 +101,14 @@ test()
   mf_data.reinit(dof, constraints, quad, data);
   mf_data.initialize_dof_vector(in2);
   mf_data.initialize_dof_vector(out2);
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for (unsigned int i = 0; i < in.local_size(); ++i)
     {
       in2(renumbering[i]) = in.local_element(i);
     }
 
   mf.vmult(out2, in2);
 
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for (unsigned int i = 0; i < in.local_size(); ++i)
     out2(renumbering[i]) -= out.local_element(i);
 
   double diff_norm = out2.linfty_norm() / out.linfty_norm();

@@ -170,8 +170,8 @@ namespace Step11
     // of what is to come later:
     mean_value_constraints.clear();
     mean_value_constraints.add_line(first_boundary_dof);
-    for(unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
-      if(boundary_dofs[i] == true)
+    for (unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
+      if (boundary_dofs[i] == true)
         mean_value_constraints.add_entry(first_boundary_dof, i, -1);
     mean_value_constraints.close();
 
@@ -404,8 +404,8 @@ namespace Step11
   {
     GridGenerator::hyper_ball(triangulation);
 
-    for(unsigned int cycle = 0; cycle < 6;
-        ++cycle, triangulation.refine_global(1))
+    for (unsigned int cycle = 0; cycle < 6;
+         ++cycle, triangulation.refine_global(1))
       {
         setup_system();
         assemble_and_solve();
@@ -435,11 +435,11 @@ main()
       // but create an unnamed such object and call the <code>run</code>
       // function of it, subsequent to which it is immediately destroyed
       // again.
-      for(unsigned int mapping_degree = 1; mapping_degree <= 3;
-          ++mapping_degree)
+      for (unsigned int mapping_degree = 1; mapping_degree <= 3;
+           ++mapping_degree)
         Step11::LaplaceProblem<2>(mapping_degree).run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -452,7 +452,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -35,27 +35,27 @@ test()
   // build the sparse matrix
   IndexSet                       indices = complete_index_set(N * N);
   TrilinosWrappers::SparseMatrix matrix(indices, MPI_COMM_WORLD, 5);
-  for(unsigned int i = 0; i < N; i++)
-    for(unsigned int j = 0; j < N; j++)
+  for (unsigned int i = 0; i < N; i++)
+    for (unsigned int j = 0; j < N; j++)
       {
         const unsigned int global = i * N + j;
         matrix.set(global, global, 4);
-        if(j > 0)
+        if (j > 0)
           {
             matrix.set(global - 1, global, -1);
             matrix.set(global, global - 1, -1);
           }
-        if(j < N - 1)
+        if (j < N - 1)
           {
             matrix.set(global + 1, global, -1);
             matrix.set(global, global + 1, -1);
           }
-        if(i > 0)
+        if (i > 0)
           {
             matrix.set(global - N, global, -1);
             matrix.set(global, global - N, -1);
           }
-        if(i < N - 1)
+        if (i < N - 1)
           {
             matrix.set(global + N, global, -1);
             matrix.set(global, global + N, -1);
@@ -68,7 +68,7 @@ test()
   // of the matrix norm
   TrilinosWrappers::MPI::Vector v1(indices, MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v2(indices, MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < N * N; ++i)
+  for (unsigned int i = 0; i < N * N; ++i)
     v1(i) = i;
   matrix.vmult(v2, v1);
 
@@ -89,7 +89,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -103,7 +103,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

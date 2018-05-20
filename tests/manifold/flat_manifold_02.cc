@@ -38,17 +38,17 @@ test(unsigned int ref = 1)
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
       // check that FlatManifold returns the middle of the cell.
       deallog << "Cell: " << cell << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           const typename Triangulation<dim, spacedim>::face_iterator& face
             = cell->face(f);
-          if(face->get_manifold().get_new_point_on_face(face).distance(
-               face->center())
-             > 1e-6)
+          if (face->get_manifold().get_new_point_on_face(face).distance(
+                face->center())
+              > 1e-6)
             {
               deallog << "Face            : " << face << std::endl;
               deallog << "Default manifold: "

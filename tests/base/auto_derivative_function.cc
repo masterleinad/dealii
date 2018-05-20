@@ -122,7 +122,7 @@ main()
 
   AutoDerivativeFunction<dim>::DifferenceFormula formula;
   const double                                   h_base = 0.1;
-  for(unsigned int order = 1; order < 5; ++order)
+  for (unsigned int order = 1; order < 5; ++order)
     {
       formula = AutoDerivativeFunction<dim>::get_formula_of_order(order);
       auto_function.set_formula(formula);
@@ -130,7 +130,7 @@ main()
       ConvergenceTable history;
 
       unsigned int factor = 1;
-      for(unsigned int i = 0; i < 6; ++i, factor *= 2)
+      for (unsigned int i = 0; i < 6; ++i, factor *= 2)
         {
           history.add_value("f", factor);
           history.omit_column_from_convergence_rate_evaluation("f");

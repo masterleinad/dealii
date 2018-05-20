@@ -37,7 +37,7 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
   {
     unsigned int  c = 0;
     std::ifstream in((std::string(filename) + ".pvtu").c_str());
-    while(in && ++c < 20)
+    while (in && ++c < 20)
       {
         std::string s;
         std::getline(in, s);
@@ -48,7 +48,7 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
   {
     unsigned int  c = 0;
     std::ifstream in((std::string(filename) + "_0000.vtu").c_str());
-    while(in && ++c < 20)
+    while (in && ++c < 20)
       {
         std::string s;
         std::getline(in, s);

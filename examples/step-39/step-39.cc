@@ -201,8 +201,8 @@ namespace Step39
     const double       penalty
       = 2. * deg * (deg + 1) * dinfo.face->measure() / dinfo.cell->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         local_vector(i) += (-fe.shape_value(i, k) * penalty * boundary_values[k]
                             + (fe.normal_vector(k) * fe.shape_grad(i, k))
                                 * boundary_values[k])
@@ -247,7 +247,7 @@ namespace Step39
     const FEValuesBase<dim>& fe = info.fe_values();
 
     const std::vector<Tensor<2, dim>>& DDuh = info.hessians[0][0];
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for (unsigned k = 0; k < fe.n_quadrature_points; ++k)
       {
         const double t = dinfo.cell->diameter() * trace(DDuh[k]);
         dinfo.value(0) += t * t * fe.JxW(k);
@@ -275,7 +275,7 @@ namespace Step39
     const double       penalty
       = 2. * deg * (deg + 1) * dinfo.face->measure() / dinfo.cell->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for (unsigned k = 0; k < fe.n_quadrature_points; ++k)
       dinfo.value(0) += penalty * (boundary_values[k] - uh[k])
                         * (boundary_values[k] - uh[k]) * fe.JxW(k);
     dinfo.value(0) = std::sqrt(dinfo.value(0));
@@ -304,7 +304,7 @@ namespace Step39
     const double penalty = penalty1 + penalty2;
     const double h       = dinfo1.face->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for (unsigned k = 0; k < fe.n_quadrature_points; ++k)
       {
         double diff1 = uh1[k] - uh2[k];
         double diff2
@@ -374,10 +374,10 @@ namespace Step39
     const std::vector<Tensor<1, dim>>& Duh = info.gradients[0][0];
     const std::vector<double>&         uh  = info.values[0][0];
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for (unsigned k = 0; k < fe.n_quadrature_points; ++k)
       {
         double sum = 0;
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           {
             const double diff = exact_gradients[k][d] - Duh[k][d];
             sum += diff * diff;
@@ -407,7 +407,7 @@ namespace Step39
     const double       penalty
       = 2. * deg * (deg + 1) * dinfo.face->measure() / dinfo.cell->measure();
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for (unsigned k = 0; k < fe.n_quadrature_points; ++k)
       {
         const double diff = exact_values[k] - uh[k];
         dinfo.value(0) += penalty * diff * diff * fe.JxW(k);
@@ -434,7 +434,7 @@ namespace Step39
       = deg * (deg + 1) * dinfo2.face->measure() / dinfo2.cell->measure();
     const double penalty = penalty1 + penalty2;
 
-    for(unsigned k = 0; k < fe.n_quadrature_points; ++k)
+    for (unsigned k = 0; k < fe.n_quadrature_points; ++k)
       {
         double diff = uh1[k] - uh2[k];
         dinfo1.value(0) += (penalty * diff * diff) * fe.JxW(k);
@@ -568,9 +568,9 @@ namespace Step39
 
     // Now all objects are prepared to hold one sparsity pattern or matrix per
     // level. What's left is setting up the sparsity patterns on each level.
-    for(unsigned int level = mg_sparsity.min_level();
-        level <= mg_sparsity.max_level();
-        ++level)
+    for (unsigned int level = mg_sparsity.min_level();
+         level <= mg_sparsity.max_level();
+         ++level)
       {
         // These are roughly the same lines as above for the global matrix,
         // now for each level.
@@ -583,7 +583,7 @@ namespace Step39
         // refinement edge between levels. They are stored at the index
         // referring to the finer of the two indices, thus there is no such
         // object on level 0.
-        if(level > 0)
+        if (level > 0)
           {
             DynamicSparsityPattern dsp;
             dsp.reinit(dof_handler.n_dofs(level - 1),
@@ -797,10 +797,10 @@ namespace Step39
 
     estimates.block(0).reinit(triangulation.n_active_cells());
     unsigned int i = 0;
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell, ++i)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell, ++i)
       cell->set_user_index(i);
 
     // This starts like before,
@@ -872,10 +872,10 @@ namespace Step39
     errors.block(0).reinit(triangulation.n_active_cells());
     errors.block(1).reinit(triangulation.n_active_cells());
     unsigned int i = 0;
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell, ++i)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell, ++i)
       cell->set_user_index(i);
 
     MeshWorker::IntegrationInfoBox<dim> info_box;
@@ -944,10 +944,10 @@ namespace Step39
   InteriorPenaltyProblem<dim>::run(unsigned int n_steps)
   {
     deallog << "Element: " << fe.get_name() << std::endl;
-    for(unsigned int s = 0; s < n_steps; ++s)
+    for (unsigned int s = 0; s < n_steps; ++s)
       {
         deallog << "Step " << s << std::endl;
-        if(estimates.block(0).size() == 0)
+        if (estimates.block(0).size() == 0)
           triangulation.refine_global(1);
         else
           {
@@ -962,7 +962,7 @@ namespace Step39
 
         setup_system();
         deallog << "DoFHandler " << dof_handler.n_dofs() << " dofs, level dofs";
-        for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+        for (unsigned int l = 0; l < triangulation.n_levels(); ++l)
           deallog << ' ' << dof_handler.n_dofs(l);
         deallog << std::endl;
 
@@ -996,7 +996,7 @@ main()
       InteriorPenaltyProblem<2> test1(fe1);
       test1.run(12);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1009,7 +1009,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

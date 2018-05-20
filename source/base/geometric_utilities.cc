@@ -45,14 +45,14 @@ namespace GeometricUtilities
       // azimuth angle \theta:
       scoord[1] = std::atan2(position(1), position(0));
       // correct to [0,2*pi)
-      if(scoord[1] < 0.0)
+      if (scoord[1] < 0.0)
         scoord[1] += 2.0 * numbers::PI;
 
       // polar angle \phi:
-      if(dim == 3)
+      if (dim == 3)
         {
           // acos returns the angle in the range [0,\pi]
-          if(scoord[0] > std::numeric_limits<double>::min())
+          if (scoord[0] > std::numeric_limits<double>::min())
             scoord[2] = std::acos(position(2) / scoord[0]);
           else
             scoord[2] = 0.0;
@@ -71,7 +71,7 @@ namespace GeometricUtilities
       Assert(scoord[1] >= 0. && scoord[1] < 2. * numbers::PI,
              SphericalAzimuth(scoord[1]));
 
-      switch(dim)
+      switch (dim)
         {
           case 2:
             {

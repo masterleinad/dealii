@@ -61,31 +61,31 @@ FE_RT_Bubbles<dim>::FE_RT_Bubbles(const unsigned int deg)
 
   // Reinit the vectors of prolongation matrices to the
   // right sizes. There are no restriction matrices implemented
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
-      ref_case < RefinementCase<dim>::isotropic_refinement + 1;
-      ++ref_case)
+  for (unsigned int ref_case = RefinementCase<dim>::cut_x;
+       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
+       ++ref_case)
     {
       const unsigned int nc
         = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
 
-      for(unsigned int i = 0; i < nc; ++i)
+      for (unsigned int i = 0; i < nc; ++i)
         this->prolongation[ref_case - 1][i].reinit(n_dofs, n_dofs);
     }
   // Fill prolongation matrices with embedding operators
   // set tolerance to 1, as embedding error accumulate quickly
   FETools::compute_embedding_matrices(*this, this->prolongation, true, 1.0);
   FullMatrix<double> face_embeddings[GeometryInfo<dim>::max_children_per_face];
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
     face_embeddings[i].reinit(this->dofs_per_face, this->dofs_per_face);
   FETools::compute_face_embedding_matrices<dim, double>(
     *this, face_embeddings, 0, 0);
   this->interface_constraints.reinit((1 << (dim - 1)) * this->dofs_per_face,
                                      this->dofs_per_face);
   unsigned int target_row = 0;
-  for(unsigned int d = 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
-    for(unsigned int i = 0; i < face_embeddings[d].m(); ++i)
+  for (unsigned int d = 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
+    for (unsigned int i = 0; i < face_embeddings[d].m(); ++i)
       {
-        for(unsigned int j = 0; j < face_embeddings[d].n(); ++j)
+        for (unsigned int j = 0; j < face_embeddings[d].n(); ++j)
           this->interface_constraints(target_row, j) = face_embeddings[d](i, j);
         ++target_row;
       }
@@ -127,17 +127,17 @@ FE_RT_Bubbles<dim>::initialize_support_points(const unsigned int deg)
   // On the faces, we choose as many Gauss-Lobatto points
   // as required to determine the normal component uniquely.
   // This is the deg of the RT_Bubble element plus one.
-  if(dim > 1)
+  if (dim > 1)
     {
       QGaussLobatto<dim - 1> face_points(deg + 1);
       Assert(face_points.size() == this->dofs_per_face, ExcInternalError());
-      for(unsigned int k = 0; k < this->dofs_per_face; ++k)
+      for (unsigned int k = 0; k < this->dofs_per_face; ++k)
         this->generalized_face_support_points[k] = face_points.point(k);
       Quadrature<dim> faces
         = QProjector<dim>::project_to_all_faces(face_points);
-      for(unsigned int k = 0;
-          k < this->dofs_per_face * GeometryInfo<dim>::faces_per_cell;
-          ++k)
+      for (unsigned int k = 0;
+           k < this->dofs_per_face * GeometryInfo<dim>::faces_per_cell;
+           ++k)
         this->generalized_support_points[k]
           = faces.point(k
                         + QProjector<dim>::DataSetDescriptor::face(
@@ -146,7 +146,7 @@ FE_RT_Bubbles<dim>::initialize_support_points(const unsigned int deg)
       current = this->dofs_per_face * GeometryInfo<dim>::faces_per_cell;
     }
 
-  if(deg == 1)
+  if (deg == 1)
     return;
 
   // In the interior, we need anisotropic Gauss-Lobatto quadratures,
@@ -159,10 +159,10 @@ FE_RT_Bubbles<dim>::initialize_support_points(const unsigned int deg)
   std::vector<double> wts(pts.size(), 1);
   Quadrature<1>       low(pts, wts);
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       std::unique_ptr<QAnisotropic<dim>> quadrature;
-      switch(dim)
+      switch (dim)
         {
           case 1:
             quadrature = std_cxx14::make_unique<QAnisotropic<dim>>(high);
@@ -181,7 +181,7 @@ FE_RT_Bubbles<dim>::initialize_support_points(const unsigned int deg)
             Assert(false, ExcNotImplemented());
         }
 
-      for(unsigned int k = 0; k < quadrature->size(); ++k)
+      for (unsigned int k = 0; k < quadrature->size(); ++k)
         this->generalized_support_points[current++] = quadrature->point(k);
     }
   Assert(current == this->dofs_per_cell, ExcInternalError());
@@ -193,7 +193,7 @@ FE_RT_Bubbles<dim>::get_dpo_vector(const unsigned int deg)
 {
   // We have (deg+1)^(dim-1) DoFs per face...
   unsigned int dofs_per_face = 1;
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     dofs_per_face *= deg + 1;
 
   // ...plus the interior DoFs for the total of dim*(deg+1)^dim
@@ -221,15 +221,15 @@ FE_RT_Bubbles<dim>::get_ria_vector(const unsigned int deg)
   const unsigned int dofs_per_cell
     = PolynomialsRT_Bubbles<dim>::compute_n_pols(deg);
   unsigned int dofs_per_face = deg + 1;
-  for(unsigned int d = 2; d < dim; ++d)
+  for (unsigned int d = 2; d < dim; ++d)
     dofs_per_face *= deg + 1;
   // All face dofs need to be non-additive, since they have
   // continuity requirements. The interior dofs are
   // made additive.
   std::vector<bool> ret_val(dofs_per_cell, false);
-  for(unsigned int i = GeometryInfo<dim>::faces_per_cell * dofs_per_face;
-      i < dofs_per_cell;
-      ++i)
+  for (unsigned int i = GeometryInfo<dim>::faces_per_cell * dofs_per_face;
+       i < dofs_per_cell;
+       ++i)
     ret_val[i] = true;
 
   return ret_val;
@@ -254,10 +254,10 @@ FE_RT_Bubbles<dim>::convert_generalized_support_point_values_to_dof_values(
   // evaluated depends on the face direction and orientation.
   unsigned int fbase = 0;
   unsigned int f     = 0;
-  for(; f < GeometryInfo<dim>::faces_per_cell;
-      ++f, fbase += this->dofs_per_face)
+  for (; f < GeometryInfo<dim>::faces_per_cell;
+       ++f, fbase += this->dofs_per_face)
     {
-      for(unsigned int i = 0; i < this->dofs_per_face; ++i)
+      for (unsigned int i = 0; i < this->dofs_per_face; ++i)
         {
           nodal_values[fbase + i] = support_point_values[fbase + i](
             GeometryInfo<dim>::unit_normal_direction[f]);
@@ -269,9 +269,9 @@ FE_RT_Bubbles<dim>::convert_generalized_support_point_values_to_dof_values(
   Assert((this->dofs_per_cell - fbase) % dim == 0, ExcInternalError());
 
   f = 0;
-  while(fbase < this->dofs_per_cell)
+  while (fbase < this->dofs_per_cell)
     {
-      for(unsigned int i = 0; i < istep; ++i)
+      for (unsigned int i = 0; i < istep; ++i)
         {
           nodal_values[fbase + i] = support_point_values[fbase + i](f);
         }

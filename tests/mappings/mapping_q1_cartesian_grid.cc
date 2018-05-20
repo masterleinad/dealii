@@ -50,7 +50,7 @@ private:
   void
   make_grid()
   {
-    if(refine_case == 1)
+    if (refine_case == 1)
       {
         std::vector<unsigned int> repetitions(dim);
         repetitions[0] = repetitions[1]
@@ -63,7 +63,7 @@ private:
                                                   true);
         triangulation.refine_global(1); // With refinement
       }
-    else if(refine_case == 2)
+    else if (refine_case == 2)
       {
         std::vector<unsigned int> repetitions(dim);
         repetitions[0] = repetitions[1]
@@ -76,7 +76,7 @@ private:
                                                   true);
         triangulation.refine_global(0); // With no refinement
       }
-    else if(refine_case == 3)
+    else if (refine_case == 3)
       {
         std::vector<unsigned int> repetitions(dim);
         repetitions[0] = repetitions[1] = 10; // Finer initial mesh
@@ -88,7 +88,7 @@ private:
                                                   true);
         triangulation.refine_global(0); // With no refinement
       }
-    else if(refine_case == 4)
+    else if (refine_case == 4)
       {
         std::vector<unsigned int> repetitions(dim);
         repetitions[0] = repetitions[1] = 1; // Single cell
@@ -117,7 +117,7 @@ private:
 
     auto       cell = dof_handler.begin_active();
     const auto endc = dof_handler.end();
-    for(unsigned int index = 0; cell != endc; ++cell, ++index)
+    for (unsigned int index = 0; cell != endc; ++cell, ++index)
       {
         const auto P1 = cell->vertex(0);
         const auto P2 = cell->vertex(1);
@@ -144,7 +144,7 @@ private:
         const Point<dim> dp_test_mid
           = mapping.transform_real_to_unit_cell(cell, dp_real_mid);
 
-        if((test - dp_real).norm() > tol)
+        if ((test - dp_real).norm() > tol)
           {
             deallog << " " << std::endl;
             deallog << "ERROR" << std::endl;

@@ -31,7 +31,7 @@
 
 #define PRINTME(name, var)                              \
   deallog << "Block vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
+  for (unsigned int i = 0; i < var.n_blocks(); ++i)     \
     deallog << "[block " << i << " ]  " << var.block(i);
 
 using namespace dealii;
@@ -64,18 +64,18 @@ main()
   dsp.block(0, 1).reinit(n_u, n_p);
   dsp.block(1, 1).reinit(n_p, n_p);
 
-  for(unsigned int i = 0; i < n_u; ++i)
+  for (unsigned int i = 0; i < n_u; ++i)
     {
-      for(unsigned int j = 0; j < n_u; ++j)
+      for (unsigned int j = 0; j < n_u; ++j)
         dsp.block(0, 0).add(i, j);
-      for(unsigned int j = 0; j < n_p; ++j)
+      for (unsigned int j = 0; j < n_p; ++j)
         {
           dsp.block(0, 1).add(i, j);
           dsp.block(1, 0).add(j, i);
         }
     }
-  for(unsigned int i = 0; i < n_p; ++i)
-    for(unsigned int j = 0; j < n_p; ++j)
+  for (unsigned int i = 0; i < n_p; ++i)
+    for (unsigned int j = 0; j < n_p; ++j)
       dsp.block(1, 1).add(i, j);
   dsp.collect_sizes();
 
@@ -87,16 +87,16 @@ main()
 
   // Come up with some simple, but non-trivial structure:
 
-  for(unsigned int i = 0; i < a.block(0, 0).n(); ++i)
+  for (unsigned int i = 0; i < a.block(0, 0).n(); ++i)
     a.block(0, 0).set(i, i, 10.);
 
-  for(unsigned int i = 0; i < a.block(1, 1).n(); ++i)
+  for (unsigned int i = 0; i < a.block(1, 1).n(); ++i)
     a.block(1, 1).set(i, i, 5.);
 
-  for(unsigned int i = 0; i < a.block(1, 0).m(); ++i)
+  for (unsigned int i = 0; i < a.block(1, 0).m(); ++i)
     a.block(0, 1).set(i, i, 3.);
 
-  for(unsigned int i = 0; i < a.block(0, 1).n(); ++i)
+  for (unsigned int i = 0; i < a.block(0, 1).n(); ++i)
     a.block(1, 0).set(i, i, 1.);
 
   auto op_a = linear_operator<BlockVector<double>>(a);
@@ -121,7 +121,7 @@ main()
 
   BlockVector<double> u;
   op_a.reinit_domain_vector(u, false);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     {
       u[i] = (double) (i + 1);
     }
@@ -187,7 +187,7 @@ main()
   auto op_upp_x_upu = block_operator<3, 3, BlockVector<double>>(temp2);
 
   op_upp_x_upu.reinit_domain_vector(u, false);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     {
       u[i] = (double) (i + 1);
     }
@@ -212,7 +212,7 @@ main()
   auto op_long = op_u_x_upu * transpose_operator(op_upp_x_upu) * op_upp_x_p;
 
   op_long.reinit_domain_vector(u, false);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     {
       u[i] = (double) (i + 1);
     }

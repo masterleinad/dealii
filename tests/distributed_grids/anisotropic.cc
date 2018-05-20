@@ -38,7 +38,7 @@ test(std::ostream& /*out*/)
     {
       tr.execute_coarsening_and_refinement();
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

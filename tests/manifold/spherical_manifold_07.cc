@@ -33,7 +33,7 @@ main()
   Point<3>                      center(0.0, 0.0, 0.0);
   const SphericalManifold<3, 3> manifold(center);
 
-  for(unsigned int i = 1; i < 20; ++i)
+  for (unsigned int i = 1; i < 20; ++i)
     {
       const double eps = 1 / std::pow(10, i * 1.0);
 

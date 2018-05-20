@@ -67,11 +67,11 @@ test(const bool left = true)
   triangulation.refine_global(1);
 
   // Extra refinement to generate hanging nodes
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    if(pred_r<dim>(cell))
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    if (pred_r<dim>(cell))
       cell->set_refine_flag();
 
   triangulation.prepare_coarsening_and_refinement();
@@ -101,7 +101,7 @@ test(const bool left = true)
   support.print(deallog);
 
   // print grid and DoFs for visual inspection
-  if(false)
+  if (false)
     {
       std::cout << "-------------------- " << Utilities::int_to_string(dim)
                 << std::endl;

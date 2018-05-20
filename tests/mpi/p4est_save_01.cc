@@ -39,7 +39,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
   std::string filename = "dat";
@@ -49,12 +49,12 @@ test()
     GridGenerator::hyper_cube(tr);
 
     tr.refine_global(2);
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = tr.begin_active();
-        cell != tr.end();
-        ++cell)
-      if(!cell->is_ghost() && !cell->is_artificial())
-        if(cell->center().norm() < 0.3)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = tr.begin_active();
+         cell != tr.end();
+         ++cell)
+      if (!cell->is_ghost() && !cell->is_artificial())
+        if (cell->center().norm() < 0.3)
           {
             cell->set_refine_flag();
           }
@@ -63,7 +63,7 @@ test()
 
     tr.save(filename.c_str());
 
-    if(myid == 0)
+    if (myid == 0)
       {
         deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
         deallog << "cells(0) = " << tr.n_active_cells() << std::endl;
@@ -78,7 +78,7 @@ test()
     GridGenerator::hyper_cube(tr);
     tr.load(filename.c_str(), false);
 
-    if(myid == 0)
+    if (myid == 0)
       {
         deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
         deallog << "cells(0) = " << tr.n_active_cells() << std::endl;
@@ -86,7 +86,7 @@ test()
     deallog << "Checksum: " << tr.get_checksum() << std::endl;
   }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -99,7 +99,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

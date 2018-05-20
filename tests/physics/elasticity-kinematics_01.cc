@@ -54,13 +54,13 @@ test_kinematic_tensors()
   Vector<double> soln_t(dof_handler.n_dofs());
   Vector<double> soln_t1(dof_handler.n_dofs());
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
-        if(std::abs(cell->vertex(v)[0] - 1.0) < 1e-9)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        if (std::abs(cell->vertex(v)[0] - 1.0) < 1e-9)
           soln_t[cell->vertex_dof_index(v, 0)] = 1.0;
     }
 
@@ -79,10 +79,10 @@ test_kinematic_tensors()
   MappingQEulerian<dim> q1_mapping(1, dof_handler, soln_t);
   FEValues<dim>         fe_values_mapped(q1_mapping, fe, qf, update_gradients);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       fe_values.reinit(cell);
       fe_values_mapped.reinit(cell);
@@ -100,7 +100,7 @@ test_kinematic_tensors()
       fe_values_mapped[u_fe].get_function_gradients(dot_soln_t,
                                                     qp_dot_grad_u_t);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
           static const double tol = 1e-12;
 

@@ -23,7 +23,7 @@ test(const std::string& desc)
 {
   deallog << desc << " -> ";
   std::unique_ptr<dealii::Patterns::Double> c = Patterns::Double::create(desc);
-  if(!c)
+  if (!c)
     {
       deallog << "NULL" << std::endl;
       return;

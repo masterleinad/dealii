@@ -43,7 +43,7 @@ test()
   dof1.distribute_dofs(fe1);
 
   Vector<double> v1(dof1.n_dofs());
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = i;
 
   DataOut<dim> data_out;

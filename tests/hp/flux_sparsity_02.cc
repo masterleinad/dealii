@@ -41,7 +41,7 @@ check()
   std::vector<unsigned int> subdivisions(dim, 1U);
   subdivisions[0] = 2;
   Point<dim> p1, p2;
-  switch(dim)
+  switch (dim)
     {
       case 2:
         p1[0] = p1[1] = 0.0;

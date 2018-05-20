@@ -95,7 +95,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

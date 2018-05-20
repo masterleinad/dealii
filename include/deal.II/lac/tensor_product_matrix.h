@@ -405,8 +405,8 @@ namespace internal
                                     const Number*      in,
                                     const unsigned int n,
                                     const unsigned int m) {
-        for(unsigned int mm = 0; mm < m; ++mm)
-          for(unsigned int nn = 0; nn < n; ++nn)
+        for (unsigned int mm = 0; mm < m; ++mm)
+          for (unsigned int nn = 0; nn < n; ++nn)
             out[mm + nn * m] = *(in++);
       };
 
@@ -420,11 +420,11 @@ namespace internal
       deriv_copy.compute_generalized_eigenvalues_symmetric(mass_copy,
                                                            eigenvecs);
       AssertDimension(eigenvecs.size(), n_rows);
-      for(unsigned int i = 0; i < n_rows; ++i)
-        for(unsigned int j = 0; j < n_cols; ++j, ++eigenvectors)
+      for (unsigned int i = 0; i < n_rows; ++i)
+        for (unsigned int j = 0; j < n_cols; ++j, ++eigenvectors)
           *eigenvectors = eigenvecs[j][i];
 
-      for(unsigned int i = 0; i < n_rows; ++i, ++eigenvalues)
+      for (unsigned int i = 0; i < n_rows; ++i, ++eigenvalues)
         *eigenvalues = deriv_copy.eigenvalue(i).real();
     }
   } // namespace TensorProductMatrix
@@ -435,7 +435,7 @@ inline unsigned int
 TensorProductMatrixSymmetricSumBase<dim, Number, size>::m() const
 {
   unsigned int m = mass_matrix[0].n_rows();
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     m *= mass_matrix[d].n_rows();
   return m;
 }
@@ -445,7 +445,7 @@ inline unsigned int
 TensorProductMatrixSymmetricSumBase<dim, Number, size>::n() const
 {
   unsigned int n = mass_matrix[0].n_cols();
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     n *= mass_matrix[d].n_cols();
   return n;
 }
@@ -477,13 +477,13 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::vmult(
   const Number* src = src_view.begin();
   Number*       dst = &(dst_view[0]);
 
-  if(dim == 1)
+  if (dim == 1)
     {
       const Number* A = &derivative_matrix[0](0, 0);
       eval.template apply<0, false, false>(A, src, dst);
     }
 
-  else if(dim == 2)
+  else if (dim == 2)
     {
       const Number* A0 = &derivative_matrix[0](0, 0);
       const Number* M0 = &mass_matrix[0](0, 0);
@@ -495,7 +495,7 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::vmult(
       eval.template apply<1, false, true>(M1, t, dst);
     }
 
-  else if(dim == 3)
+  else if (dim == 3)
     {
       const Number* A0 = &derivative_matrix[0](0, 0);
       const Number* M0 = &mass_matrix[0](0, 0);
@@ -547,29 +547,29 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::apply_inverse(
   //       --> apply<.,false,.> (S,src,dst) calculates dst = S * src,
   //       while the eigenvectors are stored column-wise in S, i.e.
   //       rows correspond to dofs whereas columns to eigenvalue indices!
-  if(dim == 1)
+  if (dim == 1)
     {
       const Number* S = &eigenvectors[0](0, 0);
       eval.template apply<0, true, false>(S, src, t);
-      for(unsigned int i = 0; i < n; ++i)
+      for (unsigned int i = 0; i < n; ++i)
         t[i] /= eigenvalues[0][i];
       eval.template apply<0, false, false>(S, t, dst);
     }
 
-  else if(dim == 2)
+  else if (dim == 2)
     {
       const Number* S0 = &(eigenvectors[0](0, 0));
       const Number* S1 = &(eigenvectors[1](0, 0));
       eval.template apply<0, true, false>(S0, src, t);
       eval.template apply<1, true, false>(S1, t, dst);
-      for(unsigned int i1 = 0, c = 0; i1 < n; ++i1)
-        for(unsigned int i0 = 0; i0 < n; ++i0, ++c)
+      for (unsigned int i1 = 0, c = 0; i1 < n; ++i1)
+        for (unsigned int i0 = 0; i0 < n; ++i0, ++c)
           dst[c] /= (eigenvalues[1][i1] + eigenvalues[0][i0]);
       eval.template apply<0, false, false>(S0, dst, t);
       eval.template apply<1, false, false>(S1, t, dst);
     }
 
-  else if(dim == 3)
+  else if (dim == 3)
     {
       const Number* S0 = &eigenvectors[0](0, 0);
       const Number* S1 = &eigenvectors[1](0, 0);
@@ -577,9 +577,9 @@ TensorProductMatrixSymmetricSumBase<dim, Number, size>::apply_inverse(
       eval.template apply<0, true, false>(S0, src, t);
       eval.template apply<1, true, false>(S1, t, dst);
       eval.template apply<2, true, false>(S2, dst, t);
-      for(unsigned int i2 = 0, c = 0; i2 < n; ++i2)
-        for(unsigned int i1 = 0; i1 < n; ++i1)
-          for(unsigned int i0 = 0; i0 < n; ++i0, ++c)
+      for (unsigned int i2 = 0, c = 0; i2 < n; ++i2)
+        for (unsigned int i1 = 0; i1 < n; ++i1)
+          for (unsigned int i0 = 0; i0 < n; ++i0, ++c)
             t[c]
               /= (eigenvalues[2][i2] + eigenvalues[1][i1] + eigenvalues[0][i0]);
       eval.template apply<0, false, false>(S0, t, dst);
@@ -631,7 +631,7 @@ TensorProductMatrixSymmetricSum<dim, Number, size>::reinit_impl(
   this->mass_matrix          = mass_matrices;
   this->derivative_matrix    = derivative_matrices;
 
-  for(int dir = 0; dir < dim; ++dir)
+  for (int dir = 0; dir < dim; ++dir)
     {
       Assert(size == -1
                || (size > 0
@@ -738,8 +738,8 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
 
   constexpr unsigned int macro_size = VectorizedArray<Number>::n_array_elements;
   std::size_t            n_rows_max = (size > 0) ? size : 0;
-  if(size == -1)
-    for(unsigned int d = 0; d < dim; ++d)
+  if (size == -1)
+    for (unsigned int d = 0; d < dim; ++d)
       n_rows_max = std::max(n_rows_max, mass_matrix[d].n_rows());
   const std::size_t nm_flat_size_max = n_rows_max * n_rows_max * macro_size;
   const std::size_t n_flat_size_max  = n_rows_max * macro_size;
@@ -754,7 +754,7 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
   eigenvectors_flat.resize(nm_flat_size_max);
   std::array<unsigned int, macro_size> offsets_nm;
   std::array<unsigned int, macro_size> offsets_n;
-  for(int dir = 0; dir < dim; ++dir)
+  for (int dir = 0; dir < dim; ++dir)
     {
       Assert(
         size == -1
@@ -770,7 +770,7 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
       const unsigned int n_rows = mass_matrix[dir].n_rows();
       const unsigned int n_cols = mass_matrix[dir].n_cols();
       const unsigned int nm     = n_rows * n_cols;
-      for(unsigned int vv = 0; vv < macro_size; ++vv)
+      for (unsigned int vv = 0; vv < macro_size; ++vv)
         offsets_nm[vv] = nm * vv;
 
       vectorized_transpose_and_store(false,
@@ -788,7 +788,7 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
       const Number* deriv_cbegin   = deriv_matrix_flat.data();
       Number*       eigenvec_begin = eigenvectors_flat.data();
       Number*       eigenval_begin = eigenvalues_flat.data();
-      for(unsigned int lane = 0; lane < macro_size; ++lane)
+      for (unsigned int lane = 0; lane < macro_size; ++lane)
         internal::TensorProductMatrix ::spectral_assembly<Number>(
           mass_cbegin + nm * lane,
           deriv_cbegin + nm * lane,
@@ -799,7 +799,7 @@ TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>::
 
       this->eigenvalues[dir].resize(n_rows);
       this->eigenvectors[dir].reinit(n_rows, n_cols);
-      for(unsigned int vv = 0; vv < macro_size; ++vv)
+      for (unsigned int vv = 0; vv < macro_size; ++vv)
         offsets_n[vv] = n_rows * vv;
       vectorized_load_and_transpose(n_rows,
                                     eigenvalues_flat.data(),

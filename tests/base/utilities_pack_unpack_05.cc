@@ -45,8 +45,8 @@ check(const double (&array)[N], const Point<dim>(&point))
 
   // TEST RESULTS
   bool equal_array = true;
-  for(unsigned int i = 0; i < N; ++i)
-    if(array[i] != unpacked_array[i])
+  for (unsigned int i = 0; i < N; ++i)
+    if (array[i] != unpacked_array[i])
       {
         equal_array = false;
         break;
@@ -71,7 +71,7 @@ test()
   const unsigned int N  = 10000;
   Point<N>           p2 = random_point<N>();
   double             x2[N];
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     x2[i] = i;
   check(x2, p2);
 

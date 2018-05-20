@@ -40,7 +40,7 @@ main(int argc, char** argv)
   const unsigned int n_dofs_per_block = 10;
 
   std::vector<IndexSet> locally_owned_partitioning(n_blocks);
-  for(unsigned int b = 0; b < n_blocks; ++b)
+  for (unsigned int b = 0; b < n_blocks; ++b)
     {
       locally_owned_partitioning[b].set_size(n_dofs_per_block);
       locally_owned_partitioning[b].add_range(
@@ -54,7 +54,7 @@ main(int argc, char** argv)
   parallel_vector.locally_owned_elements().print(deallog.get_file_stream());
 
   // Set entries in parallel vector
-  for(auto idx : parallel_vector.locally_owned_elements())
+  for (auto idx : parallel_vector.locally_owned_elements())
     {
       parallel_vector[idx] = 10.0 * idx;
     }

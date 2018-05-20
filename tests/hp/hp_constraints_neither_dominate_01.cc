@@ -80,7 +80,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   Triangulation<dim> triangulation;
   {
     Point<dim> p1, p2;
-    for(unsigned int d = 0; d < dim; d++)
+    for (unsigned int d = 0; d < dim; d++)
       p1[d] = -1;
     p2[0] = 1.0;
     std::vector<unsigned int> repetitoins(dim, 1);
@@ -123,14 +123,14 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   counter++;
   std::vector<Vector<double>> shape_functions;
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
+  for (unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       Vector<double> shape_function;
       shape_function.reinit(dof_handler.n_dofs());
       shape_function[s] = 1.0;
 
       // if the dof is constrained, first output unconstrained vector
-      if(constraints.is_constrained(s))
+      if (constraints.is_constrained(s))
         {
           names.push_back(std::string("UN_")
                           + dealii::Utilities::int_to_string(s, 2));
@@ -153,13 +153,13 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(unsigned int index = 0; cell != endc; ++cell, ++index)
+  for (unsigned int index = 0; cell != endc; ++cell, ++index)
     {
       fe_index[index] = cell->active_fe_index();
     }
   data_out.add_data_vector(fe_index, "fe_index");
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for (unsigned int i = 0; i < shape_functions.size(); i++)
     data_out.add_data_vector(shape_functions[i], names[i]);
 
   data_out.build_patches(0);
@@ -172,7 +172,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
 
   // fill some vector
   Vector<double> solution(dof_handler.n_dofs());
-  for(unsigned int dof = 0; dof < dof_handler.n_dofs(); dof++)
+  for (unsigned int dof = 0; dof < dof_handler.n_dofs(); dof++)
     solution[dof] = 21.0 * (dof % 2) + 0.5 + dof % 3;
 
   constraints.distribute(solution);
@@ -183,15 +183,15 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
 
   std::vector<unsigned int>   local_face_dof_indices;
   std::vector<Vector<double>> values;
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       const unsigned int fe_index = cell->active_fe_index();
       local_face_dof_indices.resize(fe_collection[fe_index].dofs_per_face);
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(!cell->at_boundary(f)) // that's enough for our simple mesh
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (!cell->at_boundary(f)) // that's enough for our simple mesh
           {
             deallog << "cell=" << cell << " face=" << f << std::endl;
             fe_face_values_hp.reinit(cell, f);
@@ -206,7 +206,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
             const std::vector<dealii::Point<dim>>& q_points
               = fe_face_values.get_quadrature_points();
 
-            for(unsigned int q = 0; q < n_q_points; q++)
+            for (unsigned int q = 0; q < n_q_points; q++)
               deallog << "u[" << q_points[q] << "]={" << values[q][0] << ","
                       << values[q][1] << "}" << std::endl;
           }
@@ -233,7 +233,7 @@ main(int argc, char** argv)
       test2cells<3>(
         2, 1); // Q(2) x FE_Nothing vs Q(1) x Q(1) => common Q(1) x FE_Nothing
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -247,7 +247,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -124,7 +124,7 @@ LaplaceKernelIntegration<2>::compute_SD_integral_on_cell(
   double         rn_c = r_c * n_c;
   vector<double> i_S(4);
   vector<double> i_D(4);
-  for(unsigned int q_point = 0; q_point < 4; ++q_point)
+  for (unsigned int q_point = 0; q_point < 4; ++q_point)
     {
       const Tensor<1, 3> r  = point - cell->vertex(q_point);
       const Tensor<1, 3> a1 = transpose(jacobians[q_point])[0];

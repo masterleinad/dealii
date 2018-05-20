@@ -102,7 +102,7 @@ namespace Step59
     value(const Point<dim>& p, const unsigned int = 0) const override final
     {
       double val = 1.;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         val *= std::cos(numbers::PI * 2.4 * p[d]);
       return val;
     }
@@ -112,11 +112,11 @@ namespace Step59
     {
       const double   arg = numbers::PI * 2.4;
       Tensor<1, dim> grad;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         {
           grad[d] = 1.;
-          for(unsigned int e = 0; e < dim; ++e)
-            if(d == e)
+          for (unsigned int e = 0; e < dim; ++e)
+            if (d == e)
               grad[d] *= -arg * std::sin(arg * p[e]);
             else
               grad[d] *= std::cos(arg * p[e]);
@@ -137,7 +137,7 @@ namespace Step59
     {
       const double arg = numbers::PI * 2.4;
       double       val = 1.;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         val *= std::cos(arg * p[d]);
       return dim * arg * arg * val;
     }
@@ -288,8 +288,8 @@ namespace Step59
     const MatrixFree<dim, number>&                    data,
     const LinearAlgebra::distributed::Vector<number>& vec)
   {
-    if(vec.get_partitioner().get()
-       == data.get_dof_info(0).vector_partitioner.get())
+    if (vec.get_partitioner().get()
+        == data.get_dof_info(0).vector_partitioner.get())
       return;
 
     LinearAlgebra::distributed::Vector<number> copy_vec(vec);
@@ -481,11 +481,11 @@ namespace Step59
     const std::pair<unsigned int, unsigned int>&      cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.gather_evaluate(src, false, true);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_gradient(phi.get_gradient(q), q);
         phi.integrate_scatter(false, true, dst);
       }
@@ -535,7 +535,7 @@ namespace Step59
                                                                          true);
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi_outer(data,
                                                                          false);
-    for(unsigned int face = face_range.first; face < face_range.second; ++face)
+    for (unsigned int face = face_range.first; face < face_range.second; ++face)
       {
         // On a given batch of faces, we first update the pointers to the
         // current face and then access the vector. As mentioned above, we
@@ -597,7 +597,7 @@ namespace Step59
         // accordance with its relation to the primal consistency term that
         // gets the factor of one half due to the average in the test function
         // slot.
-        for(unsigned int q = 0; q < phi_inner.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi_inner.n_q_points; ++q)
           {
             const VectorizedArray<number> solution_jump
               = (phi_inner.get_value(q) - phi_outer.get_value(q));
@@ -665,7 +665,7 @@ namespace Step59
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi_inner(data,
                                                                          true);
-    for(unsigned int face = face_range.first; face < face_range.second; ++face)
+    for (unsigned int face = face_range.first; face < face_range.second; ++face)
       {
         phi_inner.reinit(face);
         phi_inner.gather_evaluate(src, true, true);
@@ -678,7 +678,7 @@ namespace Step59
 
         const bool is_dirichlet = (data.get_boundary_id(face) == 0);
 
-        for(unsigned int q = 0; q < phi_inner.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi_inner.n_q_points; ++q)
           {
             const VectorizedArray<number> u_inner = phi_inner.get_value(q);
             const VectorizedArray<number> u_outer
@@ -736,18 +736,18 @@ namespace Step59
     FullMatrix<double>                                 laplace_unscaled(N, N);
     std::array<Table<2, VectorizedArray<number>>, dim> mass_matrices;
     std::array<Table<2, VectorizedArray<number>>, dim> laplace_matrices;
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       {
         mass_matrices[d].reinit(N, N);
         laplace_matrices[d].reinit(N, N);
       }
 
     QGauss<1> quadrature(N);
-    for(unsigned int i = 0; i < N; ++i)
-      for(unsigned int j = 0; j < N; ++j)
+    for (unsigned int i = 0; i < N; ++i)
+      for (unsigned int j = 0; j < N; ++j)
         {
           double sum_mass = 0, sum_laplace = 0;
-          for(unsigned int q = 0; q < quadrature.size(); ++q)
+          for (unsigned int q = 0; q < quadrature.size(); ++q)
             {
               sum_mass += (fe_1d->shape_value(i, quadrature.point(q))
                            * fe_1d->shape_value(j, quadrature.point(q)))
@@ -756,7 +756,7 @@ namespace Step59
                               * fe_1d->shape_grad(j, quadrature.point(q))[0])
                              * quadrature.weight(q);
             }
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             mass_matrices[d](i, j) = sum_mass;
 
           // The left and right boundary terms assembled by the next two
@@ -805,31 +805,31 @@ namespace Step59
     cell_matrices.clear();
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(*data);
     unsigned int old_mapping_data_index = numbers::invalid_unsigned_int;
-    for(unsigned int cell = 0; cell < data->n_cell_batches(); ++cell)
+    for (unsigned int cell = 0; cell < data->n_cell_batches(); ++cell)
       {
         phi.reinit(cell);
 
-        if(phi.get_mapping_data_index_offset() == old_mapping_data_index)
+        if (phi.get_mapping_data_index_offset() == old_mapping_data_index)
           continue;
 
         Tensor<2, dim, VectorizedArray<number>> inverse_jacobian
           = phi.inverse_jacobian(0);
 
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int e = 0; e < dim; ++e)
-            if(d != e)
-              for(unsigned int v = 0;
-                  v < VectorizedArray<number>::n_array_elements;
-                  ++v)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int e = 0; e < dim; ++e)
+            if (d != e)
+              for (unsigned int v = 0;
+                   v < VectorizedArray<number>::n_array_elements;
+                   ++v)
                 AssertThrow(inverse_jacobian[d][e][v] == 0.,
                             ExcNotImplemented());
 
         VectorizedArray<number> jacobian_determinant = inverse_jacobian[0][0];
-        for(unsigned int e = 1; e < dim; ++e)
+        for (unsigned int e = 1; e < dim; ++e)
           jacobian_determinant *= inverse_jacobian[e][e];
         jacobian_determinant = 1. / jacobian_determinant;
 
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           {
             const VectorizedArray<number> scaling_factor
               = inverse_jacobian[d][d] * inverse_jacobian[d][d]
@@ -841,12 +841,12 @@ namespace Step59
             // for computing the generalized eigenvalue problem mentioned in
             // the introduction.
 
-            for(unsigned int i = 0; i < N; ++i)
-              for(unsigned int j = 0; j < N; ++j)
+            for (unsigned int i = 0; i < N; ++i)
+              for (unsigned int j = 0; j < N; ++j)
                 laplace_matrices[d](i, j)
                   = scaling_factor * laplace_unscaled(i, j);
           }
-        if(cell_matrices.size() <= phi.get_mapping_data_index_offset())
+        if (cell_matrices.size() <= phi.get_mapping_data_index_offset())
           cell_matrices.resize(phi.get_mapping_data_index_offset() + 1);
         cell_matrices[phi.get_mapping_data_index_offset()].reinit(
           mass_matrices, laplace_matrices);
@@ -875,7 +875,7 @@ namespace Step59
     adjust_ghost_range_if_necessary(*data, src);
 
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(*data);
-    for(unsigned int cell = 0; cell < data->n_cell_batches(); ++cell)
+    for (unsigned int cell = 0; cell < data->n_cell_batches(); ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values(src);
@@ -1025,7 +1025,7 @@ namespace Step59
     const unsigned int nlevels = triangulation.n_global_levels();
     mg_matrices.resize(0, nlevels - 1);
 
-    for(unsigned int level = 0; level < nlevels; ++level)
+    for (unsigned int level = 0; level < nlevels; ++level)
       {
         typename MatrixFree<dim, float>::AdditionalData additional_data;
         additional_data.tasks_parallel_scheme
@@ -1068,20 +1068,20 @@ namespace Step59
     FEEvaluation<dim, fe_degree>   phi(data);
     RightHandSide<dim>             rhs_func;
     Solution<dim>                  exact_solution;
-    for(unsigned int cell = 0; cell < data.n_cell_batches(); ++cell)
+    for (unsigned int cell = 0; cell < data.n_cell_batches(); ++cell)
       {
         phi.reinit(cell);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           {
             VectorizedArray<double> rhs_val = VectorizedArray<double>();
             Point<dim, VectorizedArray<double>> point_batch
               = phi.quadrature_point(q);
-            for(unsigned int v = 0;
-                v < VectorizedArray<double>::n_array_elements;
-                ++v)
+            for (unsigned int v = 0;
+                 v < VectorizedArray<double>::n_array_elements;
+                 ++v)
               {
                 Point<dim> single_point;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   single_point[d] = point_batch[d][v];
                 rhs_val[v] = rhs_func.value(single_point);
               }
@@ -1115,9 +1115,9 @@ namespace Step59
     // MatrixFree::n_inner_face_batches(), whereas the number of boundary face
     // batches is given by MatrixFree::n_boundary_face_batches().
     FEFaceEvaluation<dim, fe_degree> phi_face(data, true);
-    for(unsigned int face = data.n_inner_face_batches();
-        face < data.n_inner_face_batches() + data.n_boundary_face_batches();
-        ++face)
+    for (unsigned int face = data.n_inner_face_batches();
+         face < data.n_inner_face_batches() + data.n_boundary_face_batches();
+         ++face)
       {
         phi_face.reinit(face);
 
@@ -1127,7 +1127,7 @@ namespace Step59
         const VectorizedArray<double> sigma
           = inverse_length_normal_to_face * system_matrix.get_penalty_factor();
 
-        for(unsigned int q = 0; q < phi_face.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi_face.n_q_points; ++q)
           {
             VectorizedArray<double> test_value = VectorizedArray<double>(),
                                     test_normal_derivative
@@ -1135,12 +1135,12 @@ namespace Step59
             Point<dim, VectorizedArray<double>> point_batch
               = phi_face.quadrature_point(q);
 
-            for(unsigned int v = 0;
-                v < VectorizedArray<double>::n_array_elements;
-                ++v)
+            for (unsigned int v = 0;
+                 v < VectorizedArray<double>::n_array_elements;
+                 ++v)
               {
                 Point<dim> single_point;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   single_point[d] = point_batch[d][v];
 
                 // The MatrixFree class lets us query the boundary_id of the
@@ -1152,12 +1152,12 @@ namespace Step59
                 // case (where we add something to the function value) or the
                 // Neumann case (where we add something to the normal
                 // derivative).
-                if(data.get_boundary_id(face) == 0)
+                if (data.get_boundary_id(face) == 0)
                   test_value[v] = 2.0 * exact_solution.value(single_point);
                 else
                   {
                     Tensor<1, dim> normal;
-                    for(unsigned int d = 0; d < dim; ++d)
+                    for (unsigned int d = 0; d < dim; ++d)
                       normal[d] = phi_face.get_normal_vector(q)[d][v];
                     test_normal_derivative[v]
                       = -normal * exact_solution.gradient(single_point);
@@ -1213,10 +1213,10 @@ namespace Step59
                                                          mg_smoother;
     MGLevelObject<typename SmootherType::AdditionalData> smoother_data;
     smoother_data.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for (unsigned int level = 0; level < triangulation.n_global_levels();
+         ++level)
       {
-        if(level > 0)
+        if (level > 0)
           {
             smoother_data[level].smoothing_range     = 15.;
             smoother_data[level].degree              = 2;
@@ -1305,22 +1305,22 @@ namespace Step59
           << (n_ranks > 1 ? "es" : "") << ", element " << fe.get_name()
           << std::endl
           << std::endl;
-    for(unsigned int cycle = 0; cycle < 9 - dim; ++cycle)
+    for (unsigned int cycle = 0; cycle < 9 - dim; ++cycle)
       {
         pcout << "Cycle " << cycle << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             Point<dim> upper_right;
             upper_right[0] = 2.5;
-            for(unsigned int d = 1; d < dim; ++d)
+            for (unsigned int d = 1; d < dim; ++d)
               upper_right[d] = 2.8;
             GridGenerator::hyper_rectangle(
               triangulation, Point<dim>(), upper_right);
             triangulation.begin_active()->face(0)->set_boundary_id(10);
             triangulation.begin_active()->face(1)->set_boundary_id(11);
             triangulation.begin_active()->face(2)->set_boundary_id(0);
-            for(unsigned int f = 3; f < GeometryInfo<dim>::faces_per_cell; ++f)
+            for (unsigned int f = 3; f < GeometryInfo<dim>::faces_per_cell; ++f)
               triangulation.begin_active()->face(f)->set_boundary_id(1);
 
             std::vector<GridTools::PeriodicFacePair<
@@ -1359,7 +1359,7 @@ main(int argc, char* argv[])
       LaplaceProblem<dimension, degree_finite_element> laplace_problem;
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1372,7 +1372,7 @@ main(int argc, char* argv[])
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

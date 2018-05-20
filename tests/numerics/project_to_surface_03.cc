@@ -44,7 +44,7 @@ test()
   cell->vertex(2)[0] += 0.25;
   cell->vertex(4)[0] += 0.25;
 
-  for(unsigned int point = 0; point < 9; ++point)
+  for (unsigned int point = 0; point < 9; ++point)
     {
       // choose the 8 vertices of the
       // original unit cell as well
@@ -55,7 +55,7 @@ test()
 
       deallog << "Trial point = " << trial_point << std::endl;
 
-      for(unsigned int e = 0; e < GeometryInfo<dim>::quads_per_cell; ++e)
+      for (unsigned int e = 0; e < GeometryInfo<dim>::quads_per_cell; ++e)
         {
           const typename Triangulation<dim>::quad_iterator quad
             = (dim > 2 ?
@@ -81,7 +81,7 @@ test()
           // indeed closer to
           // trial_point than any of
           // the vertices of the quad
-          for(unsigned int v = 0; v < 4; ++v)
+          for (unsigned int v = 0; v < 4; ++v)
             AssertThrow(p.distance(trial_point)
                           <= quad->vertex(v).distance(trial_point),
                         ExcInternalError());

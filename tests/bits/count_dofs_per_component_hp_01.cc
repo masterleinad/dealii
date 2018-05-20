@@ -60,7 +60,7 @@ test()
   DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
   DoFTools::count_dofs_per_component(hp_dof_handler, dofs_per_component_hp);
 
-  for(unsigned int i = 0; i < 3; i++)
+  for (unsigned int i = 0; i < 3; i++)
     {
       deallog << "DoFs in the " << i
               << ". component for classical FE: " << dofs_per_component.at(i)

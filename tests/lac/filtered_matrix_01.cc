@@ -34,7 +34,7 @@ checkVmult(FullMatrix<number>& A,
 
   F.vmult(O, V);
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }

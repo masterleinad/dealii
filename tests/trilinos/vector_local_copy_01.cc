@@ -36,12 +36,12 @@ main(int argc, char** argv)
   MPI_Comm           serial_communicator;
   const unsigned int colour = this_mpi_process;
   const unsigned int key    = this_mpi_process;
-  if(n_mpi_processes > 1)
+  if (n_mpi_processes > 1)
     MPI_Comm_split(mpi_communicator, colour, key, &serial_communicator);
   else
     serial_communicator = mpi_communicator;
 
-  if(this_mpi_process == 0)
+  if (this_mpi_process == 0)
     {
       const TrilinosWrappers::MPI::Vector tril_vec(complete_index_set(10),
                                                    serial_communicator);

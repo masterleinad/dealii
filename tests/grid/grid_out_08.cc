@@ -59,9 +59,9 @@ test()
   const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
   std::vector<CellData<dim>> cells(n_cells, CellData<dim>());
 
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for (unsigned int i = 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     }

@@ -26,7 +26,7 @@ check(const std::string in,
       std::string       out)
 {
   std::string result = Utilities::replace_in_string(in, from, to);
-  if(result != out)
+  if (result != out)
     {
       deallog << "in='" << in << "' from='" << from << "' to='" << to
               << "' result='" << result << "' != '" << out << "'" << std::endl;

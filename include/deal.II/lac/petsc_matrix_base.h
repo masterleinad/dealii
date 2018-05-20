@@ -1123,14 +1123,14 @@ namespace PETScWrappers
 
       // if at end of line: do one step, then cycle until we find a
       // row with a nonzero number of entries
-      if(accessor.a_index >= accessor.colnum_cache->size())
+      if (accessor.a_index >= accessor.colnum_cache->size())
         {
           accessor.a_index = 0;
           ++accessor.a_row;
 
-          while((accessor.a_row < accessor.matrix->m())
-                && (accessor.a_row < accessor.matrix->local_range().second)
-                && (accessor.matrix->row_length(accessor.a_row) == 0))
+          while ((accessor.a_row < accessor.matrix->m())
+                 && (accessor.a_row < accessor.matrix->local_range().second)
+                 && (accessor.matrix->row_length(accessor.a_row) == 0))
             ++accessor.a_row;
 
           accessor.visit_present_row();
@@ -1203,7 +1203,7 @@ namespace PETScWrappers
            ExcDimensionMismatch(indices.size(), values.m()));
     Assert(values.m() == values.n(), ExcNotQuadratic());
 
-    for(size_type i = 0; i < indices.size(); ++i)
+    for (size_type i = 0; i < indices.size(); ++i)
       set(indices[i],
           indices.size(),
           indices.data(),
@@ -1222,7 +1222,7 @@ namespace PETScWrappers
     Assert(col_indices.size() == values.n(),
            ExcDimensionMismatch(col_indices.size(), values.n()));
 
-    for(size_type i = 0; i < row_indices.size(); ++i)
+    for (size_type i = 0; i < row_indices.size(); ++i)
       set(row_indices[i],
           col_indices.size(),
           col_indices.data(),
@@ -1262,7 +1262,7 @@ namespace PETScWrappers
     int                n_columns;
 
     // If we don't elide zeros, the pointers are already available...
-    if(elide_zero_values == false)
+    if (elide_zero_values == false)
       {
         col_index_ptr = reinterpret_cast<const PetscInt*>(col_indices);
         col_value_ptr = values;
@@ -1272,18 +1272,18 @@ namespace PETScWrappers
       {
         // Otherwise, extract nonzero values in each row and get the
         // respective index.
-        if(column_indices.size() < n_cols)
+        if (column_indices.size() < n_cols)
           {
             column_indices.resize(n_cols);
             column_values.resize(n_cols);
           }
 
         n_columns = 0;
-        for(size_type j = 0; j < n_cols; ++j)
+        for (size_type j = 0; j < n_cols; ++j)
           {
             const PetscScalar value = values[j];
             AssertIsFinite(value);
-            if(value != PetscScalar())
+            if (value != PetscScalar())
               {
                 column_indices[n_columns] = col_indices[j];
                 column_values[n_columns]  = value;
@@ -1311,7 +1311,7 @@ namespace PETScWrappers
   {
     AssertIsFinite(value);
 
-    if(value == PetscScalar())
+    if (value == PetscScalar())
       {
         // we have to check after using Insert/Add in any case to be
         // consistent with the MPI communication model, but we can save
@@ -1334,7 +1334,7 @@ namespace PETScWrappers
            ExcDimensionMismatch(indices.size(), values.m()));
     Assert(values.m() == values.n(), ExcNotQuadratic());
 
-    for(size_type i = 0; i < indices.size(); ++i)
+    for (size_type i = 0; i < indices.size(); ++i)
       add(indices[i],
           indices.size(),
           indices.data(),
@@ -1353,7 +1353,7 @@ namespace PETScWrappers
     Assert(col_indices.size() == values.n(),
            ExcDimensionMismatch(col_indices.size(), values.n()));
 
-    for(size_type i = 0; i < row_indices.size(); ++i)
+    for (size_type i = 0; i < row_indices.size(); ++i)
       add(row_indices[i],
           col_indices.size(),
           col_indices.data(),
@@ -1396,7 +1396,7 @@ namespace PETScWrappers
     int                n_columns;
 
     // If we don't elide zeros, the pointers are already available...
-    if(elide_zero_values == false)
+    if (elide_zero_values == false)
       {
         col_index_ptr = reinterpret_cast<const PetscInt*>(col_indices);
         col_value_ptr = values;
@@ -1406,18 +1406,18 @@ namespace PETScWrappers
       {
         // Otherwise, extract nonzero values in each row and get the
         // respective index.
-        if(column_indices.size() < n_cols)
+        if (column_indices.size() < n_cols)
           {
             column_indices.resize(n_cols);
             column_values.resize(n_cols);
           }
 
         n_columns = 0;
-        for(size_type j = 0; j < n_cols; ++j)
+        for (size_type j = 0; j < n_cols; ++j)
           {
             const PetscScalar value = values[j];
             AssertIsFinite(value);
-            if(value != PetscScalar())
+            if (value != PetscScalar())
               {
                 column_indices[n_columns] = col_indices[j];
                 column_values[n_columns]  = value;
@@ -1459,7 +1459,7 @@ namespace PETScWrappers
     Assert(in_local_range(r),
            ExcIndexRange(r, local_range().first, local_range().second));
 
-    if(row_length(r) > 0)
+    if (row_length(r) > 0)
       return const_iterator(this, r, 0);
     else
       return end(r);
@@ -1481,8 +1481,8 @@ namespace PETScWrappers
     // owned range of rows first, before we ask for the length of the
     // row since the latter query leads to an exception in case we ask
     // for a row that is not locally owned
-    for(size_type i = r + 1; i < m(); ++i)
-      if(i == local_range().second || (row_length(i) > 0))
+    for (size_type i = r + 1; i < m(); ++i)
+      if (i == local_range().second || (row_length(i) > 0))
         return const_iterator(this, i, 0);
 
     // if there is no such line, then take the
@@ -1506,7 +1506,7 @@ namespace PETScWrappers
   inline void
   MatrixBase::prepare_action(const VectorOperation::values new_action)
   {
-    if(last_action == VectorOperation::unknown)
+    if (last_action == VectorOperation::unknown)
       last_action = new_action;
 
     Assert(last_action == new_action, ExcWrongMode(last_action, new_action));

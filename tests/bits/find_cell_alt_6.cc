@@ -41,13 +41,13 @@ void check(Triangulation<2>& tria)
   const std::vector<Point<2>>& v = tria.get_vertices();
   MappingQGeneric<2>           map(1);
 
-  for(unsigned i = 0; i < tria.n_vertices(); i++)
+  for (unsigned i = 0; i < tria.n_vertices(); i++)
     {
       std::pair<Triangulation<2>::active_cell_iterator, Point<2>> cell
         = GridTools::find_active_cell_around_point(map, tria, v[i]);
 
       deallog << "Vertex <" << v[i] << "> found in cell ";
-      for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
         deallog << "<" << cell.first->vertex(v) << "> ";
       deallog << " [local: " << cell.second << "]" << std::endl;
     }
@@ -67,7 +67,7 @@ main()
       coarse_grid.execute_coarsening_and_refinement();
       check(coarse_grid);
     }
-  catch(const std::exception& exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

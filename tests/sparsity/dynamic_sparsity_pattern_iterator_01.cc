@@ -22,14 +22,14 @@ void
 test()
 {
   DynamicSparsityPattern sp(5, 5);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < 5; ++i)
+    for (unsigned int j = 0; j < 5; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
   sp.compress();
 
   DynamicSparsityPattern::const_iterator i = sp.begin();
-  for(; i != sp.end(); ++i)
+  for (; i != sp.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 
   deallog << "OK" << std::endl;
@@ -44,7 +44,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -58,7 +58,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

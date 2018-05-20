@@ -52,13 +52,13 @@ main(int argc, char** argv)
     PETScWrappers::MPI::Vector v0(MPI_COMM_WORLD, dim, dim);
     PETScWrappers::MPI::Vector y(MPI_COMM_WORLD, dim, dim);
     PETScWrappers::MPI::Vector x(MPI_COMM_WORLD, dim, dim);
-    for(unsigned int j = 0; j < v0.size(); ++j)
+    for (unsigned int j = 0; j < v0.size(); ++j)
       v0[j] = random_value<double>();
 
     v0.compress(VectorOperation::insert);
     GrowingVectorMemory<PETScWrappers::MPI::Vector> vector_memory;
 
-    for(unsigned int k = 4; k < 10; ++k)
+    for (unsigned int k = 4; k < 10; ++k)
       {
         const double est = Utilities::LinearAlgebra::lanczos_largest_eigenvalue(
           A, v0, k, vector_memory);
@@ -85,7 +85,7 @@ main(int argc, char** argv)
             {
               solver.solve(A, x, y, preconditioner);
             }
-          catch(SolverControl::NoConvergence&)
+          catch (SolverControl::NoConvergence&)
             {}
 
           deallog << "CG " << estimated_eigenvalues.back() << std::endl;

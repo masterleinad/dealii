@@ -273,27 +273,27 @@ protected:
     // quadrature points summed over *all* faces or subfaces, whereas
     // the number of output slots equals the number of quadrature
     // points on only *one* face)
-    if((update_flags & update_values)
-       && !((output_data.shape_values.n_rows() > 0)
-            && (output_data.shape_values.n_cols() == n_q_points)))
+    if ((update_flags & update_values)
+        && !((output_data.shape_values.n_rows() > 0)
+             && (output_data.shape_values.n_cols() == n_q_points)))
       data->shape_values.reinit(this->dofs_per_cell, n_q_points);
 
-    if(update_flags & update_gradients)
+    if (update_flags & update_gradients)
       data->shape_gradients.reinit(this->dofs_per_cell, n_q_points);
 
-    if(update_flags & update_hessians)
+    if (update_flags & update_hessians)
       data->shape_hessians.reinit(this->dofs_per_cell, n_q_points);
 
-    if(update_flags & update_3rd_derivatives)
+    if (update_flags & update_3rd_derivatives)
       data->shape_3rd_derivatives.reinit(this->dofs_per_cell, n_q_points);
 
     // next already fill those fields of which we have information by
     // now. note that the shape gradients are only those on the unit
     // cell, and need to be transformed when visiting an actual cell
-    if(update_flags
-       & (update_values | update_gradients | update_hessians
-          | update_3rd_derivatives))
-      for(unsigned int i = 0; i < n_q_points; ++i)
+    if (update_flags
+        & (update_values | update_gradients | update_hessians
+           | update_3rd_derivatives))
+      for (unsigned int i = 0; i < n_q_points; ++i)
         {
           poly_space.compute(quadrature.point(i),
                              values,
@@ -309,30 +309,30 @@ protected:
           // faces and subfaces, but we later on copy only a portion of it
           // into the output object; in that case, copy the data from all
           // faces into the scratch object
-          if(update_flags & update_values)
-            if(output_data.shape_values.n_rows() > 0)
+          if (update_flags & update_values)
+            if (output_data.shape_values.n_rows() > 0)
               {
-                if(output_data.shape_values.n_cols() == n_q_points)
-                  for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+                if (output_data.shape_values.n_cols() == n_q_points)
+                  for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
                     output_data.shape_values[k][i] = values[k];
                 else
-                  for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+                  for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
                     data->shape_values[k][i] = values[k];
               }
 
           // for everything else, derivatives need to be transformed,
           // so we write them into our scratch space and only later
           // copy stuff into where FEValues wants it
-          if(update_flags & update_gradients)
-            for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+          if (update_flags & update_gradients)
+            for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
               data->shape_gradients[k][i] = grads[k];
 
-          if(update_flags & update_hessians)
-            for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+          if (update_flags & update_hessians)
+            for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
               data->shape_hessians[k][i] = grad_grads[k];
 
-          if(update_flags & update_3rd_derivatives)
-            for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+          if (update_flags & update_3rd_derivatives)
+            for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
               data->shape_3rd_derivatives[k][i] = third_derivatives[k];
         }
     return std::move(data);

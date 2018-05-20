@@ -206,14 +206,14 @@ inline SmartPointer<T, P>::SmartPointer() : t(nullptr), id(typeid(P).name())
 template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer(T* t) : t(t), id(typeid(P).name())
 {
-  if(t != nullptr)
+  if (t != nullptr)
     t->subscribe(id);
 }
 
 template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer(T* t, const char* id) : t(t), id(id)
 {
-  if(t != nullptr)
+  if (t != nullptr)
     t->subscribe(id);
 }
 
@@ -222,7 +222,7 @@ template <class Q>
 inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, Q>& tt)
   : t(tt.t), id(tt.id)
 {
-  if(t != nullptr)
+  if (t != nullptr)
     t->subscribe(id);
 }
 
@@ -230,14 +230,14 @@ template <typename T, typename P>
 inline SmartPointer<T, P>::SmartPointer(const SmartPointer<T, P>& tt)
   : t(tt.t), id(tt.id)
 {
-  if(t != nullptr)
+  if (t != nullptr)
     t->subscribe(id);
 }
 
 template <typename T, typename P>
 inline SmartPointer<T, P>::~SmartPointer()
 {
-  if(t != nullptr)
+  if (t != nullptr)
     t->unsubscribe(id);
 }
 
@@ -245,7 +245,7 @@ template <typename T, typename P>
 inline void
 SmartPointer<T, P>::clear()
 {
-  if(t != nullptr)
+  if (t != nullptr)
     {
       t->unsubscribe(id);
       delete t;
@@ -259,13 +259,13 @@ SmartPointer<T, P>::operator=(T* tt)
 {
   // optimize if no real action is
   // requested
-  if(t == tt)
+  if (t == tt)
     return *this;
 
-  if(t != nullptr)
+  if (t != nullptr)
     t->unsubscribe(id);
   t = tt;
-  if(tt != nullptr)
+  if (tt != nullptr)
     tt->subscribe(id);
   return *this;
 }
@@ -278,13 +278,13 @@ SmartPointer<T, P>::operator=(const SmartPointer<T, Q>& tt)
   // if objects on the left and right
   // hand side of the operator= are
   // the same, then this is a no-op
-  if(&tt == this)
+  if (&tt == this)
     return *this;
 
-  if(t != nullptr)
+  if (t != nullptr)
     t->unsubscribe(id);
   t = static_cast<T*>(tt);
-  if(tt != nullptr)
+  if (tt != nullptr)
     tt->subscribe(id);
   return *this;
 }
@@ -296,13 +296,13 @@ SmartPointer<T, P>::operator=(const SmartPointer<T, P>& tt)
   // if objects on the left and right
   // hand side of the operator= are
   // the same, then this is a no-op
-  if(&tt == this)
+  if (&tt == this)
     return *this;
 
-  if(t != nullptr)
+  if (t != nullptr)
     t->unsubscribe(id);
   t = static_cast<T*>(tt);
-  if(tt != nullptr)
+  if (tt != nullptr)
     tt->subscribe(id);
   return *this;
 }
@@ -345,12 +345,12 @@ template <typename T, typename P>
 inline void
 SmartPointer<T, P>::swap(T*& tt)
 {
-  if(t != nullptr)
+  if (t != nullptr)
     t->unsubscribe(id);
 
   std::swap(t, tt);
 
-  if(t != nullptr)
+  if (t != nullptr)
     t->subscribe(id);
 }
 

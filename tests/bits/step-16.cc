@@ -116,7 +116,7 @@ LaplaceProblem<dim>::setup_system()
   mg_matrices.resize(0, nlevels - 1);
   mg_sparsity.resize(0, nlevels - 1);
 
-  for(unsigned int level = 0; level < nlevels; ++level)
+  for (unsigned int level = 0; level < nlevels; ++level)
     {
       mg_sparsity[level].reinit(mg_dof_handler.n_dofs(level),
                                 mg_dof_handler.n_dofs(level),
@@ -149,17 +149,17 @@ LaplaceProblem<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = mg_dof_handler.begin_active(),
     endc = mg_dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
 
       fe_values.reinit(cell);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                      * fe_values.shape_grad(j, q_point))
                                     + fe_values.shape_value(i, q_point)
@@ -171,9 +171,9 @@ LaplaceProblem<dim>::assemble_system()
           };
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
@@ -202,17 +202,17 @@ LaplaceProblem<dim>::assemble_multigrid()
 
   typename DoFHandler<dim>::cell_iterator cell = mg_dof_handler.begin(),
                                           endc = mg_dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       const unsigned int level = cell->level();
       cell_matrix              = 0;
 
       fe_values.reinit(cell);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                      * fe_values.shape_grad(j, q_point))
                                     + fe_values.shape_value(i, q_point)
@@ -221,9 +221,9 @@ LaplaceProblem<dim>::assemble_multigrid()
           };
 
       cell->get_mg_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             mg_matrices[level].add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
         };
@@ -291,11 +291,11 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 6; ++cycle)
+  for (unsigned int cycle = 0; cycle < 6; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_cube(triangulation);
         }

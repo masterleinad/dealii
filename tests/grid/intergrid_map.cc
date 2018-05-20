@@ -48,7 +48,7 @@ check()
 
   // make several loops to refine the
   // two grids
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     {
       deallog << "Refinement step " << i << std::endl;
 
@@ -67,7 +67,7 @@ check()
       // write out the mapping
       typename DoFHandler<dim>::cell_iterator cell = dof_1.begin(),
                                               endc = dof_1.end();
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
           deallog << cell << "->" << intergrid_map_1[cell] << "->"
                   << intergrid_map_2[intergrid_map_1[cell]] << std::endl;
@@ -79,21 +79,21 @@ check()
       // but differently. this
       // produces quite random grids
       cell = dof_1.begin();
-      for(unsigned int index = 0; cell != endc; ++cell)
-        if(cell->active())
+      for (unsigned int index = 0; cell != endc; ++cell)
+        if (cell->active())
           {
             ++index;
-            if(index % 3 == 0)
+            if (index % 3 == 0)
               cell->set_refine_flag();
           };
 
       cell = dof_2.begin();
       endc = dof_2.end();
-      for(unsigned int index = 0; cell != endc; ++cell)
-        if(cell->active())
+      for (unsigned int index = 0; cell != endc; ++cell)
+        if (cell->active())
           {
             ++index;
-            if(index % 3 == 1)
+            if (index % 3 == 1)
               cell->set_refine_flag();
           };
 

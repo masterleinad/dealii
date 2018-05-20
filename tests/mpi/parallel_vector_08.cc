@@ -29,7 +29,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   const unsigned int set = 200;
@@ -37,10 +37,10 @@ test()
   const unsigned int local_size  = set - myid;
   unsigned int       global_size = 0;
   unsigned int       my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  for (unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
-      if(i < myid)
+      if (i < myid)
         my_start += set - i;
     }
   // each processor owns some indices and all
@@ -73,37 +73,37 @@ test()
     local_owned, local_owned, MPI_COMM_WORLD);
 
   // set a few of the local elements
-  for(unsigned i = 0; i < local_size; ++i)
+  for (unsigned i = 0; i < local_size; ++i)
     w.local_element(i) = 2.0 * (i + my_start);
 
   v = w;
   v.update_ghost_values();
 
   // check local values for correctness
-  for(unsigned int i = 0; i < local_size; ++i)
+  for (unsigned int i = 0; i < local_size; ++i)
     AssertThrow(v.local_element(i) == 2.0 * (i + my_start), ExcInternalError());
 
   // check local values with two different
   // access operators
-  for(unsigned int i = 0; i < local_size; ++i)
+  for (unsigned int i = 0; i < local_size; ++i)
     AssertThrow(v.local_element(i) == v(local_owned.nth_index_in_set(i)),
                 ExcInternalError());
-  for(unsigned int i = 0; i < local_size; ++i)
+  for (unsigned int i = 0; i < local_size; ++i)
     AssertThrow(v.local_element(i) == v(i + my_start), ExcInternalError());
 
   // check non-local entries on all processors
-  for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     AssertThrow(v(ghost_indices[i]) == 2. * ghost_indices[i],
                 ExcInternalError());
 
   // compare direct access local_element with access ()
-  for(unsigned int i = 0; i < 10; ++i)
-    if(ghost_indices[i] < my_start)
+  for (unsigned int i = 0; i < 10; ++i)
+    if (ghost_indices[i] < my_start)
       AssertThrow(v(ghost_indices[i]) == v.local_element(local_size + i),
                   ExcInternalError());
 
-  if(myid == 0)
-    for(unsigned int i = 5; i < 10; ++i)
+  if (myid == 0)
+    for (unsigned int i = 5; i < 10; ++i)
       AssertThrow(v(ghost_indices[i]) == v.local_element(local_size + i - 5),
                   ExcInternalError());
 
@@ -114,34 +114,34 @@ test()
   v = w;
 
   // check local values for correctness
-  for(unsigned int i = 0; i < local_size; ++i)
+  for (unsigned int i = 0; i < local_size; ++i)
     AssertThrow(v.local_element(i) == 2.0 * (i + my_start), ExcInternalError());
 
   // check local values with two different
   // access operators
-  for(unsigned int i = 0; i < local_size; ++i)
+  for (unsigned int i = 0; i < local_size; ++i)
     AssertThrow(v.local_element(i) == v(local_owned.nth_index_in_set(i)),
                 ExcInternalError());
-  for(unsigned int i = 0; i < local_size; ++i)
+  for (unsigned int i = 0; i < local_size; ++i)
     AssertThrow(v.local_element(i) == v(i + my_start), ExcInternalError());
 
   // check non-local entries on all processors
-  for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     AssertThrow(v(ghost_indices[i]) == 2. * ghost_indices[i],
                 ExcInternalError());
 
   // compare direct access [] with access ()
-  for(unsigned int i = 0; i < 10; ++i)
-    if(ghost_indices[i] < my_start)
+  for (unsigned int i = 0; i < 10; ++i)
+    if (ghost_indices[i] < my_start)
       AssertThrow(v(ghost_indices[i]) == v.local_element(local_size + i),
                   ExcInternalError());
 
-  if(myid == 0)
-    for(unsigned int i = 5; i < 10; ++i)
+  if (myid == 0)
+    for (unsigned int i = 5; i < 10; ++i)
       AssertThrow(v(ghost_indices[i]) == v.local_element(local_size + i - 5),
                   ExcInternalError());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -154,7 +154,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

@@ -39,7 +39,7 @@ namespace internal
       invert_numbering(const std::vector<unsigned int>& in)
       {
         std::vector<unsigned int> out(in.size());
-        for(unsigned int i = 0; i < in.size(); ++i)
+        for (unsigned int i = 0; i < in.size(); ++i)
           {
             Assert(in[i] < out.size(),
                    dealii::ExcIndexRange(in[i], 0, out.size()));
@@ -139,8 +139,8 @@ FE_Q_Hierarchical<dim>::get_interpolation_matrix(
   FullMatrix<double>&       matrix) const
 {
   // support interpolation between FE_Q_Hierarchical only.
-  if(const FE_Q_Hierarchical<dim>* source_fe
-     = dynamic_cast<const FE_Q_Hierarchical<dim>*>(&source))
+  if (const FE_Q_Hierarchical<dim>* source_fe
+      = dynamic_cast<const FE_Q_Hierarchical<dim>*>(&source))
     {
       // ok, source is a Q_Hierarchical element, so we will be able to do the work
       Assert(matrix.m() == this->dofs_per_cell,
@@ -157,11 +157,11 @@ FE_Q_Hierarchical<dim>::get_interpolation_matrix(
       matrix = 0.;
 
       // distinguish between the case when we interpolate to a richer element
-      if(this->dofs_per_cell >= source_fe->dofs_per_cell)
+      if (this->dofs_per_cell >= source_fe->dofs_per_cell)
         {
           const std::vector<unsigned int> dof_map
             = this->get_embedding_dofs(source_fe->degree);
-          for(unsigned int j = 0; j < dof_map.size(); j++)
+          for (unsigned int j = 0; j < dof_map.size(); j++)
             matrix[dof_map[j]][j] = 1.;
         }
       // and when just truncate higher modes.
@@ -169,7 +169,7 @@ FE_Q_Hierarchical<dim>::get_interpolation_matrix(
         {
           const std::vector<unsigned int> dof_map
             = source_fe->get_embedding_dofs(this->degree);
-          for(unsigned int j = 0; j < dof_map.size(); j++)
+          for (unsigned int j = 0; j < dof_map.size(); j++)
             matrix[j][dof_map[j]] = 1.;
         }
     }
@@ -220,12 +220,12 @@ FE_Q_Hierarchical<dim>::hp_vertex_dof_identities(
   // single DoF of each FE at a
   // vertex, and they should have
   // identical value
-  if(dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
     {
       return std::vector<std::pair<unsigned int, unsigned int>>(
         1, std::make_pair(0U, 0U));
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -249,7 +249,7 @@ FE_Q_Hierarchical<dim>::hp_line_dof_identities(
   // these identities if both FEs are
   // FE_Q_Hierarchicals or if the other
   // one is an FE_Nothing.
-  if(dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
     {
       const unsigned int& this_dpl  = this->dofs_per_line;
       const unsigned int& other_dpl = fe_other.dofs_per_line;
@@ -259,12 +259,12 @@ FE_Q_Hierarchical<dim>::hp_line_dof_identities(
       // for the first N-1, where N is minimum number of
       // dofs_per_line for each FE_Q_Hierarchical.
       std::vector<std::pair<unsigned int, unsigned int>> res;
-      for(unsigned int i = 0; i < std::min(this_dpl, other_dpl); i++)
+      for (unsigned int i = 0; i < std::min(this_dpl, other_dpl); i++)
         res.emplace_back(i, i);
 
       return res;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -288,7 +288,7 @@ FE_Q_Hierarchical<dim>::hp_quad_dof_identities(
   // these identities if both FEs are
   // FE_Q_Hierarchicals or if the other
   // one is an FE_Nothing.
-  if(dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
     {
       const unsigned int& this_dpq  = this->dofs_per_quad;
       const unsigned int& other_dpq = fe_other.dofs_per_quad;
@@ -298,12 +298,12 @@ FE_Q_Hierarchical<dim>::hp_quad_dof_identities(
       // for the first N-1, where N is minimum number of
       // dofs_per_line for each FE_Q_Hierarchical.
       std::vector<std::pair<unsigned int, unsigned int>> res;
-      for(unsigned int i = 0; i < std::min(this_dpq, other_dpq); i++)
+      for (unsigned int i = 0; i < std::min(this_dpq, other_dpq); i++)
         res.emplace_back(i, i);
 
       return res;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -323,22 +323,22 @@ FiniteElementDomination::Domination
 FE_Q_Hierarchical<dim>::compare_for_face_domination(
   const FiniteElement<dim>& fe_other) const
 {
-  if(const FE_Q_Hierarchical<dim>* fe_q_other
-     = dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other))
+  if (const FE_Q_Hierarchical<dim>* fe_q_other
+      = dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other))
     {
       // the element with lowest polynomial degree
       // dominates the other.
-      if(this->degree < fe_q_other->degree)
+      if (this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
-      else if(this->degree == fe_q_other->degree)
+      else if (this->degree == fe_q_other->degree)
         return FiniteElementDomination::either_element_can_dominate;
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if (const FE_Nothing<dim>* fe_nothing
+           = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
     {
-      if(fe_nothing->is_dominating())
+      if (fe_nothing->is_dominating())
         {
           return FiniteElementDomination::other_element_dominates;
         }
@@ -413,41 +413,41 @@ FE_Q_Hierarchical<dim>::build_dofs_cell(
   // 3                 \      1/ 2^k * k!/(k-j)!j!
   // 4                             .
 
-  for(unsigned int c = 0; c < GeometryInfo<1>::max_children_per_cell; ++c)
-    for(unsigned int j = 0; j < dofs_1d; ++j)
-      for(unsigned int k = 0; k < dofs_1d; ++k)
+  for (unsigned int c = 0; c < GeometryInfo<1>::max_children_per_cell; ++c)
+    for (unsigned int j = 0; j < dofs_1d; ++j)
+      for (unsigned int k = 0; k < dofs_1d; ++k)
         {
           // upper diagonal block
-          if((j <= 1) && (k <= 1))
+          if ((j <= 1) && (k <= 1))
             {
-              if(((c == 0) && (j == 0) && (k == 0))
-                 || ((c == 1) && (j == 1) && (k == 1)))
+              if (((c == 0) && (j == 0) && (k == 0))
+                  || ((c == 1) && (j == 1) && (k == 1)))
                 dofs_cell[c](j, k) = 1.;
               else
                 dofs_cell[c](j, k) = 0.;
 
-              if(((c == 0) && (j == 1)) || ((c == 1) && (j == 0)))
+              if (((c == 0) && (j == 1)) || ((c == 1) && (j == 0)))
                 dofs_subcell[c](j, k) = .5;
-              else if(((c == 0) && (k == 0)) || ((c == 1) && (k == 1)))
+              else if (((c == 0) && (k == 0)) || ((c == 1) && (k == 1)))
                 dofs_subcell[c](j, k) = 1.;
               else
                 dofs_subcell[c](j, k) = 0.;
             }
           // upper right block
-          else if((j <= 1) && (k >= 2))
+          else if ((j <= 1) && (k >= 2))
             {
-              if(((c == 0) && (j == 1) && ((k % 2) == 0))
-                 || ((c == 1) && (j == 0) && ((k % 2) == 0)))
+              if (((c == 0) && (j == 1) && ((k % 2) == 0))
+                  || ((c == 1) && (j == 0) && ((k % 2) == 0)))
                 dofs_subcell[c](j, k) = -1.;
             }
           // upper diagonal block
-          else if((j >= 2) && (k >= 2) && (j <= k))
+          else if ((j >= 2) && (k >= 2) && (j <= k))
             {
               double factor = 1.;
-              for(unsigned int i = 1; i <= j; ++i)
+              for (unsigned int i = 1; i <= j; ++i)
                 factor *= ((double) (k - i + 1)) / ((double) i);
               // factor == k * (k-1) * ... * (k-j+1) / j! = k! / (k-j)! / j!
-              if(c == 0)
+              if (c == 0)
                 {
                   dofs_subcell[c](j, k)
                     = ((k + j) % 2 == 0) ?
@@ -479,7 +479,7 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
   this->interface_constraints.TableBase<2, double>::reinit(
     this->interface_constraints_size());
 
-  switch(dim)
+  switch (dim)
     {
       case 1:
         {
@@ -490,13 +490,13 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
       case 2:
         {
           // vertex node
-          for(unsigned int i = 0; i < dofs_1d; ++i)
+          for (unsigned int i = 0; i < dofs_1d; ++i)
             this->interface_constraints(0, i) = dofs_subcell[0](1, i);
           // edge nodes
-          for(unsigned int c = 0; c < GeometryInfo<1>::max_children_per_cell;
-              ++c)
-            for(unsigned int i = 0; i < dofs_1d; ++i)
-              for(unsigned int j = 2; j < dofs_1d; ++j)
+          for (unsigned int c = 0; c < GeometryInfo<1>::max_children_per_cell;
+               ++c)
+            for (unsigned int i = 0; i < dofs_1d; ++i)
+              for (unsigned int j = 2; j < dofs_1d; ++j)
                 this->interface_constraints(1 + c * (this->degree - 1) + j - 2,
                                             i)
                   = dofs_subcell[c](j, i);
@@ -505,7 +505,7 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
 
       case 3:
         {
-          for(unsigned int i = 0; i < dofs_1d * dofs_1d; i++)
+          for (unsigned int i = 0; i < dofs_1d * dofs_1d; i++)
             {
               // center vertex node
               this->interface_constraints(0, face_renumber[i])
@@ -527,7 +527,7 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
                   * dofs_subcell[1](1, (i - (i % dofs_1d)) / dofs_1d);
 
               // interior edges
-              for(unsigned int j = 0; j < (this->degree - 1); j++)
+              for (unsigned int j = 0; j < (this->degree - 1); j++)
                 {
                   this->interface_constraints(5 + j, face_renumber[i])
                     = dofs_subcell[0](1, i % dofs_1d)
@@ -547,7 +547,7 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
                 }
 
               // boundary edges
-              for(unsigned int j = 0; j < (this->degree - 1); j++)
+              for (unsigned int j = 0; j < (this->degree - 1); j++)
                 {
                   // left edge
                   this->interface_constraints(5 + 4 * (this->degree - 1) + j,
@@ -595,8 +595,8 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
                 }
 
               // interior faces
-              for(unsigned int j = 0; j < (this->degree - 1); j++)
-                for(unsigned int k = 0; k < (this->degree - 1); k++)
+              for (unsigned int j = 0; j < (this->degree - 1); j++)
+                for (unsigned int k = 0; k < (this->degree - 1); k++)
                   {
                     // subcell 0
                     this->interface_constraints(5 + 12 * (this->degree - 1) + j
@@ -646,7 +646,7 @@ FE_Q_Hierarchical<dim>::initialize_embedding_and_restriction(
   const unsigned int dofs_1d = 2 * this->dofs_per_vertex + this->dofs_per_line;
   const std::vector<unsigned int>& renumber = this->poly_space.get_numbering();
 
-  for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
+  for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
     {
       this->prolongation[iso][c].reinit(this->dofs_per_cell,
                                         this->dofs_per_cell);
@@ -656,9 +656,10 @@ FE_Q_Hierarchical<dim>::initialize_embedding_and_restriction(
 
   // the 1d case is particularly
   // simple, so special case it:
-  if(dim == 1)
+  if (dim == 1)
     {
-      for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
+      for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+           ++c)
         {
           this->prolongation[iso][c].fill(dofs_subcell[c]);
           this->restriction[iso][c].fill(dofs_cell[c]);
@@ -676,15 +677,15 @@ FE_Q_Hierarchical<dim>::initialize_embedding_and_restriction(
   // i loops over the dofs in the
   // master cell. These are the
   // columns in the embedding matrix.
-  for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
-    for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-      switch(dim)
+  for (unsigned int j = 0; j < this->dofs_per_cell; ++j)
+    for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
+      switch (dim)
         {
           case 2:
             {
-              for(unsigned int c = 0;
-                  c < GeometryInfo<2>::max_children_per_cell;
-                  ++c)
+              for (unsigned int c = 0;
+                   c < GeometryInfo<2>::max_children_per_cell;
+                   ++c)
                 {
                   // left/right line: 0/1
                   const unsigned int c0 = c % 2;
@@ -710,9 +711,9 @@ FE_Q_Hierarchical<dim>::initialize_embedding_and_restriction(
 
           case 3:
             {
-              for(unsigned int c = 0;
-                  c < GeometryInfo<3>::max_children_per_cell;
-                  ++c)
+              for (unsigned int c = 0;
+                   c < GeometryInfo<3>::max_children_per_cell;
+                   ++c)
                 {
                   // left/right face: 0/1
                   const unsigned int c0 = c % 2;
@@ -775,7 +776,7 @@ FE_Q_Hierarchical<dim>::initialize_generalized_support_points()
 {
   // number of points: (degree+1)^dim
   unsigned int n = this->degree + 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     n *= this->degree + 1;
 
   this->generalized_support_points.resize(n);
@@ -812,30 +813,30 @@ FE_Q_Hierarchical<dim>::initialize_generalized_support_points()
   // TODO shouldn't we just at least make support points unique,
   // even though the delta property is not satisfied for this FE?
   unsigned int k = 0;
-  for(unsigned int iz = 0; iz <= ((dim > 2) ? this->degree : 0); ++iz)
-    for(unsigned int iy = 0; iy <= ((dim > 1) ? this->degree : 0); ++iy)
-      for(unsigned int ix = 0; ix <= this->degree; ++ix)
+  for (unsigned int iz = 0; iz <= ((dim > 2) ? this->degree : 0); ++iz)
+    for (unsigned int iy = 0; iy <= ((dim > 1) ? this->degree : 0); ++iy)
+      for (unsigned int ix = 0; ix <= this->degree; ++ix)
         {
-          if(ix == 0)
+          if (ix == 0)
             p(0) = 0.;
-          else if(ix == 1)
+          else if (ix == 1)
             p(0) = 1.;
           else
             p(0) = .5;
-          if(dim > 1)
+          if (dim > 1)
             {
-              if(iy == 0)
+              if (iy == 0)
                 p(1) = 0.;
-              else if(iy == 1)
+              else if (iy == 1)
                 p(1) = 1.;
               else
                 p(1) = .5;
             }
-          if(dim > 2)
+          if (dim > 2)
             {
-              if(iz == 0)
+              if (iz == 0)
                 p(2) = 0.;
-              else if(iz == 1)
+              else if (iz == 1)
                 p(2) = 1.;
               else
                 p(2) = .5;
@@ -912,7 +913,7 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
          (typename FiniteElement<dim>::ExcInterpolationNotImplemented()));
   interpolation_matrix = 0;
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
@@ -922,7 +923,7 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
           // element, which corresponds to 1 on diagonal of the matrix.
           // DoFs which correspond to higher polynomials
           // are zeroed (zero rows in the matrix).
-          for(unsigned int i = 0; i < this->dofs_per_face; ++i)
+          for (unsigned int i = 0; i < this->dofs_per_face; ++i)
             interpolation_matrix(i, i) = 1;
 
           break;
@@ -930,19 +931,19 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
 
       case 3:
         {
-          for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_face; ++i)
+          for (unsigned int i = 0; i < GeometryInfo<3>::vertices_per_face; ++i)
             interpolation_matrix(i, i) = 1;
 
-          for(unsigned int i = 0; i < this->degree - 1; ++i)
+          for (unsigned int i = 0; i < this->degree - 1; ++i)
             {
-              for(unsigned int j = 0; j < GeometryInfo<3>::lines_per_face; ++j)
+              for (unsigned int j = 0; j < GeometryInfo<3>::lines_per_face; ++j)
                 interpolation_matrix(i + j * (x_source_fe.degree - 1)
                                        + GeometryInfo<3>::vertices_per_face,
                                      i + j * (this->degree - 1)
                                        + GeometryInfo<3>::vertices_per_face)
                   = 1;
 
-              for(unsigned int j = 0; j < this->degree - 1; ++j)
+              for (unsigned int j = 0; j < this->degree - 1; ++j)
                 interpolation_matrix((i + GeometryInfo<3>::lines_per_face)
                                          * (x_source_fe.degree - 1)
                                        + j + GeometryInfo<3>::vertices_per_face,
@@ -996,11 +997,11 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
   Assert(this->dofs_per_face <= source_fe.dofs_per_face,
          (typename FiniteElement<dim>::ExcInterpolationNotImplemented()));
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
-          switch(subface)
+          switch (subface)
             {
               case 0:
                 {
@@ -1008,7 +1009,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                   interpolation_matrix(1, 0) = 0.5;
                   interpolation_matrix(1, 1) = 0.5;
 
-                  for(unsigned int dof = 2; dof < this->dofs_per_face;)
+                  for (unsigned int dof = 2; dof < this->dofs_per_face;)
                     {
                       interpolation_matrix(1, dof) = -1.0;
                       dof                          = dof + 2;
@@ -1016,19 +1017,19 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                   int factorial_i = 1;
 
-                  for(int i = 2; i < (int) this->dofs_per_face; ++i)
+                  for (int i = 2; i < (int) this->dofs_per_face; ++i)
                     {
                       interpolation_matrix(i, i) = std::pow(0.5, i);
                       factorial_i *= i;
                       int factorial_j  = factorial_i;
                       int factorial_ij = 1;
 
-                      for(int j = i + 1; j < (int) this->dofs_per_face; ++j)
+                      for (int j = i + 1; j < (int) this->dofs_per_face; ++j)
                         {
                           factorial_ij *= j - i;
                           factorial_j *= j;
 
-                          if((i + j) & 1)
+                          if ((i + j) & 1)
                             interpolation_matrix(i, j)
                               = -1.0 * std::pow(0.5, j) * factorial_j
                                 / (factorial_i * factorial_ij);
@@ -1048,7 +1049,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                   interpolation_matrix(0, 0) = 0.5;
                   interpolation_matrix(0, 1) = 0.5;
 
-                  for(unsigned int dof = 2; dof < this->dofs_per_face;)
+                  for (unsigned int dof = 2; dof < this->dofs_per_face;)
                     {
                       interpolation_matrix(0, dof) = -1.0;
                       dof                          = dof + 2;
@@ -1058,14 +1059,14 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                   int factorial_i = 1;
 
-                  for(int i = 2; i < (int) this->dofs_per_face; ++i)
+                  for (int i = 2; i < (int) this->dofs_per_face; ++i)
                     {
                       interpolation_matrix(i, i) = std::pow(0.5, i);
                       factorial_i *= i;
                       int factorial_j  = factorial_i;
                       int factorial_ij = 1;
 
-                      for(int j = i + 1; j < (int) this->dofs_per_face; ++j)
+                      for (int j = i + 1; j < (int) this->dofs_per_face; ++j)
                         {
                           factorial_ij *= j - i;
                           factorial_j *= j;
@@ -1082,7 +1083,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
       case 3:
         {
-          switch(subface)
+          switch (subface)
             {
               case 0:
                 {
@@ -1092,16 +1093,16 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                   interpolation_matrix(2, 0) = 0.5;
                   interpolation_matrix(2, 2) = 0.5;
 
-                  for(unsigned int i = 0; i < this->degree - 1;)
+                  for (unsigned int i = 0; i < this->degree - 1;)
                     {
-                      for(unsigned int line = 0;
-                          line < GeometryInfo<3>::lines_per_face;
-                          ++line)
+                      for (unsigned int line = 0;
+                           line < GeometryInfo<3>::lines_per_face;
+                           ++line)
                         interpolation_matrix(3,
                                              i + line * (this->degree - 1) + 4)
                           = -0.5;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(3,
                                                i + (j + 4) * this->degree - j)
@@ -1115,14 +1116,14 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                       i                              = i + 2;
                     }
 
-                  for(unsigned int vertex = 0;
-                      vertex < GeometryInfo<3>::vertices_per_face;
-                      ++vertex)
+                  for (unsigned int vertex = 0;
+                       vertex < GeometryInfo<3>::vertices_per_face;
+                       ++vertex)
                     interpolation_matrix(3, vertex) = 0.25;
 
                   int factorial_i = 1;
 
-                  for(int i = 2; i <= (int) this->degree; ++i)
+                  for (int i = 2; i <= (int) this->degree; ++i)
                     {
                       double tmp                         = std::pow(0.5, i);
                       interpolation_matrix(i + 2, i + 2) = tmp;
@@ -1143,7 +1144,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                         = tmp;
                       tmp *= -2.0;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(i + source_fe.degree + 1,
                                                (i + 2) * this->degree + j + 2
@@ -1158,7 +1159,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                       int factorial_k = 1;
 
-                      for(int j = 2; j <= (int) this->degree; ++j)
+                      for (int j = 2; j <= (int) this->degree; ++j)
                         {
                           interpolation_matrix(i + (j + 2) * source_fe.degree
                                                  - j,
@@ -1168,12 +1169,12 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                           int factorial_kl = 1;
                           int factorial_l  = factorial_k;
 
-                          for(int k = j + 1; k < (int) this->degree; ++k)
+                          for (int k = j + 1; k < (int) this->degree; ++k)
                             {
                               factorial_kl *= k - j;
                               factorial_l *= k;
 
-                              if((j + k) & 1)
+                              if ((j + k) & 1)
                                 interpolation_matrix(
                                   i + (j + 2) * source_fe.degree - j,
                                   i + (k + 2) * this->degree - k)
@@ -1193,12 +1194,12 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                       int factorial_j  = factorial_i;
                       int factorial_ij = 1;
 
-                      for(int j = i + 1; j <= (int) this->degree; ++j)
+                      for (int j = i + 1; j <= (int) this->degree; ++j)
                         {
                           factorial_ij *= j - i;
                           factorial_j *= j;
 
-                          if((i + j) & 1)
+                          if ((i + j) & 1)
                             {
                               tmp = -1.0 * std::pow(0.5, j) * factorial_j
                                     / (factorial_i * factorial_ij);
@@ -1208,7 +1209,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                 = tmp;
                               factorial_k = 1;
 
-                              for(int k = 2; k <= (int) this->degree; ++k)
+                              for (int k = 2; k <= (int) this->degree; ++k)
                                 {
                                   interpolation_matrix(
                                     i + (k + 2) * source_fe.degree - k,
@@ -1218,13 +1219,13 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                   int factorial_l  = factorial_k;
                                   int factorial_kl = 1;
 
-                                  for(int l = k + 1; l <= (int) this->degree;
-                                      ++l)
+                                  for (int l = k + 1; l <= (int) this->degree;
+                                       ++l)
                                     {
                                       factorial_kl *= l - k;
                                       factorial_l *= l;
 
-                                      if((k + l) & 1)
+                                      if ((k + l) & 1)
                                         interpolation_matrix(
                                           i + (k + 2) * source_fe.degree - k,
                                           j + (l + 2) * this->degree - l)
@@ -1256,7 +1257,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                 = tmp;
                               tmp *= -2.0;
 
-                              for(unsigned int k = 0; k < this->degree - 1;)
+                              for (unsigned int k = 0; k < this->degree - 1;)
                                 {
                                   interpolation_matrix(i + source_fe.degree + 1,
                                                        (j + 2) * this->degree
@@ -1279,7 +1280,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                 = tmp;
                               factorial_k = 1;
 
-                              for(int k = 2; k <= (int) this->degree; ++k)
+                              for (int k = 2; k <= (int) this->degree; ++k)
                                 {
                                   interpolation_matrix(
                                     i + (k + 2) * source_fe.degree - k,
@@ -1289,13 +1290,13 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                   int factorial_l  = factorial_k;
                                   int factorial_kl = 1;
 
-                                  for(int l = k + 1; l <= (int) this->degree;
-                                      ++l)
+                                  for (int l = k + 1; l <= (int) this->degree;
+                                       ++l)
                                     {
                                       factorial_kl *= l - k;
                                       factorial_l *= l;
 
-                                      if((k + l) & 1)
+                                      if ((k + l) & 1)
                                         interpolation_matrix(
                                           i + (k + 2) * source_fe.degree - k,
                                           j + (l + 2) * this->degree - l)
@@ -1327,7 +1328,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                 = tmp;
                               tmp *= -2.0;
 
-                              for(unsigned int k = 0; k < this->degree - 1;)
+                              for (unsigned int k = 0; k < this->degree - 1;)
                                 {
                                   interpolation_matrix(i + source_fe.degree + 1,
                                                        (j + 2) * this->degree
@@ -1354,16 +1355,16 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                   interpolation_matrix(3, 1) = 0.5;
                   interpolation_matrix(3, 3) = 0.5;
 
-                  for(unsigned int i = 0; i < this->degree - 1;)
+                  for (unsigned int i = 0; i < this->degree - 1;)
                     {
-                      for(unsigned int line = 0;
-                          line < GeometryInfo<3>::lines_per_face;
-                          ++line)
+                      for (unsigned int line = 0;
+                           line < GeometryInfo<3>::lines_per_face;
+                           ++line)
                         interpolation_matrix(2,
                                              i + line * (this->degree - 1) + 4)
                           = -0.5;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(2,
                                                i + (j + 4) * this->degree - j)
@@ -1377,14 +1378,14 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                       i                                             = i + 2;
                     }
 
-                  for(unsigned int vertex = 0;
-                      vertex < GeometryInfo<3>::vertices_per_face;
-                      ++vertex)
+                  for (unsigned int vertex = 0;
+                       vertex < GeometryInfo<3>::vertices_per_face;
+                       ++vertex)
                     interpolation_matrix(2, vertex) = 0.25;
 
                   int factorial_i = 1;
 
-                  for(int i = 2; i <= (int) this->degree; ++i)
+                  for (int i = 2; i <= (int) this->degree; ++i)
                     {
                       double tmp                         = std::pow(0.5, i + 1);
                       interpolation_matrix(i + 2, i + 2) = tmp;
@@ -1397,7 +1398,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                         = tmp;
                       tmp *= -2.0;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(
                             i + 2, j + (i + 2) * this->degree + 2 - i)
@@ -1420,7 +1421,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                       int factorial_j  = factorial_i;
                       int factorial_ij = 1;
 
-                      for(int j = i + 1; j <= (int) this->degree; ++j)
+                      for (int j = i + 1; j <= (int) this->degree; ++j)
                         {
                           factorial_ij *= j - i;
                           factorial_j *= j;
@@ -1431,7 +1432,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                             = tmp;
                           int factorial_k = 1;
 
-                          for(int k = 2; k <= (int) this->degree; ++k)
+                          for (int k = 2; k <= (int) this->degree; ++k)
                             {
                               interpolation_matrix(
                                 i + (k + 2) * source_fe.degree - k,
@@ -1441,12 +1442,12 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                               int factorial_l  = factorial_k;
                               int factorial_kl = 1;
 
-                              for(int l = k + 1; l <= (int) this->degree; ++l)
+                              for (int l = k + 1; l <= (int) this->degree; ++l)
                                 {
                                   factorial_kl *= l - k;
                                   factorial_l *= l;
 
-                                  if((k + l) & 1)
+                                  if ((k + l) & 1)
                                     interpolation_matrix(
                                       i + (k + 2) * source_fe.degree - k,
                                       j + (l + 2) * this->degree - l)
@@ -1465,7 +1466,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                           tmp *= -1.0;
 
-                          for(unsigned int k = 0; k < this->degree - 1;)
+                          for (unsigned int k = 0; k < this->degree - 1;)
                             {
                               interpolation_matrix(i + 3 * source_fe.degree - 1,
                                                    j + (k + 4) * this->degree
@@ -1482,7 +1483,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                                j + 3 * this->degree - 1)
                             = tmp;
 
-                          if((i + j) & 1)
+                          if ((i + j) & 1)
                             tmp *= -1.0;
 
                           interpolation_matrix(i + 2, j + 2) = tmp;
@@ -1493,7 +1494,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                             = 2.0 * tmp;
                           tmp *= -2.0;
 
-                          for(unsigned int k = 0; k < this->degree - 1;)
+                          for (unsigned int k = 0; k < this->degree - 1;)
                             {
                               interpolation_matrix(
                                 i + 2, k + (j + 2) * this->degree + 2 - j)
@@ -1504,7 +1505,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                       int factorial_k = 1;
 
-                      for(int j = 2; j <= (int) this->degree; ++j)
+                      for (int j = 2; j <= (int) this->degree; ++j)
                         {
                           interpolation_matrix(i + (j + 2) * source_fe.degree
                                                  - j,
@@ -1514,12 +1515,12 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                           int factorial_l  = factorial_k;
                           int factorial_kl = 1;
 
-                          for(int k = j + 1; k <= (int) this->degree; ++k)
+                          for (int k = j + 1; k <= (int) this->degree; ++k)
                             {
                               factorial_kl *= k - j;
                               factorial_l *= k;
 
-                              if((j + k) & 1)
+                              if ((j + k) & 1)
                                 interpolation_matrix(
                                   i + (j + 2) * source_fe.degree - j,
                                   i + (k + 2) * this->degree - k)
@@ -1547,16 +1548,16 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                   interpolation_matrix(3, 2) = 0.5;
                   interpolation_matrix(3, 3) = 0.5;
 
-                  for(unsigned int i = 0; i < this->degree - 1;)
+                  for (unsigned int i = 0; i < this->degree - 1;)
                     {
-                      for(unsigned int line = 0;
-                          line < GeometryInfo<3>::lines_per_face;
-                          ++line)
+                      for (unsigned int line = 0;
+                           line < GeometryInfo<3>::lines_per_face;
+                           ++line)
                         interpolation_matrix(1,
                                              i + line * (this->degree - 1) + 4)
                           = -0.5;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(1,
                                                i + (j + 4) * this->degree - j)
@@ -1569,14 +1570,14 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                       i                                                 = i + 2;
                     }
 
-                  for(unsigned int vertex = 0;
-                      vertex < GeometryInfo<3>::vertices_per_face;
-                      ++vertex)
+                  for (unsigned int vertex = 0;
+                       vertex < GeometryInfo<3>::vertices_per_face;
+                       ++vertex)
                     interpolation_matrix(1, vertex) = 0.25;
 
                   int factorial_i = 1;
 
-                  for(int i = 2; i <= (int) this->degree; ++i)
+                  for (int i = 2; i <= (int) this->degree; ++i)
                     {
                       double tmp                         = std::pow(0.5, i);
                       interpolation_matrix(i + 2, i + 2) = tmp;
@@ -1597,7 +1598,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                         = tmp;
                       tmp *= -2.0;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(i + source_fe.degree + 1,
                                                j + (i + 2) * this->degree + 2
@@ -1612,7 +1613,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                       int factorial_k = 1;
 
-                      for(int j = 2; j <= (int) this->degree; ++j)
+                      for (int j = 2; j <= (int) this->degree; ++j)
                         {
                           interpolation_matrix(i + (j + 2) * source_fe.degree
                                                  - j,
@@ -1622,7 +1623,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                           int factorial_kl = 1;
                           int factorial_l  = factorial_k;
 
-                          for(int k = j + 1; k <= (int) this->degree; ++k)
+                          for (int k = j + 1; k <= (int) this->degree; ++k)
                             {
                               factorial_kl *= k - j;
                               factorial_l *= k;
@@ -1638,7 +1639,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                       int factorial_j  = factorial_i;
                       int factorial_ij = 1;
 
-                      for(int j = i + 1; j <= (int) this->degree; ++j)
+                      for (int j = i + 1; j <= (int) this->degree; ++j)
                         {
                           factorial_ij *= j - i;
                           factorial_j *= j;
@@ -1647,7 +1648,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                           interpolation_matrix(i + 2, j + 2) = tmp;
                           tmp *= -1.0;
 
-                          for(unsigned int k = 0; k < this->degree - 1;)
+                          for (unsigned int k = 0; k < this->degree - 1;)
                             {
                               interpolation_matrix(i + source_fe.degree + 1,
                                                    k + (j + 2) * this->degree
@@ -1663,7 +1664,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                                                j + this->degree + 1)
                             = tmp;
 
-                          if((i + j) & 1)
+                          if ((i + j) & 1)
                             tmp *= -1.0;
 
                           interpolation_matrix(i + 2 * source_fe.degree,
@@ -1678,7 +1679,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                             = tmp;
                           int factorial_k = 1;
 
-                          for(int k = 2; k <= (int) this->degree; ++k)
+                          for (int k = 2; k <= (int) this->degree; ++k)
                             {
                               interpolation_matrix(
                                 i + (k + 2) * source_fe.degree - k,
@@ -1688,7 +1689,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                               int factorial_l  = factorial_k;
                               int factorial_kl = 1;
 
-                              for(int l = k + 1; l <= (int) this->degree; ++l)
+                              for (int l = k + 1; l <= (int) this->degree; ++l)
                                 {
                                   factorial_kl *= l - k;
                                   factorial_l *= l;
@@ -1702,7 +1703,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                           tmp *= -1.0;
 
-                          for(unsigned int k = 0; k < this->degree - 1;)
+                          for (unsigned int k = 0; k < this->degree - 1;)
                             {
                               interpolation_matrix(i + 2 * source_fe.degree,
                                                    j + (k + 4) * this->degree
@@ -1718,21 +1719,21 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
               case 3:
                 {
-                  for(unsigned int vertex = 0;
-                      vertex < GeometryInfo<3>::vertices_per_face;
-                      ++vertex)
+                  for (unsigned int vertex = 0;
+                       vertex < GeometryInfo<3>::vertices_per_face;
+                       ++vertex)
                     interpolation_matrix(0, vertex) = 0.25;
 
-                  for(unsigned int i = 0; i < this->degree - 1;)
+                  for (unsigned int i = 0; i < this->degree - 1;)
                     {
-                      for(unsigned int line = 0;
-                          line < GeometryInfo<3>::lines_per_face;
-                          ++line)
+                      for (unsigned int line = 0;
+                           line < GeometryInfo<3>::lines_per_face;
+                           ++line)
                         interpolation_matrix(0,
                                              i + line * (this->degree - 1) + 4)
                           = -0.5;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(0,
                                                i + (j + 4) * this->degree - j)
@@ -1753,7 +1754,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                   int factorial_i = 1;
 
-                  for(int i = 2; i <= (int) this->degree; ++i)
+                  for (int i = 2; i <= (int) this->degree; ++i)
                     {
                       double tmp                         = std::pow(0.5, i + 1);
                       interpolation_matrix(i + 2, i + 2) = tmp;
@@ -1766,7 +1767,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                         = tmp;
                       tmp *= -2.0;
 
-                      for(unsigned int j = 0; j < this->degree - 1;)
+                      for (unsigned int j = 0; j < this->degree - 1;)
                         {
                           interpolation_matrix(
                             i + 2, j + (i + 2) * this->degree + 2 - i)
@@ -1786,7 +1787,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                         = tmp;
                       int factorial_k = 1;
 
-                      for(int j = 2; j <= (int) this->degree; ++j)
+                      for (int j = 2; j <= (int) this->degree; ++j)
                         {
                           interpolation_matrix(i + (j + 2) * source_fe.degree
                                                  - j,
@@ -1796,7 +1797,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                           int factorial_l  = factorial_k;
                           int factorial_kl = 1;
 
-                          for(int k = j + 1; k <= (int) this->degree; ++k)
+                          for (int k = j + 1; k <= (int) this->degree; ++k)
                             {
                               factorial_kl *= k - j;
                               factorial_l *= k;
@@ -1812,7 +1813,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                       int factorial_j  = factorial_i;
                       int factorial_ij = 1;
 
-                      for(int j = i + 1; j <= (int) this->degree; ++j)
+                      for (int j = i + 1; j <= (int) this->degree; ++j)
                         {
                           factorial_ij *= j - i;
                           factorial_j *= j;
@@ -1836,7 +1837,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                             = tmp;
                           int factorial_k = 1;
 
-                          for(int k = 2; k <= (int) this->degree; ++k)
+                          for (int k = 2; k <= (int) this->degree; ++k)
                             {
                               interpolation_matrix(
                                 i + (k + 2) * source_fe.degree - k,
@@ -1846,7 +1847,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
                               int factorial_l  = factorial_k;
                               int factorial_kl = 1;
 
-                              for(int l = k + 1; l <= (int) this->degree; ++l)
+                              for (int l = k + 1; l <= (int) this->degree; ++l)
                                 {
                                   factorial_kl *= l - k;
                                   factorial_l *= l;
@@ -1860,7 +1861,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
                           tmp *= -1.0;
 
-                          for(unsigned int k = 0; k < this->degree - 1;)
+                          for (unsigned int k = 0; k < this->degree - 1;)
                             {
                               interpolation_matrix(
                                 i + 2, k + (j + 2) * this->degree + 2 - j)
@@ -1887,7 +1888,7 @@ FE_Q_Hierarchical<dim>::initialize_generalized_face_support_points()
 
   // number of points: (degree+1)^codim
   unsigned int n = this->degree + 1;
-  for(unsigned int i = 1; i < codim; ++i)
+  for (unsigned int i = 1; i < codim; ++i)
     n *= this->degree + 1;
 
   this->generalized_face_support_points.resize(n);
@@ -1895,30 +1896,30 @@ FE_Q_Hierarchical<dim>::initialize_generalized_face_support_points()
   Point<codim> p;
 
   unsigned int k = 0;
-  for(unsigned int iz = 0; iz <= ((codim > 2) ? this->degree : 0); ++iz)
-    for(unsigned int iy = 0; iy <= ((codim > 1) ? this->degree : 0); ++iy)
-      for(unsigned int ix = 0; ix <= this->degree; ++ix)
+  for (unsigned int iz = 0; iz <= ((codim > 2) ? this->degree : 0); ++iz)
+    for (unsigned int iy = 0; iy <= ((codim > 1) ? this->degree : 0); ++iy)
+      for (unsigned int ix = 0; ix <= this->degree; ++ix)
         {
-          if(ix == 0)
+          if (ix == 0)
             p(0) = 0.;
-          else if(ix == 1)
+          else if (ix == 1)
             p(0) = 1.;
           else
             p(0) = .5;
-          if(codim > 1)
+          if (codim > 1)
             {
-              if(iy == 0)
+              if (iy == 0)
                 p(1) = 0.;
-              else if(iy == 1)
+              else if (iy == 1)
                 p(1) = 1.;
               else
                 p(1) = .5;
             }
-          if(codim > 2)
+          if (codim > 2)
             {
-              if(iz == 0)
+              if (iz == 0)
                 p(2) = 0.;
-              else if(iz == 1)
+              else if (iz == 1)
                 p(2) = 1.;
               else
                 p(2) = .5;
@@ -1933,7 +1934,7 @@ std::vector<unsigned int>
 FE_Q_Hierarchical<dim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 1U);
-  for(unsigned int i = 1; i < dpo.size(); ++i)
+  for (unsigned int i = 1; i < dpo.size(); ++i)
     dpo[i] = dpo[i - 1] * (deg - 1);
   return dpo;
 }
@@ -1964,11 +1965,11 @@ FE_Q_Hierarchical<dim>::hierarchic_to_fe_q_hierarchical_numbering(
   // numbers of the degrees of
   // freedom in hierarchical and
   // lexicographical order
-  switch(dim)
+  switch (dim)
     {
       case 1:
         {
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
             h2l[i] = i;
 
           break;
@@ -1996,22 +1997,22 @@ FE_Q_Hierarchical<dim>::hierarchic_to_fe_q_hierarchical_numbering(
           h2l[next_index++] = n;
           h2l[next_index++] = n + 1;
           // left line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n;
           // right line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n + 1;
           // bottom line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = 2 + i;
           // top line
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = n + 2 + i;
           // inside quad
           Assert(fe.dofs_per_quad == fe.dofs_per_line * fe.dofs_per_line,
                  ExcInternalError());
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               h2l[next_index++] = (2 + i) * n + 2 + j;
 
           Assert(next_index == fe.dofs_per_cell, ExcInternalError());
@@ -2037,67 +2038,67 @@ FE_Q_Hierarchical<dim>::hierarchic_to_fe_q_hierarchical_numbering(
 
           // now the lines
           // bottom face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n + 1;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = 2 + i;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = n + 2 + i;
           // top face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = n2 + (2 + i) * n;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = n2 + (2 + i) * n + 1;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = n2 + 2 + i;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = n2 + n + 2 + i;
           // lines in z-direction
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n2;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n2 + 1;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n2 + n;
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
             h2l[next_index++] = (2 + i) * n2 + n + 1;
 
           // inside quads
           Assert(fe.dofs_per_quad == fe.dofs_per_line * fe.dofs_per_line,
                  ExcInternalError());
           // left face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               h2l[next_index++] = (2 + i) * n2 + (2 + j) * n;
           // right face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               h2l[next_index++] = (2 + i) * n2 + (2 + j) * n + 1;
           // front face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               h2l[next_index++] = (2 + i) * n2 + 2 + j;
           // back face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               h2l[next_index++] = (2 + i) * n2 + n + 2 + j;
           // bottom face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               h2l[next_index++] = (2 + i) * n + 2 + j;
           // top face
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
               h2l[next_index++] = n2 + (2 + i) * n + 2 + j;
 
           // inside hex
           Assert(fe.dofs_per_hex == fe.dofs_per_quad * fe.dofs_per_line,
                  ExcInternalError());
-          for(unsigned int i = 0; i < fe.dofs_per_line; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_line; ++j)
-              for(unsigned int k = 0; k < fe.dofs_per_line; ++k)
+          for (unsigned int i = 0; i < fe.dofs_per_line; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_line; ++j)
+              for (unsigned int k = 0; k < fe.dofs_per_line; ++k)
                 h2l[next_index++] = (2 + i) * n2 + (2 + j) * n + 2 + k;
 
           Assert(next_index == fe.dofs_per_cell, ExcInternalError());
@@ -2165,13 +2166,13 @@ FE_Q_Hierarchical<dim>::has_support_on_face(const unsigned int shape_index,
   // shape functions, since they
   // have no support no-where on
   // the boundary
-  if(((dim == 2) && (shape_index >= this->first_quad_index))
-     || ((dim == 3) && (shape_index >= this->first_hex_index)))
+  if (((dim == 2) && (shape_index >= this->first_quad_index))
+      || ((dim == 3) && (shape_index >= this->first_hex_index)))
     return false;
 
   // let's see whether this is a
   // vertex
-  if(shape_index < this->first_line_index)
+  if (shape_index < this->first_line_index)
     {
       // for Q elements, there is
       // one dof per vertex, so
@@ -2181,12 +2182,13 @@ FE_Q_Hierarchical<dim>::has_support_on_face(const unsigned int shape_index,
       const unsigned int vertex_no = shape_index;
       Assert(vertex_no < GeometryInfo<dim>::vertices_per_cell,
              ExcInternalError());
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
-        if(GeometryInfo<dim>::face_to_cell_vertices(face_index, i) == vertex_no)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
+        if (GeometryInfo<dim>::face_to_cell_vertices(face_index, i)
+            == vertex_no)
           return true;
       return false;
     }
-  else if(shape_index < this->first_quad_index)
+  else if (shape_index < this->first_quad_index)
     // ok, dof is on a line
     {
       const unsigned int line_index
@@ -2194,12 +2196,12 @@ FE_Q_Hierarchical<dim>::has_support_on_face(const unsigned int shape_index,
       Assert(line_index < GeometryInfo<dim>::lines_per_cell,
              ExcInternalError());
 
-      for(unsigned int i = 0; i < GeometryInfo<dim>::lines_per_face; ++i)
-        if(GeometryInfo<dim>::face_to_cell_lines(face_index, i) == line_index)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::lines_per_face; ++i)
+        if (GeometryInfo<dim>::face_to_cell_lines(face_index, i) == line_index)
           return true;
       return false;
     }
-  else if(shape_index < this->first_hex_index)
+  else if (shape_index < this->first_hex_index)
     // dof is on a quad
     {
       const unsigned int quad_index
@@ -2216,7 +2218,7 @@ FE_Q_Hierarchical<dim>::has_support_on_face(const unsigned int shape_index,
 
       // in 3d,
       // quad_index=face_index
-      if(dim == 3)
+      if (dim == 3)
         return (quad_index == face_index);
       else
         Assert(false, ExcNotImplemented());
@@ -2243,51 +2245,51 @@ FE_Q_Hierarchical<dim>::get_embedding_dofs(const unsigned int sub_degree) const
   Assert((sub_degree > 0) && (sub_degree <= this->degree),
          ExcIndexRange(sub_degree, 1, this->degree));
 
-  if(dim == 1)
+  if (dim == 1)
     {
       std::vector<unsigned int> embedding_dofs(sub_degree + 1);
-      for(unsigned int i = 0; i < (sub_degree + 1); ++i)
+      for (unsigned int i = 0; i < (sub_degree + 1); ++i)
         embedding_dofs[i] = i;
 
       return embedding_dofs;
     }
 
-  if(sub_degree == 1)
+  if (sub_degree == 1)
     {
       std::vector<unsigned int> embedding_dofs(
         GeometryInfo<dim>::vertices_per_cell);
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         embedding_dofs[i] = i;
 
       return embedding_dofs;
     }
-  else if(sub_degree == this->degree)
+  else if (sub_degree == this->degree)
     {
       std::vector<unsigned int> embedding_dofs(this->dofs_per_cell);
-      for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
         embedding_dofs[i] = i;
 
       return embedding_dofs;
     }
 
-  if((dim == 2) || (dim == 3))
+  if ((dim == 2) || (dim == 3))
     {
       std::vector<unsigned int> embedding_dofs(
         (dim == 2) ? (sub_degree + 1) * (sub_degree + 1) :
                      (sub_degree + 1) * (sub_degree + 1) * (sub_degree + 1));
 
-      for(unsigned int i = 0;
-          i < ((dim == 2) ?
-                 (sub_degree + 1) * (sub_degree + 1) :
-                 (sub_degree + 1) * (sub_degree + 1) * (sub_degree + 1));
-          ++i)
+      for (unsigned int i = 0;
+           i < ((dim == 2) ?
+                  (sub_degree + 1) * (sub_degree + 1) :
+                  (sub_degree + 1) * (sub_degree + 1) * (sub_degree + 1));
+           ++i)
         {
           // vertex
-          if(i < GeometryInfo<dim>::vertices_per_cell)
+          if (i < GeometryInfo<dim>::vertices_per_cell)
             embedding_dofs[i] = i;
           // line
-          else if(i < (GeometryInfo<dim>::vertices_per_cell
-                       + GeometryInfo<dim>::lines_per_cell * (sub_degree - 1)))
+          else if (i < (GeometryInfo<dim>::vertices_per_cell
+                        + GeometryInfo<dim>::lines_per_cell * (sub_degree - 1)))
             {
               const unsigned int j
                 = (i - GeometryInfo<dim>::vertices_per_cell) % (sub_degree - 1);
@@ -2299,10 +2301,10 @@ FE_Q_Hierarchical<dim>::get_embedding_dofs(const unsigned int sub_degree) const
                                   + line * (this->degree - 1) + j;
             }
           // quad
-          else if(i < (GeometryInfo<dim>::vertices_per_cell
-                       + GeometryInfo<dim>::lines_per_cell * (sub_degree - 1))
-                        + GeometryInfo<dim>::quads_per_cell * (sub_degree - 1)
-                            * (sub_degree - 1))
+          else if (i < (GeometryInfo<dim>::vertices_per_cell
+                        + GeometryInfo<dim>::lines_per_cell * (sub_degree - 1))
+                         + GeometryInfo<dim>::quads_per_cell * (sub_degree - 1)
+                             * (sub_degree - 1))
             {
               const unsigned int j
                 = (i - GeometryInfo<dim>::vertices_per_cell
@@ -2326,12 +2328,12 @@ FE_Q_Hierarchical<dim>::get_embedding_dofs(const unsigned int sub_degree) const
                   + k * (this->degree - 1) + j;
             }
           // hex
-          else if(i < (GeometryInfo<dim>::vertices_per_cell
-                       + GeometryInfo<dim>::lines_per_cell * (sub_degree - 1))
-                        + GeometryInfo<dim>::quads_per_cell * (sub_degree - 1)
-                            * (sub_degree - 1)
-                        + GeometryInfo<dim>::hexes_per_cell * (sub_degree - 1)
-                            * (sub_degree - 1) * (sub_degree - 1))
+          else if (i < (GeometryInfo<dim>::vertices_per_cell
+                        + GeometryInfo<dim>::lines_per_cell * (sub_degree - 1))
+                         + GeometryInfo<dim>::quads_per_cell * (sub_degree - 1)
+                             * (sub_degree - 1)
+                         + GeometryInfo<dim>::hexes_per_cell * (sub_degree - 1)
+                             * (sub_degree - 1) * (sub_degree - 1))
             {
               const unsigned int j
                 = (i - GeometryInfo<dim>::vertices_per_cell
@@ -2379,11 +2381,11 @@ std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_Q_Hierarchical<dim>::get_constant_modes() const
 {
   Table<2, bool> constant_modes(1, this->dofs_per_cell);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
     constant_modes(0, i) = true;
-  for(unsigned int i = GeometryInfo<dim>::vertices_per_cell;
-      i < this->dofs_per_cell;
-      ++i)
+  for (unsigned int i = GeometryInfo<dim>::vertices_per_cell;
+       i < this->dofs_per_cell;
+       ++i)
     constant_modes(0, i) = false;
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(1, 0));

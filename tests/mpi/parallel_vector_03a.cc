@@ -28,7 +28,7 @@ void
 check(const unsigned int                                myid,
       const LinearAlgebra::distributed::Vector<double>& v)
 {
-  if(myid == 0)
+  if (myid == 0)
     {
       AssertThrow(v(10) == 10.0, ExcInternalError());
       AssertThrow(v(11) == 0., ExcInternalError());
@@ -57,7 +57,7 @@ test()
   IndexSet           local_owned(size);
   IndexSet           local_nonzero(size);
   IndexSet           local_relevant(size);
-  if(myid == 0)
+  if (myid == 0)
     {
       local_owned.add_range(0, 10);
       local_nonzero.add_range(5, 10);
@@ -79,7 +79,7 @@ test()
   v = 0.;
 
   // set local values
-  for(unsigned int i = 0; i < local_nonzero.n_elements(); i++)
+  for (unsigned int i = 0; i < local_nonzero.n_elements(); i++)
     v(local_nonzero.nth_index_in_set(i)) = local_nonzero.nth_index_in_set(i);
 
   // set value from processor which does not own it:
@@ -87,7 +87,7 @@ test()
   v.compress(VectorOperation::insert);
 
   // add to value from processor which has it as a ghost
-  if(myid == 1)
+  if (myid == 1)
     v(6) = 60;
   v.compress(VectorOperation::add); // 60 + 6
   // compress(insert) used to leave ghosts un-touched which resulted in
@@ -97,7 +97,7 @@ test()
 
   check(myid, v);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -110,7 +110,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       std::ofstream logfile("output");
       deallog.attach(logfile);

@@ -89,8 +89,8 @@ public:
     Assert(r > 0.0, ExcMessage("r is not positive"));
     dir /= r;
     SymmetricTensor<2, dim> dir_x_dir;
-    for(unsigned int i = 0; i < dim; i++)
-      for(unsigned int j = i; j < dim; j++)
+    for (unsigned int i = 0; i < dim; i++)
+      for (unsigned int j = i; j < dim; j++)
         dir_x_dir[i][j] = dir[i] * dir[j];
 
     return std::exp(-r)
@@ -172,7 +172,7 @@ test(const FiniteElement<dim>&  fe1,
   {
     Point<dim>                p1, p2;
     std::vector<unsigned int> repetitions(dim);
-    for(unsigned int d = 0; d < dim; d++)
+    for (unsigned int d = 0; d < dim; d++)
       {
         p1[d]          = -1.0;
         p2[d]          = 2.0;
@@ -181,7 +181,7 @@ test(const FiniteElement<dim>&  fe1,
     GridGenerator::subdivided_hyper_rectangle(
       triangulation, repetitions, p1, p2);
 
-    if(distort)
+    if (distort)
       GridTools::distort_random(0.1, triangulation);
   }
 
@@ -217,7 +217,7 @@ test(const FiniteElement<dim>&  fe1,
     endc_enriched = dof_handler_enriched.end(),
     cell_system   = dof_handler_system.begin_active(),
     endc_system   = dof_handler_system.end();
-  for(; cell_enriched != endc_enriched; ++cell_enriched, ++cell_system)
+  for (; cell_enriched != endc_enriched; ++cell_enriched, ++cell_system)
     {
       fe_values_enriched.reinit(cell_enriched);
       fe_values_system.reinit(cell_system);
@@ -226,8 +226,8 @@ test(const FiniteElement<dim>&  fe1,
         = fe_values_system.get_quadrature_points();
 
       // check shape functions
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           check_consistency(
             q_points[q_point],
             function,
@@ -241,8 +241,8 @@ test(const FiniteElement<dim>&  fe1,
             fe_values_system.shape_grad_component(i, q_point, 1),
             fe_values_system.shape_hessian_component(i, q_point, 1));
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
         {
           fe_face_values_enriched.reinit(cell_enriched, face);
           fe_face_values_system.reinit(cell_system, face);
@@ -250,8 +250,8 @@ test(const FiniteElement<dim>&  fe1,
           const std::vector<dealii::Point<dim>>& q_points
             = fe_face_values_system.get_quadrature_points();
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int q_point = 0; q_point < n_q_points_face; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int q_point = 0; q_point < n_q_points_face; ++q_point)
               check_consistency(
                 q_points[q_point],
                 function,
@@ -305,7 +305,7 @@ main(int argc, char** argv)
           FE_Q<dim>(3), FE_Q<dim>(2), QGauss<dim>(2), QGauss<dim - 1>(2), true);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -319,7 +319,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

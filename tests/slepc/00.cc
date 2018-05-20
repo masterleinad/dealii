@@ -52,7 +52,7 @@ main(int argc, char** argv)
       logfile << "ok" << std::endl << std::endl;
     }
 
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -67,7 +67,7 @@ main(int argc, char** argv)
       return 1;
     }
 
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

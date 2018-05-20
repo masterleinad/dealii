@@ -29,7 +29,7 @@ check()
 {
   Triangulation<dim> tr;
   Point<dim>         p0, p1;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     p1[d] = 1 + d;
   std::vector<unsigned int> refinements(dim, 3);
   GridGenerator::subdivided_hyper_rectangle(tr, refinements, p0, p1, true);
@@ -38,11 +38,11 @@ check()
   std::vector<
     GridTools::PeriodicFacePair<typename Triangulation<dim>::cell_iterator>>
     periodic_faces;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     GridTools::collect_periodic_faces(tr, 2 * d, 2 * d + 1, d, periodic_faces);
 
   deallog << "Test run in " << dim << " dimensions" << std::endl;
-  for(unsigned int i = 0; i < periodic_faces.size(); ++i)
+  for (unsigned int i = 0; i < periodic_faces.size(); ++i)
     {
       deallog << periodic_faces[i].cell[0]->index() << " "
               << periodic_faces[i].cell[1]->index() << " "

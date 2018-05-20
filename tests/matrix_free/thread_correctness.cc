@@ -34,17 +34,17 @@ sub_test()
   tria.execute_coarsening_and_refinement();
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 0.5)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 0.5)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 #ifndef DEBUG
-  if(dim < 3 || fe_degree < 2)
+  if (dim < 3 || fe_degree < 2)
     tria.refine_global(1);
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  if(dim == 2 && fe_degree < 2)
+  if (dim == 2 && fe_degree < 2)
     tria.refine_global(2);
   else
     tria.refine_global(1);
@@ -55,13 +55,13 @@ sub_test()
   deallog << "Testing " << fe.get_name() << std::endl;
 
   // run test for several different meshes
-  for(unsigned int i = 0; i < 8 - 2 * dim; ++i)
+  for (unsigned int i = 0; i < 8 - 2 * dim; ++i)
     {
       cell                 = tria.begin_active();
       endc                 = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (9 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (9 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
 
@@ -109,9 +109,9 @@ sub_test()
       Vector<number> out_dist(in_dist), out_color(in_dist),
         out_partition(in_dist);
 
-      for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+      for (unsigned int i = 0; i < dof.n_dofs(); ++i)
         {
-          if(constraints.is_constrained(i))
+          if (constraints.is_constrained(i))
             continue;
           const double entry = random_value<double>();
           in_dist(i)         = entry;
@@ -121,7 +121,7 @@ sub_test()
 
       // make 10 sweeps in order to get in some
       // variation to the threaded program
-      for(unsigned int sweep = 0; sweep < 10; ++sweep)
+      for (unsigned int sweep = 0; sweep < 10; ++sweep)
         {
           mf_color.vmult(out_color, in_dist);
           mf_partition.vmult(out_partition, in_dist);

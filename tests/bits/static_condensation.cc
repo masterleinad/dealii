@@ -98,7 +98,7 @@ double
 Solution<dim>::value(const Point<dim>& p, const unsigned int) const
 {
   double return_value = 0;
-  for(unsigned int i = 0; i < this->n_source_centers; ++i)
+  for (unsigned int i = 0; i < this->n_source_centers; ++i)
     {
       const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
       return_value
@@ -114,7 +114,7 @@ Solution<dim>::gradient(const Point<dim>& p, const unsigned int) const
 {
   Tensor<1, dim> return_value;
 
-  for(unsigned int i = 0; i < this->n_source_centers; ++i)
+  for (unsigned int i = 0; i < this->n_source_centers; ++i)
     {
       const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
 
@@ -143,7 +143,7 @@ double
 RightHandSide<dim>::value(const Point<dim>& p, const unsigned int) const
 {
   double return_value = 0;
-  for(unsigned int i = 0; i < this->n_source_centers; ++i)
+  for (unsigned int i = 0; i < this->n_source_centers; ++i)
     {
       const Tensor<1, dim> x_minus_xi = p - this->source_centers[i];
 
@@ -326,7 +326,7 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end(), tracec = dof_handler_trace.begin_active();
-  for(; cell != endc; ++cell, ++tracec)
+  for (; cell != endc; ++cell, ++tracec)
     {
       cell_rhs = 0;
 
@@ -335,44 +335,44 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
 
       right_hand_side.value_list(fe_values.get_quadrature_points(), rhs_values);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             {
               double                sum          = 0;
               const Tensor<1, dim>* shape_grad_i = &fe_values.shape_grad(i, 0);
               const Tensor<1, dim>* shape_grad_j = &fe_values.shape_grad(j, 0);
               const double* shape_value_i        = &fe_values.shape_value(i, 0);
               const double* shape_value_j        = &fe_values.shape_value(j, 0);
-              for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+              for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
                 sum += (shape_grad_i[q_index] * shape_grad_j[q_index]
                         + shape_value_i[q_index] * shape_value_j[q_index])
                        * fe_values.JxW(q_index);
               cell_matrix(i, j) = sum;
             }
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             cell_rhs(i) += (fe_values.shape_value(i, q_point)
                             * rhs_values[q_point] * fe_values.JxW(q_point));
         }
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        if(cell->face(face)->at_boundary()
-           && (cell->face(face)->boundary_id() == 1))
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        if (cell->face(face)->at_boundary()
+            && (cell->face(face)->boundary_id() == 1))
           {
             x_fe_face_values.reinit(cell, face);
             const FEFaceValues<dim>& fe_face_values
               = x_fe_face_values.get_present_fe_values();
 
-            for(unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
+            for (unsigned int q_point = 0; q_point < n_face_q_points; ++q_point)
               {
                 const double neumann_value
                   = (exact_solution.gradient(
                        fe_face_values.quadrature_point(q_point))
                      * fe_face_values.normal_vector(q_point));
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   cell_rhs(i)
                     += (neumann_value * fe_face_values.shape_value(i, q_point)
                         * fe_face_values.JxW(q_point));
@@ -381,14 +381,14 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
 
       const unsigned int shift = fe_trace.dofs_per_cell;
       const unsigned int sizes = fe.dofs_per_cell - fe_trace.dofs_per_cell;
-      for(unsigned int i = 0; i < sizes; ++i)
-        for(unsigned int j = 0; j < sizes; ++j)
+      for (unsigned int i = 0; i < sizes; ++i)
+        for (unsigned int j = 0; j < sizes; ++j)
           eliminate_matrix(i, j) = cell_matrix(i + shift, j + shift);
-      if(sizes > 0)
+      if (sizes > 0)
         eliminate_matrix.gauss_jordan();
 
       cell->get_dof_indices(local_dof_indices);
-      if(do_reconstruct == false)
+      if (do_reconstruct == false)
         {
           cell->get_dof_indices(local_dof_indices);
           constraints.distribute_local_to_global(cell_matrix,
@@ -397,26 +397,26 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
                                                  system_matrix,
                                                  system_rhs);
 
-          for(unsigned int i = 0; i < shift; ++i)
-            for(unsigned int j = 0; j < sizes; ++j)
+          for (unsigned int i = 0; i < shift; ++i)
+            for (unsigned int j = 0; j < sizes; ++j)
               {
                 double sum = 0;
-                for(unsigned int k = 0; k < sizes; ++k)
+                for (unsigned int k = 0; k < sizes; ++k)
                   sum += cell_matrix(i, k + shift) * eliminate_matrix(k, j);
                 temp_matrix(i, j) = sum;
               }
-          for(unsigned int i = 0; i < shift; ++i)
-            for(unsigned int j = 0; j < shift; ++j)
+          for (unsigned int i = 0; i < shift; ++i)
+            for (unsigned int j = 0; j < shift; ++j)
               {
                 double sum = 0;
-                for(unsigned int k = 0; k < sizes; ++k)
+                for (unsigned int k = 0; k < sizes; ++k)
                   sum += temp_matrix(i, k) * cell_matrix(shift + k, j);
                 trace_matrix(i, j) = cell_matrix(i, j) - sum;
               }
-          for(unsigned int i = 0; i < shift; ++i)
+          for (unsigned int i = 0; i < shift; ++i)
             {
               double sum = 0;
-              for(unsigned int k = 0; k < sizes; ++k)
+              for (unsigned int k = 0; k < sizes; ++k)
                 sum += temp_matrix(i, k) * cell_rhs(shift + k);
               trace_rhs(i) = cell_rhs(i) - sum;
             }
@@ -431,19 +431,19 @@ HelmholtzProblem<dim>::assemble_system(const bool do_reconstruct)
       else
         {
           tracec->get_interpolated_dof_values(solution_trace, local_trace);
-          for(unsigned int i = 0; i < shift; ++i)
+          for (unsigned int i = 0; i < shift; ++i)
             solution_trace_full(local_dof_indices[i]) = local_trace(i);
-          for(unsigned int i = 0; i < sizes; ++i)
+          for (unsigned int i = 0; i < sizes; ++i)
             {
               double sum = 0;
-              for(unsigned int k = 0; k < shift; ++k)
+              for (unsigned int k = 0; k < shift; ++k)
                 sum += cell_matrix(shift + i, k) * local_trace(k);
               local_interior(i) = cell_rhs(shift + i) - sum;
             }
-          for(unsigned int i = 0; i < sizes; ++i)
+          for (unsigned int i = 0; i < sizes; ++i)
             {
               double sum = 0;
-              for(unsigned int j = 0; j < sizes; ++j)
+              for (unsigned int j = 0; j < sizes; ++j)
                 sum += eliminate_matrix(i, j) * local_interior(j);
               solution_trace_full(local_dof_indices[shift + i]) = sum;
             }
@@ -484,7 +484,7 @@ template <int dim>
 void
 HelmholtzProblem<dim>::refine_grid()
 {
-  switch(refinement_mode)
+  switch (refinement_mode)
     {
       case global_refinement:
         {
@@ -580,9 +580,9 @@ template <int dim>
 void
 HelmholtzProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 6 - dim; ++cycle)
+  for (unsigned int cycle = 0; cycle < 6 - dim; ++cycle)
     {
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_cube(triangulation, -1, 1);
           triangulation.refine_global(1);
@@ -590,11 +590,12 @@ HelmholtzProblem<dim>::run()
           typename Triangulation<dim>::cell_iterator cell
             = triangulation.begin(),
             endc = triangulation.end();
-          for(; cell != endc; ++cell)
-            for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-                ++face)
-              if((cell->face(face)->center()(0) == -1)
-                 || (cell->face(face)->center()(1) == -1))
+          for (; cell != endc; ++cell)
+            for (unsigned int face = 0;
+                 face < GeometryInfo<dim>::faces_per_cell;
+                 ++face)
+              if ((cell->face(face)->center()(0) == -1)
+                  || (cell->face(face)->center()(1) == -1))
                 cell->face(face)->set_boundary_id(1);
         }
       else
@@ -635,7 +636,7 @@ main()
 
   try
     {
-      for(unsigned int deg = 1; deg < 5; ++deg)
+      for (unsigned int deg = 1; deg < 5; ++deg)
         {
           HelmholtzProblem<2> helmholtz_problem_2d(
             deg, HelmholtzProblem<2>::adaptive_refinement);
@@ -644,7 +645,7 @@ main()
 
           deallog << std::endl;
         }
-      for(unsigned int deg = 1; deg < 4; ++deg)
+      for (unsigned int deg = 1; deg < 4; ++deg)
         {
           HelmholtzProblem<2> helmholtz_problem_2d(
             deg, HelmholtzProblem<2>::global_refinement);
@@ -663,7 +664,7 @@ main()
         deallog << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -676,7 +677,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

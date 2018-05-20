@@ -74,7 +74,7 @@ test()
     FEFieldFunction<dim, DoFHandler<dim>, TrilinosWrappers::MPI::Vector>
       field_function(dofh, x_rel);
 
-  for(unsigned int test = 0; test < 4; ++test)
+  for (unsigned int test = 0; test < 4; ++test)
     {
       double     value;
       Point<dim> p
@@ -92,7 +92,7 @@ test()
                    < 1e-8 * std::fabs(value + (p[0] + 2)),
                  ExcInternalError());
         }
-      catch(typename VectorTools::ExcPointNotAvailableHere&)
+      catch (typename VectorTools::ExcPointNotAvailableHere&)
         {
           point_found = false;
         }
@@ -103,7 +103,7 @@ test()
              ExcInternalError());
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -116,7 +116,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -36,9 +36,9 @@ test()
   TrilinosWrappers::SparseMatrix A(sparsity);
 
   // and loop over the elements of it
-  for(TrilinosWrappers::SparseMatrix::const_iterator k = A.begin();
-      k != A.end();
-      ++k)
+  for (TrilinosWrappers::SparseMatrix::const_iterator k = A.begin();
+       k != A.end();
+       ++k)
     deallog << k->row() << ' ' << k->column() << ' ' << k->value() << std::endl;
 }
 
@@ -54,7 +54,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -68,7 +68,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

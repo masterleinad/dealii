@@ -96,7 +96,7 @@ Postprocess<dim>::evaluate_scalar_field(
          ExcDimensionMismatch(computed_quantities.size(),
                               inputs.solution_values.size()));
 
-  for(unsigned int i = 0; i < computed_quantities.size(); i++)
+  for (unsigned int i = 0; i < computed_quantities.size(); i++)
     {
       Assert(computed_quantities[i].size() == 2,
              ExcDimensionMismatch(computed_quantities[i].size(), 2));
@@ -176,13 +176,13 @@ TestPointValueHistory<dim>::run()
     typename DoFHandler<dim>::active_cell_iterator cell, endc;
     cell = dof_handler.begin_active();
     endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell); // need to get local_dof_indices
         cell->get_dof_indices(local_dof_indices);
         dof_locations = fe_values.get_quadrature_points();
 
-        for(unsigned int dof = 0; dof != finite_element.dofs_per_cell; dof++)
+        for (unsigned int dof = 0; dof != finite_element.dofs_per_cell; dof++)
           {
             unsigned int dof_component
               = finite_element.system_to_component_index(dof).first;
@@ -192,7 +192,7 @@ TestPointValueHistory<dim>::run()
             poles(local_dof_indices[dof])
               = -dof_locations[dof](dof_component % dim);
 
-            if(dof_component == dim) // components start numbering at 0
+            if (dof_component == dim) // components start numbering at 0
               poles(local_dof_indices[dof])
                 = -0.1; // dim+1th component is not handled well by the code above
 
@@ -277,7 +277,7 @@ TestPointValueHistory<dim>::run()
   double       t_max   = 0.00001;
   unsigned int step    = 0;
 
-  for(double time = 0; time < t_max; time = time + delta_t)
+  for (double time = 0; time < t_max; time = time + delta_t)
     {
       node_monitor.start_new_dataset(time);
       no_dof_handler.start_new_dataset(time);
@@ -329,7 +329,7 @@ TestPointValueHistory<dim>::run()
                                    "Test_Copy_indep.gpl",
                                    "no_dof_indep.gpl"};
 
-  for(unsigned int i = 0; i < sizeof(filenames) / sizeof(filenames[0]); ++i)
+  for (unsigned int i = 0; i < sizeof(filenames) / sizeof(filenames[0]); ++i)
     {
       deallog << "Copying output file " << filenames[i] << std::endl;
 
@@ -337,7 +337,7 @@ TestPointValueHistory<dim>::run()
       AssertThrow(in, ExcIO());
 
       std::string s;
-      while(in)
+      while (in)
         {
           std::getline(in, s);
           deallog << s << std::endl;

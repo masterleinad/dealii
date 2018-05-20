@@ -782,7 +782,7 @@ FilteredMatrix<VectorType>::apply_constraints(VectorType& v) const
   tmp_vector->reinit(v);
   const_index_value_iterator       i = constraints.begin();
   const const_index_value_iterator e = constraints.end();
-  for(; i != e; ++i)
+  for (; i != e; ++i)
     {
       AssertIsFinite(i->second);
       (*tmp_vector)(i->first) = -i->second;
@@ -794,7 +794,7 @@ FilteredMatrix<VectorType>::apply_constraints(VectorType& v) const
   matrix->vmult_add(v, *tmp_vector);
   // finally set constrained
   // entries themselves
-  for(i = constraints.begin(); i != e; ++i)
+  for (i = constraints.begin(); i != e; ++i)
     {
       AssertIsFinite(i->second);
       v(i->first) = i->second;
@@ -809,7 +809,7 @@ FilteredMatrix<VectorType>::pre_filter(VectorType& v) const
   // zero out value
   const_index_value_iterator       i = constraints.begin();
   const const_index_value_iterator e = constraints.end();
-  for(; i != e; ++i)
+  for (; i != e; ++i)
     v(i->first) = 0;
 }
 
@@ -822,7 +822,7 @@ FilteredMatrix<VectorType>::post_filter(const VectorType& in,
   // set value correctly
   const_index_value_iterator       i = constraints.begin();
   const const_index_value_iterator e = constraints.end();
-  for(; i != e; ++i)
+  for (; i != e; ++i)
     {
       AssertIsFinite(in(i->first));
       out(i->first) = in(i->first);
@@ -833,7 +833,7 @@ template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::vmult(VectorType& dst, const VectorType& src) const
 {
-  if(!expect_constrained_source)
+  if (!expect_constrained_source)
     {
       GrowingVectorMemory<VectorType>            mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
@@ -858,7 +858,7 @@ template <typename VectorType>
 inline void
 FilteredMatrix<VectorType>::Tvmult(VectorType& dst, const VectorType& src) const
 {
-  if(!expect_constrained_source)
+  if (!expect_constrained_source)
     {
       GrowingVectorMemory<VectorType>            mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
@@ -884,7 +884,7 @@ inline void
 FilteredMatrix<VectorType>::vmult_add(VectorType&       dst,
                                       const VectorType& src) const
 {
-  if(!expect_constrained_source)
+  if (!expect_constrained_source)
     {
       GrowingVectorMemory<VectorType>            mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
@@ -910,7 +910,7 @@ inline void
 FilteredMatrix<VectorType>::Tvmult_add(VectorType&       dst,
                                        const VectorType& src) const
 {
-  if(!expect_constrained_source)
+  if (!expect_constrained_source)
     {
       GrowingVectorMemory<VectorType>            mem;
       typename VectorMemory<VectorType>::Pointer tmp_vector(mem);

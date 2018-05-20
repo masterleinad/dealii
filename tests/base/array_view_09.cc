@@ -49,7 +49,7 @@ test()
       {
         make_array_view(std::end(v), std::begin(v));
       }
-    catch(const ExceptionBase& exc)
+    catch (const ExceptionBase& exc)
       {
         deallog << exc.get_exc_name() << std::endl;
       }
@@ -117,7 +117,7 @@ test()
       {
         make_array_view(std::end(v), std::begin(v));
       }
-    catch(const ExceptionBase& exc)
+    catch (const ExceptionBase& exc)
       {
         deallog << exc.get_exc_name() << std::endl;
       }

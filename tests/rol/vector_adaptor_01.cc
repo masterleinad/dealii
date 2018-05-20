@@ -69,13 +69,13 @@ main(int argc, char** argv)
         trilinos_vector.reinit(complete_index_set(100), MPI_COMM_WORLD);
 
         // set the first vector
-        for(unsigned int i = 0; i < trilinos_vector.size(); ++i)
+        for (unsigned int i = 0; i < trilinos_vector.size(); ++i)
           trilinos_vector(i) = i;
 
         test(trilinos_vector);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -89,7 +89,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

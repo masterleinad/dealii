@@ -86,7 +86,7 @@ test(std::string solver_name, std::string preconditioner_name)
     dealii::Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
       endc = triangulation.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const dealii::Point<dim>& center = cell->center();
         const double              x      = center[0];
@@ -120,7 +120,7 @@ test(std::string solver_name, std::string preconditioner_name)
                                           /* keep constrained dofs */ true);
   std::vector<dealii::types::global_dof_index> n_locally_owned_dofs(
     n_mpi_processes);
-  for(unsigned int i = 0; i < n_mpi_processes; i++)
+  for (unsigned int i = 0; i < n_mpi_processes; i++)
     n_locally_owned_dofs[i] = locally_owned_dofs_per_processor[i].n_elements();
 
   dealii::SparsityTools::distribute_sparsity_pattern(
@@ -134,11 +134,11 @@ test(std::string solver_name, std::string preconditioner_name)
     locally_owned_dofs, locally_owned_dofs, csp, mpi_communicator);
 
   eigenfunctions.resize(5);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
     {
       eigenfunctions[i].reinit(locally_owned_dofs,
                                mpi_communicator); //without ghost dofs
-      for(unsigned int j = 0; j < locally_owned_dofs.n_elements(); ++j)
+      for (unsigned int j = 0; j < locally_owned_dofs.n_elements(); ++j)
         eigenfunctions[i][locally_owned_dofs.nth_index_in_set(j)]
           = random_value<double>();
 
@@ -170,16 +170,16 @@ test(std::string solver_name, std::string preconditioner_name)
   typename dealii::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
-    if(cell->subdomain_id() == this_mpi_process)
+  for (; cell != endc; ++cell)
+    if (cell->subdomain_id() == this_mpi_process)
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;
         cell_mass_matrix      = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
@@ -207,12 +207,12 @@ test(std::string solver_name, std::string preconditioner_name)
     PETScWrappers::PreconditionerBase* preconditioner;
 
     dealii::deallog << preconditioner_name << std::endl;
-    if(preconditioner_name == "Jacobi")
+    if (preconditioner_name == "Jacobi")
       {
         preconditioner
           = new PETScWrappers::PreconditionJacobi(mpi_communicator);
       }
-    else if(preconditioner_name == "Boomer")
+    else if (preconditioner_name == "Boomer")
       {
         PETScWrappers::PreconditionBoomerAMG::AdditionalData data;
         data.symmetric_operator = true;
@@ -220,7 +220,7 @@ test(std::string solver_name, std::string preconditioner_name)
         preconditioner
           = new PETScWrappers::PreconditionBoomerAMG(mpi_communicator, data);
       }
-    else if(preconditioner_name == "BlockJacobi")
+    else if (preconditioner_name == "BlockJacobi")
       {
         preconditioner
           = new PETScWrappers::PreconditionBlockJacobi(mpi_communicator);
@@ -249,23 +249,23 @@ test(std::string solver_name, std::string preconditioner_name)
 
     dealii::deallog << solver_name << std::endl;
     // Get a handle on the wanted eigenspectrum solver
-    if(solver_name == "KrylovSchur")
+    if (solver_name == "KrylovSchur")
       {
         eigensolver = new dealii::SLEPcWrappers::SolverKrylovSchur(
           solver_control, mpi_communicator);
       }
 
-    else if(solver_name == "GeneralizedDavidson")
+    else if (solver_name == "GeneralizedDavidson")
       {
         eigensolver = new dealii::SLEPcWrappers::SolverGeneralizedDavidson(
           solver_control, mpi_communicator);
       }
-    else if(solver_name == "JacobiDavidson")
+    else if (solver_name == "JacobiDavidson")
       {
         eigensolver = new dealii::SLEPcWrappers::SolverJacobiDavidson(
           solver_control, mpi_communicator);
       }
-    else if(solver_name == "Lanczos")
+    else if (solver_name == "Lanczos")
       {
         eigensolver = new dealii::SLEPcWrappers::SolverLanczos(
           solver_control, mpi_communicator);
@@ -299,7 +299,7 @@ test(std::string solver_name, std::string preconditioner_name)
     // as solve_04 works ok.
     //dealii::deallog << "outer iterations: "<< solver_control.last_step ()<<std::endl;
     //dealii::deallog << "last inner iterations: "<<linear_solver_control.last_step()<<std::endl;
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       dealii::deallog << eigenvalues[i] << std::endl;
 
     delete preconditioner;
@@ -311,11 +311,11 @@ test(std::string solver_name, std::string preconditioner_name)
     {
       const double               precision = 1e-5;
       PETScWrappers::MPI::Vector Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {
           mass_matrix.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for (unsigned int j = 0; j < eigenfunctions.size(); j++)
             Assert(std::abs(eigenfunctions[j] * Bx - (i == j)) < precision,
                    ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
                               + " and " + Utilities::int_to_string(j)
@@ -352,7 +352,7 @@ main(int argc, char** argv)
         //        test ("JacobiDavidson");
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -366,7 +366,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

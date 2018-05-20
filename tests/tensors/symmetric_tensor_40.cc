@@ -28,7 +28,7 @@ check_value(const int    dim,
             const double tol = 1e-12)
 {
   const double rel_error = std::abs(expected - actual) / std::abs(actual);
-  if(rel_error > tol)
+  if (rel_error > tol)
     {
       deallog << "Incorrect value calculated: "
               << "Dim " << dim << ", eigenvalue " << index << ". Expected "

@@ -39,17 +39,17 @@ test()
   IndexSet row_partitioning(n_rows);
   IndexSet col_partitioning(n_cols);
 
-  if(n_procs == 1)
+  if (n_procs == 1)
     {
       row_partitioning.add_range(0, n_rows);
       col_partitioning.add_range(0, n_cols);
     }
-  else if(n_procs == 2)
+  else if (n_procs == 2)
     {
       // row_partitioning should be { [0, 2), [2, n_rows) }
       // col_partitioning should be { [0, 2), [2, n_cols) }
       // col_relevant_set should be { [0, 3), [1, n_cols) }
-      if(my_id == 0)
+      if (my_id == 0)
         {
           row_partitioning.add_range(0, n_rows);
           col_partitioning.add_range(0, n_cols);
@@ -60,7 +60,7 @@ test()
 
   TrilinosWrappers::SparsityPattern sp(
     row_partitioning, col_partitioning, MPI_COMM_WORLD);
-  if(my_id == 0)
+  if (my_id == 0)
     {
       sp.add(0, 0);
       sp.add(0, 2);
@@ -71,7 +71,7 @@ test()
   TrilinosWrappers::SparseMatrix A;
   A.clear();
   A.reinit(sp);
-  if(my_id == 0)
+  if (my_id == 0)
     {
       A.add(0, 0, 1);
       A.add(0, 2, 1);
@@ -87,7 +87,7 @@ test()
     col_partitioning, col_partitioning, MPI_COMM_WORLD),
     dy(row_partitioning, row_partitioning, MPI_COMM_WORLD);
 
-  for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
+  for (unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
     {
       const unsigned int global_index = col_partitioning.nth_index_in_set(i);
       dx(global_index)                = random_value<double>();
@@ -100,7 +100,7 @@ test()
 
   // compare whether we got the same result
   // (should be no roundoff difference)
-  for(unsigned int i = 0; i < row_partitioning.n_elements(); ++i)
+  for (unsigned int i = 0; i < row_partitioning.n_elements(); ++i)
     {
       const unsigned int global_index = row_partitioning.nth_index_in_set(i);
       AssertThrow(dy(global_index) == y(global_index), ExcInternalError());
@@ -111,7 +111,7 @@ test()
 
   // compare whether we got the same result
   // (should be no roundoff difference)
-  for(unsigned int i = 0; i < row_partitioning.n_elements(); ++i)
+  for (unsigned int i = 0; i < row_partitioning.n_elements(); ++i)
     {
       const unsigned int global_index = row_partitioning.nth_index_in_set(i);
       AssertThrow(dy(global_index) == y(global_index), ExcInternalError());
@@ -119,7 +119,7 @@ test()
 
   A.Tvmult(x, y);
   A.Tvmult(dx, dy);
-  for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
+  for (unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
     {
       const unsigned int global_index = col_partitioning.nth_index_in_set(i);
       AssertThrow(dx(global_index) == x(global_index), ExcInternalError());
@@ -127,13 +127,13 @@ test()
 
   A.Tvmult_add(x, y);
   A.Tvmult_add(dx, dy);
-  for(unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
+  for (unsigned int i = 0; i < col_partitioning.n_elements(); ++i)
     {
       const unsigned int global_index = col_partitioning.nth_index_in_set(i);
       AssertThrow(dx(global_index) == x(global_index), ExcInternalError());
     }
 
-  if(my_id == 0)
+  if (my_id == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -147,7 +147,7 @@ main(int argc, char** argv)
   unsigned int       myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

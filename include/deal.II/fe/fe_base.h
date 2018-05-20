@@ -474,18 +474,18 @@ namespace FiniteElementDomination
     // neither_element_dominates=0, this_element_dominates=1,
     // other_element_dominates=2, either_element_can_dominate=3
     // =this_element_dominates|other_element_dominates
-    switch(d1)
+    switch (d1)
       {
         case this_element_dominates:
-          if((d2 == this_element_dominates)
-             || (d2 == either_element_can_dominate) || (d2 == no_requirements))
+          if ((d2 == this_element_dominates)
+              || (d2 == either_element_can_dominate) || (d2 == no_requirements))
             return this_element_dominates;
           else
             return neither_element_dominates;
 
         case other_element_dominates:
-          if((d2 == other_element_dominates)
-             || (d2 == either_element_can_dominate) || (d2 == no_requirements))
+          if ((d2 == other_element_dominates)
+              || (d2 == either_element_can_dominate) || (d2 == no_requirements))
             return other_element_dominates;
           else
             return neither_element_dominates;
@@ -494,7 +494,7 @@ namespace FiniteElementDomination
           return neither_element_dominates;
 
         case either_element_can_dominate:
-          if(d2 == no_requirements)
+          if (d2 == no_requirements)
             return either_element_can_dominate;
           else
             return d2;
@@ -558,7 +558,7 @@ template <int structdim>
 inline unsigned int
 FiniteElementData<dim>::n_dofs_per_object() const
 {
-  switch(structdim)
+  switch (structdim)
     {
       case 0:
         return dofs_per_vertex;

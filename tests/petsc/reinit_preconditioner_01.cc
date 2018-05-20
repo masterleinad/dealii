@@ -42,8 +42,8 @@ test()
 
   DynamicSparsityPattern csp(local_relevant);
 
-  for(unsigned int i = 0; i < 2 * numproc; ++i)
-    if(local_relevant.is_element(i))
+  for (unsigned int i = 0; i < 2 * numproc; ++i)
+    if (local_relevant.is_element(i))
       csp.add(i, i);
 
   csp.add(0, 1);
@@ -80,7 +80,7 @@ test()
     dst.print(deallog.get_file_stream());
   }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

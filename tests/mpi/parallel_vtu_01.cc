@@ -38,7 +38,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -61,7 +61,7 @@ test()
   data_out.write_vtu_in_parallel("output.vtu", MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       std::vector<std::string> filenames;
       filenames.push_back("output.vtu");

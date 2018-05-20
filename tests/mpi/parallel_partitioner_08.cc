@@ -51,13 +51,13 @@ test()
 
   IndexSet is1(16), is2(16), is3(16);
 
-  if(rank == 0)
+  if (rank == 0)
     {
       is1.add_range(0, 8);
       // note: empty is2
       is3.add_range(8, 12);
     }
-  else if(rank == 1)
+  else if (rank == 1)
     {
       is1.add_range(8, 16);
       is2.add_index(1);
@@ -77,11 +77,11 @@ test()
   AlignedVector<Number> owned(rank == 0 ? 8 : 0);
   AlignedVector<Number> ghost(4);
 
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     ghost[i] = 0.;
 
-  if(rank == 0)
-    for(int i = 0; i < 8; i++)
+  if (rank == 0)
+    for (int i = 0; i < 8; i++)
       owned[i] = i;
 
   // update ghost values
@@ -107,10 +107,10 @@ test()
 
   auto print = [&]() {
     deallog << "owned:" << std::endl;
-    for(auto el : owned)
+    for (auto el : owned)
       deallog << el << " ";
     deallog << std::endl << "ghost:" << std::endl;
-    for(auto el : ghost)
+    for (auto el : ghost)
       deallog << el << " ";
     deallog << std::endl;
   };
@@ -145,7 +145,7 @@ test()
   compress(VectorOperation::insert);
   print();
 
-  if(rank == 1)
+  if (rank == 1)
     {
       ghost[1] = 10;
       ghost[2] = 20;

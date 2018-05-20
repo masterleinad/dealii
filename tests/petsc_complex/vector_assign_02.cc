@@ -25,11 +25,11 @@ void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   // set the first vector
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     v(k) = PetscScalar(k, k * k);
 
   // add elements by reference
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     w(k) += v(k);
 
   // check that they're equal
@@ -62,7 +62,7 @@ main(int argc, char** argv)
         deallog << "OK" << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -76,7 +76,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

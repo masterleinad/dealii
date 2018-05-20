@@ -40,7 +40,7 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   // don't run this test if hanging
   // nodes are not implemented
-  if(dof_handler.get_fe().constraints_are_implemented() == false)
+  if (dof_handler.get_fe().constraints_are_implemented() == false)
     return;
 
   ConstraintMatrix cm;
@@ -50,24 +50,24 @@ check_this(const DoFHandler<dim>& dof_handler)
   deallog << cm.n_constraints() << std::endl;
   deallog << cm.max_constraint_indirections() << std::endl;
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     deallog << (cm.is_constrained(i) ? '0' : '1');
   deallog << std::endl;
 
   deallog << cm.n_constraints() << std::endl;
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     deallog << (cm.is_identity_constrained(i) ? '0' : '1');
   deallog << std::endl;
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    if(cm.is_constrained(i))
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    if (cm.is_constrained(i))
       {
         deallog << "not identity constrained: " << i << std::endl;
         Vector<double> v(dof_handler.n_dofs());
         v(i) = 1;
         cm.condense(v);
-        for(unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
-          if(v(j) != 0)
+        for (unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
+          if (v(j) != 0)
             deallog << "  line " << j << ": " << v(j) << std::endl;
       }
 }

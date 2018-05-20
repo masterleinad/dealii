@@ -76,15 +76,15 @@ filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
   bool              found   = false;
   const std::string opening = "<" + key;
   const std::string closing = "</" + key;
-  while(std::getline(in, line))
+  while (std::getline(in, line))
     {
-      if(line.find(opening) != std::string::npos
-         && line.find("binary") != std::string::npos)
+      if (line.find(opening) != std::string::npos
+          && line.find("binary") != std::string::npos)
         {
           found = true;
           // remove everything after ">" but keep things after "</"
           const auto pos = line.find(closing);
-          if(pos != std::string::npos)
+          if (pos != std::string::npos)
             {
               line  = line.substr(0, line.find(">", 0) + 1) + line.substr(pos);
               found = false;
@@ -93,14 +93,14 @@ filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
             line = line.substr(0, line.find(">", 0) + 1);
           out << line << std::endl;
         }
-      else if(line.find(closing) != std::string::npos)
+      else if (line.find(closing) != std::string::npos)
         {
           found = false;
           // remove everything before "<"
           line = line.substr(line.find("<", 0));
           out << line << std::endl;
         }
-      else if(!found)
+      else if (!found)
         out << line << std::endl;
     }
 }
@@ -162,9 +162,9 @@ namespace Testing
   {
     constexpr Number max = std::numeric_limits<Number>::max();
     constexpr Number min = std::numeric_limits<Number>::min();
-    if(b > 0 && a > max - b)
+    if (b > 0 && a > max - b)
       return (min + a) + (b - max) - 1;
-    if(b < 0 && a < min - b)
+    if (b < 0 && a < min - b)
       return (max + a) + (b - min) + 1;
     return a + b;
   }
@@ -176,13 +176,13 @@ namespace Testing
     static int  k;
     static bool inited = false;
 
-    if(!inited || reseed)
+    if (!inited || reseed)
       {
         //srand treats a seed 0 as 1 for some reason
         r[0]          = (seed == 0) ? 1 : seed;
         long int word = r[0];
 
-        for(int i = 1; i < 31; i++)
+        for (int i = 1; i < 31; i++)
           {
             // This does:
             //   r[i] = (16807 * r[i-1]) % 2147483647;
@@ -190,25 +190,25 @@ namespace Testing
             const long int hi = word / 127773;
             const long int lo = word % 127773;
             word              = 16807 * lo - 2836 * hi;
-            if(word < 0)
+            if (word < 0)
               word += 2147483647;
             r[i] = word;
           }
         k = 31;
-        for(int i = 31; i < 34; i++)
+        for (int i = 31; i < 34; i++)
           {
             r[k % 32] = r[(k + 32 - 31) % 32];
             k         = (k + 1) % 32;
           }
 
-        for(int i = 34; i < 344; i++)
+        for (int i = 34; i < 344; i++)
           {
             r[k % 32]
               = nonoverflow_add(r[(k + 32 - 31) % 32], r[(k + 32 - 3) % 32]);
             k = (k + 1) % 32;
           }
         inited = true;
-        if(reseed == true)
+        if (reseed == true)
           return 0; // do not generate new no
       }
 
@@ -244,7 +244,7 @@ random_point(const double& min = 0.0, const double& max = 1.0)
 {
   Assert(max >= min, ExcMessage("Make sure max>=min"));
   Point<dim> p;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     p[i] = random_value(min, max);
   return p;
 }
@@ -257,7 +257,7 @@ cat_file(const char* filename)
   std::ifstream in(filename);
   Assert(in, dealii::ExcIO());
 
-  while(in)
+  while (in)
     {
       std::string s;
       std::getline(in, s);
@@ -299,7 +299,7 @@ checksum(const IT& begin, const IT& end)
 
   IT it = begin;
 
-  while(it != end)
+  while (it != end)
     {
       a = (a + (unsigned char) *it) % 65521;
       b = (a + b) % 65521;
@@ -345,11 +345,11 @@ unify_pretty_function(const std::string& text)
       {                                                              \
         SolverType_COMMAND;                                          \
       }                                                              \
-    catch(SolverControl::NoConvergence & exc)                        \
+    catch (SolverControl::NoConvergence & exc)                       \
       {}                                                             \
     deallog.depth_file(previous_depth);                              \
     const unsigned int steps = CONTROL_COMMAND;                      \
-    if(steps >= MIN_ALLOWED && steps <= MAX_ALLOWED)                 \
+    if (steps >= MIN_ALLOWED && steps <= MAX_ALLOWED)                \
       {                                                              \
         deallog << "Solver stopped within " << MIN_ALLOWED << " - "  \
                 << MAX_ALLOWED << " iterations" << std::endl;        \
@@ -371,7 +371,7 @@ template <typename Number>
 Number
 filter_out_small_numbers(const Number number, const double tolerance)
 {
-  if(std::abs(number) < tolerance)
+  if (std::abs(number) < tolerance)
     return Number();
   else
     return number;
@@ -419,10 +419,10 @@ namespace
            dealii::ExcInternalError());
 
     bool errors = false;
-    for(int i = 0; i < stageLog->stageInfo->classLog->numClasses; ++i)
+    for (int i = 0; i < stageLog->stageInfo->classLog->numClasses; ++i)
       {
-        if(stageLog->stageInfo->classLog->classInfo[i].destructions
-           != stageLog->stageInfo->classLog->classInfo[i].creations)
+        if (stageLog->stageInfo->classLog->classInfo[i].destructions
+            != stageLog->stageInfo->classLog->classInfo[i].creations)
           {
             errors = true;
             std::cerr
@@ -436,7 +436,7 @@ namespace
           }
       }
 
-    if(errors)
+    if (errors)
       throw dealii::ExcMessage("PETSc memory leak");
 #  endif
   }
@@ -468,7 +468,7 @@ mpi_initlog(const bool console = false)
 {
 #ifdef DEAL_II_WITH_MPI
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       deallogname = "output";
       deallogfile.open(deallogname.c_str());
@@ -494,9 +494,9 @@ struct MPILogInitAll
   {
 #ifdef DEAL_II_WITH_MPI
     const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-    if(myid == 0)
+    if (myid == 0)
       {
-        if(!deallog.has_file())
+        if (!deallog.has_file())
           {
             deallogfile.open("output");
             deallog.attach(deallogfile);
@@ -528,7 +528,7 @@ struct MPILogInitAll
     // pop the prefix for the MPI rank of the current process
     deallog.pop();
 
-    if(myid != 0)
+    if (myid != 0)
       {
         deallog.detach();
         deallogfile.close();
@@ -541,9 +541,9 @@ struct MPILogInitAll
     MPI_Barrier(MPI_COMM_WORLD);
 #  endif
 
-    if(myid == 0)
+    if (myid == 0)
       {
-        for(unsigned int i = 1; i < nproc; ++i)
+        for (unsigned int i = 1; i < nproc; ++i)
           {
             std::string filename = "output" + Utilities::int_to_string(i);
             cat_file(filename.c_str());
@@ -669,7 +669,7 @@ DEAL_II_NAMESPACE_CLOSE
 LogStream&
 operator<<(LogStream& out, const std::vector<unsigned int>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }
@@ -677,7 +677,7 @@ operator<<(LogStream& out, const std::vector<unsigned int>& v)
 LogStream&
 operator<<(LogStream& out, const std::vector<long long unsigned int>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }
@@ -685,7 +685,7 @@ operator<<(LogStream& out, const std::vector<long long unsigned int>& v)
 LogStream&
 operator<<(LogStream& out, const std::vector<double>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }

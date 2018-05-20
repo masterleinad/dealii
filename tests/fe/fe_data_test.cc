@@ -146,14 +146,14 @@ test_fe_datas()
   // Check vector elements in 2d and higher only
   test_2d_3d(fe_datas);
 
-  if(dim == 2)
+  if (dim == 2)
     {
       fe_datas.push_back(new FE_DGBDM<dim>(1));
       deallog << (*fe_datas.rbegin())->get_name() << std::endl;
       fe_datas.push_back(new FE_DGBDM<dim>(2));
       deallog << (*fe_datas.rbegin())->get_name() << std::endl;
     }
-  if(dim > 1)
+  if (dim > 1)
     {
       FE_RaviartThomasNodal<dim>* rt0 = new FE_RaviartThomasNodal<dim>(0);
       FE_RaviartThomasNodal<dim>* rt1 = new FE_RaviartThomasNodal<dim>(1);
@@ -167,7 +167,7 @@ test_fe_datas()
 
   // for dim==3 the constraints are
   // only hardcoded for Q1-Q2
-  if(dim != 3)
+  if (dim != 3)
     {
       fe_datas.push_back(new FESystem<dim>(FE_Q<dim>(3), 2));
       deallog << (*fe_datas.rbegin())->get_name() << std::endl;
@@ -204,7 +204,7 @@ test_fe_datas()
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
   deallog << std::endl << "dim=" << dim << std::endl;
-  for(unsigned int n = 0; n < fe_datas.size(); ++n)
+  for (unsigned int n = 0; n < fe_datas.size(); ++n)
     {
       FiniteElement<dim>* fe_data = fe_datas[n];
       deallog << "fe_data[" << n << "]:" << fe_data->get_name() << std::endl;
@@ -227,15 +227,15 @@ test_fe_datas()
               << "blocks=" << fe_data->block_indices() << std::endl
               << "degree=" << fe_data->tensor_degree() << std::endl
               << "conformity=";
-      if(fe_data->conforms(FiniteElementData<dim>::L2))
+      if (fe_data->conforms(FiniteElementData<dim>::L2))
         deallog << " L2";
-      if(fe_data->conforms(FiniteElementData<dim>::Hcurl))
+      if (fe_data->conforms(FiniteElementData<dim>::Hcurl))
         deallog << " Hcurl";
-      if(fe_data->conforms(FiniteElementData<dim>::Hdiv))
+      if (fe_data->conforms(FiniteElementData<dim>::Hdiv))
         deallog << " Hdiv";
-      if(fe_data->conforms(FiniteElementData<dim>::H1))
+      if (fe_data->conforms(FiniteElementData<dim>::H1))
         deallog << " H1";
-      if(fe_data->conforms(FiniteElementData<dim>::H2))
+      if (fe_data->conforms(FiniteElementData<dim>::H2))
         deallog << " H2";
       deallog << std::endl;
       deallog << "unit_support_points="
@@ -249,22 +249,22 @@ test_fe_datas()
               << std::endl;
 
       deallog << "face_to_equivalent_cell_index:";
-      for(unsigned int i = 0; i < fe_data->dofs_per_face; ++i)
+      for (unsigned int i = 0; i < fe_data->dofs_per_face; ++i)
         deallog << ' ' << fe_data->face_to_cell_index(i, 0);
       deallog << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           deallog << "face_to_cell_index:";
-          for(unsigned int i = 0; i < fe_data->dofs_per_face; ++i)
+          for (unsigned int i = 0; i < fe_data->dofs_per_face; ++i)
             deallog << ' ' << fe_data->face_to_cell_index(i, f);
           deallog << std::endl;
         }
 
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           deallog << "support on face " << f << ':';
-          for(unsigned int s = 0; s < fe_data->dofs_per_cell; ++s)
-            if(fe_datas[n]->has_support_on_face(s, f))
+          for (unsigned int s = 0; s < fe_data->dofs_per_cell; ++s)
+            if (fe_datas[n]->has_support_on_face(s, f))
               deallog << '\t' << s;
           deallog << std::endl;
         }
@@ -272,7 +272,7 @@ test_fe_datas()
     }
 
   // delete all FiniteElementDatas
-  for(unsigned int i = 0; i < fe_datas.size(); ++i)
+  for (unsigned int i = 0; i < fe_datas.size(); ++i)
     delete fe_datas[i];
 }
 

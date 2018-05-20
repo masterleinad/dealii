@@ -101,7 +101,7 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   // stress -> 0 gamma -> 1
   std::vector<unsigned int> block_component(
     n_stress_components + n_gamma_components, 1);
-  for(unsigned int ii = 0; ii < n_stress_components; ii++)
+  for (unsigned int ii = 0; ii < n_stress_components; ii++)
     block_component[ii] = 0;
 
   DoFRenumbering::component_wise(dof_handler);
@@ -147,7 +147,7 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   system_rhs.block(1).reinit(n_gamma_dof);
   system_rhs.collect_sizes();
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     system_rhs(i) = i;
 }
 
@@ -184,7 +184,7 @@ MixedElastoPlasticity<dim>::assemble_system()
   fe_values[stress].get_function_values(system_rhs, local_values);
   fe_values[stress].get_function_divergences(system_rhs, local_divergences);
 
-  for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
+  for (unsigned int q = 0; q < quadrature_formula.size(); ++q)
     deallog << local_values[q] << std::endl
             << local_divergences[q] << std::endl;
 }

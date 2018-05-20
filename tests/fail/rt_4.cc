@@ -30,14 +30,14 @@ test(const unsigned int degree)
 
   FE_RaviartThomas<dim> fe_rt(degree);
 
-  for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
+  for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
     {
       const FullMatrix<double>& m = fe_rt.get_prolongation_matrix(
         c, RefinementCase<dim>::isotropic_refinement);
 
-      for(unsigned int i = 0; i < m.m(); ++i)
+      for (unsigned int i = 0; i < m.m(); ++i)
         {
-          for(unsigned int j = 0; j < m.n(); ++j)
+          for (unsigned int j = 0; j < m.n(); ++j)
             deallog << 100 * m(i, j) << ' ';
           deallog << std::endl;
         }
@@ -54,7 +54,7 @@ main()
   logfile.setf(std::ios::fixed);
   deallog.attach(logfile);
 
-  for(unsigned int degree = 0; degree < 4; ++degree)
+  for (unsigned int degree = 0; degree < 4; ++degree)
     test<2>(degree);
   //  test<3>(degree);
 

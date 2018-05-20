@@ -40,16 +40,16 @@ namespace Algorithms
   OutputOperator<VectorType>&
   OutputOperator<VectorType>::operator<<(const AnyData& vectors)
   {
-    if(os == nullptr)
+    if (os == nullptr)
       {
         deallog << "Step " << step << std::endl;
-        for(unsigned int i = 0; i < vectors.size(); ++i)
+        for (unsigned int i = 0; i < vectors.size(); ++i)
           {
             const VectorType* v = vectors.try_read_ptr<VectorType>(i);
-            if(v == nullptr)
+            if (v == nullptr)
               continue;
             deallog << vectors.name(i);
-            for(unsigned int j = 0; j < v->size(); ++j)
+            for (unsigned int j = 0; j < v->size(); ++j)
               deallog << ' '
                       << ::dealii::internal::ElementAccess<VectorType>::get(*v,
                                                                             j);
@@ -60,12 +60,12 @@ namespace Algorithms
     else
       {
         (*os) << ' ' << step;
-        for(unsigned int i = 0; i < vectors.size(); ++i)
+        for (unsigned int i = 0; i < vectors.size(); ++i)
           {
             const VectorType* v = vectors.try_read_ptr<VectorType>(i);
-            if(v == nullptr)
+            if (v == nullptr)
               continue;
-            for(unsigned int j = 0; j < v->size(); ++j)
+            for (unsigned int j = 0; j < v->size(); ++j)
               (*os) << ' '
                     << ::dealii::internal::ElementAccess<VectorType>::get(*v,
                                                                           j);

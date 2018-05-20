@@ -51,7 +51,7 @@ test_real_to_unit_cell()
     {
       mapping.transform_real_to_unit_cell(triangulation.begin(), point);
     }
-  catch(typename Mapping<dim>::ExcTransformationFailed&)
+  catch (typename Mapping<dim>::ExcTransformationFailed&)
     {
       deallog << "Transformation for point " << point << " on cell with "
               << "center " << triangulation.begin()->center()

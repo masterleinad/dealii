@@ -33,10 +33,10 @@ void
 check_tensor_product(const std::vector<Quadrature<1>>& quadratures,
                      const std::vector<std::string>&   quadrature_names)
 {
-  for(unsigned int i = 0; i < quadratures.size(); ++i)
+  for (unsigned int i = 0; i < quadratures.size(); ++i)
     {
       const Quadrature<1>& quadrature = quadratures[i];
-      if(quadrature.is_tensor_product())
+      if (quadrature.is_tensor_product())
         {
           deallog << "1D " << quadrature_names[i];
           const auto& q_basis = quadrature.get_tensor_basis();
@@ -44,7 +44,7 @@ check_tensor_product(const std::vector<Quadrature<1>>& quadratures,
           const auto& q_points  = quadrature.get_points();
           const auto& q_weights = quadrature.get_weights();
           AssertThrow(q_basis[0].size() == q_points.size(), ExcInternalError());
-          for(unsigned int q = 0; q < quadrature.size(); ++q)
+          for (unsigned int q = 0; q < quadrature.size(); ++q)
             {
               std::cout << q_points[q] << " " << q_basis[0].get_points()[q]
                         << std::endl;
@@ -66,10 +66,10 @@ void
 check_tensor_product(const std::vector<Quadrature<2>>& quadratures,
                      const std::vector<std::string>&   quadrature_names)
 {
-  for(unsigned int i = 0; i < quadratures.size(); ++i)
+  for (unsigned int i = 0; i < quadratures.size(); ++i)
     {
       const Quadrature<2>& quadrature = quadratures[i];
-      if(quadrature.is_tensor_product())
+      if (quadrature.is_tensor_product())
         {
           deallog << "2D " << quadrature_names[i];
           const auto& q_basis = quadrature.get_tensor_basis();
@@ -79,8 +79,8 @@ check_tensor_product(const std::vector<Quadrature<2>>& quadratures,
           AssertThrow(q_basis[0].size() * q_basis[1].size() == q_points.size(),
                       ExcInternalError());
           unsigned int q = 0;
-          for(unsigned int q2 = 0; q2 < q_basis[0].size(); ++q2)
-            for(unsigned int q1 = 0; q1 < q_basis[1].size(); ++q1)
+          for (unsigned int q2 = 0; q2 < q_basis[0].size(); ++q2)
+            for (unsigned int q1 = 0; q1 < q_basis[1].size(); ++q1)
               {
                 AssertThrow(
                   std::abs(q_points[q][0] - q_basis[0].get_points()[q1][0])
@@ -107,10 +107,10 @@ void
 check_tensor_product(const std::vector<Quadrature<3>>& quadratures,
                      const std::vector<std::string>&   quadrature_names)
 {
-  for(unsigned int i = 0; i < quadratures.size(); ++i)
+  for (unsigned int i = 0; i < quadratures.size(); ++i)
     {
       const Quadrature<3>& quadrature = quadratures[i];
-      if(quadrature.is_tensor_product())
+      if (quadrature.is_tensor_product())
         {
           deallog << "3D " << quadrature_names[i];
           const auto& q_basis = quadrature.get_tensor_basis();
@@ -121,9 +121,9 @@ check_tensor_product(const std::vector<Quadrature<3>>& quadratures,
                         == q_points.size(),
                       ExcInternalError());
           unsigned int q = 0;
-          for(unsigned int q3 = 0; q3 < q_basis[2].size(); ++q3)
-            for(unsigned int q2 = 0; q2 < q_basis[1].size(); ++q2)
-              for(unsigned int q1 = 0; q1 < q_basis[0].size(); ++q1)
+          for (unsigned int q3 = 0; q3 < q_basis[2].size(); ++q3)
+            for (unsigned int q2 = 0; q2 < q_basis[1].size(); ++q2)
+              for (unsigned int q1 = 0; q1 < q_basis[0].size(); ++q1)
                 {
                   AssertThrow(
                     std::abs(q_points[q][0] - q_basis[0].get_points()[q1][0])

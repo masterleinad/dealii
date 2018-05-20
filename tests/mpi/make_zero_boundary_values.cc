@@ -38,7 +38,7 @@ test()
   {
     ConstraintMatrix boundary_values;
     DoFTools::make_zero_boundary_constraints(dofh, boundary_values);
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       boundary_values.print(deallog.get_file_stream());
   }
 
@@ -49,7 +49,7 @@ test()
     DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
     ConstraintMatrix boundary_values(relevant_set);
     DoFTools::make_zero_boundary_constraints(dofh, boundary_values);
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       boundary_values.print(deallog.get_file_stream());
   }
 }
@@ -63,7 +63,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -34,27 +34,27 @@ test()
   // build the sparse matrix
   PETScWrappers::MPI::SparseMatrix matrix(
     PETSC_COMM_WORLD, N * N, N * N, N * N, N * N, 5);
-  for(unsigned int i = 0; i < N; i++)
-    for(unsigned int j = 0; j < N; j++)
+  for (unsigned int i = 0; i < N; i++)
+    for (unsigned int j = 0; j < N; j++)
       {
         const unsigned int global = i * N + j;
         matrix.add(global, global, 4);
-        if(j > 0)
+        if (j > 0)
           {
             matrix.add(global - 1, global, -1);
             matrix.add(global, global - 1, -1);
           }
-        if(j < N - 1)
+        if (j < N - 1)
           {
             matrix.add(global + 1, global, -1);
             matrix.add(global, global + 1, -1);
           }
-        if(i > 0)
+        if (i > 0)
           {
             matrix.add(global - N, global, -1);
             matrix.add(global, global - N, -1);
           }
-        if(i < N - 1)
+        if (i < N - 1)
           {
             matrix.add(global + N, global, -1);
             matrix.add(global, global + N, -1);
@@ -67,7 +67,7 @@ test()
   // of the matrix norm
   PETScWrappers::MPI::Vector v1(PETSC_COMM_WORLD, N * N, N * N);
   PETScWrappers::MPI::Vector v2(PETSC_COMM_WORLD, N * N, N * N);
-  for(unsigned int i = 0; i < N * N; ++i)
+  for (unsigned int i = 0; i < N * N; ++i)
     v1(i) = i;
   matrix.vmult(v2, v1);
 
@@ -86,7 +86,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -100,7 +100,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

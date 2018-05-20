@@ -30,11 +30,11 @@ test()
   int this_mpi_process, n_mpi_processes;
   n_mpi_processes  = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   this_mpi_process = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(this_mpi_process == 0)
+  if (this_mpi_process == 0)
     {
       my_set.add_range(0, 86);
     }
-  else if(this_mpi_process == 1)
+  else if (this_mpi_process == 1)
     {
       my_set.add_range(86, 400);
       my_set.add_range(529, 654);

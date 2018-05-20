@@ -71,8 +71,8 @@ namespace Step27
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(unsigned int counter = 0; cell != endc; ++cell, counter++)
-      if(counter == 0)
+    for (unsigned int counter = 0; cell != endc; ++cell, counter++)
+      if (counter == 0)
         {
           cell->set_active_fe_index(cell->active_fe_index() + 1);
         }

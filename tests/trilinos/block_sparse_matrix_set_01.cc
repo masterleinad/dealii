@@ -32,12 +32,12 @@ test()
   // a small matrix
   const unsigned int             block_size = 16;
   TrilinosWrappers::SparseMatrix m_small(block_size, block_size, 3U);
-  for(unsigned int i = 0; i < block_size; ++i)
-    for(unsigned int j = 0; j < block_size; ++j)
-      if(std::fabs((double) i - j) < 2)
+  for (unsigned int i = 0; i < block_size; ++i)
+    for (unsigned int j = 0; j < block_size; ++j)
+      if (std::fabs((double) i - j) < 2)
         {
           double value;
-          if(i == j)
+          if (i == j)
             value = 1.; // for this example, set the values to
           // one and not some to two, since we do
           // not insert elements into the sparsity
@@ -57,16 +57,16 @@ test()
   TrilinosWrappers::BlockSparseMatrix m, m2;
   m.reinit(3, 2);
   m2.reinit(3, 2);
-  for(unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
-    for(unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
+  for (unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
+    for (unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
       m.block(block_row, block_col).copy_from(m_small);
   m.collect_sizes();
 
   // fill the second matrix with the
   // sparsity pattern (but not the
   // values)
-  for(unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
-    for(unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
+  for (unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
+    for (unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
       m2.block(block_row, block_col).reinit(m_small);
   m2.collect_sizes();
 
@@ -74,8 +74,9 @@ test()
   // matrix
   {
     FullMatrix<double> full_matrix(2 * m.n_block_rows(), 2 * m.n_block_cols());
-    for(unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
-      for(unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
+    for (unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
+      for (unsigned int block_col = 0; block_col < m.n_block_cols();
+           ++block_col)
         {
           full_matrix(block_row * 2, block_col * 2)         = 1;
           full_matrix(block_row * 2 + 1, block_col * 2 + 1) = 1.;
@@ -88,17 +89,17 @@ test()
     std::vector<types::global_dof_index> local_col_indices(2
                                                            * m.n_block_cols());
 
-    for(unsigned int i = 0; i < block_size - 1; ++i)
+    for (unsigned int i = 0; i < block_size - 1; ++i)
       {
-        for(unsigned int block_row = 0; block_row < m.n_block_rows();
-            ++block_row)
+        for (unsigned int block_row = 0; block_row < m.n_block_rows();
+             ++block_row)
           {
             local_row_indices[2 * block_row] = block_row * block_size + i;
             local_row_indices[2 * block_row + 1]
               = block_row * block_size + i + 1;
           }
-        for(unsigned int block_col = 0; block_col < m.n_block_cols();
-            ++block_col)
+        for (unsigned int block_col = 0; block_col < m.n_block_cols();
+             ++block_col)
           {
             local_col_indices[2 * block_col] = block_col * block_size + i;
             local_col_indices[2 * block_col + 1]
@@ -114,8 +115,8 @@ test()
   // subtract the matrix m from this one,
   // we should get a zero matrix
   double norm = 0;
-  for(unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
-    for(unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
+  for (unsigned int block_row = 0; block_row < m.n_block_rows(); ++block_row)
+    for (unsigned int block_col = 0; block_col < m.n_block_cols(); ++block_col)
       {
         m2.block(block_row, block_col).add(-1.0, m.block(block_row, block_col));
 
@@ -143,7 +144,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -157,7 +158,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

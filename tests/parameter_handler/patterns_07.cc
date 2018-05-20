@@ -48,7 +48,7 @@ main()
           << std::endl
           << std::endl;
 
-  for(auto i : a)
+  for (auto i : a)
     deallog << i.first << ":" << i.second << std::endl;
 
   return 0;

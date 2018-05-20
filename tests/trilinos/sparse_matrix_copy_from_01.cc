@@ -41,8 +41,8 @@ main(int argc, char** argv)
   SparseMatrix<double> matrix(sparsity);
   {
     double value = 1;
-    for(SparseMatrix<double>::iterator p = matrix.begin(); p != matrix.end();
-        ++p, ++value)
+    for (SparseMatrix<double>::iterator p = matrix.begin(); p != matrix.end();
+         ++p, ++value)
       p->value() = value;
   }
   deallog << "Original:" << std::endl;
@@ -65,8 +65,9 @@ main(int argc, char** argv)
   matrix.print(deallog.get_file_stream());
 
   // also compare for equality with the original
-  for(SparsityPattern::const_iterator p = sparsity.begin(); p != sparsity.end();
-      ++p)
+  for (SparsityPattern::const_iterator p = sparsity.begin();
+       p != sparsity.end();
+       ++p)
     AssertThrow(copy(p->row(), p->column()) == matrix(p->row(), p->column()),
                 ExcInternalError());
 }

@@ -42,9 +42,9 @@ main()
 
   // First, use only two surrounding points. The second time around,
   // instead, use four, with additional zero weights
-  for(unsigned int test_no = 0; test_no < 2; ++test_no)
+  for (unsigned int test_no = 0; test_no < 2; ++test_no)
     {
-      if(test_no == 1)
+      if (test_no == 1)
         {
           // Test that we get the same result with four surrounding points
           points.push_back(Point<2>(0.3, 1.0));
@@ -54,7 +54,7 @@ main()
         }
 
       deallog << "Test " << test_no << std::endl;
-      for(unsigned int i = 0; i < n_intermediates; ++i)
+      for (unsigned int i = 0; i < n_intermediates; ++i)
         {
           weights[0] = (double) i / ((double) n_intermediates - 1);
           weights[1] = 1.0 - weights[0];

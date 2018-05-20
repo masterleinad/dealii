@@ -69,11 +69,11 @@ main()
   double exact_integral;
   double eps = 1e-10;
 
-  for(unsigned int nos = 0; nos < origins.size(); ++nos)
+  for (unsigned int nos = 0; nos < origins.size(); ++nos)
     {
-      for(unsigned int nas = 0; nas < alphas.size(); ++nas)
+      for (unsigned int nas = 0; nas < alphas.size(); ++nas)
         {
-          for(unsigned int power = 0; power < 13; ++power)
+          for (unsigned int power = 0; power < 13; ++power)
             {
               exact_integral
                 = log_integral(power, origins[nos][0], alphas[nas]);
@@ -82,7 +82,7 @@ main()
               deallog << "int_0^1 x^" << power << " ln(|x-" << origins[nos]
                       << "|/" << alphas[nas] << ") = " << exact_integral
                       << endl;
-              for(unsigned int nq = 2; nq < 13; ++nq)
+              for (unsigned int nq = 2; nq < 13; ++nq)
                 {
                   QGaussLogR<1> quad(nq, origins[nos], alphas[nas]);
                   QGaussLogR<1> factored_quad(
@@ -90,7 +90,7 @@ main()
 
                   double approx_integral          = 0;
                   double approx_integral_factored = 0;
-                  for(unsigned int q = 0; q < quad.size(); ++q)
+                  for (unsigned int q = 0; q < quad.size(); ++q)
                     {
                       double qpow = pow(quad.point(q)[0], (double) power);
                       approx_integral += qpow * quad.weight(q);
@@ -100,7 +100,7 @@ main()
                       // This code cannot work if factor is equal to
                       // zero. In this case, just pass the other
                       // quadrature formula, which should be valid anyway.
-                      if(factor != 0.0)
+                      if (factor != 0.0)
                         {
                           qpow *= factor;
                           approx_integral_factored
@@ -114,7 +114,8 @@ main()
 
                   deallog << "   Error(n=" << quad.size()
                           << ") = " << (approx_integral - exact_integral);
-                  if(std::abs(approx_integral - approx_integral_factored) > eps)
+                  if (std::abs(approx_integral - approx_integral_factored)
+                      > eps)
                     deallog
                       << ", difference between factored and unfactored: "
                       << std::abs(approx_integral - approx_integral_factored);
@@ -131,13 +132,13 @@ double
 log_integral(const unsigned int N, const double point, const double alpha)
 {
   double result = 0;
-  if(point == 0)
+  if (point == 0)
     {
       result = -(1. + log(alpha) * N + log(alpha)) / (2 * N + N * N + 1);
     }
-  else if(point == 1)
+  else if (point == 1)
     {
-      switch(N)
+      switch (N)
         {
           case 0:
             result = -0.1e1 - log(alpha);
@@ -182,7 +183,7 @@ log_integral(const unsigned int N, const double point, const double alpha)
     }
   else
     {
-      switch(N)
+      switch (N)
         {
           case 0:
             result = point * log(point) + log(0.1e1 - point) - log(alpha)

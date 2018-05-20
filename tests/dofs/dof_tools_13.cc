@@ -26,11 +26,11 @@ check_this(const DoFHandler<dim>& dof_handler)
 {
   // this doesn't make much sense if
   // the element is not primitive
-  if(dof_handler.get_fe().is_primitive() == false)
+  if (dof_handler.get_fe().is_primitive() == false)
     return;
 
   Vector<double> cell_data(dof_handler.get_triangulation().n_active_cells());
-  for(unsigned int i = 0; i < cell_data.size(); ++i)
+  for (unsigned int i = 0; i < cell_data.size(); ++i)
     cell_data(i) = i;
 
   // distribute to first component
@@ -38,7 +38,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   DoFTools::distribute_cell_to_dof_vector(dof_handler, cell_data, dof_data);
 
   // output every third element
-  for(unsigned int i = 0; i < dof_data.size(); i += 3)
+  for (unsigned int i = 0; i < dof_data.size(); i += 3)
     deallog << dof_data(i) << " ";
   deallog << std::endl;
 
@@ -47,7 +47,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   // first component.
   DoFTools::distribute_cell_to_dof_vector(
     dof_handler, cell_data, dof_data, dof_handler.get_fe().n_components() - 1);
-  for(unsigned int i = 0; i < dof_data.size(); i += 3)
+  for (unsigned int i = 0; i < dof_data.size(); i += 3)
     deallog << dof_data(i) << " ";
   deallog << std::endl;
 }

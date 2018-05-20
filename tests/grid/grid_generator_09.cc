@@ -30,7 +30,7 @@ check_rect1(unsigned int n, bool color, bool log)
   Point<dim>                right;
   std::vector<unsigned int> subdivisions(dim);
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       left(d)         = -1.;
       right(d)        = d + 2;
@@ -41,16 +41,16 @@ check_rect1(unsigned int n, bool color, bool log)
     tria, subdivisions, left, right, color);
 
   GridOut grid_out;
-  if(dim == 2)
+  if (dim == 2)
     {
-      if(log)
+      if (log)
         grid_out.write_xfig(tria, deallog.get_file_stream());
       else
         grid_out.write_xfig(tria, std::cout);
     }
   else
     {
-      if(log)
+      if (log)
         grid_out.write_dx(tria, deallog.get_file_stream());
       else
         grid_out.write_dx(tria, std::cout);

@@ -62,7 +62,7 @@ check_all(std::ostream& log)
   flags.time  = numbers::PI;
   flags.cycle = 42;
 
-  if(true)
+  if (true)
     {
       sprintf(name, "%d%d.vtk", dim, spacedim);
 #if SEPARATE_FILES == 1

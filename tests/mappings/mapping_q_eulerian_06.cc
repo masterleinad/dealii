@@ -48,7 +48,7 @@ test(unsigned int degree)
 
   // Shift just the interior points but not the boundary points
   Vector<double> shift(shift_dh.n_dofs());
-  for(unsigned int i = 2; i <= degree; ++i)
+  for (unsigned int i = 2; i <= degree; ++i)
     shift(i) = 0.1;
 
   QGauss<dim>                                     quad(degree + 1);
@@ -60,15 +60,15 @@ test(unsigned int degree)
   Point<spacedim> real;
   Point<dim>      unit;
   double          eps = 1e-10;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       deallog << cell << std::endl;
-      for(unsigned int q = 0; q < quad.size(); ++q)
+      for (unsigned int q = 0; q < quad.size(); ++q)
         {
           real = mapping.transform_unit_to_real_cell(cell, quad.point(q));
           unit = mapping.transform_real_to_unit_cell(cell, real);
           deallog << quad.point(q) << " -> " << real << std::endl;
-          if((unit - quad.point(q)).norm() > eps)
+          if ((unit - quad.point(q)).norm() > eps)
             deallog << quad.point(q) << " != " << unit << std::endl;
         }
     }

@@ -304,8 +304,8 @@ DiagonalMatrix<VectorType>::add(const size_type  row,
                                 const bool,
                                 const bool)
 {
-  for(size_type i = 0; i < n_cols; ++i)
-    if(col_indices[i] == row)
+  for (size_type i = 0; i < n_cols; ++i)
+    if (col_indices[i] == row)
       diagonal(row) += values[i];
 }
 
@@ -315,7 +315,7 @@ DiagonalMatrix<VectorType>::add(const size_type  i,
                                 const size_type  j,
                                 const value_type value)
 {
-  if(i == j)
+  if (i == j)
     diagonal(i) += value;
 }
 

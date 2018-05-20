@@ -26,11 +26,11 @@ void
 test(Vector<double>& v, Vector<double>& w)
 {
   TrilinosWrappers::SparseMatrix m(v.size(), w.size(), w.size());
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
       m.set(i, j, i + 2 * j);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
 
   m.compress(VectorOperation::insert);
@@ -39,20 +39,20 @@ test(Vector<double>& v, Vector<double>& w)
   m.Tvmult(w, v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < m.n(); ++i)
+  for (unsigned int i = 0; i < m.n(); ++i)
     {
       double result = 0;
-      for(unsigned int j = 0; j < m.m(); ++j)
+      for (unsigned int j = 0; j < m.m(); ++j)
         result += (j + 2 * i) * j;
       AssertThrow(w(i) == result, ExcInternalError());
     }
 
   m.Tvmult_add(w, v);
   // make sure we get the expected result
-  for(unsigned int i = 0; i < m.n(); ++i)
+  for (unsigned int i = 0; i < m.n(); ++i)
     {
       double result = 0;
-      for(unsigned int j = 0; j < m.m(); ++j)
+      for (unsigned int j = 0; j < m.m(); ++j)
         result += (j + 2 * i) * j;
       AssertThrow(w(i) == result + result, ExcInternalError());
     }
@@ -76,7 +76,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -90,7 +90,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

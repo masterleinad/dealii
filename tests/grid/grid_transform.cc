@@ -56,21 +56,21 @@ main()
   Triangulation<dim>::cell_iterator cell = tria.begin_active(),
                                     endc = tria.end();
   Triangulation<dim>::face_iterator face;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->at_boundary())
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<dim>::faces_per_cell;
-            ++face_no)
+      if (cell->at_boundary())
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
           {
             face = cell->face(face_no);
-            if(face->at_boundary())
-              for(unsigned int vertex_no = 0;
-                  vertex_no < GeometryInfo<dim>::vertices_per_face;
-                  ++vertex_no)
+            if (face->at_boundary())
+              for (unsigned int vertex_no = 0;
+                   vertex_no < GeometryInfo<dim>::vertices_per_face;
+                   ++vertex_no)
                 {
                   const Point<dim>& v = face->vertex(vertex_no);
-                  if(std::fabs(std::sqrt(v.square()) - outer_radius) < 1e-12)
+                  if (std::fabs(std::sqrt(v.square()) - outer_radius) < 1e-12)
                     {
                       // leave the
                       // point, where
@@ -80,8 +80,8 @@ main()
                           face->vertex_index(vertex_no), v));
                       face->set_manifold_id(0);
                     }
-                  else if(std::fabs(std::sqrt(v.square()) - inner_radius)
-                          < 1e-12)
+                  else if (std::fabs(std::sqrt(v.square()) - inner_radius)
+                           < 1e-12)
                     {
                       // move the
                       // center of

@@ -86,12 +86,12 @@ main()
   // lower left hand corner of a 2x2 grid
   // the rest is fluid/mesh (1)
 
-  for(Triangulation<dim>::active_cell_iterator cell = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (Triangulation<dim>::active_cell_iterator cell = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     {
       real_cell_center = cell->center();
-      if(real_cell_center(0) < 0.5 && real_cell_center(1) < 0.5)
+      if (real_cell_center(0) < 0.5 && real_cell_center(1) < 0.5)
         cell->set_material_id(0); // solid
       else
         cell->set_material_id(1); //fluid
@@ -119,11 +119,11 @@ main()
 
   hp::DoFHandler<dim> dh(tria);
 
-  for(hp::DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-      cell != dh.end();
-      ++cell)
+  for (hp::DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+       cell != dh.end();
+       ++cell)
     {
-      if(int(cell->material_id()) == 0)
+      if (int(cell->material_id()) == 0)
         cell->set_active_fe_index(0);
       else
         cell->set_active_fe_index(1);
@@ -132,11 +132,11 @@ main()
 
   std::vector<unsigned int> block_component(total_dim, 0);
 
-  for(unsigned int comp = 0; comp < total_dim; comp++)
+  for (unsigned int comp = 0; comp < total_dim; comp++)
     {
-      if(comp < solid_dim)
+      if (comp < solid_dim)
         block_component[comp] = 0;
-      else if(comp < solid_dim + fluid_dim)
+      else if (comp < solid_dim + fluid_dim)
         block_component[comp] = 1;
       else
         block_component[comp] = 2;
@@ -175,11 +175,11 @@ main()
     Table<2, DoFTools::Coupling> face_coupling(fe_collection.n_components(),
                                                fe_collection.n_components());
 
-    for(unsigned int c = 0; c < fe_collection.n_components(); ++c)
+    for (unsigned int c = 0; c < fe_collection.n_components(); ++c)
       {
-        for(unsigned int d = 0; d < fe_collection.n_components(); ++d)
+        for (unsigned int d = 0; d < fe_collection.n_components(); ++d)
           {
-            if(
+            if (
               ((c < solid_dim)
                && (d < solid_dim)) //couples solid dims with solid dims
               || (((c >= solid_dim)
@@ -193,7 +193,7 @@ main()
                 cell_coupling[d][c] = DoFTools::always;
               } //cell_coupling
 
-            if(
+            if (
               (c < solid_dim)
               && (d
                   >= solid_dim)) //couples solid dims with fluid and mesh dims on the interface
@@ -235,23 +235,23 @@ main()
   std::vector<std::pair<unsigned int, unsigned int>> solid_fluid_pairs;
   std::vector<std::pair<unsigned int, unsigned int>> solid_mesh_pairs;
 
-  for(hp::DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-      cell != dh.end();
-      ++cell) //loops over the cells
+  for (hp::DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+       cell != dh.end();
+       ++cell) //loops over the cells
     {
-      if(int(cell->material_id()) == 1)
+      if (int(cell->material_id()) == 1)
         {
           //Only loop over cells in the fluid region
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
             {
-              if(!cell->at_boundary(f))
+              if (!cell->at_boundary(f))
                 {
                   bool face_is_on_interface = false;
                   //checks to see if cell face neighbor is in the solid domain
-                  if(int(cell->neighbor(f)->material_id()) == 0)
+                  if (int(cell->neighbor(f)->material_id()) == 0)
                     face_is_on_interface = true;
 
-                  if(face_is_on_interface)
+                  if (face_is_on_interface)
                     {
                       std::vector<unsigned int> solid_disp_dof, solid_vel_dof,
                         fluid_vel_dof, mesh_disp_dof;
@@ -260,26 +260,26 @@ main()
                       cell->face(f)->get_dof_indices(fl_msh_face_dof_indices,
                                                      1);
 
-                      for(unsigned int i = 0; i < dofs_per_solid_face; ++i)
+                      for (unsigned int i = 0; i < dofs_per_solid_face; ++i)
                         {
                           unsigned int comp
                             = solid_fe->face_system_to_component_index(i).first;
-                          if(comp < dim)
+                          if (comp < dim)
                             solid_disp_dof.push_back(i);
-                          if(comp >= dim && comp < solid_dim)
+                          if (comp >= dim && comp < solid_dim)
                             solid_vel_dof.push_back(i);
                         } //i
-                      for(unsigned int i = 0; i < dofs_per_fl_msh_face; ++i)
+                      for (unsigned int i = 0; i < dofs_per_fl_msh_face; ++i)
                         {
                           unsigned int comp
                             = fluid_fe->face_system_to_component_index(i).first;
-                          if(comp >= solid_dim && comp < solid_dim + dim)
+                          if (comp >= solid_dim && comp < solid_dim + dim)
                             fluid_vel_dof.push_back(i);
-                          if(comp >= solid_dim + fluid_dim)
+                          if (comp >= solid_dim + fluid_dim)
                             mesh_disp_dof.push_back(i);
                         } //i
 
-                      for(unsigned int i = 0; i < solid_vel_dof.size(); ++i)
+                      for (unsigned int i = 0; i < solid_vel_dof.size(); ++i)
                         {
                           //in this example solid_vel_dof.size()==fluid_vel_dof.size()
                           constraints.add_line(
@@ -294,7 +294,7 @@ main()
                               solid_face_dof_indices[solid_vel_dof[i]],
                               fl_msh_face_dof_indices[fluid_vel_dof[i]]));
                         } //i
-                      for(unsigned int i = 0; i < solid_disp_dof.size(); ++i)
+                      for (unsigned int i = 0; i < solid_disp_dof.size(); ++i)
                         {
                           constraints.add_line(
                             fl_msh_face_dof_indices[mesh_disp_dof[i]]);
@@ -318,12 +318,12 @@ main()
 
   // prints out which dofs are coupled
   deallog << "---------------Coupled dofs---------------" << std::endl;
-  for(unsigned int i = 0; i < solid_fluid_pairs.size(); i++)
+  for (unsigned int i = 0; i < solid_fluid_pairs.size(); i++)
     {
       deallog << "solid dof: " << solid_fluid_pairs[i].first
               << ", fluid dof: " << solid_fluid_pairs[i].second << std::endl;
     }
-  for(unsigned int i = 0; i < solid_fluid_pairs.size(); i++)
+  for (unsigned int i = 0; i < solid_fluid_pairs.size(); i++)
     {
       deallog << "solid dof: " << solid_mesh_pairs[i].first
               << ", mesh dof: " << solid_mesh_pairs[i].second << std::endl;
@@ -340,11 +340,11 @@ main()
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    for(hp::DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-        cell != dh.end();
-        ++cell) //loops over the cells
+    for (hp::DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+         cell != dh.end();
+         ++cell) //loops over the cells
       {
-        if(int(cell->material_id()) == 1) //are we in the fluid region?
+        if (int(cell->material_id()) == 1) //are we in the fluid region?
           {
             cell->get_dof_indices(local_dof_indices);
 

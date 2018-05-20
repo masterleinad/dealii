@@ -56,7 +56,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int i = 0; i < 2 * dim + 1; ++i)
+    for (unsigned int i = 0; i < 2 * dim + 1; ++i)
       values(i) = value(p, i);
   }
 };
@@ -66,7 +66,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
@@ -74,13 +74,13 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // Create a system element composed
   // of one RT-i and one DGQ-i.
   hp::FECollection<dim> element;
-  for(unsigned int i = 0; i < 5 - dim; ++i)
+  for (unsigned int i = 0; i < 5 - dim; ++i)
     element.push_back(FESystem<dim>(FE_RaviartThomasNodal<dim>(i),
                                     1,
                                     FE_DGQ<dim>(i),
@@ -90,15 +90,15 @@ check()
 
   // ... also add Q-(i+1) ^ dim
   // to this system
-  for(unsigned int i = 1; i < 3; ++i)
+  for (unsigned int i = 1; i < 3; ++i)
     element.push_back(FESystem<dim>(
       FE_Nothing<dim>(dim), 1, FE_Nothing<dim>(), 1, FE_Q<dim>(i), dim));
 
   hp::DoFHandler<dim> dof(tr);
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % element.size());
 
   dof.distribute_dofs(element);
@@ -108,7 +108,7 @@ check()
   function_map[0] = &coefficient;
 
   hp::QCollection<dim - 1> face_quadrature;
-  for(unsigned int i = 0; i < 7 - dim; ++i)
+  for (unsigned int i = 0; i < 7 - dim; ++i)
     face_quadrature.push_back(QGauss<dim - 1>(4 + i));
 
   std::vector<types::global_dof_index> dof_to_boundary_mapping;

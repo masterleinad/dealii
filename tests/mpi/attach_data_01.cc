@@ -37,16 +37,17 @@ pack_function(
   static int some_number = 0;
   deallog << "packing cell " << cell->id() << " with data=" << some_number
           << " status=";
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
     deallog << "PERSIST";
-  else if(status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
     deallog << "REFINE";
-  else if(status
-          == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
     deallog << "COARSEN";
   deallog << std::endl;
 
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
     {
       Assert(cell->has_children(), ExcInternalError());
     }
@@ -74,16 +75,17 @@ unpack_function(
 
   deallog << "unpacking cell " << cell->id() << " with data=" << (*intdata)
           << " status=";
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
     deallog << "PERSIST";
-  else if(status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
     deallog << "REFINE";
-  else if(status
-          == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
     deallog << "COARSEN";
   deallog << std::endl;
 
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
     {
       Assert(cell->has_children(), ExcInternalError());
     }
@@ -100,7 +102,7 @@ test()
   unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -110,21 +112,21 @@ test()
 
       typename Triangulation<dim, dim>::active_cell_iterator cell;
 
-      for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+      for (cell = tr.begin_active(); cell != tr.end(); ++cell)
         {
-          if(cell->id().to_string() == "0_1:0")
+          if (cell->id().to_string() == "0_1:0")
             {
               cell->set_refine_flag();
             }
-          else if(cell->parent()->id().to_string() == "3_0:")
+          else if (cell->parent()->id().to_string() == "3_0:")
             cell->set_coarsen_flag();
 
-          if(cell->is_locally_owned())
+          if (cell->is_locally_owned())
             {
               deallog << "myid=" << myid << " cellid=" << cell->id();
-              if(cell->coarsen_flag_set())
+              if (cell->coarsen_flag_set())
                 deallog << " coarsening" << std::endl;
-              else if(cell->refine_flag_set())
+              else if (cell->refine_flag_set())
                 deallog << " refining" << std::endl;
               else
                 deallog << std::endl;

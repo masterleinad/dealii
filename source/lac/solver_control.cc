@@ -50,42 +50,42 @@ SolverControl::check(const unsigned int step, const double check_value)
   // if this is the first time we
   // come here, then store the
   // residual for later comparisons
-  if(step == 0)
+  if (step == 0)
     {
       initial_val = check_value;
     }
 
-  if(m_log_history && ((step % m_log_frequency) == 0))
+  if (m_log_history && ((step % m_log_frequency) == 0))
     deallog << "Check " << step << "\t" << check_value << std::endl;
 
   lstep  = step;
   lvalue = check_value;
 
-  if(step == 0)
+  if (step == 0)
     {
-      if(check_failure)
+      if (check_failure)
         failure_residual = relative_failure_residual * check_value;
 
-      if(m_log_result)
+      if (m_log_result)
         deallog << "Starting value " << check_value << std::endl;
     }
 
-  if(history_data_enabled)
+  if (history_data_enabled)
     history_data.push_back(check_value);
 
-  if(check_value <= tol)
+  if (check_value <= tol)
     {
-      if(m_log_result)
+      if (m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
       lcheck = success;
       return success;
     }
 
-  if((step >= maxsteps) || std::isnan(check_value)
-     || (check_failure && (check_value > failure_residual)))
+  if ((step >= maxsteps) || std::isnan(check_value)
+      || (check_failure && (check_value > failure_residual)))
     {
-      if(m_log_result)
+      if (m_log_result)
         deallog << "Failure step " << step << " value " << check_value
                 << std::endl;
       lcheck = failure;
@@ -123,7 +123,7 @@ SolverControl::last_step() const
 unsigned int
 SolverControl::log_frequency(unsigned int f)
 {
-  if(f == 0)
+  if (f == 0)
     f = 1;
   unsigned int old = m_log_frequency;
   m_log_frequency  = f;
@@ -153,7 +153,7 @@ SolverControl::get_history_data() const
 double
 SolverControl::average_reduction() const
 {
-  if(lstep == 0)
+  if (lstep == 0)
     return 0.;
 
   Assert(history_data_enabled, ExcHistoryDataRequired());
@@ -235,7 +235,7 @@ ReductionControl::check(const unsigned int step, const double check_value)
   // if this is the first time we
   // come here, then store the
   // residual for later comparisons
-  if(step == 0)
+  if (step == 0)
     {
       initial_val = check_value;
       reduced_tol = check_value * reduce;
@@ -245,16 +245,16 @@ ReductionControl::check(const unsigned int step, const double check_value)
   // has been achieved. also check
   // for equality in case initial
   // residual already was zero
-  if(check_value <= reduced_tol)
+  if (check_value <= reduced_tol)
     {
-      if(m_log_result)
+      if (m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
       lstep  = step;
       lvalue = check_value;
       lcheck = success;
 
-      if(history_data_enabled)
+      if (history_data_enabled)
         history_data.push_back(check_value);
 
       return success;
@@ -291,9 +291,9 @@ IterationNumberControl::check(const unsigned int step, const double check_value)
 {
   // check whether the given number of iterations was reached, and return
   // success in that case. Otherwise, go on to the check of the base class.
-  if(step >= this->maxsteps)
+  if (step >= this->maxsteps)
     {
-      if(m_log_result)
+      if (m_log_result)
         deallog << "Convergence step " << step << " value " << check_value
                 << std::endl;
       lstep  = step;
@@ -339,7 +339,7 @@ SolverControl::State
 ConsecutiveControl::check(const unsigned int step, const double check_value)
 {
   // reset the counter if ConsecutiveControl is being reused
-  if(step == 0)
+  if (step == 0)
     n_converged_iterations = 0;
   else
     {
@@ -352,10 +352,10 @@ ConsecutiveControl::check(const unsigned int step, const double check_value)
 
   SolverControl::State state = SolverControl::check(step, check_value);
   // check if we need to override the success:
-  if(state == success)
+  if (state == success)
     {
       n_converged_iterations++;
-      if(n_converged_iterations == n_consecutive_iterations)
+      if (n_converged_iterations == n_consecutive_iterations)
         {
           return success;
         }

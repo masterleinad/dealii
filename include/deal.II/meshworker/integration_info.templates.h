@@ -35,11 +35,11 @@ namespace MeshWorker
     values.resize(global_data->n_values());
     // For all selected finite
     // element functions
-    for(unsigned int i = 0; i < values.size(); ++i)
+    for (unsigned int i = 0; i < values.size(); ++i)
       {
         values[i].resize(n_components);
         // For all components
-        for(unsigned int j = 0; j < values[i].size(); ++j)
+        for (unsigned int j = 0; j < values[i].size(); ++j)
           {
             values[i][j].resize(nqp);
           }
@@ -48,11 +48,11 @@ namespace MeshWorker
     gradients.resize(global_data->n_gradients());
     // For all selected finite
     // element functions
-    for(unsigned int i = 0; i < gradients.size(); ++i)
+    for (unsigned int i = 0; i < gradients.size(); ++i)
       {
         gradients[i].resize(n_components);
         // For all components
-        for(unsigned int j = 0; j < gradients[i].size(); ++j)
+        for (unsigned int j = 0; j < gradients[i].size(); ++j)
           {
             gradients[i][j].resize(nqp);
           }
@@ -61,11 +61,11 @@ namespace MeshWorker
     hessians.resize(global_data->n_hessians());
     // For all selected finite
     // element functions
-    for(unsigned int i = 0; i < hessians.size(); ++i)
+    for (unsigned int i = 0; i < hessians.size(); ++i)
       {
         hessians[i].resize(n_components);
         // For all components
-        for(unsigned int j = 0; j < hessians[i].size(); ++j)
+        for (unsigned int j = 0; j < hessians[i].size(); ++j)
           {
             hessians[i][j].resize(nqp);
           }
@@ -86,11 +86,11 @@ namespace MeshWorker
     const DoFInfo<dim, sdim, number>& info,
     bool                              split_fevalues)
   {
-    if(split_fevalues)
+    if (split_fevalues)
       {
         unsigned int comp = 0;
         // Loop over all blocks
-        for(unsigned int b = 0; b < info.block_info->local().size(); ++b)
+        for (unsigned int b = 0; b < info.block_info->local().size(); ++b)
           {
             const unsigned int fe_no = info.block_info->base_element(b);
             const FEValuesBase<dim, sdim>& fe     = this->fe_values(fe_no);
@@ -100,7 +100,7 @@ namespace MeshWorker
             const unsigned int block_size
               = info.block_info->local().block_size(b);
 
-            if(info.level_cell)
+            if (info.level_cell)
               this->global_data->mg_fill(values,
                                          gradients,
                                          hessians,
@@ -128,7 +128,7 @@ namespace MeshWorker
       {
         const FEValuesBase<dim, sdim>& fe     = this->fe_values(0);
         const unsigned int             n_comp = fe.get_fe().n_components();
-        if(info.level_cell)
+        if (info.level_cell)
           this->global_data->mg_fill(values,
                                      gradients,
                                      hessians,
@@ -159,7 +159,7 @@ namespace MeshWorker
     std::size_t mem = sizeof(*this)
                       + MemoryConsumption::memory_consumption(fevalv)
                       - sizeof(fevalv);
-    for(unsigned int i = 0; i < fevalv.size(); ++i)
+    for (unsigned int i = 0; i < fevalv.size(); ++i)
       mem += fevalv[i]->memory_consumption();
     return mem;
   }
@@ -184,32 +184,32 @@ namespace MeshWorker
     face_flags |= boundary_flags;
     neighbor_flags |= neighbor_geometry ? boundary_flags : update_default;
 
-    if(cell_selector.has_values() != 0)
+    if (cell_selector.has_values() != 0)
       cell_flags |= update_values;
-    if(cell_selector.has_gradients() != 0)
+    if (cell_selector.has_gradients() != 0)
       cell_flags |= update_gradients;
-    if(cell_selector.has_hessians() != 0)
+    if (cell_selector.has_hessians() != 0)
       cell_flags |= update_hessians;
 
-    if(boundary_selector.has_values() != 0)
+    if (boundary_selector.has_values() != 0)
       boundary_flags |= update_values;
-    if(boundary_selector.has_gradients() != 0)
+    if (boundary_selector.has_gradients() != 0)
       boundary_flags |= update_gradients;
-    if(boundary_selector.has_hessians() != 0)
+    if (boundary_selector.has_hessians() != 0)
       boundary_flags |= update_hessians;
 
-    if(face_selector.has_values() != 0)
+    if (face_selector.has_values() != 0)
       face_flags |= update_values;
-    if(face_selector.has_gradients() != 0)
+    if (face_selector.has_gradients() != 0)
       face_flags |= update_gradients;
-    if(face_selector.has_hessians() != 0)
+    if (face_selector.has_hessians() != 0)
       face_flags |= update_hessians;
 
-    if(face_selector.has_values() != 0)
+    if (face_selector.has_values() != 0)
       neighbor_flags |= update_values;
-    if(face_selector.has_gradients() != 0)
+    if (face_selector.has_gradients() != 0)
       neighbor_flags |= update_gradients;
-    if(face_selector.has_hessians() != 0)
+    if (face_selector.has_hessians() != 0)
       neighbor_flags |= update_hessians;
   }
 
@@ -221,13 +221,13 @@ namespace MeshWorker
                                                   bool              face,
                                                   bool              neighbor)
   {
-    if(cell)
+    if (cell)
       cell_flags |= flags;
-    if(boundary)
+    if (boundary)
       boundary_flags |= flags;
-    if(face)
+    if (face)
       face_flags |= flags;
-    if(neighbor)
+    if (neighbor)
       neighbor_flags |= flags;
   }
 

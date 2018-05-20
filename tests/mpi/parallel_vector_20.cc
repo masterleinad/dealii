@@ -56,7 +56,7 @@ test()
   AssertThrow(v.local_element(0) == my_id + 1, ExcInternalError());
   AssertThrow(v.local_element(1) == my_id + 1, ExcInternalError());
 
-  if(my_id == 0)
+  if (my_id == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -69,7 +69,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

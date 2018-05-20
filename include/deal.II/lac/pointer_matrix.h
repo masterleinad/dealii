@@ -647,7 +647,7 @@ template <typename MatrixType, typename VectorType>
 inline bool
 PointerMatrix<MatrixType, VectorType>::empty() const
 {
-  if(m == nullptr)
+  if (m == nullptr)
     return true;
   return m->empty();
 }
@@ -696,7 +696,7 @@ PointerMatrixAux<MatrixType, VectorType>::PointerMatrixAux(
   const MatrixType*         M)
   : mem(mem, typeid(*this).name()), m(M, typeid(*this).name())
 {
-  if(mem == 0)
+  if (mem == 0)
     mem = &my_memory;
 }
 
@@ -706,7 +706,7 @@ PointerMatrixAux<MatrixType, VectorType>::PointerMatrixAux(
   const char*               name)
   : mem(mem, name), m(0, name)
 {
-  if(mem == 0)
+  if (mem == 0)
     mem = &my_memory;
 }
 
@@ -717,7 +717,7 @@ PointerMatrixAux<MatrixType, VectorType>::PointerMatrixAux(
   const char*               name)
   : mem(mem, name), m(M, name)
 {
-  if(mem == nullptr)
+  if (mem == nullptr)
     mem = &my_memory;
 }
 
@@ -742,7 +742,7 @@ PointerMatrixAux<MatrixType, VectorType>::set_memory(
   VectorMemory<VectorType>* M)
 {
   mem = M;
-  if(mem == 0)
+  if (mem == 0)
     mem = &my_memory;
 }
 
@@ -750,7 +750,7 @@ template <typename MatrixType, typename VectorType>
 inline bool
 PointerMatrixAux<MatrixType, VectorType>::empty() const
 {
-  if(m == 0)
+  if (m == 0)
     return true;
   return m->empty();
 }
@@ -760,7 +760,7 @@ inline void
 PointerMatrixAux<MatrixType, VectorType>::vmult(VectorType&       dst,
                                                 const VectorType& src) const
 {
-  if(mem == nullptr)
+  if (mem == nullptr)
     mem = &my_memory;
   Assert(mem != nullptr, ExcNotInitialized());
   Assert(m != nullptr, ExcNotInitialized());
@@ -772,7 +772,7 @@ inline void
 PointerMatrixAux<MatrixType, VectorType>::Tvmult(VectorType&       dst,
                                                  const VectorType& src) const
 {
-  if(mem == nullptr)
+  if (mem == nullptr)
     mem = &my_memory;
   Assert(mem != nullptr, ExcNotInitialized());
   Assert(m != nullptr, ExcNotInitialized());
@@ -784,7 +784,7 @@ inline void
 PointerMatrixAux<MatrixType, VectorType>::vmult_add(VectorType&       dst,
                                                     const VectorType& src) const
 {
-  if(mem == nullptr)
+  if (mem == nullptr)
     mem = &my_memory;
   Assert(mem != nullptr, ExcNotInitialized());
   Assert(m != nullptr, ExcNotInitialized());
@@ -801,7 +801,7 @@ PointerMatrixAux<MatrixType, VectorType>::Tvmult_add(
   VectorType&       dst,
   const VectorType& src) const
 {
-  if(mem == nullptr)
+  if (mem == nullptr)
     mem = &my_memory;
   Assert(mem != nullptr, ExcNotInitialized());
   Assert(m != nullptr, ExcNotInitialized());
@@ -848,7 +848,7 @@ template <typename number>
 inline bool
 PointerMatrixVector<number>::empty() const
 {
-  if(m == 0)
+  if (m == 0)
     return true;
   return m->empty();
 }

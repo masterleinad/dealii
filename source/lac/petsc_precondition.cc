@@ -39,7 +39,7 @@ namespace PETScWrappers
       {
         clear();
       }
-    catch(...)
+    catch (...)
       {}
   }
 
@@ -48,7 +48,7 @@ namespace PETScWrappers
   {
     matrix = nullptr;
 
-    if(pc != nullptr)
+    if (pc != nullptr)
       {
         PetscErrorCode ierr = PCDestroy(&pc);
         pc                  = nullptr;
@@ -435,7 +435,7 @@ namespace PETScWrappers
     ierr = PCHYPRESetType(pc, "boomeramg");
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    if(additional_data.output_details)
+    if (additional_data.output_details)
       {
         set_option_value("-pc_hypre_boomeramg_print_statistics", "1");
       }
@@ -452,7 +452,7 @@ namespace PETScWrappers
     ssStream << additional_data.strong_threshold;
     set_option_value("-pc_hypre_boomeramg_strong_threshold", ssStream.str());
 
-    if(additional_data.symmetric_operator)
+    if (additional_data.symmetric_operator)
       {
         set_option_value("-pc_hypre_boomeramg_relax_type_up",
                          "symmetric-SOR/Jacobi");
@@ -543,7 +543,7 @@ namespace PETScWrappers
     ierr = PCHYPRESetType(pc, "parasails");
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    if(additional_data.output_details)
+    if (additional_data.output_details)
       {
         set_option_value("-pc_hypre_parasails_logging", "1");
       }
@@ -555,7 +555,7 @@ namespace PETScWrappers
 
     std::stringstream ssStream;
 
-    switch(additional_data.symmetric)
+    switch (additional_data.symmetric)
       {
         case 0:
           {

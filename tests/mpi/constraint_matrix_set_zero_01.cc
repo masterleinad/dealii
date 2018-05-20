@@ -42,7 +42,7 @@ test()
 
   PETScWrappers::MPI::BlockVector v(local_active, MPI_COMM_WORLD);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = 1.0 + i;
   v.compress(VectorOperation::insert);
 

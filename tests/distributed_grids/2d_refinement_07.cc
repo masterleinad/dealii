@@ -32,14 +32,14 @@ test(std::ostream& /*out*/)
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   GridGenerator::hyper_cube(tr);
-  for(unsigned int i = 0; i < 30; ++i)
+  for (unsigned int i = 0; i < 30; ++i)
     {
       deallog << "cells: " << tr.n_active_cells() << " level:" << tr.n_levels()
               << std::endl;
 
       typename parallel::distributed::Triangulation<dim>::cell_iterator it;
       it = tr.begin_active();
-      while(it->level() < static_cast<int>(tr.n_levels() - 1))
+      while (it->level() < static_cast<int>(tr.n_levels() - 1))
         ++it;
 
       it->set_refine_flag();
@@ -47,7 +47,7 @@ test(std::ostream& /*out*/)
         {
           tr.execute_coarsening_and_refinement();
         }
-      catch(ExceptionBase& e)
+      catch (ExceptionBase& e)
         {
           deallog << e.get_exc_name() << std::endl;
         }

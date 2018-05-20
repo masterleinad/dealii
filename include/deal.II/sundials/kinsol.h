@@ -321,13 +321,13 @@ namespace SUNDIALS
           "Choose among newton|linesearch|fixed_point|picard",
           Patterns::Selection("newton|linesearch|fixed_point|picard"));
         prm.add_action("Solution strategy", [&](const std::string& value) {
-          if(value == "newton")
+          if (value == "newton")
             strategy = newton;
-          else if(value == "linesearch")
+          else if (value == "linesearch")
             strategy = linesearch;
-          else if(value == "fixed_point")
+          else if (value == "fixed_point")
             strategy = fixed_point;
-          else if(value == "picard")
+          else if (value == "picard")
             strategy = picard;
           else
             Assert(false, ExcInternalError());

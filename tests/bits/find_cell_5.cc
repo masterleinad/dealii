@@ -35,7 +35,7 @@ void check(Triangulation<3>& tria)
     = GridTools::find_active_cell_around_point(tria, p);
 
   deallog << cell << std::endl;
-  for(unsigned int v = 0; v < GeometryInfo<3>::vertices_per_cell; ++v)
+  for (unsigned int v = 0; v < GeometryInfo<3>::vertices_per_cell; ++v)
     deallog << "<" << cell->vertex(v) << "> ";
   deallog << std::endl;
 
@@ -60,7 +60,7 @@ main()
       coarse_grid.refine_global(3);
       check(coarse_grid);
     }
-  catch(const std::exception& exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

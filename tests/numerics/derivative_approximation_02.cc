@@ -83,12 +83,12 @@ exact_third(Point<dim>& p, Tensor<3, dim>& third)
   double dy[4] = {
     cos(b * y), -b * sin(b * y), -b * b * cos(b * y), b * b * b * sin(b * y)};
 
-  for(int i = 0; i < dim; ++i)
-    for(int j = 0; j < dim; ++j)
-      for(int k = 0; k < dim; ++k)
+  for (int i = 0; i < dim; ++i)
+    for (int j = 0; j < dim; ++j)
+      for (int k = 0; k < dim; ++k)
         {
           int zeros = 0, ones = 0;
-          switch(i)
+          switch (i)
             {
               case 0:
                 ++zeros;
@@ -100,7 +100,7 @@ exact_third(Point<dim>& p, Tensor<3, dim>& third)
                 third[i][j][k] = 0;
                 continue;
             }
-          switch(j)
+          switch (j)
             {
               case 0:
                 ++zeros;
@@ -112,7 +112,7 @@ exact_third(Point<dim>& p, Tensor<3, dim>& third)
                 third[i][j][k] = 0;
                 continue;
             }
-          switch(k)
+          switch (k)
             {
               case 0:
                 ++zeros;
@@ -152,7 +152,7 @@ derivatives()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       // get derivative approximations
       Tensor<1, dim> grad, ex_grad;
@@ -179,7 +179,7 @@ derivatives()
       // that this is only part of the truth,
       // we would have to test more here to be
       // really sure, but this should be enough
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         Assert(third[i] == transpose(third[i]),
                ExcMessage("Third derivative is not symmetric"));
 

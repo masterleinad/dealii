@@ -76,12 +76,12 @@ namespace GridTools
   operator<<(StreamType& s, const CacheUpdateFlags u)
   {
     s << " CacheUpdateFlags";
-    if(u & update_vertex_to_cell_map)
+    if (u & update_vertex_to_cell_map)
       s << "|vertex_to_cell_map";
-    if(u & update_vertex_to_cell_centers_directions)
+    if (u & update_vertex_to_cell_centers_directions)
       s << "|vertex_to_cells_centers_directions";
 #ifdef DEAL_II_WITH_NANOFLANN
-    if(u & update_vertex_kdtree)
+    if (u & update_vertex_kdtree)
       s << "|vertex_kdtree";
 #endif
     return s;

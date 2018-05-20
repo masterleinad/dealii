@@ -50,7 +50,7 @@ check(const unsigned int        level,
   Functions::CosineFunction<dim> cosine;
 
   DoFHandler<dim> dof(tr);
-  if(dim == 2)
+  if (dim == 2)
     {
       GridGenerator::hyper_ball(tr, Point<dim>(), 1);
       tr.reset_manifold(0);
@@ -84,23 +84,23 @@ check(const unsigned int        level,
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
   const typename DoFHandler<dim>::cell_iterator  end  = dof.end();
 
-  for(; cell != end; ++cell)
+  for (; cell != end; ++cell)
     {
       fe.reinit(cell);
       cell->get_dof_indices(global_dofs);
       cosine.value_list(fe.get_quadrature_points(), function);
 
-      for(unsigned int k = 0; k < quadrature.size(); ++k)
+      for (unsigned int k = 0; k < quadrature.size(); ++k)
         {
           double dx = fe.JxW(k);
 
-          for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < element.dofs_per_cell; ++i)
             {
               const double v   = fe.shape_value(i, k);
               double       rhs = dx * v * (function[k]);
 
               f(global_dofs[i]) += rhs;
-              for(unsigned int j = 0; j < element.dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < element.dofs_per_cell; ++j)
                 {
                   const double u  = fe.shape_value(j, k);
                   double       el = dx * (u * v /* + (Du*Dv) */);
@@ -133,7 +133,7 @@ check(const unsigned int        level,
   std::vector<Tensor<2, dim>>          DDu(quadrature.size());
   std::vector<SymmetricTensor<2, dim>> DDf(quadrature.size());
 
-  for(cell = dof.begin_active(); cell != end; ++cell)
+  for (cell = dof.begin_active(); cell != end; ++cell)
     {
       fe2.reinit(cell);
 
@@ -144,23 +144,23 @@ check(const unsigned int        level,
       fe2.get_function_gradients(u, Du);
       fe2.get_function_hessians(u, DDu);
 
-      for(unsigned int k = 0; k < quadrature.size(); ++k)
+      for (unsigned int k = 0; k < quadrature.size(); ++k)
         {
           const double dx = fe.JxW(k);
           double       e  = u_local[k];
-          if(errors)
+          if (errors)
             e -= function[k];
           l2 += dx * e * e;
-          for(unsigned int i = 0; i < dim; ++i)
+          for (unsigned int i = 0; i < dim; ++i)
             {
               e = Du[k][i];
-              if(errors)
+              if (errors)
                 e -= Df[k][i];
               h1 += dx * e * e;
-              for(unsigned int j = 0; j < dim; ++j)
+              for (unsigned int j = 0; j < dim; ++j)
                 {
                   e = DDu[k][i][j];
-                  if(errors)
+                  if (errors)
                     e -= DDf[k][i][j];
                   h2 += dx * e * e;
                 }
@@ -186,7 +186,7 @@ loop()
   std::vector<FiniteElement<dim>*> elements;
   elements.push_back(new FE_Q<dim>(1));
   elements.push_back(new FE_Q<dim>(2));
-  if(dim < 3)
+  if (dim < 3)
     {
       elements.push_back(new FE_Q<dim>(3));
       elements.push_back(new FE_Q<dim>(4));
@@ -194,23 +194,23 @@ loop()
 
   elements.push_back(new FE_DGQ<dim>(1));
   elements.push_back(new FE_DGQ<dim>(2));
-  if(dim < 3)
+  if (dim < 3)
     {
       elements.push_back(new FE_DGQ<dim>(3));
       elements.push_back(new FE_DGQ<dim>(4));
     }
 
-  for(unsigned int m = 0; m < maps.size(); ++m)
-    for(unsigned int e = 0; e < elements.size(); ++e)
+  for (unsigned int m = 0; m < maps.size(); ++m)
+    for (unsigned int e = 0; e < elements.size(); ++e)
       {
         check(1, *maps[m], *elements[e], gauss);
         //      check (2, *maps[m], *elements[e], gauss);
       }
 
-  for(unsigned int m = 0; m < maps.size(); ++m)
+  for (unsigned int m = 0; m < maps.size(); ++m)
     delete maps[m];
 
-  for(unsigned int e = 0; e < elements.size(); ++e)
+  for (unsigned int e = 0; e < elements.size(); ++e)
     delete elements[e];
 }
 

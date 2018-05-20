@@ -86,20 +86,20 @@ curved_grid(std::ofstream& out)
   // each cell by 'factor'. compute, how large
   // the first extent 'dr' has to be
   double factor = 2., sum = 0;
-  for(unsigned int j = 0; j < n_r; ++j)
+  for (unsigned int j = 0; j < n_r; ++j)
     sum += std::pow(factor, 1. * j);
   double dr = (r_a - r_i) / sum;
   // radii of the cells
   std::vector<double> r(n_r + 1, r_i);
-  for(unsigned int j = 1; j < n_r + 1; ++j)
+  for (unsigned int j = 1; j < n_r + 1; ++j)
     {
       r[j] = r[j - 1] + dr;
       dr *= factor;
     }
   // create vertices
   std::vector<Point<2>> vertices(n_phi * (n_r + 1));
-  for(unsigned int j = 0; j < n_r + 1; ++j)
-    for(unsigned int i = 0; i < n_phi; ++i)
+  for (unsigned int j = 0; j < n_r + 1; ++j)
+    for (unsigned int i = 0; i < n_phi; ++i)
       {
         const unsigned int p     = i + j * n_phi;
         const double       alpha = i * 2 * numbers::PI / n_phi;
@@ -107,8 +107,8 @@ curved_grid(std::ofstream& out)
       }
   // create connectivity
   std::vector<CellData<2>> cells(n_phi * n_r);
-  for(unsigned int j = 0; j < n_r; ++j)
-    for(unsigned int i = 0; i < n_phi; ++i)
+  for (unsigned int j = 0; j < n_r; ++j)
+    for (unsigned int i = 0; i < n_phi; ++i)
       {
         const unsigned int index         = i + j * n_phi;
         const unsigned int p             = i + j * n_phi;
@@ -149,34 +149,35 @@ curved_grid(std::ofstream& out)
   DoFHandler<2>::cell_iterator cell = dof_handler.begin_active(),
                                endc = dof_handler.end();
   DoFHandler<2>::face_iterator face;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       // fix all vertices
-      for(unsigned int vertex_no = 0;
-          vertex_no < GeometryInfo<2>::vertices_per_cell;
-          ++vertex_no)
+      for (unsigned int vertex_no = 0;
+           vertex_no < GeometryInfo<2>::vertices_per_cell;
+           ++vertex_no)
         {
-          for(unsigned int i = 0; i < 2; ++i)
+          for (unsigned int i = 0; i < 2; ++i)
             m[i][cell->vertex_dof_index(vertex_no, 0)] = 0.;
         }
 
-      if(cell->at_boundary())
-        for(unsigned int face_no = 0; face_no < GeometryInfo<2>::faces_per_cell;
-            ++face_no)
+      if (cell->at_boundary())
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<2>::faces_per_cell;
+             ++face_no)
           {
             face = cell->face(face_no);
             // insert a modifiued value for
             // the middle point of boundary
             // faces
-            if(face->at_boundary())
+            if (face->at_boundary())
               {
                 const double eps = 1e-4;
-                if(std::fabs(face->vertex(1).norm() - r_i) < eps)
-                  for(unsigned int i = 0; i < 2; ++i)
+                if (std::fabs(face->vertex(1).norm() - r_i) < eps)
+                  for (unsigned int i = 0; i < 2; ++i)
                     m[i][face->dof_index(0)]
                       = (face->center() * (r_i / face->center().norm() - 1))(i);
-                else if(std::fabs(face->vertex(1).norm() - r_a) < eps)
-                  for(unsigned int i = 0; i < 2; ++i)
+                else if (std::fabs(face->vertex(1).norm() - r_a) < eps)
+                  for (unsigned int i = 0; i < 2; ++i)
                     m[i][face->dof_index(0)] = 0.;
                 else
                   Assert(false, ExcInternalError());
@@ -186,11 +187,11 @@ curved_grid(std::ofstream& out)
   // solve the 2 problems with
   // different right hand sides.
   Vector<double> us[2];
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     us[i].reinit(dof_handler.n_dofs());
   // solve linear systems in parallel
   Threads::ThreadGroup<> threads;
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     threads += Threads::new_thread(&laplace_solve, S, m[i], us[i]);
   threads.join_all();
   // create a new DoFHandler for the combined
@@ -203,11 +204,11 @@ curved_grid(std::ofstream& out)
   DoFHandler<2>::active_cell_iterator component_cell
     = dof_handler.begin_active(),
     end_c = dof_handler.end(), combined_cell = cdh.begin_active();
-  for(; component_cell != end_c; ++component_cell, ++combined_cell)
+  for (; component_cell != end_c; ++component_cell, ++combined_cell)
     {
       component_cell->get_dof_values(us[0], dx);
       component_cell->get_dof_values(us[1], dy);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         {
           dxy(cfe.component_to_system_index(0, i)) = dx(i);
           dxy(cfe.component_to_system_index(1, i)) = dy(i);

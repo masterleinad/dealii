@@ -24,7 +24,7 @@ void
 check()
 {
   Point<dim> p1, p2;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       p1[i] = 10.0 + 0.12345 * i;
       p1[i] = 0.5 + 0.6789 * i;

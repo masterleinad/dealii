@@ -28,7 +28,7 @@ test(VectorType& v)
 {
   std::vector<bool> filter(v.size(), false);
   // set some elements of the vector
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     {
       filter[i] = true;
       v(i)      = i;
@@ -79,7 +79,7 @@ main()
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -93,7 +93,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

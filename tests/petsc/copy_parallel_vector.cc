@@ -45,7 +45,7 @@ main(int argc, char** argv)
   owned_indices.print(deallog);
 
   PETScWrappers::MPI::Vector petsc_vector(owned_indices, MPI_COMM_WORLD);
-  for(const auto dof : owned_indices)
+  for (const auto dof : owned_indices)
     {
       petsc_vector(dof) = double(dof);
     }
@@ -53,7 +53,7 @@ main(int argc, char** argv)
   Vector<double> deal_vector(petsc_vector);
   deallog << rank << ": deal vector size: " << deal_vector.size() << std::endl;
 
-  for(const auto value : deal_vector)
+  for (const auto value : deal_vector)
     {
       deallog << value << std::endl;
     }

@@ -65,7 +65,7 @@ public:
   value(const Point<dim>& p, const unsigned int component) const
   {
     double val = 0.0;
-    if(std::abs(p(1) - 1.0) < 1e-5)
+    if (std::abs(p(1) - 1.0) < 1e-5)
       val = 2.0;
 
     deallog << "evaluate normal derivative at " << p << " with value " << val
@@ -102,8 +102,8 @@ make_mesh(Triangulation<dim, spacedim>& tria)
   tria.refine_global(2);
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = tria.begin_active();
-  for(; cell != tria.end(); ++cell)
-    if(cell->center()[1] < 1e-10 && (spacedim != 3 || cell->center()[2] < 0.5))
+  for (; cell != tria.end(); ++cell)
+    if (cell->center()[1] < 1e-10 && (spacedim != 3 || cell->center()[2] < 0.5))
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 }
@@ -138,7 +138,7 @@ check()
   KellyErrorEstimator<dim, spacedim>::estimate(
     mapping, dof, q_face, neumann_bc, v, error);
   deallog << "Estimated error indicators:" << std::endl;
-  for(unsigned int i = 0; i < error.size(); ++i)
+  for (unsigned int i = 0; i < error.size(); ++i)
     deallog << error(i) << std::endl;
 
   {

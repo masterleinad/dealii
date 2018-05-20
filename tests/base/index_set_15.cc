@@ -29,7 +29,7 @@ test()
   // randomly add 90 elements to each
   // set, some of which may be
   // repetitions of previous ones
-  for(unsigned int i = 0; i < 9 * is1.size() / 10; ++i)
+  for (unsigned int i = 0; i < 9 * is1.size() / 10; ++i)
     {
       is1.add_index(Testing::rand() % is1.size());
       is2.add_index(Testing::rand() % is2.size());
@@ -45,7 +45,7 @@ test()
   is2.print(deallog);
   is3.print(deallog);
 
-  for(unsigned int i = 0; i < is3.size(); ++i)
+  for (unsigned int i = 0; i < is3.size(); ++i)
     {
       AssertThrow((is1.is_element(i) && !is2.is_element(i))
                     == is3.is_element(i),

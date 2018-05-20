@@ -50,7 +50,7 @@ check_all()
 {
   char                      name[100];
   DataOutBase::TecplotFlags flags;
-  if(true)
+  if (true)
     {
       sprintf(name, "%d%d.tecplot", dim, spacedim);
       flags.tecplot_binary_file_name = name;

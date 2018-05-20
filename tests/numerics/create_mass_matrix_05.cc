@@ -38,7 +38,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     {
       GridGenerator::hyper_ball(tr, Point<dim>(), 1);
       tr.reset_manifold(0);
@@ -48,7 +48,7 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
@@ -70,14 +70,14 @@ check()
   SparsityPattern              sparsity(dof.n_dofs(), dof.n_dofs());
   const unsigned int           n_components = 2 * dim;
   Table<2, DoFTools::Coupling> mask(n_components, n_components);
-  for(unsigned int i = 0; i < n_components; ++i)
-    for(unsigned int j = 0; j < n_components; ++j)
+  for (unsigned int i = 0; i < n_components; ++i)
+    for (unsigned int j = 0; j < n_components; ++j)
       mask(i, j) = DoFTools::none;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       mask[i][j] = DoFTools::always;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       mask[dim + i][dim + j] = DoFTools::always;
   DoFTools::make_sparsity_pattern(dof, mask, sparsity);
   ConstraintMatrix constraints;
@@ -99,9 +99,9 @@ check()
   // multiply matrix by 100 to
   // make test more sensitive
   deallog << "Matrix: " << std::endl;
-  for(SparseMatrix<double>::const_iterator p = matrix.begin();
-      p != matrix.end();
-      ++p)
+  for (SparseMatrix<double>::const_iterator p = matrix.begin();
+       p != matrix.end();
+       ++p)
     deallog << p->value() * 100 << std::endl;
 }
 

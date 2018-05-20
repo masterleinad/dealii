@@ -35,20 +35,20 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  if(fe_degree > 1)
+  if (fe_degree > 1)
     return;
 
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria, 0, 1);
 
   // set boundary ids on boundaries to the number of the face
-  for(unsigned int face = 2; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (unsigned int face = 2; face < GeometryInfo<dim>::faces_per_cell; ++face)
     tria.begin()->face(face)->set_all_boundary_ids(face);
 
   std::vector<
     GridTools::PeriodicFacePair<typename Triangulation<dim>::cell_iterator>>
     periodic_faces;
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     GridTools::collect_periodic_faces(
       tria, 2 * d, 2 * d + 1, d, periodic_faces);
   deallog << "Periodic faces: " << periodic_faces.size() << std::endl;
@@ -87,15 +87,15 @@ test()
   SolverCG<LinearAlgebra::distributed::Vector<double>> solver(control);
   solver.solve(mf, sol, rhs, PreconditionIdentity());
   // gather all data at root
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       Vector<double> solution_gather0(sol.size());
       double*        sol_gather_ptr = solution_gather0.begin();
-      for(unsigned int i = 0; i < sol.local_size(); ++i)
+      for (unsigned int i = 0; i < sol.local_size(); ++i)
         *sol_gather_ptr++ = sol.local_element(i);
-      for(unsigned int i = 1;
-          i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-          ++i)
+      for (unsigned int i = 1;
+           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+           ++i)
         {
           MPI_Recv(sol_gather_ptr,
                    dof.locally_owned_dofs_per_processor()[i].n_elements(),

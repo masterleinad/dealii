@@ -35,9 +35,9 @@ test()
 
   SparseMatrix<double> matrix(sparsity);
   const double         val = std::pow(10, myid);
-  for(SparsityPattern::const_iterator it = sparsity.begin();
-      it != sparsity.end();
-      ++it)
+  for (SparsityPattern::const_iterator it = sparsity.begin();
+       it != sparsity.end();
+       ++it)
     {
       const auto i = (*it).row();
       const auto j = (*it).column();
@@ -57,9 +57,9 @@ test()
 
   Utilities::MPI::sum(full, MPI_COMM_WORLD, full);
 
-  for(SparsityPattern::const_iterator it = sparsity.begin();
-      it != sparsity.end();
-      ++it)
+  for (SparsityPattern::const_iterator it = sparsity.begin();
+       it != sparsity.end();
+       ++it)
     {
       const auto i = (*it).row();
       const auto j = (*it).column();
@@ -81,7 +81,7 @@ main(int argc, char* argv[])
   // MPILogInitAll log;
   // test();
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
       test();

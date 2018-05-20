@@ -27,8 +27,8 @@ template <typename VectorType>
 void
 set(VectorType& vector)
 {
-  for(unsigned int i = 0; i < vector.size(); ++i)
-    if(vector.locally_owned_elements().is_element(i))
+  for (unsigned int i = 0; i < vector.size(); ++i)
+    if (vector.locally_owned_elements().is_element(i))
       vector(i) = i;
   vector.compress(VectorOperation::insert);
 }
@@ -41,26 +41,26 @@ test(VectorType& vector)
 
   // select every other element
   std::vector<typename VectorType::size_type> indices;
-  for(unsigned int j = 0; j < vector.size() / 2; ++j)
+  for (unsigned int j = 0; j < vector.size() / 2; ++j)
     indices.push_back(2 * j);
 
   // do the extraction with the function that takes indices, then
   // assert correctness
   std::vector<typename VectorType::value_type> values1(indices.size());
   vector.extract_subvector_to(indices, values1);
-  for(unsigned int j = 0; j < vector.size() / 2; ++j)
+  for (unsigned int j = 0; j < vector.size() / 2; ++j)
     AssertThrow(get_real_assert_zero_imag(values1[j]) == 2 * j,
                 ExcInternalError());
 
   // do the same with the version of the function that takes iterators
   std::vector<typename VectorType::value_type> values2(indices.size());
   vector.extract_subvector_to(indices.begin(), indices.end(), values2.begin());
-  for(unsigned int j = 0; j < vector.size() / 2; ++j)
+  for (unsigned int j = 0; j < vector.size() / 2; ++j)
     AssertThrow(get_real_assert_zero_imag(values2[j]) == 2 * j,
                 ExcInternalError());
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -72,9 +72,9 @@ main(int argc, char** argv)
   const unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   {
     IndexSet local(10);
-    if(myid == 0)
+    if (myid == 0)
       local.add_range(0, 5);
-    if(myid == 1)
+    if (myid == 1)
       local.add_range(5, 10);
 
     IndexSet dense_local(10);
@@ -114,15 +114,15 @@ main(int argc, char** argv)
     std::vector<IndexSet> partitioning;
     {
       IndexSet block1(10);
-      if(myid == 0)
+      if (myid == 0)
         block1.add_range(0, 7);
-      if(myid == 1)
+      if (myid == 1)
         block1.add_range(7, 10);
 
       IndexSet block2(6);
-      if(myid == 0)
+      if (myid == 0)
         block2.add_range(0, 2);
-      if(myid == 1)
+      if (myid == 1)
         block2.add_range(2, 6);
 
       partitioning.push_back(block1);

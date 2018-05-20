@@ -48,7 +48,7 @@ main()
   worker_thread = Threads::new_thread(worker);
 
   Threads::ThreadGroup<> waiter_threads;
-  for(unsigned int i = 0; i < 20; ++i)
+  for (unsigned int i = 0; i < 20; ++i)
     waiter_threads += Threads::new_thread(waiter, i);
 
   waiter_threads.join_all();

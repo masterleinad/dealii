@@ -41,19 +41,19 @@ test()
   // determine which vertices to move. only move those with x>1/3
   std::vector<bool> moved_locally_owned_vertices
     = GridTools::get_locally_owned_vertices(tr);
-  for(unsigned int v = 0; v < tr.n_vertices(); ++v)
-    if((moved_locally_owned_vertices[v] == true)
-       && (tr.get_vertices()[v][0] < 1. / 3))
+  for (unsigned int v = 0; v < tr.n_vertices(); ++v)
+    if ((moved_locally_owned_vertices[v] == true)
+        && (tr.get_vertices()[v][0] < 1. / 3))
       moved_locally_owned_vertices[v] = false;
 
   // now do the move
   Point<dim> shift;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     shift[d] = 1;
 
   unsigned int n_vertices_moved = 0;
-  for(unsigned int v = 0; v < tr.n_vertices(); ++v)
-    if(moved_locally_owned_vertices[v] == true)
+  for (unsigned int v = 0; v < tr.n_vertices(); ++v)
+    if (moved_locally_owned_vertices[v] == true)
       {
         // maybe not the most elegant way to do it, but it works for the purpose
         // of the test...
@@ -78,11 +78,11 @@ test()
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int i = 0;
-          i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-          ++i)
+      for (unsigned int i = 0;
+           i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+           ++i)
         {
           deallog << "Partition " << i << std::endl;
 
@@ -92,7 +92,7 @@ test()
         }
     }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

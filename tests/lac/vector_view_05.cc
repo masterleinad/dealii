@@ -27,24 +27,24 @@ checkReadWriteConstructor(Vector<number>& V)
   VectorView<number> VV(V.size(), V.begin());
 
   deallog << "Printing Vector<number>" << std::endl;
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for (unsigned int i = 0; i < V.size(); ++i)
     deallog << V(i) << '\t';
   deallog << std::endl;
 
   deallog << "Printing VectorView<number> pointing to Vector<number>"
           << std::endl;
-  for(unsigned int i = 0; i < VV.size(); ++i)
+  for (unsigned int i = 0; i < VV.size(); ++i)
     deallog << VV(i) << '\t';
   deallog << std::endl;
 
   deallog
     << "Incrementing Vector<number> elements using Read-write handle of VectorView<number>"
     << std::endl;
-  for(unsigned int i = 0; i < VV.size(); ++i)
+  for (unsigned int i = 0; i < VV.size(); ++i)
     VV(i) = VV(i) + 1;
 
   deallog << "Printing modified Vector<number>" << std::endl;
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for (unsigned int i = 0; i < V.size(); ++i)
     deallog << V(i) << '\t';
   deallog << std::endl;
 }

@@ -49,7 +49,7 @@ public:
     // vector solution, make the last dim
     // components a vector
     std::vector<std::tuple<unsigned int, unsigned int, std::string>> retval;
-    if(get_dataset_names().size() >= dim)
+    if (get_dataset_names().size() >= dim)
       retval.push_back(std::tuple<unsigned int, unsigned int, std::string>(
         get_dataset_names().size() - dim,
         get_dataset_names().size() - 1,
@@ -115,7 +115,7 @@ check_this(const DoFHandler<dim>& dof_handler,
   Assert(data_out.get_patches().size() == reader.get_patches().size(),
          ExcInternalError());
 
-  for(unsigned int i = 0; i < reader.get_patches().size(); ++i)
+  for (unsigned int i = 0; i < reader.get_patches().size(); ++i)
     Assert(data_out.get_patches()[i] == reader.get_patches()[i],
            ExcInternalError());
 
@@ -123,7 +123,7 @@ check_this(const DoFHandler<dim>& dof_handler,
   Assert(data_out.get_vector_data_ranges().size()
            == reader.get_vector_data_ranges().size(),
          ExcInternalError());
-  for(unsigned int i = 0; i < data_out.get_vector_data_ranges().size(); ++i)
+  for (unsigned int i = 0; i < data_out.get_vector_data_ranges().size(); ++i)
     {
       deallog << std::get<0>(data_out.get_vector_data_ranges()[i]) << ' '
               << std::get<1>(data_out.get_vector_data_ranges()[i]) << ' '

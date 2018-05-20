@@ -47,8 +47,8 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double v = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         v += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return v;
   }
@@ -65,7 +65,7 @@ test()
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(3);
 
-  for(unsigned int p = 1; p < 7 - dim; ++p)
+  for (unsigned int p = 1; p < 7 - dim; ++p)
     {
       FE_Q<dim>             fe(p);
       hp::FECollection<dim> hp_fe(fe);
@@ -75,7 +75,7 @@ test()
 
       Vector<double> interpolant(dof_handler.n_dofs());
       Vector<float>  error(triangulation.n_active_cells());
-      for(unsigned int q = 0; q <= p + 2; ++q)
+      for (unsigned int q = 0; q <= p + 2; ++q)
         {
           // interpolate the function
           VectorTools::interpolate(dof_handler, F<dim>(q), interpolant);
@@ -88,7 +88,7 @@ test()
             error,
             hp::QCollection<dim>(QGauss<dim>(q + 2)),
             VectorTools::L2_norm);
-          if(q <= p)
+          if (q <= p)
             AssertThrow(error.l2_norm() < 1e-12 * interpolant.l2_norm(),
                         ExcInternalError());
 

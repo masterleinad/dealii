@@ -36,16 +36,16 @@ test()
   // use the same element, but with
   // different indices
   hp::FECollection<dim> fe_collection;
-  for(unsigned int i = 0; i < tria.n_active_cells(); ++i)
+  for (unsigned int i = 0; i < tria.n_active_cells(); ++i)
     fe_collection.push_back(FE_Q<dim>(1));
 
   hp::DoFHandler<dim> dof_handler(tria);
 
   unsigned int fe_index = 0;
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell, ++fe_index)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell, ++fe_index)
     {
       deallog << "Setting fe_index=" << fe_index << " on cell " << cell
               << std::endl;
@@ -55,16 +55,16 @@ test()
   dof_handler.distribute_dofs(fe_collection);
 
   std::vector<types::global_dof_index> local_dof_indices;
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       local_dof_indices.resize(cell->get_fe().dofs_per_cell);
       cell->get_dof_indices(local_dof_indices);
 
       deallog << cell << std::endl;
-      for(unsigned int i = 0; i < local_dof_indices.size(); ++i)
+      for (unsigned int i = 0; i < local_dof_indices.size(); ++i)
         deallog << local_dof_indices[i] << ' ';
       deallog << std::endl;
     }

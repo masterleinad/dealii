@@ -75,8 +75,8 @@ test()
 
   hp::DoFHandler<dim> dof_handler(triangulation);
 
-  for(unsigned int i = 0; i < fe.size(); ++i)
-    for(unsigned int j = 0; j < fe.size(); ++j)
+  for (unsigned int i = 0; i < fe.size(); ++i)
+    for (unsigned int j = 0; j < fe.size(); ++j)
       {
         deallog << "Testing " << fe[i].get_name() << " vs. " << fe[j].get_name()
                 << std::endl;
@@ -88,7 +88,7 @@ test()
         cell->set_active_fe_index(i);
         ++cell;
 
-        for(; cell != dof_handler.end(); ++cell)
+        for (; cell != dof_handler.end(); ++cell)
           cell->set_active_fe_index(j);
 
         dof_handler.distribute_dofs(fe);

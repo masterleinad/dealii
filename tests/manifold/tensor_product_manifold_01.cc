@@ -44,8 +44,8 @@ test1()
   sp[0] = manifold.push_forward(cp[0]);
   sp[1] = manifold.push_forward(cp[1]);
 
-  for(unsigned int d = 0; d < 2; ++d)
-    if(cp[d].distance(manifold.pull_back(sp[d])) > 1e-10)
+  for (unsigned int d = 0; d < 2; ++d)
+    if (cp[d].distance(manifold.pull_back(sp[d])) > 1e-10)
       deallog << "Error! " << cp[d] << "->" << sp[d] << "->"
               << manifold.pull_back(sp[d]) << std::endl;
 
@@ -53,7 +53,7 @@ test1()
 
   deallog << "P0: " << sp[0] << ", P1: " << sp[1] << std::endl;
 
-  for(unsigned int i = 0; i < n_intermediates + 1; ++i)
+  for (unsigned int i = 0; i < n_intermediates + 1; ++i)
     {
       w[0] = 1.0 - (double) i / ((double) n_intermediates);
       w[1] = 1.0 - w[0];

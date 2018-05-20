@@ -44,9 +44,9 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double f = sin(p[0] * 4);
-    if(dim > 1)
+    if (dim > 1)
       f *= cos(p[1] * 4);
-    if(dim > 2)
+    if (dim > 2)
       f *= exp(p[2] * 4);
     return f;
   };
@@ -101,7 +101,7 @@ transfer(std::ostream& out)
                                                     endc = tria.end();
   ++cell;
   ++cell;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_refine_flag();
 
   tria.prepare_coarsening_and_refinement();
@@ -145,7 +145,7 @@ transfer(std::ostream& out)
   endc = tria.end(tria.n_levels() - 1);
   cell->set_refine_flag();
   ++cell;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_coarsen_flag();
   Vector<double> q_old_solution = q_solution, dgq_old_solution = dgq_solution;
   tria.prepare_coarsening_and_refinement();

@@ -155,9 +155,9 @@ test()
   const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
   std::vector<CellData<dim>> cells(n_cells, CellData<dim>());
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for (unsigned int i = 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     }
@@ -165,23 +165,24 @@ test()
   Triangulation<3> triangulation;
   triangulation.create_triangulation(vertices, cells, SubCellData());
 
-  for(Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if((cell->face(f)->center()[2] != -4) && (cell->face(f)->center()[2] != 7)
-         && (cell->face(f)->at_boundary()))
+  for (Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if ((cell->face(f)->center()[2] != -4)
+          && (cell->face(f)->center()[2] != 7)
+          && (cell->face(f)->at_boundary()))
         cell->face(f)->set_boundary_id(1);
 
   triangulation.refine_global(1);
 
-  for(Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
-        ++face_no)
+  for (Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    for (unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+         ++face_no)
       AssertThrow(cell->at_boundary(face_no)
                     == cell->face(face_no)->at_boundary(),
                   ExcInternalError());

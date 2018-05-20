@@ -31,8 +31,8 @@ test_matrix(PETScWrappers::SparseMatrix& m)
   deallog << "Check 01 matrix access" << std::endl;
 
   // fill up a matrix with some numbers
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for (unsigned int k = 0; k < m.m(); ++k)
+    for (unsigned int l = 0; l < m.n(); ++l)
       {
         PetscReal el_r = static_cast<double>(k + l);
         PetscReal el_i = static_cast<double>(-1. * (k + l));
@@ -41,8 +41,8 @@ test_matrix(PETScWrappers::SparseMatrix& m)
 
   m.compress(VectorOperation::insert);
 
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for (unsigned int k = 0; k < m.m(); ++k)
+    for (unsigned int l = 0; l < m.n(); ++l)
       {
         PetscReal el_r = static_cast<double>(k + l);
         PetscReal el_i = static_cast<double>(-1. * (k + l));
@@ -73,7 +73,7 @@ main(int argc, char** argv)
       }
     }
 
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -87,7 +87,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

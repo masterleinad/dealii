@@ -39,7 +39,7 @@ test(const int testcase)
   GridGenerator::hyper_cube(tria_1);
   GridGenerator::hyper_cube(tria_2);
   Point<dim> shift;
-  switch(testcase)
+  switch (testcase)
     {
       case 0:
         shift[0] = 2;
@@ -48,7 +48,7 @@ test(const int testcase)
         shift[0] = 1;
         break;
       case 2:
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           shift[d] = 1;
         break;
       default:
@@ -80,7 +80,7 @@ main()
   logfile << std::setprecision(2);
   deallog.attach(logfile);
 
-  for(unsigned int t = 0; t < 3; ++t)
+  for (unsigned int t = 0; t < 3; ++t)
     {
       test<2>(t);
       test<3>(t);

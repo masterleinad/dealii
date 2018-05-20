@@ -45,10 +45,10 @@ test()
   {
     unsigned int cell_index    = 0;
     unsigned int my_cell_index = 0;
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-        cell != tr.end();
-        ++cell, ++cell_index)
-      if(cell->subdomain_id() == myid)
+    for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+         cell != tr.end();
+         ++cell, ++cell_index)
+      if (cell->subdomain_id() == myid)
         {
           ++my_cell_index;
           indicators(cell_index) = my_cell_index;
@@ -63,12 +63,12 @@ test()
   // coarsening. we have to
   // accumulate over all processors
   unsigned int my_refined = 0, my_coarsened = 0;
-  for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-      cell != tr.end();
-      ++cell)
-    if(cell->refine_flag_set())
+  for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+       cell != tr.end();
+       ++cell)
+    if (cell->refine_flag_set())
       ++my_refined;
-    else if(cell->coarsen_flag_set())
+    else if (cell->coarsen_flag_set())
       ++my_coarsened;
 
   unsigned int n_refined = 0, n_coarsened = 0;
@@ -81,7 +81,7 @@ test()
   // exactly 20% of cells for
   // refinement, and none for
   // coarsening
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "total active cells = " << tr.n_global_active_cells()
               << std::endl;
@@ -90,7 +90,7 @@ test()
     }
 
   tr.execute_coarsening_and_refinement();
-  if(myid == 0)
+  if (myid == 0)
     deallog << "total active cells = " << tr.n_global_active_cells()
             << std::endl;
 }
@@ -104,7 +104,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

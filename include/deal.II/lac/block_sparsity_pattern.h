@@ -806,7 +806,7 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
   const bool      indices_are_sorted)
 {
   // Resize scratch arrays
-  if(block_column_indices.size() < this->n_block_cols())
+  if (block_column_indices.size() < this->n_block_cols())
     {
       block_column_indices.resize(this->n_block_cols());
       counter_within_block.resize(this->n_block_cols());
@@ -824,13 +824,13 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
   // whether the size of one is large
   // enough before actually going
   // through all of them.
-  if(block_column_indices[0].size() < n_cols)
-    for(size_type i = 0; i < this->n_block_cols(); ++i)
+  if (block_column_indices[0].size() < n_cols)
+    for (size_type i = 0; i < this->n_block_cols(); ++i)
       block_column_indices[i].resize(n_cols);
 
   // Reset the number of added elements
   // in each block to zero.
-  for(size_type i = 0; i < this->n_block_cols(); ++i)
+  for (size_type i = 0; i < this->n_block_cols(); ++i)
     counter_within_block[i] = 0;
 
   // Go through the column indices to
@@ -842,7 +842,7 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
   // is stored contiguously (in fact,
   // indices will be intermixed when it
   // comes from an element matrix).
-  for(ForwardIterator it = begin; it != end; ++it)
+  for (ForwardIterator it = begin; it != end; ++it)
     {
       const size_type col = *it;
 
@@ -858,7 +858,7 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
   // If in debug mode, do a check whether
   // the right length has been obtained.
   size_type length = 0;
-  for(size_type i = 0; i < this->n_block_cols(); ++i)
+  for (size_type i = 0; i < this->n_block_cols(); ++i)
     length += counter_within_block[i];
   Assert(length == n_cols, ExcInternalError());
 #endif
@@ -870,9 +870,9 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
   // the individual blocks!
   const std::pair<size_type, size_type> row_index
     = this->row_indices.global_to_local(row);
-  for(size_type block_col = 0; block_col < n_block_cols(); ++block_col)
+  for (size_type block_col = 0; block_col < n_block_cols(); ++block_col)
     {
-      if(counter_within_block[block_col] == 0)
+      if (counter_within_block[block_col] == 0)
         continue;
       sub_objects[row_index.first][block_col]->add_entries(
         row_index.second,
@@ -908,7 +908,7 @@ BlockSparsityPatternBase<SparsityPatternType>::row_length(
 
   unsigned int c = 0;
 
-  for(size_type b = 0; b < rows; ++b)
+  for (size_type b = 0; b < rows; ++b)
     c += sub_objects[row_index.first][b]->row_length(row_index.second);
 
   return c;
@@ -940,11 +940,11 @@ BlockDynamicSparsityPattern::column_number(const size_type    row,
 
   size_type c             = 0;
   size_type block_columns = 0; //sum of n_cols for all blocks to the left
-  for(unsigned int b = 0; b < columns; ++b)
+  for (unsigned int b = 0; b < columns; ++b)
     {
       unsigned int rowlen
         = sub_objects[row_index.first][b]->row_length(row_index.second);
-      if(index < c + rowlen)
+      if (index < c + rowlen)
         return block_columns
                + sub_objects[row_index.first][b]->column_number(
                    row_index.second, index - c);

@@ -50,7 +50,8 @@ public:
   {
     typename DataOut<dim>::active_cell_iterator cell
       = this->dofs->begin_active();
-    while((cell != this->dofs->end()) && (cell->subdomain_id() != subdomain_id))
+    while ((cell != this->dofs->end())
+           && (cell->subdomain_id() != subdomain_id))
       ++cell;
 
     return cell;
@@ -59,7 +60,7 @@ public:
   virtual typename DataOut<dim>::cell_iterator
   next_cell(const typename DataOut<dim>::cell_iterator& old_cell)
   {
-    if(old_cell != this->dofs->end())
+    if (old_cell != this->dofs->end())
       {
         const IteratorFilters::SubdomainEqualTo predicate(subdomain_id);
 
@@ -83,7 +84,7 @@ check()
   tria.refine_global(1);
 
   Vector<double> cell_data(4);
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     cell_data(i) = i * 1.0;
 
   // this should skip the first cell

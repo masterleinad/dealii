@@ -30,34 +30,34 @@ test(unsigned int variant)
   rhs = 1.;
 
   FullMatrix<number> matrix(n, n);
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < n; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       matrix(i, j) = random_value<double>(-.1, .1);
 
   // put diagonal entries of different strengths. these are very challenging
   // for GMRES and will usually take a lot of iterations until the Krylov
   // subspace is complete enough
-  if(variant == 0)
-    for(unsigned int i = 0; i < n; ++i)
+  if (variant == 0)
+    for (unsigned int i = 0; i < n; ++i)
       matrix(i, i) = (i + 1);
-  else if(variant == 1)
-    for(unsigned int i = 0; i < n; ++i)
+  else if (variant == 1)
+    for (unsigned int i = 0; i < n; ++i)
       matrix(i, i) = (i + 1) * (i + 1) * (i + 1) * (i + 1);
-  else if(variant == 2)
-    for(unsigned int i = 0; i < n; ++i)
+  else if (variant == 2)
+    for (unsigned int i = 0; i < n; ++i)
       matrix(i, i) = 1e10 * (i + 1);
-  else if(variant == 3)
-    for(unsigned int i = 0; i < n; ++i)
+  else if (variant == 3)
+    for (unsigned int i = 0; i < n; ++i)
       matrix(i, i) = 1e10 * (i + 1) * (i + 1) * (i + 1) * (i + 1);
-  else if(variant == 4)
-    for(unsigned int i = 0; i < n; ++i)
+  else if (variant == 4)
+    for (unsigned int i = 0; i < n; ++i)
       matrix(i, i) = 1e30 * (i + 1);
-  else if(variant == 5)
-    for(unsigned int i = 0; i < n; ++i)
+  else if (variant == 5)
+    for (unsigned int i = 0; i < n; ++i)
       matrix(i, i) = 1e30 * (i + 1) * (i + 1) * (i + 1) * (i + 1);
   else
     Assert(false, ExcMessage("Invalid variant"));
-  if(std::is_same<number, float>::value == true)
+  if (std::is_same<number, float>::value == true)
     Assert(variant < 4, ExcMessage("Invalid_variant"));
 
   deallog.push(Utilities::int_to_string(variant, 1));

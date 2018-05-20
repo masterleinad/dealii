@@ -34,7 +34,7 @@ test(unsigned int ref = 1)
   deallog << "Testing dim=" << dim << ", spacedim=" << spacedim << std::endl;
 
   Point<spacedim> center;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     center[i] = .25;
 
   double radius = center.norm();
@@ -46,12 +46,12 @@ test(unsigned int ref = 1)
 
   tria.refine_global(1);
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
-    if(dim < spacedim && cell->center().distance(center) < radius)
+  for (cell = tria.begin_active(); cell != tria.end(); ++cell)
+    if (dim < spacedim && cell->center().distance(center) < radius)
       cell->set_all_manifold_ids(1);
     else
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(cell->face(f)->center().distance(center) < radius)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (cell->face(f)->center().distance(center) < radius)
           cell->face(f)->set_all_manifold_ids(1);
 
   tria.set_manifold(1, boundary);

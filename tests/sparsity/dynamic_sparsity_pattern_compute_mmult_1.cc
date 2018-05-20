@@ -44,39 +44,39 @@ test()
   SparsityPattern left, right;
 
   // add manually entries to pattern
-  for(unsigned int i = 0; i < M; i += m_entries)
-    for(unsigned int j = 0; j < N; j += n_entries)
+  for (unsigned int i = 0; i < M; i += m_entries)
+    for (unsigned int j = 0; j < N; j += n_entries)
       dyn_left.add(i, j);
   // add manually entries to pattern
-  for(unsigned int i = 0; i < N; i += n_entries)
-    for(unsigned int j = 0; j < O; j += o_entries)
+  for (unsigned int i = 0; i < N; i += n_entries)
+    for (unsigned int j = 0; j < O; j += o_entries)
       dyn_right.add(i, j);
   // copy DynamicSparsityPattern to SparsityPattern
   left.copy_from(dyn_left);
   right.copy_from(dyn_right);
   // test DynamicSparsityPattern and DynamicSparsityPattern
   out.compute_mmult_pattern(dyn_left, dyn_right);
-  for(unsigned int i = 0; i < M; i += m_entries)
-    for(unsigned int j = 0; j < O; j += o_entries)
-      if(!out.exists(i, j))
+  for (unsigned int i = 0; i < M; i += m_entries)
+    for (unsigned int j = 0; j < O; j += o_entries)
+      if (!out.exists(i, j))
         test_failed = true;
   // test SparsityPattern and DynamicSparsityPattern
   out.compute_mmult_pattern(left, dyn_right);
-  for(unsigned int i = 0; i < M; i += m_entries)
-    for(unsigned int j = 0; j < O; j += o_entries)
-      if(!out.exists(i, j))
+  for (unsigned int i = 0; i < M; i += m_entries)
+    for (unsigned int j = 0; j < O; j += o_entries)
+      if (!out.exists(i, j))
         test_failed = true;
   // test DynamicSparsityPattern and SparsityPattern
   out.compute_mmult_pattern(dyn_left, right);
-  for(unsigned int i = 0; i < M; i += m_entries)
-    for(unsigned int j = 0; j < O; j += o_entries)
-      if(!out.exists(i, j))
+  for (unsigned int i = 0; i < M; i += m_entries)
+    for (unsigned int j = 0; j < O; j += o_entries)
+      if (!out.exists(i, j))
         test_failed = true;
   // test SparsityPattern and SparsityPattern
   out.compute_mmult_pattern(left, right);
-  for(unsigned int i = 0; i < M; i += m_entries)
-    for(unsigned int j = 0; j < O; j += o_entries)
-      if(!out.exists(i, j))
+  for (unsigned int i = 0; i < M; i += m_entries)
+    for (unsigned int j = 0; j < O; j += o_entries)
+      if (!out.exists(i, j))
         test_failed = true;
 
   Assert(!test_failed, ExcInternalError());

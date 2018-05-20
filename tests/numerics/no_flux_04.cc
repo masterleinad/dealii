@@ -47,7 +47,7 @@ public:
   {
     Assert(v.size() == dim, ExcInternalError());
 
-    switch(dim)
+    switch (dim)
       {
         case 2:
           v(0) = p[0] + p[1];
@@ -89,8 +89,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   cm.distribute(v);
 
   // remove small entries
-  for(unsigned int i = 0; i < v.size(); ++i)
-    if(std::fabs(v(i)) < 1e-12)
+  for (unsigned int i = 0; i < v.size(); ++i)
+    if (std::fabs(v(i)) < 1e-12)
       v(i) = 0;
 
   DataOut<dim> data_out;
@@ -119,7 +119,7 @@ test_hyper_sphere()
 
   tr.refine_global(2);
 
-  for(unsigned int degree = 1; degree < 6 - dim; ++degree)
+  for (unsigned int degree = 1; degree < 6 - dim; ++degree)
     {
       FESystem<dim> fe(FE_Q<dim>(QIterated<1>(QTrapez<1>(), degree)), dim);
       test(tr, fe);

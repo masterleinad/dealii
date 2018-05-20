@@ -79,11 +79,11 @@ test()
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                  endc = dof.end();
   unsigned int counter                                = 0;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j, ++counter)
-          if(counter % 42 == 0)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < fe.dofs_per_cell; ++j, ++counter)
+          if (counter % 42 == 0)
             local_mat(i, j) = 0;
           else
             local_mat(i, j) = random_value<double>();

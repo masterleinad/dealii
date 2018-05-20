@@ -53,7 +53,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       values(d) = value(p, d);
   }
 };
@@ -63,26 +63,26 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
   // of one Q1 and one Q2 element
   hp::FECollection<dim> element;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for (unsigned int i = 1; i < 7 - dim; ++i)
     element.push_back(FE_RaviartThomas<dim>(i - 1));
   hp::DoFHandler<dim> dof(tr);
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % element.size());
 
   dof.distribute_dofs(element);
@@ -92,17 +92,17 @@ check()
   // formula suited to the elements
   // we have here
   hp::MappingCollection<dim> mapping;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for (unsigned int i = 1; i < 7 - dim; ++i)
     mapping.push_back(MappingQ<dim>(i + 1));
 
   hp::QCollection<dim - 1> quadrature;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for (unsigned int i = 1; i < 7 - dim; ++i)
     quadrature.push_back(QGauss<dim - 1>(3 + i));
 
   Vector<double> rhs(dof.n_dofs());
   VectorTools::create_boundary_right_hand_side(
     dof, quadrature, MySquareFunction<dim>(), rhs);
-  for(unsigned int i = 0; i < rhs.size(); ++i)
+  for (unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

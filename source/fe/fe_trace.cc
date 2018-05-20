@@ -57,7 +57,7 @@ FE_TraceQ<dim, spacedim>::FE_TraceQ(const unsigned int degree)
   // values to FE_TraceQ). Note that we simply take the points of fe_q but
   // skip the last ones which are associated with the interior of FE_Q.
   this->unit_support_points.resize(this->dofs_per_cell);
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
     this->unit_support_points[i] = fe_q.get_unit_support_points()[i];
 
   // Initialize constraint matrices
@@ -110,7 +110,7 @@ std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_TraceQ<dim, spacedim>::get_constant_modes() const
 {
   Table<2, bool> constant_modes(1, this->dofs_per_cell);
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
     constant_modes(0, i) = true;
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(
     constant_modes, std::vector<unsigned int>(1, 0));
@@ -128,7 +128,7 @@ FE_TraceQ<dim, spacedim>::
   AssertDimension(support_point_values.size(), nodal_values.size());
   AssertDimension(this->dofs_per_cell, nodal_values.size());
 
-  for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
     {
       AssertDimension(support_point_values[i].size(), 1);
 
@@ -147,7 +147,7 @@ FE_TraceQ<dim, spacedim>::get_dpo_vector(const unsigned int deg)
   std::vector<unsigned int> dpo(dim + 1, 1U);
   dpo[dim] = 0;
   dpo[0]   = 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     dpo[i] = dpo[i - 1] * (deg - 1);
   return dpo;
 }
@@ -164,20 +164,20 @@ FiniteElementDomination::Domination
 FE_TraceQ<dim, spacedim>::compare_for_face_domination(
   const FiniteElement<dim, spacedim>& fe_other) const
 {
-  if(const FE_TraceQ<dim, spacedim>* fe_q_other
-     = dynamic_cast<const FE_TraceQ<dim, spacedim>*>(&fe_other))
+  if (const FE_TraceQ<dim, spacedim>* fe_q_other
+      = dynamic_cast<const FE_TraceQ<dim, spacedim>*>(&fe_other))
     {
-      if(this->degree < fe_q_other->degree)
+      if (this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
-      else if(this->degree == fe_q_other->degree)
+      else if (this->degree == fe_q_other->degree)
         return FiniteElementDomination::either_element_can_dominate;
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if (const FE_Nothing<dim>* fe_nothing
+           = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
     {
-      if(fe_nothing->is_dominating())
+      if (fe_nothing->is_dominating())
         {
           return FiniteElementDomination::other_element_dominates;
         }
@@ -218,13 +218,13 @@ FE_TraceQ<dim, spacedim>::get_subface_interpolation_matrix(
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_face));
 
   // see if source is a FaceQ element
-  if(const FE_TraceQ<dim, spacedim>* source_fe
-     = dynamic_cast<const FE_TraceQ<dim, spacedim>*>(&x_source_fe))
+  if (const FE_TraceQ<dim, spacedim>* source_fe
+      = dynamic_cast<const FE_TraceQ<dim, spacedim>*>(&x_source_fe))
     {
       fe_q.get_subface_interpolation_matrix(
         source_fe->fe_q, subface, interpolation_matrix);
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe) != nullptr)
     {
       // nothing to do here, the FE_Nothing has no degrees of freedom anyway
     }

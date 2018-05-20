@@ -55,10 +55,10 @@ test()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; cell++)
+  for (; cell != endc; cell++)
     {
       Point<dim> center = cell->center();
-      if(std::sqrt(center.square()) < 0.25)
+      if (std::sqrt(center.square()) < 0.25)
         cell->set_active_fe_index(1);
       else
         cell->set_active_fe_index(0);

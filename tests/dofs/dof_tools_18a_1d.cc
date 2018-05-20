@@ -59,9 +59,9 @@ check_this(const DoFHandler<dim>& dof_handler)
   // pattern (if we write out the
   // whole pattern, the output file
   // would be in the range of 40 MB)
-  for(unsigned int l = 0; l < sp.n_rows(); ++l)
+  for (unsigned int l = 0; l < sp.n_rows(); ++l)
     {
-      for(unsigned int c = 0; c < sp.row_length(l); ++c)
+      for (unsigned int c = 0; c < sp.row_length(l); ++c)
         deallog << sp.column_number(l, c) << " ";
       deallog << std::endl;
     }
@@ -72,7 +72,7 @@ check_this(const DoFHandler<dim>& dof_handler)
           << sp.n_nonzero_elements() << std::endl;
 
   unsigned int hash = 0;
-  for(unsigned int l = 0; l < sp.n_rows(); ++l)
+  for (unsigned int l = 0; l < sp.n_rows(); ++l)
     hash
       += l
          * (sp.row_length(l) + (sp.begin(l) - sp.begin())
@@ -91,9 +91,9 @@ check_this()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  for(Triangulation<dim>::active_cell_iterator c = tr.begin_active(2);
-      c != tr.end_active(2);
-      ++c)
+  for (Triangulation<dim>::active_cell_iterator c = tr.begin_active(2);
+       c != tr.end_active(2);
+       ++c)
     c->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 
@@ -117,7 +117,7 @@ main()
       check_this();
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -130,7 +130,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

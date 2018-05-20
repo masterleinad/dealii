@@ -34,21 +34,21 @@ namespace hp
     // X is guaranteed to be in the subset of {X,Y1...YN} of weakest dominating
     // elements. Since we only guarantee that the function returns one of them,
     // we may as well return X right away.
-    if(fes.size() == 1)
+    if (fes.size() == 1)
       return *fes.begin();
 
     const hp::FECollection<dim, spacedim>& fe_collection = *this;
     std::set<unsigned int>                 candidate_fes;
 
     // first loop over all FEs and check which can dominate those given in @p fes:
-    for(unsigned int cur_fe = 0; cur_fe < fe_collection.size(); cur_fe++)
+    for (unsigned int cur_fe = 0; cur_fe < fe_collection.size(); cur_fe++)
       {
         FiniteElementDomination::Domination domination
           = FiniteElementDomination::no_requirements;
         // check if cur_fe can dominate all FEs in @p fes:
-        for(std::set<unsigned int>::const_iterator it = fes.begin();
-            it != fes.end();
-            ++it)
+        for (std::set<unsigned int>::const_iterator it = fes.begin();
+             it != fes.end();
+             ++it)
           {
             Assert(
               *it < fe_collection.size(),
@@ -59,7 +59,7 @@ namespace hp
           }
 
         // if we found dominating element, keep them in a set.
-        if(
+        if (
           domination == FiniteElementDomination::this_element_dominates
           || domination
                == FiniteElementDomination::
@@ -69,29 +69,29 @@ namespace hp
 
     // among the ones we found, pick one that is dominated by all others and
     // thus should represent the largest FE space.
-    if(candidate_fes.size() == 1)
+    if (candidate_fes.size() == 1)
       {
         return *candidate_fes.begin();
       }
     else
-      for(std::set<unsigned int>::const_iterator it = candidate_fes.begin();
-          it != candidate_fes.end();
-          ++it)
+      for (std::set<unsigned int>::const_iterator it = candidate_fes.begin();
+           it != candidate_fes.end();
+           ++it)
         {
           FiniteElementDomination::Domination domination
             = FiniteElementDomination::no_requirements;
-          for(std::set<unsigned int>::const_iterator ito
-              = candidate_fes.begin();
-              ito != candidate_fes.end();
-              ++ito)
-            if(it != ito)
+          for (std::set<unsigned int>::const_iterator ito
+               = candidate_fes.begin();
+               ito != candidate_fes.end();
+               ++ito)
+            if (it != ito)
               {
                 domination = domination
                              & fe_collection[*it].compare_for_face_domination(
                                  fe_collection[*ito]);
               }
 
-          if(
+          if (
             domination == FiniteElementDomination::other_element_dominates
             || domination
                  == FiniteElementDomination::
@@ -116,7 +116,7 @@ namespace hp
     Assert(fes.size() > 0,
            ExcMessage("Need to pass at least one finite element."));
 
-    for(unsigned int i = 0; i < fes.size(); ++i)
+    for (unsigned int i = 0; i < fes.size(); ++i)
       push_back(*fes[i]);
   }
 
@@ -130,7 +130,7 @@ namespace hp
     // the first element, since all the other
     // elements have already passed the test
     // against the first element
-    if(finite_elements.size() != 0)
+    if (finite_elements.size() != 0)
       Assert(new_fe.n_components() == finite_elements[0]->n_components(),
              ExcMessage("All elements inside a collection need to have the "
                         "same number of vector components!"));
@@ -151,7 +151,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(scalar), ExcInternalError());
 
     return mask;
@@ -170,7 +170,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(vector), ExcInternalError());
 
     return mask;
@@ -189,7 +189,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(sym_tensor), ExcInternalError());
 
     return mask;
@@ -207,7 +207,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].component_mask(block_mask),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -228,7 +228,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(scalar),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -249,7 +249,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(vector),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -270,7 +270,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(sym_tensor),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -291,7 +291,7 @@ namespace hp
 
     // but then also verify that the other elements of the collection
     // would return the same mask
-    for(unsigned int c = 1; c < size(); ++c)
+    for (unsigned int c = 1; c < size(); ++c)
       Assert(mask == (*this)[c].block_mask(component_mask),
              ExcMessage("Not all elements of this collection agree on what "
                         "the appropriate mask should be."));
@@ -306,7 +306,7 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     const unsigned int nb = finite_elements[0]->n_blocks();
-    for(unsigned int i = 1; i < finite_elements.size(); ++i)
+    for (unsigned int i = 1; i < finite_elements.size(); ++i)
       Assert(finite_elements[i]->n_blocks() == nb,
              ExcMessage("Not all finite elements in this collection have "
                         "the same number of components."));
@@ -321,7 +321,7 @@ namespace hp
     std::size_t mem
       = (sizeof(*this)
          + MemoryConsumption::memory_consumption(finite_elements));
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
       mem += finite_elements[i]->memory_consumption();
 
     return mem;

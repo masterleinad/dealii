@@ -24,10 +24,10 @@ void
 test()
 {
   Tensor<4, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           t[i][j][k][l] = ((i == k) && (j == l) ? 1 : 0);
 
   Tensor<2, dim> a, b;
@@ -35,12 +35,12 @@ test()
   a[1][1] = 2;
   a[0][1] = 3;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         double tmp_ij = 0;
-        for(unsigned int k = 0; k < dim; ++k)
-          for(unsigned int l = 0; l < dim; ++l)
+        for (unsigned int k = 0; k < dim; ++k)
+          for (unsigned int l = 0; l < dim; ++l)
             {
               deallog << i << ' ' << j << ' ' << k << ' ' << l << ": "
                       << t[i][j][k][l] << ' ' << a[k][l] << std::endl;
@@ -55,12 +55,12 @@ test()
   // tensors etc
   t *= 2;
   b.clear();
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         double tmp_ij = 0;
-        for(unsigned int k = 0; k < dim; ++k)
-          for(unsigned int l = 0; l < dim; ++l)
+        for (unsigned int k = 0; k < dim; ++k)
+          for (unsigned int l = 0; l < dim; ++l)
             tmp_ij += t[i][j][k][l] * a[k][l];
         b[i][j] = tmp_ij;
       }

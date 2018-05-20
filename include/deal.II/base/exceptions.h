@@ -1124,7 +1124,7 @@ namespace deal_II_exceptions
       // Fill the fields of the exception object
       e.set_fields(file, line, function, cond, exc_name);
 
-      switch(handling)
+      switch (handling)
         {
           case abort_on_exception:
             dealii::deal_II_exceptions::internals::abort(e);
@@ -1207,7 +1207,7 @@ namespace deal_II_exceptions
 #  ifdef DEAL_II_HAVE_BUILTIN_EXPECT
 #    define Assert(cond, exc)                                            \
       {                                                                  \
-        if(__builtin_expect(!(cond), false))                             \
+        if (__builtin_expect(!(cond), false))                            \
           ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
             ::dealii::deal_II_exceptions::internals::abort_on_exception, \
             __FILE__,                                                    \
@@ -1220,7 +1220,7 @@ namespace deal_II_exceptions
 #  else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #    define Assert(cond, exc)                                            \
       {                                                                  \
-        if(!(cond))                                                      \
+        if (!(cond))                                                     \
           ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
             ::dealii::deal_II_exceptions::internals::abort_on_exception, \
             __FILE__,                                                    \
@@ -1256,7 +1256,7 @@ namespace deal_II_exceptions
 #  ifdef DEAL_II_HAVE_BUILTIN_EXPECT
 #    define AssertNothrow(cond, exc)                                    \
       {                                                                 \
-        if(__builtin_expect(!(cond), false))                            \
+        if (__builtin_expect(!(cond), false))                           \
           ::dealii::deal_II_exceptions::internals::issue_error_nothrow( \
             ::dealii::deal_II_exceptions::internals::                   \
               abort_nothrow_on_exception,                               \
@@ -1270,7 +1270,7 @@ namespace deal_II_exceptions
 #  else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #    define AssertNothrow(cond, exc)                                    \
       {                                                                 \
-        if(!(cond))                                                     \
+        if (!(cond))                                                    \
           ::dealii::deal_II_exceptions::internals::issue_error_nothrow( \
             ::dealii::deal_II_exceptions::internals::                   \
               abort_nothrow_on_exception,                               \
@@ -1306,7 +1306,7 @@ namespace deal_II_exceptions
 #ifdef DEAL_II_HAVE_BUILTIN_EXPECT
 #  define AssertThrow(cond, exc)                                       \
     {                                                                  \
-      if(__builtin_expect(!(cond), false))                             \
+      if (__builtin_expect(!(cond), false))                            \
         ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
           ::dealii::deal_II_exceptions::internals::throw_on_exception, \
           __FILE__,                                                    \
@@ -1319,7 +1319,7 @@ namespace deal_II_exceptions
 #else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #  define AssertThrow(cond, exc)                                       \
     {                                                                  \
-      if(!(cond))                                                      \
+      if (!(cond))                                                     \
         ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
           ::dealii::deal_II_exceptions::internals::throw_on_exception, \
           __FILE__,                                                    \
@@ -1353,7 +1353,7 @@ namespace deal_II_exceptions
  */
 #define AssertVectorVectorDimension(vec, dim1, dim2) \
   AssertDimension((vec).size(), (dim1));             \
-  for(unsigned int i = 0; i < dim1; ++i)             \
+  for (unsigned int i = 0; i < dim1; ++i)            \
     {                                                \
       AssertDimension((vec)[i].size(), (dim2));      \
     }

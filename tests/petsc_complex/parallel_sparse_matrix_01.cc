@@ -116,15 +116,15 @@ test(const unsigned int poly_degree = 1)
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           cell_mass_matrix = PetscScalar();
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
                   cell_mass_matrix(i, j)
                     += (fe_values.shape_value(i, q_point)
@@ -140,15 +140,15 @@ test(const unsigned int poly_degree = 1)
     mass_matrix.compress(VectorOperation::add);
   }
 
-  for(unsigned int i = 0; i < locally_owned_dofs.n_elements(); i++)
+  for (unsigned int i = 0; i < locally_owned_dofs.n_elements(); i++)
     {
       double re = 0, im = 0;
-      if(i % 2)
+      if (i % 2)
         {
           re = 1.0 * i;
           im = 1.0 * (this_mpi_process + 1);
         }
-      else if(i % 3)
+      else if (i % 3)
         {
           re = 0.0;
           im = -1.0 * (this_mpi_process + 1);
@@ -195,7 +195,7 @@ main(int argc, char* argv[])
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       test<2>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -209,7 +209,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -86,8 +86,8 @@ test()
     FE_Q<dim>       dummy_fe(1);
     FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
-    for(cell = tr.begin_active(); cell != tr.end(); ++cell)
-      if(cell->is_locally_owned())
+    for (cell = tr.begin_active(); cell != tr.end(); ++cell)
+      if (cell->is_locally_owned())
         {
           typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                   &dof_handler);
@@ -98,7 +98,7 @@ test()
           {
             std::vector<std::shared_ptr<MyQData>> qpd
               = data_storage.get_data(cell);
-            for(unsigned int q = 0; q < rhs.size(); q++)
+            for (unsigned int q = 0; q < rhs.size(); q++)
               qpd[q]->value = my_func.value(q_points[q]);
           }
 
@@ -111,7 +111,7 @@ test()
           {
             std::vector<std::shared_ptr<MyQData>> qpd
               = data_storage.get_data(cell);
-            for(unsigned int q = 0; q < rhs.size(); q++)
+            for (unsigned int q = 0; q < rhs.size(); q++)
               AssertThrow(qpd[q]->value == default_value,
                           ExcWrongValue(qpd[q]->value,
                                         default_value,

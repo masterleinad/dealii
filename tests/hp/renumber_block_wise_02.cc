@@ -39,10 +39,10 @@ get_dofs(const hp::DoFHandler<dim>& dof)
 {
   std::vector<types::global_dof_index> local;
   std::vector<types::global_dof_index> global;
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     {
       local.resize(cell->get_fe().dofs_per_cell);
       cell->get_dof_indices(local);
@@ -85,23 +85,23 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   hp::DoFHandler<dim> dof(tr);
   {
     bool coin = false;
-    for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-        = dof.begin_active();
-        cell != dof.end();
-        ++cell)
+    for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+         = dof.begin_active();
+         cell != dof.end();
+         ++cell)
       {
         cell->set_active_fe_index(coin ? 0 : 1);
         coin = !coin;

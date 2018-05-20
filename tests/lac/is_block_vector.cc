@@ -40,7 +40,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       std::cerr << std::endl
                 << std::endl
@@ -53,7 +53,7 @@ main()
       // abort
       return 2;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

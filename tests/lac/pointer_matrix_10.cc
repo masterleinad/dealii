@@ -31,7 +31,7 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
 
   deallog << "Multiplying with all ones vector" << std::endl;
   Vector<number> V(A.n());
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for (unsigned int i = 0; i < V.size(); ++i)
     V(i) = 1;
 
   Vector<number> O(A.m());
@@ -48,7 +48,7 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 
@@ -63,7 +63,7 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
 
   deallog << "Multiplying with all ones vector" << std::endl;
   Vector<number> V_(B.n());
-  for(unsigned int i = 0; i < V_.size(); ++i)
+  for (unsigned int i = 0; i < V_.size(); ++i)
     V_(i) = 1;
 
   Vector<number> OU(B.m());
@@ -80,7 +80,7 @@ checkAssign(FullMatrix<number>& A, FullMatrix<number>& B)
   Assert(OU == OU_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < OU.size(); ++i)
+  for (unsigned int i = 0; i < OU.size(); ++i)
     deallog << OU(i) << '\t';
   deallog << std::endl;
 }

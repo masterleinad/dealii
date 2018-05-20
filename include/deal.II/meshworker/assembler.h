@@ -545,10 +545,10 @@ namespace MeshWorker
       const BlockVector<double>&                  local,
       const std::vector<types::global_dof_index>& dof)
     {
-      if(constraints == 0)
+      if (constraints == 0)
         {
-          for(unsigned int b = 0; b < local.n_blocks(); ++b)
-            for(unsigned int j = 0; j < local.block(b).size(); ++j)
+          for (unsigned int b = 0; b < local.n_blocks(); ++b)
+            for (unsigned int j = 0; j < local.block(b).size(); ++j)
               {
                 // The coordinates of
                 // the current entry in
@@ -572,7 +572,7 @@ namespace MeshWorker
     inline void
     ResidualLocalBlocksToGlobalBlocks<VectorType>::assemble(const DOFINFO& info)
     {
-      for(unsigned int i = 0; i < residuals.size(); ++i)
+      for (unsigned int i = 0; i < residuals.size(); ++i)
         assemble(
           *(residuals.entry<VectorType>(i)), info.vector(i), info.indices);
     }
@@ -584,7 +584,7 @@ namespace MeshWorker
       const DOFINFO& info1,
       const DOFINFO& info2)
     {
-      for(unsigned int i = 0; i < residuals.size(); ++i)
+      for (unsigned int i = 0; i < residuals.size(); ++i)
         {
           assemble(
             *(residuals.entry<VectorType>(i)), info1.vector(i), info1.indices);
@@ -639,11 +639,11 @@ namespace MeshWorker
       const std::vector<types::global_dof_index>& dof1,
       const std::vector<types::global_dof_index>& dof2)
     {
-      if(constraints == nullptr)
+      if (constraints == nullptr)
         {
-          for(unsigned int j = 0; j < local.n_rows(); ++j)
-            for(unsigned int k = 0; k < local.n_cols(); ++k)
-              if(std::fabs(local(j, k)) >= threshold)
+          for (unsigned int j = 0; j < local.n_rows(); ++j)
+            for (unsigned int k = 0; k < local.n_cols(); ++k)
+              if (std::fabs(local(j, k)) >= threshold)
                 {
                   // The coordinates of
                   // the current entry in
@@ -666,12 +666,12 @@ namespace MeshWorker
           const BlockIndices&                  bi = this->block_info->local();
           std::vector<types::global_dof_index> sliced_row_indices(
             bi.block_size(block_row));
-          for(unsigned int i = 0; i < sliced_row_indices.size(); ++i)
+          for (unsigned int i = 0; i < sliced_row_indices.size(); ++i)
             sliced_row_indices[i] = dof1[bi.block_start(block_row) + i];
 
           std::vector<types::global_dof_index> sliced_col_indices(
             bi.block_size(block_col));
-          for(unsigned int i = 0; i < sliced_col_indices.size(); ++i)
+          for (unsigned int i = 0; i < sliced_col_indices.size(); ++i)
             sliced_col_indices[i] = dof2[bi.block_start(block_col) + i];
 
           constraints->distribute_local_to_global(
@@ -685,7 +685,7 @@ namespace MeshWorker
     MatrixLocalBlocksToGlobalBlocks<MatrixType, number>::assemble(
       const DOFINFO& info)
     {
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for (unsigned int i = 0; i < matrices->size(); ++i)
         {
           // Row and column index of
           // the block we are dealing with
@@ -708,7 +708,7 @@ namespace MeshWorker
       const DOFINFO& info1,
       const DOFINFO& info2)
     {
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for (unsigned int i = 0; i < matrices->size(); ++i)
         {
           // Row and column index of
           // the block we are dealing with
@@ -811,9 +811,9 @@ namespace MeshWorker
       const unsigned int                          level2,
       bool                                        transpose)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
-          if(std::fabs(local(j, k)) >= threshold)
+      for (unsigned int j = 0; j < local.n_rows(); ++j)
+        for (unsigned int k = 0; k < local.n_cols(); ++k)
+          if (std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
               // the current entry in
@@ -843,32 +843,32 @@ namespace MeshWorker
                                              .global_to_local(dof2[kcell])
                                              .second;
 
-              if(mg_constrained_dofs == 0)
+              if (mg_constrained_dofs == 0)
                 {
-                  if(transpose)
+                  if (transpose)
                     global.add(kglobal, jglobal, local(j, k));
                   else
                     global.add(jglobal, kglobal, local(j, k));
                 }
               else
                 {
-                  if(!mg_constrained_dofs->at_refinement_edge(level1, jglobal)
-                     && !mg_constrained_dofs->at_refinement_edge(level2,
-                                                                 kglobal))
+                  if (!mg_constrained_dofs->at_refinement_edge(level1, jglobal)
+                      && !mg_constrained_dofs->at_refinement_edge(level2,
+                                                                  kglobal))
                     {
-                      if(mg_constrained_dofs->set_boundary_values())
+                      if (mg_constrained_dofs->set_boundary_values())
                         {
-                          if((!mg_constrained_dofs->is_boundary_index(level1,
-                                                                      jglobal)
-                              && !mg_constrained_dofs->is_boundary_index(
-                                   level2, kglobal))
-                             || (mg_constrained_dofs->is_boundary_index(level1,
-                                                                        jglobal)
-                                 && mg_constrained_dofs->is_boundary_index(
-                                      level2, kglobal)
-                                 && jglobal == kglobal))
+                          if ((!mg_constrained_dofs->is_boundary_index(level1,
+                                                                       jglobal)
+                               && !mg_constrained_dofs->is_boundary_index(
+                                    level2, kglobal))
+                              || (mg_constrained_dofs->is_boundary_index(
+                                    level1, jglobal)
+                                  && mg_constrained_dofs->is_boundary_index(
+                                       level2, kglobal)
+                                  && jglobal == kglobal))
                             {
-                              if(transpose)
+                              if (transpose)
                                 global.add(kglobal, jglobal, local(j, k));
                               else
                                 global.add(jglobal, kglobal, local(j, k));
@@ -876,7 +876,7 @@ namespace MeshWorker
                         }
                       else
                         {
-                          if(transpose)
+                          if (transpose)
                             global.add(kglobal, jglobal, local(j, k));
                           else
                             global.add(jglobal, kglobal, local(j, k));
@@ -898,9 +898,9 @@ namespace MeshWorker
       const unsigned int                          level1,
       const unsigned int                          level2)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
-          if(std::fabs(local(j, k)) >= threshold)
+      for (unsigned int j = 0; j < local.n_rows(); ++j)
+        for (unsigned int k = 0; k < local.n_cols(); ++k)
+          if (std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
               // the current entry in
@@ -930,19 +930,19 @@ namespace MeshWorker
                                              .global_to_local(dof2[kcell])
                                              .second;
 
-              if(mg_constrained_dofs == 0)
+              if (mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(j, k));
               else
                 {
-                  if(!mg_constrained_dofs->non_refinement_edge_index(level1,
-                                                                     jglobal)
-                     && !mg_constrained_dofs->non_refinement_edge_index(
-                          level2, kglobal))
+                  if (!mg_constrained_dofs->non_refinement_edge_index(level1,
+                                                                      jglobal)
+                      && !mg_constrained_dofs->non_refinement_edge_index(
+                           level2, kglobal))
                     {
-                      if(!mg_constrained_dofs->at_refinement_edge(level1,
-                                                                  jglobal)
-                         && !mg_constrained_dofs->at_refinement_edge(level2,
-                                                                     kglobal))
+                      if (!mg_constrained_dofs->at_refinement_edge(level1,
+                                                                   jglobal)
+                          && !mg_constrained_dofs->at_refinement_edge(level2,
+                                                                      kglobal))
                         global.add(jglobal, kglobal, local(j, k));
                     }
                 }
@@ -961,9 +961,9 @@ namespace MeshWorker
       const unsigned int                          level1,
       const unsigned int                          level2)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
-          if(std::fabs(local(j, k)) >= threshold)
+      for (unsigned int j = 0; j < local.n_rows(); ++j)
+        for (unsigned int k = 0; k < local.n_cols(); ++k)
+          if (std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
               // the current entry in
@@ -993,19 +993,19 @@ namespace MeshWorker
                                              .global_to_local(dof2[kcell])
                                              .second;
 
-              if(mg_constrained_dofs == 0)
+              if (mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(j, k));
               else
                 {
-                  if(!mg_constrained_dofs->non_refinement_edge_index(level1,
-                                                                     jglobal)
-                     && !mg_constrained_dofs->non_refinement_edge_index(
-                          level2, kglobal))
+                  if (!mg_constrained_dofs->non_refinement_edge_index(level1,
+                                                                      jglobal)
+                      && !mg_constrained_dofs->non_refinement_edge_index(
+                           level2, kglobal))
                     {
-                      if(!mg_constrained_dofs->at_refinement_edge(level1,
-                                                                  jglobal)
-                         && !mg_constrained_dofs->at_refinement_edge(level2,
-                                                                     kglobal))
+                      if (!mg_constrained_dofs->at_refinement_edge(level1,
+                                                                   jglobal)
+                          && !mg_constrained_dofs->at_refinement_edge(level2,
+                                                                      kglobal))
                         global.add(jglobal, kglobal, local(j, k));
                     }
                 }
@@ -1024,9 +1024,9 @@ namespace MeshWorker
       const unsigned int                          level1,
       const unsigned int                          level2)
     {
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
-          if(std::fabs(local(k, j)) >= threshold)
+      for (unsigned int j = 0; j < local.n_rows(); ++j)
+        for (unsigned int k = 0; k < local.n_cols(); ++k)
+          if (std::fabs(local(k, j)) >= threshold)
             {
               // The coordinates of
               // the current entry in
@@ -1056,19 +1056,19 @@ namespace MeshWorker
                                              .global_to_local(dof2[kcell])
                                              .second;
 
-              if(mg_constrained_dofs == 0)
+              if (mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(k, j));
               else
                 {
-                  if(!mg_constrained_dofs->non_refinement_edge_index(level1,
-                                                                     jglobal)
-                     && !mg_constrained_dofs->non_refinement_edge_index(
-                          level2, kglobal))
+                  if (!mg_constrained_dofs->non_refinement_edge_index(level1,
+                                                                      jglobal)
+                      && !mg_constrained_dofs->non_refinement_edge_index(
+                           level2, kglobal))
                     {
-                      if(!mg_constrained_dofs->at_refinement_edge(level1,
-                                                                  jglobal)
-                         && !mg_constrained_dofs->at_refinement_edge(level2,
-                                                                     kglobal))
+                      if (!mg_constrained_dofs->at_refinement_edge(level1,
+                                                                   jglobal)
+                          && !mg_constrained_dofs->at_refinement_edge(level2,
+                                                                      kglobal))
                         global.add(jglobal, kglobal, local(k, j));
                     }
                 }
@@ -1090,9 +1090,9 @@ namespace MeshWorker
       //      AssertDimension(local.n(), dof1.size());
       //      AssertDimension(local.m(), dof2.size());
 
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
-          if(std::fabs(local(j, k)) >= threshold)
+      for (unsigned int j = 0; j < local.n_rows(); ++j)
+        for (unsigned int k = 0; k < local.n_cols(); ++k)
+          if (std::fabs(local(j, k)) >= threshold)
             {
               // The coordinates of
               // the current entry in
@@ -1122,25 +1122,25 @@ namespace MeshWorker
                                              .global_to_local(dof2[kcell])
                                              .second;
 
-              if(mg_constrained_dofs == 0)
+              if (mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(j, k));
               else
                 {
-                  if(mg_constrained_dofs->at_refinement_edge(level1, jglobal)
-                     && !mg_constrained_dofs->at_refinement_edge(level2,
-                                                                 kglobal))
+                  if (mg_constrained_dofs->at_refinement_edge(level1, jglobal)
+                      && !mg_constrained_dofs->at_refinement_edge(level2,
+                                                                  kglobal))
                     {
-                      if(mg_constrained_dofs->set_boundary_values())
+                      if (mg_constrained_dofs->set_boundary_values())
                         {
-                          if((!mg_constrained_dofs->is_boundary_index(level1,
-                                                                      jglobal)
-                              && !mg_constrained_dofs->is_boundary_index(
-                                   level2, kglobal))
-                             || (mg_constrained_dofs->is_boundary_index(level1,
-                                                                        jglobal)
-                                 && mg_constrained_dofs->is_boundary_index(
-                                      level2, kglobal)
-                                 && jglobal == kglobal))
+                          if ((!mg_constrained_dofs->is_boundary_index(level1,
+                                                                       jglobal)
+                               && !mg_constrained_dofs->is_boundary_index(
+                                    level2, kglobal))
+                              || (mg_constrained_dofs->is_boundary_index(
+                                    level1, jglobal)
+                                  && mg_constrained_dofs->is_boundary_index(
+                                       level2, kglobal)
+                                  && jglobal == kglobal))
                             global.add(jglobal, kglobal, local(j, k));
                         }
                       else
@@ -1165,9 +1165,9 @@ namespace MeshWorker
       //      AssertDimension(local.n(), dof1.size());
       //      AssertDimension(local.m(), dof2.size());
 
-      for(unsigned int j = 0; j < local.n_rows(); ++j)
-        for(unsigned int k = 0; k < local.n_cols(); ++k)
-          if(std::fabs(local(k, j)) >= threshold)
+      for (unsigned int j = 0; j < local.n_rows(); ++j)
+        for (unsigned int k = 0; k < local.n_cols(); ++k)
+          if (std::fabs(local(k, j)) >= threshold)
             {
               // The coordinates of
               // the current entry in
@@ -1197,25 +1197,25 @@ namespace MeshWorker
                                              .global_to_local(dof2[kcell])
                                              .second;
 
-              if(mg_constrained_dofs == 0)
+              if (mg_constrained_dofs == 0)
                 global.add(jglobal, kglobal, local(k, j));
               else
                 {
-                  if(mg_constrained_dofs->at_refinement_edge(level1, jglobal)
-                     && !mg_constrained_dofs->at_refinement_edge(level2,
-                                                                 kglobal))
+                  if (mg_constrained_dofs->at_refinement_edge(level1, jglobal)
+                      && !mg_constrained_dofs->at_refinement_edge(level2,
+                                                                  kglobal))
                     {
-                      if(mg_constrained_dofs->set_boundary_values())
+                      if (mg_constrained_dofs->set_boundary_values())
                         {
-                          if((!mg_constrained_dofs->is_boundary_index(level1,
-                                                                      jglobal)
-                              && !mg_constrained_dofs->is_boundary_index(
-                                   level2, kglobal))
-                             || (mg_constrained_dofs->is_boundary_index(level1,
-                                                                        jglobal)
-                                 && mg_constrained_dofs->is_boundary_index(
-                                      level2, kglobal)
-                                 && jglobal == kglobal))
+                          if ((!mg_constrained_dofs->is_boundary_index(level1,
+                                                                       jglobal)
+                               && !mg_constrained_dofs->is_boundary_index(
+                                    level2, kglobal))
+                              || (mg_constrained_dofs->is_boundary_index(
+                                    level1, jglobal)
+                                  && mg_constrained_dofs->is_boundary_index(
+                                       level2, kglobal)
+                                  && jglobal == kglobal))
                             global.add(jglobal, kglobal, local(k, j));
                         }
                       else
@@ -1233,7 +1233,7 @@ namespace MeshWorker
     {
       const unsigned int level = info.cell->level();
 
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for (unsigned int i = 0; i < matrices->size(); ++i)
         {
           // Row and column index of
           // the block we are dealing with
@@ -1248,9 +1248,9 @@ namespace MeshWorker
                    info.indices,
                    level,
                    level);
-          if(mg_constrained_dofs != 0)
+          if (mg_constrained_dofs != 0)
             {
-              if(interface_in != 0)
+              if (interface_in != 0)
                 assemble_in(interface_in->block(i)[level],
                             info.matrix(i, false).matrix,
                             row,
@@ -1259,7 +1259,7 @@ namespace MeshWorker
                             info.indices,
                             level,
                             level);
-              if(interface_out != 0)
+              if (interface_out != 0)
                 assemble_in(interface_out->block(i)[level],
                             info.matrix(i, false).matrix,
                             row,
@@ -1299,7 +1299,7 @@ namespace MeshWorker
       const unsigned int level1 = info1.cell->level();
       const unsigned int level2 = info2.cell->level();
 
-      for(unsigned int i = 0; i < matrices->size(); ++i)
+      for (unsigned int i = 0; i < matrices->size(); ++i)
         {
           MGLevelObject<MatrixBlock<MatrixType>>& o = matrices->block(i);
 
@@ -1308,9 +1308,9 @@ namespace MeshWorker
           const unsigned int row = o[level1].row;
           const unsigned int col = o[level1].column;
 
-          if(level1 == level2)
+          if (level1 == level2)
             {
-              if(mg_constrained_dofs == 0)
+              if (mg_constrained_dofs == 0)
                 {
                   assemble(o[level1].matrix,
                            info1.matrix(i, false).matrix,
@@ -1384,7 +1384,7 @@ namespace MeshWorker
           else
             {
               Assert(level1 > level2, ExcNotImplemented());
-              if(flux_up->size() != 0)
+              if (flux_up->size() != 0)
                 {
                   // Do not add M22,
                   // which is done by

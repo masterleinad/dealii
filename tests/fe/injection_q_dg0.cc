@@ -24,8 +24,8 @@ void
 test()
 {
   deallog << std::setprecision(10);
-  for(unsigned int i = 1; i < 4; ++i)
-    for(unsigned int j = i; j < 4; ++j)
+  for (unsigned int i = 1; i < 4; ++i)
+    for (unsigned int j = i; j < 4; ++j)
       {
         deallog << "inj " << i << " " << j << ":" << std::endl;
         do_check(FE_Q_DG0<dim>(QIterated<1>(QTrapez<1>(), i)),

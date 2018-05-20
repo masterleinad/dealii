@@ -58,7 +58,7 @@ generate_grid(Triangulation<dim>& tria)
   std::vector<unsigned int> sub_div;
 
   // Define a rectangular shape
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       p1(d) = 0;
       p2(d) = (d == 0) ? 2.0 : 1.0;
@@ -96,7 +96,7 @@ test_constraints(hp::FECollection<dim>& fe_coll)
     = dof_handler.begin_active(),
     endc               = dof_handler.end();
   unsigned int fe_indx = 0;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell->set_active_fe_index(fe_indx);
       ++fe_indx;

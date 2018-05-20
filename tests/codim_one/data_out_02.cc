@@ -53,7 +53,7 @@ main()
   dof_handler.distribute_dofs(fe);
   soln.reinit(dof_handler.n_dofs());
   soln = 0;
-  for(unsigned int i = 0; i < soln.size(); ++i)
+  for (unsigned int i = 0; i < soln.size(); ++i)
     soln(i) = i;
   DataOut<dim, DoFHandler<dim, dim + 1>> data_out;
   data_out.attach_dof_handler(dof_handler);

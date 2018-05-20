@@ -70,10 +70,10 @@ namespace Step18
   get_stress_strain_tensor(const double lambda, const double mu)
   {
     SymmetricTensor<4, dim> tmp;
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = 0; j < dim; ++j)
-        for(unsigned int k = 0; k < dim; ++k)
-          for(unsigned int l = 0; l < dim; ++l)
+    for (unsigned int i = 0; i < dim; ++i)
+      for (unsigned int j = 0; j < dim; ++j)
+        for (unsigned int k = 0; k < dim; ++k)
+          for (unsigned int l = 0; l < dim; ++l)
             tmp[i][j][k][l] = (((i == k) && (j == l) ? mu : 0.0)
                                + ((i == l) && (j == k) ? mu : 0.0)
                                + ((i == j) && (k == l) ? lambda : 0.0));
@@ -86,10 +86,10 @@ namespace Step18
              const unsigned int   q_point)
   {
     SymmetricTensor<2, dim> tmp;
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       tmp[i][i] = fe_values.shape_grad_component(shape_func, q_point, i)[i];
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = i + 1; j < dim; ++j)
+    for (unsigned int i = 0; i < dim; ++i)
+      for (unsigned int j = i + 1; j < dim; ++j)
         tmp[i][j]
           = (fe_values.shape_grad_component(shape_func, q_point, i)[j]
              + fe_values.shape_grad_component(shape_func, q_point, j)[i])
@@ -102,10 +102,10 @@ namespace Step18
   {
     Assert(grad.size() == dim, ExcInternalError());
     SymmetricTensor<2, dim> strain;
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       strain[i][i] = grad[i][i];
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = i + 1; j < dim; ++j)
+    for (unsigned int i = 0; i < dim; ++i)
+      for (unsigned int j = i + 1; j < dim; ++j)
         strain[i][j] = (grad[i][j] + grad[j][i]) / 2;
     return strain;
   }
@@ -126,7 +126,7 @@ namespace Step18
                         grad_u[1][0] - grad_u[0][1]);
     const double   tan_angle = std::sqrt(curl * curl);
     const double   angle     = std::atan(tan_angle);
-    if(angle < 1e-9)
+    if (angle < 1e-9)
       {
         static const double rotation[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
         static const Tensor<2, 3> rot(rotation);
@@ -240,7 +240,7 @@ namespace Step18
     const unsigned int n_points = points.size();
     Assert(value_list.size() == n_points,
            ExcDimensionMismatch(value_list.size(), n_points));
-    for(unsigned int p = 0; p < n_points; ++p)
+    for (unsigned int p = 0; p < n_points; ++p)
       BodyForce<dim>::vector_value(points[p], value_list[p]);
   }
   template <int dim>
@@ -287,7 +287,7 @@ namespace Step18
     const unsigned int n_points = points.size();
     Assert(value_list.size() == n_points,
            ExcDimensionMismatch(value_list.size(), n_points));
-    for(unsigned int p = 0; p < n_points; ++p)
+    for (unsigned int p = 0; p < n_points; ++p)
       IncrementalBoundaryValues<dim>::vector_value(points[p], value_list[p]);
   }
   template <int dim>
@@ -323,7 +323,7 @@ namespace Step18
     end_time         = 5;
     timestep_no      = 0;
     do_initial_timestep();
-    while(present_time < end_time)
+    while (present_time < end_time)
       do_timestep();
   }
   template <int dim>
@@ -332,21 +332,21 @@ namespace Step18
   {
     const double inner_radius = 0.8, outer_radius = 1;
     GridGenerator::cylinder_shell(triangulation, 3, inner_radius, outer_radius);
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(cell->face(f)->at_boundary())
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (cell->face(f)->at_boundary())
           {
             const Point<dim> face_center = cell->face(f)->center();
-            if(face_center[2] == 0)
+            if (face_center[2] == 0)
               cell->face(f)->set_boundary_id(0);
-            else if(face_center[2] == 3)
+            else if (face_center[2] == 3)
               cell->face(f)->set_boundary_id(1);
-            else if(std::sqrt(face_center[0] * face_center[0]
-                              + face_center[1] * face_center[1])
-                    < (inner_radius + outer_radius) / 2)
+            else if (std::sqrt(face_center[0] * face_center[0]
+                               + face_center[1] * face_center[1])
+                     < (inner_radius + outer_radius) / 2)
               cell->face(f)->set_boundary_id(2);
             else
               cell->face(f)->set_boundary_id(3);
@@ -408,15 +408,15 @@ namespace Step18
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           cell_rhs    = 0;
           fe_values.reinit(cell);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                 {
                   const SymmetricTensor<2, dim> eps_phi_i
                     = get_strain(fe_values, i, q_point),
@@ -428,11 +428,11 @@ namespace Step18
             = reinterpret_cast<PointHistory<dim>*>(cell->user_pointer());
           body_force.vector_value_list(fe_values.get_quadrature_points(),
                                        body_force_values);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               const unsigned int component_i
                 = fe.system_to_component_index(i).first;
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                 {
                   const SymmetricTensor<2, dim>& old_stress
                     = local_quadrature_points_data[q_point].old_stress;
@@ -507,7 +507,7 @@ namespace Step18
     DataOut<dim> data_out;
     data_out.attach_dof_handler(dof_handler);
     std::vector<std::string> solution_names;
-    switch(dim)
+    switch (dim)
       {
         case 1:
           solution_names.push_back("delta_x");
@@ -530,11 +530,11 @@ namespace Step18
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active(),
         endc = triangulation.end();
-      for(; cell != endc; ++cell)
-        if(cell->is_locally_owned())
+      for (; cell != endc; ++cell)
+        if (cell->is_locally_owned())
           {
             SymmetricTensor<2, dim> accumulated_stress;
-            for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
+            for (unsigned int q = 0; q < quadrature_formula.size(); ++q)
               accumulated_stress
                 += reinterpret_cast<PointHistory<dim>*>(cell->user_pointer())[q]
                      .old_stress;
@@ -558,10 +558,10 @@ namespace Step18
     AssertThrow(n_mpi_processes < 1000, ExcNotImplemented());
     std::ofstream output(filename.c_str());
     data_out.write_vtu(output);
-    if(this_mpi_process == 0)
+    if (this_mpi_process == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0; i < n_mpi_processes; ++i)
+        for (unsigned int i = 0; i < n_mpi_processes; ++i)
           filenames.push_back("solution-"
                               + Utilities::int_to_string(timestep_no, 4) + "."
                               + Utilities::int_to_string(i, 3) + ".vtu");
@@ -588,16 +588,16 @@ namespace Step18
     ++timestep_no;
     pcout << "Timestep " << timestep_no << " at time " << present_time
           << std::endl;
-    for(unsigned int cycle = 0; cycle < 1; ++cycle)
+    for (unsigned int cycle = 0; cycle < 1; ++cycle)
       {
         pcout << "  Cycle " << cycle << ':' << std::endl;
-        if(cycle == 0)
+        if (cycle == 0)
           create_coarse_grid();
         else
           refine_initial_grid();
         pcout << "    Number of active cells:       "
               << triangulation.n_active_cells() << " (by partition:";
-        for(unsigned int p = 0; p < n_mpi_processes; ++p)
+        for (unsigned int p = 0; p < n_mpi_processes; ++p)
           pcout << (p == 0 ? ' ' : '+')
                 << (GridTools::count_cells_with_subdomain_association(
                      triangulation, p));
@@ -605,7 +605,7 @@ namespace Step18
         setup_system();
         pcout << "    Number of degrees of freedom: " << dof_handler.n_dofs()
               << " (by partition:";
-        for(unsigned int p = 0; p < n_mpi_processes; ++p)
+        for (unsigned int p = 0; p < n_mpi_processes; ++p)
           pcout << (p == 0 ? ' ' : '+')
                 << (DoFTools::count_dofs_with_subdomain_association(dof_handler,
                                                                     p));
@@ -617,10 +617,10 @@ namespace Step18
           typename DoFHandler<dim>::active_cell_iterator cell
             = dof_handler.begin_active(),
             endc = dof_handler.end();
-          for(; cell != endc; ++cell)
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
-                ++v)
-              if(cell->vertex(v).distance(soln_pt) < 1e-6)
+          for (; cell != endc; ++cell)
+            for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+                 ++v)
+              if (cell->vertex(v).distance(soln_pt) < 1e-6)
                 {
                   monitored_vertex_first_dof = cell->vertex_dof_index(v, 0);
                 }
@@ -639,7 +639,7 @@ namespace Step18
     ++timestep_no;
     pcout << "Timestep " << timestep_no << " at time " << present_time
           << std::endl;
-    if(present_time > end_time)
+    if (present_time > end_time)
       {
         present_timestep -= (present_time - end_time);
         present_time = end_time;
@@ -650,7 +650,7 @@ namespace Step18
     // Output displacement at edge of displaced surface
     {
       static Tensor<1, dim> soln;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         soln[d] += incremental_displacement(monitored_vertex_first_dof + d);
       deallog << "Timestep " << timestep_no << ": " << soln << std::endl;
     }
@@ -674,8 +674,8 @@ namespace Step18
       = triangulation.n_locally_owned_active_cells();
     PETScWrappers::MPI::Vector distributed_error_per_cell(
       mpi_communicator, triangulation.n_active_cells(), n_local_cells);
-    for(unsigned int i = 0; i < error_per_cell.size(); ++i)
-      if(error_per_cell(i) != 0)
+    for (unsigned int i = 0; i < error_per_cell.size(); ++i)
+      if (error_per_cell(i) != 0)
         distributed_error_per_cell(i) = error_per_cell(i);
     distributed_error_per_cell.compress(VectorOperation::insert);
     error_per_cell = distributed_error_per_cell;
@@ -690,16 +690,16 @@ namespace Step18
   {
     pcout << "    Moving mesh..." << std::endl;
     std::vector<bool> vertex_touched(triangulation.n_vertices(), false);
-    for(typename DoFHandler<dim>::active_cell_iterator cell
-        = dof_handler.begin_active();
-        cell != dof_handler.end();
-        ++cell)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
-        if(vertex_touched[cell->vertex_index(v)] == false)
+    for (typename DoFHandler<dim>::active_cell_iterator cell
+         = dof_handler.begin_active();
+         cell != dof_handler.end();
+         ++cell)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        if (vertex_touched[cell->vertex_index(v)] == false)
           {
             vertex_touched[cell->vertex_index(v)] = true;
             Point<dim> vertex_displacement;
-            for(unsigned int d = 0; d < dim; ++d)
+            for (unsigned int d = 0; d < dim; ++d)
               vertex_displacement[d]
                 = incremental_displacement(cell->vertex_dof_index(v, d));
             cell->vertex(v) += vertex_displacement;
@@ -710,11 +710,11 @@ namespace Step18
   TopLevel<dim>::setup_quadrature_point_history()
   {
     unsigned int our_cells = 0;
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      if(cell->is_locally_owned())
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      if (cell->is_locally_owned())
         ++our_cells;
     triangulation.clear_user_data();
     {
@@ -723,11 +723,11 @@ namespace Step18
     }
     quadrature_point_history.resize(our_cells * quadrature_formula.size());
     unsigned int history_index = 0;
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      if(cell->is_locally_owned())
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      if (cell->is_locally_owned())
         {
           cell->set_user_pointer(&quadrature_point_history[history_index]);
           history_index += quadrature_formula.size();
@@ -743,11 +743,11 @@ namespace Step18
       fe, quadrature_formula, update_values | update_gradients);
     std::vector<std::vector<Tensor<1, dim>>> displacement_increment_grads(
       quadrature_formula.size(), std::vector<Tensor<1, dim>>(dim));
-    for(typename DoFHandler<dim>::active_cell_iterator cell
-        = dof_handler.begin_active();
-        cell != dof_handler.end();
-        ++cell)
-      if(cell->is_locally_owned())
+    for (typename DoFHandler<dim>::active_cell_iterator cell
+         = dof_handler.begin_active();
+         cell != dof_handler.end();
+         ++cell)
+      if (cell->is_locally_owned())
         {
           PointHistory<dim>* local_quadrature_points_history
             = reinterpret_cast<PointHistory<dim>*>(cell->user_pointer());
@@ -760,7 +760,7 @@ namespace Step18
           fe_values.reinit(cell);
           fe_values.get_function_gradients(incremental_displacement,
                                            displacement_increment_grads);
-          for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
+          for (unsigned int q = 0; q < quadrature_formula.size(); ++q)
             {
               const SymmetricTensor<2, dim> new_stress
                 = (local_quadrature_points_history[q].old_stress
@@ -792,7 +792,7 @@ main(int argc, char** argv)
       TopLevel<3>                      elastic_problem;
       elastic_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -805,7 +805,7 @@ main(int argc, char** argv)
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

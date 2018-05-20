@@ -33,7 +33,7 @@ check(TRIA& tr)
 {
   typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       deallog << cell->level() << " " << cell->index() << " " << cell->id()
               << " " << cell->id().to_string() << std::endl;

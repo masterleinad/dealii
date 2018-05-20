@@ -34,9 +34,9 @@ main()
     std::istringstream in1(elements);
     t.fill(std::istream_iterator<double>(in1), true);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for (unsigned int i = 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for (unsigned int j = 0; j < t.size()[1]; ++j)
           deallog << t[i][j] << ' ';
         deallog << std::endl;
       }
@@ -45,9 +45,9 @@ main()
     std::istringstream in2(elements);
     t.fill(std::istream_iterator<double>(in2), false);
 
-    for(unsigned int i = 0; i < t.size()[0]; ++i)
+    for (unsigned int i = 0; i < t.size()[0]; ++i)
       {
-        for(unsigned int j = 0; j < t.size()[1]; ++j)
+        for (unsigned int j = 0; j < t.size()[1]; ++j)
           deallog << t[i][j] << ' ';
         deallog << std::endl;
       }

@@ -40,11 +40,11 @@ test()
     Point<spacedim> position;
     Point<dim>      reference_position;
 
-    if(Utilities::MPI::this_mpi_process(tr.get_communicator()) == 0)
-      for(unsigned int i = 0; i < dim; ++i)
+    if (Utilities::MPI::this_mpi_process(tr.get_communicator()) == 0)
+      for (unsigned int i = 0; i < dim; ++i)
         position(i) = 0.475;
     else
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         position(i) = 0.525;
 
     Particles::Particle<dim, spacedim> particle(
@@ -58,17 +58,17 @@ test()
     particle_handler.sort_particles_into_subdomains_and_cells();
     particle_handler.exchange_ghost_particles();
 
-    for(auto particle = particle_handler.begin();
-        particle != particle_handler.end();
-        ++particle)
+    for (auto particle = particle_handler.begin();
+         particle != particle_handler.end();
+         ++particle)
       deallog << "Particle id " << particle->get_id()
               << " is local particle on process "
               << Utilities::MPI::this_mpi_process(tr.get_communicator())
               << std::endl;
 
-    for(auto particle = particle_handler.begin_ghost();
-        particle != particle_handler.end_ghost();
-        ++particle)
+    for (auto particle = particle_handler.begin_ghost();
+         particle != particle_handler.end_ghost();
+         ++particle)
       deallog << "Particle id " << particle->get_id()
               << " is ghost particle on process "
               << Utilities::MPI::this_mpi_process(tr.get_communicator())

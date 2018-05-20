@@ -68,12 +68,12 @@ test()
   // create 5 individual thread specific
   // storage locations
   Threads::ThreadGroup<> tg;
-  for(unsigned int i = 10; i < 15; ++i)
+  for (unsigned int i = 10; i < 15; ++i)
     tg += Threads::new_thread(execute, i);
 
   // spin lock until all threads have created
   // their objects
-  while(counter != 5)
+  while (counter != 5)
     ;
 
   // delete the TLS object. this should also

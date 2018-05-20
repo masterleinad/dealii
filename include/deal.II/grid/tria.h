@@ -3742,7 +3742,7 @@ private:
 template <int structdim>
 inline CellData<structdim>::CellData()
 {
-  for(unsigned int i = 0; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
     vertices[i] = numbers::invalid_unsigned_int;
 
   material_id = 0;
@@ -3835,7 +3835,7 @@ Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
 
   unsigned int n_levels = levels.size();
   ar&          n_levels;
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for (unsigned int i = 0; i < levels.size(); ++i)
     ar& levels[i];
 
   // boost dereferences a nullptr when serializing a nullptr
@@ -3843,7 +3843,7 @@ Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // Therefore, work around it.
   bool faces_is_nullptr = (faces.get() == nullptr);
   ar&  faces_is_nullptr;
-  if(!faces_is_nullptr)
+  if (!faces_is_nullptr)
     ar& faces;
 
   ar& vertices;
@@ -3854,7 +3854,7 @@ Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
 
   ar& check_for_distorted_cells;
 
-  if(dim == 1)
+  if (dim == 1)
     {
       ar& vertex_to_boundary_id_map_1d;
       ar& vertex_to_manifold_id_map_1d;
@@ -3876,7 +3876,7 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   unsigned int size;
   ar&          size;
   levels.resize(size);
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for (unsigned int i = 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>
           level;
@@ -3887,7 +3887,7 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   //Workaround for nullptr, see in save().
   bool faces_is_nullptr = true;
   ar&  faces_is_nullptr;
-  if(!faces_is_nullptr)
+  if (!faces_is_nullptr)
     ar& faces;
 
   ar& vertices;
@@ -3900,7 +3900,7 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   // they are easy enough to rebuild upon re-loading data. do
   // this here. don't forget to first resize the fields appropriately
   {
-    for(unsigned int l = 0; l < levels.size(); ++l)
+    for (unsigned int l = 0; l < levels.size(); ++l)
       levels[l]->active_cell_indices.resize(levels[l]->refine_flags.size());
     reset_active_cell_indices();
   }
@@ -3913,7 +3913,7 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
                     "same setting with regard to reporting distorted "
                     "cell as the one previously stored."));
 
-  if(dim == 1)
+  if (dim == 1)
     {
       ar& vertex_to_boundary_id_map_1d;
       ar& vertex_to_manifold_id_map_1d;

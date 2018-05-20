@@ -45,8 +45,8 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(size);
   unsigned int           count = 0;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j, ++count)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = 0; j < size; ++j, ++count)
       full(i, j) = count;
 
   //create 2d process grid
@@ -80,8 +80,8 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
                               sub_size + offset_B.second);
   scalapack_matrix_dest.copy_to(dest);
 
-  for(unsigned int i = 0; i < sub_size; ++i)
-    for(unsigned int j = 0; j < sub_size; ++j)
+  for (unsigned int i = 0; i < sub_size; ++i)
+    for (unsigned int j = 0; j < sub_size; ++j)
       dest(i + offset_B.first, j + offset_B.second)
         -= full(offset_A.first + i, offset_A.second + j);
   AssertThrow(dest.frobenius_norm() < 1e-12, ExcInternalError());
@@ -96,11 +96,11 @@ main(int argc, char** argv)
   const std::vector<unsigned int> blocks_i = {{16, 32, 64}};
   const std::vector<unsigned int> blocks_j = {{16, 32, 64}};
 
-  for(const auto& s : blocks_i)
-    for(const auto& b : blocks_j)
+  for (const auto& s : blocks_i)
+    for (const auto& b : blocks_j)
       test<float>(s, b);
 
-  for(const auto& s : blocks_i)
-    for(const auto& b : blocks_j)
+  for (const auto& s : blocks_i)
+    for (const auto& b : blocks_j)
       test<double>(s, b);
 }

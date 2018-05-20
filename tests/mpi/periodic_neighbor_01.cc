@@ -132,12 +132,12 @@ periodicity_tests<dim>::periodicity_tests()
   comm_size = Utilities::MPI::n_mpi_processes(mpi_comm);
   std::vector<unsigned> repeats(dim, 2);
   Point<dim>            p1, p2, periodic_transfer;
-  if(dim == 2)
+  if (dim == 2)
     {
       p2                = Point<dim>(16., 16.);
       periodic_transfer = Point<dim>(0.0, 16.);
     }
-  if(dim == 3)
+  if (dim == 3)
     {
       p2                = Point<dim>(16., 16., 16.);
       periodic_transfer = Point<dim>(0.0, 16., 0.0);
@@ -153,25 +153,25 @@ template <int dim>
 void
 periodicity_tests<dim>::refine_grid(const unsigned n)
 {
-  if(n != 0 && refn_cycle == 0)
+  if (n != 0 && refn_cycle == 0)
     {
       the_grid.refine_global(n);
       refn_cycle += n;
     }
-  else if(n != 0)
+  else if (n != 0)
     {
       Point<dim> refn_point;
-      if(dim == 2)
+      if (dim == 2)
         refn_point = Point<dim>(6.5, 15.5);
-      if(dim == 3)
+      if (dim == 3)
         refn_point = Point<dim>(6.5, 15.5, 6.5);
-      for(unsigned i_refn = 0; i_refn < n; ++i_refn)
+      for (unsigned i_refn = 0; i_refn < n; ++i_refn)
         {
           active_cell_iterator cell_it = the_grid.begin_active();
-          for(; cell_it != the_grid.end(); ++cell_it)
+          for (; cell_it != the_grid.end(); ++cell_it)
             {
-              if(cell_it->is_locally_owned()
-                 && cell_it->point_inside(refn_point))
+              if (cell_it->is_locally_owned()
+                  && cell_it->point_inside(refn_point))
                 {
                   cell_it->set_refine_flag();
                   break;
@@ -204,7 +204,7 @@ periodicity_tests<dim>::write_grid()
     true,  // draw_colorbar = true,
     true); // draw_legend = true
   Grid1_Out.set_flags(svg_flags);
-  if(dim == 2)
+  if (dim == 2)
     {
       std::ofstream Grid1_OutFile(
         "Grid1" + dealii::Utilities::to_string(refn_cycle)
@@ -228,20 +228,20 @@ periodicity_tests<dim>::check_periodicity()
   typedef typename std::map<cell_face_pair, cell_face_pair>::iterator
     cell_face_map_it;
 
-  for(int rank_i = 0; rank_i < comm_size; ++rank_i)
+  for (int rank_i = 0; rank_i < comm_size; ++rank_i)
     {
-      if(comm_rank == rank_i)
+      if (comm_rank == rank_i)
         {
           deallog << "All of the cells with periodic neighbors on rank "
                   << comm_rank << std::endl;
           active_cell_iterator cell_it = the_grid.begin_active();
-          for(; cell_it != the_grid.end(); ++cell_it)
+          for (; cell_it != the_grid.end(); ++cell_it)
             {
-              for(unsigned i_face = 0;
-                  i_face < GeometryInfo<dim>::faces_per_cell;
-                  ++i_face)
+              for (unsigned i_face = 0;
+                   i_face < GeometryInfo<dim>::faces_per_cell;
+                   ++i_face)
                 {
-                  if(cell_it->has_periodic_neighbor(i_face))
+                  if (cell_it->has_periodic_neighbor(i_face))
                     {
                       const cell_iterator& nb_it
                         = cell_it->periodic_neighbor(i_face);
@@ -254,7 +254,7 @@ periodicity_tests<dim>::check_periodicity()
                       deallog << nb_it->face(nb_i_face)->center()
                               << " is a periodic neighbor of "
                               << cell_it->face(i_face)->center();
-                      if(cell_it->periodic_neighbor_is_coarser(i_face))
+                      if (cell_it->periodic_neighbor_is_coarser(i_face))
                         {
                           deallog << ". And periodic neighbor is coarser."
                                   << std::endl;
@@ -281,7 +281,7 @@ periodicity_tests<dim>::check_periodicity()
                                    == cell_it,
                                  ExcInternalError());
                         }
-                      else if(nb_it->face(nb_i_face)->has_children())
+                      else if (nb_it->face(nb_i_face)->has_children())
                         {
                           deallog << ". And periodic neighbor is refined."
                                   << std::endl;
@@ -327,7 +327,7 @@ main(int argc, char* argv[])
        * Let us first check the periodicity of the simple case of uniformly refined
        * mesh.
        */
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog
           << "First, we check the periodic faces on a uniformly refined mesh."
           << std::endl;
@@ -336,7 +336,7 @@ main(int argc, char* argv[])
       test_2D.check_periodicity();
 
       /* Next, we want to check the case of nonuniform mesh */
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog
           << "Next, we check the periodic faces on an adaptively refined mesh."
           << std::endl;
@@ -349,7 +349,7 @@ main(int argc, char* argv[])
        * Let us first check the periodicity of the simple case of uniformly refined
        * mesh.
        */
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog
           << "First, we check the periodic faces on a uniformly refined mesh."
           << std::endl;
@@ -358,7 +358,7 @@ main(int argc, char* argv[])
       test_3D.check_periodicity();
 
       /* Next, we want to check the case of nonuniform mesh */
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog
           << "Next, we check the periodic faces on an adaptively refined mesh."
           << std::endl;
@@ -366,7 +366,7 @@ main(int argc, char* argv[])
       //  test_3D.write_grid();
       test_3D.check_periodicity();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -380,7 +380,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

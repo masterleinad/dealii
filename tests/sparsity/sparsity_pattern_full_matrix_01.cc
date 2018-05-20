@@ -36,8 +36,8 @@ test(const unsigned int M, const unsigned int N)
 
   // fill a full matrix completely
   FullMatrix<double> mat(M, N);
-  for(unsigned int m = 0; m < M; ++m)
-    for(unsigned int n = 0; n < N; ++n)
+  for (unsigned int m = 0; m < M; ++m)
+    for (unsigned int n = 0; n < N; ++n)
       mat(m, n) = 1;
 
   // then copy the nonzero entries of 'mat' (i.e., all entries) to the

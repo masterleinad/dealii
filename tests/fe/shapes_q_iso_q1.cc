@@ -39,7 +39,7 @@ plot_FE_Q_shape_functions()
 
   // skip the following tests to
   // reduce run-time
-  if(dim < 3)
+  if (dim < 3)
     {
       FE_Q_iso_Q1<dim> q3(3);
       plot_shape_functions(m, q3, "Q3_iso_Q1");

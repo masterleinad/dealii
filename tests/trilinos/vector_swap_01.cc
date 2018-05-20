@@ -35,11 +35,11 @@ test()
 {
   TrilinosWrappers::MPI::Vector v;
   v.reinit(complete_index_set(5), MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = 1;
   TrilinosWrappers::MPI::Vector w;
   w.reinit(complete_index_set(9), MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < w.size(); ++i)
+  for (unsigned int i = 0; i < w.size(); ++i)
     w(i) = 2;
 
   deallog << "v: ";
@@ -73,7 +73,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -87,7 +87,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

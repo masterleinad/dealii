@@ -114,7 +114,7 @@ namespace internal
     template <int structdim>
     inline TriaObject<structdim>::TriaObject()
     {
-      for(unsigned int i = 0; i < GeometryInfo<structdim>::faces_per_cell; ++i)
+      for (unsigned int i = 0; i < GeometryInfo<structdim>::faces_per_cell; ++i)
         faces[i] = -1;
     }
 

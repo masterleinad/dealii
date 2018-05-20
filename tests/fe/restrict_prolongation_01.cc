@@ -48,14 +48,14 @@ check(const FiniteElement<dim, spacedim>& fe,
   deallog << fe.get_name() << std::endl;
   const unsigned int dpc = fe.dofs_per_cell;
 
-  if(nested_size == 0)
+  if (nested_size == 0)
     nested_size = dpc;
 
   // loop over all possible refinement cases
   unsigned int ref_case = (isotropic_only) ?
                             RefinementCase<dim>::isotropic_refinement :
                             RefinementCase<dim>::cut_x;
-  for(; ref_case <= RefinementCase<dim>::isotropic_refinement; ++ref_case)
+  for (; ref_case <= RefinementCase<dim>::isotropic_refinement; ++ref_case)
     {
       deallog << "RefinementCase " << ref_case << std::endl;
       // create a respective refinement on the triangulation
@@ -79,7 +79,7 @@ check(const FiniteElement<dim, spacedim>& fe,
       unsigned int child_no = 0;
       typename dealii::DoFHandler<dim, spacedim>::active_cell_iterator cell
         = dh.begin_active();
-      for(; cell != dh.end(); ++cell, ++child_no)
+      for (; cell != dh.end(); ++cell, ++child_no)
         {
           FullMatrix<double> restriction_local = fe.get_restriction_matrix(
             child_no, RefinementCase<dim>(ref_case));
@@ -88,15 +88,15 @@ check(const FiniteElement<dim, spacedim>& fe,
 
           cell->get_dof_indices(ldi);
 
-          for(unsigned int j = 0; j < dpc; ++j)
+          for (unsigned int j = 0; j < dpc; ++j)
             {
               const bool add = fe.restriction_is_additive(j);
-              for(unsigned int i = 0; i < dpc; ++i)
+              for (unsigned int i = 0; i < dpc; ++i)
                 {
                   prolongation_global(ldi[i], j) = prolongation_local(i, j);
-                  if(add)
+                  if (add)
                     restriction_global(j, ldi[i]) += restriction_local(j, i);
-                  else if(restriction_local(j, i) != 0)
+                  else if (restriction_local(j, i) != 0)
                     restriction_global(j, ldi[i]) = restriction_local(j, i);
                 }
             }
@@ -136,18 +136,18 @@ check(const FiniteElement<dim, spacedim>& fe,
       //     deallog<<std::endl;
 
       bool is_identity = true;
-      for(unsigned int i = 0; i < nested_size; ++i)
-        for(unsigned int j = 0; j < nested_size; ++j)
+      for (unsigned int i = 0; i < nested_size; ++i)
+        for (unsigned int j = 0; j < nested_size; ++j)
           {
             const double expected = (i == j) ? 1. : 0.;
-            if(std::fabs(result(i, j) - expected) > 1.e-12)
+            if (std::fabs(result(i, j) - expected) > 1.e-12)
               {
                 deallog << i << " " << j << " " << result(i, j) << std::endl;
                 is_identity = false;
               }
           }
 
-      if(is_identity)
+      if (is_identity)
         deallog << "OK" << std::endl;
     }
 }
@@ -157,7 +157,7 @@ main()
 {
   initlog();
   deallog.depth_file(1);
-  for(unsigned int i = 1; i <= 3; ++i)
+  for (unsigned int i = 1; i <= 3; ++i)
     {
       {
         FE_Q<2> fe(i);

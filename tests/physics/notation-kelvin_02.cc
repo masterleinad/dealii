@@ -33,7 +33,7 @@ using namespace dealii::Physics;
 template <int dim, typename Number>
 void initialize(Tensor<1, dim, Number>& x)
 {
-  for(unsigned int i = 0; i < x.n_independent_components; ++i)
+  for (unsigned int i = 0; i < x.n_independent_components; ++i)
     x[i] = i + 1;
 }
 
@@ -41,8 +41,8 @@ template <int dim, typename Number>
 void initialize(Tensor<2, dim, Number>& x)
 {
   unsigned int c = 1;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         x[i][j] = c++;
       }
@@ -52,8 +52,8 @@ template <int dim, typename Number>
 void initialize(SymmetricTensor<2, dim, Number>& x)
 {
   unsigned int c = 1;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = i; j < dim; ++j)
       {
         x[i][j] = c++;
       }
@@ -63,9 +63,9 @@ template <int dim, typename Number>
 void initialize(Tensor<3, dim, Number>& x)
 {
   unsigned int c = 1;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
         {
           x[i][j][k] = c++;
         }
@@ -82,7 +82,7 @@ void initialize(Tensor<3, dim, Number>& x,
   SymmetricTensor<2, dim, Number> st;
   initialize(st);
   const Tensor<2, dim, Number> t(st);
-  if(left_components_are_symmetric == true)
+  if (left_components_are_symmetric == true)
     x = outer_product(t, v);
   else
     x = outer_product(v, t);
@@ -92,10 +92,10 @@ template <int dim, typename Number>
 void initialize(Tensor<4, dim, Number>& x)
 {
   unsigned int c = 1;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           {
             x[i][j][k][l] = c++;
           }
@@ -105,10 +105,10 @@ template <int dim, typename Number>
 void initialize(SymmetricTensor<4, dim, Number>& x)
 {
   unsigned int c = 1;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = k; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = i; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = k; l < dim; ++l)
           {
             x[i][j][k][l] = c++;
           }

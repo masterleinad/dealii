@@ -26,22 +26,22 @@ void
 check_interpolation(const std::vector<Polynomial<double>>& p,
                     const std::vector<Point<1>>&           x)
 {
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for (unsigned int i = 0; i < p.size(); ++i)
     {
       deallog << i;
-      for(unsigned int k = 0; k < x.size(); ++k)
+      for (unsigned int k = 0; k < x.size(); ++k)
         {
           deallog << '.';
           const double y = p[i].value(x[k](0));
-          if(i == k)
+          if (i == k)
             {
-              if(std::fabs(y - 1.) > 2.e-10)
+              if (std::fabs(y - 1.) > 2.e-10)
                 deallog << "Error1  lg y=" << std::log10(std::fabs(y - 1.))
                         << std::endl;
             }
           else
             {
-              if(std::fabs(y) > 3.e-10)
+              if (std::fabs(y) > 3.e-10)
                 deallog << "Error0  lg y=" << std::log10(std::fabs(y))
                         << std::endl;
             }
@@ -67,7 +67,7 @@ check_lge(unsigned int n)
     = LagrangeEquidistant::generate_complete_basis(n);
   std::vector<Point<1>> x(n + 1);
   const double          h = 1. / n;
-  for(unsigned int i = 0; i <= n; ++i)
+  for (unsigned int i = 0; i <= n; ++i)
     x[i](0) = h * i;
   check_interpolation(p, x);
 }

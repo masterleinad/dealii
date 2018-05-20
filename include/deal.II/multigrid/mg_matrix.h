@@ -202,7 +202,7 @@ namespace mg
   Matrix<VectorType>::initialize(const MGLevelObject<MatrixType>& p)
   {
     matrices.resize(p.min_level(), p.max_level());
-    for(unsigned int level = p.min_level(); level <= p.max_level(); ++level)
+    for (unsigned int level = p.min_level(); level <= p.max_level(); ++level)
       {
         // Workaround: Unfortunately, not every "p[level]" object has a
         // rich enough interface to populate reinit_(domain|range)_vector.

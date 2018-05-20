@@ -67,14 +67,14 @@ void make_grid(Triangulation<2>& triangulation)
 
   triangulation.refine_global(1);
 
-  for(unsigned int step = 0; step < 1; ++step)
+  for (unsigned int step = 0; step < 1; ++step)
     {
       Triangulation<2>::active_cell_iterator cell, endc;
       cell = triangulation.begin_active();
       endc = triangulation.end();
 
-      for(; cell != endc; ++cell)
-        if(cell->vertex(0) == p0)
+      for (; cell != endc; ++cell)
+        if (cell->vertex(0) == p0)
           {
             cell->set_refine_flag();
             break;
@@ -117,7 +117,7 @@ test(const Triangulation<dim>& tria,
   VectorTools::project(
     mapping, dof_handler1, constraints1, quadrature, function, function1);
 
-  switch(testcase)
+  switch (testcase)
     {
       case 1:
         FETools::interpolate(
@@ -154,7 +154,7 @@ test(const Triangulation<dim>& tria,
   data_out.clear();
 
   std::string file2_name = fe_string1 + "_";
-  switch(testcase)
+  switch (testcase)
     {
       case 1:
         data_out.attach_dof_handler(dof_handler2);

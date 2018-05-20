@@ -71,7 +71,7 @@ public:
     FEEvaluation<dim, degree_p, degree_p + 2, 1, Number> pressure(
       data, 0, 0, dim);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         velocity.reinit(cell);
         velocity.read_dof_values_plain(src);
@@ -80,7 +80,7 @@ public:
         pressure.read_dof_values_plain(src);
         pressure.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for (unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             SymmetricTensor<2, dim, vector_t> sym_grad_u
               = velocity.get_symmetric_gradient(q);
@@ -89,7 +89,7 @@ public:
             pressure.submit_value(div, q);
 
             // subtract p * I
-            for(unsigned int d = 0; d < dim; ++d)
+            for (unsigned int d = 0; d < dim; ++d)
               sym_grad_u[d][d] -= pres;
 
             velocity.submit_symmetric_gradient(sym_grad_u, q);
@@ -155,8 +155,8 @@ test()
   {
     BlockDynamicSparsityPattern csp(2, 2);
 
-    for(unsigned int d = 0; d < 2; ++d)
-      for(unsigned int e = 0; e < 2; ++e)
+    for (unsigned int d = 0; d < 2; ++d)
+      for (unsigned int e = 0; e < 2; ++e)
         csp.block(d, e).reinit(dofs_per_block[d], dofs_per_block[e]);
 
     csp.collect_sizes();
@@ -193,23 +193,23 @@ test()
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 phi_grads_u[k] = fe_values[velocities].symmetric_gradient(k, q);
                 div_phi_u[k]   = fe_values[velocities].divergence(k, q);
                 phi_p[k]       = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for (unsigned int j = 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (phi_grads_u[i] * phi_grads_u[j]
@@ -218,8 +218,8 @@ test()
                   }
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             local_matrix(i, j) = local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
@@ -229,22 +229,22 @@ test()
   }
 
   solution.reinit(2);
-  for(unsigned int d = 0; d < 2; ++d)
+  for (unsigned int d = 0; d < 2; ++d)
     solution.block(d).reinit(dofs_per_block[d]);
   solution.collect_sizes();
 
   system_rhs.reinit(solution);
 
   // fill system_rhs with random numbers
-  for(unsigned int j = 0; j < system_rhs.block(0).size(); ++j)
-    if(constraints.is_constrained(j) == false)
+  for (unsigned int j = 0; j < system_rhs.block(0).size(); ++j)
+    if (constraints.is_constrained(j) == false)
       {
         const double val
           = -1 + 2. * (double) Testing::rand() / double(RAND_MAX);
         system_rhs.block(0)(j) = val;
       }
-  for(unsigned int j = 0; j < system_rhs.block(1).size(); ++j)
-    if(constraints.is_constrained(j + system_rhs.block(0).size()) == false)
+  for (unsigned int j = 0; j < system_rhs.block(1).size(); ++j)
+    if (constraints.is_constrained(j + system_rhs.block(0).size()) == false)
       {
         const double val
           = -1 + 2. * (double) Testing::rand() / double(RAND_MAX);
@@ -262,7 +262,7 @@ test()
                      MatrixFree<dim>::AdditionalData::none));
     mf_data.initialize_dof_vector(mf_solution);
     mf_data.initialize_dof_vector(mf_rhs);
-    for(unsigned int i = 0; i < mf_rhs.size(); ++i)
+    for (unsigned int i = 0; i < mf_rhs.size(); ++i)
       mf_rhs(i) = system_rhs(i);
   }
 
@@ -272,7 +272,7 @@ test()
   mf.vmult(mf_solution, mf_rhs);
 
   // Verification
-  for(unsigned int i = 0; i < mf_solution.size(); ++i)
+  for (unsigned int i = 0; i < mf_solution.size(); ++i)
     mf_solution(i) -= solution(i);
   const double error    = mf_solution.linfty_norm();
   const double relative = solution.linfty_norm();

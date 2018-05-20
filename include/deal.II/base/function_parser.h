@@ -391,7 +391,7 @@ template <int dim>
 std::string
 FunctionParser<dim>::default_variable_names()
 {
-  switch(dim)
+  switch (dim)
     {
       case 1:
         return "x";

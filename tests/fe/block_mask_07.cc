@@ -42,7 +42,7 @@ test()
       Assert(BlockMask(12, true).first_selected_block(13) == 0,
              ExcInternalError());
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -53,7 +53,7 @@ test()
       Assert(BlockMask(12, false).first_selected_block() == 0,
              ExcInternalError());
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

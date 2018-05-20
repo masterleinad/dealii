@@ -276,9 +276,9 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
   // special case if block size is
   // one since we then don't need all
   // that loop overhead
-  if(options.block_size == 1)
+  if (options.block_size == 1)
     {
-      if(options.show_absolute_values == true)
+      if (options.show_absolute_values == true)
         return std::fabs(
           internal::MatrixOutImplementation::get_element(matrix, i, j));
       else
@@ -289,15 +289,15 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
   // then compute average of elements
   double    average    = 0;
   size_type n_elements = 0;
-  for(size_type row = i * options.block_size;
-      row < std::min(size_type(matrix.m()),
-                     size_type((i + 1) * options.block_size));
-      ++row)
-    for(size_type col = j * options.block_size;
-        col < std::min(size_type(matrix.m()),
-                       size_type((j + 1) * options.block_size));
-        ++col, ++n_elements)
-      if(options.show_absolute_values == true)
+  for (size_type row = i * options.block_size;
+       row < std::min(size_type(matrix.m()),
+                      size_type((i + 1) * options.block_size));
+       ++row)
+    for (size_type col = j * options.block_size;
+         col < std::min(size_type(matrix.m()),
+                        size_type((j + 1) * options.block_size));
+         ++col, ++n_elements)
+      if (options.show_absolute_values == true)
         average += std::fabs(
           internal::MatrixOutImplementation::get_element(matrix, row, col));
       else
@@ -320,7 +320,7 @@ MatrixOut::build_patches(const Matrix&      matrix,
 
   // If continuous, the number of
   // plotted patches is matrix size-1
-  if(!options.discontinuous)
+  if (!options.discontinuous)
     {
       --gridpoints_x;
       --gridpoints_y;
@@ -333,8 +333,8 @@ MatrixOut::build_patches(const Matrix&      matrix,
 
   // now build the patches
   size_type index = 0;
-  for(size_type i = 0; i < gridpoints_y; ++i)
-    for(size_type j = 0; j < gridpoints_x; ++j, ++index)
+  for (size_type i = 0; i < gridpoints_y; ++i)
+    for (size_type j = 0; j < gridpoints_x; ++j, ++index)
       {
         // within each patch, order
         // the points in such a way
@@ -368,13 +368,13 @@ MatrixOut::build_patches(const Matrix&      matrix,
         // coordinates by the block
         // size, to get original
         // coordinates
-        for(unsigned int v = 0; v < 4; ++v)
+        for (unsigned int v = 0; v < 4; ++v)
           patches[index].vertices[v] *= options.block_size;
 
         patches[index].n_subdivisions = 1;
 
         patches[index].data.reinit(1, 4);
-        if(options.discontinuous)
+        if (options.discontinuous)
           {
             patches[index].data(0, 0)
               = get_gridpoint_value(matrix, i, j, options);

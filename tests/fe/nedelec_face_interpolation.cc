@@ -63,26 +63,26 @@ test(unsigned p1, unsigned p2)
   fe[0].get_face_interpolation_matrix(fe[1], face_int_matrix);
 
   bool is_zero_column = true;
-  for(unsigned int i = 0; i < face_int_matrix.n(); ++i)
+  for (unsigned int i = 0; i < face_int_matrix.n(); ++i)
     {
       is_zero_column = true;
-      for(unsigned int j = 0; j < face_int_matrix.m(); ++j)
+      for (unsigned int j = 0; j < face_int_matrix.m(); ++j)
         {
-          if(fabs(face_int_matrix(j, i)) > 1e-10)
+          if (fabs(face_int_matrix(j, i)) > 1e-10)
             {
               is_zero_column = false;
               break;
             }
         }
 
-      if(is_zero_column)
+      if (is_zero_column)
         {
           deallog << "Column " << i << " has no non-zero elements."
                   << std::endl;
         }
     }
 
-  if(!is_zero_column)
+  if (!is_zero_column)
     deallog << "OK" << std::endl;
   else
     deallog << "Failed" << std::endl;

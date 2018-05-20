@@ -23,7 +23,7 @@
 void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       v(i) = i;
       w(i) = i + 1.;
@@ -35,7 +35,7 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
   v.equ(2, w);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i + 1., ExcInternalError());
       AssertThrow(v(i) == 2 * (i + 1.), ExcInternalError());
@@ -60,7 +60,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -74,7 +74,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

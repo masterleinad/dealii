@@ -49,7 +49,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   parallel::distributed::Triangulation<3> triangulation(MPI_COMM_WORLD);
@@ -111,20 +111,20 @@ test()
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
   FullMatrix<number> local_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
 
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
-    if(cell->is_locally_owned())
+  for (DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
+    if (cell->is_locally_owned())
       {
         fe_values.reinit(cell);
         local_matrix = number();
 
-        for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
-            ++q_point)
+        for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+             ++q_point)
           {
-            for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
                   local_matrix(i, j) += fe_values.shape_value(i, q_point)
                                         * fe_values.shape_value(j, q_point);
               }
@@ -139,7 +139,7 @@ test()
   deallog.get_file_stream() << std::setprecision(10);
   A.print(deallog.get_file_stream());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -151,7 +151,7 @@ test_alt()
   unsigned int        myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int        numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   parallel::distributed::Triangulation<3> triangulation(MPI_COMM_WORLD);
@@ -213,20 +213,20 @@ test_alt()
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
   FullMatrix<double> local_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
 
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
-    if(cell->is_locally_owned())
+  for (DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
+    if (cell->is_locally_owned())
       {
         fe_values.reinit(cell);
         local_matrix = 0.0;
 
-        for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
-            ++q_point)
+        for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+             ++q_point)
           {
-            for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
                   local_matrix(i, j) += fe_values.shape_value(i, q_point)
                                         * fe_values.shape_value(j, q_point);
               }
@@ -240,7 +240,7 @@ test_alt()
   A.compress(VectorOperation::add);
   //A.print(deallog.get_file_stream());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

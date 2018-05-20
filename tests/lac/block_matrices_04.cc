@@ -173,7 +173,7 @@ LaplaceProblem<BlockVector<double>,
                BlockSparseMatrix<double>,
                BlockSparsityPattern>::reinit_sparsity()
 {
-  switch(n_blocks)
+  switch (n_blocks)
     {
       case 2:
         {
@@ -181,8 +181,8 @@ LaplaceProblem<BlockVector<double>,
           const types::global_dof_index block_size[2]
             = {n_dofs / 3, n_dofs - n_dofs / 3};
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 0; j < 2; ++j)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 0; j < 2; ++j)
               sparsity_pattern.block(i, j).reinit(
                 block_size[i],
                 block_size[j],
@@ -198,8 +198,8 @@ LaplaceProblem<BlockVector<double>,
           const types::global_dof_index block_size[3]
             = {n_dofs / 5, n_dofs / 7, n_dofs - n_dofs / 5 - n_dofs / 7};
 
-          for(unsigned int i = 0; i < 3; ++i)
-            for(unsigned int j = 0; j < 3; ++j)
+          for (unsigned int i = 0; i < 3; ++i)
+            for (unsigned int j = 0; j < 3; ++j)
               sparsity_pattern.block(i, j).reinit(
                 block_size[i],
                 block_size[j],
@@ -220,7 +220,7 @@ LaplaceProblem<BlockVector<double>,
                BlockSparseMatrix<double>,
                BlockSparsityPattern>::reinit_vectors()
 {
-  switch(n_blocks)
+  switch (n_blocks)
     {
       case 2:
         {
@@ -275,33 +275,33 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::assemble_system()
 
   DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
                                       endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
       cell_matrix = 0;
       cell_rhs    = 0;
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             cell_matrix(i, j)
               += (fe_values.shape_grad(i, q_point)
                   * fe_values.shape_grad(j, q_point) * fe_values.JxW(q_point));
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           cell_rhs(i)
             += (fe_values.shape_value(i, q_point) * 1 * fe_values.JxW(q_point));
 
       cell->get_dof_indices(local_dof_indices);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
           system_matrix.add(
             local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         system_rhs(local_dof_indices[i]) += cell_rhs(i);
     };
 
@@ -338,7 +338,7 @@ LaplaceProblem<VectorType, Matrix, Sparsity>::run()
   assemble_system();
   solve();
 
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for (unsigned int i = 0; i < solution.size(); ++i)
     deallog
       //<< typeid(VectorType).name ()
       //<< ' '
@@ -358,7 +358,7 @@ main()
   // vector of solution vectors
   std::vector<std::vector<double>> solutions;
 
-  if(true)
+  if (true)
     {
       LaplaceProblem<Vector<double>, SparseMatrix<double>, SparsityPattern>
         laplace_problem(2);
@@ -366,11 +366,11 @@ main()
 
       solutions.push_back(std::vector<double>());
       solutions.back().resize(laplace_problem.solution.size());
-      for(unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
+      for (unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
         solutions.back()[i] = laplace_problem.solution(i);
     };
 
-  if(true)
+  if (true)
     {
       LaplaceProblem<Vector<float>, SparseMatrix<float>, SparsityPattern>
         laplace_problem(3);
@@ -378,11 +378,11 @@ main()
 
       solutions.push_back(std::vector<double>());
       solutions.back().resize(laplace_problem.solution.size());
-      for(unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
+      for (unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
         solutions.back()[i] = laplace_problem.solution(i);
     };
 
-  if(true)
+  if (true)
     {
       LaplaceProblem<BlockVector<double>,
                      BlockSparseMatrix<double>,
@@ -392,11 +392,11 @@ main()
 
       solutions.push_back(std::vector<double>());
       solutions.back().resize(laplace_problem.solution.size());
-      for(unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
+      for (unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
         solutions.back()[i] = laplace_problem.solution(i);
     };
 
-  if(true)
+  if (true)
     {
       LaplaceProblem<BlockVector<double>,
                      BlockSparseMatrix<double>,
@@ -406,18 +406,18 @@ main()
 
       solutions.push_back(std::vector<double>());
       solutions.back().resize(laplace_problem.solution.size());
-      for(unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
+      for (unsigned int i = 0; i < laplace_problem.solution.size(); ++i)
         solutions.back()[i] = laplace_problem.solution(i);
     };
 
   const unsigned int n_datasets = solutions.size();
   deallog << "Checking " << n_datasets << " data sets." << std::endl;
 
-  for(unsigned int i = 1; i < n_datasets; ++i)
+  for (unsigned int i = 1; i < n_datasets; ++i)
     Assert(solutions[i].size() == solutions[i].size(), ExcInternalError());
 
   deallog << std::setprecision(16);
-  for(unsigned int i = 1; i < n_datasets; ++i)
+  for (unsigned int i = 1; i < n_datasets; ++i)
     {
       // relative accuracy. data set
       // 1 is computed using floats
@@ -425,9 +425,9 @@ main()
       // our requirements
       const double accuracy = (i == 1 ? 1e-6 : 1e-12);
 
-      for(unsigned int j = 0; j < solutions[0].size(); ++j)
-        if(std::fabs(solutions[i][j] - solutions[0][j])
-           > accuracy * std::fabs(solutions[i][j] + solutions[0][j]))
+      for (unsigned int j = 0; j < solutions[0].size(); ++j)
+        if (std::fabs(solutions[i][j] - solutions[0][j])
+            > accuracy * std::fabs(solutions[i][j] + solutions[0][j]))
           {
             deallog << "Discrepancy: i=" << i << ", j=" << j
                     << ", sol[i][j]=" << solutions[i][j]

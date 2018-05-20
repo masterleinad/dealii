@@ -58,9 +58,9 @@ solve_filtered(std::map<types::global_dof_index, double>& bv,
 
   solver.solve(A1, u, f1, fprec);
 
-  for(std::map<types::global_dof_index, double>::const_iterator i = bv.begin();
-      i != bv.end();
-      ++i)
+  for (std::map<types::global_dof_index, double>::const_iterator i = bv.begin();
+       i != bv.end();
+       ++i)
     AssertThrow(std::fabs(u(i->first) - i->second) < 1e-8, ExcInternalError());
 }
 
@@ -90,7 +90,7 @@ check()
 
   Functions::CosineFunction<dim> cosine;
 
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
@@ -126,17 +126,17 @@ check()
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
   const typename DoFHandler<dim>::cell_iterator  end  = dof.end();
 
-  for(; cell != end; ++cell)
+  for (; cell != end; ++cell)
     {
       fe.reinit(cell);
       cell->get_dof_indices(global_dofs);
       cosine.value_list(fe.get_quadrature_points(), function);
 
-      for(unsigned int k = 0; k < quadrature.size(); ++k)
+      for (unsigned int k = 0; k < quadrature.size(); ++k)
         {
           double dx = fe.JxW(k);
 
-          for(unsigned int i = 0; i < element.dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < element.dofs_per_cell; ++i)
             {
               const double         v      = fe.shape_value(i, k);
               const Tensor<1, dim> grad_v = fe.shape_grad(i, k);
@@ -144,7 +144,7 @@ check()
               double rhs = dx * v * (function[k]);
 
               f(global_dofs[i]) += rhs;
-              for(unsigned int j = 0; j < element.dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < element.dofs_per_cell; ++j)
                 {
                   const Tensor<1, dim> grad_u = fe.shape_grad(j, k);
                   double               el     = dx * (grad_u * grad_v);
@@ -162,10 +162,10 @@ check()
   // values on the boundary of the
   // domain, so reset the elements to
   // some other value
-  for(typename std::map<types::global_dof_index, double>::iterator i
-      = bv.begin();
-      i != bv.end();
-      ++i)
+  for (typename std::map<types::global_dof_index, double>::iterator i
+       = bv.begin();
+       i != bv.end();
+       ++i)
     i->second = std::sin(i->second + 0.5) + 1.0;
 
   // first solve filtered. this does
@@ -181,7 +181,7 @@ check()
   solve_eliminated<dim>(bv, A, u_eliminated, f);
 
   // output and check
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
       deallog << u_filtered(i) << std::endl;
       Assert(std::fabs(u_filtered(i) - u_eliminated(i)) < 1e-8,

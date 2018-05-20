@@ -24,9 +24,9 @@ main()
   initlog();
 
   SparsityPattern sparsity(2, 3, 3);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
-      if(i < j)
+  for (unsigned int i = 0; i < 2; ++i)
+    for (unsigned int j = 0; j < 3; ++j)
+      if (i < j)
         sparsity.add(i, j);
   sparsity.compress();
 

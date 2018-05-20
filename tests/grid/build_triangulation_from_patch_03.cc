@@ -43,10 +43,10 @@ test()
   GridTools::distort_random(0.2, triangulation, false);
 
   unsigned int index = 0;
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell, ++index)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell, ++index)
     {
       std::vector<typename Triangulation<dim>::active_cell_iterator> patch_cells
         = GridTools::get_patch_around_cell<Triangulation<dim>>(cell);
@@ -61,20 +61,21 @@ test()
         patch_cells, local_triangulation, patch_to_global_tria_map);
 
       deallog << "patch_cells " << cell << ": ";
-      for(unsigned int i = 0; i < patch_cells.size(); ++i)
+      for (unsigned int i = 0; i < patch_cells.size(); ++i)
         deallog << patch_cells[i] << ' ';
       deallog << std::endl;
 
       deallog << "local_triangulation " << cell << ":\n";
-      for(typename Triangulation<dim>::active_cell_iterator tria_cell
-          = local_triangulation.begin_active();
-          tria_cell != local_triangulation.end();
-          ++tria_cell)
+      for (typename Triangulation<dim>::active_cell_iterator tria_cell
+           = local_triangulation.begin_active();
+           tria_cell != local_triangulation.end();
+           ++tria_cell)
         {
           deallog << "   " << tria_cell << " user flag check:  "
                   << (tria_cell->user_flag_set() ? " (+) " : " (-) ")
                   << std::endl;
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+          for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+               ++v)
             {
               deallog << "  vertices for cell  " << tria_cell << " : "
                       << tria_cell->vertex(v) << std::endl;

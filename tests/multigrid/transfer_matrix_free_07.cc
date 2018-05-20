@@ -34,19 +34,19 @@ check(const unsigned int fe_degree)
 
   // run a few different sizes...
   unsigned int sizes[] = {1, 2, 3};
-  for(unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
-      ++cycle)
+  for (unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
+       ++cycle)
     {
       unsigned int n_refinements = 0;
       unsigned int n_subdiv      = sizes[cycle];
-      if(n_subdiv > 1)
-        while(n_subdiv % 2 == 0)
+      if (n_subdiv > 1)
+        while (n_subdiv % 2 == 0)
           {
             n_refinements += 1;
             n_subdiv /= 2;
           }
       n_refinements += 3 - dim;
-      if(fe_degree < 3)
+      if (fe_degree < 3)
         n_refinements += 1;
 
       parallel::distributed::Triangulation<dim> tr(
@@ -58,27 +58,27 @@ check(const unsigned int fe_degree)
       tr.refine_global(n_refinements);
 
       // adaptive refinement into a circle
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() < 0.5)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() < 0.5)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() > 0.3
-           && cell->center().norm() < 0.4)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() > 0.3
+            && cell->center().norm() < 0.4)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() > 0.33
-           && cell->center().norm() < 0.37)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() > 0.33
+            && cell->center().norm() < 0.37)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
 
@@ -98,16 +98,16 @@ check(const unsigned int fe_degree)
       transfer.build(mgdof);
 
       // check prolongation for all levels using random vector
-      for(unsigned int level = 1;
-          level < mgdof.get_triangulation().n_global_levels();
-          ++level)
+      for (unsigned int level = 1;
+           level < mgdof.get_triangulation().n_global_levels();
+           ++level)
         {
           LinearAlgebra::distributed::Vector<Number> v1, v2;
           LinearAlgebra::distributed::Vector<double> v1_cpy, v2_cpy, v3;
           v1.reinit(mgdof.locally_owned_mg_dofs(level - 1), MPI_COMM_WORLD);
           v2.reinit(mgdof.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
           v3.reinit(mgdof.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
-          for(unsigned int i = 0; i < v1.local_size(); ++i)
+          for (unsigned int i = 0; i < v1.local_size(); ++i)
             v1.local_element(i) = random_value<double>();
           v1_cpy = v1;
           transfer.prolongate(level, v2, v1);
@@ -119,16 +119,16 @@ check(const unsigned int fe_degree)
         }
 
       // check restriction for all levels using random vector
-      for(unsigned int level = 1;
-          level < mgdof.get_triangulation().n_global_levels();
-          ++level)
+      for (unsigned int level = 1;
+           level < mgdof.get_triangulation().n_global_levels();
+           ++level)
         {
           LinearAlgebra::distributed::Vector<Number> v1, v2;
           LinearAlgebra::distributed::Vector<double> v1_cpy, v2_cpy, v3;
           v1.reinit(mgdof.locally_owned_mg_dofs(level), MPI_COMM_WORLD);
           v2.reinit(mgdof.locally_owned_mg_dofs(level - 1), MPI_COMM_WORLD);
           v3.reinit(mgdof.locally_owned_mg_dofs(level - 1), MPI_COMM_WORLD);
-          for(unsigned int i = 0; i < v1.local_size(); ++i)
+          for (unsigned int i = 0; i < v1.local_size(); ++i)
             v1.local_element(i) = random_value<double>();
           v1_cpy = v1;
           transfer.restrict_and_add(level, v2, v1);

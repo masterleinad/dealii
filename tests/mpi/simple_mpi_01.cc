@@ -28,15 +28,15 @@ test_mpi()
   unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
-  for(unsigned int i = 1; i < numprocs; ++i)
+  for (unsigned int i = 1; i < numprocs; ++i)
     {
       MPI_Barrier(MPI_COMM_WORLD);
       //      system("sleep 1");
 
-      if(myid == 0)
+      if (myid == 0)
         {
           unsigned int buf = numbers::invalid_unsigned_int;
           MPI_Status   status;
@@ -45,12 +45,12 @@ test_mpi()
                   << std::endl;
           Assert(buf == i, ExcInternalError());
         }
-      else if(myid == i)
+      else if (myid == i)
         {
           MPI_Send(&myid, 1, MPI_INT, 0, 1, MPI_COMM_WORLD);
         }
     }
-  if(myid == 0)
+  if (myid == 0)
     deallog << "done" << std::endl;
 }
 
@@ -60,7 +60,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

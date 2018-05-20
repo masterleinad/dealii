@@ -44,8 +44,8 @@ test()
   triangulation.refine_global(3);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-      ++i)
+  for (unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+       ++i)
     fe.push_back(FE_Q<dim>(1));
 
   hp::DoFHandler<dim> dof_handler(triangulation);
@@ -53,8 +53,8 @@ test()
   // set the active_fe_index on all locally active cells equal to the
   // subdomain_id. we can later verify this equality also on ghost
   // cells
-  for(auto cell : dof_handler.active_cell_iterators())
-    if(cell->is_locally_owned())
+  for (auto cell : dof_handler.active_cell_iterators())
+    if (cell->is_locally_owned())
       cell->set_active_fe_index(cell->subdomain_id());
 
   dof_handler.distribute_dofs(fe);
@@ -64,12 +64,12 @@ test()
           << std::endl;
 
   // verify that the information has been communicated between processors
-  for(auto cell : dof_handler.active_cell_iterators())
+  for (auto cell : dof_handler.active_cell_iterators())
     {
-      if(cell->is_locally_owned())
+      if (cell->is_locally_owned())
         Assert(cell->active_fe_index() == cell->subdomain_id(),
                ExcInternalError());
-      if(cell->is_ghost())
+      if (cell->is_ghost())
         Assert(cell->active_fe_index() == cell->subdomain_id(),
                ExcInternalError());
     }

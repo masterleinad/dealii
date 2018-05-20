@@ -29,9 +29,9 @@ test()
 
   // only proc 0 and 1 own rows
   IndexSet rows(4 * n_procs);
-  if(myid == 0)
+  if (myid == 0)
     rows.add_range(0, 2 * n_procs);
-  else if(myid == 1)
+  else if (myid == 1)
     rows.add_range(2 * n_procs, 4 * n_procs);
   rows.compress();
 
@@ -39,16 +39,16 @@ test()
     dst(rows, MPI_COMM_WORLD);
 
   TrilinosWrappers::SparseMatrix mat(rows, rows, MPI_COMM_WORLD);
-  for(const auto& row : rows)
+  for (const auto& row : rows)
     {
       const unsigned int i = row;
       mat.set(i, i, 100.);
-      for(unsigned int j = 0; j < mat.n(); ++j)
-        if(i != j)
+      for (unsigned int j = 0; j < mat.n(); ++j)
+        if (i != j)
           mat.set(i, j, i * j * .5 + .5);
     }
 
-  for(unsigned int i = 0; i < src.size(); ++i)
+  for (unsigned int i = 0; i < src.size(); ++i)
     src(i) = i;
 
   mat.compress(VectorOperation::insert);

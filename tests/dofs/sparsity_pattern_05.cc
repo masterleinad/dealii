@@ -34,15 +34,15 @@
 bool
 operator==(const BlockSparsityPattern& sp1, const BlockSparsityPattern& sp2)
 {
-  if(sp1.n_block_rows() != sp2.n_block_rows())
+  if (sp1.n_block_rows() != sp2.n_block_rows())
     return false;
 
-  if(sp1.n_block_cols() != sp2.n_block_cols())
+  if (sp1.n_block_cols() != sp2.n_block_cols())
     return false;
 
-  for(unsigned int i = 0; i < sp1.n_block_rows(); ++i)
-    for(unsigned int j = 0; j < sp1.n_block_cols(); ++j)
-      if(!(sp1.block(i, j) == sp2.block(i, j)))
+  for (unsigned int i = 0; i < sp1.n_block_rows(); ++i)
+    for (unsigned int j = 0; j < sp1.n_block_cols(); ++j)
+      if (!(sp1.block(i, j) == sp2.block(i, j)))
         {
           Assert(false, ExcInternalError());
           return false;
@@ -56,7 +56,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
@@ -65,7 +65,7 @@ check()
   tr.execute_coarsening_and_refinement();
   tr.begin_active(2)->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed

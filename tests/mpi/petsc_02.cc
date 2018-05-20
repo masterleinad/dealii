@@ -32,7 +32,7 @@ test()
   unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
   DynamicSparsityPattern csp(2);
@@ -45,12 +45,12 @@ test()
 
   mat.reinit(MPI_COMM_WORLD, csp, local_rows, local_rows, myid);
 
-  if(myid == 0)
+  if (myid == 0)
     mat.add(0, 0, 1.0);
 
   mat.compress(VectorOperation::add);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "done" << std::endl;
 }
 
@@ -59,7 +59,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

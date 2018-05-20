@@ -81,62 +81,66 @@ void create_triangulation(Triangulation<2>& tria)
   circle_2.set_manifold(MANIFOLD_ID, spherical_manifold);
 
   // then move the vertices to the points where we want them to be to create a slightly asymmetric cube with a hole
-  for(Triangulation<2>::cell_iterator cell = middle.begin();
-      cell != middle.end();
-      ++cell)
+  for (Triangulation<2>::cell_iterator cell = middle.begin();
+       cell != middle.end();
+       ++cell)
     {
-      for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
         {
           Point<2>& vertex = cell->vertex(v);
-          if(std::abs(vertex[0] - X_2) < 1e-10
-             && std::abs(vertex[1] - Y_C) < 1e-10)
+          if (std::abs(vertex[0] - X_2) < 1e-10
+              && std::abs(vertex[1] - Y_C) < 1e-10)
             {
               vertex = Point<2>(X_2, H / 2.0);
             }
-          else if(std::abs(vertex[0] - (X_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                    < 1e-10
-                  && std::abs(vertex[1]
-                              - (Y_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                       < 1e-10)
+          else if (std::abs(vertex[0]
+                            - (X_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                     < 1e-10
+                   && std::abs(vertex[1]
+                               - (Y_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                        < 1e-10)
             {
               vertex = Point<2>(X_2, H);
             }
-          else if(std::abs(vertex[0] - (X_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                    < 1e-10
-                  && std::abs(vertex[1]
-                              - (Y_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                       < 1e-10)
+          else if (std::abs(vertex[0]
+                            - (X_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                     < 1e-10
+                   && std::abs(vertex[1]
+                               - (Y_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                        < 1e-10)
             {
               vertex = Point<2>(X_2, Y_0);
             }
-          else if(std::abs(vertex[0] - X_C) < 1e-10
-                  && std::abs(vertex[1] - (Y_C + (X_2 - X_1) / 2.0)) < 1e-10)
+          else if (std::abs(vertex[0] - X_C) < 1e-10
+                   && std::abs(vertex[1] - (Y_C + (X_2 - X_1) / 2.0)) < 1e-10)
             {
               vertex = Point<2>(X_C, H);
             }
-          else if(std::abs(vertex[0] - X_C) < 1e-10
-                  && std::abs(vertex[1] - (Y_C - (X_2 - X_1) / 2.0)) < 1e-10)
+          else if (std::abs(vertex[0] - X_C) < 1e-10
+                   && std::abs(vertex[1] - (Y_C - (X_2 - X_1) / 2.0)) < 1e-10)
             {
               vertex = Point<2>(X_C, Y_0);
             }
-          else if(std::abs(vertex[0] - (X_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                    < 1e-10
-                  && std::abs(vertex[1]
-                              - (Y_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                       < 1e-10)
+          else if (std::abs(vertex[0]
+                            - (X_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                     < 1e-10
+                   && std::abs(vertex[1]
+                               - (Y_C + (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                        < 1e-10)
             {
               vertex = Point<2>(X_1, H);
             }
-          else if(std::abs(vertex[0] - (X_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                    < 1e-10
-                  && std::abs(vertex[1]
-                              - (Y_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
-                       < 1e-10)
+          else if (std::abs(vertex[0]
+                            - (X_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                     < 1e-10
+                   && std::abs(vertex[1]
+                               - (Y_C - (X_2 - X_1) / 2.0 / std::sqrt(2)))
+                        < 1e-10)
             {
               vertex = Point<2>(X_1, Y_0);
             }
-          else if(std::abs(vertex[0] - X_1) < 1e-10
-                  && std::abs(vertex[1] - Y_C) < 1e-10)
+          else if (std::abs(vertex[0] - X_1) < 1e-10
+                   && std::abs(vertex[1] - Y_C) < 1e-10)
             {
               vertex = Point<2>(X_1, H / 2.0);
             }
@@ -150,11 +154,11 @@ void create_triangulation(Triangulation<2>& tria)
 
   // Set the cylinder boundary  to 2, outflow to 1, the rest to 0.
   //tria.set_all_manifold_ids(0);
-  for(Triangulation<2>::active_cell_iterator cell = tria.begin();
-      cell != tria.end();
-      ++cell)
+  for (Triangulation<2>::active_cell_iterator cell = tria.begin();
+       cell != tria.end();
+       ++cell)
     {
-      if(Point<2>(X_C, Y_C).distance(cell->center()) <= R_2)
+      if (Point<2>(X_C, Y_C).distance(cell->center()) <= R_2)
         cell->set_all_manifold_ids(MANIFOLD_ID);
     }
 }
@@ -167,11 +171,11 @@ void create_triangulation(Triangulation<3>& tria)
 
   // Set the cylinder boundary  to 2, outflow to 1, the rest to 0.
   tria.set_all_manifold_ids(0);
-  for(Triangulation<3>::active_cell_iterator cell = tria.begin();
-      cell != tria.end();
-      ++cell)
+  for (Triangulation<3>::active_cell_iterator cell = tria.begin();
+       cell != tria.end();
+       ++cell)
     {
-      if(Point<3>(X_C, Y_C, cell->center()[2]).distance(cell->center()) <= R_2)
+      if (Point<3>(X_C, Y_C, cell->center()[2]).distance(cell->center()) <= R_2)
         cell->set_all_manifold_ids(MANIFOLD_ID);
     }
 }
@@ -216,20 +220,20 @@ test()
   tria.set_manifold(MANIFOLD_ID, *cylinder_manifold);
 
   FE_Nothing<dim> fe;
-  for(unsigned int degree = 1; degree < 7; ++degree)
+  for (unsigned int degree = 1; degree < 7; ++degree)
     {
       MappingQGeneric<dim> mapping(degree);
       QGauss<dim>          quad(degree + 1);
       FEValues<dim>        fe_values(mapping, fe, quad, update_JxW_values);
       double               sum = 0.;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
         {
           fe_values.reinit(cell);
           double local_sum = 0;
-          for(unsigned int q = 0; q < quad.size(); ++q)
+          for (unsigned int q = 0; q < quad.size(); ++q)
             local_sum += fe_values.JxW(q);
           sum += local_sum;
         }

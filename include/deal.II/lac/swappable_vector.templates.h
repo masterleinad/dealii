@@ -43,13 +43,13 @@ SwappableVector<number>::~SwappableVector()
   // first, before killing the vector
   // itself
 
-  if(filename != "")
+  if (filename != "")
     {
       try
         {
           kill_file();
         }
-      catch(...)
+      catch (...)
         {}
     }
 }
@@ -59,7 +59,7 @@ SwappableVector<number>&
 SwappableVector<number>::operator=(const SwappableVector<number>& v)
 {
   // if necessary, first delete data
-  if(filename != "")
+  if (filename != "")
     kill_file();
 
   // if in MT mode, block all other
@@ -82,7 +82,7 @@ SwappableVector<number>::swap_out(const std::string& name)
   // that has not been deleted in the
   // meantime, then we kill that file
   // first
-  if(filename != "")
+  if (filename != "")
     kill_file();
 
   filename = name;
@@ -119,7 +119,7 @@ SwappableVector<number>::reload()
   // if data was already preloaded,
   // then there is no more need to
   // load it
-  if(data_is_preloaded == false)
+  if (data_is_preloaded == false)
     // reload data. note that this
     // function also releases the
     // lock
@@ -154,11 +154,11 @@ SwappableVector<number>::alert()
 
   // calling this function multiple
   // times does no harm:
-  if((data_is_preloaded == true) ||
-     // calling this function while the
-     // vector is active does no harm
-     // either
-     (this->size() != 0))
+  if ((data_is_preloaded == true) ||
+      // calling this function while the
+      // vector is active does no harm
+      // either
+      (this->size() != 0))
     lock.release();
   else
     // data has not been preloaded so
@@ -187,7 +187,7 @@ SwappableVector<number>::reload_vector(const bool set_flag)
   // release the lock that was acquired by the calling functions
 
   // set the flag if so required
-  if(set_flag)
+  if (set_flag)
     data_is_preloaded = true;
   lock.release();
 #endif
@@ -210,7 +210,7 @@ SwappableVector<number>::kill_file()
   // is most probably an error, not?
   Assert(data_is_preloaded == false, ExcInternalError());
 
-  if(filename != "")
+  if (filename != "")
     {
       int status = std::remove(filename.c_str());
       (void) status;

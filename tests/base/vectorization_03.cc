@@ -32,7 +32,7 @@ struct Evaluation
   void
   submit_value(const VectorizedArray<double> val, const unsigned int index)
   {
-    if(is_cartesian)
+    if (is_cartesian)
       values[index] = val * cartesian_weight * jac_weight[index];
     else
       values[index] = val * general_weight[index];
@@ -50,7 +50,7 @@ initialize(Evaluation& eval)
 {
   eval.is_cartesian     = true;
   eval.cartesian_weight = random_value<double>();
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     eval.cartesian_weight = std::max(
       eval.cartesian_weight, eval.cartesian_weight * eval.cartesian_weight);
   eval.general_weight[0] = 0.2313342 * eval.cartesian_weight;
@@ -67,7 +67,7 @@ test()
   weight = random_value<double>();
 
   VectorizedArray<double> vec;
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+  for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
     vec[v] = random_value<double>();
 
   current.values[0] = vec;
@@ -84,7 +84,7 @@ test()
   vector *= 2. * current.get_value(0)[0];
 
   double error = 0;
-  for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+  for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
     error
       += std::abs(current.get_value(0)[v]
                     / (current.cartesian_weight[v] * current.jac_weight[0][0])

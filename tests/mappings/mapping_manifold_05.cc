@@ -38,7 +38,7 @@ test()
   Triangulation<dim, spacedim> triangulation;
 
   Point<spacedim> center;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     center[i] = 5 + i;
 
   const double inner_radius = 0.5, outer_radius = 1.0;
@@ -63,7 +63,7 @@ test()
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = triangulation.begin_active();
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     {
       fe_values_mapping.reinit(cell, f);
       fe_values_q.reinit(cell, f);
@@ -76,21 +76,21 @@ test()
       AssertThrow(jac_from_mapping_q.size() == jac_from_mapping_manifold.size(),
                   ExcInternalError());
 
-      for(unsigned int q = 0; q < jac_from_mapping_q.size(); ++q)
+      for (unsigned int q = 0; q < jac_from_mapping_q.size(); ++q)
         {
           double dist = 0;
-          for(unsigned int d = 0; d < spacedim; ++d)
+          for (unsigned int d = 0; d < spacedim; ++d)
             dist += (jac_from_mapping_manifold[q][d] - jac_from_mapping_q[q][d])
                       .norm();
-          if(dist > 1e-10)
+          if (dist > 1e-10)
             {
               deallog << "Jacobian from mapping manifold at point " << q
                       << std::endl;
-              for(unsigned int d = 0; d < spacedim; ++d)
+              for (unsigned int d = 0; d < spacedim; ++d)
                 deallog << jac_from_mapping_manifold[q][d] << std::endl;
 
               deallog << "Jacobian from mapping q at point " << q << std::endl;
-              for(unsigned int d = 0; d < spacedim; ++d)
+              for (unsigned int d = 0; d < spacedim; ++d)
                 deallog << jac_from_mapping_q[q][d] << std::endl;
             }
         }

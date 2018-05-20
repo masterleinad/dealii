@@ -45,19 +45,19 @@ test()
   typename Triangulation<dim>::active_cell_iterator cell, endc;
   cell = tria.begin_active();
   endc = tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 0.5)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 0.5)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  for(unsigned int i = 0; i < 5 - dim; ++i)
+  for (unsigned int i = 0; i < 5 - dim; ++i)
     {
       cell                 = tria.begin_active();
       endc                 = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(cell->center()[0] < 5.)
+      for (; cell != endc; ++cell, ++counter)
+        if (cell->center()[0] < 5.)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -77,7 +77,7 @@ test()
 
   const unsigned int        n_macro_cells = mf.n_macro_cells();
   std::vector<unsigned int> n_cell_types(4, 0);
-  for(unsigned int i = 0; i < n_macro_cells; ++i)
+  for (unsigned int i = 0; i < n_macro_cells; ++i)
     n_cell_types[mf.get_mapping_info().get_cell_type(i)]++;
 
   // should do at least some compression
@@ -112,7 +112,7 @@ test_cube()
 
   const unsigned int        n_macro_cells = mf.n_macro_cells();
   std::vector<unsigned int> n_cell_types(4, 0);
-  for(unsigned int i = 0; i < n_macro_cells; ++i)
+  for (unsigned int i = 0; i < n_macro_cells; ++i)
     n_cell_types[mf.get_mapping_info().get_cell_type(i)]++;
 
   // should have one Cartesian cell and no other
@@ -130,10 +130,10 @@ test_parallelogram()
   deallog << "Parallelogram" << std::endl;
   Triangulation<dim> tria;
   Point<dim>         corners[dim];
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       corners[d][d] = 1.;
-      if(d > 0)
+      if (d > 0)
         corners[d][0] = 0.5 + 0.5 * d;
     }
   GridGenerator::parallelepiped(tria, corners);
@@ -154,7 +154,7 @@ test_parallelogram()
 
   const unsigned int        n_macro_cells = mf.n_macro_cells();
   std::vector<unsigned int> n_cell_types(4, 0);
-  for(unsigned int i = 0; i < n_macro_cells; ++i)
+  for (unsigned int i = 0; i < n_macro_cells; ++i)
     n_cell_types[mf.get_mapping_info().get_cell_type(i)]++;
 
   // should have one affine cell and no other

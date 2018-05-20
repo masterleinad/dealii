@@ -39,26 +39,26 @@ test_reset_vector_values(const bool reset_values, const int tape_index)
   std::vector<adouble> x(n, 1.0); // Dep. variable values initially set here
   std::vector<adouble> y(m, 1.0);
 
-  if(reset_values == false)
-    for(unsigned int i = 0; i < n; i++)
+  if (reset_values == false)
+    for (unsigned int i = 0; i < n; i++)
       xp[i] = (i + 1.0) / (2.0 + i);
 
   trace_on(tape_index);
-  for(unsigned int i = 0; i < n; i++)
+  for (unsigned int i = 0; i < n; i++)
     {
       x[i] <<= xp[i];
-      for(unsigned int j = 0; j < m; ++j)
+      for (unsigned int j = 0; j < m; ++j)
         y[j] *= (j + 1) * x[i];
     }
-  for(unsigned int j = 0; j < m; ++j)
+  for (unsigned int j = 0; j < m; ++j)
     y[j] >>= yp[j];
 
   trace_off();
   // tapestats(1, tape_stats);
 
   // --- Change values ---
-  if(reset_values == true)
-    for(unsigned int i = 0; i < n; i++)
+  if (reset_values == true)
+    for (unsigned int i = 0; i < n; i++)
       xp[i] = (i + 1.0) / (2.0 + i);
 
   // --- Functions ---
@@ -66,26 +66,26 @@ test_reset_vector_values(const bool reset_values, const int tape_index)
   function(tape_index, m, n, xp.data(), f);
 
   deallog << "Evaluation points:" << std::endl;
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     deallog << "  x[" << i << "]: " << xp[i] << std::endl;
 
   deallog << "Function values:" << std::endl;
-  for(unsigned int j = 0; j < m; ++j)
+  for (unsigned int j = 0; j < m; ++j)
     deallog << "  f[" << j << "]: " << f[j] << "  y[" << j << "]: " << yp[j]
             << std::endl;
 
   // --- Jacobian ---
 
   double** J = new double*[m];
-  for(unsigned int j = 0; j < m; ++j)
+  for (unsigned int j = 0; j < m; ++j)
     J[j] = new double[n];
 
   jacobian(tape_index, m, n, xp.data(), J);
 
   deallog << "Function jacobian J:" << std::endl;
-  for(unsigned int j = 0; j < m; j++)
+  for (unsigned int j = 0; j < m; j++)
     {
-      for(unsigned int i = 0; i < n; i++)
+      for (unsigned int i = 0; i < n; i++)
         deallog << J[j][i] << (i < n - 1 ? "," : "");
 
       deallog << std::endl;
@@ -96,7 +96,7 @@ test_reset_vector_values(const bool reset_values, const int tape_index)
   delete[] f;
   f = nullptr;
 
-  for(unsigned int j = 0; j < m; j++)
+  for (unsigned int j = 0; j < m; j++)
     delete[] J[j];
   delete[] J;
   J = nullptr;

@@ -37,7 +37,7 @@ test()
   Triangulation<dim, spacedim> triangulation;
 
   Point<spacedim> center;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     center[i] = 5 + i;
 
   const double inner_radius = 0.5, outer_radius = 1.0;
@@ -60,19 +60,19 @@ test()
   FEValues<dim, spacedim> fe_values(
     mapping, fe, quad, update_quadrature_points);
 
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
     {
       fe_values.reinit(cell);
       std::vector<Point<spacedim>> fev_qp = fe_values.get_quadrature_points();
-      for(unsigned int q = 0; q < fev_qp.size(); ++q)
+      for (unsigned int q = 0; q < fev_qp.size(); ++q)
         {
           const Point<spacedim> pq
             = mapping.transform_unit_to_real_cell(cell, quad.point(q));
 
-          if(pq.distance(fev_qp[q]) > 1e-10)
+          if (pq.distance(fev_qp[q]) > 1e-10)
             {
               deallog << "Expected: " << pq << ", got: " << fev_qp[q]
                       << std::endl;

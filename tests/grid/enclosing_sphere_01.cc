@@ -39,7 +39,7 @@ template <>
 void
 create_triangulation(const unsigned int case_no, Triangulation<2>& tria)
 {
-  switch(case_no)
+  switch (case_no)
     {
       case 0:
         GridGenerator::hyper_cube(tria, 1., 3.);
@@ -102,7 +102,7 @@ template <>
 void
 create_triangulation(const unsigned int case_no, Triangulation<3>& tria)
 {
-  switch(case_no)
+  switch (case_no)
     {
       case 0:
         GridGenerator::hyper_cube(tria, 1., 3.);
@@ -171,7 +171,7 @@ void
 test()
 {
   Triangulation<dim> tria;
-  for(unsigned int case_no = 0; case_no < 4; ++case_no)
+  for (unsigned int case_no = 0; case_no < 4; ++case_no)
     {
       create_triangulation(case_no, tria);
       const std::pair<Point<dim>, double> smallest_sphere
@@ -184,7 +184,7 @@ test()
 
       // Check that all the vertices are within the sphere
       // (sphere with thickness 100. *std::numeric_limits<double>::epsilon())
-      for(int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for (int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         AssertThrow(std::fabs(center.distance(tria.begin_active()->vertex(v)))
                       < radius + 100. * std::numeric_limits<double>::epsilon(),
                     ExcInternalError());

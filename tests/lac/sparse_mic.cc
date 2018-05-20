@@ -32,7 +32,7 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  for(unsigned int size = 4; size <= 16; size *= 2)
+  for (unsigned int size = 4; size <= 16; size *= 2)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -42,14 +42,14 @@ main()
       FDMatrix        testproblem(size, size);
       SparsityPattern structure(dim, dim, dim);
       //      testproblem.five_point_structure(structure);
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int i = 0; i < dim; ++i)
+        for (unsigned int j = 0; j < dim; ++j)
           structure.add(i, j);
       structure.compress();
       SparseMatrix<double> A(structure);
       testproblem.five_point(A);
 
-      for(unsigned int test = 0; test < 2; ++test)
+      for (unsigned int test = 0; test < 2; ++test)
         {
           deallog << "Test " << test << std::endl;
 
@@ -60,18 +60,18 @@ main()
           // 2, test with same
           // pattern as A
           SparsityPattern mic_pattern(dim, dim, dim);
-          switch(test)
+          switch (test)
             {
               case 0:
-                for(unsigned int i = 0; i < dim; ++i)
-                  for(unsigned int j = 0; j < dim; ++j)
+                for (unsigned int i = 0; i < dim; ++i)
+                  for (unsigned int j = 0; j < dim; ++j)
                     mic_pattern.add(i, j);
                 break;
 
               case 1:
-                for(unsigned int i = 0; i < dim; ++i)
-                  for(unsigned int j = 0; j < dim; ++j)
-                    if(structure(i, j) != SparsityPattern::invalid_entry)
+                for (unsigned int i = 0; i < dim; ++i)
+                  for (unsigned int j = 0; j < dim; ++j)
+                    if (structure(i, j) != SparsityPattern::invalid_entry)
                       mic_pattern.add(i, j);
                 break;
 
@@ -92,9 +92,9 @@ main()
           // preconditioner
           Vector<double> v(dim);
           Vector<double> tmp1(dim), tmp2(dim);
-          for(unsigned int i = 0; i < 3; ++i)
+          for (unsigned int i = 0; i < 3; ++i)
             {
-              for(unsigned int j = 0; j < dim; ++j)
+              for (unsigned int j = 0; j < dim; ++j)
                 v(j) = random_value<double>();
 
               A.vmult(tmp1, v);

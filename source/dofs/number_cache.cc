@@ -43,11 +43,11 @@ namespace internal
       const unsigned int n_procs = locally_owned_dofs_per_processor.size();
 
       // compress IndexSet representation before using it for anything else
-      for(unsigned int p = 0; p < n_procs; ++p)
+      for (unsigned int p = 0; p < n_procs; ++p)
         locally_owned_dofs_per_processor[p].compress();
 
       n_locally_owned_dofs_per_processor.resize(n_procs);
-      for(unsigned int p = 0; p < n_procs; ++p)
+      for (unsigned int p = 0; p < n_procs; ++p)
         n_locally_owned_dofs_per_processor[p]
           = locally_owned_dofs_per_processor[p].n_elements();
       n_locally_owned_dofs = n_locally_owned_dofs_per_processor[my_rank];

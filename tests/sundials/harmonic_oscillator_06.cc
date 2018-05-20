@@ -56,7 +56,7 @@ main(int argc, char** argv)
   SUNDIALS::ARKode<VectorType>::AdditionalData data;
   data.add_parameters(prm);
 
-  if(false)
+  if (false)
     {
       std::ofstream ofile(SOURCE_DIR "/harmonic_oscillator_06.prm");
       prm.print_parameters(ofile, ParameterHandler::ShortText);

@@ -34,7 +34,7 @@ template <typename VECTOR>
 void
 print(const VECTOR& vec)
 {
-  for(types::global_dof_index i = 0; i < vec.size(); ++i)
+  for (types::global_dof_index i = 0; i < vec.size(); ++i)
     {
       deallog << vec(i) << " ";
     }
@@ -221,7 +221,7 @@ main(int argc, char* argv[])
     const unsigned int                rc = 10;
     TrilinosWrappers::SparsityPattern sparsity_pattern(
       rc, rc, /*n_entries_per_row =*/1);
-    for(unsigned int i = 0; i < rc; ++i)
+    for (unsigned int i = 0; i < rc; ++i)
       {
         sparsity_pattern.add(i, i);
       }
@@ -232,7 +232,7 @@ main(int argc, char* argv[])
     b.reinit(A.locally_owned_domain_indices());
     TrilinosWrappers::MPI::Vector c;
     c.reinit(A.locally_owned_domain_indices());
-    for(unsigned int i = 0; i < rc; ++i)
+    for (unsigned int i = 0; i < rc; ++i)
       {
         A.set(i, i, 2.0);
         b(i) = i;
@@ -340,7 +340,7 @@ main(int argc, char* argv[])
           test_solver<SLVR>(A, b);
           deallog.pop();
         }
-      catch(...)
+      catch (...)
         {
           deallog.pop();
           deallog << "Known AztecOO error in SolverBicgstab" << std::endl;
@@ -420,7 +420,7 @@ main(int argc, char* argv[])
           test_solver<SLVR>(A, b);
           deallog.pop();
         }
-      catch(...)
+      catch (...)
         {
           deallog.pop();
           deallog << "Known AztecOO error in SolverTFQMR" << std::endl;

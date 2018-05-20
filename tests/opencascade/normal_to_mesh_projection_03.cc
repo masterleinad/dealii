@@ -52,7 +52,7 @@ main()
   pts.push_back(Point<3>(0, 0, -1));
 
   TopoDS_Edge edge1 = interpolation_curve(pts);
-  for(unsigned int i = 0; i < pts.size(); ++i)
+  for (unsigned int i = 0; i < pts.size(); ++i)
     pts[i] += Point<3>(0, 1, 0);
   TopoDS_Edge edge2 = interpolation_curve(pts);
 
@@ -85,7 +85,7 @@ main()
                 return OpenCASCADE::point_compare(p1, p2, direction, tolerance);
               });
 
-    for(auto p : spoints)
+    for (auto p : spoints)
       deallog << p << std::endl;
     deallog << "============" << std::endl;
   }
@@ -105,7 +105,7 @@ main()
                 return OpenCASCADE::point_compare(p1, p2, direction, tolerance);
               });
 
-    for(auto p : spoints)
+    for (auto p : spoints)
       deallog << p << std::endl;
   }
 }

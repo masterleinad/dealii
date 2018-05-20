@@ -594,7 +594,7 @@ namespace MeshWorker
       n_components(other.n_components)
   {
     fevalv.resize(other.fevalv.size());
-    for(unsigned int i = 0; i < other.fevalv.size(); ++i)
+    for (unsigned int i = 0; i < other.fevalv.size(); ++i)
       {
         const FEValuesBase<dim, sdim>& p = *other.fevalv[i];
         const FEValues<dim, sdim>*     pc
@@ -604,19 +604,19 @@ namespace MeshWorker
         const FESubfaceValues<dim, sdim>* ps
           = dynamic_cast<const FESubfaceValues<dim, sdim>*>(&p);
 
-        if(pc != nullptr)
+        if (pc != nullptr)
           fevalv[i]
             = std::make_shared<FEValues<dim, sdim>>(pc->get_mapping(),
                                                     pc->get_fe(),
                                                     pc->get_quadrature(),
                                                     pc->get_update_flags());
-        else if(pf != nullptr)
+        else if (pf != nullptr)
           fevalv[i]
             = std::make_shared<FEFaceValues<dim, sdim>>(pf->get_mapping(),
                                                         pf->get_fe(),
                                                         pf->get_quadrature(),
                                                         pf->get_update_flags());
-        else if(ps != nullptr)
+        else if (ps != nullptr)
           fevalv[i] = std::make_shared<FESubfaceValues<dim, sdim>>(
             ps->get_mapping(),
             ps->get_fe(),
@@ -638,7 +638,7 @@ namespace MeshWorker
     const BlockInfo*                                block_info)
   {
     fe_pointer = &el;
-    if(block_info == nullptr || block_info->local().size() == 0)
+    if (block_info == nullptr || block_info->local().size() == 0)
       {
         fevalv.resize(1);
         fevalv[0] = std::make_shared<FEVALUES>(mapping, el, quadrature, flags);
@@ -646,7 +646,7 @@ namespace MeshWorker
     else
       {
         fevalv.resize(el.n_base_elements());
-        for(unsigned int i = 0; i < fevalv.size(); ++i)
+        for (unsigned int i = 0; i < fevalv.size(); ++i)
           fevalv[i] = std::make_shared<FEVALUES>(
             mapping, el.base_element(i), quadrature, flags);
       }
@@ -683,17 +683,17 @@ namespace MeshWorker
   IntegrationInfo<dim, spacedim>::reinit(
     const DoFInfo<dim, spacedim, number>& info)
   {
-    for(unsigned int i = 0; i < fevalv.size(); ++i)
+    for (unsigned int i = 0; i < fevalv.size(); ++i)
       {
         FEValuesBase<dim, spacedim>& febase = *fevalv[i];
-        if(info.sub_number != numbers::invalid_unsigned_int)
+        if (info.sub_number != numbers::invalid_unsigned_int)
           {
             // This is a subface
             FESubfaceValues<dim, spacedim>& fe
               = dynamic_cast<FESubfaceValues<dim, spacedim>&>(febase);
             fe.reinit(info.cell, info.face_number, info.sub_number);
           }
-        else if(info.face_number != numbers::invalid_unsigned_int)
+        else if (info.face_number != numbers::invalid_unsigned_int)
           {
             // This is a face
             FEFaceValues<dim, spacedim>& fe
@@ -710,7 +710,7 @@ namespace MeshWorker
       }
 
     const bool split_fevalues = info.block_info != nullptr;
-    if(!global_data->empty())
+    if (!global_data->empty())
       fill_local_data(info, split_fevalues);
   }
 
@@ -723,11 +723,11 @@ namespace MeshWorker
                                                              unsigned int fp,
                                                              bool         force)
   {
-    if(force || cell_quadrature.size() == 0)
+    if (force || cell_quadrature.size() == 0)
       cell_quadrature = QGauss<dim>(cp);
-    if(force || boundary_quadrature.size() == 0)
+    if (force || boundary_quadrature.size() == 0)
       boundary_quadrature = QGauss<dim - 1>(bp);
-    if(force || face_quadrature.size() == 0)
+    if (force || face_quadrature.size() == 0)
       face_quadrature = QGauss<dim - 1>(fp);
   }
 

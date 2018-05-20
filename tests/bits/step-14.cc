@@ -116,12 +116,12 @@ namespace Evaluation
       = dof_handler.begin_active(),
       endc                      = dof_handler.end();
     bool evaluation_point_found = false;
-    for(; (cell != endc) && !evaluation_point_found; ++cell)
-      for(unsigned int vertex = 0;
-          vertex < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex)
-        if(cell->vertex(vertex).distance(evaluation_point)
-           < cell->diameter() * 1e-8)
+    for (; (cell != endc) && !evaluation_point_found; ++cell)
+      for (unsigned int vertex = 0;
+           vertex < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex)
+        if (cell->vertex(vertex).distance(evaluation_point)
+            < cell->diameter() * 1e-8)
           {
             point_value = solution(cell->vertex_dof_index(vertex, 0));
 
@@ -178,18 +178,18 @@ namespace Evaluation
       = dof_handler.begin_active(),
       endc                             = dof_handler.end();
     unsigned int evaluation_point_hits = 0;
-    for(; cell != endc; ++cell)
-      for(unsigned int vertex = 0;
-          vertex < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex)
-        if(cell->vertex(vertex) == evaluation_point)
+    for (; cell != endc; ++cell)
+      for (unsigned int vertex = 0;
+           vertex < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex)
+        if (cell->vertex(vertex) == evaluation_point)
           {
             fe_values.reinit(cell);
             fe_values.get_function_gradients(solution, solution_gradients);
 
             unsigned int q_point = 0;
-            for(; q_point < solution_gradients.size(); ++q_point)
-              if(fe_values.quadrature_point(q_point) == evaluation_point)
+            for (; q_point < solution_gradients.size(); ++q_point)
+              if (fe_values.quadrature_point(q_point) == evaluation_point)
                 break;
 
             Assert(q_point < solution_gradients.size(), ExcInternalError());
@@ -405,7 +405,7 @@ namespace LaplaceSolver
 
     {
       Threads::Mutex mutex;
-      for(unsigned int thread = 0; thread < n_threads; ++thread)
+      for (unsigned int thread = 0; thread < n_threads; ++thread)
         {
           assemble_matrix(linear_system,
                           thread_ranges[thread].first,
@@ -445,25 +445,25 @@ namespace LaplaceSolver
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    for(typename DoFHandler<dim>::active_cell_iterator cell = begin_cell;
-        cell != end_cell;
-        ++cell)
+    for (typename DoFHandler<dim>::active_cell_iterator cell = begin_cell;
+         cell != end_cell;
+         ++cell)
       {
         cell_matrix = 0;
 
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                     * fe_values.shape_grad(j, q_point)
                                     * fe_values.JxW(q_point));
 
         cell->get_dof_indices(local_dof_indices);
         Threads::Mutex::ScopedLock lock(mutex);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             linear_system.matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
       };
@@ -612,7 +612,7 @@ namespace LaplaceSolver
     typename DoFHandler<dim>::active_cell_iterator cell
       = this->dof_handler.begin_active(),
       endc = this->dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_rhs = 0;
 
@@ -620,13 +620,13 @@ namespace LaplaceSolver
 
         rhs_function->value_list(fe_values.get_quadrature_points(), rhs_values);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             cell_rhs(i) += (fe_values.shape_value(i, q_point)
                             * rhs_values[q_point] * fe_values.JxW(q_point));
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           rhs(local_dof_indices[i]) += cell_rhs(i);
       }
   }
@@ -770,7 +770,7 @@ namespace LaplaceSolver
     typename DoFHandler<dim>::active_cell_iterator cell
       = this->dof_handler.begin_active(),
       endc = this->dof_handler.end();
-    for(unsigned int cell_index = 0; cell != endc; ++cell, ++cell_index)
+    for (unsigned int cell_index = 0; cell != endc; ++cell, ++cell_index)
       estimated_error(cell_index) *= weighting_function->value(cell->center());
 
     GridRefinement::refine_and_coarsen_fixed_number(
@@ -875,7 +875,7 @@ namespace Data
     const unsigned int /*component*/) const
   {
     double q = p(0);
-    for(unsigned int i = 1; i < dim; ++i)
+    for (unsigned int i = 1; i < dim; ++i)
       q += std::sin(10 * p(i) + 5 * p(0) * p(0));
     const double exponential = std::exp(q);
     return exponential;
@@ -888,11 +888,11 @@ namespace Data
     const unsigned int /*component*/) const
   {
     double q = p(0);
-    for(unsigned int i = 1; i < dim; ++i)
+    for (unsigned int i = 1; i < dim; ++i)
       q += std::sin(10 * p(i) + 5 * p(0) * p(0));
     const double u  = std::exp(q);
     double       t1 = 1, t2 = 0, t3 = 0;
-    for(unsigned int i = 1; i < dim; ++i)
+    for (unsigned int i = 1; i < dim; ++i)
       {
         t1 += std::cos(10 * p(i) + 5 * p(0) * p(0)) * 10 * p(0);
         t2 += 10 * std::cos(10 * p(i) + 5 * p(0) * p(0))
@@ -976,9 +976,9 @@ namespace Data
       = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
     std::vector<CellData<dim>> cells(n_cells, CellData<dim>());
-    for(unsigned int i = 0; i < n_cells; ++i)
+    for (unsigned int i = 0; i < n_cells; ++i)
       {
-        for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+        for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
           cells[i].vertices[j] = cell_vertices[i][j];
         cells[i].material_id = 0;
       };
@@ -1034,12 +1034,12 @@ namespace DualFunctional
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      for(unsigned int vertex = 0;
-          vertex < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex)
-        if(cell->vertex(vertex).distance(evaluation_point)
-           < cell->diameter() * 1e-8)
+    for (; cell != endc; ++cell)
+      for (unsigned int vertex = 0;
+           vertex < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex)
+        if (cell->vertex(vertex).distance(evaluation_point)
+            < cell->diameter() * 1e-8)
           {
             rhs(cell->vertex_dof_index(vertex, 0)) = 1;
             return;
@@ -1096,21 +1096,21 @@ namespace DualFunctional
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->center().distance(evaluation_point) <= cell->diameter())
+    for (; cell != endc; ++cell)
+      if (cell->center().distance(evaluation_point) <= cell->diameter())
         {
           fe_values.reinit(cell);
           cell_rhs = 0;
 
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int q = 0; q < n_q_points; ++q)
             {
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 cell_rhs(i) += fe_values.shape_grad(i, q)[0] * fe_values.JxW(q);
               total_volume += fe_values.JxW(q);
             };
 
           cell->get_dof_indices(local_dof_indices);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             rhs(local_dof_indices[i]) += cell_rhs(i);
         };
 
@@ -1413,9 +1413,9 @@ namespace LaplaceSolver
     Vector<float> error_indicators(this->triangulation->n_active_cells());
     estimate_error(error_indicators);
 
-    for(Vector<float>::iterator i = error_indicators.begin();
-        i != error_indicators.end();
-        ++i)
+    for (Vector<float>::iterator i = error_indicators.begin();
+         i != error_indicators.end();
+         ++i)
       *i = std::fabs(*i);
 
     GridRefinement::refine_and_coarsen_fixed_fraction(
@@ -1486,18 +1486,19 @@ namespace LaplaceSolver
                                       dual_weights);
 
     FaceIntegrals face_integrals;
-    for(active_cell_iterator cell = dual_solver.dof_handler.begin_active();
-        cell != dual_solver.dof_handler.end();
-        ++cell)
-      for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
-          ++face_no)
+    for (active_cell_iterator cell = dual_solver.dof_handler.begin_active();
+         cell != dual_solver.dof_handler.end();
+         ++cell)
+      for (unsigned int face_no = 0;
+           face_no < GeometryInfo<dim>::faces_per_cell;
+           ++face_no)
         face_integrals[cell->face(face_no)] = -1e20;
 
     error_indicators.reinit(
       dual_solver.dof_handler.get_triangulation().n_active_cells());
 
     const unsigned int n_threads = MultithreadInfo::n_threads();
-    for(unsigned int i = 0; i < n_threads; ++i)
+    for (unsigned int i = 0; i < n_threads; ++i)
       {
         estimate_some(primal_solution,
                       dual_weights,
@@ -1508,11 +1509,12 @@ namespace LaplaceSolver
       }
 
     unsigned int present_cell = 0;
-    for(active_cell_iterator cell = dual_solver.dof_handler.begin_active();
-        cell != dual_solver.dof_handler.end();
-        ++cell, ++present_cell)
-      for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
-          ++face_no)
+    for (active_cell_iterator cell = dual_solver.dof_handler.begin_active();
+         cell != dual_solver.dof_handler.end();
+         ++cell, ++present_cell)
+      for (unsigned int face_no = 0;
+           face_no < GeometryInfo<dim>::faces_per_cell;
+           ++face_no)
         {
           Assert(face_integrals.find(cell->face(face_no))
                    != face_integrals.end(),
@@ -1543,16 +1545,16 @@ namespace LaplaceSolver
     FaceData face_data(*dual_solver.fe, *dual_solver.face_quadrature);
 
     active_cell_iterator cell = dual_solver.dof_handler.begin_active();
-    for(unsigned int t = 0;
-        (t < this_thread) && (cell != dual_solver.dof_handler.end());
-        ++t, ++cell)
+    for (unsigned int t = 0;
+         (t < this_thread) && (cell != dual_solver.dof_handler.end());
+         ++t, ++cell)
       {
       }
 
-    if(cell == dual_solver.dof_handler.end())
+    if (cell == dual_solver.dof_handler.end())
       return;
 
-    for(unsigned int cell_index = this_thread; true;)
+    for (unsigned int cell_index = this_thread; true;)
       {
         integrate_over_cell(cell,
                             cell_index,
@@ -1561,26 +1563,26 @@ namespace LaplaceSolver
                             cell_data,
                             error_indicators);
 
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<dim>::faces_per_cell;
-            ++face_no)
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
           {
-            if(cell->face(face_no)->at_boundary())
+            if (cell->face(face_no)->at_boundary())
               {
                 face_integrals[cell->face(face_no)] = 0;
                 continue;
               };
 
-            if((cell->neighbor(face_no)->has_children() == false)
-               && (cell->neighbor(face_no)->level() == cell->level())
-               && (cell->neighbor(face_no)->index() < cell->index()))
+            if ((cell->neighbor(face_no)->has_children() == false)
+                && (cell->neighbor(face_no)->level() == cell->level())
+                && (cell->neighbor(face_no)->index() < cell->index()))
               continue;
 
-            if(cell->at_boundary(face_no) == false)
-              if(cell->neighbor(face_no)->level() < cell->level())
+            if (cell->at_boundary(face_no) == false)
+              if (cell->neighbor(face_no)->level() < cell->level())
                 continue;
 
-            if(cell->face(face_no)->has_children() == false)
+            if (cell->face(face_no)->has_children() == false)
               integrate_over_regular_face(cell,
                                           face_no,
                                           primal_solution,
@@ -1596,13 +1598,13 @@ namespace LaplaceSolver
                                             face_integrals);
           };
 
-        for(unsigned int t = 0;
-            ((t < n_threads) && (cell != dual_solver.dof_handler.end()));
-            ++t, ++cell, ++cell_index)
+        for (unsigned int t = 0;
+             ((t < n_threads) && (cell != dual_solver.dof_handler.end()));
+             ++t, ++cell, ++cell_index)
           {
           }
 
-        if(cell == dual_solver.dof_handler.end())
+        if (cell == dual_solver.dof_handler.end())
           break;
       };
   }
@@ -1627,7 +1629,7 @@ namespace LaplaceSolver
                                             cell_data.dual_weights);
 
     double sum = 0;
-    for(unsigned int p = 0; p < cell_data.fe_values.n_quadrature_points; ++p)
+    for (unsigned int p = 0; p < cell_data.fe_values.n_quadrature_points; ++p)
       sum += ((cell_data.rhs_values[p] + trace(cell_data.cell_grad_grads[p]))
               * cell_data.dual_weights[p] * cell_data.fe_values.JxW(p));
     error_indicators(cell_index) += sum;
@@ -1658,7 +1660,7 @@ namespace LaplaceSolver
     face_data.fe_face_values_neighbor.get_function_gradients(
       primal_solution, face_data.neighbor_grads);
 
-    for(unsigned int p = 0; p < n_q_points; ++p)
+    for (unsigned int p = 0; p < n_q_points; ++p)
       face_data.jump_residual[p]
         = ((face_data.cell_grads[p] - face_data.neighbor_grads[p])
            * face_data.fe_face_values_cell.normal_vector(p));
@@ -1667,7 +1669,7 @@ namespace LaplaceSolver
                                                       face_data.dual_weights);
 
     double face_integral = 0;
-    for(unsigned int p = 0; p < n_q_points; ++p)
+    for (unsigned int p = 0; p < n_q_points; ++p)
       face_integral += (face_data.jump_residual[p] * face_data.dual_weights[p]
                         * face_data.fe_face_values_cell.JxW(p));
 
@@ -1699,8 +1701,8 @@ namespace LaplaceSolver
 
     const unsigned int neighbor_neighbor = cell->neighbor_of_neighbor(face_no);
 
-    for(unsigned int subface_no = 0; subface_no < face->n_children();
-        ++subface_no)
+    for (unsigned int subface_no = 0; subface_no < face->n_children();
+         ++subface_no)
       {
         const active_cell_iterator neighbor_child
           = cell->neighbor_child_on_subface(face_no, subface_no);
@@ -1716,7 +1718,7 @@ namespace LaplaceSolver
         face_data.fe_face_values_neighbor.get_function_gradients(
           primal_solution, face_data.neighbor_grads);
 
-        for(unsigned int p = 0; p < n_q_points; ++p)
+        for (unsigned int p = 0; p < n_q_points; ++p)
           face_data.jump_residual[p]
             = ((face_data.neighbor_grads[p] - face_data.cell_grads[p])
                * face_data.fe_face_values_neighbor.normal_vector(p));
@@ -1725,7 +1727,7 @@ namespace LaplaceSolver
           dual_weights, face_data.dual_weights);
 
         double face_integral = 0;
-        for(unsigned int p = 0; p < n_q_points; ++p)
+        for (unsigned int p = 0; p < n_q_points; ++p)
           face_integral
             += (face_data.jump_residual[p] * face_data.dual_weights[p]
                 * face_data.fe_face_values_neighbor.JxW(p));
@@ -1733,8 +1735,8 @@ namespace LaplaceSolver
       };
 
     double sum = 0;
-    for(unsigned int subface_no = 0; subface_no < face->n_children();
-        ++subface_no)
+    for (unsigned int subface_no = 0; subface_no < face->n_children();
+         ++subface_no)
       {
         Assert(face_integrals.find(face->child(subface_no))
                  != face_integrals.end(),
@@ -1809,7 +1811,7 @@ Framework<dim>::run(const ProblemDescription& descriptor)
   const QGauss<dim - 1> face_quadrature(descriptor.dual_fe_degree + 1);
 
   LaplaceSolver::Base<dim>* solver = nullptr;
-  switch(descriptor.refinement_criterion)
+  switch (descriptor.refinement_criterion)
     {
       case ProblemDescription::dual_weighted_error_estimator:
         {
@@ -1866,7 +1868,7 @@ Framework<dim>::run(const ProblemDescription& descriptor)
         AssertThrow(false, ExcInternalError());
     };
 
-  for(unsigned int step = 0; true; ++step)
+  for (unsigned int step = 0; true; ++step)
     {
       deallog << "Refinement cycle: " << step << std::endl;
 
@@ -1877,16 +1879,16 @@ Framework<dim>::run(const ProblemDescription& descriptor)
       deallog << "   Number of degrees of freedom=" << solver->n_dofs()
               << std::endl;
 
-      for(typename EvaluatorList::const_iterator e
-          = descriptor.evaluator_list.begin();
-          e != descriptor.evaluator_list.end();
-          ++e)
+      for (typename EvaluatorList::const_iterator e
+           = descriptor.evaluator_list.begin();
+           e != descriptor.evaluator_list.end();
+           ++e)
         {
           (*e)->set_refinement_cycle(step);
           solver->postprocess(**e);
         };
 
-      if(solver->n_dofs() < descriptor.max_degrees_of_freedom)
+      if (solver->n_dofs() < descriptor.max_degrees_of_freedom)
         solver->refine_grid();
       else
         break;
@@ -1935,7 +1937,7 @@ main()
       Framework<dim>::run(descriptor);
     }
 
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -1948,7 +1950,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

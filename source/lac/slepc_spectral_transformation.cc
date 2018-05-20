@@ -37,7 +37,7 @@ namespace SLEPcWrappers
 
   TransformationBase::~TransformationBase()
   {
-    if(st != nullptr)
+    if (st != nullptr)
       {
         const PetscErrorCode ierr = STDestroy(&st);
         (void) ierr;

@@ -1128,7 +1128,7 @@ inline void
 Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
                                      std::vector<OtherNumber>&     values) const
 {
-  for(size_type i = 0; i < indices.size(); ++i)
+  for (size_type i = 0; i < indices.size(); ++i)
     values[i] = operator()(indices[i]);
 }
 
@@ -1139,7 +1139,7 @@ Vector<Number>::extract_subvector_to(ForwardIterator       indices_begin,
                                      const ForwardIterator indices_end,
                                      OutputIterator        values_begin) const
 {
-  while(indices_begin != indices_end)
+  while (indices_begin != indices_end)
     {
       *values_begin = operator()(*indices_begin);
       indices_begin++;
@@ -1187,7 +1187,7 @@ Vector<Number>::add(const size_type    n_indices,
                     const size_type*   indices,
                     const OtherNumber* values)
 {
-  for(size_type i = 0; i < n_indices; ++i)
+  for (size_type i = 0; i < n_indices; ++i)
     {
       Assert(indices[i] < vec_size, ExcIndexRange(indices[i], 0, vec_size));
       Assert(

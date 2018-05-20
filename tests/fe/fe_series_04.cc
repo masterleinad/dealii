@@ -83,7 +83,7 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   hp::FECollection<dim> fe_collection;
   hp::QCollection<dim>  quadrature_formula;
 
-  for(unsigned int p = poly_degree; p <= poly_degree + 3; p++)
+  for (unsigned int p = poly_degree; p <= poly_degree + 3; p++)
     {
       fe_collection.push_back(dealii::FE_Q<dim>(p));
       quadrature_formula.push_back(dealii::QGauss<dim>(p + 1 + 5));
@@ -115,14 +115,14 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
     legendre.calculate(local_dof_values, cell_active_fe_index, coeff_out);
 
     deallog << "local dofs:";
-    for(unsigned int i = 0; i < cell_n_dofs; i++)
+    for (unsigned int i = 0; i < cell_n_dofs; i++)
       dealii::deallog << " " << local_dof_values[i];
 
     dealii::deallog << std::endl;
   }
 
   deallog << "calculated:" << std::endl;
-  for(unsigned int i = 0; i < N; i++)
+  for (unsigned int i = 0; i < N; i++)
     deallog << coeff_out[i] << std::endl;
 
   std::vector<double> coeff_exp(3);
@@ -131,7 +131,7 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   coeff_exp[1] = 3.123557585310879e-4;
   coeff_exp[2] = 2.104375000953028e-4;
   deallog << "exact:" << std::endl;
-  for(unsigned int i = 0; i < coeff_exp.size(); i++)
+  for (unsigned int i = 0; i < coeff_exp.size(); i++)
     deallog << coeff_exp[i] << std::endl;
 
   dof_handler.clear();
@@ -146,10 +146,10 @@ test_legendre_orthonormal(const unsigned int N)
 {
   const unsigned int dim = 1;
   deallog << "Pl @ -1;0;1" << std::endl;
-  for(unsigned int l = 0; l < N; l++)
+  for (unsigned int l = 0; l < N; l++)
     {
       deallog << "l=" << l << ": ";
-      for(double x = -1.0; x <= 1.0; x += 1.0)
+      for (double x = -1.0; x <= 1.0; x += 1.0)
         deallog << gsl_sf_legendre_Pl(l, x) << " ";
 
       deallog << std::endl;
@@ -157,11 +157,11 @@ test_legendre_orthonormal(const unsigned int N)
 
   QGauss<dim> quadrature(8);
   deallog << "orthogonality: " << std::endl;
-  for(int k1 = 0; k1 < N; k1++)
-    for(int k2 = 0; k2 < N; k2++)
+  for (int k1 = 0; k1 < N; k1++)
+    for (int k2 = 0; k2 < N; k2++)
       {
         double ortho = 0;
-        for(unsigned int q = 0; q < quadrature.size(); ++q)
+        for (unsigned int q = 0; q < quadrature.size(); ++q)
           {
             const Point<dim>& x_q = quadrature.point(q);
             const double      m   = 0.5;              // mid-point

@@ -31,13 +31,13 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   IndexSet block1(10);
-  if(myid == 0)
+  if (myid == 0)
     block1.add_range(0, 7);
-  if(myid == 1)
+  if (myid == 1)
     block1.add_range(7, 10);
 
   IndexSet block2(numproc);
@@ -69,14 +69,14 @@ test()
         typename LA::MPI::BlockVector x = v_1;
         x                               = v_2; // error
       }
-    catch(const ExceptionBase& e)
+    catch (const ExceptionBase& e)
       {
         deallog << "Exception: " << e.get_exc_name() << std::endl;
       }
   }
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

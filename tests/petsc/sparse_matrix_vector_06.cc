@@ -25,11 +25,11 @@ void
 test(PETScWrappers::MPI::Vector& v)
 {
   PETScWrappers::SparseMatrix m(v.size(), v.size(), v.size());
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.m(); ++j)
       m.set(i, j, i + 2 * j);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
 
   m.compress(VectorOperation::insert);
@@ -39,12 +39,12 @@ test(PETScWrappers::MPI::Vector& v)
   const PetscScalar s = m.matrix_norm_square(v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     Assert(v(i) == i, ExcInternalError());
 
   PetscScalar result = 0;
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.m(); ++j)
       result += (i + 2 * j) * j * i;
 
   Assert(s == result, ExcInternalError());
@@ -67,7 +67,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -81,7 +81,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

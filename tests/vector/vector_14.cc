@@ -27,9 +27,9 @@ test(Vector<double>& v)
   // actually wrote elements to
   std::vector<bool> pattern(v.size(), false);
   bool              flag = false;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     {
-      if(flag == true)
+      if (flag == true)
         v(i) += i;
       else
         v(i) = i;
@@ -42,7 +42,7 @@ test(Vector<double>& v)
 
   // check that they are ok, and this time
   // all of them
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     AssertThrow(((pattern[i] == true) && (v(i) == i))
                   || ((pattern[i] == false) && (v(i) == 0)),
                 ExcInternalError());
@@ -60,7 +60,7 @@ main()
       Vector<double> v(100);
       test(v);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -74,7 +74,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

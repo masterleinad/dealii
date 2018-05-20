@@ -61,7 +61,7 @@ VectorBoundaryValues<dim>::vector_value(const Point<dim>&,
   Assert(values.size() == dim + 1,
          ExcDimensionMismatch(values.size(), dim + 1));
 
-  for(unsigned int d = 0; d < dim + 1; ++d)
+  for (unsigned int d = 0; d < dim + 1; ++d)
     values(d) = 13.; //+d;
 }
 
@@ -123,7 +123,7 @@ FindBug<dim>::dirichlet_conditions()
 
   // This is just for the final
   // output-test
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     dirichlet_dofs[i] = 1.;
 
   // Here comes the crucial call....
@@ -148,9 +148,9 @@ FindBug<dim>::dirichlet_conditions()
   // to 1, and interpolate_b_v should
   // have overwritten those for
   // component 0 by 0)
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     {
-      if(fixed_dofs[i] == true)
+      if (fixed_dofs[i] == true)
         {
           AssertThrow(dirichlet_dofs[i] == 13, ExcInternalError());
         }
@@ -169,8 +169,8 @@ FindBug<dim>::dirichlet_conditions()
                                            VectorBoundaryValues<dim>(),
                                            dirichlet_dofs,
                                            component_mask);
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    if(fixed_dofs[i] == true)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    if (fixed_dofs[i] == true)
       deallog << i << " " << dirichlet_dofs[i] << std::endl;
 }
 

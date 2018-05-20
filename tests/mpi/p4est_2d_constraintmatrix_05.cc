@@ -69,8 +69,8 @@ test()
 
   x1 -= x_ref;
   double err = x1.linfty_norm();
-  if(err > 1.0e-12)
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (err > 1.0e-12)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << "err:" << err << std::endl;
 
   // now test the same thing with a fresh vector
@@ -81,11 +81,11 @@ test()
   cm.distribute(x2);
   x2 -= x_ref;
   err = x2.linfty_norm();
-  if(err > 1.0e-12)
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (err > 1.0e-12)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << "err:" << err << std::endl;
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -98,7 +98,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

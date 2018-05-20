@@ -146,7 +146,7 @@ test()
   matrix_free->initialize_dof_vector(dst3);
   matrix_free->initialize_dof_vector(dst4);
 
-  for(unsigned int i = 0; i < src.local_size(); ++i)
+  for (unsigned int i = 0; i < src.local_size(); ++i)
     src.local_element(i) = random_value<NumberType>();
 
   MatrixFreeOperators::MassOperator<
@@ -176,15 +176,15 @@ test()
     typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin_active(),
                                             endc = dof_handler.end();
     std::vector<bool> vertex_touched(triangulation.n_vertices(), false);
-    for(cell = dof_handler.begin_active(); cell != endc; ++cell)
-      for(unsigned int vertex_no = 0;
-          vertex_no < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex_no)
-        if(vertex_touched[cell->vertex_index(vertex_no)] == false)
+    for (cell = dof_handler.begin_active(); cell != endc; ++cell)
+      for (unsigned int vertex_no = 0;
+           vertex_no < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex_no)
+        if (vertex_touched[cell->vertex_index(vertex_no)] == false)
           {
             Point<dim>&    v = cell->vertex(vertex_no);
             Tensor<1, dim> d;
-            for(unsigned int i = 0; i < dim; ++i)
+            for (unsigned int i = 0; i < dim; ++i)
               d[i] = displacement_function.value(v, i);
 
             v += d;

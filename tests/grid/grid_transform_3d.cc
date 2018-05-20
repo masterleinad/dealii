@@ -43,19 +43,19 @@ main()
   Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                            endc = tria.end();
 
-  for(cell = tria.begin_active(); cell != endc; ++cell)
-    if((cell->center()[0] - .2) * (cell->center()[0] - .2)
-         + (cell->center()[2] - cell->center()[1] / 4)
-             * (cell->center()[2] - cell->center()[1] / 4)
-       < cell->diameter() * cell->diameter())
+  for (cell = tria.begin_active(); cell != endc; ++cell)
+    if ((cell->center()[0] - .2) * (cell->center()[0] - .2)
+          + (cell->center()[2] - cell->center()[1] / 4)
+              * (cell->center()[2] - cell->center()[1] / 4)
+        < cell->diameter() * cell->diameter())
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  for(cell = tria.begin_active(); cell != endc; ++cell)
-    if((cell->center()[0] - .2) * (cell->center()[0] - .2)
-         + (cell->center()[2] - cell->center()[1] / 4)
-             * (cell->center()[2] - cell->center()[1] / 4)
-       < cell->diameter() * cell->diameter())
+  for (cell = tria.begin_active(); cell != endc; ++cell)
+    if ((cell->center()[0] - .2) * (cell->center()[0] - .2)
+          + (cell->center()[2] - cell->center()[1] / 4)
+              * (cell->center()[2] - cell->center()[1] / 4)
+        < cell->diameter() * cell->diameter())
       cell->set_refine_flag();
     else
       cell->set_coarsen_flag();
@@ -70,15 +70,15 @@ main()
   }
 
   Triangulation<dim>::face_iterator face;
-  for(cell = tria.begin_active(); cell != endc; ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
-        ++face_no)
+  for (cell = tria.begin_active(); cell != endc; ++cell)
+    for (unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+         ++face_no)
       {
         face = cell->face(face_no);
-        if(face->at_boundary())
-          for(unsigned int vertex_no = 0;
-              vertex_no < GeometryInfo<dim>::vertices_per_face;
-              ++vertex_no)
+        if (face->at_boundary())
+          for (unsigned int vertex_no = 0;
+               vertex_no < GeometryInfo<dim>::vertices_per_face;
+               ++vertex_no)
             {
               const Point<dim>& old_vertex = face->vertex(vertex_no);
 

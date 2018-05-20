@@ -51,7 +51,7 @@ test()
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_ball(triangulation);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
@@ -77,7 +77,7 @@ test()
   deallog << "constraints:" << std::endl;
   constraints.print(deallog.get_file_stream());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 

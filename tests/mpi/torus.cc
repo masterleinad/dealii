@@ -71,7 +71,7 @@ main(int argc, char* argv[])
     argc, argv, testing_max_num_threads());
   MPILogInitAll log;
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       static std::ofstream logfile("output");
       deallog.attach(logfile);
@@ -86,33 +86,33 @@ main(int argc, char* argv[])
 
   // create a set of all cells, and insert all cells into it
   std::set<parallel::distributed::Triangulation<2, 3>::cell_iterator> cells;
-  for(parallel::distributed::Triangulation<2, 3>::cell_iterator cell
-      = triangulation.begin(0);
-      cell != triangulation.end(0);
-      ++cell)
+  for (parallel::distributed::Triangulation<2, 3>::cell_iterator cell
+       = triangulation.begin(0);
+       cell != triangulation.end(0);
+       ++cell)
     {
       cells.insert(cell);
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "Adding cell " << cell << std::endl;
     }
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "List contains " << cells.size() << " items" << std::endl;
 
   // verify that every cell is in there
-  for(parallel::distributed::Triangulation<2, 3>::cell_iterator cell
-      = triangulation.begin(0);
-      cell != triangulation.end(0);
-      ++cell)
+  for (parallel::distributed::Triangulation<2, 3>::cell_iterator cell
+       = triangulation.begin(0);
+       cell != triangulation.end(0);
+       ++cell)
     AssertThrow(cells.find(cell) != cells.end(), ExcMissingCell(cell));
 
   // refine triangulation and verify that every coarse mesh cell is in there
   triangulation.refine_global(2);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "List contains " << cells.size() << " items" << std::endl;
-  for(parallel::distributed::Triangulation<2, 3>::cell_iterator cell
-      = triangulation.begin(0);
-      cell != triangulation.end(0);
-      ++cell)
+  for (parallel::distributed::Triangulation<2, 3>::cell_iterator cell
+       = triangulation.begin(0);
+       cell != triangulation.end(0);
+       ++cell)
     AssertThrow(cells.find(cell) != cells.end(), ExcMissingCell(cell));
 }

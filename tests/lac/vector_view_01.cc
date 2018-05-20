@@ -27,13 +27,13 @@ checkReadOnlyConstructor(const Vector<number>& V)
   VectorView<number> VV(V.size(), V.begin());
 
   deallog << "Printing Vector<number>" << std::endl;
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for (unsigned int i = 0; i < V.size(); ++i)
     deallog << V(i) << '\t';
   deallog << std::endl;
 
   deallog << "Printing VectorView<number> pointing to Vector<number>"
           << std::endl;
-  for(unsigned int i = 0; i < VV.size(); ++i)
+  for (unsigned int i = 0; i < VV.size(); ++i)
     deallog << VV(i) << '\t';
   deallog << std::endl;
 

@@ -43,7 +43,7 @@ print_dofs(const hp::DoFHandler<2>::active_cell_iterator& cell)
   std::vector<types::global_dof_index> dof_indices(
     cell->get_fe().dofs_per_cell);
   cell->get_dof_indices(dof_indices);
-  for(unsigned int i = 0; i < dof_indices.size(); ++i)
+  for (unsigned int i = 0; i < dof_indices.size(); ++i)
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }

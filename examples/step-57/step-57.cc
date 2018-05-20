@@ -176,7 +176,7 @@ namespace Step57
   {
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
-    if(component == 0 && std::abs(p[dim - 1] - 1.0) < 1e-10)
+    if (component == 0 && std::abs(p[dim - 1] - 1.0) < 1e-10)
       return 1.0;
 
     return 0;
@@ -187,7 +187,7 @@ namespace Step57
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                     Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
+    for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
   }
 
@@ -392,7 +392,7 @@ namespace Step57
   StationaryNavierStokes<dim>::assemble(const bool initial_step,
                                         const bool assemble_matrix)
   {
-    if(assemble_matrix)
+    if (assemble_matrix)
       system_matrix = 0;
 
     system_rhs = 0;
@@ -432,7 +432,7 @@ namespace Step57
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
 
@@ -455,9 +455,9 @@ namespace Step57
         // zero. Since the pressure mass matrix is used while creating the
         // preconditioner, we assemble it here and then move it into a
         // separate SparseMatrix at the end (same as in step-22).
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 div_phi_u[k]  = fe_values[velocities].divergence(k, q);
                 grad_phi_u[k] = fe_values[velocities].gradient(k, q);
@@ -465,11 +465,11 @@ namespace Step57
                 phi_p[k]      = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                if(assemble_matrix)
+                if (assemble_matrix)
                   {
-                    for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                    for (unsigned int j = 0; j < dofs_per_cell; ++j)
                       {
                         local_matrix(i, j)
                           += (viscosity
@@ -506,7 +506,7 @@ namespace Step57
         const ConstraintMatrix& constraints_used
           = initial_step ? nonzero_constraints : zero_constraints;
 
-        if(assemble_matrix)
+        if (assemble_matrix)
           {
             constraints_used.distribute_local_to_global(local_matrix,
                                                         local_rhs,
@@ -521,7 +521,7 @@ namespace Step57
           }
       }
 
-    if(assemble_matrix)
+    if (assemble_matrix)
       {
         // Finally we move pressure mass matrix into a separate matrix:
 
@@ -660,8 +660,8 @@ namespace Step57
     double last_res;
     bool   first_step = is_initial_step;
 
-    for(unsigned int refinement = 0; refinement < max_refinement + 1;
-        ++refinement)
+    for (unsigned int refinement = 0; refinement < max_refinement + 1;
+         ++refinement)
       {
         unsigned int outer_iteration = 0;
         last_res                     = 1.0;
@@ -672,10 +672,10 @@ namespace Step57
         std::cout << "viscosity= " << viscosity << std::endl;
         std::cout << "*****************************************" << std::endl;
 
-        while((first_step || (current_res > tolerance))
-              && outer_iteration < max_iteration)
+        while ((first_step || (current_res > tolerance))
+               && outer_iteration < max_iteration)
           {
-            if(first_step)
+            if (first_step)
               {
                 setup_dofs();
                 initialize_system();
@@ -706,7 +706,7 @@ namespace Step57
                 // that the new residual is smaller than the one of last step, which is done
                 // in the following loop. Also the line search method can be located in step-15.
 
-                for(double alpha = 1.0; alpha > 1e-5; alpha *= 0.5)
+                for (double alpha = 1.0; alpha > 1e-5; alpha *= 0.5)
                   {
                     evaluation_point = present_solution;
                     evaluation_point.add(alpha, newton_update);
@@ -716,7 +716,7 @@ namespace Step57
                     std::cout << " alpha = " << std::setw(6) << alpha
                               << std::setw(0) << " res = " << current_res
                               << std::endl;
-                    if(current_res < last_res)
+                    if (current_res < last_res)
                       break;
                   }
                 {
@@ -728,16 +728,16 @@ namespace Step57
               }
             ++outer_iteration;
 
-            if(output_result)
+            if (output_result)
               {
                 output_results(max_iteration * refinement + outer_iteration);
 
-                if(current_res <= tolerance)
+                if (current_res <= tolerance)
                   process_solution(refinement);
               }
           }
 
-        if(refinement < max_refinement)
+        if (refinement < max_refinement)
           {
             refine_mesh();
             std::cout << "*****************************************"
@@ -764,8 +764,8 @@ namespace Step57
 
     bool is_initial_step = true;
 
-    for(double Re = 1000.0; Re < target_Re;
-        Re        = std::min(Re + step_size, target_Re))
+    for (double Re = 1000.0; Re < target_Re;
+         Re        = std::min(Re + step_size, target_Re))
       {
         viscosity = 1.0 / Re;
         std::cout << "*****************************************" << std::endl;
@@ -826,7 +826,7 @@ namespace Step57
 
     f << std::scientific;
 
-    for(unsigned int i = 0; i <= 100; ++i)
+    for (unsigned int i = 0; i <= 100; ++i)
       {
         p(dim - 1) = i / 100.0;
 
@@ -834,7 +834,7 @@ namespace Step57
         VectorTools::point_value(dof_handler, present_solution, p, tmp_vector);
         f << p(dim - 1);
 
-        for(int j = 0; j < dim; j++)
+        for (int j = 0; j < dim; j++)
           f << " " << tmp_vector(j);
         f << std::endl;
       }
@@ -858,7 +858,7 @@ namespace Step57
     // this program. After that, we just do the same as we did when viscosity
     // is larger than 1/1000: run Newton's iteration, refine the mesh,
     // transfer solutions, and repeat.
-    if(Re > 1000.0)
+    if (Re > 1000.0)
       {
         std::cout << "       Searching for initial guess ... " << std::endl;
         const double step_size = 2000.0;
@@ -899,7 +899,7 @@ main()
       StationaryNavierStokes<2> flow(/* degree = */ 1);
       flow.run(4);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -912,7 +912,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

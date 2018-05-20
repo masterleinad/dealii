@@ -55,9 +55,9 @@ test()
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
 
@@ -87,9 +87,9 @@ test()
   Vector<number> solution(dof.n_dofs());
 
   // create vector with random entries
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = random_value<double>();
       solution(i)        = entry;
@@ -97,14 +97,14 @@ test()
   constraints.distribute(solution);
 
   MatrixFree<dim, number> mf_data;
-  if(fe_degree > 1)
+  if (fe_degree > 1)
     sub_test<dim, fe_degree, fe_degree - 1, number>(
       dof, constraints, mf_data, solution);
   sub_test<dim, fe_degree, fe_degree, number>(
     dof, constraints, mf_data, solution);
   sub_test<dim, fe_degree, fe_degree + 2, number>(
     dof, constraints, mf_data, solution);
-  if(dim == 2)
+  if (dim == 2)
     sub_test<dim, fe_degree, fe_degree + 3, number>(
       dof, constraints, mf_data, solution);
 }

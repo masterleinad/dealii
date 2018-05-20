@@ -49,7 +49,7 @@ main()
   // refine it more or less
   // arbitrarily
   tria.refine_global(1);
-  if(true)
+  if (true)
     {
       Triangulation<2>::active_cell_iterator cell = tria.begin_active();
       ++cell;
@@ -83,11 +83,11 @@ main()
                             quadrature,
                             update_quadrature_points | update_normal_vectors);
 
-  for(DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
-      if(cell->face(f)->at_boundary())
+  for (DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+      if (cell->face(f)->at_boundary())
         {
           c1_values.reinit(cell, f);
           q3_values.reinit(cell, f);
@@ -103,7 +103,7 @@ main()
           // length approximately 1
           // and point radially
           // outward
-          for(unsigned int i = 0; i < 2; ++i)
+          for (unsigned int i = 0; i < 2; ++i)
             {
               Point<2> radius = c1_values.quadrature_point(i);
               radius /= std::sqrt(radius.square());
@@ -116,7 +116,7 @@ main()
             };
 
           // some numerical checks for correctness
-          for(unsigned int i = 0; i < 2; ++i)
+          for (unsigned int i = 0; i < 2; ++i)
             {
               AssertThrow(
                 std::fabs(

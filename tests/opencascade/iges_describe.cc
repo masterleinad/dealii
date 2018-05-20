@@ -46,11 +46,11 @@ main()
   deallog << "Shape contains " << std::get<0>(n) << " faces, " << std::get<1>(n)
           << " edges, and " << std::get<2>(n) << " vertices." << std::endl;
 
-  if(nf != faces.size())
+  if (nf != faces.size())
     deallog << "Error!" << std::endl;
-  if(ne != edges.size())
+  if (ne != edges.size())
     deallog << "Error!" << std::endl;
-  if(nv != vertices.size())
+  if (nv != vertices.size())
     deallog << "Error!" << std::endl;
 
   return 0;

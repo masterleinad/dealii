@@ -31,7 +31,7 @@
 
 void check(Triangulation<3>& tria)
 {
-  for(unsigned i = 0; i < tria.n_vertices(); i++)
+  for (unsigned i = 0; i < tria.n_vertices(); i++)
     {
       std::vector<Triangulation<3>::active_cell_iterator> cells
         = GridTools::find_cells_adjacent_to_vertex(tria, i);
@@ -39,7 +39,7 @@ void check(Triangulation<3>& tria)
       deallog << "Vertex " << i << " at " << tria.get_vertices()[i] << ": "
               << cells.size() << " cells" << std::endl;
 
-      for(unsigned c = 0; c < cells.size(); c++)
+      for (unsigned c = 0; c < cells.size(); c++)
         deallog << "   " << cells[c] << std::endl;
     }
 }
@@ -59,19 +59,19 @@ main()
       std::vector<Point<dim>> vertices;
       vertices.push_back(Point<dim>(0, 0, 0));
 
-      for(unsigned int i = 0; i < 16; ++i)
+      for (unsigned int i = 0; i < 16; ++i)
         vertices.push_back(Point<dim>(std::cos(i * 2 * numbers::PI / 16),
                                       std::sin(i * 2 * numbers::PI / 16),
                                       0));
 
       // then extrude the mesh into
       // z-direction
-      for(unsigned int i = 0; i < 17; ++i)
+      for (unsigned int i = 0; i < 17; ++i)
         vertices.push_back(Point<dim>(vertices[i][0], vertices[i][1], 1));
 
       // now create the 8 cells
       std::vector<CellData<dim>> cells;
-      for(unsigned int c = 0; c < 8; ++c)
+      for (unsigned int c = 0; c < 8; ++c)
         {
           CellData<dim> d;
           d.vertices[0] = 0;
@@ -79,7 +79,7 @@ main()
           d.vertices[2] = 1 + ((2 * c + 2) % 16);
           d.vertices[3] = 1 + 2 * c + 1;
 
-          for(unsigned int v = 4; v < 8; ++v)
+          for (unsigned int v = 4; v < 8; ++v)
             d.vertices[v] = d.vertices[v - 4] + 17;
 
           cells.push_back(d);
@@ -94,7 +94,7 @@ main()
 
       check(coarse_grid);
     }
-  catch(const std::exception& exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

@@ -45,7 +45,7 @@ main()
 
     SparseMatrix<double> A(sparsity_pattern);
     Vector<double>       b(rc);
-    for(unsigned int i = 0; i < rc; ++i)
+    for (unsigned int i = 0; i < rc; ++i)
       {
         A.diag_element(i) = 5.0;
         b(i)              = 1.0;
@@ -92,7 +92,7 @@ main()
     SparseMatrix<double> C(sparsity_pattern);
     SparseMatrix<double> D(sparsity_pattern);
 
-    for(unsigned int i = 0; i < rc; ++i)
+    for (unsigned int i = 0; i < rc; ++i)
       {
         B.diag_element(i) = 4.0;
         C.diag_element(i) = 4.0; // K = [A,B ; C,D] is symmetric

@@ -178,8 +178,8 @@ namespace Step40
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           x_fe_values.reinit(cell);
           const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
@@ -195,7 +195,7 @@ namespace Step40
           cell_matrix = PetscScalar();
           cell_rhs    = PetscScalar();
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             {
               const double rhs_value
                 = (fe_values.quadrature_point(q_point)[1]
@@ -207,9 +207,9 @@ namespace Step40
                      1 :
                      -1);
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for (unsigned int j = 0; j < dofs_per_cell; ++j)
                     cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                           * fe_values.shape_grad(j, q_point)
                                           * fe_values.JxW(q_point));
@@ -287,11 +287,11 @@ namespace Step40
   LaplaceProblem<dim>::run()
   {
     const unsigned int n_cycles = 2;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         pcout << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation);
             triangulation.refine_global(5);
@@ -304,9 +304,9 @@ namespace Step40
         pcout << "   Number of active cells:       "
               << triangulation.n_global_active_cells() << std::endl
               << "      ";
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(mpi_communicator);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
+             ++i)
           pcout << triangulation.n_locally_owned_active_cells_per_processor()[i]
                 << '+';
         pcout << std::endl;
@@ -314,9 +314,9 @@ namespace Step40
         pcout << "   Number of degrees of freedom: " << dof_handler.n_dofs()
               << std::endl
               << "      ";
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(mpi_communicator);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
+             ++i)
           pcout << dof_handler.n_locally_owned_dofs_per_processor()[i] << '+';
         pcout << std::endl;
 
@@ -341,7 +341,7 @@ test_mpi()
         laplace_problem_2d.run();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -355,7 +355,7 @@ test_mpi()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl
@@ -376,7 +376,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

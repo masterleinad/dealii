@@ -73,7 +73,7 @@ namespace std
                            - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1)
                                * t * std::exp(-x * x);
 
-    if(!neg_val)
+    if (!neg_val)
       return y;
     else
       return -y;

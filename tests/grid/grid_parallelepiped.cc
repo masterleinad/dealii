@@ -38,7 +38,7 @@ check_parallelepiped(bool colorize, bool log)
   Point<dim>(corners)[dim];
 
   // build corners for this particular dim:
-  switch(dim)
+  switch (dim)
     {
       case 1:
         corners[0] = Point<dim>(0.5);
@@ -64,7 +64,7 @@ check_parallelepiped(bool colorize, bool log)
 
   GridOut grid_out;
 
-  if(log)
+  if (log)
     grid_out.write_gnuplot(triangulation, logfile);
 
   else

@@ -26,15 +26,15 @@ test()
   deallog << "dim=" << dim << std::endl;
 
   SymmetricTensor<2, dim> s;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = i; j < dim; ++j)
       s[i][j] = (i + 1) * (j + 1);
 
   Tensor<2, dim>          t = s;
   SymmetricTensor<2, dim> u(t);
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       deallog << (i + 1) * (j + 1) << " " << (int) s[i][j] << " "
               << (int) t[i][j] << " " << (int) u[i][j] << std::endl;
 }

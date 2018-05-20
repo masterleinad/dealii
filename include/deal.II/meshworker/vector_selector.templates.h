@@ -118,7 +118,7 @@ namespace MeshWorker
     AssertDimension(hessians.size(), this->n_hessians());
 
     const AnyData& data = this->data;
-    for(unsigned int i = 0; i < this->n_values(); ++i)
+    for (unsigned int i = 0; i < this->n_values(); ++i)
       {
         const VectorType* src = data.read_ptr<VectorType>(this->value_index(i));
         VectorSlice<std::vector<std::vector<typename VectorType::value_type>>>
@@ -126,7 +126,7 @@ namespace MeshWorker
         fe.get_function_values(*src, make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_gradients(); ++i)
+    for (unsigned int i = 0; i < this->n_gradients(); ++i)
       {
         const VectorType* src
           = data.read_ptr<VectorType>(this->gradient_index(i));
@@ -137,7 +137,7 @@ namespace MeshWorker
           *src, make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_hessians(); ++i)
+    for (unsigned int i = 0; i < this->n_hessians(); ++i)
       {
         const VectorType* src
           = data.read_ptr<VectorType>(this->hessian_index(i));
@@ -210,7 +210,7 @@ namespace MeshWorker
     AssertDimension(hessians.size(), this->n_hessians());
 
     const AnyData& data = this->data;
-    for(unsigned int i = 0; i < this->n_values(); ++i)
+    for (unsigned int i = 0; i < this->n_values(); ++i)
       {
         const MGLevelObject<VectorType>* src
           = data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));
@@ -220,7 +220,7 @@ namespace MeshWorker
           (*src)[level], make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_gradients(); ++i)
+    for (unsigned int i = 0; i < this->n_gradients(); ++i)
       {
         const MGLevelObject<VectorType>* src
           = data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));
@@ -231,7 +231,7 @@ namespace MeshWorker
           (*src)[level], make_slice(index, start, size), dst, true);
       }
 
-    for(unsigned int i = 0; i < this->n_hessians(); ++i)
+    for (unsigned int i = 0; i < this->n_hessians(); ++i)
       {
         const MGLevelObject<VectorType>* src
           = data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));

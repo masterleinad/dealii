@@ -60,7 +60,7 @@ test(const unsigned int flag)
   GridGenerator::hyper_rectangle(
     triangulation, Point<dim>(0, 0), Point<dim>(1, 1));
 
-  if(flag == 0)
+  if (flag == 0)
     triangulation.refine_global(2);
   else
     triangulation.refine_global(1);
@@ -68,18 +68,18 @@ test(const unsigned int flag)
   DoFHandler<dim> dh(triangulation);
 
   // Extra refinement to generate hanging nodes
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-      cell != dh.end();
-      ++cell)
-    if(cell->is_locally_owned()
-       && ((flag == 1 && pred_d<dim>(cell))
-           || (flag == 2 && !pred_d<dim>(cell))))
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
+       cell != dh.end();
+       ++cell)
+    if (cell->is_locally_owned()
+        && ((flag == 1 && pred_d<dim>(cell))
+            || (flag == 2 && !pred_d<dim>(cell))))
       cell->set_refine_flag();
 
   triangulation.prepare_coarsening_and_refinement();
   triangulation.execute_coarsening_and_refinement();
 
-  if(flag > 0)
+  if (flag > 0)
     triangulation.refine_global(1);
 
   FE_Q<dim> fe(2);
@@ -106,27 +106,27 @@ test(const unsigned int flag)
   // various runs with different number of MPI cores
   const unsigned int dofs_support
     = Utilities::MPI::sum(support_local.n_elements(), MPI_COMM_WORLD);
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog << "accumulated: " << std::endl;
       deallog << dofs_support << std::endl;
     }
 
   // print grid and DoFs for visual inspection
-  if(false)
+  if (false)
     {
       DataOut<dim> data_out;
       data_out.attach_dof_handler(dh);
 
       std::vector<LinearAlgebra::distributed::Vector<double>> shape_functions(
         dh.n_dofs());
-      for(unsigned int i = 0; i < dh.n_dofs(); ++i)
+      for (unsigned int i = 0; i < dh.n_dofs(); ++i)
         {
           LinearAlgebra::distributed::Vector<double>& s = shape_functions[i];
           s.reinit(
             dh.locally_owned_dofs(), locally_relevant_set, MPI_COMM_WORLD);
           s = 0.;
-          if(dh.locally_owned_dofs().is_element(i))
+          if (dh.locally_owned_dofs().is_element(i))
             s[i] = 1.0;
           s.compress(VectorOperation::insert);
           cm.distribute(s);
@@ -137,7 +137,7 @@ test(const unsigned int flag)
         }
 
       Vector<float> subdomain(triangulation.n_active_cells());
-      for(unsigned int i = 0; i < subdomain.size(); ++i)
+      for (unsigned int i = 0; i < subdomain.size(); ++i)
         subdomain(i) = triangulation.locally_owned_subdomain();
       data_out.add_data_vector(subdomain, "subdomain");
       data_out.build_patches();
@@ -148,12 +148,12 @@ test(const unsigned int flag)
       std::ofstream output(filename.c_str());
       data_out.write_vtu(output);
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
           std::vector<std::string> filenames;
-          for(unsigned int i = 0;
-              i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-              ++i)
+          for (unsigned int i = 0;
+               i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+               ++i)
             filenames.push_back(output_name(flag, i));
 
           const std::string master_name

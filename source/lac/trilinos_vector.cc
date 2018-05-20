@@ -149,7 +149,7 @@ namespace TrilinosWrappers
       // which process owns what. So we decide that no process
       // owns anything in that case. In particular asking for
       // the locally owned elements is not allowed.
-      if(has_ghosts)
+      if (has_ghosts)
         {
           owned_elements.clear();
           owned_elements.set_size(0);
@@ -177,7 +177,7 @@ namespace TrilinosWrappers
       // In case we do not allow to have different maps, this call means that
       // we have to reset the vector. So clear the vector, initialize our map
       // with the map in v, and generate the vector.
-      if(allow_different_maps == false)
+      if (allow_different_maps == false)
         {
           // check equality for MPI communicators: We can only choose the fast
           // version in case the underlying Epetra_MpiComm object is the same,
@@ -194,15 +194,15 @@ namespace TrilinosWrappers
 #  else
           const bool same_communicators = true;
 #  endif
-          if(!same_communicators
-             || vector->Map().SameAs(v.vector->Map()) == false)
+          if (!same_communicators
+              || vector->Map().SameAs(v.vector->Map()) == false)
             {
               vector = std_cxx14::make_unique<Epetra_FEVector>(v.vector->Map());
               has_ghosts     = v.has_ghosts;
               last_action    = Zero;
               owned_elements = v.owned_elements;
             }
-          else if(omit_zeroing_entries == false)
+          else if (omit_zeroing_entries == false)
             {
               // old and new vectors have exactly the same map, i.e. size and
               // parallel distribution
@@ -260,21 +260,21 @@ namespace TrilinosWrappers
       // In case we do not allow to have different maps, this call means that
       // we have to reset the vector. So clear the vector, initialize our map
       // with the map in v, and generate the vector.
-      if(v.n_blocks() == 0)
+      if (v.n_blocks() == 0)
         return;
 
       // create a vector that holds all the elements contained in the block
       // vector. need to manually create an Epetra_Map.
       size_type n_elements = 0, added_elements = 0, block_offset = 0;
-      for(size_type block = 0; block < v.n_blocks(); ++block)
+      for (size_type block = 0; block < v.n_blocks(); ++block)
         n_elements += v.block(block).local_size();
       std::vector<TrilinosWrappers::types::int_type> global_ids(n_elements, -1);
-      for(size_type block = 0; block < v.n_blocks(); ++block)
+      for (size_type block = 0; block < v.n_blocks(); ++block)
         {
           TrilinosWrappers::types::int_type* glob_elements
             = TrilinosWrappers::my_global_elements(
               v.block(block).vector_partitioner());
-          for(size_type i = 0; i < v.block(block).local_size(); ++i)
+          for (size_type i = 0; i < v.block(block).local_size(); ++i)
             global_ids[added_elements++] = glob_elements[i] + block_offset;
           owned_elements.add_indices(v.block(block).owned_elements,
                                      block_offset);
@@ -291,13 +291,13 @@ namespace TrilinosWrappers
       auto actual_vec = std_cxx14::make_unique<Epetra_FEVector>(new_map);
 
       TrilinosScalar* entries = (*actual_vec)[0];
-      for(size_type block = 0; block < v.n_blocks(); ++block)
+      for (size_type block = 0; block < v.n_blocks(); ++block)
         {
           v.block(block).trilinos_vector().ExtractCopy(entries, 0);
           entries += v.block(block).local_size();
         }
 
-      if(import_data == true)
+      if (import_data == true)
         {
           AssertThrow(
             static_cast<size_type>(TrilinosWrappers::global_length(*actual_vec))
@@ -333,7 +333,7 @@ namespace TrilinosWrappers
     {
       nonlocal_vector.reset();
       owned_elements = locally_owned_entries;
-      if(vector_writable == false)
+      if (vector_writable == false)
         {
           IndexSet parallel_partitioner = locally_owned_entries;
           parallel_partitioner.add_indices(ghost_entries);
@@ -349,7 +349,7 @@ namespace TrilinosWrappers
                  ExcMessage("A writable vector must not have ghost entries in "
                             "its parallel partitioning"));
 
-          if(vector->Map().SameAs(map) == false)
+          if (vector->Map().SameAs(map) == false)
             vector = std_cxx14::make_unique<Epetra_FEVector>(map);
           else
             {
@@ -360,7 +360,7 @@ namespace TrilinosWrappers
 
           IndexSet nonlocal_entries(ghost_entries);
           nonlocal_entries.subtract_set(locally_owned_entries);
-          if(Utilities::MPI::n_mpi_processes(communicator) > 1)
+          if (Utilities::MPI::n_mpi_processes(communicator) > 1)
             {
               Epetra_Map nonlocal_map
                 = nonlocal_entries.make_trilinos_map(communicator, true);
@@ -424,10 +424,10 @@ namespace TrilinosWrappers
       // layout (just need to copy the local data, not reset the memory and
       // the underlying Epetra_Map). The third case means that we have to
       // rebuild the calling vector.
-      if(same_communicators && v.vector->Map().SameAs(vector->Map()))
+      if (same_communicators && v.vector->Map().SameAs(vector->Map()))
         {
           *vector = *v.vector;
-          if(v.nonlocal_vector.get() != nullptr)
+          if (v.nonlocal_vector.get() != nullptr)
             nonlocal_vector = std_cxx14::make_unique<Epetra_MultiVector>(
               v.nonlocal_vector->Map(), 1);
           last_action = Zero;
@@ -436,8 +436,8 @@ namespace TrilinosWrappers
       // size, but different parallel layouts (and
       // one of them a one-to-one mapping). Then we
       // can call the import/export functionality.
-      else if(size() == v.size()
-              && (v.vector->Map().UniqueGIDs() || vector->Map().UniqueGIDs()))
+      else if (size() == v.size()
+               && (v.vector->Map().UniqueGIDs() || vector->Map().UniqueGIDs()))
         {
           reinit(v, false, true);
         }
@@ -451,7 +451,7 @@ namespace TrilinosWrappers
           owned_elements = v.owned_elements;
         }
 
-      if(v.nonlocal_vector.get() != nullptr)
+      if (v.nonlocal_vector.get() != nullptr)
         nonlocal_vector = std_cxx14::make_unique<Epetra_MultiVector>(
           v.nonlocal_vector->Map(), 1);
 
@@ -477,7 +477,7 @@ namespace TrilinosWrappers
       //
       // let's hope this isn't a particularly frequent operation
       std::pair<size_type, size_type> local_range = this->local_range();
-      for(size_type i = local_range.first; i < local_range.second; ++i)
+      for (size_type i = local_range.first; i < local_range.second; ++i)
         (*vector)[0][i - local_range.first] = v(i);
 
       return *this;
@@ -494,7 +494,7 @@ namespace TrilinosWrappers
              ExcMessage("The input vector has overlapping data, "
                         "which is not allowed."));
 
-      if(vector->Map().SameAs(m.trilinos_matrix().ColMap()) == false)
+      if (vector->Map().SameAs(m.trilinos_matrix().ColMap()) == false)
         vector = std_cxx14::make_unique<Epetra_FEVector>(
           m.trilinos_matrix().ColMap());
 
@@ -514,11 +514,11 @@ namespace TrilinosWrappers
       //operations. Typically given_last_action is only used on machines that do
       //not execute an operation (because they have no own cells for example).
       Epetra_CombineMode mode = last_action;
-      if(last_action == Zero)
+      if (last_action == Zero)
         {
-          if(given_last_action == ::dealii::VectorOperation::add)
+          if (given_last_action == ::dealii::VectorOperation::add)
             mode = Add;
-          else if(given_last_action == ::dealii::VectorOperation::insert)
+          else if (given_last_action == ::dealii::VectorOperation::insert)
             mode = Insert;
         }
       else
@@ -554,7 +554,7 @@ namespace TrilinosWrappers
 
       // Now pass over the information about what we did last to the vector.
       int ierr = 0;
-      if(nonlocal_vector.get() == nullptr || mode != Add)
+      if (nonlocal_vector.get() == nullptr || mode != Add)
         ierr = vector->GlobalAssemble(mode);
       else
         {
@@ -579,7 +579,7 @@ namespace TrilinosWrappers
 
       // If the element is not present on the current processor, we can't
       // continue. This is the main difference to the el() function.
-      if(trilinos_i == -1)
+      if (trilinos_i == -1)
         {
           Assert(false,
                  ExcAccessToNonLocalElement(index,
@@ -596,7 +596,7 @@ namespace TrilinosWrappers
     void
     Vector::add(const Vector& v, const bool allow_different_maps)
     {
-      if(allow_different_maps == false)
+      if (allow_different_maps == false)
         *this += v;
       else
         {
@@ -630,12 +630,12 @@ namespace TrilinosWrappers
     Vector::operator==(const Vector& v) const
     {
       Assert(size() == v.size(), ExcDimensionMismatch(size(), v.size()));
-      if(local_size() != v.local_size())
+      if (local_size() != v.local_size())
         return false;
 
       size_type i;
-      for(i = 0; i < local_size(); i++)
-        if((*(v.vector))[0][i] != (*vector)[0][i])
+      for (i = 0; i < local_size(); i++)
+        if ((*(v.vector))[0][i] != (*vector)[0][i])
           return false;
 
       return true;
@@ -657,9 +657,9 @@ namespace TrilinosWrappers
       TrilinosScalar*       start_ptr = (*vector)[0];
       const TrilinosScalar *ptr = start_ptr, *eptr = start_ptr + local_size();
       unsigned int          flag = 0;
-      while(ptr != eptr)
+      while (ptr != eptr)
         {
-          if(*ptr != 0)
+          if (*ptr != 0)
             {
               flag = 1;
               break;
@@ -704,9 +704,9 @@ namespace TrilinosWrappers
       // this in that case.
       const TrilinosScalar *ptr = start_ptr, *eptr = start_ptr + size();
       bool                  flag = true;
-      while(ptr != eptr)
+      while (ptr != eptr)
         {
-          if(*ptr < 0.0)
+          if (*ptr < 0.0)
             {
               flag = false;
               break;
@@ -727,12 +727,12 @@ namespace TrilinosWrappers
       boost::io::ios_flags_saver restore_flags(out);
 
       out.precision(precision);
-      if(scientific)
+      if (scientific)
         out.setf(std::ios::scientific, std::ios::floatfield);
       else
         out.setf(std::ios::fixed, std::ios::floatfield);
 
-      if(size() != local_size())
+      if (size() != local_size())
         {
           auto global_id = [&](const size_type index) {
             return gid(vector->Map(),
@@ -740,7 +740,7 @@ namespace TrilinosWrappers
           };
           out << "size:" << size() << " local_size:" << local_size() << " :"
               << std::endl;
-          for(size_type i = 0; i < local_size(); ++i)
+          for (size_type i = 0; i < local_size(); ++i)
             out << "[" << global_id(i) << "]: " << (*(vector))[0][i]
                 << std::endl;
         }
@@ -751,11 +751,11 @@ namespace TrilinosWrappers
           int             ierr = vector->ExtractView(&val, &leading_dimension);
 
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
-          if(across)
-            for(size_type i = 0; i < size(); ++i)
+          if (across)
+            for (size_type i = 0; i < size(); ++i)
               out << static_cast<double>(val[i]) << ' ';
           else
-            for(size_type i = 0; i < size(); ++i)
+            for (size_type i = 0; i < size(); ++i)
               out << static_cast<double>(val[i]) << std::endl;
           out << std::endl;
         }

@@ -49,17 +49,17 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2);
 void
 output_matrix(const FullMatrix<double>& m)
 {
-  if((m.m() == 0) || (m.n() == 0))
+  if ((m.m() == 0) || (m.n() == 0))
     {
       deallog << "(Empty matrix)" << std::endl;
       return;
     }
 
   deallog << m.l1_norm() << ' ' << m.linfty_norm() << std::endl;
-  if(m.m() == m.n())
+  if (m.m() == m.n())
     deallog << m.frobenius_norm() << std::endl;
 
-  for(unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
+  for (unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
     deallog << m(i, i) << ' ' << m(i, std::min(m.m(), m.n()) - i - 1) << ' ';
   deallog << std::endl;
 }
@@ -74,9 +74,10 @@ output_vector(const VectorType& v)
 
   // write out at most 20 equispaced
   // elements of the vector
-  for(unsigned int i = 0; i < v.size();
-      i += std::max(static_cast<typename VectorType::size_type>(1),
-                    static_cast<typename VectorType::size_type>(v.size() / 20)))
+  for (unsigned int i = 0; i < v.size();
+       i
+       += std::max(static_cast<typename VectorType::size_type>(1),
+                   static_cast<typename VectorType::size_type>(v.size() / 20)))
     deallog << v(i) << ' ';
   deallog << std::endl;
 }
@@ -88,7 +89,7 @@ make_tria()
   Triangulation<dim>* tria = new Triangulation<dim>();
   GridGenerator::hyper_cube(*tria, 0., 1.);
   tria->refine_global(1);
-  for(int i = 0; i < 2; ++i)
+  for (int i = 0; i < 2; ++i)
     {
       tria->begin_active()->set_refine_flag();
       tria->execute_coarsening_and_refinement();
@@ -263,7 +264,7 @@ main()
       */
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -276,7 +277,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

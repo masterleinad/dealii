@@ -365,11 +365,11 @@ LinearOperator<Range, Domain, Payload>
 operator+(const LinearOperator<Range, Domain, Payload>& first_op,
           const LinearOperator<Range, Domain, Payload>& second_op)
 {
-  if(first_op.is_null_operator)
+  if (first_op.is_null_operator)
     {
       return second_op;
     }
-  else if(second_op.is_null_operator)
+  else if (second_op.is_null_operator)
     {
       return first_op;
     }
@@ -423,11 +423,11 @@ LinearOperator<Range, Domain, Payload>
 operator-(const LinearOperator<Range, Domain, Payload>& first_op,
           const LinearOperator<Range, Domain, Payload>& second_op)
 {
-  if(first_op.is_null_operator)
+  if (first_op.is_null_operator)
     {
       return -1. * second_op;
     }
-  else if(second_op.is_null_operator)
+  else if (second_op.is_null_operator)
     {
       return first_op;
     }
@@ -465,11 +465,11 @@ operator*(typename Range::value_type                    number,
                         typename Domain::value_type>::value,
     "Range and Domain must have implicitly convertible 'value_type's");
 
-  if(op.is_null_operator)
+  if (op.is_null_operator)
     {
       return op;
     }
-  else if(number == 0.)
+  else if (number == 0.)
     {
       return null_operator(op);
     }
@@ -558,7 +558,7 @@ LinearOperator<Range, Domain, Payload>
 operator*(const LinearOperator<Range, Intermediate, Payload>&  first_op,
           const LinearOperator<Intermediate, Domain, Payload>& second_op)
 {
-  if(first_op.is_null_operator || second_op.is_null_operator)
+  if (first_op.is_null_operator || second_op.is_null_operator)
     {
       LinearOperator<Range, Domain, Payload> return_op;
       return_op.reinit_domain_vector = second_op.reinit_domain_vector;
@@ -1056,7 +1056,7 @@ namespace
 
     function(*i, u);
 
-    if(add)
+    if (add)
       v += *i;
     else
       v = *i;
@@ -1073,7 +1073,7 @@ namespace
     operator()(LinearOperator<Range, Domain, Payload>& op, const Matrix& matrix)
     {
       op.vmult = [&matrix](Range& v, const Domain& u) {
-        if(PointerComparison::equal(&v, &u))
+        if (PointerComparison::equal(&v, &u))
           {
             // If v and u are the same memory location use intermediate storage
             apply_with_intermediate_storage(
@@ -1098,7 +1098,7 @@ namespace
       };
 
       op.Tvmult = [&matrix](Domain& v, const Range& u) {
-        if(PointerComparison::equal(&v, &u))
+        if (PointerComparison::equal(&v, &u))
           {
             // If v and u are the same memory location use intermediate storage
             apply_with_intermediate_storage(
@@ -1141,7 +1141,7 @@ namespace
       // ... but add native vmult_add and Tvmult_add variants:
 
       op.vmult_add = [&matrix](Range& v, const Domain& u) {
-        if(PointerComparison::equal(&v, &u))
+        if (PointerComparison::equal(&v, &u))
           {
             apply_with_intermediate_storage(
               [&matrix](Range& b, const Domain& a) { matrix.vmult(b, a); },
@@ -1156,7 +1156,7 @@ namespace
       };
 
       op.Tvmult_add = [&matrix](Domain& v, const Range& u) {
-        if(PointerComparison::equal(&v, &u))
+        if (PointerComparison::equal(&v, &u))
           {
             apply_with_intermediate_storage(
               [&matrix](Domain& b, const Range& a) { matrix.Tvmult(b, a); },

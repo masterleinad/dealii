@@ -77,7 +77,7 @@ check_all(std::ostream& log)
   //  const char* format = "%d%d%d%s.pov";
   DataOutBase::PovrayFlags flags;
 
-  if(true)
+  if (true)
     {
       sprintf(name, "cont%d%d%d.pov", dim, 4, 4);
 #if SEPARATE_FILES == 1
@@ -90,7 +90,7 @@ check_all(std::ostream& log)
     }
 
   flags.external_data = true;
-  if(true)
+  if (true)
     {
       sprintf(name, "cont%d%d%dtri.pov", dim, 4, 4);
 #if SEPARATE_FILES == 1
@@ -103,7 +103,7 @@ check_all(std::ostream& log)
     }
 
   flags.smooth = true;
-  if(true)
+  if (true)
     {
       sprintf(name, "cont%d%d%dsmooth.pov", dim, 4, 4);
 #if SEPARATE_FILES == 1
@@ -116,7 +116,7 @@ check_all(std::ostream& log)
     }
 
   flags.bicubic_patch = true;
-  if(true)
+  if (true)
     {
       sprintf(name, "cont%d%d%dbic.pov", dim, 4, 3);
 #if SEPARATE_FILES == 1

@@ -242,7 +242,7 @@ template <int dim>
 inline unsigned int
 KDTree<dim>::size() const
 {
-  if(adaptor)
+  if (adaptor)
     return adaptor->points.size();
   else
     return 0;
@@ -292,7 +292,7 @@ KDTree<dim>::PointCloudAdaptor::kdtree_distance(const double* p1,
 {
   AssertDimension(size, dim);
   double res = 0.0;
-  for(size_t d = 0; d < size; ++d)
+  for (size_t d = 0; d < size; ++d)
     res += (p1[d] - points[idx_p2][d]) * (p1[d] - points[idx_p2][d]);
   return std::sqrt(res);
 }

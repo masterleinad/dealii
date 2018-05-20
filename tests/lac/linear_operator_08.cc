@@ -225,7 +225,7 @@ main()
 
     SparseMatrix<double> A(sparsity_pattern);
     Vector<double>       b(rc);
-    for(unsigned int i = 0; i < rc; ++i)
+    for (unsigned int i = 0; i < rc; ++i)
       {
         A.diag_element(i) = 2.0;
         b(i)              = i;
@@ -397,8 +397,8 @@ main()
     BlockSparsityPattern sparsity_pattern;
     {
       BlockDynamicSparsityPattern csp(blks, blks);
-      for(unsigned int bi = 0; bi < blks; ++bi)
-        for(unsigned int bj = 0; bj < blks; ++bj)
+      for (unsigned int bi = 0; bi < blks; ++bi)
+        for (unsigned int bj = 0; bj < blks; ++bj)
           csp.block(bi, bj).reinit(rc, rc);
 
       csp.collect_sizes();
@@ -407,8 +407,8 @@ main()
 
     BlockSparseMatrix<double> A(sparsity_pattern);
     BlockVector<double>       b(blks, rc);
-    for(unsigned int bi = 0; bi < blks; ++bi)
-      for(unsigned int i = 0; i < rc; ++i)
+    for (unsigned int bi = 0; bi < blks; ++bi)
+      for (unsigned int i = 0; i < rc; ++i)
         {
           A.block(bi, bi).diag_element(i) = 2.0;
           b.block(bi)(i)                  = bi * rc + i;

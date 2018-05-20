@@ -54,7 +54,7 @@ merge_check()
 
   // check twice, once with closed
   // objects, once with open ones
-  for(unsigned int run = 0; run < 2; ++run)
+  for (unsigned int run = 0; run < 2; ++run)
     {
       deallog << "Checking with " << (run == 0 ? "open" : "closed")
               << " objects" << std::endl;
@@ -90,7 +90,7 @@ merge_check()
 
       // in one of the two runs,
       // close the objects
-      if(run == 1)
+      if (run == 1)
         {
           c1.close();
           c2.close();

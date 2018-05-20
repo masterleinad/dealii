@@ -55,8 +55,8 @@ test(const unsigned int size, const unsigned int block_size)
 
   {
     unsigned int index = 0;
-    for(unsigned int i = 0; i < size; ++i)
-      for(unsigned int j = 0; j < size; ++j)
+    for (unsigned int i = 0; i < size; ++i)
+      for (unsigned int j = 0; j < size; ++j)
         full_in(i, j) = index++;
   }
 
@@ -69,7 +69,7 @@ test(const unsigned int size, const unsigned int block_size)
 
   const NumberType error = diff.frobenius_norm();
 
-  if(error > 1e-10 && this_mpi_process == 0)
+  if (error > 1e-10 && this_mpi_process == 0)
     {
       std::cout << "Error!" << std::endl << "expected to have:" << std::endl;
       full_in.print_formatted(std::cout);
@@ -90,11 +90,11 @@ main(int argc, char** argv)
   const std::vector<unsigned int> sizes  = {{64, 120, 320, 640}};
   const std::vector<unsigned int> blocks = {{32, 64}};
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
       test<float>(s, b);
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
       test<double>(s, b);
 }

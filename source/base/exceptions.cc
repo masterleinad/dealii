@@ -77,9 +77,9 @@ ExceptionBase::ExceptionBase()
     what_str("")
 {
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
-  for(unsigned int i = 0;
-      i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
-      ++i)
+  for (unsigned int i = 0;
+       i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
+       ++i)
     raw_stacktrace[i] = nullptr;
 #endif
 }
@@ -97,9 +97,9 @@ ExceptionBase::ExceptionBase(const ExceptionBase& exc)
       "") // don't copy the error message, it gets generated dynamically by what()
 {
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
-  for(unsigned int i = 0;
-      i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
-      ++i)
+  for (unsigned int i = 0;
+       i < sizeof(raw_stacktrace) / sizeof(raw_stacktrace[0]);
+       ++i)
     raw_stacktrace[i] = nullptr;
 #endif
 }
@@ -137,7 +137,7 @@ const char*
 ExceptionBase::what() const noexcept
 {
   // If no error c_string was generated so far, do it now:
-  if(what_str == "")
+  if (what_str == "")
     {
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
       // We have deferred the symbol lookup to this point to avoid costly
@@ -183,7 +183,7 @@ ExceptionBase::print_exc_data(std::ostream& out) const
   // between numerous "..."-enclosed strings that the preprocessor
   // collates into a single string, making it awkward to read. Consequently,
   // elide this text if the message was generated via an ExcMessage object
-  if(std::strstr(cond, "dealii::ExcMessage") != nullptr)
+  if (std::strstr(cond, "dealii::ExcMessage") != nullptr)
     out << "The name and call sequence of the exception was:" << std::endl
         << "    " << exc << std::endl;
 
@@ -200,10 +200,10 @@ ExceptionBase::print_info(std::ostream& out) const
 void
 ExceptionBase::print_stack_trace(std::ostream& out) const
 {
-  if(n_stacktrace_frames == 0)
+  if (n_stacktrace_frames == 0)
     return;
 
-  if(deal_II_exceptions::show_stacktrace == false)
+  if (deal_II_exceptions::show_stacktrace == false)
     return;
 
   // if there is a stackframe stored, print it
@@ -215,16 +215,16 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
   // correspond to the exception raising mechanism themselves, rather than
   // the place where the exception was triggered
   int frame = 0;
-  while((frame < n_stacktrace_frames)
-        && ((std::string(stacktrace[frame]).find("ExceptionBase")
-             != std::string::npos)
-            || (std::string(stacktrace[frame]).find("deal_II_exceptions")
-                != std::string::npos)))
+  while ((frame < n_stacktrace_frames)
+         && ((std::string(stacktrace[frame]).find("ExceptionBase")
+              != std::string::npos)
+             || (std::string(stacktrace[frame]).find("deal_II_exceptions")
+                 != std::string::npos)))
     ++frame;
 
   // output the rest
   const unsigned int first_significant_frame = frame;
-  for(; frame < n_stacktrace_frames; ++frame)
+  for (; frame < n_stacktrace_frames; ++frame)
     {
       out << '#' << frame - first_significant_frame << "  ";
 
@@ -249,7 +249,7 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
       char* p
         = abi::__cxa_demangle(functionname.c_str(), nullptr, nullptr, &status);
 
-      if((status == 0) && (functionname != "main"))
+      if ((status == 0) && (functionname != "main"))
         {
           std::string realname(p);
           // in MT mode, one often gets backtraces spanning several lines
@@ -258,8 +258,8 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
           // tuples are actually unused boost::tuples::null_type, so we
           // should split them off if they are trailing a template argument
           // list
-          while(realname.find(", boost::tuples::null_type>")
-                != std::string::npos)
+          while (realname.find(", boost::tuples::null_type>")
+                 != std::string::npos)
             realname.erase(realname.find(", boost::tuples::null_type>"),
                            std::string(", boost::tuples::null_type").size());
 
@@ -279,7 +279,7 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
       out << stacktrace_entry << std::endl;
 
       // stop if we're in main()
-      if(functionname == "main")
+      if (functionname == "main")
         break;
     }
 }
@@ -304,7 +304,7 @@ ExceptionBase::generate_message() const
       print_info(converter);
       print_stack_trace(converter);
 
-      if(!deal_II_exceptions::additional_assert_output.empty())
+      if (!deal_II_exceptions::additional_assert_output.empty())
         {
           converter
             << "--------------------------------------------------------"
@@ -317,7 +317,7 @@ ExceptionBase::generate_message() const
 
       what_str = converter.str();
     }
-  catch(...)
+  catch (...)
     {
       // On error, resume next. There is nothing better we can do...
       what_str = "ExceptionBase::generate_message () failed";
@@ -340,7 +340,7 @@ namespace StandardExceptions
     bool error_name_known = false;
     // workaround for Open MPI 1.6.5 not accepting
     // MPI_ERR_LASTCODE in MPI_Error_class
-    if(error_code < MPI_ERR_LASTCODE)
+    if (error_code < MPI_ERR_LASTCODE)
       {
         // get the string name of the error code by first converting it to an
         // error class.
@@ -350,7 +350,7 @@ namespace StandardExceptions
 
         // Check the output of the error printing functions. If either MPI
         // function fails we should just print a less descriptive message.
-        if(error_name_known)
+        if (error_name_known)
           {
             ierr = MPI_Error_string(error_class, error_name, &resulting_length);
             error_name_known = error_name_known && (ierr == MPI_SUCCESS);
@@ -359,7 +359,7 @@ namespace StandardExceptions
 
     out << "deal.II encountered an error while calling an MPI function."
         << std::endl;
-    if(error_name_known)
+    if (error_name_known)
       {
         out << "The description of the error provided by MPI is \""
             << error_name << "\"." << std::endl;
@@ -399,13 +399,13 @@ namespace
 #ifdef DEAL_II_WITH_MPI
     int is_initialized;
     MPI_Initialized(&is_initialized);
-    if(is_initialized)
+    if (is_initialized)
       {
         // do the same as in Utilities::MPI::n_mpi_processes() here,
         // but without error checking to not throw again.
         int n_proc = 1;
         MPI_Comm_size(MPI_COMM_WORLD, &n_proc);
-        if(n_proc > 1)
+        if (n_proc > 1)
           {
             std::cerr
               << "Calling MPI_Abort now.\n"
@@ -431,7 +431,7 @@ namespace deal_II_exceptions
     void
     do_issue_error_nothrow(const ExceptionBase& exc) noexcept
     {
-      if(dealii::deal_II_exceptions::abort_on_exception)
+      if (dealii::deal_II_exceptions::abort_on_exception)
         internal_abort(exc);
       else
         {
@@ -444,7 +444,7 @@ namespace deal_II_exceptions
 
     [[noreturn]] void
     abort(const ExceptionBase& exc) {
-      if(dealii::deal_II_exceptions::abort_on_exception)
+      if (dealii::deal_II_exceptions::abort_on_exception)
         internal_abort(exc);
       else
         {
@@ -456,7 +456,7 @@ namespace deal_II_exceptions
 #ifdef DEAL_II_WITH_CUDA
     std::string get_cusparse_error_string(const cusparseStatus_t error_code)
     {
-      switch(error_code)
+      switch (error_code)
         {
           case CUSPARSE_STATUS_NOT_INITIALIZED:
             {
@@ -501,7 +501,7 @@ namespace deal_II_exceptions
     get_cusolver_error_string(cusolverStatus_t error_code)
     {
       std::string message;
-      switch(error_code)
+      switch (error_code)
         {
           case CUSOLVER_STATUS_NOT_INITIALIZED:
             {

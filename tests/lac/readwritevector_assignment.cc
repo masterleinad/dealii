@@ -34,9 +34,9 @@ test()
   deallog << "float_size " << float_vector.n_elements() << std::endl;
 
   double_vector = 0.;
-  for(unsigned int i = 0; i < double_vector.n_elements(); ++i)
+  for (unsigned int i = 0; i < double_vector.n_elements(); ++i)
     double_vector.local_element(i) += i;
-  for(unsigned int i = 0; i < float_vector.n_elements(); ++i)
+  for (unsigned int i = 0; i < float_vector.n_elements(); ++i)
     float_vector[i] = i;
 
   double_vector.print(deallog.get_file_stream());
@@ -48,7 +48,7 @@ test()
   LinearAlgebra::ReadWriteVector<double> double_vector2(double_vector);
   double_vector2.print(deallog.get_file_stream());
 
-  for(unsigned int i = 0; i < double_vector.n_elements(); ++i)
+  for (unsigned int i = 0; i < double_vector.n_elements(); ++i)
     double_vector2.local_element(i) += i;
   double_vector = double_vector2;
   double_vector.print(deallog.get_file_stream());

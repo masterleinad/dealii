@@ -73,8 +73,8 @@ test(const unsigned int size,
   //Lapack as reference
   {
     std::vector<NumberType> lapack_A(size * size);
-    for(unsigned int i = 0; i < size; ++i)
-      for(unsigned int j = 0; j < size; ++j)
+    for (unsigned int i = 0; i < size; ++i)
+      for (unsigned int j = 0; j < size; ++j)
         lapack_A[i * size + j] = full_A(i, j);
 
     int
@@ -120,13 +120,13 @@ test(const unsigned int size,
   const std::vector<NumberType> eigenvalues_psyevx
     = scalapack_syevx.eigenpairs_symmetric_by_index(
       std::make_pair(size - max_n_eigenvalues, size - 1), false);
-  for(unsigned int i = eigenvalues_psyevx.size() - 1; i > 0; --i)
+  for (unsigned int i = eigenvalues_psyevx.size() - 1; i > 0; --i)
     {
-      if(!(std::abs(eigenvalues_psyevx[i]
-                    - eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
-             / std::abs(
-                 eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
-           < tol))
+      if (!(std::abs(eigenvalues_psyevx[i]
+                     - eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
+              / std::abs(
+                  eigenvalues_Lapack[size - eigenvalues_psyevx.size() + i])
+            < tol))
         {
           std::cout << "process #" << this_mpi_process
                     << ": eigenvalues do not fit: " << eigenvalues_psyevx[i]
@@ -157,8 +157,8 @@ main(int argc, char** argv)
 
   const double tol = 1e-10;
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol);
 }

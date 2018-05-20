@@ -31,7 +31,7 @@ int
 test(int i)
 {
   int k = 1;
-  for(unsigned int j = 0; j < 100000000; ++j)
+  for (unsigned int j = 0; j < 100000000; ++j)
     k += j % 17 + i;
   return k;
 }
@@ -50,7 +50,7 @@ main()
                                 Threads::new_task(test, 7),
                                 Threads::new_task(test, 8)};
 
-  for(unsigned int i = 0; i < sizeof(tasks) / sizeof(tasks[0]); ++i)
+  for (unsigned int i = 0; i < sizeof(tasks) / sizeof(tasks[0]); ++i)
     deallog << i << ' ' << tasks[i].return_value() << std::endl;
 
   deallog << "OK" << std::endl;

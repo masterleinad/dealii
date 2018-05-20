@@ -42,7 +42,7 @@ test(const unsigned int degree)
 
   deallog << "Degree=" << degree << std::endl;
 
-  for(double h = 1; h > 1. / 128; h /= 2)
+  for (double h = 1; h > 1. / 128; h /= 2)
     {
       deallog << "  h=" << h << std::endl;
 
@@ -56,14 +56,14 @@ test(const unsigned int degree)
 
       FEFaceValues<dim> fe_values(fe_rt_bubbles, quadrature, update_gradients);
       fe_values.reinit(dof.begin_active(), 0);
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for (unsigned int q = 0; q < quadrature.size(); ++q)
         {
           deallog << "    Quadrature point " << q << ": ";
-          for(unsigned int i = 0; i < fe_rt_bubbles.dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < fe_rt_bubbles.dofs_per_cell; ++i)
             {
               deallog << '[';
-              for(unsigned int c = 0; c < fe_rt_bubbles.n_components(); ++c)
-                for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int c = 0; c < fe_rt_bubbles.n_components(); ++c)
+                for (unsigned int d = 0; d < dim; ++d)
                   deallog << filter_out_small_numbers(
                                fe_values.shape_grad_component(i, q, c)[d],
                                5.e-6)
@@ -81,7 +81,7 @@ main()
   initlog();
   deallog << std::fixed;
 
-  for(unsigned int i = 1; i < 4; ++i)
+  for (unsigned int i = 1; i < 4; ++i)
     {
       test<2>(i);
       test<3>(i);

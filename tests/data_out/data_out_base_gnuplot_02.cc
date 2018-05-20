@@ -60,7 +60,7 @@ check_all(std::ostream& log)
   char                      name[100];
   const char*               format = "%d%d.gnuplot";
   DataOutBase::GnuplotFlags flags;
-  for(unsigned int i = 0; i < 5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     {
       sprintf(name, format, dim, spacedim, "");
 #if SEPARATE_FILES == 1

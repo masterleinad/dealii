@@ -346,10 +346,10 @@ Physics::Elasticity::StandardTensors<dim>::dC_inv_dC(
     = symmetrize(invert(transpose(F) * F));
 
   SymmetricTensor<4, dim, Number> dC_inv_dC;
-  for(unsigned int A = 0; A < dim; ++A)
-    for(unsigned int B = A; B < dim; ++B)
-      for(unsigned int C = 0; C < dim; ++C)
-        for(unsigned int D = C; D < dim; ++D)
+  for (unsigned int A = 0; A < dim; ++A)
+    for (unsigned int B = A; B < dim; ++B)
+      for (unsigned int C = 0; C < dim; ++C)
+        for (unsigned int D = C; D < dim; ++D)
           dC_inv_dC[A][B][C][D]
             -= 0.5 * (C_inv[A][C] * C_inv[B][D] + C_inv[A][D] * C_inv[B][C]);
 

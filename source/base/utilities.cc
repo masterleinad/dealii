@@ -96,9 +96,9 @@ namespace Utilities
   {
     std::string lc_string = boost::lexical_cast<std::string>(value);
 
-    if(digits == numbers::invalid_unsigned_int)
+    if (digits == numbers::invalid_unsigned_int)
       return lc_string;
-    else if(lc_string.size() < digits)
+    else if (lc_string.size() < digits)
       {
         // We have to add the padding zeroes in front of the number
         const unsigned int padding_position = (lc_string[0] == '-') ? 1 : 0;
@@ -114,13 +114,13 @@ namespace Utilities
                     const std::string& from,
                     const std::string& to)
   {
-    if(from.empty())
+    if (from.empty())
       return input;
 
     std::string            out = input;
     std::string::size_type pos = out.find(from);
 
-    while(pos != std::string::npos)
+    while (pos != std::string::npos)
       {
         out.replace(pos, from.size(), to);
         pos = out.find(from, pos + to.size());
@@ -134,17 +134,17 @@ namespace Utilities
     std::string::size_type left  = 0;
     std::string::size_type right = input.size() > 0 ? input.size() - 1 : 0;
 
-    for(; left < input.size(); ++left)
+    for (; left < input.size(); ++left)
       {
-        if(!std::isspace(input[left]))
+        if (!std::isspace(input[left]))
           {
             break;
           }
       }
 
-    for(; right >= left; --right)
+    for (; right >= left; --right)
       {
-        if(!std::isspace(input[right]))
+        if (!std::isspace(input[right]))
           {
             break;
           }
@@ -156,7 +156,7 @@ namespace Utilities
   std::string
   dim_string(const int dim, const int spacedim)
   {
-    if(dim == spacedim)
+    if (dim == spacedim)
       return int_to_string(dim);
     else
       return int_to_string(dim) + "," + int_to_string(spacedim);
@@ -165,17 +165,17 @@ namespace Utilities
   unsigned int
   needed_digits(const unsigned int max_number)
   {
-    if(max_number < 10)
+    if (max_number < 10)
       return 1;
-    if(max_number < 100)
+    if (max_number < 100)
       return 2;
-    if(max_number < 1000)
+    if (max_number < 1000)
       return 3;
-    if(max_number < 10000)
+    if (max_number < 10000)
       return 4;
-    if(max_number < 100000)
+    if (max_number < 100000)
       return 5;
-    if(max_number < 1000000)
+    if (max_number < 1000000)
       return 6;
     AssertThrow(false, ExcInvalidNumber(max_number));
     return 0;
@@ -186,9 +186,9 @@ namespace Utilities
   {
     // trim whitespace on either side of the text if necessary
     std::string s = s_;
-    while((s.size() > 0) && (s[0] == ' '))
+    while ((s.size() > 0) && (s[0] == ' '))
       s.erase(s.begin());
-    while((s.size() > 0) && (s[s.size() - 1] == ' '))
+    while ((s.size() > 0) && (s[s.size() - 1] == ' '))
       s.erase(s.end() - 1);
 
     // now convert and see whether we succeed. note that strtol only
@@ -211,7 +211,7 @@ namespace Utilities
   string_to_int(const std::vector<std::string>& s)
   {
     std::vector<int> tmp(s.size());
-    for(unsigned int i = 0; i < s.size(); ++i)
+    for (unsigned int i = 0; i < s.size(); ++i)
       tmp[i] = string_to_int(s[i]);
     return tmp;
   }
@@ -221,9 +221,9 @@ namespace Utilities
   {
     // trim whitespace on either side of the text if necessary
     std::string s = s_;
-    while((s.size() > 0) && (s[0] == ' '))
+    while ((s.size() > 0) && (s[0] == ' '))
       s.erase(s.begin());
-    while((s.size() > 0) && (s[s.size() - 1] == ' '))
+    while ((s.size() > 0) && (s[s.size() - 1] == ' '))
       s.erase(s.end() - 1);
 
     // now convert and see whether we succeed. note that strtol only
@@ -246,7 +246,7 @@ namespace Utilities
   string_to_double(const std::vector<std::string>& s)
   {
     std::vector<double> tmp(s.size());
-    for(unsigned int i = 0; i < s.size(); ++i)
+    for (unsigned int i = 0; i < s.size(); ++i)
       tmp[i] = string_to_double(s[i]);
     return tmp;
   }
@@ -260,7 +260,7 @@ namespace Utilities
 
     // as discussed in the documentation, eat whitespace from the end
     // of the string
-    while(tmp.length() != 0 && tmp[tmp.length() - 1] == ' ')
+    while (tmp.length() != 0 && tmp[tmp.length() - 1] == ' ')
       tmp.erase(tmp.length() - 1, 1);
 
     // split the input list until it is empty. since in every iteration
@@ -270,12 +270,12 @@ namespace Utilities
     // there was space after the last delimiter. this matches what's
     // discussed in the documentation
     std::vector<std::string> split_list;
-    while(tmp.length() != 0)
+    while (tmp.length() != 0)
       {
         std::string name;
         name = tmp;
 
-        if(name.find(delimiter) != std::string::npos)
+        if (name.find(delimiter) != std::string::npos)
           {
             name.erase(name.find(delimiter), std::string::npos);
             tmp.erase(0, tmp.find(delimiter) + delimiter.size());
@@ -284,9 +284,9 @@ namespace Utilities
           tmp = "";
 
         // strip spaces from this element's front and end
-        while((name.length() != 0) && (name[0] == ' '))
+        while ((name.length() != 0) && (name[0] == ' '))
           name.erase(0, 1);
-        while(name.length() != 0 && name[name.length() - 1] == ' ')
+        while (name.length() != 0 && name[name.length() - 1] == ' ')
           name.erase(name.length() - 1, 1);
 
         split_list.push_back(name);
@@ -312,23 +312,23 @@ namespace Utilities
     std::vector<std::string> lines;
 
     // remove trailing spaces
-    while((text.length() != 0) && (text[text.length() - 1] == delimiter))
+    while ((text.length() != 0) && (text[text.length() - 1] == delimiter))
       text.erase(text.length() - 1, 1);
 
     // then split the text into lines
-    while(text.length() != 0)
+    while (text.length() != 0)
       {
         // in each iteration, first remove
         // leading spaces
-        while((text.length() != 0) && (text[0] == delimiter))
+        while ((text.length() != 0) && (text[0] == delimiter))
           text.erase(0, 1);
 
         std::size_t pos_newline = text.find_first_of('\n', 0);
-        if(pos_newline != std::string::npos && pos_newline <= width)
+        if (pos_newline != std::string::npos && pos_newline <= width)
           {
             std::string line(text, 0, pos_newline);
-            while((line.length() != 0)
-                  && (line[line.length() - 1] == delimiter))
+            while ((line.length() != 0)
+                   && (line[line.length() - 1] == delimiter))
               line.erase(line.length() - 1, 1);
             lines.push_back(line);
             text.erase(0, pos_newline + 1);
@@ -338,11 +338,11 @@ namespace Utilities
         // if we can fit everything into one
         // line, then do so. otherwise, we have
         // to keep breaking
-        if(text.length() < width)
+        if (text.length() < width)
           {
             // remove trailing spaces
-            while((text.length() != 0)
-                  && (text[text.length() - 1] == delimiter))
+            while ((text.length() != 0)
+                   && (text[text.length() - 1] == delimiter))
               text.erase(text.length() - 1, 1);
             lines.push_back(text);
             text = "";
@@ -353,25 +353,25 @@ namespace Utilities
             // location of the previous space, so
             // that we can break around there
             int location = std::min<int>(width, text.length() - 1);
-            for(; location > 0; --location)
-              if(text[location] == delimiter)
+            for (; location > 0; --location)
+              if (text[location] == delimiter)
                 break;
 
             // if there are no spaces, then try if
             // there are spaces coming up
-            if(location == 0)
-              for(location = std::min<int>(width, text.length() - 1);
-                  location < static_cast<int>(text.length());
-                  ++location)
-                if(text[location] == delimiter)
+            if (location == 0)
+              for (location = std::min<int>(width, text.length() - 1);
+                   location < static_cast<int>(text.length());
+                   ++location)
+                if (text[location] == delimiter)
                   break;
 
             // now take the text up to the found
             // location and put it into a single
             // line, and remove it from 'text'
             std::string line(text, 0, location);
-            while((line.length() != 0)
-                  && (line[line.length() - 1] == delimiter))
+            while ((line.length() != 0)
+                   && (line[line.length() - 1] == delimiter))
               line.erase(line.length() - 1, 1);
             lines.push_back(line);
             text.erase(0, location);
@@ -384,11 +384,11 @@ namespace Utilities
   bool
   match_at_string_start(const std::string& name, const std::string& pattern)
   {
-    if(pattern.size() > name.size())
+    if (pattern.size() > name.size())
       return false;
 
-    for(unsigned int i = 0; i < pattern.size(); ++i)
-      if(pattern[i] != name[i])
+    for (unsigned int i = 0; i < pattern.size(); ++i)
+      if (pattern[i] != name[i])
         return false;
 
     return true;
@@ -404,25 +404,25 @@ namespace Utilities
     std::istringstream str(test_string);
 
     int i;
-    if(str >> i)
+    if (str >> i)
       {
         // compute the number of
         // digits of i. assuming it
         // is less than 8 is likely
         // ok
-        if(i < 10)
+        if (i < 10)
           return std::make_pair(i, 1U);
-        else if(i < 100)
+        else if (i < 100)
           return std::make_pair(i, 2U);
-        else if(i < 1000)
+        else if (i < 1000)
           return std::make_pair(i, 3U);
-        else if(i < 10000)
+        else if (i < 10000)
           return std::make_pair(i, 4U);
-        else if(i < 100000)
+        else if (i < 100000)
           return std::make_pair(i, 5U);
-        else if(i < 1000000)
+        else if (i < 1000000)
           return std::make_pair(i, 6U);
-        else if(i < 10000000)
+        else if (i < 10000000)
           return std::make_pair(i, 7U);
         else
           {
@@ -438,7 +438,7 @@ namespace Utilities
   generate_normal_random_number(const double a, const double sigma)
   {
     // if no noise: return now
-    if(sigma == 0)
+    if (sigma == 0)
       return a;
 
     // we would want to use rand(), but that function is not reentrant
@@ -457,7 +457,7 @@ namespace Utilities
     const unsigned int n = permutation.size();
 
     std::vector<unsigned int> out(n);
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       out[i] = n - 1 - permutation[i];
 
     return out;
@@ -470,7 +470,7 @@ namespace Utilities
 
     std::vector<unsigned int> out(n, numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       {
         Assert(permutation[i] < n, ExcIndexRange(permutation[i], 0, n));
         out[permutation[i]] = i;
@@ -478,7 +478,7 @@ namespace Utilities
 
     // check that we have actually reached
     // all indices
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       Assert(out[i] != numbers::invalid_unsigned_int,
              ExcMessage("The given input permutation had duplicate entries!"));
 
@@ -491,7 +491,7 @@ namespace Utilities
     const unsigned long long int n = permutation.size();
 
     std::vector<unsigned long long int> out(n);
-    for(unsigned long long int i = 0; i < n; ++i)
+    for (unsigned long long int i = 0; i < n; ++i)
       out[i] = n - 1 - permutation[i];
 
     return out;
@@ -504,7 +504,7 @@ namespace Utilities
 
     std::vector<unsigned long long int> out(n, numbers::invalid_unsigned_int);
 
-    for(unsigned long long int i = 0; i < n; ++i)
+    for (unsigned long long int i = 0; i < n; ++i)
       {
         Assert(permutation[i] < n, ExcIndexRange(permutation[i], 0, n));
         out[permutation[i]] = i;
@@ -512,7 +512,7 @@ namespace Utilities
 
     // check that we have actually reached
     // all indices
-    for(unsigned long long int i = 0; i < n; ++i)
+    for (unsigned long long int i = 0; i < n; ++i)
       Assert(out[i] != numbers::invalid_unsigned_int,
              ExcMessage("The given input permutation had duplicate entries!"));
 
@@ -526,7 +526,7 @@ namespace Utilities
     const unsigned int n = permutation.size();
 
     std::vector<Integer> out(n);
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       out[i] = n - 1 - permutation[i];
 
     return out;
@@ -540,7 +540,7 @@ namespace Utilities
 
     std::vector<Integer> out(n, numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       {
         Assert(permutation[i] < n, ExcIndexRange(permutation[i], 0, n));
         out[permutation[i]] = i;
@@ -548,7 +548,7 @@ namespace Utilities
 
     // check that we have actually reached
     // all indices
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       Assert(out[i] != numbers::invalid_unsigned_int,
              ExcMessage("The given input permutation had duplicate entries!"));
 
@@ -586,7 +586,7 @@ namespace Utilities
     const std::string
     get_current_vectorization_level()
     {
-      switch(DEAL_II_COMPILER_VECTORIZATION_LEVEL)
+      switch (DEAL_II_COMPILER_VECTORIZATION_LEVEL)
         {
           case 0:
             return "disabled";
@@ -616,16 +616,16 @@ namespace Utilities
       std::ifstream file("/proc/self/status");
       std::string   line;
       std::string   name;
-      while(!file.eof())
+      while (!file.eof())
         {
           file >> name;
-          if(name == "VmPeak:")
+          if (name == "VmPeak:")
             file >> stats.VmPeak;
-          else if(name == "VmSize:")
+          else if (name == "VmSize:")
             file >> stats.VmSize;
-          else if(name == "VmHWM:")
+          else if (name == "VmHWM:")
             file >> stats.VmHWM;
-          else if(name == "VmRSS:")
+          else if (name == "VmRSS:")
             {
               file >> stats.VmRSS;
               break; //this is always the last entry
@@ -742,7 +742,7 @@ namespace Utilities
       // return a duplicate of it
       const Epetra_MpiComm* mpi_comm
         = dynamic_cast<const Epetra_MpiComm*>(&communicator);
-      if(mpi_comm != nullptr)
+      if (mpi_comm != nullptr)
         return new Epetra_MpiComm(
           Utilities::MPI::duplicate_communicator(mpi_comm->GetMpiComm()));
 #  endif
@@ -764,7 +764,7 @@ namespace Utilities
       // this whole thing was created as an MPI communicator
 #  ifdef DEAL_II_WITH_MPI
       Epetra_MpiComm* mpi_comm = dynamic_cast<Epetra_MpiComm*>(&communicator);
-      if(mpi_comm != nullptr)
+      if (mpi_comm != nullptr)
         {
           MPI_Comm comm  = mpi_comm->GetMpiComm();
           *mpi_comm      = Epetra_MpiComm(MPI_COMM_SELF);
@@ -789,7 +789,7 @@ namespace Utilities
     Epetra_Map
     duplicate_map(const Epetra_BlockMap& map, const Epetra_Comm& comm)
     {
-      if(map.LinearMap() == true)
+      if (map.LinearMap() == true)
         {
           // each processor stores a
           // contiguous range of

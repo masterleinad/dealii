@@ -41,7 +41,7 @@ test()
   grid_out.write_dx(tria, logfile);
 
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active();
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
     {
       cell->set_coarsen_flag();
       ++cell;

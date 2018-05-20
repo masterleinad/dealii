@@ -89,7 +89,7 @@ test_mesh(DoFHandler<dim>& mgdofs)
 
   BlockVector<double> cells(n_functionals);
   BlockVector<double> faces(n_functionals);
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for (unsigned int i = 0; i < n_functionals; ++i)
     {
       cells.block(i).reinit(dofs.get_triangulation().n_cells());
       faces.block(i).reinit(dofs.get_triangulation().n_faces());
@@ -131,12 +131,12 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "  Results cells";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for (unsigned int i = 0; i < n_functionals; ++i)
     deallog << '\t' << cells.block(i).l1_norm();
   deallog << std::endl;
 
   deallog << "  Results faces";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for (unsigned int i = 0; i < n_functionals; ++i)
     deallog << '\t' << faces.block(i).l1_norm();
   deallog << std::endl;
 
@@ -163,12 +163,12 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "MGResults cells";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for (unsigned int i = 0; i < n_functionals; ++i)
     deallog << '\t' << cells.block(i).l1_norm();
   deallog << std::endl;
 
   deallog << "MGResults faces";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for (unsigned int i = 0; i < n_functionals; ++i)
     deallog << '\t' << faces.block(i).l1_norm();
   deallog << std::endl;
 }

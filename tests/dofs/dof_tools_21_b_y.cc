@@ -74,7 +74,7 @@ void generate_grid(Triangulation<2>& triangulation)
   /* cell 1 */
   int cell_vertices_1[GeometryInfo<2>::vertices_per_cell] = {7, 6, 5, 4};
 
-  for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
     {
       cells[0].vertices[j] = cell_vertices_0[j];
       cells[1].vertices[j] = cell_vertices_1[j];
@@ -91,11 +91,11 @@ void generate_grid(Triangulation<2>& triangulation)
   Triangulation<2>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<2>::faces_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<2>::faces_per_cell; ++j)
     {
-      if(cell_1->face(j)->center()(1) > 2.9)
+      if (cell_1->face(j)->center()(1) > 2.9)
         face_1 = cell_1->face(j);
-      if(cell_2->face(j)->center()(1) < -2.9)
+      if (cell_2->face(j)->center()(1) < -2.9)
         face_2 = cell_2->face(j);
     }
   face_1->set_boundary_id(42);
@@ -133,11 +133,11 @@ print_matching(DoFHandler<dim>& dof_handler)
 
   // Print out all DoF support points on the two faces:
   deallog << "DoFs of face_1:" << std::endl;
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for (unsigned int i = 0; i < fe.dofs_per_face; ++i)
     deallog << dofs_1[i] << " is located at " << support_points[dofs_1[i]]
             << std::endl;
   deallog << "DoFs of face_2:" << std::endl;
-  for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+  for (unsigned int i = 0; i < fe.dofs_per_face; ++i)
     deallog << dofs_2[i] << " is located at " << support_points[dofs_2[i]]
             << std::endl;
 

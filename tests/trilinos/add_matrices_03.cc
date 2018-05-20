@@ -28,7 +28,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 3 indices
@@ -38,9 +38,9 @@ test()
   // Create sparsity patterns
   TrilinosWrappers::SparsityPattern sp(local_owned, MPI_COMM_WORLD);
 
-  for(unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
-    for(unsigned int j = 0; j < local_owned.size(); ++j)
-      if((i + j) % 2 == 1)
+  for (unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
+    for (unsigned int j = 0; j < local_owned.size(); ++j)
+      if ((i + j) % 2 == 1)
         {
           sp.add(i, j);
         }
@@ -49,12 +49,12 @@ test()
 
   // create matrices by adding some elements into the respective positions
   TrilinosWrappers::SparseMatrix m1(sp), m2(sp);
-  for(unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
-    for(unsigned int j = 0; j < local_owned.size(); ++j)
-      if((i + j) % 2 == 1)
+  for (unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
+    for (unsigned int j = 0; j < local_owned.size(); ++j)
+      if ((i + j) % 2 == 1)
         {
           m1.add(i, j, i + j);
-          if(j % 2 == 0)
+          if (j % 2 == 0)
             m2.add(i, j, i + 2 * j + 1);
         }
   m1.compress(VectorOperation::add);
@@ -64,14 +64,14 @@ test()
 
   // Check for correctness of entries (all floating point comparisons should
   // be exact)
-  for(unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
-    for(unsigned int j = 0; j < local_owned.size(); ++j)
-      if((i + j) % 2 == 1 && j % 2 == 0)
+  for (unsigned int i = myid * 3; i < myid * 3 + 3; ++i)
+    for (unsigned int j = 0; j < local_owned.size(); ++j)
+      if ((i + j) % 2 == 1 && j % 2 == 0)
         {
           Assert(m1.el(i, j) == (double) i + j + 2 * i + 4 * j + 2,
                  ExcInternalError());
         }
-      else if((i + j) % 2 == 1)
+      else if ((i + j) % 2 == 1)
         {
           Assert(m1.el(i, j) == (double) i + j, ExcInternalError());
         }
@@ -95,7 +95,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -109,7 +109,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

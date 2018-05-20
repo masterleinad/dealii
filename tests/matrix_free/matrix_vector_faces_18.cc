@@ -31,7 +31,7 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  if(fe_degree > 1)
+  if (fe_degree > 1)
     return;
 
   const double       h  = 1;
@@ -61,7 +61,7 @@ test()
   bottom_two[0] = Lx - Li;
   bottom_two[1] = h;
 
-  if(dim == 3)
+  if (dim == 3)
     {
       left_one[2]   = 0;
       right_one[2]  = 0;
@@ -82,7 +82,7 @@ test()
   refinements_right[0]  = 20;
   refinements_bottom[0] = 20;
 
-  if(dim == 3)
+  if (dim == 3)
     {
       refinements_left[2]   = 4;
       refinements_right[2]  = 4;
@@ -104,29 +104,29 @@ test()
 
   GridGenerator::merge_triangulations(temp, bottom, triangulation);
 
-  if(dim == 3)
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin();
-        cell != triangulation.end();
-        ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(cell->face(f)->at_boundary())
+  if (dim == 3)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin();
+         cell != triangulation.end();
+         ++cell)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (cell->face(f)->at_boundary())
           {
-            if(std::abs(cell->face(f)->center()[2]) < 1e-12)
+            if (std::abs(cell->face(f)->center()[2]) < 1e-12)
               cell->face(f)->set_all_boundary_ids(10);
-            else if(std::abs(cell->face(f)->center()[2] - Lz) < 1e-12)
+            else if (std::abs(cell->face(f)->center()[2] - Lz) < 1e-12)
               cell->face(f)->set_all_boundary_ids(11);
-            else if(std::abs(cell->face(f)->center()[1] - h) < 1e-12)
+            else if (std::abs(cell->face(f)->center()[1] - h) < 1e-12)
               cell->face(f)->set_all_boundary_ids(0);
-            else if(std::abs(cell->face(f)->center()[1]) < 1e-12)
+            else if (std::abs(cell->face(f)->center()[1]) < 1e-12)
               cell->face(f)->set_all_boundary_ids(0);
-            else if(std::abs(cell->face(f)->center()[0]) < 1e-12)
+            else if (std::abs(cell->face(f)->center()[0]) < 1e-12)
               cell->face(f)->set_all_boundary_ids(0);
-            else if(std::abs(cell->face(f)->center()[1] - Ly) < 1e-12)
+            else if (std::abs(cell->face(f)->center()[1] - Ly) < 1e-12)
               cell->face(f)->set_all_boundary_ids(3);
-            else if(std::abs(cell->face(f)->center()[0] + Li) < 1e-12)
+            else if (std::abs(cell->face(f)->center()[0] + Li) < 1e-12)
               cell->face(f)->set_all_boundary_ids(1);
-            else if(std::abs(cell->face(f)->center()[0] - (Lx - Li)) < 1e-12)
+            else if (std::abs(cell->face(f)->center()[0] - (Lx - Li)) < 1e-12)
               cell->face(f)->set_all_boundary_ids(2);
           }
 
@@ -134,7 +134,7 @@ test()
     GridTools::PeriodicFacePair<typename Triangulation<dim>::cell_iterator>>
     periodic_faces;
 
-  if(dim == 3)
+  if (dim == 3)
     {
       GridTools::collect_periodic_faces(
         triangulation, 10, 11, 2, periodic_faces);
@@ -193,7 +193,7 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < in_orig.local_size(); ++i)
+  for (unsigned int i = 0; i < in_orig.local_size(); ++i)
     {
       const double entry       = Testing::rand() / (double) RAND_MAX;
       in_orig.local_element(i) = entry;
@@ -216,7 +216,7 @@ test()
     mf2(mf_data);
   mf2.vmult(out, in);
 
-  for(unsigned int i = 0; i < out.local_size(); ++i)
+  for (unsigned int i = 0; i < out.local_size(); ++i)
     out(renumbering[i]) -= out_orig.local_element(i);
 
   double diff_norm = out.linfty_norm() / out_orig.linfty_norm();
@@ -225,7 +225,7 @@ test()
   // test again, now doing matrix-vector product twice
   mf2.vmult(out, in);
   mf2.vmult(out, in);
-  for(unsigned int i = 0; i < out.local_size(); ++i)
+  for (unsigned int i = 0; i < out.local_size(); ++i)
     out(renumbering[i]) -= out_orig.local_element(i);
   diff_norm = out.linfty_norm() / out_orig.linfty_norm();
   deallog << diff_norm << std::endl;

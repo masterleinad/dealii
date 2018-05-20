@@ -648,7 +648,7 @@ namespace Threads
     // function is called with n_intervals==1, so have a shortcut here
     // to handle that case efficiently
 
-    if(n_intervals == 1)
+    if (n_intervals == 1)
       return (std::vector<IteratorPair>(1, IteratorPair(begin, end)));
 
     // if more than one interval requested, do the full work
@@ -659,9 +659,9 @@ namespace Threads
     std::vector<IteratorPair> return_values(n_intervals);
 
     return_values[0].first = begin;
-    for(unsigned int i = 0; i < n_intervals; ++i)
+    for (unsigned int i = 0; i < n_intervals; ++i)
       {
-        if(i != n_intervals - 1)
+        if (i != n_intervals - 1)
           {
             return_values[i].second = return_values[i].first;
             // note: the cast is performed to avoid a warning of gcc
@@ -672,7 +672,7 @@ namespace Threads
                          static_cast<signed int>(n_elements_per_interval));
             // distribute residual in division equally among the first
             // few subintervals
-            if(i < residual)
+            if (i < residual)
               ++return_values[i].second;
 
             return_values[i + 1].first = return_values[i].second;
@@ -871,7 +871,7 @@ namespace Threads
 
       ~ThreadDescriptor()
       {
-        if(!thread_is_active)
+        if (!thread_is_active)
           return;
         thread.detach();
         thread_is_active = false;
@@ -898,11 +898,11 @@ namespace Threads
         // see if the thread hasn't been joined yet. if it has, then
         // join() is a no-op. use schmidt's double-checking strategy
         // to use the mutex only when necessary
-        if(thread_is_active == false)
+        if (thread_is_active == false)
           return;
 
         Mutex::ScopedLock lock(thread_is_active_mutex);
-        if(thread_is_active == true)
+        if (thread_is_active == true)
           {
             Assert(thread.joinable(), ExcInternalError());
             thread.join();
@@ -928,11 +928,11 @@ namespace Threads
           {
             call(function, *ret_val);
           }
-        catch(const std::exception& exc)
+        catch (const std::exception& exc)
           {
             internal::handle_std_exception(exc);
           }
-        catch(...)
+        catch (...)
           {
             internal::handle_unknown_exception();
           }
@@ -1037,7 +1037,7 @@ namespace Threads
     void
     join() const
     {
-      if(thread_descriptor)
+      if (thread_descriptor)
         thread_descriptor->join();
     }
 
@@ -1322,9 +1322,9 @@ namespace Threads
     void
     join_all() const
     {
-      for(typename std::list<Thread<RT>>::const_iterator t = threads.begin();
-          t != threads.end();
-          ++t)
+      for (typename std::list<Thread<RT>>::const_iterator t = threads.begin();
+           t != threads.end();
+           ++t)
         t->join();
     }
 
@@ -1364,11 +1364,11 @@ namespace Threads
           {
             call(task_descriptor.function, task_descriptor.ret_val);
           }
-        catch(const std::exception& exc)
+        catch (const std::exception& exc)
           {
             internal::handle_std_exception(exc);
           }
-        catch(...)
+        catch (...)
           {
             internal::handle_unknown_exception();
           }
@@ -1496,10 +1496,11 @@ namespace Threads
     {
       // use the pattern described in the TBB book on pages 230/231
       // ("Start a large task in parallel with the main program")
-      task = new(tbb::task::allocate_root()) tbb::empty_task;
+      task = new (tbb::task::allocate_root()) tbb::empty_task;
       task->set_ref_count(2);
 
-      tbb::task* worker = new(task->allocate_child()) TaskEntryPoint<RT>(*this);
+      tbb::task* worker
+        = new (task->allocate_child()) TaskEntryPoint<RT>(*this);
 
       // in earlier versions of the TBB, task::spawn was a regular
       // member function; however, in later versions, it was converted
@@ -1572,7 +1573,7 @@ namespace Threads
       //
       // TODO: can we assert that no other thread tries to end the
       // task?
-      if(task_is_done == true)
+      if (task_is_done == true)
         return;
 
       // let TBB wait for the task to complete.
@@ -1965,9 +1966,9 @@ namespace Threads
     void
     join_all() const
     {
-      for(typename std::list<Task<RT>>::const_iterator t = tasks.begin();
-          t != tasks.end();
-          ++t)
+      for (typename std::list<Task<RT>>::const_iterator t = tasks.begin();
+           t != tasks.end();
+           ++t)
         t->join();
     }
 

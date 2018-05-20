@@ -165,13 +165,13 @@ SeventhProblem<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
-    if(cell->is_locally_owned())
+  for (; cell != endc; ++cell)
+    if (cell->is_locally_owned())
       {
         cell_matrix = 0;
         cell_rhs    = 0;
         fe_values.reinit(cell);
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             const double rhs_value
               = (fe_values.quadrature_point(q_point)[1]
@@ -182,9 +182,9 @@ SeventhProblem<dim>::assemble_system()
                                  * fe_values.quadrature_point(q_point)[0]) ?
                    1 :
                    -1);
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                         * fe_values.shape_grad(j, q_point)
                                         * fe_values.JxW(q_point));
@@ -222,7 +222,7 @@ template <int dim>
 void
 SeventhProblem<dim>::run(unsigned int cycle)
 {
-  if(cycle == 0)
+  if (cycle == 0)
     {
       GridGenerator::hyper_cube(triangulation);
       triangulation.refine_global(1);
@@ -281,7 +281,7 @@ seventh_grid()
   pcout << "7th Starting" << std::endl;
   SeventhProblem<2>  lap(1);
   const unsigned int n_cycles = 5;
-  for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+  for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
     {
       pcout << "Cycle " << cycle << ':' << std::endl;
       lap.run(cycle);

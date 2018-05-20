@@ -41,9 +41,9 @@ test()
       Utilities::Trilinos::comm_world()));
   std::vector<unsigned int> start_row(Utilities::Trilinos::get_n_mpi_processes(
     Utilities::Trilinos::comm_world()));
-  for(unsigned int i = 0; i < Utilities::Trilinos::get_n_mpi_processes(
-                                Utilities::Trilinos::comm_world());
-      ++i)
+  for (unsigned int i = 0; i < Utilities::Trilinos::get_n_mpi_processes(
+                                 Utilities::Trilinos::comm_world());
+       ++i)
     {
       N += (i + 1) * 10;
       local_rows_per_process[i] = (i + 1) * 10;
@@ -55,13 +55,13 @@ test()
   // processes. note that only one of the
   // four blocks uses Inodes
   DynamicSparsityPattern csp(N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       {
         csp.add(i, i);
-        if(i + local_rows_per_process.back() < N)
+        if (i + local_rows_per_process.back() < N)
           csp.add(i, i + local_rows_per_process.back());
-        if(i > local_rows_per_process.back())
+        if (i > local_rows_per_process.back())
           csp.add(i, i - local_rows_per_process.back());
       }
 
@@ -90,8 +90,8 @@ test()
   // now write into the exact same matrix
   // entries as have been created by the
   // sparsity pattern above
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < csp.row_length(i); ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < csp.row_length(i); ++j)
       m.add(i, csp.column_number(i, j), 1.);
 
   m.compress(VectorOperation::add);
@@ -111,7 +111,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -125,7 +125,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -257,8 +257,8 @@ namespace Step23
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    if((this->get_time() <= 0.5) && (p[0] < 0) && (p[1] < 1. / 3)
-       && (p[1] > -1. / 3))
+    if ((this->get_time() <= 0.5) && (p[0] < 0) && (p[1] < 1. / 3)
+        && (p[1] > -1. / 3))
       return std::sin(this->get_time() * 4 * numbers::PI);
     else
       return 0;
@@ -272,8 +272,8 @@ namespace Step23
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    if((this->get_time() <= 0.5) && (p[0] < 0) && (p[1] < 1. / 3)
-       && (p[1] > -1. / 3))
+    if ((this->get_time() <= 0.5) && (p[0] < 0) && (p[1] < 1. / 3)
+        && (p[1] > -1. / 3))
       return (std::cos(this->get_time() * 4 * numbers::PI) * 4 * numbers::PI);
     else
       return 0;
@@ -491,7 +491,7 @@ namespace Step23
     Vector<double> tmp(solution_u.size());
     Vector<double> forcing_terms(solution_u.size());
 
-    for(; time <= 5; time += time_step, ++timestep_number)
+    for (; time <= 5; time += time_step, ++timestep_number)
       {
         std::cout << "Time step " << timestep_number << " at t=" << time
                   << std::endl;
@@ -617,7 +617,7 @@ main()
       WaveEquation<2> wave_equation_solver;
       wave_equation_solver.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -631,7 +631,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

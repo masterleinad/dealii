@@ -653,7 +653,7 @@ PArpackSolver<VectorType>::AdditionalData::AdditionalData(
     mode(mode)
 {
   //Check for possible options for symmetric problems
-  if(symmetric)
+  if (symmetric)
     {
       Assert(
         eigenvalue_of_interest != largest_real_part,
@@ -800,7 +800,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1&                 A,
                                  const unsigned int       n_eigenvalues)
 {
   std::vector<VectorType*> eigenvectors_ptr(eigenvectors.size());
-  for(unsigned int i = 0; i < eigenvectors.size(); ++i)
+  for (unsigned int i = 0; i < eigenvectors.size(); ++i)
     eigenvectors_ptr[i] = &eigenvectors[i];
   solve(A, B, inverse, eigenvalues, eigenvectors_ptr, n_eigenvalues);
 }
@@ -815,7 +815,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
                                  std::vector<VectorType*>& eigenvectors,
                                  const unsigned int        n_eigenvalues)
 {
-  if(additional_data.symmetric)
+  if (additional_data.symmetric)
     {
       Assert(
         n_eigenvalues <= eigenvectors.size(),
@@ -866,7 +866,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
   // "SI" smallest imaginary part
   // "BE" both ends of spectrum simultaneous
   char which[3];
-  switch(additional_data.eigenvalue_of_interest)
+  switch (additional_data.eigenvalue_of_interest)
     {
       case algebraically_largest:
         std::strcpy(which, "LA");
@@ -935,10 +935,10 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
   int n_inside_arpack = nloc;
 
   // IDO = 99: done
-  while(ido != 99)
+  while (ido != 99)
     {
       // call of ARPACK pdnaupd routine
-      if(additional_data.symmetric)
+      if (additional_data.symmetric)
         pdsaupd_(&mpi_communicator_fortran,
                  &ido,
                  bmat,
@@ -978,7 +978,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
       AssertThrow(info == 0, PArpackExcInfoPdnaupd(info));
 
       // if we converge, we shall not modify anything in work arrays!
-      if(ido == 99)
+      if (ido == 99)
         break;
 
       // IPNTR(1) is the pointer into WORKD for X,
@@ -993,19 +993,19 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
       src = 0.;
 
       // switch based on both ido and mode
-      if((ido == -1) || (ido == 1 && mode < 3))
+      if ((ido == -1) || (ido == 1 && mode < 3))
         // compute  Y = OP * X
         {
           src.add(nloc, local_indices.data(), workd.data() + shift_x);
           src.compress(VectorOperation::add);
 
-          if(mode == 3)
+          if (mode == 3)
             // OP = inv[K - sigma*M]*M
             {
               mass_matrix.vmult(tmp, src);
               inverse.vmult(dst, tmp);
             }
-          else if(mode == 2)
+          else if (mode == 2)
             // OP = inv[M]*K
             {
               system_matrix.vmult(tmp, src);
@@ -1015,14 +1015,14 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
                                        workd.data() + shift_x);
               inverse.vmult(dst, tmp);
             }
-          else if(mode == 1)
+          else if (mode == 1)
             {
               system_matrix.vmult(dst, src);
             }
           else
             AssertThrow(false, PArpackExcMode(mode));
         }
-      else if(ido == 1 && mode >= 3)
+      else if (ido == 1 && mode >= 3)
         // compute  Y = OP * X for mode 3, 4 and 5, where
         // the vector B * X is already available in WORKD(ipntr(3)).
         {
@@ -1039,14 +1039,14 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
           Assert(mode == 3, ExcNotImplemented());
           inverse.vmult(dst, src);
         }
-      else if(ido == 2)
+      else if (ido == 2)
         // compute  Y = B * X
         {
           src.add(nloc, local_indices.data(), workd.data() + shift_x);
           src.compress(VectorOperation::add);
 
           // Multiplication with mass matrix M
-          if(mode == 1)
+          if (mode == 1)
             {
               dst = src;
             }
@@ -1077,7 +1077,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
   std::vector<double> eigenvalues_im(n_eigenvalues + 1, 0.);
 
   // call of ARPACK pdneupd routine
-  if(additional_data.symmetric)
+  if (additional_data.symmetric)
     pdseupd_(&mpi_communicator_fortran,
              &rvec,
              howmany,
@@ -1129,20 +1129,20 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
              &lworkl,
              &info);
 
-  if(info == 1)
+  if (info == 1)
     {
       AssertThrow(false, PArpackExcInfoMaxIt(control().max_steps()));
     }
-  else if(info == 3)
+  else if (info == 3)
     {
       AssertThrow(false, PArpackExcNoShifts(1));
     }
-  else if(info != 0)
+  else if (info != 0)
     {
       AssertThrow(false, PArpackExcInfoPdneupd(info));
     }
 
-  for(int i = 0; i < nev; ++i)
+  for (int i = 0; i < nev; ++i)
     {
       (*eigenvectors[i]) = 0.0;
       Assert(i * nloc + nloc <= (int) v.size(), dealii::ExcInternalError());
@@ -1151,7 +1151,7 @@ PArpackSolver<VectorType>::solve(const MatrixType1& system_matrix,
       eigenvectors[i]->compress(VectorOperation::add);
     }
 
-  for(size_type i = 0; i < n_eigenvalues; ++i)
+  for (size_type i = 0; i < n_eigenvalues; ++i)
     eigenvalues[i]
       = std::complex<double>(eigenvalues_real[i], eigenvalues_im[i]);
 

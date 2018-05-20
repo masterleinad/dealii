@@ -88,14 +88,14 @@ void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
       fe_v.reinit(cell);
 
-      for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
         {
-          if(!cell->face(f)->at_boundary())
+          if (!cell->face(f)->at_boundary())
             {
               const QProjector<2>::DataSetDescriptor offset
                 = (QProjector<2>::DataSetDescriptor::face(
@@ -128,7 +128,7 @@ void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
                 n_q_proj, Vector<double>(n_components));
               fe_v_n.get_function_values(solution, this_value_n);
 
-              for(unsigned int q_point = 0; q_point < n_q_face; ++q_point)
+              for (unsigned int q_point = 0; q_point < n_q_face; ++q_point)
                 {
                   Tensor<1, 2> vn = fe_v_face.normal_vector(q_point);
                   double       nx = vn[0];
@@ -185,13 +185,13 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
 
-      for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
         {
-          if(!cell->face(f)->at_boundary())
+          if (!cell->face(f)->at_boundary())
             {
               fe_v_face.reinit(cell, f);
 
@@ -208,7 +208,7 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
                 n_q_face, Vector<double>(n_components));
               fe_v_face_n.get_function_values(solution, this_value_n);
 
-              for(unsigned int q_point = 0; q_point < n_q_face; ++q_point)
+              for (unsigned int q_point = 0; q_point < n_q_face; ++q_point)
                 {
                   Tensor<1, 2> vn = fe_v_face.normal_vector(q_point);
                   double       nx = vn[0];
@@ -263,13 +263,13 @@ main(int /*argc*/, char** /*argv*/)
   solution.reinit(dof_handler->n_dofs());
 
   // Fill solution vector with random values between 0 and 1.
-  for(unsigned int i = 0; i < dof_handler->n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler->n_dofs(); ++i)
     solution(i) = random_value<double>();
 
   // Now check if the function is continuous in normal
   // direction.
   EvaluateNormal2(dof_handler, solution);
 
-  delete(dof_handler);
+  delete (dof_handler);
   return (0);
 }

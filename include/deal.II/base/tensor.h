@@ -981,7 +981,7 @@ template <int rank_, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE
 Tensor<rank_, dim, Number>::Tensor(const array_type& initializer)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] = Tensor<rank_ - 1, dim, Number>(initializer[i]);
 }
 
@@ -991,7 +991,7 @@ inline DEAL_II_ALWAYS_INLINE
 Tensor<rank_, dim, Number>::Tensor(
   const Tensor<rank_, dim, OtherNumber>& initializer)
 {
-  for(unsigned int i = 0; i != dim; ++i)
+  for (unsigned int i = 0; i != dim; ++i)
     values[i] = Tensor<rank_ - 1, dim, Number>(initializer[i]);
 }
 
@@ -1001,7 +1001,7 @@ inline DEAL_II_ALWAYS_INLINE
 Tensor<rank_, dim, Number>::Tensor(
   const Tensor<1, dim, Tensor<rank_ - 1, dim, OtherNumber>>& initializer)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] = initializer[i];
 }
 
@@ -1122,7 +1122,7 @@ template <typename OtherNumber>
 inline DEAL_II_ALWAYS_INLINE Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator=(const Tensor<rank_, dim, OtherNumber>& t)
 {
-  if(dim > 0)
+  if (dim > 0)
     std::copy(&t.values[0], &t.values[0] + dim, &values[0]);
   return *this;
 }
@@ -1135,7 +1135,7 @@ Tensor<rank_, dim, Number>::operator=(const Number& d)
          ExcMessage("Only assignment with zero is allowed"));
   (void) d;
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] = internal::NumberType<Number>::value(0.0);
   return *this;
 }
@@ -1146,8 +1146,8 @@ inline bool
 Tensor<rank_, dim, Number>::
 operator==(const Tensor<rank_, dim, OtherNumber>& p) const
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    if(values[i] != p.values[i])
+  for (unsigned int i = 0; i < dim; ++i)
+    if (values[i] != p.values[i])
       return false;
   return true;
 }
@@ -1179,7 +1179,7 @@ template <typename OtherNumber>
 inline Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator+=(const Tensor<rank_, dim, OtherNumber>& p)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] += p.values[i];
   return *this;
 }
@@ -1189,7 +1189,7 @@ template <typename OtherNumber>
 inline Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator-=(const Tensor<rank_, dim, OtherNumber>& p)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] -= p.values[i];
   return *this;
 }
@@ -1199,7 +1199,7 @@ template <typename OtherNumber>
 inline DEAL_II_CUDA_HOST_DEV Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator*=(const OtherNumber& s)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] *= s;
   return *this;
 }
@@ -1209,7 +1209,7 @@ template <typename OtherNumber>
 inline Tensor<rank_, dim, Number>&
 Tensor<rank_, dim, Number>::operator/=(const OtherNumber& s)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] /= s;
   return *this;
 }
@@ -1220,7 +1220,7 @@ Tensor<rank_, dim, Number>::operator-() const
 {
   Tensor<rank_, dim, Number> tmp;
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     tmp.values[i] = -values[i];
 
   return tmp;
@@ -1239,7 +1239,7 @@ Tensor<rank_, dim, Number>::norm_square() const
 {
   typename numbers::NumberTraits<Number>::real_type s = internal::NumberType<
     typename numbers::NumberTraits<Number>::real_type>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     s += values[i].norm_square();
 
   return s;
@@ -1263,7 +1263,7 @@ inline void
 Tensor<rank_, dim, Number>::unroll_recursion(Vector<OtherNumber>& result,
                                              unsigned int&        index) const
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i].unroll_recursion(result, index);
 }
 
@@ -1273,7 +1273,7 @@ Tensor<rank_, dim, Number>::component_to_unrolled_index(
   const TableIndices<rank_>& indices)
 {
   unsigned int index = 0;
-  for(int r = 0; r < rank_; ++r)
+  for (int r = 0; r < rank_; ++r)
     index = index * dim + indices[r];
 
   return index;
@@ -1289,7 +1289,7 @@ Tensor<rank_, dim, Number>::unrolled_to_component_indices(const unsigned int i)
   TableIndices<rank_> indices;
 
   unsigned int remainder = i;
-  for(int r = rank_ - 1; r >= 0; --r)
+  for (int r = rank_ - 1; r >= 0; --r)
     {
       indices[r] = (remainder % dim);
       remainder /= dim;
@@ -1303,7 +1303,7 @@ template <int rank_, int dim, typename Number>
 inline void
 Tensor<rank_, dim, Number>::clear()
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     values[i] = internal::NumberType<Number>::value(0.0);
 }
 
@@ -1340,10 +1340,10 @@ template <int rank_, int dim, typename Number>
 inline std::ostream&
 operator<<(std::ostream& out, const Tensor<rank_, dim, Number>& p)
 {
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       out << p[i];
-      if(i != dim - 1)
+      if (i != dim - 1)
         out << ' ';
     }
 
@@ -1482,7 +1482,7 @@ inline DEAL_II_ALWAYS_INLINE
 {
   // recurse over the base objects
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tt;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     tt[d] = t[d] * factor;
   return tt;
 }
@@ -1526,7 +1526,7 @@ operator/(const Tensor<rank, dim, Number>& t, const OtherNumber& factor)
 {
   // recurse over the base objects
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tt;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     tt[d] = t[d] / factor;
   return tt;
 }
@@ -1546,7 +1546,7 @@ inline DEAL_II_ALWAYS_INLINE
 {
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tmp(p);
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     tmp[i] += q[i];
 
   return tmp;
@@ -1567,7 +1567,7 @@ inline DEAL_II_ALWAYS_INLINE
 {
   Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type> tmp(p);
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     tmp[i] -= q[i];
 
   return tmp;
@@ -1970,11 +1970,11 @@ determinant(const Tensor<2, dim, Number>& t)
   // determinant. We expand along the last row.
   Number det = internal::NumberType<Number>::value(0.0);
 
-  for(unsigned int k = 0; k < dim; ++k)
+  for (unsigned int k = 0; k < dim; ++k)
     {
       Tensor<2, dim - 1, Number> minor;
-      for(unsigned int i = 0; i < dim - 1; ++i)
-        for(unsigned int j = 0; j < dim - 1; ++j)
+      for (unsigned int i = 0; i < dim - 1; ++i)
+        for (unsigned int j = 0; j < dim - 1; ++j)
           minor[i][j] = t[i][j < k ? j : j + 1];
 
       const Number cofactor = ((k % 2 == 0) ? -1. : 1.) * determinant(minor);
@@ -2009,7 +2009,7 @@ inline DEAL_II_ALWAYS_INLINE Number
                              trace(const Tensor<2, dim, Number>& d)
 {
   Number t = d[0][0];
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     t += d[i][i];
   return t;
 }
@@ -2124,10 +2124,10 @@ inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, Number>
                              transpose(const Tensor<2, dim, Number>& t)
 {
   Tensor<2, dim, Number> tt;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       tt[i][i] = t[i][i];
-      for(unsigned int j = i + 1; j < dim; ++j)
+      for (unsigned int j = i + 1; j < dim; ++j)
         {
           tt[i][j] = t[j][i];
           tt[j][i] = t[i][j];
@@ -2189,13 +2189,13 @@ inline Number
 l1_norm(const Tensor<2, dim, Number>& t)
 {
   Number max = internal::NumberType<Number>::value(0.0);
-  for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int j = 0; j < dim; ++j)
     {
       Number sum = internal::NumberType<Number>::value(0.0);
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         sum += std::fabs(t[i][j]);
 
-      if(sum > max)
+      if (sum > max)
         max = sum;
     }
 
@@ -2214,13 +2214,13 @@ inline Number
 linfty_norm(const Tensor<2, dim, Number>& t)
 {
   Number max = internal::NumberType<Number>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       Number sum = internal::NumberType<Number>::value(0.0);
-      for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int j = 0; j < dim; ++j)
         sum += std::fabs(t[i][j]);
 
-      if(sum > max)
+      if (sum > max)
         max = sum;
     }
 
@@ -2240,10 +2240,10 @@ inline adouble
 l1_norm(const Tensor<2, dim, adouble>& t)
 {
   adouble max = internal::NumberType<adouble>::value(0.0);
-  for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int j = 0; j < dim; ++j)
     {
       adouble sum = internal::NumberType<adouble>::value(0.0);
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         sum += std::fabs(t[i][j]);
 
       condassign(max, (sum > max), sum, max);
@@ -2257,10 +2257,10 @@ inline adouble
 linfty_norm(const Tensor<2, dim, adouble>& t)
 {
   adouble max = internal::NumberType<adouble>::value(0.0);
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       adouble sum = internal::NumberType<adouble>::value(0.0);
-      for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int j = 0; j < dim; ++j)
         sum += std::fabs(t[i][j]);
 
       condassign(max, (sum > max), sum, max);

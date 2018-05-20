@@ -87,51 +87,51 @@ test()
   std::vector<Point<2>> points;
   points.push_back(p);
 
-  for(int i = 0;; ++i)
+  for (int i = 0;; ++i)
     {
       try
         {
-          if(i == 0)
+          if (i == 0)
             {
               deallog << "vector_value:" << std::endl;
               Vector<double> out(1);
               field_func.vector_value(p, out);
               deallog << "  OK: " << out[0] << std::endl;
             }
-          else if(i == 1)
+          else if (i == 1)
             {
               deallog << "value:" << std::endl;
               double out = field_func.value(p);
               deallog << "  OK: " << out << std::endl;
             }
-          else if(i == 2)
+          else if (i == 2)
             {
               deallog << "value_list:" << std::endl;
               std::vector<double> out(1, -42.0f);
               field_func.value_list(points, out);
               deallog << "  OK: " << out[0] << std::endl;
             }
-          else if(i == 3)
+          else if (i == 3)
             {
               deallog << "vector_value_list:" << std::endl;
               std::vector<Vector<double>> out(1, Vector<double>(1));
               field_func.vector_value_list(points, out);
               deallog << "  OK: " << out[0][0] << std::endl;
             }
-          else if(i == 4)
+          else if (i == 4)
             {
               deallog << "vector_gradient:" << std::endl;
               std::vector<Tensor<1, 2>> out(1, Tensor<1, 2>());
               field_func.vector_gradient(p, out);
               deallog << "  OK: " << out[0] << std::endl;
             }
-          else if(i == 5)
+          else if (i == 5)
             {
               deallog << "gradient:" << std::endl;
               Tensor<1, 2> out = field_func.gradient(p);
               deallog << "  OK: " << out[0] << std::endl;
             }
-          else if(i == 6)
+          else if (i == 6)
             {
               deallog << "vector_gradient_list:" << std::endl;
               std::vector<std::vector<Tensor<1, 2>>> out(
@@ -139,34 +139,34 @@ test()
               field_func.vector_gradient_list(points, out);
               deallog << "  OK: " << out[0][0] << std::endl;
             }
-          else if(i == 7)
+          else if (i == 7)
             {
               deallog << "gradient_list:" << std::endl;
               std::vector<Tensor<1, 2>> out(1, Tensor<1, 2>());
               field_func.gradient_list(points, out);
               deallog << "  OK: " << out[0] << std::endl;
             }
-          else if(i == 8)
+          else if (i == 8)
             {
               deallog << "laplacian:" << std::endl;
               double out = field_func.laplacian(p);
               deallog << "  OK: " << out << std::endl;
             }
-          else if(i == 9)
+          else if (i == 9)
             {
               deallog << "vector_laplacian:" << std::endl;
               Vector<double> out(1);
               field_func.vector_laplacian(p, out);
               deallog << "  OK: " << out[0] << std::endl;
             }
-          else if(i == 10)
+          else if (i == 10)
             {
               deallog << "laplacian_list:" << std::endl;
               std::vector<double> out(1);
               field_func.laplacian_list(points, out);
               deallog << "  OK: " << out[0] << std::endl;
             }
-          else if(i == 11)
+          else if (i == 11)
             {
               deallog << "vector_laplacian_list:" << std::endl;
               std::vector<Vector<double>> out(1, Vector<double>(1));
@@ -176,15 +176,15 @@ test()
           else
             break;
         }
-      catch(const VectorTools::ExcPointNotAvailableHere&)
+      catch (const VectorTools::ExcPointNotAvailableHere&)
         {
           deallog << "  ExcPointNotAvailableHere" << std::endl;
         }
-      catch(std::exception& exc)
+      catch (std::exception& exc)
         {
           deallog << exc.what() << std::endl;
         }
-      catch(...)
+      catch (...)
         {
           deallog << "  Oh no! Some other error that we shouldn't get."
                   << std::endl;

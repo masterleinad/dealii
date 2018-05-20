@@ -96,7 +96,7 @@ namespace polytest
     Assert(dim == 2, ExcNotImplemented());
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for (unsigned int i = 0; i < points.size(); ++i)
       {
         const Point<dim>& p = points[i];
         // non-zero curl-curl:
@@ -115,7 +115,7 @@ namespace polytest
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < points.size(); ++i)
+    for (unsigned int i = 0; i < points.size(); ++i)
       {
         const Point<dim>& p = points[i];
         // non-zero curl-curl:
@@ -234,7 +234,7 @@ namespace polytest
     typename DoFHandler<dim>::active_cell_iterator cell, endc;
     endc = dof_handler.end();
     cell = dof_handler.begin_active();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values_test.reinit(cell);
         fe_values.reinit(cell);
@@ -243,16 +243,16 @@ namespace polytest
 
         right_hand_side.rhs_value_list(fe_values.get_quadrature_points(),
                                        rhs_value_list);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
             Tensor<1, dim> rhs_value;
-            for(unsigned int d = 0; d < dim; ++d)
+            for (unsigned int d = 0; d < dim; ++d)
               {
                 rhs_value[d] = rhs_value_list[q](d);
               }
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   {
                     cell_matrix(i, j)
                       += (fe_values[vec].curl(i, q) * fe_values[vec].curl(j, q)
@@ -323,7 +323,7 @@ main()
 
   initlog();
 
-  for(unsigned int p = 0; p < 3; ++p)
+  for (unsigned int p = 0; p < 3; ++p)
     {
       polytest::polytest<dim> poly(p);
       poly.run();

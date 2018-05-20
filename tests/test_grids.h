@@ -65,24 +65,24 @@ namespace TestGrids
             bool                local      = false)
   {
     GridGenerator::hyper_cube(tr, -1., 1.);
-    if(refinement && !local)
+    if (refinement && !local)
       tr.refine_global(refinement);
-    if(refinement && local)
+    if (refinement && local)
       {
         tr.refine_global(1);
-        for(unsigned int i = 1; i < refinement; ++i)
+        for (unsigned int i = 1; i < refinement; ++i)
           {
-            for(typename Triangulation<dim>::active_cell_iterator cell
-                = tr.begin_active();
-                cell != tr.end();
-                ++cell)
+            for (typename Triangulation<dim>::active_cell_iterator cell
+                 = tr.begin_active();
+                 cell != tr.end();
+                 ++cell)
               {
                 const Point<dim>& p        = cell->center();
                 bool              negative = true;
-                for(unsigned int d = 0; d < dim; ++d)
-                  if(p(d) >= 0.)
+                for (unsigned int d = 0; d < dim; ++d)
+                  if (p(d) >= 0.)
                     negative = false;
-                if(negative)
+                if (negative)
                   cell->set_refine_flag();
               }
             tr.execute_coarsening_and_refinement();
@@ -90,7 +90,7 @@ namespace TestGrids
       }
     deallog << "Triangulation hypercube " << dim << "D refinement "
             << refinement;
-    if(local)
+    if (local)
       deallog << " local ";
     deallog << " steps " << tr.n_active_cells() << " active cells "
             << tr.n_cells() << " total cells " << std::endl;

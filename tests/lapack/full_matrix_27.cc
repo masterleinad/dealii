@@ -31,10 +31,10 @@ test(const unsigned int size)
   LAPACKFullMatrix<NumberType> A(size);
   A.set_property(LAPACKSupport::symmetric);
   Vector<NumberType> v(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     {
       v(i) = random_value<NumberType>();
-      for(unsigned int j = i; j < size; ++j)
+      for (unsigned int j = i; j < size; ++j)
         {
           const NumberType val = random_value<NumberType>();
           A(i, j)              = val;
@@ -49,8 +49,8 @@ test(const unsigned int size)
 
   B.rank1_update(a, v);
 
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = 0; j < size; ++j)
       {
         const NumberType diff = A(i, j) + a * v(i) * v(j) - B(i, j);
         AssertThrow(std::abs(diff) < 1e-10 * std::abs(B(i, j)),
@@ -69,7 +69,7 @@ main()
   deallog.attach(logfile);
 
   const std::vector<unsigned int> sizes = {{17, 35, 391}};
-  for(const auto& s : sizes)
+  for (const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;
       test<double>(s);

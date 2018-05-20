@@ -38,10 +38,10 @@ test(const unsigned int size)
 
   M                    = 0.;
   unsigned int counter = 1;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = 0; j < size; ++j)
       {
-        if(j >= i)
+        if (j >= i)
           M(i, j) = counter;
 
         counter++;
@@ -62,7 +62,7 @@ main()
   deallog.attach(logfile);
 
   const std::vector<unsigned int> sizes = {{1, 3, 11}};
-  for(const auto& s : sizes)
+  for (const auto& s : sizes)
     {
       deallog << "size=" << s << std::endl;
       // test<float>(s);

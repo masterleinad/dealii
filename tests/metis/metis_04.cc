@@ -42,14 +42,14 @@ test()
     triangulation.execute_coarsening_and_refinement();
   }
 
-  for(unsigned int procs = 1; procs < 20; ++procs)
+  for (unsigned int procs = 1; procs < 20; ++procs)
     {
       deallog << " procs = " << procs << std::endl;
       GridTools::partition_triangulation(procs, triangulation);
       {
         typename Triangulation<dim>::active_cell_iterator cell
           = triangulation.begin_active();
-        for(; cell != triangulation.end(); ++cell)
+        for (; cell != triangulation.end(); ++cell)
           {
             deallog << cell->subdomain_id() << " ";
           }

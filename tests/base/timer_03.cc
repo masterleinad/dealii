@@ -26,7 +26,7 @@ compare(double t1, double t2, double ratio)
   double d = std::fabs(r - ratio) / ratio;
 
   // relative error < 25%?
-  if(d <= .25)
+  if (d <= .25)
     {
       deallog << "OK" << std::endl;
     }
@@ -40,7 +40,7 @@ void
 match(double v1, double v2)
 {
   double eps = 1.0e-6;
-  if(std::fabs(v1 - v2) < eps)
+  if (std::fabs(v1 - v2) < eps)
     {
       deallog << "OK" << std::endl;
     }
@@ -56,9 +56,9 @@ double s = 0.;
 void
 burn(unsigned int n)
 {
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
-      for(unsigned int j = 1; j < 100000; ++j)
+      for (unsigned int j = 1; j < 100000; ++j)
         {
           s += 1. / j * i;
         }
@@ -93,12 +93,12 @@ main()
   match(calls["Section1"], 1.0);
   match(calls["Section2"], 2.0);
 
-  if(cpu_times["Section1"] * cpu_times["Section2"] > 0.)
+  if (cpu_times["Section1"] * cpu_times["Section2"] > 0.)
     deallog << "OK" << std::endl;
   else
     deallog << "ERROR - total cpu time 0" << std::endl;
 
-  if(wall_times["Section1"] * wall_times["Section2"] > 0.)
+  if (wall_times["Section1"] * wall_times["Section2"] > 0.)
     deallog << "OK" << std::endl;
   else
     deallog << "ERROR - total wall time 0" << std::endl;

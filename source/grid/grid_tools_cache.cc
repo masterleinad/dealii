@@ -34,7 +34,7 @@ namespace GridTools
   {
     // Make sure that the signals that was attached to the triangulation
     // is removed here.
-    if(tria_signal.connected())
+    if (tria_signal.connected())
       tria_signal.disconnect();
   }
 
@@ -50,7 +50,7 @@ namespace GridTools
     std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>>&
   Cache<dim, spacedim>::get_vertex_to_cell_map() const
   {
-    if(update_flags & update_vertex_to_cell_map)
+    if (update_flags & update_vertex_to_cell_map)
       {
         vertex_to_cells = GridTools::vertex_to_cell_map(*tria);
         update_flags    = update_flags & ~update_vertex_to_cell_map;
@@ -62,7 +62,7 @@ namespace GridTools
   const std::vector<std::vector<Tensor<1, spacedim>>>&
   Cache<dim, spacedim>::get_vertex_to_cell_centers_directions() const
   {
-    if(update_flags & update_vertex_to_cell_centers_directions)
+    if (update_flags & update_vertex_to_cell_centers_directions)
       {
         vertex_to_cell_centers = GridTools::vertex_to_cell_centers_directions(
           *tria, get_vertex_to_cell_map());
@@ -75,7 +75,7 @@ namespace GridTools
   const std::map<unsigned int, Point<spacedim>>&
   Cache<dim, spacedim>::get_used_vertices() const
   {
-    if(update_flags & update_used_vertices)
+    if (update_flags & update_used_vertices)
       {
         used_vertices = GridTools::extract_used_vertices(*tria, *mapping);
         update_flags  = update_flags & ~update_used_vertices;
@@ -88,7 +88,7 @@ namespace GridTools
   const KDTree<spacedim>&
   Cache<dim, spacedim>::get_vertex_kdtree() const
   {
-    if(update_flags & update_vertex_kdtree)
+    if (update_flags & update_vertex_kdtree)
       {
         vertex_kdtree.set_points(tria->get_vertices());
         update_flags = update_flags & ~update_vertex_kdtree;

@@ -81,8 +81,8 @@ namespace parallel
       void
       operator()(const Range& range) const
       {
-        for(typename Range::const_iterator p = range.begin(); p != range.end();
-            ++p)
+        for (typename Range::const_iterator p = range.begin(); p != range.end();
+             ++p)
           apply(f, *p);
       }
 
@@ -173,7 +173,7 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-    for(OutputIterator in = begin_in; in != end_in;)
+    for (OutputIterator in = begin_in; in != end_in;)
       *out++ = predicate(*in++);
 #else
     typedef std::tuple<InputIterator, OutputIterator> Iterators;
@@ -227,7 +227,7 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-    for(OutputIterator in1 = begin_in1; in1 != end_in1;)
+    for (OutputIterator in1 = begin_in1; in1 != end_in1;)
       *out++ = predicate(*in1++, *in2++);
 #else
     typedef std::tuple<InputIterator1, InputIterator2, OutputIterator>
@@ -284,7 +284,7 @@ namespace parallel
     // warnings about unused arguments
     (void) grainsize;
 
-    for(OutputIterator in1 = begin_in1; in1 != end_in1;)
+    for (OutputIterator in1 = begin_in1; in1 != end_in1;)
       *out++ = predicate(*in1++, *in2++, *in3++);
 #else
     typedef std::

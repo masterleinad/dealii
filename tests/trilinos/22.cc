@@ -27,8 +27,8 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 {
   // set only certain elements of each
   // vector, but disjoint sets of elements
-  for(unsigned int i = 0; i < v.size(); ++i)
-    if(i % 3 == 0)
+  for (unsigned int i = 0; i < v.size(); ++i)
+    if (i % 3 == 0)
       v(i) = i;
     else
       w(i) = i;
@@ -59,7 +59,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -73,7 +73,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

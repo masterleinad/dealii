@@ -28,7 +28,7 @@ CellId::CellId()
   // initialize the child indices to invalid values
   // (the only allowed values are between zero and
   // GeometryInfo<dim>::max_children_per_cell)
-  for(unsigned int i = 0; i < child_indices.size(); ++i)
+  for (unsigned int i = 0; i < child_indices.size(); ++i)
     child_indices[i] = std::numeric_limits<char>::max();
 }
 
@@ -70,16 +70,16 @@ CellId::CellId(const CellId::binary_type& binary_representation)
   // Loop until all child indices have been read
   unsigned int child_level  = 0;
   unsigned int binary_entry = 2;
-  while(child_level < n_child_indices)
+  while (child_level < n_child_indices)
     {
-      for(unsigned int j = 0; j < children_per_value; ++j)
+      for (unsigned int j = 0; j < children_per_value; ++j)
         {
           // Read the current child index by shifting to the current
           // index's position and doing a bitwise-and with the child_mask.
           child_indices[child_level]
             = (binary_representation[binary_entry] >> (dim * j)) & child_mask;
           ++child_level;
-          if(child_level == n_child_indices)
+          if (child_level == n_child_indices)
             break;
         }
       ++binary_entry;
@@ -110,18 +110,18 @@ CellId::to_binary() const
   unsigned int binary_entry = 2;
 
   // Loop until all child indices have been written
-  while(child_level < n_child_indices)
+  while (child_level < n_child_indices)
     {
       Assert(binary_entry < binary_representation.size(), ExcInternalError());
 
-      for(unsigned int j = 0; j < children_per_value; ++j)
+      for (unsigned int j = 0; j < children_per_value; ++j)
         {
           const unsigned int child_index
             = static_cast<unsigned int>(child_indices[child_level]);
           // Shift the child index to its position in the unsigned int and store it
           binary_representation[binary_entry] |= (child_index << (j * dim));
           ++child_level;
-          if(child_level == n_child_indices)
+          if (child_level == n_child_indices)
             break;
         }
       ++binary_entry;
@@ -145,7 +145,7 @@ CellId::to_cell(const Triangulation<dim, spacedim>& tria) const
   typename Triangulation<dim, spacedim>::cell_iterator cell(
     &tria, 0, coarse_cell_id);
 
-  for(unsigned int i = 0; i < n_child_indices; ++i)
+  for (unsigned int i = 0; i < n_child_indices; ++i)
     cell = cell->child(static_cast<unsigned int>(child_indices[i]));
 
   return cell;

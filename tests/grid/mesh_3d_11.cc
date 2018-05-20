@@ -37,17 +37,17 @@
 
 void check_this(Triangulation<3>& tria)
 {
-  for(Triangulation<3>::cell_iterator cell = tria.begin(); cell != tria.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
-      if(!cell->at_boundary())
+  for (Triangulation<3>::cell_iterator cell = tria.begin(); cell != tria.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+      if (!cell->at_boundary())
         {
           const Triangulation<3>::cell_iterator neighbor = cell->neighbor(f);
           const unsigned int nb_nb = cell->neighbor_of_neighbor(f);
 
           bool found = false;
-          for(unsigned int ff = 0; ff < GeometryInfo<3>::faces_per_cell; ++ff)
-            if(neighbor->neighbor(ff) == cell)
+          for (unsigned int ff = 0; ff < GeometryInfo<3>::faces_per_cell; ++ff)
+            if (neighbor->neighbor(ff) == cell)
               {
                 AssertThrow(found == false, ExcInternalError());
                 AssertThrow(ff == nb_nb, ExcInternalError());
@@ -69,7 +69,7 @@ void check(Triangulation<3>& tria)
   deallog << "Initial check" << std::endl;
   check_this(tria);
 
-  for(unsigned int r = 0; r < 3; ++r)
+  for (unsigned int r = 0; r < 3; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

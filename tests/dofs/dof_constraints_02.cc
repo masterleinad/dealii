@@ -41,12 +41,12 @@ test()
   // generate as many hanging node
   // constraints as possible
   triangulation.refine_global(4 - dim);
-  for(unsigned int i = 0; i < 11 - 2 * dim; ++i)
+  for (unsigned int i = 0; i < 11 - 2 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
-        if(index % (3 * dim) == 0)
+      for (unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+        if (index % (3 * dim) == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
@@ -75,18 +75,18 @@ test()
   // (2) distributing them right away
   std::vector<types::global_dof_index> local_dofs(fe.dofs_per_cell);
   Vector<double>                       local_vector(fe.dofs_per_cell);
-  for(typename DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       cell->get_dof_indices(local_dofs);
       local_vector = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         local_vector(i) = (i + 1.) * (local_dofs[i] + 1.);
 
       // copy local to global by ourselves
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         A(local_dofs[i]) += local_vector(i);
 
       // or let other functions do that
@@ -100,8 +100,8 @@ test()
   // for constrained nodes. we can do so at
   // will, since these values don't matter
   // anyway
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    if(constraints.is_constrained(i))
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    if (constraints.is_constrained(i))
       B(i) = A(i);
 
   // now comes the check: we subtract B from
@@ -123,7 +123,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -137,7 +137,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

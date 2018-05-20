@@ -210,29 +210,29 @@ namespace MeshWorker
           || (current_subdomain_id
               == cell->get_triangulation().locally_owned_subdomain());
 
-      if((!ignore_subdomain)
-         && (current_subdomain_id == numbers::artificial_subdomain_id))
+      if ((!ignore_subdomain)
+          && (current_subdomain_id == numbers::artificial_subdomain_id))
         return;
 
-      if(!(flags & (cells_after_faces))
-         && (((flags & (assemble_own_cells)) && own_cell)
-             || ((flags & assemble_ghost_cells) && !own_cell)))
+      if (!(flags & (cells_after_faces))
+          && (((flags & (assemble_own_cells)) && own_cell)
+              || ((flags & assemble_ghost_cells) && !own_cell)))
         cell_worker(cell, scratch, copy);
 
-      if(flags & (work_on_faces | work_on_boundary))
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<CellIteratorType::AccessorType::Container::
-                                     dimension>::faces_per_cell;
-            ++face_no)
+      if (flags & (work_on_faces | work_on_boundary))
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<CellIteratorType::AccessorType::Container::
+                                      dimension>::faces_per_cell;
+             ++face_no)
           {
             typename CellIteratorType::AccessorType::Container::face_iterator
               face
               = cell->face(face_no);
-            if(cell->at_boundary(face_no)
-               && !cell->has_periodic_neighbor(face_no))
+            if (cell->at_boundary(face_no)
+                && !cell->has_periodic_neighbor(face_no))
               {
                 // only integrate boundary faces of own cells
-                if((flags & assemble_boundary_faces) && own_cell)
+                if ((flags & assemble_boundary_faces) && own_cell)
                   boundary_worker(cell, face_no, scratch, copy);
               }
             else
@@ -243,10 +243,10 @@ namespace MeshWorker
 
                 types::subdomain_id neighbor_subdomain_id
                   = numbers::artificial_subdomain_id;
-                if(neighbor->is_level_cell())
+                if (neighbor->is_level_cell())
                   neighbor_subdomain_id = neighbor->level_subdomain_id();
                 //subdomain id is only valid for active cells
-                else if(neighbor->active())
+                else if (neighbor->active())
                   neighbor_subdomain_id = neighbor->subdomain_id();
 
                 const bool own_neighbor
@@ -255,21 +255,21 @@ namespace MeshWorker
                         == cell->get_triangulation().locally_owned_subdomain());
 
                 // skip all faces between two ghost cells
-                if(!own_cell && !own_neighbor)
+                if (!own_cell && !own_neighbor)
                   continue;
 
                 // skip if the user doesn't want faces between own cells
-                if(own_cell && own_neighbor
-                   && !(flags
-                        & (assemble_own_interior_faces_both
-                           | assemble_own_interior_faces_once)))
+                if (own_cell && own_neighbor
+                    && !(flags
+                         & (assemble_own_interior_faces_both
+                            | assemble_own_interior_faces_once)))
                   continue;
 
                 // skip face to ghost
-                if(own_cell != own_neighbor
-                   && !(flags
-                        & (assemble_ghost_faces_both
-                           | assemble_ghost_faces_once)))
+                if (own_cell != own_neighbor
+                    && !(flags
+                         & (assemble_ghost_faces_both
+                            | assemble_ghost_faces_once)))
                   continue;
 
                 // Deal with refinement edges from the refined side. Assuming one-irregular
@@ -277,16 +277,16 @@ namespace MeshWorker
                 const bool periodic_neighbor
                   = cell->has_periodic_neighbor(face_no);
 
-                if((!periodic_neighbor && cell->neighbor_is_coarser(face_no))
-                   || (periodic_neighbor
-                       && cell->periodic_neighbor_is_coarser(face_no)))
+                if ((!periodic_neighbor && cell->neighbor_is_coarser(face_no))
+                    || (periodic_neighbor
+                        && cell->periodic_neighbor_is_coarser(face_no)))
                   {
                     Assert(!cell->has_children(), ExcInternalError());
                     Assert(!neighbor->has_children(), ExcInternalError());
 
                     // skip if only one processor needs to assemble the face
                     // to a ghost cell and the fine cell is not ours.
-                    if(!own_cell && (flags & assemble_ghost_faces_once))
+                    if (!own_cell && (flags & assemble_ghost_faces_once))
                       continue;
 
                     const std::pair<unsigned int, unsigned int> neighbor_face_no
@@ -304,7 +304,7 @@ namespace MeshWorker
                                 scratch,
                                 copy);
 
-                    if(flags & assemble_own_interior_faces_both)
+                    if (flags & assemble_own_interior_faces_both)
                       {
                         // If own faces are to be assembled from both sides, call the
                         // faceworker again with swapped arguments. This is because
@@ -324,8 +324,8 @@ namespace MeshWorker
                   {
                     // If iterator is active and neighbor is refined, skip
                     // internal face.
-                    if(internal::is_active_iterator(cell)
-                       && neighbor->has_children())
+                    if (internal::is_active_iterator(cell)
+                        && neighbor->has_children())
                       continue;
 
                     // Now neighbor is on same level, double-check this:
@@ -335,22 +335,22 @@ namespace MeshWorker
                     // If we own both cells only do faces from one side (unless
                     // AssembleFlags says otherwise). Here, we rely on cell comparison
                     // that will look at cell->index().
-                    if(own_cell && own_neighbor
-                       && (flags & assemble_own_interior_faces_once)
-                       && (neighbor < cell))
+                    if (own_cell && own_neighbor
+                        && (flags & assemble_own_interior_faces_once)
+                        && (neighbor < cell))
                       continue;
 
                     // We only look at faces to ghost on the same level once
                     // (only where own_cell=true and own_neighbor=false)
-                    if(!own_cell)
+                    if (!own_cell)
                       continue;
 
                     // now only one processor assembles faces_to_ghost. We let the
                     // processor with the smaller (level-)subdomain id assemble the
                     // face.
-                    if(own_cell && !own_neighbor
-                       && (flags & assemble_ghost_faces_once)
-                       && (neighbor_subdomain_id < current_subdomain_id))
+                    if (own_cell && !own_neighbor
+                        && (flags & assemble_ghost_faces_once)
+                        && (neighbor_subdomain_id < current_subdomain_id))
                       continue;
 
                     const unsigned int neighbor_face_no
@@ -374,9 +374,9 @@ namespace MeshWorker
           } // faces
 
       // Execute the cell_worker if faces are handled before cells
-      if((flags & cells_after_faces)
-         && (((flags & assemble_own_cells) && own_cell)
-             || ((flags & assemble_ghost_cells) && !own_cell)))
+      if ((flags & cells_after_faces)
+          && (((flags & assemble_own_cells) && own_cell)
+              || ((flags & assemble_ghost_cells) && !own_cell)))
         cell_worker(cell, scratch, copy);
     };
 

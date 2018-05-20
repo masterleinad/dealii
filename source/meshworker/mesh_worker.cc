@@ -25,14 +25,14 @@ namespace MeshWorker
   void
   LocalResults<number>::reinit(const BlockIndices& bi)
   {
-    for(unsigned int i = 0; i < J.size(); ++i)
+    for (unsigned int i = 0; i < J.size(); ++i)
       J[i] = 0.;
-    for(unsigned int i = 0; i < R.size(); ++i)
+    for (unsigned int i = 0; i < R.size(); ++i)
       R[i].reinit(bi);
-    for(unsigned int i = 0; i < M1.size(); ++i)
+    for (unsigned int i = 0; i < M1.size(); ++i)
       M1[i].matrix.reinit(bi.block_size(M1[i].row),
                           bi.block_size(M1[i].column));
-    for(unsigned int i = 0; i < M2.size(); ++i)
+    for (unsigned int i = 0; i < M2.size(); ++i)
       M2[i].matrix.reinit(bi.block_size(M2[i].row),
                           bi.block_size(M2[i].column));
     quadrature_data.reset_values();

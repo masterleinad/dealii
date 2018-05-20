@@ -288,17 +288,17 @@ TridiagonalMatrix<number>::operator()(size_type i, size_type j) const
   Assert(i <= j + 1, ExcIndexRange(i, j - 1, j + 2));
   Assert(j <= i + 1, ExcIndexRange(j, i - 1, i + 2));
 
-  if(j == i)
+  if (j == i)
     return diagonal[i];
-  if(j == i - 1)
+  if (j == i - 1)
     {
-      if(is_symmetric)
+      if (is_symmetric)
         return right[i - 1];
       else
         return left[i];
     }
 
-  if(j == i + 1)
+  if (j == i + 1)
     return right[i];
 
   Assert(false, ExcInternalError());
@@ -314,17 +314,17 @@ TridiagonalMatrix<number>::operator()(size_type i, size_type j)
   Assert(i <= j + 1, ExcIndexRange(i, j - 1, j + 2));
   Assert(j <= i + 1, ExcIndexRange(j, i - 1, i + 2));
 
-  if(j == i)
+  if (j == i)
     return diagonal[i];
-  if(j == i - 1)
+  if (j == i - 1)
     {
-      if(is_symmetric)
+      if (is_symmetric)
         return right[i - 1];
       else
         return left[i];
     }
 
-  if(j == i + 1)
+  if (j == i + 1)
     return right[i];
 
   Assert(false, ExcInternalError());
@@ -338,16 +338,16 @@ TridiagonalMatrix<number>::print(OutputStream&      s,
                                  const unsigned int width,
                                  const unsigned int) const
 {
-  for(size_type i = 0; i < n(); ++i)
+  for (size_type i = 0; i < n(); ++i)
     {
-      if(i > 0)
+      if (i > 0)
         s << std::setw(width) << (*this)(i, i - 1);
       else
         s << std::setw(width) << "";
 
       s << ' ' << (*this)(i, i) << ' ';
 
-      if(i < n() - 1)
+      if (i < n() - 1)
         s << std::setw(width) << (*this)(i, i + 1);
 
       s << std::endl;

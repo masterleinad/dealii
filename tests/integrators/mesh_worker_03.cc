@@ -62,8 +62,8 @@ MatrixIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
   const FiniteElement<dim>& fe           = info.fe_values().get_fe();
   FullMatrix<double>&       local_matrix = dinfo.matrix(0).matrix;
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-    for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+  for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
       {
         local_matrix(i, j) = 10 * fe.system_to_block_index(i).first
                              + fe.system_to_block_index(j).first;
@@ -82,8 +82,8 @@ MatrixIntegrator<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
   FullMatrix<double>&       matrix_v1u2 = dinfo1.matrix(0, true).matrix;
   FullMatrix<double>&       matrix_v2u1 = dinfo2.matrix(0, true).matrix;
 
-  for(unsigned int i = 0; i < fe1.dofs_per_cell; ++i)
-    for(unsigned int j = 0; j < fe1.dofs_per_cell; ++j)
+  for (unsigned int i = 0; i < fe1.dofs_per_cell; ++i)
+    for (unsigned int j = 0; j < fe1.dofs_per_cell; ++j)
       {
         matrix_v1u2(i, j) = 10 * fe1.system_to_block_index(i).first
                             + fe2.system_to_block_index(j).first;
@@ -97,12 +97,12 @@ void
 MatrixIntegrator<dim>::block_cell(MeshWorker::DoFInfo<dim>& dinfo,
                                   MeshWorker::IntegrationInfo<dim>&)
 {
-  for(unsigned int m = 0; m < dinfo.n_matrices(); ++m)
+  for (unsigned int m = 0; m < dinfo.n_matrices(); ++m)
     {
       MatrixBlock<FullMatrix<double>>& loc = dinfo.matrix(m);
 
-      for(unsigned int i = 0; i < loc.matrix.m(); ++i)
-        for(unsigned int j = 0; j < loc.matrix.n(); ++j)
+      for (unsigned int i = 0; i < loc.matrix.m(); ++i)
+        for (unsigned int j = 0; j < loc.matrix.n(); ++j)
           {
             loc.matrix(i, j) = 10 * loc.row + loc.column;
           }
@@ -116,22 +116,22 @@ MatrixIntegrator<dim>::block_face(MeshWorker::DoFInfo<dim>& dinfo1,
                                   MeshWorker::IntegrationInfo<dim>&,
                                   MeshWorker::IntegrationInfo<dim>&)
 {
-  for(unsigned int m = 0; m < dinfo1.n_matrices(); ++m)
+  for (unsigned int m = 0; m < dinfo1.n_matrices(); ++m)
     {
       MatrixBlock<FullMatrix<double>>& loc = dinfo1.matrix(m, true);
 
-      for(unsigned int i = 0; i < loc.matrix.m(); ++i)
-        for(unsigned int j = 0; j < loc.matrix.n(); ++j)
+      for (unsigned int i = 0; i < loc.matrix.m(); ++i)
+        for (unsigned int j = 0; j < loc.matrix.n(); ++j)
           {
             loc.matrix(i, j) = 10 * loc.row + loc.column;
           }
     }
-  for(unsigned int m = 0; m < dinfo2.n_matrices(); ++m)
+  for (unsigned int m = 0; m < dinfo2.n_matrices(); ++m)
     {
       MatrixBlock<FullMatrix<double>>& loc = dinfo2.matrix(m, true);
 
-      for(unsigned int i = 0; i < loc.matrix.m(); ++i)
-        for(unsigned int j = 0; j < loc.matrix.n(); ++j)
+      for (unsigned int i = 0; i < loc.matrix.m(); ++i)
+        for (unsigned int j = 0; j < loc.matrix.n(); ++j)
           {
             loc.matrix(i, j) = 10 * loc.row + loc.column;
           }
@@ -247,22 +247,22 @@ test_simple(DoFHandler<dim>& mgdofs)
   mg_matrix_dg_up.resize(0, n_levels - 1);
   mg_matrix_dg_down.resize(0, n_levels - 1);
 
-  for(unsigned int level = mg_sparsity.min_level();
-      level <= mg_sparsity.max_level();
-      ++level)
+  for (unsigned int level = mg_sparsity.min_level();
+       level <= mg_sparsity.max_level();
+       ++level)
     {
       DynamicSparsityPattern c_sparsity(mgdofs.n_dofs(level));
       DynamicSparsityPattern ci_sparsity;
-      if(level > 0)
+      if (level > 0)
         ci_sparsity.reinit(mgdofs.n_dofs(level - 1), mgdofs.n_dofs(level));
 
       MGTools::make_flux_sparsity_pattern(mgdofs, c_sparsity, level);
-      if(level > 0)
+      if (level > 0)
         MGTools::make_flux_sparsity_pattern_edge(mgdofs, ci_sparsity, level);
 
       mg_sparsity[level].copy_from(c_sparsity);
       mg_matrix[level].reinit(mg_sparsity[level]);
-      if(level > 0)
+      if (level > 0)
         {
           mg_sparsity_dg_interface[level].copy_from(ci_sparsity);
           mg_matrix_dg_up[level].reinit(mg_sparsity_dg_interface[level]);
@@ -284,21 +284,21 @@ test(const FiniteElement<dim>& fe)
   //  tr.execute_coarsening_and_refinement();
   //  tr.refine_global(1);
   deallog << "Triangulation levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << tr.n_cells(l);
   deallog << std::endl;
 
   unsigned int cn = 0;
-  for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
-      cell != tr.end();
-      ++cell, ++cn)
+  for (typename Triangulation<dim>::cell_iterator cell = tr.begin();
+       cell != tr.end();
+       ++cell, ++cn)
     cell->set_user_index(cn);
 
   DoFHandler<dim> dofs(tr);
   dofs.distribute_dofs(fe);
   dofs.distribute_mg_dofs(fe);
   deallog << "DoFHandler " << dofs.n_dofs() << " levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << dofs.n_dofs(l);
   deallog << std::endl;
 
@@ -325,6 +325,6 @@ main()
     std::shared_ptr<FiniteElement<2>>(new FESystem<2>(dgp0, 1, q1, 1)));
   //  fe2.push_back(std::shared_ptr<FiniteElement<2> >(new  FE_Q<2>(1)));
 
-  for(unsigned int i = 0; i < fe2.size(); ++i)
+  for (unsigned int i = 0; i < fe2.size(); ++i)
     test(*fe2[i]);
 }

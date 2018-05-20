@@ -32,7 +32,7 @@ main()
   ConvergenceTable table;
   ConvergenceTable table_2;
 
-  for(unsigned int i = 1; i <= 4; ++i)
+  for (unsigned int i = 1; i <= 4; ++i)
     {
       table.add_value("error", 3. * i);
       table.add_value("key", i);

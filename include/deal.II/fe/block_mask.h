@@ -248,7 +248,7 @@ inline bool BlockMask::operator[](const unsigned int block_index) const
 {
   // if the mask represents the all-block mask
   // then always return true
-  if(block_mask.size() == 0)
+  if (block_mask.size() == 0)
     return true;
   else
     {
@@ -269,18 +269,18 @@ BlockMask::represents_n_blocks(const unsigned int n) const
 inline unsigned int
 BlockMask::n_selected_blocks(const unsigned int n) const
 {
-  if((n != numbers::invalid_unsigned_int) && (size() > 0))
+  if ((n != numbers::invalid_unsigned_int) && (size() > 0))
     AssertDimension(n, size());
 
   const unsigned int real_n = (n != numbers::invalid_unsigned_int ? n : size());
-  if(block_mask.size() == 0)
+  if (block_mask.size() == 0)
     return real_n;
   else
     {
       AssertDimension(real_n, block_mask.size());
       unsigned int c = 0;
-      for(unsigned int i = 0; i < block_mask.size(); ++i)
-        if(block_mask[i] == true)
+      for (unsigned int i = 0; i < block_mask.size(); ++i)
+        if (block_mask[i] == true)
           ++c;
       return c;
     }
@@ -289,15 +289,15 @@ BlockMask::n_selected_blocks(const unsigned int n) const
 inline unsigned int
 BlockMask::first_selected_block(const unsigned int n) const
 {
-  if((n != numbers::invalid_unsigned_int) && (size() > 0))
+  if ((n != numbers::invalid_unsigned_int) && (size() > 0))
     AssertDimension(n, size());
 
-  if(block_mask.size() == 0)
+  if (block_mask.size() == 0)
     return 0;
   else
     {
-      for(unsigned int c = 0; c < block_mask.size(); ++c)
-        if(block_mask[c] == true)
+      for (unsigned int c = 0; c < block_mask.size(); ++c)
+        if (block_mask[c] == true)
           return c;
 
       Assert(false, ExcMessage("No block is selected at all!"));
@@ -316,9 +316,9 @@ BlockMask::operator|(const BlockMask& mask) const
 {
   // if one of the two masks denotes the all-block mask,
   // then return the other one
-  if(block_mask.size() == 0)
+  if (block_mask.size() == 0)
     return mask;
-  else if(mask.block_mask.size() == 0)
+  else if (mask.block_mask.size() == 0)
     return *this;
   else
     {
@@ -326,7 +326,7 @@ BlockMask::operator|(const BlockMask& mask) const
       // the combination of the two
       AssertDimension(block_mask.size(), mask.block_mask.size());
       std::vector<bool> new_mask(block_mask.size());
-      for(unsigned int i = 0; i < block_mask.size(); ++i)
+      for (unsigned int i = 0; i < block_mask.size(); ++i)
         new_mask[i] = (block_mask[i] || mask.block_mask[i]);
 
       return new_mask;
@@ -337,9 +337,9 @@ inline BlockMask BlockMask::operator&(const BlockMask& mask) const
 {
   // if one of the two masks denotes the all-block mask,
   // then return the other one
-  if(block_mask.size() == 0)
+  if (block_mask.size() == 0)
     return mask;
-  else if(mask.block_mask.size() == 0)
+  else if (mask.block_mask.size() == 0)
     return *this;
   else
     {
@@ -347,7 +347,7 @@ inline BlockMask BlockMask::operator&(const BlockMask& mask) const
       // the combination of the two
       AssertDimension(block_mask.size(), mask.block_mask.size());
       std::vector<bool> new_mask(block_mask.size());
-      for(unsigned int i = 0; i < block_mask.size(); ++i)
+      for (unsigned int i = 0; i < block_mask.size(); ++i)
         new_mask[i] = (block_mask[i] && mask.block_mask[i]);
 
       return new_mask;

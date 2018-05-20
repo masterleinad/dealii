@@ -62,7 +62,7 @@ namespace LinearAlgebra
             assumed,
             __double_as_longlong(val + __longlong_as_double(assumed)));
         }
-      while(assumed != old);
+      while (assumed != old);
 
       return __longlong_as_double(old);
 #  endif
@@ -85,7 +85,7 @@ namespace LinearAlgebra
                           assumed,
                           atomicMax(address_as_int, __float_as_int(val)));
         }
-      while(assumed != old);
+      while (assumed != old);
 
       return __longlong_as_double(old);
     }
@@ -110,7 +110,7 @@ namespace LinearAlgebra
                                     static_cast<unsigned long long int>(
                                       __double_as_longlong(val))));
         }
-      while(assumed != old);
+      while (assumed != old);
 
       return __longlong_as_double(old);
     }

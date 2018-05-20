@@ -29,7 +29,7 @@
 #  include <TopoDS.hxx>
 
 #  include <Standard_Version.hxx>
-#  if(OCC_VERSION_MAJOR < 7)
+#  if (OCC_VERSION_MAJOR < 7)
 #    include <Handle_Adaptor3d_HCurve.hxx>
 #  endif
 
@@ -50,10 +50,10 @@ namespace OpenCASCADE
       Assert((shape.ShapeType() == TopAbs_WIRE)
                || (shape.ShapeType() == TopAbs_EDGE),
              ExcUnsupportedShape());
-      if(shape.ShapeType() == TopAbs_WIRE)
+      if (shape.ShapeType() == TopAbs_WIRE)
         return Handle(BRepAdaptor_HCompCurve)(
           new BRepAdaptor_HCompCurve(TopoDS::Wire(shape)));
-      else if(shape.ShapeType() == TopAbs_EDGE)
+      else if (shape.ShapeType() == TopAbs_EDGE)
         return Handle(BRepAdaptor_HCurve)(
           new BRepAdaptor_HCurve(TopoDS::Edge(shape)));
 
@@ -96,7 +96,7 @@ namespace OpenCASCADE
   {
     (void) surrounding_points;
 #  ifdef DEBUG
-    for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+    for (unsigned int i = 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
                  .distance(surrounding_points[i])
                < std::max(tolerance * surrounding_points[i].norm(), tolerance),
@@ -132,7 +132,7 @@ namespace OpenCASCADE
   {
     (void) surrounding_points;
 #  ifdef DEBUG
-    for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+    for (unsigned int i = 0; i < surrounding_points.size(); ++i)
       Assert(closest_point(sh, surrounding_points[i], tolerance)
                  .distance(surrounding_points[i])
                < std::max(tolerance * surrounding_points[i].norm(), tolerance),
@@ -172,7 +172,7 @@ namespace OpenCASCADE
     TopoDS_Shape out_shape;
     Tensor<1, 3> average_normal;
 #  ifdef DEBUG
-    for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+    for (unsigned int i = 0; i < surrounding_points.size(); ++i)
       {
         Assert(
           closest_point(sh, surrounding_points[i], tolerance)
@@ -182,11 +182,11 @@ namespace OpenCASCADE
       }
 #  endif
 
-    switch(surrounding_points.size())
+    switch (surrounding_points.size())
       {
         case 2:
           {
-            for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+            for (unsigned int i = 0; i < surrounding_points.size(); ++i)
               {
                 std::tuple<Point<3>, Tensor<1, 3>, double, double>
                   p_and_diff_forms = closest_point_and_differential_forms(
@@ -391,7 +391,7 @@ namespace OpenCASCADE
 
     DX[0][0] = Du.X();
     DX[1][0] = Du.Y();
-    if(spacedim > 2)
+    if (spacedim > 2)
       DX[2][0] = Du.Z();
     else
       Assert(
@@ -399,7 +399,7 @@ namespace OpenCASCADE
         ExcMessage("Expecting derivative along Z to be zero! Bailing out."));
     DX[0][1] = Dv.X();
     DX[1][1] = Dv.Y();
-    if(spacedim > 2)
+    if (spacedim > 2)
       DX[2][1] = Dv.Z();
     else
       Assert(

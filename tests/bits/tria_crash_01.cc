@@ -54,21 +54,21 @@ main()
   Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                            endc = tria.end();
 
-  for(cell = tria.begin_active(); cell != endc; ++cell)
-    if(predicate(cell->center(), cell->diameter()))
+  for (cell = tria.begin_active(); cell != endc; ++cell)
+    if (predicate(cell->center(), cell->diameter()))
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
   deallog << "n_cells=" << tria.n_active_cells() << std::endl;
 
-  for(cell = tria.begin_active(); cell != endc; ++cell)
-    if(!predicate(cell->center(), cell->diameter()))
+  for (cell = tria.begin_active(); cell != endc; ++cell)
+    if (!predicate(cell->center(), cell->diameter()))
       cell->set_coarsen_flag();
 
   // make sure there really are no refinement
   // flags set
   tria.prepare_coarsening_and_refinement();
-  for(cell = tria.begin_active(); cell != endc; ++cell)
+  for (cell = tria.begin_active(); cell != endc; ++cell)
     AssertThrow(!cell->refine_flag_set(), ExcInternalError());
 
   tria.execute_coarsening_and_refinement();

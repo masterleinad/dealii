@@ -173,16 +173,16 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
   Assert(storage.n_cols() <= storage.n_rows(),
          ExcDimensionMismatch(storage.n_cols(), storage.n_rows()));
 
-  for(size_type j = 0; j < n; ++j)
+  for (size_type j = 0; j < n; ++j)
     {
       number2   sigma = 0;
       size_type i;
       // sigma = ||v||^2
-      for(i = j; i < m; ++i)
+      for (i = j; i < m; ++i)
         sigma += storage(i, j) * storage(i, j);
       // We are ready if the column is
       // empty. Are we?
-      if(std::fabs(sigma) < 1.e-15)
+      if (std::fabs(sigma) < 1.e-15)
         return;
 
       number2 s = (storage(j, j) < 0) ? std::sqrt(sigma) : -std::sqrt(sigma);
@@ -195,19 +195,19 @@ Householder<number>::initialize(const FullMatrix<number2>& M)
       diagonal[j]   = beta * (storage(j, j) - s);
       storage(j, j) = s;
 
-      for(i = j + 1; i < m; ++i)
+      for (i = j + 1; i < m; ++i)
         storage(i, j) *= beta;
 
       // For all subsequent columns do
       // the Householder reflection
-      for(size_type k = j + 1; k < n; ++k)
+      for (size_type k = j + 1; k < n; ++k)
         {
           number2 sum = diagonal[j] * storage(j, k);
-          for(i = j + 1; i < m; ++i)
+          for (i = j + 1; i < m; ++i)
             sum += storage(i, j) * storage(i, k);
 
           storage(j, k) -= sum * this->diagonal[j];
-          for(i = j + 1; i < m; ++i)
+          for (i = j + 1; i < m; ++i)
             storage(i, k) -= sum * storage(i, j);
         }
     }
@@ -240,20 +240,20 @@ Householder<number>::least_squares(Vector<number2>&       dst,
 
   // Multiply Q_n ... Q_2 Q_1 src
   // Where Q_i = I - v_i v_i^T
-  for(size_type j = 0; j < n; ++j)
+  for (size_type j = 0; j < n; ++j)
     {
       // sum = v_i^T dst
       number2 sum = diagonal[j] * (*aux)(j);
-      for(size_type i = j + 1; i < m; ++i)
+      for (size_type i = j + 1; i < m; ++i)
         sum += static_cast<number2>(storage(i, j)) * (*aux)(i);
       // dst -= v * sum
       (*aux)(j) -= sum * diagonal[j];
-      for(size_type i = j + 1; i < m; ++i)
+      for (size_type i = j + 1; i < m; ++i)
         (*aux)(i) -= sum * static_cast<number2>(storage(i, j));
     }
   // Compute norm of residual
   number2 sum = 0.;
-  for(size_type i = n; i < m; ++i)
+  for (size_type i = n; i < m; ++i)
     sum += (*aux)(i) * (*aux)(i);
   AssertIsFinite(sum);
 
@@ -283,20 +283,20 @@ Householder<number>::least_squares(BlockVector<number2>&       dst,
 
   // Multiply Q_n ... Q_2 Q_1 src
   // Where Q_i = I-v_i v_i^T
-  for(size_type j = 0; j < n; ++j)
+  for (size_type j = 0; j < n; ++j)
     {
       // sum = v_i^T dst
       number2 sum = diagonal[j] * (*aux)(j);
-      for(size_type i = j + 1; i < m; ++i)
+      for (size_type i = j + 1; i < m; ++i)
         sum += storage(i, j) * (*aux)(i);
       // dst -= v * sum
       (*aux)(j) -= sum * diagonal[j];
-      for(size_type i = j + 1; i < m; ++i)
+      for (size_type i = j + 1; i < m; ++i)
         (*aux)(i) -= sum * storage(i, j);
     }
   // Compute norm of residual
   number2 sum = 0.;
-  for(size_type i = n; i < m; ++i)
+  for (size_type i = n; i < m; ++i)
     sum += (*aux)(i) * (*aux)(i);
   AssertIsFinite(sum);
 

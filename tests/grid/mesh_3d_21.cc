@@ -37,16 +37,16 @@ void check_this(Triangulation<3>& tria)
   dof_handler.distribute_dofs(fe);
 
   DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
-  for(; cell != dof_handler.end(); ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
-        ++face_no)
-      if(!cell->at_boundary(face_no))
+  for (; cell != dof_handler.end(); ++cell)
+    for (unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
+         ++face_no)
+      if (!cell->at_boundary(face_no))
         {
-          if(cell->neighbor(face_no)->has_children())
+          if (cell->neighbor(face_no)->has_children())
             // we are coarser than the neighbor
-            for(unsigned int subface_no = 0;
-                subface_no < cell->face(face_no)->n_children();
-                ++subface_no)
+            for (unsigned int subface_no = 0;
+                 subface_no < cell->face(face_no)->n_children();
+                 ++subface_no)
               {
                 // get an iterator
                 // pointing to the cell
@@ -73,7 +73,7 @@ void check_this(Triangulation<3>& tria)
                 AssertThrow(our_subface_no == subface_no, ExcInternalError());
                 deallog << "from coarse to fine and back: OK" << std::endl;
               }
-          else if(cell->neighbor(face_no)->level() < cell->level())
+          else if (cell->neighbor(face_no)->level() < cell->level())
             // the neighbor is coarser
             {
               const unsigned int neighbor_face_no
@@ -99,7 +99,7 @@ void check(Triangulation<3>& tria)
   deallog << "Initial check" << std::endl;
   check_this(tria);
 
-  for(unsigned int r = 0; r < 2; ++r)
+  for (unsigned int r = 0; r < 2; ++r)
     {
       tria.refine_global(1);
       deallog << "Check " << r << std::endl;

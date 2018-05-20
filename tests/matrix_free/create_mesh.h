@@ -44,13 +44,13 @@ void create_mesh(Triangulation<2>& tria, const double scale_grid = 1.)
   points[10] = Point<dim>(7., 1.4);
   points[11] = Point<dim>(7.5, numbers::PI);
 
-  if(scale_grid != 1.)
-    for(unsigned int i = 0; i < points.size(); ++i)
+  if (scale_grid != 1.)
+    for (unsigned int i = 0; i < points.size(); ++i)
       points[i] *= scale_grid;
 
   // connect the points to cells
   std::vector<CellData<dim>> cells(5);
-  for(unsigned int i = 0; i < 5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     {
       cells[i].vertices[0] = 0 + 2 * i;
       cells[i].vertices[1] = 2 + 2 * i;
@@ -104,13 +104,13 @@ void create_mesh(Triangulation<3>& tria, const double scale_grid = 1.)
   points[22] = Point<dim>(7., 1.5, 7.1);
   points[23] = Point<dim>(7.5, 3.8, 2.99);
 
-  if(scale_grid != 1.)
-    for(unsigned int i = 0; i < points.size(); ++i)
+  if (scale_grid != 1.)
+    for (unsigned int i = 0; i < points.size(); ++i)
       points[i] *= scale_grid;
 
   // connect the points to cells
   std::vector<CellData<dim>> cells(5);
-  for(unsigned int i = 0; i < 5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     {
       cells[i].vertices[0] = 0 + 4 * i;
       cells[i].vertices[1] = 4 + 4 * i;

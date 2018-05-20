@@ -54,13 +54,13 @@ void check_this(Triangulation<3>& tria)
   dof_handler.distribute_dofs(fe);
 
   DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
-  for(; cell != dof_handler.end(); ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
-        ++face_no)
-      if(!cell->at_boundary(face_no) && cell->face(face_no)->has_children())
-        for(unsigned int subface_no = 0;
-            subface_no < cell->face(face_no)->number_of_children();
-            ++subface_no)
+  for (; cell != dof_handler.end(); ++cell)
+    for (unsigned int face_no = 0; face_no < GeometryInfo<3>::faces_per_cell;
+         ++face_no)
+      if (!cell->at_boundary(face_no) && cell->face(face_no)->has_children())
+        for (unsigned int subface_no = 0;
+             subface_no < cell->face(face_no)->number_of_children();
+             ++subface_no)
           {
             unsigned int neighbor_neighbor = cell->neighbor_face_no(face_no);
 
@@ -70,7 +70,7 @@ void check_this(Triangulation<3>& tria)
             fe_face_values1.reinit(neighbor_child, neighbor_neighbor);
             fe_face_values2.reinit(cell, face_no, subface_no);
 
-            for(unsigned int q = 0; q < quadrature.size(); ++q)
+            for (unsigned int q = 0; q < quadrature.size(); ++q)
               {
                 AssertThrow((fe_face_values1.quadrature_point(q)
                              - fe_face_values2.quadrature_point(q))
@@ -96,13 +96,13 @@ void check_this(Triangulation<3>& tria)
 // quadrature points both on faces and neighboring subfaces match.
 void check(Triangulation<3>& tria_org)
 {
-  for(unsigned int c = 0; c < tria_org.n_active_cells(); ++c)
-    for(unsigned int i = 1; i < 8; ++i)
+  for (unsigned int c = 0; c < tria_org.n_active_cells(); ++c)
+    for (unsigned int i = 1; i < 8; ++i)
       {
         Triangulation<3> tria;
         tria.copy_triangulation(tria_org);
         Triangulation<3>::active_cell_iterator cell = tria.begin_active();
-        for(unsigned int j = 0; j < c; ++j)
+        for (unsigned int j = 0; j < c; ++j)
           ++cell;
         cell->set_refine_flag(RefinementCase<3>(i));
         tria.execute_coarsening_and_refinement();
@@ -111,7 +111,7 @@ void check(Triangulation<3>& tria_org)
                 << std::endl;
         check_this(tria);
 
-        for(unsigned int r = 0; r < 2; ++r)
+        for (unsigned int r = 0; r < 2; ++r)
           {
             tria.refine_global(1);
             deallog << "Check " << r << ", " << tria.n_active_cells()
@@ -136,20 +136,20 @@ void check(Triangulation<3>& tria_org)
 // went wrong at some time, so check that it works now.
 void check2(Triangulation<3>& orig_tria)
 {
-  for(unsigned int i = 0; i < orig_tria.n_active_cells(); ++i)
+  for (unsigned int i = 0; i < orig_tria.n_active_cells(); ++i)
     {
       Triangulation<3> tria;
       tria.copy_triangulation(orig_tria);
       Triangulation<3>::cell_iterator cell = tria.begin_active(),
                                       endc = tria.end();
-      for(unsigned int j = 0; j < i; ++j)
+      for (unsigned int j = 0; j < i; ++j)
         ++cell;
       cell->set_refine_flag(RefinementCase<3>::cut_z);
       tria.execute_coarsening_and_refinement();
 
       cell = tria.begin();
-      for(; cell != endc; ++cell)
-        if(cell->refinement_case() == RefinementCase<3>::cut_z)
+      for (; cell != endc; ++cell)
+        if (cell->refinement_case() == RefinementCase<3>::cut_z)
           {
             cell->child(0)->set_refine_flag(RefinementCase<3>::cut_xy);
             cell->child(1)->set_refine_flag(RefinementCase<3>::cut_xy);
@@ -160,7 +160,7 @@ void check2(Triangulation<3>& orig_tria)
               << tria.n_active_cells() << " active cells" << std::endl;
       check_this(tria);
 
-      for(unsigned int r = 0; r < 2; ++r)
+      for (unsigned int r = 0; r < 2; ++r)
         {
           tria.refine_global(1);
           deallog << "2 -> Check " << r << ", " << tria.n_active_cells()

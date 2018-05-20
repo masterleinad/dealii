@@ -94,7 +94,7 @@ test()
   std::vector<Vector<double>> m(points.size(), Vector<double>(2));
   fe_function.vector_value_list(points, m);
 
-  for(unsigned int i = 0; i < m.size(); ++i)
+  for (unsigned int i = 0; i < m.size(); ++i)
     {
       Assert(std::fabs(m[i](0) - points[i].square())
                < 1e-10 * std::fabs(m[i](0) + points[i].square()),

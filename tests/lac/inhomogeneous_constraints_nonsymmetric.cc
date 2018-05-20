@@ -100,7 +100,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
   double product = 1;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     product *= (p[d] + 1);
   return product;
 }
@@ -137,7 +137,7 @@ AdvectionProblem<dim>::setup_system()
       dof_handler, 0, RightHandSide<dim>(), boundary_values);
     std::map<types::global_dof_index, double>::const_iterator boundary_value
       = boundary_values.begin();
-    for(; boundary_value != boundary_values.end(); ++boundary_value)
+    for (; boundary_value != boundary_values.end(); ++boundary_value)
       {
         test_all_constraints.add_line(boundary_value->first);
         test_all_constraints.set_inhomogeneity(boundary_value->first,
@@ -166,18 +166,18 @@ AdvectionProblem<dim>::test_equality()
   // need to manually go through the
   // matrix, since we can have different
   // entries in constrained lines.
-  for(unsigned int i = 0; i < reference_matrix.m(); ++i)
+  for (unsigned int i = 0; i < reference_matrix.m(); ++i)
     {
       SparseMatrix<double>::const_iterator reference
         = reference_matrix.begin(i);
       SparseMatrix<double>::iterator test = test_matrix.begin(i);
-      if(test_all_constraints.is_constrained(i) == false)
+      if (test_all_constraints.is_constrained(i) == false)
         {
-          for(; test != test_matrix.end(i); ++test, ++reference)
+          for (; test != test_matrix.end(i); ++test, ++reference)
             test->value() -= reference->value();
         }
       else
-        for(; test != test_matrix.end(i); ++test)
+        for (; test != test_matrix.end(i); ++test)
           test->value() = 0;
     }
 
@@ -189,8 +189,8 @@ AdvectionProblem<dim>::test_equality()
   // nonzero rhs, whereas we will have zero
   // rhs when using inhomogeneous
   // constraints.
-  for(unsigned int i = 0; i < reference_matrix.m(); ++i)
-    if(test_all_constraints.is_constrained(i) == false)
+  for (unsigned int i = 0; i < reference_matrix.m(); ++i)
+    if (test_all_constraints.is_constrained(i) == false)
       test_rhs(i) -= reference_rhs(i);
     else
       test_rhs(i) = 0;
@@ -226,7 +226,7 @@ AdvectionProblem<dim>::assemble_reference()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -239,10 +239,10 @@ AdvectionProblem<dim>::assemble_reference()
       advection_direction[1]       = 1;
       advection_direction[dim - 1] = -1;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j)
                 += (fe_values.shape_value(i, q_point) * advection_direction
                     * fe_values.shape_grad(j, q_point)
@@ -256,7 +256,7 @@ AdvectionProblem<dim>::assemble_reference()
       cell->get_dof_indices(local_dof_indices);
 
       reference_matrix.add(local_dof_indices, cell_matrix);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         reference_rhs(local_dof_indices[i]) += cell_rhs(i);
     }
 
@@ -297,7 +297,7 @@ AdvectionProblem<dim>::assemble_test_1()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -310,10 +310,10 @@ AdvectionProblem<dim>::assemble_test_1()
       advection_direction[1]       = 1;
       advection_direction[dim - 1] = -1;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j)
                 += (fe_values.shape_value(i, q_point) * advection_direction
                     * fe_values.shape_grad(j, q_point)
@@ -327,7 +327,7 @@ AdvectionProblem<dim>::assemble_test_1()
       cell->get_dof_indices(local_dof_indices);
 
       test_matrix.add(local_dof_indices, cell_matrix);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         test_rhs(local_dof_indices[i]) += cell_rhs(i);
     }
 
@@ -362,7 +362,7 @@ AdvectionProblem<dim>::assemble_test_2()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -375,10 +375,10 @@ AdvectionProblem<dim>::assemble_test_2()
       advection_direction[1]       = 1;
       advection_direction[dim - 1] = -1;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j)
                 += (fe_values.shape_value(i, q_point) * advection_direction
                     * fe_values.shape_grad(j, q_point)
@@ -417,12 +417,12 @@ AdvectionProblem<dim>::run()
   {
     // find the last cell and mark it
     // for refinement
-    for(typename DoFHandler<dim>::active_cell_iterator cell
-        = dof_handler.begin_active();
-        cell != dof_handler.end();
-        ++cell)
-      if(++typename DoFHandler<dim>::active_cell_iterator(cell)
-         == dof_handler.end())
+    for (typename DoFHandler<dim>::active_cell_iterator cell
+         = dof_handler.begin_active();
+         cell != dof_handler.end();
+         ++cell)
+      if (++typename DoFHandler<dim>::active_cell_iterator(cell)
+          == dof_handler.end())
         cell->set_refine_flag();
   }
   triangulation.execute_coarsening_and_refinement();

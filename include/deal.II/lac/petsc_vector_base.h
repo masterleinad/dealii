@@ -898,7 +898,7 @@ namespace PETScWrappers
       // PETScWrappers::MPI::Vector), but we
       // can save some work if the addend is
       // zero
-      if(value == PetscScalar())
+      if (value == PetscScalar())
         return *this;
 
       // use the PETSc function to add something
@@ -928,7 +928,7 @@ namespace PETScWrappers
       // PETScWrappers::MPI::Vector), but we
       // can save some work if the addend is
       // zero
-      if(value == PetscScalar())
+      if (value == PetscScalar())
         return *this;
 
       // use the PETSc function to
@@ -960,7 +960,7 @@ namespace PETScWrappers
       // PETScWrappers::MPI::Vector), but we
       // can save some work if the factor is
       // one
-      if(value == 1.)
+      if (value == 1.)
         return *this;
 
       const PetscInt    petsc_i   = index;
@@ -991,7 +991,7 @@ namespace PETScWrappers
       // PETScWrappers::MPI::Vector), but we
       // can save some work if the factor is
       // one
-      if(value == 1.)
+      if (value == 1.)
         return *this;
 
       const PetscInt    petsc_i   = index;
@@ -1104,12 +1104,12 @@ namespace PETScWrappers
                                    OutputIterator        values_begin) const
   {
     const PetscInt n_idx = static_cast<PetscInt>(indices_end - indices_begin);
-    if(n_idx == 0)
+    if (n_idx == 0)
       return;
 
     // if we are dealing
     // with a parallel vector
-    if(ghosted)
+    if (ghosted)
       {
         // there is the possibility
         // that the vector has
@@ -1144,11 +1144,11 @@ namespace PETScWrappers
         ierr = VecGetArray(locally_stored_elements, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        for(PetscInt i = 0; i < n_idx; ++i)
+        for (PetscInt i = 0; i < n_idx; ++i)
           {
             const unsigned int index = *(indices_begin + i);
-            if(index >= static_cast<unsigned int>(begin)
-               && index < static_cast<unsigned int>(end))
+            if (index >= static_cast<unsigned int>(begin)
+                && index < static_cast<unsigned int>(end))
               {
                 //local entry
                 *(values_begin + i) = *(ptr + index - begin);
@@ -1184,7 +1184,7 @@ namespace PETScWrappers
         ierr = VecGetArray(vector, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        for(PetscInt i = 0; i < n_idx; ++i)
+        for (PetscInt i = 0; i < n_idx; ++i)
           {
             const unsigned int index = *(indices_begin + i);
 

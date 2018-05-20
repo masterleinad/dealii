@@ -62,7 +62,7 @@ test2()
   fp.initialize("s,t", "s*t+c", constants);
 
   std::vector<int> v(10000);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v[i] = i;
 
   int result = 0;

@@ -47,9 +47,9 @@ main()
 
   // make sure that all cells have positive
   // volume
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (DoFHandler<3>::active_cell_iterator cell = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       fe_values.reinit(cell);
       deallog << cell << ' ' << fe_values.JxW(0) << std::endl;

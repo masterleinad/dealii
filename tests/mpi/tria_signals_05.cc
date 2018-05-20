@@ -99,7 +99,7 @@ test()
     Point<dim>                p1;
     Point<dim>                p2;
 
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       {
         repetitions.push_back(2);
         p1[d] = 0.0;
@@ -110,17 +110,17 @@ test()
 
   SignalListener<dim, spacedim> count_cell_via_signal(tria);
 
-  for(unsigned int n_loop = 1; n_loop < 5; ++n_loop)
+  for (unsigned int n_loop = 1; n_loop < 5; ++n_loop)
     {
       {
         Point<dim> p;
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           {
             p[d] = 0.5 - std::pow(0.5, 1.0 + n_loop);
           }
         typename TriaType::active_cell_iterator cell = tria.begin_active();
-        for(; cell != tria.end(); ++cell)
-          if(cell->is_locally_owned() && ((cell->center()).distance(p) < 1e-4))
+        for (; cell != tria.end(); ++cell)
+          if (cell->is_locally_owned() && ((cell->center()).distance(p) < 1e-4))
             {
               cell->set_refine_flag();
             }

@@ -100,21 +100,21 @@ inline void
 PetscFDMatrix::vmult_add(dealii::PETScWrappers::VectorBase&       dst,
                          const dealii::PETScWrappers::VectorBase& src) const
 {
-  for(unsigned int i = 0; i <= ny - 2; i++)
+  for (unsigned int i = 0; i <= ny - 2; i++)
     {
-      for(unsigned int j = 0; j <= nx - 2; j++)
+      for (unsigned int j = 0; j <= nx - 2; j++)
         {
           // Number of the row to be entered
           unsigned int row = j + (nx - 1) * i;
 
           dst(row) += 4. * src(row); // A.set(row, row, 4.);
 
-          if(j > 0)
+          if (j > 0)
             {
               dst(row - 1) += -1. * src(row); // A.set(row-1, row, -1.);
               dst(row) += -1. * src(row - 1); // A.set(row, row-1, -1.);
             }
-          if(i > 0)
+          if (i > 0)
             {
               dst(row - (nx - 1))
                 += -1. * src(row); // A.set(row-(nx-1), row, -1.);

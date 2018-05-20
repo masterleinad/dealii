@@ -53,28 +53,28 @@ test()
   // try some global refinement
   counter = 0;
   tr.refine_global(1);
-  if(myid == 0)
+  if (myid == 0)
     deallog << "refine_global(1) results in a total of " << counter
             << std::endl;
 
   counter = 0;
   tr.refine_global(3);
-  if(myid == 0)
+  if (myid == 0)
     deallog << "refine_global(3) results in a total of " << counter
             << std::endl;
 
   // now also find the bottom left corner of the domain and, on the processor
   // that owns this cell, refine it 4 times
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     {
       counter                              = 0;
       Triangulation<2>::cell_iterator cell = tr.begin(0);
-      while(cell->has_children())
+      while (cell->has_children())
         cell = cell->child(0);
-      if(cell->is_locally_owned())
+      if (cell->is_locally_owned())
         cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
-      if(myid == 0)
+      if (myid == 0)
         deallog << "local refinement results in a total of " << counter
                 << std::endl;
     }
@@ -89,7 +89,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

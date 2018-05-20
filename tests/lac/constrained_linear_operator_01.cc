@@ -140,17 +140,17 @@ Step6<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
 
       fe_values.reinit(cell);
 
-      for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += (fe_values.shape_grad(i, q_index)
                                     * fe_values.shape_grad(j, q_index)
                                     * fe_values.JxW(q_index));
@@ -217,9 +217,9 @@ template <int dim>
 void
 Step6<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for (unsigned int cycle = 0; cycle < 3; ++cycle)
     {
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_cube(triangulation);
           triangulation.refine_global(3);
@@ -232,7 +232,7 @@ Step6<dim>::run()
       solve();
 
       Vector<double> diff = solution - solution_lo;
-      if(diff.l2_norm() < 1e-10)
+      if (diff.l2_norm() < 1e-10)
         deallog << "OK" << std::endl;
       else
         deallog << "ERROR! Output does not match!" << std::endl;

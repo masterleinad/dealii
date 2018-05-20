@@ -58,8 +58,8 @@ test()
   // 16  1 1    1 1 1    1 1 1 1    1
   // 17     1 1 11   1 1 1    1 1 1 1
   // 18   1 1    111 1    1 1 1    1 1
-  for(unsigned int row = 0; row < 19; ++row)
-    for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int row = 0; row < 19; ++row)
+    for (unsigned int i = 0; i < 10; ++i)
       bsp.add(row, (row * 5 + i * 9) % 29);
   bsp.compress();
 
@@ -71,22 +71,22 @@ test()
   // with the matrix-vector
   // operations.
   unsigned int total_nonzero_elements = 0;
-  for(unsigned int row = 0; row < 19; ++row)
+  for (unsigned int row = 0; row < 19; ++row)
     {
       // first count the number of
       // elements in each row
       std::vector<bool> t(29, false);
-      for(unsigned int i = 0; i < 10; ++i)
+      for (unsigned int i = 0; i < 10; ++i)
         t[(row * 5 + i * 9) % 29] = true;
       // if we are in the third block
       // row, then the first matrix
       // is square, so there may be
       // an additional element
-      if(row >= 9)
+      if (row >= 9)
         t[row - 9] = true;
 
       deallog << "Row " << row << " sparsity:  ";
-      for(unsigned int i = 0; i < 29; ++i)
+      for (unsigned int i = 0; i < 29; ++i)
         deallog << t[i];
       deallog << std::endl;
 
@@ -95,10 +95,10 @@ test()
       // now see how many elements
       // there really are:
       unsigned int ac = 0;
-      for(unsigned int col = 0; col < 2; ++col)
-        if(row < 2)
+      for (unsigned int col = 0; col < 2; ++col)
+        if (row < 2)
           ac += bsp.block(0, col).row_length(row - 0);
-        else if(row < 9)
+        else if (row < 9)
           ac += bsp.block(1, col).row_length(row - 2);
         else
           ac += bsp.block(2, col).row_length(row - 9);
@@ -122,19 +122,19 @@ test()
 
   // try to write something into it,
   // set entry (i,j) to i*j
-  for(unsigned int row = 0; row < 19; ++row)
-    for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int row = 0; row < 19; ++row)
+    for (unsigned int i = 0; i < 10; ++i)
       bsm.set(row, (row * 5 + i * 9) % 29, row * ((row * 5 + i * 9) % 29));
   // and add .5 to each value
-  for(unsigned int row = 0; row < 19; ++row)
-    for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int row = 0; row < 19; ++row)
+    for (unsigned int i = 0; i < 10; ++i)
       bsm.add(row, (row * 5 + i * 9) % 29, 0.5);
 
   // Check the iterator
   deallog.push("Iterator");
   BlockSparseMatrix<double>::const_iterator       iter     = bsm.begin();
   const BlockSparseMatrix<double>::const_iterator end_iter = bsm.end();
-  for(; iter != end_iter; ++iter)
+  for (; iter != end_iter; ++iter)
     deallog << iter->row() << '\t' << iter->column() << '\t' << iter->value()
             << std::endl;
   deallog.pop();
@@ -155,25 +155,25 @@ test()
   dst_sizes[2] = 10;
   dst.reinit(dst_sizes);
 
-  for(unsigned int i = 0; i < 29; ++i)
+  for (unsigned int i = 0; i < 29; ++i)
     src(i) = i;
 
   bsm.vmult(dst, src);
   // now check what came out
-  for(unsigned int row = 0; row < 19; ++row)
+  for (unsigned int row = 0; row < 19; ++row)
     {
       std::vector<double> t(29, 0.);
       // first check which elements
       // in this row exist
-      for(unsigned int i = 0; i < 10; ++i)
+      for (unsigned int i = 0; i < 10; ++i)
         t[(row * 5 + i * 9) % 29] = row * ((row * 5 + i * 9) % 29);
 
-      for(unsigned int i = 0; i < 10; ++i)
+      for (unsigned int i = 0; i < 10; ++i)
         t[(row * 5 + i * 9) % 29] += 0.5;
 
       // compute the exact result
       double row_sum = 0;
-      for(unsigned int i = 0; i < 29; ++i)
+      for (unsigned int i = 0; i < 29; ++i)
         row_sum += t[i] * i;
 
       // compare to vmult result
@@ -196,7 +196,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       std::cerr << std::endl
                 << std::endl
@@ -209,7 +209,7 @@ main()
       // abort
       return 2;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -93,8 +93,9 @@ test2()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (; cell != endc; ++cell)
+    for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+         ++face)
       {
         fe_face_values.reinit(cell, face);
         const unsigned int                     n_q_points = quadrature.size();
@@ -102,8 +103,8 @@ test2()
         const std::vector<dealii::Point<dim>>& q_points
           = fe_face_values.get_quadrature_points();
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             deallog << "dof=" << i << " qp=" << q_points[q_point]
                     << " f(qp)=" << function.value(q_points[q_point])
                     << " N(qp)=" << fe_face_values.shape_value(i, q_point)
@@ -126,7 +127,7 @@ main(int argc, char** argv)
     {
       test2<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -140,7 +141,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

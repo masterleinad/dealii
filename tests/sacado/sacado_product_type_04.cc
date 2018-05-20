@@ -49,7 +49,7 @@ main()
   a.val() = Sdouble(2, 0, 7.0);
   b.val() = Sdouble(2, 1, 3.0);
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       t1[i] = 2. * a + i;
       t2[i] = 3. * b - i;

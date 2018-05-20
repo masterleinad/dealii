@@ -32,7 +32,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   // fails if the element is not
   // primitive, so skip this test for
   // such elements
-  if(dof_handler.get_fe().is_primitive() != true)
+  if (dof_handler.get_fe().is_primitive() != true)
     return;
 
   // create sparsity pattern
@@ -40,8 +40,8 @@ check_this(const DoFHandler<dim>& dof_handler)
   BlockSparsityPattern sp(n_components, n_components);
   std::vector<types::global_dof_index> dofs_per_component(n_components);
   DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
-  for(unsigned int i = 0; i < n_components; ++i)
-    for(unsigned int j = 0; j < n_components; ++j)
+  for (unsigned int i = 0; i < n_components; ++i)
+    for (unsigned int j = 0; j < n_components; ++j)
       sp.block(i, j).reinit(dofs_per_component[i],
                             dofs_per_component[j],
                             dof_handler.max_couplings_between_dofs());
@@ -54,16 +54,16 @@ check_this(const DoFHandler<dim>& dof_handler)
   // pattern (if we write out the
   // whole pattern, the output file
   // would be in the range of 40 MB)
-  for(unsigned int l = 0; l < 20; ++l)
+  for (unsigned int l = 0; l < 20; ++l)
     {
       const unsigned int                    line = l * (sp.n_rows() / 20);
       std::pair<unsigned int, unsigned int> block_row
         = sp.get_row_indices().global_to_local(line);
-      for(unsigned int col = 0; col < n_components; ++col)
+      for (unsigned int col = 0; col < n_components; ++col)
         {
-          for(unsigned int c = 0;
-              c < sp.block(block_row.first, col).row_length(block_row.second);
-              ++c)
+          for (unsigned int c = 0;
+               c < sp.block(block_row.first, col).row_length(block_row.second);
+               ++c)
             deallog << sp.block(block_row.first, col)
                          .column_number(block_row.second, c)
                     << " ";
@@ -72,8 +72,8 @@ check_this(const DoFHandler<dim>& dof_handler)
     }
 
   // write out some other indicators
-  for(unsigned int r = 0; r < n_components; ++r)
-    for(unsigned int c = 0; c < n_components; ++c)
+  for (unsigned int r = 0; r < n_components; ++r)
+    for (unsigned int c = 0; c < n_components; ++c)
       {
         const SparsityPattern& x = sp.block(r, c);
         deallog << x.bandwidth() << std::endl
@@ -81,7 +81,7 @@ check_this(const DoFHandler<dim>& dof_handler)
                 << x.n_nonzero_elements() << std::endl;
 
         unsigned int hash = 0;
-        for(unsigned int l = 0; l < x.n_rows(); ++l)
+        for (unsigned int l = 0; l < x.n_rows(); ++l)
           hash += l * x.row_length(l);
         deallog << hash << std::endl;
       }

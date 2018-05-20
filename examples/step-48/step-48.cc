@@ -124,18 +124,18 @@ namespace Step48
     FEEvaluation<dim, fe_degree> fe_eval(data);
     const unsigned int           n_q_points = fe_eval.n_q_points;
 
-    for(unsigned int cell = 0; cell < data.n_macro_cells(); ++cell)
+    for (unsigned int cell = 0; cell < data.n_macro_cells(); ++cell)
       {
         fe_eval.reinit(cell);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           fe_eval.submit_value(one, q);
         fe_eval.integrate(true, false);
         fe_eval.distribute_local_to_global(inv_mass_matrix);
       }
 
     inv_mass_matrix.compress(VectorOperation::add);
-    for(unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
-      if(inv_mass_matrix.local_element(k) > 1e-15)
+    for (unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
+      if (inv_mass_matrix.local_element(k) > 1e-15)
         inv_mass_matrix.local_element(k)
           = 1. / inv_mass_matrix.local_element(k);
       else
@@ -184,7 +184,7 @@ namespace Step48
   {
     AssertDimension(src.size(), 2);
     FEEvaluation<dim, fe_degree> current(data), old(data);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         current.reinit(cell);
         old.reinit(cell);
@@ -195,7 +195,7 @@ namespace Step48
         current.evaluate(true, true, false);
         old.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < current.n_q_points; ++q)
+        for (unsigned int q = 0; q < current.n_q_points; ++q)
           {
             const VectorizedArray<double> current_value = current.get_value(q);
             const VectorizedArray<double> old_value     = old.get_value(q);
@@ -262,7 +262,7 @@ namespace Step48
     const double factor
       = (m / std::sqrt(1. - m * m) * std::sin(std::sqrt(1. - m * m) * t + c2));
     double result = 1.;
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       result *= -4. * std::atan(factor / std::cosh(m * p[d] + c1));
     return result;
   }
@@ -361,17 +361,17 @@ namespace Step48
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active(),
         end_cell = triangulation.end();
-      for(; cell != end_cell; ++cell)
-        if(cell->is_locally_owned())
-          if(cell->center().norm() < 11)
+      for (; cell != end_cell; ++cell)
+        if (cell->is_locally_owned())
+          if (cell->center().norm() < 11)
             cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
 
       cell     = triangulation.begin_active();
       end_cell = triangulation.end();
-      for(; cell != end_cell; ++cell)
-        if(cell->is_locally_owned())
-          if(cell->center().norm() < 6)
+      for (; cell != end_cell; ++cell)
+        if (cell->is_locally_owned())
+          if (cell->center().norm() < 6)
             cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
@@ -481,12 +481,12 @@ namespace Step48
       + ".vtu");
     data_out.write_vtu(output);
 
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+             ++i)
           filenames.push_back("solution-"
                               + Utilities::int_to_string(timestep_number, 3)
                               + "." + Utilities::int_to_string(i, 4) + ".vtu");
@@ -573,8 +573,8 @@ namespace Step48
     Timer  timer;
     double wtime       = 0;
     double output_time = 0;
-    for(time += time_step; time <= final_time;
-        time += time_step, ++timestep_number)
+    for (time += time_step; time <= final_time;
+         time += time_step, ++timestep_number)
       {
         timer.restart();
         old_old_solution.swap(old_solution);
@@ -583,7 +583,7 @@ namespace Step48
         wtime += timer.wall_time();
 
         timer.restart();
-        if(timestep_number % output_timestep_skip == 0)
+        if (timestep_number % output_timestep_skip == 0)
           output_results(timestep_number / output_timestep_skip);
 
         output_time += timer.wall_time();
@@ -626,7 +626,7 @@ main(int argc, char** argv)
       SineGordonProblem<dimension> sg_problem;
       sg_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -640,7 +640,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

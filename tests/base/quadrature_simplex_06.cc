@@ -43,21 +43,21 @@ main()
   //       index  m  i  j
   double error[4][6][6][6] = {{{{0}}}};
 
-  for(unsigned int m = 0; m < 6; ++m)
+  for (unsigned int m = 0; m < 6; ++m)
     {
-      for(unsigned int index = 0; index < 4; ++index)
+      for (unsigned int index = 0; index < 4; ++index)
         {
           auto split_point = GeometryInfo<2>::unit_cell_vertex(index);
 
           QSplit<2> quad(QTrianglePolar(m + 1), split_point);
 
-          for(unsigned int i = 0; i < 6; ++i)
-            for(unsigned int j = 0; j < 6; ++j)
+          for (unsigned int i = 0; i < 6; ++i)
+            for (unsigned int j = 0; j < 6; ++j)
               {
                 double exact_integral  = exact_integral_one_over_r(index, i, j);
                 double approx_integral = 0;
 
-                for(unsigned int q = 0; q < quad.size(); ++q)
+                for (unsigned int q = 0; q < quad.size(); ++q)
                   {
                     double x = quad.point(q)[0];
                     double y = quad.point(q)[1];
@@ -71,16 +71,16 @@ main()
     }
 
   // Now output the results.
-  for(unsigned int index = 0; index < 4; ++index)
+  for (unsigned int index = 0; index < 4; ++index)
     {
       deallog << " ===============Vertex Index: " << index
               << " ==============================" << std::endl;
-      for(unsigned int i = 0; i < 6; ++i)
-        for(unsigned int j = 0; j < 6; ++j)
+      for (unsigned int i = 0; i < 6; ++i)
+        for (unsigned int j = 0; j < 6; ++j)
           {
             deallog << "======= f(x,y) = x^" << i << " y^" << j << std::endl;
 
-            for(unsigned int m = 0; m < 6; ++m)
+            for (unsigned int m = 0; m < 6; ++m)
               deallog << "Order[" << m + 1
                       << "], error = " << error[index][m][i][j] << std::endl;
           }

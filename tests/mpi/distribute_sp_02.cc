@@ -31,21 +31,21 @@ test_mpi()
   unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
   unsigned int          num_local = 10;
   unsigned int          n         = numprocs * num_local;
   std::vector<IndexSet> locally_owned_dofs_per_cpu(numprocs, IndexSet(n));
-  for(unsigned int i = 0; i < numprocs; ++i)
+  for (unsigned int i = 0; i < numprocs; ++i)
     locally_owned_dofs_per_cpu[i].add_range((i) *num_local,
                                             (i + 1) * num_local);
 
   IndexSet locally_rel(n);
   locally_rel.add_range(myid * num_local, (myid + 1) * num_local);
-  if(myid > 0)
+  if (myid > 0)
     locally_rel.add_range((myid - 1) * num_local, (myid + 0) * num_local);
-  if(myid < numprocs - 1)
+  if (myid < numprocs - 1)
     locally_rel.add_range((myid + 1) * num_local, (myid + 2) * num_local);
 
   std::vector<IndexSet> partitioning;
@@ -53,10 +53,10 @@ test_mpi()
 
   BlockDynamicSparsityPattern csp(partitioning);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     csp.add(i, myid);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "blocks: " << csp.n_block_rows() << "x" << csp.n_block_cols()
               << std::endl;
@@ -71,48 +71,48 @@ test_mpi()
       }*/
 
   // checking...
-  for(unsigned int r = 0; r < num_local; ++r)
+  for (unsigned int r = 0; r < num_local; ++r)
     {
       unsigned int indx = r + myid * num_local;
       unsigned int len  = csp.row_length(indx);
 
       //std::cout << "myid=" << myid << " idx=" << indx << " len=" << len <<std::endl;
 
-      if(myid > 0 && myid < numprocs - 1)
+      if (myid > 0 && myid < numprocs - 1)
         Assert(len == 3, ExcInternalError());
-      if(myid == 0 || myid == numprocs - 1)
+      if (myid == 0 || myid == numprocs - 1)
         Assert(len == 2, ExcInternalError());
 
       Assert(csp.exists(indx, myid), ExcInternalError());
-      if(myid > 0)
+      if (myid > 0)
         Assert(csp.exists(indx, myid - 1), ExcInternalError());
-      if(myid < numprocs - 1)
+      if (myid < numprocs - 1)
         Assert(csp.exists(indx, myid + 1), ExcInternalError());
     }
 
   //now a 2x2 block system where the 2,2 block has size 1x1:
-  if(myid == 0)
+  if (myid == 0)
     deallog << "part 2" << std::endl;
 
   IndexSet bla(1);
-  if(myid == 0)
+  if (myid == 0)
     bla.add_index(0);
 
   partitioning.push_back(bla);
 
   csp.reinit(partitioning);
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     csp.add(i, myid);
 
   std::vector<IndexSet> locally_owned_dofs_per_cpu2(numprocs, IndexSet(n));
-  for(unsigned int i = 0; i < numprocs; ++i)
+  for (unsigned int i = 0; i < numprocs; ++i)
     locally_owned_dofs_per_cpu2[i].add_range((i) *num_local,
                                              (i + 1) * num_local);
 
   SparsityTools::distribute_sparsity_pattern(
     csp, locally_owned_dofs_per_cpu2, MPI_COMM_WORLD, locally_rel);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "blocks: " << csp.n_block_rows() << "x" << csp.n_block_cols()
               << std::endl;
@@ -120,26 +120,26 @@ test_mpi()
     }
 
   // checking...
-  for(unsigned int r = 0; r < num_local; ++r)
+  for (unsigned int r = 0; r < num_local; ++r)
     {
       unsigned int indx = r + myid * num_local;
       unsigned int len  = csp.row_length(indx);
 
       //std::cout << "myid=" << myid << " idx=" << indx << " len=" << len <<std::endl;
 
-      if(myid > 0 && myid < numprocs - 1)
+      if (myid > 0 && myid < numprocs - 1)
         Assert(len == 3, ExcInternalError());
-      if(myid == numprocs - 1 || myid == 0)
+      if (myid == numprocs - 1 || myid == 0)
         Assert(len == 2, ExcInternalError());
 
       Assert(csp.exists(indx, myid), ExcInternalError());
-      if(myid > 0)
+      if (myid > 0)
         Assert(csp.exists(indx, myid - 1), ExcInternalError());
-      if(myid < numprocs - 1)
+      if (myid < numprocs - 1)
         Assert(csp.exists(indx, myid + 1), ExcInternalError());
     }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "done" << std::endl;
 }
 
@@ -156,7 +156,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

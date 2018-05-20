@@ -74,7 +74,7 @@ public:
   {
     deallog << "Start";
 
-    if(do_renumber)
+    if (do_renumber)
       deallog << " with renumbering" << std::endl;
     else
       deallog << " without renumbering" << std::endl;
@@ -87,14 +87,14 @@ public:
     constraints.clear();
     constraints.close();
 
-    if(do_renumber)
+    if (do_renumber)
       renumber();
 
     init_structures();
 
     deallog << "Finished";
 
-    if(do_renumber)
+    if (do_renumber)
       deallog << " with renumbering" << std::endl;
     else
       deallog << " without renumbering" << std::endl;
@@ -139,13 +139,13 @@ private:
     locally_owned_dofs = dof_handler.locally_owned_dofs();
 
     std::vector<types::global_dof_index> new_number(dof_handler.n_dofs());
-    for(types::global_dof_index i = 0; i < dof_handler.n_dofs(); i++)
+    for (types::global_dof_index i = 0; i < dof_handler.n_dofs(); i++)
       new_number[i] = dof_handler.n_dofs() - i - 1;
 
     std::vector<types::global_dof_index> local_new_number;
-    for(IndexSet::ElementIterator dof = locally_owned_dofs.begin();
-        dof != locally_owned_dofs.end();
-        ++dof)
+    for (IndexSet::ElementIterator dof = locally_owned_dofs.begin();
+         dof != locally_owned_dofs.end();
+         ++dof)
       local_new_number.push_back(new_number[*dof]);
 
     deallog << "n_dofs = " << dof_handler.n_dofs() << std::endl;

@@ -27,7 +27,7 @@ test(VectorType& v)
 {
   // set some elements of the vector
   unsigned int my_id = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  for(unsigned int i = 5 * my_id; i < 5 * (my_id + 1); ++i)
+  for (unsigned int i = 5 * my_id; i < 5 * (my_id + 1); ++i)
     {
       v(i) = i;
     }
@@ -64,7 +64,7 @@ main(int argc, char* argv[])
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -78,7 +78,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

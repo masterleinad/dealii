@@ -27,7 +27,7 @@ test()
   unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
   Tensor<1, 1> tensor_1;
@@ -36,7 +36,7 @@ test()
 
   Tensor<1, 1> result_1 = Utilities::MPI::sum(tensor_1, MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "1D tensor: " << result_1 << std::endl;
 
   Tensor<1, 2> tensor_2;
@@ -46,7 +46,7 @@ test()
 
   Tensor<1, 2> result_2 = Utilities::MPI::sum(tensor_2, MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "2D tensor: " << result_2 << std::endl;
 
   Tensor<1, 3> tensor_3;
@@ -57,7 +57,7 @@ test()
 
   Tensor<1, 3> result_3 = Utilities::MPI::sum(tensor_3, MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "3D tensor: " << result_3 << std::endl;
 
   Tensor<2, 3> rank_2_tensor;
@@ -75,7 +75,7 @@ test()
   Tensor<2, 3> result_rank_2
     = Utilities::MPI::sum(rank_2_tensor, MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Rank 2 tensor: " << result_rank_2 << std::endl;
 
   SymmetricTensor<2, 2> symmetric_tensor;
@@ -87,7 +87,7 @@ test()
   SymmetricTensor<2, 2> result_symmetric
     = Utilities::MPI::sum(symmetric_tensor, MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Symmetric tensor: " << result_symmetric << std::endl;
 }
 
@@ -104,7 +104,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

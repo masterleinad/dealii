@@ -29,7 +29,7 @@ main()
   const unsigned int N = 10000;
   Vector<double>     x(N), y(N);
 
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     x(i) = i;
 
   // set y=2*x

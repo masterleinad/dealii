@@ -43,7 +43,7 @@ test(const Point<spacedim>& p)
 
   // Displacement vector.
   Vector<double> disp(dh.n_dofs());
-  for(unsigned int i = 0; i < dh.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dh.n_dofs(); ++i)
     disp[i] = .5;
 
   // mapping
@@ -55,7 +55,7 @@ test(const Point<spacedim>& p)
   selected_vertices[0] = true;
   selected_vertices[5] = true;
 
-  for(auto& e : m)
+  for (auto& e : m)
     deallog << "Vertex: " << e.first << ": " << e.second << std::endl;
 
   auto i = GridTools::find_closest_vertex(mapping, tria, p, selected_vertices);

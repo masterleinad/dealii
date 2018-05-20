@@ -212,7 +212,7 @@ MGLevelObject<Object>::resize(const unsigned int new_minlevel,
   objects.clear();
 
   minlevel = new_minlevel;
-  for(unsigned int i = 0; i < new_maxlevel - new_minlevel + 1; ++i)
+  for (unsigned int i = 0; i < new_maxlevel - new_minlevel + 1; ++i)
     objects.push_back(std::make_shared<Object>());
 }
 
@@ -221,7 +221,7 @@ MGLevelObject<Object>&
 MGLevelObject<Object>::operator=(const double d)
 {
   typename std::vector<std::shared_ptr<Object>>::iterator v;
-  for(v = objects.begin(); v != objects.end(); ++v)
+  for (v = objects.begin(); v != objects.end(); ++v)
     **v = d;
   return *this;
 }
@@ -239,7 +239,7 @@ void
 MGLevelObject<Object>::clear_elements()
 {
   typename std::vector<std::shared_ptr<Object>>::iterator v;
-  for(v = objects.begin(); v != objects.end(); ++v)
+  for (v = objects.begin(); v != objects.end(); ++v)
     (*v)->clear();
 }
 
@@ -262,7 +262,7 @@ template <typename ActionFunctionObjectType>
 void
 MGLevelObject<Object>::apply(ActionFunctionObjectType action)
 {
-  for(unsigned int lvl = min_level(); lvl <= max_level(); ++lvl)
+  for (unsigned int lvl = min_level(); lvl <= max_level(); ++lvl)
     {
       action(lvl, (*this)[lvl]);
     }
@@ -275,7 +275,7 @@ MGLevelObject<Object>::memory_consumption() const
   std::size_t result = sizeof(*this);
   typedef typename std::vector<std::shared_ptr<Object>>::const_iterator Iter;
   const Iter end = objects.end();
-  for(Iter o = objects.begin(); o != end; ++o)
+  for (Iter o = objects.begin(); o != end; ++o)
     result += (*o)->memory_consumption();
 
   return result;

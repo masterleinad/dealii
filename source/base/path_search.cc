@@ -67,11 +67,11 @@ PathSearch::initialize_classes()
 std::vector<std::string>&
 PathSearch::get_path_list(const std::string& cls)
 {
-  if(path_lists.empty())
+  if (path_lists.empty())
     initialize_classes();
 
   // Modified by Luca Heltai. If a class is not there, add it
-  if(path_lists.count(cls) == 0)
+  if (path_lists.count(cls) == 0)
     add_class(cls);
 
   // Assert(path_lists.count(cls) != 0, ExcNoClass(cls));
@@ -87,7 +87,7 @@ PathSearch::get_suffix_list(const std::string& cls)
   // add_path function with the path_list bit...
 
   // Modified by Luca Heltai. If a class is not there, add it
-  if(suffix_lists.count(cls) == 0)
+  if (suffix_lists.count(cls) == 0)
     add_class(cls);
 
   // Assert(suffix_lists.count(cls) != 0, ExcNoClass(cls));
@@ -113,25 +113,25 @@ PathSearch::find(const std::string& filename,
 
   std::string real_name;
 
-  if(debug > 2)
+  if (debug > 2)
     deallog << "PathSearch[" << cls << "] " << my_path_list.size()
             << " directories " << std::endl;
 
   // Try to open file in the various directories we have
-  for(path = my_path_list.begin(); path != endp; ++path)
+  for (path = my_path_list.begin(); path != endp; ++path)
     {
       // see if the file exists as given, i.e., with
       // the whole filename specified, including (possibly)
       // the suffix
       {
         real_name = *path + filename;
-        if(debug > 1)
+        if (debug > 1)
           deallog << "PathSearch[" << cls << "] trying " << real_name
                   << std::endl;
         FILE* fp = fopen(real_name.c_str(), open_mode);
-        if(fp != nullptr)
+        if (fp != nullptr)
           {
-            if(debug > 0)
+            if (debug > 0)
               deallog << "PathSearch[" << cls << "] opened " << real_name
                       << std::endl;
             fclose(fp);
@@ -141,16 +141,16 @@ PathSearch::find(const std::string& filename,
 
       // try again with the suffix appended, unless there is
       // no suffix
-      if(suffix != "")
+      if (suffix != "")
         {
           real_name = *path + filename + suffix;
-          if(debug > 1)
+          if (debug > 1)
             deallog << "PathSearch[" << cls << "] trying " << real_name
                     << std::endl;
           FILE* fp = fopen(real_name.c_str(), open_mode);
-          if(fp != nullptr)
+          if (fp != nullptr)
             {
-              if(debug > 0)
+              if (debug > 0)
                 deallog << "PathSearch[" << cls << "] opened " << real_name
                         << std::endl;
               fclose(fp);
@@ -168,18 +168,18 @@ PathSearch::find(const std::string& filename, const char* open_mode)
   std::vector<std::string>::const_iterator       suffix;
   const std::vector<std::string>::const_iterator ends = my_suffix_list.end();
 
-  if(debug > 2)
+  if (debug > 2)
     deallog << "PathSearch[" << cls << "] " << my_path_list.size()
             << " directories " << my_suffix_list.size() << " suffixes"
             << std::endl;
 
-  for(suffix = my_suffix_list.begin(); suffix != ends; ++suffix)
+  for (suffix = my_suffix_list.begin(); suffix != ends; ++suffix)
     {
       try
         {
           return find(filename, *suffix, open_mode);
         }
-      catch(ExcFileNotFound&)
+      catch (ExcFileNotFound&)
         {
           continue;
         }
@@ -193,7 +193,7 @@ PathSearch::add_class(const std::string& cls)
 {
   // Make sure standard classes are
   // initialized first
-  if(path_lists.empty())
+  if (path_lists.empty())
     initialize_classes();
   // Add empty path and empty suffix
   // for new class
@@ -206,15 +206,15 @@ PathSearch::add_class(const std::string& cls)
 void
 PathSearch::add_path(const std::string& path, Position pos)
 {
-  if(pos == back)
+  if (pos == back)
     my_path_list.push_back(path);
-  else if(pos == front)
+  else if (pos == front)
     my_path_list.insert(my_path_list.begin(), path);
-  else if(pos == after_none)
+  else if (pos == after_none)
     {
       std::vector<std::string>::iterator i
         = std::find(my_path_list.begin(), my_path_list.end(), empty);
-      if(i != my_path_list.end())
+      if (i != my_path_list.end())
         ++i;
       my_path_list.insert(i, path);
     }
@@ -223,15 +223,15 @@ PathSearch::add_path(const std::string& path, Position pos)
 void
 PathSearch::add_suffix(const std::string& suffix, Position pos)
 {
-  if(pos == back)
+  if (pos == back)
     my_suffix_list.push_back(suffix);
-  else if(pos == front)
+  else if (pos == front)
     my_suffix_list.insert(my_suffix_list.begin(), suffix);
-  else if(pos == after_none)
+  else if (pos == after_none)
     {
       std::vector<std::string>::iterator i
         = std::find(my_suffix_list.begin(), my_suffix_list.end(), empty);
-      if(i != my_suffix_list.end())
+      if (i != my_suffix_list.end())
         ++i;
       my_suffix_list.insert(i, suffix);
     }

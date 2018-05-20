@@ -36,13 +36,13 @@ namespace LinearAlgebra
     Vector<Number>::clear_mpi_requests()
     {
 #ifdef DEAL_II_WITH_MPI
-      for(size_type j = 0; j < compress_requests.size(); j++)
+      for (size_type j = 0; j < compress_requests.size(); j++)
         {
           const int ierr = MPI_Request_free(&compress_requests[j]);
           AssertThrowMPI(ierr);
         }
       compress_requests.clear();
-      for(size_type j = 0; j < update_ghost_values_requests.size(); j++)
+      for (size_type j = 0; j < update_ghost_values_requests.size(); j++)
         {
           const int ierr = MPI_Request_free(&update_ghost_values_requests[j]);
           AssertThrowMPI(ierr);
@@ -55,7 +55,7 @@ namespace LinearAlgebra
     void
     Vector<Number>::resize_val(const size_type new_alloc_size)
     {
-      if(new_alloc_size > allocated_size)
+      if (new_alloc_size > allocated_size)
         {
           Assert(
             ((allocated_size > 0 && values != nullptr) || values == nullptr),
@@ -68,7 +68,7 @@ namespace LinearAlgebra
 
           allocated_size = new_alloc_size;
         }
-      else if(new_alloc_size == 0)
+      else if (new_alloc_size == 0)
         {
           values.reset();
           allocated_size = 0;
@@ -94,7 +94,7 @@ namespace LinearAlgebra
       partitioner = std::make_shared<Utilities::MPI::Partitioner>(size);
 
       // set entries to zero if so requested
-      if(omit_zeroing_entries == false)
+      if (omit_zeroing_entries == false)
         this->operator=(Number());
       else
         zero_out_ghosts();
@@ -113,7 +113,7 @@ namespace LinearAlgebra
       // different (check only if the are allocated
       // differently, not if the actual data is
       // different)
-      if(partitioner.get() != v.partitioner.get())
+      if (partitioner.get() != v.partitioner.get())
         {
           partitioner = v.partitioner;
           const size_type new_allocated_size
@@ -121,7 +121,7 @@ namespace LinearAlgebra
           resize_val(new_allocated_size);
         }
 
-      if(omit_zeroing_entries == false)
+      if (omit_zeroing_entries == false)
         this->operator=(Number());
       else
         zero_out_ghosts();
@@ -205,7 +205,7 @@ namespace LinearAlgebra
       thread_loop_partitioner = v.thread_loop_partitioner;
 
       const size_type this_size = local_size();
-      if(this_size > 0)
+      if (this_size > 0)
         {
           dealii::internal::VectorOperations::Vector_copy<Number, Number>
             copier(v.values.get(), values.get());
@@ -253,7 +253,7 @@ namespace LinearAlgebra
         {
           clear_mpi_requests();
         }
-      catch(...)
+      catch (...)
         {}
     }
 
@@ -288,9 +288,9 @@ namespace LinearAlgebra
       // c does not have any ghosts (constructed without ghost elements given)
       // but the current vector does: In that case, we need to exchange data
       // also when none of the two vector had updated its ghost values before.
-      if(partitioner.get() == nullptr)
+      if (partitioner.get() == nullptr)
         reinit(c, true);
-      else if(partitioner.get() != c.partitioner.get())
+      else if (partitioner.get() != c.partitioner.get())
         {
           // local ranges are also the same if both partitioners are empty
           // (even if they happen to define the empty range as [0,0) or [c,c)
@@ -301,11 +301,11 @@ namespace LinearAlgebra
                      == partitioner->local_range().first
                    && c.partitioner->local_range().second
                         == c.partitioner->local_range().first));
-          if((c.partitioner->n_mpi_processes() > 1
-              && Utilities::MPI::min(local_ranges_are_identical,
-                                     c.partitioner->get_mpi_communicator())
-                   == 0)
-             || !local_ranges_are_identical)
+          if ((c.partitioner->n_mpi_processes() > 1
+               && Utilities::MPI::min(local_ranges_are_identical,
+                                      c.partitioner->get_mpi_communicator())
+                    == 0)
+              || !local_ranges_are_identical)
             reinit(c, true);
           else
             must_update_ghost_values |= vector_is_ghosted;
@@ -320,7 +320,7 @@ namespace LinearAlgebra
       thread_loop_partitioner = c.thread_loop_partitioner;
 
       const size_type this_size = partitioner->local_size();
-      if(this_size > 0)
+      if (this_size > 0)
         {
           dealii::internal::VectorOperations::Vector_copy<Number, Number2>
             copier(c.values.get(), values.get());
@@ -328,7 +328,7 @@ namespace LinearAlgebra
             copier, 0, this_size, thread_loop_partitioner);
         }
 
-      if(must_update_ghost_values)
+      if (must_update_ghost_values)
         update_ghost_values();
       else
         zero_out_ghosts();
@@ -341,7 +341,7 @@ namespace LinearAlgebra
     Vector<Number>::copy_locally_owned_data_from(const Vector<Number2>& src)
     {
       AssertDimension(partitioner->local_size(), src.partitioner->local_size());
-      if(partitioner->local_size() > 0)
+      if (partitioner->local_size() > 0)
         {
           dealii::internal::VectorOperations::Vector_copy<Number, Number2>
             copier(src.values.get(), values.get());
@@ -409,7 +409,7 @@ namespace LinearAlgebra
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // spread ghost values between processes?
-      if(vector_is_ghosted || petsc_vec.has_ghost_elements())
+      if (vector_is_ghosted || petsc_vec.has_ghost_elements())
         update_ghost_values();
 
       // return a reference to this object per normal c++ operator overloading
@@ -432,7 +432,7 @@ namespace LinearAlgebra
       rw_vector.import(trilinos_vec, VectorOperation::insert);
       import(rw_vector, VectorOperation::insert);
 
-      if(vector_is_ghosted || trilinos_vec.has_ghost_elements())
+      if (vector_is_ghosted || trilinos_vec.has_ghost_elements())
         update_ghost_values();
 #  else
       AssertThrow(false, ExcNotImplemented());
@@ -463,7 +463,7 @@ namespace LinearAlgebra
     void
     Vector<Number>::zero_out_ghosts() const
     {
-      if(values != nullptr)
+      if (values != nullptr)
         std::fill_n(values.get() + partitioner->local_size(),
                     partitioner->n_ghost_indices(),
                     Number());
@@ -485,7 +485,7 @@ namespace LinearAlgebra
       Threads::Mutex::ScopedLock lock(mutex);
 
       // allocate import_data in case it is not set up yet
-      if(import_data == nullptr && partitioner->n_import_indices() > 0)
+      if (import_data == nullptr && partitioner->n_import_indices() > 0)
         import_data
           = std_cxx14::make_unique<Number[]>(partitioner->n_import_indices());
 
@@ -534,15 +534,15 @@ namespace LinearAlgebra
     {
 #ifdef DEAL_II_WITH_MPI
       // nothing to do when we neither have import nor ghost indices.
-      if(partitioner->n_ghost_indices() == 0
-         && partitioner->n_import_indices() == 0)
+      if (partitioner->n_ghost_indices() == 0
+          && partitioner->n_import_indices() == 0)
         return;
 
       // make this function thread safe
       Threads::Mutex::ScopedLock lock(mutex);
 
       // allocate import_data in case it is not set up yet
-      if(import_data == nullptr && partitioner->n_import_indices() > 0)
+      if (import_data == nullptr && partitioner->n_import_indices() > 0)
         import_data
           = std_cxx14::make_unique<Number[]>(partitioner->n_import_indices());
 
@@ -569,7 +569,7 @@ namespace LinearAlgebra
       AssertDimension(partitioner->ghost_targets().size()
                         + partitioner->import_targets().size(),
                       update_ghost_values_requests.size());
-      if(update_ghost_values_requests.size() > 0)
+      if (update_ghost_values_requests.size() > 0)
         {
           // make this function thread safe
           Threads::Mutex::ScopedLock lock(mutex);
@@ -594,7 +594,7 @@ namespace LinearAlgebra
       // If no communication pattern is given, create one. Otherwise, use the
       // given one.
       std::shared_ptr<const Utilities::MPI::Partitioner> comm_pattern;
-      if(communication_pattern.get() == nullptr)
+      if (communication_pattern.get() == nullptr)
         {
           // Split the IndexSet of V in locally owned elements and ghost indices
           // then create the communication pattern
@@ -621,14 +621,14 @@ namespace LinearAlgebra
       // because indices are translated twice, once by nth_index_in_set(i) and
       // once for operator() of tmp_vector
       const IndexSet& v_stored = V.get_stored_elements();
-      for(size_type i = 0; i < v_stored.n_elements(); ++i)
+      for (size_type i = 0; i < v_stored.n_elements(); ++i)
         tmp_vector(v_stored.nth_index_in_set(i)) = V.local_element(i);
 
       tmp_vector.compress(operation);
 
       // Copy the local elements of tmp_vector to the right place in val
       IndexSet tmp_index_set = tmp_vector.locally_owned_elements();
-      for(size_type i = 0; i < tmp_index_set.n_elements(); ++i)
+      for (size_type i = 0; i < tmp_index_set.n_elements(); ++i)
         {
           values[locally_owned_elem.index_within_set(
             tmp_index_set.nth_index_in_set(i))]
@@ -643,12 +643,12 @@ namespace LinearAlgebra
 #ifdef DEAL_II_WITH_MPI
 
 #  ifdef DEBUG
-      if(Utilities::MPI::job_supports_mpi())
+      if (Utilities::MPI::job_supports_mpi())
         {
           // make sure that there are not outstanding requests from updating
           // ghost values or compress
           int flag = 1;
-          if(update_ghost_values_requests.size() > 0)
+          if (update_ghost_values_requests.size() > 0)
             {
               const int ierr = MPI_Testall(update_ghost_values_requests.size(),
                                            update_ghost_values_requests.data(),
@@ -660,7 +660,7 @@ namespace LinearAlgebra
                 ExcMessage("MPI found unfinished update_ghost_values() requests"
                            "when calling swap, which is not allowed"));
             }
-          if(compress_requests.size() > 0)
+          if (compress_requests.size() > 0)
             {
               const int ierr = MPI_Testall(compress_requests.size(),
                                            compress_requests.data(),
@@ -691,7 +691,7 @@ namespace LinearAlgebra
     Vector<Number>::operator=(const Number s)
     {
       const size_type this_size = local_size();
-      if(this_size > 0)
+      if (this_size > 0)
         {
           internal::VectorOperations::Vector_set<Number> setter(s,
                                                                 values.get());
@@ -702,7 +702,7 @@ namespace LinearAlgebra
 
       // if we call Vector::operator=0, we want to zero out all the entries
       // plus ghosts.
-      if(s == Number())
+      if (s == Number())
         zero_out_ghosts();
 
       return *this;
@@ -737,7 +737,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_add, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
 
       return *this;
@@ -759,7 +759,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_subtract, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
 
       return *this;
@@ -776,7 +776,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_add, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -794,7 +794,7 @@ namespace LinearAlgebra
       AssertDimension(local_size(), v.local_size());
 
       // nothing to do if a is zero
-      if(a == Number(0.))
+      if (a == Number(0.))
         return;
 
       internal::VectorOperations::Vectorization_add_av<Number> vector_add(
@@ -809,7 +809,7 @@ namespace LinearAlgebra
     {
       add_local(a, vv);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -839,7 +839,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_add, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -848,7 +848,7 @@ namespace LinearAlgebra
     Vector<Number>::add(const std::vector<size_type>& indices,
                         const std::vector<Number>&    values)
     {
-      for(std::size_t i = 0; i < indices.size(); ++i)
+      for (std::size_t i = 0; i < indices.size(); ++i)
         {
           this->operator()(indices[i]) += values[i];
         }
@@ -866,7 +866,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_sadd, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -899,7 +899,7 @@ namespace LinearAlgebra
     {
       sadd_local(x, a, vv);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -923,7 +923,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_sadd, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -938,7 +938,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_multiply, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
 
       return *this;
@@ -968,7 +968,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_scale, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -989,7 +989,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_equ, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -1011,7 +1011,7 @@ namespace LinearAlgebra
       internal::VectorOperations::parallel_for(
         vector_equ, 0, partitioner->local_size(), thread_loop_partitioner);
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         update_ghost_values();
     }
 
@@ -1020,8 +1020,8 @@ namespace LinearAlgebra
     Vector<Number>::all_zero_local() const
     {
       const size_type local_size = partitioner->local_size();
-      for(size_type i = 0; i < local_size; ++i)
-        if(values[i] != Number(0))
+      for (size_type i = 0; i < local_size; ++i)
+        if (values[i] != Number(0))
           return false;
       return true;
     }
@@ -1036,7 +1036,7 @@ namespace LinearAlgebra
       // functions handle this case correctly through the job_supports_mpi()
       // query). this is the same in all the reduce functions below
       int local_result = -static_cast<int>(all_zero_local());
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return -Utilities::MPI::max(local_result,
                                     partitioner->get_mpi_communicator());
       else
@@ -1048,7 +1048,7 @@ namespace LinearAlgebra
     Number
     Vector<Number>::inner_product_local(const Vector<Number2>& v) const
     {
-      if(PointerComparison::equal(this, &v))
+      if (PointerComparison::equal(this, &v))
         return norm_sqr_local();
 
       AssertDimension(partitioner->local_size(), v.partitioner->local_size());
@@ -1072,7 +1072,7 @@ namespace LinearAlgebra
       const Vector<Number>& v = dynamic_cast<const Vector<Number>&>(vv);
 
       Number local_result = inner_product_local(v);
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::sum(local_result,
                                    partitioner->get_mpi_communicator());
       else
@@ -1098,7 +1098,7 @@ namespace LinearAlgebra
     {
       Assert(size() != 0, ExcEmptyObject());
 
-      if(partitioner->local_size() == 0)
+      if (partitioner->local_size() == 0)
         return Number();
 
       Number                                        sum;
@@ -1114,7 +1114,7 @@ namespace LinearAlgebra
     Vector<Number>::mean_value() const
     {
       Number local_result = mean_value_local();
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::sum(local_result
                                      * (real_type) partitioner->local_size(),
                                    partitioner->get_mpi_communicator())
@@ -1140,7 +1140,7 @@ namespace LinearAlgebra
     Vector<Number>::l1_norm() const
     {
       real_type local_result = l1_norm_local();
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::sum(local_result,
                                    partitioner->get_mpi_communicator());
       else
@@ -1152,7 +1152,7 @@ namespace LinearAlgebra
     Vector<Number>::norm_sqr() const
     {
       real_type local_result = norm_sqr_local();
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::sum(local_result,
                                    partitioner->get_mpi_communicator());
       else
@@ -1183,7 +1183,7 @@ namespace LinearAlgebra
     Vector<Number>::lp_norm(const real_type p) const
     {
       const real_type local_result = lp_norm_local(p);
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return std::pow(
           Utilities::MPI::sum(std::pow(local_result, p),
                               partitioner->get_mpi_communicator()),
@@ -1199,7 +1199,7 @@ namespace LinearAlgebra
       real_type max = 0.;
 
       const size_type local_size = partitioner->local_size();
-      for(size_type i = 0; i < local_size; ++i)
+      for (size_type i = 0; i < local_size; ++i)
         max = std::max(numbers::NumberTraits<Number>::abs(values[i]), max);
 
       return max;
@@ -1210,7 +1210,7 @@ namespace LinearAlgebra
     Vector<Number>::linfty_norm() const
     {
       const real_type local_result = linfty_norm_local();
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::max(local_result,
                                    partitioner->get_mpi_communicator());
       else
@@ -1251,7 +1251,7 @@ namespace LinearAlgebra
       const Vector<Number>& w = dynamic_cast<const Vector<Number>&>(ww);
 
       Number local_result = add_and_dot_local(a, v, w);
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         return Utilities::MPI::sum(local_result,
                                    partitioner->get_mpi_communicator());
       else
@@ -1284,10 +1284,10 @@ namespace LinearAlgebra
       // if the partitioner is shared between more processors, just count a
       // fraction of that memory, since we're not actually using more memory
       // for it.
-      if(partitioner.use_count() > 0)
+      if (partitioner.use_count() > 0)
         memory
           += partitioner->memory_consumption() / partitioner.use_count() + 1;
-      if(import_data != nullptr)
+      if (import_data != nullptr)
         memory += (static_cast<std::size_t>(partitioner->n_import_indices())
                    * sizeof(Number));
       return memory;
@@ -1306,7 +1306,7 @@ namespace LinearAlgebra
       unsigned int       old_precision = out.precision(precision);
 
       out.precision(precision);
-      if(scientific)
+      if (scientific)
         out.setf(std::ios::scientific, std::ios::floatfield);
       else
         out.setf(std::ios::fixed, std::ios::floatfield);
@@ -1315,8 +1315,8 @@ namespace LinearAlgebra
         // many barriers as there are processors and start writing when it's our
         // turn
 #ifdef DEAL_II_WITH_MPI
-      if(partitioner->n_mpi_processes() > 1)
-        for(unsigned int i = 0; i < partitioner->this_mpi_process(); i++)
+      if (partitioner->n_mpi_processes() > 1)
+        for (unsigned int i = 0; i < partitioner->this_mpi_process(); i++)
           {
             const int ierr = MPI_Barrier(partitioner->get_mpi_communicator());
             AssertThrowMPI(ierr);
@@ -1328,24 +1328,24 @@ namespace LinearAlgebra
           << partitioner->local_range().second
           << "), global size: " << partitioner->size() << std::endl
           << "Vector data:" << std::endl;
-      if(across)
-        for(size_type i = 0; i < partitioner->local_size(); ++i)
+      if (across)
+        for (size_type i = 0; i < partitioner->local_size(); ++i)
           out << local_element(i) << ' ';
       else
-        for(size_type i = 0; i < partitioner->local_size(); ++i)
+        for (size_type i = 0; i < partitioner->local_size(); ++i)
           out << local_element(i) << std::endl;
       out << std::endl;
 
-      if(vector_is_ghosted)
+      if (vector_is_ghosted)
         {
           out << "Ghost entries (global index / value):" << std::endl;
-          if(across)
-            for(size_type i = 0; i < partitioner->n_ghost_indices(); ++i)
+          if (across)
+            for (size_type i = 0; i < partitioner->n_ghost_indices(); ++i)
               out << '(' << partitioner->ghost_indices().nth_index_in_set(i)
                   << '/' << local_element(partitioner->local_size() + i)
                   << ") ";
           else
-            for(size_type i = 0; i < partitioner->n_ghost_indices(); ++i)
+            for (size_type i = 0; i < partitioner->n_ghost_indices(); ++i)
               out << '(' << partitioner->ghost_indices().nth_index_in_set(i)
                   << '/' << local_element(partitioner->local_size() + i) << ")"
                   << std::endl;
@@ -1354,14 +1354,14 @@ namespace LinearAlgebra
       out << std::flush;
 
 #ifdef DEAL_II_WITH_MPI
-      if(partitioner->n_mpi_processes() > 1)
+      if (partitioner->n_mpi_processes() > 1)
         {
           int ierr = MPI_Barrier(partitioner->get_mpi_communicator());
           AssertThrowMPI(ierr);
 
-          for(unsigned int i = partitioner->this_mpi_process() + 1;
-              i < partitioner->n_mpi_processes();
-              i++)
+          for (unsigned int i = partitioner->this_mpi_process() + 1;
+               i < partitioner->n_mpi_processes();
+               i++)
             {
               ierr = MPI_Barrier(partitioner->get_mpi_communicator());
               AssertThrowMPI(ierr);

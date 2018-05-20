@@ -47,12 +47,12 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   DoFRenumbering::component_wise(dof);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "FE=" << fe.get_name() << ", case=" << i << std::endl;
 
       std::set<types::boundary_id> boundary_ids;
-      for(unsigned int j = 0; j <= i; ++j)
+      for (unsigned int j = 0; j <= i; ++j)
         boundary_ids.insert(j);
 
       ConstraintMatrix cm;
@@ -74,7 +74,7 @@ test_hyper_cube()
 
   tr.refine_global(1);
 
-  for(unsigned int degree = 1; degree < 4; ++degree)
+  for (unsigned int degree = 1; degree < 4; ++degree)
     {
       FESystem<dim> fe(FE_Q<dim>(QIterated<1>(QTrapez<1>(), degree)),
                        dim,

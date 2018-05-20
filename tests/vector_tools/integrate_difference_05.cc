@@ -49,7 +49,7 @@ public:
   void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    switch(dim)
+    switch (dim)
       {
         case 2:
           values[0] = p[0] * p[0] + p[1];
@@ -127,7 +127,7 @@ test()
 {
   deallog << dim << " dimensions, Hdiv_seminorm:" << std::endl;
   double true_value = 0;
-  switch(dim)
+  switch (dim)
     {
       case 2:
         true_value = std::sqrt(14.0 / 3.0);

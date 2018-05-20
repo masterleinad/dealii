@@ -48,7 +48,7 @@ public:
   pull_back(const Point<spacedim>& space_point) const override
   {
     Point<spacedim + 1> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       p[d] = space_point[d];
     return p;
   }
@@ -57,7 +57,7 @@ public:
   push_forward(const Point<spacedim + 1>& chart_point) const override
   {
     Point<spacedim> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       p[d] = chart_point[d];
     return p;
   }
@@ -66,7 +66,7 @@ public:
   push_forward_gradient(const Point<spacedim + 1>& chart_point) const override
   {
     DerivativeForm<1, spacedim + 1, spacedim> x;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       x[d][d] = 1;
     return x;
   }
@@ -96,7 +96,7 @@ test(unsigned int ref, const MappingQ<dim>& mapping)
                           update_gradients | update_values
                             | update_quadrature_points | update_JxW_values);
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
       cell->set_all_manifold_ids(0);
 
@@ -106,20 +106,20 @@ test(unsigned int ref, const MappingQ<dim>& mapping)
       fe_values.reinit(cell);
 
       deallog << "  center: " << cell->center() << std::endl;
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for (unsigned int q = 0; q < quadrature.size(); ++q)
         {
           deallog << "  JxW(" << q << "): " << fe_values.JxW(q) << std::endl;
           deallog << "  p(" << q << "): " << fe_values.quadrature_point(q)
                   << std::endl;
-          for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
             deallog << "  shape " << i << "," << q << ": "
                     << fe_values.shape_value(i, q) << " "
                     << fe_values.shape_grad(i, q) << std::endl;
         }
 
-      if(cell->get_manifold().get_new_point_on_cell(cell).distance(
-           cell->center())
-         > 1e-6)
+      if (cell->get_manifold().get_new_point_on_cell(cell).distance(
+            cell->center())
+          > 1e-6)
         {
           deallog << "Default manifold: "
                   << cell->get_manifold().get_new_point_on_cell(cell)

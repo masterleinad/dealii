@@ -41,7 +41,7 @@ namespace internal
   apply_exponential_map(const Tensor<1, 3>& u, const Tensor<1, 3>& dir)
   {
     const double theta = dir.norm();
-    if(theta < 1.e-10)
+    if (theta < 1.e-10)
       {
         return u;
       }
@@ -80,15 +80,15 @@ namespace internal
     Assert(vector.norm_square() != 0.,
            ExcMessage("The direction parameter must not be zero!"));
     Point<3> normal;
-    if(std::abs(vector[0]) >= std::abs(vector[1])
-       && std::abs(vector[0]) >= std::abs(vector[2]))
+    if (std::abs(vector[0]) >= std::abs(vector[1])
+        && std::abs(vector[0]) >= std::abs(vector[2]))
       {
         normal[1] = -1.;
         normal[2] = -1.;
         normal[0] = (vector[1] + vector[2]) / vector[0];
       }
-    else if(std::abs(vector[1]) >= std::abs(vector[0])
-            && std::abs(vector[1]) >= std::abs(vector[2]))
+    else if (std::abs(vector[1]) >= std::abs(vector[0])
+             && std::abs(vector[1]) >= std::abs(vector[2]))
       {
         normal[0] = -1.;
         normal[2] = -1.;
@@ -100,7 +100,7 @@ namespace internal
         normal[1] = -1.;
         normal[2] = (vector[0] + vector[1]) / vector[2];
       }
-    if(normalize)
+    if (normalize)
       normal /= normal.norm();
     return normal;
   }
@@ -149,8 +149,8 @@ PolarManifold<dim, spacedim>::push_forward(
   const double theta = spherical_point[1];
 
   Point<spacedim> p;
-  if(rho > 1e-10)
-    switch(spacedim)
+  if (rho > 1e-10)
+    switch (spacedim)
       {
         case 2:
           p[0] = rho * cos(theta);
@@ -181,12 +181,12 @@ PolarManifold<dim, spacedim>::pull_back(
   Point<spacedim> p;
   p[0] = rho;
 
-  switch(spacedim)
+  switch (spacedim)
     {
       case 2:
         {
           p[1] = atan2(R[1], R[0]);
-          if(p[1] < 0)
+          if (p[1] < 0)
             p[1] += 2 * numbers::PI;
           break;
         }
@@ -195,7 +195,7 @@ PolarManifold<dim, spacedim>::pull_back(
         {
           const double z = R[2];
           p[2]           = atan2(R[1], R[0]); // phi
-          if(p[2] < 0)
+          if (p[2] < 0)
             p[2] += 2 * numbers::PI;                        // phi is periodic
           p[1] = atan2(sqrt(R[0] * R[0] + R[1] * R[1]), z); // theta
           break;
@@ -218,8 +218,8 @@ PolarManifold<dim, spacedim>::push_forward_gradient(
   const double theta = spherical_point[1];
 
   DerivativeForm<1, spacedim, spacedim> DX;
-  if(rho > 1e-10)
-    switch(spacedim)
+  if (rho > 1e-10)
+    switch (spacedim)
       {
         case 2:
           {
@@ -279,14 +279,14 @@ SphericalManifold<dim, spacedim>::get_intermediate_point(
 {
   const double tol = 1e-10;
 
-  if((p1 - p2).norm_square() < tol * tol || std::abs(w) < tol)
+  if ((p1 - p2).norm_square() < tol * tol || std::abs(w) < tol)
     return p1;
-  else if(std::abs(w - 1.0) < tol)
+  else if (std::abs(w - 1.0) < tol)
     return p2;
 
   // If the points are one dimensional then there is no need for anything but
   // a linear combination.
-  if(spacedim == 1)
+  if (spacedim == 1)
     return Point<spacedim>(w * p2 + (1 - w) * p1);
 
   const Tensor<1, spacedim> v1 = p1 - center;
@@ -304,11 +304,11 @@ SphericalManifold<dim, spacedim>::get_intermediate_point(
   const double cosgamma = e1 * e2;
 
   // Points are collinear with the center (allow for 8*eps as a tolerance)
-  if(cosgamma < -1 + 8. * std::numeric_limits<double>::epsilon())
+  if (cosgamma < -1 + 8. * std::numeric_limits<double>::epsilon())
     return center;
 
   // Points are along a line, in which case e1 and e2 are essentially the same.
-  if(cosgamma > 1 - 8. * std::numeric_limits<double>::epsilon())
+  if (cosgamma > 1 - 8. * std::numeric_limits<double>::epsilon())
     return Point<spacedim>(center + w * v2 + (1 - w) * v1);
 
   // Find the angle sigma that corresponds to arclength equal to w. acos
@@ -364,7 +364,7 @@ SphericalManifold<dim, spacedim>::get_tangent_vector(
          ExcMessage("p1 and p2 cannot lie on the same diameter and be opposite "
                     "respect to the center."));
 
-  if(cosgamma > 1 - 8. * std::numeric_limits<double>::epsilon())
+  if (cosgamma > 1 - 8. * std::numeric_limits<double>::epsilon())
     return v2 - v1;
 
   // Normal to v1 in the plane described by v1,v2,and the origin.
@@ -397,7 +397,7 @@ SphericalManifold<dim, spacedim>::normal_vector(
   std::array<double, n_vertices>     distances_to_center;
   std::array<double, n_vertices - 1> distances_to_first_vertex;
   distances_to_center[0] = (face->vertex(0) - center).norm_square();
-  for(unsigned int i = 1; i < n_vertices; ++i)
+  for (unsigned int i = 1; i < n_vertices; ++i)
     {
       distances_to_center[i] = (face->vertex(i) - center).norm_square();
       distances_to_first_vertex[i - 1]
@@ -408,8 +408,8 @@ SphericalManifold<dim, spacedim>::normal_vector(
   const auto min_distance_to_first_vertex = std::min_element(
     distances_to_first_vertex.begin(), distances_to_first_vertex.end());
 
-  if(*minmax_distance.second - *minmax_distance.first
-     < 1.e-10 * *min_distance_to_first_vertex)
+  if (*minmax_distance.second - *minmax_distance.first
+      < 1.e-10 * *min_distance_to_first_vertex)
     {
       const Tensor<1, spacedim> unnormalized_spherical_normal = p - center;
       const Tensor<1, spacedim> normalized_spherical_normal
@@ -452,7 +452,7 @@ SphericalManifold<dim, spacedim>::get_normals_at_vertices(
   std::array<double, n_vertices>     distances_to_center;
   std::array<double, n_vertices - 1> distances_to_first_vertex;
   distances_to_center[0] = (face->vertex(0) - center).norm_square();
-  for(unsigned int i = 1; i < n_vertices; ++i)
+  for (unsigned int i = 1; i < n_vertices; ++i)
     {
       distances_to_center[i] = (face->vertex(i) - center).norm_square();
       distances_to_first_vertex[i - 1]
@@ -463,10 +463,10 @@ SphericalManifold<dim, spacedim>::get_normals_at_vertices(
   const auto min_distance_to_first_vertex = std::min_element(
     distances_to_first_vertex.begin(), distances_to_first_vertex.end());
 
-  if(*minmax_distance.second - *minmax_distance.first
-     < 1.e-10 * *min_distance_to_first_vertex)
+  if (*minmax_distance.second - *minmax_distance.first
+      < 1.e-10 * *min_distance_to_first_vertex)
     {
-      for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
+      for (unsigned int vertex = 0; vertex < n_vertices; ++vertex)
         face_vertex_normals[vertex] = face->vertex(vertex) - center;
     }
   else
@@ -515,9 +515,9 @@ SphericalManifold<dim, spacedim>::get_new_points(
   const unsigned int weight_rows    = new_points.size();
   const unsigned int weight_columns = surrounding_points.size();
 
-  if(surrounding_points.size() == 2)
+  if (surrounding_points.size() == 2)
     {
-      for(unsigned int row = 0; row < weight_rows; ++row)
+      for (unsigned int row = 0; row < weight_rows; ++row)
         new_points[row]
           = get_intermediate_point(surrounding_points[0],
                                    surrounding_points[1],
@@ -532,12 +532,12 @@ SphericalManifold<dim, spacedim>::get_new_points(
   boost::container::small_vector<double, 100> distances(
     surrounding_points.size(), 0.0);
   double max_distance = 0.;
-  for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+  for (unsigned int i = 0; i < surrounding_points.size(); ++i)
     {
       directions[i] = surrounding_points[i] - center;
       distances[i]  = directions[i].norm();
 
-      if(distances[i] != 0.)
+      if (distances[i] != 0.)
         directions[i] /= distances[i];
       else
         Assert(false,
@@ -546,7 +546,7 @@ SphericalManifold<dim, spacedim>::get_new_points(
 
       // Check if an estimate is good enough,
       // this is often the case for sufficiently refined meshes.
-      for(unsigned int k = 0; k < i; ++k)
+      for (unsigned int k = 0; k < i; ++k)
         {
           const double squared_distance
             = (directions[i] - directions[k]).norm_square();
@@ -562,7 +562,7 @@ SphericalManifold<dim, spacedim>::get_new_points(
     = make_array_view(directions.begin(), directions.end());
   const ArrayView<const double> array_distances
     = make_array_view(distances.begin(), distances.end());
-  for(unsigned int row = 0; row < weight_rows; ++row)
+  for (unsigned int row = 0; row < weight_rows; ++row)
     {
       new_candidates[row]
         = guess_new_point(array_directions,
@@ -572,7 +572,7 @@ SphericalManifold<dim, spacedim>::get_new_points(
 
       // If the candidate is the center, mark it as found to avoid entering
       // the Newton iteration in step 2, which would crash.
-      if(new_candidates[row].first == 0.0)
+      if (new_candidates[row].first == 0.0)
         {
           new_points[row]               = center;
           accurate_point_was_found[row] = true;
@@ -581,7 +581,7 @@ SphericalManifold<dim, spacedim>::get_new_points(
 
       // If not in 3D, just use the implementation from PolarManifold
       // after we verified that the candidate is not the center.
-      if(spacedim < 3)
+      if (spacedim < 3)
         new_points[row] = polar_manifold.get_new_point(
           surrounding_points,
           ArrayView<const double>(&weights[row * weight_columns],
@@ -590,16 +590,16 @@ SphericalManifold<dim, spacedim>::get_new_points(
 
   // In this case, we treated the case that the candidate is the center and obtained
   // the new locations from the PolarManifold object otherwise.
-  if(spacedim < 3)
+  if (spacedim < 3)
     return;
 
   // If all the points are close to each other, we expect the estimate to
   // be good enough. This tolerance was chosen such that the first iteration
   // for a at least three time refined HyperShell mesh with radii .5 and 1.
   // doesn't already succeed.
-  if(max_distance < 2e-2)
+  if (max_distance < 2e-2)
     {
-      for(unsigned int row = 0; row < weight_rows; ++row)
+      for (unsigned int row = 0; row < weight_rows; ++row)
         new_points[row]
           = center + new_candidates[row].first * new_candidates[row].second;
 
@@ -618,30 +618,30 @@ SphericalManifold<dim, spacedim>::get_new_points(
     surrounding_points.size(), 0.0);
 
   unsigned int n_unique_directions = 0;
-  for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+  for (unsigned int i = 0; i < surrounding_points.size(); ++i)
     {
       bool found_duplicate = false;
 
       // This inner loop is of $O(N^2)$ complexity, but surrounding_points.size()
       // is usually at most 8 points large.
-      for(unsigned int j = 0; j < n_unique_directions; ++j)
+      for (unsigned int j = 0; j < n_unique_directions; ++j)
         {
           const double squared_distance
             = (directions[i] - directions[j]).norm_square();
-          if(!found_duplicate && squared_distance < 1e-28)
+          if (!found_duplicate && squared_distance < 1e-28)
             {
               found_duplicate = true;
-              for(unsigned int row = 0; row < weight_rows; ++row)
+              for (unsigned int row = 0; row < weight_rows; ++row)
                 merged_weights[row * weight_columns + j]
                   += weights[row * weight_columns + i];
             }
         }
 
-      if(found_duplicate == false)
+      if (found_duplicate == false)
         {
           merged_directions[n_unique_directions] = directions[i];
           merged_distances[n_unique_directions]  = distances[i];
-          for(unsigned int row = 0; row < weight_rows; ++row)
+          for (unsigned int row = 0; row < weight_rows; ++row)
             merged_weights[row * weight_columns + n_unique_directions]
               = weights[row * weight_columns + i];
 
@@ -653,24 +653,25 @@ SphericalManifold<dim, spacedim>::get_new_points(
   // the get_new_point function call below.
   boost::container::small_vector<unsigned int, 100> merged_weights_index(
     new_points.size(), numbers::invalid_unsigned_int);
-  for(unsigned int row = 0; row < weight_rows; ++row)
+  for (unsigned int row = 0; row < weight_rows; ++row)
     {
-      for(unsigned int existing_row = 0; existing_row < row; ++existing_row)
+      for (unsigned int existing_row = 0; existing_row < row; ++existing_row)
         {
           bool identical_weights = true;
 
-          for(unsigned int weight_index = 0; weight_index < n_unique_directions;
-              ++weight_index)
-            if(std::abs(
-                 merged_weights[row * weight_columns + weight_index]
-                 - merged_weights[existing_row * weight_columns + weight_index])
-               > tolerance)
+          for (unsigned int weight_index = 0;
+               weight_index < n_unique_directions;
+               ++weight_index)
+            if (std::abs(merged_weights[row * weight_columns + weight_index]
+                         - merged_weights[existing_row * weight_columns
+                                          + weight_index])
+                > tolerance)
               {
                 identical_weights = false;
                 break;
               }
 
-          if(identical_weights)
+          if (identical_weights)
             {
               merged_weights_index[row] = existing_row;
               break;
@@ -685,10 +686,10 @@ SphericalManifold<dim, spacedim>::get_new_points(
   const ArrayView<const double> array_merged_distances = make_array_view(
     merged_distances.begin(), merged_distances.begin() + n_unique_directions);
 
-  for(unsigned int row = 0; row < weight_rows; ++row)
-    if(!accurate_point_was_found[row])
+  for (unsigned int row = 0; row < weight_rows; ++row)
+    if (!accurate_point_was_found[row])
       {
-        if(merged_weights_index[row] == numbers::invalid_unsigned_int)
+        if (merged_weights_index[row] == numbers::invalid_unsigned_int)
           {
             const ArrayView<const double> array_merged_weights(
               &merged_weights[row * weight_columns], n_unique_directions);
@@ -720,10 +721,10 @@ SphericalManifold<dim, spacedim>::guess_new_point(
 
   // Perform a simple average ...
   double total_weights = 0.;
-  for(unsigned int i = 0; i < directions.size(); i++)
+  for (unsigned int i = 0; i < directions.size(); i++)
     {
       // if one weight is one, return its direction
-      if(std::abs(1 - weights[i]) < tolerance)
+      if (std::abs(1 - weights[i]) < tolerance)
         return std::make_pair(distances[i], directions[i]);
 
       rho += distances[i] * weights[i];
@@ -733,7 +734,7 @@ SphericalManifold<dim, spacedim>::guess_new_point(
 
   // ... and normalize if the candidate is different from the origin.
   const double norm = candidate.norm();
-  if(norm == 0.)
+  if (norm == 0.)
     return std::make_pair(0.0, Point<spacedim>());
   candidate /= norm;
   rho /= total_weights;
@@ -774,17 +775,17 @@ namespace
     {
       // If the candidate happens to coincide with a normalized
       // direction, we return it. Otherwise, the Hessian would be singular.
-      for(unsigned int i = 0; i < n_merged_points; ++i)
+      for (unsigned int i = 0; i < n_merged_points; ++i)
         {
           const double squared_distance
             = (candidate - directions[i]).norm_square();
-          if(squared_distance < tolerance * tolerance)
+          if (squared_distance < tolerance * tolerance)
             return candidate;
         }
 
       // check if we only have two points now, in which case we can use the
       // get_intermediate_point function
-      if(n_merged_points == 2)
+      if (n_merged_points == 2)
         {
           SphericalManifold<3, 3> unit_manifold;
           Assert(std::abs(weights[0] + weights[1] - 1.0) < 1e-13,
@@ -801,7 +802,7 @@ namespace
 
       // On success we exit the loop early.
       // Otherwise, we just take the result after max_iterations steps.
-      for(unsigned int i = 0; i < max_iterations; ++i)
+      for (unsigned int i = 0; i < max_iterations; ++i)
         {
           // Step 2a: Find new descent direction
 
@@ -815,13 +816,13 @@ namespace
           // Then compute its contribution to the Hessian.
           gradient = 0.;
           Hessian  = 0.;
-          for(unsigned int i = 0; i < n_merged_points; ++i)
-            if(std::abs(weights[i]) > 1.e-15)
+          for (unsigned int i = 0; i < n_merged_points; ++i)
+            if (std::abs(weights[i]) > 1.e-15)
               {
                 vPerp = internal::projected_direction(directions[i], candidate);
                 const double sinthetaSq = vPerp.norm_square();
                 const double sintheta   = std::sqrt(sinthetaSq);
-                if(sintheta < tolerance)
+                if (sintheta < tolerance)
                   {
                     Hessian[0][0] += weights[i];
                     Hessian[1][1] += weights[i];
@@ -865,7 +866,7 @@ namespace
             = Point<3>(internal::apply_exponential_map(candidate, xDisp));
 
           // Step 2c: return the new candidate if we didn't move
-          if((candidate - candidateOld).norm_square() < tolerance * tolerance)
+          if ((candidate - candidateOld).norm_square() < tolerance * tolerance)
             break;
         }
     }
@@ -971,7 +972,7 @@ CylindricalManifold<dim, spacedim>::get_new_point(
   // First check if the average in space lies on the axis.
   Point<spacedim> middle;
   double          average_length = 0.;
-  for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+  for (unsigned int i = 0; i < surrounding_points.size(); ++i)
     {
       middle += surrounding_points[i] * weights[i];
       average_length += surrounding_points[i].square() * weights[i];
@@ -979,7 +980,7 @@ CylindricalManifold<dim, spacedim>::get_new_point(
   middle -= point_on_axis;
   const double lambda = middle * direction;
 
-  if((middle - direction * lambda).square() < tolerance * average_length)
+  if ((middle - direction * lambda).square() < tolerance * average_length)
     return Point<spacedim>() + direction * lambda;
   else // If not, using the ChartManifold should yield valid results.
     return ChartManifold<dim, spacedim, 3>::get_new_point(surrounding_points,
@@ -1123,7 +1124,7 @@ FunctionManifold<dim, spacedim, chartdim>::FunctionManifold(
 template <int dim, int spacedim, int chartdim>
 FunctionManifold<dim, spacedim, chartdim>::~FunctionManifold()
 {
-  if(owns_pointers == true)
+  if (owns_pointers == true)
     {
       const Function<chartdim>* pf = push_forward_function;
       push_forward_function        = nullptr;
@@ -1149,7 +1150,7 @@ FunctionManifold<dim, spacedim, chartdim>::clone() const
   // function (owns_pointers == false) or that the newly generated manifold
   // creates internally the push_forward and pull_back functions using the same
   // expressions that were used to construct this class (own_pointers == true).
-  if(owns_pointers == true)
+  if (owns_pointers == true)
     {
       return std_cxx14::make_unique<FunctionManifold<dim, spacedim, chartdim>>(
         push_forward_expression,
@@ -1177,13 +1178,13 @@ FunctionManifold<dim, spacedim, chartdim>::push_forward(
   Vector<double>  pf(spacedim);
   Point<spacedim> result;
   push_forward_function->vector_value(chart_point, pf);
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     result[i] = pf[i];
 
 #ifdef DEBUG
   Vector<double> pb(chartdim);
   pull_back_function->vector_value(result, pb);
-  for(unsigned int i = 0; i < chartdim; ++i)
+  for (unsigned int i = 0; i < chartdim; ++i)
     Assert(
       (chart_point.norm() > tolerance
        && (std::abs(pb[i] - chart_point[i]) < tolerance * chart_point.norm()))
@@ -1201,10 +1202,10 @@ FunctionManifold<dim, spacedim, chartdim>::push_forward_gradient(
   const Point<chartdim>& chart_point) const
 {
   DerivativeForm<1, chartdim, spacedim> DF;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     {
       const auto gradient = push_forward_function->gradient(chart_point, i);
-      for(unsigned int j = 0; j < chartdim; ++j)
+      for (unsigned int j = 0; j < chartdim; ++j)
         DF[i][j] = gradient[j];
     }
   return DF;
@@ -1218,7 +1219,7 @@ FunctionManifold<dim, spacedim, chartdim>::pull_back(
   Vector<double>  pb(chartdim);
   Point<chartdim> result;
   pull_back_function->vector_value(space_point, pb);
-  for(unsigned int i = 0; i < chartdim; ++i)
+  for (unsigned int i = 0; i < chartdim; ++i)
     result[i] = pb[i];
   return result;
 }
@@ -1313,7 +1314,7 @@ template <int dim, int spacedim>
 TransfiniteInterpolationManifold<dim,
                                  spacedim>::~TransfiniteInterpolationManifold()
 {
-  if(clear_signal.connected())
+  if (clear_signal.connected())
     clear_signal.disconnect();
 }
 
@@ -1322,7 +1323,7 @@ std::unique_ptr<Manifold<dim, spacedim>>
 TransfiniteInterpolationManifold<dim, spacedim>::clone() const
 {
   auto ptr = new TransfiniteInterpolationManifold<dim, spacedim>();
-  if(triangulation)
+  if (triangulation)
     ptr->initialize(*triangulation);
   return std::unique_ptr<Manifold<dim, spacedim>>(ptr);
 }
@@ -1343,17 +1344,17 @@ TransfiniteInterpolationManifold<dim, spacedim>::initialize(
   typename Triangulation<dim, spacedim>::active_cell_iterator cell
     = triangulation.begin(level_coarse),
     endc = triangulation.end(level_coarse);
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       bool cell_is_flat = true;
-      for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
-        if(cell->line(l)->manifold_id() != cell->manifold_id()
-           && cell->line(l)->manifold_id() != numbers::invalid_manifold_id)
+      for (unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+        if (cell->line(l)->manifold_id() != cell->manifold_id()
+            && cell->line(l)->manifold_id() != numbers::invalid_manifold_id)
           cell_is_flat = false;
-      if(dim > 2)
-        for(unsigned int q = 0; q < GeometryInfo<dim>::quads_per_cell; ++q)
-          if(cell->quad(q)->manifold_id() != cell->manifold_id()
-             && cell->quad(q)->manifold_id() != numbers::invalid_manifold_id)
+      if (dim > 2)
+        for (unsigned int q = 0; q < GeometryInfo<dim>::quads_per_cell; ++q)
+          if (cell->quad(q)->manifold_id() != cell->manifold_id()
+              && cell->quad(q)->manifold_id() != numbers::invalid_manifold_id)
             cell_is_flat = false;
       AssertIndexRange(static_cast<unsigned int>(cell->index()),
                        coarse_cell_is_flat.size());
@@ -1403,8 +1404,8 @@ namespace
        chart_point[0] * chart_point[1]}};
 
     Point<spacedim> new_point;
-    if(cell_is_flat)
-      for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
+    if (cell_is_flat)
+      for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
         new_point += weights_vertices[v] * vertices[v];
     else
       {
@@ -1424,8 +1425,8 @@ namespace
           = make_array_view(weights.begin(), weights.end());
         const auto points_view = make_array_view(points.begin(), points.end());
 
-        for(unsigned int line = 0; line < GeometryInfo<2>::lines_per_cell;
-            ++line)
+        for (unsigned int line = 0; line < GeometryInfo<2>::lines_per_cell;
+             ++line)
           {
             const double my_weight
               = (line % 2) ? chart_point[line / 2] : 1 - chart_point[line / 2];
@@ -1437,8 +1438,8 @@ namespace
             // negative weight applied to the vertex
             const types::manifold_id line_manifold_id
               = cell.line(line)->manifold_id();
-            if(line_manifold_id == my_manifold_id
-               || line_manifold_id == numbers::invalid_manifold_id)
+            if (line_manifold_id == my_manifold_id
+                || line_manifold_id == numbers::invalid_manifold_id)
               {
                 weights_vertices[GeometryInfo<2>::line_to_cell_vertices(line,
                                                                         0)]
@@ -1462,7 +1463,7 @@ namespace
           }
 
         // subtract contribution from the vertices (second line in formula)
-        for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
           new_point -= weights_vertices[v] * vertices[v];
       }
 
@@ -1516,26 +1517,26 @@ namespace
     // repeatedly. we allow for 10 such shape functions to wrap around the
     // first four once again for easier face access.
     double linear_shapes[10];
-    for(unsigned int d = 0; d < 3; ++d)
+    for (unsigned int d = 0; d < 3; ++d)
       {
         linear_shapes[2 * d]     = 1. - chart_point[d];
         linear_shapes[2 * d + 1] = chart_point[d];
       }
 
     // wrap linear shape functions around for access in face loop
-    for(unsigned int d = 6; d < 10; ++d)
+    for (unsigned int d = 6; d < 10; ++d)
       linear_shapes[d] = linear_shapes[d - 6];
 
     std::array<double, 8> weights_vertices;
-    for(unsigned int i2 = 0, v = 0; i2 < 2; ++i2)
-      for(unsigned int i1 = 0; i1 < 2; ++i1)
-        for(unsigned int i0 = 0; i0 < 2; ++i0, ++v)
+    for (unsigned int i2 = 0, v = 0; i2 < 2; ++i2)
+      for (unsigned int i1 = 0; i1 < 2; ++i1)
+        for (unsigned int i0 = 0; i0 < 2; ++i0, ++v)
           weights_vertices[v] = (linear_shapes[4 + i2] * linear_shapes[2 + i1])
                                 * linear_shapes[i0];
 
     Point<spacedim> new_point;
-    if(cell_is_flat)
-      for(unsigned int v = 0; v < 8; ++v)
+    if (cell_is_flat)
+      for (unsigned int v = 0; v < 8; ++v)
         new_point += weights_vertices[v] * vertices[v];
     else
       {
@@ -1543,8 +1544,8 @@ namespace
         // weights are set outside and coincide with the flat manifold case)
 
         double weights_lines[GeometryInfo<3>::lines_per_cell];
-        for(unsigned int line = 0; line < GeometryInfo<3>::lines_per_cell;
-            ++line)
+        for (unsigned int line = 0; line < GeometryInfo<3>::lines_per_cell;
+             ++line)
           weights_lines[line] = 0;
 
         // start with the contributions of the faces
@@ -1555,25 +1556,25 @@ namespace
           = make_array_view(weights.begin(), weights.end());
         const auto points_view = make_array_view(points.begin(), points.end());
 
-        for(unsigned int face = 0; face < GeometryInfo<3>::faces_per_cell;
-            ++face)
+        for (unsigned int face = 0; face < GeometryInfo<3>::faces_per_cell;
+             ++face)
           {
             const double       my_weight = linear_shapes[face];
             const unsigned int face_even = face - face % 2;
 
-            if(std::abs(my_weight) < 1e-13)
+            if (std::abs(my_weight) < 1e-13)
               continue;
 
             // same manifold or invalid id which will go back to the same class
             // -> face will interpolate from the surrounding lines and vertices
             const types::manifold_id face_manifold_id
               = cell.face(face)->manifold_id();
-            if(face_manifold_id == my_manifold_id
-               || face_manifold_id == numbers::invalid_manifold_id)
+            if (face_manifold_id == my_manifold_id
+                || face_manifold_id == numbers::invalid_manifold_id)
               {
-                for(unsigned int line = 0;
-                    line < GeometryInfo<2>::lines_per_cell;
-                    ++line)
+                for (unsigned int line = 0;
+                     line < GeometryInfo<2>::lines_per_cell;
+                     ++line)
                   {
                     const double line_weight
                       = linear_shapes[face_even + 2 + line];
@@ -1599,8 +1600,8 @@ namespace
               }
             else
               {
-                for(unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell;
-                    ++v)
+                for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell;
+                     ++v)
                   points[v] = vertices[face_to_cell_vertices_3d[face][v]];
                 weights[0]
                   = linear_shapes[face_even + 2] * linear_shapes[face_even + 4];
@@ -1621,13 +1622,13 @@ namespace
           = make_array_view(weights.begin(), weights.begin() + 2);
         const auto points_view_line
           = make_array_view(points.begin(), points.begin() + 2);
-        for(unsigned int line = 0; line < GeometryInfo<3>::lines_per_cell;
-            ++line)
+        for (unsigned int line = 0; line < GeometryInfo<3>::lines_per_cell;
+             ++line)
           {
             const double line_point
               = (line < 8 ? chart_point[1 - (line % 4) / 2] : chart_point[2]);
             double my_weight = 0.;
-            if(line < 8)
+            if (line < 8)
               my_weight = linear_shapes[line % 4] * linear_shapes[4 + line / 4];
             else
               {
@@ -1637,13 +1638,13 @@ namespace
               }
             my_weight -= weights_lines[line];
 
-            if(std::abs(my_weight) < 1e-13)
+            if (std::abs(my_weight) < 1e-13)
               continue;
 
             const types::manifold_id line_manifold_id
               = cell.line(line)->manifold_id();
-            if(line_manifold_id == my_manifold_id
-               || line_manifold_id == numbers::invalid_manifold_id)
+            if (line_manifold_id == my_manifold_id
+                || line_manifold_id == numbers::invalid_manifold_id)
               {
                 weights_vertices[GeometryInfo<3>::line_to_cell_vertices(line,
                                                                         0)]
@@ -1668,7 +1669,7 @@ namespace
           }
 
         // finally add the contribution of the
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           new_point += weights_vertices[v] * vertices[v];
       }
     return new_point;
@@ -1702,7 +1703,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::push_forward_gradient(
 {
   // compute the derivative with the help of finite differences
   DerivativeForm<1, dim, spacedim> grad;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       Point<dim>   modified = chart_point;
       const double step     = chart_point[d] > 0.5 ? -1e-8 : 1e-8;
@@ -1713,7 +1714,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::push_forward_gradient(
         = compute_transfinite_interpolation(
             *cell, modified, coarse_cell_is_flat[cell->index()])
           - pushed_forward_chart_point;
-      for(unsigned int e = 0; e < spacedim; ++e)
+      for (unsigned int e = 0; e < spacedim; ++e)
         grad[e][d] = difference[e] / step;
     }
   return grad;
@@ -1727,7 +1728,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
   const Point<dim>& initial_guess) const
 {
   Point<dim> outside;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     outside[d] = internal::invalid_pull_back_coordinate;
 
   // project the user-given input to unit cell
@@ -1746,17 +1747,17 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
   const double tolerance = 1e-21 * Utilities::fixed_power<2>(cell->diameter());
   double       residual_norm_square = residual.norm_square();
   DerivativeForm<1, dim, spacedim> inv_grad;
-  for(unsigned int i = 0; i < 100; ++i)
+  for (unsigned int i = 0; i < 100; ++i)
     {
-      if(residual_norm_square < tolerance)
+      if (residual_norm_square < tolerance)
         {
           // do a final update of the point with the last available Jacobian
           // information. The residual is close to zero due to the check
           // above, but me might improve some of the last digits by a final
           // Newton-like step with step length 1
           Tensor<1, dim> update;
-          for(unsigned int d = 0; d < spacedim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
+          for (unsigned int d = 0; d < spacedim; ++d)
+            for (unsigned int e = 0; e < dim; ++e)
               update[e] += inv_grad[d][e] * residual[d];
           return chart_point + update;
         }
@@ -1770,7 +1771,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
       // much as 3 more iterations). this usually happens close to convergence
       // and one more step with the finite-differenced Jacobian leads to
       // convergence
-      if(i % 8 == 0)
+      if (i % 8 == 0)
         {
           // if the determinant is zero or negative, the mapping is either not
           // invertible or already has inverted and we are outside the valid
@@ -1779,13 +1780,13 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
           // determinant since we use properly oriented meshes.
           DerivativeForm<1, dim, spacedim> grad = push_forward_gradient(
             cell, chart_point, Point<spacedim>(point - residual));
-          if(grad.determinant() <= 0.0)
+          if (grad.determinant() <= 0.0)
             return outside;
           inv_grad = grad.covariant_form();
         }
       Tensor<1, dim> update;
-      for(unsigned int d = 0; d < spacedim; ++d)
-        for(unsigned int e = 0; e < dim; ++e)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        for (unsigned int e = 0; e < dim; ++e)
           update[e] += inv_grad[d][e] * residual[d];
 
       // Line search, accept step if the residual has decreased
@@ -1793,20 +1794,20 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
 
       // check if point is inside 1.2 times the unit cell to avoid
       // hitting points very far away from valid ones in the manifolds
-      while(!GeometryInfo<dim>::is_inside_unit_cell(
-              chart_point + alpha * update, 0.2)
-            && alpha > 1e-7)
+      while (!GeometryInfo<dim>::is_inside_unit_cell(
+               chart_point + alpha * update, 0.2)
+             && alpha > 1e-7)
         alpha *= 0.5;
 
       const Tensor<1, spacedim> old_residual = residual;
-      while(alpha > 1e-7)
+      while (alpha > 1e-7)
         {
           Point<dim> guess = chart_point + alpha * update;
           residual         = point
                      - compute_transfinite_interpolation(
                          *cell, guess, coarse_cell_is_flat[cell->index()]);
           const double residual_norm_new = residual.norm_square();
-          if(residual_norm_new < residual_norm_square)
+          if (residual_norm_new < residual_norm_square)
             {
               residual_norm_square = residual_norm_new;
               chart_point += alpha * update;
@@ -1815,7 +1816,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
           else
             alpha *= 0.5;
         }
-      if(alpha < 1e-7)
+      if (alpha < 1e-7)
         return outside;
 
       // update the inverse Jacobian with "Broyden's good method" and
@@ -1829,17 +1830,17 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
       const Tensor<1, spacedim> delta_f = old_residual - residual;
 
       Tensor<1, dim> Jinv_deltaf;
-      for(unsigned int d = 0; d < spacedim; ++d)
-        for(unsigned int e = 0; e < dim; ++e)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        for (unsigned int e = 0; e < dim; ++e)
           Jinv_deltaf[e] += inv_grad[d][e] * delta_f[d];
       const Tensor<1, dim> factor
         = (delta_x - Jinv_deltaf) / (delta_x * Jinv_deltaf);
       Tensor<1, spacedim> jac_update;
-      for(unsigned int d = 0; d < spacedim; ++d)
-        for(unsigned int e = 0; e < dim; ++e)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        for (unsigned int e = 0; e < dim; ++e)
           jac_update[d] += delta_x[e] * inv_grad[d][e];
-      for(unsigned int d = 0; d < spacedim; ++d)
-        for(unsigned int e = 0; e < dim; ++e)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        for (unsigned int e = 0; e < dim; ++e)
           inv_grad[d][e] += factor[e] * jac_update[d];
     }
   return outside;
@@ -1868,17 +1869,17 @@ TransfiniteInterpolationManifold<dim, spacedim>::
     endc = triangulation->end(level_coarse);
   boost::container::small_vector<std::pair<double, unsigned int>, 200>
     distances_and_cells;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       // only consider cells where the current manifold is attached
-      if(&cell->get_manifold() != this)
+      if (&cell->get_manifold() != this)
         continue;
 
       std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
         vertices;
-      for(unsigned int vertex_n = 0;
-          vertex_n < GeometryInfo<dim>::vertices_per_cell;
-          ++vertex_n)
+      for (unsigned int vertex_n = 0;
+           vertex_n < GeometryInfo<dim>::vertices_per_cell;
+           ++vertex_n)
         {
           vertices[vertex_n] = cell->vertex(vertex_n);
         }
@@ -1887,26 +1888,26 @@ TransfiniteInterpolationManifold<dim, spacedim>::
       // center of the loop, we can skip the expensive part below (this assumes
       // that the manifold does not deform the grid too much)
       Point<spacedim> center;
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         center += vertices[v];
       center *= 1. / GeometryInfo<dim>::vertices_per_cell;
       double radius_square = 0.;
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         radius_square
           = std::max(radius_square, (center - vertices[v]).norm_square());
       bool inside_circle = true;
-      for(unsigned int i = 0; i < points.size(); ++i)
-        if((center - points[i]).norm_square() > radius_square * 1.5)
+      for (unsigned int i = 0; i < points.size(); ++i)
+        if ((center - points[i]).norm_square() > radius_square * 1.5)
           {
             inside_circle = false;
             break;
           }
-      if(inside_circle == false)
+      if (inside_circle == false)
         continue;
 
       // slightly more expensive search
       double current_distance = 0;
-      for(unsigned int i = 0; i < points.size(); ++i)
+      for (unsigned int i = 0; i < points.size(); ++i)
         {
           Point<dim> point
             = cell->real_to_unit_cell_affine_approximation(points[i]);
@@ -1920,8 +1921,8 @@ TransfiniteInterpolationManifold<dim, spacedim>::
   std::sort(distances_and_cells.begin(), distances_and_cells.end());
   std::array<unsigned int, 20> cells;
   cells.fill(numbers::invalid_unsigned_int);
-  for(unsigned int i = 0; i < distances_and_cells.size() && i < cells.size();
-      ++i)
+  for (unsigned int i = 0; i < distances_and_cells.size() && i < cells.size();
+       ++i)
     cells[i] = distances_and_cells[i].second;
 
   return cells;
@@ -1968,7 +1969,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
                       "points around a two-dimensional object. It also assumes "
                       "that the first three chart points have already been "
                       "computed."));
-    switch(i)
+    switch (i)
       {
         case 0:
         case 1:
@@ -2029,7 +2030,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
   // parallel, while in the structdim 3 case, 0 - 6 and 2 - 7 should be roughly
   // orthogonal. Use the angle between these two vectors to figure out if we
   // should turn on either structdim optimization.
-  if(surrounding_points.size() == 8)
+  if (surrounding_points.size() == 8)
     {
       const Tensor<1, spacedim> v06
         = surrounding_points[6] - surrounding_points[0];
@@ -2039,11 +2040,11 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
       // note that we can save a call to sqrt() by rearranging
       const double cosine = scalar_product(v06, v27)
                             / std::sqrt(v06.norm_square() * v27.norm_square());
-      if(0.707 < cosine)
+      if (0.707 < cosine)
         // the angle is less than pi/4, so these vectors are roughly parallel:
         // enable the structdim 2 optimization
         use_structdim_2_guesses = true;
-      else if(spacedim == 3)
+      else if (spacedim == 3)
         // otherwise these vectors are roughly orthogonal: enable the
         // structdim 3 optimization if we are in 3D
         use_structdim_3_guesses = true;
@@ -2054,12 +2055,12 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
          ExcInternalError());
 
   // check whether all points are inside the unit cell of the current chart
-  for(unsigned int c = 0; c < nearby_cells.size(); ++c)
+  for (unsigned int c = 0; c < nearby_cells.size(); ++c)
     {
       typename Triangulation<dim, spacedim>::cell_iterator cell(
         triangulation, level_coarse, nearby_cells[c]);
       bool inside_unit_cell = true;
-      for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+      for (unsigned int i = 0; i < surrounding_points.size(); ++i)
         {
           Point<dim> guess;
           // an optimization: keep track of whether or not we used the affine
@@ -2069,11 +2070,11 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
           bool used_affine_approximation = false;
           // if we have already computed three points, we can guess the fourth
           // to be the missing corner point of a rectangle
-          if(i == 3 && surrounding_points.size() == 8)
+          if (i == 3 && surrounding_points.size() == 8)
             guess = chart_points[1] + (chart_points[2] - chart_points[0]);
-          else if(use_structdim_2_guesses && 3 < i)
+          else if (use_structdim_2_guesses && 3 < i)
             guess = guess_chart_point_structdim_2(i);
-          else if(use_structdim_3_guesses && 4 < i)
+          else if (use_structdim_3_guesses && 4 < i)
             guess = guess_chart_point_structdim_3(i);
           else
             {
@@ -2086,8 +2087,8 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
           // the initial guess may not have been good enough: if applicable,
           // try again with the affine approximation (which is more accurate
           // than the cheap methods used above)
-          if(chart_points[i][0] == internal::invalid_pull_back_coordinate
-             && !used_affine_approximation)
+          if (chart_points[i][0] == internal::invalid_pull_back_coordinate
+              && !used_affine_approximation)
             {
               guess = cell->real_to_unit_cell_affine_approximation(
                 surrounding_points[i]);
@@ -2096,38 +2097,38 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
 
           // Tolerance 1e-6 chosen that the method also works with
           // SphericalManifold
-          if(GeometryInfo<dim>::is_inside_unit_cell(chart_points[i], 1e-6)
-             == false)
+          if (GeometryInfo<dim>::is_inside_unit_cell(chart_points[i], 1e-6)
+              == false)
             {
               inside_unit_cell = false;
               break;
             }
         }
-      if(inside_unit_cell == true)
+      if (inside_unit_cell == true)
         {
           return cell;
         }
 
       // if we did not find a point and this was the last valid cell (the next
       // iterate being the end of the array or an unvalid tag), we must stop
-      if(c == nearby_cells.size() - 1
-         || nearby_cells[c + 1] == numbers::invalid_unsigned_int)
+      if (c == nearby_cells.size() - 1
+          || nearby_cells[c + 1] == numbers::invalid_unsigned_int)
         {
           // generate additional information to help debugging why we did not
           // get a point
           std::ostringstream message;
-          for(unsigned int b = 0; b <= c; ++b)
+          for (unsigned int b = 0; b <= c; ++b)
             {
               typename Triangulation<dim, spacedim>::cell_iterator cell(
                 triangulation, level_coarse, nearby_cells[b]);
               message << "Looking at cell " << cell->id()
                       << " with vertices: " << std::endl;
-              for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
-                  ++v)
+              for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+                   ++v)
                 message << cell->vertex(v) << "    ";
               message << std::endl;
               message << "Transformation to chart coordinates: " << std::endl;
-              for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+              for (unsigned int i = 0; i < surrounding_points.size(); ++i)
                 {
                   message << surrounding_points[i] << " -> "
                           << pull_back(
@@ -2193,7 +2194,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::get_new_points(
     weights,
     make_array_view(new_points_on_chart.begin(), new_points_on_chart.end()));
 
-  for(unsigned int row = 0; row < weights.size(0); ++row)
+  for (unsigned int row = 0; row < weights.size(0); ++row)
     new_points[row] = push_forward(cell, new_points_on_chart[row]);
 }
 

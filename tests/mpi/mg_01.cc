@@ -53,7 +53,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(
@@ -69,19 +69,19 @@ test()
 
   //tr.begin_active()->set_level_subdomain_id(1+myid);
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     {
       MPI_Barrier(MPI_COMM_WORLD);
-      if(myid == i)
+      if (myid == i)
         {
           deallog << "ID = " << i << std::endl;
-          for(unsigned int lvl = 0; lvl < tr.n_levels(); ++lvl)
+          for (unsigned int lvl = 0; lvl < tr.n_levels(); ++lvl)
             {
               typename Triangulation<dim>::cell_iterator cell = tr.begin(lvl),
                                                          endc = tr.end(lvl);
 
-              for(; cell != endc; ++cell)
-                if(cell->level_subdomain_id() != 4294967294)
+              for (; cell != endc; ++cell)
+                if (cell->level_subdomain_id() != 4294967294)
                   deallog << cell->level_subdomain_id();
                 else
                   deallog << "-";
@@ -91,7 +91,7 @@ test()
         }
     }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "my levels: " << tr.n_levels()
             << "<= global levels:" << tr.n_global_levels() << std::endl;
 }

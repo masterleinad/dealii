@@ -25,11 +25,11 @@ void
 test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 {
   PETScWrappers::SparseMatrix m(v.size(), v.size(), v.size());
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.m(); ++j)
       m.set(i, j, i + 2 * j);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       v(i) = i;
       w(i) = i;
@@ -43,12 +43,12 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
   m.vmult_add(w, v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       AssertThrow(v(i) == i, ExcInternalError());
 
       double result = 0;
-      for(unsigned int j = 0; j < m.m(); ++j)
+      for (unsigned int j = 0; j < m.m(); ++j)
         result += (i + 2 * j) * j;
       AssertThrow(w(i) == i + result, ExcInternalError());
     }
@@ -72,7 +72,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -86,7 +86,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -56,13 +56,13 @@ test()
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       typename Triangulation<dim>::active_cell_iterator it = tr.begin_active();
       ++it;
       ++it;
       ++it;
-      for(unsigned int i = 0; i < 5; ++i)
+      for (unsigned int i = 0; i < 5; ++i)
         {
           it->set_refine_flag();
           ++it;
@@ -89,8 +89,8 @@ test()
   cm.close();
 
   TrilinosWrappers::MPI::Vector vec(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
-  for(unsigned int i = vec.local_range().first; i < vec.local_range().second;
-      ++i)
+  for (unsigned int i = vec.local_range().first; i < vec.local_range().second;
+       ++i)
     vec(i) = i;
   vec.compress(VectorOperation::insert);
 
@@ -98,7 +98,7 @@ test()
   vec.locally_owned_elements().print(deallog);
   deallog << "relevant set:" << std::endl;
   locally_relevant_set.print(deallog);
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "constraint_matrix:" << std::endl;
       cm.print(deallog.get_file_stream());
@@ -106,7 +106,7 @@ test()
 
   cm.distribute(vec);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -119,7 +119,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

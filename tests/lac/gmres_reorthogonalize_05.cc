@@ -31,7 +31,7 @@ namespace dealii
   Number Vector<Number>::operator*(const Vector<Number2>& v) const
   {
     Number sum = 0;
-    for(unsigned int i = 0; i < size(); ++i)
+    for (unsigned int i = 0; i < size(); ++i)
       sum += values[i] * v.values[i];
     return sum;
   }
@@ -40,7 +40,7 @@ namespace dealii
   Vector<Number>::l2_norm() const
   {
     real_type sum = 0;
-    for(unsigned int i = 0; i < size(); ++i)
+    for (unsigned int i = 0; i < size(); ++i)
       sum += values[i] * values[i];
     return std::sqrt(sum);
   }
@@ -59,7 +59,7 @@ test()
   sp.compress();
   SparseMatrix<number> matrix(sp);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     matrix.diag_element(i) = (i + 1);
 
   SolverControl control(1000, 1e2 * std::numeric_limits<number>::epsilon());

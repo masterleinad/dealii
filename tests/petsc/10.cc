@@ -23,9 +23,9 @@ void
 test(PETScWrappers::SparseMatrix& m)
 {
   // first set a few entries
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.m(); ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         m.set(i, j, i * j * .5 + .5);
 
   m.compress(VectorOperation::insert);
@@ -35,9 +35,9 @@ test(PETScWrappers::SparseMatrix& m)
   // expect
   m /= 4. / 3.;
 
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.m(); ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.m(); ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         {
           AssertThrow(m(i, j) == (i * j * .5 + .5) / 4 * 3, ExcInternalError());
           AssertThrow(m.el(i, j) == (i * j * .5 + .5) / 4 * 3,
@@ -65,7 +65,7 @@ main(int argc, char** argv)
         test(m);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -79,7 +79,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

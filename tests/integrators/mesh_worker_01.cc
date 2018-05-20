@@ -69,26 +69,26 @@ template <int dim>
 void
 Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
-  if(!cells)
+  if (!cells)
     return;
   const unsigned int cell = info.cell->user_index();
 
   // Fill local residuals
-  for(unsigned int k = 0; k < info.n_vectors(); ++k)
-    for(unsigned int b = 0; b < info.vector(k).n_blocks(); ++b)
-      for(unsigned int i = 0; i < info.vector(k).block(b).size(); ++i)
+  for (unsigned int k = 0; k < info.n_vectors(); ++k)
+    for (unsigned int b = 0; b < info.vector(k).n_blocks(); ++b)
+      for (unsigned int i = 0; i < info.vector(k).block(b).size(); ++i)
         {
           const double x             = cell + 0.1 * b + 0.001 * i;
           info.vector(k).block(b)(i) = x;
         }
 
-  for(unsigned int k = 0; k < info.n_matrices(); ++k)
+  for (unsigned int k = 0; k < info.n_matrices(); ++k)
     {
       const unsigned int  block_row = info.matrix(k).row;
       const unsigned int  block_col = info.matrix(k).column;
       FullMatrix<double>& M1        = info.matrix(k).matrix;
-      for(unsigned int i = 0; i < M1.m(); ++i)
-        for(unsigned int j = 0; j < M1.n(); ++j)
+      for (unsigned int i = 0; i < M1.m(); ++i)
+        for (unsigned int j = 0; j < M1.n(); ++j)
           {
             double x = .1 * block_row + .001 * i;
             x        = .1 * block_col + .001 * j + .001 * x;
@@ -172,7 +172,7 @@ test_simple(DoFHandler<dim>& mgdofs)
     assembler,
     lctrl);
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << std::setprecision(3) << v(i);
   deallog << std::endl;
 
@@ -193,21 +193,21 @@ test(const FiniteElement<dim>& fe)
   tr.execute_coarsening_and_refinement();
   //  tr.refine_global(1);
   deallog << "Triangulation levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << tr.n_cells(l);
   deallog << std::endl;
 
   unsigned int cn = 0;
-  for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
-      cell != tr.end();
-      ++cell, ++cn)
+  for (typename Triangulation<dim>::cell_iterator cell = tr.begin();
+       cell != tr.end();
+       ++cell, ++cn)
     cell->set_user_index(cn);
 
   DoFHandler<dim> dofs(tr);
   dofs.distribute_dofs(fe);
   dofs.distribute_mg_dofs(fe);
   deallog << "DoFHandler " << dofs.n_dofs() << " levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << dofs.n_dofs(l);
   deallog << std::endl;
 
@@ -225,6 +225,6 @@ main()
   fe2.push_back(std::shared_ptr<FiniteElement<2>>(new FE_DGP<2>(1)));
   fe2.push_back(std::shared_ptr<FiniteElement<2>>(new FE_Q<2>(1)));
 
-  for(unsigned int i = 0; i < fe2.size(); ++i)
+  for (unsigned int i = 0; i < fe2.size(); ++i)
     test(*fe2[i]);
 }

@@ -30,11 +30,11 @@ void
 test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 {
   // set the first vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
 
   // add elements by reference
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     w(i) += v(i);
 
   // check that they're equal
@@ -61,7 +61,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -75,7 +75,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

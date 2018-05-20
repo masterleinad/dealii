@@ -41,7 +41,7 @@ BlockSparseMatrix<number>::~BlockSparseMatrix()
     {
       clear();
     }
-  catch(...)
+  catch (...)
     {}
   sparsity_pattern = nullptr;
 }
@@ -59,8 +59,8 @@ BlockSparseMatrix<number>::operator=(const BlockSparseMatrix<number>& m)
   // anything except than checking
   // whether the base objects want to
   // do something
-  for(size_type r = 0; r < this->n_block_rows(); ++r)
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+  for (size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
       this->block(r, c) = m.block(r, c);
 
   return *this;
@@ -93,8 +93,8 @@ BlockSparseMatrix<number>::reinit(const BlockSparsityPattern& sparsity)
   this->sub_objects.reinit(sparsity.n_block_rows(), sparsity.n_block_cols());
 
   // and reinitialize the blocks
-  for(size_type r = 0; r < this->n_block_rows(); ++r)
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+  for (size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
       {
         BlockType* p = new SparseMatrix<number>();
         p->reinit(sparsity.block(r, c));
@@ -106,9 +106,9 @@ template <typename number>
 bool
 BlockSparseMatrix<number>::empty() const
 {
-  for(size_type r = 0; r < this->n_block_rows(); ++r)
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
-      if(this->block(r, c).empty() == false)
+  for (size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
+      if (this->block(r, c).empty() == false)
         return false;
 
   return true;
@@ -134,8 +134,8 @@ BlockSparseMatrix<number>::n_actually_nonzero_elements(
   const double threshold) const
 {
   size_type count = 0;
-  for(size_type i = 0; i < this->n_block_rows(); ++i)
-    for(size_type j = 0; j < this->n_block_cols(); ++j)
+  for (size_type i = 0; i < this->n_block_rows(); ++i)
+    for (size_type j = 0; j < this->n_block_cols(); ++j)
       count += this->sub_objects[i][j]->n_actually_nonzero_elements(threshold);
 
   return count;
@@ -157,8 +157,8 @@ BlockSparseMatrix<number>::print_formatted(std::ostream&      out,
                                            const char*        zero_string,
                                            const double       denominator) const
 {
-  for(size_type r = 0; r < this->n_block_rows(); ++r)
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+  for (size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
       {
         out << "Component (" << r << "," << c << ")" << std::endl;
         this->block(r, c).print_formatted(
@@ -172,8 +172,8 @@ BlockSparseMatrix<number>::memory_consumption() const
 {
   std::size_t mem = sizeof(*this);
   mem += MemoryConsumption::memory_consumption(this->sub_objects);
-  for(size_type r = 0; r < this->n_block_rows(); ++r)
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+  for (size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
       mem += MemoryConsumption::memory_consumption(*this->sub_objects[r][c]);
 
   return mem;

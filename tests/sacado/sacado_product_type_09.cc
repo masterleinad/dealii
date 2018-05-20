@@ -35,8 +35,8 @@ main()
   a.val() = Sdouble(2, 0, 7.0);
   b.val() = Sdouble(2, 1, 3.0);
 
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for (unsigned int i = 0; i < 2; ++i)
+    for (unsigned int j = 0; j < 2; ++j)
       {
         t[i][j]  = (1. + (i + 1) * (j * 2));
         st[i][j] = 2. * a + i * j * b;

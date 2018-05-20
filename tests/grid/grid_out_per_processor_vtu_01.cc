@@ -44,14 +44,14 @@ output(const parallel::distributed::Triangulation<dim>& tr,
   // copy the .pvtu and .vtu files
   // into the logstream
   int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       cat_file((std::string(filename) + ".pvtu").c_str());
       cat_file((std::string(filename) + ".proc0000.vtu").c_str());
     }
-  else if(myid == 1)
+  else if (myid == 1)
     cat_file((std::string(filename) + ".proc0001.vtu").c_str());
-  else if(myid == 2)
+  else if (myid == 2)
     cat_file((std::string(filename) + ".proc0002.vtu").c_str());
   else
     AssertThrow(false, ExcNotImplemented());
@@ -62,7 +62,7 @@ void
 test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(

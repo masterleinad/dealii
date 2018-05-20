@@ -42,31 +42,31 @@ public:
     // ask MatrixFree for cell_range for different orders
     std::pair<unsigned int, unsigned int> subrange_deg
       = data.create_cell_subrange_hp(cell_range, 1);
-    if(subrange_deg.second > subrange_deg.first)
+    if (subrange_deg.second > subrange_deg.first)
       helmholtz_operator<dim, 1, Vector<Number>, 2>(
         data, dst, src, subrange_deg);
     subrange_deg = data.create_cell_subrange_hp(cell_range, 2);
-    if(subrange_deg.second > subrange_deg.first)
+    if (subrange_deg.second > subrange_deg.first)
       helmholtz_operator<dim, 2, Vector<Number>, 3>(
         data, dst, src, subrange_deg);
     subrange_deg = data.create_cell_subrange_hp(cell_range, 3);
-    if(subrange_deg.second > subrange_deg.first)
+    if (subrange_deg.second > subrange_deg.first)
       helmholtz_operator<dim, 3, Vector<Number>, 4>(
         data, dst, src, subrange_deg);
     subrange_deg = data.create_cell_subrange_hp(cell_range, 4);
-    if(subrange_deg.second > subrange_deg.first)
+    if (subrange_deg.second > subrange_deg.first)
       helmholtz_operator<dim, 4, Vector<Number>, 5>(
         data, dst, src, subrange_deg);
     subrange_deg = data.create_cell_subrange_hp(cell_range, 5);
-    if(subrange_deg.second > subrange_deg.first)
+    if (subrange_deg.second > subrange_deg.first)
       helmholtz_operator<dim, 5, Vector<Number>, 6>(
         data, dst, src, subrange_deg);
     subrange_deg = data.create_cell_subrange_hp(cell_range, 6);
-    if(subrange_deg.second > subrange_deg.first)
+    if (subrange_deg.second > subrange_deg.first)
       helmholtz_operator<dim, 6, Vector<Number>, 7>(
         data, dst, src, subrange_deg);
     subrange_deg = data.create_cell_subrange_hp(cell_range, 7);
-    if(subrange_deg.second > subrange_deg.first)
+    if (subrange_deg.second > subrange_deg.first)
       helmholtz_operator<dim, 7, Vector<Number>, 8>(
         data, dst, src, subrange_deg);
   }
@@ -86,7 +86,7 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  if(fe_degree > 1)
+  if (fe_degree > 1)
     return;
 
   typedef double               number;
@@ -95,22 +95,22 @@ test()
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
   tria.refine_global(1);
 
   // refine a few cells
-  for(unsigned int i = 0; i < 11 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 11 - 3 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
         endc               = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -121,7 +121,7 @@ test()
   hp::QCollection<dim>  quadrature_collection;
   hp::QCollection<1>    quadrature_collection_mf;
 
-  for(unsigned int deg = 1; deg <= max_degree; ++deg)
+  for (unsigned int deg = 1; deg <= max_degree; ++deg)
     {
       fe_collection.push_back(FE_Q<dim>(QGaussLobatto<1>(deg + 1)));
       quadrature_collection.push_back(QGauss<dim>(deg + 1));
@@ -134,7 +134,7 @@ test()
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof.begin_active(),
       endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const unsigned int fe_index = Testing::rand() % max_degree;
         cell->set_active_fe_index(fe_index);
@@ -178,7 +178,7 @@ test()
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof.begin_active(),
       endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
 
@@ -187,11 +187,11 @@ test()
         hp_fe_values.reinit(cell);
         const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
 
-        for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
-            ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+             ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                          * fe_values.shape_grad(j, q_point)
                                        + 10. * fe_values.shape_value(i, q_point)
@@ -211,9 +211,9 @@ test()
   Vector<double> src(dof.n_dofs());
   Vector<double> result_spmv(src), result_mf(src);
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i) == false)
+      if (constraints.is_constrained(i) == false)
         src(i) = random_value<double>();
     }
 

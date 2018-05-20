@@ -33,7 +33,7 @@ main(int argc, char** argv)
   deallog.attach(logfile);
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);
 
-  for(unsigned int size = 4; size <= 16; size *= 2)
+  for (unsigned int size = 4; size <= 16; size *= 2)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -70,9 +70,9 @@ main(int argc, char** argv)
       v.reinit(set, MPI_COMM_WORLD);
       tmp1.reinit(set, MPI_COMM_WORLD);
       tmp2.reinit(set, MPI_COMM_WORLD);
-      for(unsigned int i = 0; i < 3; ++i)
+      for (unsigned int i = 0; i < 3; ++i)
         {
-          for(unsigned int j = 0; j < dim; ++j)
+          for (unsigned int j = 0; j < dim; ++j)
             v(j) = random_value<double>();
 
           AA.vmult(tmp1, v);

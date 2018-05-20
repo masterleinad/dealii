@@ -481,13 +481,13 @@ MGTransferMatrixFree<dim, Number>::interpolate_to_mg(
 
   // resize the dst vector if it's empty or has incorrect size
   MGLevelObject<IndexSet> relevant_dofs(min_level, max_level);
-  for(unsigned int level = min_level; level <= max_level; ++level)
+  for (unsigned int level = min_level; level <= max_level; ++level)
     {
       DoFTools::extract_locally_relevant_level_dofs(
         dof_handler, level, relevant_dofs[level]);
-      if(dst[level].size() != dof_handler.locally_owned_mg_dofs(level).size()
-         || dst[level].local_size()
-              != dof_handler.locally_owned_mg_dofs(level).n_elements())
+      if (dst[level].size() != dof_handler.locally_owned_mg_dofs(level).size()
+          || dst[level].local_size()
+               != dof_handler.locally_owned_mg_dofs(level).n_elements())
         dst[level].reinit(dof_handler.locally_owned_mg_dofs(level),
                           relevant_dofs[level],
                           mpi_communicator);
@@ -502,7 +502,7 @@ MGTransferMatrixFree<dim, Number>::interpolate_to_mg(
   // MGConstrainedDoFs does NOT keep this info right now, only periodicity constraints...
   dst[max_level].update_ghost_values();
   // do the transfer from level to level-1:
-  for(unsigned int level = max_level; level > min_level; --level)
+  for (unsigned int level = max_level; level > min_level; --level)
     {
       // auxiliary vector which always has ghost elements
       LinearAlgebra::distributed::Vector<Number> ghosted_vector(
@@ -519,31 +519,31 @@ MGTransferMatrixFree<dim, Number>::interpolate_to_mg(
       typename DoFHandler<dim>::cell_iterator cell
         = dof_handler.begin(level - 1);
       typename DoFHandler<dim>::cell_iterator endc = dof_handler.end(level - 1);
-      for(; cell != endc; ++cell)
-        if(cell->is_locally_owned_on_level())
+      for (; cell != endc; ++cell)
+        if (cell->is_locally_owned_on_level())
           {
             // if we get to a cell without children (== active), we can
             // skip it as there values should be already set by the
             // equivalent of copy_to_mg()
-            if(!cell->has_children())
+            if (!cell->has_children())
               continue;
 
             std::fill(dof_values_coarse.begin(), dof_values_coarse.end(), 0.);
-            for(unsigned int child = 0; child < cell->n_children(); ++child)
+            for (unsigned int child = 0; child < cell->n_children(); ++child)
               {
                 cell->child(child)->get_mg_dof_indices(dof_indices);
-                for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+                for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
                   dof_values_fine(i) = ghosted_vector(dof_indices[i]);
                 fe.get_restriction_matrix(child, cell->refinement_case())
                   .vmult(tmp, dof_values_fine);
-                for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-                  if(fe.restriction_is_additive(i))
+                for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+                  if (fe.restriction_is_additive(i))
                     dof_values_coarse[i] += tmp[i];
-                  else if(tmp(i) != 0.)
+                  else if (tmp(i) != 0.)
                     dof_values_coarse[i] = tmp[i];
               }
             cell->get_mg_dof_indices(dof_indices);
-            for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
               dst[level - 1](dof_indices[i]) = dof_values_coarse[i];
           }
 
@@ -583,7 +583,7 @@ MGTransferBlockMatrixFree<dim, Number>::copy_to_mg(
   const unsigned int n_blocks = src.n_blocks();
   AssertDimension(mg_dof.size(), n_blocks);
 
-  if(n_blocks == 0)
+  if (n_blocks == 0)
     return;
 
   const unsigned int min_level = dst.min_level();
@@ -596,22 +596,22 @@ MGTransferBlockMatrixFree<dim, Number>::copy_to_mg(
     const parallel::Triangulation<dim, spacedim>* tria
       = (dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
         &(mg_dof[0]->get_triangulation())));
-    for(unsigned int i = 1; i < n_blocks; ++i)
+    for (unsigned int i = 1; i < n_blocks; ++i)
       AssertThrow((dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
                      &(mg_dof[0]->get_triangulation()))
                    == tria),
                   ExcMessage("The DoFHandler use different Triangulations!"));
 
-    for(unsigned int level = min_level; level <= max_level; ++level)
+    for (unsigned int level = min_level; level <= max_level; ++level)
       {
         dst[level].reinit(n_blocks);
         bool collect_size = false;
-        for(unsigned int b = 0; b < n_blocks; ++b)
+        for (unsigned int b = 0; b < n_blocks; ++b)
           {
             LinearAlgebra::distributed::Vector<Number>& v = dst[level].block(b);
-            if(v.size() != mg_dof[b]->locally_owned_mg_dofs(level).size()
-               || v.local_size()
-                    != mg_dof[b]->locally_owned_mg_dofs(level).n_elements())
+            if (v.size() != mg_dof[b]->locally_owned_mg_dofs(level).size()
+                || v.local_size()
+                     != mg_dof[b]->locally_owned_mg_dofs(level).n_elements())
               {
                 v.reinit(mg_dof[b]->locally_owned_mg_dofs(level),
                          tria != nullptr ? tria->get_communicator() :
@@ -621,7 +621,7 @@ MGTransferBlockMatrixFree<dim, Number>::copy_to_mg(
             else
               v = 0.;
           }
-        if(collect_size)
+        if (collect_size)
           dst[level].collect_sizes();
       }
   }
@@ -630,15 +630,15 @@ MGTransferBlockMatrixFree<dim, Number>::copy_to_mg(
   MGLevelObject<LinearAlgebra::distributed::Vector<Number>> dst_non_block(
     min_level, max_level);
 
-  for(unsigned int b = 0; b < n_blocks; ++b)
+  for (unsigned int b = 0; b < n_blocks; ++b)
     {
-      for(unsigned int l = min_level; l <= max_level; ++l)
+      for (unsigned int l = min_level; l <= max_level; ++l)
         dst_non_block[l].reinit(dst[l].block(b));
       const unsigned int data_block = same_for_all ? 0 : b;
       matrix_free_transfer_vector[data_block].copy_to_mg(
         *mg_dof[b], dst_non_block, src.block(b));
 
-      for(unsigned int l = min_level; l <= max_level; ++l)
+      for (unsigned int l = min_level; l <= max_level; ++l)
         dst[l].block(b) = dst_non_block[l];
     }
 }
@@ -671,22 +671,22 @@ MGTransferBlockMatrixFree<dim, Number>::copy_from_mg(
   const unsigned int n_blocks = dst.n_blocks();
   AssertDimension(mg_dof.size(), n_blocks);
 
-  if(n_blocks == 0)
+  if (n_blocks == 0)
     return;
 
   const unsigned int min_level = src.min_level();
   const unsigned int max_level = src.max_level();
 
-  for(unsigned int l = min_level; l <= max_level; ++l)
+  for (unsigned int l = min_level; l <= max_level; ++l)
     AssertDimension(src[l].n_blocks(), dst.n_blocks());
 
   // FIXME: this a quite ugly as we need a temporary object:
   MGLevelObject<LinearAlgebra::distributed::Vector<Number>> src_non_block(
     min_level, max_level);
 
-  for(unsigned int b = 0; b < n_blocks; ++b)
+  for (unsigned int b = 0; b < n_blocks; ++b)
     {
-      for(unsigned int l = min_level; l <= max_level; ++l)
+      for (unsigned int l = min_level; l <= max_level; ++l)
         {
           src_non_block[l].reinit(src[l].block(b));
           src_non_block[l] = src[l].block(b);

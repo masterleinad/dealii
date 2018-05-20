@@ -91,10 +91,10 @@ FE_ABF<dim>::FE_ABF(const unsigned int deg)
   this->interface_constraints.reinit((1 << (dim - 1)) * this->dofs_per_face,
                                      this->dofs_per_face);
   unsigned int target_row = 0;
-  for(unsigned int d = 0; d < face_embeddings.size(); ++d)
-    for(unsigned int i = 0; i < face_embeddings[d].m(); ++i)
+  for (unsigned int d = 0; d < face_embeddings.size(); ++d)
+    for (unsigned int i = 0; i < face_embeddings[d].m(); ++i)
       {
-        for(unsigned int j = 0; j < face_embeddings[d].n(); ++j)
+        for (unsigned int j = 0; j < face_embeddings[d].n(); ++j)
           this->interface_constraints(target_row, j) = face_embeddings[d](i, j);
         ++target_row;
       }
@@ -139,7 +139,7 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
 
   unsigned int n_face_points = (dim > 1) ? 1 : 0;
   // compute (deg+1)^(dim-1)
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     n_face_points *= deg + 1;
 
   this->generalized_support_points.resize(
@@ -151,10 +151,10 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
   std::vector<AnisotropicPolynomials<dim>*> polynomials_abf(dim);
 
   // Generate x_1^{i} x_2^{r+1} ...
-  for(unsigned int dd = 0; dd < dim; ++dd)
+  for (unsigned int dd = 0; dd < dim; ++dd)
     {
       std::vector<std::vector<Polynomials::Polynomial<double>>> poly(dim);
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         poly[d].push_back(Polynomials::Monomial<double>(deg + 1));
       poly[dd] = Polynomials::Monomial<double>::generate_complete_basis(deg);
 
@@ -164,7 +164,7 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
   // Number of the point being entered
   unsigned int current = 0;
 
-  if(dim > 1)
+  if (dim > 1)
     {
       QGauss<dim - 1>                   face_points(deg + 1);
       TensorProductPolynomials<dim - 1> legendre
@@ -175,13 +175,13 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
       //       Assert (face_points.size() == this->dofs_per_face,
       //            ExcInternalError());
 
-      for(unsigned int k = 0; k < n_face_points; ++k)
+      for (unsigned int k = 0; k < n_face_points; ++k)
         {
           this->generalized_face_support_points[k] = face_points.point(k);
           // Compute its quadrature
           // contribution for each
           // moment.
-          for(unsigned int i = 0; i < legendre.n(); ++i)
+          for (unsigned int i = 0; i < legendre.n(); ++i)
             {
               boundary_weights(k, i)
                 = face_points.weight(k)
@@ -191,8 +191,8 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
 
       Quadrature<dim> faces
         = QProjector<dim>::project_to_all_faces(face_points);
-      for(; current < GeometryInfo<dim>::faces_per_cell * n_face_points;
-          ++current)
+      for (; current < GeometryInfo<dim>::faces_per_cell * n_face_points;
+           ++current)
         {
           // Enter the support point
           // into the vector
@@ -205,9 +205,9 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
       // was necessary to cast the ABF elements into the deal.II framework
       // for vector valued elements.
       boundary_weights_abf.reinit(faces.size(), polynomials_abf[0]->n() * dim);
-      for(unsigned int k = 0; k < faces.size(); ++k)
+      for (unsigned int k = 0; k < faces.size(); ++k)
         {
-          for(unsigned int i = 0; i < polynomials_abf[0]->n() * dim; ++i)
+          for (unsigned int i = 0; i < polynomials_abf[0]->n() * dim; ++i)
             {
               boundary_weights_abf(k, i)
                 = polynomials_abf[i % dim]->compute_value(i / dim,
@@ -219,14 +219,14 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
 
   // Create Legendre basis for the
   // space D_xi Q_k
-  if(deg > 0)
+  if (deg > 0)
     {
       std::vector<AnisotropicPolynomials<dim>*> polynomials(dim);
 
-      for(unsigned int dd = 0; dd < dim; ++dd)
+      for (unsigned int dd = 0; dd < dim; ++dd)
         {
           std::vector<std::vector<Polynomials::Polynomial<double>>> poly(dim);
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             poly[d] = Polynomials::Legendre::generate_complete_basis(deg);
           poly[dd] = Polynomials::Legendre::generate_complete_basis(deg - 1);
 
@@ -236,22 +236,22 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
       interior_weights.reinit(
         TableIndices<3>(n_interior_points, polynomials[0]->n(), dim));
 
-      for(unsigned int k = 0; k < cell_quadrature.size(); ++k)
+      for (unsigned int k = 0; k < cell_quadrature.size(); ++k)
         {
-          for(unsigned int i = 0; i < polynomials[0]->n(); ++i)
-            for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int i = 0; i < polynomials[0]->n(); ++i)
+            for (unsigned int d = 0; d < dim; ++d)
               interior_weights(k, i, d)
                 = cell_quadrature.weight(k)
                   * polynomials[d]->compute_value(i, cell_quadrature.point(k));
         }
 
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         delete polynomials[d];
     }
 
   // Decouple the creation of the generalized support points
   // from computation of interior weights.
-  for(unsigned int k = 0; k < cell_quadrature.size(); ++k)
+  for (unsigned int k = 0; k < cell_quadrature.size(); ++k)
     this->generalized_support_points[current++] = cell_quadrature.point(k);
 
   // Additional functionality for the ABF elements
@@ -262,20 +262,20 @@ FE_ABF<dim>::initialize_support_points(const unsigned int deg)
     cell_quadrature.size(), polynomials_abf[0]->n() * dim, dim));
   Tensor<1, dim> poly_grad;
 
-  for(unsigned int k = 0; k < cell_quadrature.size(); ++k)
+  for (unsigned int k = 0; k < cell_quadrature.size(); ++k)
     {
-      for(unsigned int i = 0; i < polynomials_abf[0]->n() * dim; ++i)
+      for (unsigned int i = 0; i < polynomials_abf[0]->n() * dim; ++i)
         {
           poly_grad = polynomials_abf[i % dim]->compute_grad(
                         i / dim, cell_quadrature.point(k))
                       * cell_quadrature.weight(k);
           // The minus sign comes from the use of the Gauss theorem to replace the divergence.
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             interior_weights_abf(k, i, d) = -poly_grad[d];
         }
     }
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     delete polynomials_abf[d];
 
   Assert(current == this->generalized_support_points.size(),
@@ -296,10 +296,11 @@ template <int dim>
 void
 FE_ABF<dim>::initialize_restriction()
 {
-  if(dim == 1)
+  if (dim == 1)
     {
       unsigned int iso = RefinementCase<dim>::isotropic_refinement - 1;
-      for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell;
+           ++i)
         this->restriction[iso][i].reinit(0, 0);
       return;
     }
@@ -308,7 +309,7 @@ FE_ABF<dim>::initialize_restriction()
   const unsigned int n_face_points = q_base.size();
   // First, compute interpolation on
   // subfaces
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
     {
       // The shape functions of the
       // child cell are evaluated
@@ -319,13 +320,13 @@ FE_ABF<dim>::initialize_restriction()
       // evaluation suffers if not
       // ordered by point
       Table<2, double> cached_values_face(this->dofs_per_cell, q_face.size());
-      for(unsigned int k = 0; k < q_face.size(); ++k)
-        for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+      for (unsigned int k = 0; k < q_face.size(); ++k)
+        for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
           cached_values_face(i, k) = this->shape_value_component(
             i, q_face.point(k), GeometryInfo<dim>::unit_normal_direction[face]);
 
-      for(unsigned int sub = 0; sub < GeometryInfo<dim>::max_children_per_face;
-          ++sub)
+      for (unsigned int sub = 0; sub < GeometryInfo<dim>::max_children_per_face;
+           ++sub)
         {
           // The weight functions for
           // the coarse face are
@@ -348,11 +349,11 @@ FE_ABF<dim>::initialize_restriction()
           // are equal to the
           // corresponding shape
           // functions.
-          for(unsigned int k = 0; k < n_face_points; ++k)
-            for(unsigned int i_child = 0; i_child < this->dofs_per_cell;
-                ++i_child)
-              for(unsigned int i_face = 0; i_face < this->dofs_per_face;
-                  ++i_face)
+          for (unsigned int k = 0; k < n_face_points; ++k)
+            for (unsigned int i_child = 0; i_child < this->dofs_per_cell;
+                 ++i_child)
+              for (unsigned int i_face = 0; i_face < this->dofs_per_face;
+                   ++i_face)
                 {
                   // The quadrature
                   // weights on the
@@ -371,17 +372,17 @@ FE_ABF<dim>::initialize_restriction()
         }
     }
 
-  if(rt_order == 0)
+  if (rt_order == 0)
     return;
 
   // Create Legendre basis for the
   // space D_xi Q_k. Here, we cannot
   // use the shape functions
   std::vector<AnisotropicPolynomials<dim>*> polynomials(dim);
-  for(unsigned int dd = 0; dd < dim; ++dd)
+  for (unsigned int dd = 0; dd < dim; ++dd)
     {
       std::vector<std::vector<Polynomials::Polynomial<double>>> poly(dim);
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         poly[d] = Polynomials::Legendre::generate_complete_basis(rt_order);
       poly[dd] = Polynomials::Legendre::generate_complete_basis(rt_order - 1);
 
@@ -396,22 +397,22 @@ FE_ABF<dim>::initialize_restriction()
   // evaluation suffers if not
   // ordered by point
   Table<3, double> cached_values_cell(this->dofs_per_cell, q_cell.size(), dim);
-  for(unsigned int k = 0; k < q_cell.size(); ++k)
-    for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-      for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int k = 0; k < q_cell.size(); ++k)
+    for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
+      for (unsigned int d = 0; d < dim; ++d)
         cached_values_cell(i, k, d)
           = this->shape_value_component(i, q_cell.point(k), d);
 
-  for(unsigned int child = 0; child < GeometryInfo<dim>::max_children_per_cell;
-      ++child)
+  for (unsigned int child = 0; child < GeometryInfo<dim>::max_children_per_cell;
+       ++child)
     {
       Quadrature<dim> q_sub = QProjector<dim>::project_to_child(q_cell, child);
 
-      for(unsigned int k = 0; k < q_sub.size(); ++k)
-        for(unsigned int i_child = 0; i_child < this->dofs_per_cell; ++i_child)
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int i_weight = 0; i_weight < polynomials[d]->n();
-                ++i_weight)
+      for (unsigned int k = 0; k < q_sub.size(); ++k)
+        for (unsigned int i_child = 0; i_child < this->dofs_per_cell; ++i_child)
+          for (unsigned int d = 0; d < dim; ++d)
+            for (unsigned int i_weight = 0; i_weight < polynomials[d]->n();
+                 ++i_weight)
               {
                 this->restriction[iso][child](
                   start_cell_dofs + i_weight * dim + d, i_child)
@@ -420,7 +421,7 @@ FE_ABF<dim>::initialize_restriction()
               }
     }
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     delete polynomials[d];
 }
 
@@ -428,7 +429,7 @@ template <int dim>
 std::vector<unsigned int>
 FE_ABF<dim>::get_dpo_vector(const unsigned int rt_order)
 {
-  if(dim == 1)
+  if (dim == 1)
     {
       Assert(false, ExcImpossibleInDim(1));
       return std::vector<unsigned int>();
@@ -440,7 +441,7 @@ FE_ABF<dim>::get_dpo_vector(const unsigned int rt_order)
   // Initiative...), and we have
   // (rt_order+1)^(dim-1) DoFs per face
   unsigned int dofs_per_face = 1;
-  for(int d = 0; d < dim - 1; ++d)
+  for (int d = 0; d < dim - 1; ++d)
     dofs_per_face *= rt_order + 1;
 
   // and then there are interior dofs
@@ -470,11 +471,11 @@ FE_ABF<dim>::has_support_on_face(const unsigned int shape_index,
   // Return computed values if we
   // know them easily. Otherwise, it
   // is always safe to return true.
-  switch(rt_order)
+  switch (rt_order)
     {
       case 0:
         {
-          switch(dim)
+          switch (dim)
             {
               case 2:
                 {
@@ -517,9 +518,9 @@ FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
   std::fill(nodal_values.begin(), nodal_values.end(), 0.);
 
   const unsigned int n_face_points = boundary_weights.size(0);
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
-    for(unsigned int k = 0; k < n_face_points; ++k)
-      for(unsigned int i = 0; i < boundary_weights.size(1); ++i)
+  for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for (unsigned int k = 0; k < n_face_points; ++k)
+      for (unsigned int i = 0; i < boundary_weights.size(1); ++i)
         {
           nodal_values[i + face * this->dofs_per_face]
             += boundary_weights(k, i)
@@ -532,9 +533,9 @@ FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
   const unsigned int start_cell_points
     = GeometryInfo<dim>::faces_per_cell * n_face_points;
 
-  for(unsigned int k = 0; k < interior_weights.size(0); ++k)
-    for(unsigned int i = 0; i < interior_weights.size(1); ++i)
-      for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int k = 0; k < interior_weights.size(0); ++k)
+    for (unsigned int i = 0; i < interior_weights.size(1); ++i)
+      for (unsigned int d = 0; d < dim; ++d)
         nodal_values[start_cell_dofs + i * dim + d]
           += interior_weights(k, i, d)
              * support_point_values[k + start_cell_points][d];
@@ -543,24 +544,24 @@ FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
     = start_cell_dofs + interior_weights.size(1) * dim;
 
   // Cell integral of ABF terms
-  for(unsigned int k = 0; k < interior_weights_abf.size(0); ++k)
-    for(unsigned int i = 0; i < interior_weights_abf.size(1); ++i)
-      for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int k = 0; k < interior_weights_abf.size(0); ++k)
+    for (unsigned int i = 0; i < interior_weights_abf.size(1); ++i)
+      for (unsigned int d = 0; d < dim; ++d)
         nodal_values[start_abf_dofs + i]
           += interior_weights_abf(k, i, d)
              * support_point_values[k + start_cell_points][d];
 
   // Face integral of ABF terms
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
     {
       double n_orient
         = (double) GeometryInfo<dim>::unit_normal_orientation[face];
-      for(unsigned int fp = 0; fp < n_face_points; ++fp)
+      for (unsigned int fp = 0; fp < n_face_points; ++fp)
         {
           // TODO: Check what the face_orientation, face_flip and face_rotation have to be in 3D
           unsigned int k = QProjector<dim>::DataSetDescriptor::face(
             face, false, false, false, n_face_points);
-          for(unsigned int i = 0; i < boundary_weights_abf.size(1); ++i)
+          for (unsigned int i = 0; i < boundary_weights_abf.size(1); ++i)
             nodal_values[start_abf_dofs + i]
               += n_orient * boundary_weights_abf(k + fp, i)
                  * support_point_values[face * n_face_points + fp][GeometryInfo<
@@ -569,8 +570,8 @@ FE_ABF<dim>::convert_generalized_support_point_values_to_dof_values(
     }
 
   // TODO: Check if this "correction" can be removed.
-  for(unsigned int i = 0; i < boundary_weights_abf.size(1); ++i)
-    if(std::fabs(nodal_values[start_abf_dofs + i]) < 1.0e-16)
+  for (unsigned int i = 0; i < boundary_weights_abf.size(1); ++i)
+    if (std::fabs(nodal_values[start_abf_dofs + i]) < 1.0e-16)
       nodal_values[start_abf_dofs + i] = 0.0;
 }
 

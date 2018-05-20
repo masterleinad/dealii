@@ -44,7 +44,7 @@ test()
 
   constraints.resolve_indices(indices);
 
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for (unsigned int i = 0; i < indices.size(); ++i)
     deallog << "Index: " << indices[i] << std::endl;
 }
 

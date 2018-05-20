@@ -61,7 +61,7 @@ private:
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> fe_eval(data,
                                                                        true);
-    for(unsigned int face = face_range.first; face < face_range.second; face++)
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
         fe_eval.reinit(face);
         fe_eval.read_dof_values(src);
@@ -71,7 +71,7 @@ private:
         // only have one cell (otherwise the output will not be stable among
         // systems...)
         deallog << "Face " << face << ": ";
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
           {
             deallog << fe_eval.get_value(q)[0] << " "
                     << fe_eval.get_normal_derivative(q)[0] << "   ";
@@ -99,7 +99,7 @@ Point<dim>
 grid_transform(const Point<dim>& in)
 {
   Point<dim> out;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     out[d] = in[d] + 0.75 * d * in[0];
   return out;
 }

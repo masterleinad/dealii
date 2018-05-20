@@ -34,9 +34,9 @@ test(PETScWrappers::MatrixBase& m)
   double          norm_sqr = 0;
   unsigned int    nnz      = 0;
   const size_type N        = m.m();
-  for(size_type i = 0; i < N; ++i)
+  for (size_type i = 0; i < N; ++i)
     {
-      if(i >= 5)
+      if (i >= 5)
         {
           const double s = Testing::rand();
           m.add(i, i - 5, s);
@@ -44,7 +44,7 @@ test(PETScWrappers::MatrixBase& m)
           ++nnz;
         }
 
-      if(i < N - 5)
+      if (i < N - 5)
         {
           const double s = Testing::rand();
           m.add(i, i + 5, s);
@@ -68,12 +68,12 @@ test(PETScWrappers::MatrixBase& m)
   Assert(m.n_nonzero_elements() - nnz == 0, ExcInternalError());
 
   // now remove the entries of rows N/2 and N/3
-  for(size_type i = 0; i < N; ++i)
+  for (size_type i = 0; i < N; ++i)
     {
       const double s = m.el(N / 2, i);
       norm_sqr -= s * s;
     }
-  for(size_type i = 0; i < N; ++i)
+  for (size_type i = 0; i < N; ++i)
     {
       const double s = m.el(N / 3, i);
       norm_sqr -= s * s;
@@ -109,7 +109,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -123,7 +123,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

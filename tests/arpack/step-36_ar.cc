@@ -116,7 +116,7 @@ namespace Step36
     mass_matrix.reinit(sparsity_pattern);
 
     eigenfunctions.resize(8);
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
       eigenfunctions[i].reinit(dof_handler.n_dofs());
 
     eigenvalues.resize(eigenfunctions.size());
@@ -148,7 +148,7 @@ namespace Step36
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;
@@ -157,9 +157,9 @@ namespace Step36
         potential.value_list(fe_values.get_quadrature_points(),
                              potential_values);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
@@ -188,8 +188,8 @@ namespace Step36
     double min_spurious_eigenvalue = std::numeric_limits<double>::max(),
            max_spurious_eigenvalue = -std::numeric_limits<double>::max();
 
-    for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-      if(constraints.is_constrained(i))
+    for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+      if (constraints.is_constrained(i))
         {
           const double ev         = stiffness_matrix(i, i) / mass_matrix(i, i);
           min_spurious_eigenvalue = std::min(min_spurious_eigenvalue, ev);
@@ -220,12 +220,12 @@ namespace Step36
     // b) x_j*B*x_i=\delta_{ij}
     {
       Vector<double> Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {
           mass_matrix.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
-            if(std::abs(eigenfunctions[j] * Bx - (i == j)) > 1e-8)
+          for (unsigned int j = 0; j < eigenfunctions.size(); j++)
+            if (std::abs(eigenfunctions[j] * Bx - (i == j)) > 1e-8)
               deallog << "Eigenvectors " + Utilities::int_to_string(i) + " and "
                            + Utilities::int_to_string(j)
                            + " are not orthonormal!"
@@ -236,7 +236,7 @@ namespace Step36
 
           stiffness_matrix.vmult(Ax, eigenfunctions[i]);
           Ax.add(-1.0 * std::real(eigenvalues[i]), Bx);
-          if(Ax.l2_norm() > 1e-8)
+          if (Ax.l2_norm() > 1e-8)
             deallog << "Returned vector " + Utilities::int_to_string(i)
                          + " is not an eigenvector!"
                            " L2 norm of the residual is "
@@ -244,7 +244,7 @@ namespace Step36
                     << std::endl;
         }
     }
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
       eigenfunctions[i] /= eigenfunctions[i].linfty_norm();
 
     return std::make_pair(solver_control.last_step(),
@@ -259,7 +259,7 @@ namespace Step36
 
     data_out.attach_dof_handler(dof_handler);
 
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
       data_out.add_data_vector(eigenfunctions[i],
                                std::string("eigenfunction_")
                                  + Utilities::int_to_string(i));
@@ -298,7 +298,7 @@ namespace Step36
 
     std::sort(eigenvalues.begin(), eigenvalues.end(), my_compare);
 
-    for(unsigned int i = 0; i < 5 && i < eigenvalues.size(); ++i)
+    for (unsigned int i = 0; i < 5 && i < eigenvalues.size(); ++i)
       deallog << "      Eigenvalue " << i << " : " << eigenvalues[i]
               << std::endl;
   }
@@ -318,7 +318,7 @@ main(int argc, char** argv)
       problem.run();
     }
 
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -332,7 +332,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

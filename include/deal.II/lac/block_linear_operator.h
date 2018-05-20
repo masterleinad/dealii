@@ -360,7 +360,7 @@ namespace internal
         v.reinit(m);
 
         // And reinitialize every individual block with reinit_range_vectors:
-        for(unsigned int i = 0; i < m; ++i)
+        for (unsigned int i = 0; i < m; ++i)
           op.block(i, 0).reinit_range_vector(v.block(i), omit_zeroing_entries);
 
         v.collect_sizes();
@@ -373,7 +373,7 @@ namespace internal
         v.reinit(n);
 
         // And reinitialize every individual block with reinit_domain_vectors:
-        for(unsigned int i = 0; i < n; ++i)
+        for (unsigned int i = 0; i < n; ++i)
           op.block(0, i).reinit_domain_vector(v.block(i), omit_zeroing_entries);
 
         v.collect_sizes();
@@ -395,10 +395,10 @@ namespace internal
                           "source and destination vectors are different memory "
                           "locations"));
 
-        for(unsigned int i = 0; i < m; ++i)
+        for (unsigned int i = 0; i < m; ++i)
           {
             op.block(i, 0).vmult(v.block(i), u.block(0));
-            for(unsigned int j = 1; j < n; ++j)
+            for (unsigned int j = 1; j < n; ++j)
               op.block(i, j).vmult_add(v.block(i), u.block(j));
           }
       };
@@ -420,8 +420,8 @@ namespace internal
                      "source and destination vectors are different memory "
                      "locations"));
 
-        for(unsigned int i = 0; i < m; ++i)
-          for(unsigned int j = 0; j < n; ++j)
+        for (unsigned int i = 0; i < m; ++i)
+          for (unsigned int j = 0; j < n; ++j)
             op.block(i, j).vmult_add(v.block(i), u.block(j));
       };
 
@@ -441,10 +441,10 @@ namespace internal
                           "source and destination vectors are different memory "
                           "locations"));
 
-        for(unsigned int i = 0; i < n; ++i)
+        for (unsigned int i = 0; i < n; ++i)
           {
             op.block(0, i).Tvmult(v.block(i), u.block(0));
-            for(unsigned int j = 1; j < m; ++j)
+            for (unsigned int j = 1; j < m; ++j)
               op.block(j, i).Tvmult_add(v.block(i), u.block(j));
           }
       };
@@ -466,8 +466,8 @@ namespace internal
                      "source and destination vectors are different memory "
                      "locations"));
 
-        for(unsigned int i = 0; i < n; ++i)
-          for(unsigned int j = 0; j < m; ++j)
+        for (unsigned int i = 0; i < n; ++i)
+          for (unsigned int j = 0; j < m; ++j)
             op.block(j, i).Tvmult_add(v.block(i), u.block(j));
       };
     }
@@ -670,7 +670,7 @@ block_diagonal_operator(const BlockMatrixType& block_matrix)
     Assert(i < m, ExcIndexRange(i, 0, m));
     Assert(j < n, ExcIndexRange(j, 0, n));
 #endif
-    if(i == j)
+    if (i == j)
       return BlockType(block_matrix.block(i, j));
     else
       return null_operator(BlockType(block_matrix.block(i, j)));
@@ -718,9 +718,9 @@ block_diagonal_operator(
   // elements of return_op.ops are populated correctly. They must be
   // null_operators, but with correct reinit_domain_vector and
   // reinit_range_vector functions.
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < m; ++j)
-      if(i == j)
+  for (unsigned int i = 0; i < m; ++i)
+    for (unsigned int j = 0; j < m; ++j)
+      if (i == j)
         {
           // diagonal elements are easy:
           new_ops[i][j] = ops[i];
@@ -829,16 +829,16 @@ block_forward_substitution(
         Assert(v.n_blocks() == m, ExcDimensionMismatch(v.n_blocks(), m));
         Assert(u.n_blocks() == m, ExcDimensionMismatch(u.n_blocks(), m));
 
-        if(m == 0)
+        if (m == 0)
           return;
 
         diagonal_inverse.block(0, 0).vmult(v.block(0), u.block(0));
-        for(unsigned int i = 1; i < m; ++i)
+        for (unsigned int i = 1; i < m; ++i)
           {
             auto& dst = v.block(i);
             dst       = u.block(i);
             dst *= -1.;
-            for(unsigned int j = 0; j < i; ++j)
+            for (unsigned int j = 0; j < i; ++j)
               block_operator.block(i, j).vmult_add(dst, v.block(j));
             dst *= -1.;
             diagonal_inverse.block(i, i).vmult(
@@ -858,7 +858,7 @@ block_forward_substitution(
         Assert(v.n_blocks() == m, ExcDimensionMismatch(v.n_blocks(), m));
         Assert(u.n_blocks() == m, ExcDimensionMismatch(u.n_blocks(), m));
 
-        if(m == 0)
+        if (m == 0)
           return;
 
         GrowingVectorMemory<typename Range::BlockType>            vector_memory;
@@ -867,13 +867,13 @@ block_forward_substitution(
 
         diagonal_inverse.block(0, 0).vmult_add(v.block(0), u.block(0));
 
-        for(unsigned int i = 1; i < m; ++i)
+        for (unsigned int i = 1; i < m; ++i)
           {
             diagonal_inverse.block(i, i).reinit_range_vector(
               *tmp, /*bool omit_zeroing_entries=*/true);
             *tmp = u.block(i);
             *tmp *= -1.;
-            for(unsigned int j = 0; j < i; ++j)
+            for (unsigned int j = 0; j < i; ++j)
               block_operator.block(i, j).vmult_add(*tmp, v.block(j));
             *tmp *= -1.;
             diagonal_inverse.block(i, i).vmult_add(v.block(i), *tmp);
@@ -942,17 +942,17 @@ block_back_substitution(
     Assert(v.n_blocks() == m, ExcDimensionMismatch(v.n_blocks(), m));
     Assert(u.n_blocks() == m, ExcDimensionMismatch(u.n_blocks(), m));
 
-    if(m == 0)
+    if (m == 0)
       return;
 
     diagonal_inverse.block(m - 1, m - 1).vmult(v.block(m - 1), u.block(m - 1));
 
-    for(int i = m - 2; i >= 0; --i)
+    for (int i = m - 2; i >= 0; --i)
       {
         auto& dst = v.block(i);
         dst       = u.block(i);
         dst *= -1.;
-        for(unsigned int j = i + 1; j < m; ++j)
+        for (unsigned int j = i + 1; j < m; ++j)
           block_operator.block(i, j).vmult_add(dst, v.block(j));
         dst *= -1.;
         diagonal_inverse.block(i, i).vmult(dst,
@@ -975,19 +975,19 @@ block_back_substitution(
         typename VectorMemory<typename Range::BlockType>::Pointer tmp(
           vector_memory);
 
-        if(m == 0)
+        if (m == 0)
           return;
 
         diagonal_inverse.block(m - 1, m - 1)
           .vmult_add(v.block(m - 1), u.block(m - 1));
 
-        for(int i = m - 2; i >= 0; --i)
+        for (int i = m - 2; i >= 0; --i)
           {
             diagonal_inverse.block(i, i).reinit_range_vector(
               *tmp, /*bool omit_zeroing_entries=*/true);
             *tmp = u.block(i);
             *tmp *= -1.;
-            for(unsigned int j = i + 1; j < m; ++j)
+            for (unsigned int j = i + 1; j < m; ++j)
               block_operator.block(i, j).vmult_add(*tmp, v.block(j));
             *tmp *= -1.;
             diagonal_inverse.block(i, i).vmult_add(v.block(i), *tmp);

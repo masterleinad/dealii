@@ -64,13 +64,13 @@ test(const bool apply_constrains, const unsigned int hp)
 
   // refine first cell (simple case)
   std::string hp_string;
-  if(hp == 1)
+  if (hp == 1)
     {
       hp_string = "_hpSimple";
       cell->set_refine_flag();
     }
   // refine second cell
-  else if(hp == 2)
+  else if (hp == 2)
     {
       hp_string = "_hpComplex";
       cell++;
@@ -88,14 +88,14 @@ test(const bool apply_constrains, const unsigned int hp)
 
   Vector<double> v(n_dofs);
 
-  if(apply_constrains)
+  if (apply_constrains)
     deallog << hp_string << std::endl;
 
-  for(unsigned int i = 0; i < n_dofs; i++)
+  for (unsigned int i = 0; i < n_dofs; i++)
     {
       v    = 0.;
       v[i] = 1.;
-      if(apply_constrains)
+      if (apply_constrains)
         {
           constraints.distribute(v);
           deallog << "i=" << i << std::endl;

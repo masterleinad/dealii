@@ -164,13 +164,13 @@ namespace internal
       mapping_info_storage.data_index_offsets.resize(1);
       mapping_info_storage.JxW_values.resize(fe_values.n_quadrature_points);
       mapping_info_storage.jacobians[0].resize(fe_values.n_quadrature_points);
-      if(update_flags & update_quadrature_points)
+      if (update_flags & update_quadrature_points)
         {
           mapping_info_storage.quadrature_point_offsets.resize(1, 0);
           mapping_info_storage.quadrature_points.resize(
             fe_values.n_quadrature_points);
         }
-      if(fe_values.get_update_flags() & update_normal_vectors)
+      if (fe_values.get_update_flags() & update_normal_vectors)
         {
           mapping_info_storage.normal_vectors.resize(
             fe_values.n_quadrature_points);
@@ -195,29 +195,29 @@ namespace internal
     MappingDataOnTheFly<dim, Number>::reinit(
       typename dealii::Triangulation<dim>::cell_iterator cell)
     {
-      if(present_cell == cell)
+      if (present_cell == cell)
         return;
       present_cell = cell;
       fe_values.reinit(present_cell);
-      for(unsigned int q = 0; q < fe_values.get_quadrature().size(); ++q)
+      for (unsigned int q = 0; q < fe_values.get_quadrature().size(); ++q)
         {
-          if(fe_values.get_update_flags() & update_JxW_values)
+          if (fe_values.get_update_flags() & update_JxW_values)
             mapping_info_storage.JxW_values[q] = fe_values.JxW(q);
-          if(fe_values.get_update_flags() & update_jacobians)
+          if (fe_values.get_update_flags() & update_jacobians)
             {
               Tensor<2, dim> jac = fe_values.jacobian(q);
               jac                = invert(transpose(jac));
-              for(unsigned int d = 0; d < dim; ++d)
-                for(unsigned int e = 0; e < dim; ++e)
+              for (unsigned int d = 0; d < dim; ++d)
+                for (unsigned int e = 0; e < dim; ++e)
                   mapping_info_storage.jacobians[0][q][d][e] = jac[d][e];
             }
-          if(fe_values.get_update_flags() & update_quadrature_points)
-            for(unsigned int d = 0; d < dim; ++d)
+          if (fe_values.get_update_flags() & update_quadrature_points)
+            for (unsigned int d = 0; d < dim; ++d)
               mapping_info_storage.quadrature_points[q][d]
                 = fe_values.quadrature_point(q)[d];
-          if(fe_values.get_update_flags() & update_normal_vectors)
+          if (fe_values.get_update_flags() & update_normal_vectors)
             {
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 mapping_info_storage.normal_vectors[q][d]
                   = fe_values.normal_vector(q)[d];
               mapping_info_storage.normals_times_jacobians[0][q]

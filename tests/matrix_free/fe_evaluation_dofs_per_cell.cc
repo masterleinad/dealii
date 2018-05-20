@@ -63,7 +63,7 @@ test()
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
   DoFHandler<dim> dof(tria);
-  for(unsigned int i = 0; i < fes.size(); ++i)
+  for (unsigned int i = 0; i < fes.size(); ++i)
     {
       deallog << "Checking " << fes[i]->get_name() << std::endl;
       dof.distribute_dofs(*fes[i]);
@@ -72,17 +72,17 @@ test()
                          ConstraintMatrix(),
                          QGauss<1>(degree + 3),
                          typename MatrixFree<dim>::AdditionalData());
-      if(i < 2)
+      if (i < 2)
         {
           FEEvaluation<dim, degree + 1, degree + 3, dim> phi(matrix_free);
           print_info(phi);
         }
-      if(i != 2)
+      if (i != 2)
         {
           FEEvaluation<dim, -1, 0, dim> phi(matrix_free);
           print_info(phi);
         }
-      if(i == 2)
+      if (i == 2)
         {
           FEEvaluation<dim, degree + 1, degree + 3, 2> phi(matrix_free);
           print_info(phi);

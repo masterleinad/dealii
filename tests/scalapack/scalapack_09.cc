@@ -135,9 +135,9 @@ main(int argc, char** argv)
   const double                    tol_double = 1e-10;
   const float                     tol_float  = 1e-5;
 
-  for(const auto& b : blocks)
+  for (const auto& b : blocks)
     test<double>(b, tol_double);
 
-  for(const auto& b : blocks)
+  for (const auto& b : blocks)
     test<float>(b, tol_float);
 }

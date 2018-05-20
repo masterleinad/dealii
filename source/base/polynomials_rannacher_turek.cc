@@ -30,22 +30,22 @@ PolynomialsRannacherTurek<dim>::compute_value(const unsigned int i,
                                               const Point<dim>&  p) const
 {
   Assert(dim == 2, ExcNotImplemented());
-  if(i == 0)
+  if (i == 0)
     {
       return (0.75 - 2.5 * p(0) + 1.5 * p(1)
               + 1.5 * (p(0) * p(0) - p(1) * p(1)));
     }
-  else if(i == 1)
+  else if (i == 1)
     {
       return (-0.25 - 0.5 * p(0) + 1.5 * p(1)
               + 1.5 * (p(0) * p(0) - p(1) * p(1)));
     }
-  else if(i == 2)
+  else if (i == 2)
     {
       return (0.75 + 1.5 * p(0) - 2.5 * p(1)
               - 1.5 * (p(0) * p(0) - p(1) * p(1)));
     }
-  else if(i == 3)
+  else if (i == 3)
     {
       return (-0.25 + 1.5 * p(0) - 0.5 * p(1)
               - 1.5 * (p(0) * p(0) - p(1) * p(1)));
@@ -62,22 +62,22 @@ PolynomialsRannacherTurek<dim>::compute_grad(const unsigned int i,
 {
   Assert(dim == 2, ExcNotImplemented());
   Tensor<1, dim> grad;
-  if(i == 0)
+  if (i == 0)
     {
       grad[0] = -2.5 + 3 * p(0);
       grad[1] = 1.5 - 3 * p(1);
     }
-  else if(i == 1)
+  else if (i == 1)
     {
       grad[0] = -0.5 + 3.0 * p(0);
       grad[1] = 1.5 - 3.0 * p(1);
     }
-  else if(i == 2)
+  else if (i == 2)
     {
       grad[0] = 1.5 - 3.0 * p(0);
       grad[1] = -2.5 + 3.0 * p(1);
     }
-  else if(i == 3)
+  else if (i == 3)
     {
       grad[0] = 1.5 - 3.0 * p(0);
       grad[1] = -0.5 + 3.0 * p(1);
@@ -97,28 +97,28 @@ PolynomialsRannacherTurek<dim>::compute_grad_grad(const unsigned int i,
 {
   Assert(dim == 2, ExcNotImplemented());
   Tensor<2, dim> grad_grad;
-  if(i == 0)
+  if (i == 0)
     {
       grad_grad[0][0] = 3;
       grad_grad[0][1] = 0;
       grad_grad[1][0] = 0;
       grad_grad[1][1] = -3;
     }
-  else if(i == 1)
+  else if (i == 1)
     {
       grad_grad[0][0] = 3;
       grad_grad[0][1] = 0;
       grad_grad[1][0] = 0;
       grad_grad[1][1] = -3;
     }
-  else if(i == 2)
+  else if (i == 2)
     {
       grad_grad[0][0] = -3;
       grad_grad[0][1] = 0;
       grad_grad[1][0] = 0;
       grad_grad[1][1] = 3;
     }
-  else if(i == 3)
+  else if (i == 3)
     {
       grad_grad[0][0] = -3;
       grad_grad[0][1] = 0;
@@ -150,25 +150,25 @@ PolynomialsRannacherTurek<dim>::compute(
   Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.size() == 0,
          ExcDimensionMismatch(fourth_derivatives.size(), n_pols));
 
-  for(unsigned int i = 0; i < n_pols; ++i)
+  for (unsigned int i = 0; i < n_pols; ++i)
     {
-      if(values.size() != 0)
+      if (values.size() != 0)
         {
           values[i] = compute_value(i, unit_point);
         }
-      if(grads.size() != 0)
+      if (grads.size() != 0)
         {
           grads[i] = compute_grad(i, unit_point);
         }
-      if(grad_grads.size() != 0)
+      if (grad_grads.size() != 0)
         {
           grad_grads[i] = compute_grad_grad(i, unit_point);
         }
-      if(third_derivatives.size() != 0)
+      if (third_derivatives.size() != 0)
         {
           third_derivatives[i] = compute_derivative<3>(i, unit_point);
         }
-      if(fourth_derivatives.size() != 0)
+      if (fourth_derivatives.size() != 0)
         {
           fourth_derivatives[i] = compute_derivative<4>(i, unit_point);
         }

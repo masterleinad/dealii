@@ -33,7 +33,7 @@ main()
 {
   initlog();
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       ParameterHandler prm;
       prm.enter_subsection("Testing");
@@ -49,7 +49,7 @@ main()
       // test both relevant parse_input functions
       try
         {
-          if(i == 0)
+          if (i == 0)
             {
               prm.parse_input("prm/parameter_handler_backslash_05.prm");
             }
@@ -70,7 +70,7 @@ main()
           deallog << list_1 << std::endl;
           deallog << list_2 << std::endl;
         }
-      catch(ParameterHandler::ExcCannotParseLine& exc)
+      catch (ParameterHandler::ExcCannotParseLine& exc)
         {
           deallog << exc.get_exc_name() << std::endl;
           exc.print_info(deallog.get_file_stream());

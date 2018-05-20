@@ -65,8 +65,8 @@ test()
   DoFTools::extract_locally_relevant_dofs(dofh, locally_relevant_set);
 
   TrilinosWrappers::MPI::Vector vec(dofh.locally_owned_dofs(), MPI_COMM_WORLD);
-  for(unsigned int i = vec.local_range().first; i < vec.local_range().second;
-      ++i)
+  for (unsigned int i = vec.local_range().first; i < vec.local_range().second;
+       ++i)
     vec(i) = i;
   vec.compress(VectorOperation::insert);
 
@@ -79,7 +79,7 @@ test()
     mapping, dofh, vec_rel, indicators);
 
   // we got here, so no exception.
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

@@ -150,7 +150,7 @@ ExactSolution<dim>::value(const Point<dim>&  p,
   AssertIndexRange(component, dim);
 
   double val = -1000;
-  switch(component)
+  switch (component)
     {
       case 0:
         val = cos(numbers::PI * p(0)) * sin(numbers::PI * p(1)) + bc_constant;
@@ -177,10 +177,10 @@ ExactSolution<dim>::value_list(const std::vector<Point<dim>>& points,
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
   AssertIndexRange(component, dim);
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     {
       const Point<dim>& p = points[i];
-      switch(component)
+      switch (component)
         {
           case 0:
             values[i]
@@ -200,7 +200,7 @@ ExactSolution<dim>::vector_value_list(const std::vector<Point<dim>>& points,
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     {
       const Point<dim>& p = points[i];
       values[i](0)
@@ -240,7 +240,7 @@ RightHandSide<dim>::vector_value_list(
   Assert(value_list.size() == points.size(),
          ExcDimensionMismatch(value_list.size(), points.size()));
   const unsigned int n_points = points.size();
-  for(unsigned int p = 0; p < n_points; ++p)
+  for (unsigned int p = 0; p < n_points; ++p)
     {
       RightHandSide<dim>::vector_value(points[p], value_list[p]);
     }
@@ -266,7 +266,7 @@ MaxwellProblem<dim>::dotprod(const Tensor<1, dim>& A,
                              const Tensor<1, dim>& B) const
 {
   double return_val = 0;
-  for(unsigned int k = 0; k < dim; k++)
+  for (unsigned int k = 0; k < dim; k++)
     {
       return_val += A[k] * B[k];
     }
@@ -279,7 +279,7 @@ MaxwellProblem<dim>::dotprod(const Tensor<1, dim>& A,
                              const Vector<double>& B) const
 {
   double return_val = 0;
-  for(unsigned int k = 0; k < dim; k++)
+  for (unsigned int k = 0; k < dim; k++)
     {
       return_val += A[k] * B(k);
     }
@@ -329,28 +329,28 @@ MaxwellProblem<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
       fe_values.reinit(cell);
       right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                         rhs_values);
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               value_i[0] = fe_values.shape_value_component(i, q_point, 0);
               value_i[1] = fe_values.shape_value_component(i, q_point, 1);
-              if(dim == 3)
+              if (dim == 3)
                 {
                   value_i[2] = fe_values.shape_value_component(i, q_point, 2);
                 }
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
                   value_j[0] = fe_values.shape_value_component(j, q_point, 0);
                   value_j[1] = fe_values.shape_value_component(j, q_point, 1);
-                  if(dim == 3)
+                  if (dim == 3)
                     {
                       value_j[2]
                         = fe_values.shape_value_component(j, q_point, 2);
@@ -413,9 +413,9 @@ template <int dim>
 void
 MaxwellProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for (unsigned int cycle = 0; cycle < 3; ++cycle)
     {
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_cube(triangulation, -1, 1);
           triangulation.refine_global(2);

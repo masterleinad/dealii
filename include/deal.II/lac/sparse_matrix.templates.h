@@ -119,7 +119,7 @@ SparseMatrix<number>::SparseMatrix(const SparsityPattern& c,
   // override in a derived class
   // for clarity be explicit on which function is called
   SparseMatrix<number>::reinit(c);
-  for(size_type i = 0; i < n(); ++i)
+  for (size_type i = 0; i < n(); ++i)
     this->set(i, i, 1.);
 }
 
@@ -173,7 +173,7 @@ SparseMatrix<number>::operator=(const double d)
   const size_type   grain_size
     = internal::SparseMatrixImplementation::minimum_parallel_grain_size
       * (cols->n_nonzero_elements() + m()) / m();
-  if(matrix_size > grain_size)
+  if (matrix_size > grain_size)
     parallel::apply_to_subranges(
       0U,
       matrix_size,
@@ -183,12 +183,12 @@ SparseMatrix<number>::operator=(const double d)
         std::placeholders::_2,
         val.get()),
       grain_size);
-  else if(matrix_size > 0)
+  else if (matrix_size > 0)
     {
 #ifdef DEAL_II_WITH_CXX17
-      if constexpr(std::is_trivial<number>::value)
+      if constexpr (std::is_trivial<number>::value)
 #else
-      if(std::is_trivial<number>::value)
+      if (std::is_trivial<number>::value)
 #endif
         std::memset(val.get(), 0, matrix_size * sizeof(number));
       else
@@ -209,7 +209,7 @@ SparseMatrix<number>::operator=(const IdentityMatrix& id)
          ExcDimensionMismatch(cols->n_cols(), id.n()));
 
   *this = 0;
-  for(size_type i = 0; i < n(); ++i)
+  for (size_type i = 0; i < n(); ++i)
     this->set(i, i, 1.);
 
   return *this;
@@ -221,7 +221,7 @@ SparseMatrix<number>::reinit(const SparsityPattern& sparsity)
 {
   cols = &sparsity;
 
-  if(cols->empty())
+  if (cols->empty())
     {
       val.reset();
       max_len = 0;
@@ -229,7 +229,7 @@ SparseMatrix<number>::reinit(const SparsityPattern& sparsity)
     }
 
   const std::size_t N = cols->n_nonzero_elements();
-  if(N > max_len || max_len == 0)
+  if (N > max_len || max_len == 0)
     {
       val     = std_cxx14::make_unique<number[]>(N);
       max_len = N;
@@ -251,7 +251,7 @@ template <typename number>
 bool
 SparseMatrix<number>::empty() const
 {
-  if(cols == nullptr)
+  if (cols == nullptr)
     return true;
   else
     return cols->empty();
@@ -281,8 +281,8 @@ SparseMatrix<number>::n_actually_nonzero_elements(const double threshold) const
   Assert(threshold >= 0, ExcMessage("Negative threshold!"));
   size_type         nnz       = 0;
   const std::size_t nnz_alloc = n_nonzero_elements();
-  for(size_type i = 0; i < nnz_alloc; ++i)
-    if(std::abs(val[i]) > threshold)
+  for (size_type i = 0; i < nnz_alloc; ++i)
+    if (std::abs(val[i]) > threshold)
       ++nnz;
   return nnz;
 }
@@ -295,17 +295,17 @@ SparseMatrix<number>::symmetrize()
   Assert(cols->rows == cols->cols, ExcNotQuadratic());
 
   const size_type n_rows = m();
-  for(size_type row = 0; row < n_rows; ++row)
+  for (size_type row = 0; row < n_rows; ++row)
     {
       // first skip diagonal entry
       number* val_ptr = &val[cols->rowstart[row]];
-      if(m() == n())
+      if (m() == n())
         ++val_ptr;
       const size_type*    colnum_ptr = &cols->colnums[cols->rowstart[row] + 1];
       const number* const val_end_of_row = &val[cols->rowstart[row + 1]];
 
       // treat lower left triangle
-      while((val_ptr != val_end_of_row) && (*colnum_ptr < row))
+      while ((val_ptr != val_end_of_row) && (*colnum_ptr < row))
         {
           // compute the mean of this
           // and the transpose value
@@ -348,9 +348,9 @@ SparseMatrix<number>::copy_from(const FullMatrix<somenumber>& matrix)
   *this = 0;
 
   // then copy old matrix
-  for(size_type row = 0; row < matrix.m(); ++row)
-    for(size_type col = 0; col < matrix.n(); ++col)
-      if(matrix(row, col) != somenumber())
+  for (size_type row = 0; row < matrix.m(); ++row)
+    for (size_type col = 0; col < matrix.n(); ++col)
+      if (matrix(row, col) != somenumber())
         set(row, col, number(matrix(row, col)));
 }
 
@@ -369,7 +369,7 @@ SparseMatrix<number>::copy_from(const TrilinosWrappers::SparseMatrix& matrix)
   std::vector<TrilinosScalar> value_cache;
   std::vector<size_type>      colnum_cache;
 
-  for(size_type row = 0; row < matrix.m(); ++row)
+  for (size_type row = 0; row < matrix.m(); ++row)
     {
       value_cache.resize(matrix.n());
       colnum_cache.resize(matrix.n());
@@ -414,7 +414,7 @@ SparseMatrix<number>::add(const number                    factor,
   const somenumber*   matrix_ptr = matrix.val.get();
   const number* const end_ptr    = val.get() + cols->n_nonzero_elements();
 
-  while(val_ptr != end_ptr)
+  while (val_ptr != end_ptr)
     *val_ptr++ += factor * number(*matrix_ptr++);
 }
 
@@ -445,22 +445,22 @@ namespace internal
       const size_type*             colnum_ptr = &colnums[rowstart[begin_row]];
       typename OutVector::iterator dst_ptr    = dst.begin() + begin_row;
 
-      if(add == false)
-        for(size_type row = begin_row; row < end_row; ++row)
+      if (add == false)
+        for (size_type row = begin_row; row < end_row; ++row)
           {
             typename OutVector::value_type s   = 0.;
             const number* const val_end_of_row = &values[rowstart[row + 1]];
-            while(val_ptr != val_end_of_row)
+            while (val_ptr != val_end_of_row)
               s += typename OutVector::value_type(*val_ptr++) *
                    typename OutVector::value_type(src(*colnum_ptr++));
             *dst_ptr++ = s;
           }
       else
-        for(size_type row = begin_row; row < end_row; ++row)
+        for (size_type row = begin_row; row < end_row; ++row)
           {
             typename OutVector::value_type s   = *dst_ptr;
             const number* const val_end_of_row = &values[rowstart[row + 1]];
-            while(val_ptr != val_end_of_row)
+            while (val_ptr != val_end_of_row)
               s += typename OutVector::value_type(*val_ptr++) *
                    typename OutVector::value_type(src(*colnum_ptr++));
             *dst_ptr++ = s;
@@ -486,12 +486,13 @@ SparseMatrix<number>::add(const size_type  row,
   // just go through the column indices and
   // look whether we found one, rather than
   // doing many binary searches
-  if(elide_zero_values == false && col_indices_are_sorted == true && n_cols > 3)
+  if (elide_zero_values == false && col_indices_are_sorted == true
+      && n_cols > 3)
     {
       // check whether the given indices are
       // really sorted
 #ifdef DEBUG
-      for(size_type i = 1; i < n_cols; ++i)
+      for (size_type i = 1; i < n_cols; ++i)
         Assert(
           col_indices[i] > col_indices[i - 1],
           ExcMessage("List of indices is unsorted or contains duplicates."));
@@ -501,7 +502,7 @@ SparseMatrix<number>::add(const size_type  row,
       const size_type  row_length_1 = cols->row_length(row) - 1;
       number*          val_ptr      = &val[cols->rowstart[row]];
 
-      if(m() == n())
+      if (m() == n())
         {
           // find diagonal and add it if found
           Assert(this_cols[0] == row, ExcInternalError());
@@ -509,7 +510,7 @@ SparseMatrix<number>::add(const size_type  row,
             = Utilities::lower_bound(col_indices, col_indices + n_cols, row);
           const size_type diag      = diag_pos - col_indices;
           size_type       post_diag = diag;
-          if(diag != n_cols && *diag_pos == row)
+          if (diag != n_cols && *diag_pos == row)
             {
               val_ptr[0] += *(values + (diag_pos - col_indices));
               ++post_diag;
@@ -517,10 +518,10 @@ SparseMatrix<number>::add(const size_type  row,
 
           // add indices before diagonal
           size_type counter = 1;
-          for(size_type i = 0; i < diag; ++i)
+          for (size_type i = 0; i < diag; ++i)
             {
-              while(this_cols[counter] < col_indices[i]
-                    && counter < row_length_1)
+              while (this_cols[counter] < col_indices[i]
+                     && counter < row_length_1)
                 ++counter;
 
               Assert((this_cols[counter] == col_indices[i])
@@ -531,10 +532,10 @@ SparseMatrix<number>::add(const size_type  row,
             }
 
           // add indices after diagonal
-          for(size_type i = post_diag; i < n_cols; ++i)
+          for (size_type i = post_diag; i < n_cols; ++i)
             {
-              while(this_cols[counter] < col_indices[i]
-                    && counter < row_length_1)
+              while (this_cols[counter] < col_indices[i]
+                     && counter < row_length_1)
                 ++counter;
 
               Assert((this_cols[counter] == col_indices[i])
@@ -551,10 +552,10 @@ SparseMatrix<number>::add(const size_type  row,
       else
         {
           size_type counter = 0;
-          for(size_type i = 0; i < n_cols; ++i)
+          for (size_type i = 0; i < n_cols; ++i)
             {
-              while(this_cols[counter] < col_indices[i]
-                    && counter < row_length_1)
+              while (this_cols[counter] < col_indices[i]
+                     && counter < row_length_1)
                 ++counter;
 
               Assert((this_cols[counter] == col_indices[i])
@@ -577,16 +578,16 @@ SparseMatrix<number>::add(const size_type  row,
   size_type              index          = cols->rowstart[row];
   const size_type        next_row_index = cols->rowstart[row + 1];
 
-  for(size_type j = 0; j < n_cols; ++j)
+  for (size_type j = 0; j < n_cols; ++j)
     {
       const number value = number(values[j]);
       AssertIsFinite(value);
 
 #ifdef DEBUG
-      if(elide_zero_values == true && value == number())
+      if (elide_zero_values == true && value == number())
         continue;
 #else
-      if(value == number())
+      if (value == number())
         continue;
 #endif
 
@@ -594,7 +595,7 @@ SparseMatrix<number>::add(const size_type  row,
       // the next present index in the sparsity
       // pattern (otherwise, do a binary
       // search)
-      if(index < next_row_index && my_cols[index] == col_indices[j])
+      if (index < next_row_index && my_cols[index] == col_indices[j])
         goto add_value;
 
       index = cols->operator()(row, col_indices[j]);
@@ -603,7 +604,7 @@ SparseMatrix<number>::add(const size_type  row,
       // the matrix that are not part of
       // the sparsity pattern, if the
       // value we add is zero
-      if(index == SparsityPattern::invalid_entry)
+      if (index == SparsityPattern::invalid_entry)
         {
           Assert(value == number(), ExcInvalidIndex(row, col_indices[j]));
           continue;
@@ -634,21 +635,21 @@ SparseMatrix<number>::set(const size_type  row,
   std::size_t       index = cols->rowstart[row], next_index = index;
   const std::size_t next_row_index = cols->rowstart[row + 1];
 
-  if(elide_zero_values == true)
+  if (elide_zero_values == true)
     {
-      for(size_type j = 0; j < n_cols; ++j)
+      for (size_type j = 0; j < n_cols; ++j)
         {
           const number value = number(values[j]);
           AssertIsFinite(value);
 
-          if(value == number())
+          if (value == number())
             continue;
 
           // check whether the next index to set is
           // the next present index in the sparsity
           // pattern (otherwise, do a binary
           // search)
-          if(index != next_row_index && my_cols[index] == col_indices[j])
+          if (index != next_row_index && my_cols[index] == col_indices[j])
             goto set_value;
 
           next_index = cols->operator()(row, col_indices[j]);
@@ -657,7 +658,7 @@ SparseMatrix<number>::set(const size_type  row,
           // the matrix that are not part of
           // the sparsity pattern, if the
           // value to which we set it is zero
-          if(next_index == SparsityPattern::invalid_entry)
+          if (next_index == SparsityPattern::invalid_entry)
             {
               Assert(false, ExcInvalidIndex(row, col_indices[j]));
               continue;
@@ -672,17 +673,17 @@ SparseMatrix<number>::set(const size_type  row,
   else
     {
       // same code as above, but now check for zeros
-      for(size_type j = 0; j < n_cols; ++j)
+      for (size_type j = 0; j < n_cols; ++j)
         {
           const number value = number(values[j]);
           AssertIsFinite(value);
 
-          if(index != next_row_index && my_cols[index] == col_indices[j])
+          if (index != next_row_index && my_cols[index] == col_indices[j])
             goto set_value_checked;
 
           next_index = cols->operator()(row, col_indices[j]);
 
-          if(next_index == SparsityPattern::invalid_entry)
+          if (next_index == SparsityPattern::invalid_entry)
             {
               Assert(value == number(), ExcInvalidIndex(row, col_indices[j]));
               continue;
@@ -738,9 +739,9 @@ SparseMatrix<number>::Tvmult(OutVector& dst, const InVector& src) const
 
   dst = 0;
 
-  for(size_type i = 0; i < m(); i++)
+  for (size_type i = 0; i < m(); i++)
     {
-      for(size_type j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
+      for (size_type j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
         {
           const size_type p = cols->colnums[j];
           dst(p) += typename OutVector::value_type(val[j]) *
@@ -789,8 +790,8 @@ SparseMatrix<number>::Tvmult_add(OutVector& dst, const InVector& src) const
 
   Assert(!PointerComparison::equal(&src, &dst), ExcSourceEqualsDestination());
 
-  for(size_type i = 0; i < m(); i++)
-    for(size_type j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
+  for (size_type i = 0; i < m(); i++)
+    for (size_type j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
       {
         const size_type p = cols->colnums[j];
         dst(p) += typename OutVector::value_type(val[j]) *
@@ -821,10 +822,10 @@ namespace internal
     {
       typename InVector::value_type norm_sqr = 0.;
 
-      for(size_type i = begin_row; i < end_row; ++i)
+      for (size_type i = begin_row; i < end_row; ++i)
         {
           typename InVector::value_type s = 0;
-          for(size_type j = rowstart[i]; j < rowstart[i + 1]; j++)
+          for (size_type j = rowstart[i]; j < rowstart[i + 1]; j++)
             s += typename InVector::value_type(values[j]) * v(colnums[j]);
           norm_sqr += v(i)
                       * numbers::NumberTraits<
@@ -883,10 +884,10 @@ namespace internal
     {
       typename InVector::value_type norm_sqr = 0.;
 
-      for(size_type i = begin_row; i < end_row; ++i)
+      for (size_type i = begin_row; i < end_row; ++i)
         {
           typename InVector::value_type s = 0;
-          for(size_type j = rowstart[i]; j < rowstart[i + 1]; j++)
+          for (size_type j = rowstart[i]; j < rowstart[i + 1]; j++)
             s += typename InVector::value_type(values[j]) * v(colnums[j]);
           norm_sqr += u(i)
                       * numbers::NumberTraits<
@@ -941,7 +942,7 @@ SparseMatrix<number>::mmult(SparseMatrix<numberC>&       C,
   const SparsityPattern& sp_B = *B.cols;
 
   // clear previous content of C
-  if(rebuild_sparsity_C == true)
+  if (rebuild_sparsity_C == true)
     {
       // we are about to change the sparsity pattern of C. this can not work
       // if either A or B use the same sparsity pattern
@@ -976,7 +977,7 @@ SparseMatrix<number>::mmult(SparseMatrix<numberC>&       C,
   // elements that are going to be written
   // into the new matrix.
   unsigned int max_n_cols_B = 0;
-  for(size_type i = 0; i < B.m(); ++i)
+  for (size_type i = 0; i < B.m(); ++i)
     max_n_cols_B = std::max(max_n_cols_B, sp_B.row_length(i));
   std::vector<numberC> new_entries(max_n_cols_B);
 
@@ -984,18 +985,18 @@ SparseMatrix<number>::mmult(SparseMatrix<numberC>&       C,
   // nested loops. One over the rows of A, for each row we then loop over all
   // the columns, and then we need to multiply each element with all the
   // elements in that row in B.
-  for(size_type i = 0; i < C.m(); ++i)
+  for (size_type i = 0; i < C.m(); ++i)
     {
       const size_type*       rows     = &sp_A.colnums[sp_A.rowstart[i]];
       const size_type* const end_rows = &sp_A.colnums[sp_A.rowstart[i + 1]];
-      for(; rows != end_rows; ++rows)
+      for (; rows != end_rows; ++rows)
         {
           const number     A_val = val[rows - &sp_A.colnums[sp_A.rowstart[0]]];
           const size_type  col   = *rows;
           const size_type* new_cols = (&sp_B.colnums[sp_B.rowstart[col]]);
 
           // special treatment for diagonal
-          if(sp_B.n_rows() == sp_B.n_cols())
+          if (sp_B.n_rows() == sp_B.n_cols())
             {
               C.add(
                 i,
@@ -1013,7 +1014,7 @@ SparseMatrix<number>::mmult(SparseMatrix<numberC>&       C,
           const numberB* B_val_ptr
             = &B.val[new_cols - &sp_B.colnums[sp_B.rowstart[0]]];
           const numberB* const end_cols = &B.val[sp_B.rowstart[col + 1]];
-          for(; B_val_ptr != end_cols; ++B_val_ptr)
+          for (; B_val_ptr != end_cols; ++B_val_ptr)
             *new_ptr++ = numberC(A_val) * numberC(*B_val_ptr)
                          * numberC(use_vector ? V(col) : 1);
 
@@ -1045,7 +1046,7 @@ SparseMatrix<number>::Tmmult(SparseMatrix<numberC>&       C,
   const SparsityPattern& sp_B = *B.cols;
 
   // clear previous content of C
-  if(rebuild_sparsity_C == true)
+  if (rebuild_sparsity_C == true)
     {
       // we are about to change the sparsity pattern of C. this can not work
       // if either A or B use the same sparsity pattern
@@ -1069,7 +1070,7 @@ SparseMatrix<number>::Tmmult(SparseMatrix<numberC>&       C,
       // DynamicSparsityPattern class.
       {
         DynamicSparsityPattern dsp(n(), B.n());
-        for(size_type i = 0; i < sp_A.n_rows(); ++i)
+        for (size_type i = 0; i < sp_A.n_rows(); ++i)
           {
             const size_type*       rows = &sp_A.colnums[sp_A.rowstart[i]];
             const size_type* const end_rows
@@ -1080,16 +1081,16 @@ SparseMatrix<number>::Tmmult(SparseMatrix<numberC>&       C,
             size_type* end_new_cols
               = const_cast<size_type*>(&sp_B.colnums[sp_B.rowstart[i + 1]]);
 
-            if(sp_B.n_rows() == sp_B.n_cols())
+            if (sp_B.n_rows() == sp_B.n_cols())
               ++new_cols;
 
-            for(; rows != end_rows; ++rows)
+            for (; rows != end_rows; ++rows)
               {
                 const size_type row = *rows;
 
                 // if B has a diagonal, need to add that manually. this way,
                 // we maintain sortedness.
-                if(sp_B.n_rows() == sp_B.n_cols())
+                if (sp_B.n_rows() == sp_B.n_cols())
                   dsp.add(row, i);
 
                 dsp.add_entries(row, new_cols, end_new_cols, true);
@@ -1109,7 +1110,7 @@ SparseMatrix<number>::Tmmult(SparseMatrix<numberC>&       C,
   // elements that are going to be written
   // into the new matrix.
   unsigned int max_n_cols_B = 0;
-  for(size_type i = 0; i < B.m(); ++i)
+  for (size_type i = 0; i < B.m(); ++i)
     max_n_cols_B = std::max(max_n_cols_B, sp_B.row_length(i));
   std::vector<numberC> new_entries(max_n_cols_B);
 
@@ -1117,23 +1118,23 @@ SparseMatrix<number>::Tmmult(SparseMatrix<numberC>&       C,
   // nested loops. One over the rows of A, for each row we then loop over all
   // the columns, and then we need to multiply each element with all the
   // elements in that row in B.
-  for(size_type i = 0; i < m(); ++i)
+  for (size_type i = 0; i < m(); ++i)
     {
       const size_type*       rows     = &sp_A.colnums[sp_A.rowstart[i]];
       const size_type* const end_rows = &sp_A.colnums[sp_A.rowstart[i + 1]];
       const size_type*       new_cols = &sp_B.colnums[sp_B.rowstart[i]];
-      if(sp_B.n_rows() == sp_B.n_cols())
+      if (sp_B.n_rows() == sp_B.n_cols())
         ++new_cols;
 
       const numberB* const end_cols = &B.val[sp_B.rowstart[i + 1]];
 
-      for(; rows != end_rows; ++rows)
+      for (; rows != end_rows; ++rows)
         {
           const size_type row   = *rows;
           const number    A_val = val[rows - &sp_A.colnums[sp_A.rowstart[0]]];
 
           // special treatment for diagonal
-          if(sp_B.n_rows() == sp_B.n_cols())
+          if (sp_B.n_rows() == sp_B.n_cols())
             C.add(
               row,
               i,
@@ -1147,7 +1148,7 @@ SparseMatrix<number>::Tmmult(SparseMatrix<numberC>&       C,
           numberC*       new_ptr = new_entries.data();
           const numberB* B_val_ptr
             = &B.val[new_cols - &sp_B.colnums[sp_B.rowstart[0]]];
-          for(; B_val_ptr != end_cols; ++B_val_ptr)
+          for (; B_val_ptr != end_cols; ++B_val_ptr)
             *new_ptr++ = numberC(A_val) * numberC(*B_val_ptr)
                          * numberC(use_vector ? V(i) : 1);
 
@@ -1170,8 +1171,8 @@ SparseMatrix<number>::l1_norm() const
 
   Vector<real_type> column_sums(n());
   const size_type   n_rows = m();
-  for(size_type row = 0; row < n_rows; ++row)
-    for(size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
+  for (size_type row = 0; row < n_rows; ++row)
+    for (size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
       column_sums(cols->colnums[j])
         += numbers::NumberTraits<number>::abs(val[j]);
 
@@ -1189,13 +1190,13 @@ SparseMatrix<number>::linfty_norm() const
 
   real_type       max    = 0;
   const size_type n_rows = m();
-  for(size_type row = 0; row < n_rows; ++row)
+  for (size_type row = 0; row < n_rows; ++row)
     {
       real_type           sum            = 0;
       const number* const val_end_of_row = &val[cols->rowstart[row + 1]];
-      while(val_ptr != val_end_of_row)
+      while (val_ptr != val_end_of_row)
         sum += numbers::NumberTraits<number>::abs(*val_ptr++);
-      if(sum > max)
+      if (sum > max)
         max = sum;
     }
   return max;
@@ -1210,8 +1211,8 @@ SparseMatrix<number>::frobenius_norm() const
   // reference to rows or columns
   real_type       norm_sqr = 0;
   const size_type n_rows   = m();
-  for(const number* ptr = val.get(); ptr != val.get() + cols->rowstart[n_rows];
-      ++ptr)
+  for (const number* ptr = val.get(); ptr != val.get() + cols->rowstart[n_rows];
+       ++ptr)
     norm_sqr += numbers::NumberTraits<number>::abs_square(*ptr);
 
   return std::sqrt(norm_sqr);
@@ -1242,10 +1243,10 @@ namespace internal
     {
       typename OutVector::value_type norm_sqr = 0.;
 
-      for(size_type i = begin_row; i < end_row; ++i)
+      for (size_type i = begin_row; i < end_row; ++i)
         {
           typename OutVector::value_type s = b(i);
-          for(size_type j = rowstart[i]; j < rowstart[i + 1]; j++)
+          for (size_type j = rowstart[i]; j < rowstart[i + 1]; j++)
             s -= typename OutVector::value_type(values[j]) * u(colnums[j]);
           dst(i) = s;
           norm_sqr += s
@@ -1299,8 +1300,8 @@ namespace
   AssertNoZerosOnDiagonal(const SparseMatrix<number>& matrix)
   {
 #ifdef DEBUG
-    for(typename SparseMatrix<number>::size_type row = 0; row < matrix.m();
-        ++row)
+    for (typename SparseMatrix<number>::size_type row = 0; row < matrix.m();
+         ++row)
       Assert(
         matrix.diag_element(row) != number(),
         ExcMessage("There is a zero on the diagonal of this matrix "
@@ -1352,11 +1353,11 @@ SparseMatrix<number>::precondition_Jacobi(Vector<somenumber>&       dst,
   // in each row, i.e. at index
   // rowstart[i]. and we do have a
   // square matrix by above assertion
-  if(om != number(1.))
-    for(size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr, ++rowstart_ptr)
+  if (om != number(1.))
+    for (size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr, ++rowstart_ptr)
       *dst_ptr = somenumber(om) * *src_ptr / somenumber(val[*rowstart_ptr]);
   else
-    for(size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr, ++rowstart_ptr)
+    for (size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr, ++rowstart_ptr)
       *dst_ptr = *src_ptr / somenumber(val[*rowstart_ptr]);
 }
 
@@ -1388,13 +1389,13 @@ SparseMatrix<number>::precondition_SSOR(
   // case when we have stored the position
   // just right of the diagonal (then we
   // don't have to search for it).
-  if(pos_right_of_diagonal.size() != 0)
+  if (pos_right_of_diagonal.size() != 0)
     {
       Assert(pos_right_of_diagonal.size() == dst.size(),
              ExcDimensionMismatch(pos_right_of_diagonal.size(), dst.size()));
 
       // forward sweep
-      for(size_type row = 0; row < n; ++row, ++dst_ptr, ++rowstart_ptr)
+      for (size_type row = 0; row < n; ++row, ++dst_ptr, ++rowstart_ptr)
         {
           *dst_ptr = src(row);
           const std::size_t first_right_of_diagonal_index
@@ -1402,9 +1403,9 @@ SparseMatrix<number>::precondition_SSOR(
           Assert(first_right_of_diagonal_index <= *(rowstart_ptr + 1),
                  ExcInternalError());
           number s = 0;
-          for(size_type j = (*rowstart_ptr) + 1;
-              j < first_right_of_diagonal_index;
-              ++j)
+          for (size_type j = (*rowstart_ptr) + 1;
+               j < first_right_of_diagonal_index;
+               ++j)
             s += val[j] * number(dst(cols->colnums[j]));
 
           // divide by diagonal element
@@ -1414,20 +1415,20 @@ SparseMatrix<number>::precondition_SSOR(
 
       rowstart_ptr = &cols->rowstart[0];
       dst_ptr      = &dst(0);
-      for(; rowstart_ptr != &cols->rowstart[n]; ++rowstart_ptr, ++dst_ptr)
+      for (; rowstart_ptr != &cols->rowstart[n]; ++rowstart_ptr, ++dst_ptr)
         *dst_ptr *= somenumber(om * (number(2.) - om))
                     * somenumber(val[*rowstart_ptr]);
 
       // backward sweep
       rowstart_ptr = &cols->rowstart[n - 1];
       dst_ptr      = &dst(n - 1);
-      for(int row = n - 1; row >= 0; --row, --rowstart_ptr, --dst_ptr)
+      for (int row = n - 1; row >= 0; --row, --rowstart_ptr, --dst_ptr)
         {
           const size_type end_row = *(rowstart_ptr + 1);
           const size_type first_right_of_diagonal_index
             = pos_right_of_diagonal[row];
           number s = 0;
-          for(size_type j = first_right_of_diagonal_index; j < end_row; ++j)
+          for (size_type j = first_right_of_diagonal_index; j < end_row; ++j)
             s += val[j] * number(dst(cols->colnums[j]));
 
           *dst_ptr -= s * om;
@@ -1440,7 +1441,7 @@ SparseMatrix<number>::precondition_SSOR(
   // of the first element right of the
   // diagonal manually for each sweep.
   // forward sweep
-  for(size_type row = 0; row < n; ++row, ++dst_ptr, ++rowstart_ptr)
+  for (size_type row = 0; row < n; ++row, ++dst_ptr, ++rowstart_ptr)
     {
       *dst_ptr = src(row);
       // find the first element in this line
@@ -1457,8 +1458,8 @@ SparseMatrix<number>::precondition_SSOR(
            - &cols->colnums[0]);
 
       number s = 0;
-      for(size_type j = (*rowstart_ptr) + 1; j < first_right_of_diagonal_index;
-          ++j)
+      for (size_type j = (*rowstart_ptr) + 1; j < first_right_of_diagonal_index;
+           ++j)
         s += val[j] * number(dst(cols->colnums[j]));
 
       // divide by diagonal element
@@ -1469,13 +1470,13 @@ SparseMatrix<number>::precondition_SSOR(
 
   rowstart_ptr = &cols->rowstart[0];
   dst_ptr      = &dst(0);
-  for(size_type row = 0; row < n; ++row, ++rowstart_ptr, ++dst_ptr)
+  for (size_type row = 0; row < n; ++row, ++rowstart_ptr, ++dst_ptr)
     *dst_ptr *= somenumber((number(2.) - om)) * somenumber(val[*rowstart_ptr]);
 
   // backward sweep
   rowstart_ptr = &cols->rowstart[n - 1];
   dst_ptr      = &dst(n - 1);
-  for(int row = n - 1; row >= 0; --row, --rowstart_ptr, --dst_ptr)
+  for (int row = n - 1; row >= 0; --row, --rowstart_ptr, --dst_ptr)
     {
       const size_type end_row = *(rowstart_ptr + 1);
       const size_type first_right_of_diagonal_index
@@ -1484,7 +1485,7 @@ SparseMatrix<number>::precondition_SSOR(
                                   static_cast<size_type>(row))
            - &cols->colnums[0]);
       number s = 0;
-      for(size_type j = first_right_of_diagonal_index; j < end_row; ++j)
+      for (size_type j = first_right_of_diagonal_index; j < end_row; ++j)
         s += val[j] * number(dst(cols->colnums[j]));
       *dst_ptr -= s * om;
       Assert(val[*rowstart_ptr] != number(), ExcDivideByZero());
@@ -1532,13 +1533,13 @@ SparseMatrix<number>::SOR(Vector<somenumber>& dst, const number om) const
 
   AssertNoZerosOnDiagonal(*this);
 
-  for(size_type row = 0; row < m(); ++row)
+  for (size_type row = 0; row < m(); ++row)
     {
       somenumber s = dst(row);
-      for(size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
+      for (size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
         {
           const size_type col = cols->colnums[j];
-          if(col < row)
+          if (col < row)
             s -= somenumber(val[j]) * dst(col);
         }
 
@@ -1559,16 +1560,16 @@ SparseMatrix<number>::TSOR(Vector<somenumber>& dst, const number om) const
   AssertNoZerosOnDiagonal(*this);
 
   size_type row = m() - 1;
-  while(true)
+  while (true)
     {
       somenumber s = dst(row);
-      for(size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
-        if(cols->colnums[j] > row)
+      for (size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
+        if (cols->colnums[j] > row)
           s -= somenumber(val[j]) * dst(cols->colnums[j]);
 
       dst(row) = s * somenumber(om) / somenumber(val[cols->rowstart[row]]);
 
-      if(row == 0)
+      if (row == 0)
         break;
 
       --row;
@@ -1595,15 +1596,15 @@ SparseMatrix<number>::PSOR(Vector<somenumber>&           dst,
 
   AssertNoZerosOnDiagonal(*this);
 
-  for(size_type urow = 0; urow < m(); ++urow)
+  for (size_type urow = 0; urow < m(); ++urow)
     {
       const size_type row = permutation[urow];
       somenumber      s   = dst(row);
 
-      for(size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
+      for (size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
         {
           const size_type col = cols->colnums[j];
-          if(inverse_permutation[col] < urow)
+          if (inverse_permutation[col] < urow)
             {
               s -= somenumber(val[j]) * dst(col);
             }
@@ -1633,15 +1634,15 @@ SparseMatrix<number>::TPSOR(Vector<somenumber>&           dst,
 
   AssertNoZerosOnDiagonal(*this);
 
-  for(size_type urow = m(); urow != 0;)
+  for (size_type urow = m(); urow != 0;)
     {
       --urow;
       const size_type row = permutation[urow];
       somenumber      s   = dst(row);
-      for(size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
+      for (size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
         {
           const size_type col = cols->colnums[j];
-          if(inverse_permutation[col] > urow)
+          if (inverse_permutation[col] > urow)
             s -= somenumber(val[j]) * dst(col);
         }
 
@@ -1667,7 +1668,7 @@ SparseMatrix<number>::Jacobi_step(Vector<somenumber>&       v,
   typename VectorMemory<Vector<somenumber>>::Pointer w(mem);
   w->reinit(v);
 
-  if(!v.all_zero())
+  if (!v.all_zero())
     {
       vmult(*w, v);
       *w -= b;
@@ -1693,10 +1694,10 @@ SparseMatrix<number>::SOR_step(Vector<somenumber>&       v,
 
   AssertNoZerosOnDiagonal(*this);
 
-  for(size_type row = 0; row < m(); ++row)
+  for (size_type row = 0; row < m(); ++row)
     {
       somenumber s = b(row);
-      for(size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
+      for (size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
         {
           s -= somenumber(val[j]) * v(cols->colnums[j]);
         }
@@ -1719,10 +1720,10 @@ SparseMatrix<number>::TSOR_step(Vector<somenumber>&       v,
 
   AssertNoZerosOnDiagonal(*this);
 
-  for(int row = m() - 1; row >= 0; --row)
+  for (int row = m() - 1; row >= 0; --row)
     {
       somenumber s = b(row);
-      for(size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
+      for (size_type j = cols->rowstart[row]; j < cols->rowstart[row + 1]; ++j)
         {
           s -= somenumber(val[j]) * v(cols->colnums[j]);
         }
@@ -1760,15 +1761,15 @@ SparseMatrix<number>::SSOR(Vector<somenumber>& dst, const number om) const
   size_type       j;
   somenumber      s;
 
-  for(size_type i = 0; i < n; i++)
+  for (size_type i = 0; i < n; i++)
     {
       s = 0.;
-      for(j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
+      for (j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
         {
           const size_type p = cols->colnums[j];
-          if(p != SparsityPattern::invalid_entry)
+          if (p != SparsityPattern::invalid_entry)
             {
-              if(i > j)
+              if (i > j)
                 s += somenumber(val[j]) * dst(p);
             }
         }
@@ -1776,16 +1777,16 @@ SparseMatrix<number>::SSOR(Vector<somenumber>& dst, const number om) const
       dst(i) /= somenumber(val[cols->rowstart[i]]);
     }
 
-  for(int i = n - 1; i >= 0;
-      i--) // this time, i is signed, but always positive!
+  for (int i = n - 1; i >= 0;
+       i--) // this time, i is signed, but always positive!
     {
       s = 0.;
-      for(j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
+      for (j = cols->rowstart[i]; j < cols->rowstart[i + 1]; j++)
         {
           const size_type p = cols->colnums[j];
-          if(p != SparsityPattern::invalid_entry)
+          if (p != SparsityPattern::invalid_entry)
             {
-              if(static_cast<size_type>(i) < j)
+              if (static_cast<size_type>(i) < j)
                 s += somenumber(val[j]) * dst(p);
             }
         }
@@ -1818,23 +1819,23 @@ SparseMatrix<number>::print_formatted(std::ostream&      out,
   std::ios::fmtflags old_flags     = out.flags();
   unsigned int       old_precision = out.precision(precision);
 
-  if(scientific)
+  if (scientific)
     {
       out.setf(std::ios::scientific, std::ios::floatfield);
-      if(!width)
+      if (!width)
         width = precision + 7;
     }
   else
     {
       out.setf(std::ios::fixed, std::ios::floatfield);
-      if(!width)
+      if (!width)
         width = precision + 2;
     }
 
-  for(size_type i = 0; i < m(); ++i)
+  for (size_type i = 0; i < m(); ++i)
     {
-      for(size_type j = 0; j < n(); ++j)
-        if((*cols)(i, j) != SparsityPattern::invalid_entry)
+      for (size_type j = 0; j < n(); ++j)
+        if ((*cols)(i, j) != SparsityPattern::invalid_entry)
           out << std::setw(width)
               << val[cols->operator()(i, j)] * number(denominator) << ' ';
         else
@@ -1856,12 +1857,12 @@ SparseMatrix<number>::print_pattern(std::ostream& out,
   Assert(cols != nullptr, ExcNotInitialized());
   Assert(val != nullptr, ExcNotInitialized());
 
-  for(size_type i = 0; i < m(); ++i)
+  for (size_type i = 0; i < m(); ++i)
     {
-      for(size_type j = 0; j < n(); ++j)
-        if((*cols)(i, j) == SparsityPattern::invalid_entry)
+      for (size_type j = 0; j < n(); ++j)
+        if ((*cols)(i, j) == SparsityPattern::invalid_entry)
           out << '.';
-        else if(std::abs(val[cols->operator()(i, j)]) > threshold)
+        else if (std::abs(val[cols->operator()(i, j)]) > threshold)
           out << '*';
         else
           out << ':';

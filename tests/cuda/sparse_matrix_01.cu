@@ -56,8 +56,8 @@ check_matrix(SparseMatrix<double> const&         A,
                                cudaMemcpyDeviceToHost);
   AssertCuda(cuda_error_code);
 
-  for(int i = 0; i < n_rows; ++i)
-    for(int j = row_ptr_host[i]; j < row_ptr_host[i + 1]; ++j)
+  for (int i = 0; i < n_rows; ++i)
+    for (int j = row_ptr_host[i]; j < row_ptr_host[i + 1]; ++j)
       AssertThrow(std::abs(val_host[j] - A(i, column_index_host[j])) < 1e-15,
                   ExcInternalError());
 }
@@ -67,7 +67,7 @@ check_vector(Vector<double> const&                         a,
              LinearAlgebra::ReadWriteVector<double> const& b)
 {
   unsigned int size = a.size();
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(std::abs(a[i] - b[i]) < 1e-15, ExcInternalError());
 }
 
@@ -106,13 +106,13 @@ test(Utilities::CUDA::Handle& cuda_handle)
   const unsigned int vector_size = A.n();
   Vector<double>     dst(vector_size);
   Vector<double>     src(vector_size);
-  for(unsigned int i = 0; i < vector_size; ++i)
+  for (unsigned int i = 0; i < vector_size; ++i)
     src[i] = i;
   A.vmult(dst, src);
   LinearAlgebra::CUDAWrappers::Vector<double> dst_dev(vector_size);
   LinearAlgebra::CUDAWrappers::Vector<double> src_dev(vector_size);
   LinearAlgebra::ReadWriteVector<double>      read_write(vector_size);
-  for(unsigned int i = 0; i < vector_size; ++i)
+  for (unsigned int i = 0; i < vector_size; ++i)
     read_write[i] = i;
   src_dev.import(read_write, VectorOperation::insert);
   A_dev.vmult(dst_dev, src_dev);
@@ -149,7 +149,7 @@ test(Utilities::CUDA::Handle& cuda_handle)
 
   // Compute the residual
   Vector<double> b(src);
-  for(unsigned int i = 0; i < vector_size; ++i)
+  for (unsigned int i = 0; i < vector_size; ++i)
     {
       b[i]          = i;
       src[i]        = i;
@@ -181,20 +181,20 @@ test(Utilities::CUDA::Handle& cuda_handle)
 
   // Compute L1 norm second test
   SparsityPattern sparsity_pattern(vector_size, vector_size, 3);
-  for(unsigned int i = 0; i < vector_size; ++i)
+  for (unsigned int i = 0; i < vector_size; ++i)
     {
       sparsity_pattern.add(i, 0);
       sparsity_pattern.add(i, i);
-      if(i < vector_size - 1)
+      if (i < vector_size - 1)
         sparsity_pattern.add(i, i + 1);
     }
   sparsity_pattern.compress();
   SparseMatrix<double> B(sparsity_pattern);
-  for(unsigned int i = 0; i < vector_size; ++i)
+  for (unsigned int i = 0; i < vector_size; ++i)
     {
       B.set(i, 0, 1);
       B.set(i, i, 1);
-      if(i < vector_size - 1)
+      if (i < vector_size - 1)
         B.set(i, i + 1, 1);
     }
   CUDAWrappers::SparseMatrix<double> B_dev(cuda_handle, B);

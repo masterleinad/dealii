@@ -35,7 +35,7 @@ test1(const bool keep_boundary)
 
   deallog << "dim=" << dim << ", keep_boundary=" << keep_boundary << std::endl;
   std::string filename;
-  if(keep_boundary)
+  if (keep_boundary)
     filename = "keep_true-";
   else
     filename = "keep_false-";
@@ -47,9 +47,10 @@ test1(const bool keep_boundary)
   GridOut().write_gnuplot(tria, logfile);
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(my_id == 0)
-    for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-        ++i)
+  if (my_id == 0)
+    for (unsigned int i = 0;
+         i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+         ++i)
       {
         deallog << "Process " << i << ":" << std::endl;
         cat_file((filename + "-" + Utilities::int_to_string(i, 2)).c_str());
@@ -64,7 +65,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       std::ofstream logfile("output");
       deallog << std::setprecision(4);

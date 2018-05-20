@@ -74,7 +74,7 @@ check_this<1>(const DoFHandler<1>&  dof_handler,
 
   // the following is only
   // implemented for 2d (=1d+time)
-  if(dim == 1)
+  if (dim == 1)
     {
       data_out_stack.write_povray(deallog.get_file_stream());
       data_out_stack.write_eps(deallog.get_file_stream());

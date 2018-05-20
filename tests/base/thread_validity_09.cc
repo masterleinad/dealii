@@ -55,17 +55,17 @@ main()
 
   const unsigned int sz = 1000000;
   char*              p  = new char[sz];
-  for(unsigned int i = 0; i < sz; ++i)
+  for (unsigned int i = 0; i < sz; ++i)
     p[i] = 0;
 
   // make sure the worker thread can actually start
   mutex.release();
 
   // wait for the worker thread to do its work
-  while(spin_lock == 0)
+  while (spin_lock == 0)
     ;
 
-  for(unsigned int i = 0; i < sz; ++i)
+  for (unsigned int i = 0; i < sz; ++i)
     AssertThrow(p[i] == 0, ExcInternalError());
 
   delete[] p;

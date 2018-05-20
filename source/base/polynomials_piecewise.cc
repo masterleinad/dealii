@@ -53,20 +53,20 @@ namespace Polynomials
     // shift polynomial if necessary
     number y                      = x;
     double derivative_change_sign = 1.;
-    if(n_intervals > 0)
+    if (n_intervals > 0)
       {
         const number step = 1. / n_intervals;
         // polynomial spans over two intervals
-        if(spans_two_intervals)
+        if (spans_two_intervals)
           {
             const double offset = step * interval;
-            if(x < offset || x > offset + step + step)
+            if (x < offset || x > offset + step + step)
               {
-                for(unsigned int k = 0; k <= n_derivatives; ++k)
+                for (unsigned int k = 0; k <= n_derivatives; ++k)
                   values[k] = 0;
                 return;
               }
-            else if(x < offset + step)
+            else if (x < offset + step)
               y = x - offset;
             else
               {
@@ -77,9 +77,9 @@ namespace Polynomials
         else
           {
             const double offset = step * interval;
-            if(x < offset || x > offset + step)
+            if (x < offset || x > offset + step)
               {
-                for(unsigned int k = 0; k <= n_derivatives; ++k)
+                for (unsigned int k = 0; k <= n_derivatives; ++k)
                   values[k] = 0;
                 return;
               }
@@ -89,14 +89,14 @@ namespace Polynomials
 
         // on subinterval boundaries, cannot evaluate derivatives properly, so
         // set them to zero
-        if((std::abs(y) < 1e-14
-            && (interval > 0 || derivative_change_sign == -1.))
-           || (std::abs(y - step) < 1e-14
-               && (interval < n_intervals - 1
-                   || derivative_change_sign == -1.)))
+        if ((std::abs(y) < 1e-14
+             && (interval > 0 || derivative_change_sign == -1.))
+            || (std::abs(y - step) < 1e-14
+                && (interval < n_intervals - 1
+                    || derivative_change_sign == -1.)))
           {
             values[0] = value(x);
-            for(unsigned int d = 1; d <= n_derivatives; ++d)
+            for (unsigned int d = 1; d <= n_derivatives; ++d)
               values[d] = 0;
             return;
           }
@@ -105,7 +105,7 @@ namespace Polynomials
     polynomial.value(y, n_derivatives, values);
 
     // change sign if necessary
-    for(unsigned int j = 1; j <= n_derivatives; j += 2)
+    for (unsigned int j = 1; j <= n_derivatives; j += 2)
       values[j] *= derivative_change_sign;
   }
 
@@ -116,15 +116,15 @@ namespace Polynomials
   {
     std::vector<Polynomial<double>> p_base
       = LagrangeEquidistant::generate_complete_basis(base_degree);
-    for(unsigned int i = 0; i < p_base.size(); ++i)
+    for (unsigned int i = 0; i < p_base.size(); ++i)
       p_base[i].scale(n_subdivisions);
 
     std::vector<PiecewisePolynomial<double>> p;
     p.reserve(n_subdivisions * base_degree + 1);
 
     p.emplace_back(p_base[0], n_subdivisions, 0, false);
-    for(unsigned int s = 0; s < n_subdivisions; ++s)
-      for(unsigned int i = 0; i < base_degree; ++i)
+    for (unsigned int s = 0; s < n_subdivisions; ++s)
+      for (unsigned int i = 0; i < base_degree; ++i)
         p.emplace_back(p_base[i + 1],
                        n_subdivisions,
                        s,

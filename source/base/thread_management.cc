@@ -181,7 +181,7 @@ namespace Threads
     // unless the barrier is a no-op,
     // complain again (how did we get
     // here then?)
-    if(count != 1)
+    if (count != 1)
       std::abort();
 #    endif
   }
@@ -196,7 +196,7 @@ namespace Threads
     // function is a no-op. otherwise
     // complain about the missing
     // POSIX functions
-    if(count == 1)
+    if (count == 1)
       return 0;
     else
       {
@@ -224,9 +224,9 @@ namespace Threads
       n_intervals);
 
     return_values[0].first = begin;
-    for(unsigned int i = 0; i < n_intervals; ++i)
+    for (unsigned int i = 0; i < n_intervals; ++i)
       {
-        if(i != n_intervals - 1)
+        if (i != n_intervals - 1)
           {
             return_values[i].second
               = (return_values[i].first + n_elements_per_interval);
@@ -234,7 +234,7 @@ namespace Threads
             // division equally among
             // the first few
             // subintervals
-            if(i < residual)
+            if (i < residual)
               ++return_values[i].second;
             return_values[i + 1].first = return_values[i].second;
           }

@@ -690,7 +690,7 @@ MatrixBlock<MatrixType>::add(const std::vector<size_type>& r_indices,
   AssertDimension(r_indices.size(), values.m());
   AssertDimension(c_indices.size(), values.n());
 
-  for(size_type i = 0; i < row_indices.size(); ++i)
+  for (size_type i = 0; i < row_indices.size(); ++i)
     add(r_indices[i],
         c_indices.size(),
         c_indices.data(),
@@ -725,7 +725,7 @@ MatrixBlock<MatrixType>::add(const size_type  b_row,
   //#ifdef DEBUG
   Assert(bi.first == row, ExcBlockIndexMismatch(bi.first, row));
 
-  for(size_type j = 0; j < n_cols; ++j)
+  for (size_type j = 0; j < n_cols; ++j)
     {
       const std::pair<unsigned int, size_type> bj
         = column_indices.global_to_local(col_indices[j]);
@@ -749,7 +749,7 @@ MatrixBlock<MatrixType>::add(const std::vector<size_type>& indices,
   AssertDimension(indices.size(), values.m());
   Assert(values.n() == values.m(), ExcNotQuadratic());
 
-  for(size_type i = 0; i < indices.size(); ++i)
+  for (size_type i = 0; i < indices.size(); ++i)
     add(indices[i],
         indices.size(),
         indices.data(),
@@ -832,7 +832,7 @@ template <typename MatrixType>
 inline void
 MatrixBlockVector<MatrixType>::reinit(const BlockSparsityPattern& sparsity)
 {
-  for(size_type i = 0; i < this->size(); ++i)
+  for (size_type i = 0; i < this->size(); ++i)
     {
       block(i).reinit(sparsity);
     }
@@ -842,13 +842,13 @@ template <typename MatrixType>
 inline void
 MatrixBlockVector<MatrixType>::clear(bool really_clean)
 {
-  if(really_clean)
+  if (really_clean)
     {
       Assert(false, ExcNotImplemented());
     }
   else
     {
-      for(size_type i = 0; i < this->size(); ++i)
+      for (size_type i = 0; i < this->size(); ++i)
         matrix(i).clear();
     }
 }
@@ -900,12 +900,12 @@ MGMatrixBlockVector<MatrixType>::add(size_type          row,
   p[0].column = column;
 
   matrices.add(p, name);
-  if(edge_matrices)
+  if (edge_matrices)
     {
       matrices_in.add(p, name);
       matrices_out.add(p, name);
     }
-  if(edge_flux_matrices)
+  if (edge_flux_matrices)
     {
       flux_matrices_up.add(p, name);
       flux_matrices_down.add(p, name);
@@ -987,14 +987,14 @@ inline void
 MGMatrixBlockVector<MatrixType>::reinit_matrix(
   const MGLevelObject<BlockSparsityPattern>& sparsity)
 {
-  for(size_type i = 0; i < this->size(); ++i)
+  for (size_type i = 0; i < this->size(); ++i)
     {
       MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
       const size_type                         row = o[o.min_level()].row;
       const size_type                         col = o[o.min_level()].column;
 
       o.resize(sparsity.min_level(), sparsity.max_level());
-      for(size_type level = o.min_level(); level <= o.max_level(); ++level)
+      for (size_type level = o.min_level(); level <= o.max_level(); ++level)
         {
           o[level].row    = row;
           o[level].column = col;
@@ -1008,7 +1008,7 @@ inline void
 MGMatrixBlockVector<MatrixType>::reinit_edge(
   const MGLevelObject<BlockSparsityPattern>& sparsity)
 {
-  for(size_type i = 0; i < this->size(); ++i)
+  for (size_type i = 0; i < this->size(); ++i)
     {
       MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
       const size_type                         row = o[o.min_level()].row;
@@ -1016,7 +1016,7 @@ MGMatrixBlockVector<MatrixType>::reinit_edge(
 
       block_in(i).resize(sparsity.min_level(), sparsity.max_level());
       block_out(i).resize(sparsity.min_level(), sparsity.max_level());
-      for(size_type level = o.min_level(); level <= o.max_level(); ++level)
+      for (size_type level = o.min_level(); level <= o.max_level(); ++level)
         {
           block_in(i)[level].row    = row;
           block_in(i)[level].column = col;
@@ -1033,7 +1033,7 @@ inline void
 MGMatrixBlockVector<MatrixType>::reinit_edge_flux(
   const MGLevelObject<BlockSparsityPattern>& sparsity)
 {
-  for(size_type i = 0; i < this->size(); ++i)
+  for (size_type i = 0; i < this->size(); ++i)
     {
       MGLevelObject<MatrixBlock<MatrixType>>& o   = block(i);
       const size_type                         row = o[o.min_level()].row;
@@ -1041,7 +1041,7 @@ MGMatrixBlockVector<MatrixType>::reinit_edge_flux(
 
       block_up(i).resize(sparsity.min_level(), sparsity.max_level());
       block_down(i).resize(sparsity.min_level(), sparsity.max_level());
-      for(size_type level = o.min_level(); level <= o.max_level(); ++level)
+      for (size_type level = o.min_level(); level <= o.max_level(); ++level)
         {
           block_up(i)[level].row    = row;
           block_up(i)[level].column = col;
@@ -1057,11 +1057,11 @@ template <typename MatrixType>
 inline void
 MGMatrixBlockVector<MatrixType>::clear_object(AnyData& mo)
 {
-  for(size_type i = 0; i < mo.size(); ++i)
+  for (size_type i = 0; i < mo.size(); ++i)
     {
       MGLevelObject<MatrixBlock<MatrixType>>& o
         = mo.entry<MGLevelObject<MatrixType>*>(i);
-      for(size_type level = o.min_level(); level <= o.max_level(); ++level)
+      for (size_type level = o.min_level(); level <= o.max_level(); ++level)
         o[level].matrix.clear();
     }
 }
@@ -1070,7 +1070,7 @@ template <typename MatrixType>
 inline void
 MGMatrixBlockVector<MatrixType>::clear(bool really_clean)
 {
-  if(really_clean)
+  if (really_clean)
     {
       Assert(false, ExcNotImplemented());
     }

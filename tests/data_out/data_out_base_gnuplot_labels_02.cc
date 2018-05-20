@@ -91,13 +91,13 @@ check_all(std::ostream& log)
   const char* format = "%d%d.gnuplot";
 
   std::vector<std::string> labels;
-  for(unsigned int spacedim_n = 0; spacedim_n < spacedim; ++spacedim_n)
+  for (unsigned int spacedim_n = 0; spacedim_n < spacedim; ++spacedim_n)
     {
       labels.push_back("label_" + Utilities::to_string(spacedim_n));
     }
 
   DataOutBase::GnuplotFlags flags(labels);
-  for(unsigned int i = 0; i < 5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     {
       sprintf(name, format, dim, spacedim, "");
 #if SEPARATE_FILES == 1

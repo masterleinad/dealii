@@ -52,10 +52,10 @@ JobIdentifier::base_name(const char* filename)
   std::string            name(filename);
   std::string::size_type pos;
   pos = name.rfind('/');
-  if(pos != std::string::npos)
+  if (pos != std::string::npos)
     name.erase(0, pos + 1);
   pos = name.rfind('.');
-  if(pos != std::string::npos)
+  if (pos != std::string::npos)
     name.erase(pos, name.size());
   return name;
 }

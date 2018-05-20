@@ -50,11 +50,11 @@ test()
 
   triangulation.refine_global(1);
   // Extra refinement to generate hanging nodes
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    if(cell->center()(0) > 0.49)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    if (cell->center()(0) > 0.49)
       cell->set_refine_flag();
 
   triangulation.prepare_coarsening_and_refinement();
@@ -72,8 +72,8 @@ test()
   Table<2, DoFTools::Coupling> coupling(2, 2);
   Table<2, DoFTools::Coupling> flux_coupling(2, 2);
 
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for (unsigned int i = 0; i < 2; ++i)
+    for (unsigned int j = 0; j < 2; ++j)
       {
         coupling[i][j]      = DoFTools::none;
         flux_coupling[i][j] = DoFTools::none;

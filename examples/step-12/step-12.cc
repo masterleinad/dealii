@@ -108,9 +108,9 @@ namespace Step12
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
 
-    for(unsigned int i = 0; i < values.size(); ++i)
+    for (unsigned int i = 0; i < values.size(); ++i)
       {
-        if(points[i](0) < 0.5)
+        if (points[i](0) < 0.5)
           values[i] = 1.;
         else
           values[i] = 0.;
@@ -355,15 +355,15 @@ namespace Step12
     // With these objects, we continue local integration like always. First,
     // we loop over the quadrature points and compute the advection vector in
     // the current point.
-    for(unsigned int point = 0; point < fe_values.n_quadrature_points; ++point)
+    for (unsigned int point = 0; point < fe_values.n_quadrature_points; ++point)
       {
         const Tensor<1, dim> beta_at_q_point
           = beta(fe_values.quadrature_point(point));
 
         // We solve a homogeneous equation, thus no right hand side shows up
         // in the cell term.  What's left is integrating the matrix entries.
-        for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < fe_values.dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < fe_values.dofs_per_cell; ++j)
             local_matrix(i, j)
               += -beta_at_q_point * fe_values.shape_grad(i, point)
                  * fe_values.shape_value(j, point) * JxW[point];
@@ -390,19 +390,19 @@ namespace Step12
     static BoundaryValues<dim> boundary_function;
     boundary_function.value_list(fe_face_values.get_quadrature_points(), g);
 
-    for(unsigned int point = 0; point < fe_face_values.n_quadrature_points;
-        ++point)
+    for (unsigned int point = 0; point < fe_face_values.n_quadrature_points;
+         ++point)
       {
         const double beta_dot_n
           = beta(fe_face_values.quadrature_point(point)) * normals[point];
-        if(beta_dot_n > 0)
-          for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
+        if (beta_dot_n > 0)
+          for (unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
               local_matrix(i, j)
                 += beta_dot_n * fe_face_values.shape_value(j, point)
                    * fe_face_values.shape_value(i, point) * JxW[point];
         else
-          for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
             local_vector(i) += -beta_dot_n * g[point]
                                * fe_face_values.shape_value(i, point)
                                * JxW[point];
@@ -446,25 +446,25 @@ namespace Step12
     const std::vector<Tensor<1, dim>>& normals
       = fe_face_values.get_normal_vectors();
 
-    for(unsigned int point = 0; point < fe_face_values.n_quadrature_points;
-        ++point)
+    for (unsigned int point = 0; point < fe_face_values.n_quadrature_points;
+         ++point)
       {
         const double beta_dot_n
           = beta(fe_face_values.quadrature_point(point)) * normals[point];
-        if(beta_dot_n > 0)
+        if (beta_dot_n > 0)
           {
             // This term we've already seen:
-            for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
+            for (unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
+              for (unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
                 u1_v1_matrix(i, j)
                   += beta_dot_n * fe_face_values.shape_value(j, point)
                      * fe_face_values.shape_value(i, point) * JxW[point];
 
             // We additionally assemble the term $(\beta\cdot n u,\hat
             // v)_{\partial \kappa_+}$,
-            for(unsigned int k = 0; k < fe_face_values_neighbor.dofs_per_cell;
-                ++k)
-              for(unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
+            for (unsigned int k = 0; k < fe_face_values_neighbor.dofs_per_cell;
+                 ++k)
+              for (unsigned int j = 0; j < fe_face_values.dofs_per_cell; ++j)
                 u1_v2_matrix(k, j)
                   += -beta_dot_n * fe_face_values.shape_value(j, point)
                      * fe_face_values_neighbor.shape_value(k, point)
@@ -473,19 +473,21 @@ namespace Step12
         else
           {
             // This one we've already seen, too:
-            for(unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
-              for(unsigned int l = 0; l < fe_face_values_neighbor.dofs_per_cell;
-                  ++l)
+            for (unsigned int i = 0; i < fe_face_values.dofs_per_cell; ++i)
+              for (unsigned int l = 0;
+                   l < fe_face_values_neighbor.dofs_per_cell;
+                   ++l)
                 u2_v1_matrix(i, l)
                   += beta_dot_n * fe_face_values_neighbor.shape_value(l, point)
                      * fe_face_values.shape_value(i, point) * JxW[point];
 
             // And this is another new one: $(\beta\cdot n \hat u,\hat
             // v)_{\partial \kappa_-}$:
-            for(unsigned int k = 0; k < fe_face_values_neighbor.dofs_per_cell;
-                ++k)
-              for(unsigned int l = 0; l < fe_face_values_neighbor.dofs_per_cell;
-                  ++l)
+            for (unsigned int k = 0; k < fe_face_values_neighbor.dofs_per_cell;
+                 ++k)
+              for (unsigned int l = 0;
+                   l < fe_face_values_neighbor.dofs_per_cell;
+                   ++l)
                 u2_v2_matrix(k, l)
                   += -beta_dot_n * fe_face_values_neighbor.shape_value(l, point)
                      * fe_face_values_neighbor.shape_value(k, point)
@@ -560,7 +562,7 @@ namespace Step12
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+    for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
       gradient_indicator(cell_no)
         *= std::pow(cell->diameter(), 1 + 1.0 * dim / 2);
 
@@ -608,11 +610,11 @@ namespace Step12
   void
   AdvectionProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 6; ++cycle)
+    for (unsigned int cycle = 0; cycle < 6; ++cycle)
       {
         deallog << "Cycle " << cycle << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation);
 
@@ -647,7 +649,7 @@ main()
       Step12::AdvectionProblem<2> dgmethod;
       dgmethod.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -660,7 +662,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -285,15 +285,15 @@ namespace Advection
 
     std::vector<double> u(values[0]);
 
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             cell_rhs(i) -= wavespeed
                            * (u[q_point] * fe_v[upos].gradient(i, q_point)[0])
                            * fe_v.JxW(q_point);
 
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
                 cell_matrix(i, j) += fe_v[upos].value(i, q_point)
                                      * fe_v[upos].value(j, q_point)
@@ -314,7 +314,7 @@ namespace Advection
 
     // We only have a non-zero boundary contribution at the
     // x=0 boundary
-    if(boundary_id != 0)
+    if (boundary_id != 0)
       return;
 
     const FEValuesBase<dim>& fe_v = info.fe_values();
@@ -326,9 +326,9 @@ namespace Advection
 
     double boundary_flux = -1.0;
 
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             cell_rhs(i) += wavespeed * boundary_flux
                            * fe_v[upos].value(i, q_point) * fe_v.JxW(q_point);
@@ -360,14 +360,14 @@ namespace Advection
 
     double flux;
 
-    for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+    for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
       {
-        if(fe_v_1.normal_vector(q_point)[0] > 0)
+        if (fe_v_1.normal_vector(q_point)[0] > 0)
           flux = u_1[q_point] * fe_v_1.normal_vector(q_point)[0];
         else
           flux = u_2[q_point] * fe_v_1.normal_vector(q_point)[0];
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             cell_vector_1(i) += wavespeed * flux
                                 * fe_v_1[upos].value(i, q_point)
@@ -425,7 +425,7 @@ namespace Advection
 
     double inv_cell_vol = 1.0 / std::pow(0.01, dim);
 
-    for(unsigned int dt = 0; dt < n_dt; ++dt)
+    for (unsigned int dt = 0; dt < n_dt; ++dt)
       {
         assemble_rhs(solution, stage);
 

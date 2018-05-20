@@ -117,7 +117,7 @@ test()
 
   eigenfunctions.resize(number_of_eigenvalues);
   eigenvalues.resize(number_of_eigenvalues);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
     mf_data->initialize_dof_vector(eigenfunctions[i]);
 
   // test PArpack with matrix-free
@@ -153,7 +153,7 @@ test()
     {
       LinearAlgebra::distributed::Vector<double> init_vector;
       mf_data->initialize_dof_vector(init_vector);
-      for(auto it = init_vector.begin(); it != init_vector.end(); ++it)
+      for (auto it = init_vector.begin(); it != init_vector.end(); ++it)
         *it = random_value<double>();
 
       constraints.set_zero(init_vector);
@@ -165,10 +165,10 @@ test()
       laplace, mass, invert, lambda, eigenfunctions, eigenvalues.size());
     deallog.depth_file(previous_depth);
 
-    for(unsigned int i = 0; i < lambda.size(); i++)
+    for (unsigned int i = 0; i < lambda.size(); i++)
       eigenvalues[i] = lambda[i].real();
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-orthonormal:
@@ -177,9 +177,9 @@ test()
     {
       const double                               precision = 1e-7;
       LinearAlgebra::distributed::Vector<double> Ax(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for (unsigned int j = 0; j < eigenfunctions.size(); j++)
             {
               const double err
                 = std::abs(eigenfunctions[j] * eigenfunctions[i] - (i == j));
@@ -218,7 +218,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -232,7 +232,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

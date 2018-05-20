@@ -61,12 +61,12 @@ public:
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src_cpy);
         fe_eval.evaluate(true, true, false);
-        for(unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
           {
             fe_eval.submit_value(Number(10) * fe_eval.get_value(q), q);
             fe_eval.submit_gradient(fe_eval.get_gradient(q), q);
@@ -89,7 +89,7 @@ do_test(const DoFHandler<dim>&  dof,
         const unsigned int      parallel_option = 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
-  if(parallel_option > 0)
+  if (parallel_option > 0)
     deallog << "Parallel option: " << parallel_option << std::endl;
   //std::cout << "Number of cells: " << dof.get_triangulation().n_active_cells() << std::endl;
   //std::cout << "Number of degrees of freedom: " << dof.n_dofs() << std::endl;
@@ -100,9 +100,9 @@ do_test(const DoFHandler<dim>&  dof,
   Vector<number>                         in_dist(dof.n_dofs());
   Vector<number>                         out_dist(in_dist);
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = random_value<double>();
       in(i)              = entry;
@@ -135,15 +135,15 @@ do_test(const DoFHandler<dim>&  dof,
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                          * fe_values.shape_grad(j, q_point)
                                        + 10. * fe_values.shape_value(i, q_point)
@@ -173,20 +173,20 @@ test()
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
 
-  if(dim < 3 || fe_degree < 2)
+  if (dim < 3 || fe_degree < 2)
     tria.refine_global(1);
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 1e-8)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
@@ -201,7 +201,7 @@ test()
 
   do_test<dim, fe_degree, double>(dof, constraints);
 
-  if(dim == 2)
+  if (dim == 2)
     {
       deallog.push("float");
       do_test<dim, fe_degree, float>(dof, constraints);

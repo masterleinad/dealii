@@ -42,7 +42,7 @@ main()
 
   double random = eval("rand()"); //random seed
 
-  if(0.0 <= random && random <= 1.0)
+  if (0.0 <= random && random <= 1.0)
     deallog << "OK" << std::endl;
 
   deallog << eval("rand_seed(10)") << std::endl;

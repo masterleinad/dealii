@@ -31,9 +31,9 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "hyper_cube" << std::endl;
 
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -44,24 +44,24 @@ test()
       std::vector<types::subdomain_id> cell_subd(tr.n_active_cells());
 
       GridTools::get_subdomain_association(tr, cell_subd);
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
-          for(unsigned int i = 0; i < tr.n_active_cells(); ++i)
+          for (unsigned int i = 0; i < tr.n_active_cells(); ++i)
             deallog << cell_subd[i] << " ";
           deallog << std::endl;
         }
 
-      if(myid == 0)
+      if (myid == 0)
         {
           deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
         }
 
       const unsigned int checksum = tr.get_checksum();
-      if(myid == 0)
+      if (myid == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -74,7 +74,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

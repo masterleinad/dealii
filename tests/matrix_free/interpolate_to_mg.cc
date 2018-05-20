@@ -96,16 +96,16 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
   GridGenerator::subdivided_hyper_cube(triangulation, 5, -1, 1);
   // now do some refinement
   triangulation.refine_global(n_glob_ref);
-  for(unsigned int ref = 0; ref < n_ref; ++ref)
+  for (unsigned int ref = 0; ref < n_ref; ++ref)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        if(cell->is_locally_owned()
-           && (cell->center().norm() < 0.5
-                 && (cell->level() < 5 || cell->center().norm() > 0.45)
-               || (dim == 2 && cell->center().norm() > 1.2)))
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        if (cell->is_locally_owned()
+            && (cell->center().norm() < 0.5
+                  && (cell->level() < 5 || cell->center().norm() > 0.45)
+                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
@@ -138,14 +138,14 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
   fine_projection.update_ghost_values();
 
   // output for debug purposes:
-  if(true)
+  if (true)
     {
       DataOut<dim> data_out;
       data_out.attach_dof_handler(dof_handler);
       data_out.add_data_vector(fine_projection, "projection");
 
       Vector<float> subdomain(triangulation.n_active_cells());
-      for(unsigned int i = 0; i < subdomain.size(); ++i)
+      for (unsigned int i = 0; i < subdomain.size(); ++i)
         subdomain(i) = triangulation.locally_owned_subdomain();
       data_out.add_data_vector(subdomain, "subdomain");
       data_out.build_patches();
@@ -184,15 +184,15 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
 
   FEValues<dim> fe_values(
     fe, quadrature, update_values | update_quadrature_points);
-  for(unsigned int level = max_level + 1; level != min_level;)
+  for (unsigned int level = max_level + 1; level != min_level;)
     {
       --level;
 
       std::vector<types::global_dof_index>    dof_indices(fe.dofs_per_cell);
       typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(level);
       typename DoFHandler<dim>::cell_iterator endc = dof_handler.end(level);
-      for(; cell != endc; ++cell)
-        if(cell->is_locally_owned_on_level())
+      for (; cell != endc; ++cell)
+        if (cell->is_locally_owned_on_level())
           {
             fe_values.reinit(cell);
             cell->get_mg_dof_indices(dof_indices);
@@ -202,20 +202,20 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
             const std::vector<Point<dim>>& q_points
               = fe_values.get_quadrature_points();
 
-            for(unsigned int q = 0; q < q_points.size(); ++q)
+            for (unsigned int q = 0; q < q_points.size(); ++q)
               {
                 const double diff = q_values[q] - function.value(q_points[q]);
-                if(std::abs(diff) > 1e-10)
+                if (std::abs(diff) > 1e-10)
                   {
                     std::cout << "dofs: ";
-                    for(const auto i : dof_indices)
+                    for (const auto i : dof_indices)
                       std::cout << i << " ";
                     std::cout << std::endl << "values: ";
                     std::vector<LevelNumberType> local_values(
                       dof_indices.size());
                     level_projection[level].extract_subvector_to(dof_indices,
                                                                  local_values);
-                    for(const auto v : local_values)
+                    for (const auto v : local_values)
                       std::cout << v << " ";
                     std::cout << std::endl
                               << "val(q)=" << q_values[q] << std::endl;

@@ -34,7 +34,7 @@ modify_name(const std::string& name)
   dim_name += '>';
 
   std::string::size_type pos;
-  while((pos = new_name.find(dim_name)) != std::string::npos)
+  while ((pos = new_name.find(dim_name)) != std::string::npos)
     new_name.replace(pos, 3, "<dim>");
 
   return new_name;

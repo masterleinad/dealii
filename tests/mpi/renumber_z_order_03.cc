@@ -71,9 +71,9 @@ main(int argc, char* argv[])
     = dh_world.begin_active(),
     endc_world = dh_world.end(), cell_self = dh_self.begin_active(),
     endc_self = dh_self.end();
-  for(; cell_world != endc_world && cell_self != endc_self;
-      ++cell_world, ++cell_self)
-    if(cell_world->is_locally_owned())
+  for (; cell_world != endc_world && cell_self != endc_self;
+       ++cell_world, ++cell_self)
+    if (cell_world->is_locally_owned())
       Assert(cell_world->dof_index(0) == cell_self->dof_index(0),
              ExcInternalError());
 

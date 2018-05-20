@@ -39,7 +39,7 @@ plot_FE_Q_DG0_shape_functions()
 
   // skip the following tests to
   // reduce run-time
-  if(dim < 3)
+  if (dim < 3)
     {
       FE_Q_DG0<dim> q3(QIterated<1>(QTrapez<1>(), 3));
       plot_shape_functions(m, q3, "Q3_DG0");

@@ -53,10 +53,10 @@ test()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       Point<dim> center = cell->center();
-      if(center[0] < 0)
+      if (center[0] < 0)
         cell->set_active_fe_index(1);
       else
         cell->set_active_fe_index(0);

@@ -39,15 +39,15 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   Functions::ConstantFunction<dim> constant_function(1., dim);
   typename FunctionMap<dim>::type  function_map;
-  for(unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
     function_map[j] = &constant_function;
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "FE=" << fe.get_name() << ", case=" << i << std::endl;
 
       std::set<types::boundary_id> boundary_ids;
-      for(unsigned int j = 0; j <= i; ++j)
+      for (unsigned int j = 0; j <= i; ++j)
         boundary_ids.insert(j);
 
       ConstraintMatrix cm;
@@ -65,17 +65,17 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     fe, quadrature, update_quadrature_points);
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                  endc = dof.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
-        ++face_no)
-      if(cell->face(face_no)->at_boundary())
+  for (; cell != endc; ++cell)
+    for (unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+         ++face_no)
+      if (cell->face(face_no)->at_boundary())
         {
           typename DoFHandler<dim>::face_iterator face = cell->face(face_no);
           face_dofs.resize(fe.dofs_per_face);
           face->get_dof_indices(face_dofs);
 
           fe_face_values.reinit(cell, face_no);
-          for(unsigned int i = 0; i < face_dofs.size(); ++i)
+          for (unsigned int i = 0; i < face_dofs.size(); ++i)
             {
               std::cout << face_dofs[i] << "\t"
                         << fe_face_values.quadrature_point(i) << "\t"
@@ -92,12 +92,12 @@ test_hyper_cube()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     tr.begin_active()->face(i)->set_boundary_id(i);
 
   tr.refine_global(2);
 
-  for(unsigned int degree = 1; degree < 4; ++degree)
+  for (unsigned int degree = 1; degree < 4; ++degree)
     {
       FESystem<dim> fe(FE_Q<dim>(degree), dim);
       test(tr, fe);

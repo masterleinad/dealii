@@ -25,8 +25,8 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
 {
   // set only certain elements of each
   // vector, but disjoint sets of elements
-  for(unsigned int i = 0; i < v.size(); ++i)
-    if(i % 3 == 0)
+  for (unsigned int i = 0; i < v.size(); ++i)
+    if (i % 3 == 0)
       v(i) = std::complex<double>(i + 1., i + 2.);
     else
       w(i) = std::complex<double>(i + 1., i + 2.);
@@ -50,7 +50,7 @@ main()
       Vector<std::complex<double>> w(100);
       test(v, w);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -64,7 +64,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

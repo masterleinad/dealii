@@ -55,9 +55,9 @@ check()
   // Create an adapted mesh
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active();
-  for(; cell < dof_handler.end(); ++cell)
+  for (; cell < dof_handler.end(); ++cell)
     {
-      if((cell->center()[0] == 0.625) && (cell->center()[1] == 0.625))
+      if ((cell->center()[0] == 0.625) && (cell->center()[1] == 0.625))
         cell->set_refine_flag();
     }
   triangulation.execute_coarsening_and_refinement();
@@ -73,11 +73,11 @@ check()
         &get_conflict_indices_cfem<dim>)));
 
   // Output the coloring
-  for(unsigned int color = 0; color < coloring.size(); ++color)
+  for (unsigned int color = 0; color < coloring.size(); ++color)
     {
       deallog << "Color: " << color << std::endl;
-      for(unsigned int i = 0; i < coloring[color].size(); ++i)
-        for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int i = 0; i < coloring[color].size(); ++i)
+        for (unsigned int j = 0; j < dim; ++j)
           deallog << coloring[color][i]->center()[j] << " ";
       deallog << std::endl;
     }

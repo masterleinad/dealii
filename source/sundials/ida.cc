@@ -162,10 +162,10 @@ namespace SUNDIALS
   template <typename VectorType>
   IDA<VectorType>::~IDA()
   {
-    if(ida_mem)
+    if (ida_mem)
       IDAFree(&ida_mem);
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const int ierr = MPI_Comm_free(&communicator);
         (void) ierr;
@@ -191,7 +191,7 @@ namespace SUNDIALS
     // solution. Here we take only a
     // view of it.
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is                = solution.locally_owned_elements();
         const size_t   local_system_size = is.n_elements();
@@ -222,7 +222,7 @@ namespace SUNDIALS
 
     output_step(0, solution, solution_dot, 0);
 
-    while(t < data.final_time)
+    while (t < data.final_time)
       {
         next_time += data.output_period;
 
@@ -235,7 +235,7 @@ namespace SUNDIALS
         copy(solution, yy);
         copy(solution_dot, yp);
 
-        while(solver_should_restart(t, solution, solution_dot))
+        while (solver_should_restart(t, solution, solution_dot))
           reset(t, h, solution, solution_dot);
 
         step_number++;
@@ -245,7 +245,7 @@ namespace SUNDIALS
 
       // Free the vectors which are no longer used.
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         N_VDestroy_Parallel(yy);
         N_VDestroy_Parallel(yp);
@@ -274,16 +274,16 @@ namespace SUNDIALS
     unsigned int system_size;
     bool         first_step = (current_time == data.initial_time);
 
-    if(ida_mem)
+    if (ida_mem)
       IDAFree(&ida_mem);
 
     ida_mem = IDACreate();
 
     // Free the vectors which are no longer used.
-    if(yy)
+    if (yy)
       {
 #  ifdef DEAL_II_WITH_MPI
-        if(is_serial_vector<VectorType>::value == false)
+        if (is_serial_vector<VectorType>::value == false)
           {
             N_VDestroy_Parallel(yy);
             N_VDestroy_Parallel(yp);
@@ -304,7 +304,7 @@ namespace SUNDIALS
     (void) status;
     system_size = solution.size();
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is                = solution.locally_owned_elements();
         const size_t   local_system_size = is.n_elements();
@@ -333,7 +333,7 @@ namespace SUNDIALS
     status = IDAInit(ida_mem, t_dae_residual<VectorType>, current_time, yy, yp);
     AssertIDA(status);
 
-    if(get_local_tolerances)
+    if (get_local_tolerances)
       {
         copy(abs_tolls, get_local_tolerances());
         status = IDASVtolerances(ida_mem, data.relative_tolerance, abs_tolls);
@@ -352,14 +352,14 @@ namespace SUNDIALS
     status = IDASetUserData(ida_mem, (void*) this);
     AssertIDA(status);
 
-    if(data.ic_type == AdditionalData::use_y_diff
-       || data.reset_type == AdditionalData::use_y_diff
-       || data.ignore_algebraic_terms_for_errors)
+    if (data.ic_type == AdditionalData::use_y_diff
+        || data.reset_type == AdditionalData::use_y_diff
+        || data.ignore_algebraic_terms_for_errors)
       {
         VectorType diff_comp_vector(solution);
         diff_comp_vector = 0.0;
         auto dc          = differential_components();
-        for(auto i = dc.begin(); i != dc.end(); ++i)
+        for (auto i = dc.begin(); i != dc.end(); ++i)
           diff_comp_vector[*i] = 1.0;
 
         copy(diff_id, diff_comp_vector);
@@ -391,7 +391,7 @@ namespace SUNDIALS
     AssertIDA(status);
 
     typename AdditionalData::InitialConditionCorrection type;
-    if(first_step)
+    if (first_step)
       type = data.ic_type;
     else
       type = data.reset_type;
@@ -400,7 +400,7 @@ namespace SUNDIALS
       = IDASetMaxNumItersIC(ida_mem, data.maximum_non_linear_iterations_ic);
     AssertIDA(status);
 
-    if(type == AdditionalData::use_y_dot)
+    if (type == AdditionalData::use_y_dot)
       {
         // (re)initialization of the vectors
         status
@@ -413,7 +413,7 @@ namespace SUNDIALS
         copy(solution, yy);
         copy(solution_dot, yp);
       }
-    else if(type == AdditionalData::use_y_diff)
+    else if (type == AdditionalData::use_y_diff)
       {
         status = IDACalcIC(
           ida_mem, IDA_YA_YDP_INIT, current_time + current_time_step);

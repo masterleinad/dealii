@@ -42,19 +42,19 @@ check(const unsigned int fe_degree)
 
   // run a few different sizes...
   unsigned int sizes[] = {1, 2, 3};
-  for(unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
-      ++cycle)
+  for (unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
+       ++cycle)
     {
       unsigned int n_refinements = 0;
       unsigned int n_subdiv      = sizes[cycle];
-      if(n_subdiv > 1)
-        while(n_subdiv % 2 == 0)
+      if (n_subdiv > 1)
+        while (n_subdiv % 2 == 0)
           {
             n_refinements += 1;
             n_subdiv /= 2;
           }
       n_refinements += 3 - dim;
-      if(fe_degree < 3)
+      if (fe_degree < 3)
         n_refinements += 1;
 
       parallel::distributed::Triangulation<dim> tr(
@@ -66,27 +66,27 @@ check(const unsigned int fe_degree)
       tr.refine_global(n_refinements);
 
       // adaptive refinement into a circle
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() < 0.5)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() < 0.5)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() > 0.3
-           && cell->center().norm() < 0.4)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() > 0.3
+            && cell->center().norm() < 0.4)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() > 0.33
-           && cell->center().norm() < 0.37)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() > 0.33
+            && cell->center().norm() < 0.37)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
 
@@ -106,13 +106,13 @@ check(const unsigned int fe_degree)
       ZeroFunction<dim>               zero_function;
       typename FunctionMap<dim>::type dirichlet_boundary;
       dirichlet_boundary[0] = &zero_function;
-      for(unsigned int i = 0; i < mgdof_ptr.size(); ++i)
+      for (unsigned int i = 0; i < mgdof_ptr.size(); ++i)
         mg_constrained_dofs_vector[i].initialize(*mgdof_ptr[i],
                                                  dirichlet_boundary);
 
       // build reference
       std::vector<MGTransferMatrixFree<dim, Number>> transfer_ref;
-      for(unsigned int b = 0; b < nb; ++b)
+      for (unsigned int b = 0; b < nb; ++b)
         {
           transfer_ref.emplace_back(mg_constrained_dofs_vector[b]);
           transfer_ref[b].build(*mgdof_ptr[b]);
@@ -124,13 +124,13 @@ check(const unsigned int fe_degree)
       transfer.build(mgdof_ptr);
 
       // check prolongation for all levels using random vector
-      for(unsigned int level = 1;
-          level < mgdof_ptr[0]->get_triangulation().n_global_levels();
-          ++level)
+      for (unsigned int level = 1;
+           level < mgdof_ptr[0]->get_triangulation().n_global_levels();
+           ++level)
         {
           LinearAlgebra::distributed::BlockVector<Number> v1(nb), v2(nb),
             v3(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for (unsigned int b = 0; b < nb; ++b)
             {
               v1.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level - 1),
                                  MPI_COMM_WORLD);
@@ -139,7 +139,7 @@ check(const unsigned int fe_degree)
               v3.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level),
                                  MPI_COMM_WORLD);
 
-              for(unsigned int i = 0; i < v1.block(b).local_size(); ++i)
+              for (unsigned int i = 0; i < v1.block(b).local_size(); ++i)
                 v1.block(b).local_element(i) = random_value<double>();
 
               transfer_ref[b].prolongate(level, v2.block(b), v1.block(b));
@@ -152,13 +152,13 @@ check(const unsigned int fe_degree)
         }
 
       // check restriction for all levels using random vector
-      for(unsigned int level = 1;
-          level < mgdof_ptr[0]->get_triangulation().n_global_levels();
-          ++level)
+      for (unsigned int level = 1;
+           level < mgdof_ptr[0]->get_triangulation().n_global_levels();
+           ++level)
         {
           LinearAlgebra::distributed::BlockVector<Number> v1(nb), v2(nb),
             v3(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for (unsigned int b = 0; b < nb; ++b)
             {
               v1.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level),
                                  MPI_COMM_WORLD);
@@ -167,7 +167,7 @@ check(const unsigned int fe_degree)
               v3.block(b).reinit(mgdof_ptr[b]->locally_owned_mg_dofs(level - 1),
                                  MPI_COMM_WORLD);
 
-              for(unsigned int i = 0; i < v1.block(b).local_size(); ++i)
+              for (unsigned int i = 0; i < v1.block(b).local_size(); ++i)
                 v1.block(b).local_element(i) = random_value<double>();
 
               transfer_ref[b].restrict_and_add(level, v2.block(b), v1.block(b));
@@ -181,7 +181,7 @@ check(const unsigned int fe_degree)
           v2 = 1.;
           v3 = 1.;
           transfer.restrict_and_add(level, v2, v1);
-          for(unsigned int b = 0; b < nb; ++b)
+          for (unsigned int b = 0; b < nb; ++b)
             transfer_ref[b].restrict_and_add(level, v3.block(b), v1.block(b));
           v3 -= v2;
           deallog << "Diff restrict add l" << level << ": " << v3.l2_norm()

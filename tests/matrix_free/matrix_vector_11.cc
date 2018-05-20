@@ -47,28 +47,28 @@ test()
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
   cell                                                   = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->is_locally_owned())
-      if(cell->center().norm() < 0.2)
+  for (; cell != endc; ++cell)
+    if (cell->is_locally_owned())
+      if (cell->center().norm() < 0.2)
         cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  if(fe_degree < 2)
+  if (fe_degree < 2)
     tria.refine_global(2);
   else
     tria.refine_global(1);
-  if(tria.begin(tria.n_levels() - 1)->is_locally_owned())
+  if (tria.begin(tria.n_levels() - 1)->is_locally_owned())
     tria.begin(tria.n_levels() - 1)->set_refine_flag();
-  if(tria.last()->is_locally_owned())
+  if (tria.last()->is_locally_owned())
     tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(unsigned int i = 0; i < 11 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 11 - 3 * dim; ++i)
     {
       cell                 = tria.begin_active();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(cell->is_locally_owned())
-          if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (cell->is_locally_owned())
+          if (counter % (7 - i) == 0)
             cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -111,33 +111,33 @@ test()
   out.reinit(in);
   ref.reinit(in);
 
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for (unsigned int i = 0; i < in.local_size(); ++i)
     {
       const unsigned int glob_index = owned_set.nth_index_in_set(i);
-      if(constraints.is_constrained(glob_index))
+      if (constraints.is_constrained(glob_index))
         continue;
       in.local_element(i) = random_value<double>();
     }
 
   mf.vmult(ref, in);
 
-  for(unsigned int parallel_option = 0; parallel_option < 3; ++parallel_option)
+  for (unsigned int parallel_option = 0; parallel_option < 3; ++parallel_option)
     {
       const QGauss<1>                                  quad(fe_degree + 1);
       typename MatrixFree<dim, number>::AdditionalData data;
-      if(parallel_option == 0)
+      if (parallel_option == 0)
         {
           data.tasks_parallel_scheme
             = MatrixFree<dim, number>::AdditionalData::partition_partition;
           deallog << "Parallel option: partition partition" << std::endl;
         }
-      else if(parallel_option == 1)
+      else if (parallel_option == 1)
         {
           data.tasks_parallel_scheme
             = MatrixFree<dim, number>::AdditionalData::partition_color;
           deallog << "Parallel option: partition color" << std::endl;
         }
-      else if(parallel_option == 2)
+      else if (parallel_option == 2)
         {
           data.tasks_parallel_scheme
             = MatrixFree<dim, number>::AdditionalData::color;
@@ -155,7 +155,7 @@ test()
 
       // run 10 times to make a possible error more
       // likely to show up
-      for(unsigned int run = 0; run < 10; ++run)
+      for (unsigned int run = 0; run < 10; ++run)
         {
           mf.vmult(out, in);
           out -= ref;
@@ -176,7 +176,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

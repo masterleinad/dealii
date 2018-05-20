@@ -38,9 +38,9 @@ test()
   sp.reinit(rows, columns, MPI_COMM_WORLD, 0u);
   deallog << "SP::is_compressed(): " << sp.is_compressed() << std::endl;
 
-  for(unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
-    for(unsigned int j = 0; j < 3 * n_procs; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 2 * myid; i < 2 * myid + 2; ++i)
+    for (unsigned int j = 0; j < 3 * n_procs; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
 
   deallog << "SP::is_compressed(): " << sp.is_compressed() << std::endl;
@@ -78,7 +78,7 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       std::ofstream logfile("output");
       deallog.attach(logfile);

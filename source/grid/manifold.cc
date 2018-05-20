@@ -86,15 +86,15 @@ Manifold<dim, spacedim>::get_new_point(
   Point<spacedim> p = surrounding_points[permutation[0]];
   double          w = weights[permutation[0]];
 
-  for(unsigned int i = 1; i < n_points; ++i)
+  for (unsigned int i = 1; i < n_points; ++i)
     {
       double weight = 0.0;
-      if((weights[permutation[i]] + w) < tol)
+      if ((weights[permutation[i]] + w) < tol)
         weight = 0.0;
       else
         weight = w / (weights[permutation[i]] + w);
 
-      if(std::abs(weight) > 1e-14)
+      if (std::abs(weight) > 1e-14)
         p = get_intermediate_point(
           p, surrounding_points[permutation[i]], 1.0 - weight);
       w += weights[permutation[i]];
@@ -112,7 +112,7 @@ Manifold<dim, spacedim>::get_new_points(
 {
   AssertDimension(surrounding_points.size(), weights.size(1));
 
-  for(unsigned int row = 0; row < weights.size(0); ++row)
+  for (unsigned int row = 0; row < weights.size(0); ++row)
     {
       new_points[row] = get_new_point(
         make_array_view(surrounding_points.begin(), surrounding_points.end()),
@@ -165,16 +165,16 @@ Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
   double       abs_cos_angle = std::numeric_limits<double>::max();
   unsigned int first_index   = numbers::invalid_unsigned_int,
                second_index  = numbers::invalid_unsigned_int;
-  for(unsigned int i = 0; i < 3; ++i)
-    if(distances[i] > 1e-8 * max_distance)
-      for(unsigned int j = i + 1; j < 4; ++j)
-        if(distances[j] > 1e-8 * max_distance)
+  for (unsigned int i = 0; i < 3; ++i)
+    if (distances[i] > 1e-8 * max_distance)
+      for (unsigned int j = i + 1; j < 4; ++j)
+        if (distances[j] > 1e-8 * max_distance)
           {
             const double new_angle = (p - vertices[i]) * (p - vertices[j])
                                      / (distances[i] * distances[j]);
             // multiply by factor 0.999 to bias the search in a way that
             // avoids trouble with roundoff
-            if(std::abs(new_angle) < 0.999 * abs_cos_angle)
+            if (std::abs(new_angle) < 0.999 * abs_cos_angle)
               {
                 abs_cos_angle = std::abs(new_angle);
                 first_index   = i;
@@ -205,7 +205,7 @@ Manifold<3, 3>::normal_vector(const Triangulation<3, 3>::face_iterator& face,
   const Tensor<1, spacedim> rt2              = vertices[2] - vertices[1];
   const Tensor<1, spacedim> reference_normal = cross_product_3d(rt1, rt2);
 
-  if(reference_normal * normal < 0.0)
+  if (reference_normal * normal < 0.0)
     normal *= -1.0;
 
   return normal / normal.norm();
@@ -231,7 +231,7 @@ Manifold<2, 2>::get_normals_at_vertices(
   n[1]
     = -cross_product_2d(get_tangent_vector(face->vertex(1), face->vertex(0)));
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       Assert(n[i].norm() != 0,
              ExcInternalError("Something went wrong. The "
@@ -259,7 +259,7 @@ Manifold<3, 3>::get_normals_at_vertices(
   n[3] = cross_product_3d(get_tangent_vector(face->vertex(3), face->vertex(2)),
                           get_tangent_vector(face->vertex(3), face->vertex(1)));
 
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     {
       Assert(n[i].norm() != 0,
              ExcInternalError("Something went wrong. The "
@@ -275,7 +275,7 @@ Manifold<dim, spacedim>::get_normals_at_vertices(
   const typename Triangulation<dim, spacedim>::face_iterator& face,
   FaceVertexNormals&                                          n) const
 {
-  for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+  for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
     {
       n[v] = normal_vector(face, face->vertex(v));
       n[v] /= n[v].norm();
@@ -313,7 +313,7 @@ Manifold<dim, spacedim>::get_new_point_on_face(
 {
   Assert(dim > 1, ExcImpossibleInDim(dim));
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         return get_new_point_on_line(face);
@@ -329,7 +329,7 @@ Point<spacedim>
 Manifold<dim, spacedim>::get_new_point_on_cell(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
 {
-  switch(dim)
+  switch (dim)
     {
       case 1:
         return get_new_point_on_line(cell);
@@ -486,18 +486,18 @@ FlatManifold<dim, spacedim>::get_new_point(
   Point<spacedim> p;
 
   // if there is no periodicity, use a shortcut
-  if(periodicity == Tensor<1, spacedim>())
+  if (periodicity == Tensor<1, spacedim>())
     {
-      for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+      for (unsigned int i = 0; i < surrounding_points.size(); ++i)
         p += surrounding_points[i] * weights[i];
     }
   else
     {
       Tensor<1, spacedim> minP = periodicity;
 
-      for(unsigned int d = 0; d < spacedim; ++d)
-        if(periodicity[d] > 0)
-          for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        if (periodicity[d] > 0)
+          for (unsigned int i = 0; i < surrounding_points.size(); ++i)
             {
               minP[d] = std::min(minP[d], surrounding_points[i][d]);
               Assert(
@@ -508,11 +508,11 @@ FlatManifold<dim, spacedim>::get_new_point(
             }
 
       // compute the weighted average point, possibly taking into account periodicity
-      for(unsigned int i = 0; i < surrounding_points.size(); ++i)
+      for (unsigned int i = 0; i < surrounding_points.size(); ++i)
         {
           Point<spacedim> dp;
-          for(unsigned int d = 0; d < spacedim; ++d)
-            if(periodicity[d] > 0)
+          for (unsigned int d = 0; d < spacedim; ++d)
+            if (periodicity[d] > 0)
               dp[d]
                 = ((surrounding_points[i][d] - minP[d]) > periodicity[d] / 2.0 ?
                      -periodicity[d] :
@@ -522,9 +522,9 @@ FlatManifold<dim, spacedim>::get_new_point(
         }
 
       // if necessary, also adjust the weighted point by the periodicity
-      for(unsigned int d = 0; d < spacedim; ++d)
-        if(periodicity[d] > 0)
-          if(p[d] < 0)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        if (periodicity[d] > 0)
+          if (p[d] < 0)
             p[d] += periodicity[d];
     }
 
@@ -539,15 +539,15 @@ FlatManifold<dim, spacedim>::get_new_points(
   ArrayView<Point<spacedim>>              new_points) const
 {
   AssertDimension(surrounding_points.size(), weights.size(1));
-  if(weights.size(0) == 0)
+  if (weights.size(0) == 0)
     return;
 
   const std::size_t n_points = surrounding_points.size();
 
   Tensor<1, spacedim> minP = periodicity;
-  for(unsigned int d = 0; d < spacedim; ++d)
-    if(periodicity[d] > 0)
-      for(unsigned int i = 0; i < n_points; ++i)
+  for (unsigned int d = 0; d < spacedim; ++d)
+    if (periodicity[d] > 0)
+      for (unsigned int i = 0; i < n_points; ++i)
         {
           minP[d] = std::min(minP[d], surrounding_points[i][d]);
           Assert((surrounding_points[i][d]
@@ -562,30 +562,30 @@ FlatManifold<dim, spacedim>::get_new_points(
 
   boost::container::small_vector<Point<spacedim>, 200> modified_points;
   bool adjust_periodicity = false;
-  for(unsigned int d = 0; d < spacedim; ++d)
-    if(periodicity[d] > 0)
-      for(unsigned int i = 0; i < n_points; ++i)
-        if((surrounding_points[i][d] - minP[d]) > periodicity[d] / 2.0)
+  for (unsigned int d = 0; d < spacedim; ++d)
+    if (periodicity[d] > 0)
+      for (unsigned int i = 0; i < n_points; ++i)
+        if ((surrounding_points[i][d] - minP[d]) > periodicity[d] / 2.0)
           {
             adjust_periodicity = true;
             break;
           }
-  if(adjust_periodicity == true)
+  if (adjust_periodicity == true)
     {
       modified_points.resize(surrounding_points.size());
       std::copy(surrounding_points.begin(),
                 surrounding_points.end(),
                 modified_points.begin());
-      for(unsigned int d = 0; d < spacedim; ++d)
-        if(periodicity[d] > 0)
-          for(unsigned int i = 0; i < n_points; ++i)
-            if((surrounding_points[i][d] - minP[d]) > periodicity[d] / 2.0)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        if (periodicity[d] > 0)
+          for (unsigned int i = 0; i < n_points; ++i)
+            if ((surrounding_points[i][d] - minP[d]) > periodicity[d] / 2.0)
               modified_points[i][d] -= periodicity[d];
       surrounding_points_start = modified_points.data();
     }
 
   // Now perform the interpolation
-  for(unsigned int row = 0; row < weights.size(0); ++row)
+  for (unsigned int row = 0; row < weights.size(0); ++row)
     {
       Assert(
         std::abs(
@@ -594,13 +594,13 @@ FlatManifold<dim, spacedim>::get_new_points(
           < 1e-10,
         ExcMessage("The weights for the individual points should sum to 1!"));
       Point<spacedim> new_point;
-      for(unsigned int p = 0; p < n_points; ++p)
+      for (unsigned int p = 0; p < n_points; ++p)
         new_point += surrounding_points_start[p] * weights(row, p);
 
       // if necessary, also adjust the weighted point by the periodicity
-      for(unsigned int d = 0; d < spacedim; ++d)
-        if(periodicity[d] > 0)
-          if(new_point[d] < 0)
+      for (unsigned int d = 0; d < spacedim; ++d)
+        if (periodicity[d] > 0)
+          if (new_point[d] < 0)
             new_point[d] += periodicity[d];
 
       // TODO should this use surrounding_points_start or surrounding_points?
@@ -638,12 +638,12 @@ FlatManifold<dim, spacedim>::get_tangent_vector(const Point<spacedim>& x1,
   // to make sure that if a distance in one coordinate direction
   // is larger than half of the box length, then go the other way
   // around (i.e., via the periodic box)
-  for(unsigned int d = 0; d < spacedim; ++d)
-    if(periodicity[d] > tolerance)
+  for (unsigned int d = 0; d < spacedim; ++d)
+    if (periodicity[d] > tolerance)
       {
-        if(direction[d] < -periodicity[d] / 2)
+        if (direction[d] < -periodicity[d] / 2)
           direction[d] += periodicity[d];
-        else if(direction[d] > periodicity[d] / 2)
+        else if (direction[d] > periodicity[d] / 2)
           direction[d] -= periodicity[d];
       }
 
@@ -684,8 +684,8 @@ FlatManifold<2>::get_normals_at_vertices(
   Manifold<2, 2>::FaceVertexNormals&     face_vertex_normals) const
 {
   const Tensor<1, 2> tangent = face->vertex(1) - face->vertex(0);
-  for(unsigned int vertex = 0; vertex < GeometryInfo<2>::vertices_per_face;
-      ++vertex)
+  for (unsigned int vertex = 0; vertex < GeometryInfo<2>::vertices_per_face;
+       ++vertex)
     // compute normals from tangent
     face_vertex_normals[vertex] = Point<2>(tangent[1], -tangent[0]);
 }
@@ -709,7 +709,7 @@ FlatManifold<3>::get_normals_at_vertices(
 
   static const unsigned int neighboring_vertices[4][2]
     = {{1, 2}, {3, 0}, {0, 3}, {2, 1}};
-  for(unsigned int vertex = 0; vertex < vertices_per_face; ++vertex)
+  for (unsigned int vertex = 0; vertex < vertices_per_face; ++vertex)
     {
       // first define the two tangent vectors at the vertex by using the
       // two lines radiating away from this vertex
@@ -800,24 +800,25 @@ FlatManifold<dim, spacedim>::normal_vector(
   const unsigned int facedim = dim - 1;
 
   Point<facedim> xi;
-  for(unsigned int i = 0; i < facedim; ++i)
+  for (unsigned int i = 0; i < facedim; ++i)
     xi[i] = 1. / 2;
 
   const double        eps = 1e-12;
   Tensor<1, spacedim> grad_F[facedim];
   unsigned int        iteration = 0;
-  while(true)
+  while (true)
     {
       Point<spacedim> F;
-      for(unsigned int v = 0; v < GeometryInfo<facedim>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<facedim>::vertices_per_cell;
+           ++v)
         F += face->vertex(v)
              * GeometryInfo<facedim>::d_linear_shape_function(xi, v);
 
-      for(unsigned int i = 0; i < facedim; ++i)
+      for (unsigned int i = 0; i < facedim; ++i)
         {
           grad_F[i] = 0;
-          for(unsigned int v = 0; v < GeometryInfo<facedim>::vertices_per_cell;
-              ++v)
+          for (unsigned int v = 0; v < GeometryInfo<facedim>::vertices_per_cell;
+               ++v)
             grad_F[i]
               += face->vertex(v)
                  * GeometryInfo<facedim>::d_linear_shape_function_gradient(
@@ -825,14 +826,14 @@ FlatManifold<dim, spacedim>::normal_vector(
         }
 
       Tensor<1, facedim> J;
-      for(unsigned int i = 0; i < facedim; ++i)
-        for(unsigned int j = 0; j < spacedim; ++j)
+      for (unsigned int i = 0; i < facedim; ++i)
+        for (unsigned int j = 0; j < spacedim; ++j)
           J[i] += grad_F[i][j] * (F - p)[j];
 
       Tensor<2, facedim> H;
-      for(unsigned int i = 0; i < facedim; ++i)
-        for(unsigned int j = 0; j < facedim; ++j)
-          for(unsigned int k = 0; k < spacedim; ++k)
+      for (unsigned int i = 0; i < facedim; ++i)
+        for (unsigned int j = 0; j < facedim; ++j)
+          for (unsigned int k = 0; k < spacedim; ++k)
             H[i][j] += grad_F[i][k] * grad_F[j][k];
 
       const Tensor<1, facedim> delta_xi = -invert(H) * J;
@@ -846,7 +847,7 @@ FlatManifold<dim, spacedim>::normal_vector(
                         "of what a deformed cell is. You may want to output "
                         "the vertices of your cell."));
 
-      if(delta_xi.norm() < eps)
+      if (delta_xi.norm() < eps)
         break;
     }
 
@@ -887,7 +888,7 @@ ChartManifold<dim, spacedim, chartdim>::get_new_point(
 
   boost::container::small_vector<Point<chartdim>, 200> chart_points(n_points);
 
-  for(unsigned int i = 0; i < n_points; ++i)
+  for (unsigned int i = 0; i < n_points; ++i)
     chart_points[i] = pull_back(surrounding_points[i]);
 
   const Point<chartdim> p_chart = sub_manifold.get_new_point(
@@ -909,7 +910,7 @@ ChartManifold<dim, spacedim, chartdim>::get_new_points(
   const std::size_t n_points = surrounding_points.size();
 
   boost::container::small_vector<Point<chartdim>, 200> chart_points(n_points);
-  for(std::size_t i = 0; i < n_points; ++i)
+  for (std::size_t i = 0; i < n_points; ++i)
     chart_points[i] = pull_back(surrounding_points[i]);
 
   boost::container::small_vector<Point<chartdim>, 200> new_points_on_chart(
@@ -919,7 +920,7 @@ ChartManifold<dim, spacedim, chartdim>::get_new_points(
     weights,
     make_array_view(new_points_on_chart.begin(), new_points_on_chart.end()));
 
-  for(std::size_t row = 0; row < weights.size(0); ++row)
+  for (std::size_t row = 0; row < weights.size(0); ++row)
     new_points[row] = push_forward(new_points_on_chart[row]);
 }
 
@@ -958,7 +959,7 @@ ChartManifold<dim, spacedim, chartdim>::get_tangent_vector(
     = sub_manifold.get_tangent_vector(pull_back(x1), pull_back(x2));
 
   Tensor<1, spacedim> result;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     result[i] += F_prime[i] * delta;
 
   return result;

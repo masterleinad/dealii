@@ -43,7 +43,7 @@ public:
   pull_back(const Point<spacedim>& space_point) const override
   {
     Point<spacedim + 1> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       p[d] = space_point[d];
     return p;
   }
@@ -52,7 +52,7 @@ public:
   push_forward(const Point<spacedim + 1>& chart_point) const override
   {
     Point<spacedim> p;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       p[d] = chart_point[d];
     return p;
   }
@@ -61,7 +61,7 @@ public:
   push_forward_gradient(const Point<spacedim + 1>& chart_point) const override
   {
     DerivativeForm<1, spacedim + 1, spacedim> x;
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       x[d][d] = 1;
     return x;
   }
@@ -82,15 +82,15 @@ test(unsigned int ref = 1)
 
   typename Triangulation<dim, spacedim>::active_cell_iterator cell;
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
       cell->set_all_manifold_ids(0);
 
       // check that FlatManifold returns the middle of the cell.
       deallog << "Cell: " << cell << std::endl;
-      if(cell->get_manifold().get_new_point_on_cell(cell).distance(
-           cell->center())
-         > 1e-6)
+      if (cell->get_manifold().get_new_point_on_cell(cell).distance(
+            cell->center())
+          > 1e-6)
         {
           deallog << "Default manifold: "
                   << cell->get_manifold().get_new_point_on_cell(cell)

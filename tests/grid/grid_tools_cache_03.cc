@@ -35,7 +35,7 @@ test(const Point<spacedim>& p)
   tria.begin_active()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  for(auto cell = tria.begin_active(2); cell != tria.end(2); ++cell)
+  for (auto cell = tria.begin_active(2); cell != tria.end(2); ++cell)
     cell->set_coarsen_flag();
 
   tria.execute_coarsening_and_refinement();
@@ -44,7 +44,7 @@ test(const Point<spacedim>& p)
 
   auto m = cache.get_used_vertices();
 
-  for(auto& e : m)
+  for (auto& e : m)
     deallog << "Vertex: " << e.first << ": " << e.second << std::endl;
 
   auto i = GridTools::find_closest_vertex(m, p);

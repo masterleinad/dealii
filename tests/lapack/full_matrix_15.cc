@@ -38,8 +38,8 @@ test(const unsigned int size)
   M.set_property(LAPACKSupport::symmetric);
   M.compute_cholesky_factorization();
   // factorization is stored in the lower diagonal part
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = i + 1; j < size; ++j)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = i + 1; j < size; ++j)
       M(i, j) = 0.;
 
   FullMatrix<NumberType> diff(size);
@@ -48,7 +48,7 @@ test(const unsigned int size)
 
   const NumberType error = diff.frobenius_norm();
   deallog << size << " : " << diff.frobenius_norm() << std::endl;
-  if(false)
+  if (false)
     {
       std::cout << "Lapack:" << std::endl;
       M.print_formatted(std::cout);
@@ -68,7 +68,7 @@ main()
   deallog.attach(logfile);
 
   const std::vector<unsigned int> sizes = {{1, 3, 11, 17, 32, 64, 200, 391}};
-  for(const auto& s : sizes)
+  for (const auto& s : sizes)
     {
       // test<float>(s);
       test<double>(s);

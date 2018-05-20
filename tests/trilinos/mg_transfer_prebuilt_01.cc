@@ -46,7 +46,7 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>&      mg_dof,
     ExcMessage(
       "multigrid with Trilinos vectors only works with distributed Triangulation!"));
 
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
       v[level].reinit(mg_dof.locally_owned_mg_dofs(level),
                       tria->get_communicator());
@@ -96,7 +96,7 @@ check_simple(const FiniteElement<dim>& fe)
 
   // Now the same for a non-constant
   // vector
-  for(unsigned int i = 0; i < u[0].size(); ++i)
+  for (unsigned int i = 0; i < u[0].size(); ++i)
     u[0](i) = i;
   transfer.prolongate(1, u[1], u[0]);
   transfer.prolongate(2, u[2], u[1]);
@@ -115,11 +115,11 @@ check_simple(const FiniteElement<dim>& fe)
   // from one up
   TrilinosWrappers::MPI::Vector v;
   v.reinit(mgdof.locally_owned_dofs(), MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i + 1;
 
   transfer.copy_to_mg(mgdof, u, v);
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     deallog << ' ' << (int) u[2](i);
   deallog << std::endl;
 
@@ -127,10 +127,10 @@ check_simple(const FiniteElement<dim>& fe)
   // multigrid vector counting the
   // dofs and see where the numbers go
   v = 0.;
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     u[2](i) = i + 1;
   transfer.copy_from_mg(mgdof, v, u);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << (int) v(i);
   deallog << std::endl;
   v.equ(-1., v);

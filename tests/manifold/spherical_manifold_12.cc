@@ -54,9 +54,9 @@ main()
                               quadrature,
                               update_normal_vectors | update_quadrature_points);
 
-  for(auto cell : tria.active_cell_iterators())
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (auto cell : tria.active_cell_iterators())
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         {
           fe_values.reinit(cell, f);
 
@@ -64,16 +64,16 @@ main()
           // that we use a 4-th degree mapping, so its accuracy on the once
           // refined version of the sphere should be enough)
           const double tolerance = 1e-7;
-          for(unsigned int q = 0; q < quadrature.size(); ++q)
+          for (unsigned int q = 0; q < quadrature.size(); ++q)
             {
               const Tensor<1, dim> normal_manifold = spherical.normal_vector(
                 cell->face(f), fe_values.quadrature_point(q));
-              if(cell->face(f)->boundary_id() == 2)
+              if (cell->face(f)->boundary_id() == 2)
                 {
                   const Tensor<1, dim> normal_flat = flat.normal_vector(
                     cell->face(f), fe_values.quadrature_point(q));
-                  if(std::abs(1.0 - std::abs(normal_manifold * normal_flat))
-                     > tolerance)
+                  if (std::abs(1.0 - std::abs(normal_manifold * normal_flat))
+                      > tolerance)
                     deallog
                       << "Error in point " << fe_values.quadrature_point(q)
                       << ": "
@@ -88,8 +88,8 @@ main()
                 {
                   const Tensor<1, dim> normal_feval
                     = fe_values.normal_vector(q);
-                  if(std::abs(1.0 - std::abs(normal_manifold * normal_feval))
-                     > tolerance)
+                  if (std::abs(1.0 - std::abs(normal_manifold * normal_feval))
+                      > tolerance)
                     deallog
                       << "Error in point " << fe_values.quadrature_point(q)
                       << ": "

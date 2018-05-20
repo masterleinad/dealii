@@ -25,10 +25,10 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<float>>& w)
 {
   // set only certain elements of each
   // vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       v(i) = std::complex<double>(i, i + 1.);
-      if(i % 3 == 0)
+      if (i % 3 == 0)
         w(i) = std::complex<double>(i + 1., i + 2.);
     }
   // but then copy elements and make sure the
@@ -51,7 +51,7 @@ main()
       Vector<std::complex<float>>  w(100);
       test(v, w);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -65,7 +65,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

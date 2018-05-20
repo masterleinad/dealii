@@ -107,7 +107,7 @@ template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 {
-  if(p.square() < 0.5 * 0.5)
+  if (p.square() < 0.5 * 0.5)
     return 20;
   else
     return 1;
@@ -126,9 +126,9 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 
   Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-  for(unsigned int i = 0; i < n_points; ++i)
+  for (unsigned int i = 0; i < n_points; ++i)
     {
-      if(points[i].square() < 0.5 * 0.5)
+      if (points[i].square() < 0.5 * 0.5)
         values[i] = 20;
       else
         values[i] = 1;
@@ -195,7 +195,7 @@ Step6<dim>::assemble_system()
   const Coefficient<dim> coefficient;
   std::vector<double>    coefficient_values(n_q_points);
 
-  for(auto cell : dof_handler.active_cell_iterators())
+  for (auto cell : dof_handler.active_cell_iterators())
     {
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -205,10 +205,10 @@ Step6<dim>::assemble_system()
       coefficient.value_list(fe_values.get_quadrature_points(),
                              coefficient_values);
 
-      for(unsigned int q_index = 0; q_index < n_q_points; ++q_index)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += (coefficient_values[q_index]
                                     * fe_values.shape_grad(i, q_index)
                                     * fe_values.shape_grad(j, q_index)
@@ -277,11 +277,11 @@ template <int dim>
 void
 Step6<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for (unsigned int cycle = 0; cycle < 3; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_ball(triangulation);
 

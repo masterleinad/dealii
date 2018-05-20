@@ -45,7 +45,7 @@ main()
 
   std::vector<Point<2>> vertices = FE_Q<2>(1).get_unit_support_points();
 
-  for(unsigned int m = 1; m < 7; ++m)
+  for (unsigned int m = 1; m < 7; ++m)
     {
       deallog << " =========Quadrature Order: " << m
               << " =============================== " << endl;
@@ -59,15 +59,15 @@ main()
         QTelles<2>        quad(m, vertices[index]);
         QGaussOneOverR<2> quad2(m, vertices[index]);
 
-        for(unsigned int i = 0; i < 6; ++i)
+        for (unsigned int i = 0; i < 6; ++i)
           {
-            for(unsigned int j = 0; j < 6; ++j)
+            for (unsigned int j = 0; j < 6; ++j)
               {
                 double exact_integral  = exact_integral_one_over_r(index, i, j);
                 double approx_integral = 0;
                 double approx_integral_2 = 0;
 
-                for(unsigned int q = 0; q < quad.size(); ++q)
+                for (unsigned int q = 0; q < quad.size(); ++q)
                   {
                     double x = quad.point(q)[0];
                     double y = quad.point(q)[1];
@@ -76,7 +76,7 @@ main()
                                         / R * quad.weight(q));
                   }
 
-                for(unsigned int q = 0; q < quad2.size(); ++q)
+                for (unsigned int q = 0; q < quad2.size(); ++q)
                   {
                     double x = quad2.point(q)[0];
                     double y = quad2.point(q)[1];

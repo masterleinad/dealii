@@ -69,7 +69,7 @@ test()
   // and output what we have
   SparsityPattern A;
   A.copy_from(sparsity);
-  for(SparsityPattern::const_iterator i = A.begin(); i != A.end(); ++i)
+  for (SparsityPattern::const_iterator i = A.begin(); i != A.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 }
 
@@ -84,7 +84,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -98,7 +98,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

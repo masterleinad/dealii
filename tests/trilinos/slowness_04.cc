@@ -43,10 +43,10 @@ test()
   std::vector<unsigned int> permutation(N);
   {
     std::vector<unsigned int> unused_indices(N);
-    for(unsigned int i = 0; i < N; i++)
+    for (unsigned int i = 0; i < N; i++)
       unused_indices[i] = i;
 
-    for(unsigned int i = 0; i < N; i++)
+    for (unsigned int i = 0; i < N; i++)
       {
         // pick a random element among the
         // unused indices
@@ -63,30 +63,30 @@ test()
   // build the sparse matrix
   IndexSet                       indices = complete_index_set(N * N);
   TrilinosWrappers::SparseMatrix matrix(indices, MPI_COMM_WORLD, 5);
-  for(unsigned int i_ = 0; i_ < N; i_++)
-    for(unsigned int j_ = 0; j_ < N; j_++)
+  for (unsigned int i_ = 0; i_ < N; i_++)
+    for (unsigned int j_ = 0; j_ < N; j_++)
       {
         const unsigned int i = permutation[i_];
         const unsigned int j = permutation[j_];
 
         const unsigned int global = i * N + j;
         matrix.set(global, global, Testing::rand());
-        if(j > 0)
+        if (j > 0)
           {
             matrix.set(global - 1, global, Testing::rand());
             matrix.set(global, global - 1, Testing::rand());
           }
-        if(j < N - 1)
+        if (j < N - 1)
           {
             matrix.set(global + 1, global, Testing::rand());
             matrix.set(global, global + 1, Testing::rand());
           }
-        if(i > 0)
+        if (i > 0)
           {
             matrix.set(global - N, global, Testing::rand());
             matrix.set(global, global - N, Testing::rand());
           }
-        if(i < N - 1)
+        if (i < N - 1)
           {
             matrix.set(global + N, global, Testing::rand());
             matrix.set(global, global + N, Testing::rand());
@@ -99,7 +99,7 @@ test()
   // of the matrix norm
   TrilinosWrappers::MPI::Vector v1(indices, MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector v2(indices, MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < N * N; ++i)
+  for (unsigned int i = 0; i < N * N; ++i)
     v1(i) = i;
   matrix.vmult(v2, v1);
 
@@ -120,7 +120,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -134,7 +134,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -104,7 +104,7 @@ namespace Utilities
       int grp_rank;
       ierr = MPI_Group_rank(group, &grp_rank);
       AssertThrowMPI(ierr);
-      if(grp_rank == MPI_UNDEFINED)
+      if (grp_rank == MPI_UNDEFINED)
         {
           *new_comm = MPI_COMM_NULL;
           return MPI_SUCCESS;
@@ -132,13 +132,13 @@ namespace Utilities
 
       MPI_Comm comm_old = *new_comm;
       MPI_Comm ic;
-      for(int merge_sz = 1; merge_sz < grp_size; merge_sz *= 2)
+      for (int merge_sz = 1; merge_sz < grp_size; merge_sz *= 2)
         {
           const int gid = grp_rank / merge_sz;
           comm_old      = *new_comm;
-          if(gid % 2 == 0)
+          if (gid % 2 == 0)
             {
-              if((gid + 1) * merge_sz < grp_size)
+              if ((gid + 1) * merge_sz < grp_size)
                 {
                   ierr = (MPI_Intercomm_create(
                     *new_comm, 0, comm, pids[(gid + 1) * merge_sz], tag, &ic));
@@ -155,7 +155,7 @@ namespace Utilities
               ierr = MPI_Intercomm_merge(ic, 1 /* HIGH */, new_comm);
               AssertThrowMPI(ierr);
             }
-          if(*new_comm != comm_old)
+          if (*new_comm != comm_old)
             {
               ierr = MPI_Comm_free(&ic);
               AssertThrowMPI(ierr);
@@ -176,7 +176,7 @@ namespace Utilities
       const unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_comm);
       const unsigned int n_procs = Utilities::MPI::n_mpi_processes(mpi_comm);
 
-      for(unsigned int i = 0; i < destinations.size(); ++i)
+      for (unsigned int i = 0; i < destinations.size(); ++i)
         {
           Assert(destinations[i] < n_procs,
                  ExcIndexRange(destinations[i], 0, n_procs));
@@ -190,7 +190,7 @@ namespace Utilities
       const unsigned int max_n_destinations
         = Utilities::MPI::max(destinations.size(), mpi_comm);
 
-      if(max_n_destinations == 0)
+      if (max_n_destinations == 0)
         // all processes have nothing to send/receive:
         return std::vector<unsigned int>();
 
@@ -219,12 +219,12 @@ namespace Utilities
       // now we know who is going to communicate with whom. collect who is
       // going to communicate with us!
       std::vector<unsigned int> origins;
-      for(unsigned int i = 0; i < n_procs; ++i)
-        for(unsigned int j = 0; j < max_n_destinations; ++j)
-          if(all_destinations[i * max_n_destinations + j] == myid)
+      for (unsigned int i = 0; i < n_procs; ++i)
+        for (unsigned int j = 0; j < max_n_destinations; ++j)
+          if (all_destinations[i * max_n_destinations + j] == myid)
             origins.push_back(i);
-          else if(all_destinations[i * max_n_destinations + j]
-                  == numbers::invalid_unsigned_int)
+          else if (all_destinations[i * max_n_destinations + j]
+                   == numbers::invalid_unsigned_int)
             break;
 
       return origins;
@@ -243,27 +243,27 @@ namespace Utilities
         Assert(*len == 1, ExcInternalError());
 
         inout_rhs->sum += in_lhs->sum;
-        if(inout_rhs->min > in_lhs->min)
+        if (inout_rhs->min > in_lhs->min)
           {
             inout_rhs->min       = in_lhs->min;
             inout_rhs->min_index = in_lhs->min_index;
           }
-        else if(inout_rhs->min == in_lhs->min)
+        else if (inout_rhs->min == in_lhs->min)
           {
             // choose lower cpu index when tied to make operator commutative
-            if(inout_rhs->min_index > in_lhs->min_index)
+            if (inout_rhs->min_index > in_lhs->min_index)
               inout_rhs->min_index = in_lhs->min_index;
           }
 
-        if(inout_rhs->max < in_lhs->max)
+        if (inout_rhs->max < in_lhs->max)
           {
             inout_rhs->max       = in_lhs->max;
             inout_rhs->max_index = in_lhs->max_index;
           }
-        else if(inout_rhs->max == in_lhs->max)
+        else if (inout_rhs->max == in_lhs->max)
           {
             // choose lower cpu index when tied to make operator commutative
-            if(inout_rhs->max_index > in_lhs->max_index)
+            if (inout_rhs->max_index > in_lhs->max_index)
               inout_rhs->max_index = in_lhs->max_index;
           }
       }
@@ -274,7 +274,7 @@ namespace Utilities
     {
       // If MPI was not started, we have a serial computation and cannot run
       // the other MPI commands
-      if(job_supports_mpi() == false)
+      if (job_supports_mpi() == false)
         {
           MinMaxAvg result;
           result.sum       = my_value;
@@ -449,7 +449,7 @@ namespace Utilities
       constructor_has_already_run = true;
 
       // Now also see how many threads we'd like to run
-      if(max_num_threads != numbers::invalid_unsigned_int)
+      if (max_num_threads != numbers::invalid_unsigned_int)
         {
           // set maximum number of threads (also respecting the environment
           // variable that the called function evaluates) based on what the
@@ -490,12 +490,13 @@ namespace Utilities
           // instance the current process represents
           unsigned int n_local_processes   = 0;
           unsigned int nth_process_on_host = 0;
-          for(unsigned int i = 0; i < MPI::n_mpi_processes(MPI_COMM_WORLD); ++i)
-            if(std::string(all_hostnames.data() + i * max_hostname_size)
-               == hostname)
+          for (unsigned int i = 0; i < MPI::n_mpi_processes(MPI_COMM_WORLD);
+               ++i)
+            if (std::string(all_hostnames.data() + i * max_hostname_size)
+                == hostname)
               {
                 ++n_local_processes;
-                if(i <= MPI::this_mpi_process(MPI_COMM_WORLD))
+                if (i <= MPI::this_mpi_process(MPI_COMM_WORLD))
                   ++nth_process_on_host;
               }
           Assert(nth_process_on_host > 0, ExcInternalError());
@@ -553,8 +554,8 @@ namespace Utilities
       // Now deal with PETSc (with or without MPI). Only delete the vectors if
       // finalize hasn't been called yet, otherwise this will lead to errors.
 #ifdef DEAL_II_WITH_PETSC
-      if((PetscInitializeCalled == PETSC_TRUE)
-         && (PetscFinalizeCalled == PETSC_FALSE))
+      if ((PetscInitializeCalled == PETSC_TRUE)
+          && (PetscFinalizeCalled == PETSC_FALSE))
         {
           GrowingVectorMemory<
             PETScWrappers::MPI::Vector>::release_unused_memory();
@@ -581,9 +582,9 @@ namespace Utilities
       // when running PETSc, because we initialize MPI ourselves before
       // calling PetscInitialize
 #ifdef DEAL_II_WITH_MPI
-      if(job_supports_mpi() == true)
+      if (job_supports_mpi() == true)
         {
-          if(std::uncaught_exception())
+          if (std::uncaught_exception())
             {
               std::cerr
                 << "ERROR: Uncaught exception in MPI_InitFinalize on proc "

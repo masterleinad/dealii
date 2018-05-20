@@ -36,7 +36,8 @@ check_this(const DoFHandler<dim>& dof_handler)
   // check for these elements,
   // everything else is handled in
   // dof_tools_19
-  if(dof_handler.get_fe().get_name().find("RaviartThomas") == std::string::npos)
+  if (dof_handler.get_fe().get_name().find("RaviartThomas")
+      == std::string::npos)
     return;
 
   Functions::ConstantFunction<dim> test_func(
@@ -44,7 +45,7 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   // don't run this test if hanging
   // nodes are not implemented
-  if(dof_handler.get_fe().constraints_are_implemented() == false)
+  if (dof_handler.get_fe().constraints_are_implemented() == false)
     return;
 
   ConstraintMatrix cm;
@@ -64,7 +65,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   // all values of the projected solution
   // should be close around 1 (the value of
   // the original function)
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for (unsigned int i = 0; i < solution.size(); ++i)
     Assert(std::fabs(solution(i) - 1) < 1e-6, ExcInternalError());
 
   // Evaluate error

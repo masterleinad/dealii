@@ -53,10 +53,10 @@ check()
   hp::DoFHandler<dim> dof(tr);
   {
     bool coin = false;
-    for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-        = dof.begin_active();
-        cell != dof.end();
-        ++cell)
+    for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+         = dof.begin_active();
+         cell != dof.end();
+         ++cell)
       {
         cell->set_active_fe_index(coin ? 0 : 1);
         coin = !coin;
@@ -66,10 +66,10 @@ check()
 
   std::vector<bool>                    touched(dof.n_dofs(), false);
   std::vector<types::global_dof_index> local_dof_indices;
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     {
       const unsigned int fe_index      = cell->active_fe_index();
       const unsigned int dofs_per_cell = fe_collection[fe_index].dofs_per_cell;
@@ -77,7 +77,7 @@ check()
       cell->get_dof_indices(local_dof_indices);
 
       deallog << "cell=" << cell << std::endl;
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
           Assert(local_dof_indices[i] < dof.n_dofs(), ExcInternalError());
           touched[local_dof_indices[i]] = true;
@@ -88,7 +88,7 @@ check()
 
   // make sure all dof indices have
   // actually been used
-  for(unsigned int i = 0; i < touched.size(); ++i)
+  for (unsigned int i = 0; i < touched.size(); ++i)
     AssertThrow(touched[i] == true, ExcInternalError());
 
   deallog << "OK" << std::endl;

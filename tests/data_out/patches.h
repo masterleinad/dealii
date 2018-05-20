@@ -25,7 +25,7 @@ template <int dim, int spacedim>
 void
 create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
 {
-  for(unsigned int p = 0; p < patches.size(); ++p)
+  for (unsigned int p = 0; p < patches.size(); ++p)
     {
       DataOutBase::Patch<dim, spacedim>& patch = patches[p];
 
@@ -33,8 +33,8 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
       const unsigned int nsubp = nsub + 1;
 
       patch.n_subdivisions = nsub;
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
-        for(unsigned int d = 0; d < spacedim; ++d)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        for (unsigned int d = 0; d < spacedim; ++d)
           patch.vertices[v](d)
             = p + cell_coordinates[d][v] + ((d >= dim) ? v : 0);
 
@@ -44,10 +44,10 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
       unsigned int n4 = (dim > 3) ? nsubp : 1;
       patch.data.reinit(5, n1 * n2 * n3 * n4);
 
-      for(unsigned int i4 = 0; i4 < n4; ++i4)
-        for(unsigned int i3 = 0; i3 < n3; ++i3)
-          for(unsigned int i2 = 0; i2 < n2; ++i2)
-            for(unsigned int i1 = 0; i1 < n1; ++i1)
+      for (unsigned int i4 = 0; i4 < n4; ++i4)
+        for (unsigned int i3 = 0; i3 < n3; ++i3)
+          for (unsigned int i2 = 0; i2 < n2; ++i2)
+            for (unsigned int i1 = 0; i1 < n1; ++i1)
               {
                 const unsigned int i
                   = i1 + nsubp * (i2 + nsubp * (i3 + nsubp * i4));
@@ -85,42 +85,42 @@ create_continuous_patches(std::vector<DataOutBase::Patch<dim, dim>>& patches,
   QIterated<dim> trapezsub(trapez1d, n_sub);
 
   Point<dim> midpoint;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     midpoint(d) = n_cells / 2.;
 
   Functions::CutOffFunctionCinfty<dim> function(2., midpoint);
 
-  for(unsigned int i3 = 0; i3 < n3; ++i3)
-    for(unsigned int i2 = 0; i2 < n2; ++i2)
-      for(unsigned int i1 = 0; i1 < n1; ++i1)
+  for (unsigned int i3 = 0; i3 < n3; ++i3)
+    for (unsigned int i2 = 0; i2 < n2; ++i2)
+      for (unsigned int i1 = 0; i1 < n1; ++i1)
         {
           DataOutBase::Patch<dim, dim> patch;
           patch.n_subdivisions = n_sub;
-          for(unsigned int k = 0; k < trapez.size(); ++k)
+          for (unsigned int k = 0; k < trapez.size(); ++k)
             {
               Point<dim> p = trapez.point(k);
-              if(dim >= 1)
+              if (dim >= 1)
                 p(0) += i1;
-              if(dim >= 2)
+              if (dim >= 2)
                 p(1) += i2;
-              if(dim >= 3)
+              if (dim >= 3)
                 p(2) += i3;
               patch.vertices[k] = p;
             }
           std::vector<Point<dim>> points = trapezsub.get_points();
-          for(unsigned int k = 0; k < points.size(); ++k)
+          for (unsigned int k = 0; k < points.size(); ++k)
             {
-              if(dim >= 1)
+              if (dim >= 1)
                 points[k](0) += i1;
-              if(dim >= 2)
+              if (dim >= 2)
                 points[k](1) += i2;
-              if(dim >= 3)
+              if (dim >= 3)
                 points[k](2) += i3;
             }
           std::vector<double> values(points.size());
           function.value_list(points, values);
           patch.data.reinit(1, points.size());
-          for(unsigned int k = 0; k < points.size(); ++k)
+          for (unsigned int k = 0; k < points.size(); ++k)
             patch.data(0, k) = values[k];
           patches.push_back(patch);
         }

@@ -142,7 +142,7 @@ namespace Utilities
       // skip all jobs
       // Note that a different condition is used in FORTRAN code here
       // https://stackoverflow.com/questions/18516915/calling-blacs-with-more-processes-than-used
-      if(this_process_row < 0 || this_process_column < 0)
+      if (this_process_row < 0 || this_process_column < 0)
         mpi_process_is_active = false;
       else
         mpi_process_is_active = true;
@@ -157,7 +157,7 @@ namespace Utilities
 
       std::vector<int> inactive_with_root_ranks;
       inactive_with_root_ranks.push_back(0);
-      for(unsigned int i = n_active_mpi_processes; i < n_mpi_processes; ++i)
+      for (unsigned int i = n_active_mpi_processes; i < n_mpi_processes; ++i)
         inactive_with_root_ranks.push_back(i);
 
       // Get the group of processes in mpi_communicator
@@ -192,10 +192,10 @@ namespace Utilities
 
       // Double check that the process with rank 0 in subgroup is active:
 #  ifdef DEBUG
-      if(mpi_communicator_inactive_with_root != MPI_COMM_NULL
-         && Utilities::MPI::this_mpi_process(
-              mpi_communicator_inactive_with_root)
-              == 0)
+      if (mpi_communicator_inactive_with_root != MPI_COMM_NULL
+          && Utilities::MPI::this_mpi_process(
+               mpi_communicator_inactive_with_root)
+               == 0)
         Assert(mpi_process_is_active, ExcInternalError());
 #  endif
     }
@@ -221,10 +221,10 @@ namespace Utilities
 
     ProcessGrid::~ProcessGrid()
     {
-      if(mpi_process_is_active)
+      if (mpi_process_is_active)
         Cblacs_gridexit(blacs_context);
 
-      if(mpi_communicator_inactive_with_root != MPI_COMM_NULL)
+      if (mpi_communicator_inactive_with_root != MPI_COMM_NULL)
         MPI_Comm_free(&mpi_communicator_inactive_with_root);
     }
 
@@ -233,7 +233,7 @@ namespace Utilities
     ProcessGrid::send_to_inactive(NumberType* value, const int count) const
     {
       Assert(count > 0, ExcInternalError());
-      if(mpi_communicator_inactive_with_root != MPI_COMM_NULL)
+      if (mpi_communicator_inactive_with_root != MPI_COMM_NULL)
         {
           const int ierr
             = MPI_Bcast(value,

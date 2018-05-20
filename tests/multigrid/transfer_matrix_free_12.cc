@@ -50,7 +50,7 @@ check(const FiniteElement<dim>& fe_scalar)
   DoFHandler<dim> dofcoarse(trcoarse);
   dofcoarse.distribute_dofs(fe);
   Tensor<1, dim> exponents_monomial;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     exponents_monomial[d] = 1;
   LinearAlgebra::distributed::Vector<double> vrefcoarse;
   vrefcoarse.reinit(dofcoarse.n_dofs());
@@ -78,13 +78,13 @@ check(const FiniteElement<dim>& fe_scalar)
   vref = vrefdouble;
   std::vector<LinearAlgebra::distributed::Vector<Number>> vec(
     tr.n_global_levels());
-  for(unsigned int level = 0; level < tr.n_global_levels(); ++level)
+  for (unsigned int level = 0; level < tr.n_global_levels(); ++level)
     vec[level].reinit(mgdof.n_dofs(level));
   vec.back() = vref;
 
   // prolongate monomial from coarse to fine, should be exact for monomial
   vec[0] = vrefcoarse;
-  for(unsigned int level = 1; level < tr.n_global_levels(); ++level)
+  for (unsigned int level = 1; level < tr.n_global_levels(); ++level)
     transfer.prolongate(level, vec[level], vec[level - 1]);
   vec.back() -= vref;
   const Number tolerance = 1000. * std::numeric_limits<Number>::epsilon();
@@ -95,7 +95,7 @@ check(const FiniteElement<dim>& fe_scalar)
   // unfortunately, no completely trivial expression of what should happen
   // during restriction
   vec.back() = vref;
-  for(unsigned int level = tr.n_global_levels() - 1; level > 0; --level)
+  for (unsigned int level = tr.n_global_levels() - 1; level > 0; --level)
     transfer.restrict_and_add(level, vec[level - 1], vec[level]);
   deallog << "Norm after restriction: " << vec[0].l2_norm() << std::endl;
 }

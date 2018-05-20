@@ -49,7 +49,7 @@ public:
     const double x = p[0];
     const double y = p[1];
     // some function we know we can project with FE_Q<dim>(2)
-    if(comp == 0)
+    if (comp == 0)
       return 0.5 * x * x + 2.1 * y * y + 2;
     else
       return 0.1 * x + 22.5 * y * y;
@@ -107,8 +107,8 @@ check_qph(parallel::distributed::Triangulation<dim>& tr,
   FEValues<dim>   fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
   dof_handler.distribute_dofs(dummy_fe);
   typename Triangulation<dim, dim>::active_cell_iterator cell;
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
-    if(cell->is_locally_owned())
+  for (cell = tr.begin_active(); cell != tr.end(); ++cell)
+    if (cell->is_locally_owned())
       {
         typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                 &dof_handler);
@@ -117,7 +117,7 @@ check_qph(parallel::distributed::Triangulation<dim>& tr,
           = fe_values.get_quadrature_points();
         const std::vector<std::shared_ptr<const DATA>> qpd
           = manager.get_data(cell);
-        for(unsigned int q = 0; q < q_points.size(); q++)
+        for (unsigned int q = 0; q < q_points.size(); q++)
           {
             const double f_1 = func.value(q_points[q], 0);
             const double f_2 = func.value(q_points[q], 1);
@@ -159,8 +159,8 @@ test()
     FE_Q<dim>       dummy_fe(1);
     FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
-    for(cell = tr.begin_active(); cell != tr.end(); ++cell)
-      if(cell->is_locally_owned())
+    for (cell = tr.begin_active(); cell != tr.end(); ++cell)
+      if (cell->is_locally_owned())
         {
           typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                   &dof_handler);
@@ -170,7 +170,7 @@ test()
           data_storage.initialize(cell, rhs.size());
           std::vector<std::shared_ptr<MyQData>> qpd
             = data_storage.get_data(cell);
-          for(unsigned int q = 0; q < rhs.size(); q++)
+          for (unsigned int q = 0; q < rhs.size(); q++)
             {
               qpd[q]->value1 = my_func.value(q_points[q], 0);
               qpd[q]->value2 = my_func.value(q_points[q], 1);
@@ -182,8 +182,8 @@ test()
   check_qph(tr, data_storage, rhs, my_func);
 
   // mark some for refinement
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
-    if(cell->center()[0] < 0.5)
+  for (cell = tr.begin_active(); cell != tr.end(); ++cell)
+    if (cell->center()[0] < 0.5)
       cell->set_refine_flag();
 
   data_transfer.prepare_for_coarsening_and_refinement(tr, data_storage);
@@ -191,8 +191,8 @@ test()
   tr.execute_coarsening_and_refinement();
 
   // create qhp data
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
-    if(cell->is_locally_owned())
+  for (cell = tr.begin_active(); cell != tr.end(); ++cell)
+    if (cell->is_locally_owned())
       {
         data_storage.initialize(cell, rhs.size());
       }

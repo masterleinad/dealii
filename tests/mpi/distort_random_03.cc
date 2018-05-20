@@ -35,7 +35,7 @@ test1(const bool keep_boundary)
 
   deallog << "dim=" << dim << ", keep_boundary=" << keep_boundary << std::endl;
   std::string filename;
-  if(keep_boundary)
+  if (keep_boundary)
     filename = "keep_true-";
   else
     filename = "keep_false-";

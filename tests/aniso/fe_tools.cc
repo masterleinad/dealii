@@ -33,11 +33,11 @@ print_formatted(const FullMatrix<number>& A,
                 const unsigned int        precision,
                 const unsigned int        width)
 {
-  for(unsigned int i = 0; i < A.m(); ++i)
+  for (unsigned int i = 0; i < A.m(); ++i)
     {
-      for(unsigned int j = 0; j < A.n(); ++j)
+      for (unsigned int j = 0; j < A.n(); ++j)
         {
-          if(A(i, j) != 0)
+          if (A(i, j) != 0)
             deallog << std::setw(width) << std::setprecision(precision)
                     << A(i, j);
           else
@@ -65,22 +65,22 @@ test_embedding(const FiniteElement<dim>& fe)
 
   std::vector<std::vector<FullMatrix<double>>> P;
   P.resize(RefinementCase<dim>::isotropic_refinement);
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
-      ref_case < RefinementCase<dim>::isotropic_refinement + 1;
-      ++ref_case)
-    for(unsigned int c = 0;
-        c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
-        ++c)
+  for (unsigned int ref_case = RefinementCase<dim>::cut_x;
+       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
+       ++ref_case)
+    for (unsigned int c = 0;
+         c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
+         ++c)
       P[ref_case - 1].push_back(FullMatrix<double>(n));
 
   FETools::compute_embedding_matrices(fe, P);
 
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
-      ref_case < RefinementCase<dim>::isotropic_refinement + 1;
-      ++ref_case)
-    for(unsigned int c = 0;
-        c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
-        ++c)
+  for (unsigned int ref_case = RefinementCase<dim>::cut_x;
+       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
+       ++ref_case)
+    for (unsigned int c = 0;
+         c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
+         ++c)
       {
         deallog << fe.get_name() << " embedding, RefinementCase<dim>:: "
                 << refine_case_names[ref_case] << ", child " << c << std::endl;
@@ -102,9 +102,9 @@ test_projection(const FiniteElement<dim>& fe1,
   FullMatrix<double> P(n2, n1);
 
   FETools::get_projection_matrix(fe1, fe2, P);
-  for(unsigned int i = 0; i < n2; ++i)
-    for(unsigned int j = 0; j < n1; ++j)
-      if(std::fabs(P(i, j)) < 1e-12)
+  for (unsigned int i = 0; i < n2; ++i)
+    for (unsigned int j = 0; j < n1; ++j)
+      if (std::fabs(P(i, j)) < 1e-12)
         P(i, j) = 0;
   P.print_formatted(out, 8, false, 5);
 }

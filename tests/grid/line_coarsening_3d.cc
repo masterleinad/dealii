@@ -33,21 +33,21 @@ void create_star_structured_cylinder(Triangulation<3>&  coarse_grid,
   std::vector<Point<3>> points(2 * (1 + 2 * n_cells));
   points[0] = Point<3>();
   points[1] = Point<3>(1, 0, 0);
-  for(unsigned int i = 0; i < 2 * n_cells - 1; ++i)
+  for (unsigned int i = 0; i < 2 * n_cells - 1; ++i)
     {
       points[2 + i] = Point<3>(std::cos(numbers::PI / n_cells * (i + 1)),
                                std::sin(numbers::PI / n_cells * (i + 1)),
                                0);
     }
 
-  for(unsigned int i = 0; i < 2 * n_cells + 1; ++i)
+  for (unsigned int i = 0; i < 2 * n_cells + 1; ++i)
     {
       points[1 + 2 * n_cells + i] = points[i] + Point<3>(0, 0, -1);
     }
 
   std::vector<CellData<3>> cells(n_cells);
 
-  for(unsigned int c = 0; c < n_cells; ++c)
+  for (unsigned int c = 0; c < n_cells; ++c)
     {
       cells[c].vertices[0] = 0;
       cells[c].vertices[1] = 1 + 2 * c;
@@ -86,7 +86,7 @@ check()
   go.write_ucd(tria, logfile);
   // coarsen the first cell again
   cell = tria.begin_active(1);
-  for(unsigned int c = 0; c < 8; ++c)
+  for (unsigned int c = 0; c < 8; ++c)
     {
       cell->set_coarsen_flag();
       ++cell;

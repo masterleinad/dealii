@@ -288,7 +288,7 @@ namespace CUDAWrappers
     SharedData(Number* vd, Number* gq[dim])
       : values(vd)
     {
-      for(int d = 0; d < dim; ++d)
+      for (int d = 0; d < dim; ++d)
         gradients[d] = gq[d];
     }
 

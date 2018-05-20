@@ -171,9 +171,9 @@ namespace parallel
           std::placeholders::_3,
           std::ref(all_out)));
 
-      for(typename std::vector<VectorType*>::iterator it = all_out.begin();
-          it != all_out.end();
-          ++it)
+      for (typename std::vector<VectorType*>::iterator it = all_out.begin();
+           it != all_out.end();
+           ++it)
         (*it)->compress(::dealii::VectorOperation::insert);
 
       input_vectors.clear();
@@ -213,10 +213,10 @@ namespace parallel
       const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
       ::dealii::Vector<typename VectorType::value_type> dofvalues(
         dofs_per_cell);
-      for(typename std::vector<const VectorType*>::iterator it
-          = input_vectors.begin();
-          it != input_vectors.end();
-          ++it)
+      for (typename std::vector<const VectorType*>::iterator it
+           = input_vectors.begin();
+           it != input_vectors.end();
+           ++it)
         {
           cell->get_interpolated_dof_values(*(*it), dofvalues);
           std::memcpy(data_store,
@@ -244,9 +244,9 @@ namespace parallel
       const typename VectorType::value_type* data_store
         = reinterpret_cast<const typename VectorType::value_type*>(data);
 
-      for(typename std::vector<VectorType*>::iterator it = all_out.begin();
-          it != all_out.end();
-          ++it)
+      for (typename std::vector<VectorType*>::iterator it = all_out.begin();
+           it != all_out.end();
+           ++it)
         {
           std::memcpy(&dofvalues(0),
                       data_store,

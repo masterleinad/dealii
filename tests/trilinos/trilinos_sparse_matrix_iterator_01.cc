@@ -24,9 +24,9 @@ void
 test()
 {
   TrilinosWrappers::SparsityPattern sp(5, 5, 3);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < 5; ++i)
+    for (unsigned int j = 0; j < 5; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
   sp.compress();
 
@@ -53,7 +53,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -67,7 +67,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

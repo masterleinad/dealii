@@ -23,7 +23,7 @@ Quadrature<dim>
 QuadratureSelector<dim>::create_quadrature(const std::string& s,
                                            const unsigned int order)
 {
-  if(s == "gauss")
+  if (s == "gauss")
     {
       AssertThrow(order >= 1, ExcInvalidQGaussOrder(order));
       return QGauss<dim>(order);
@@ -32,15 +32,15 @@ QuadratureSelector<dim>::create_quadrature(const std::string& s,
     {
       AssertThrow(order == 0, ExcInvalidOrder(s, order));
 
-      if(s == "midpoint")
+      if (s == "midpoint")
         return QMidpoint<dim>();
-      else if(s == "milne")
+      else if (s == "milne")
         return QMilne<dim>();
-      else if(s == "simpson")
+      else if (s == "simpson")
         return QSimpson<dim>();
-      else if(s == "trapez")
+      else if (s == "trapez")
         return QTrapez<dim>();
-      else if(s == "weddle")
+      else if (s == "weddle")
         return QWeddle<dim>();
     }
 

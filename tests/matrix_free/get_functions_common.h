@@ -83,7 +83,7 @@ public:
     std::vector<Tensor<1, dim, Number>> reference_grads(fe_eval.n_q_points);
     std::vector<Tensor<2, dim, Number>> reference_hess(fe_eval.n_q_points);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src);
@@ -91,44 +91,44 @@ public:
 
         // compare values with the ones the FEValues
         // gives us. Those are seen as reference
-        for(unsigned int j = 0; j < data.n_components_filled(cell); ++j)
+        for (unsigned int j = 0; j < data.n_components_filled(cell); ++j)
           {
             fe_val.reinit(data.get_cell_iterator(cell, j));
             fe_val.get_function_values(src, reference_values);
             fe_val.get_function_gradients(src, reference_grads);
             fe_val.get_function_hessians(src, reference_hess);
 
-            for(int q = 0; q < (int) fe_eval.n_q_points; q++)
+            for (int q = 0; q < (int) fe_eval.n_q_points; q++)
               {
                 errors[0]
                   += std::fabs(fe_eval.get_value(q)[j] - reference_values[q]);
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   errors[1] += std::fabs(fe_eval.get_gradient(q)[d][j]
                                          - reference_grads[q][d]);
                 errors[2] += std::fabs(fe_eval.get_laplacian(q)[j]
                                        - trace(reference_hess[q]));
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     errors[3] += std::fabs(fe_eval.get_hessian_diagonal(q)[d][j]
                                            - reference_hess[q][d][d]);
-                    for(unsigned int e = 0; e < dim; ++e)
+                    for (unsigned int e = 0; e < dim; ++e)
                       errors[4] += std::fabs(fe_eval.get_hessian(q)[d][e][j]
                                              - reference_hess[q][d][e]);
                   }
 
                 total[0] += std::fabs(reference_values[q]);
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   total[1] += std::fabs(reference_grads[q][d]);
 
                 // reference for second derivatives computed
                 // from fe_eval because FEValues is not
                 // accurate enough with finite differences
                 total[2] += std::fabs(fe_eval.get_laplacian(q)[j]);
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     total[3]
                       += std::fabs(fe_eval.get_hessian_diagonal(q)[d][j]);
-                    for(unsigned int e = 0; e < dim; ++e)
+                    for (unsigned int e = 0; e < dim; ++e)
                       total[4] += std::fabs(fe_eval.get_hessian(q)[d][e][j]);
                   }
               }
@@ -139,7 +139,7 @@ public:
   void
   test_functions(const Vector<Number>& src) const
   {
-    for(unsigned int i = 0; i < 5; ++i)
+    for (unsigned int i = 0; i < 5; ++i)
       {
         errors[i] = 0;
         total[i]  = 0;
@@ -149,7 +149,7 @@ public:
 
     // for doubles, use a stricter condition than
     // for floats for the relative error size
-    if(types_are_equal<Number, double>::value == true)
+    if (types_are_equal<Number, double>::value == true)
       {
         deallog << "Error function values: " << errors[0] / total[0]
                 << std::endl;
@@ -172,7 +172,7 @@ public:
         const double output4 = total[4] == 0 ? 0. : errors[4] / total[4];
         deallog << "Error function Hessians: " << output4 << std::endl;
       }
-    else if(types_are_equal<Number, float>::value == true)
+    else if (types_are_equal<Number, float>::value == true)
       {
         deallog << "Error function values: " << errors[0] / total[0]
                 << std::endl;
@@ -229,9 +229,9 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   Vector<number> solution(dof.n_dofs());
 
   // create vector with random entries
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = random_value<double>();
       solution(i)        = entry;

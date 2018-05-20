@@ -1448,7 +1448,7 @@ namespace TrilinosWrappers
     Vector::extract_subvector_to(const std::vector<size_type>& indices,
                                  std::vector<TrilinosScalar>&  values) const
     {
-      for(size_type i = 0; i < indices.size(); ++i)
+      for (size_type i = 0; i < indices.size(); ++i)
         values[i] = operator()(indices[i]);
     }
 
@@ -1458,7 +1458,7 @@ namespace TrilinosWrappers
                                  const ForwardIterator indices_end,
                                  OutputIterator        values_begin) const
     {
-      while(indices_begin != indices_end)
+      while (indices_begin != indices_end)
         {
           *values_begin = operator()(*indices_begin);
           indices_begin++;
@@ -1527,21 +1527,21 @@ namespace TrilinosWrappers
       // writing to this vector at all.
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
-      if(last_action == Add)
+      if (last_action == Add)
         {
           const int ierr = vector->GlobalAssemble(Add);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         }
 
-      if(last_action != Insert)
+      if (last_action != Insert)
         last_action = Insert;
 
-      for(size_type i = 0; i < n_elements; ++i)
+      for (size_type i = 0; i < n_elements; ++i)
         {
           const size_type                         row       = indices[i];
           const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
-          if(local_row != -1)
+          if (local_row != -1)
             (*vector)[0][local_row] = values[i];
           else
             {
@@ -1595,9 +1595,9 @@ namespace TrilinosWrappers
       // writing to this vector at all.
       Assert(!has_ghost_elements(), ExcGhostsPresent());
 
-      if(last_action != Add)
+      if (last_action != Add)
         {
-          if(last_action == Insert)
+          if (last_action == Insert)
             {
               const int ierr = vector->GlobalAssemble(Insert);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
@@ -1605,14 +1605,14 @@ namespace TrilinosWrappers
           last_action = Add;
         }
 
-      for(size_type i = 0; i < n_elements; ++i)
+      for (size_type i = 0; i < n_elements; ++i)
         {
           const size_type                         row       = indices[i];
           const TrilinosWrappers::types::int_type local_row = vector->Map().LID(
             static_cast<TrilinosWrappers::types::int_type>(row));
-          if(local_row != -1)
+          if (local_row != -1)
             (*vector)[0][local_row] += values[i];
-          else if(nonlocal_vector.get() == nullptr)
+          else if (nonlocal_vector.get() == nullptr)
             {
               const int ierr = vector->SumIntoGlobalValues(
                 1,
@@ -1769,7 +1769,7 @@ namespace TrilinosWrappers
 
       // loop over all the elements because
       // Trilinos does not support lp norms
-      for(size_type i = 0; i < n_local; i++)
+      for (size_type i = 0; i < n_local; i++)
         sum += std::pow(std::fabs((*vector)[0][i]), p);
 
       norm = std::pow(sum, static_cast<TrilinosScalar>(1. / p));
@@ -1867,7 +1867,7 @@ namespace TrilinosWrappers
       AssertIsFinite(s);
 
       size_type n_local = local_size();
-      for(size_type i = 0; i < n_local; i++)
+      for (size_type i = 0; i < n_local; i++)
         (*vector)[0][i] += s;
     }
 
@@ -1920,7 +1920,7 @@ namespace TrilinosWrappers
 
       // We assume that the vectors have the same Map
       // if the local size is the same and if the vectors are not ghosted
-      if(local_size() == v.local_size() && !v.has_ghost_elements())
+      if (local_size() == v.local_size() && !v.has_ghost_elements())
         {
           Assert(this->vector->Map().SameAs(v.vector->Map()) == true,
                  ExcDifferentParallelPartitioning());
@@ -1948,7 +1948,7 @@ namespace TrilinosWrappers
 
       // We assume that the vectors have the same Map
       // if the local size is the same and if the vectors are not ghosted
-      if(local_size() == v.local_size() && !v.has_ghost_elements())
+      if (local_size() == v.local_size() && !v.has_ghost_elements())
         {
           Assert(this->vector->Map().SameAs(v.vector->Map()) == true,
                  ExcDifferentParallelPartitioning());
@@ -1986,7 +1986,7 @@ namespace TrilinosWrappers
       AssertIsFinite(a);
 
       // If we don't have the same map, copy.
-      if(vector->Map().SameAs(v.vector->Map()) == false)
+      if (vector->Map().SameAs(v.vector->Map()) == false)
         {
           this->sadd(0., a, v);
         }
@@ -2056,7 +2056,7 @@ namespace TrilinosWrappers
       int ierr = vector->PutScalar(s);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
-      if(nonlocal_vector.get() != nullptr)
+      if (nonlocal_vector.get() != nullptr)
         {
           ierr = nonlocal_vector->PutScalar(0.);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));

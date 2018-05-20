@@ -127,9 +127,9 @@ namespace Functions
                            const Tensor<1, dim>&    in1,
                            const Tensor<1, dim>&    in2)
     {
-      if(val != 0.)
-        for(unsigned int i = 0; i < dim; i++)
-          for(unsigned int j = i; j < dim; j++)
+      if (val != 0.)
+        for (unsigned int i = 0; i < dim; i++)
+          for (unsigned int j = i; j < dim; j++)
             out[i][j] += (in1[i] * in2[j] + in1[j] * in2[i]) * val;
     }
 
@@ -141,9 +141,9 @@ namespace Functions
                            const double&            val,
                            const Tensor<1, dim>&    in)
     {
-      if(val != 0.)
-        for(unsigned int i = 0; i < dim; i++)
-          for(unsigned int j = i; j < dim; j++)
+      if (val != 0.)
+        for (unsigned int i = 0; i < dim; i++)
+          for (unsigned int j = i; j < dim; j++)
             out[i][j] += val * in[i] * in[j];
     }
   } // namespace
@@ -199,18 +199,18 @@ namespace Functions
 
     Tensor<1, dim> res;
 
-    if(sg[0] != 0.)
+    if (sg[0] != 0.)
       {
         res += unit_r * sg[0];
       }
 
-    if(sg[1] * sin_phi != 0.)
+    if (sg[1] * sin_phi != 0.)
       {
         Assert(sp[0] != 0., ExcDivideByZero());
         res += unit_theta * sg[1] / (sp[0] * sin_phi);
       }
 
-    if(sg[2] != 0.)
+    if (sg[2] != 0.)
       {
         Assert(sp[0] != 0., ExcDivideByZero());
         res += unit_phi * sg[2] / sp[0];

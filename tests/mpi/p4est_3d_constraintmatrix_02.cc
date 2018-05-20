@@ -40,21 +40,21 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
-  for(unsigned int step = 0; step < 15; ++step)
+  for (unsigned int step = 0; step < 15; ++step)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tr.begin_active(),
         endc = tr.end();
 
-      for(; cell != endc; ++cell)
-        if(Testing::rand() % 42 == 1)
+      for (; cell != endc; ++cell)
+        if (Testing::rand() % 42 == 1)
           cell->set_refine_flag();
 
       tr.execute_coarsening_and_refinement();
@@ -96,7 +96,7 @@ test()
     out << "**** proc " << myid << std::endl;
     x_dub.print(out);
 
-    if(myid == 0)
+    if (myid == 0)
       deallog << out.str() << std::endl;
     else
       MPI_Send((void*) out.str().c_str(),
@@ -107,9 +107,9 @@ test()
                MPI_COMM_WORLD);
   }
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int i = 1; i < numproc; ++i)
+      for (unsigned int i = 1; i < numproc; ++i)
         {
           MPI_Status status;
           int        msglen;
@@ -137,7 +137,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

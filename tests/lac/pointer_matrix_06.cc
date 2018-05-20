@@ -43,7 +43,7 @@ checkTvmult(FullMatrix<number>& A,
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }

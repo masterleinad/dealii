@@ -39,10 +39,10 @@ main(int argc, char** argv)
 
   // Check the move constructor
   TrilinosWrappers::SparsityPattern B(std::move(A));
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for (unsigned int i = 0; i < 3; ++i)
+    for (unsigned int j = 0; j < 3; ++j)
       {
-        if((i == 2) && (j == 1))
+        if ((i == 2) && (j == 1))
           {
             AssertThrow(B.exists(i, j) == true, ExcInternalError());
           }
@@ -56,10 +56,10 @@ main(int argc, char** argv)
   A.reinit(partitioning);
   A.add(1, 2);
   A.compress();
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for (unsigned int i = 0; i < 3; ++i)
+    for (unsigned int j = 0; j < 3; ++j)
       {
-        if((i == 1) && (j == 2))
+        if ((i == 1) && (j == 2))
           {
             AssertThrow(A.exists(i, j) == true, ExcInternalError());
           }

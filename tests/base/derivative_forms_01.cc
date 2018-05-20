@@ -30,7 +30,7 @@ void
 test()
 {
   Tensor<1, dim, SSdouble> x;
-  for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int j = 0; j < dim; ++j)
     {
       // This is for the first derivative
       Sdouble jv = numbers::PI * (j + 1) / 2.0;
@@ -41,28 +41,28 @@ test()
     }
 
   Tensor<1, spacedim, SSdouble> F;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < spacedim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       F[i] += std::sin(x[j] + numbers::PI * i / 2);
 
   DerivativeForm<1, dim, spacedim, Sdouble> dF;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < spacedim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       dF[i][j] = F[i].dx(j);
 
   DerivativeForm<2, dim, spacedim, double> ddF;
-  for(unsigned int i = 0; i < spacedim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
+  for (unsigned int i = 0; i < spacedim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
         ddF[i][j][k] = dF[i][j].dx(k);
 
   deallog << "dim = " << dim << ", spacedim = " << spacedim << std::endl;
   deallog << "x  : " << x << std::endl;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     deallog << "F[" << i << "] : " << F[i] << std::endl;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     deallog << "dF[" << i << "] : " << dF[i] << std::endl;
-  for(unsigned int i = 0; i < spacedim; ++i)
+  for (unsigned int i = 0; i < spacedim; ++i)
     deallog << "ddF[" << i << "] : " << ddF[i] << std::endl;
 }
 

@@ -98,7 +98,7 @@ double
 Coefficient<dim>::value(const Point<dim>& p,
                         const unsigned int /*component*/) const
 {
-  if(p.square() < 0.5 * 0.5)
+  if (p.square() < 0.5 * 0.5)
     return 20;
   else
     return 1;
@@ -116,9 +116,9 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 
   const unsigned int n_points = points.size();
 
-  for(unsigned int i = 0; i < n_points; ++i)
+  for (unsigned int i = 0; i < n_points; ++i)
     {
-      if(points[i].square() < 0.5 * 0.5)
+      if (points[i].square() < 0.5 * 0.5)
         values[i] = 20;
       else
         values[i] = 1;
@@ -181,7 +181,7 @@ LaplaceProblem<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -191,10 +191,10 @@ LaplaceProblem<dim>::assemble_system()
       coefficient.value_list(fe_values.get_quadrature_points(),
                              coefficient_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += ((coefficient_values[q_point]
                                        * fe_values.shape_grad(i, q_point)
                                        * fe_values.shape_grad(j, q_point)
@@ -248,11 +248,11 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for (unsigned int cycle = 0; cycle < 3; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle != 0)
+      if (cycle != 0)
         triangulation.refine_global(1);
       else
         {
@@ -267,12 +267,12 @@ LaplaceProblem<dim>::run()
           {
             // find the last cell and mark it
             // for refinement
-            for(typename DoFHandler<dim>::active_cell_iterator cell
-                = dof_handler.begin_active();
-                cell != dof_handler.end();
-                ++cell)
-              if(++typename DoFHandler<dim>::active_cell_iterator(cell)
-                 == dof_handler.end())
+            for (typename DoFHandler<dim>::active_cell_iterator cell
+                 = dof_handler.begin_active();
+                 cell != dof_handler.end();
+                 ++cell)
+              if (++typename DoFHandler<dim>::active_cell_iterator(cell)
+                  == dof_handler.end())
                 cell->set_refine_flag();
           }
           triangulation.execute_coarsening_and_refinement();

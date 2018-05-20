@@ -192,7 +192,7 @@ TensorProductPolynomialsConst<dim>::compute_derivative(
   Assert(i <= max_indices, ExcInternalError());
 
   // treat the regular basis functions
-  if(i < max_indices)
+  if (i < max_indices)
     return this
       ->TensorProductPolynomials<dim>::template compute_derivative<order>(i, p);
   else

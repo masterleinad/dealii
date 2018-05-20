@@ -28,11 +28,11 @@ void fill_tensor(
   dealii::SymmetricTensor<2, dim, dealii::VectorizedArray<Number>>& A)
 {
   Number counter = 0.0;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int v = 0;
-          v < dealii::VectorizedArray<Number>::n_array_elements;
-          v++)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int v = 0;
+           v < dealii::VectorizedArray<Number>::n_array_elements;
+           v++)
         {
           A[i][j][v] = counter;
           counter += 1.0;
@@ -51,10 +51,10 @@ main()
   SymmetricTensor<2, dim, VectorizedArray<double>> B;
 
   // I^sym = 0.5(d_ik*d_jl + d_il*d_jk) -> I^sym : A = A^sym
-  for(unsigned int i = 0; i < dim; i++)
-    for(unsigned int j = 0; j < dim; j++)
-      for(unsigned int k = 0; k < dim; k++)
-        for(unsigned int l = 0; l < dim; l++)
+  for (unsigned int i = 0; i < dim; i++)
+    for (unsigned int j = 0; j < dim; j++)
+      for (unsigned int k = 0; k < dim; k++)
+        for (unsigned int l = 0; l < dim; l++)
           I[i][j][k][l] = ((i == k && j == l && i == l && j == k) ?
                              make_vectorized_array(1.0) :
                              ((i == k && j == l) || (i == l && j == k) ?
@@ -68,11 +68,11 @@ main()
 
   // Note that you cannot use B.norm() here even with something
   // like VectorizedArray<double> frob_norm = B.norm() -> Maybe a TODO?
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements;
-          ++v)
-        if(B[i][j][v] != 0.0)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements;
+           ++v)
+        if (B[i][j][v] != 0.0)
           deallog << "Not OK" << std::endl;
 
   deallog << "OK" << std::endl;

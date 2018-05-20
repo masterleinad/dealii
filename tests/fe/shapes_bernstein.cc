@@ -41,7 +41,7 @@ plot_FE_Bernstein_shape_functions()
 
   // skip the following tests to
   // reduce run-time
-  if(dim < 3)
+  if (dim < 3)
     {
       FE_Bernstein<dim> b3(3);
       plot_shape_functions(m, b3, "B3");

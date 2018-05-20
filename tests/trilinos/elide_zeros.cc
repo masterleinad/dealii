@@ -227,16 +227,16 @@ namespace LinearAdvectionTest
     typename DoFHandler<dim>::active_cell_iterator current_cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; current_cell != endc; ++current_cell)
+    for (; current_cell != endc; ++current_cell)
       {
-        if(current_cell->is_locally_owned())
+        if (current_cell->is_locally_owned())
           {
-            for(unsigned int face_n = 0;
-                face_n < GeometryInfo<dim>::faces_per_cell;
-                ++face_n)
+            for (unsigned int face_n = 0;
+                 face_n < GeometryInfo<dim>::faces_per_cell;
+                 ++face_n)
               {
                 const int neighbor_index = current_cell->neighbor_index(face_n);
-                if(neighbor_index != -1) // interior face
+                if (neighbor_index != -1) // interior face
                   {
                     // for DG we need to access the FE space on the adjacent cell.
                     typename DoFHandler<dim>::active_cell_iterator neighbor_cell
@@ -249,18 +249,18 @@ namespace LinearAdvectionTest
                      * Always integrate if the current cell is more refined
                      * than the neighbor.
                      */
-                    if(current_cell->level() > neighbor_cell->level())
+                    if (current_cell->level() > neighbor_cell->level())
                       {
                         do_face_integration     = true;
                         neighbor_is_level_lower = true;
                       }
                     // If the neighbor is not active, then it is at a higher
                     // refinement level (so we do not need to integrate now)
-                    if(neighbor_cell->active())
+                    if (neighbor_cell->active())
                       {
-                        if(neighbor_cell->is_locally_owned())
+                        if (neighbor_cell->is_locally_owned())
                           {
-                            if(neighbor_cell < current_cell)
+                            if (neighbor_cell < current_cell)
                               {
                                 do_face_integration = true;
                               }
@@ -270,16 +270,16 @@ namespace LinearAdvectionTest
                             Assert(neighbor_cell->is_ghost(),
                                    ExcMessage("All neighbors should be locally "
                                               "owned or ghost cells."));
-                            if(current_cell->level() == neighbor_cell->level()
-                               && current_cell->subdomain_id()
-                                    < neighbor_cell->subdomain_id())
+                            if (current_cell->level() == neighbor_cell->level()
+                                && current_cell->subdomain_id()
+                                     < neighbor_cell->subdomain_id())
                               {
                                 do_face_integration = true;
                               }
                           }
                       }
 
-                    if(do_face_integration)
+                    if (do_face_integration)
                       {
                         const unsigned int neighbor_face_n
                           = current_cell->neighbor_face_no(face_n);

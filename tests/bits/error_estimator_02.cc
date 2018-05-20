@@ -70,12 +70,12 @@ make_mesh(Triangulation<dim>& tria)
   // hanging nodes as possible
   tria.refine_global(4 - dim);
   const double steps[4] = {/*d=0*/ 0, 7, 3, 3};
-  for(unsigned int i = 0; i < steps[dim]; ++i)
+  for (unsigned int i = 0; i < steps[dim]; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active();
-      for(unsigned int index = 0; cell != tria.end(); ++cell, ++index)
-        if(index % (3 * dim) == 0)
+      for (unsigned int index = 0; cell != tria.end(); ++cell, ++index)
+        if (index % (3 * dim) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -87,11 +87,11 @@ make_mesh(Triangulation<dim>& tria)
   // (octant)
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int material = 0;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()(d) > 0)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()(d) > 0)
           material |= (1 << d);
       AssertThrow(material < (1 << dim), ExcInternalError());
 
@@ -135,12 +135,12 @@ check()
   error1 *= scaling_factor;
 
   deallog << "Estimated error indicators:" << std::endl;
-  for(unsigned int i = 0; i < error1.size(); ++i)
+  for (unsigned int i = 0; i < error1.size(); ++i)
     deallog << error1(i) << std::endl;
 
   // then do the same with different
   // material ids and add up the result
-  for(unsigned int material = 0; material < (1 << dim); ++material)
+  for (unsigned int material = 0; material < (1 << dim); ++material)
     {
       deallog << "Material id=" << material << std::endl;
 
@@ -166,13 +166,13 @@ check()
       // this_error, the corresponding
       // entry in error2 should still be
       // empty
-      for(unsigned int i = 0; i < this_error.size(); ++i)
+      for (unsigned int i = 0; i < this_error.size(); ++i)
         {
           deallog << i << ' ' << this_error(i) << std::endl;
 
           AssertThrow((this_error(i) == 0) || (error2(i) == 0),
                       ExcInternalError());
-          if(this_error(i) != 0)
+          if (this_error(i) != 0)
             error2(i) = this_error(i);
         }
     }

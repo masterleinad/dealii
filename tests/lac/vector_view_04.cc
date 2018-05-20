@@ -32,7 +32,7 @@ checkReinit2(Vector<number>& V)
     << std::endl;
 
   Vector<number> _V(V.size());
-  for(unsigned int i = 0; i < _V.size(); i++)
+  for (unsigned int i = 0; i < _V.size(); i++)
     _V(i) = 0;
 
   deallog << "Creating VectorView<number> pointing to dummy Vector<number>"
@@ -40,13 +40,13 @@ checkReinit2(Vector<number>& V)
   VectorView<number> VV(_V.size(), _V.begin());
 
   deallog << "Printing dummy Vector<number>" << std::endl;
-  for(unsigned int i = 0; i < _V.size(); ++i)
+  for (unsigned int i = 0; i < _V.size(); ++i)
     deallog << _V(i) << '\t';
   deallog << std::endl;
 
   deallog << "Printing VectorView<number> pointing to dummy Vector<number>"
           << std::endl;
-  for(unsigned int i = 0; i < VV.size(); ++i)
+  for (unsigned int i = 0; i < VV.size(); ++i)
     deallog << VV(i) << '\t';
   deallog << std::endl;
 
@@ -54,24 +54,24 @@ checkReinit2(Vector<number>& V)
   VV.reinit(V.size() / 2, V.begin());
 
   deallog << "Printing Vector<number>" << std::endl;
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for (unsigned int i = 0; i < V.size(); ++i)
     deallog << V(i) << '\t';
   deallog << std::endl;
 
   deallog << "Printing VectorView<number> pointing to half of Vector<number>"
           << std::endl;
-  for(unsigned int i = 0; i < VV.size(); ++i)
+  for (unsigned int i = 0; i < VV.size(); ++i)
     deallog << VV(i) << '\t';
   deallog << std::endl;
 
   deallog
     << "Incrementing Vector<number> elements using Read-write handle of VectorView<number>"
     << std::endl;
-  for(unsigned int i = 0; i < VV.size(); ++i)
+  for (unsigned int i = 0; i < VV.size(); ++i)
     VV(i) = VV(i) + 1;
 
   deallog << "Printing modified Vector<number>" << std::endl;
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for (unsigned int i = 0; i < V.size(); ++i)
     deallog << V(i) << '\t';
   deallog << std::endl;
 }

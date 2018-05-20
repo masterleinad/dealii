@@ -166,7 +166,7 @@ Step4<dim>::setup_system()
 
   system_matrix.compress(VectorOperation::add);
 
-  for(unsigned int i = 0; i < system_rhs.size(); ++i)
+  for (unsigned int i = 0; i < system_rhs.size(); ++i)
     system_rhs(i) = 0.01 * i - 0.000001 * i * i;
 }
 
@@ -199,9 +199,9 @@ template <int dim>
 void
 Step4<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 2; ++cycle)
+  for (unsigned int cycle = 0; cycle < 2; ++cycle)
     {
-      if(cycle == 0)
+      if (cycle == 0)
         make_grid();
       else
         triangulation.refine_global(1);
@@ -224,7 +224,7 @@ main(int argc, char** argv)
       Step4<2> test;
       test.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -238,7 +238,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

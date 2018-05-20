@@ -30,8 +30,8 @@ create_regular_particle_distribution(
   const parallel::distributed::Triangulation<dim, spacedim>& tr,
   const unsigned int particles_per_direction = 3)
 {
-  for(unsigned int i = 0; i < particles_per_direction; ++i)
-    for(unsigned int j = 0; j < particles_per_direction; ++j)
+  for (unsigned int i = 0; i < particles_per_direction; ++i)
+    for (unsigned int j = 0; j < particles_per_direction; ++j)
       {
         Point<spacedim> position;
         Point<dim>      reference_position;
@@ -42,8 +42,8 @@ create_regular_particle_distribution(
         position[1] = static_cast<double>(j)
                       / static_cast<double>(particles_per_direction - 1);
 
-        if(dim > 2)
-          for(unsigned int k = 0; k < particles_per_direction; ++k)
+        if (dim > 2)
+          for (unsigned int k = 0; k < particles_per_direction; ++k)
             {
               position[2] = static_cast<double>(j)
                             / static_cast<double>(particles_per_direction - 1);
@@ -88,9 +88,9 @@ test()
   create_regular_particle_distribution(particle_handler, tr);
   particle_handler.sort_particles_into_subdomains_and_cells();
 
-  for(auto particle = particle_handler.begin();
-      particle != particle_handler.end();
-      ++particle)
+  for (auto particle = particle_handler.begin();
+       particle != particle_handler.end();
+       ++particle)
     deallog << "Before serialization particle id " << particle->get_id()
             << " is in cell " << particle->get_surrounding_cell(tr)
             << std::endl;
@@ -126,9 +126,9 @@ test()
   particle_handler.initialize(tr, mapping);
 
   // This should not produce any output
-  for(auto particle = particle_handler.begin();
-      particle != particle_handler.end();
-      ++particle)
+  for (auto particle = particle_handler.begin();
+       particle != particle_handler.end();
+       ++particle)
     deallog << "In between particle id " << particle->get_id() << " is in cell "
             << particle->get_surrounding_cell(tr) << std::endl;
 
@@ -152,9 +152,9 @@ test()
     tr.load("checkpoint");
   }
 
-  for(auto particle = particle_handler.begin();
-      particle != particle_handler.end();
-      ++particle)
+  for (auto particle = particle_handler.begin();
+       particle != particle_handler.end();
+       ++particle)
     deallog << "After serialization particle id " << particle->get_id()
             << " is in cell " << particle->get_surrounding_cell(tr)
             << std::endl;

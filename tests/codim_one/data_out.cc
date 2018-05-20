@@ -56,7 +56,7 @@ test(std::string filename)
 
   // Output the vertex numbering
   Vector<double> numbering(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < numbering.size(); ++i)
+  for (unsigned int i = 0; i < numbering.size(); ++i)
     numbering(i) = i;
 
   DataOut<dim, DoFHandler<dim, spacedim>> dataout;

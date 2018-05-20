@@ -232,7 +232,7 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
   solution.reinit(dof_handler.n_dofs());
 
   // Populate with non-trivial values
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     {
       solution(i) = i + 1;
     }
@@ -256,7 +256,7 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
     // Convert the DoF values so that they are potentially of
     // a different number type
     std::vector<NumberType> local_dof_values_other(fe.dofs_per_cell);
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
       local_dof_values_other[i] = local_dof_values[i];
 
     test_view(solution,

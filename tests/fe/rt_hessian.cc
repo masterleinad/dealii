@@ -44,8 +44,8 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   fe_values.reinit(dof.begin_active());
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       deallog << fe_values.shape_hessian_component(0, 0, 0)[i][j] << std::endl;
 
   // compare the hessian with

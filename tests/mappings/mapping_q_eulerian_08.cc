@@ -78,13 +78,13 @@ public:
   {
     Tensor<1, dim, VectorizedArray<NumberType>> shift_vec;
     Point<dim>                                  p;
-    for(unsigned int v = 0; v < VectorizedArray<NumberType>::n_array_elements;
-        ++v)
+    for (unsigned int v = 0; v < VectorizedArray<NumberType>::n_array_elements;
+         ++v)
       {
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           p[d] = p_vec[d][v];
 
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           shift_vec[d][v] = this->value(p, d);
       }
 
@@ -118,16 +118,16 @@ test(const unsigned int n_ref = 0)
   triangulation.refine_global(3);
 
   // do some adaptive refinement
-  for(unsigned int ref = 0; ref < n_ref; ++ref)
+  for (unsigned int ref = 0; ref < n_ref; ++ref)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        if(cell->is_locally_owned()
-           && (cell->center().norm() < 0.5
-                 && (cell->level() < 5 || cell->center().norm() > 0.45)
-               || (dim == 2 && cell->center().norm() > 1.2)))
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        if (cell->is_locally_owned()
+            && (cell->center().norm() < 0.5
+                  && (cell->level() < 5 || cell->center().norm() > 0.45)
+                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
@@ -225,19 +225,19 @@ test(const unsigned int n_ref = 0)
       Assert(matrix_free_euler.n_macro_cells() == matrix_free.n_macro_cells(),
              ExcInternalError());
       const unsigned int nqp = fe_eval.n_q_points;
-      for(unsigned int cell = 0; cell < n_cells; ++cell)
+      for (unsigned int cell = 0; cell < n_cells; ++cell)
         {
           fe_eval_euler.reinit(cell);
           fe_eval.reinit(cell);
-          for(unsigned int q = 0; q < nqp; ++q)
+          for (unsigned int q = 0; q < nqp; ++q)
             {
               const auto& v1 = fe_eval_euler.quadrature_point(q);
               const auto& qp = fe_eval.quadrature_point(q);
               const auto  v2 = qp + displacement_function.shift_value(qp);
               VectorizedArray<NumberType> dist = v1.distance(v2);
-              for(unsigned int v = 0;
-                  v < VectorizedArray<NumberType>::n_array_elements;
-                  ++v)
+              for (unsigned int v = 0;
+                   v < VectorizedArray<NumberType>::n_array_elements;
+                   ++v)
                 AssertThrow(dist[v] < 1e-8,
                             ExcMessage("distance: " + std::to_string(dist[v])));
             }
@@ -253,7 +253,7 @@ test(const unsigned int n_ref = 0)
   mg_constrained_dofs.make_zero_boundary_constraints(dof_handler,
                                                      dirichlet_boundary_ids);
 
-  for(unsigned int level = min_level; level <= max_level; ++level)
+  for (unsigned int level = min_level; level <= max_level; ++level)
     {
       typename MatrixFree<dim, LevelNumberType>::AdditionalData
         mg_additional_data;
@@ -299,19 +299,19 @@ test(const unsigned int n_ref = 0)
         Assert(mg_level_euler.n_macro_cells() == mg_level.n_macro_cells(),
                ExcInternalError());
         const unsigned int nqp = fe_eval.n_q_points;
-        for(unsigned int cell = 0; cell < n_cells; ++cell)
+        for (unsigned int cell = 0; cell < n_cells; ++cell)
           {
             fe_eval_euler.reinit(cell);
             fe_eval.reinit(cell);
-            for(unsigned int q = 0; q < nqp; ++q)
+            for (unsigned int q = 0; q < nqp; ++q)
               {
                 const auto& v1 = fe_eval_euler.quadrature_point(q);
                 const auto& qp = fe_eval.quadrature_point(q);
                 const auto  v2 = qp + displacement_function.shift_value(qp);
                 VectorizedArray<NumberType> dist = v1.distance(v2);
-                for(unsigned int v = 0;
-                    v < VectorizedArray<NumberType>::n_array_elements;
-                    ++v)
+                for (unsigned int v = 0;
+                     v < VectorizedArray<NumberType>::n_array_elements;
+                     ++v)
                   AssertThrow(
                     dist[v] < 1e-8,
                     ExcMessage("Level " + std::to_string(level)

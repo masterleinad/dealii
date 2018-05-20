@@ -112,24 +112,24 @@ namespace internal
         const FE_Q_DG0<dim>* fe_q_dg0 = dynamic_cast<const FE_Q_DG0<dim>*>(fe);
 
         element_type = tensor_general;
-        if(fe_poly != nullptr)
+        if (fe_poly != nullptr)
           scalar_lexicographic = fe_poly->get_poly_space_numbering_inverse();
-        else if(fe_poly_piece != nullptr)
+        else if (fe_poly_piece != nullptr)
           scalar_lexicographic
             = fe_poly_piece->get_poly_space_numbering_inverse();
-        else if(fe_dgp != nullptr)
+        else if (fe_dgp != nullptr)
           {
             scalar_lexicographic.resize(fe_dgp->dofs_per_cell);
-            for(unsigned int i = 0; i < fe_dgp->dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < fe_dgp->dofs_per_cell; ++i)
               scalar_lexicographic[i] = i;
             element_type = truncated_tensor;
           }
-        else if(fe_q_dg0 != nullptr)
+        else if (fe_q_dg0 != nullptr)
           {
             scalar_lexicographic = fe_q_dg0->get_poly_space_numbering_inverse();
             element_type         = tensor_symmetric_plus_dg0;
           }
-        else if(fe->dofs_per_cell == 0)
+        else if (fe->dofs_per_cell == 0)
           {
             // FE_Nothing case -> nothing to do here
           }
@@ -138,7 +138,7 @@ namespace internal
 
         // Finally store the renumbering into the member variable of this
         // class
-        if(fe_in.n_components() == 1)
+        if (fe_in.n_components() == 1)
           lexicographic_numbering = scalar_lexicographic;
         else
           {
@@ -150,12 +150,12 @@ namespace internal
             std::vector<unsigned int> lexicographic(
               fe_in.dofs_per_cell, numbers::invalid_unsigned_int);
             unsigned int components_before = 0;
-            for(unsigned int e = 0; e < base_element_number; ++e)
+            for (unsigned int e = 0; e < base_element_number; ++e)
               components_before += fe_in.element_multiplicity(e);
-            for(unsigned int comp = 0;
-                comp < fe_in.element_multiplicity(base_element_number);
-                ++comp)
-              for(unsigned int i = 0; i < scalar_inv.size(); ++i)
+            for (unsigned int comp = 0;
+                 comp < fe_in.element_multiplicity(base_element_number);
+                 ++comp)
+              for (unsigned int i = 0; i < scalar_inv.size(); ++i)
                 lexicographic[fe_in.component_to_system_index(
                   comp + components_before, i)]
                   = scalar_inv.size() * comp + scalar_inv[i];
@@ -166,8 +166,8 @@ namespace internal
               fe_in.element_multiplicity(base_element_number)
                 * fe->dofs_per_cell,
               numbers::invalid_unsigned_int);
-            for(unsigned int i = 0; i < lexicographic.size(); ++i)
-              if(lexicographic[i] != numbers::invalid_unsigned_int)
+            for (unsigned int i = 0; i < lexicographic.size(); ++i)
+              if (lexicographic[i] != numbers::invalid_unsigned_int)
                 {
                   AssertIndexRange(lexicographic[i],
                                    lexicographic_numbering.size());
@@ -179,7 +179,7 @@ namespace internal
         // unit support point, assuming that fe.shape_value(0,unit_point) ==
         // 1. otherwise, need other entry point (e.g. generating a 1D element
         // by reading the name, as done before r29356)
-        if(fe->has_support_points())
+        if (fe->has_support_points())
           unit_point = fe->get_unit_support_points()[scalar_lexicographic[0]];
         Assert(fe->dofs_per_cell == 0
                  || std::abs(
@@ -211,12 +211,12 @@ namespace internal
       this->hessians_within_subface[0].resize(array_size);
       this->hessians_within_subface[1].resize(array_size);
 
-      for(unsigned int i = 0; i < n_dofs_1d; ++i)
+      for (unsigned int i = 0; i < n_dofs_1d; ++i)
         {
           // need to reorder from hierarchical to lexicographic to get the
           // DoFs correct
           const unsigned int my_i = scalar_lexicographic[i];
-          for(unsigned int q = 0; q < n_q_points_1d; ++q)
+          for (unsigned int q = 0; q < n_q_points_1d; ++q)
             {
               Point<dim> q_point = unit_point;
               q_point[0]         = quad.get_points()[q][0];
@@ -270,8 +270,8 @@ namespace internal
         shape_gradients_collocation_eo.resize(n_q_points_1d * stride);
         shape_hessians_collocation_eo.resize(n_q_points_1d * stride);
         FE_DGQArbitraryNodes<1> fe(quad.get_points());
-        for(unsigned int i = 0; i < n_q_points_1d / 2; ++i)
-          for(unsigned int q = 0; q < stride; ++q)
+        for (unsigned int i = 0; i < n_q_points_1d / 2; ++i)
+          for (unsigned int q = 0; q < stride; ++q)
             {
               shape_gradients_collocation_eo[i * stride + q]
                 = 0.5
@@ -296,8 +296,8 @@ namespace internal
                      - fe.shape_grad_grad(
                          i, quad.get_points()[n_q_points_1d - 1 - q])[0][0]);
             }
-        if(n_q_points_1d % 2 == 1)
-          for(unsigned int q = 0; q < stride; ++q)
+        if (n_q_points_1d % 2 == 1)
+          for (unsigned int q = 0; q < stride; ++q)
             {
               shape_gradients_collocation_eo[n_q_points_1d / 2 * stride + q]
                 = fe.shape_grad(n_q_points_1d / 2, quad.get_points()[q])[0];
@@ -307,61 +307,61 @@ namespace internal
             }
       }
 
-      if(element_type == tensor_general
-         && check_1d_shapes_symmetric(n_q_points_1d))
+      if (element_type == tensor_general
+          && check_1d_shapes_symmetric(n_q_points_1d))
         {
-          if(check_1d_shapes_collocation())
+          if (check_1d_shapes_collocation())
             element_type = tensor_symmetric_collocation;
           else
             element_type = tensor_symmetric;
-          if(n_dofs_1d > 2 && element_type == tensor_symmetric)
+          if (n_dofs_1d > 2 && element_type == tensor_symmetric)
             {
               // check if we are a Hermite type
               element_type = tensor_symmetric_hermite;
-              for(unsigned int i = 1; i < n_dofs_1d; ++i)
-                if(std::abs(get_first_array_element(shape_data_on_face[0][i]))
-                   > 1e-12)
+              for (unsigned int i = 1; i < n_dofs_1d; ++i)
+                if (std::abs(get_first_array_element(shape_data_on_face[0][i]))
+                    > 1e-12)
                   element_type = tensor_symmetric;
-              for(unsigned int i = 2; i < n_dofs_1d; ++i)
-                if(std::abs(get_first_array_element(
-                     shape_data_on_face[0][n_dofs_1d + i]))
-                   > 1e-12)
+              for (unsigned int i = 2; i < n_dofs_1d; ++i)
+                if (std::abs(get_first_array_element(
+                      shape_data_on_face[0][n_dofs_1d + i]))
+                    > 1e-12)
                   element_type = tensor_symmetric;
             }
         }
-      else if(element_type == tensor_symmetric_plus_dg0)
+      else if (element_type == tensor_symmetric_plus_dg0)
         check_1d_shapes_symmetric(n_q_points_1d);
 
       nodal_at_cell_boundaries = true;
-      for(unsigned int i = 1; i < n_dofs_1d; ++i)
-        if(std::abs(get_first_array_element(shape_data_on_face[0][i])) > 1e-13
-           || std::abs(get_first_array_element(shape_data_on_face[1][i - 1]))
-                > 1e-13)
+      for (unsigned int i = 1; i < n_dofs_1d; ++i)
+        if (std::abs(get_first_array_element(shape_data_on_face[0][i])) > 1e-13
+            || std::abs(get_first_array_element(shape_data_on_face[1][i - 1]))
+                 > 1e-13)
           nodal_at_cell_boundaries = false;
 
-      if(nodal_at_cell_boundaries == true)
+      if (nodal_at_cell_boundaries == true)
         {
           face_to_cell_index_nodal.reinit(GeometryInfo<dim>::faces_per_cell,
                                           dofs_per_component_on_face);
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
             {
               const unsigned int direction = f / 2;
               const unsigned int stride
                 = direction < dim - 1 ? (fe_degree + 1) : 1;
               int shift = 1;
-              for(unsigned int d = 0; d < direction; ++d)
+              for (unsigned int d = 0; d < direction; ++d)
                 shift *= fe_degree + 1;
               const unsigned int offset = (f % 2) * fe_degree * shift;
 
-              if(direction == 0 || direction == dim - 1)
-                for(unsigned int i = 0; i < dofs_per_component_on_face; ++i)
+              if (direction == 0 || direction == dim - 1)
+                for (unsigned int i = 0; i < dofs_per_component_on_face; ++i)
                   face_to_cell_index_nodal(f, i) = offset + i * stride;
               else
                 // local coordinate system on faces 2 and 3 is zx in
                 // deal.II, not xz as expected for tensor products -> adjust
                 // that here
-                for(unsigned int j = 0; j <= fe_degree; ++j)
-                  for(unsigned int i = 0; i <= fe_degree; ++i)
+                for (unsigned int j = 0; j <= fe_degree; ++j)
+                  for (unsigned int i = 0; i <= fe_degree; ++i)
                     {
                       const unsigned int ind
                         = offset + j * dofs_per_component_on_face + i;
@@ -372,24 +372,24 @@ namespace internal
             }
         }
 
-      if(element_type == tensor_symmetric_hermite)
+      if (element_type == tensor_symmetric_hermite)
         {
           face_to_cell_index_hermite.reinit(GeometryInfo<dim>::faces_per_cell,
                                             2 * dofs_per_component_on_face);
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
             {
               const unsigned int direction = f / 2;
               const unsigned int stride
                 = direction < dim - 1 ? (fe_degree + 1) : 1;
               int shift = 1;
-              for(unsigned int d = 0; d < direction; ++d)
+              for (unsigned int d = 0; d < direction; ++d)
                 shift *= fe_degree + 1;
               const unsigned int offset = (f % 2) * fe_degree * shift;
-              if(f % 2 == 1)
+              if (f % 2 == 1)
                 shift = -shift;
 
-              if(direction == 0 || direction == dim - 1)
-                for(unsigned int i = 0; i < dofs_per_component_on_face; ++i)
+              if (direction == 0 || direction == dim - 1)
+                for (unsigned int i = 0; i < dofs_per_component_on_face; ++i)
                   {
                     face_to_cell_index_hermite(f, 2 * i) = offset + i * stride;
                     face_to_cell_index_hermite(f, 2 * i + 1)
@@ -399,8 +399,8 @@ namespace internal
                 // local coordinate system on faces 2 and 3 is zx in
                 // deal.II, not xz as expected for tensor products -> adjust
                 // that here
-                for(unsigned int j = 0; j <= fe_degree; ++j)
-                  for(unsigned int i = 0; i <= fe_degree; ++i)
+                for (unsigned int j = 0; j <= fe_degree; ++j)
+                  for (unsigned int i = 0; i <= fe_degree; ++i)
                     {
                       const unsigned int ind
                         = offset + j * dofs_per_component_on_face + i;
@@ -418,32 +418,32 @@ namespace internal
     ShapeInfo<Number>::check_1d_shapes_symmetric(
       const unsigned int n_q_points_1d)
     {
-      if(dofs_per_component_on_cell == 0)
+      if (dofs_per_component_on_cell == 0)
         return false;
 
       const double zero_tol
         = std::is_same<Number, double>::value == true ? 1e-12 : 1e-7;
       // symmetry for values
       const unsigned int n_dofs_1d = fe_degree + 1;
-      for(unsigned int i = 0; i < (n_dofs_1d + 1) / 2; ++i)
-        for(unsigned int j = 0; j < n_q_points_1d; ++j)
-          if(std::abs(get_first_array_element(
-               shape_values[i * n_q_points_1d + j]
-               - shape_values[(n_dofs_1d - i) * n_q_points_1d - j - 1]))
-             > std::max(zero_tol,
-                        zero_tol
-                          * std::abs(get_first_array_element(
-                              shape_values[i * n_q_points_1d + j]))))
+      for (unsigned int i = 0; i < (n_dofs_1d + 1) / 2; ++i)
+        for (unsigned int j = 0; j < n_q_points_1d; ++j)
+          if (std::abs(get_first_array_element(
+                shape_values[i * n_q_points_1d + j]
+                - shape_values[(n_dofs_1d - i) * n_q_points_1d - j - 1]))
+              > std::max(zero_tol,
+                         zero_tol
+                           * std::abs(get_first_array_element(
+                               shape_values[i * n_q_points_1d + j]))))
             return false;
 
       // shape values should be zero at x=0.5 for all basis functions except
       // for the middle one
-      if(n_q_points_1d % 2 == 1 && n_dofs_1d % 2 == 1)
+      if (n_q_points_1d % 2 == 1 && n_dofs_1d % 2 == 1)
         {
-          for(unsigned int i = 0; i < n_dofs_1d / 2; ++i)
-            if(std::abs(get_first_array_element(
-                 shape_values[i * n_q_points_1d + n_q_points_1d / 2]))
-               > zero_tol)
+          for (unsigned int i = 0; i < n_dofs_1d / 2; ++i)
+            if (std::abs(get_first_array_element(
+                  shape_values[i * n_q_points_1d + n_q_points_1d / 2]))
+                > zero_tol)
               return false;
         }
 
@@ -452,38 +452,38 @@ namespace internal
       // the power of 1.5 to get a suitable gradient scaling
       const double zero_tol_gradient
         = zero_tol * std::sqrt(fe_degree + 1.) * (fe_degree + 1);
-      for(unsigned int i = 0; i < (n_dofs_1d + 1) / 2; ++i)
-        for(unsigned int j = 0; j < n_q_points_1d; ++j)
-          if(std::abs(get_first_array_element(
-               shape_gradients[i * n_q_points_1d + j]
-               + shape_gradients[(n_dofs_1d - i) * n_q_points_1d - j - 1]))
-             > zero_tol_gradient)
+      for (unsigned int i = 0; i < (n_dofs_1d + 1) / 2; ++i)
+        for (unsigned int j = 0; j < n_q_points_1d; ++j)
+          if (std::abs(get_first_array_element(
+                shape_gradients[i * n_q_points_1d + j]
+                + shape_gradients[(n_dofs_1d - i) * n_q_points_1d - j - 1]))
+              > zero_tol_gradient)
             return false;
-      if(n_dofs_1d % 2 == 1 && n_q_points_1d % 2 == 1)
-        if(std::abs(get_first_array_element(
-             shape_gradients[(n_dofs_1d / 2) * n_q_points_1d
-                             + (n_q_points_1d / 2)]))
-           > zero_tol_gradient)
+      if (n_dofs_1d % 2 == 1 && n_q_points_1d % 2 == 1)
+        if (std::abs(get_first_array_element(
+              shape_gradients[(n_dofs_1d / 2) * n_q_points_1d
+                              + (n_q_points_1d / 2)]))
+            > zero_tol_gradient)
           return false;
 
       // symmetry for Hessian. Multiply tolerance by degree^3 of the element
       // to get a suitable Hessian scaling
       const double zero_tol_hessian
         = zero_tol * (fe_degree + 1) * (fe_degree + 1) * (fe_degree + 1);
-      for(unsigned int i = 0; i < (n_dofs_1d + 1) / 2; ++i)
-        for(unsigned int j = 0; j < n_q_points_1d; ++j)
-          if(std::abs(get_first_array_element(
-               shape_hessians[i * n_q_points_1d + j]
-               - shape_hessians[(n_dofs_1d - i) * n_q_points_1d - j - 1]))
-             > zero_tol_hessian)
+      for (unsigned int i = 0; i < (n_dofs_1d + 1) / 2; ++i)
+        for (unsigned int j = 0; j < n_q_points_1d; ++j)
+          if (std::abs(get_first_array_element(
+                shape_hessians[i * n_q_points_1d + j]
+                - shape_hessians[(n_dofs_1d - i) * n_q_points_1d - j - 1]))
+              > zero_tol_hessian)
             return false;
 
       const unsigned int stride = (n_q_points_1d + 1) / 2;
       shape_values_eo.resize((fe_degree + 1) * stride);
       shape_gradients_eo.resize((fe_degree + 1) * stride);
       shape_hessians_eo.resize((fe_degree + 1) * stride);
-      for(unsigned int i = 0; i < (fe_degree + 1) / 2; ++i)
-        for(unsigned int q = 0; q < stride; ++q)
+      for (unsigned int i = 0; i < (fe_degree + 1) / 2; ++i)
+        for (unsigned int q = 0; q < stride; ++q)
           {
             shape_values_eo[i * stride + q]
               = 0.5
@@ -514,8 +514,8 @@ namespace internal
                 * (shape_hessians[i * n_q_points_1d + q]
                    - shape_hessians[i * n_q_points_1d + n_q_points_1d - 1 - q]);
           }
-      if(fe_degree % 2 == 0)
-        for(unsigned int q = 0; q < stride; ++q)
+      if (fe_degree % 2 == 0)
+        for (unsigned int q = 0; q < stride; ++q)
           {
             shape_values_eo[fe_degree / 2 * stride + q]
               = shape_values[(fe_degree / 2) * n_q_points_1d + q];
@@ -532,28 +532,28 @@ namespace internal
     bool
     ShapeInfo<Number>::check_1d_shapes_collocation()
     {
-      if(dofs_per_component_on_cell != n_q_points)
+      if (dofs_per_component_on_cell != n_q_points)
         return false;
 
       const double zero_tol
         = std::is_same<Number, double>::value == true ? 1e-12 : 1e-7;
       // check: identity operation for shape values
       const unsigned int n_points_1d = fe_degree + 1;
-      for(unsigned int i = 0; i < n_points_1d; ++i)
-        for(unsigned int j = 0; j < n_points_1d; ++j)
-          if(i != j)
+      for (unsigned int i = 0; i < n_points_1d; ++i)
+        for (unsigned int j = 0; j < n_points_1d; ++j)
+          if (i != j)
             {
-              if(std::abs(
-                   get_first_array_element(shape_values[i * n_points_1d + j]))
-                 > zero_tol)
+              if (std::abs(
+                    get_first_array_element(shape_values[i * n_points_1d + j]))
+                  > zero_tol)
                 return false;
             }
           else
             {
-              if(std::abs(
-                   get_first_array_element(shape_values[i * n_points_1d + j])
-                   - 1.)
-                 > zero_tol)
+              if (std::abs(
+                    get_first_array_element(shape_values[i * n_points_1d + j])
+                    - 1.)
+                  > zero_tol)
                 return false;
             }
       return true;
@@ -574,7 +574,7 @@ namespace internal
         shape_gradients_collocation_eo);
       memory
         += MemoryConsumption::memory_consumption(shape_hessians_collocation_eo);
-      for(unsigned int i = 0; i < 2; ++i)
+      for (unsigned int i = 0; i < 2; ++i)
         {
           memory
             += MemoryConsumption::memory_consumption(shape_data_on_face[i]);

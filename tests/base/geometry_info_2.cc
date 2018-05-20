@@ -44,56 +44,58 @@ test()
   deallog << "quads_per_face    " << GeometryInfo<dim>::quads_per_face
           << std::endl;
 
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     deallog << "face normal" << f << ' '
             << (GeometryInfo<dim>::unit_normal_orientation[f] > 0. ? '+' : '-')
             << "x" << GeometryInfo<dim>::unit_normal_direction[f] << std::endl;
 
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     {
       deallog << "face_children" << f << "[true ]";
-      for(unsigned int v = 0; v < GeometryInfo<dim>::max_children_per_face; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::max_children_per_face;
+           ++v)
         deallog << ' '
                 << GeometryInfo<dim>::child_cell_on_face(
                      RefinementCase<dim>::isotropic_refinement, f, v, true);
       deallog << std::endl;
       deallog << "face_children" << f << "[false]";
-      for(unsigned int v = 0; v < GeometryInfo<dim>::max_children_per_face; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::max_children_per_face;
+           ++v)
         deallog << ' '
                 << GeometryInfo<dim>::child_cell_on_face(
                      RefinementCase<dim>::isotropic_refinement, f, v, false);
       deallog << std::endl;
     }
 
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     {
       deallog << "face_vertices" << f << "[true ]";
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
         deallog << ' ' << GeometryInfo<dim>::face_to_cell_vertices(f, v, true);
       deallog << std::endl;
       deallog << "face_vertices" << f << "[false]";
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
         deallog << ' ' << GeometryInfo<dim>::face_to_cell_vertices(f, v, false);
       deallog << std::endl;
     }
 
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
     {
       deallog << "face_lines" << f << "[true ]";
-      for(unsigned int v = 1; v <= GeometryInfo<dim>::lines_per_face; ++v)
+      for (unsigned int v = 1; v <= GeometryInfo<dim>::lines_per_face; ++v)
         deallog << ' ' << GeometryInfo<dim>::face_to_cell_lines(f, v - 1, true);
       deallog << std::endl;
       deallog << "face_lines" << f << "[false]";
-      for(unsigned int v = 1; v <= GeometryInfo<dim>::lines_per_face; ++v)
+      for (unsigned int v = 1; v <= GeometryInfo<dim>::lines_per_face; ++v)
         deallog << ' '
                 << GeometryInfo<dim>::face_to_cell_lines(f, v - 1, false);
       deallog << std::endl;
     }
 
-  for(unsigned int f = 0; f < GeometryInfo<dim>::lines_per_cell; ++f)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::lines_per_cell; ++f)
     {
       deallog << "line_vertices" << f;
-      for(unsigned int v = 0; v < GeometryInfo<1>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<1>::vertices_per_cell; ++v)
         deallog << ' ' << GeometryInfo<dim>::line_to_cell_vertices(f, v);
       deallog << std::endl;
     }

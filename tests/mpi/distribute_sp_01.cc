@@ -30,25 +30,25 @@ test_mpi()
   unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
   unsigned int                         num_local = 10;
   unsigned int                         n         = numprocs * num_local;
   std::vector<types::global_dof_index> rows_per_cpu;
-  for(unsigned int i = 0; i < numprocs; ++i)
+  for (unsigned int i = 0; i < numprocs; ++i)
     rows_per_cpu.push_back(num_local);
 
   IndexSet locally_rel(n);
   locally_rel.add_range(myid * num_local, (myid + 1) * num_local);
-  if(myid > 0)
+  if (myid > 0)
     locally_rel.add_range((myid - 1) * num_local, (myid + 0) * num_local);
-  if(myid < numprocs - 1)
+  if (myid < numprocs - 1)
     locally_rel.add_range((myid + 1) * num_local, (myid + 2) * num_local);
 
   DynamicSparsityPattern csp(n, n, locally_rel);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     csp.add(i, myid);
 
   SparsityTools::distribute_sparsity_pattern(
@@ -59,26 +59,26 @@ test_mpi()
       }*/
 
   // checking...
-  for(unsigned int r = 0; r < num_local; ++r)
+  for (unsigned int r = 0; r < num_local; ++r)
     {
       unsigned int indx = r + myid * num_local;
       unsigned int len  = csp.row_length(indx);
 
       //std::cout << "myid=" << myid << " idx=" << indx << " len=" << len <<std::endl;
 
-      if(myid > 0 && myid < numprocs - 1)
+      if (myid > 0 && myid < numprocs - 1)
         Assert(len == 3, ExcInternalError());
-      if(myid == 0 || myid == numprocs - 1)
+      if (myid == 0 || myid == numprocs - 1)
         Assert(len == 2, ExcInternalError());
 
       Assert(csp.exists(indx, myid), ExcInternalError());
-      if(myid > 0)
+      if (myid > 0)
         Assert(csp.exists(indx, myid - 1), ExcInternalError());
-      if(myid < numprocs - 1)
+      if (myid < numprocs - 1)
         Assert(csp.exists(indx, myid + 1), ExcInternalError());
     }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "done" << std::endl;
 }
 
@@ -95,7 +95,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

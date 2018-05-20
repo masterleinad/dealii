@@ -261,32 +261,32 @@ SolverSelector<VectorType>::solve(const Matrix&         A,
                                   const VectorType&     b,
                                   const Preconditioner& precond) const
 {
-  if(solver_name == "richardson")
+  if (solver_name == "richardson")
     {
       SolverRichardson<VectorType> solver(*control, richardson_data);
       solver.solve(A, x, b, precond);
     }
-  else if(solver_name == "cg")
+  else if (solver_name == "cg")
     {
       SolverCG<VectorType> solver(*control, cg_data);
       solver.solve(A, x, b, precond);
     }
-  else if(solver_name == "minres")
+  else if (solver_name == "minres")
     {
       SolverMinRes<VectorType> solver(*control, minres_data);
       solver.solve(A, x, b, precond);
     }
-  else if(solver_name == "bicgstab")
+  else if (solver_name == "bicgstab")
     {
       SolverBicgstab<VectorType> solver(*control, bicgstab_data);
       solver.solve(A, x, b, precond);
     }
-  else if(solver_name == "gmres")
+  else if (solver_name == "gmres")
     {
       SolverGMRES<VectorType> solver(*control, gmres_data);
       solver.solve(A, x, b, precond);
     }
-  else if(solver_name == "fgmres")
+  else if (solver_name == "fgmres")
     {
       SolverFGMRES<VectorType> solver(*control, fgmres_data);
       solver.solve(A, x, b, precond);

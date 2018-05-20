@@ -30,7 +30,7 @@ main()
 
   TableHandler table;
 
-  for(unsigned int i = 1; i <= 10; ++i)
+  for (unsigned int i = 1; i <= 10; ++i)
     {
       table.add_value("numbers", i);
       table.add_value("squares", i * i);

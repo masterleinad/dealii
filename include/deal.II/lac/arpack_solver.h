@@ -457,7 +457,7 @@ inline ArpackSolver::AdditionalData::AdditionalData(
     symmetric(symmetric)
 {
   //Check for possible options for symmetric problems
-  if(symmetric)
+  if (symmetric)
     {
       Assert(
         eigenvalue_of_interest != largest_real_part,
@@ -500,7 +500,7 @@ ArpackSolver::set_initial_vector(const VectorType& vec)
 {
   initial_vector_provided = true;
   resid.resize(vec.size());
-  for(size_type i = 0; i < vec.size(); ++i)
+  for (size_type i = 0; i < vec.size(); ++i)
     resid[i] = vec[i];
 }
 
@@ -526,7 +526,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   unsigned int nev = nev_const;
 
   // check input sizes
-  if(additional_data.symmetric)
+  if (additional_data.symmetric)
     {
       Assert(nev <= eigenvectors.size(),
              ArpackExcInvalidEigenvectorSize(nev, eigenvectors.size()));
@@ -566,7 +566,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   // imaginary part "SI" smallest imaginary part "BE" both ends of spectrum
   // simultaneous.
   char which[3];
-  switch(additional_data.eigenvalue_of_interest)
+  switch (additional_data.eigenvalue_of_interest)
     {
       case algebraically_largest:
         std::strcpy(which, "LA");
@@ -601,7 +601,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   double tol = control().tolerance();
 
   // if the starting vector is used it has to be in resid
-  if(!initial_vector_provided || resid.size() != n)
+  if (!initial_vector_provided || resid.size() != n)
     resid.resize(n, 1.);
 
   // number of Arnoldi basis vectors specified
@@ -634,10 +634,10 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
   //information out of the iteration
   int info = 1;
 
-  while(ido != 99)
+  while (ido != 99)
     {
       // call of ARPACK dsaupd/dnaupd routine
-      if(additional_data.symmetric)
+      if (additional_data.symmetric)
         dsaupd_(&ido,
                 bmat,
                 &n,
@@ -672,14 +672,14 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                 &lworkl,
                 &info);
 
-      if(ido == 99)
+      if (ido == 99)
         break;
 
-      switch(mode)
+      switch (mode)
         {
           case 3:
             {
-              switch(ido)
+              switch (ido)
                 {
                   case -1:
                     {
@@ -688,7 +688,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       dst.reinit(src);
                       tmp.reinit(src);
 
-                      for(size_type i = 0; i < src.size(); ++i)
+                      for (size_type i = 0; i < src.size(); ++i)
                         src(i) = workd[ipntr[0] - 1 + i];
 
                       // multiplication with mass matrix M
@@ -696,7 +696,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       // solving linear system
                       inverse.vmult(dst, tmp);
 
-                      for(size_type i = 0; i < dst.size(); ++i)
+                      for (size_type i = 0; i < dst.size(); ++i)
                         workd[ipntr[1] - 1 + i] = dst(i);
                     }
                     break;
@@ -709,7 +709,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       tmp.reinit(src);
                       tmp2.reinit(src);
 
-                      for(size_type i = 0; i < src.size(); ++i)
+                      for (size_type i = 0; i < src.size(); ++i)
                         {
                           src(i) = workd[ipntr[2] - 1 + i];
                           tmp(i) = workd[ipntr[0] - 1 + i];
@@ -717,7 +717,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       // solving linear system
                       inverse.vmult(dst, src);
 
-                      for(size_type i = 0; i < dst.size(); ++i)
+                      for (size_type i = 0; i < dst.size(); ++i)
                         workd[ipntr[1] - 1 + i] = dst(i);
                     }
                     break;
@@ -728,13 +728,13 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                       src.reinit(eigenvectors[0]);
                       dst.reinit(src);
 
-                      for(size_type i = 0; i < src.size(); ++i)
+                      for (size_type i = 0; i < src.size(); ++i)
                         src(i) = workd[ipntr[0] - 1 + i];
 
                       // Multiplication with mass matrix M
                       mass_matrix.vmult(dst, src);
 
-                      for(size_type i = 0; i < dst.size(); ++i)
+                      for (size_type i = 0; i < dst.size(); ++i)
                         workd[ipntr[1] - 1 + i] = dst(i);
                     }
                     break;
@@ -751,9 +751,9 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
         }
     }
 
-  if(info < 0)
+  if (info < 0)
     {
-      if(additional_data.symmetric)
+      if (additional_data.symmetric)
         {
           Assert(false, ArpackExcArpackInfodsaupd(info));
         }
@@ -776,7 +776,7 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
       std::vector<double> eigenvalues_im(nev + 1, 0.);
 
       // call of ARPACK dseupd/dneupd routine
-      if(additional_data.symmetric)
+      if (additional_data.symmetric)
         {
           std::vector<double> z(ldz * nev, 0.);
           dseupd_(&rvec,
@@ -832,17 +832,17 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
                   &info);
         }
 
-      if(info == 1)
+      if (info == 1)
         {
           Assert(false, ArpackExcArpackInfoMaxIt(control().max_steps()));
         }
-      else if(info == 3)
+      else if (info == 3)
         {
           Assert(false, ArpackExcArpackNoShifts());
         }
-      else if(info != 0)
+      else if (info != 0)
         {
-          if(additional_data.symmetric)
+          if (additional_data.symmetric)
             {
               Assert(false, ArpackExcArpackInfodseupd(info));
             }
@@ -850,11 +850,11 @@ ArpackSolver::solve(const MatrixType1& /*system_matrix*/,
             Assert(false, ArpackExcArpackInfodneupd(info));
         }
 
-      for(unsigned int i = 0; i < nev; ++i)
-        for(unsigned int j = 0; j < n; ++j)
+      for (unsigned int i = 0; i < nev; ++i)
+        for (unsigned int j = 0; j < n; ++j)
           eigenvectors[i](j) = v[i * n + j];
 
-      for(unsigned int i = 0; i < nev_const; ++i)
+      for (unsigned int i = 0; i < nev_const; ++i)
         eigenvalues[i]
           = std::complex<double>(eigenvalues_real[i], eigenvalues_im[i]);
     }

@@ -50,10 +50,10 @@ check()
 
   triangulation.refine_global(3);
 
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     {
       Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
-      for(unsigned int i = 0; i < estimated_error_per_cell.size(); ++i)
+      for (unsigned int i = 0; i < estimated_error_per_cell.size(); ++i)
         estimated_error_per_cell(i) = i;
       GridRefinement::refine_and_coarsen_fixed_fraction(
         triangulation, estimated_error_per_cell, 0.3, 0.1);
@@ -64,10 +64,10 @@ check()
   DoFHandler<dim> stokes_dof_handler(triangulation);
   stokes_dof_handler.distribute_dofs(fe);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell
-      = stokes_dof_handler.begin_active();
-      cell != stokes_dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell
+       = stokes_dof_handler.begin_active();
+       cell != stokes_dof_handler.end();
+       ++cell)
     cell->clear_user_flag();
   std::vector<std::vector<typename DoFHandler<dim>::active_cell_iterator>>
     coloring = GraphColoring::make_graph_coloring(
@@ -77,14 +77,14 @@ check()
         const typename DoFHandler<dim>::active_cell_iterator&)>(
         &get_conflict_indices<dim>));
 
-  for(unsigned int c = 0; c < coloring.size(); ++c)
-    for(unsigned int i = 0; i < coloring[c].size(); ++i)
+  for (unsigned int c = 0; c < coloring.size(); ++c)
+    for (unsigned int i = 0; i < coloring[c].size(); ++i)
       coloring[c][i]->set_user_flag();
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell
-      = stokes_dof_handler.begin_active();
-      cell != stokes_dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell
+       = stokes_dof_handler.begin_active();
+       cell != stokes_dof_handler.end();
+       ++cell)
     AssertThrow(cell->user_flag_set() == true, ExcInternalError());
 
   deallog << "OK" << std::endl;

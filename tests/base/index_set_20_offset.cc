@@ -27,7 +27,7 @@ testor(IndexSet& a, IndexSet& other, unsigned int offset, bool verbose)
 
   merged.add_indices(other, offset);
 
-  if(verbose)
+  if (verbose)
     {
       deallog << "Original index set: " << std::endl;
       a.print(deallog);
@@ -37,7 +37,7 @@ testor(IndexSet& a, IndexSet& other, unsigned int offset, bool verbose)
       merged.print(deallog);
     }
 
-  for(unsigned int i = 0; i < merged.size(); ++i)
+  for (unsigned int i = 0; i < merged.size(); ++i)
     {
       Assert(
         merged.is_element(i)
