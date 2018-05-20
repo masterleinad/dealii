@@ -87,13 +87,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -140,13 +140,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -208,13 +208,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -260,13 +260,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -359,13 +359,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -402,13 +402,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -459,13 +459,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -507,13 +507,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -605,13 +605,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -741,13 +741,13 @@ namespace GridOutFlags
      * Declare parameters in ParameterHandler.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Parse parameters of ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
   };
 
   /**
@@ -892,7 +892,7 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_dx(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
+  write_dx(const Triangulation<dim, spacedim> & tria, std::ostream & out) const;
 
   /**
    * Write the triangulation in the gnuplot format.
@@ -927,9 +927,9 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_gnuplot(const Triangulation<dim, spacedim>& tria,
-                std::ostream&                       out,
-                const Mapping<dim, spacedim>*       mapping = nullptr) const;
+  write_gnuplot(const Triangulation<dim, spacedim> & tria,
+                std::ostream &                       out,
+                const Mapping<dim, spacedim> *       mapping = nullptr) const;
 
   /**
    * Write the triangulation in the msh format.
@@ -951,7 +951,8 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_msh(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
+  write_msh(const Triangulation<dim, spacedim> & tria,
+            std::ostream &                       out) const;
 
   /**
    * Write the triangulation in the ucd format.
@@ -974,7 +975,8 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_ucd(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
+  write_ucd(const Triangulation<dim, spacedim> & tria,
+            std::ostream &                       out) const;
 
   /**
    * Write the triangulation in the encapsulated postscript format.
@@ -1007,9 +1009,9 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_eps(const Triangulation<dim, spacedim>& tria,
-            std::ostream&                       out,
-            const Mapping<dim, spacedim>*       mapping = nullptr) const;
+  write_eps(const Triangulation<dim, spacedim> & tria,
+            std::ostream &                       out,
+            const Mapping<dim, spacedim> *       mapping = nullptr) const;
 
   /**
    * Write two-dimensional XFig-file.
@@ -1031,9 +1033,9 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_xfig(const Triangulation<dim, spacedim>& tria,
-             std::ostream&                       out,
-             const Mapping<dim, spacedim>*       mapping = nullptr) const;
+  write_xfig(const Triangulation<dim, spacedim> & tria,
+             std::ostream &                       out,
+             const Mapping<dim, spacedim> *       mapping = nullptr) const;
 
   /**
    * Write the triangulation in the SVG format.
@@ -1054,7 +1056,7 @@ public:
    * grids in two space dimensions.
    */
   void
-  write_svg(const Triangulation<2, 2>& tria, std::ostream& out) const;
+  write_svg(const Triangulation<2, 2> & tria, std::ostream & out) const;
 
   /**
    * Declaration of the same function as above for all other dimensions and
@@ -1063,7 +1065,8 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_svg(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
+  write_svg(const Triangulation<dim, spacedim> & tria,
+            std::ostream &                       out) const;
 
   /**
    * Write triangulation in MathGL script format. To interpret this file a
@@ -1081,8 +1084,8 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_mathgl(const Triangulation<dim, spacedim>& tria,
-               std::ostream&                       out) const;
+  write_mathgl(const Triangulation<dim, spacedim> & tria,
+               std::ostream &                       out) const;
 
   /**
    * Write triangulation in VTK format.
@@ -1103,7 +1106,8 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_vtk(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
+  write_vtk(const Triangulation<dim, spacedim> & tria,
+            std::ostream &                       out) const;
 
   /**
    * Write triangulation in VTU format.
@@ -1124,7 +1128,8 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_vtu(const Triangulation<dim, spacedim>& tria, std::ostream& out) const;
+  write_vtu(const Triangulation<dim, spacedim> & tria,
+            std::ostream &                       out) const;
 
   /**
    * Write triangulation in VTU format for each processor, and add a .pvtu file for
@@ -1156,10 +1161,11 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write_mesh_per_processor_as_vtu(const Triangulation<dim, spacedim>& tria,
-                                  const std::string& filename_without_extension,
-                                  const bool         view_levels = false,
-                                  const bool include_artificial  = false) const;
+  write_mesh_per_processor_as_vtu(
+    const Triangulation<dim, spacedim> & tria,
+    const std::string &                  filename_without_extension,
+    const bool                           view_levels        = false,
+    const bool                           include_artificial = false) const;
 
   /**
    * Write grid to @p out according to the given data format. This function
@@ -1167,91 +1173,91 @@ public:
    */
   template <int dim, int spacedim>
   void
-  write(const Triangulation<dim, spacedim>& tria,
-        std::ostream&                       out,
-        const OutputFormat                  output_format,
-        const Mapping<dim, spacedim>*       mapping = nullptr) const;
+  write(const Triangulation<dim, spacedim> & tria,
+        std::ostream &                       out,
+        const OutputFormat                   output_format,
+        const Mapping<dim, spacedim> *       mapping = nullptr) const;
 
   /**
    * Write mesh in default format set by ParameterHandler.
    */
   template <int dim, int spacedim>
   void
-  write(const Triangulation<dim, spacedim>& tria,
-        std::ostream&                       out,
-        const Mapping<dim, spacedim>*       mapping = nullptr) const;
+  write(const Triangulation<dim, spacedim> & tria,
+        std::ostream &                       out,
+        const Mapping<dim, spacedim> *       mapping = nullptr) const;
 
   /**
    * Set flags for DX output
    */
   void
-  set_flags(const GridOutFlags::DX& flags);
+  set_flags(const GridOutFlags::DX & flags);
 
   /**
    * Set flags for Gmsh output
    */
   void
-  set_flags(const GridOutFlags::Msh& flags);
+  set_flags(const GridOutFlags::Msh & flags);
 
   /**
    * Set flags for UCD output
    */
   void
-  set_flags(const GridOutFlags::Ucd& flags);
+  set_flags(const GridOutFlags::Ucd & flags);
 
   /**
    * Set flags for GNUPLOT output
    */
   void
-  set_flags(const GridOutFlags::Gnuplot& flags);
+  set_flags(const GridOutFlags::Gnuplot & flags);
 
   /**
    * Set flags for EPS output of a one-dimensional triangulation
    */
   void
-  set_flags(const GridOutFlags::Eps<1>& flags);
+  set_flags(const GridOutFlags::Eps<1> & flags);
 
   /**
    * Set flags for EPS output of a two-dimensional triangulation
    */
   void
-  set_flags(const GridOutFlags::Eps<2>& flags);
+  set_flags(const GridOutFlags::Eps<2> & flags);
 
   /**
    * Set flags for EPS output of a three-dimensional triangulation
    */
   void
-  set_flags(const GridOutFlags::Eps<3>& flags);
+  set_flags(const GridOutFlags::Eps<3> & flags);
 
   /**
    * Set flags for EPS output of a three-dimensional triangulation
    */
   void
-  set_flags(const GridOutFlags::XFig& flags);
+  set_flags(const GridOutFlags::XFig & flags);
 
   /**
    * Set flags for SVG output
    */
   void
-  set_flags(const GridOutFlags::Svg& flags);
+  set_flags(const GridOutFlags::Svg & flags);
 
   /**
    * Set flags for MathGL output
    */
   void
-  set_flags(const GridOutFlags::MathGL& flags);
+  set_flags(const GridOutFlags::MathGL & flags);
 
   /**
    * Set flags for VTK output
    */
   void
-  set_flags(const GridOutFlags::Vtk& flags);
+  set_flags(const GridOutFlags::Vtk & flags);
 
   /**
    * Set flags for VTU output
    */
   void
-  set_flags(const GridOutFlags::Vtu& flags);
+  set_flags(const GridOutFlags::Vtu & flags);
 
   /**
    * Provide a function that can tell us which suffix a given output format
@@ -1291,7 +1297,7 @@ public:
    * ParameterHandler class, use the function get_output_format_names().
    */
   static OutputFormat
-  parse_output_format(const std::string& format_name);
+  parse_output_format(const std::string & format_name);
 
   /**
    * Return a list of implemented output formats. The different names are
@@ -1305,13 +1311,13 @@ public:
    * Declare parameters in ParameterHandler.
    */
   static void
-  declare_parameters(ParameterHandler& param);
+  declare_parameters(ParameterHandler & param);
 
   /**
    * Parse parameters of ParameterHandler.
    */
   void
-  parse_parameters(ParameterHandler& param);
+  parse_parameters(ParameterHandler & param);
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -1424,29 +1430,29 @@ private:
    */
   template <int dim, int spacedim>
   unsigned int
-  write_msh_faces(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+  write_msh_faces(const Triangulation<dim, spacedim> & tria,
+                  const unsigned int                   next_element_index,
+                  std::ostream &                       out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
-  write_msh_faces(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_faces(const Triangulation<1, 1> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
    * nothing.
    */
   unsigned int
-  write_msh_faces(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_faces(const Triangulation<1, 2> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   unsigned int
-  write_msh_faces(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_faces(const Triangulation<1, 3> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
 
   /**
    * Write the grid information about lines to @p out. Only those lines are
@@ -1475,45 +1481,45 @@ private:
    */
   template <int dim, int spacedim>
   unsigned int
-  write_msh_lines(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+  write_msh_lines(const Triangulation<dim, spacedim> & tria,
+                  const unsigned int                   next_element_index,
+                  std::ostream &                       out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
-  write_msh_lines(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_lines(const Triangulation<1, 1> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
    * nothing.
    */
   unsigned int
-  write_msh_lines(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_lines(const Triangulation<1, 2> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   unsigned int
-  write_msh_lines(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_lines(const Triangulation<1, 3> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   /**
    * Declaration of the specialization of above function for 2d. Does nothing.
    */
   unsigned int
-  write_msh_lines(const Triangulation<2, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_lines(const Triangulation<2, 2> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   /**
    * Declaration of the specialization of above function for 2d, 3sd. Does
    * nothing.
    */
   unsigned int
-  write_msh_lines(const Triangulation<2, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_msh_lines(const Triangulation<2, 3> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
 
   /**
    * Write the grid information about faces to @p out. Only those faces are
@@ -1542,30 +1548,30 @@ private:
    */
   template <int dim, int spacedim>
   unsigned int
-  write_ucd_faces(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+  write_ucd_faces(const Triangulation<dim, spacedim> & tria,
+                  const unsigned int                   next_element_index,
+                  std::ostream &                       out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
-  write_ucd_faces(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_faces(const Triangulation<1, 1> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
    * nothing.
    */
   unsigned int
-  write_ucd_faces(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_faces(const Triangulation<1, 2> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   unsigned int
-  write_ucd_faces(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_faces(const Triangulation<1, 3> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
 
   /**
    * Write the grid information about lines to @p out. Only those lines are
@@ -1594,45 +1600,45 @@ private:
    */
   template <int dim, int spacedim>
   unsigned int
-  write_ucd_lines(const Triangulation<dim, spacedim>& tria,
-                  const unsigned int                  next_element_index,
-                  std::ostream&                       out) const;
+  write_ucd_lines(const Triangulation<dim, spacedim> & tria,
+                  const unsigned int                   next_element_index,
+                  std::ostream &                       out) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Does nothing.
    */
   unsigned int
-  write_ucd_lines(const Triangulation<1, 1>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_lines(const Triangulation<1, 1> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Does
    * nothing.
    */
   unsigned int
-  write_ucd_lines(const Triangulation<1, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_lines(const Triangulation<1, 2> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   unsigned int
-  write_ucd_lines(const Triangulation<1, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_lines(const Triangulation<1, 3> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
 
   /**
    * Declaration of the specialization of above function for 2d. Does nothing.
    */
   unsigned int
-  write_ucd_lines(const Triangulation<2, 2>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_lines(const Triangulation<2, 2> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
   /**
    * Declaration of the specialization of above function for 2d, 3sd. Does
    * nothing.
    */
   unsigned int
-  write_ucd_lines(const Triangulation<2, 3>& tria,
-                  const unsigned int         next_element_index,
-                  std::ostream&              out) const;
+  write_ucd_lines(const Triangulation<2, 3> & tria,
+                  const unsigned int          next_element_index,
+                  std::ostream &              out) const;
 
   /**
    * This function projects a three-dimensional point (Point<3> point) onto a
@@ -1664,23 +1670,23 @@ private:
    */
   template <int dim, int spacedim>
   unsigned int
-  n_boundary_faces(const Triangulation<dim, spacedim>& tria) const;
+  n_boundary_faces(const Triangulation<dim, spacedim> & tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Simply
    * returns zero.
    */
   unsigned int
-  n_boundary_faces(const Triangulation<1, 1>& tria) const;
+  n_boundary_faces(const Triangulation<1, 1> & tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Simply
    * returns zero.
    */
   unsigned int
-  n_boundary_faces(const Triangulation<1, 2>& tria) const;
+  n_boundary_faces(const Triangulation<1, 2> & tria) const;
   unsigned int
-  n_boundary_faces(const Triangulation<1, 3>& tria) const;
+  n_boundary_faces(const Triangulation<1, 3> & tria) const;
 
   /**
    * Return the number of lines in the triangulation which have a boundary
@@ -1696,36 +1702,36 @@ private:
    */
   template <int dim, int spacedim>
   unsigned int
-  n_boundary_lines(const Triangulation<dim, spacedim>& tria) const;
+  n_boundary_lines(const Triangulation<dim, spacedim> & tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Simply
    * returns zero.
    */
   unsigned int
-  n_boundary_lines(const Triangulation<1, 1>& tria) const;
+  n_boundary_lines(const Triangulation<1, 1> & tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Simply
    * returns zero.
    */
   unsigned int
-  n_boundary_lines(const Triangulation<1, 2>& tria) const;
+  n_boundary_lines(const Triangulation<1, 2> & tria) const;
   unsigned int
-  n_boundary_lines(const Triangulation<1, 3>& tria) const;
+  n_boundary_lines(const Triangulation<1, 3> & tria) const;
 
   /**
    * Declaration of the specialization of above function for 2d. Simply
    * returns zero.
    */
   unsigned int
-  n_boundary_lines(const Triangulation<2, 2>& tria) const;
+  n_boundary_lines(const Triangulation<2, 2> & tria) const;
   /**
    * Declaration of the specialization of above function for 2d, 3sd. Simply
    * returns zero.
    */
   unsigned int
-  n_boundary_lines(const Triangulation<2, 3>& tria) const;
+  n_boundary_lines(const Triangulation<2, 3> & tria) const;
 };
 
 DEAL_II_NAMESPACE_CLOSE

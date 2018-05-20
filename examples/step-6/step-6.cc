@@ -136,7 +136,7 @@ private:
 // step-5:
 template <int dim>
 double
-coefficient(const Point<dim>& p)
+coefficient(const Point<dim> & p)
 {
   if(p.square() < 0.5 * 0.5)
     return 20;
@@ -668,7 +668,7 @@ main()
   // Apart from this, there isn't much that we can do except exiting the
   // program with an error code (this is what the <code>return 1;</code>
   // does):
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

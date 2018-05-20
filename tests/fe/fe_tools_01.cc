@@ -25,7 +25,7 @@
 
 template <int dim>
 void
-test_fe(const char* name)
+test_fe(const char * name)
 {
   std::unique_ptr<FiniteElement<dim>> fe
     = FETools::get_fe_by_name<dim, dim>(std::string(name));
@@ -68,7 +68,7 @@ main()
 
   // Now set up a list of malformed
   // names
-  std::vector<const char*> names;
+  std::vector<const char *> names;
   //  names.push_back("FE_Q[2]");
 
   for(unsigned int i = 0; i < names.size(); ++i)
@@ -77,7 +77,7 @@ main()
         {
           test_fe<2>(names[i]);
         }
-      catch(ExceptionBase& e)
+      catch(ExceptionBase & e)
         {
           logfile << e.what();
         }

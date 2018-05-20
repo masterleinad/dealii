@@ -104,8 +104,8 @@ public:
    * Constructor. @p omega denotes the damping parameter of the
    * preconditioning.
    */
-  PreconditionSelector(const std::string&                     preconditioning,
-                       const typename VectorType::value_type& omega = 1.);
+  PreconditionSelector(const std::string &                     preconditioning,
+                       const typename VectorType::value_type & omega = 1.);
 
   /**
    * Destructor.
@@ -117,7 +117,7 @@ public:
    * matrix. e.g. for @p precondition_jacobi, <tt>~_sor</tt>, <tt>~_ssor</tt>.
    */
   void
-  use_matrix(const MatrixType& M);
+  use_matrix(const MatrixType & M);
 
   /**
    * Return the dimension of the codomain (or range) space. Note that the
@@ -138,14 +138,14 @@ public:
    * the constructor.
    */
   virtual void
-  vmult(VectorType& dst, const VectorType& src) const;
+  vmult(VectorType & dst, const VectorType & src) const;
 
   /**
    * Transpose precondition procedure. Calls the preconditioning that was
    * specified in the constructor.
    */
   virtual void
-  Tvmult(VectorType& dst, const VectorType& src) const;
+  Tvmult(VectorType & dst, const VectorType & src) const;
 
   /**
    * Get the names of all implemented preconditionings. The list of possible
@@ -196,8 +196,8 @@ private:
 
 template <typename MatrixType, typename VectorType>
 PreconditionSelector<MatrixType, VectorType>::PreconditionSelector(
-  const std::string&                     preconditioning,
-  const typename VectorType::value_type& omega)
+  const std::string &                     preconditioning,
+  const typename VectorType::value_type & omega)
   : preconditioning(preconditioning), omega(omega)
 {}
 
@@ -210,7 +210,7 @@ PreconditionSelector<MatrixType, VectorType>::~PreconditionSelector()
 
 template <typename MatrixType, typename VectorType>
 void
-PreconditionSelector<MatrixType, VectorType>::use_matrix(const MatrixType& M)
+PreconditionSelector<MatrixType, VectorType>::use_matrix(const MatrixType & M)
 {
   A = &M;
 }
@@ -233,8 +233,9 @@ PreconditionSelector<MatrixType, VectorType>::n() const
 
 template <typename MatrixType, typename VectorType>
 void
-PreconditionSelector<MatrixType, VectorType>::vmult(VectorType&       dst,
-                                                    const VectorType& src) const
+PreconditionSelector<MatrixType, VectorType>::vmult(
+  VectorType &       dst,
+  const VectorType & src) const
 {
   if(preconditioning == "none")
     {
@@ -264,8 +265,8 @@ PreconditionSelector<MatrixType, VectorType>::vmult(VectorType&       dst,
 template <typename MatrixType, typename VectorType>
 void
 PreconditionSelector<MatrixType, VectorType>::Tvmult(
-  VectorType&       dst,
-  const VectorType& src) const
+  VectorType &       dst,
+  const VectorType & src) const
 {
   if(preconditioning == "none")
     {

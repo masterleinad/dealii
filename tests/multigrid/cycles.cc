@@ -39,15 +39,15 @@ public:
   {}
 
   virtual void
-  smooth(const unsigned int, VectorType&, const VectorType&) const
+  smooth(const unsigned int, VectorType &, const VectorType &) const
   {}
 
   virtual void
-  prolongate(const unsigned int, VectorType&, const VectorType&) const
+  prolongate(const unsigned int, VectorType &, const VectorType &) const
   {}
 
   virtual void
-  restrict_and_add(const unsigned int, VectorType&, const VectorType&) const
+  restrict_and_add(const unsigned int, VectorType &, const VectorType &) const
   {}
 
   virtual void
@@ -55,7 +55,7 @@ public:
   {}
 
   virtual void
-  operator()(const unsigned int, VectorType&, const VectorType&) const
+  operator()(const unsigned int, VectorType &, const VectorType &) const
   {}
 };
 

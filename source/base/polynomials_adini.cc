@@ -118,10 +118,10 @@ PolynomialsAdini::PolynomialsAdini()
 }
 
 void
-PolynomialsAdini::compute(const Point<2>&            unit_point,
-                          std::vector<double>&       values,
-                          std::vector<Tensor<1, 2>>& grads,
-                          std::vector<Tensor<2, 2>>& grad_grads) const
+PolynomialsAdini::compute(const Point<2> &            unit_point,
+                          std::vector<double> &       values,
+                          std::vector<Tensor<1, 2>> & grads,
+                          std::vector<Tensor<2, 2>> & grad_grads) const
 {
   if(values.empty() == false) // do not bother if empty
     {
@@ -150,7 +150,7 @@ PolynomialsAdini::compute(const Point<2>&            unit_point,
 }
 
 double
-PolynomialsAdini::compute_value(const unsigned int i, const Point<2>& p) const
+PolynomialsAdini::compute_value(const unsigned int i, const Point<2> & p) const
 {
   const double x = p(0);
   const double y = p(1);
@@ -162,7 +162,7 @@ PolynomialsAdini::compute_value(const unsigned int i, const Point<2>& p) const
 }
 
 Tensor<1, 2>
-PolynomialsAdini::compute_grad(const unsigned int i, const Point<2>& p) const
+PolynomialsAdini::compute_grad(const unsigned int i, const Point<2> & p) const
 {
   const double x = p(0);
   const double y = p(1);
@@ -183,7 +183,7 @@ PolynomialsAdini::compute_grad(const unsigned int i, const Point<2>& p) const
 
 Tensor<2, 2>
 PolynomialsAdini::compute_grad_grad(const unsigned int i,
-                                    const Point<2>&    p) const
+                                    const Point<2> &   p) const
 {
   const double x = p(0);
   const double y = p(1);

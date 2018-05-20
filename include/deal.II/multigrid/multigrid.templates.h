@@ -71,8 +71,8 @@ Multigrid<VectorType>::set_debug(const unsigned int d)
 
 template <typename VectorType>
 void
-Multigrid<VectorType>::set_edge_matrices(const MGMatrixBase<VectorType>& down,
-                                         const MGMatrixBase<VectorType>& up)
+Multigrid<VectorType>::set_edge_matrices(const MGMatrixBase<VectorType> & down,
+                                         const MGMatrixBase<VectorType> & up)
 {
   edge_out = &down;
   edge_in  = &up;
@@ -81,8 +81,8 @@ Multigrid<VectorType>::set_edge_matrices(const MGMatrixBase<VectorType>& down,
 template <typename VectorType>
 void
 Multigrid<VectorType>::set_edge_flux_matrices(
-  const MGMatrixBase<VectorType>& down,
-  const MGMatrixBase<VectorType>& up)
+  const MGMatrixBase<VectorType> & down,
+  const MGMatrixBase<VectorType> & up)
 {
   edge_down = &down;
   edge_up   = &up;
@@ -359,7 +359,7 @@ Multigrid<VectorType>::vcycle()
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_coarse_solve(
-  const std::function<void(const bool, const unsigned int)>& slot)
+  const std::function<void(const bool, const unsigned int)> & slot)
 {
   return this->signals.coarse_solve.connect(slot);
 }
@@ -367,7 +367,7 @@ Multigrid<VectorType>::connect_coarse_solve(
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_restriction(
-  const std::function<void(const bool, const unsigned int)>& slot)
+  const std::function<void(const bool, const unsigned int)> & slot)
 {
   return this->signals.restriction.connect(slot);
 }
@@ -375,7 +375,7 @@ Multigrid<VectorType>::connect_restriction(
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_prolongation(
-  const std::function<void(const bool, const unsigned int)>& slot)
+  const std::function<void(const bool, const unsigned int)> & slot)
 {
   return this->signals.prolongation.connect(slot);
 }
@@ -383,7 +383,7 @@ Multigrid<VectorType>::connect_prolongation(
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_pre_smoother_step(
-  const std::function<void(const bool, const unsigned int)>& slot)
+  const std::function<void(const bool, const unsigned int)> & slot)
 {
   return this->signals.pre_smoother_step.connect(slot);
 }
@@ -391,7 +391,7 @@ Multigrid<VectorType>::connect_pre_smoother_step(
 template <typename VectorType>
 boost::signals2::connection
 Multigrid<VectorType>::connect_post_smoother_step(
-  const std::function<void(const bool, const unsigned int)>& slot)
+  const std::function<void(const bool, const unsigned int)> & slot)
 {
   return this->signals.post_smoother_step.connect(slot);
 }

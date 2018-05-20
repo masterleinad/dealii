@@ -439,7 +439,7 @@ main()
           ++mapping_degree)
         Step11::LaplaceProblem<2>(mapping_degree).run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

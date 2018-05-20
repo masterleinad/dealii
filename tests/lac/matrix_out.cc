@@ -22,7 +22,7 @@ main()
 {
   initlog();
 
-  auto& logfile = deallog.get_file_stream();
+  auto & logfile = deallog.get_file_stream();
 
   // test for a square full matrix
   if(true)

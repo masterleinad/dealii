@@ -81,8 +81,8 @@ public:
    * and the number of children of a cell in the current space dimension (i.e.,
    * GeometryInfo<dim>::max_children_per_cell).
    */
-  CellId(const unsigned int               coarse_cell_id,
-         const std::vector<std::uint8_t>& child_indices);
+  CellId(const unsigned int                coarse_cell_id,
+         const std::vector<std::uint8_t> & child_indices);
 
   /**
    * Construct a CellId object with a given @p coarse_cell_id and array of
@@ -95,15 +95,15 @@ public:
    * GeometryInfo<dim>::max_children_per_cell). The array
    * @p child_indices must have at least @p n_child_indices valid entries.
    */
-  CellId(const unsigned int  coarse_cell_id,
-         const unsigned int  n_child_indices,
-         const std::uint8_t* child_indices);
+  CellId(const unsigned int   coarse_cell_id,
+         const unsigned int   n_child_indices,
+         const std::uint8_t * child_indices);
 
   /**
    * Construct a CellId object with a given binary representation that was
    * previously constructed by CellId::to_binary.
    */
-  CellId(const binary_type& binary_representation);
+  CellId(const binary_type & binary_representation);
 
   /**
    * Construct an invalid CellId.
@@ -128,19 +128,19 @@ public:
    */
   template <int dim, int spacedim>
   typename Triangulation<dim, spacedim>::cell_iterator
-  to_cell(const Triangulation<dim, spacedim>& tria) const;
+  to_cell(const Triangulation<dim, spacedim> & tria) const;
 
   /**
    * Compare two CellId objects for equality.
    */
   bool
-  operator==(const CellId& other) const;
+  operator==(const CellId & other) const;
 
   /**
    * Compare two CellIds for inequality.
    */
   bool
-  operator!=(const CellId& other) const;
+  operator!=(const CellId & other) const;
 
   /**
    * Compare two CellIds with regard to an ordering. The details of this
@@ -148,14 +148,14 @@ public:
    * total ordering among all cells.
    */
   bool
-  operator<(const CellId& other) const;
+  operator<(const CellId & other) const;
 
   /**
    * Boost serialization function
    */
   template <class Archive>
   void
-  serialize(Archive& ar, const unsigned int version);
+  serialize(Archive & ar, const unsigned int version);
 
 private:
   /**
@@ -186,17 +186,17 @@ private:
   std::array<std::uint8_t, 30> child_indices;
 #endif
 
-  friend std::istream&
-  operator>>(std::istream& is, CellId& cid);
-  friend std::ostream&
-  operator<<(std::ostream& os, const CellId& cid);
+  friend std::istream &
+  operator>>(std::istream & is, CellId & cid);
+  friend std::ostream &
+  operator<<(std::ostream & os, const CellId & cid);
 };
 
 /**
  * Write a CellId object into a stream.
  */
-inline std::ostream&
-operator<<(std::ostream& os, const CellId& cid)
+inline std::ostream &
+operator<<(std::ostream & os, const CellId & cid)
 {
   os << cid.coarse_cell_id << '_' << cid.n_child_indices << ':';
   for(unsigned int i = 0; i < cid.n_child_indices; ++i)
@@ -213,18 +213,18 @@ operator<<(std::ostream& os, const CellId& cid)
  */
 template <class Archive>
 void
-CellId::serialize(Archive& ar, const unsigned int /*version*/)
+CellId::serialize(Archive & ar, const unsigned int /*version*/)
 {
-  ar& coarse_cell_id;
-  ar& n_child_indices;
-  ar& child_indices;
+  ar & coarse_cell_id;
+  ar & n_child_indices;
+  ar & child_indices;
 }
 
 /**
  * Read a CellId object from a stream.
  */
-inline std::istream&
-operator>>(std::istream& is, CellId& cid)
+inline std::istream &
+operator>>(std::istream & is, CellId & cid)
 {
   unsigned int cellid;
   is >> cellid;
@@ -251,7 +251,7 @@ operator>>(std::istream& is, CellId& cid)
 }
 
 inline bool
-CellId::operator==(const CellId& other) const
+CellId::operator==(const CellId & other) const
 {
   if(this->coarse_cell_id != other.coarse_cell_id)
     return false;
@@ -266,13 +266,13 @@ CellId::operator==(const CellId& other) const
 }
 
 inline bool
-CellId::operator!=(const CellId& other) const
+CellId::operator!=(const CellId & other) const
 {
   return !(*this == other);
 }
 
 inline bool
-CellId::operator<(const CellId& other) const
+CellId::operator<(const CellId & other) const
 {
   if(this->coarse_cell_id != other.coarse_cell_id)
     return this->coarse_cell_id < other.coarse_cell_id;

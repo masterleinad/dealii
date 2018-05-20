@@ -75,8 +75,8 @@ namespace DoFTools
         * Return true if @p lhs is considered less than @p rhs.
         */
       bool
-      operator()(const Point<dim, Number>& lhs,
-                 const Point<dim, Number>& rhs) const
+      operator()(const Point<dim, Number> & lhs,
+                 const Point<dim, Number> & rhs) const
       {
         double downstream_size = 0;
         double weight          = 1.;
@@ -115,8 +115,8 @@ namespace DoFTools
     //   in the component_mask that corresponds to this shape function
     template <int dim, int spacedim>
     std::vector<unsigned char>
-    get_local_component_association(const FiniteElement<dim, spacedim>& fe,
-                                    const ComponentMask& component_mask)
+    get_local_component_association(const FiniteElement<dim, spacedim> & fe,
+                                    const ComponentMask & component_mask)
     {
       std::vector<unsigned char> local_component_association(
         fe.dofs_per_cell, (unsigned char) (-1));
@@ -186,12 +186,12 @@ namespace DoFTools
     //   in the component_mask that corresponds to this shape function
     template <typename DoFHandlerType>
     void
-    get_component_association(const DoFHandlerType&       dof,
-                              const ComponentMask&        component_mask,
-                              std::vector<unsigned char>& dofs_by_component)
+    get_component_association(const DoFHandlerType &       dof,
+                              const ComponentMask &        component_mask,
+                              std::vector<unsigned char> & dofs_by_component)
     {
       const dealii::hp::FECollection<DoFHandlerType::dimension,
-                                     DoFHandlerType::space_dimension>&
+                                     DoFHandlerType::space_dimension> &
         fe_collection
         = dof.get_fe_collection();
       Assert(fe_collection.n_components() < 256, ExcNotImplemented());
@@ -211,7 +211,7 @@ namespace DoFTools
       for(unsigned int f = 0; f < fe_collection.size(); ++f)
         {
           const FiniteElement<DoFHandlerType::dimension,
-                              DoFHandlerType::space_dimension>& fe
+                              DoFHandlerType::space_dimension> & fe
             = fe_collection[f];
           local_component_association[f]
             = get_local_component_association(fe, component_mask);
@@ -245,11 +245,11 @@ namespace DoFTools
     // dof.locally_owned_dofs().index_within_set(indices[i])
     template <typename DoFHandlerType>
     inline void
-    get_block_association(const DoFHandlerType&       dof,
-                          std::vector<unsigned char>& dofs_by_block)
+    get_block_association(const DoFHandlerType &       dof,
+                          std::vector<unsigned char> & dofs_by_block)
     {
       const dealii::hp::FECollection<DoFHandlerType::dimension,
-                                     DoFHandlerType::space_dimension>&
+                                     DoFHandlerType::space_dimension> &
         fe_collection
         = dof.get_fe_collection();
       Assert(fe_collection.n_components() < 256, ExcNotImplemented());
@@ -269,7 +269,7 @@ namespace DoFTools
       for(unsigned int f = 0; f < fe_collection.size(); ++f)
         {
           const FiniteElement<DoFHandlerType::dimension,
-                              DoFHandlerType::space_dimension>& fe
+                              DoFHandlerType::space_dimension> & fe
             = fe_collection[f];
           local_block_association[f].resize(fe.dofs_per_cell,
                                             (unsigned char) (-1));
@@ -305,14 +305,14 @@ namespace DoFTools
 
   template <typename DoFHandlerType, typename Number>
   void
-  distribute_cell_to_dof_vector(const DoFHandlerType& dof_handler,
-                                const Vector<Number>& cell_data,
-                                Vector<double>&       dof_data,
-                                const unsigned int    component)
+  distribute_cell_to_dof_vector(const DoFHandlerType & dof_handler,
+                                const Vector<Number> & cell_data,
+                                Vector<double> &       dof_data,
+                                const unsigned int     component)
   {
-    const unsigned int dim                   = DoFHandlerType::dimension;
-    const unsigned int spacedim              = DoFHandlerType::space_dimension;
-    const Triangulation<dim, spacedim>& tria = dof_handler.get_triangulation();
+    const unsigned int dim                    = DoFHandlerType::dimension;
+    const unsigned int spacedim               = DoFHandlerType::space_dimension;
+    const Triangulation<dim, spacedim> & tria = dof_handler.get_triangulation();
     (void) tria;
 
     AssertDimension(cell_data.size(), tria.n_active_cells());
@@ -389,11 +389,11 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  extract_dofs(const DoFHandler<dim, spacedim>& dof,
-               const ComponentMask&             component_mask,
-               std::vector<bool>&               selected_dofs)
+  extract_dofs(const DoFHandler<dim, spacedim> & dof,
+               const ComponentMask &             component_mask,
+               std::vector<bool> &               selected_dofs)
   {
-    const FiniteElement<dim, spacedim>& fe = dof.get_fe();
+    const FiniteElement<dim, spacedim> & fe = dof.get_fe();
     (void) fe;
 
     Assert(component_mask.represents_n_components(fe.n_components()),
@@ -435,11 +435,11 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  extract_dofs(const hp::DoFHandler<dim, spacedim>& dof,
-               const ComponentMask&                 component_mask,
-               std::vector<bool>&                   selected_dofs)
+  extract_dofs(const hp::DoFHandler<dim, spacedim> & dof,
+               const ComponentMask &                 component_mask,
+               std::vector<bool> &                   selected_dofs)
   {
-    const FiniteElement<dim, spacedim>& fe = dof.begin_active()->get_fe();
+    const FiniteElement<dim, spacedim> & fe = dof.begin_active()->get_fe();
     (void) fe;
 
     Assert(component_mask.represents_n_components(fe.n_components()),
@@ -478,9 +478,9 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  extract_dofs(const DoFHandler<dim, spacedim>& dof,
-               const BlockMask&                 block_mask,
-               std::vector<bool>&               selected_dofs)
+  extract_dofs(const DoFHandler<dim, spacedim> & dof,
+               const BlockMask &                 block_mask,
+               std::vector<bool> &               selected_dofs)
   {
     // simply forward to the function that works based on a component mask
     extract_dofs(dof, dof.get_fe().component_mask(block_mask), selected_dofs);
@@ -488,9 +488,9 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  extract_dofs(const hp::DoFHandler<dim, spacedim>& dof,
-               const BlockMask&                     block_mask,
-               std::vector<bool>&                   selected_dofs)
+  extract_dofs(const hp::DoFHandler<dim, spacedim> & dof,
+               const BlockMask &                     block_mask,
+               std::vector<bool> &                   selected_dofs)
   {
     // simply forward to the function that works based on a component mask
     extract_dofs(dof, dof.get_fe().component_mask(block_mask), selected_dofs);
@@ -498,13 +498,13 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_level_dofs(const unsigned int    level,
-                     const DoFHandlerType& dof,
-                     const ComponentMask&  component_mask,
-                     std::vector<bool>&    selected_dofs)
+  extract_level_dofs(const unsigned int     level,
+                     const DoFHandlerType & dof,
+                     const ComponentMask &  component_mask,
+                     std::vector<bool> &    selected_dofs)
   {
     const FiniteElement<DoFHandlerType::dimension,
-                        DoFHandlerType::space_dimension>& fe
+                        DoFHandlerType::space_dimension> & fe
       = dof.get_fe();
 
     Assert(component_mask.represents_n_components(n_components(dof)),
@@ -552,10 +552,10 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_level_dofs(const unsigned int    level,
-                     const DoFHandlerType& dof,
-                     const BlockMask&      block_mask,
-                     std::vector<bool>&    selected_dofs)
+  extract_level_dofs(const unsigned int     level,
+                     const DoFHandlerType & dof,
+                     const BlockMask &      block_mask,
+                     std::vector<bool> &    selected_dofs)
   {
     // simply defer to the other extract_level_dofs() function
     extract_level_dofs(
@@ -564,15 +564,15 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_boundary_dofs(const DoFHandlerType&               dof_handler,
-                        const ComponentMask&                component_mask,
-                        std::vector<bool>&                  selected_dofs,
-                        const std::set<types::boundary_id>& boundary_ids)
+  extract_boundary_dofs(const DoFHandlerType &               dof_handler,
+                        const ComponentMask &                component_mask,
+                        std::vector<bool> &                  selected_dofs,
+                        const std::set<types::boundary_id> & boundary_ids)
   {
     Assert(
       (dynamic_cast<const parallel::distributed::Triangulation<
          DoFHandlerType::dimension,
-         DoFHandlerType::space_dimension>*>(&dof_handler.get_triangulation())
+         DoFHandlerType::space_dimension> *>(&dof_handler.get_triangulation())
        == nullptr),
       ExcMessage(
         "This function can not be used with distributed triangulations."
@@ -591,10 +591,10 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_boundary_dofs(const DoFHandlerType&               dof_handler,
-                        const ComponentMask&                component_mask,
-                        IndexSet&                           selected_dofs,
-                        const std::set<types::boundary_id>& boundary_ids)
+  extract_boundary_dofs(const DoFHandlerType &               dof_handler,
+                        const ComponentMask &                component_mask,
+                        IndexSet &                           selected_dofs,
+                        const std::set<types::boundary_id> & boundary_ids)
   {
     Assert(component_mask.represents_n_components(n_components(dof_handler)),
            ExcMessage("Component mask has invalid size."));
@@ -644,7 +644,7 @@ namespace DoFTools
                    != boundary_ids.end()))
               {
                 const FiniteElement<DoFHandlerType::dimension,
-                                    DoFHandlerType::space_dimension>& fe
+                                    DoFHandlerType::space_dimension> & fe
                   = cell->get_fe();
 
                 const unsigned int dofs_per_face = fe.dofs_per_face;
@@ -702,10 +702,10 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   extract_dofs_with_support_on_boundary(
-    const DoFHandlerType&               dof_handler,
-    const ComponentMask&                component_mask,
-    std::vector<bool>&                  selected_dofs,
-    const std::set<types::boundary_id>& boundary_ids)
+    const DoFHandlerType &               dof_handler,
+    const ComponentMask &                component_mask,
+    std::vector<bool> &                  selected_dofs,
+    const std::set<types::boundary_id> & boundary_ids)
   {
     Assert(component_mask.represents_n_components(n_components(dof_handler)),
            ExcMessage("This component mask has the wrong size."));
@@ -747,7 +747,7 @@ namespace DoFTools
                  != boundary_ids.end()))
             {
               const FiniteElement<DoFHandlerType::dimension,
-                                  DoFHandlerType::space_dimension>& fe
+                                  DoFHandlerType::space_dimension> & fe
                 = cell->get_fe();
 
               const unsigned int dofs_per_cell = fe.dofs_per_cell;
@@ -788,15 +788,16 @@ namespace DoFTools
   template <typename DoFHandlerType>
   IndexSet
   extract_dofs_with_support_contained_within(
-    const DoFHandlerType& dof_handler,
+    const DoFHandlerType & dof_handler,
     const std::function<
-      bool(const typename DoFHandlerType::active_cell_iterator&)>& predicate,
-    const ConstraintMatrix&                                        cm)
+      bool(const typename DoFHandlerType::active_cell_iterator &)> & predicate,
+    const ConstraintMatrix &                                         cm)
   {
     const std::function<bool(
-      const typename DoFHandlerType::active_cell_iterator&)>
+      const typename DoFHandlerType::active_cell_iterator &)>
       predicate_local
-      = [=](const typename DoFHandlerType::active_cell_iterator& cell) -> bool {
+      = [=](
+          const typename DoFHandlerType::active_cell_iterator & cell) -> bool {
       return cell->is_locally_owned() && predicate(cell);
     };
 
@@ -862,7 +863,7 @@ namespace DoFTools
           // if halo DoF is constrained, add all DoFs to which it's constrained
           // because after resolving constraints, the support of the DoFs that
           // constrain the current DoF will extend to the halo cells.
-          if(const std::vector<std::pair<types::global_dof_index, double>>*
+          if(const std::vector<std::pair<types::global_dof_index, double>> *
                line_ptr
              = cm.get_constraint_entries(*it))
             {
@@ -899,7 +900,7 @@ namespace DoFTools
       template <int spacedim>
       IndexSet
       extract_hanging_node_dofs(
-        const dealii::DoFHandler<1, spacedim>& dof_handler)
+        const dealii::DoFHandler<1, spacedim> & dof_handler)
       {
         // there are no hanging nodes in 1d
         return IndexSet(dof_handler.n_dofs());
@@ -908,13 +909,13 @@ namespace DoFTools
       template <int spacedim>
       IndexSet
       extract_hanging_node_dofs(
-        const dealii::DoFHandler<2, spacedim>& dof_handler)
+        const dealii::DoFHandler<2, spacedim> & dof_handler)
       {
         const unsigned int dim = 2;
 
         IndexSet selected_dofs(dof_handler.n_dofs());
 
-        const FiniteElement<dim, spacedim>& fe = dof_handler.get_fe();
+        const FiniteElement<dim, spacedim> & fe = dof_handler.get_fe();
 
         // this function is similar to the make_sparsity_pattern function,
         // see there for more information
@@ -955,14 +956,14 @@ namespace DoFTools
       template <int spacedim>
       IndexSet
       extract_hanging_node_dofs(
-        const dealii::DoFHandler<3, spacedim>& dof_handler)
+        const dealii::DoFHandler<3, spacedim> & dof_handler)
       {
         const unsigned int dim = 3;
 
         IndexSet selected_dofs(dof_handler.n_dofs());
         IndexSet unconstrained_dofs(dof_handler.n_dofs());
 
-        const FiniteElement<dim, spacedim>& fe = dof_handler.get_fe();
+        const FiniteElement<dim, spacedim> & fe = dof_handler.get_fe();
 
         for(auto cell : dof_handler.active_cell_iterators())
           if(!cell->is_artificial())
@@ -1001,8 +1002,8 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  extract_hanging_node_dofs(const DoFHandler<dim, spacedim>& dof_handler,
-                            std::vector<bool>&               selected_dofs)
+  extract_hanging_node_dofs(const DoFHandler<dim, spacedim> & dof_handler,
+                            std::vector<bool> &               selected_dofs)
   {
     const IndexSet selected_dofs_as_index_set
       = extract_hanging_node_dofs(dof_handler);
@@ -1010,22 +1011,22 @@ namespace DoFTools
            ExcDimensionMismatch(selected_dofs.size(), dof_handler.n_dofs()));
     // preset all values by false
     std::fill(selected_dofs.begin(), selected_dofs.end(), false);
-    for(const auto& index : selected_dofs_as_index_set)
+    for(const auto & index : selected_dofs_as_index_set)
       selected_dofs[index] = true;
   }
 
   template <int dim, int spacedim>
   IndexSet
-  extract_hanging_node_dofs(const DoFHandler<dim, spacedim>& dof_handler)
+  extract_hanging_node_dofs(const DoFHandler<dim, spacedim> & dof_handler)
   {
     return internal::extract_hanging_node_dofs(dof_handler);
   }
 
   template <typename DoFHandlerType>
   void
-  extract_subdomain_dofs(const DoFHandlerType&     dof_handler,
+  extract_subdomain_dofs(const DoFHandlerType &    dof_handler,
                          const types::subdomain_id subdomain_id,
-                         std::vector<bool>&        selected_dofs)
+                         std::vector<bool> &       selected_dofs)
   {
     Assert(selected_dofs.size() == dof_handler.n_dofs(),
            ExcDimensionMismatch(selected_dofs.size(), dof_handler.n_dofs()));
@@ -1054,8 +1055,8 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_locally_owned_dofs(const DoFHandlerType& dof_handler,
-                             IndexSet&             dof_set)
+  extract_locally_owned_dofs(const DoFHandlerType & dof_handler,
+                             IndexSet &             dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_dofs();
@@ -1064,8 +1065,8 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_locally_active_dofs(const DoFHandlerType& dof_handler,
-                              IndexSet&             dof_set)
+  extract_locally_active_dofs(const DoFHandlerType & dof_handler,
+                              IndexSet &             dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_dofs();
@@ -1100,8 +1101,8 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_locally_relevant_dofs(const DoFHandlerType& dof_handler,
-                                IndexSet&             dof_set)
+  extract_locally_relevant_dofs(const DoFHandlerType & dof_handler,
+                                IndexSet &             dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_dofs();
@@ -1140,9 +1141,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_locally_relevant_level_dofs(const DoFHandlerType& dof_handler,
-                                      const unsigned int    level,
-                                      IndexSet&             dof_set)
+  extract_locally_relevant_level_dofs(const DoFHandlerType & dof_handler,
+                                      const unsigned int     level,
+                                      IndexSet &             dof_set)
   {
     // collect all the locally owned dofs
     dof_set = dof_handler.locally_owned_mg_dofs(level);
@@ -1187,9 +1188,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  extract_constant_modes(const DoFHandlerType&           dof_handler,
-                         const ComponentMask&            component_mask,
-                         std::vector<std::vector<bool>>& constant_modes)
+  extract_constant_modes(const DoFHandlerType &           dof_handler,
+                         const ComponentMask &            component_mask,
+                         std::vector<std::vector<bool>> & constant_modes)
   {
     const unsigned int n_components = dof_handler.get_fe(0).n_components();
     Assert(component_mask.represents_n_components(n_components),
@@ -1206,7 +1207,7 @@ namespace DoFTools
           += std::count(dofs_by_component.begin(), dofs_by_component.end(), i);
 
     // Find local numbering within the selected components
-    const IndexSet& locally_owned_dofs = dof_handler.locally_owned_dofs();
+    const IndexSet & locally_owned_dofs = dof_handler.locally_owned_dofs();
     std::vector<unsigned int> component_numbering(
       locally_owned_dofs.n_elements(), numbers::invalid_unsigned_int);
     for(unsigned int i = 0, count = 0; i < locally_owned_dofs.n_elements(); ++i)
@@ -1219,7 +1220,7 @@ namespace DoFTools
     // TODO: We might be able to extend this also for elements which do not
     // have the same constant modes, but that is messy...
     const dealii::hp::FECollection<DoFHandlerType::dimension,
-                                   DoFHandlerType::space_dimension>&
+                                   DoFHandlerType::space_dimension> &
       fe_collection
       = dof_handler.get_fe_collection();
     std::vector<Table<2, bool>> element_constant_modes;
@@ -1279,8 +1280,8 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  get_active_fe_indices(const DoFHandlerType&      dof_handler,
-                        std::vector<unsigned int>& active_fe_indices)
+  get_active_fe_indices(const DoFHandlerType &      dof_handler,
+                        std::vector<unsigned int> & active_fe_indices)
   {
     AssertDimension(active_fe_indices.size(),
                     dof_handler.get_triangulation().n_active_cells());
@@ -1294,7 +1295,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   std::vector<IndexSet>
-  locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
+  locally_owned_dofs_per_subdomain(const DoFHandlerType & dof_handler)
   {
     Assert(dof_handler.n_dofs() > 0,
            ExcMessage("The given DoFHandler has no DoFs."));
@@ -1304,7 +1305,7 @@ namespace DoFTools
     Assert(
       (dynamic_cast<const parallel::distributed::Triangulation<
          DoFHandlerType::dimension,
-         DoFHandlerType::space_dimension>*>(&dof_handler.get_triangulation())
+         DoFHandlerType::space_dimension> *>(&dof_handler.get_triangulation())
        == nullptr),
       ExcMessage("For parallel::distributed::Triangulation objects and "
                  "associated DoF handler objects, asking for any information "
@@ -1331,7 +1332,7 @@ namespace DoFTools
     const unsigned int n_subdomains
       = (dynamic_cast<
              const parallel::Triangulation<DoFHandlerType::dimension,
-                                           DoFHandlerType::space_dimension>*>(
+                                           DoFHandlerType::space_dimension> *>(
            &dof_handler.get_triangulation())
              == nullptr ?
            [&dof_handler]() {
@@ -1342,9 +1343,9 @@ namespace DoFTools
              return max_subdomain_id + 1;
            }() :
            Utilities::MPI::n_mpi_processes(
-             dynamic_cast<
-               const parallel::Triangulation<DoFHandlerType::dimension,
-                                             DoFHandlerType::space_dimension>*>(
+             dynamic_cast<const parallel::Triangulation<
+               DoFHandlerType::dimension,
+               DoFHandlerType::space_dimension> *>(
                &dof_handler.get_triangulation())
                ->get_communicator()));
     Assert(n_subdomains > *std::max_element(subdomain_association.begin(),
@@ -1393,14 +1394,14 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   std::vector<IndexSet>
-  locally_relevant_dofs_per_subdomain(const DoFHandlerType& dof_handler)
+  locally_relevant_dofs_per_subdomain(const DoFHandlerType & dof_handler)
   {
     // If the Triangulation is distributed, the only thing we can usefully
     // ask is for its locally owned subdomain
     Assert(
       (dynamic_cast<const parallel::distributed::Triangulation<
          DoFHandlerType::dimension,
-         DoFHandlerType::space_dimension>*>(&dof_handler.get_triangulation())
+         DoFHandlerType::space_dimension> *>(&dof_handler.get_triangulation())
        == nullptr),
       ExcMessage("For parallel::distributed::Triangulation objects and "
                  "associated DoF handler objects, asking for any information "
@@ -1425,7 +1426,7 @@ namespace DoFTools
       {
         // Extract the layer of cells around this subdomain
         std::function<bool(
-          const typename DoFHandlerType::active_cell_iterator&)>
+          const typename DoFHandlerType::active_cell_iterator &)>
           predicate = IteratorFilters::SubdomainEqualTo(subdomain_id);
         const std::vector<typename DoFHandlerType::active_cell_iterator>
           active_halo_layer
@@ -1441,7 +1442,7 @@ namespace DoFTools
             it_cell != active_halo_layer.end();
             ++it_cell)
           {
-            const typename DoFHandlerType::active_cell_iterator& cell
+            const typename DoFHandlerType::active_cell_iterator & cell
               = *it_cell;
             Assert(
               cell->subdomain_id() != subdomain_id,
@@ -1471,15 +1472,15 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   get_subdomain_association(
-    const DoFHandlerType&             dof_handler,
-    std::vector<types::subdomain_id>& subdomain_association)
+    const DoFHandlerType &             dof_handler,
+    std::vector<types::subdomain_id> & subdomain_association)
   {
     // if the Triangulation is distributed, the only thing we can usefully
     // ask is for its locally owned subdomain
     Assert(
       (dynamic_cast<const parallel::distributed::Triangulation<
          DoFHandlerType::dimension,
-         DoFHandlerType::space_dimension>*>(&dof_handler.get_triangulation())
+         DoFHandlerType::space_dimension> *>(&dof_handler.get_triangulation())
        == nullptr),
       ExcMessage(
         "For parallel::distributed::Triangulation objects and "
@@ -1503,11 +1504,11 @@ namespace DoFTools
     std::vector<types::subdomain_id> cell_owners(
       dof_handler.get_triangulation().n_active_cells());
     if(const parallel::shared::Triangulation<DoFHandlerType::dimension,
-                                             DoFHandlerType::space_dimension>*
+                                             DoFHandlerType::space_dimension> *
          tr
        = (dynamic_cast<const parallel::shared::Triangulation<
             DoFHandlerType::dimension,
-            DoFHandlerType::space_dimension>*>(
+            DoFHandlerType::space_dimension> *>(
          &dof_handler.get_triangulation())))
       {
         cell_owners = tr->get_true_subdomain_ids_of_cells();
@@ -1569,7 +1570,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   unsigned int
-  count_dofs_with_subdomain_association(const DoFHandlerType&     dof_handler,
+  count_dofs_with_subdomain_association(const DoFHandlerType &    dof_handler,
                                         const types::subdomain_id subdomain)
   {
     std::vector<types::subdomain_id> subdomain_association(
@@ -1582,7 +1583,7 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   IndexSet
-  dof_indices_with_subdomain_association(const DoFHandlerType&     dof_handler,
+  dof_indices_with_subdomain_association(const DoFHandlerType &    dof_handler,
                                          const types::subdomain_id subdomain)
   {
     // If we have a distributed::Triangulation only allow locally_owned
@@ -1638,9 +1639,9 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   count_dofs_with_subdomain_association(
-    const DoFHandlerType&      dof_handler,
-    const types::subdomain_id  subdomain,
-    std::vector<unsigned int>& n_dofs_on_subdomain)
+    const DoFHandlerType &      dof_handler,
+    const types::subdomain_id   subdomain,
+    std::vector<unsigned int> & n_dofs_on_subdomain)
   {
     Assert(n_dofs_on_subdomain.size() == dof_handler.get_fe(0).n_components(),
            ExcDimensionMismatch(n_dofs_on_subdomain.size(),
@@ -1693,16 +1694,17 @@ namespace DoFTools
     // index
     template <int dim, int spacedim>
     void
-    resolve_components(const FiniteElement<dim, spacedim>&   fe,
-                       const std::vector<unsigned char>&     dofs_by_component,
-                       const std::vector<unsigned int>&      target_component,
-                       const bool                            only_once,
-                       std::vector<types::global_dof_index>& dofs_per_component,
-                       unsigned int&                         component)
+    resolve_components(
+      const FiniteElement<dim, spacedim> &   fe,
+      const std::vector<unsigned char> &     dofs_by_component,
+      const std::vector<unsigned int> &      target_component,
+      const bool                             only_once,
+      std::vector<types::global_dof_index> & dofs_per_component,
+      unsigned int &                         component)
     {
       for(unsigned int b = 0; b < fe.n_base_elements(); ++b)
         {
-          const FiniteElement<dim, spacedim>& base = fe.base_element(b);
+          const FiniteElement<dim, spacedim> & base = fe.base_element(b);
           // Dimension of base element
           unsigned int d = base.n_components();
 
@@ -1737,12 +1739,13 @@ namespace DoFTools
 
     template <int dim, int spacedim>
     void
-    resolve_components(const hp::FECollection<dim, spacedim>& fe_collection,
-                       const std::vector<unsigned char>&      dofs_by_component,
-                       const std::vector<unsigned int>&       target_component,
-                       const bool                             only_once,
-                       std::vector<types::global_dof_index>& dofs_per_component,
-                       unsigned int&                         component)
+    resolve_components(
+      const hp::FECollection<dim, spacedim> & fe_collection,
+      const std::vector<unsigned char> &      dofs_by_component,
+      const std::vector<unsigned int> &       target_component,
+      const bool                              only_once,
+      std::vector<types::global_dof_index> &  dofs_per_component,
+      unsigned int &                          component)
     {
       // assert that all elements in the collection have the same structure
       // (base elements and multiplicity, components per base element) and
@@ -1784,7 +1787,7 @@ namespace DoFTools
        */
       template <int dim, int spacedim>
       bool
-      all_elements_are_primitive(const FiniteElement<dim, spacedim>& fe)
+      all_elements_are_primitive(const FiniteElement<dim, spacedim> & fe)
       {
         return fe.is_primitive();
       }
@@ -1795,7 +1798,7 @@ namespace DoFTools
       template <int dim, int spacedim>
       bool
       all_elements_are_primitive(
-        const dealii::hp::FECollection<dim, spacedim>& fe_collection)
+        const dealii::hp::FECollection<dim, spacedim> & fe_collection)
       {
         for(unsigned int i = 0; i < fe_collection.size(); ++i)
           if(fe_collection[i].is_primitive() == false)
@@ -1809,10 +1812,10 @@ namespace DoFTools
   template <typename DoFHandlerType>
   void
   count_dofs_per_component(
-    const DoFHandlerType&                 dof_handler,
-    std::vector<types::global_dof_index>& dofs_per_component,
-    bool                                  only_once,
-    std::vector<unsigned int>             target_component)
+    const DoFHandlerType &                 dof_handler,
+    std::vector<types::global_dof_index> & dofs_per_component,
+    bool                                   only_once,
+    std::vector<unsigned int>              target_component)
   {
     const unsigned int n_components = dof_handler.get_fe(0).n_components();
 
@@ -1881,8 +1884,8 @@ namespace DoFTools
     const unsigned int dim      = DoFHandlerType::dimension;
     const unsigned int spacedim = DoFHandlerType::space_dimension;
 
-    if(const parallel::Triangulation<dim, spacedim>* tria
-       = (dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
+    if(const parallel::Triangulation<dim, spacedim> * tria
+       = (dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
          &dof_handler.get_triangulation())))
       {
         std::vector<types::global_dof_index> local_dof_count
@@ -1901,14 +1904,14 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  count_dofs_per_block(const DoFHandlerType&                 dof_handler,
-                       std::vector<types::global_dof_index>& dofs_per_block,
-                       const std::vector<unsigned int>&      target_block_)
+  count_dofs_per_block(const DoFHandlerType &                 dof_handler,
+                       std::vector<types::global_dof_index> & dofs_per_block,
+                       const std::vector<unsigned int> &      target_block_)
   {
     std::vector<unsigned int> target_block = target_block_;
 
     const dealii::hp::FECollection<DoFHandlerType::dimension,
-                                   DoFHandlerType::space_dimension>&
+                                   DoFHandlerType::space_dimension> &
       fe_collection
       = dof_handler.get_fe_collection();
     Assert(fe_collection.size() < 256, ExcNotImplemented());
@@ -1916,7 +1919,7 @@ namespace DoFTools
     for(unsigned int this_fe = 0; this_fe < fe_collection.size(); ++this_fe)
       {
         const FiniteElement<DoFHandlerType::dimension,
-                            DoFHandlerType::space_dimension>& fe
+                            DoFHandlerType::space_dimension> & fe
           = fe_collection[this_fe];
         std::fill(dofs_per_block.begin(),
                   dofs_per_block.end(),
@@ -1965,10 +1968,10 @@ namespace DoFTools
         // if we are working on a parallel mesh, we now need to collect
         // this information from all processors
         if(const parallel::Triangulation<DoFHandlerType::dimension,
-                                         DoFHandlerType::space_dimension>* tria
+                                         DoFHandlerType::space_dimension> * tria
            = (dynamic_cast<
               const parallel::Triangulation<DoFHandlerType::dimension,
-                                            DoFHandlerType::space_dimension>*>(
+                                            DoFHandlerType::space_dimension> *>(
              &dof_handler.get_triangulation())))
           {
             std::vector<types::global_dof_index> local_dof_count
@@ -1987,8 +1990,8 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  map_dof_to_boundary_indices(const DoFHandlerType&                 dof_handler,
-                              std::vector<types::global_dof_index>& mapping)
+  map_dof_to_boundary_indices(const DoFHandlerType & dof_handler,
+                              std::vector<types::global_dof_index> & mapping)
   {
     mapping.clear();
     mapping.insert(
@@ -2027,9 +2030,9 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  map_dof_to_boundary_indices(const DoFHandlerType&               dof_handler,
-                              const std::set<types::boundary_id>& boundary_ids,
-                              std::vector<types::global_dof_index>& mapping)
+  map_dof_to_boundary_indices(const DoFHandlerType &               dof_handler,
+                              const std::set<types::boundary_id> & boundary_ids,
+                              std::vector<types::global_dof_index> & mapping)
   {
     Assert(boundary_ids.find(numbers::internal_face_boundary_id)
              == boundary_ids.end(),
@@ -2078,15 +2081,15 @@ namespace DoFTools
       void
       map_dofs_to_support_points(
         const hp::MappingCollection<DoFHandlerType::dimension,
-                                    DoFHandlerType::space_dimension>& mapping,
-        const DoFHandlerType&                             dof_handler,
+                                    DoFHandlerType::space_dimension> & mapping,
+        const DoFHandlerType &                             dof_handler,
         std::map<types::global_dof_index,
-                 Point<DoFHandlerType::space_dimension>>& support_points)
+                 Point<DoFHandlerType::space_dimension>> & support_points)
       {
         const unsigned int dim      = DoFHandlerType::dimension;
         const unsigned int spacedim = DoFHandlerType::space_dimension;
 
-        const hp::FECollection<dim, spacedim>& fe_collection
+        const hp::FECollection<dim, spacedim> & fe_collection
           = dof_handler.get_fe_collection();
         hp::QCollection<dim> q_coll_dummy;
 
@@ -2119,13 +2122,13 @@ namespace DoFTools
           if(cell->is_artificial() == false)
             {
               hp_fe_values.reinit(cell);
-              const FEValues<dim, spacedim>& fe_values
+              const FEValues<dim, spacedim> & fe_values
                 = hp_fe_values.get_present_fe_values();
 
               local_dof_indices.resize(cell->get_fe().dofs_per_cell);
               cell->get_dof_indices(local_dof_indices);
 
-              const std::vector<Point<spacedim>>& points
+              const std::vector<Point<spacedim>> & points
                 = fe_values.get_quadrature_points();
               for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
                 // insert the values into the map
@@ -2137,9 +2140,9 @@ namespace DoFTools
       void
       map_dofs_to_support_points(
         const hp::MappingCollection<DoFHandlerType::dimension,
-                                    DoFHandlerType::space_dimension>& mapping,
-        const DoFHandlerType&                                dof_handler,
-        std::vector<Point<DoFHandlerType::space_dimension>>& support_points)
+                                    DoFHandlerType::space_dimension> & mapping,
+        const DoFHandlerType &                                dof_handler,
+        std::vector<Point<DoFHandlerType::space_dimension>> & support_points)
       {
         // get the data in the form of the map as above
         std::map<types::global_dof_index,
@@ -2161,18 +2164,18 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  map_dofs_to_support_points(const Mapping<dim, spacedim>&    mapping,
-                             const DoFHandler<dim, spacedim>& dof_handler,
-                             std::vector<Point<spacedim>>&    support_points)
+  map_dofs_to_support_points(const Mapping<dim, spacedim> &    mapping,
+                             const DoFHandler<dim, spacedim> & dof_handler,
+                             std::vector<Point<spacedim>> &    support_points)
   {
     AssertDimension(support_points.size(), dof_handler.n_dofs());
-    Assert(
-      (dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
-         &dof_handler.get_triangulation())
-       == nullptr),
-      ExcMessage(
-        "This function can not be used with distributed triangulations."
-        "See the documentation for more information."));
+    Assert((dynamic_cast<
+              const parallel::distributed::Triangulation<dim, spacedim> *>(
+              &dof_handler.get_triangulation())
+            == nullptr),
+           ExcMessage(
+             "This function can not be used with distributed triangulations."
+             "See the documentation for more information."));
 
     // Let the internal function do all the work, just make sure that it
     // gets a MappingCollection
@@ -2185,18 +2188,18 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   map_dofs_to_support_points(
-    const hp::MappingCollection<dim, spacedim>& mapping,
-    const hp::DoFHandler<dim, spacedim>&        dof_handler,
-    std::vector<Point<spacedim>>&               support_points)
+    const hp::MappingCollection<dim, spacedim> & mapping,
+    const hp::DoFHandler<dim, spacedim> &        dof_handler,
+    std::vector<Point<spacedim>> &               support_points)
   {
     AssertDimension(support_points.size(), dof_handler.n_dofs());
-    Assert(
-      (dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
-         &dof_handler.get_triangulation())
-       == nullptr),
-      ExcMessage(
-        "This function can not be used with distributed triangulations."
-        "See the documentation for more information."));
+    Assert((dynamic_cast<
+              const parallel::distributed::Triangulation<dim, spacedim> *>(
+              &dof_handler.get_triangulation())
+            == nullptr),
+           ExcMessage(
+             "This function can not be used with distributed triangulations."
+             "See the documentation for more information."));
 
     // Let the internal function do all the work, just make sure that it
     // gets a MappingCollection
@@ -2206,9 +2209,9 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   map_dofs_to_support_points(
-    const Mapping<dim, spacedim>&                       mapping,
-    const DoFHandler<dim, spacedim>&                    dof_handler,
-    std::map<types::global_dof_index, Point<spacedim>>& support_points)
+    const Mapping<dim, spacedim> &                       mapping,
+    const DoFHandler<dim, spacedim> &                    dof_handler,
+    std::map<types::global_dof_index, Point<spacedim>> & support_points)
   {
     support_points.clear();
 
@@ -2223,9 +2226,9 @@ namespace DoFTools
   template <int dim, int spacedim>
   void
   map_dofs_to_support_points(
-    const hp::MappingCollection<dim, spacedim>&         mapping,
-    const hp::DoFHandler<dim, spacedim>&                dof_handler,
-    std::map<types::global_dof_index, Point<spacedim>>& support_points)
+    const hp::MappingCollection<dim, spacedim> &         mapping,
+    const hp::DoFHandler<dim, spacedim> &                dof_handler,
+    std::map<types::global_dof_index, Point<spacedim>> & support_points)
   {
     support_points.clear();
 
@@ -2237,8 +2240,8 @@ namespace DoFTools
   template <int spacedim>
   void
   write_gnuplot_dof_support_point_info(
-    std::ostream&                                             out,
-    const std::map<types::global_dof_index, Point<spacedim>>& support_points)
+    std::ostream &                                             out,
+    const std::map<types::global_dof_index, Point<spacedim>> & support_points)
   {
     AssertThrow(out, ExcIO());
 
@@ -2256,7 +2259,7 @@ namespace DoFTools
         it != support_points.end();
         ++it)
       {
-        std::vector<types::global_dof_index>& v = point_map[it->second];
+        std::vector<types::global_dof_index> & v = point_map[it->second];
         v.push_back(it->first);
       }
 
@@ -2266,7 +2269,7 @@ namespace DoFTools
         ++it)
       {
         out << it->first << " \"";
-        const std::vector<types::global_dof_index>& v = it->second;
+        const std::vector<types::global_dof_index> & v = it->second;
         for(unsigned int i = 0; i < v.size(); ++i)
           {
             if(i > 0)
@@ -2282,12 +2285,12 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  convert_couplings_to_blocks(const DoFHandler<dim, spacedim>& dof_handler,
-                              const Table<2, Coupling>&        table,
-                              std::vector<Table<2, Coupling>>& tables_by_block)
+  convert_couplings_to_blocks(const DoFHandler<dim, spacedim> & dof_handler,
+                              const Table<2, Coupling> &        table,
+                              std::vector<Table<2, Coupling>> & tables_by_block)
   {
-    const FiniteElement<dim, spacedim>& fe = dof_handler.get_fe();
-    const unsigned int                  nb = fe.n_blocks();
+    const FiniteElement<dim, spacedim> & fe = dof_handler.get_fe();
+    const unsigned int                   nb = fe.n_blocks();
 
     tables_by_block.resize(1);
     tables_by_block[0].reinit(nb, nb);
@@ -2306,17 +2309,17 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  convert_couplings_to_blocks(const hp::DoFHandler<dim, spacedim>& dof_handler,
-                              const Table<2, Coupling>&            table,
-                              std::vector<Table<2, Coupling>>& tables_by_block)
+  convert_couplings_to_blocks(const hp::DoFHandler<dim, spacedim> & dof_handler,
+                              const Table<2, Coupling> &            table,
+                              std::vector<Table<2, Coupling>> & tables_by_block)
   {
-    const hp::FECollection<dim>& fe_collection
+    const hp::FECollection<dim> & fe_collection
       = dof_handler.get_fe_collection();
     tables_by_block.resize(fe_collection.size());
 
     for(unsigned int f = 0; f < fe_collection.size(); ++f)
       {
-        const FiniteElement<dim, spacedim>& fe = fe_collection[f];
+        const FiniteElement<dim, spacedim> & fe = fe_collection[f];
 
         const unsigned int nb = fe.n_blocks();
         tables_by_block[f].reinit(nb, nb);
@@ -2335,11 +2338,11 @@ namespace DoFTools
 
   template <int dim, int spacedim>
   void
-  make_cell_patches(SparsityPattern&                 block_list,
-                    const DoFHandler<dim, spacedim>& dof_handler,
-                    const unsigned int               level,
-                    const std::vector<bool>&         selected_dofs,
-                    const types::global_dof_index    offset)
+  make_cell_patches(SparsityPattern &                 block_list,
+                    const DoFHandler<dim, spacedim> & dof_handler,
+                    const unsigned int                level,
+                    const std::vector<bool> &         selected_dofs,
+                    const types::global_dof_index     offset)
   {
     typename DoFHandler<dim, spacedim>::level_cell_iterator cell;
     typename DoFHandler<dim, spacedim>::level_cell_iterator endc
@@ -2379,12 +2382,12 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  make_single_patch(SparsityPattern&      block_list,
-                    const DoFHandlerType& dof_handler,
-                    const unsigned int    level,
-                    const bool            interior_only)
+  make_single_patch(SparsityPattern &      block_list,
+                    const DoFHandlerType & dof_handler,
+                    const unsigned int     level,
+                    const bool             interior_only)
   {
-    const FiniteElement<DoFHandlerType::dimension>& fe = dof_handler.get_fe();
+    const FiniteElement<DoFHandlerType::dimension> & fe = dof_handler.get_fe();
     block_list.reinit(1, dof_handler.n_dofs(level), dof_handler.n_dofs(level));
     typename DoFHandlerType::level_cell_iterator cell;
     typename DoFHandlerType::level_cell_iterator endc = dof_handler.end(level);
@@ -2425,11 +2428,11 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   void
-  make_child_patches(SparsityPattern&      block_list,
-                     const DoFHandlerType& dof_handler,
-                     const unsigned int    level,
-                     const bool            interior_dofs_only,
-                     const bool            boundary_dofs)
+  make_child_patches(SparsityPattern &      block_list,
+                     const DoFHandlerType & dof_handler,
+                     const unsigned int     level,
+                     const bool             interior_dofs_only,
+                     const bool             boundary_dofs)
   {
     Assert(level > 0 && level < dof_handler.get_triangulation().n_levels(),
            ExcIndexRange(level, 1, dof_handler.get_triangulation().n_levels()));
@@ -2453,7 +2456,7 @@ namespace DoFTools
               = pcell->child(child);
 
             // For hp, only this line here would have to be replaced.
-            const FiniteElement<DoFHandlerType::dimension>& fe
+            const FiniteElement<DoFHandlerType::dimension> & fe
               = dof_handler.get_fe();
             const unsigned int n_dofs = fe.dofs_per_cell;
             indices.resize(n_dofs);
@@ -2497,14 +2500,14 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   std::vector<unsigned int>
-  make_vertex_patches(SparsityPattern&      block_list,
-                      const DoFHandlerType& dof_handler,
-                      const unsigned int    level,
-                      const bool            interior_only,
-                      const bool            boundary_patches,
-                      const bool            level_boundary_patches,
-                      const bool            single_cell_patches,
-                      const bool            invert_vertex_mapping)
+  make_vertex_patches(SparsityPattern &      block_list,
+                      const DoFHandlerType & dof_handler,
+                      const unsigned int     level,
+                      const bool             interior_only,
+                      const bool             boundary_patches,
+                      const bool             level_boundary_patches,
+                      const bool             single_cell_patches,
+                      const bool             invert_vertex_mapping)
   {
     const unsigned int n_blocks     = dof_handler.get_fe().n_blocks();
     BlockMask exclude_boundary_dofs = BlockMask(n_blocks, interior_only);
@@ -2520,14 +2523,14 @@ namespace DoFTools
 
   template <typename DoFHandlerType>
   std::vector<unsigned int>
-  make_vertex_patches(SparsityPattern&      block_list,
-                      const DoFHandlerType& dof_handler,
-                      const unsigned int    level,
-                      const BlockMask&      exclude_boundary_dofs,
-                      const bool            boundary_patches,
-                      const bool            level_boundary_patches,
-                      const bool            single_cell_patches,
-                      const bool            invert_vertex_mapping)
+  make_vertex_patches(SparsityPattern &      block_list,
+                      const DoFHandlerType & dof_handler,
+                      const unsigned int     level,
+                      const BlockMask &      exclude_boundary_dofs,
+                      const bool             boundary_patches,
+                      const bool             level_boundary_patches,
+                      const bool             single_cell_patches,
+                      const bool             invert_vertex_mapping)
   {
     typename DoFHandlerType::level_cell_iterator cell;
     typename DoFHandlerType::level_cell_iterator endc = dof_handler.end(level);
@@ -2603,7 +2606,7 @@ namespace DoFTools
 
     for(cell = dof_handler.begin(level); cell != endc; ++cell)
       {
-        const FiniteElement<DoFHandlerType::dimension>& fe = cell->get_fe();
+        const FiniteElement<DoFHandlerType::dimension> & fe = cell->get_fe();
         indices.resize(fe.dofs_per_cell);
         cell->get_mg_dof_indices(indices);
 
@@ -2674,7 +2677,7 @@ namespace DoFTools
   template <typename DoFHandlerType>
   unsigned int
   count_dofs_on_patch(
-    const std::vector<typename DoFHandlerType::active_cell_iterator>& patch)
+    const std::vector<typename DoFHandlerType::active_cell_iterator> & patch)
   {
     std::set<types::global_dof_index>    dofs_on_patch;
     std::vector<types::global_dof_index> local_dof_indices;
@@ -2701,7 +2704,7 @@ namespace DoFTools
   template <typename DoFHandlerType>
   std::vector<types::global_dof_index>
   get_dofs_on_patch(
-    const std::vector<typename DoFHandlerType::active_cell_iterator>& patch)
+    const std::vector<typename DoFHandlerType::active_cell_iterator> & patch)
   {
     std::set<types::global_dof_index>    dofs_on_patch;
     std::vector<types::global_dof_index> local_dof_indices;

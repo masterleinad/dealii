@@ -47,28 +47,28 @@ namespace LinearAlgebra
        * read_write_vector_index_set is the index set associated to a
        * ReadWriteVector object.
        */
-      CommunicationPattern(const IndexSet& vector_space_vector_index_set,
-                           const IndexSet& read_write_vector_index_set,
-                           const MPI_Comm& communicator);
+      CommunicationPattern(const IndexSet & vector_space_vector_index_set,
+                           const IndexSet & read_write_vector_index_set,
+                           const MPI_Comm & communicator);
 
       /**
        * Reinitialize the object.
        */
       virtual void
-      reinit(const IndexSet& vector_space_vector_index_set,
-             const IndexSet& read_write_vector_index_set,
-             const MPI_Comm& communicator) override;
+      reinit(const IndexSet & vector_space_vector_index_set,
+             const IndexSet & read_write_vector_index_set,
+             const MPI_Comm & communicator) override;
 
       /**
        * Return the underlying MPI communicator.
        */
-      virtual const MPI_Comm&
+      virtual const MPI_Comm &
       get_mpi_communicator() const override;
 
       /**
        * Return the underlying Epetra_Import object.
        */
-      const Epetra_Import&
+      const Epetra_Import &
       get_epetra_import() const;
 
     private:

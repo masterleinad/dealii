@@ -41,13 +41,13 @@
 // .cc files
 template <int dim>
 void
-check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2);
+check_this(const FiniteElement<dim> & fe1, const FiniteElement<dim> & fe2);
 
 // output some indicators for a given matrix. we don't write out the
 // entire matrix since this would blow up our output files beyond
 // reasonable limits
 void
-output_matrix(const FullMatrix<double>& m)
+output_matrix(const FullMatrix<double> & m)
 {
   if((m.m() == 0) || (m.n() == 0))
     {
@@ -67,7 +67,7 @@ output_matrix(const FullMatrix<double>& m)
 // output some indicators for a given vector
 template <typename VectorType>
 void
-output_vector(const VectorType& v)
+output_vector(const VectorType & v)
 {
   deallog << v.l1_norm() << ' ' << v.l2_norm() << ' ' << v.linfty_norm()
           << std::endl;
@@ -82,10 +82,10 @@ output_vector(const VectorType& v)
 }
 
 template <int dim>
-Triangulation<dim>*
+Triangulation<dim> *
 make_tria()
 {
-  Triangulation<dim>* tria = new Triangulation<dim>();
+  Triangulation<dim> * tria = new Triangulation<dim>();
   GridGenerator::hyper_cube(*tria, 0., 1.);
   tria->refine_global(1);
   for(int i = 0; i < 2; ++i)
@@ -97,29 +97,29 @@ make_tria()
 }
 
 template <int dim>
-DoFHandler<dim>*
-make_dof_handler(const Triangulation<dim>& tria, const FiniteElement<dim>& fe)
+DoFHandler<dim> *
+make_dof_handler(const Triangulation<dim> & tria, const FiniteElement<dim> & fe)
 {
-  DoFHandler<dim>* dof_handler = new DoFHandler<dim>(tria);
+  DoFHandler<dim> * dof_handler = new DoFHandler<dim>(tria);
   dof_handler->distribute_dofs(fe);
   return dof_handler;
 }
 
 template <int dim>
-hp::DoFHandler<dim>*
-make_hp_dof_handler(const Triangulation<dim>&    tria,
-                    const hp::FECollection<dim>& fe)
+hp::DoFHandler<dim> *
+make_hp_dof_handler(const Triangulation<dim> &    tria,
+                    const hp::FECollection<dim> & fe)
 {
-  hp::DoFHandler<dim>* dof_handler = new hp::DoFHandler<dim>(tria);
+  hp::DoFHandler<dim> * dof_handler = new hp::DoFHandler<dim>(tria);
   dof_handler->distribute_dofs(fe);
   return dof_handler;
 }
 
 template <int dim>
 void
-check(const FiniteElement<dim>& fe1,
-      const FiniteElement<dim>& fe2,
-      const std::string&        name)
+check(const FiniteElement<dim> & fe1,
+      const FiniteElement<dim> & fe2,
+      const std::string &        name)
 {
   deallog << "Checking " << name << " in " << dim << "d:" << std::endl;
 
@@ -263,7 +263,7 @@ main()
       */
       return 0;
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

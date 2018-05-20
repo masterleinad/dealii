@@ -37,20 +37,20 @@ class QuadraticObjective : public ROL::Objective<Real>
 {
 private:
   Teuchos::RCP<const VectorType>
-  get_rcp_to_VectorType(const ROL::Vector<Real>& x)
+  get_rcp_to_VectorType(const ROL::Vector<Real> & x)
   {
     return (Teuchos::dyn_cast<const Xprim>(x)).getVector();
   }
 
   Teuchos::RCP<dealii::Vector<Real>>
-  get_rcp_to_VectorType(ROL::Vector<Real>& x)
+  get_rcp_to_VectorType(ROL::Vector<Real> & x)
   {
     return (Teuchos::dyn_cast<Xprim>(x)).getVector();
   }
 
 public:
   Real
-  value(const ROL::Vector<Real>& x, Real& tol)
+  value(const ROL::Vector<Real> & x, Real & tol)
   {
     Assert(x.dimension() == 2, ExcInternalError());
 
@@ -58,7 +58,7 @@ public:
   }
 
   void
-  gradient(ROL::Vector<Real>& g, const ROL::Vector<Real>& x, Real& tol)
+  gradient(ROL::Vector<Real> & g, const ROL::Vector<Real> & x, Real & tol)
   {
     Teuchos::RCP<const VectorType> xp = this->get_rcp_to_VectorType(x);
     Teuchos::RCP<VectorType>       gp = this->get_rcp_to_VectorType(g);
@@ -100,7 +100,7 @@ test(const double x, const double y)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   try
     {
@@ -108,7 +108,7 @@ main(int argc, char** argv)
       test(-0.1, 0.1);
       test(9.1, -6.1);
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

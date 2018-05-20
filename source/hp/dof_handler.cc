@@ -81,7 +81,7 @@ namespace internal
          */
         template <int dim, int spacedim>
         static void
-        reserve_space_release_space(DoFHandler<dim, spacedim>& dof_handler)
+        reserve_space_release_space(DoFHandler<dim, spacedim> & dof_handler)
         {
           // Release all space except the active_fe_indices field
           // which we have to back up before
@@ -117,7 +117,7 @@ namespace internal
          */
         template <int dim, int spacedim>
         static void
-        reserve_space_vertices(DoFHandler<dim, spacedim>& dof_handler)
+        reserve_space_vertices(DoFHandler<dim, spacedim> & dof_handler)
         {
           // The final step in all of the reserve_space() functions is to set
           // up vertex dof information. since vertices are sequentially
@@ -235,7 +235,7 @@ namespace internal
          */
         template <int dim, int spacedim>
         static void
-        reserve_space_cells(DoFHandler<dim, spacedim>& dof_handler)
+        reserve_space_cells(DoFHandler<dim, spacedim> & dof_handler)
         {
           // count how much space we need on each level for the cell
           // dofs and set the dof_*_offsets data. initially set the
@@ -328,24 +328,24 @@ namespace internal
          */
         template <int dim, int spacedim>
         static void
-        reserve_space_faces(DoFHandler<dim, spacedim>& dof_handler)
+        reserve_space_faces(DoFHandler<dim, spacedim> & dof_handler)
         {
           // make the code generic between lines and quads
-          std::vector<unsigned int>& face_dof_offsets
+          std::vector<unsigned int> & face_dof_offsets
             = (dim == 2 ?
-                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<2>&>(
+                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<2> &>(
                    *dof_handler.faces)
                    .lines.dof_offsets :
-                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<3>&>(
+                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<3> &>(
                    *dof_handler.faces)
                    .quads.dof_offsets);
 
-          std::vector<types::global_dof_index>& face_dof_indices
+          std::vector<types::global_dof_index> & face_dof_indices
             = (dim == 2 ?
-                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<2>&>(
+                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<2> &>(
                    *dof_handler.faces)
                    .lines.dofs :
-                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<3>&>(
+                 reinterpret_cast<dealii::internal::hp::DoFIndicesOnFaces<3> &>(
                    *dof_handler.faces)
                    .quads.dofs);
 
@@ -371,10 +371,10 @@ namespace internal
               {
                 case 2:
                   {
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .save_user_flags_line(saved_face_user_flags);
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .clear_user_flags_line();
 
@@ -383,10 +383,10 @@ namespace internal
 
                 case 3:
                   {
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .save_user_flags_quad(saved_face_user_flags);
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .clear_user_flags_quad();
 
@@ -469,7 +469,7 @@ namespace internal
               {
                 case 2:
                   {
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .clear_user_flags_line();
 
@@ -478,7 +478,7 @@ namespace internal
 
                 case 3:
                   {
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .clear_user_flags_quad();
 
@@ -584,7 +584,7 @@ namespace internal
               {
                 case 2:
                   {
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .load_user_flags_line(saved_face_user_flags);
 
@@ -593,7 +593,7 @@ namespace internal
 
                 case 3:
                   {
-                    const_cast<dealii::Triangulation<dim, spacedim>&>(
+                    const_cast<dealii::Triangulation<dim, spacedim> &>(
                       *dof_handler.tria)
                       .load_user_flags_quad(saved_face_user_flags);
 
@@ -613,7 +613,7 @@ namespace internal
          * selected when calling @p distribute_dofs the last time.
          */
         template <int spacedim>
-        static void reserve_space(DoFHandler<1, spacedim>& dof_handler)
+        static void reserve_space(DoFHandler<1, spacedim> & dof_handler)
         {
           Assert(dof_handler.fe_collection.size() > 0,
                  (typename DoFHandler<1, spacedim>::ExcNoFESelected()));
@@ -629,7 +629,7 @@ namespace internal
         }
 
         template <int spacedim>
-        static void reserve_space(DoFHandler<2, spacedim>& dof_handler)
+        static void reserve_space(DoFHandler<2, spacedim> & dof_handler)
         {
           Assert(dof_handler.fe_collection.size() > 0,
                  (typename DoFHandler<2, spacedim>::ExcNoFESelected()));
@@ -649,7 +649,7 @@ namespace internal
         }
 
         template <int spacedim>
-        static void reserve_space(DoFHandler<3, spacedim>& dof_handler)
+        static void reserve_space(DoFHandler<3, spacedim> & dof_handler)
         {
           const unsigned int dim = 3;
 
@@ -771,7 +771,7 @@ namespace internal
          */
         template <int spacedim>
         static unsigned int
-        max_couplings_between_dofs(const DoFHandler<1, spacedim>& dof_handler)
+        max_couplings_between_dofs(const DoFHandler<1, spacedim> & dof_handler)
         {
           return std::min(
             static_cast<types::global_dof_index>(
@@ -782,7 +782,7 @@ namespace internal
 
         template <int spacedim>
         static unsigned int
-        max_couplings_between_dofs(const DoFHandler<2, spacedim>& dof_handler)
+        max_couplings_between_dofs(const DoFHandler<2, spacedim> & dof_handler)
         {
           // get these numbers by drawing pictures and counting...
           // example:
@@ -845,7 +845,7 @@ namespace internal
 
         template <int spacedim>
         static unsigned int
-        max_couplings_between_dofs(const DoFHandler<3, spacedim>& dof_handler)
+        max_couplings_between_dofs(const DoFHandler<3, spacedim> & dof_handler)
         {
           //TODO:[?] Invent significantly better estimates than the ones in this function
           // doing the same thing here is a rather complicated thing,
@@ -882,11 +882,11 @@ namespace internal
         template <int dim, int spacedim>
         static void
         communicate_active_fe_indices(
-          dealii::hp::DoFHandler<dim, spacedim>& dof_handler)
+          dealii::hp::DoFHandler<dim, spacedim> & dof_handler)
         {
-          if(const parallel::shared::Triangulation<dim, spacedim>* tr
+          if(const parallel::shared::Triangulation<dim, spacedim> * tr
              = dynamic_cast<
-               const parallel::shared::Triangulation<dim, spacedim>*>(
+               const parallel::shared::Triangulation<dim, spacedim> *>(
                &dof_handler.get_triangulation()))
             {
               // we have a shared triangulation. in this case, every processor
@@ -901,7 +901,7 @@ namespace internal
               // that owns it, the sum is correct
               std::vector<unsigned int> active_fe_indices(tr->n_active_cells(),
                                                           (unsigned int) 0);
-              for(const auto& cell : dof_handler.active_cell_iterators())
+              for(const auto & cell : dof_handler.active_cell_iterators())
                 if(cell->is_locally_owned())
                   active_fe_indices[cell->active_cell_index()]
                     = cell->active_fe_index();
@@ -921,9 +921,9 @@ namespace internal
                     cell->index(),
                     active_fe_indices[cell->active_cell_index()]);
             }
-          else if(const parallel::distributed::Triangulation<dim, spacedim>* tr
-                  = dynamic_cast<
-                    const parallel::distributed::Triangulation<dim, spacedim>*>(
+          else if(const parallel::distributed::Triangulation<dim, spacedim> * tr
+                  = dynamic_cast<const parallel::distributed::
+                                   Triangulation<dim, spacedim> *>(
                     &dof_handler.get_triangulation()))
             {
               // For completely distributed meshes, use the function that is able to move
@@ -933,15 +933,15 @@ namespace internal
               // active_fe_index objects
               auto pack
                 = [](const typename dealii::hp::DoFHandler<dim, spacedim>::
-                       active_cell_iterator& cell) -> unsigned int {
+                       active_cell_iterator & cell) -> unsigned int {
                 return cell->active_fe_index();
               };
 
               auto unpack
                 = [&dof_handler](
                     const typename dealii::hp::DoFHandler<dim, spacedim>::
-                      active_cell_iterator& cell,
-                    const unsigned int&     active_fe_index) -> void {
+                      active_cell_iterator & cell,
+                    const unsigned int &     active_fe_index) -> void {
                 // we would like to say
                 //   cell->set_active_fe_index(active_fe_index);
                 // but this is not allowed on cells that are not
@@ -959,7 +959,7 @@ namespace internal
             {
               // a sequential triangulation. there is nothing we need to do here
               Assert(
-                (dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
+                (dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
                    &dof_handler.get_triangulation())
                  == nullptr),
                 ExcInternalError());
@@ -988,7 +988,7 @@ namespace hp
 
   template <int dim, int spacedim>
   DoFHandler<dim, spacedim>::DoFHandler(
-    const Triangulation<dim, spacedim>& tria)
+    const Triangulation<dim, spacedim> & tria)
     : tria(&tria, typeid(*this).name()), faces(nullptr)
   {
     setup_policy_and_listeners();
@@ -1134,7 +1134,7 @@ namespace hp
   template <int dim, int spacedim>
   types::global_dof_index
   DoFHandler<dim, spacedim>::n_boundary_dofs(
-    const std::set<types::boundary_id>& boundary_ids) const
+    const std::set<types::boundary_id> & boundary_ids) const
   {
     Assert(fe_collection.size() > 0, ExcNoFESelected());
     Assert(boundary_ids.find(numbers::internal_face_boundary_id)
@@ -1179,7 +1179,7 @@ namespace hp
   template <typename number>
   types::global_dof_index
   DoFHandler<2, 3>::n_boundary_dofs(
-    const std::map<types::boundary_id, const Function<3, number>*>&) const
+    const std::map<types::boundary_id, const Function<3, number> *> &) const
   {
     Assert(false, ExcNotImplemented());
     return 0;
@@ -1187,7 +1187,7 @@ namespace hp
 
   template <>
   types::global_dof_index
-  DoFHandler<2, 3>::n_boundary_dofs(const std::set<types::boundary_id>&) const
+  DoFHandler<2, 3>::n_boundary_dofs(const std::set<types::boundary_id> &) const
   {
     Assert(false, ExcNotImplemented());
     return 0;
@@ -1217,7 +1217,7 @@ namespace hp
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::set_active_fe_indices(
-    const std::vector<unsigned int>& active_fe_indices)
+    const std::vector<unsigned int> & active_fe_indices)
   {
     Assert(active_fe_indices.size() == get_triangulation().n_active_cells(),
            ExcDimensionMismatch(active_fe_indices.size(),
@@ -1237,7 +1237,7 @@ namespace hp
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::get_active_fe_indices(
-    std::vector<unsigned int>& active_fe_indices) const
+    std::vector<unsigned int> & active_fe_indices) const
   {
     active_fe_indices.resize(get_triangulation().n_active_cells());
 
@@ -1252,8 +1252,8 @@ namespace hp
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::initialize(
-    const Triangulation<dim, spacedim>&    tria,
-    const hp::FECollection<dim, spacedim>& fe)
+    const Triangulation<dim, spacedim> &    tria,
+    const hp::FECollection<dim, spacedim> & fe)
   {
     if(this->tria != &tria)
       {
@@ -1274,7 +1274,7 @@ namespace hp
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::distribute_dofs(
-    const hp::FECollection<dim, spacedim>& ff)
+    const hp::FECollection<dim, spacedim> & ff)
   {
     Assert(
       tria != nullptr,
@@ -1299,8 +1299,8 @@ namespace hp
     // subdomain ids to the "true" owner of each cell. we later
     // restore these flags
     std::vector<types::subdomain_id> saved_subdomain_ids;
-    if(const parallel::shared::Triangulation<dim, spacedim>* shared_tria
-       = (dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(
+    if(const parallel::shared::Triangulation<dim, spacedim> * shared_tria
+       = (dynamic_cast<const parallel::shared::Triangulation<dim, spacedim> *>(
          &get_triangulation())))
       if(shared_tria->with_artificial_cells())
         {
@@ -1311,7 +1311,7 @@ namespace hp
             = get_triangulation().begin_active(),
             endc = get_triangulation().end();
 
-          const std::vector<types::subdomain_id>& true_subdomain_ids
+          const std::vector<types::subdomain_id> & true_subdomain_ids
             = shared_tria->get_true_subdomain_ids_of_cells();
 
           for(unsigned int index = 0; cell != endc; ++cell, ++index)
@@ -1338,8 +1338,8 @@ namespace hp
       reserve_space(*this);
 
     // now undo the subdomain modification
-    if(const parallel::shared::Triangulation<dim, spacedim>* shared_tria
-       = (dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(
+    if(const parallel::shared::Triangulation<dim, spacedim> * shared_tria
+       = (dynamic_cast<const parallel::shared::Triangulation<dim, spacedim> *>(
          &get_triangulation())))
       if(shared_tria->with_artificial_cells())
         {
@@ -1358,7 +1358,7 @@ namespace hp
     // state as it was at the beginning of this function.
     std::vector<bool> user_flags;
     tria->save_user_flags(user_flags);
-    const_cast<Triangulation<dim, spacedim>&>(*tria).clear_user_flags();
+    const_cast<Triangulation<dim, spacedim> &>(*tria).clear_user_flags();
 
     /////////////////////////////////
 
@@ -1379,7 +1379,7 @@ namespace hp
     }
 
     // finally restore the user flags
-    const_cast<Triangulation<dim, spacedim>&>(*tria).load_user_flags(
+    const_cast<Triangulation<dim, spacedim> &>(*tria).load_user_flags(
       user_flags);
   }
 
@@ -1388,7 +1388,7 @@ namespace hp
   DoFHandler<dim, spacedim>::setup_policy_and_listeners()
   {
     // decide whether we need a sequential or a parallel shared/distributed policy
-    if(dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(
+    if(dynamic_cast<const parallel::shared::Triangulation<dim, spacedim> *>(
          &*this->tria)
        != nullptr)
       policy
@@ -1396,7 +1396,7 @@ namespace hp
                                    ParallelShared<DoFHandler<dim, spacedim>>>(
           *this);
     else if(dynamic_cast<
-              const parallel::distributed::Triangulation<dim, spacedim>*>(
+              const parallel::distributed::Triangulation<dim, spacedim> *>(
               &*this->tria)
             != nullptr)
       policy = std_cxx14::make_unique<
@@ -1429,7 +1429,7 @@ namespace hp
   template <int dim, int spacedim>
   void
   DoFHandler<dim, spacedim>::renumber_dofs(
-    const std::vector<types::global_dof_index>& new_numbers)
+    const std::vector<types::global_dof_index> & new_numbers)
   {
     Assert(
       levels.size() > 0,

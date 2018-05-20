@@ -24,7 +24,7 @@
 #include <vector>
 
 void
-print(TrilinosWrappers::MPI::Vector& v)
+print(TrilinosWrappers::MPI::Vector & v)
 {
   deallog << "size= " << v.size() << " el(0)= " << v(0)
           << " l2norm()= " << v.l2_norm() << std::endl;
@@ -62,7 +62,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
@@ -73,7 +73,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

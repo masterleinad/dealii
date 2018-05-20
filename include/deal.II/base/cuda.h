@@ -49,7 +49,7 @@ namespace Utilities
       /**
        * Copy constructor is deleted.
        */
-      Handle(Handle const&) = delete;
+      Handle(Handle const &) = delete;
 
       /**
        * Destructor. Destroy the handles and free all the memory allocated by
@@ -72,7 +72,7 @@ namespace Utilities
      */
     template <typename T>
     inline void
-    malloc(T*& pointer, const unsigned int n_elements)
+    malloc(T *& pointer, const unsigned int n_elements)
     {
       cudaError_t cuda_error_code
         = cudaMalloc(&pointer, n_elements * sizeof(T));
@@ -84,7 +84,7 @@ namespace Utilities
      */
     template <typename T>
     inline void
-    free(T*& pointer)
+    free(T *& pointer)
     {
       cudaError_t cuda_error_code = cudaFree(pointer);
       AssertCuda(cuda_error_code);
@@ -96,7 +96,7 @@ namespace Utilities
      */
     template <typename T>
     inline void
-    copy_to_host(const T* pointer_dev, std::vector<T>& vector_host)
+    copy_to_host(const T * pointer_dev, std::vector<T> & vector_host)
     {
       cudaError_t cuda_error_code = cudaMemcpy(vector_host.data(),
                                                pointer_dev,
@@ -111,7 +111,7 @@ namespace Utilities
      */
     template <typename T>
     inline void
-    copy_to_dev(const std::vector<T>& vector_host, T* pointer_dev)
+    copy_to_dev(const std::vector<T> & vector_host, T * pointer_dev)
     {
       cudaError_t cuda_error_code = cudaMemcpy(pointer_dev,
                                                vector_host.data(),

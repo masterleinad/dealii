@@ -27,11 +27,11 @@ typedef int size_type;
 template <typename Number>
 struct Vectorization_add_v
 {
-  Number* val;
-  Number* v_val;
+  Number * val;
+  Number * v_val;
 
   void
-  operator()(const tbb::blocked_range<size_type>& range) const
+  operator()(const tbb::blocked_range<size_type> & range) const
   {
     if(dealii::parallel::internal::EnableOpenMPSimdFor<Number>::value)
       {

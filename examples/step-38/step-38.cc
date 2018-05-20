@@ -145,23 +145,24 @@ namespace Step38
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> & p,
+          const unsigned int component = 0) const override;
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim>&  p,
+    gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
   };
 
   template <>
   double
-  Solution<2>::value(const Point<2>& p, const unsigned int) const
+  Solution<2>::value(const Point<2> & p, const unsigned int) const
   {
     return (-2. * p(0) * p(1));
   }
 
   template <>
   Tensor<1, 2>
-  Solution<2>::gradient(const Point<2>& p, const unsigned int) const
+  Solution<2>::gradient(const Point<2> & p, const unsigned int) const
   {
     Tensor<1, 2> return_value;
     return_value[0] = -2. * p(1) * (1 - 2. * p(0) * p(0));
@@ -172,7 +173,7 @@ namespace Step38
 
   template <>
   double
-  Solution<3>::value(const Point<3>& p, const unsigned int) const
+  Solution<3>::value(const Point<3> & p, const unsigned int) const
   {
     return (std::sin(numbers::PI * p(0)) * std::cos(numbers::PI * p(1))
             * exp(p(2)));
@@ -180,7 +181,7 @@ namespace Step38
 
   template <>
   Tensor<1, 3>
-  Solution<3>::gradient(const Point<3>& p, const unsigned int) const
+  Solution<3>::gradient(const Point<3> & p, const unsigned int) const
   {
     using numbers::PI;
 
@@ -201,12 +202,13 @@ namespace Step38
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> & p,
+          const unsigned int component = 0) const override;
   };
 
   template <>
   double
-  RightHandSide<2>::value(const Point<2>& p,
+  RightHandSide<2>::value(const Point<2> & p,
                           const unsigned int /*component*/) const
   {
     return (-8. * p(0) * p(1));
@@ -214,7 +216,7 @@ namespace Step38
 
   template <>
   double
-  RightHandSide<3>::value(const Point<3>& p,
+  RightHandSide<3>::value(const Point<3> & p,
                           const unsigned int /*component*/) const
   {
     using numbers::PI;
@@ -535,7 +537,7 @@ main()
       LaplaceBeltramiProblem<3> laplace_beltrami;
       laplace_beltrami.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

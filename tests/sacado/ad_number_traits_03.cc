@@ -29,7 +29,7 @@ namespace AD = Differentiation::AD;
 
 template <typename Number>
 Number
-func(const Number& a, const Number& b, const Number& c)
+func(const Number & a, const Number & b, const Number & c)
 {
   const Number r = c * std::log(b + 1.) / std::sin(a);
   return r;
@@ -37,13 +37,13 @@ func(const Number& a, const Number& b, const Number& c)
 
 template <typename Number>
 void
-print(const Number& r,
-      const Number& drda,
-      const Number& drdb,
-      const Number& d2rda2,
-      const Number& d2rdb2,
-      const Number& d2rdadb,
-      const Number& d2rdbda)
+print(const Number & r,
+      const Number & drda,
+      const Number & drdb,
+      const Number & d2rda2,
+      const Number & d2rdb2,
+      const Number & d2rdadb,
+      const Number & d2rdbda)
 {
   deallog << "        r = " << r << std::endl
           << "    dr/da = " << drda << std::endl

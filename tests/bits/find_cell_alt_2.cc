@@ -25,7 +25,7 @@
 
 #include <deal.II/fe/mapping_q.h>
 
-void check(Triangulation<3>& tria)
+void check(Triangulation<3> & tria)
 {
   MappingQ<3> map(3);
 

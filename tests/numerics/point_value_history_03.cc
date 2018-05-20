@@ -51,8 +51,9 @@ class Postprocess : public DataPostprocessor<dim>
 {
 public:
   void
-  evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim>& inputs,
-                        std::vector<Vector<double>>& computed_quantities) const;
+  evaluate_scalar_field(
+    const DataPostprocessorInputs::Scalar<dim> & inputs,
+    std::vector<Vector<double>> &                computed_quantities) const;
 
   std::vector<std::string>
   get_names() const;
@@ -89,8 +90,8 @@ Postprocess<dim>::n_output_variables() const
 template <int dim>
 void
 Postprocess<dim>::evaluate_scalar_field(
-  const DataPostprocessorInputs::Scalar<dim>& inputs,
-  std::vector<Vector<double>>&                computed_quantities) const
+  const DataPostprocessorInputs::Scalar<dim> & inputs,
+  std::vector<Vector<double>> &                computed_quantities) const
 {
   Assert(computed_quantities.size() == inputs.solution_values.size(),
          ExcDimensionMismatch(computed_quantities.size(),

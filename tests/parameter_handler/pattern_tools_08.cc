@@ -25,8 +25,8 @@ main()
 {
   initlog();
 
-  auto        a = std::make_tuple(Point<3>(), double(3.5), std::string("ciao"));
-  const auto& pattern = Patterns::Tools::Convert<decltype(a)>::to_pattern();
+  auto a = std::make_tuple(Point<3>(), double(3.5), std::string("ciao"));
+  const auto & pattern = Patterns::Tools::Convert<decltype(a)>::to_pattern();
 
   deallog << pattern->description() << std::endl;
 }

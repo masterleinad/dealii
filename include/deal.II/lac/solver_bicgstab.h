@@ -156,16 +156,16 @@ public:
   /**
    * Constructor.
    */
-  SolverBicgstab(SolverControl&            cn,
-                 VectorMemory<VectorType>& mem,
-                 const AdditionalData&     data = AdditionalData());
+  SolverBicgstab(SolverControl &            cn,
+                 VectorMemory<VectorType> & mem,
+                 const AdditionalData &     data = AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverBicgstab(SolverControl&        cn,
-                 const AdditionalData& data = AdditionalData());
+  SolverBicgstab(SolverControl &        cn,
+                 const AdditionalData & data = AdditionalData());
 
   /**
    * Virtual destructor.
@@ -177,16 +177,16 @@ public:
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  solve(const MatrixType&         A,
-        VectorType&               x,
-        const VectorType&         b,
-        const PreconditionerType& preconditioner);
+  solve(const MatrixType &         A,
+        VectorType &               x,
+        const VectorType &         b,
+        const PreconditionerType & preconditioner);
 
 protected:
   /**
    * Auxiliary vector.
    */
-  VectorType* Vx;
+  VectorType * Vx;
 
   /**
    * Auxiliary vector.
@@ -226,14 +226,14 @@ protected:
   /**
    * Right hand side vector.
    */
-  const VectorType* Vb;
+  const VectorType * Vb;
 
   /**
    * Computation of the stopping criterion.
    */
   template <typename MatrixType>
   double
-  criterion(const MatrixType& A, const VectorType& x, const VectorType& b);
+  criterion(const MatrixType & A, const VectorType & x, const VectorType & b);
 
   /**
    * Interface for derived class.  This function gets the current iteration
@@ -242,9 +242,9 @@ protected:
    */
   virtual void
   print_vectors(const unsigned int step,
-                const VectorType&  x,
-                const VectorType&  r,
-                const VectorType&  d) const;
+                const VectorType & x,
+                const VectorType & r,
+                const VectorType & d) const;
 
   /**
    * Additional parameters.
@@ -257,7 +257,7 @@ private:
    */
   template <typename MatrixType>
   SolverControl::State
-  start(const MatrixType& A);
+  start(const MatrixType & A);
 
   /**
    * A structure returned by the iterate() function representing what it found
@@ -282,7 +282,7 @@ private:
    */
   template <typename MatrixType, typename PreconditionerType>
   IterationResult
-  iterate(const MatrixType& A, const PreconditionerType& preconditioner);
+  iterate(const MatrixType & A, const PreconditionerType & preconditioner);
 };
 
 /*@}*/
@@ -303,15 +303,15 @@ SolverBicgstab<VectorType>::IterationResult::IterationResult(
 {}
 
 template <typename VectorType>
-SolverBicgstab<VectorType>::SolverBicgstab(SolverControl&            cn,
-                                           VectorMemory<VectorType>& mem,
-                                           const AdditionalData&     data)
+SolverBicgstab<VectorType>::SolverBicgstab(SolverControl &            cn,
+                                           VectorMemory<VectorType> & mem,
+                                           const AdditionalData &     data)
   : Solver<VectorType>(cn, mem), Vx(nullptr), Vb(nullptr), additional_data(data)
 {}
 
 template <typename VectorType>
-SolverBicgstab<VectorType>::SolverBicgstab(SolverControl&        cn,
-                                           const AdditionalData& data)
+SolverBicgstab<VectorType>::SolverBicgstab(SolverControl &        cn,
+                                           const AdditionalData & data)
   : Solver<VectorType>(cn), Vx(nullptr), Vb(nullptr), additional_data(data)
 {}
 
@@ -322,9 +322,9 @@ SolverBicgstab<VectorType>::~SolverBicgstab()
 template <typename VectorType>
 template <typename MatrixType>
 double
-SolverBicgstab<VectorType>::criterion(const MatrixType& A,
-                                      const VectorType& x,
-                                      const VectorType& b)
+SolverBicgstab<VectorType>::criterion(const MatrixType & A,
+                                      const VectorType & x,
+                                      const VectorType & b)
 {
   A.vmult(*Vt, x);
   Vt->add(-1., b);
@@ -336,7 +336,7 @@ SolverBicgstab<VectorType>::criterion(const MatrixType& A,
 template <typename VectorType>
 template <typename MatrixType>
 SolverControl::State
-SolverBicgstab<VectorType>::start(const MatrixType& A)
+SolverBicgstab<VectorType>::start(const MatrixType & A)
 {
   A.vmult(*Vr, *Vx);
   Vr->sadd(-1., 1., *Vb);
@@ -348,28 +348,28 @@ SolverBicgstab<VectorType>::start(const MatrixType& A)
 template <typename VectorType>
 void
 SolverBicgstab<VectorType>::print_vectors(const unsigned int,
-                                          const VectorType&,
-                                          const VectorType&,
-                                          const VectorType&) const
+                                          const VectorType &,
+                                          const VectorType &,
+                                          const VectorType &) const
 {}
 
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
 typename SolverBicgstab<VectorType>::IterationResult
-SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
-                                    const PreconditionerType& preconditioner)
+SolverBicgstab<VectorType>::iterate(const MatrixType &         A,
+                                    const PreconditionerType & preconditioner)
 {
   //TODO:[GK] Implement "use the length of the computed orthogonal residual" in the BiCGStab method.
   SolverControl::State state = SolverControl::iterate;
   alpha = omega = rho = 1.;
 
-  VectorType& r    = *Vr;
-  VectorType& rbar = *Vrbar;
-  VectorType& p    = *Vp;
-  VectorType& y    = *Vy;
-  VectorType& z    = *Vz;
-  VectorType& t    = *Vt;
-  VectorType& v    = *Vv;
+  VectorType & r    = *Vr;
+  VectorType & rbar = *Vrbar;
+  VectorType & p    = *Vp;
+  VectorType & y    = *Vy;
+  VectorType & z    = *Vz;
+  VectorType & t    = *Vt;
+  VectorType & v    = *Vv;
 
   rbar         = r;
   bool startup = true;
@@ -442,10 +442,10 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverBicgstab<VectorType>::solve(const MatrixType&         A,
-                                  VectorType&               x,
-                                  const VectorType&         b,
-                                  const PreconditionerType& preconditioner)
+SolverBicgstab<VectorType>::solve(const MatrixType &         A,
+                                  VectorType &               x,
+                                  const VectorType &         b,
+                                  const PreconditionerType & preconditioner)
 {
   LogStream::Prefix prefix("Bicgstab");
   Vr    = typename VectorMemory<VectorType>::Pointer(this->memory);

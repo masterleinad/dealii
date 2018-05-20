@@ -21,7 +21,7 @@
 #include <vector>
 
 void
-test(const unsigned int chunk_size, Vector<double>& v, Vector<double>& w)
+test(const unsigned int chunk_size, Vector<double> & v, Vector<double> & w)
 {
   // set some entries in the
   // matrix. actually, set them all
@@ -79,7 +79,7 @@ main()
           test(chunk_sizes[i], v, w);
         }
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

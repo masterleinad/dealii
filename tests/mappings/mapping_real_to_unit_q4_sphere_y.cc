@@ -88,7 +88,7 @@ test_real_to_unit_cell()
     {
       map.transform_real_to_unit_cell(cell, p);
     }
-  catch(const std::exception& e)
+  catch(const std::exception & e)
     {
       deallog << "Caught exception of type " << typeid(e).name() << std::endl;
     }

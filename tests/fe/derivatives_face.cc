@@ -30,9 +30,9 @@
 
 template <int dim>
 inline void
-plot_derivatives(Mapping<dim>&       mapping,
-                 FiniteElement<dim>& finel,
-                 const char*         name)
+plot_derivatives(Mapping<dim> &       mapping,
+                 FiniteElement<dim> & finel,
+                 const char *         name)
 {
   deallog.push(name);
 

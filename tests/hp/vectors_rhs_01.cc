@@ -45,13 +45,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> & p, const unsigned int component) const
   {
     return (component + 1) * p.square();
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const
+  vector_value(const Point<dim> & p, Vector<double> & values) const
   {
     values(0) = value(p, 0);
     values(1) = value(p, 1);

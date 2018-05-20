@@ -22,7 +22,7 @@
 
 template <int dim>
 void
-check1(const Function<dim>& f, const unsigned int degree)
+check1(const Function<dim> & f, const unsigned int degree)
 {
   FE_RaviartThomasNodal<dim> fe(degree);
   deallog << fe.get_name() << ' ';

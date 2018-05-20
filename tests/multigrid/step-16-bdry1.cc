@@ -73,16 +73,16 @@ class LaplaceMatrix : public MeshWorker::LocalIntegrator<dim>
 public:
   LaplaceMatrix();
   virtual void
-  cell(MeshWorker::DoFInfo<dim>&         dinfo,
-       MeshWorker::IntegrationInfo<dim>& info) const;
+  cell(MeshWorker::DoFInfo<dim> &         dinfo,
+       MeshWorker::IntegrationInfo<dim> & info) const;
   virtual void
-  boundary(MeshWorker::DoFInfo<dim>&         dinfo,
-           MeshWorker::IntegrationInfo<dim>& info) const;
+  boundary(MeshWorker::DoFInfo<dim> &         dinfo,
+           MeshWorker::IntegrationInfo<dim> & info) const;
   virtual void
-  face(MeshWorker::DoFInfo<dim>&         dinfo1,
-       MeshWorker::DoFInfo<dim>&         dinfo2,
-       MeshWorker::IntegrationInfo<dim>& info1,
-       MeshWorker::IntegrationInfo<dim>& info2) const;
+  face(MeshWorker::DoFInfo<dim> &         dinfo1,
+       MeshWorker::DoFInfo<dim> &         dinfo2,
+       MeshWorker::IntegrationInfo<dim> & info1,
+       MeshWorker::IntegrationInfo<dim> & info2) const;
 };
 
 template <int dim>
@@ -92,8 +92,8 @@ LaplaceMatrix<dim>::LaplaceMatrix()
 
 template <int dim>
 void
-LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
-                         MeshWorker::IntegrationInfo<dim>& info) const
+LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim> &         dinfo,
+                         MeshWorker::IntegrationInfo<dim> & info) const
 {
   AssertDimension(dinfo.n_matrices(), 1);
   Laplace::cell_matrix(dinfo.matrix(0, false).matrix, info.fe_values(0));
@@ -102,8 +102,8 @@ LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
 template <int dim>
 void
 LaplaceMatrix<dim>::boundary(
-  MeshWorker::DoFInfo<dim>& /*dinfo*/,
-  typename MeshWorker::IntegrationInfo<dim>& /*info*/) const
+  MeshWorker::DoFInfo<dim> & /*dinfo*/,
+  typename MeshWorker::IntegrationInfo<dim> & /*info*/) const
 {
   //  const unsigned int deg = info.fe_values(0).get_fe().tensor_degree();
   //  Laplace::nitsche_matrix(dinfo.matrix(0,false).matrix, info.fe_values(0),
@@ -112,10 +112,10 @@ LaplaceMatrix<dim>::boundary(
 
 template <int dim>
 void
-LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>& /*dinfo1*/,
-                         MeshWorker::DoFInfo<dim>& /*dinfo2*/,
-                         MeshWorker::IntegrationInfo<dim>& /*info1*/,
-                         MeshWorker::IntegrationInfo<dim>& /*info2*/) const
+LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim> & /*dinfo1*/,
+                         MeshWorker::DoFInfo<dim> & /*dinfo2*/,
+                         MeshWorker::IntegrationInfo<dim> & /*info1*/,
+                         MeshWorker::IntegrationInfo<dim> & /*info2*/) const
 {
   //  const unsigned int deg = info1.fe_values(0).get_fe().tensor_degree();
   //  Laplace::ip_matrix(dinfo1.matrix(0,false).matrix, dinfo1.matrix(0,true).matrix,
@@ -142,7 +142,7 @@ private:
   void
   solve(bool use_mw);
   void
-  refine_grid(const std::string& reftype);
+  refine_grid(const std::string & reftype);
   void
   output_results(const unsigned int cycle) const;
 
@@ -176,17 +176,17 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 
   virtual void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+  value_list(const std::vector<Point<dim>> & points,
+             std::vector<double> &           values,
+             const unsigned int              component = 0) const;
 };
 
 template <int dim>
 double
-Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
+Coefficient<dim>::value(const Point<dim> & p, const unsigned int) const
 {
   //  if (p.square() < 0.5*0.5)
   //    return 20;
@@ -196,9 +196,9 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 
 template <int dim>
 void
-Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                             std::vector<double>&           values,
-                             const unsigned int             component) const
+Coefficient<dim>::value_list(const std::vector<Point<dim>> & points,
+                             std::vector<double> &           values,
+                             const unsigned int              component) const
 {
   const unsigned int n_points = points.size();
 
@@ -236,7 +236,7 @@ LaplaceProblem<dim>::setup_system()
                           mg_dof_handler.n_dofs(),
                           mg_dof_handler.max_couplings_between_dofs());
   DoFTools::make_sparsity_pattern(
-    static_cast<const DoFHandler<dim>&>(mg_dof_handler), sparsity_pattern);
+    static_cast<const DoFHandler<dim> &>(mg_dof_handler), sparsity_pattern);
 
   solution.reinit(mg_dof_handler.n_dofs());
   system_rhs.reinit(mg_dof_handler.n_dofs());
@@ -518,7 +518,7 @@ LaplaceProblem<dim>::solve(bool use_mw)
 
 template <int dim>
 void
-LaplaceProblem<dim>::refine_grid(const std::string& reftype)
+LaplaceProblem<dim>::refine_grid(const std::string & reftype)
 {
   bool cell_refined = false;
   if(reftype == "center" || !cell_refined)
@@ -622,7 +622,7 @@ main()
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

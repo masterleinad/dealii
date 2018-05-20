@@ -20,7 +20,7 @@
 #include <deal.II/base/parameter_handler.h>
 
 void
-check(const char* p)
+check(const char * p)
 {
   ParameterHandler prm;
   prm.declare_entry("test_1", "3", Patterns::Double());
@@ -34,7 +34,7 @@ check(const char* p)
       // pattern, so we should not get here
       deallog << "test_1=" << prm.get("test_1") << std::endl;
     }
-  catch(ParameterHandler::ExcInvalidEntryForPattern& exc)
+  catch(ParameterHandler::ExcInvalidEntryForPattern & exc)
     {
       deallog << exc.get_exc_name() << std::endl;
       exc.print_info(deallog.get_file_stream());

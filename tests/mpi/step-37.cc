@@ -272,7 +272,7 @@ namespace Step37
   class PotentialBCFunction : public Function<dim>
   {
   public:
-    PotentialBCFunction(const double& charge, const Point<dim>& dipole)
+    PotentialBCFunction(const double & charge, const Point<dim> & dipole)
       : Function<dim>(1),
         charge(charge),
         x0(std::abs(charge) < 1e-10 ? Point<dim>() : dipole / charge)
@@ -281,7 +281,7 @@ namespace Step37
     virtual ~PotentialBCFunction() = default;
 
     virtual double
-    value(const Point<dim>& p, const unsigned int) const
+    value(const Point<dim> & p, const unsigned int) const
     {
       const double r = p.distance(x0);
       Assert(r > 0, ExcDivideByZero());
@@ -540,7 +540,7 @@ namespace Step37
 } // namespace Step37
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   try
     {
@@ -551,7 +551,7 @@ main(int argc, char* argv[])
       LaplaceProblem<dimension> laplace_problem;
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

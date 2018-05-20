@@ -22,7 +22,7 @@
 
 template <int dim>
 void
-write_mat_id_to_file(const Triangulation<dim>& tria)
+write_mat_id_to_file(const Triangulation<dim> & tria)
 {
   int                                               count = 0;
   typename Triangulation<dim>::active_cell_iterator cell  = tria.begin_active(),
@@ -76,7 +76,7 @@ test()
   }
 
   // Compute a halo layer around material id 2 and set it to material id 3
-  std::function<bool(const cell_iterator&)> predicate
+  std::function<bool(const cell_iterator &)> predicate
     = IteratorFilters::MaterialIdEqualTo(2, true);
   const std::vector<cell_iterator> active_halo_layer
     = GridTools::compute_active_cell_halo_layer(tria, predicate);

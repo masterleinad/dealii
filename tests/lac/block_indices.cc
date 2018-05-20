@@ -19,7 +19,7 @@
 #include <deal.II/lac/block_indices.h>
 
 void
-test(const BlockIndices& idx)
+test(const BlockIndices & idx)
 {
   const unsigned int n = idx.size();
   deallog << "sizes: " << idx << std::endl;

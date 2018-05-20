@@ -33,7 +33,8 @@ unsigned int current_cell_weight;
 template <int dim>
 unsigned int
 cell_weight_1(
-  const typename parallel::distributed::Triangulation<dim>::cell_iterator& cell,
+  const typename parallel::distributed::Triangulation<dim>::cell_iterator &
+                                                                       cell,
   const typename parallel::distributed::Triangulation<dim>::CellStatus status)
 {
   return current_cell_weight++;
@@ -42,7 +43,8 @@ cell_weight_1(
 template <int dim>
 unsigned int
 cell_weight_2(
-  const typename parallel::distributed::Triangulation<dim>::cell_iterator& cell,
+  const typename parallel::distributed::Triangulation<dim>::cell_iterator &
+                                                                       cell,
   const typename parallel::distributed::Triangulation<dim>::CellStatus status)
 {
   return 1;
@@ -85,7 +87,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

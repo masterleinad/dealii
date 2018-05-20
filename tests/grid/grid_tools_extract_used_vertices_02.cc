@@ -23,7 +23,7 @@
 
 template <int dim, int spacedim>
 void
-test(const Point<spacedim>& p)
+test(const Point<spacedim> & p)
 {
   deallog << "dim: " << dim << ", spacedim: " << spacedim << std::endl;
 
@@ -41,7 +41,7 @@ test(const Point<spacedim>& p)
 
   auto m = GridTools::extract_used_vertices(tria);
 
-  for(auto& e : m)
+  for(auto & e : m)
     deallog << "Vertex: " << e.first << ": " << e.second << std::endl;
 
   auto i = GridTools::find_closest_vertex(m, p);

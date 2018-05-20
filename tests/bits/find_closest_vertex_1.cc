@@ -25,9 +25,9 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-void check(Triangulation<3>& tria)
+void check(Triangulation<3> & tria)
 {
-  const std::vector<Point<3>>& v = tria.get_vertices();
+  const std::vector<Point<3>> & v = tria.get_vertices();
   for(unsigned i = 0; i < v.size(); i++)
     deallog << "["
             << GridTools::find_closest_vertex(
@@ -49,7 +49,7 @@ main()
       coarse_grid.refine_global(3);
       check(coarse_grid);
     }
-  catch(const std::exception& exc)
+  catch(const std::exception & exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

@@ -149,12 +149,13 @@ namespace Step15
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> & p,
+          const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  BoundaryValues<dim>::value(const Point<dim>& p,
+  BoundaryValues<dim>::value(const Point<dim> & p,
                              const unsigned int /*component*/) const
   {
     return std::sin(2 * numbers::PI * (p[0] + p[1]));
@@ -703,7 +704,7 @@ main()
       MinimalSurfaceProblem<2> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

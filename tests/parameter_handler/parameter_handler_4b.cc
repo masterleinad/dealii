@@ -34,7 +34,7 @@ main()
       prm.leave_subsection();
       prm.print_parameters(logfile, ParameterHandler::LaTeX);
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

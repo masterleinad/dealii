@@ -58,7 +58,7 @@ public:
   TestFunction(const unsigned int p_order);
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -76,7 +76,7 @@ TestFunction<dim>::TestFunction(const unsigned int p_order) : p_order(p_order)
 
 template <int dim>
 double
-TestFunction<dim>::value(const Point<dim>& p,
+TestFunction<dim>::value(const Point<dim> & p,
                          const unsigned int /*component*/) const
 {
   double val = base[0].value(p(0));
@@ -244,7 +244,7 @@ main()
   // 6. The triangulation is refined 2 times
   // uniformly and several times (pseudo-)
   // randomly.
-  TestFEQConstraints<3>* test;
+  TestFEQConstraints<3> * test;
   for(unsigned int p = 1; p < 4; ++p)
     {
       test = new TestFEQConstraints<3>(p, ref_level[p - 1]);

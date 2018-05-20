@@ -36,7 +36,7 @@ main()
 
   deallog << t[0][1][2][0][1][2][0][1][2] << std::endl;
 
-  const Tensor<9, 3, int>& t_ref = t;
+  const Tensor<9, 3, int> & t_ref = t;
 
   deallog << TensorAccessors::extract<9>(t_ref, indices) << std::endl;
 

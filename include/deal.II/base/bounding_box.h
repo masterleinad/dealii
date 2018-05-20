@@ -104,13 +104,13 @@ public:
    * which describe the box: one for the bottom and one for the top
    * corner.
    */
-  BoundingBox(const std::pair<Point<spacedim, Number>, Point<spacedim, Number>>&
-                boundary_points);
+  BoundingBox(const std::pair<Point<spacedim, Number>,
+                              Point<spacedim, Number>> & boundary_points);
 
   /**
    * Return the boundary_points
    */
-  const std::pair<Point<spacedim, Number>, Point<spacedim, Number>>&
+  const std::pair<Point<spacedim, Number>, Point<spacedim, Number>> &
   get_boundary_points() const;
 
   /**
@@ -120,7 +120,7 @@ public:
    * Return an enumerator of type NeighborType.
    */
   NeighborType
-  get_neighbor_type(const BoundingBox<spacedim, Number>& other_bbox) const;
+  get_neighbor_type(const BoundingBox<spacedim, Number> & other_bbox) const;
 
   /**
    * Enlarge the current object so that it contains @p other_bbox .
@@ -128,13 +128,13 @@ public:
    * by this function.
    */
   void
-  merge_with(const BoundingBox<spacedim, Number>& other_bbox);
+  merge_with(const BoundingBox<spacedim, Number> & other_bbox);
 
   /**
    * Return true if the point is inside the Bounding Box, false otherwise.
    */
   bool
-  point_inside(const Point<spacedim, Number>& p) const;
+  point_inside(const Point<spacedim, Number> & p) const;
 
   /**
    * Compute the volume (i.e. the dim-dimensional measure) of the BoundingBox.
@@ -147,7 +147,7 @@ public:
    */
   template <class Archive>
   void
-  serialize(Archive& ar, const unsigned int version);
+  serialize(Archive & ar, const unsigned int version);
 
 private:
   std::pair<Point<spacedim, Number>, Point<spacedim, Number>> boundary_points;
@@ -159,7 +159,7 @@ private:
 
 template <int spacedim, typename Number>
 inline BoundingBox<spacedim, Number>::BoundingBox(
-  const std::pair<Point<spacedim, Number>, Point<spacedim, Number>>&
+  const std::pair<Point<spacedim, Number>, Point<spacedim, Number>> &
     boundary_points)
 {
   //We check the Bounding Box is not degenerate
@@ -175,10 +175,10 @@ inline BoundingBox<spacedim, Number>::BoundingBox(
 template <int spacedim, typename Number>
 template <class Archive>
 void
-BoundingBox<spacedim, Number>::serialize(Archive& ar,
+BoundingBox<spacedim, Number>::serialize(Archive & ar,
                                          const unsigned int /*version*/)
 {
-  ar& boundary_points;
+  ar & boundary_points;
 }
 
 #endif // DOXYGEN

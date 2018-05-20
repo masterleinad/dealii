@@ -484,7 +484,7 @@ Test_Solver_Output::refine_grid()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

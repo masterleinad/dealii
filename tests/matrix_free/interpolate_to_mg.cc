@@ -65,7 +65,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int component = 0) const
+  value(const Point<dim> & p, const unsigned int component = 0) const
   {
     (void) component;
     return p[0] * 2. + p[1] - 10.;
@@ -199,7 +199,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
             fe_values.get_function_values(
               level_projection[level], dof_indices, q_values);
 
-            const std::vector<Point<dim>>& q_points
+            const std::vector<Point<dim>> & q_points
               = fe_values.get_quadrature_points();
 
             for(unsigned int q = 0; q < q_points.size(); ++q)
@@ -237,7 +237,7 @@ test(const unsigned int n_glob_ref = 2, const unsigned int n_ref = 0)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

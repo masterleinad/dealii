@@ -42,7 +42,7 @@ backtrace:
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
 
 void
-iterate(DynamicSparsityPattern& sp)
+iterate(DynamicSparsityPattern & sp)
 {
   DynamicSparsityPattern::const_iterator i = sp.begin();
   for(; i != sp.end(); ++i)
@@ -100,7 +100,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

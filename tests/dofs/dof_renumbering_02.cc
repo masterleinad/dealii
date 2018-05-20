@@ -32,9 +32,9 @@
 
 template <int dim>
 void
-print_dofs(const DoFHandler<dim>& dof)
+print_dofs(const DoFHandler<dim> & dof)
 {
-  const FiniteElement<dim>&            fe = dof.get_fe();
+  const FiniteElement<dim> &           fe = dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
@@ -65,9 +65,9 @@ print_dofs(const DoFHandler<dim>& dof)
 
 template <int dim>
 void
-print_dofs(const DoFHandler<dim>& dof, unsigned int level)
+print_dofs(const DoFHandler<dim> & dof, unsigned int level)
 {
-  const FiniteElement<dim>&            fe = dof.get_fe();
+  const FiniteElement<dim> &           fe = dof.get_fe();
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
@@ -98,10 +98,10 @@ print_dofs(const DoFHandler<dim>& dof, unsigned int level)
 
 template <int dim>
 void
-check_renumbering(DoFHandler<dim>& mgdof)
+check_renumbering(DoFHandler<dim> & mgdof)
 {
-  const FiniteElement<dim>& element = mgdof.get_fe();
-  DoFHandler<dim>&          dof     = mgdof;
+  const FiniteElement<dim> & element = mgdof.get_fe();
+  DoFHandler<dim> &          dof     = mgdof;
   deallog << element.get_name() << std::endl;
 
   // Prepare a reordering of

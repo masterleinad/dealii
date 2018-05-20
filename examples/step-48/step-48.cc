@@ -77,25 +77,25 @@ namespace Step48
   class SineGordonOperation
   {
   public:
-    SineGordonOperation(const MatrixFree<dim, double>& data_in,
-                        const double                   time_step);
+    SineGordonOperation(const MatrixFree<dim, double> & data_in,
+                        const double                    time_step);
 
     void
-    apply(LinearAlgebra::distributed::Vector<double>&                     dst,
-          const std::vector<LinearAlgebra::distributed::Vector<double>*>& src)
+    apply(LinearAlgebra::distributed::Vector<double> &                      dst,
+          const std::vector<LinearAlgebra::distributed::Vector<double> *> & src)
       const;
 
   private:
-    const MatrixFree<dim, double>&             data;
+    const MatrixFree<dim, double> &            data;
     const VectorizedArray<double>              delta_t_sqr;
     LinearAlgebra::distributed::Vector<double> inv_mass_matrix;
 
     void
     local_apply(
-      const MatrixFree<dim, double>&                                  data,
-      LinearAlgebra::distributed::Vector<double>&                     dst,
-      const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
-      const std::pair<unsigned int, unsigned int>& cell_range) const;
+      const MatrixFree<dim, double> &                                   data,
+      LinearAlgebra::distributed::Vector<double> &                      dst,
+      const std::vector<LinearAlgebra::distributed::Vector<double> *> & src,
+      const std::pair<unsigned int, unsigned int> & cell_range) const;
   };
 
   // @sect4{SineGordonOperation::SineGordonOperation}
@@ -113,8 +113,8 @@ namespace Step48
   // by the inverse mass matrix in each time step.
   template <int dim, int fe_degree>
   SineGordonOperation<dim, fe_degree>::SineGordonOperation(
-    const MatrixFree<dim, double>& data_in,
-    const double                   time_step)
+    const MatrixFree<dim, double> & data_in,
+    const double                    time_step)
     : data(data_in), delta_t_sqr(make_vectorized_array(time_step * time_step))
   {
     VectorizedArray<double> one = make_vectorized_array(1.);
@@ -177,10 +177,10 @@ namespace Step48
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::local_apply(
-    const MatrixFree<dim>&                                          data,
-    LinearAlgebra::distributed::Vector<double>&                     dst,
-    const std::vector<LinearAlgebra::distributed::Vector<double>*>& src,
-    const std::pair<unsigned int, unsigned int>& cell_range) const
+    const MatrixFree<dim> &                                           data,
+    LinearAlgebra::distributed::Vector<double> &                      dst,
+    const std::vector<LinearAlgebra::distributed::Vector<double> *> & src,
+    const std::pair<unsigned int, unsigned int> & cell_range) const
   {
     AssertDimension(src.size(), 2);
     FEEvaluation<dim, fe_degree> current(data), old(data);
@@ -224,8 +224,8 @@ namespace Step48
   template <int dim, int fe_degree>
   void
   SineGordonOperation<dim, fe_degree>::apply(
-    LinearAlgebra::distributed::Vector<double>&                     dst,
-    const std::vector<LinearAlgebra::distributed::Vector<double>*>& src) const
+    LinearAlgebra::distributed::Vector<double> &                      dst,
+    const std::vector<LinearAlgebra::distributed::Vector<double> *> & src) const
   {
     dst = 0;
     data.cell_loop(
@@ -246,12 +246,13 @@ namespace Step48
       : Function<dim>(n_components, time)
     {}
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> & p,
+          const unsigned int component = 0) const override;
   };
 
   template <int dim>
   double
-  ExactSolution<dim>::value(const Point<dim>& p,
+  ExactSolution<dim>::value(const Point<dim> & p,
                             const unsigned int /* component */) const
   {
     double t = this->get_time();
@@ -543,7 +544,8 @@ namespace Step48
       dof_handler, ExactSolution<dim>(1, time - time_step), old_solution);
     output_results(0);
 
-    std::vector<LinearAlgebra::distributed::Vector<double>*> previous_solutions;
+    std::vector<LinearAlgebra::distributed::Vector<double> *>
+      previous_solutions;
     previous_solutions.push_back(&old_solution);
     previous_solutions.push_back(&old_old_solution);
 
@@ -613,7 +615,7 @@ namespace Step48
 // system. As an alternative, you can also set this number manually if you
 // want to set a specific number of threads (e.g. when MPI-only is required).
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   using namespace Step48;
   using namespace dealii;
@@ -626,7 +628,7 @@ main(int argc, char** argv)
       SineGordonProblem<dimension> sg_problem;
       sg_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -36,8 +36,8 @@
 #include <metis.h>
 
 void
-partition(const SparsityPattern& sparsity_pattern,
-          const unsigned int     n_partitions)
+partition(const SparsityPattern & sparsity_pattern,
+          const unsigned int      n_partitions)
 {
   // generate the data structures for
   // METIS. Note that this is particularly
@@ -140,7 +140,7 @@ main()
     {
       test<1>();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

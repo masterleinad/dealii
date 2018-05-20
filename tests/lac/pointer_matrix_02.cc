@@ -22,7 +22,7 @@
 
 template <typename number>
 void
-checkConstructor2(FullMatrix<number>& A)
+checkConstructor2(FullMatrix<number> & A)
 {
   deallog << "Init with matrix A" << std::endl;
   PointerMatrix<FullMatrix<number>, Vector<number>> P(&A);

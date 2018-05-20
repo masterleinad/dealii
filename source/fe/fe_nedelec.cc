@@ -239,7 +239,7 @@ FE_Nedelec<2>::initialize_support_points(const unsigned int order)
   const int dim = 2;
 
   // Create polynomial basis.
-  const std::vector<Polynomials::Polynomial<double>>& lobatto_polynomials
+  const std::vector<Polynomials::Polynomial<double>> & lobatto_polynomials
     = Polynomials::Lobatto::generate_complete_basis(order + 1);
   std::vector<Polynomials::Polynomial<double>> lobatto_polynomials_grad(order
                                                                         + 1);
@@ -268,8 +268,8 @@ FE_Nedelec<2>::initialize_support_points(const unsigned int order)
       // If the polynomial degree is positive
       // we have support points on the faces
       // and in the interior of a cell.
-      const QGauss<dim>   quadrature(order + 1);
-      const unsigned int& n_interior_points = quadrature.size();
+      const QGauss<dim>    quadrature(order + 1);
+      const unsigned int & n_interior_points = quadrature.size();
 
       this->generalized_support_points.resize(n_boundary_points
                                               + n_interior_points);
@@ -319,7 +319,7 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
   const int dim = 3;
 
   // Create polynomial basis.
-  const std::vector<Polynomials::Polynomial<double>>& lobatto_polynomials
+  const std::vector<Polynomials::Polynomial<double>> & lobatto_polynomials
     = Polynomials::Lobatto::generate_complete_basis(order + 1);
   std::vector<Polynomials::Polynomial<double>> lobatto_polynomials_grad(order
                                                                         + 1);
@@ -329,9 +329,9 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
 
   // Initialize quadratures to obtain
   // quadrature points later on.
-  const QGauss<1>            reference_edge_quadrature(order + 1);
-  const unsigned int&        n_edge_points = reference_edge_quadrature.size();
-  const Quadrature<dim - 1>& edge_quadrature
+  const QGauss<1>             reference_edge_quadrature(order + 1);
+  const unsigned int &        n_edge_points = reference_edge_quadrature.size();
+  const Quadrature<dim - 1> & edge_quadrature
     = QProjector<dim - 1>::project_to_all_faces(reference_edge_quadrature);
 
   if(order > 0)
@@ -340,12 +340,12 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
       // we have support points on the edges,
       // faces and in the interior of a cell.
       const QGauss<dim - 1> reference_face_quadrature(order + 1);
-      const unsigned int&   n_face_points = reference_face_quadrature.size();
+      const unsigned int &  n_face_points = reference_face_quadrature.size();
       const unsigned int    n_boundary_points
         = GeometryInfo<dim>::lines_per_cell * n_edge_points
           + GeometryInfo<dim>::faces_per_cell * n_face_points;
-      const QGauss<dim>   quadrature(order + 1);
-      const unsigned int& n_interior_points = quadrature.size();
+      const QGauss<dim>    quadrature(order + 1);
+      const unsigned int & n_interior_points = quadrature.size();
 
       boundary_weights.reinit(n_edge_points + n_face_points,
                               2 * (order + 1) * order);
@@ -422,7 +422,7 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
               }
         }
 
-      const Quadrature<dim>& face_quadrature
+      const Quadrature<dim> & face_quadrature
         = QProjector<dim>::project_to_all_faces(reference_face_quadrature);
 
       for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
@@ -505,11 +505,11 @@ FE_Nedelec<dim>::initialize_restriction()
   // interpolate here, are discontinuous
   // we have to use more quadrature
   // points as in interpolate.
-  const QGauss<1>              edge_quadrature(2 * this->degree);
-  const std::vector<Point<1>>& edge_quadrature_points
+  const QGauss<1>               edge_quadrature(2 * this->degree);
+  const std::vector<Point<1>> & edge_quadrature_points
     = edge_quadrature.get_points();
-  const unsigned int& n_edge_quadrature_points = edge_quadrature.size();
-  const unsigned int  index = RefinementCase<dim>::isotropic_refinement - 1;
+  const unsigned int & n_edge_quadrature_points = edge_quadrature.size();
+  const unsigned int   index = RefinementCase<dim>::isotropic_refinement - 1;
 
   switch(dim)
     {
@@ -587,7 +587,7 @@ FE_Nedelec<dim>::initialize_restriction()
           if(this->degree > 1)
             {
               const unsigned int deg = this->degree - 1;
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 legendre_polynomials
                 = Polynomials::Legendre::generate_complete_basis(deg);
               FullMatrix<double> system_matrix_inv(deg, deg);
@@ -750,15 +750,15 @@ FE_Nedelec<dim>::initialize_restriction()
                         }
                   }
 
-              const QGauss<dim>              quadrature(2 * this->degree);
-              const std::vector<Point<dim>>& quadrature_points
+              const QGauss<dim>               quadrature(2 * this->degree);
+              const std::vector<Point<dim>> & quadrature_points
                 = quadrature.get_points();
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 lobatto_polynomials
                 = Polynomials::Lobatto::generate_complete_basis(this->degree);
               const unsigned int n_boundary_dofs
                 = GeometryInfo<dim>::faces_per_cell * this->degree;
-              const unsigned int& n_quadrature_points = quadrature.size();
+              const unsigned int & n_quadrature_points = quadrature.size();
 
               {
                 FullMatrix<double> assembling_matrix(
@@ -1028,7 +1028,7 @@ FE_Nedelec<dim>::initialize_restriction()
           if(this->degree > 1)
             {
               const unsigned int deg = this->degree - 1;
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 legendre_polynomials
                 = Polynomials::Legendre::generate_complete_basis(deg);
               FullMatrix<double> system_matrix_inv(deg, deg);
@@ -1257,15 +1257,15 @@ FE_Nedelec<dim>::initialize_restriction()
                           }
                     }
 
-              const QGauss<2>              face_quadrature(2 * this->degree);
-              const std::vector<Point<2>>& face_quadrature_points
+              const QGauss<2>               face_quadrature(2 * this->degree);
+              const std::vector<Point<2>> & face_quadrature_points
                 = face_quadrature.get_points();
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 lobatto_polynomials
                 = Polynomials::Lobatto::generate_complete_basis(this->degree);
               const unsigned int n_edge_dofs
                 = GeometryInfo<dim>::lines_per_cell * this->degree;
-              const unsigned int& n_face_quadrature_points
+              const unsigned int & n_face_quadrature_points
                 = face_quadrature.size();
 
               {
@@ -1641,13 +1641,13 @@ FE_Nedelec<dim>::initialize_restriction()
                             }
                   }
 
-              const QGauss<dim>              quadrature(2 * this->degree);
-              const std::vector<Point<dim>>& quadrature_points
+              const QGauss<dim>               quadrature(2 * this->degree);
+              const std::vector<Point<dim>> & quadrature_points
                 = quadrature.get_points();
               const unsigned int n_boundary_dofs
                 = 2 * GeometryInfo<dim>::faces_per_cell * deg * this->degree
                   + n_edge_dofs;
-              const unsigned int& n_quadrature_points = quadrature.size();
+              const unsigned int & n_quadrature_points = quadrature.size();
 
               {
                 FullMatrix<double> assembling_matrix(deg * deg * this->degree,
@@ -2386,10 +2386,10 @@ FE_Nedelec<dim>::has_support_on_face(const unsigned int shape_index,
 template <int dim>
 FiniteElementDomination::Domination
 FE_Nedelec<dim>::compare_for_face_domination(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> & fe_other) const
 {
-  if(const FE_Nedelec<dim>* fe_nedelec_other
-     = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
+  if(const FE_Nedelec<dim> * fe_nedelec_other
+     = dynamic_cast<const FE_Nedelec<dim> *>(&fe_other))
     {
       if(this->degree < fe_nedelec_other->degree)
         return FiniteElementDomination::this_element_dominates;
@@ -2398,8 +2398,8 @@ FE_Nedelec<dim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if(const FE_Nothing<dim> * fe_nothing
+          = dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       // TODO: ???
       // the FE_Nothing has no
@@ -2438,7 +2438,7 @@ FE_Nedelec<dim>::hp_constraints_are_implemented() const
 
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
-FE_Nedelec<dim>::hp_vertex_dof_identities(const FiniteElement<dim>&) const
+FE_Nedelec<dim>::hp_vertex_dof_identities(const FiniteElement<dim> &) const
 {
   // Nedelec elements do not have any dofs
   // on vertices, hence return an empty vector.
@@ -2448,14 +2448,14 @@ FE_Nedelec<dim>::hp_vertex_dof_identities(const FiniteElement<dim>&) const
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Nedelec<dim>::hp_line_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> & fe_other) const
 {
   // we can presently only compute these
   // identities if both FEs are
   // FE_Nedelec or if the other one is an
   // FE_Nothing
-  if(const FE_Nedelec<dim>* fe_nedelec_other
-     = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
+  if(const FE_Nedelec<dim> * fe_nedelec_other
+     = dynamic_cast<const FE_Nedelec<dim> *>(&fe_other))
     {
       // dofs are located on lines, so
       // two dofs are identical, if their
@@ -2471,7 +2471,7 @@ FE_Nedelec<dim>::hp_line_dof_identities(
       return identities;
     }
 
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -2490,14 +2490,14 @@ FE_Nedelec<dim>::hp_line_dof_identities(
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Nedelec<dim>::hp_quad_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> & fe_other) const
 {
   // we can presently only compute
   // these identities if both FEs are
   // FE_Nedelec or if the other one is an
   // FE_Nothing
-  if(const FE_Nedelec<dim>* fe_nedelec_other
-     = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
+  if(const FE_Nedelec<dim> * fe_nedelec_other
+     = dynamic_cast<const FE_Nedelec<dim> *>(&fe_other))
     {
       // dofs are located on the interior
       // of faces, so two dofs are identical,
@@ -2518,7 +2518,7 @@ FE_Nedelec<dim>::hp_quad_dof_identities(
       return identities;
     }
 
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -2544,14 +2544,14 @@ FE_Nedelec<dim>::hp_quad_dof_identities(
 template <int dim>
 void
 FE_Nedelec<dim>::get_face_interpolation_matrix(
-  const FiniteElement<dim>& source,
-  FullMatrix<double>&       interpolation_matrix) const
+  const FiniteElement<dim> & source,
+  FullMatrix<double> &       interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
   // Nedelec element
   AssertThrow((source.get_name().find("FE_Nedelec<") == 0)
-                || (dynamic_cast<const FE_Nedelec<dim>*>(&source) != nullptr),
+                || (dynamic_cast<const FE_Nedelec<dim> *>(&source) != nullptr),
               (typename FiniteElement<dim>::ExcInterpolationNotImplemented()));
   Assert(interpolation_matrix.m() == source.dofs_per_face,
          ExcDimensionMismatch(interpolation_matrix.m(), source.dofs_per_face));
@@ -2560,8 +2560,8 @@ FE_Nedelec<dim>::get_face_interpolation_matrix(
 
   // ok, source is a Nedelec element, so
   // we will be able to do the work
-  const FE_Nedelec<dim>& source_fe
-    = dynamic_cast<const FE_Nedelec<dim>&>(source);
+  const FE_Nedelec<dim> & source_fe
+    = dynamic_cast<const FE_Nedelec<dim> &>(source);
 
   // Make sure, that the element,
   // for which the DoFs should be
@@ -2616,9 +2616,9 @@ FE_Nedelec<dim>::get_face_interpolation_matrix(
 
 template <>
 void
-FE_Nedelec<1>::get_subface_interpolation_matrix(const FiniteElement<1, 1>&,
+FE_Nedelec<1>::get_subface_interpolation_matrix(const FiniteElement<1, 1> &,
                                                 const unsigned int,
-                                                FullMatrix<double>&) const
+                                                FullMatrix<double> &) const
 {
   Assert(false, ExcNotImplemented());
 }
@@ -2642,15 +2642,15 @@ FE_Nedelec<1>::get_subface_interpolation_matrix(const FiniteElement<1, 1>&,
 template <int dim>
 void
 FE_Nedelec<dim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim>& source,
-  const unsigned int        subface,
-  FullMatrix<double>&       interpolation_matrix) const
+  const FiniteElement<dim> & source,
+  const unsigned int         subface,
+  FullMatrix<double> &       interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
   // Nedelec element
   AssertThrow((source.get_name().find("FE_Nedelec<") == 0)
-                || (dynamic_cast<const FE_Nedelec<dim>*>(&source) != nullptr),
+                || (dynamic_cast<const FE_Nedelec<dim> *>(&source) != nullptr),
               typename FiniteElement<dim>::ExcInterpolationNotImplemented());
   Assert(interpolation_matrix.m() == source.dofs_per_face,
          ExcDimensionMismatch(interpolation_matrix.m(), source.dofs_per_face));
@@ -2659,8 +2659,8 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 
   // ok, source is a Nedelec element, so
   // we will be able to do the work
-  const FE_Nedelec<dim>& source_fe
-    = dynamic_cast<const FE_Nedelec<dim>&>(source);
+  const FE_Nedelec<dim> & source_fe
+    = dynamic_cast<const FE_Nedelec<dim> &>(source);
 
   // Make sure, that the element,
   // for which the DoFs should be
@@ -2678,10 +2678,10 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
   interpolation_matrix = 0.0;
   // Perform projection-based interpolation
   // as usual.
-  const QGauss<1>              edge_quadrature(source_fe.degree);
-  const std::vector<Point<1>>& edge_quadrature_points
+  const QGauss<1>               edge_quadrature(source_fe.degree);
+  const std::vector<Point<1>> & edge_quadrature_points
     = edge_quadrature.get_points();
-  const unsigned int& n_edge_quadrature_points = edge_quadrature.size();
+  const unsigned int & n_edge_quadrature_points = edge_quadrature.size();
 
   switch(dim)
     {
@@ -2701,7 +2701,7 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 
           if(source_fe.degree > 1)
             {
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 legendre_polynomials
                 = Polynomials::Legendre::generate_complete_basis(
                   source_fe.degree - 1);
@@ -2819,7 +2819,7 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 
           if(source_fe.degree > 1)
             {
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 legendre_polynomials
                 = Polynomials::Legendre::generate_complete_basis(
                   source_fe.degree - 1);
@@ -2935,16 +2935,16 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                           = solution(j, i);
                 }
 
-              const QGauss<2>              quadrature(source_fe.degree);
-              const std::vector<Point<2>>& quadrature_points
+              const QGauss<2>               quadrature(source_fe.degree);
+              const std::vector<Point<2>> & quadrature_points
                 = quadrature.get_points();
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 lobatto_polynomials
                 = Polynomials::Lobatto::generate_complete_basis(
                   source_fe.degree);
               const unsigned int n_boundary_dofs
                 = GeometryInfo<dim>::lines_per_face * source_fe.degree;
-              const unsigned int& n_quadrature_points = quadrature.size();
+              const unsigned int & n_quadrature_points = quadrature.size();
 
               {
                 FullMatrix<double> assembling_matrix(source_fe.degree
@@ -3085,10 +3085,10 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 }
 
 template <int dim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Nedelec<dim>::get_prolongation_matrix(
-  const unsigned int         child,
-  const RefinementCase<dim>& refinement_case) const
+  const unsigned int          child,
+  const RefinementCase<dim> & refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -3112,7 +3112,7 @@ FE_Nedelec<dim>::get_prolongation_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_Nedelec<dim>& this_nonconst = const_cast<FE_Nedelec<dim>&>(*this);
+      FE_Nedelec<dim> & this_nonconst = const_cast<FE_Nedelec<dim> &>(*this);
 
       // Reinit the vectors of
       // restriction and prolongation
@@ -3143,10 +3143,10 @@ FE_Nedelec<dim>::get_prolongation_matrix(
 }
 
 template <int dim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Nedelec<dim>::get_restriction_matrix(
-  const unsigned int         child,
-  const RefinementCase<dim>& refinement_case) const
+  const unsigned int          child,
+  const RefinementCase<dim> & refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -3173,7 +3173,7 @@ FE_Nedelec<dim>::get_restriction_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_Nedelec<dim>& this_nonconst = const_cast<FE_Nedelec<dim>&>(*this);
+      FE_Nedelec<dim> & this_nonconst = const_cast<FE_Nedelec<dim> &>(*this);
 
       // Reinit the vectors of
       // restriction and prolongation
@@ -3212,8 +3212,8 @@ FE_Nedelec<dim>::get_restriction_matrix(
 template <int dim>
 void
 FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
-  const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  const std::vector<Vector<double>> & support_point_values,
+  std::vector<double> &               nodal_values) const
 {
   const unsigned int deg = this->degree - 1;
   Assert(support_point_values.size() == this->generalized_support_points.size(),
@@ -3233,7 +3233,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
           // Let us begin with the
           // interpolation part.
           const QGauss<dim - 1> reference_edge_quadrature(this->degree);
-          const unsigned int& n_edge_points = reference_edge_quadrature.size();
+          const unsigned int & n_edge_points = reference_edge_quadrature.size();
 
           for(unsigned int i = 0; i < 2; ++i)
             for(unsigned int j = 0; j < 2; ++j)
@@ -3268,7 +3268,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // We start with projection
               // on the higher order edge
               // shape function.
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 lobatto_polynomials
                 = Polynomials::Lobatto::generate_complete_basis(this->degree);
               FullMatrix<double> system_matrix(this->degree - 1,
@@ -3347,10 +3347,10 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // horizontal and the
               // vertical, interior
               // shape functions.
-              const QGauss<dim>   reference_quadrature(this->degree);
-              const unsigned int& n_interior_points
+              const QGauss<dim>    reference_quadrature(this->degree);
+              const unsigned int & n_interior_points
                 = reference_quadrature.size();
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 legendre_polynomials
                 = Polynomials::Legendre::generate_complete_basis(this->degree
                                                                  - 1);
@@ -3508,8 +3508,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
         {
           // Let us begin with the
           // interpolation part.
-          const QGauss<1>     reference_edge_quadrature(this->degree);
-          const unsigned int& n_edge_points = reference_edge_quadrature.size();
+          const QGauss<1>      reference_edge_quadrature(this->degree);
+          const unsigned int & n_edge_points = reference_edge_quadrature.size();
 
           for(unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
             {
@@ -3558,7 +3558,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // We start with projection
               // on the higher order edge
               // shape function.
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 lobatto_polynomials
                 = Polynomials::Lobatto::generate_complete_basis(this->degree);
               FullMatrix<double> system_matrix(this->degree - 1,
@@ -3636,7 +3636,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // horizontal and the
               // vertical, shape
               // functions.
-              const std::vector<Polynomials::Polynomial<double>>&
+              const std::vector<Polynomials::Polynomial<double>> &
                 legendre_polynomials
                 = Polynomials::Legendre::generate_complete_basis(this->degree
                                                                  - 1);

@@ -40,7 +40,7 @@
 using namespace dealii;
 
 ConstraintMatrix
-make_constraint_matrix(const DoFHandler<2>& dof_handler, int version)
+make_constraint_matrix(const DoFHandler<2> & dof_handler, int version)
 {
   constexpr int    dim = 2;
   ConstraintMatrix constraints;
@@ -101,8 +101,8 @@ make_constraint_matrix(const DoFHandler<2>& dof_handler, int version)
   std::map<types::global_dof_index, Point<dim>> support_points;
   DoFTools::map_dofs_to_support_points(
     MappingQ<dim, dim>(1), dof_handler, support_points);
-  for(const auto& line : constraints.get_lines())
-    for(const auto& entry : line.entries)
+  for(const auto & line : constraints.get_lines())
+    for(const auto & entry : line.entries)
       deallog << "DoF " << line.index << " at " << support_points[line.index]
               << " is constrained to "
               << " DoF " << entry.first << " at " << support_points[entry.first]
@@ -117,7 +117,7 @@ public:
   PeriodicReference() : Function<dim>()
   {}
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const override
+  value(const Point<dim> & p, const unsigned int component = 0) const override
   {
     if(dim == 3)
       return std::sin(p(0) + 1.) * std::sin(p(1) + 2.) * std::sin(p(2) + 3.);
@@ -127,18 +127,18 @@ public:
 
 template <int dim>
 void
-get_point_value(const DoFHandler<dim>& dof_handler,
-                const Point<dim>&      point,
-                const Vector<double>&  solution,
-                Vector<double>&        value)
+get_point_value(const DoFHandler<dim> & dof_handler,
+                const Point<dim> &      point,
+                const Vector<double> &  solution,
+                Vector<double> &        value)
 {
   VectorTools::point_value(dof_handler, solution, point, value);
 }
 
 void
-check_periodicity(const DoFHandler<2>& dof_handler,
-                  Vector<double>&      solution,
-                  const unsigned int   cycle)
+check_periodicity(const DoFHandler<2> & dof_handler,
+                  Vector<double> &      solution,
+                  const unsigned int    cycle)
 {
   unsigned int n_points = 2;
   for(unsigned int i = 0; i < cycle; i++)
@@ -208,7 +208,7 @@ check_periodicity(const DoFHandler<2>& dof_handler,
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   initlog();
 

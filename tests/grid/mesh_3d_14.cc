@@ -32,7 +32,7 @@
 #include <deal.II/grid/tria_iterator.h>
 #include <deal.II/lac/vector.h>
 
-void check_this(Triangulation<3>& tria)
+void check_this(Triangulation<3> & tria)
 {
   QTrapez<2>         quadrature;
   FE_Q<3>            fe(1);
@@ -90,7 +90,7 @@ void check_this(Triangulation<3>& tria)
           }
 }
 
-void check(Triangulation<3>& tria)
+void check(Triangulation<3> & tria)
 {
   (++tria.begin_active())->set_refine_flag();
   tria.execute_coarsening_and_refinement();

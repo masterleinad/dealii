@@ -40,13 +40,13 @@ public:
    * @note Names will be added to the end of the current list.
    */
   void
-  add(const std::string& name);
+  add(const std::string & name);
 
   /**
    * Create the index vector pointing into the AnyData object.
    */
   void
-  initialize(const AnyData& data);
+  initialize(const AnyData & data);
 
   /**
    * The number of names in this object. This function may be used whether
@@ -83,7 +83,7 @@ NamedSelection::size() const
 }
 
 inline void
-NamedSelection::add(const std::string& s)
+NamedSelection::add(const std::string & s)
 {
   names.push_back(s);
 }

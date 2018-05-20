@@ -51,7 +51,7 @@ public:
   }
 
   void
-  vmult(Vector<double>& dst, const Vector<double>& src) const
+  vmult(Vector<double> & dst, const Vector<double> & src) const
   {
     dst = src;
     dst.scale(diagonal);

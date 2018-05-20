@@ -31,9 +31,9 @@
 // Test a given TESTEE object f on n_points points
 template <int dim, typename Number>
 void
-test_one_object(const TESTEE<dim>& f,
-                const unsigned int n_points,
-                const unsigned int n_component)
+test_one_object(const TESTEE<dim> & f,
+                const unsigned int  n_points,
+                const unsigned int  n_component)
 {
   // Create a vector of random points
   std::vector<Point<dim>> points(n_points);
@@ -108,8 +108,8 @@ test_one_object(const TESTEE<dim>& f,
 // Construct TESTEE with different constructor and test them
 template <int dim, typename Number>
 void
-test_constructor(const unsigned int         n_component,
-                 const std::vector<NUMBER>& component_data)
+test_constructor(const unsigned int          n_component,
+                 const std::vector<NUMBER> & component_data)
 {
   const unsigned int n_points(5);
 
@@ -180,7 +180,7 @@ test_constructor(const unsigned int         n_component,
 // test different number of vector components
 template <int dim, typename Number>
 void
-test_n_components(const std::vector<NUMBER>& component_data)
+test_n_components(const std::vector<NUMBER> & component_data)
 {
 #define N_COMPONENT_CASE 3
   const unsigned int components[N_COMPONENT_CASE] = {1, 4, 7};

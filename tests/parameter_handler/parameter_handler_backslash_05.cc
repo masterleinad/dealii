@@ -70,7 +70,7 @@ main()
           deallog << list_1 << std::endl;
           deallog << list_2 << std::endl;
         }
-      catch(ParameterHandler::ExcCannotParseLine& exc)
+      catch(ParameterHandler::ExcCannotParseLine & exc)
         {
           deallog << exc.get_exc_name() << std::endl;
           exc.print_info(deallog.get_file_stream());

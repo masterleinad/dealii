@@ -28,8 +28,8 @@ test(const unsigned int degree)
 {
   deallog << "FE_BDM<" << dim << "> (" << degree << ")" << std::endl;
 
-  FE_BDM<dim>               fe_rt(degree);
-  const FullMatrix<double>& constraints = fe_rt.constraints();
+  FE_BDM<dim>                fe_rt(degree);
+  const FullMatrix<double> & constraints = fe_rt.constraints();
 
   for(unsigned int i = 0; i < constraints.m(); ++i)
     {

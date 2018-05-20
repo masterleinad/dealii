@@ -27,9 +27,9 @@
 // column (well, we had to invent
 // something)
 void
-make_masks(const unsigned int            n,
-           Table<2, DoFTools::Coupling>& m1,
-           Table<2, DoFTools::Coupling>& m2)
+make_masks(const unsigned int             n,
+           Table<2, DoFTools::Coupling> & m1,
+           Table<2, DoFTools::Coupling> & m2)
 {
   m1.reinit(n, n);
   m2.reinit(n, n);
@@ -40,7 +40,7 @@ make_masks(const unsigned int            n,
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> & dof_handler)
 {
   Table<2, DoFTools::Coupling> mask_int;
   Table<2, DoFTools::Coupling> mask_ext;

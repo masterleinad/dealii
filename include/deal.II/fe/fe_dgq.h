@@ -133,8 +133,8 @@ public:
    * FiniteElement<dim>::ExcInterpolationNotImplemented is thrown.
    */
   virtual void
-  get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                           FullMatrix<double>& matrix) const override;
+  get_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                           FullMatrix<double> & matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -148,8 +148,8 @@ public:
    * FiniteElement<dim>::ExcInterpolationNotImplemented.
    */
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                FullMatrix<double>& matrix) const override;
+  get_face_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                                FullMatrix<double> & matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -163,9 +163,9 @@ public:
    * FiniteElement<dim>::ExcInterpolationNotImplemented.
    */
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
-                                   FullMatrix<double>& matrix) const override;
+  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                                   const unsigned int                   subface,
+                                   FullMatrix<double> & matrix) const override;
 
   /**
    * Projection from a fine grid space onto a coarse grid space. Overrides the
@@ -184,10 +184,10 @@ public:
    * Row and column indices are related to coarse grid and fine grid spaces,
    * respectively, consistent with the definition of the associated operator.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_restriction_matrix(
-    const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const unsigned int          child,
+    const RefinementCase<dim> & refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -211,10 +211,10 @@ public:
    * cells using this matrix array, zero elements in the prolongation matrix
    * are discarded and will not fill up the transfer matrix.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_prolongation_matrix(
-    const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const unsigned int          child,
+    const RefinementCase<dim> & refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -242,7 +242,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_vertex_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -253,7 +253,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_line_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -264,7 +264,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_quad_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
 
   /**
    * Return whether this element implements its hanging node constraints in
@@ -288,7 +288,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
 
   /**
    * @}
@@ -318,8 +318,8 @@ public:
    */
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    const std::vector<Vector<double>> & support_point_values,
+    std::vector<double> &               nodal_values) const override;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -344,7 +344,7 @@ protected:
    *
    * The degree of these polynomials is <tt>polynomials.size()-1</tt>.
    */
-  FE_DGQ(const std::vector<Polynomials::Polynomial<double>>& polynomials);
+  FE_DGQ(const std::vector<Polynomials::Polynomial<double>> & polynomials);
 
 private:
   /**
@@ -373,8 +373,8 @@ private:
    * either.
    */
   void
-  rotate_indices(std::vector<unsigned int>& indices,
-                 const char                 direction) const;
+  rotate_indices(std::vector<unsigned int> & indices,
+                 const char                  direction) const;
 
   /*
    * Mutex for protecting initialization of restriction and embedding matrix.
@@ -420,7 +420,7 @@ public:
    * <tt>points</tt>. The degree of these polynomials is
    * <tt>points.size()-1</tt>.
    */
-  FE_DGQArbitraryNodes(const Quadrature<1>& points);
+  FE_DGQArbitraryNodes(const Quadrature<1> & points);
 
   /**
    * Return a string that uniquely identifies a finite element. This class
@@ -439,8 +439,8 @@ public:
    */
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    const std::vector<Vector<double>> & support_point_values,
+    std::vector<double> &               nodal_values) const override;
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;
 };

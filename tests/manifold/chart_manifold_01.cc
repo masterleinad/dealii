@@ -38,19 +38,19 @@ public:
   }
 
   virtual Point<spacedim>
-  pull_back(const Point<spacedim>& space_point) const override
+  pull_back(const Point<spacedim> & space_point) const override
   {
     return space_point;
   }
 
   virtual Point<spacedim>
-  push_forward(const Point<spacedim>& chart_point) const override
+  push_forward(const Point<spacedim> & chart_point) const override
   {
     return chart_point;
   }
 
   virtual DerivativeForm<1, spacedim, spacedim>
-  push_forward_gradient(const Point<spacedim>& chart_point) const override
+  push_forward_gradient(const Point<spacedim> & chart_point) const override
   {
     DerivativeForm<1, spacedim, spacedim> x;
     for(unsigned int d = 0; d < spacedim; ++d)

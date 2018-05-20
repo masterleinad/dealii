@@ -37,10 +37,10 @@
 // .cc files
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler);
+check_this(const DoFHandler<dim> & dof_handler);
 
 void
-output_vector(std::vector<bool>& v)
+output_vector(std::vector<bool> & v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     deallog << (v[i] ? '1' : '0');
@@ -48,7 +48,7 @@ output_vector(std::vector<bool>& v)
 }
 
 void
-output_vector(std::vector<unsigned int>& v)
+output_vector(std::vector<unsigned int> & v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << v[i];
@@ -57,7 +57,7 @@ output_vector(std::vector<unsigned int>& v)
 
 template <int dim>
 void
-check(const Triangulation<dim>& tria, const FiniteElement<dim>& fe)
+check(const Triangulation<dim> & tria, const FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -70,7 +70,7 @@ check(const Triangulation<dim>& tria, const FiniteElement<dim>& fe)
 
 template <int dim>
 void
-check_grid(const Triangulation<dim>& tr)
+check_grid(const Triangulation<dim> & tr)
 {
   FE_Q<dim> q1(1);
   check(tr, q1);

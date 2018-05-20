@@ -44,7 +44,8 @@ test();
 
 template <int dim>
 void
-do_check(const FiniteElement<dim>& coarse_fe, const FiniteElement<dim>& fine_fe)
+do_check(const FiniteElement<dim> & coarse_fe,
+         const FiniteElement<dim> & fine_fe)
 {
   FullMatrix<double> injection_1(fine_fe.dofs_per_cell,
                                  coarse_fe.dofs_per_cell);

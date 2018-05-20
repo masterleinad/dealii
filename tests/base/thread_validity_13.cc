@@ -34,23 +34,23 @@ public:
   {}
 
   // delete the copy constructor
-  X(const X&) = delete;
+  X(const X &) = delete;
 
   // move constructor. sets the moved-from value to a recognizable
   // value
-  X(X&& x)
+  X(X && x)
   {
     value   = x.value;
     x.value = 0;
   }
 
   // same idea about copy operators
-  X&
-  operator=(const X&)
+  X &
+  operator=(const X &)
     = delete;
 
-  X&
-  operator=(X&& x)
+  X &
+  operator=(X && x)
   {
     value   = x.value;
     x.value = 0;

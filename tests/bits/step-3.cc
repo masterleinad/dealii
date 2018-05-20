@@ -124,7 +124,7 @@ LaplaceProblem::assemble_system()
     {
       x_fe_values.reinit(cell);
 
-      const FEValues<2>& fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<2> & fe_values = x_fe_values.get_present_fe_values();
 
       cell_matrix = 0;
       cell_rhs    = 0;

@@ -77,7 +77,7 @@ test()
           for(unsigned int q = 0; q < quad.size(); ++q)
             integral += fe_val.JxW(q);
         }
-      catch(ExceptionBase& e)
+      catch(ExceptionBase & e)
         {
           deallog << e.get_exc_name() << std::endl;
         }

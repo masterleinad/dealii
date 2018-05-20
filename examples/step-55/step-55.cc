@@ -103,29 +103,29 @@ namespace Step55
     class InverseMatrix : public Subscriptor
     {
     public:
-      InverseMatrix(const Matrix& m, const Preconditioner& preconditioner);
+      InverseMatrix(const Matrix & m, const Preconditioner & preconditioner);
 
       template <typename VectorType>
       void
-      vmult(VectorType& dst, const VectorType& src) const;
+      vmult(VectorType & dst, const VectorType & src) const;
 
     private:
       const SmartPointer<const Matrix> matrix;
-      const Preconditioner&            preconditioner;
+      const Preconditioner &           preconditioner;
     };
 
     template <class Matrix, class Preconditioner>
     InverseMatrix<Matrix, Preconditioner>::InverseMatrix(
-      const Matrix&         m,
-      const Preconditioner& preconditioner)
+      const Matrix &         m,
+      const Preconditioner & preconditioner)
       : matrix(&m), preconditioner(preconditioner)
     {}
 
     template <class Matrix, class Preconditioner>
     template <typename VectorType>
     void
-    InverseMatrix<Matrix, Preconditioner>::vmult(VectorType&       dst,
-                                                 const VectorType& src) const
+    InverseMatrix<Matrix, Preconditioner>::vmult(VectorType &       dst,
+                                                 const VectorType & src) const
     {
       SolverControl solver_control(src.size(), 1e-8 * src.l2_norm());
       SolverCG<LA::MPI::Vector> cg(solver_control);
@@ -135,7 +135,7 @@ namespace Step55
         {
           cg.solve(*matrix, dst, src, preconditioner);
         }
-      catch(std::exception& e)
+      catch(std::exception & e)
         {
           Assert(false, ExcMessage(e.what()));
         }
@@ -147,29 +147,29 @@ namespace Step55
     class BlockDiagonalPreconditioner : public Subscriptor
     {
     public:
-      BlockDiagonalPreconditioner(const PreconditionerA& preconditioner_A,
-                                  const PreconditionerS& preconditioner_S);
+      BlockDiagonalPreconditioner(const PreconditionerA & preconditioner_A,
+                                  const PreconditionerS & preconditioner_S);
 
       void
-      vmult(LA::MPI::BlockVector& dst, const LA::MPI::BlockVector& src) const;
+      vmult(LA::MPI::BlockVector & dst, const LA::MPI::BlockVector & src) const;
 
     private:
-      const PreconditionerA& preconditioner_A;
-      const PreconditionerS& preconditioner_S;
+      const PreconditionerA & preconditioner_A;
+      const PreconditionerS & preconditioner_S;
     };
 
     template <class PreconditionerA, class PreconditionerS>
     BlockDiagonalPreconditioner<PreconditionerA, PreconditionerS>::
-      BlockDiagonalPreconditioner(const PreconditionerA& preconditioner_A,
-                                  const PreconditionerS& preconditioner_S)
+      BlockDiagonalPreconditioner(const PreconditionerA & preconditioner_A,
+                                  const PreconditionerS & preconditioner_S)
       : preconditioner_A(preconditioner_A), preconditioner_S(preconditioner_S)
     {}
 
     template <class PreconditionerA, class PreconditionerS>
     void
     BlockDiagonalPreconditioner<PreconditionerA, PreconditionerS>::vmult(
-      LA::MPI::BlockVector&       dst,
-      const LA::MPI::BlockVector& src) const
+      LA::MPI::BlockVector &       dst,
+      const LA::MPI::BlockVector & src) const
     {
       preconditioner_A.vmult(dst.block(0), src.block(0));
       preconditioner_S.vmult(dst.block(1), src.block(1));
@@ -190,13 +190,13 @@ namespace Step55
     {}
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& value) const override;
+    vector_value(const Point<dim> & p, Vector<double> & value) const override;
   };
 
   template <int dim>
   void
-  RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+  RightHandSide<dim>::vector_value(const Point<dim> & p,
+                                   Vector<double> &   values) const
   {
     const double R_x = p[0];
     const double R_y = p[1];
@@ -226,13 +226,13 @@ namespace Step55
     {}
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& value) const override;
+    vector_value(const Point<dim> & p, Vector<double> & value) const override;
   };
 
   template <int dim>
   void
-  ExactSolution<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+  ExactSolution<dim>::vector_value(const Point<dim> & p,
+                                   Vector<double> &   values) const
   {
     const double R_x = p[0];
     const double R_y = p[1];
@@ -829,7 +829,7 @@ namespace Step55
 } // namespace Step55
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   try
     {
@@ -841,7 +841,7 @@ main(int argc, char* argv[])
       StokesProblem<2> problem(2);
       problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

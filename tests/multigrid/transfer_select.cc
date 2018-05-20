@@ -34,11 +34,11 @@ using namespace std;
 
 template <int dim>
 void
-check_select(const FiniteElement<dim>& fe,
-             unsigned int              selected,
-             unsigned int              mg_selected,
-             std::vector<unsigned int> target_component,
-             std::vector<unsigned int> mg_target_component)
+check_select(const FiniteElement<dim> & fe,
+             unsigned int               selected,
+             unsigned int               mg_selected,
+             std::vector<unsigned int>  target_component,
+             std::vector<unsigned int>  mg_target_component)
 {
   deallog << fe.get_name() << " select " << selected << " (global) and "
           << mg_selected << " (mg)" << std::endl;
@@ -47,11 +47,11 @@ check_select(const FiniteElement<dim>& fe,
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  DoFHandler<dim>  mgdof(tr);
-  DoFHandler<dim>& dof = mgdof;
+  DoFHandler<dim>   mgdof(tr);
+  DoFHandler<dim> & dof = mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
-  DoFRenumbering::component_wise(static_cast<DoFHandler<dim>&>(mgdof),
+  DoFRenumbering::component_wise(static_cast<DoFHandler<dim> &>(mgdof),
                                  target_component);
   vector<types::global_dof_index> ndofs(
     *std::max_element(target_component.begin(), target_component.end()) + 1);

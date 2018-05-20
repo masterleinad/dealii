@@ -46,7 +46,7 @@ struct Evaluation
 };
 
 void
-initialize(Evaluation& eval)
+initialize(Evaluation & eval)
 {
   eval.is_cartesian     = true;
   eval.cartesian_weight = random_value<double>();
@@ -93,7 +93,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
   deallog << std::setprecision(4);

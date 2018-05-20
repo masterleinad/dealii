@@ -28,7 +28,7 @@ using namespace std;
 
 template <int dim, class PolynomialType>
 void
-check_point(const Point<dim>& x, const PolynomialType& p)
+check_point(const Point<dim> & x, const PolynomialType & p)
 {
   const unsigned int          n = p.n();
   std::vector<Tensor<1, dim>> values(n);

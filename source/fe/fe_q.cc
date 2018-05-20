@@ -61,7 +61,7 @@ FE_Q<dim, spacedim>::FE_Q(const unsigned int degree)
 }
 
 template <int dim, int spacedim>
-FE_Q<dim, spacedim>::FE_Q(const Quadrature<1>& points)
+FE_Q<dim, spacedim>::FE_Q(const Quadrature<1> & points)
   : FE_Q_Base<TensorProductPolynomials<dim>, dim, spacedim>(
       TensorProductPolynomials<dim>(
         Polynomials::generate_complete_Lagrange_basis(points.get_points())),
@@ -133,8 +133,8 @@ FE_Q<dim, spacedim>::get_name() const
 template <int dim, int spacedim>
 void
 FE_Q<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
-  const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_values) const
+  const std::vector<Vector<double>> & support_point_values,
+  std::vector<double> &               nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());

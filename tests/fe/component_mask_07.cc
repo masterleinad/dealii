@@ -43,7 +43,7 @@ test()
       Assert(ComponentMask(12, true).first_selected_component(13) == 0,
              ExcInternalError());
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -54,7 +54,7 @@ test()
       Assert(ComponentMask(12, false).first_selected_component() == 0,
              ExcInternalError());
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

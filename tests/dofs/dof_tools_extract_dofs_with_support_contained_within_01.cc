@@ -33,7 +33,7 @@
 
 template <int dim>
 bool
-pred_d(const typename DoFHandler<dim>::active_cell_iterator& cell)
+pred_d(const typename DoFHandler<dim>::active_cell_iterator & cell)
 {
   return (cell->center()(0) < 0.49 && cell->center()(1) < 0.49);
 }
@@ -73,7 +73,7 @@ test(const unsigned int flag)
 
   IndexSet support = DoFTools::extract_dofs_with_support_contained_within(
     dh,
-    std::function<bool(const typename DoFHandler<dim>::active_cell_iterator&)>(
+    std::function<bool(const typename DoFHandler<dim>::active_cell_iterator &)>(
       &pred_d<dim>),
     cm);
   support.print(deallog);
@@ -114,7 +114,7 @@ test(const unsigned int flag)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 

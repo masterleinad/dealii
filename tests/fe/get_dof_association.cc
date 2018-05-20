@@ -23,7 +23,7 @@
 
 template <int dim>
 void
-test(const FiniteElement<dim>& fe)
+test(const FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl;
 

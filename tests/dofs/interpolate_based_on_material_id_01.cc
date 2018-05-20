@@ -42,7 +42,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int) const
+  value(const Point<dim> & p, const unsigned int) const
   {
     double v = 0;
     for(unsigned int d = 0; d < dim; ++d)
@@ -62,7 +62,7 @@ test()
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(3);
-  std::map<types::material_id, const Function<dim>*> functions;
+  std::map<types::material_id, const Function<dim> *> functions;
   for(typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
       cell != triangulation.end();
@@ -95,7 +95,7 @@ test()
         }
     }
 
-  for(typename std::map<types::material_id, const Function<dim>*>::iterator p
+  for(typename std::map<types::material_id, const Function<dim> *>::iterator p
       = functions.begin();
       p != functions.end();
       ++p)

@@ -40,10 +40,10 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
-void colorize_sixty_deg_hyper_shell(Triangulation<3>& tria,
-                                    const Point<3>&   center,
-                                    const double      inner_radius,
-                                    const double      outer_radius)
+void colorize_sixty_deg_hyper_shell(Triangulation<3> & tria,
+                                    const Point<3> &   center,
+                                    const double       inner_radius,
+                                    const double       outer_radius)
 {
   //    if (tria.n_cells() != 4)
   //      AssertThrow (false, ExcNotImplemented());
@@ -132,10 +132,10 @@ void colorize_sixty_deg_hyper_shell(Triangulation<3>& tria,
       }
 }
 
-void sixty_deg_hyper_shell(Triangulation<3>& tria,
-                           const Point<3>&   center,
-                           const double      inner_radius,
-                           const double      outer_radius)
+void sixty_deg_hyper_shell(Triangulation<3> & tria,
+                           const Point<3> &   center,
+                           const double       inner_radius,
+                           const double       outer_radius)
 {
   const double r0 = inner_radius;
   const double r1 = outer_radius;

@@ -48,13 +48,13 @@ public:
   }
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> & p, const unsigned int component) const
   {
     return 100 * (component + 1) * p.square() * std::sin(p.square()) * scaling;
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const
+  vector_value(const Point<dim> & p, Vector<double> & values) const
   {
     for(unsigned int d = 0; d < this->n_components; ++d)
       values(d) = value(p, d);
@@ -65,22 +65,22 @@ private:
 };
 
 template <int dim>
-const Quadrature<dim - 1>&
-boundary_q(const DoFHandler<dim>&)
+const Quadrature<dim - 1> &
+boundary_q(const DoFHandler<dim> &)
 {
   static const QGauss<dim - 1> q(4);
   return q;
 }
 
-const Quadrature<0>&
-boundary_q(const DoFHandler<1>&)
+const Quadrature<0> &
+boundary_q(const DoFHandler<1> &)
 {
-  static const Quadrature<0>* q = nullptr;
+  static const Quadrature<0> * q = nullptr;
   return *q;
 }
 
 void
-write_map(const std::map<types::global_dof_index, double>& bv)
+write_map(const std::map<types::global_dof_index, double> & bv)
 {
   for(std::map<types::global_dof_index, double>::const_iterator i = bv.begin();
       i != bv.end();
@@ -118,8 +118,8 @@ check()
 
   // list of finite elements for which we want check, and associated list of
   // boundary value functions
-  std::vector<const FiniteElement<dim>*> fe_list;
-  std::vector<MySquareFunction<dim>*>    function_list;
+  std::vector<const FiniteElement<dim> *> fe_list;
+  std::vector<MySquareFunction<dim> *>    function_list;
 
   // FE1: a system of a quadratic and a linear element
   fe_list.push_back(new FESystem<dim>(FE_Q<dim>(2), 1, FE_Q<dim>(1), 1));
@@ -139,7 +139,7 @@ check()
       for(unsigned int i = 0; i < fe_list.size(); ++i)
         {
           function_list[i]->set_scaling(factors[it]);
-          const FiniteElement<dim>& fe = *fe_list[i];
+          const FiniteElement<dim> & fe = *fe_list[i];
 
           DoFHandler<dim> dof(tr);
           dof.distribute_dofs(fe);

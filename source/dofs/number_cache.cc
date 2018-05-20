@@ -36,8 +36,8 @@ namespace internal
     {}
 
     NumberCache::NumberCache(
-      const std::vector<IndexSet>& locally_owned_dofs_per_processor,
-      const unsigned int           my_rank)
+      const std::vector<IndexSet> & locally_owned_dofs_per_processor,
+      const unsigned int            my_rank)
       : locally_owned_dofs_per_processor(locally_owned_dofs_per_processor)
     {
       const unsigned int n_procs = locally_owned_dofs_per_processor.size();

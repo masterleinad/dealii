@@ -41,11 +41,11 @@
 
 template <class SOLVER, class MATRIX, class VECTOR, class PRECONDITION>
 void
-check_solve(SOLVER&             solver,
-            const MATRIX&       A,
-            VECTOR&             u,
-            VECTOR&             f,
-            const PRECONDITION& P)
+check_solve(SOLVER &             solver,
+            const MATRIX &       A,
+            VECTOR &             u,
+            VECTOR &             f,
+            const PRECONDITION & P)
 {
   deallog << "Solver type: " << typeid(solver).name() << std::endl;
 
@@ -55,7 +55,7 @@ check_solve(SOLVER&             solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(std::exception& e)
+  catch(std::exception & e)
     {
       std::cout << e.what() << std::endl;
       deallog << e.what() << std::endl;
@@ -67,7 +67,7 @@ check_solve(SOLVER&             solver,
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
   deallog << std::setprecision(4);

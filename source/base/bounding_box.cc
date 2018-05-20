@@ -19,7 +19,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int spacedim, typename Number>
 bool
 BoundingBox<spacedim, Number>::point_inside(
-  const Point<spacedim, Number>& p) const
+  const Point<spacedim, Number> & p) const
 {
   for(unsigned int i = 0; i < spacedim; ++i)
     {
@@ -40,7 +40,7 @@ BoundingBox<spacedim, Number>::point_inside(
 template <int spacedim, typename Number>
 void
 BoundingBox<spacedim, Number>::merge_with(
-  const BoundingBox<spacedim, Number>& other_bbox)
+  const BoundingBox<spacedim, Number> & other_bbox)
 {
   for(unsigned int i = 0; i < spacedim; ++i)
     {
@@ -54,7 +54,7 @@ BoundingBox<spacedim, Number>::merge_with(
 template <int spacedim, typename Number>
 NeighborType
 BoundingBox<spacedim, Number>::get_neighbor_type(
-  const BoundingBox<spacedim, Number>& other_bbox) const
+  const BoundingBox<spacedim, Number> & other_bbox) const
 {
   if(spacedim == 1)
     {
@@ -140,7 +140,7 @@ BoundingBox<spacedim, Number>::get_neighbor_type(
 }
 
 template <int spacedim, typename Number>
-const std::pair<Point<spacedim, Number>, Point<spacedim, Number>>&
+const std::pair<Point<spacedim, Number>, Point<spacedim, Number>> &
 BoundingBox<spacedim, Number>::get_boundary_points() const
 {
   return this->boundary_points;

@@ -91,12 +91,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> & p, const unsigned int component) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> & p,
                           const unsigned int /*component*/) const
 {
   double product = 1;

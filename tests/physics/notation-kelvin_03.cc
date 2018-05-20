@@ -29,20 +29,20 @@ using namespace dealii;
 using namespace dealii::Physics;
 
 template <int dim, typename Number>
-void initialize(Tensor<0, dim, Number>& x)
+void initialize(Tensor<0, dim, Number> & x)
 {
   x = 1.0;
 }
 
 template <int dim, typename Number>
-void initialize(Tensor<1, dim, Number>& x)
+void initialize(Tensor<1, dim, Number> & x)
 {
   for(unsigned int i = 0; i < x.n_independent_components; ++i)
     x[i] = 1.0;
 }
 
 template <int dim, typename Number>
-void initialize(Tensor<2, dim, Number>& x)
+void initialize(Tensor<2, dim, Number> & x)
 {
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
@@ -52,7 +52,7 @@ void initialize(Tensor<2, dim, Number>& x)
 }
 
 template <int dim, typename Number>
-void initialize(SymmetricTensor<2, dim, Number>& x)
+void initialize(SymmetricTensor<2, dim, Number> & x)
 {
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = i; j < dim; ++j)
@@ -62,7 +62,7 @@ void initialize(SymmetricTensor<2, dim, Number>& x)
 }
 
 template <int dim, typename Number>
-void initialize(Tensor<3, dim, Number>& x)
+void initialize(Tensor<3, dim, Number> & x)
 {
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
@@ -73,7 +73,7 @@ void initialize(Tensor<3, dim, Number>& x)
 }
 
 template <int dim, typename Number>
-void initialize(Tensor<4, dim, Number>& x)
+void initialize(Tensor<4, dim, Number> & x)
 {
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = 0; j < dim; ++j)
@@ -85,7 +85,7 @@ void initialize(Tensor<4, dim, Number>& x)
 }
 
 template <int dim, typename Number>
-void initialize(SymmetricTensor<4, dim, Number>& x)
+void initialize(SymmetricTensor<4, dim, Number> & x)
 {
   for(unsigned int i = 0; i < dim; ++i)
     for(unsigned int j = i; j < dim; ++j)

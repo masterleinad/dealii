@@ -70,25 +70,25 @@ namespace Algorithms
      * Constructor, receiving the applications computing the residual and
      * solving the linear problem, respectively.
      */
-    Newton(OperatorBase& residual, OperatorBase& inverse_derivative);
+    Newton(OperatorBase & residual, OperatorBase & inverse_derivative);
 
     /**
      * Declare the parameters applicable to Newton's method.
      */
     static void
-    declare_parameters(ParameterHandler& param);
+    declare_parameters(ParameterHandler & param);
 
     /**
      * Read the parameters in the ParameterHandler.
      */
     void
-    parse_parameters(ParameterHandler& param);
+    parse_parameters(ParameterHandler & param);
 
     /**
      * Initialize the pointer data_out for debugging.
      */
     void
-    initialize(OutputOperator<VectorType>& output);
+    initialize(OutputOperator<VectorType> & output);
 
     /**
      * The actual Newton iteration. The initial value is in <tt>out(0)</tt>,
@@ -97,10 +97,10 @@ namespace Algorithms
      * #residual and #inverse_derivative.
      */
     virtual void
-    operator()(AnyData& out, const AnyData& in) override;
+    operator()(AnyData & out, const AnyData & in) override;
 
     virtual void
-    notify(const Event&) override;
+    notify(const Event &) override;
 
     /**
      * Set the maximal residual reduction allowed without triggering

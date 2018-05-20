@@ -23,11 +23,11 @@
 
 template <int spacedim>
 void
-test(const unsigned int& size)
+test(const unsigned int & size)
 {
   std::vector<BoundingBox<spacedim>> b_boxes(size);
 
-  for(auto& b : b_boxes)
+  for(auto & b : b_boxes)
     {
       auto p1 = random_point<spacedim>();
       auto p2 = p1;
@@ -42,10 +42,10 @@ test(const unsigned int& size)
 
   unsigned int i  = 0;
   bool         ok = true;
-  for(auto& b : b_boxes)
+  for(auto & b : b_boxes)
     {
-      const auto& b_points = b.get_boundary_points();
-      const auto& u_points = unpacked[i++].get_boundary_points();
+      const auto & b_points = b.get_boundary_points();
+      const auto & u_points = unpacked[i++].get_boundary_points();
       if(b_points.first.distance(u_points.first) > 1e-12)
         {
           deallog << "NOT OK: " << b_points.first << " != " << u_points.first

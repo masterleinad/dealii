@@ -29,24 +29,24 @@ DEAL_II_NAMESPACE_OPEN
 template <>
 void
 FE_Poly<TensorProductPolynomials<1>, 1, 2>::fill_fe_values(
-  const Triangulation<1, 2>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<1>&                   quadrature,
-  const Mapping<1, 2>&                   mapping,
-  const Mapping<1, 2>::InternalDataBase& mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<1, 2>&
-                                               mapping_data,
-  const FiniteElement<1, 2>::InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1, 2>&
+  const Triangulation<1, 2>::cell_iterator &,
+  const CellSimilarity::Similarity        cell_similarity,
+  const Quadrature<1> &                   quadrature,
+  const Mapping<1, 2> &                   mapping,
+  const Mapping<1, 2>::InternalDataBase & mapping_internal,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<1, 2> &
+                                                mapping_data,
+  const FiniteElement<1, 2>::InternalDataBase & fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1, 2> &
     output_data) const
 {
   // convert data object to internal
   // data for this class. fails with
   // an exception if that is not
   // possible
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData & fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when
@@ -95,22 +95,22 @@ FE_Poly<TensorProductPolynomials<1>, 1, 2>::fill_fe_values(
 template <>
 void
 FE_Poly<TensorProductPolynomials<2>, 2, 3>::fill_fe_values(
-  const Triangulation<2, 3>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<2>&                   quadrature,
-  const Mapping<2, 3>&                   mapping,
-  const Mapping<2, 3>::InternalDataBase& mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 3>&
-                                               mapping_data,
-  const FiniteElement<2, 3>::InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 3>&
+  const Triangulation<2, 3>::cell_iterator &,
+  const CellSimilarity::Similarity        cell_similarity,
+  const Quadrature<2> &                   quadrature,
+  const Mapping<2, 3> &                   mapping,
+  const Mapping<2, 3>::InternalDataBase & mapping_internal,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 3> &
+                                                mapping_data,
+  const FiniteElement<2, 3>::InternalDataBase & fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 3> &
     output_data) const
 {
   // assert that the following dynamics
   // cast is really well-defined.
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData & fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when
@@ -159,15 +159,15 @@ FE_Poly<TensorProductPolynomials<2>, 2, 3>::fill_fe_values(
 template <>
 void
 FE_Poly<PolynomialSpace<1>, 1, 2>::fill_fe_values(
-  const Triangulation<1, 2>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<1>&                   quadrature,
-  const Mapping<1, 2>&                   mapping,
-  const Mapping<1, 2>::InternalDataBase& mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<1, 2>&
-                                               mapping_data,
-  const FiniteElement<1, 2>::InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1, 2>&
+  const Triangulation<1, 2>::cell_iterator &,
+  const CellSimilarity::Similarity        cell_similarity,
+  const Quadrature<1> &                   quadrature,
+  const Mapping<1, 2> &                   mapping,
+  const Mapping<1, 2>::InternalDataBase & mapping_internal,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<1, 2> &
+                                                mapping_data,
+  const FiniteElement<1, 2>::InternalDataBase & fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<1, 2> &
     output_data) const
 {
   // convert data object to internal
@@ -175,9 +175,9 @@ FE_Poly<PolynomialSpace<1>, 1, 2>::fill_fe_values(
   // an exception if that is not
   // possible
 
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData & fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when
@@ -226,20 +226,20 @@ FE_Poly<PolynomialSpace<1>, 1, 2>::fill_fe_values(
 template <>
 void
 FE_Poly<PolynomialSpace<2>, 2, 3>::fill_fe_values(
-  const Triangulation<2, 3>::cell_iterator&,
-  const CellSimilarity::Similarity       cell_similarity,
-  const Quadrature<2>&                   quadrature,
-  const Mapping<2, 3>&                   mapping,
-  const Mapping<2, 3>::InternalDataBase& mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 3>&
-                                               mapping_data,
-  const FiniteElement<2, 3>::InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 3>&
+  const Triangulation<2, 3>::cell_iterator &,
+  const CellSimilarity::Similarity        cell_similarity,
+  const Quadrature<2> &                   quadrature,
+  const Mapping<2, 3> &                   mapping,
+  const Mapping<2, 3>::InternalDataBase & mapping_internal,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 3> &
+                                                mapping_data,
+  const FiniteElement<2, 3>::InternalDataBase & fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 3> &
     output_data) const
 {
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData & fe_data = static_cast<const InternalData &>(fe_internal);
 
   // transform gradients and higher derivatives. there is nothing to do
   // for values since we already emplaced them into output_data when

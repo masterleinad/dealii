@@ -33,7 +33,7 @@
 using namespace dealii;
 
 void
-print_patches(const SparsityPattern& bl)
+print_patches(const SparsityPattern & bl)
 {
   for(unsigned int i = 0; i < bl.n_rows(); ++i)
     {
@@ -52,8 +52,8 @@ print_patches(const SparsityPattern& bl)
 
 template <class TR>
 void
-test_global_refinement(
-  void (*test_block_list)(const TR& tr, const FiniteElement<TR::dimension>& fe))
+test_global_refinement(void (
+  *test_block_list)(const TR & tr, const FiniteElement<TR::dimension> & fe))
 {
   const unsigned int dim = TR::dimension;
   TR trc(Triangulation<dim>::limit_level_difference_at_vertices);
@@ -94,8 +94,8 @@ test_global_refinement(
 template <int dim>
 void
 test_global_refinement_parallel(
-  void (*test_block_list)(const parallel::distributed::Triangulation<dim>& tr,
-                          const FiniteElement<dim>&                        fe))
+  void (*test_block_list)(const parallel::distributed::Triangulation<dim> & tr,
+                          const FiniteElement<dim> &                        fe))
 {
   parallel::distributed::Triangulation<dim> trl(
     MPI_COMM_WORLD,

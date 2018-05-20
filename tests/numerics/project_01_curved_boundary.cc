@@ -43,7 +43,7 @@ class F : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim>& p, const unsigned int = 0) const
+  value(const Point<dim> & p, const unsigned int = 0) const
   {
     // compute the linfty norm of p
     double m = 0;

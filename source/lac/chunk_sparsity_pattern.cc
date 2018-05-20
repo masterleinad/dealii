@@ -24,7 +24,7 @@ ChunkSparsityPattern::ChunkSparsityPattern()
   reinit(0, 0, 0, 1);
 }
 
-ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern& s)
+ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern & s)
   : Subscriptor(),
     chunk_size(s.chunk_size),
     sparsity_pattern(s.sparsity_pattern)
@@ -49,10 +49,10 @@ ChunkSparsityPattern::ChunkSparsityPattern(const size_type m,
 }
 
 ChunkSparsityPattern::ChunkSparsityPattern(
-  const size_type               m,
-  const size_type               n,
-  const std::vector<size_type>& row_lengths,
-  const size_type               chunk_size)
+  const size_type                m,
+  const size_type                n,
+  const std::vector<size_type> & row_lengths,
+  const size_type                chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
@@ -67,17 +67,17 @@ ChunkSparsityPattern::ChunkSparsityPattern(const size_type n,
 }
 
 ChunkSparsityPattern::ChunkSparsityPattern(
-  const size_type               m,
-  const std::vector<size_type>& row_lengths,
-  const size_type               chunk_size)
+  const size_type                m,
+  const std::vector<size_type> & row_lengths,
+  const size_type                chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
   reinit(m, m, row_lengths, chunk_size);
 }
 
-ChunkSparsityPattern&
-ChunkSparsityPattern::operator=(const ChunkSparsityPattern& s)
+ChunkSparsityPattern &
+ChunkSparsityPattern::operator=(const ChunkSparsityPattern & s)
 {
   Assert(
     s.rows == 0 && s.cols == 0,
@@ -110,10 +110,10 @@ ChunkSparsityPattern::reinit(const size_type m,
 
 void
 ChunkSparsityPattern::reinit(
-  const size_type                                  m,
-  const size_type                                  n,
-  const VectorSlice<const std::vector<size_type>>& row_lengths,
-  const size_type                                  chunk_size)
+  const size_type                                   m,
+  const size_type                                   n,
+  const VectorSlice<const std::vector<size_type>> & row_lengths,
+  const size_type                                   chunk_size)
 {
   Assert(row_lengths.size() == m, ExcInvalidNumber(m));
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
@@ -158,8 +158,8 @@ ChunkSparsityPattern::compress()
 
 template <typename SparsityPatternType>
 void
-ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
-                                const size_type            chunk_size)
+ChunkSparsityPattern::copy_from(const SparsityPatternType & dsp,
+                                const size_type             chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
   this->chunk_size = chunk_size;
@@ -198,8 +198,8 @@ ChunkSparsityPattern::copy_from(const SparsityPatternType& dsp,
 
 template <typename number>
 void
-ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
-                                const size_type           chunk_size)
+ChunkSparsityPattern::copy_from(const FullMatrix<number> & matrix,
+                                const size_type            chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
@@ -231,10 +231,10 @@ ChunkSparsityPattern::copy_from(const FullMatrix<number>& matrix,
 }
 
 void
-ChunkSparsityPattern::reinit(const size_type               m,
-                             const size_type               n,
-                             const std::vector<size_type>& row_lengths,
-                             const size_type               chunk_size)
+ChunkSparsityPattern::reinit(const size_type                m,
+                             const size_type                n,
+                             const std::vector<size_type> & row_lengths,
+                             const size_type                chunk_size)
 {
   Assert(chunk_size > 0, ExcInvalidNumber(chunk_size));
 
@@ -247,13 +247,13 @@ namespace internal
   {
     template <typename SparsityPatternType>
     void
-    copy_sparsity(const SparsityPatternType& src, SparsityPattern& dst)
+    copy_sparsity(const SparsityPatternType & src, SparsityPattern & dst)
     {
       dst.copy_from(src);
     }
 
     void
-    copy_sparsity(const SparsityPattern& src, SparsityPattern& dst)
+    copy_sparsity(const SparsityPattern & src, SparsityPattern & dst)
     {
       dst = src;
     }
@@ -264,7 +264,7 @@ template <typename Sparsity>
 void
 ChunkSparsityPattern::create_from(const unsigned int m,
                                   const unsigned int n,
-                                  const Sparsity& sparsity_pattern_for_chunks,
+                                  const Sparsity & sparsity_pattern_for_chunks,
                                   const unsigned int chunk_size_in,
                                   const bool)
 {
@@ -406,7 +406,7 @@ ChunkSparsityPattern::n_nonzero_elements() const
 }
 
 void
-ChunkSparsityPattern::print(std::ostream& out) const
+ChunkSparsityPattern::print(std::ostream & out) const
 {
   Assert((sparsity_pattern.rowstart != nullptr)
            && (sparsity_pattern.colnums != nullptr),
@@ -435,7 +435,7 @@ ChunkSparsityPattern::print(std::ostream& out) const
 }
 
 void
-ChunkSparsityPattern::print_gnuplot(std::ostream& out) const
+ChunkSparsityPattern::print_gnuplot(std::ostream & out) const
 {
   Assert((sparsity_pattern.rowstart != nullptr)
            && (sparsity_pattern.colnums != nullptr),
@@ -489,7 +489,7 @@ ChunkSparsityPattern::stores_only_added_elements() const
 }
 
 void
-ChunkSparsityPattern::block_write(std::ostream& out) const
+ChunkSparsityPattern::block_write(std::ostream & out) const
 {
   AssertThrow(out, ExcIO());
 
@@ -503,7 +503,7 @@ ChunkSparsityPattern::block_write(std::ostream& out) const
 }
 
 void
-ChunkSparsityPattern::block_read(std::istream& in)
+ChunkSparsityPattern::block_read(std::istream & in)
 {
   AssertThrow(in, ExcIO());
 
@@ -535,26 +535,26 @@ ChunkSparsityPattern::memory_consumption() const
 // explicit instantiations
 template void
 ChunkSparsityPattern::copy_from<DynamicSparsityPattern>(
-  const DynamicSparsityPattern&,
+  const DynamicSparsityPattern &,
   const size_type);
 template void
 ChunkSparsityPattern::create_from<SparsityPattern>(const unsigned int,
                                                    const unsigned int,
-                                                   const SparsityPattern&,
+                                                   const SparsityPattern &,
                                                    const unsigned int,
                                                    const bool);
 template void
 ChunkSparsityPattern::create_from<DynamicSparsityPattern>(
   const unsigned int,
   const unsigned int,
-  const DynamicSparsityPattern&,
+  const DynamicSparsityPattern &,
   const unsigned int,
   const bool);
 template void
-ChunkSparsityPattern::copy_from<float>(const FullMatrix<float>&,
+ChunkSparsityPattern::copy_from<float>(const FullMatrix<float> &,
                                        const size_type);
 template void
-ChunkSparsityPattern::copy_from<double>(const FullMatrix<double>&,
+ChunkSparsityPattern::copy_from<double>(const FullMatrix<double> &,
                                         const size_type);
 
 DEAL_II_NAMESPACE_CLOSE

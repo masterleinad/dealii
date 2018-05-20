@@ -34,14 +34,14 @@ namespace internal
 
     template <typename T>
     bool
-    is_non_negative(const T& t)
+    is_non_negative(const T & t)
     {
       return t >= 0;
     }
 
     template <typename T>
     bool
-    is_non_negative(const std::complex<T>&)
+    is_non_negative(const std::complex<T> &)
     {
       Assert(false, ExcMessage("Complex numbers do not have an ordering."));
 
@@ -50,7 +50,7 @@ namespace internal
 
     template <typename T>
     void
-    print(const T& t, const char* format)
+    print(const T & t, const char * format)
     {
       if(format != nullptr)
         std::printf(format, t);
@@ -60,7 +60,7 @@ namespace internal
 
     template <typename T>
     void
-    print(const std::complex<T>& t, const char* format)
+    print(const std::complex<T> & t, const char * format)
     {
       if(format != nullptr)
         std::printf(format, t.real(), t.imag());
@@ -74,23 +74,23 @@ namespace internal
     // non-complex type
     template <typename T, typename U>
     void
-    copy(const T* begin, const T* end, U* dest)
+    copy(const T * begin, const T * end, U * dest)
     {
       std::copy(begin, end, dest);
     }
 
     template <typename T, typename U>
     void
-    copy(const std::complex<T>* begin,
-         const std::complex<T>* end,
-         std::complex<U>*       dest)
+    copy(const std::complex<T> * begin,
+         const std::complex<T> * end,
+         std::complex<U> *       dest)
     {
       std::copy(begin, end, dest);
     }
 
     template <typename T, typename U>
     void
-    copy(const std::complex<T>*, const std::complex<T>*, U*)
+    copy(const std::complex<T> *, const std::complex<T> *, U *)
     {
       Assert(false,
              ExcMessage("Can't convert a vector of complex numbers "
@@ -109,7 +109,7 @@ namespace internal
     template <typename Functor>
     struct TBBForFunctor
     {
-      TBBForFunctor(Functor&        functor,
+      TBBForFunctor(Functor &       functor,
                     const size_type start,
                     const size_type end)
         : functor(functor), start(start), end(end)
@@ -135,14 +135,14 @@ namespace internal
       }
 
       void
-      operator()(const tbb::blocked_range<size_type>& range) const
+      operator()(const tbb::blocked_range<size_type> & range) const
       {
         const size_type r_begin = start + range.begin() * chunk_size;
         const size_type r_end = std::min(start + range.end() * chunk_size, end);
         functor(r_begin, r_end);
       }
 
-      Functor&        functor;
+      Functor &       functor;
       const size_type start;
       const size_type end;
       unsigned int    n_chunks;
@@ -153,10 +153,10 @@ namespace internal
     template <typename Functor>
     void
     parallel_for(
-      Functor&                                             functor,
-      size_type                                            start,
-      size_type                                            end,
-      std::shared_ptr<parallel::internal::TBBPartitioner>& partitioner)
+      Functor &                                             functor,
+      size_type                                             start,
+      size_type                                             end,
+      std::shared_ptr<parallel::internal::TBBPartitioner> & partitioner)
     {
 #ifdef DEAL_II_WITH_THREADS
       size_type vec_size = end - start;
@@ -194,7 +194,7 @@ namespace internal
     template <typename Number>
     struct Vector_set
     {
-      Vector_set(Number value, Number* dst) : value(value), dst(dst)
+      Vector_set(Number value, Number * dst) : value(value), dst(dst)
       {
         Assert(dst != nullptr, ExcInternalError());
       }
@@ -219,14 +219,14 @@ namespace internal
         std::fill(dst + begin, dst + end, value);
       }
 
-      const Number  value;
-      Number* const dst;
+      const Number   value;
+      Number * const dst;
     };
 
     template <typename Number, typename OtherNumber>
     struct Vector_copy
     {
-      Vector_copy(const OtherNumber* src, Number* dst) : src(src), dst(dst)
+      Vector_copy(const OtherNumber * src, Number * dst) : src(src), dst(dst)
       {
         Assert(src != nullptr, ExcInternalError());
         Assert(dst != nullptr, ExcInternalError());
@@ -258,14 +258,14 @@ namespace internal
           }
       }
 
-      const OtherNumber* const src;
-      Number* const            dst;
+      const OtherNumber * const src;
+      Number * const            dst;
     };
 
     template <typename Number>
     struct Vectorization_multiply_factor
     {
-      Vectorization_multiply_factor(Number* val, Number factor)
+      Vectorization_multiply_factor(Number * val, Number factor)
         : val(val), factor(factor)
       {}
 
@@ -285,14 +285,14 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number  factor;
+      Number * val;
+      Number   factor;
     };
 
     template <typename Number>
     struct Vectorization_add_av
     {
-      Vectorization_add_av(Number* val, Number* v_val, Number factor)
+      Vectorization_add_av(Number * val, Number * v_val, Number factor)
         : val(val), v_val(v_val), factor(factor)
       {}
 
@@ -312,15 +312,15 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
-      Number  factor;
+      Number * val;
+      Number * v_val;
+      Number   factor;
     };
 
     template <typename Number>
     struct Vectorization_sadd_xav
     {
-      Vectorization_sadd_xav(Number* val, Number* v_val, Number a, Number x)
+      Vectorization_sadd_xav(Number * val, Number * v_val, Number a, Number x)
         : val(val), v_val(v_val), a(a), x(x)
       {}
 
@@ -340,16 +340,16 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
-      Number  a;
-      Number  x;
+      Number * val;
+      Number * v_val;
+      Number   a;
+      Number   x;
     };
 
     template <typename Number>
     struct Vectorization_subtract_v
     {
-      Vectorization_subtract_v(Number* val, Number* v_val)
+      Vectorization_subtract_v(Number * val, Number * v_val)
         : val(val), v_val(v_val)
       {}
 
@@ -369,14 +369,14 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
+      Number * val;
+      Number * v_val;
     };
 
     template <typename Number>
     struct Vectorization_add_factor
     {
-      Vectorization_add_factor(Number* val, Number factor)
+      Vectorization_add_factor(Number * val, Number factor)
         : val(val), factor(factor)
       {}
 
@@ -396,14 +396,14 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number  factor;
+      Number * val;
+      Number   factor;
     };
 
     template <typename Number>
     struct Vectorization_add_v
     {
-      Vectorization_add_v(Number* val, Number* v_val) : val(val), v_val(v_val)
+      Vectorization_add_v(Number * val, Number * v_val) : val(val), v_val(v_val)
       {}
 
       void
@@ -422,18 +422,18 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
+      Number * val;
+      Number * v_val;
     };
 
     template <typename Number>
     struct Vectorization_add_avpbw
     {
-      Vectorization_add_avpbw(Number* val,
-                              Number* v_val,
-                              Number* w_val,
-                              Number  a,
-                              Number  b)
+      Vectorization_add_avpbw(Number * val,
+                              Number * v_val,
+                              Number * w_val,
+                              Number   a,
+                              Number   b)
         : val(val), v_val(v_val), w_val(w_val), a(a), b(b)
       {}
 
@@ -453,17 +453,17 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
-      Number* w_val;
-      Number  a;
-      Number  b;
+      Number * val;
+      Number * v_val;
+      Number * w_val;
+      Number   a;
+      Number   b;
     };
 
     template <typename Number>
     struct Vectorization_sadd_xv
     {
-      Vectorization_sadd_xv(Number* val, Number* v_val, Number x)
+      Vectorization_sadd_xv(Number * val, Number * v_val, Number x)
         : val(val), v_val(v_val), x(x)
       {}
 
@@ -483,20 +483,20 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
-      Number  x;
+      Number * val;
+      Number * v_val;
+      Number   x;
     };
 
     template <typename Number>
     struct Vectorization_sadd_xavbw
     {
-      Vectorization_sadd_xavbw(Number* val,
-                               Number* v_val,
-                               Number* w_val,
-                               Number  x,
-                               Number  a,
-                               Number  b)
+      Vectorization_sadd_xavbw(Number * val,
+                               Number * v_val,
+                               Number * w_val,
+                               Number   x,
+                               Number   a,
+                               Number   b)
         : val(val), v_val(v_val), w_val(w_val), x(x), a(a), b(b)
       {}
 
@@ -516,18 +516,18 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
-      Number* w_val;
-      Number  x;
-      Number  a;
-      Number  b;
+      Number * val;
+      Number * v_val;
+      Number * w_val;
+      Number   x;
+      Number   a;
+      Number   b;
     };
 
     template <typename Number>
     struct Vectorization_scale
     {
-      Vectorization_scale(Number* val, Number* v_val) : val(val), v_val(v_val)
+      Vectorization_scale(Number * val, Number * v_val) : val(val), v_val(v_val)
       {}
 
       void
@@ -546,14 +546,14 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* v_val;
+      Number * val;
+      Number * v_val;
     };
 
     template <typename Number>
     struct Vectorization_equ_au
     {
-      Vectorization_equ_au(Number* val, Number* u_val, Number a)
+      Vectorization_equ_au(Number * val, Number * u_val, Number a)
         : val(val), u_val(u_val), a(a)
       {}
 
@@ -573,19 +573,19 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* u_val;
-      Number  a;
+      Number * val;
+      Number * u_val;
+      Number   a;
     };
 
     template <typename Number>
     struct Vectorization_equ_aubv
     {
-      Vectorization_equ_aubv(Number* val,
-                             Number* u_val,
-                             Number* v_val,
-                             Number  a,
-                             Number  b)
+      Vectorization_equ_aubv(Number * val,
+                             Number * u_val,
+                             Number * v_val,
+                             Number   a,
+                             Number   b)
         : val(val), u_val(u_val), v_val(v_val), a(a), b(b)
       {}
 
@@ -605,23 +605,23 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* u_val;
-      Number* v_val;
-      Number  a;
-      Number  b;
+      Number * val;
+      Number * u_val;
+      Number * v_val;
+      Number   a;
+      Number   b;
     };
 
     template <typename Number>
     struct Vectorization_equ_aubvcw
     {
-      Vectorization_equ_aubvcw(Number* val,
-                               Number* u_val,
-                               Number* v_val,
-                               Number* w_val,
-                               Number  a,
-                               Number  b,
-                               Number  c)
+      Vectorization_equ_aubvcw(Number * val,
+                               Number * u_val,
+                               Number * v_val,
+                               Number * w_val,
+                               Number   a,
+                               Number   b,
+                               Number   c)
         : val(val), u_val(u_val), v_val(v_val), w_val(w_val), a(a), b(b), c(c)
       {}
 
@@ -641,19 +641,19 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* u_val;
-      Number* v_val;
-      Number* w_val;
-      Number  a;
-      Number  b;
-      Number  c;
+      Number * val;
+      Number * u_val;
+      Number * v_val;
+      Number * w_val;
+      Number   a;
+      Number   b;
+      Number   c;
     };
 
     template <typename Number>
     struct Vectorization_ratio
     {
-      Vectorization_ratio(Number* val, Number* a_val, Number* b_val)
+      Vectorization_ratio(Number * val, Number * a_val, Number * b_val)
         : val(val), a_val(a_val), b_val(b_val)
       {}
 
@@ -673,9 +673,9 @@ namespace internal
           }
       }
 
-      Number* val;
-      Number* a_val;
-      Number* b_val;
+      Number * val;
+      Number * a_val;
+      Number * b_val;
     };
 
     // All sums over all the vector entries (l2-norm, inner product, etc.) are
@@ -690,7 +690,7 @@ namespace internal
         = std::is_same<Number, Number2>::value
           && (VectorizedArray<Number>::n_array_elements > 1);
 
-      Dot(const Number* X, const Number2* Y) : X(X), Y(Y)
+      Dot(const Number * X, const Number2 * Y) : X(X), Y(Y)
       {}
 
       Number
@@ -719,8 +719,8 @@ namespace internal
         return x * y;
       }
 
-      const Number*  X;
-      const Number2* Y;
+      const Number *  X;
+      const Number2 * Y;
     };
 
     template <typename Number, typename RealType>
@@ -729,7 +729,7 @@ namespace internal
       static const bool vectorizes
         = VectorizedArray<Number>::n_array_elements > 1;
 
-      Norm2(const Number* X) : X(X)
+      Norm2(const Number * X) : X(X)
       {}
 
       RealType
@@ -746,7 +746,7 @@ namespace internal
         return x * x;
       }
 
-      const Number* X;
+      const Number * X;
     };
 
     template <typename Number, typename RealType>
@@ -755,7 +755,7 @@ namespace internal
       static const bool vectorizes
         = VectorizedArray<Number>::n_array_elements > 1;
 
-      Norm1(const Number* X) : X(X)
+      Norm1(const Number * X) : X(X)
       {}
 
       RealType
@@ -772,7 +772,7 @@ namespace internal
         return std::abs(x);
       }
 
-      const Number* X;
+      const Number * X;
     };
 
     template <typename Number, typename RealType>
@@ -781,7 +781,7 @@ namespace internal
       static const bool vectorizes
         = VectorizedArray<Number>::n_array_elements > 1;
 
-      NormP(const Number* X, RealType p) : X(X), p(p)
+      NormP(const Number * X, RealType p) : X(X), p(p)
       {}
 
       RealType
@@ -798,8 +798,8 @@ namespace internal
         return std::pow(std::abs(x), p);
       }
 
-      const Number* X;
-      RealType      p;
+      const Number * X;
+      RealType       p;
     };
 
     template <typename Number>
@@ -808,7 +808,7 @@ namespace internal
       static const bool vectorizes
         = VectorizedArray<Number>::n_array_elements > 1;
 
-      MeanValue(const Number* X) : X(X)
+      MeanValue(const Number * X) : X(X)
       {}
 
       Number
@@ -825,7 +825,7 @@ namespace internal
         return x;
       }
 
-      const Number* X;
+      const Number * X;
     };
 
     template <typename Number>
@@ -834,7 +834,7 @@ namespace internal
       static const bool vectorizes
         = VectorizedArray<Number>::n_array_elements > 1;
 
-      AddAndDot(Number* X, const Number* V, const Number* W, Number a)
+      AddAndDot(Number * X, const Number * V, const Number * W, Number a)
         : X(X), V(V), W(W), a(a)
       {}
 
@@ -870,7 +870,7 @@ namespace internal
         return x * w;
       }
 
-      Number*       X;
+      Number *      X;
       const Number *V, *W;
       Number        a;
     };
@@ -917,10 +917,10 @@ namespace internal
 
     template <typename Operation, typename ResultType>
     void
-    accumulate_recursive(const Operation& op,
-                         const size_type  first,
-                         const size_type  last,
-                         ResultType&      result)
+    accumulate_recursive(const Operation & op,
+                         const size_type   first,
+                         const size_type   last,
+                         ResultType &      result)
     {
       const size_type vec_size = last - first;
       if(vec_size <= vector_accumulation_recursion_threshold * 32)
@@ -1049,9 +1049,9 @@ namespace internal
     template <typename Operation, typename ResultType>
     void
     accumulate_regular(
-      const Operation& op,
-      size_type&       n_chunks,
-      size_type&       index,
+      const Operation & op,
+      size_type &       n_chunks,
+      size_type &       index,
       ResultType (&outer_results)[vector_accumulation_recursion_threshold],
       std::integral_constant<bool, false>)
     {
@@ -1085,9 +1085,9 @@ namespace internal
     template <typename Operation, typename Number>
     void
     accumulate_regular(
-      const Operation& op,
-      size_type&       n_chunks,
-      size_type&       index,
+      const Operation & op,
+      size_type &       n_chunks,
+      size_type &       index,
       Number (&outer_results)[vector_accumulation_recursion_threshold],
       std::integral_constant<bool, true>)
     {
@@ -1180,9 +1180,9 @@ namespace internal
     {
       static const unsigned int threshold_array_allocate = 512;
 
-      TBBReduceFunctor(const Operation& op,
-                       const size_type  start,
-                       const size_type  end)
+      TBBReduceFunctor(const Operation & op,
+                       const size_type   start,
+                       const size_type   end)
         : op(op), start(start), end(end)
       {
         const size_type vec_size = end - start;
@@ -1220,7 +1220,7 @@ namespace internal
        * [range.begin(), range.end()).
        */
       void
-      operator()(const tbb::blocked_range<size_type>& range) const
+      operator()(const tbb::blocked_range<size_type> & range) const
       {
         for(size_type i = range.begin(); i < range.end(); ++i)
           accumulate_recursive(op,
@@ -1243,9 +1243,9 @@ namespace internal
         return array_ptr[0];
       }
 
-      const Operation& op;
-      const size_type  start;
-      const size_type  end;
+      const Operation & op;
+      const size_type   start;
+      const size_type   end;
 
       mutable unsigned int    n_chunks;
       unsigned int            chunk_size;
@@ -1253,7 +1253,7 @@ namespace internal
       std::vector<ResultType> large_array;
       // this variable either points to small_array or large_array depending on
       // the number of threads we want to feed
-      mutable ResultType* array_ptr;
+      mutable ResultType * array_ptr;
     };
 #endif
 
@@ -1264,11 +1264,11 @@ namespace internal
     template <typename Operation, typename ResultType>
     void
     parallel_reduce(
-      const Operation&                                     op,
-      const size_type                                      start,
-      const size_type                                      end,
-      ResultType&                                          result,
-      std::shared_ptr<parallel::internal::TBBPartitioner>& partitioner)
+      const Operation &                                     op,
+      const size_type                                       start,
+      const size_type                                       end,
+      ResultType &                                          result,
+      std::shared_ptr<parallel::internal::TBBPartitioner> & partitioner)
     {
 #ifdef DEAL_II_WITH_THREADS
       size_type vec_size = end - start;

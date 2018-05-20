@@ -22,7 +22,7 @@
 #include <vector>
 
 void
-test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
+test(PETScWrappers::MPI::Vector & v, PETScWrappers::MPI::Vector & w)
 {
   // set the first vector
   for(unsigned int k = 0; k < v.size(); ++k)
@@ -39,7 +39,7 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
@@ -62,7 +62,7 @@ main(int argc, char** argv)
         deallog << "OK" << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

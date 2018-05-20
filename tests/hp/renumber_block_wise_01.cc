@@ -34,7 +34,7 @@
 
 template <int dim>
 std::vector<types::global_dof_index>
-get_dofs(const hp::DoFHandler<dim>& dof)
+get_dofs(const hp::DoFHandler<dim> & dof)
 {
   std::vector<types::global_dof_index> local;
   std::vector<types::global_dof_index> global;
@@ -54,7 +54,7 @@ get_dofs(const hp::DoFHandler<dim>& dof)
 
 template <int dim>
 void
-check_renumbering(hp::DoFHandler<dim>& dof)
+check_renumbering(hp::DoFHandler<dim> & dof)
 {
   // do component-wise and save the
   // results

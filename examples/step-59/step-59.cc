@@ -99,7 +99,7 @@ namespace Step59
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int = 0) const override final
+    value(const Point<dim> & p, const unsigned int = 0) const override final
     {
       double val = 1.;
       for(unsigned int d = 0; d < dim; ++d)
@@ -108,7 +108,7 @@ namespace Step59
     }
 
     virtual Tensor<1, dim>
-    gradient(const Point<dim>& p, const unsigned int = 0) const override final
+    gradient(const Point<dim> & p, const unsigned int = 0) const override final
     {
       const double   arg = numbers::PI * 2.4;
       Tensor<1, dim> grad;
@@ -133,7 +133,7 @@ namespace Step59
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int = 0) const override final
+    value(const Point<dim> & p, const unsigned int = 0) const override final
     {
       const double arg = numbers::PI * 2.4;
       double       val = 1.;
@@ -181,18 +181,18 @@ namespace Step59
 
     void
     initialize_dof_vector(
-      LinearAlgebra::distributed::Vector<number>& vec) const;
+      LinearAlgebra::distributed::Vector<number> & vec) const;
 
     std::shared_ptr<const MatrixFree<dim, number>>
     get_matrix_free() const;
 
     void
-    vmult(LinearAlgebra::distributed::Vector<number>&       dst,
-          const LinearAlgebra::distributed::Vector<number>& src) const;
+    vmult(LinearAlgebra::distributed::Vector<number> &       dst,
+          const LinearAlgebra::distributed::Vector<number> & src) const;
 
     void
-    Tvmult(LinearAlgebra::distributed::Vector<number>&       dst,
-           const LinearAlgebra::distributed::Vector<number>& src) const;
+    Tvmult(LinearAlgebra::distributed::Vector<number> &       dst,
+           const LinearAlgebra::distributed::Vector<number> & src) const;
 
     number
     get_penalty_factor() const
@@ -202,23 +202,23 @@ namespace Step59
 
   private:
     void
-    apply_cell(const MatrixFree<dim, number>&                    data,
-               LinearAlgebra::distributed::Vector<number>&       dst,
-               const LinearAlgebra::distributed::Vector<number>& src,
-               const std::pair<unsigned int, unsigned int>& cell_range) const;
+    apply_cell(const MatrixFree<dim, number> &                    data,
+               LinearAlgebra::distributed::Vector<number> &       dst,
+               const LinearAlgebra::distributed::Vector<number> & src,
+               const std::pair<unsigned int, unsigned int> & cell_range) const;
 
     void
-    apply_face(const MatrixFree<dim, number>&                    data,
-               LinearAlgebra::distributed::Vector<number>&       dst,
-               const LinearAlgebra::distributed::Vector<number>& src,
-               const std::pair<unsigned int, unsigned int>& face_range) const;
+    apply_face(const MatrixFree<dim, number> &                    data,
+               LinearAlgebra::distributed::Vector<number> &       dst,
+               const LinearAlgebra::distributed::Vector<number> & src,
+               const std::pair<unsigned int, unsigned int> & face_range) const;
 
     void
     apply_boundary(
-      const MatrixFree<dim, number>&                    data,
-      LinearAlgebra::distributed::Vector<number>&       dst,
-      const LinearAlgebra::distributed::Vector<number>& src,
-      const std::pair<unsigned int, unsigned int>&      face_range) const;
+      const MatrixFree<dim, number> &                    data,
+      LinearAlgebra::distributed::Vector<number> &       dst,
+      const LinearAlgebra::distributed::Vector<number> & src,
+      const std::pair<unsigned int, unsigned int> &      face_range) const;
 
     std::shared_ptr<const MatrixFree<dim, number>> data;
   };
@@ -242,15 +242,15 @@ namespace Step59
     }
 
     void
-    initialize(const LaplaceOperator<dim, fe_degree, number>& op);
+    initialize(const LaplaceOperator<dim, fe_degree, number> & op);
 
     void
-    vmult(LinearAlgebra::distributed::Vector<number>&       dst,
-          const LinearAlgebra::distributed::Vector<number>& src) const;
+    vmult(LinearAlgebra::distributed::Vector<number> &       dst,
+          const LinearAlgebra::distributed::Vector<number> & src) const;
 
     void
-    Tvmult(LinearAlgebra::distributed::Vector<number>&       dst,
-           const LinearAlgebra::distributed::Vector<number>& src) const
+    Tvmult(LinearAlgebra::distributed::Vector<number> &       dst,
+           const LinearAlgebra::distributed::Vector<number> & src) const
     {
       vmult(dst, src);
     }
@@ -285,17 +285,17 @@ namespace Step59
   template <int dim, typename number>
   void
   adjust_ghost_range_if_necessary(
-    const MatrixFree<dim, number>&                    data,
-    const LinearAlgebra::distributed::Vector<number>& vec)
+    const MatrixFree<dim, number> &                    data,
+    const LinearAlgebra::distributed::Vector<number> & vec)
   {
     if(vec.get_partitioner().get()
        == data.get_dof_info(0).vector_partitioner.get())
       return;
 
     LinearAlgebra::distributed::Vector<number> copy_vec(vec);
-    const_cast<LinearAlgebra::distributed::Vector<number>&>(vec).reinit(
+    const_cast<LinearAlgebra::distributed::Vector<number> &>(vec).reinit(
       data.get_dof_info(0).vector_partitioner);
-    const_cast<LinearAlgebra::distributed::Vector<number>&>(vec)
+    const_cast<LinearAlgebra::distributed::Vector<number> &>(vec)
       .copy_locally_owned_data_from(copy_vec);
   }
 
@@ -329,7 +329,7 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::initialize_dof_vector(
-    LinearAlgebra::distributed::Vector<number>& vec) const
+    LinearAlgebra::distributed::Vector<number> & vec) const
   {
     data->initialize_dof_vector(vec);
   }
@@ -432,8 +432,8 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::vmult(
-    LinearAlgebra::distributed::Vector<number>&       dst,
-    const LinearAlgebra::distributed::Vector<number>& src) const
+    LinearAlgebra::distributed::Vector<number> &       dst,
+    const LinearAlgebra::distributed::Vector<number> & src) const
   {
     adjust_ghost_range_if_necessary(*data, dst);
     adjust_ghost_range_if_necessary(*data, src);
@@ -454,8 +454,8 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::Tvmult(
-    LinearAlgebra::distributed::Vector<number>&       dst,
-    const LinearAlgebra::distributed::Vector<number>& src) const
+    LinearAlgebra::distributed::Vector<number> &       dst,
+    const LinearAlgebra::distributed::Vector<number> & src) const
   {
     vmult(dst, src);
   }
@@ -475,10 +475,10 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::apply_cell(
-    const MatrixFree<dim, number>&                    data,
-    LinearAlgebra::distributed::Vector<number>&       dst,
-    const LinearAlgebra::distributed::Vector<number>& src,
-    const std::pair<unsigned int, unsigned int>&      cell_range) const
+    const MatrixFree<dim, number> &                    data,
+    LinearAlgebra::distributed::Vector<number> &       dst,
+    const LinearAlgebra::distributed::Vector<number> & src,
+    const std::pair<unsigned int, unsigned int> &      cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
     for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
@@ -526,10 +526,10 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::apply_face(
-    const MatrixFree<dim, number>&                    data,
-    LinearAlgebra::distributed::Vector<number>&       dst,
-    const LinearAlgebra::distributed::Vector<number>& src,
-    const std::pair<unsigned int, unsigned int>&      face_range) const
+    const MatrixFree<dim, number> &                    data,
+    LinearAlgebra::distributed::Vector<number> &       dst,
+    const LinearAlgebra::distributed::Vector<number> & src,
+    const std::pair<unsigned int, unsigned int> &      face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi_inner(data,
                                                                          true);
@@ -658,10 +658,10 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::apply_boundary(
-    const MatrixFree<dim, number>&                    data,
-    LinearAlgebra::distributed::Vector<number>&       dst,
-    const LinearAlgebra::distributed::Vector<number>& src,
-    const std::pair<unsigned int, unsigned int>&      face_range) const
+    const MatrixFree<dim, number> &                    data,
+    LinearAlgebra::distributed::Vector<number> &       dst,
+    const LinearAlgebra::distributed::Vector<number> & src,
+    const std::pair<unsigned int, unsigned int> &      face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi_inner(data,
                                                                          true);
@@ -712,7 +712,7 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   PreconditionBlockJacobi<dim, fe_degree, number>::initialize(
-    const LaplaceOperator<dim, fe_degree, number>& op)
+    const LaplaceOperator<dim, fe_degree, number> & op)
   {
     data = op.get_matrix_free();
 
@@ -868,8 +868,8 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   void
   PreconditionBlockJacobi<dim, fe_degree, number>::vmult(
-    LinearAlgebra::distributed::Vector<number>&       dst,
-    const LinearAlgebra::distributed::Vector<number>& src) const
+    LinearAlgebra::distributed::Vector<number> &       dst,
+    const LinearAlgebra::distributed::Vector<number> & src) const
   {
     adjust_ghost_range_if_necessary(*data, dst);
     adjust_ghost_range_if_necessary(*data, src);
@@ -1063,11 +1063,11 @@ namespace Step59
   LaplaceProblem<dim, fe_degree>::compute_rhs()
   {
     Timer time;
-    system_rhs                          = 0;
-    const MatrixFree<dim, double>& data = *system_matrix.get_matrix_free();
-    FEEvaluation<dim, fe_degree>   phi(data);
-    RightHandSide<dim>             rhs_func;
-    Solution<dim>                  exact_solution;
+    system_rhs                           = 0;
+    const MatrixFree<dim, double> & data = *system_matrix.get_matrix_free();
+    FEEvaluation<dim, fe_degree>    phi(data);
+    RightHandSide<dim>              rhs_func;
+    Solution<dim>                   exact_solution;
     for(unsigned int cell = 0; cell < data.n_cell_batches(); ++cell)
       {
         phi.reinit(cell);
@@ -1348,7 +1348,7 @@ namespace Step59
 // problem.
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   try
     {
@@ -1359,7 +1359,7 @@ main(int argc, char* argv[])
       LaplaceProblem<dimension, degree_finite_element> laplace_problem;
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -56,7 +56,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

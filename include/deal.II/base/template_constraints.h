@@ -231,7 +231,7 @@ struct PointerComparison
    */
   template <typename T>
   static bool
-  equal(const T* p1, const T* p2)
+  equal(const T * p1, const T * p2)
   {
     return (p1 == p2);
   }
@@ -244,7 +244,7 @@ struct PointerComparison
    */
   template <typename T, typename U>
   static bool
-  equal(const T*, const U*)
+  equal(const T *, const U *)
   {
     return false;
   }

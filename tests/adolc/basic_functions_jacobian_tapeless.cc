@@ -34,14 +34,14 @@ main(void)
   const unsigned int n = 10; // Independents
   adtl::setNumDir(n);
 
-  adtl::adouble* x = new adtl::adouble[n];
+  adtl::adouble * x = new adtl::adouble[n];
   for(unsigned int i = 0; i < n; i++)
     {
       x[i] = (i + 1.0) / (2.0 + i);
       x[i].setADValue(i, 1);
     }
 
-  adtl::adouble* y = new adtl::adouble[m];
+  adtl::adouble * y = new adtl::adouble[m];
   for(unsigned int j = 0; j < m; ++j)
     y[j] = 1.0;
 

@@ -150,7 +150,7 @@ public:
    * value.
    */
   void
-  attach_dof_handler(const DoFHandlerType& dof_handler);
+  attach_dof_handler(const DoFHandlerType & dof_handler);
 
   /**
    * Declare a data vector. The @p vector_type argument determines whether the
@@ -161,7 +161,7 @@ public:
    * component and therefore only one name needs to be given.
    */
   void
-  declare_data_vector(const std::string& name, const VectorType vector_type);
+  declare_data_vector(const std::string & name, const VectorType vector_type);
 
   /**
    * Declare a data vector. The @p vector_type argument determines whether the
@@ -175,8 +175,8 @@ public:
    * finite element has only one component.
    */
   void
-  declare_data_vector(const std::vector<std::string>& name,
-                      const VectorType                vector_type);
+  declare_data_vector(const std::vector<std::string> & name,
+                      const VectorType                 vector_type);
 
   /**
    * Add a data vector for the presently set value of the parameter.
@@ -199,7 +199,7 @@ public:
    */
   template <typename number>
   void
-  add_data_vector(const Vector<number>& vec, const std::string& name);
+  add_data_vector(const Vector<number> & vec, const std::string & name);
 
   /**
    * Add a data vector for the presently set value of the parameter.
@@ -221,8 +221,8 @@ public:
    */
   template <typename number>
   void
-  add_data_vector(const Vector<number>&           vec,
-                  const std::vector<std::string>& names);
+  add_data_vector(const Vector<number> &           vec,
+                  const std::vector<std::string> & names);
 
   /**
    * This is the central function of this class since it builds the list of
@@ -353,7 +353,7 @@ private:
    * data in the form of Patch structures (declared in the base class
    * DataOutBase) to the actual output function.
    */
-  virtual const std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>>&
+  virtual const std::vector<dealii::DataOutBase::Patch<dim + 1, dim + 1>> &
   get_patches() const override;
 
   /**

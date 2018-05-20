@@ -29,7 +29,7 @@ class HelmholtzOperatorQuad
 {
 public:
   __device__ void operator()(
-    CUDAWrappers::FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number>*
+    CUDAWrappers::FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> *
                        fe_eval,
     const unsigned int q_point) const;
 };
@@ -37,8 +37,9 @@ public:
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 __device__ void HelmholtzOperatorQuad<dim, fe_degree, Number, n_q_points_1d>::
                 operator()(
-  CUDAWrappers::FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number>* fe_eval,
-  const unsigned int                                                    q) const
+  CUDAWrappers::FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> *
+                     fe_eval,
+  const unsigned int q) const
 {
   fe_eval->submit_value(Number(10) * fe_eval->get_value(q), q);
   fe_eval->submit_gradient(fe_eval->get_gradient(q), q);
@@ -50,11 +51,11 @@ class HelmholtzOperator
 public:
   __device__ void
   operator()(
-    const unsigned int                                          cell,
-    const typename CUDAWrappers::MatrixFree<dim, Number>::Data* gpu_data,
-    CUDAWrappers::SharedData<dim, Number>*                      shared_data,
-    const Number*                                               src,
-    Number*                                                     dst) const;
+    const unsigned int                                           cell,
+    const typename CUDAWrappers::MatrixFree<dim, Number>::Data * gpu_data,
+    CUDAWrappers::SharedData<dim, Number> *                      shared_data,
+    const Number *                                               src,
+    Number *                                                     dst) const;
 
   static const unsigned int n_dofs_1d = fe_degree + 1;
   static const unsigned int n_local_dofs
@@ -65,12 +66,12 @@ public:
 
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 __device__ void
-HelmholtzOperator<dim, fe_degree, Number, n_q_points_1d>::
-operator()(const unsigned int                                          cell,
-           const typename CUDAWrappers::MatrixFree<dim, Number>::Data* gpu_data,
-           CUDAWrappers::SharedData<dim, Number>* shared_data,
-           const Number*                          src,
-           Number*                                dst) const
+HelmholtzOperator<dim, fe_degree, Number, n_q_points_1d>::operator()(
+  const unsigned int                                           cell,
+  const typename CUDAWrappers::MatrixFree<dim, Number>::Data * gpu_data,
+  CUDAWrappers::SharedData<dim, Number> *                      shared_data,
+  const Number *                                               src,
+  Number *                                                     dst) const
 {
   CUDAWrappers::FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(
     cell, gpu_data, shared_data);
@@ -89,22 +90,22 @@ template <int dim,
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const CUDAWrappers::MatrixFree<dim, Number>& data_in)
+  MatrixFreeTest(const CUDAWrappers::MatrixFree<dim, Number> & data_in)
     : data(data_in){};
 
   void
-  vmult(LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
-        const LinearAlgebra::CUDAWrappers::Vector<Number>& src);
+  vmult(LinearAlgebra::CUDAWrappers::Vector<Number> &       dst,
+        const LinearAlgebra::CUDAWrappers::Vector<Number> & src);
 
 private:
-  const CUDAWrappers::MatrixFree<dim, Number>& data;
+  const CUDAWrappers::MatrixFree<dim, Number> & data;
 };
 
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 void
 MatrixFreeTest<dim, fe_degree, Number, n_q_points_1d>::vmult(
-  LinearAlgebra::CUDAWrappers::Vector<Number>&       dst,
-  const LinearAlgebra::CUDAWrappers::Vector<Number>& src)
+  LinearAlgebra::CUDAWrappers::Vector<Number> &       dst,
+  const LinearAlgebra::CUDAWrappers::Vector<Number> & src)
 {
   dst = static_cast<Number>(0.);
   HelmholtzOperator<dim, fe_degree, Number, n_q_points_1d> helmholtz_operator;

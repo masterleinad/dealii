@@ -63,9 +63,9 @@ check()
                              {-0.24, 0.5, 0.5},
                              {-0.26, 0.5, 0.5}};
 
-  const bool  expected2d[] = {1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1};
-  const bool  expected3d[] = {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0};
-  const bool* expected     = dim == 2 ? expected2d : expected3d;
+  const bool   expected2d[] = {1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1};
+  const bool   expected3d[] = {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0};
+  const bool * expected     = dim == 2 ? expected2d : expected3d;
   for(int i = 0; i < 14; i++)
     {
       Point<dim> testpoint;

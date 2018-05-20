@@ -151,7 +151,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim>& fe_other) const override;
+    const FiniteElement<dim> & fe_other) const override;
 
   /**
    * If, on a vertex, several finite elements are active, the hp code first
@@ -169,21 +169,21 @@ public:
    * corresponding index of the other finite element.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_vertex_dof_identities(const FiniteElement<dim>& fe_other) const override;
+  hp_vertex_dof_identities(const FiniteElement<dim> & fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
    * of freedom on lines.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_line_dof_identities(const FiniteElement<dim>& fe_other) const override;
+  hp_line_dof_identities(const FiniteElement<dim> & fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
    * of freedom on lines.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_quad_dof_identities(const FiniteElement<dim>& fe_other) const override;
+  hp_quad_dof_identities(const FiniteElement<dim> & fe_other) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face of
@@ -197,8 +197,8 @@ public:
    * <tt>FiniteElement<dim>::ExcInterpolationNotImplemented</tt>.
    */
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim>& source,
-                                FullMatrix<double>& matrix) const override;
+  get_face_interpolation_matrix(const FiniteElement<dim> & source,
+                                FullMatrix<double> & matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the subface
@@ -212,9 +212,9 @@ public:
    * <tt>ExcInterpolationNotImplemented</tt>.
    */
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim>& source,
-                                   const unsigned int        subface,
-                                   FullMatrix<double>& matrix) const override;
+  get_subface_interpolation_matrix(const FiniteElement<dim> & source,
+                                   const unsigned int         subface,
+                                   FullMatrix<double> & matrix) const override;
   /**
    * Projection from a fine grid space onto a coarse grid space. If this
    * projection operator is associated with a matrix @p P, then the
@@ -229,10 +229,10 @@ public:
    * Row and column indices are related to coarse grid and fine grid spaces,
    * respectively, consistent with the definition of the associated operator.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_restriction_matrix(
-    const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const unsigned int          child,
+    const RefinementCase<dim> & refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -255,17 +255,17 @@ public:
    * cells using this matrix array, zero elements in the prolongation matrix
    * are discarded and will not fill up the transfer matrix.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_prolongation_matrix(
-    const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const unsigned int          child,
+    const RefinementCase<dim> & refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   // documentation inherited from the base class
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    const std::vector<Vector<double>> & support_point_values,
+    std::vector<double> &               nodal_values) const override;
 
   /**
    * Return a list of constant modes of the element.

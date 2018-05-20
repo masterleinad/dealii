@@ -43,7 +43,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int comp = 0) const
+  value(const Point<dim> & p, const unsigned int comp = 0) const
   {
     const double x = p[0];
     const double y = p[1];
@@ -67,14 +67,14 @@ public:
   double value;
 
   virtual void
-  pack_values(std::vector<double>& scalars) const
+  pack_values(std::vector<double> & scalars) const
   {
     Assert(scalars.size() == 1, ExcInternalError());
     scalars[0] = value;
   }
 
   virtual void
-  unpack_values(const std::vector<double>& scalars)
+  unpack_values(const std::vector<double> & scalars)
   {
     Assert(scalars.size() == 1, ExcInternalError());
     value = scalars[0];
@@ -93,11 +93,11 @@ DeclException3(ExcWrongValue,
  */
 template <int dim, typename DATA>
 void
-check_qph(parallel::distributed::Triangulation<dim>& tr,
+check_qph(parallel::distributed::Triangulation<dim> & tr,
           const CellDataStorage<typename Triangulation<dim, dim>::cell_iterator,
-                                DATA>&               manager,
-          const Quadrature<dim>&                     rhs_quadrature,
-          const MyFunction<dim>&                     func)
+                                DATA> &               manager,
+          const Quadrature<dim> &                     rhs_quadrature,
+          const MyFunction<dim> &                     func)
 {
   DoFHandler<dim> dof_handler(tr);
   FE_Q<dim>       dummy_fe(1);
@@ -110,7 +110,7 @@ check_qph(parallel::distributed::Triangulation<dim>& tr,
         typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                 &dof_handler);
         fe_values.reinit(dof_cell);
-        const std::vector<Point<dim>>& q_points
+        const std::vector<Point<dim>> & q_points
           = fe_values.get_quadrature_points();
         const std::vector<std::shared_ptr<const DATA>> qpd
           = manager.get_data(cell);
@@ -157,7 +157,7 @@ test()
           typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                   &dof_handler);
           fe_values.reinit(dof_cell);
-          const std::vector<Point<dim>>& q_points
+          const std::vector<Point<dim>> & q_points
             = fe_values.get_quadrature_points();
           data_storage.initialize(cell, rhs.size());
           std::vector<std::shared_ptr<MyQData>> qpd
@@ -196,7 +196,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog();

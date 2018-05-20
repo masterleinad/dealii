@@ -54,9 +54,9 @@ namespace internal
     {
     public:
       PointGeometryData(
-        const Point<dim>&                           new_requested_location,
-        const std::vector<Point<dim>>&              new_locations,
-        const std::vector<types::global_dof_index>& new_sol_indices);
+        const Point<dim> &                           new_requested_location,
+        const std::vector<Point<dim>> &              new_locations,
+        const std::vector<types::global_dof_index> & new_sol_indices);
       Point<dim>                           requested_location;
       std::vector<Point<dim>>              support_point_locations;
       std::vector<types::global_dof_index> solution_indices;
@@ -223,15 +223,15 @@ public:
    * making calls to @p push_back_independent as needed.  This may be used for
    * example for recording external input or logging solver performance data.
    */
-  PointValueHistory(const DoFHandler<dim>& dof_handler,
-                    const unsigned int     n_independent_variables = 0);
+  PointValueHistory(const DoFHandler<dim> & dof_handler,
+                    const unsigned int      n_independent_variables = 0);
 
   /**
    * Copy constructor. This constructor can be safely called with a @p
    * PointValueHistory object that contains data, but this could be expensive
    * and should be avoided.
    */
-  PointValueHistory(const PointValueHistory& point_value_history);
+  PointValueHistory(const PointValueHistory & point_value_history);
 
   /**
    * Assignment operator. This assignment operator can be safely called once
@@ -240,8 +240,8 @@ public:
    * reinitialized later in the class. Using the assignment operator when the
    * object contains data could be expensive.
    */
-  PointValueHistory&
-  operator=(const PointValueHistory& point_value_history);
+  PointValueHistory &
+  operator=(const PointValueHistory & point_value_history);
 
   /**
    * Deconstructor.
@@ -256,7 +256,7 @@ public:
    * iterations over the mesh.
    */
   void
-  add_point(const Point<dim>& location);
+  add_point(const Point<dim> & location);
 
   /**
    * Add multiple points to the class. The support points (one per component)
@@ -269,7 +269,7 @@ public:
    * point and the added point, even if a point is requested multiple times.
    */
   void
-  add_points(const std::vector<Point<dim>>& locations);
+  add_points(const std::vector<Point<dim>> & locations);
 
   /**
    * Put another mnemonic string (and hence @p VectorType) into the class.
@@ -279,8 +279,8 @@ public:
    * called in any order.
    */
   void
-  add_field_name(const std::string&   vector_name,
-                 const ComponentMask& component_mask = ComponentMask());
+  add_field_name(const std::string &   vector_name,
+                 const ComponentMask & component_mask = ComponentMask());
 
   /**
    * Put another mnemonic string (and hence @p VectorType) into the class.
@@ -291,23 +291,23 @@ public:
    * function.
    */
   void
-  add_field_name(const std::string& vector_name,
-                 const unsigned int n_components);
+  add_field_name(const std::string & vector_name,
+                 const unsigned int  n_components);
 
   /**
    * Provide optional names for each component of a field. These names will be
    * used instead of names generated from the field name, if supplied.
    */
   void
-  add_component_names(const std::string&              vector_name,
-                      const std::vector<std::string>& component_names);
+  add_component_names(const std::string &              vector_name,
+                      const std::vector<std::string> & component_names);
 
   /**
    * Provide optional names for the independent values. These names will be
    * used instead of "Indep_...", if supplied.
    */
   void
-  add_independent_names(const std::vector<std::string>& independent_names);
+  add_independent_names(const std::vector<std::string> & independent_names);
 
   /**
    * Extract values at the stored points from the VectorType supplied and add
@@ -319,7 +319,7 @@ public:
    */
   template <class VectorType>
   void
-  evaluate_field(const std::string& name, const VectorType& solution);
+  evaluate_field(const std::string & name, const VectorType & solution);
 
   /**
    * Compute values using a @p DataPostprocessor object with the @p VectorType
@@ -340,10 +340,10 @@ public:
    */
   template <class VectorType>
   void
-  evaluate_field(const std::vector<std::string>& names,
-                 const VectorType&               solution,
-                 const DataPostprocessor<dim>&   data_postprocessor,
-                 const Quadrature<dim>&          quadrature);
+  evaluate_field(const std::vector<std::string> & names,
+                 const VectorType &               solution,
+                 const DataPostprocessor<dim> &   data_postprocessor,
+                 const Quadrature<dim> &          quadrature);
 
   /**
    * Construct a std::vector <std::string> containing only vector_name and
@@ -352,10 +352,10 @@ public:
    */
   template <class VectorType>
   void
-  evaluate_field(const std::string&            name,
-                 const VectorType&             solution,
-                 const DataPostprocessor<dim>& data_postprocessor,
-                 const Quadrature<dim>&        quadrature);
+  evaluate_field(const std::string &            name,
+                 const VectorType &             solution,
+                 const DataPostprocessor<dim> & data_postprocessor,
+                 const Quadrature<dim> &        quadrature);
 
   /**
    * Extract values at the points actually requested from the VectorType
@@ -371,8 +371,8 @@ public:
    */
   template <class VectorType>
   void
-  evaluate_field_at_requested_location(const std::string& name,
-                                       const VectorType&  solution);
+  evaluate_field_at_requested_location(const std::string & name,
+                                       const VectorType &  solution);
 
   /**
    * Add the key for the current dataset to the dataset. Although calling this
@@ -392,7 +392,7 @@ public:
    * exception can be thrown if this method is not called.
    */
   void
-  push_back_independent(const std::vector<double>& independent_values);
+  push_back_independent(const std::vector<double> & independent_values);
 
   /**
    * Write out a series of .gpl files named base_name + "-00.gpl", base_name +
@@ -412,8 +412,8 @@ public:
    * locations output.
    */
   void
-  write_gnuplot(const std::string&             base_name,
-                const std::vector<Point<dim>>& postprocessor_locations
+  write_gnuplot(const std::string &             base_name,
+                const std::vector<Point<dim>> & postprocessor_locations
                 = std::vector<Point<dim>>());
 
   /**
@@ -449,7 +449,7 @@ public:
    * method.
    */
   void
-  get_support_locations(std::vector<std::vector<Point<dim>>>& locations);
+  get_support_locations(std::vector<std::vector<Point<dim>>> & locations);
 
   /**
    * @deprecated
@@ -460,7 +460,7 @@ public:
    * returned are actually the support points.
    */
   void
-  get_points(std::vector<std::vector<Point<dim>>>& locations);
+  get_points(std::vector<std::vector<Point<dim>>> & locations);
 
   /**
    * Stores the actual location of the points used by the data_postprocessor.
@@ -472,8 +472,8 @@ public:
    * correct number of points by the method.
    */
   void
-  get_postprocessor_locations(const Quadrature<dim>&   quadrature,
-                              std::vector<Point<dim>>& locations);
+  get_postprocessor_locations(const Quadrature<dim> &   quadrature,
+                              std::vector<Point<dim>> & locations);
 
   /**
    * Once datasets have been added to the class, requests to add additional
@@ -507,7 +507,7 @@ public:
    * stored.
    */
   void
-  status(std::ostream& out);
+  status(std::ostream & out);
 
   /**
    * Check the internal data sizes to test for a loss of data sync. This is

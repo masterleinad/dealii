@@ -19,7 +19,7 @@
 #include <deal.II/distributed/tria.h>
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   deal_II_exceptions::disable_abort_on_exception();
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
@@ -29,7 +29,7 @@ main(int argc, char* argv[])
     {
       parallel::distributed::Triangulation<1> tr(MPI_COMM_WORLD);
     }
-  catch(const std::exception& exc)
+  catch(const std::exception & exc)
     {
       deallog << "This test has to throw an exception" << std::endl;
     }

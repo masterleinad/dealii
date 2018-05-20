@@ -42,22 +42,22 @@ template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest
 {
 public:
-  typedef std::vector<Vector<Number>*> VectorType;
+  typedef std::vector<Vector<Number> *> VectorType;
 
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in)
+  MatrixFreeTest(const MatrixFree<dim, Number> & data_in)
     : data(data_in),
       fe_val(data.get_dof_handler().get_fe(),
              Quadrature<dim>(data.get_quadrature(0)),
              update_values | update_gradients | update_JxW_values){};
 
   void
-  operator()(const MatrixFree<dim, Number>&               data,
-             VectorType&                                  dst,
-             const VectorType&                            src,
-             const std::pair<unsigned int, unsigned int>& cell_range) const;
+  operator()(const MatrixFree<dim, Number> &               data,
+             VectorType &                                  dst,
+             const VectorType &                            src,
+             const std::pair<unsigned int, unsigned int> & cell_range) const;
 
   void
-  test_functions(Vector<Number>& dst, Vector<Number>& dst_deal) const
+  test_functions(Vector<Number> & dst, Vector<Number> & dst_deal) const
   {
     dst      = 0;
     dst_deal = 0;
@@ -72,17 +72,17 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val;
+  const MatrixFree<dim, Number> & data;
+  mutable FEValues<dim>           fe_val;
 };
 
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
-operator()(const MatrixFree<dim, Number>& data,
-           std::vector<Vector<Number>*>&  dst,
-           const std::vector<Vector<Number>*>&,
-           const std::pair<unsigned int, unsigned int>& cell_range) const
+operator()(const MatrixFree<dim, Number> & data,
+           std::vector<Vector<Number> *> & dst,
+           const std::vector<Vector<Number> *> &,
+           const std::pair<unsigned int, unsigned int> & cell_range) const
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
   const unsigned int                     n_q_points    = fe_eval.n_q_points;

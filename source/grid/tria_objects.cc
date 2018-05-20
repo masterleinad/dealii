@@ -133,8 +133,8 @@ namespace internal
     template <int dim, int spacedim>
     typename dealii::Triangulation<dim, spacedim>::raw_hex_iterator
     TriaObjects<TriaObject<3>>::next_free_hex(
-      const dealii::Triangulation<dim, spacedim>& tria,
-      const unsigned int                          level)
+      const dealii::Triangulation<dim, spacedim> & tria,
+      const unsigned int                           level)
     {
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 

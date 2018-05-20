@@ -75,7 +75,7 @@ namespace LAPACKSupport
   /**
    * Function printing the name of a State.
    */
-  inline const char*
+  inline const char *
   state_name(State s)
   {
     switch(s)
@@ -124,7 +124,7 @@ namespace LAPACKSupport
   /**
    * Function printing the name of a Property.
    */
-  inline const char*
+  inline const char *
   property_name(const Property s)
   {
     switch(s)
@@ -184,7 +184,7 @@ namespace LAPACKSupport
    * A LAPACK function returned an error code.
    */
   DeclException2(ExcErrorCode,
-                 char*,
+                 char *,
                  types::blas_int,
                  << "The function " << arg1 << " returned with an error code "
                  << arg2);
@@ -215,7 +215,7 @@ namespace LAPACKSupport
    */
   DeclException1(
     ExcMissing,
-    char*,
+    char *,
     << "When you ran 'cmake' during installation of deal.II, "
     << "no suitable installation of the BLAS or LAPACK library could "
     << "be found. Consequently, the function <" << arg1

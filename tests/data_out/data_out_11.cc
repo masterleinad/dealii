@@ -57,7 +57,7 @@ test()
           dof_handler, vec, names, component_interpretation);
         data_out.build_patches(mapping, 2);
       }
-    catch(ExceptionBase& exc)
+    catch(ExceptionBase & exc)
       {
         deallog << exc.get_exc_name() << std::endl;
       }
@@ -73,7 +73,7 @@ test()
           vec, names, DataOut<dim>::type_automatic, component_interpretation);
         data_out.build_patches(mapping, 2);
       }
-    catch(ExceptionBase& exc)
+    catch(ExceptionBase & exc)
       {
         deallog << exc.get_exc_name() << std::endl;
       }

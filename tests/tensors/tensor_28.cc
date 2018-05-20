@@ -32,7 +32,7 @@ using namespace dealii;
 
 template <int dim>
 void
-test_tensor(const Tensor<2, dim>& F)
+test_tensor(const Tensor<2, dim> & F)
 {
   // Contraction with the a tensor on the outermost
   // indices of standard tensors:
@@ -115,7 +115,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   initlog();
 

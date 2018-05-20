@@ -21,13 +21,13 @@
 
 template <typename T>
 void
-test(const T& t)
+test(const T & t)
 {
   try
     {
       make_array_view(std::begin(t), std::end(t));
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

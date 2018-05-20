@@ -107,7 +107,7 @@ test()
       AssertThrow(correct_constraints.is_constrained(i)
                     == library_constraints.is_constrained(i),
                   ExcInternalError());
-      typedef const std::vector<std::pair<types::global_dof_index, double>>&
+      typedef const std::vector<std::pair<types::global_dof_index, double>> &
         constraint_format;
       if(correct_constraints.is_constrained(i))
         {

@@ -22,7 +22,7 @@
 using namespace dealii;
 
 void
-check(const std::string& input, const std::string& expected)
+check(const std::string & input, const std::string & expected)
 {
   AssertThrow(Utilities::trim(input) == expected, ExcInternalError());
 }

@@ -67,14 +67,14 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> & p, const unsigned int component) const
   {
     return (0.1 + 2. * component) + (0.2 + 3. * component) * p[component];
   }
 
   template <typename NumberType>
   Tensor<1, dim, VectorizedArray<NumberType>>
-  shift_value(const Point<dim, VectorizedArray<NumberType>>& p_vec) const
+  shift_value(const Point<dim, VectorizedArray<NumberType>> & p_vec) const
   {
     Tensor<1, dim, VectorizedArray<NumberType>> shift_vec;
     Point<dim>                                  p;
@@ -146,14 +146,14 @@ test(const unsigned int n_ref = 0)
   dof_handler_euler.distribute_dofs(fe_euler);
   dof_handler_euler.distribute_mg_dofs();
 
-  const IndexSet& locally_owned_dofs_euler
+  const IndexSet & locally_owned_dofs_euler
     = dof_handler_euler.locally_owned_dofs();
   IndexSet locally_relevant_dofs_euler;
   DoFTools::extract_locally_relevant_dofs(dof_handler_euler,
                                           locally_relevant_dofs_euler);
 
-  const IndexSet& locally_owned_dofs = dof_handler.locally_owned_dofs();
-  IndexSet        locally_relevant_dofs;
+  const IndexSet & locally_owned_dofs = dof_handler.locally_owned_dofs();
+  IndexSet         locally_relevant_dofs;
   DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
 
   // constraints:
@@ -231,9 +231,9 @@ test(const unsigned int n_ref = 0)
           fe_eval.reinit(cell);
           for(unsigned int q = 0; q < nqp; ++q)
             {
-              const auto& v1 = fe_eval_euler.quadrature_point(q);
-              const auto& qp = fe_eval.quadrature_point(q);
-              const auto  v2 = qp + displacement_function.shift_value(qp);
+              const auto & v1 = fe_eval_euler.quadrature_point(q);
+              const auto & qp = fe_eval.quadrature_point(q);
+              const auto   v2 = qp + displacement_function.shift_value(qp);
               VectorizedArray<NumberType> dist = v1.distance(v2);
               for(unsigned int v = 0;
                   v < VectorizedArray<NumberType>::n_array_elements;
@@ -305,9 +305,9 @@ test(const unsigned int n_ref = 0)
             fe_eval.reinit(cell);
             for(unsigned int q = 0; q < nqp; ++q)
               {
-                const auto& v1 = fe_eval_euler.quadrature_point(q);
-                const auto& qp = fe_eval.quadrature_point(q);
-                const auto  v2 = qp + displacement_function.shift_value(qp);
+                const auto & v1 = fe_eval_euler.quadrature_point(q);
+                const auto & qp = fe_eval.quadrature_point(q);
+                const auto   v2 = qp + displacement_function.shift_value(qp);
                 VectorizedArray<NumberType> dist = v1.distance(v2);
                 for(unsigned int v = 0;
                     v < VectorizedArray<NumberType>::n_array_elements;
@@ -325,7 +325,7 @@ test(const unsigned int n_ref = 0)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

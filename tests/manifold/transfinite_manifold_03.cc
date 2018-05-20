@@ -29,7 +29,7 @@
 
 template <int dim, int spacedim>
 void
-do_test(const Triangulation<dim, spacedim>& tria)
+do_test(const Triangulation<dim, spacedim> & tria)
 {
   for(unsigned int degree = 1; degree < 5; ++degree)
     {

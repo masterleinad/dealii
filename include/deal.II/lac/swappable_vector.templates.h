@@ -27,7 +27,7 @@ SwappableVector<number>::SwappableVector() : data_is_preloaded(false)
 {}
 
 template <typename number>
-SwappableVector<number>::SwappableVector(const SwappableVector<number>& v)
+SwappableVector<number>::SwappableVector(const SwappableVector<number> & v)
   : Vector<number>(v), filename(), data_is_preloaded(false)
 {
   Assert(v.filename == "", ExcInvalidCopyOperation());
@@ -55,8 +55,8 @@ SwappableVector<number>::~SwappableVector()
 }
 
 template <typename number>
-SwappableVector<number>&
-SwappableVector<number>::operator=(const SwappableVector<number>& v)
+SwappableVector<number> &
+SwappableVector<number>::operator=(const SwappableVector<number> & v)
 {
   // if necessary, first delete data
   if(filename != "")
@@ -75,7 +75,7 @@ SwappableVector<number>::operator=(const SwappableVector<number>& v)
 
 template <typename number>
 void
-SwappableVector<number>::swap_out(const std::string& name)
+SwappableVector<number>::swap_out(const std::string & name)
 {
   // if the vector was stored in
   // another file previously, and
@@ -221,7 +221,7 @@ SwappableVector<number>::kill_file()
 }
 
 template <typename number>
-const std::string&
+const std::string &
 SwappableVector<number>::get_filename() const
 {
   return filename;

@@ -63,20 +63,22 @@ public:
 
   void
   compute_SD_integral_on_cell(
-    vector<double>&                                          dst,
-    typename DoFHandler<dim, dim + 1>::active_cell_iterator& cell,
-    const Point<dim + 1>&                                    point);
+    vector<double> &                                          dst,
+    typename DoFHandler<dim, dim + 1>::active_cell_iterator & cell,
+    const Point<dim + 1> &                                    point);
 
 private:
   double
-  term_S(const Tensor<1, 3>& r,
-         const Tensor<1, 3>& a1,
-         const Tensor<1, 3>& a2,
-         const Tensor<1, 3>& n,
-         const double&       rn_c);
+  term_S(const Tensor<1, 3> & r,
+         const Tensor<1, 3> & a1,
+         const Tensor<1, 3> & a2,
+         const Tensor<1, 3> & n,
+         const double &       rn_c);
 
   double
-  term_D(const Tensor<1, 3>& r, const Tensor<1, 3>& a1, const Tensor<1, 3>& a2);
+  term_D(const Tensor<1, 3> & r,
+         const Tensor<1, 3> & a1,
+         const Tensor<1, 3> & a2);
 
   SmartPointer<FEValues<dim, dim + 1>> fe_values;
 };
@@ -100,17 +102,17 @@ LaplaceKernelIntegration<2>::LaplaceKernelIntegration()
 template <int dim>
 LaplaceKernelIntegration<dim>::~LaplaceKernelIntegration()
 {
-  FEValues<dim, dim + 1>* fp = fe_values;
-  fe_values                  = nullptr;
+  FEValues<dim, dim + 1> * fp = fe_values;
+  fe_values                   = nullptr;
   delete fp;
 }
 
 template <>
 void
 LaplaceKernelIntegration<2>::compute_SD_integral_on_cell(
-  vector<double>&                         dst,
-  DoFHandler<2, 3>::active_cell_iterator& cell,
-  const Point<3>&                         point)
+  vector<double> &                         dst,
+  DoFHandler<2, 3>::active_cell_iterator & cell,
+  const Point<3> &                         point)
 {
   Assert(dst.size() == 2, ExcDimensionMismatch(dst.size(), 2));
   fe_values->reinit(cell);
@@ -139,11 +141,11 @@ LaplaceKernelIntegration<2>::compute_SD_integral_on_cell(
 
 template <int dim>
 double
-LaplaceKernelIntegration<dim>::term_S(const Tensor<1, 3>& r,
-                                      const Tensor<1, 3>& a1,
-                                      const Tensor<1, 3>& a2,
-                                      const Tensor<1, 3>& n,
-                                      const double&       rn_c)
+LaplaceKernelIntegration<dim>::term_S(const Tensor<1, 3> & r,
+                                      const Tensor<1, 3> & a1,
+                                      const Tensor<1, 3> & a2,
+                                      const Tensor<1, 3> & n,
+                                      const double &       rn_c)
 {
   Tensor<1, 3> ra1 = cross_product_3d(r, a1);
   Tensor<1, 3> ra2 = cross_product_3d(r, a2);
@@ -159,9 +161,9 @@ LaplaceKernelIntegration<dim>::term_S(const Tensor<1, 3>& r,
 
 template <int dim>
 double
-LaplaceKernelIntegration<dim>::term_D(const Tensor<1, 3>& r,
-                                      const Tensor<1, 3>& a1,
-                                      const Tensor<1, 3>& a2)
+LaplaceKernelIntegration<dim>::term_D(const Tensor<1, 3> & r,
+                                      const Tensor<1, 3> & a1,
+                                      const Tensor<1, 3> & a2)
 {
   Tensor<1, 3> ra1 = cross_product_3d(r, a1);
   Tensor<1, 3> ra2 = cross_product_3d(r, a2);

@@ -28,8 +28,8 @@ test(const unsigned int degree)
 {
   deallog << "FE_RT_Bubbles<" << dim << "> (" << degree << ")" << std::endl;
 
-  FE_RT_Bubbles<dim>        fe_rt_bubbles(degree);
-  const FullMatrix<double>& constraints = fe_rt_bubbles.constraints();
+  FE_RT_Bubbles<dim>         fe_rt_bubbles(degree);
+  const FullMatrix<double> & constraints = fe_rt_bubbles.constraints();
 
   for(unsigned int i = 0; i < constraints.m(); ++i)
     {

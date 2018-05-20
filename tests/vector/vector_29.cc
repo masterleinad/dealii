@@ -20,7 +20,7 @@
 #include <vector>
 
 void
-test(Vector<double>& v)
+test(Vector<double> & v)
 {
   v.reinit(13, true);
 
@@ -39,7 +39,7 @@ main()
       Vector<double> v(100);
       test(v);
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

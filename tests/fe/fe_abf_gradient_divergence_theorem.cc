@@ -47,9 +47,9 @@ ones()
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr,
-     const FiniteElement<dim>& fe,
-     const double              tolerance)
+test(const Triangulation<dim> & tr,
+     const FiniteElement<dim> & fe,
+     const double               tolerance)
 {
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
@@ -156,7 +156,7 @@ test_hyper_cube(const double tolerance)
   typename Triangulation<dim>::active_cell_iterator cell = tr.begin_active();
   for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
     {
-      Point<dim>& point = cell->vertex(i);
+      Point<dim> & point = cell->vertex(i);
       if(std::abs(point(dim - 1) - 1.0) < 1e-5)
         point(dim - 1) += 0.15;
     }

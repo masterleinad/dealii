@@ -37,8 +37,8 @@
 template <int dim>
 struct MyFESystem
 {
-  MyFESystem(const std::vector<const FiniteElement<dim>*>& fes,
-             const std::vector<unsigned int>&              multiplicities)
+  MyFESystem(const std::vector<const FiniteElement<dim> *> & fes,
+             const std::vector<unsigned int> &               multiplicities)
   {
     deallog << "Constructing FESystem from list." << std::endl;
   }
@@ -55,15 +55,15 @@ private:
 
   struct VectorElementDestroyer
   {
-    const std::vector<const FiniteElement<dim>*> data;
+    const std::vector<const FiniteElement<dim> *> data;
     VectorElementDestroyer(
-      const std::vector<const FiniteElement<dim>*>& pointers);
+      const std::vector<const FiniteElement<dim> *> & pointers);
     ~VectorElementDestroyer(); // destructor to delete the pointers
-    const std::vector<const FiniteElement<dim>*>&
+    const std::vector<const FiniteElement<dim> *> &
     get_data() const;
   };
 
-  static std::vector<const FiniteElement<dim>*>
+  static std::vector<const FiniteElement<dim> *>
   create_fe_list(const unsigned int polynomial_degree);
 
   static std::vector<unsigned int>
@@ -71,10 +71,10 @@ private:
 };
 
 template <int dim>
-std::vector<const FiniteElement<dim>*>
+std::vector<const FiniteElement<dim> *>
 MySimulator<dim>::create_fe_list(const unsigned int polynomial_degree)
 {
-  std::vector<const FiniteElement<dim>*> fe_list;
+  std::vector<const FiniteElement<dim> *> fe_list;
   fe_list.push_back(new FE_Q<dim>(1));
   fe_list.push_back(new FE_Q<dim>(2));
   fe_list.push_back(new FE_Q<dim>(3));
@@ -97,7 +97,7 @@ MySimulator<dim>::create_fe_multiplicities()
 
 template <int dim>
 MySimulator<dim>::VectorElementDestroyer::VectorElementDestroyer(
-  const std::vector<const FiniteElement<dim>*>& pointers)
+  const std::vector<const FiniteElement<dim> *> & pointers)
   : data(pointers)
 {}
 
@@ -112,7 +112,7 @@ MySimulator<dim>::VectorElementDestroyer::~VectorElementDestroyer()
 }
 
 template <int dim>
-const std::vector<const FiniteElement<dim>*>&
+const std::vector<const FiniteElement<dim> *> &
 MySimulator<dim>::VectorElementDestroyer::get_data() const
 {
   return data;

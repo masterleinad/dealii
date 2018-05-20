@@ -26,7 +26,7 @@
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+test(const Triangulation<dim> & tr, const FiniteElement<dim> & fe)
 {
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
@@ -40,7 +40,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     {
       fe_values[extr]; // invalid access
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
       goto ok;

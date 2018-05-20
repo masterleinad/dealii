@@ -76,7 +76,7 @@ namespace PETScWrappers
      * any estimation of non_zero entries and has no option
      * <tt>is_symmetric</tt>.
      */
-    MatrixFree(const MPI_Comm&    communicator,
+    MatrixFree(const MPI_Comm &   communicator,
                const unsigned int m,
                const unsigned int n,
                const unsigned int local_rows,
@@ -93,12 +93,12 @@ namespace PETScWrappers
      * any estimation of non_zero entries and has no option
      * <tt>is_symmetric</tt>.
      */
-    MatrixFree(const MPI_Comm&                  communicator,
-               const unsigned int               m,
-               const unsigned int               n,
-               const std::vector<unsigned int>& local_rows_per_process,
-               const std::vector<unsigned int>& local_columns_per_process,
-               const unsigned int               this_process);
+    MatrixFree(const MPI_Comm &                  communicator,
+               const unsigned int                m,
+               const unsigned int                n,
+               const std::vector<unsigned int> & local_rows_per_process,
+               const std::vector<unsigned int> & local_columns_per_process,
+               const unsigned int                this_process);
 
     /**
      * Constructor for the serial case: Same function as
@@ -115,11 +115,11 @@ namespace PETScWrappers
      * <tt>MatrixFree()</tt>, see above, with <tt>communicator =
      * MPI_COMM_WORLD</tt>.
      */
-    MatrixFree(const unsigned int               m,
-               const unsigned int               n,
-               const std::vector<unsigned int>& local_rows_per_process,
-               const std::vector<unsigned int>& local_columns_per_process,
-               const unsigned int               this_process);
+    MatrixFree(const unsigned int                m,
+               const unsigned int                n,
+               const std::vector<unsigned int> & local_rows_per_process,
+               const std::vector<unsigned int> & local_columns_per_process,
+               const unsigned int                this_process);
 
     /**
      * Throw away the present matrix and generate one that has the same
@@ -127,7 +127,7 @@ namespace PETScWrappers
      * the same argument list as the present function.
      */
     void
-    reinit(const MPI_Comm&    communicator,
+    reinit(const MPI_Comm &   communicator,
            const unsigned int m,
            const unsigned int n,
            const unsigned int local_rows,
@@ -139,12 +139,12 @@ namespace PETScWrappers
      * the same argument list as the present function.
      */
     void
-    reinit(const MPI_Comm&                  communicator,
-           const unsigned int               m,
-           const unsigned int               n,
-           const std::vector<unsigned int>& local_rows_per_process,
-           const std::vector<unsigned int>& local_columns_per_process,
-           const unsigned int               this_process);
+    reinit(const MPI_Comm &                  communicator,
+           const unsigned int                m,
+           const unsigned int                n,
+           const std::vector<unsigned int> & local_rows_per_process,
+           const std::vector<unsigned int> & local_columns_per_process,
+           const unsigned int                this_process);
 
     /**
      * Call the @p reinit() function above with <tt>communicator =
@@ -161,11 +161,11 @@ namespace PETScWrappers
      * MPI_COMM_WORLD</tt>.
      */
     void
-    reinit(const unsigned int               m,
-           const unsigned int               n,
-           const std::vector<unsigned int>& local_rows_per_process,
-           const std::vector<unsigned int>& local_columns_per_process,
-           const unsigned int               this_process);
+    reinit(const unsigned int                m,
+           const unsigned int                n,
+           const std::vector<unsigned int> & local_rows_per_process,
+           const std::vector<unsigned int> & local_columns_per_process,
+           const unsigned int                this_process);
 
     /**
      * Release all memory and return to a state just like after having called
@@ -178,7 +178,7 @@ namespace PETScWrappers
      * Return a reference to the MPI communicator object in use with this
      * matrix.
      */
-    const MPI_Comm&
+    const MPI_Comm &
     get_mpi_communicator() const override;
 
     /**
@@ -193,7 +193,7 @@ namespace PETScWrappers
      * not distributed, then neither of the vectors may be.
      */
     virtual void
-    vmult(VectorBase& dst, const VectorBase& src) const = 0;
+    vmult(VectorBase & dst, const VectorBase & src) const = 0;
 
     /**
      * Matrix-vector multiplication: let <i>dst = M<sup>T</sup>*src</i> with
@@ -208,7 +208,7 @@ namespace PETScWrappers
      * vectors may be.
      */
     virtual void
-    Tvmult(VectorBase& dst, const VectorBase& src) const = 0;
+    Tvmult(VectorBase & dst, const VectorBase & src) const = 0;
 
     /**
      * Adding Matrix-vector multiplication. Add <i>M*src</i> on <i>dst</i>
@@ -222,7 +222,7 @@ namespace PETScWrappers
      * vectors may be.
      */
     virtual void
-    vmult_add(VectorBase& dst, const VectorBase& src) const = 0;
+    vmult_add(VectorBase & dst, const VectorBase & src) const = 0;
 
     /**
      * Adding Matrix-vector multiplication. Add <i>M<sup>T</sup>*src</i> to
@@ -237,7 +237,7 @@ namespace PETScWrappers
      * vectors may be.
      */
     virtual void
-    Tvmult_add(VectorBase& dst, const VectorBase& src) const = 0;
+    Tvmult_add(VectorBase & dst, const VectorBase & src) const = 0;
 
     /**
      * The matrix-vector multiplication called by @p matrix_free_mult(). This
@@ -248,7 +248,7 @@ namespace PETScWrappers
      * in derived classes.
      */
     virtual void
-    vmult(Vec& dst, const Vec& src) const;
+    vmult(Vec & dst, const Vec & src) const;
 
   private:
     /**
@@ -285,7 +285,7 @@ namespace PETScWrappers
 
   // -------- template and inline functions ----------
 
-  inline const MPI_Comm&
+  inline const MPI_Comm &
   MatrixFree::get_mpi_communicator() const
   {
     return communicator;

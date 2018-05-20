@@ -52,14 +52,14 @@ template <int dim,
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in)
+  MatrixFreeTest(const MatrixFree<dim, Number> & data_in)
     : data(data_in),
       fe_val(data.get_dof_handler().get_fe(),
              Quadrature<dim>(data.get_quadrature(0)),
              update_values | update_gradients | update_hessians){};
 
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in,
-                 const Mapping<dim>&            mapping)
+  MatrixFreeTest(const MatrixFree<dim, Number> & data_in,
+                 const Mapping<dim> &            mapping)
     : data(data_in),
       fe_val(mapping,
              data.get_dof_handler().get_fe(),
@@ -72,10 +72,10 @@ public:
   // make function virtual to allow derived
   // classes to define a different function
   virtual void
-  operator()(const MatrixFree<dim, Number>& data,
-             Vector<Number>&,
-             const Vector<Number>&                        src,
-             const std::pair<unsigned int, unsigned int>& cell_range) const
+  operator()(const MatrixFree<dim, Number> & data,
+             Vector<Number> &,
+             const Vector<Number> &                        src,
+             const std::pair<unsigned int, unsigned int> & cell_range) const
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
 
@@ -137,7 +137,7 @@ public:
   }
 
   void
-  test_functions(const Vector<Number>& src) const
+  test_functions(const Vector<Number> & src) const
   {
     for(unsigned int i = 0; i < 5; ++i)
       {
@@ -190,9 +190,9 @@ public:
   };
 
 protected:
-  const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val;
-  mutable double                 errors[5], total[5];
+  const MatrixFree<dim, Number> & data;
+  mutable FEValues<dim>           fe_val;
+  mutable double                  errors[5], total[5];
 };
 
 // dummy with empty quadrature formula
@@ -200,24 +200,24 @@ template <int dim, int fe_degree, typename Number>
 class MatrixFreeTest<dim, fe_degree, 0, Number>
 {
 public:
-  MatrixFreeTest(const MatrixFree<dim, Number>&){};
+  MatrixFreeTest(const MatrixFree<dim, Number> &){};
 
-  MatrixFreeTest(const MatrixFree<dim, Number>&, const Mapping<dim>&){};
+  MatrixFreeTest(const MatrixFree<dim, Number> &, const Mapping<dim> &){};
 
   void
-  cell_integration(Vector<Number>&,
-                   const Vector<Number>&,
+  cell_integration(Vector<Number> &,
+                   const Vector<Number> &,
                    const std::pair<unsigned int, unsigned int>) const
   {}
 
   void
-  test_functions(const Vector<Number>&) const
+  test_functions(const Vector<Number> &) const
   {}
 };
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
+do_test(const DoFHandler<dim> & dof, const ConstraintMatrix & constraints)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
   // use this for info on problem

@@ -88,7 +88,7 @@ namespace internal
        * Fill a MinMaxAvg struct with default values.
        */
       void
-      clear_timing_data(Utilities::MPI::MinMaxAvg& data)
+      clear_timing_data(Utilities::MPI::MinMaxAvg & data)
       {
         data.sum       = numbers::signaling_nan<double>();
         data.min       = numbers::signaling_nan<double>();
@@ -277,7 +277,7 @@ Timer::reset()
 
 /* ---------------------------- TimerOutput -------------------------- */
 
-TimerOutput::TimerOutput(std::ostream&         stream,
+TimerOutput::TimerOutput(std::ostream &        stream,
                          const OutputFrequency output_frequency,
                          const OutputType      output_type)
   : output_frequency(output_frequency),
@@ -287,7 +287,7 @@ TimerOutput::TimerOutput(std::ostream&         stream,
     mpi_communicator(MPI_COMM_SELF)
 {}
 
-TimerOutput::TimerOutput(ConditionalOStream&   stream,
+TimerOutput::TimerOutput(ConditionalOStream &  stream,
                          const OutputFrequency output_frequency,
                          const OutputType      output_type)
   : output_frequency(output_frequency),
@@ -298,7 +298,7 @@ TimerOutput::TimerOutput(ConditionalOStream&   stream,
 {}
 
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
-                         std::ostream&         stream,
+                         std::ostream &        stream,
                          const OutputFrequency output_frequency,
                          const OutputType      output_type)
   : output_frequency(output_frequency),
@@ -309,7 +309,7 @@ TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
 {}
 
 TimerOutput::TimerOutput(MPI_Comm              mpi_communicator,
-                         ConditionalOStream&   stream,
+                         ConditionalOStream &  stream,
                          const OutputFrequency output_frequency,
                          const OutputType      output_type)
   : output_frequency(output_frequency),
@@ -364,7 +364,7 @@ TimerOutput::~TimerOutput()
 }
 
 void
-TimerOutput::enter_subsection(const std::string& section_name)
+TimerOutput::enter_subsection(const std::string & section_name)
 {
   Threads::Mutex::ScopedLock lock(mutex);
 
@@ -402,7 +402,7 @@ TimerOutput::enter_subsection(const std::string& section_name)
 }
 
 void
-TimerOutput::leave_subsection(const std::string& section_name)
+TimerOutput::leave_subsection(const std::string & section_name)
 {
   Assert(!active_sections.empty(),
          ExcMessage("Cannot exit any section because none has been entered!"));
@@ -466,7 +466,7 @@ std::map<std::string, double>
 TimerOutput::get_summary_data(const OutputData kind) const
 {
   std::map<std::string, double> output;
-  for(const auto& section : sections)
+  for(const auto & section : sections)
     {
       switch(kind)
         {

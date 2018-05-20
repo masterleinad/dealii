@@ -28,13 +28,13 @@
 
 template <int dim>
 void
-test(const FE_Q<dim>& fe_q)
+test(const FE_Q<dim> & fe_q)
 {
   deallog << fe_q.get_name() << std::endl;
 
   for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
     {
-      const FullMatrix<double>& m = fe_q.get_restriction_matrix(c);
+      const FullMatrix<double> & m = fe_q.get_restriction_matrix(c);
 
       for(unsigned int i = 0; i < m.m(); ++i)
         for(unsigned int j = 0; j < m.n(); ++j)

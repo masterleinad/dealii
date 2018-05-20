@@ -23,7 +23,7 @@
 
 template <int rank, int dim, typename NumberType>
 void
-fill_tensor(SymmetricTensor<rank, dim, NumberType>& t)
+fill_tensor(SymmetricTensor<rank, dim, NumberType> & t)
 {
   for(unsigned int i = 0; i != t.n_independent_components; ++i)
     {
@@ -33,7 +33,7 @@ fill_tensor(SymmetricTensor<rank, dim, NumberType>& t)
 
 template <int rank, int dim, typename NumberType>
 void
-fill_tensor(Tensor<rank, dim, NumberType>& t)
+fill_tensor(Tensor<rank, dim, NumberType> & t)
 {
   for(unsigned int i = 0; i != t.n_independent_components; ++i)
     {
@@ -47,8 +47,8 @@ template <int dim,
           template <int, int, typename> class TensorType2,
           typename NumberType2>
 void
-print(const TensorType1<2, dim, NumberType1>& t2,
-      const TensorType2<4, dim, NumberType2>& t4)
+print(const TensorType1<2, dim, NumberType1> & t2,
+      const TensorType2<4, dim, NumberType2> & t4)
 {
   deallog << t2 << std::endl;
   deallog << t4 << std::endl;
@@ -60,10 +60,10 @@ template <int dim,
           template <int, int, typename> class TensorType2,
           typename NumberType2>
 void
-print(const TensorType1<2, dim, NumberType1>& t2_1,
-      const TensorType2<2, dim, NumberType2>& t2_2,
-      const TensorType1<4, dim, NumberType1>& t4_1,
-      const TensorType2<4, dim, NumberType2>& t4_2)
+print(const TensorType1<2, dim, NumberType1> & t2_1,
+      const TensorType2<2, dim, NumberType2> & t2_2,
+      const TensorType1<4, dim, NumberType1> & t4_1,
+      const TensorType2<4, dim, NumberType2> & t4_2)
 {
   deallog << t2_1 << std::endl;
   deallog << t2_2 << std::endl;

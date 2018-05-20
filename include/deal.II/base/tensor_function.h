@@ -79,7 +79,7 @@ public:
    * Return the value of the function at the given point.
    */
   virtual value_type
-  value(const Point<dim>& p) const;
+  value(const Point<dim> & p) const;
 
   /**
    * Set <tt>values</tt> to the point values of the function at the
@@ -87,14 +87,14 @@ public:
    * right size, i.e.  the same size as the <tt>points</tt> array.
    */
   virtual void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<value_type>&       values) const;
+  value_list(const std::vector<Point<dim>> & points,
+             std::vector<value_type> &       values) const;
 
   /**
    * Return the gradient of the function at the given point.
    */
   virtual gradient_type
-  gradient(const Point<dim>& p) const;
+  gradient(const Point<dim> & p) const;
 
   /**
    * Set <tt>gradients</tt> to the gradients of the function at the
@@ -102,8 +102,8 @@ public:
    * right size, i.e.  the same size as the <tt>points</tt> array.
    */
   virtual void
-  gradient_list(const std::vector<Point<dim>>& points,
-                std::vector<gradient_type>&    gradients) const;
+  gradient_list(const std::vector<Point<dim>> & points,
+                std::vector<gradient_type> &    gradients) const;
 };
 
 /**
@@ -124,28 +124,28 @@ public:
    * An initial value for the time variable may be specified, otherwise it
    * defaults to zero.
    */
-  ConstantTensorFunction(const dealii::Tensor<rank, dim, Number>& value,
+  ConstantTensorFunction(const dealii::Tensor<rank, dim, Number> & value,
                          const Number initial_time = 0.0);
 
   virtual ~ConstantTensorFunction() override = default;
 
   virtual typename dealii::TensorFunction<rank, dim, Number>::value_type
-  value(const Point<dim>& p) const override;
+  value(const Point<dim> & p) const override;
 
   virtual void
-  value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<typename dealii::TensorFunction<rank, dim, Number>::value_type>&
-      values) const override;
+  value_list(const std::vector<Point<dim>> & points,
+             std::vector<
+               typename dealii::TensorFunction<rank, dim, Number>::value_type> &
+               values) const override;
 
   virtual typename dealii::TensorFunction<rank, dim, Number>::gradient_type
-  gradient(const Point<dim>& p) const override;
+  gradient(const Point<dim> & p) const override;
 
   virtual void
   gradient_list(
-    const std::vector<Point<dim>>& points,
+    const std::vector<Point<dim>> & points,
     std::vector<
-      typename dealii::TensorFunction<rank, dim, Number>::gradient_type>&
+      typename dealii::TensorFunction<rank, dim, Number>::gradient_type> &
       gradients) const override;
 
 private:

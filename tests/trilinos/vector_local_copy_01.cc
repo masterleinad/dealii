@@ -21,7 +21,7 @@
 #include <deal.II/lac/vector.h>
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 

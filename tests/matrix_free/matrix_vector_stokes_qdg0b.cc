@@ -55,13 +55,13 @@ public:
   typedef typename DoFHandler<dim>::active_cell_iterator CellIterator;
   typedef double                                         Number;
 
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number> & data_in) : data(data_in){};
 
   void
-  local_apply(const MatrixFree<dim, Number>&               data,
-              VectorType&                                  dst,
-              const VectorType&                            src,
-              const std::pair<unsigned int, unsigned int>& cell_range) const
+  local_apply(const MatrixFree<dim, Number> &               data,
+              VectorType &                                  dst,
+              const VectorType &                            src,
+              const std::pair<unsigned int, unsigned int> & cell_range) const
   {
     typedef VectorizedArray<Number>       vector_t;
     FEEvaluation<dim, -1, 0, dim, Number> velocity(data, 0);
@@ -99,7 +99,7 @@ public:
   }
 
   void
-  vmult(VectorType& dst, const VectorType& src) const
+  vmult(VectorType & dst, const VectorType & src) const
   {
     AssertDimension(dst.size(), dim + 1);
     for(unsigned int d = 0; d < dim + 1; ++d)
@@ -108,7 +108,7 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
+  const MatrixFree<dim, Number> & data;
 };
 
 template <int dim>
@@ -264,12 +264,12 @@ test(const unsigned int fe_degree)
 
   // setup matrix-free structure
   {
-    std::vector<const DoFHandler<dim>*> dofs;
+    std::vector<const DoFHandler<dim> *> dofs;
     dofs.push_back(&dof_handler_u);
     dofs.push_back(&dof_handler_p);
     ConstraintMatrix dummy_constraints;
     dummy_constraints.close();
-    std::vector<const ConstraintMatrix*> constraints;
+    std::vector<const ConstraintMatrix *> constraints;
     constraints.push_back(&dummy_constraints);
     constraints.push_back(&dummy_constraints);
     QGauss<1> quad(fe_degree + 2);

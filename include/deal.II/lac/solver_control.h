@@ -97,7 +97,7 @@ public:
     virtual ~NoConvergence() noexcept override = default;
 
     virtual void
-    print_info(std::ostream& out) const override
+    print_info(std::ostream & out) const override
     {
       out
         << "Iterative method reported convergence failure in step " << last_step
@@ -155,13 +155,13 @@ public:
    * Interface to parameter file.
    */
   static void
-  declare_parameters(ParameterHandler& param);
+  declare_parameters(ParameterHandler & param);
 
   /**
    * Read parameters from file.
    */
   void
-  parse_parameters(ParameterHandler& param);
+  parse_parameters(ParameterHandler & param);
 
   /**
    * Decide about success or failure of an iteration.  This function gets the
@@ -256,7 +256,7 @@ public:
   /**
    * Provide read access to the collected residual data.
    */
-  const std::vector<double>&
+  const std::vector<double> &
   get_history_data() const;
 
   /**
@@ -432,14 +432,14 @@ public:
    * Initialize with a SolverControl object. The result will emulate
    * SolverControl by setting @p reduce to zero.
    */
-  ReductionControl(const SolverControl& c);
+  ReductionControl(const SolverControl & c);
 
   /**
    * Assign a SolverControl object to ReductionControl. The result of the
    * assignment will emulate SolverControl by setting @p reduce to zero.
    */
-  ReductionControl&
-  operator=(const SolverControl& c);
+  ReductionControl &
+  operator=(const SolverControl & c);
 
   /**
    * Virtual destructor is needed as there are virtual functions in this
@@ -451,13 +451,13 @@ public:
    * Interface to parameter file.
    */
   static void
-  declare_parameters(ParameterHandler& param);
+  declare_parameters(ParameterHandler & param);
 
   /**
    * Read parameters from file.
    */
   void
-  parse_parameters(ParameterHandler& param);
+  parse_parameters(ParameterHandler & param);
 
   /**
    * Decide about success or failure of an iteration.  This function calls the
@@ -520,15 +520,15 @@ public:
    * Initialize with a SolverControl object. The result will emulate
    * SolverControl by setting the reduction target to zero.
    */
-  IterationNumberControl(const SolverControl& c);
+  IterationNumberControl(const SolverControl & c);
 
   /**
    * Assign a SolverControl object to ReductionControl. The result of the
    * assignment will emulate SolverControl by setting the reduction target to
    * zero.
    */
-  IterationNumberControl&
-  operator=(const SolverControl& c);
+  IterationNumberControl &
+  operator=(const SolverControl & c);
 
   /**
    * Virtual destructor is needed as there are virtual functions in this
@@ -576,15 +576,15 @@ public:
    * Initialize with a SolverControl object. The result will emulate
    * SolverControl by setting @p n_consecutive_iterations to one.
    */
-  ConsecutiveControl(const SolverControl& c);
+  ConsecutiveControl(const SolverControl & c);
 
   /**
    * Assign a SolverControl object to ConsecutiveControl. The result of the
    * assignment will emulate SolverControl by setting @p n_consecutive_iterations
    * to one.
    */
-  ConsecutiveControl&
-  operator=(const SolverControl& c);
+  ConsecutiveControl &
+  operator=(const SolverControl & c);
 
   /**
    * Virtual destructor is needed as there are virtual functions in this

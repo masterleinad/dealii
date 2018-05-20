@@ -30,7 +30,7 @@ main()
   // this test only needs to compile, not run
   if(false)
     {
-      SparseMatrix<double>::iterator* i;
+      SparseMatrix<double>::iterator * i;
       (*i)->value() = (int) 0;
     }
 

@@ -181,12 +181,12 @@ namespace LinearAlgebra
     {
     public:
       typedef Number                                            value_type;
-      typedef value_type*                                       pointer;
-      typedef const value_type*                                 const_pointer;
-      typedef value_type*                                       iterator;
-      typedef const value_type*                                 const_iterator;
-      typedef value_type&                                       reference;
-      typedef const value_type&                                 const_reference;
+      typedef value_type *                                      pointer;
+      typedef const value_type *                                const_pointer;
+      typedef value_type *                                      iterator;
+      typedef const value_type *                                const_iterator;
+      typedef value_type &                                      reference;
+      typedef const value_type &                                const_reference;
       typedef types::global_dof_index                           size_type;
       typedef typename numbers::NumberTraits<Number>::real_type real_type;
 
@@ -202,7 +202,7 @@ namespace LinearAlgebra
       /**
        * Copy constructor. Uses the parallel partitioning of @p in_vector.
        */
-      Vector(const Vector<Number>& in_vector);
+      Vector(const Vector<Number> & in_vector);
 
       /**
        * Construct a parallel vector of the given global size without any
@@ -226,14 +226,14 @@ namespace LinearAlgebra
        * @see
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
-      Vector(const IndexSet& local_range,
-             const IndexSet& ghost_indices,
-             const MPI_Comm  communicator);
+      Vector(const IndexSet & local_range,
+             const IndexSet & ghost_indices,
+             const MPI_Comm   communicator);
 
       /**
        * Same constructor as above but without any ghost indices.
        */
-      Vector(const IndexSet& local_range, const MPI_Comm communicator);
+      Vector(const IndexSet & local_range, const MPI_Comm communicator);
 
       /**
        * Create the vector based on the parallel partitioning described in @p
@@ -242,7 +242,7 @@ namespace LinearAlgebra
        * the same layout.
        */
       Vector(
-        const std::shared_ptr<const Utilities::MPI::Partitioner>& partitioner);
+        const std::shared_ptr<const Utilities::MPI::Partitioner> & partitioner);
 
       /**
        * Destructor.
@@ -268,8 +268,8 @@ namespace LinearAlgebra
        */
       template <typename Number2>
       void
-      reinit(const Vector<Number2>& in_vector,
-             const bool             omit_zeroing_entries = false);
+      reinit(const Vector<Number2> & in_vector,
+             const bool              omit_zeroing_entries = false);
 
       /**
        * Initialize the vector. The local range is specified by @p
@@ -288,15 +288,15 @@ namespace LinearAlgebra
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       void
-      reinit(const IndexSet& local_range,
-             const IndexSet& ghost_indices,
-             const MPI_Comm  communicator);
+      reinit(const IndexSet & local_range,
+             const IndexSet & ghost_indices,
+             const MPI_Comm   communicator);
 
       /**
        * Same as above, but without ghost entries.
        */
       void
-      reinit(const IndexSet& local_range, const MPI_Comm communicator);
+      reinit(const IndexSet & local_range, const MPI_Comm communicator);
 
       /**
        * Initialize the vector given to the parallel partitioning described in
@@ -306,7 +306,7 @@ namespace LinearAlgebra
        */
       void
       reinit(
-        const std::shared_ptr<const Utilities::MPI::Partitioner>& partitioner);
+        const std::shared_ptr<const Utilities::MPI::Partitioner> & partitioner);
 
       /**
        * Swap the contents of this vector and the other vector @p v. One could
@@ -324,7 +324,7 @@ namespace LinearAlgebra
        * handle memory separately.
        */
       void
-      swap(Vector<Number>& v);
+      swap(Vector<Number> & v);
 
       /**
        * Assigns the vector to the parallel partitioning of the input vector
@@ -337,8 +337,8 @@ namespace LinearAlgebra
        * at all, the vector will also update its ghost values in analogy to
        * the respective setting the Trilinos and PETSc vectors.
        */
-      Vector<Number>&
-      operator=(const Vector<Number>& in_vector);
+      Vector<Number> &
+      operator=(const Vector<Number> & in_vector);
 
       /**
        * Assigns the vector to the parallel partitioning of the input vector
@@ -352,8 +352,8 @@ namespace LinearAlgebra
        * the respective setting the Trilinos and PETSc vectors.
        */
       template <typename Number2>
-      Vector<Number>&
-      operator=(const Vector<Number2>& in_vector);
+      Vector<Number> &
+      operator=(const Vector<Number2> & in_vector);
 
 #ifdef DEAL_II_WITH_PETSC
       /**
@@ -367,8 +367,8 @@ namespace LinearAlgebra
        * ReadWriteVector instead.
        */
       DEAL_II_DEPRECATED
-      Vector<Number>&
-      operator=(const PETScWrappers::MPI::Vector& petsc_vec);
+      Vector<Number> &
+      operator=(const PETScWrappers::MPI::Vector & petsc_vec);
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -384,8 +384,8 @@ namespace LinearAlgebra
        * ReadWriteVector instead.
        */
       DEAL_II_DEPRECATED
-      Vector<Number>&
-      operator=(const TrilinosWrappers::MPI::Vector& trilinos_vec);
+      Vector<Number> &
+      operator=(const TrilinosWrappers::MPI::Vector & trilinos_vec);
 #endif
       //@}
 
@@ -548,7 +548,7 @@ namespace LinearAlgebra
        */
       template <typename Number2>
       void
-      copy_locally_owned_data_from(const Vector<Number2>& src);
+      copy_locally_owned_data_from(const Vector<Number2> & src);
 
       //@}
 
@@ -562,32 +562,32 @@ namespace LinearAlgebra
        * copied.
        */
       virtual void
-      reinit(const VectorSpaceVector<Number>& V,
+      reinit(const VectorSpaceVector<Number> & V,
              const bool omit_zeroing_entries = false) override;
 
       /**
        * Multiply the entire vector by a fixed factor.
        */
-      virtual Vector<Number>&
+      virtual Vector<Number> &
       operator*=(const Number factor) override;
 
       /**
        * Divide the entire vector by a fixed factor.
        */
-      virtual Vector<Number>&
+      virtual Vector<Number> &
       operator/=(const Number factor) override;
 
       /**
        * Add the vector @p V to the present one.
        */
-      virtual Vector<Number>&
-      operator+=(const VectorSpaceVector<Number>& V) override;
+      virtual Vector<Number> &
+      operator+=(const VectorSpaceVector<Number> & V) override;
 
       /**
        * Subtract the vector @p V from the present one.
        */
-      virtual Vector<Number>&
-      operator-=(const VectorSpaceVector<Number>& V) override;
+      virtual Vector<Number> &
+      operator-=(const VectorSpaceVector<Number> & V) override;
 
       /**
        * Import all the elements present in the vector's IndexSet from the input
@@ -599,7 +599,7 @@ namespace LinearAlgebra
        */
       virtual void
       import(
-        const LinearAlgebra::ReadWriteVector<Number>&   V,
+        const LinearAlgebra::ReadWriteVector<Number> &  V,
         VectorOperation::values                         operation,
         std::shared_ptr<const CommunicationPatternBase> communication_pattern
         = std::shared_ptr<const CommunicationPatternBase>()) override;
@@ -608,7 +608,7 @@ namespace LinearAlgebra
        * Return the scalar product of two vectors.
        */
       virtual Number
-      operator*(const VectorSpaceVector<Number>& V) const override;
+      operator*(const VectorSpaceVector<Number> & V) const override;
 
       /**
        * Add @p a to all components. Note that @p a is a scalar not a vector.
@@ -620,33 +620,33 @@ namespace LinearAlgebra
        * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
        */
       virtual void
-      add(const Number a, const VectorSpaceVector<Number>& V) override;
+      add(const Number a, const VectorSpaceVector<Number> & V) override;
 
       /**
        * Multiple addition of scaled vectors, i.e. <tt>*this += a*V+b*W</tt>.
        */
       virtual void
-      add(const Number                     a,
-          const VectorSpaceVector<Number>& V,
-          const Number                     b,
-          const VectorSpaceVector<Number>& W) override;
+      add(const Number                      a,
+          const VectorSpaceVector<Number> & V,
+          const Number                      b,
+          const VectorSpaceVector<Number> & W) override;
 
       /**
        * A collective add operation: This function adds a whole set of values
        * stored in @p values to the vector components specified by @p indices.
        */
       virtual void
-      add(const std::vector<size_type>& indices,
-          const std::vector<Number>&    values);
+      add(const std::vector<size_type> & indices,
+          const std::vector<Number> &    values);
 
       /**
        * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this =
        * s*(*this)+a*V</tt>.
        */
       virtual void
-      sadd(const Number                     s,
-           const Number                     a,
-           const VectorSpaceVector<Number>& V) override;
+      sadd(const Number                      s,
+           const Number                      a,
+           const VectorSpaceVector<Number> & V) override;
 
       /**
        * Scale each element of this vector by the corresponding element in the
@@ -654,13 +654,13 @@ namespace LinearAlgebra
        * immediate re-assignment) by a diagonal scaling matrix.
        */
       virtual void
-      scale(const VectorSpaceVector<Number>& scaling_factors) override;
+      scale(const VectorSpaceVector<Number> & scaling_factors) override;
 
       /**
        * Assignment <tt>*this = a*V</tt>.
        */
       virtual void
-      equ(const Number a, const VectorSpaceVector<Number>& V) override;
+      equ(const Number a, const VectorSpaceVector<Number> & V) override;
 
       /**
        * Return the l<sub>1</sub> norm of the vector (i.e., the sum of the
@@ -709,9 +709,9 @@ namespace LinearAlgebra
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       virtual Number
-      add_and_dot(const Number                     a,
-                  const VectorSpaceVector<Number>& V,
-                  const VectorSpaceVector<Number>& W) override;
+      add_and_dot(const Number                      a,
+                  const VectorSpaceVector<Number> & V,
+                  const VectorSpaceVector<Number> & W) override;
 
       /**
        * Return the global size of the vector, equal to the sum of the number of
@@ -738,7 +738,7 @@ namespace LinearAlgebra
        * Print the vector to the output stream @p out.
        */
       virtual void
-      print(std::ostream&      out,
+      print(std::ostream &     out,
             const unsigned int precision  = 3,
             const bool         scientific = true,
             const bool         across     = true) const override;
@@ -760,7 +760,7 @@ namespace LinearAlgebra
        * zero, also ghost elements are set to zero, otherwise they remain
        * unchanged.
        */
-      virtual Vector<Number>&
+      virtual Vector<Number> &
       operator=(const Number s) override;
 
       /**
@@ -769,8 +769,8 @@ namespace LinearAlgebra
        */
       template <typename OtherNumber>
       void
-      add(const std::vector<size_type>&        indices,
-          const ::dealii::Vector<OtherNumber>& values);
+      add(const std::vector<size_type> &        indices,
+          const ::dealii::Vector<OtherNumber> & values);
 
       /**
        * Take an address where n_elements are stored contiguously and add them
@@ -778,16 +778,16 @@ namespace LinearAlgebra
        */
       template <typename OtherNumber>
       void
-      add(const size_type    n_elements,
-          const size_type*   indices,
-          const OtherNumber* values);
+      add(const size_type     n_elements,
+          const size_type *   indices,
+          const OtherNumber * values);
 
       /**
        * Scaling and simple vector addition, i.e.  <tt>*this =
        * s*(*this)+V</tt>.
        */
       void
-      sadd(const Number s, const Vector<Number>& V);
+      sadd(const Number s, const Vector<Number> & V);
 
       /**
        * Scaling and multiple addition.
@@ -796,11 +796,11 @@ namespace LinearAlgebra
        */
       DEAL_II_DEPRECATED
       void
-      sadd(const Number          s,
-           const Number          a,
-           const Vector<Number>& V,
-           const Number          b,
-           const Vector<Number>& W);
+      sadd(const Number           s,
+           const Number           a,
+           const Vector<Number> & V,
+           const Number           b,
+           const Vector<Number> & W);
 
       /**
        * Assignment <tt>*this = a*u + b*v</tt>.
@@ -809,10 +809,10 @@ namespace LinearAlgebra
        */
       DEAL_II_DEPRECATED
       void
-      equ(const Number          a,
-          const Vector<Number>& u,
-          const Number          b,
-          const Vector<Number>& v);
+      equ(const Number           a,
+          const Vector<Number> & u,
+          const Number           b,
+          const Vector<Number> & v);
 
       //@}
 
@@ -866,7 +866,7 @@ namespace LinearAlgebra
        * This function is deprecated.
        */
       DEAL_II_DEPRECATED
-      const IndexSet&
+      const IndexSet &
       ghost_elements() const;
 
       /**
@@ -932,7 +932,7 @@ namespace LinearAlgebra
        * a contiguous range and <tt>O(log(n<sub>ranges</sub>))</tt> for ghost
        * elements (quite fast, but slower than local_element()).
        */
-      Number&
+      Number &
       operator()(const size_type global_index);
 
       /**
@@ -950,7 +950,7 @@ namespace LinearAlgebra
        *
        * This function does the same thing as operator().
        */
-      Number& operator[](const size_type global_index);
+      Number & operator[](const size_type global_index);
 
       /**
        * Read access to the data field specified by @p local_index. Locally
@@ -971,7 +971,7 @@ namespace LinearAlgebra
        *
        * Performance: Direct array access (fast).
        */
-      Number&
+      Number &
       local_element(const size_type local_index);
 
       /**
@@ -991,8 +991,8 @@ namespace LinearAlgebra
        */
       template <typename OtherNumber>
       void
-      extract_subvector_to(const std::vector<size_type>& indices,
-                           std::vector<OtherNumber>&     values) const;
+      extract_subvector_to(const std::vector<size_type> & indices,
+                           std::vector<OtherNumber> &     values) const;
 
       /**
        * Instead of getting individual elements of a vector via operator(),
@@ -1057,7 +1057,7 @@ namespace LinearAlgebra
        * Return a reference to the MPI communicator object in use with this
        * vector.
        */
-      const MPI_Comm&
+      const MPI_Comm &
       get_mpi_communicator() const;
 
       /**
@@ -1066,7 +1066,7 @@ namespace LinearAlgebra
        * respective reinit() call, for additional queries regarding the
        * parallel communication, or the compatibility of partitioners.
        */
-      const std::shared_ptr<const Utilities::MPI::Partitioner>&
+      const std::shared_ptr<const Utilities::MPI::Partitioner> &
       get_partitioner() const;
 
       /**
@@ -1080,7 +1080,7 @@ namespace LinearAlgebra
        */
       bool
       partitioners_are_compatible(
-        const Utilities::MPI::Partitioner& part) const;
+        const Utilities::MPI::Partitioner & part) const;
 
       /**
        * Check whether the given partitioner is compatible with the
@@ -1097,7 +1097,7 @@ namespace LinearAlgebra
        */
       bool
       partitioners_are_globally_compatible(
-        const Utilities::MPI::Partitioner& part) const;
+        const Utilities::MPI::Partitioner & part) const;
       //@}
 
       /**
@@ -1142,16 +1142,16 @@ namespace LinearAlgebra
        * without MPI communication.
        */
       void
-      add_local(const Number a, const VectorSpaceVector<Number>& V);
+      add_local(const Number a, const VectorSpaceVector<Number> & V);
 
       /**
        * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this =
        * s*(*this)+a*V</tt> without MPI communication.
        */
       void
-      sadd_local(const Number                     s,
-                 const Number                     a,
-                 const VectorSpaceVector<Number>& V);
+      sadd_local(const Number                      s,
+                 const Number                      a,
+                 const VectorSpaceVector<Number> & V);
 
       /**
        * Local part of all_zero().
@@ -1164,7 +1164,7 @@ namespace LinearAlgebra
        */
       template <typename Number2>
       Number
-      inner_product_local(const Vector<Number2>& V) const;
+      inner_product_local(const Vector<Number2> & V) const;
 
       /**
        * Local part of norm_sqr().
@@ -1202,9 +1202,9 @@ namespace LinearAlgebra
        * the add_and_dot() function.
        */
       Number
-      add_and_dot_local(const Number          a,
-                        const Vector<Number>& V,
-                        const Vector<Number>& W);
+      add_and_dot_local(const Number           a,
+                        const Vector<Number> & V,
+                        const Vector<Number> & W);
 
       /**
        * Shared pointer to store the parallel partitioning information. This
@@ -1362,7 +1362,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    inline const IndexSet&
+    inline const IndexSet &
     Vector<Number>::ghost_elements() const
     {
       return partitioner->ghost_indices();
@@ -1423,7 +1423,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    inline Number&
+    inline Number &
     Vector<Number>::operator()(const size_type global_index)
     {
       Assert(
@@ -1449,7 +1449,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    inline Number& Vector<Number>::operator[](const size_type global_index)
+    inline Number & Vector<Number>::operator[](const size_type global_index)
     {
       return operator()(global_index);
     }
@@ -1469,7 +1469,7 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    inline Number&
+    inline Number &
     Vector<Number>::local_element(const size_type local_index)
     {
       AssertIndexRange(local_index,
@@ -1481,8 +1481,9 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename OtherNumber>
     inline void
-    Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
-                                         std::vector<OtherNumber>& values) const
+    Vector<Number>::extract_subvector_to(
+      const std::vector<size_type> & indices,
+      std::vector<OtherNumber> &     values) const
     {
       for(size_type i = 0; i < indices.size(); ++i)
         values[i] = operator()(indices[i]);
@@ -1506,8 +1507,8 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename OtherNumber>
     inline void
-    Vector<Number>::add(const std::vector<size_type>&        indices,
-                        const ::dealii::Vector<OtherNumber>& values)
+    Vector<Number>::add(const std::vector<size_type> &        indices,
+                        const ::dealii::Vector<OtherNumber> & values)
     {
       AssertDimension(indices.size(), values.size());
       for(size_type i = 0; i < indices.size(); ++i)
@@ -1523,9 +1524,9 @@ namespace LinearAlgebra
     template <typename Number>
     template <typename OtherNumber>
     inline void
-    Vector<Number>::add(const size_type    n_elements,
-                        const size_type*   indices,
-                        const OtherNumber* values)
+    Vector<Number>::add(const size_type     n_elements,
+                        const size_type *   indices,
+                        const OtherNumber * values)
     {
       for(size_type i = 0; i < n_elements; ++i, ++indices, ++values)
         {
@@ -1538,14 +1539,14 @@ namespace LinearAlgebra
     }
 
     template <typename Number>
-    inline const MPI_Comm&
+    inline const MPI_Comm &
     Vector<Number>::get_mpi_communicator() const
     {
       return partitioner->get_mpi_communicator();
     }
 
     template <typename Number>
-    inline const std::shared_ptr<const Utilities::MPI::Partitioner>&
+    inline const std::shared_ptr<const Utilities::MPI::Partitioner> &
     Vector<Number>::get_partitioner() const
     {
       return partitioner;
@@ -1566,8 +1567,8 @@ namespace LinearAlgebra
  */
 template <typename Number>
 inline void
-swap(LinearAlgebra::distributed::Vector<Number>& u,
-     LinearAlgebra::distributed::Vector<Number>& v)
+swap(LinearAlgebra::distributed::Vector<Number> & u,
+     LinearAlgebra::distributed::Vector<Number> & v)
 {
   u.swap(v);
 }
@@ -1599,8 +1600,8 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&                               matrix,
-                          LinearAlgebra::distributed::Vector<Number>& v,
+      reinit_range_vector(const Matrix &                               matrix,
+                          LinearAlgebra::distributed::Vector<Number> & v,
                           bool omit_zeroing_entries)
       {
         matrix.initialize_dof_vector(v);
@@ -1610,8 +1611,8 @@ namespace internal
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&                               matrix,
-                           LinearAlgebra::distributed::Vector<Number>& v,
+      reinit_domain_vector(const Matrix &                               matrix,
+                           LinearAlgebra::distributed::Vector<Number> & v,
                            bool omit_zeroing_entries)
       {
         matrix.initialize_dof_vector(v);

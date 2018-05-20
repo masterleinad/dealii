@@ -34,10 +34,10 @@
 
 template <int dim>
 void
-output(const parallel::shared::Triangulation<dim>& tr,
-       const std::string&                          filename,
-       const bool                                  view_levels,
-       const bool                                  include_artificial)
+output(const parallel::shared::Triangulation<dim> & tr,
+       const std::string &                          filename,
+       const bool                                   view_levels,
+       const bool                                   include_artificial)
 {
   GridOut out;
   out.write_mesh_per_processor_as_vtu(
@@ -93,7 +93,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

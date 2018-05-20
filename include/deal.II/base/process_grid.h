@@ -120,7 +120,7 @@ namespace Utilities
        */
       template <typename NumberType>
       void
-      send_to_inactive(NumberType* value, const int count = 1) const;
+      send_to_inactive(NumberType * value, const int count = 1) const;
 
       /**
        * Return <code>true</code> if the process is active within the grid.
@@ -132,8 +132,9 @@ namespace Utilities
       /**
        * A private constructor which takes grid dimensions as an <code>std::pair</code>.
        */
-      ProcessGrid(MPI_Comm                                     mpi_communicator,
-                  const std::pair<unsigned int, unsigned int>& grid_dimensions);
+      ProcessGrid(
+        MPI_Comm                                      mpi_communicator,
+        const std::pair<unsigned int, unsigned int> & grid_dimensions);
 
       /**
        * An MPI communicator with all processes (active and inactive).

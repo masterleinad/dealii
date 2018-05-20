@@ -27,13 +27,13 @@
 #include <deal.II/numerics/fe_field_function.h>
 #include <deal.II/numerics/vector_tools.h>
 
-void create_reference_triangulation(Triangulation<3>& triangulation)
+void create_reference_triangulation(Triangulation<3> & triangulation)
 {
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
   triangulation.refine_global(1);
 }
 
-void create_triangulation(Triangulation<3>& triangulation)
+void create_triangulation(Triangulation<3> & triangulation)
 {
   static const Point<3> vertices_parallelograms[]
     = {Point<3>(-1., -1., -1.), //0
@@ -94,11 +94,11 @@ void create_triangulation(Triangulation<3>& triangulation)
 }
 
 void
-evaluate(const FE_Nedelec<3>&  fe,
-         const DoFHandler<3>&  dof_handler_ref,
-         const Vector<double>& u_ref,
-         const DoFHandler<3>&  dof_handler,
-         const Vector<double>& u)
+evaluate(const FE_Nedelec<3> &  fe,
+         const DoFHandler<3> &  dof_handler_ref,
+         const Vector<double> & u_ref,
+         const DoFHandler<3> &  dof_handler,
+         const Vector<double> & u)
 {
   const FEValuesExtractors::Vector component(0);
   const QGauss<3>                  quadrature(2);
@@ -130,17 +130,17 @@ evaluate(const FE_Nedelec<3>&  fe,
 }
 
 void
-set_reference_solution(Vector<double>& vector)
+set_reference_solution(Vector<double> & vector)
 {
   for(unsigned int i = 0; i < vector.size(); ++i)
     vector(i) = 1.0;
 }
 
 void
-set_solution(Vector<double>&       vector,
-             const DoFHandler<3>&  dof_handler,
-             const DoFHandler<3>&  dof_handler_ref,
-             const Vector<double>& u_ref)
+set_solution(Vector<double> &       vector,
+             const DoFHandler<3> &  dof_handler,
+             const DoFHandler<3> &  dof_handler_ref,
+             const Vector<double> & u_ref)
 {
   ConstraintMatrix constraints;
 

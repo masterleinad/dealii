@@ -33,7 +33,7 @@
 template <int spacedim>
 bool
 pred_locally_owned(
-  const typename parallel::distributed::Triangulation<spacedim>::cell_iterator&
+  const typename parallel::distributed::Triangulation<spacedim>::cell_iterator &
     cell)
 {
   return cell->is_locally_owned();
@@ -43,7 +43,7 @@ template <int dim, int spacedim = dim>
 void
 test_hypercube(unsigned int ref, unsigned int max_bbox)
 {
-  const MPI_Comm& mpi_communicator = MPI_COMM_WORLD;
+  const MPI_Comm & mpi_communicator = MPI_COMM_WORLD;
   deallog << "Testing hypercube for spacedim = " << spacedim
           << " refinement: " << ref << " max number of boxes: " << max_bbox
           << std::endl;
@@ -55,7 +55,7 @@ test_hypercube(unsigned int ref, unsigned int max_bbox)
   typedef typename parallel::distributed::Triangulation<
     spacedim>::active_cell_iterator cell_iterator;
 
-  std::function<bool(const cell_iterator&)> predicate
+  std::function<bool(const cell_iterator &)> predicate
     = pred_locally_owned<spacedim>;
 
   std::vector<BoundingBox<spacedim>> local_bbox
@@ -114,7 +114,7 @@ test_hypercube(unsigned int ref, unsigned int max_bbox)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

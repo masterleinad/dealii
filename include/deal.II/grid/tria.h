@@ -355,7 +355,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
 
     /**
@@ -413,7 +413,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
 
     /**
@@ -472,7 +472,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
   } // namespace TriangulationImplementation
 } // namespace internal
@@ -1656,7 +1656,7 @@ public:
    * Finally, through the exception, one easily finds the places where code
    * has to be changed to avoid copies.
    */
-  Triangulation(const Triangulation<dim, spacedim>&) = delete;
+  Triangulation(const Triangulation<dim, spacedim> &) = delete;
 
   /**
    * Move constructor.
@@ -1664,13 +1664,13 @@ public:
    * Create a new triangulation by stealing the internal data of another
    * triangulation.
    */
-  Triangulation(Triangulation<dim, spacedim>&& tria) noexcept;
+  Triangulation(Triangulation<dim, spacedim> && tria) noexcept;
 
   /**
    * Move assignment operator.
    */
-  Triangulation&
-  operator=(Triangulation<dim, spacedim>&& tria) noexcept;
+  Triangulation &
+  operator=(Triangulation<dim, spacedim> && tria) noexcept;
 
   /**
    * Delete the object and all levels of the hierarchy.
@@ -1697,7 +1697,7 @@ public:
   /**
    * Return the mesh smoothing requirements that are obeyed.
    */
-  virtual const MeshSmoothing&
+  virtual const MeshSmoothing &
   get_mesh_smoothing() const;
 
   /**
@@ -1724,8 +1724,8 @@ public:
    * @ref GlossManifoldIndicator "Glossary entry on manifold indicators"
    */
   void
-  set_manifold(const types::manifold_id       number,
-               const Manifold<dim, spacedim>& manifold_object);
+  set_manifold(const types::manifold_id        number,
+               const Manifold<dim, spacedim> & manifold_object);
 
   /**
    * Reset those parts of the triangulation with the given manifold_id
@@ -1818,7 +1818,7 @@ public:
    * @see
    * @ref GlossManifoldIndicator "Glossary entry on manifold indicators"
    */
-  const Manifold<dim, spacedim>&
+  const Manifold<dim, spacedim> &
   get_manifold(const types::manifold_id number) const;
 
   /**
@@ -1876,7 +1876,7 @@ public:
    * copied to changes.
    */
   virtual void
-  copy_triangulation(const Triangulation<dim, spacedim>& other_tria);
+  copy_triangulation(const Triangulation<dim, spacedim> & other_tria);
 
   /**
    * Create a triangulation from a list of vertices and a list of cells, each
@@ -1922,9 +1922,9 @@ public:
    * is twisted.
    */
   virtual void
-  create_triangulation(const std::vector<Point<spacedim>>& vertices,
-                       const std::vector<CellData<dim>>&   cells,
-                       const SubCellData&                  subcelldata);
+  create_triangulation(const std::vector<Point<spacedim>> & vertices,
+                       const std::vector<CellData<dim>> &   cells,
+                       const SubCellData &                  subcelldata);
 
   /**
    * For backward compatibility, only. This function takes the cell data in
@@ -1936,9 +1936,9 @@ public:
    */
   virtual void
   create_triangulation_compatibility(
-    const std::vector<Point<spacedim>>& vertices,
-    const std::vector<CellData<dim>>&   cells,
-    const SubCellData&                  subcelldata);
+    const std::vector<Point<spacedim>> & vertices,
+    const std::vector<CellData<dim>> &   cells,
+    const SubCellData &                  subcelldata);
 
   /**
    * Revert or flip the direction_flags of a dim<spacedim triangulation, see
@@ -2154,7 +2154,7 @@ public:
      * subsequently be coarsened away.
      */
     boost::signals2::signal<void(
-      const typename Triangulation<dim, spacedim>::cell_iterator& cell)>
+      const typename Triangulation<dim, spacedim>::cell_iterator & cell)>
       pre_coarsening_on_cell;
 
     /**
@@ -2164,7 +2164,7 @@ public:
      * cell of a set of newly created active cells.
      */
     boost::signals2::signal<void(
-      const typename Triangulation<dim, spacedim>::cell_iterator& cell)>
+      const typename Triangulation<dim, spacedim>::cell_iterator & cell)>
       post_refinement_on_cell;
 
     /**
@@ -2174,7 +2174,7 @@ public:
      * <i>old</i> triangulation, but the new one is passed as an argument).
      */
     boost::signals2::signal<void(
-      const Triangulation<dim, spacedim>& destination_tria)>
+      const Triangulation<dim, spacedim> & destination_tria)>
       copy;
 
     /**
@@ -2226,7 +2226,7 @@ public:
      * functions are connected to this signal, their return values will be
      * summed to calculate the final weight.
      */
-    boost::signals2::signal<unsigned int(const cell_iterator&,
+    boost::signals2::signal<unsigned int(const cell_iterator &,
                                          const CellStatus),
                             CellWeightSum<unsigned int>>
       cell_weight;
@@ -2289,49 +2289,49 @@ public:
    * out.  For usage, read the general documentation for this class.
    */
   void
-  save_refine_flags(std::ostream& out) const;
+  save_refine_flags(std::ostream & out) const;
 
   /**
    * Same as above, but store the flags to a bitvector rather than to a file.
    */
   void
-  save_refine_flags(std::vector<bool>& v) const;
+  save_refine_flags(std::vector<bool> & v) const;
 
   /**
    * Read the information stored by @p save_refine_flags.
    */
   void
-  load_refine_flags(std::istream& in);
+  load_refine_flags(std::istream & in);
 
   /**
    * Read the information stored by @p save_refine_flags.
    */
   void
-  load_refine_flags(const std::vector<bool>& v);
+  load_refine_flags(const std::vector<bool> & v);
 
   /**
    * Analogue to @p save_refine_flags.
    */
   void
-  save_coarsen_flags(std::ostream& out) const;
+  save_coarsen_flags(std::ostream & out) const;
 
   /**
    * Same as above, but store the flags to a bitvector rather than to a file.
    */
   void
-  save_coarsen_flags(std::vector<bool>& v) const;
+  save_coarsen_flags(std::vector<bool> & v) const;
 
   /**
    * Analogue to @p load_refine_flags.
    */
   void
-  load_coarsen_flags(std::istream& out);
+  load_coarsen_flags(std::istream & out);
 
   /**
    * Analogue to @p load_refine_flags.
    */
   void
-  load_coarsen_flags(const std::vector<bool>& v);
+  load_coarsen_flags(const std::vector<bool> & v);
 
   /**
    * Return whether this triangulation has ever undergone anisotropic (as
@@ -2362,7 +2362,7 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags(std::ostream& out) const;
+  save_user_flags(std::ostream & out) const;
 
   /**
    * Same as above, but store the flags to a bitvector rather than to a file.
@@ -2370,21 +2370,21 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags(std::vector<bool>& v) const;
+  save_user_flags(std::vector<bool> & v) const;
 
   /**
    * Read the information stored by @p save_user_flags.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags(std::istream& in);
+  load_user_flags(std::istream & in);
 
   /**
    * Read the information stored by @p save_user_flags.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags(const std::vector<bool>& v);
+  load_user_flags(const std::vector<bool> & v);
 
   /**
    * Clear all user flags on lines.  See also
@@ -2398,7 +2398,7 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags_line(std::ostream& out) const;
+  save_user_flags_line(std::ostream & out) const;
 
   /**
    * Same as above, but store the flags to a bitvector rather than to a file.
@@ -2406,21 +2406,21 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags_line(std::vector<bool>& v) const;
+  save_user_flags_line(std::vector<bool> & v) const;
 
   /**
    * Load the user flags located on lines.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags_line(std::istream& in);
+  load_user_flags_line(std::istream & in);
 
   /**
    * Load the user flags located on lines.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags_line(const std::vector<bool>& v);
+  load_user_flags_line(const std::vector<bool> & v);
 
   /**
    * Clear all user flags on quads.  See also
@@ -2434,7 +2434,7 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags_quad(std::ostream& out) const;
+  save_user_flags_quad(std::ostream & out) const;
 
   /**
    * Same as above, but store the flags to a bitvector rather than to a file.
@@ -2442,21 +2442,21 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags_quad(std::vector<bool>& v) const;
+  save_user_flags_quad(std::vector<bool> & v) const;
 
   /**
    * Load the user flags located on quads.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags_quad(std::istream& in);
+  load_user_flags_quad(std::istream & in);
 
   /**
    * Load the user flags located on quads.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags_quad(const std::vector<bool>& v);
+  load_user_flags_quad(const std::vector<bool> & v);
 
   /**
    * Clear all user flags on quads.  See also
@@ -2470,7 +2470,7 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags_hex(std::ostream& out) const;
+  save_user_flags_hex(std::ostream & out) const;
 
   /**
    * Same as above, but store the flags to a bitvector rather than to a file.
@@ -2478,21 +2478,21 @@ public:
    * @ref GlossUserFlags.
    */
   void
-  save_user_flags_hex(std::vector<bool>& v) const;
+  save_user_flags_hex(std::vector<bool> & v) const;
 
   /**
    * Load the user flags located on hexs.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags_hex(std::istream& in);
+  load_user_flags_hex(std::istream & in);
 
   /**
    * Load the user flags located on hexs.  See also
    * @ref GlossUserFlags.
    */
   void
-  load_user_flags_hex(const std::vector<bool>& v);
+  load_user_flags_hex(const std::vector<bool> & v);
 
   /**
    * Clear all user pointers and indices and allow the use of both for next
@@ -2508,14 +2508,14 @@ public:
    * @ref GlossUserData.
    */
   void
-  save_user_indices(std::vector<unsigned int>& v) const;
+  save_user_indices(std::vector<unsigned int> & v) const;
 
   /**
    * Read the information stored by save_user_indices().  See also
    * @ref GlossUserData.
    */
   void
-  load_user_indices(const std::vector<unsigned int>& v);
+  load_user_indices(const std::vector<unsigned int> & v);
 
   /**
    * Save all user pointers. The output vector is resized if necessary.  See
@@ -2523,14 +2523,14 @@ public:
    * @ref GlossUserData.
    */
   void
-  save_user_pointers(std::vector<void*>& v) const;
+  save_user_pointers(std::vector<void *> & v) const;
 
   /**
    * Read the information stored by save_user_pointers().  See also
    * @ref GlossUserData.
    */
   void
-  load_user_pointers(const std::vector<void*>& v);
+  load_user_pointers(const std::vector<void *> & v);
 
   /**
    * Save the user indices on lines. The output vector is resized if
@@ -2538,14 +2538,14 @@ public:
    * @ref GlossUserData.
    */
   void
-  save_user_indices_line(std::vector<unsigned int>& v) const;
+  save_user_indices_line(std::vector<unsigned int> & v) const;
 
   /**
    * Load the user indices located on lines.  See also
    * @ref GlossUserData.
    */
   void
-  load_user_indices_line(const std::vector<unsigned int>& v);
+  load_user_indices_line(const std::vector<unsigned int> & v);
 
   /**
    * Save the user indices on quads. The output vector is resized if
@@ -2553,14 +2553,14 @@ public:
    * @ref GlossUserData.
    */
   void
-  save_user_indices_quad(std::vector<unsigned int>& v) const;
+  save_user_indices_quad(std::vector<unsigned int> & v) const;
 
   /**
    * Load the user indices located on quads.  See also
    * @ref GlossUserData.
    */
   void
-  load_user_indices_quad(const std::vector<unsigned int>& v);
+  load_user_indices_quad(const std::vector<unsigned int> & v);
 
   /**
    * Save the user indices on hexes. The output vector is resized if
@@ -2568,28 +2568,28 @@ public:
    * @ref GlossUserData.
    */
   void
-  save_user_indices_hex(std::vector<unsigned int>& v) const;
+  save_user_indices_hex(std::vector<unsigned int> & v) const;
 
   /**
    * Load the user indices located on hexs.  See also
    * @ref GlossUserData.
    */
   void
-  load_user_indices_hex(const std::vector<unsigned int>& v);
+  load_user_indices_hex(const std::vector<unsigned int> & v);
   /**
    * Save the user indices on lines. The output vector is resized if
    * necessary.  See also
    * @ref GlossUserData.
    */
   void
-  save_user_pointers_line(std::vector<void*>& v) const;
+  save_user_pointers_line(std::vector<void *> & v) const;
 
   /**
    * Load the user pointers located on lines.  See also
    * @ref GlossUserData.
    */
   void
-  load_user_pointers_line(const std::vector<void*>& v);
+  load_user_pointers_line(const std::vector<void *> & v);
 
   /**
    * Save the user pointers on quads. The output vector is resized if
@@ -2597,14 +2597,14 @@ public:
    * @ref GlossUserData.
    */
   void
-  save_user_pointers_quad(std::vector<void*>& v) const;
+  save_user_pointers_quad(std::vector<void *> & v) const;
 
   /**
    * Load the user pointers located on quads.  See also
    * @ref GlossUserData.
    */
   void
-  load_user_pointers_quad(const std::vector<void*>& v);
+  load_user_pointers_quad(const std::vector<void *> & v);
 
   /**
    * Save the user pointers on hexes. The output vector is resized if
@@ -2612,14 +2612,14 @@ public:
    * @ref GlossUserData.
    */
   void
-  save_user_pointers_hex(std::vector<void*>& v) const;
+  save_user_pointers_hex(std::vector<void *> & v) const;
 
   /**
    * Load the user pointers located on hexs.  See also
    * @ref GlossUserData.
    */
   void
-  load_user_pointers_hex(const std::vector<void*>& v);
+  load_user_pointers_hex(const std::vector<void *> & v);
 
   /*
    * @}
@@ -3047,7 +3047,7 @@ public:
    * of vertices are only allocated once. You can find out about which
    * vertices are actually used by the function get_used_vertices().
    */
-  const std::vector<Point<spacedim>>&
+  const std::vector<Point<spacedim>> &
   get_vertices() const;
 
   /**
@@ -3067,7 +3067,7 @@ public:
    * Return a constant reference to the array of @p bools indicating whether
    * an entry in the vertex array is used or not.
    */
-  const std::vector<bool>&
+  const std::vector<bool> &
   get_used_vertices() const;
 
   /**
@@ -3102,14 +3102,14 @@ public:
    * (which may not only be a triangulation, but also a DoFHandler, for
    * example).
    */
-  Triangulation<dim, spacedim>&
+  Triangulation<dim, spacedim> &
   get_triangulation();
 
   /**
    * Return a reference to the current object. This is the const-version of
    * the previous function.
    */
-  const Triangulation<dim, spacedim>&
+  const Triangulation<dim, spacedim> &
   get_triangulation() const;
 
   /*
@@ -3231,7 +3231,7 @@ public:
    */
   template <class Archive>
   void
-  save(Archive& ar, const unsigned int version) const;
+  save(Archive & ar, const unsigned int version) const;
 
   /**
    * Read the data of this object from a stream for the purpose of
@@ -3250,7 +3250,7 @@ public:
    */
   template <class Archive>
   void
-  load(Archive& ar, const unsigned int version);
+  load(Archive & ar, const unsigned int version);
 
   /**
    * Declare the (coarse) face pairs given in the argument of this function as
@@ -3269,14 +3269,14 @@ public:
    */
   virtual void
   add_periodicity(
-    const std::vector<GridTools::PeriodicFacePair<cell_iterator>>&);
+    const std::vector<GridTools::PeriodicFacePair<cell_iterator>> &);
 
   /**
    * Return the periodic_face_map.
    */
   const std::map<
     std::pair<cell_iterator, unsigned int>,
-    std::pair<std::pair<cell_iterator, unsigned int>, std::bitset<3>>>&
+    std::pair<std::pair<cell_iterator, unsigned int>, std::bitset<3>>> &
   get_periodic_face_map() const;
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -3373,20 +3373,20 @@ protected:
    * therefore be interplatform compatible.
    */
   static void
-  write_bool_vector(const unsigned int       magic_number1,
-                    const std::vector<bool>& v,
-                    const unsigned int       magic_number2,
-                    std::ostream&            out);
+  write_bool_vector(const unsigned int        magic_number1,
+                    const std::vector<bool> & v,
+                    const unsigned int        magic_number2,
+                    std::ostream &            out);
 
   /**
    * Re-read a vector of bools previously written by @p write_bool_vector and
    * compare with the magic numbers.
    */
   static void
-  read_bool_vector(const unsigned int magic_number1,
-                   std::vector<bool>& v,
-                   const unsigned int magic_number2,
-                   std::istream&      in);
+  read_bool_vector(const unsigned int  magic_number1,
+                   std::vector<bool> & v,
+                   const unsigned int  magic_number2,
+                   std::istream &      in);
 
   /**
    * Recreate information about periodic neighbors from periodic_face_pairs_level_0.
@@ -3757,31 +3757,31 @@ namespace internal
   {
     template <class Archive>
     void
-    NumberCache<1>::serialize(Archive& ar, const unsigned int)
+    NumberCache<1>::serialize(Archive & ar, const unsigned int)
     {
-      ar& n_levels;
-      ar& n_lines& n_lines_level;
-      ar& n_active_lines& n_active_lines_level;
+      ar & n_levels;
+      ar & n_lines & n_lines_level;
+      ar & n_active_lines & n_active_lines_level;
     }
 
     template <class Archive>
     void
-    NumberCache<2>::serialize(Archive& ar, const unsigned int version)
+    NumberCache<2>::serialize(Archive & ar, const unsigned int version)
     {
       this->NumberCache<1>::serialize(ar, version);
 
-      ar& n_quads& n_quads_level;
-      ar& n_active_quads& n_active_quads_level;
+      ar & n_quads & n_quads_level;
+      ar & n_active_quads & n_active_quads_level;
     }
 
     template <class Archive>
     void
-    NumberCache<3>::serialize(Archive& ar, const unsigned int version)
+    NumberCache<3>::serialize(Archive & ar, const unsigned int version)
     {
       this->NumberCache<2>::serialize(ar, version);
 
-      ar& n_hexes& n_hexes_level;
-      ar& n_active_hexes& n_active_hexes_level;
+      ar & n_hexes & n_hexes_level;
+      ar & n_active_hexes & n_active_hexes_level;
     }
 
   } // namespace TriangulationImplementation
@@ -3818,7 +3818,7 @@ Triangulation<dim, spacedim>::n_vertices() const
 }
 
 template <int dim, int spacedim>
-inline const std::vector<Point<spacedim>>&
+inline const std::vector<Point<spacedim>> &
 Triangulation<dim, spacedim>::get_vertices() const
 {
   return vertices;
@@ -3827,74 +3827,74 @@ Triangulation<dim, spacedim>::get_vertices() const
 template <int dim, int spacedim>
 template <class Archive>
 void
-Triangulation<dim, spacedim>::save(Archive& ar, const unsigned int) const
+Triangulation<dim, spacedim>::save(Archive & ar, const unsigned int) const
 {
   // as discussed in the documentation, do not store the signals as
   // well as boundary and manifold description but everything else
-  ar& smooth_grid;
+  ar & smooth_grid;
 
   unsigned int n_levels = levels.size();
-  ar&          n_levels;
+  ar &         n_levels;
   for(unsigned int i = 0; i < levels.size(); ++i)
-    ar& levels[i];
+    ar & levels[i];
 
   // boost dereferences a nullptr when serializing a nullptr
   // at least up to 1.65.1. This causes problems with clang-5.
   // Therefore, work around it.
   bool faces_is_nullptr = (faces.get() == nullptr);
-  ar&  faces_is_nullptr;
+  ar & faces_is_nullptr;
   if(!faces_is_nullptr)
-    ar& faces;
+    ar & faces;
 
-  ar& vertices;
-  ar& vertices_used;
+  ar & vertices;
+  ar & vertices_used;
 
-  ar& anisotropic_refinement;
-  ar& number_cache;
+  ar & anisotropic_refinement;
+  ar & number_cache;
 
-  ar& check_for_distorted_cells;
+  ar & check_for_distorted_cells;
 
   if(dim == 1)
     {
-      ar& vertex_to_boundary_id_map_1d;
-      ar& vertex_to_manifold_id_map_1d;
+      ar & vertex_to_boundary_id_map_1d;
+      ar & vertex_to_manifold_id_map_1d;
     }
 }
 
 template <int dim, int spacedim>
 template <class Archive>
 void
-Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
+Triangulation<dim, spacedim>::load(Archive & ar, const unsigned int)
 {
   // clear previous content. this also calls the respective signal
   clear();
 
   // as discussed in the documentation, do not store the signals as
   // well as boundary and manifold description but everything else
-  ar& smooth_grid;
+  ar & smooth_grid;
 
   unsigned int size;
-  ar&          size;
+  ar &         size;
   levels.resize(size);
   for(unsigned int i = 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::TriangulationImplementation::TriaLevel<dim>>
-          level;
-      ar& level;
+           level;
+      ar & level;
       levels[i] = std::move(level);
     }
 
   //Workaround for nullptr, see in save().
   bool faces_is_nullptr = true;
-  ar&  faces_is_nullptr;
+  ar & faces_is_nullptr;
   if(!faces_is_nullptr)
-    ar& faces;
+    ar & faces;
 
-  ar& vertices;
-  ar& vertices_used;
+  ar & vertices;
+  ar & vertices_used;
 
-  ar& anisotropic_refinement;
-  ar& number_cache;
+  ar & anisotropic_refinement;
+  ar & number_cache;
 
   // the levels do not serialize the active_cell_indices because
   // they are easy enough to rebuild upon re-loading data. do
@@ -3906,7 +3906,7 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
   }
 
   bool my_check_for_distorted_cells;
-  ar&  my_check_for_distorted_cells;
+  ar & my_check_for_distorted_cells;
 
   Assert(my_check_for_distorted_cells == check_for_distorted_cells,
          ExcMessage("The triangulation loaded into here must have the "
@@ -3915,8 +3915,8 @@ Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int)
 
   if(dim == 1)
     {
-      ar& vertex_to_boundary_id_map_1d;
-      ar& vertex_to_manifold_id_map_1d;
+      ar & vertex_to_boundary_id_map_1d;
+      ar & vertex_to_manifold_id_map_1d;
     }
 
   // trigger the create signal to indicate

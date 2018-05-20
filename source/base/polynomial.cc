@@ -44,7 +44,7 @@ namespace Polynomials
   // -------------------- class Polynomial ---------------- //
 
   template <typename number>
-  Polynomial<number>::Polynomial(const std::vector<number>& a)
+  Polynomial<number>::Polynomial(const std::vector<number> & a)
     : coefficients(a), in_lagrange_product_form(false), lagrange_weight(1.)
   {}
 
@@ -56,8 +56,8 @@ namespace Polynomials
   {}
 
   template <typename number>
-  Polynomial<number>::Polynomial(const std::vector<Point<1>>& supp,
-                                 const unsigned int           center)
+  Polynomial<number>::Polynomial(const std::vector<Point<1>> & supp,
+                                 const unsigned int            center)
     : in_lagrange_product_form(true)
   {
     Assert(supp.size() > 0, ExcEmptyObject());
@@ -83,7 +83,7 @@ namespace Polynomials
 
   template <typename number>
   void
-  Polynomial<number>::value(const number x, std::vector<number>& values) const
+  Polynomial<number>::value(const number x, std::vector<number> & values) const
   {
     Assert(values.size() > 0, ExcZero());
 
@@ -94,7 +94,7 @@ namespace Polynomials
   void
   Polynomial<number>::value(const number       x,
                             const unsigned int n_derivatives,
-                            number*            values) const
+                            number *           values) const
   {
     // evaluate Lagrange polynomial and derivatives
     if(in_lagrange_product_form == true)
@@ -258,8 +258,8 @@ namespace Polynomials
 
   template <typename number>
   void
-  Polynomial<number>::scale(std::vector<number>& coefficients,
-                            const number         factor)
+  Polynomial<number>::scale(std::vector<number> & coefficients,
+                            const number          factor)
   {
     number f = 1.;
     for(typename std::vector<number>::iterator c = coefficients.begin();
@@ -296,8 +296,8 @@ namespace Polynomials
 
   template <typename number>
   void
-  Polynomial<number>::multiply(std::vector<number>& coefficients,
-                               const number         factor)
+  Polynomial<number>::multiply(std::vector<number> & coefficients,
+                               const number          factor)
   {
     for(typename std::vector<number>::iterator c = coefficients.begin();
         c != coefficients.end();
@@ -306,7 +306,7 @@ namespace Polynomials
   }
 
   template <typename number>
-  Polynomial<number>&
+  Polynomial<number> &
   Polynomial<number>::operator*=(const double s)
   {
     if(in_lagrange_product_form == true)
@@ -322,8 +322,8 @@ namespace Polynomials
   }
 
   template <typename number>
-  Polynomial<number>&
-  Polynomial<number>::operator*=(const Polynomial<number>& p)
+  Polynomial<number> &
+  Polynomial<number>::operator*=(const Polynomial<number> & p)
   {
     // if we are in Lagrange form, just append the
     // new points
@@ -343,7 +343,7 @@ namespace Polynomials
     // well if necessary. copy the polynomial to
     // do this
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number> *          q = nullptr;
     if(p.in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(p);
@@ -367,8 +367,8 @@ namespace Polynomials
   }
 
   template <typename number>
-  Polynomial<number>&
-  Polynomial<number>::operator+=(const Polynomial<number>& p)
+  Polynomial<number> &
+  Polynomial<number>::operator+=(const Polynomial<number> & p)
   {
     // Lagrange product form cannot reasonably be
     // retained after polynomial addition. we
@@ -385,7 +385,7 @@ namespace Polynomials
     // well if necessary. copy the polynomial to
     // do this
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number> *          q = nullptr;
     if(p.in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(p);
@@ -407,8 +407,8 @@ namespace Polynomials
   }
 
   template <typename number>
-  Polynomial<number>&
-  Polynomial<number>::operator-=(const Polynomial<number>& p)
+  Polynomial<number> &
+  Polynomial<number>::operator-=(const Polynomial<number> & p)
   {
     // Lagrange product form cannot reasonably be
     // retained after polynomial addition
@@ -419,7 +419,7 @@ namespace Polynomials
     // well if necessary. copy the polynomial to
     // do this
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number> *          q = nullptr;
     if(p.in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(p);
@@ -442,7 +442,7 @@ namespace Polynomials
 
   template <typename number>
   bool
-  Polynomial<number>::operator==(const Polynomial<number>& p) const
+  Polynomial<number>::operator==(const Polynomial<number> & p) const
   {
     // need to distinguish a few cases based on
     // whether we are in product form or not. two
@@ -471,8 +471,8 @@ namespace Polynomials
   template <typename number>
   template <typename number2>
   void
-  Polynomial<number>::shift(std::vector<number>& coefficients,
-                            const number2        offset)
+  Polynomial<number>::shift(std::vector<number> & coefficients,
+                            const number2         offset)
   {
     // too many coefficients cause overflow in
     // the binomial coefficient used below
@@ -556,7 +556,7 @@ namespace Polynomials
       return Monomial<number>(0, 0.);
 
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number> *          q = nullptr;
     if(in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(*this);
@@ -580,7 +580,7 @@ namespace Polynomials
     // no simple form possible for Lagrange
     // polynomial on product form
     std::unique_ptr<Polynomial<number>> q_data;
-    const Polynomial<number>*           q = nullptr;
+    const Polynomial<number> *          q = nullptr;
     if(in_lagrange_product_form == true)
       {
         q_data = std_cxx14::make_unique<Polynomial<number>>(*this);
@@ -600,7 +600,7 @@ namespace Polynomials
 
   template <typename number>
   void
-  Polynomial<number>::print(std::ostream& out) const
+  Polynomial<number>::print(std::ostream & out) const
   {
     if(in_lagrange_product_form == true)
       {
@@ -683,16 +683,16 @@ namespace Polynomials
   }
 
   void
-  LagrangeEquidistant::compute_coefficients(const unsigned int   n,
-                                            const unsigned int   support_point,
-                                            std::vector<double>& a)
+  LagrangeEquidistant::compute_coefficients(const unsigned int    n,
+                                            const unsigned int    support_point,
+                                            std::vector<double> & a)
   {
     Assert(support_point < n + 1, ExcIndexRange(support_point, 0, n + 1));
 
     unsigned int n_functions = n + 1;
     Assert(support_point < n_functions,
            ExcIndexRange(support_point, 0, n_functions));
-    double const* x = nullptr;
+    double const * x = nullptr;
 
     switch(n)
       {
@@ -760,7 +760,7 @@ namespace Polynomials
   //----------------------------------------------------------------------//
 
   std::vector<Polynomial<double>>
-  generate_complete_Lagrange_basis(const std::vector<Point<1>>& points)
+  generate_complete_Lagrange_basis(const std::vector<Point<1>> & points)
   {
     std::vector<Polynomial<double>> p;
     p.reserve(points.size());
@@ -1056,7 +1056,7 @@ namespace Polynomials
       };
   }
 
-  const std::vector<double>&
+  const std::vector<double> &
   Hierarchical::get_coefficients(const unsigned int k)
   {
     // first make sure the coefficients
@@ -1170,7 +1170,7 @@ namespace Polynomials
     // l_0(x) * l_1(x) but we only need to do one iteration because the zero
     // x_star is linear in the integral value.
     double
-    find_support_point_x_star(const std::vector<double>& jacobi_roots)
+    find_support_point_x_star(const std::vector<double> & jacobi_roots)
     {
       // Initial guess for the support point position values: The zero turns
       // out to be between zero and the first root of the Jacobi polynomial,

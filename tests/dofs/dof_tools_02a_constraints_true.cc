@@ -27,7 +27,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> & dof_handler)
 {
   // set up X-shape mask
   const unsigned int n_components = dof_handler.get_fe().n_components();

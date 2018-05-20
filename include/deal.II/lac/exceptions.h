@@ -57,7 +57,7 @@ namespace LACExceptions
     ExcPETScError(const int error_code);
 
     virtual void
-    print_info(std::ostream& out) const override;
+    print_info(std::ostream & out) const override;
 
     const int error_code;
   };

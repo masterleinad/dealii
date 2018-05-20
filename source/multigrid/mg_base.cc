@@ -28,8 +28,8 @@ DEAL_II_NAMESPACE_OPEN
 template <typename VectorType>
 void
 MGSmootherBase<VectorType>::apply(const unsigned int level,
-                                  VectorType&        u,
-                                  const VectorType&  rhs) const
+                                  VectorType &       u,
+                                  const VectorType & rhs) const
 {
   u = typename VectorType::value_type(0.);
   smooth(level, u, rhs);

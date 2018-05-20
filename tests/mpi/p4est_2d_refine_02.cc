@@ -27,7 +27,7 @@
 
 template <class TRIA>
 void
-check(TRIA& tr)
+check(TRIA & tr)
 {
   typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
 
@@ -77,7 +77,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

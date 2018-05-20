@@ -42,8 +42,8 @@ FE_Bernstein<dim, spacedim>::FE_Bernstein(const unsigned int degree)
 template <int dim, int spacedim>
 void
 FE_Bernstein<dim, spacedim>::get_interpolation_matrix(
-  const FiniteElement<dim, spacedim>&,
-  FullMatrix<double>&) const
+  const FiniteElement<dim, spacedim> &,
+  FullMatrix<double> &) const
 {
   // no interpolation possible. throw exception, as documentation says
   AssertThrow(
@@ -52,10 +52,10 @@ FE_Bernstein<dim, spacedim>::get_interpolation_matrix(
 }
 
 template <int dim, int spacedim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Bernstein<dim, spacedim>::get_restriction_matrix(
   const unsigned int,
-  const RefinementCase<dim>&) const
+  const RefinementCase<dim> &) const
 {
   AssertThrow(false,
               (typename FiniteElement<dim, spacedim>::ExcProjectionVoid()));
@@ -65,10 +65,10 @@ FE_Bernstein<dim, spacedim>::get_restriction_matrix(
 }
 
 template <int dim, int spacedim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Bernstein<dim, spacedim>::get_prolongation_matrix(
   const unsigned int,
-  const RefinementCase<dim>&) const
+  const RefinementCase<dim> &) const
 {
   AssertThrow(false,
               (typename FiniteElement<dim, spacedim>::ExcEmbeddingVoid()));
@@ -80,8 +80,8 @@ FE_Bernstein<dim, spacedim>::get_prolongation_matrix(
 template <int dim, int spacedim>
 void
 FE_Bernstein<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> & source_fe,
+  FullMatrix<double> &                 interpolation_matrix) const
 {
   Assert(dim > 1, ExcImpossibleInDim(1));
   get_subface_interpolation_matrix(
@@ -91,17 +91,17 @@ FE_Bernstein<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
-  const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> & x_source_fe,
+  const unsigned int                   subface,
+  FullMatrix<double> &                 interpolation_matrix) const
 {
   Assert(
     interpolation_matrix.m() == x_source_fe.dofs_per_face,
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_face));
 
   // see if source is a Bernstein element
-  if(const FE_Bernstein<dim, spacedim>* source_fe
-     = dynamic_cast<const FE_Bernstein<dim, spacedim>*>(&x_source_fe))
+  if(const FE_Bernstein<dim, spacedim> * source_fe
+     = dynamic_cast<const FE_Bernstein<dim, spacedim> *>(&x_source_fe))
     {
       // have this test in here since a table of size 2x0 reports its size as
       // 0x0
@@ -141,7 +141,7 @@ FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
 
       for(unsigned int i = 0; i < source_fe->dofs_per_face; ++i)
         {
-          const Point<dim>& p = subface_quadrature.point(i);
+          const Point<dim> & p = subface_quadrature.point(i);
           for(unsigned int j = 0; j < this->dofs_per_face; ++j)
             {
               double matrix_entry
@@ -171,7 +171,7 @@ FE_Bernstein<dim, spacedim>::get_subface_interpolation_matrix(
           Assert(std::fabs(sum - 1) < eps, ExcInternalError());
         }
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&x_source_fe) != nullptr)
     {
       // nothing to do here, the FE_Nothing has no degrees of freedom anyway
     }
@@ -192,18 +192,18 @@ FE_Bernstein<dim, spacedim>::hp_constraints_are_implemented() const
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Bernstein<dim, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> & fe_other) const
 {
   // we can presently only compute these identities if both FEs are FE_Bernsteins
   // or if the other one is an FE_Nothing. in the first case, there should be
   // exactly one single DoF of each FE at a vertex, and they should have
   // identical value
-  if(dynamic_cast<const FE_Bernstein<dim, spacedim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_Bernstein<dim, spacedim> *>(&fe_other) != nullptr)
     {
       return std::vector<std::pair<unsigned int, unsigned int>>(
         1, std::make_pair(0U, 0U));
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -230,7 +230,7 @@ FE_Bernstein<dim, spacedim>::hp_vertex_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Bernstein<dim, spacedim>::hp_line_dof_identities(
-  const FiniteElement<dim, spacedim>&) const
+  const FiniteElement<dim, spacedim> &) const
 {
   // Since this fe is not interpolatory but on the vertices, we can
   // not identify dofs on lines and on quads even if there are dofs
@@ -244,7 +244,7 @@ FE_Bernstein<dim, spacedim>::hp_line_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Bernstein<dim, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<dim, spacedim>&) const
+  const FiniteElement<dim, spacedim> &) const
 {
   // Since this fe is not interpolatory but on the vertices, we can
   // not identify dofs on lines and on quads even if there are dofs
@@ -258,10 +258,10 @@ FE_Bernstein<dim, spacedim>::hp_quad_dof_identities(
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_Bernstein<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> & fe_other) const
 {
-  if(const FE_Bernstein<dim, spacedim>* fe_b_other
-     = dynamic_cast<const FE_Bernstein<dim, spacedim>*>(&fe_other))
+  if(const FE_Bernstein<dim, spacedim> * fe_b_other
+     = dynamic_cast<const FE_Bernstein<dim, spacedim> *>(&fe_other))
     {
       if(this->degree < fe_b_other->degree)
         return FiniteElementDomination::this_element_dominates;
@@ -270,8 +270,8 @@ FE_Bernstein<dim, spacedim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if(const FE_Nothing<dim> * fe_nothing
+          = dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if(fe_nothing->is_dominating())
         {

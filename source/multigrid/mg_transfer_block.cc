@@ -47,10 +47,10 @@ namespace
   template <int dim, typename number, int spacedim>
   void
   reinit_vector_by_blocks(
-    const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-    MGLevelObject<BlockVector<number>>&                v,
-    const std::vector<bool>&                           sel,
-    std::vector<std::vector<types::global_dof_index>>& ndofs)
+    const dealii::DoFHandler<dim, spacedim> &           mg_dof,
+    MGLevelObject<BlockVector<number>> &                v,
+    const std::vector<bool> &                           sel,
+    std::vector<std::vector<types::global_dof_index>> & ndofs)
   {
     std::vector<bool> selected = sel;
     // Compute the number of blocks needed
@@ -92,10 +92,10 @@ namespace
   template <int dim, typename number, int spacedim>
   void
   reinit_vector_by_blocks(
-    const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-    MGLevelObject<dealii::Vector<number>>&             v,
-    const unsigned int                                 selected_block,
-    std::vector<std::vector<types::global_dof_index>>& ndofs)
+    const dealii::DoFHandler<dim, spacedim> &           mg_dof,
+    MGLevelObject<dealii::Vector<number>> &             v,
+    const unsigned int                                  selected_block,
+    std::vector<std::vector<types::global_dof_index>> & ndofs)
   {
     const unsigned int n_blocks = mg_dof.get_fe().n_blocks();
     Assert(selected_block < n_blocks,
@@ -124,9 +124,9 @@ template <typename number>
 template <int dim, typename number2, int spacedim>
 void
 MGTransferBlockSelect<number>::copy_to_mg(
-  const DoFHandler<dim, spacedim>& mg_dof_handler,
-  MGLevelObject<Vector<number>>&   dst,
-  const BlockVector<number2>&      src) const
+  const DoFHandler<dim, spacedim> & mg_dof_handler,
+  MGLevelObject<Vector<number>> &   dst,
+  const BlockVector<number2> &      src) const
 {
   reinit_vector_by_blocks(mg_dof_handler, dst, selected_block, sizes);
   // For MGTransferBlockSelect, the
@@ -148,9 +148,9 @@ template <typename number>
 template <int dim, typename number2, int spacedim>
 void
 MGTransferBlockSelect<number>::copy_to_mg(
-  const DoFHandler<dim, spacedim>& mg_dof_handler,
-  MGLevelObject<Vector<number>>&   dst,
-  const Vector<number2>&           src) const
+  const DoFHandler<dim, spacedim> & mg_dof_handler,
+  MGLevelObject<Vector<number>> &   dst,
+  const Vector<number2> &           src) const
 {
   reinit_vector_by_blocks(mg_dof_handler, dst, selected_block, sizes);
   // For MGTransferBlockSelect, the
@@ -171,9 +171,9 @@ template <typename number>
 template <int dim, typename number2, int spacedim>
 void
 MGTransferBlock<number>::copy_to_mg(
-  const DoFHandler<dim, spacedim>&    mg_dof_handler,
-  MGLevelObject<BlockVector<number>>& dst,
-  const BlockVector<number2>&         src) const
+  const DoFHandler<dim, spacedim> &    mg_dof_handler,
+  MGLevelObject<BlockVector<number>> & dst,
+  const BlockVector<number2> &         src) const
 {
   reinit_vector_by_blocks(mg_dof_handler, dst, selected, sizes);
   for(unsigned int level = mg_dof_handler.get_triangulation().n_levels();
@@ -192,13 +192,13 @@ MGTransferBlock<number>::copy_to_mg(
 
 template <int dim, int spacedim>
 void
-MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
-                                    const DoFHandler<dim, spacedim>& mg_dof)
+MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim> &,
+                                    const DoFHandler<dim, spacedim> & mg_dof)
 {
-  const FiniteElement<dim>& fe            = mg_dof.get_fe();
-  const unsigned int        n_blocks      = fe.n_blocks();
-  const unsigned int        dofs_per_cell = fe.dofs_per_cell;
-  const unsigned int        n_levels = mg_dof.get_triangulation().n_levels();
+  const FiniteElement<dim> & fe            = mg_dof.get_fe();
+  const unsigned int         n_blocks      = fe.n_blocks();
+  const unsigned int         dofs_per_cell = fe.dofs_per_cell;
+  const unsigned int         n_levels = mg_dof.get_triangulation().n_levels();
 
   Assert(selected.size() == n_blocks,
          ExcDimensionMismatch(selected.size(), n_blocks));
@@ -236,7 +236,7 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
 
   block_start.resize(n_blocks);
   DoFTools::count_dofs_per_block(
-    static_cast<const DoFHandler<dim, spacedim>&>(mg_dof), block_start);
+    static_cast<const DoFHandler<dim, spacedim> &>(mg_dof), block_start);
 
   types::global_dof_index k = 0;
   for(unsigned int i = 0; i < block_start.size(); ++i)
@@ -331,7 +331,7 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
                 // set an alias to the
                 // prolongation matrix for
                 // this child
-                const FullMatrix<double>& prolongation
+                const FullMatrix<double> & prolongation
                   = mg_dof.get_fe().get_prolongation_matrix(
                     child, cell->refinement_case());
 
@@ -374,7 +374,7 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim>&,
                 // set an alias to the
                 // prolongation matrix for
                 // this child
-                const FullMatrix<double>& prolongation
+                const FullMatrix<double> & prolongation
                   = mg_dof.get_fe().get_prolongation_matrix(
                     child, cell->refinement_case());
 
@@ -459,12 +459,12 @@ template <typename number>
 template <int dim, int spacedim>
 void
 MGTransferBlockSelect<number>::build_matrices(
-  const DoFHandler<dim, spacedim>& dof,
-  const DoFHandler<dim, spacedim>& mg_dof,
-  unsigned int                     select)
+  const DoFHandler<dim, spacedim> & dof,
+  const DoFHandler<dim, spacedim> & mg_dof,
+  unsigned int                      select)
 {
-  const FiniteElement<dim>& fe       = mg_dof.get_fe();
-  unsigned int              n_blocks = mg_dof.get_fe().n_blocks();
+  const FiniteElement<dim> & fe       = mg_dof.get_fe();
+  unsigned int               n_blocks = mg_dof.get_fe().n_blocks();
 
   selected_block = select;
   selected.resize(n_blocks, false);
@@ -545,12 +545,13 @@ MGTransferBlockSelect<number>::build_matrices(
 template <typename number>
 template <int dim, int spacedim>
 void
-MGTransferBlock<number>::build_matrices(const DoFHandler<dim, spacedim>& dof,
-                                        const DoFHandler<dim, spacedim>& mg_dof,
-                                        const std::vector<bool>&         sel)
+MGTransferBlock<number>::build_matrices(
+  const DoFHandler<dim, spacedim> & dof,
+  const DoFHandler<dim, spacedim> & mg_dof,
+  const std::vector<bool> &         sel)
 {
-  const FiniteElement<dim>& fe       = mg_dof.get_fe();
-  unsigned int              n_blocks = mg_dof.get_fe().n_blocks();
+  const FiniteElement<dim> & fe       = mg_dof.get_fe();
+  unsigned int               n_blocks = mg_dof.get_fe().n_blocks();
 
   if(sel.size() != 0)
     {

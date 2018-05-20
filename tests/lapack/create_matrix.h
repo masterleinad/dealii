@@ -19,7 +19,7 @@
 
 template <typename FullMatrix>
 void
-create_spd(FullMatrix& A)
+create_spd(FullMatrix & A)
 {
   const unsigned int size = A.n();
   Assert(size == A.m(), ExcDimensionMismatch(size, A.m()));
@@ -43,7 +43,7 @@ create_spd(FullMatrix& A)
 
 template <typename FullMatrix>
 void
-create_random(FullMatrix& A)
+create_random(FullMatrix & A)
 {
   for(unsigned int i = 0; i < A.m(); ++i)
     for(unsigned int j = 0; j < A.n(); ++j)
@@ -52,7 +52,7 @@ create_random(FullMatrix& A)
 
 template <typename NumberType>
 void
-create_random(Vector<NumberType>& V)
+create_random(Vector<NumberType> & V)
 {
   for(unsigned int i = 0; i < V.size(); ++i)
     V(i) = random_value<NumberType>();

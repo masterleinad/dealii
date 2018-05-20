@@ -26,7 +26,7 @@ using namespace Polynomials;
 
 template <int dim, class PolynomialType>
 void
-check_poly(const Point<dim>& x, const PolynomialType& p)
+check_poly(const Point<dim> & x, const PolynomialType & p)
 {
   const unsigned int          n   = p.n();
   const double                eps = 5.0e-15;
@@ -116,7 +116,7 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
 
 template <int dim>
 void
-check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
+check_tensor(const std::vector<Polynomial<double>> & v, const Point<dim> & x)
 {
   deallog.push("Tensor");
   TensorProductPolynomials<dim> p(v);
@@ -126,7 +126,7 @@ check_tensor(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
 
 template <int dim>
 void
-check_poly(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
+check_poly(const std::vector<Polynomial<double>> & v, const Point<dim> & x)
 {
   deallog.push("Polyno");
   PolynomialSpace<dim> p(v);
@@ -136,7 +136,7 @@ check_poly(const std::vector<Polynomial<double>>& v, const Point<dim>& x)
 }
 
 void
-check_dimensions(const std::vector<Polynomial<double>>& p)
+check_dimensions(const std::vector<Polynomial<double>> & p)
 {
   deallog.push("1d");
   check_tensor(p, Point<1>(.5));

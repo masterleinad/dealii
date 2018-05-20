@@ -34,7 +34,7 @@
 
 template <int dim>
 void
-test(std::ostream& /*out*/)
+test(std::ostream & /*out*/)
 {
   for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_cell; ++i)
     {
@@ -63,7 +63,7 @@ test(std::ostream& /*out*/)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
 #ifdef DEAL_II_WITH_MPI
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);

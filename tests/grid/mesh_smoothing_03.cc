@@ -107,7 +107,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -105,8 +105,8 @@ test_kinematic_tensors()
           static const double tol = 1e-12;
 
           // Material gradients
-          const Tensor<2, dim>& Grad_u    = qp_Grad_u_t[q_point];
-          const Tensor<2, dim>& Grad_u_t1 = qp_Grad_u_t1[q_point];
+          const Tensor<2, dim> & Grad_u    = qp_Grad_u_t[q_point];
+          const Tensor<2, dim> & Grad_u_t1 = qp_Grad_u_t1[q_point];
 
           // --- Rate independent ---
 
@@ -173,14 +173,14 @@ test_kinematic_tensors()
           // --- Rate dependent ---
 
           // Material rates
-          const Tensor<2, dim>& F_dot = qp_dot_Grad_u_t[q_point];
+          const Tensor<2, dim> & F_dot = qp_dot_Grad_u_t[q_point];
 
           // Material rate of deformation gradient tensor
           Assert((F_dot - (1.0 / delta_t) * (Grad_u - Grad_u_t1)).norm() < tol,
                  ExcMessage("Incorrect computation of F_dot"));
 
           // Spatial gradients
-          const Tensor<2, dim>& dot_grad_u = qp_dot_grad_u_t[q_point];
+          const Tensor<2, dim> & dot_grad_u = qp_dot_grad_u_t[q_point];
 
           // Spatial velocity gradient
           Assert(

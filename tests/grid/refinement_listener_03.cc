@@ -23,8 +23,8 @@ std::ofstream logfile("output");
 
 template <int dim, int spacedim>
 void
-pre_refinement_notification(const std::string&                  prefix,
-                            const Triangulation<dim, spacedim>& tria)
+pre_refinement_notification(const std::string &                  prefix,
+                            const Triangulation<dim, spacedim> & tria)
 {
   deallog << prefix << ' ' << "Pre-refinement: " << tria.n_active_cells()
           << std::endl;
@@ -32,8 +32,8 @@ pre_refinement_notification(const std::string&                  prefix,
 
 template <int dim, int spacedim>
 void
-post_refinement_notification(const std::string&                  prefix,
-                             const Triangulation<dim, spacedim>& tria)
+post_refinement_notification(const std::string &                  prefix,
+                             const Triangulation<dim, spacedim> & tria)
 {
   deallog << prefix << ' ' << "Post-refinement: " << tria.n_active_cells()
           << std::endl;
@@ -41,9 +41,9 @@ post_refinement_notification(const std::string&                  prefix,
 
 template <int dim, int spacedim>
 void
-copy_notification(const std::string&                  prefix,
-                  const Triangulation<dim, spacedim>& old_tria,
-                  const Triangulation<dim, spacedim>& new_tria)
+copy_notification(const std::string &                  prefix,
+                  const Triangulation<dim, spacedim> & old_tria,
+                  const Triangulation<dim, spacedim> & new_tria)
 {
   deallog << prefix << ' ' << "Copy: " << old_tria.n_active_cells() << ' '
           << new_tria.n_active_cells() << std::endl;
@@ -51,16 +51,16 @@ copy_notification(const std::string&                  prefix,
 
 template <int dim, int spacedim>
 void
-create_notification(const std::string&                  prefix,
-                    const Triangulation<dim, spacedim>& tria)
+create_notification(const std::string &                  prefix,
+                    const Triangulation<dim, spacedim> & tria)
 {
   deallog << prefix << ' ' << "Create: " << tria.n_active_cells() << std::endl;
 }
 
 template <int dim, int spacedim>
 void
-any_change_notification(const std::string&                  prefix,
-                        const Triangulation<dim, spacedim>& tria)
+any_change_notification(const std::string &                  prefix,
+                        const Triangulation<dim, spacedim> & tria)
 {
   deallog << prefix << ' ' << "Any change: " << tria.n_active_cells()
           << std::endl;

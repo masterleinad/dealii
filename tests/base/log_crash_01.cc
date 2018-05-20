@@ -29,7 +29,7 @@ main()
       deallog << "OK" << std::endl;
       deallog << "no newline here!";
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

@@ -25,7 +25,7 @@ MatrixOut::Options::Options(const bool         show_absolute_values,
     discontinuous(discontinuous)
 {}
 
-const std::vector<MatrixOut::Patch>&
+const std::vector<MatrixOut::Patch> &
 MatrixOut::get_patches() const
 {
   return patches;

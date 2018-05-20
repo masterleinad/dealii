@@ -63,19 +63,19 @@ template <int dim>
 class EnrichmentFunction : public Function<dim>
 {
 public:
-  EnrichmentFunction(const Point<dim>& origin)
+  EnrichmentFunction(const Point<dim> & origin)
     : Function<dim>(1), origin(origin)
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim> & point, const unsigned int component = 0) const
   {
     Tensor<1, dim> d = point - origin;
     return std::exp(-d.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim> & point, const unsigned int component = 0) const
   {
     Tensor<1, dim> d = point - origin;
     Assert(d.norm() > 0, dealii::ExcMessage("gradient is not defined at zero"));
@@ -84,7 +84,7 @@ public:
   }
 
   virtual SymmetricTensor<2, dim>
-  hessian(const Point<dim>& p, const unsigned int component = 0) const
+  hessian(const Point<dim> & p, const unsigned int component = 0) const
   {
     Tensor<1, dim> dir = p - origin;
     const double   r   = dir.norm();
@@ -119,25 +119,25 @@ private:
  */
 template <int dim>
 void
-check_consistency(const Point<dim>&     p,
-                  const Function<dim>&  func1,
-                  const Function<dim>&  func2,
-                  const Function<dim>&  func3,
-                  const double&         v_e,
-                  const Tensor<1, dim>& g_e,
-                  const Tensor<2, dim>& h_e,
-                  const double&         v_s0,
-                  const Tensor<1, dim>& g_s0,
-                  const Tensor<2, dim>& h_s0,
-                  const double&         v_s1,
-                  const Tensor<1, dim>& g_s1,
-                  const Tensor<2, dim>& h_s1,
-                  const double&         v_s2,
-                  const Tensor<1, dim>& g_s2,
-                  const Tensor<2, dim>& h_s2,
-                  const double&         v_s3,
-                  const Tensor<1, dim>& g_s3,
-                  const Tensor<2, dim>& h_s3)
+check_consistency(const Point<dim> &     p,
+                  const Function<dim> &  func1,
+                  const Function<dim> &  func2,
+                  const Function<dim> &  func3,
+                  const double &         v_e,
+                  const Tensor<1, dim> & g_e,
+                  const Tensor<2, dim> & h_e,
+                  const double &         v_s0,
+                  const Tensor<1, dim> & g_s0,
+                  const Tensor<2, dim> & h_s0,
+                  const double &         v_s1,
+                  const Tensor<1, dim> & g_s1,
+                  const Tensor<2, dim> & h_s1,
+                  const double &         v_s2,
+                  const Tensor<1, dim> & g_s2,
+                  const Tensor<2, dim> & h_s2,
+                  const double &         v_s3,
+                  const Tensor<1, dim> & g_s3,
+                  const Tensor<2, dim> & h_s3)
 {
   const double                  v_f1 = func1.value(p);
   const Tensor<1, dim>          g_f1 = func1.gradient(p);
@@ -188,12 +188,12 @@ check_consistency(const Point<dim>&     p,
  */
 template <int dim>
 void
-test(const FiniteElement<dim>&  fe_base,
-     const FiniteElement<dim>&  fe_en1,
-     const FiniteElement<dim>&  fe_en2,
-     const Quadrature<dim>&     volume_quad,
-     const Quadrature<dim - 1>& face_quad,
-     const bool                 distort)
+test(const FiniteElement<dim> &  fe_base,
+     const FiniteElement<dim> &  fe_en1,
+     const FiniteElement<dim> &  fe_en2,
+     const Quadrature<dim> &     volume_quad,
+     const Quadrature<dim - 1> & face_quad,
+     const bool                  distort)
 {
   Triangulation<dim> triangulation;
   DoFHandler<dim>    dof_handler_enriched(triangulation);
@@ -208,32 +208,32 @@ test(const FiniteElement<dim>&  fe_base,
     }
   p2[0] = 10.0;
   p3[0] = 5.0;
-  EnrichmentFunction<dim>                fun1(p1), fun2(p2), fun3(p3);
-  std::vector<const FiniteElement<dim>*> fe_enrichements(3);
+  EnrichmentFunction<dim>                 fun1(p1), fun2(p2), fun3(p3);
+  std::vector<const FiniteElement<dim> *> fe_enrichements(3);
   fe_enrichements[0] = &fe_en1;
   fe_enrichements[1] = &fe_en2;
   FE_Nothing<dim> fe_nothing(1, true);
   fe_enrichements[2] = &fe_nothing; //should be ignored
-  std::vector<std::vector<std::function<const Function<dim>*(
-    const typename Triangulation<dim, dim>::cell_iterator&)>>>
+  std::vector<std::vector<std::function<const Function<dim> *(
+    const typename Triangulation<dim, dim>::cell_iterator &)>>>
     functions(3);
   functions[0].resize(1);
   functions[0][0]
-    = [&](const typename Triangulation<dim, dim>::cell_iterator&) {
+    = [&](const typename Triangulation<dim, dim>::cell_iterator &) {
         return &fun1;
       };
   functions[1].resize(2);
   functions[1][0]
-    = [&](const typename Triangulation<dim, dim>::cell_iterator&) {
+    = [&](const typename Triangulation<dim, dim>::cell_iterator &) {
         return &fun2;
       };
   functions[1][1]
-    = [&](const typename Triangulation<dim, dim>::cell_iterator&) {
+    = [&](const typename Triangulation<dim, dim>::cell_iterator &) {
         return &fun3;
       };
   functions[2].resize(1);
   functions[2][0] = [&](
-                      const typename Triangulation<dim, dim>::cell_iterator&) {
+                      const typename Triangulation<dim, dim>::cell_iterator &) {
     AssertThrow(false, ExcMessage("Called enrichment function for FE_Nothing"));
     return nullptr;
   };
@@ -297,8 +297,8 @@ test(const FiniteElement<dim>&  fe_base,
     {
       fe_values_enriched.reinit(cell_enriched);
       fe_values_system.reinit(cell_system);
-      const unsigned int                     n_q_points = volume_quad.size();
-      const std::vector<dealii::Point<dim>>& q_points
+      const unsigned int                      n_q_points = volume_quad.size();
+      const std::vector<dealii::Point<dim>> & q_points
         = fe_values_system.get_quadrature_points();
 
       // check shape functions
@@ -331,7 +331,7 @@ test(const FiniteElement<dim>&  fe_base,
           fe_face_values_enriched.reinit(cell_enriched, face);
           fe_face_values_system.reinit(cell_system, face);
           const unsigned int n_q_points_face = face_quad.size();
-          const std::vector<dealii::Point<dim>>& q_points
+          const std::vector<dealii::Point<dim>> & q_points
             = fe_face_values_system.get_quadrature_points();
 
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -365,7 +365,7 @@ test(const FiniteElement<dim>&  fe_base,
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -407,7 +407,7 @@ main(int argc, char** argv)
              true);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

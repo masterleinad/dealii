@@ -25,7 +25,7 @@ test()
   // test an empty string -- should yield a list of zero elements with
   // any delimiter
   {
-    const char* p = "";
+    const char * p = "";
     deallog << Utilities::split_string_list(p).size() << std::endl;
     deallog << Utilities::split_string_list(p, ' ').size() << std::endl;
   }
@@ -34,7 +34,7 @@ test()
   // yield a list of zero elements even if (maybe not very usefully)
   // the delimiter is chosen as a whitespace itself
   {
-    const char* p = "  ";
+    const char * p = "  ";
     deallog << Utilities::split_string_list(p).size() << std::endl;
     deallog << Utilities::split_string_list(p, ' ').size() << std::endl;
   }

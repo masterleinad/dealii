@@ -51,7 +51,7 @@ std::ofstream logfile("output");
  * Check if the normal component is continuous over element edges.
  */
 
-void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
+void EvaluateNormal2(DoFHandler<2> * dof_handler, Vector<double> & solution)
 {
   // This quadrature rule determines the points, where the
   // continuity will be tested.
@@ -158,7 +158,7 @@ void EvaluateNormal2(DoFHandler<2>* dof_handler, Vector<double>& solution)
  * Check if the normal component is continuous over element edges.
  */
 
-void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
+void EvaluateNormal(DoFHandler<2> * dof_handler, Vector<double> & solution)
 {
   // This quadrature rule determines the points, where the
   // continuity will be tested.
@@ -235,14 +235,14 @@ void EvaluateNormal(DoFHandler<2>* dof_handler, Vector<double>& solution)
 }
 
 int
-main(int /*argc*/, char** /*argv*/)
+main(int /*argc*/, char ** /*argv*/)
 {
   deallog << std::setprecision(PRECISION);
   deallog << std::fixed;
   deallog.attach(logfile);
 
   Triangulation<2>          tria_test;
-  DoFHandler<2>*            dof_handler;
+  DoFHandler<2> *           dof_handler;
   Point<2>                  p1(0, 0), p2(1, 1);
   std::vector<unsigned int> sub_div;
 

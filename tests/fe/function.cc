@@ -35,7 +35,7 @@
 // the SAME element
 template <int dim>
 void
-vector_values(const FiniteElement<dim>& fe)
+vector_values(const FiniteElement<dim> & fe)
 {
   Assert(fe.n_base_elements() == 1, ExcNotImplemented());
   deallog.push(fe.get_name());

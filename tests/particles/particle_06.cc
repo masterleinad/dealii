@@ -62,11 +62,11 @@ test()
             << std::endl;
 
     std::vector<char> data(particle.serialized_size_in_bytes());
-    void*             write_pointer = static_cast<void*>(&data.front());
+    void *            write_pointer = static_cast<void *>(&data.front());
 
     particle.write_data(write_pointer);
 
-    const void* read_pointer = static_cast<const void*>(&data.front());
+    const void * read_pointer = static_cast<const void *>(&data.front());
     const Particles::Particle<dim, spacedim> new_particle(read_pointer, &pool);
 
     deallog << "Copy particle location: " << new_particle.get_location()

@@ -45,27 +45,27 @@ namespace Particles
      * container, and an iterator to the cell-particle pair.
      */
     ParticleIterator(
-      const std::multimap<internal::LevelInd, Particle<dim, spacedim>>& map,
+      const std::multimap<internal::LevelInd, Particle<dim, spacedim>> & map,
       const typename std::multimap<internal::LevelInd,
-                                   Particle<dim, spacedim>>::iterator&
+                                   Particle<dim, spacedim>>::iterator &
         particle);
 
     /**
      * Dereferencing operator, returns a reference to an accessor. Usage is thus
      * like <tt>(*i).get_id ();</tt>
      */
-    const ParticleAccessor<dim, spacedim>& operator*() const;
+    const ParticleAccessor<dim, spacedim> & operator*() const;
 
     /**
      * Dereferencing operator, non-@p const version.
      */
-    ParticleAccessor<dim, spacedim>& operator*();
+    ParticleAccessor<dim, spacedim> & operator*();
 
     /**
      * Assignment operator.
      */
-    ParticleIterator&
-    operator=(const ParticleIterator&);
+    ParticleIterator &
+    operator=(const ParticleIterator &);
 
     /**
      * Dereferencing operator, returns a pointer of the particle pointed to. Usage
@@ -73,31 +73,31 @@ namespace Particles
      *
      * There is a @p const and a non-@p const version.
      */
-    const ParticleAccessor<dim, spacedim>* operator->() const;
+    const ParticleAccessor<dim, spacedim> * operator->() const;
 
     /**
      * Dereferencing operator, non-@p const version.
      */
-    ParticleAccessor<dim, spacedim>* operator->();
+    ParticleAccessor<dim, spacedim> * operator->();
 
     /**
      * Compare for equality.
      */
     bool
-    operator==(const ParticleIterator<dim, spacedim>&) const;
+    operator==(const ParticleIterator<dim, spacedim> &) const;
 
     /**
      * Compare for inequality.
      */
     bool
-    operator!=(const ParticleIterator<dim, spacedim>&) const;
+    operator!=(const ParticleIterator<dim, spacedim> &) const;
 
     /**
      * Prefix <tt>++</tt> operator: <tt>++iterator</tt>. This operator advances
      * the iterator to the next element and returns a reference to
      * <tt>*this</tt>.
      */
-    ParticleIterator&
+    ParticleIterator &
     operator++();
 
     /**
@@ -113,7 +113,7 @@ namespace Particles
      * the iterator to the previous element and returns a reference to
      * <tt>*this</tt>.
      */
-    ParticleIterator&
+    ParticleIterator &
     operator--();
 
     /**
@@ -129,11 +129,11 @@ namespace Particles
      * are standard for iterators and are used by algorithms to enquire about
      * the specifics of the iterators they work on.
      */
-    typedef std::bidirectional_iterator_tag  iterator_category;
-    typedef ParticleAccessor<dim, spacedim>  value_type;
-    typedef std::ptrdiff_t                   difference_type;
-    typedef ParticleAccessor<dim, spacedim>* pointer;
-    typedef ParticleAccessor<dim, spacedim>& reference;
+    typedef std::bidirectional_iterator_tag   iterator_category;
+    typedef ParticleAccessor<dim, spacedim>   value_type;
+    typedef std::ptrdiff_t                    difference_type;
+    typedef ParticleAccessor<dim, spacedim> * pointer;
+    typedef ParticleAccessor<dim, spacedim> & reference;
 
   private:
     /**

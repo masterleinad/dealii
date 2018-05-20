@@ -26,7 +26,7 @@
 // elements again. To be sure this generates the correct results the
 // test is verbose (and uses tiny matrices).
 void
-test(PETScWrappers::FullMatrix& m)
+test(PETScWrappers::FullMatrix & m)
 {
   // assign some matrix elements
   for(unsigned int i = 0; i < m.m(); ++i)
@@ -77,7 +77,7 @@ test(PETScWrappers::FullMatrix& m)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
@@ -90,7 +90,7 @@ main(int argc, char** argv)
         test(m);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

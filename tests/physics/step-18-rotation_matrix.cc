@@ -81,9 +81,9 @@ namespace Step18
   }
   template <int dim>
   inline SymmetricTensor<2, dim>
-  get_strain(const FEValues<dim>& fe_values,
-             const unsigned int   shape_func,
-             const unsigned int   q_point)
+  get_strain(const FEValues<dim> & fe_values,
+             const unsigned int    shape_func,
+             const unsigned int    q_point)
   {
     SymmetricTensor<2, dim> tmp;
     for(unsigned int i = 0; i < dim; ++i)
@@ -98,7 +98,7 @@ namespace Step18
   }
   template <int dim>
   inline SymmetricTensor<2, dim>
-  get_strain(const std::vector<Tensor<1, dim>>& grad)
+  get_strain(const std::vector<Tensor<1, dim>> & grad)
   {
     Assert(grad.size() == dim, ExcInternalError());
     SymmetricTensor<2, dim> strain;
@@ -110,7 +110,7 @@ namespace Step18
     return strain;
   }
   Tensor<2, 2>
-  get_rotation_matrix(const std::vector<Tensor<1, 2>>& grad_u)
+  get_rotation_matrix(const std::vector<Tensor<1, 2>> & grad_u)
   {
     const double curl = (grad_u[1][0] - grad_u[0][1]);
     // Note: Here the negative angle suggests that we're computing the rotation
@@ -119,7 +119,7 @@ namespace Step18
     return Physics::Transformations::Rotations::rotation_matrix_2d(angle);
   }
   Tensor<2, 3>
-  get_rotation_matrix(const std::vector<Tensor<1, 3>>& grad_u)
+  get_rotation_matrix(const std::vector<Tensor<1, 3>> & grad_u)
   {
     const Point<3> curl(grad_u[2][1] - grad_u[1][2],
                         grad_u[0][2] - grad_u[2][0],
@@ -195,18 +195,18 @@ namespace Step18
   public:
     BodyForce();
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& values) const;
+    vector_value(const Point<dim> & p, Vector<double> & values) const;
     virtual void
-    vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const;
+    vector_value_list(const std::vector<Point<dim>> & points,
+                      std::vector<Vector<double>> &   value_list) const;
   };
   template <int dim>
   BodyForce<dim>::BodyForce() : Function<dim>(dim)
   {}
   template <int dim>
   inline void
-  BodyForce<dim>::vector_value(const Point<dim>& /*p*/,
-                               Vector<double>& values) const
+  BodyForce<dim>::vector_value(const Point<dim> & /*p*/,
+                               Vector<double> & values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
     const double g   = 9.81;
@@ -217,8 +217,8 @@ namespace Step18
   template <int dim>
   void
   BodyForce<dim>::vector_value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    const std::vector<Point<dim>> & points,
+    std::vector<Vector<double>> &   value_list) const
   {
     const unsigned int n_points = points.size();
     Assert(value_list.size() == n_points,
@@ -233,10 +233,10 @@ namespace Step18
     IncrementalBoundaryValues(const double present_time,
                               const double present_timestep);
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& values) const;
+    vector_value(const Point<dim> & p, Vector<double> & values) const;
     virtual void
-    vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const;
+    vector_value_list(const std::vector<Point<dim>> & points,
+                      std::vector<Vector<double>> &   value_list) const;
 
   private:
     const double velocity;
@@ -254,8 +254,8 @@ namespace Step18
   {}
   template <int dim>
   void
-  IncrementalBoundaryValues<dim>::vector_value(const Point<dim>& /*p*/,
-                                               Vector<double>& values) const
+  IncrementalBoundaryValues<dim>::vector_value(const Point<dim> & /*p*/,
+                                               Vector<double> & values) const
   {
     Assert(values.size() == dim, ExcDimensionMismatch(values.size(), dim));
     values    = 0;
@@ -264,8 +264,8 @@ namespace Step18
   template <int dim>
   void
   IncrementalBoundaryValues<dim>::vector_value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    const std::vector<Point<dim>> & points,
+    std::vector<Vector<double>> &   value_list) const
   {
     const unsigned int n_points = points.size();
     Assert(value_list.size() == n_points,
@@ -407,8 +407,8 @@ namespace Step18
                   cell_matrix(i, j) += (eps_phi_i * stress_strain_tensor
                                         * eps_phi_j * fe_values.JxW(q_point));
                 }
-          const PointHistory<dim>* local_quadrature_points_data
-            = reinterpret_cast<PointHistory<dim>*>(cell->user_pointer());
+          const PointHistory<dim> * local_quadrature_points_data
+            = reinterpret_cast<PointHistory<dim> *>(cell->user_pointer());
           body_force.vector_value_list(fe_values.get_quadrature_points(),
                                        body_force_values);
           for(unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -417,7 +417,7 @@ namespace Step18
                 = fe.system_to_component_index(i).first;
               for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                 {
-                  const SymmetricTensor<2, dim>& old_stress
+                  const SymmetricTensor<2, dim> & old_stress
                     = local_quadrature_points_data[q_point].old_stress;
                   cell_rhs(i)
                     += (body_force_values[q_point](component_i)
@@ -518,9 +518,9 @@ namespace Step18
           {
             SymmetricTensor<2, dim> accumulated_stress;
             for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
-              accumulated_stress
-                += reinterpret_cast<PointHistory<dim>*>(cell->user_pointer())[q]
-                     .old_stress;
+              accumulated_stress += reinterpret_cast<PointHistory<dim> *>(
+                                      cell->user_pointer())[q]
+                                      .old_stress;
             norm_of_stress(cell->active_cell_index())
               = (accumulated_stress / quadrature_formula.size()).norm();
           }
@@ -732,8 +732,8 @@ namespace Step18
         ++cell)
       if(cell->is_locally_owned())
         {
-          PointHistory<dim>* local_quadrature_points_history
-            = reinterpret_cast<PointHistory<dim>*>(cell->user_pointer());
+          PointHistory<dim> * local_quadrature_points_history
+            = reinterpret_cast<PointHistory<dim> *>(cell->user_pointer());
           Assert(local_quadrature_points_history
                    >= &quadrature_point_history.front(),
                  ExcInternalError());
@@ -761,7 +761,7 @@ namespace Step18
   }
 } // namespace Step18
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(3);
@@ -775,7 +775,7 @@ main(int argc, char** argv)
       TopLevel<3>                      elastic_problem;
       elastic_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

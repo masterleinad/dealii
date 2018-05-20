@@ -284,7 +284,8 @@ private:
    * For each local shape function, the array consists of three coefficients is in order of a,b and c.
    */
   static std::array<std::array<double, 3>, 4>
-  get_linear_shape_coefficients(const Triangulation<2, 2>::cell_iterator& cell);
+  get_linear_shape_coefficients(
+    const Triangulation<2, 2>::cell_iterator & cell);
 
   /**
    * Do the work which is needed before cellwise data computation.
@@ -296,25 +297,25 @@ private:
   virtual std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
   get_data(
     const UpdateFlags update_flags,
-    const Mapping<2, 2>&,
-    const Quadrature<2>& quadrature,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
+    const Mapping<2, 2> &,
+    const Quadrature<2> & quadrature,
+    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2> &
       output_data) const override;
 
   virtual std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
   get_face_data(
     const UpdateFlags update_flags,
-    const Mapping<2, 2>&,
-    const Quadrature<1>& quadrature,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
+    const Mapping<2, 2> &,
+    const Quadrature<1> & quadrature,
+    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2> &
       output_data) const override;
 
   virtual std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
   get_subface_data(
     const UpdateFlags update_flags,
-    const Mapping<2, 2>&,
-    const Quadrature<1>& quadrature,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
+    const Mapping<2, 2> &,
+    const Quadrature<1> & quadrature,
+    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2> &
       output_data) const override;
 
   /**
@@ -322,15 +323,15 @@ private:
    */
   virtual void
   fill_fe_values(
-    const Triangulation<2, 2>::cell_iterator& cell,
-    const CellSimilarity::Similarity          cell_similarity,
-    const Quadrature<2>&                      quadrature,
-    const Mapping<2, 2>&                      mapping,
-    const Mapping<2, 2>::InternalDataBase&    mapping_internal,
-    const internal::FEValuesImplementation::MappingRelatedData<2, 2>&
-                                                 mapping_data,
-    const FiniteElement<2, 2>::InternalDataBase& fe_internal,
-    internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
+    const Triangulation<2, 2>::cell_iterator & cell,
+    const CellSimilarity::Similarity           cell_similarity,
+    const Quadrature<2> &                      quadrature,
+    const Mapping<2, 2> &                      mapping,
+    const Mapping<2, 2>::InternalDataBase &    mapping_internal,
+    const internal::FEValuesImplementation::MappingRelatedData<2, 2> &
+                                                  mapping_data,
+    const FiniteElement<2, 2>::InternalDataBase & fe_internal,
+    internal::FEValuesImplementation::FiniteElementRelatedData<2, 2> &
       output_data) const override;
 
   /**
@@ -338,15 +339,15 @@ private:
    */
   virtual void
   fill_fe_face_values(
-    const Triangulation<2, 2>::cell_iterator& cell,
-    const unsigned int                        face_no,
-    const Quadrature<1>&                      quadrature,
-    const Mapping<2, 2>&                      mapping,
-    const Mapping<2, 2>::InternalDataBase&    mapping_internal,
-    const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2>&
-                            mapping_data,
-    const InternalDataBase& fe_internal,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
+    const Triangulation<2, 2>::cell_iterator & cell,
+    const unsigned int                         face_no,
+    const Quadrature<1> &                      quadrature,
+    const Mapping<2, 2> &                      mapping,
+    const Mapping<2, 2>::InternalDataBase &    mapping_internal,
+    const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2> &
+                             mapping_data,
+    const InternalDataBase & fe_internal,
+    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2> &
       output_data) const override;
 
   /**
@@ -354,16 +355,16 @@ private:
    */
   virtual void
   fill_fe_subface_values(
-    const Triangulation<2, 2>::cell_iterator& cell,
-    const unsigned int                        face_no,
-    const unsigned int                        sub_no,
-    const Quadrature<1>&                      quadrature,
-    const Mapping<2, 2>&                      mapping,
-    const Mapping<2, 2>::InternalDataBase&    mapping_internal,
-    const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2>&
-                            mapping_data,
-    const InternalDataBase& fe_internal,
-    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
+    const Triangulation<2, 2>::cell_iterator & cell,
+    const unsigned int                         face_no,
+    const unsigned int                         sub_no,
+    const Quadrature<1> &                      quadrature,
+    const Mapping<2, 2> &                      mapping,
+    const Mapping<2, 2>::InternalDataBase &    mapping_internal,
+    const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2> &
+                             mapping_data,
+    const InternalDataBase & fe_internal,
+    dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2> &
       output_data) const override;
 
   /**

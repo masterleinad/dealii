@@ -21,7 +21,7 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim, int spacedim>
 std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
 Mapping<dim, spacedim>::get_vertices(
-  const typename Triangulation<dim, spacedim>::cell_iterator& cell) const
+  const typename Triangulation<dim, spacedim>::cell_iterator & cell) const
 {
   std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell> vertices;
   for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
@@ -34,9 +34,9 @@ Mapping<dim, spacedim>::get_vertices(
 template <int dim, int spacedim>
 Point<dim - 1>
 Mapping<dim, spacedim>::project_real_point_to_unit_point_on_face(
-  const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-  const unsigned int&                                         face_no,
-  const Point<spacedim>&                                      p) const
+  const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+  const unsigned int &                                         face_no,
+  const Point<spacedim> &                                      p) const
 {
   //The function doesn't make physical sense for dim=1
   Assert(dim > 1, ExcNotImplemented());

@@ -36,7 +36,7 @@ template <int dim>
 void
 test()
 {
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream & out = deallog.get_file_stream();
 
   Point<dim> center;
 

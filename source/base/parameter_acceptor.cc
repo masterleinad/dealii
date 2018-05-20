@@ -26,7 +26,7 @@ std::vector<SmartPointer<ParameterAcceptor>> ParameterAcceptor::class_list;
 // Static parameter handler
 ParameterHandler ParameterAcceptor::prm;
 
-ParameterAcceptor::ParameterAcceptor(const std::string& name)
+ParameterAcceptor::ParameterAcceptor(const std::string & name)
   : acceptor_id(class_list.size()), section_name(name)
 {
   SmartPointer<ParameterAcceptor> pt(
@@ -48,10 +48,10 @@ ParameterAcceptor::get_section_name() const
 
 void
 ParameterAcceptor::initialize(
-  const std::string&                  filename,
-  const std::string&                  output_filename,
+  const std::string &                 filename,
+  const std::string &                 output_filename,
   const ParameterHandler::OutputStyle output_style_for_prm_format,
-  ParameterHandler&                   prm)
+  ParameterHandler &                  prm)
 {
   declare_all_parameters(prm);
   if(filename != "")
@@ -63,7 +63,7 @@ ParameterAcceptor::initialize(
             {
               prm.parse_input(filename);
             }
-          catch(const dealii::PathSearch::ExcFileNotFound&)
+          catch(const dealii::PathSearch::ExcFileNotFound &)
             {
               std::ofstream out(filename);
               Assert(out, ExcIO());
@@ -132,7 +132,8 @@ ParameterAcceptor::initialize(
 }
 
 void
-ParameterAcceptor::initialize(std::istream& input_stream, ParameterHandler& prm)
+ParameterAcceptor::initialize(std::istream &     input_stream,
+                              ParameterHandler & prm)
 
 {
   AssertThrow(input_stream, ExcIO());
@@ -149,15 +150,15 @@ ParameterAcceptor::clear()
 }
 
 void
-ParameterAcceptor::declare_parameters(ParameterHandler&)
+ParameterAcceptor::declare_parameters(ParameterHandler &)
 {}
 
 void
-ParameterAcceptor::parse_parameters(ParameterHandler&)
+ParameterAcceptor::parse_parameters(ParameterHandler &)
 {}
 
 void
-ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)
+ParameterAcceptor::parse_all_parameters(ParameterHandler & prm)
 {
   for(unsigned int i = 0; i < class_list.size(); ++i)
     if(class_list[i] != nullptr)
@@ -170,7 +171,7 @@ ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)
 }
 
 void
-ParameterAcceptor::declare_all_parameters(ParameterHandler& prm)
+ParameterAcceptor::declare_all_parameters(ParameterHandler & prm)
 {
   for(unsigned int i = 0; i < class_list.size(); ++i)
     if(class_list[i] != nullptr)
@@ -223,18 +224,18 @@ ParameterAcceptor::get_section_path() const
 }
 
 void
-ParameterAcceptor::enter_my_subsection(ParameterHandler& prm
+ParameterAcceptor::enter_my_subsection(ParameterHandler & prm
                                        = ParameterAcceptor::prm)
 {
   const auto sections = get_section_path();
-  for(const auto& sec : sections)
+  for(const auto & sec : sections)
     {
       prm.enter_subsection(sec);
     }
 }
 
 void
-ParameterAcceptor::leave_my_subsection(ParameterHandler& prm
+ParameterAcceptor::leave_my_subsection(ParameterHandler & prm
                                        = ParameterAcceptor::prm)
 {
   const auto sections = get_section_path();

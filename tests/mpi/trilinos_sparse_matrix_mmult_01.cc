@@ -143,7 +143,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
@@ -163,7 +163,7 @@ main(int argc, char** argv)
       else
         test();
     }
-  catch(const char* p)
+  catch(const char * p)
     {
       std::cerr << "Uncaught exception: " << p << std::endl;
       std::exit(1);

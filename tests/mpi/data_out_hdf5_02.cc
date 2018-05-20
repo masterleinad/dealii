@@ -30,11 +30,11 @@ double cell_coordinates[3][8] = {{0, 1, 0, 1, 0, 1, 0, 1},
 // to not introduce dependencies between different test targets
 template <int dim, int spacedim>
 void
-create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
+create_patches(std::vector<DataOutBase::Patch<dim, spacedim>> & patches)
 {
   for(unsigned int p = 0; p < patches.size(); ++p)
     {
-      DataOutBase::Patch<dim, spacedim>& patch = patches[p];
+      DataOutBase::Patch<dim, spacedim> & patch = patches[p];
 
       const unsigned int nsub  = p + 1;
       const unsigned int nsubp = nsub + 1;
@@ -154,7 +154,7 @@ check()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;
@@ -171,7 +171,7 @@ main(int argc, char* argv[])
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

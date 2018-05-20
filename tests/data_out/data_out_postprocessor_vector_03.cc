@@ -92,7 +92,7 @@ private:
 
 template <int dim>
 double
-coefficient(const Point<dim>& p)
+coefficient(const Point<dim> & p)
 {
   if(p.square() < 0.5 * 0.5)
     return 20;
@@ -235,8 +235,8 @@ public:
   {}
 
   virtual void
-  evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim>& input_data,
-                        std::vector<Vector<double>>& computed_quantities) const
+  evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim> & input_data,
+                        std::vector<Vector<double>> & computed_quantities) const
   {
     AssertDimension(input_data.solution_gradients.size(),
                     computed_quantities.size());

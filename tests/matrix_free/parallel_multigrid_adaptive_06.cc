@@ -84,58 +84,58 @@ public:
 
   void
   initialize(std::shared_ptr<const MatrixFree<dim, value_type>> data,
-             const MGConstrainedDoFs& mg_constrained_dofs,
-             const unsigned int       level)
+             const MGConstrainedDoFs & mg_constrained_dofs,
+             const unsigned int        level)
   {
     laplace.initialize(data, mg_constrained_dofs, level);
   }
 
   void
-  vmult_interface_down(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult_interface_down(BlockVectorType & dst, const BlockVectorType & src) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult_interface_down(dst.block(b), src.block(b));
   }
 
   void
-  vmult_interface_up(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult_interface_up(BlockVectorType & dst, const BlockVectorType & src) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult_interface_up(dst.block(b), src.block(b));
   }
 
   void
-  vmult(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult(BlockVectorType & dst, const BlockVectorType & src) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult(dst.block(b), src.block(b));
   }
 
   void
-  Tvmult(BlockVectorType& dst, const BlockVectorType& src) const
+  Tvmult(BlockVectorType & dst, const BlockVectorType & src) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.Tvmult(dst.block(b), src.block(b));
   }
 
   void
-  vmult_add(BlockVectorType& dst, const BlockVectorType& src) const
+  vmult_add(BlockVectorType & dst, const BlockVectorType & src) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult_add(dst.block(b), src.block(b));
   }
 
   void
-  Tvmult_add(BlockVectorType& dst, const BlockVectorType& src) const
+  Tvmult_add(BlockVectorType & dst, const BlockVectorType & src) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.Tvmult_add(dst.block(b), src.block(b));
   }
 
   void
-  precondition_Jacobi(BlockVectorType&       dst,
-                      const BlockVectorType& src,
-                      const value_type       omega) const
+  precondition_Jacobi(BlockVectorType &       dst,
+                      const BlockVectorType & src,
+                      const value_type        omega) const
   {
     for(unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.precondition_Jacobi(dst.block(b), src.block(b), omega);
@@ -171,15 +171,15 @@ public:
   {}
 
   void
-  initialize(const MatrixType& matrix)
+  initialize(const MatrixType & matrix)
   {
     coarse_matrix = &matrix;
   }
 
   virtual void
-  operator()(const unsigned int                                     level,
-             LinearAlgebra::distributed::BlockVector<Number>&       dst,
-             const LinearAlgebra::distributed::BlockVector<Number>& src) const
+  operator()(const unsigned int                                      level,
+             LinearAlgebra::distributed::BlockVector<Number> &       dst,
+             const LinearAlgebra::distributed::BlockVector<Number> & src) const
   {
     ReductionControl solver_control(1e4, 1e-50, 1e-10);
     SolverCG<LinearAlgebra::distributed::BlockVector<Number>> solver_coarse(
@@ -187,12 +187,12 @@ public:
     solver_coarse.solve(*coarse_matrix, dst, src, PreconditionIdentity());
   }
 
-  const MatrixType* coarse_matrix;
+  const MatrixType * coarse_matrix;
 };
 
 template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
-do_test(const DoFHandler<dim>& dof, const unsigned int nb)
+do_test(const DoFHandler<dim> & dof, const unsigned int nb)
 {
   if(types_are_equal<number, float>::value == true)
     {
@@ -400,7 +400,7 @@ test(const unsigned int nbands = 1)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 

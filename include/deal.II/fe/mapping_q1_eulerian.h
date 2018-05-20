@@ -104,8 +104,8 @@ public:
    * interpreted as the displacement we use in defining the mapping, relative
    * to the location of cells of the underlying triangulation.
    */
-  MappingQ1Eulerian(const DoFHandler<dim, spacedim>& euler_dof_handler,
-                    const VectorType&                euler_vector);
+  MappingQ1Eulerian(const DoFHandler<dim, spacedim> & euler_dof_handler,
+                    const VectorType &                euler_vector);
 
   /**
    * Return the mapped vertices of the cell. For the current class, this
@@ -114,8 +114,8 @@ public:
    * addition to the geometry of the cell.
    */
   virtual std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
-  get_vertices(const typename Triangulation<dim, spacedim>::cell_iterator& cell)
-    const override;
+  get_vertices(const typename Triangulation<dim, spacedim>::cell_iterator &
+                 cell) const override;
 
   /**
    * Return a pointer to a copy of the present object. The caller of this copy
@@ -148,11 +148,11 @@ protected:
    */
   virtual CellSimilarity::Similarity
   fill_fe_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
-    internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const CellSimilarity::Similarity                          cell_similarity,
+    const Quadrature<dim> &                                   quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase & internal_data,
+    internal::FEValuesImplementation::MappingRelatedData<dim, spacedim> &
       output_data) const override;
 
   /**
@@ -163,7 +163,7 @@ protected:
    */
   virtual std::vector<Point<spacedim>>
   compute_mapping_support_points(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell)
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell)
     const override;
 
   /**

@@ -41,10 +41,10 @@ Histogram::Interval::memory_consumption() const
 
 template <typename number>
 void
-Histogram::evaluate(const std::vector<Vector<number>>& values,
-                    const std::vector<double>&         y_values_,
-                    const unsigned int                 n_intervals,
-                    const IntervalSpacing              interval_spacing)
+Histogram::evaluate(const std::vector<Vector<number>> & values,
+                    const std::vector<double> &         y_values_,
+                    const unsigned int                  n_intervals,
+                    const IntervalSpacing               interval_spacing)
 {
   Assert(
     values.size() > 0,
@@ -191,9 +191,9 @@ Histogram::evaluate(const std::vector<Vector<number>>& values,
 
 template <typename number>
 void
-Histogram::evaluate(const Vector<number>& values,
-                    const unsigned int    n_intervals,
-                    const IntervalSpacing interval_spacing)
+Histogram::evaluate(const Vector<number> & values,
+                    const unsigned int     n_intervals,
+                    const IntervalSpacing  interval_spacing)
 {
   std::vector<Vector<number>> values_list(1, values);
   evaluate(
@@ -201,7 +201,7 @@ Histogram::evaluate(const Vector<number>& values,
 }
 
 void
-Histogram::write_gnuplot(std::ostream& out) const
+Histogram::write_gnuplot(std::ostream & out) const
 {
   AssertThrow(out, ExcIO());
   Assert(!intervals.empty(),
@@ -261,7 +261,7 @@ Histogram::get_interval_spacing_names()
 }
 
 Histogram::IntervalSpacing
-Histogram::parse_interval_spacing(const std::string& name)
+Histogram::parse_interval_spacing(const std::string & name)
 {
   if(name == "linear")
     return linear;
@@ -284,24 +284,24 @@ Histogram::memory_consumption() const
 
 // explicit instantiations for float
 template void
-Histogram::evaluate<float>(const std::vector<Vector<float>>& values,
-                           const std::vector<double>&        y_values,
-                           const unsigned int                n_intervals,
-                           const IntervalSpacing             interval_spacing);
+Histogram::evaluate<float>(const std::vector<Vector<float>> & values,
+                           const std::vector<double> &        y_values,
+                           const unsigned int                 n_intervals,
+                           const IntervalSpacing              interval_spacing);
 template void
-Histogram::evaluate<float>(const Vector<float>&  values,
+Histogram::evaluate<float>(const Vector<float> & values,
                            const unsigned int    n_intervals,
                            const IntervalSpacing interval_spacing);
 
 // explicit instantiations for double
 template void
-Histogram::evaluate<double>(const std::vector<Vector<double>>& values,
-                            const std::vector<double>&         y_values,
-                            const unsigned int                 n_intervals,
+Histogram::evaluate<double>(const std::vector<Vector<double>> & values,
+                            const std::vector<double> &         y_values,
+                            const unsigned int                  n_intervals,
                             const IntervalSpacing interval_spacing);
 template void
-Histogram::evaluate<double>(const Vector<double>& values,
-                            const unsigned int    n_intervals,
-                            const IntervalSpacing interval_spacing);
+Histogram::evaluate<double>(const Vector<double> & values,
+                            const unsigned int     n_intervals,
+                            const IntervalSpacing  interval_spacing);
 
 DEAL_II_NAMESPACE_CLOSE

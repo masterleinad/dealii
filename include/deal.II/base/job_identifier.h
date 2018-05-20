@@ -45,7 +45,7 @@ public:
    * avoid linking the library version. Unfortunately, this mechanism does not
    * work with shared libraries.
    */
-  static const char*
+  static const char *
   program_id();
 
   /**
@@ -56,7 +56,7 @@ public:
    * identifier for the program being run.
    */
   static std::string
-  base_name(const char* filename);
+  base_name(const char * filename);
 
   /**
    * Return the value of <tt>id</tt>.

@@ -96,7 +96,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
 
     /**
@@ -127,7 +127,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
 
     /**
@@ -163,26 +163,26 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
 
     template <class Archive>
     void
-    DoFFaces<1>::serialize(Archive&, const unsigned int)
+    DoFFaces<1>::serialize(Archive &, const unsigned int)
     {}
 
     template <class Archive>
     void
-    DoFFaces<2>::serialize(Archive& ar, const unsigned int)
+    DoFFaces<2>::serialize(Archive & ar, const unsigned int)
     {
-      ar& lines;
+      ar & lines;
     }
 
     template <class Archive>
     void
-    DoFFaces<3>::serialize(Archive& ar, const unsigned int)
+    DoFFaces<3>::serialize(Archive & ar, const unsigned int)
     {
-      ar& lines& quads;
+      ar & lines & quads;
     }
 
   } // namespace DoFHandlerImplementation

@@ -31,7 +31,7 @@ PolynomialsP<dim>::PolynomialsP(const unsigned int p)
 template <>
 void
 PolynomialsP<1>::create_polynomial_ordering(
-  std::vector<unsigned int>& index_map) const
+  std::vector<unsigned int> & index_map) const
 {
   Assert(index_map.size() == this->n(),
          ExcDimensionMismatch(index_map.size(), this->n()));
@@ -55,7 +55,7 @@ namespace
 template <>
 void
 PolynomialsP<2>::create_polynomial_ordering(
-  std::vector<unsigned int>& index_map) const
+  std::vector<unsigned int> & index_map) const
 {
   Assert(index_map.size() == this->n(),
          ExcDimensionMismatch(index_map.size(), this->n()));
@@ -83,7 +83,7 @@ namespace
 template <>
 void
 PolynomialsP<3>::create_polynomial_ordering(
-  std::vector<unsigned int>& index_map) const
+  std::vector<unsigned int> & index_map) const
 {
   Assert(index_map.size() == this->n(),
          ExcDimensionMismatch(index_map.size(), this->n()));

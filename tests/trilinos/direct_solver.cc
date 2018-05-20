@@ -70,7 +70,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -81,12 +81,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> & p,
                           const unsigned int /*component*/) const
 {
   double return_value = 0;
@@ -98,7 +98,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
 
 template <int dim>
 double
-BoundaryValues<dim>::value(const Point<dim>& p,
+BoundaryValues<dim>::value(const Point<dim> & p,
                            const unsigned int /*component*/) const
 {
   return p.square();
@@ -237,7 +237,7 @@ Step4<dim>::solve()
       {
         solver.solve(system_matrix, output, system_rhs);
       }
-    catch(dealii::ExceptionBase& exc)
+    catch(dealii::ExceptionBase & exc)
       {
         deallog << "Error: " << std::endl;
         exc.print_info(deallog.get_file_stream());
@@ -255,7 +255,7 @@ Step4<dim>::solve()
       {
         solver.solve(system_matrix, output, system_rhs);
       }
-    catch(dealii::ExceptionBase& exc)
+    catch(dealii::ExceptionBase & exc)
       {
         deallog << "Error: " << std::endl;
         exc.print_info(deallog.get_file_stream());
@@ -275,7 +275,7 @@ Step4<dim>::run()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
@@ -287,7 +287,7 @@ main(int argc, char** argv)
       Step4<2> test;
       test.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

@@ -78,8 +78,8 @@ test()
   ePos(0) = 0.0653630060373507487669897386695;
   ePos(1) = 1125.59175030825804242340382189;
 
-  MappingQ<2>         mapping(1);
-  MappingQGeneric<2>& mapping2 = StaticMappingQ1<2>::mapping;
+  MappingQ<2>          mapping(1);
+  MappingQGeneric<2> & mapping2 = StaticMappingQ1<2>::mapping;
   deallog << "1:" << std::endl;
   GridTools::find_active_cell_around_point(mapping, triangulation, ePos);
   deallog << "2:" << std::endl;
@@ -89,7 +89,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 

@@ -22,7 +22,7 @@
 namespace dealii
 {
   bool
-  compare(const TableHandler& t1, const TableHandler& t2)
+  compare(const TableHandler & t1, const TableHandler & t2)
   {
     std::ostringstream o1, o2;
     t1.write_tex(o1);

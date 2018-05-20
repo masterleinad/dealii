@@ -82,17 +82,17 @@ namespace Step47
   private:
     bool
     interface_intersects_cell(
-      const typename Triangulation<dim>::cell_iterator& cell) const;
+      const typename Triangulation<dim>::cell_iterator & cell) const;
     std::pair<unsigned int, Quadrature<dim>>
     compute_quadrature(
-      const Quadrature<dim>& plain_quadrature,
-      const typename hp::DoFHandler<dim>::active_cell_iterator& cell,
-      const std::vector<double>& level_set_values);
+      const Quadrature<dim> & plain_quadrature,
+      const typename hp::DoFHandler<dim>::active_cell_iterator & cell,
+      const std::vector<double> & level_set_values);
     void
-    append_quadrature(const Quadrature<dim>&         plain_quadrature,
-                      const std::vector<Point<dim>>& v,
-                      std::vector<Point<dim>>&       xfem_points,
-                      std::vector<double>&           xfem_weights);
+    append_quadrature(const Quadrature<dim> &         plain_quadrature,
+                      const std::vector<Point<dim>> & v,
+                      std::vector<Point<dim>> &       xfem_points,
+                      std::vector<double> &           xfem_weights);
 
     void
     setup_system();
@@ -129,17 +129,18 @@ namespace Step47
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> & p,
+          const unsigned int component = 0) const override;
 
     virtual void
-    value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+    value_list(const std::vector<Point<dim>> & points,
+               std::vector<double> &           values,
+               const unsigned int              component = 0) const override;
   };
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
+  Coefficient<dim>::value(const Point<dim> & p, const unsigned int) const
   {
     if(p.square() < 0.5 * 0.5)
       return 20;
@@ -149,9 +150,9 @@ namespace Step47
 
   template <int dim>
   void
-  Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+  Coefficient<dim>::value_list(const std::vector<Point<dim>> & points,
+                               std::vector<double> &           values,
+                               const unsigned int              component) const
   {
     const unsigned int n_points = points.size();
 
@@ -172,7 +173,7 @@ namespace Step47
 
   template <int dim>
   double
-  exact_solution(const Point<dim>& p)
+  exact_solution(const Point<dim> & p)
   {
     const double r = p.norm();
 
@@ -196,14 +197,14 @@ namespace Step47
 
   template <int dim>
   double
-  level_set(const Point<dim>& p)
+  level_set(const Point<dim> & p)
   {
     return p.norm() - 0.5;
   }
 
   template <int dim>
   Tensor<1, dim>
-  grad_level_set(const Point<dim>& p)
+  grad_level_set(const Point<dim> & p)
   {
     return p / p.norm();
   }
@@ -211,7 +212,7 @@ namespace Step47
   template <int dim>
   bool
   LaplaceProblem<dim>::interface_intersects_cell(
-    const typename Triangulation<dim>::cell_iterator& cell) const
+    const typename Triangulation<dim>::cell_iterator & cell) const
   {
     for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell - 1; ++v)
       if(level_set(cell->vertex(v)) * level_set(cell->vertex(v + 1)) < 0)
@@ -466,9 +467,9 @@ namespace Step47
   template <int dim>
   std::pair<unsigned int, Quadrature<dim>>
   LaplaceProblem<dim>::compute_quadrature(
-    const Quadrature<dim>& plain_quadrature,
-    const typename hp::DoFHandler<dim>::active_cell_iterator& /*cell*/,
-    const std::vector<double>& level_set_values)
+    const Quadrature<dim> & plain_quadrature,
+    const typename hp::DoFHandler<dim>::active_cell_iterator & /*cell*/,
+    const std::vector<double> & level_set_values)
   {
     unsigned int type = 0;
 
@@ -829,10 +830,10 @@ namespace Step47
   template <int dim>
   void
   LaplaceProblem<dim>::append_quadrature(
-    const Quadrature<dim>&         plain_quadrature,
-    const std::vector<Point<dim>>& v,
-    std::vector<Point<dim>>&       xfem_points,
-    std::vector<double>&           xfem_weights)
+    const Quadrature<dim> &         plain_quadrature,
+    const std::vector<Point<dim>> & v,
+    std::vector<Point<dim>> &       xfem_points,
+    std::vector<double> &           xfem_weights)
 
   {
     // Project integration points into sub-elements.  This maps quadrature
@@ -953,8 +954,8 @@ namespace Step47
   public:
     virtual void
     evaluate_vector_field(
-      const dealii::DataPostprocessorInputs::Vector<dim>& inputs,
-      std::vector<Vector<double>>& computed_quantities) const override;
+      const dealii::DataPostprocessorInputs::Vector<dim> & inputs,
+      std::vector<Vector<double>> & computed_quantities) const override;
 
     virtual std::vector<std::string>
     get_names() const override;
@@ -995,8 +996,8 @@ namespace Step47
   template <int dim>
   void
   Postprocessor<dim>::evaluate_vector_field(
-    const dealii::DataPostprocessorInputs::Vector<dim>& inputs,
-    std::vector<Vector<double>>& computed_quantities) const
+    const dealii::DataPostprocessorInputs::Vector<dim> & inputs,
+    std::vector<Vector<double>> & computed_quantities) const
   {
     const unsigned int n_quadrature_points = inputs.solution_values.size();
     Assert(computed_quantities.size() == n_quadrature_points,
@@ -1064,7 +1065,7 @@ namespace Step47
       {
         hp_fe_values.reinit(cell);
 
-        const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+        const FEValues<dim> & fe_values = hp_fe_values.get_present_fe_values();
 
         solution_values.resize(fe_values.n_quadrature_points,
                                Vector<double>(2));
@@ -1129,7 +1130,7 @@ main()
       LaplaceProblem<2> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

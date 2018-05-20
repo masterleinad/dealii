@@ -69,7 +69,7 @@ public:
    * about that. In particular do not take over ownership of any files that @p
    * v might own.
    */
-  SwappableVector(const SwappableVector& v);
+  SwappableVector(const SwappableVector & v);
 
   /**
    * Destructor. If this class still owns a file to which temporary data was
@@ -81,8 +81,8 @@ public:
    * Copy operator. Do mostly the same as the copy constructor does; if
    * necessary, delete temporary files owned by this object at first.
    */
-  SwappableVector&
-  operator=(const SwappableVector&);
+  SwappableVector &
+  operator=(const SwappableVector &);
 
   /**
    * Swap out the data of this vector to the file of which the name is given.
@@ -96,7 +96,7 @@ public:
    * kill_file has previously been called, then that is deleted first.
    */
   void
-  swap_out(const std::string& filename);
+  swap_out(const std::string & filename);
 
   /**
    * Reload the data of this vector from the file to which it has been stored
@@ -149,7 +149,7 @@ public:
    * you called @p swap_out. If @p swap_out was not called, or if in between
    * @p kill_file was called, then the filename is an empty string.
    */
-  const std::string&
+  const std::string &
   get_filename() const;
 
   /**

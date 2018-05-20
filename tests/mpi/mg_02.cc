@@ -96,7 +96,7 @@ test()
       {
         deallog << "level " << lvl << ":" << std::endl;
 
-        const std::vector<IndexSet>& vec
+        const std::vector<IndexSet> & vec
           = dofh.locally_owned_mg_dofs_per_processor(lvl);
 
         for(unsigned int i = 0; i < vec.size(); ++i)
@@ -106,7 +106,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

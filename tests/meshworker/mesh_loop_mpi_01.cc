@@ -60,7 +60,7 @@ test()
 
   typedef decltype(cell) Iterator;
 
-  auto cell_worker = [](const Iterator& cell, ScratchData& s, CopyData& c) {
+  auto cell_worker = [](const Iterator & cell, ScratchData & s, CopyData & c) {
     deallog << "Cell worker on : " << cell << " ghost? " << cell->is_ghost()
             << std::endl;
     ++c.n_cells;
@@ -70,20 +70,21 @@ test()
       ++c.n_own_cells;
   };
 
-  auto boundary_worker
-    = [](const Iterator& cell, const unsigned int& f, ScratchData&, CopyData&) {
-        deallog << "Boundary worker on : " << cell << ", Face : " << f
-                << std::endl;
-      };
+  auto boundary_worker = [](const Iterator &     cell,
+                            const unsigned int & f,
+                            ScratchData &,
+                            CopyData &) {
+    deallog << "Boundary worker on : " << cell << ", Face : " << f << std::endl;
+  };
 
-  auto face_worker = [](const Iterator&     cell,
-                        const unsigned int& f,
-                        const unsigned int& sf,
-                        const Iterator&     ncell,
-                        const unsigned int& nf,
-                        const unsigned int& nsf,
-                        ScratchData&        s,
-                        CopyData&           c) {
+  auto face_worker = [](const Iterator &     cell,
+                        const unsigned int & f,
+                        const unsigned int & sf,
+                        const Iterator &     ncell,
+                        const unsigned int & nf,
+                        const unsigned int & nsf,
+                        ScratchData &        s,
+                        CopyData &           c) {
     deallog << "Face worker on : " << cell << ", Neighbor cell : " << ncell
             << ", Face : " << f << ", Neighbor Face : " << nf
             << ", Subface: " << sf << ", Neighbor Subface: " << nsf
@@ -92,16 +93,16 @@ test()
   };
 
   CopyData data;
-  auto     copier = [&](const CopyData& c) {
+  auto     copier = [&](const CopyData & c) {
     data.n_cells += c.n_cells;
     data.n_own_cells += c.n_own_cells;
     data.n_ghost_cells += c.n_ghost_cells;
   };
 
-  std::function<void(const decltype(cell)&, ScratchData&, CopyData&)>
+  std::function<void(const decltype(cell) &, ScratchData &, CopyData &)>
     empty_cell_worker;
   std::function<void(
-    const decltype(cell)&, const unsigned int&, ScratchData&, CopyData&)>
+    const decltype(cell) &, const unsigned int &, ScratchData &, CopyData &)>
     empty_boundary_worker;
 
   auto print_summary = [&]() {
@@ -217,7 +218,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

@@ -73,9 +73,9 @@ namespace internal
       template <typename MFAddData>
       void
       initialize(
-        const dealii::Triangulation<dim>&                   triangulation,
-        const MFAddData&                                    additional_data,
-        std::vector<std::pair<unsigned int, unsigned int>>& cell_levels);
+        const dealii::Triangulation<dim> &                   triangulation,
+        const MFAddData &                                    additional_data,
+        std::vector<std::pair<unsigned int, unsigned int>> & cell_levels);
 
       /**
        * Upon completion of the dof indices, this function extracts the
@@ -85,9 +85,9 @@ namespace internal
        */
       void
       generate_faces(
-        const dealii::Triangulation<dim>&                         triangulation,
-        const std::vector<std::pair<unsigned int, unsigned int>>& cell_levels,
-        TaskInfo&                                                 task_info);
+        const dealii::Triangulation<dim> & triangulation,
+        const std::vector<std::pair<unsigned int, unsigned int>> & cell_levels,
+        TaskInfo &                                                 task_info);
 
       /**
        * Fills the information about the cell, the face number, and numbers
@@ -97,10 +97,10 @@ namespace internal
        */
       FaceToCellTopology<1>
       create_face(
-        const unsigned int                                        face_no,
-        const typename dealii::Triangulation<dim>::cell_iterator& cell,
+        const unsigned int                                         face_no,
+        const typename dealii::Triangulation<dim>::cell_iterator & cell,
         const unsigned int number_cell_interior,
-        const typename dealii::Triangulation<dim>::cell_iterator& neighbor,
+        const typename dealii::Triangulation<dim>::cell_iterator & neighbor,
         const unsigned int number_cell_exterior);
 
       bool use_active_cells;
@@ -133,10 +133,10 @@ namespace internal
     template <int vectorization_width>
     void
     collect_faces_vectorization(
-      const std::vector<FaceToCellTopology<1>>& faces_in,
-      const std::vector<bool>&                  hard_vectorization_boundary,
-      std::vector<unsigned int>&                face_partition_data,
-      std::vector<FaceToCellTopology<vectorization_width>>& faces_out);
+      const std::vector<FaceToCellTopology<1>> & faces_in,
+      const std::vector<bool> &                  hard_vectorization_boundary,
+      std::vector<unsigned int> &                face_partition_data,
+      std::vector<FaceToCellTopology<vectorization_width>> & faces_out);
 
     /* -------------------------------------------------------------------- */
 
@@ -150,9 +150,9 @@ namespace internal
     template <typename MFAddData>
     void
     FaceSetup<dim>::initialize(
-      const dealii::Triangulation<dim>&                   triangulation,
-      const MFAddData&                                    additional_data,
-      std::vector<std::pair<unsigned int, unsigned int>>& cell_levels)
+      const dealii::Triangulation<dim> &                   triangulation,
+      const MFAddData &                                    additional_data,
+      std::vector<std::pair<unsigned int, unsigned int>> & cell_levels)
     {
       use_active_cells
         = additional_data.level_mg_handler == numbers::invalid_unsigned_int;
@@ -181,7 +181,7 @@ namespace internal
       // boundaries as evenly as possible between the processors
       std::map<types::subdomain_id, FaceIdentifier>
         inner_faces_at_proc_boundary;
-      if(dynamic_cast<const parallel::Triangulation<dim>*>(&triangulation))
+      if(dynamic_cast<const parallel::Triangulation<dim> *>(&triangulation))
         {
           const types::subdomain_id my_domain
             = triangulation.locally_owned_subdomain();
@@ -277,8 +277,8 @@ namespace internal
               // looking at the length of the lists of faces
 #  if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
               MPI_Comm comm = MPI_COMM_SELF;
-              if(const parallel::Triangulation<dim>* ptria
-                 = dynamic_cast<const parallel::Triangulation<dim>*>(
+              if(const parallel::Triangulation<dim> * ptria
+                 = dynamic_cast<const parallel::Triangulation<dim> *>(
                    &triangulation))
                 comm = ptria->get_communicator();
 
@@ -706,9 +706,9 @@ namespace internal
     template <int dim>
     void
     FaceSetup<dim>::generate_faces(
-      const dealii::Triangulation<dim>&                         triangulation,
-      const std::vector<std::pair<unsigned int, unsigned int>>& cell_levels,
-      TaskInfo&                                                 task_info)
+      const dealii::Triangulation<dim> &                         triangulation,
+      const std::vector<std::pair<unsigned int, unsigned int>> & cell_levels,
+      TaskInfo &                                                 task_info)
     {
       // step 1: create the inverse map between cell iterators and the
       // cell_level_index field
@@ -922,10 +922,10 @@ namespace internal
     template <int dim>
     FaceToCellTopology<1>
     FaceSetup<dim>::create_face(
-      const unsigned int                                        face_no,
-      const typename dealii::Triangulation<dim>::cell_iterator& cell,
+      const unsigned int                                         face_no,
+      const typename dealii::Triangulation<dim>::cell_iterator & cell,
       const unsigned int number_cell_interior,
-      const typename dealii::Triangulation<dim>::cell_iterator& neighbor,
+      const typename dealii::Triangulation<dim>::cell_iterator & neighbor,
       const unsigned int number_cell_exterior)
     {
       FaceToCellTopology<1> info;
@@ -977,8 +977,8 @@ namespace internal
      * to batch similar faces together for vectorization.
      */
     bool
-    compare_faces_for_vectorization(const FaceToCellTopology<1>& face1,
-                                    const FaceToCellTopology<1>& face2)
+    compare_faces_for_vectorization(const FaceToCellTopology<1> & face1,
+                                    const FaceToCellTopology<1> & face2)
     {
       if(face1.interior_face_no != face2.interior_face_no)
         return false;
@@ -1001,8 +1001,8 @@ namespace internal
     struct FaceComparator
     {
       bool
-      operator()(const FaceToCellTopology<length>& face1,
-                 const FaceToCellTopology<length>& face2) const
+      operator()(const FaceToCellTopology<length> & face1,
+                 const FaceToCellTopology<length> & face2) const
       {
         for(unsigned int i = 0; i < length; ++i)
           if(face1.cells_interior[i] < face2.cells_interior[i])
@@ -1036,10 +1036,10 @@ namespace internal
     template <int vectorization_width>
     void
     collect_faces_vectorization(
-      const std::vector<FaceToCellTopology<1>>& faces_in,
-      const std::vector<bool>&                  hard_vectorization_boundary,
-      std::vector<unsigned int>&                face_partition_data,
-      std::vector<FaceToCellTopology<vectorization_width>>& faces_out)
+      const std::vector<FaceToCellTopology<1>> & faces_in,
+      const std::vector<bool> &                  hard_vectorization_boundary,
+      std::vector<unsigned int> &                face_partition_data,
+      std::vector<FaceToCellTopology<vectorization_width>> & faces_out)
     {
       FaceToCellTopology<vectorization_width> macro_face;
       std::vector<std::vector<unsigned int>>  faces_type;

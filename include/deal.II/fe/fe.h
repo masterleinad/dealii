@@ -674,7 +674,7 @@ public:
     /**
      * Copy construction is forbidden.
      */
-    InternalDataBase(const InternalDataBase&) = delete;
+    InternalDataBase(const InternalDataBase &) = delete;
 
   public:
     /**
@@ -754,19 +754,19 @@ public:
    * where each element equals the component mask provided in the single
    * element given.
    */
-  FiniteElement(const FiniteElementData<dim>&     fe_data,
-                const std::vector<bool>&          restriction_is_additive_flags,
-                const std::vector<ComponentMask>& nonzero_components);
+  FiniteElement(const FiniteElementData<dim> & fe_data,
+                const std::vector<bool> &      restriction_is_additive_flags,
+                const std::vector<ComponentMask> & nonzero_components);
 
   /**
    * Move constructor.
    */
-  FiniteElement(FiniteElement<dim, spacedim>&&) = default; // NOLINT
+  FiniteElement(FiniteElement<dim, spacedim> &&) = default; // NOLINT
 
   /**
    * Copy constructor.
    */
-  FiniteElement(const FiniteElement<dim, spacedim>&) = default;
+  FiniteElement(const FiniteElement<dim, spacedim> &) = default;
 
   /**
    * Virtual destructor. Makes sure that pointers to this class are deleted
@@ -833,7 +833,7 @@ public:
    * with index zero within its collection (that, of course, consists only of
    * the present finite element anyway).
    */
-  const FiniteElement<dim, spacedim>&
+  const FiniteElement<dim, spacedim> &
   operator[](const unsigned int fe_index) const;
 
   /**
@@ -862,7 +862,7 @@ public:
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
   virtual double
-  shape_value(const unsigned int i, const Point<dim>& p) const;
+  shape_value(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Just like for shape_value(), but this function will be called when the
@@ -872,7 +872,7 @@ public:
    */
   virtual double
   shape_value_component(const unsigned int i,
-                        const Point<dim>&  p,
+                        const Point<dim> & p,
                         const unsigned int component) const;
 
   /**
@@ -897,7 +897,7 @@ public:
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
   virtual Tensor<1, dim>
-  shape_grad(const unsigned int i, const Point<dim>& p) const;
+  shape_grad(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Just like for shape_grad(), but this function will be called when the
@@ -907,7 +907,7 @@ public:
    */
   virtual Tensor<1, dim>
   shape_grad_component(const unsigned int i,
-                       const Point<dim>&  p,
+                       const Point<dim> & p,
                        const unsigned int component) const;
 
   /**
@@ -932,7 +932,7 @@ public:
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
   virtual Tensor<2, dim>
-  shape_grad_grad(const unsigned int i, const Point<dim>& p) const;
+  shape_grad_grad(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Just like for shape_grad_grad(), but this function will be called when
@@ -942,7 +942,7 @@ public:
    */
   virtual Tensor<2, dim>
   shape_grad_grad_component(const unsigned int i,
-                            const Point<dim>&  p,
+                            const Point<dim> & p,
                             const unsigned int component) const;
 
   /**
@@ -967,7 +967,7 @@ public:
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
   virtual Tensor<3, dim>
-  shape_3rd_derivative(const unsigned int i, const Point<dim>& p) const;
+  shape_3rd_derivative(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Just like for shape_3rd_derivative(), but this function will be called
@@ -977,7 +977,7 @@ public:
    */
   virtual Tensor<3, dim>
   shape_3rd_derivative_component(const unsigned int i,
-                                 const Point<dim>&  p,
+                                 const Point<dim> & p,
                                  const unsigned int component) const;
 
   /**
@@ -1002,7 +1002,7 @@ public:
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
   virtual Tensor<4, dim>
-  shape_4th_derivative(const unsigned int i, const Point<dim>& p) const;
+  shape_4th_derivative(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Just like for shape_4th_derivative(), but this function will be called
@@ -1012,7 +1012,7 @@ public:
    */
   virtual Tensor<4, dim>
   shape_4th_derivative_component(const unsigned int i,
-                                 const Point<dim>&  p,
+                                 const Point<dim> & p,
                                  const unsigned int component) const;
   /**
    * This function returns @p true, if the shape function @p shape_index has
@@ -1049,9 +1049,9 @@ public:
    * by first calling the restriction_is_implemented() or the
    * isotropic_restriction_is_implemented() function.
    */
-  virtual const FullMatrix<double>&
-  get_restriction_matrix(const unsigned int         child,
-                         const RefinementCase<dim>& refinement_case
+  virtual const FullMatrix<double> &
+  get_restriction_matrix(const unsigned int          child,
+                         const RefinementCase<dim> & refinement_case
                          = RefinementCase<dim>::isotropic_refinement) const;
 
   /**
@@ -1083,9 +1083,9 @@ public:
    * by first calling the prolongation_is_implemented() or the
    * isotropic_prolongation_is_implemented() function.
    */
-  virtual const FullMatrix<double>&
-  get_prolongation_matrix(const unsigned int         child,
-                          const RefinementCase<dim>& refinement_case
+  virtual const FullMatrix<double> &
+  get_prolongation_matrix(const unsigned int          child,
+                          const RefinementCase<dim> & refinement_case
                           = RefinementCase<dim>::isotropic_refinement) const;
 
   /**
@@ -1194,8 +1194,8 @@ public:
    * function to check up front whether this function will succeed or generate
    * the exception.
    */
-  const FullMatrix<double>&
-  constraints(const dealii::internal::SubfaceCase<dim>& subface_case
+  const FullMatrix<double> &
+  constraints(const dealii::internal::SubfaceCase<dim> & subface_case
               = dealii::internal::SubfaceCase<dim>::case_isotropic) const;
 
   /**
@@ -1215,7 +1215,7 @@ public:
    */
   bool
   constraints_are_implemented(
-    const dealii::internal::SubfaceCase<dim>& subface_case
+    const dealii::internal::SubfaceCase<dim> & subface_case
     = dealii::internal::SubfaceCase<dim>::case_isotropic) const;
 
   /**
@@ -1254,8 +1254,8 @@ public:
    * ExcInterpolationNotImplemented.
    */
   virtual void
-  get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                           FullMatrix<double>&                 matrix) const;
+  get_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                           FullMatrix<double> &                 matrix) const;
   //@}
 
   /**
@@ -1275,8 +1275,8 @@ public:
    * ExcInterpolationNotImplemented.
    */
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                FullMatrix<double>& matrix) const;
+  get_face_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                                FullMatrix<double> & matrix) const;
 
   /**
    * Return the matrix interpolating from a face of one element to the
@@ -1290,9 +1290,9 @@ public:
    * ExcInterpolationNotImplemented.
    */
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
-                                   FullMatrix<double>& matrix) const;
+  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                                   const unsigned int                   subface,
+                                   FullMatrix<double> & matrix) const;
   //@}
 
   /**
@@ -1316,21 +1316,21 @@ public:
    * corresponding index of the other finite element.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_vertex_dof_identities(const FiniteElement<dim, spacedim>& fe_other) const;
+  hp_vertex_dof_identities(const FiniteElement<dim, spacedim> & fe_other) const;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
    * of freedom on lines.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_line_dof_identities(const FiniteElement<dim, spacedim>& fe_other) const;
+  hp_line_dof_identities(const FiniteElement<dim, spacedim> & fe_other) const;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
    * of freedom on quads.
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
-  hp_quad_dof_identities(const FiniteElement<dim, spacedim>& fe_other) const;
+  hp_quad_dof_identities(const FiniteElement<dim, spacedim> & fe_other) const;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -1343,7 +1343,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim, spacedim>& fe_other) const;
+    const FiniteElement<dim, spacedim> & fe_other) const;
 
   //@}
 
@@ -1378,13 +1378,13 @@ public:
    *  anyway.
    */
   virtual bool
-  operator==(const FiniteElement<dim, spacedim>& fe) const;
+  operator==(const FiniteElement<dim, spacedim> & fe) const;
 
   /**
    * Non-equality comparison operator. Defined in terms of the equality comparison operator.
    */
   bool
-  operator!=(const FiniteElement<dim, spacedim>&) const;
+  operator!=(const FiniteElement<dim, spacedim> &) const;
 
   /**
    * @name Index computations
@@ -1550,7 +1550,7 @@ public:
    * entry.  Elements for which this is true are called non-primitive (see
    * @ref GlossPrimitive).
    */
-  const ComponentMask&
+  const ComponentMask &
   get_nonzero_components(const unsigned int i) const;
 
   /**
@@ -1608,7 +1608,7 @@ public:
    * Access to base element objects. If the element is atomic, then
    * <code>base_element(0)</code> is @p this.
    */
-  virtual const FiniteElement<dim, spacedim>&
+  virtual const FiniteElement<dim, spacedim> &
   base_element(const unsigned int index) const;
 
   /**
@@ -1691,8 +1691,8 @@ public:
    * </tr>
    * </table>
    */
-  const FiniteElement<dim, spacedim>&
-  get_sub_fe(const ComponentMask& mask) const;
+  const FiniteElement<dim, spacedim> &
+  get_sub_fe(const ComponentMask & mask) const;
 
   /**
    * Return a reference to a contained finite element that matches the components
@@ -1701,7 +1701,7 @@ public:
    *
    * See the other get_sub_fe() function above for more details.
    */
-  virtual const FiniteElement<dim, spacedim>&
+  virtual const FiniteElement<dim, spacedim> &
   get_sub_fe(const unsigned int first_component,
              const unsigned int n_selected_components) const;
 
@@ -1801,7 +1801,7 @@ public:
    * one that corresponds to the argument.
    */
   ComponentMask
-  component_mask(const FEValuesExtractors::Scalar& scalar) const;
+  component_mask(const FEValuesExtractors::Scalar & scalar) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1816,7 +1816,7 @@ public:
    * ones that corresponds to the argument.
    */
   ComponentMask
-  component_mask(const FEValuesExtractors::Vector& vector) const;
+  component_mask(const FEValuesExtractors::Vector & vector) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1833,7 +1833,7 @@ public:
    */
   ComponentMask
   component_mask(
-    const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const;
+    const FEValuesExtractors::SymmetricTensor<2> & sym_tensor) const;
 
   /**
    * Given a block mask (see
@@ -1850,7 +1850,7 @@ public:
    * selected blocks of the input argument.
    */
   ComponentMask
-  component_mask(const BlockMask& block_mask) const;
+  component_mask(const BlockMask & block_mask) const;
 
   /**
    * Return a block mask with as many elements as this object has blocks and
@@ -1873,7 +1873,7 @@ public:
    * one that corresponds to the argument.
    */
   BlockMask
-  block_mask(const FEValuesExtractors::Scalar& scalar) const;
+  block_mask(const FEValuesExtractors::Scalar & scalar) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1892,7 +1892,7 @@ public:
    * ones that corresponds to the argument.
    */
   BlockMask
-  block_mask(const FEValuesExtractors::Vector& vector) const;
+  block_mask(const FEValuesExtractors::Vector & vector) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1912,7 +1912,7 @@ public:
    * ones that corresponds to the argument.
    */
   BlockMask
-  block_mask(const FEValuesExtractors::SymmetricTensor<2>& sym_tensor) const;
+  block_mask(const FEValuesExtractors::SymmetricTensor<2> & sym_tensor) const;
 
   /**
    * Given a component mask (see
@@ -1937,7 +1937,7 @@ public:
    * blocks of the input argument.
    */
   BlockMask
-  block_mask(const ComponentMask& component_mask) const;
+  block_mask(const ComponentMask & component_mask) const;
 
   /**
    * Return a list of constant modes of the element. The number of rows in
@@ -1994,7 +1994,7 @@ public:
    * <code>FESystem(FE_Q(1),3)</code> for which each support point would
    * appear three times in the returned array.
    */
-  const std::vector<Point<dim>>&
+  const std::vector<Point<dim>> &
   get_unit_support_points() const;
 
   /**
@@ -2058,7 +2058,7 @@ public:
    *
    * See the class documentation for details on support points.
    */
-  const std::vector<Point<dim - 1>>&
+  const std::vector<Point<dim - 1>> &
   get_unit_face_support_points() const;
 
   /**
@@ -2091,7 +2091,7 @@ public:
    * @ref GlossGeneralizedSupport "glossary entry on generalized support points"
    * for more information.
    */
-  const std::vector<Point<dim>>&
+  const std::vector<Point<dim>> &
   get_generalized_support_points() const;
 
   /**
@@ -2115,7 +2115,7 @@ public:
    * a given face. Don't use this function
    */
   DEAL_II_DEPRECATED
-  const std::vector<Point<dim - 1>>&
+  const std::vector<Point<dim - 1>> &
   get_generalized_face_support_points() const;
 
   /**
@@ -2259,8 +2259,8 @@ public:
    */
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const;
+    const std::vector<Vector<double>> & support_point_values,
+    std::vector<double> &               nodal_values) const;
 
   //@}
 
@@ -2610,7 +2610,7 @@ protected:
    */
   static std::vector<unsigned int>
   compute_n_nonzero_components(
-    const std::vector<ComponentMask>& nonzero_components);
+    const std::vector<ComponentMask> & nonzero_components);
 
   /**
    * Given a set of update flags, compute which other quantities <i>also</i>
@@ -2712,11 +2712,11 @@ protected:
    * it is no longer necessary.
    */
   virtual std::unique_ptr<InternalDataBase>
-  get_data(const UpdateFlags             update_flags,
-           const Mapping<dim, spacedim>& mapping,
-           const Quadrature<dim>&        quadrature,
+  get_data(const UpdateFlags              update_flags,
+           const Mapping<dim, spacedim> & mapping,
+           const Quadrature<dim> &        quadrature,
            dealii::internal::FEValuesImplementation::
-             FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+             FiniteElementRelatedData<dim, spacedim> & output_data) const = 0;
 
   /**
    * Like get_data(), but return an object that will later be used for
@@ -2760,11 +2760,11 @@ protected:
    * it is no longer necessary.
    */
   virtual std::unique_ptr<InternalDataBase>
-  get_face_data(const UpdateFlags             update_flags,
-                const Mapping<dim, spacedim>& mapping,
-                const Quadrature<dim - 1>&    quadrature,
+  get_face_data(const UpdateFlags              update_flags,
+                const Mapping<dim, spacedim> & mapping,
+                const Quadrature<dim - 1> &    quadrature,
                 dealii::internal::FEValuesImplementation::
-                  FiniteElementRelatedData<dim, spacedim>& output_data) const;
+                  FiniteElementRelatedData<dim, spacedim> & output_data) const;
 
   /**
    * Like get_data(), but return an object that will later be used for
@@ -2809,11 +2809,11 @@ protected:
    */
   virtual std::unique_ptr<InternalDataBase>
   get_subface_data(
-    const UpdateFlags             update_flags,
-    const Mapping<dim, spacedim>& mapping,
-    const Quadrature<dim - 1>&    quadrature,
+    const UpdateFlags              update_flags,
+    const Mapping<dim, spacedim> & mapping,
+    const Quadrature<dim - 1> &    quadrature,
     dealii::internal::FEValuesImplementation::
-      FiniteElementRelatedData<dim, spacedim>& output_data) const;
+      FiniteElementRelatedData<dim, spacedim> & output_data) const;
 
   /**
    * Compute information about the shape functions on the cell denoted by the
@@ -2897,16 +2897,16 @@ protected:
    */
   virtual void
   fill_fe_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
-    const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const CellSimilarity::Similarity                          cell_similarity,
+    const Quadrature<dim> &                                   quadrature,
+    const Mapping<dim, spacedim> &                            mapping,
+    const typename Mapping<dim, spacedim>::InternalDataBase & mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>& mapping_data,
-    const InternalDataBase&              fe_internal,
+      MappingRelatedData<dim, spacedim> & mapping_data,
+    const InternalDataBase &              fe_internal,
     dealii::internal::FEValuesImplementation::
-      FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+      FiniteElementRelatedData<dim, spacedim> & output_data) const = 0;
 
   /**
    * This function is the equivalent to FiniteElement::fill_fe_values(), but
@@ -2952,16 +2952,16 @@ protected:
    */
   virtual void
   fill_fe_face_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
-    const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const unsigned int                                           face_no,
+    const Quadrature<dim - 1> &                                  quadrature,
+    const Mapping<dim, spacedim> &                               mapping,
+    const typename Mapping<dim, spacedim>::InternalDataBase & mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>& mapping_data,
-    const InternalDataBase&              fe_internal,
+      MappingRelatedData<dim, spacedim> & mapping_data,
+    const InternalDataBase &              fe_internal,
     dealii::internal::FEValuesImplementation::
-      FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+      FiniteElementRelatedData<dim, spacedim> & output_data) const = 0;
 
   /**
    * This function is the equivalent to FiniteElement::fill_fe_values(), but
@@ -3010,17 +3010,17 @@ protected:
    */
   virtual void
   fill_fe_subface_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          sub_no,
-    const Quadrature<dim - 1>&                                  quadrature,
-    const Mapping<dim, spacedim>&                               mapping,
-    const typename Mapping<dim, spacedim>::InternalDataBase& mapping_internal,
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const unsigned int                                           face_no,
+    const unsigned int                                           sub_no,
+    const Quadrature<dim - 1> &                                  quadrature,
+    const Mapping<dim, spacedim> &                               mapping,
+    const typename Mapping<dim, spacedim>::InternalDataBase & mapping_internal,
     const dealii::internal::FEValuesImplementation::
-      MappingRelatedData<dim, spacedim>& mapping_data,
-    const InternalDataBase&              fe_internal,
+      MappingRelatedData<dim, spacedim> & mapping_data,
+    const InternalDataBase &              fe_internal,
     dealii::internal::FEValuesImplementation::
-      FiniteElementRelatedData<dim, spacedim>& output_data) const = 0;
+      FiniteElementRelatedData<dim, spacedim> & output_data) const = 0;
 
   friend class InternalDataBase;
   friend class FEValuesBase<dim, spacedim>;
@@ -3041,8 +3041,8 @@ protected:
 //----------------------------------------------------------------------//
 
 template <int dim, int spacedim>
-inline const FiniteElement<dim, spacedim>& FiniteElement<dim, spacedim>::
-                                           operator[](const unsigned int fe_index) const
+inline const FiniteElement<dim, spacedim> & FiniteElement<dim, spacedim>::
+                                            operator[](const unsigned int fe_index) const
 {
   (void) fe_index;
   Assert(fe_index == 0,
@@ -3205,7 +3205,7 @@ FiniteElement<dim, spacedim>::restriction_is_additive(
 }
 
 template <int dim, int spacedim>
-inline const ComponentMask&
+inline const ComponentMask &
 FiniteElement<dim, spacedim>::get_nonzero_components(const unsigned int i) const
 {
   Assert(i < this->dofs_per_cell, ExcIndexRange(i, 0, this->dofs_per_cell));

@@ -46,9 +46,9 @@ class RHS : public Function<dim>
 {
 public:
   virtual void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+  value_list(const std::vector<Point<dim>> & points,
+             std::vector<double> &           values,
+             const unsigned int              component = 0) const;
 };
 
 template <int dim>
@@ -56,9 +56,9 @@ class BoundaryValues : public Function<dim>
 {
 public:
   virtual void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+  value_list(const std::vector<Point<dim>> & points,
+             std::vector<double> &           values,
+             const unsigned int              component = 0) const;
 };
 
 template <int dim>
@@ -68,14 +68,14 @@ public:
   Beta()
   {}
   void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<Point<dim>>&       values) const;
+  value_list(const std::vector<Point<dim>> & points,
+             std::vector<Point<dim>> &       values) const;
 };
 
 template <int dim>
 void
-RHS<dim>::value_list(const std::vector<Point<dim>>& points,
-                     std::vector<double>&           values,
+RHS<dim>::value_list(const std::vector<Point<dim>> & points,
+                     std::vector<double> &           values,
                      const unsigned int) const
 {
   Assert(values.size() == points.size(),
@@ -87,16 +87,16 @@ RHS<dim>::value_list(const std::vector<Point<dim>>& points,
 
 template <int dim>
 void
-Beta<dim>::value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Point<dim>>&       values) const
+Beta<dim>::value_list(const std::vector<Point<dim>> & points,
+                      std::vector<Point<dim>> &       values) const
 {
   Assert(values.size() == points.size(),
          ExcDimensionMismatch(values.size(), points.size()));
 
   for(unsigned int i = 0; i < points.size(); ++i)
     {
-      const Point<dim>& p    = points[i];
-      Point<dim>&       beta = values[i];
+      const Point<dim> & p    = points[i];
+      Point<dim> &       beta = values[i];
 
       beta(0) = -p(1);
       beta(1) = p(0);
@@ -106,8 +106,8 @@ Beta<dim>::value_list(const std::vector<Point<dim>>& points,
 
 template <int dim>
 void
-BoundaryValues<dim>::value_list(const std::vector<Point<dim>>& points,
-                                std::vector<double>&           values,
+BoundaryValues<dim>::value_list(const std::vector<Point<dim>> & points,
+                                std::vector<double> &           values,
                                 const unsigned int) const
 {
   Assert(values.size() == points.size(),
@@ -129,28 +129,28 @@ public:
   DGTransportEquation();
 
   void
-  assemble_cell_term(const FEValues<dim>& fe_v,
-                     FullMatrix<double>&  ui_vi_matrix,
-                     Vector<double>&      cell_vector) const;
+  assemble_cell_term(const FEValues<dim> & fe_v,
+                     FullMatrix<double> &  ui_vi_matrix,
+                     Vector<double> &      cell_vector) const;
 
   void
-  assemble_boundary_term(const FEFaceValues<dim>& fe_v,
-                         FullMatrix<double>&      ui_vi_matrix,
-                         Vector<double>&          cell_vector) const;
+  assemble_boundary_term(const FEFaceValues<dim> & fe_v,
+                         FullMatrix<double> &      ui_vi_matrix,
+                         Vector<double> &          cell_vector) const;
 
   void
-  assemble_face_term1(const FEFaceValuesBase<dim>& fe_v,
-                      const FEFaceValuesBase<dim>& fe_v_neighbor,
-                      FullMatrix<double>&          ui_vi_matrix,
-                      FullMatrix<double>&          ue_vi_matrix) const;
+  assemble_face_term1(const FEFaceValuesBase<dim> & fe_v,
+                      const FEFaceValuesBase<dim> & fe_v_neighbor,
+                      FullMatrix<double> &          ui_vi_matrix,
+                      FullMatrix<double> &          ue_vi_matrix) const;
 
   void
-  assemble_face_term2(const FEFaceValuesBase<dim>& fe_v,
-                      const FEFaceValuesBase<dim>& fe_v_neighbor,
-                      FullMatrix<double>&          ui_vi_matrix,
-                      FullMatrix<double>&          ue_vi_matrix,
-                      FullMatrix<double>&          ui_ve_matrix,
-                      FullMatrix<double>&          ue_ve_matrix) const;
+  assemble_face_term2(const FEFaceValuesBase<dim> & fe_v,
+                      const FEFaceValuesBase<dim> & fe_v_neighbor,
+                      FullMatrix<double> &          ui_vi_matrix,
+                      FullMatrix<double> &          ue_vi_matrix,
+                      FullMatrix<double> &          ui_ve_matrix,
+                      FullMatrix<double> &          ue_ve_matrix) const;
 
 private:
   const Beta<dim>           beta_function;
@@ -165,11 +165,11 @@ DGTransportEquation<dim>::DGTransportEquation()
 
 template <int dim>
 void
-DGTransportEquation<dim>::assemble_cell_term(const FEValues<dim>& fe_v,
-                                             FullMatrix<double>&  ui_vi_matrix,
-                                             Vector<double>& cell_vector) const
+DGTransportEquation<dim>::assemble_cell_term(const FEValues<dim> & fe_v,
+                                             FullMatrix<double> &  ui_vi_matrix,
+                                             Vector<double> & cell_vector) const
 {
-  const std::vector<double>& JxW = fe_v.get_JxW_values();
+  const std::vector<double> & JxW = fe_v.get_JxW_values();
 
   std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
   std::vector<double>     rhs(fe_v.n_quadrature_points);
@@ -191,12 +191,12 @@ DGTransportEquation<dim>::assemble_cell_term(const FEValues<dim>& fe_v,
 template <int dim>
 void
 DGTransportEquation<dim>::assemble_boundary_term(
-  const FEFaceValues<dim>& fe_v,
-  FullMatrix<double>&      ui_vi_matrix,
-  Vector<double>&          cell_vector) const
+  const FEFaceValues<dim> & fe_v,
+  FullMatrix<double> &      ui_vi_matrix,
+  Vector<double> &          cell_vector) const
 {
-  const std::vector<double>&         JxW     = fe_v.get_JxW_values();
-  const std::vector<Tensor<1, dim>>& normals = fe_v.get_all_normal_vectors();
+  const std::vector<double> &         JxW     = fe_v.get_JxW_values();
+  const std::vector<Tensor<1, dim>> & normals = fe_v.get_all_normal_vectors();
 
   std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
   std::vector<double>     g(fe_v.n_quadrature_points);
@@ -222,13 +222,13 @@ DGTransportEquation<dim>::assemble_boundary_term(
 template <int dim>
 void
 DGTransportEquation<dim>::assemble_face_term1(
-  const FEFaceValuesBase<dim>& fe_v,
-  const FEFaceValuesBase<dim>& fe_v_neighbor,
-  FullMatrix<double>&          ui_vi_matrix,
-  FullMatrix<double>&          ue_vi_matrix) const
+  const FEFaceValuesBase<dim> & fe_v,
+  const FEFaceValuesBase<dim> & fe_v_neighbor,
+  FullMatrix<double> &          ui_vi_matrix,
+  FullMatrix<double> &          ue_vi_matrix) const
 {
-  const std::vector<double>&         JxW     = fe_v.get_JxW_values();
-  const std::vector<Tensor<1, dim>>& normals = fe_v.get_all_normal_vectors();
+  const std::vector<double> &         JxW     = fe_v.get_JxW_values();
+  const std::vector<Tensor<1, dim>> & normals = fe_v.get_all_normal_vectors();
 
   std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
   beta_function.value_list(fe_v.get_quadrature_points(), beta);
@@ -252,15 +252,15 @@ DGTransportEquation<dim>::assemble_face_term1(
 template <int dim>
 void
 DGTransportEquation<dim>::assemble_face_term2(
-  const FEFaceValuesBase<dim>& fe_v,
-  const FEFaceValuesBase<dim>& fe_v_neighbor,
-  FullMatrix<double>&          ui_vi_matrix,
-  FullMatrix<double>&          ue_vi_matrix,
-  FullMatrix<double>&          ui_ve_matrix,
-  FullMatrix<double>&          ue_ve_matrix) const
+  const FEFaceValuesBase<dim> & fe_v,
+  const FEFaceValuesBase<dim> & fe_v_neighbor,
+  FullMatrix<double> &          ui_vi_matrix,
+  FullMatrix<double> &          ue_vi_matrix,
+  FullMatrix<double> &          ui_ve_matrix,
+  FullMatrix<double> &          ue_ve_matrix) const
 {
-  const std::vector<double>&         JxW     = fe_v.get_JxW_values();
-  const std::vector<Tensor<1, dim>>& normals = fe_v.get_all_normal_vectors();
+  const std::vector<double> &         JxW     = fe_v.get_JxW_values();
+  const std::vector<Tensor<1, dim>> & normals = fe_v.get_all_normal_vectors();
 
   std::vector<Point<dim>> beta(fe_v.n_quadrature_points);
 
@@ -316,7 +316,7 @@ private:
   void
   assemble_system2();
   void
-  solve(Vector<double>& solution);
+  solve(Vector<double> & solution);
   void
   refine_grid();
   void
@@ -707,7 +707,7 @@ DGMethod<dim>::assemble_system2()
 
 template <int dim>
 void
-DGMethod<dim>::solve(Vector<double>& solution)
+DGMethod<dim>::solve(Vector<double> & solution)
 {
   SolverControl      solver_control(1000, 1e-12, false, false);
   SolverRichardson<> solver(solver_control);
@@ -833,7 +833,7 @@ main()
       DGMethod<2> dgmethod;
       dgmethod.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

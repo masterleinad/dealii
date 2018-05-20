@@ -39,7 +39,7 @@ using namespace std;
 
 template <int dim>
 void
-setup_tria(parallel::distributed::Triangulation<dim>& triangulation)
+setup_tria(parallel::distributed::Triangulation<dim> & triangulation)
 {
   unsigned int n_subdiv = 1;
   GridGenerator::subdivided_hyper_cube(triangulation, n_subdiv, 0, 1);
@@ -73,9 +73,9 @@ setup_tria(parallel::distributed::Triangulation<dim>& triangulation)
 
 template <typename DoFHandlerType>
 void
-extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
-                                  const unsigned int    level,
-                                  IndexSet&             dof_set)
+extract_locally_active_level_dofs(const DoFHandlerType & dof_handler,
+                                  const unsigned int     level,
+                                  IndexSet &             dof_set)
 {
   dof_set = IndexSet(dof_handler.n_dofs(level));
 
@@ -115,7 +115,7 @@ extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
 
 template <int dim>
 void
-check_fe(FiniteElement<dim>& fe)
+check_fe(FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -156,7 +156,7 @@ check_fe(FiniteElement<dim>& fe)
         if(!cell->is_locally_owned_on_level())
           continue;
 
-        std::vector<types::global_dof_index>& d
+        std::vector<types::global_dof_index> & d
           = mgdofmap[cell->id().to_string()];
         d.resize(fe.dofs_per_cell);
         cell->get_mg_dof_indices(d);
@@ -169,7 +169,7 @@ check_fe(FiniteElement<dim>& fe)
         if(cell->level_subdomain_id() == numbers::artificial_subdomain_id)
           continue;
 
-        std::vector<types::global_dof_index>& renumbered
+        std::vector<types::global_dof_index> & renumbered
           = mgdofmap[cell->id().to_string()];
         cell->set_mg_dof_indices(renumbered);
         cell->update_cell_dof_indices_cache();
@@ -244,7 +244,7 @@ check()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log(true);

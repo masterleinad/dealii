@@ -145,22 +145,22 @@ public:
   {}
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const;
+  vector_value(const Point<dim> & p, Vector<double> & values) const;
   virtual double
-  value(const Point<dim>& p, unsigned int compoment) const;
+  value(const Point<dim> & p, unsigned int compoment) const;
 };
 
 template <int dim>
 inline void
-BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                  Vector<double>&   values) const
+BoundaryValues<dim>::vector_value(const Point<dim> & p,
+                                  Vector<double> &   values) const
 {
   values(0) = -0.001;
 }
 
 template <int dim>
 inline double
-BoundaryValues<dim>::value(const Point<dim>& p, unsigned int compoment) const
+BoundaryValues<dim>::value(const Point<dim> & p, unsigned int compoment) const
 {
   return -0.001;
 }
@@ -174,12 +174,12 @@ class ConstrainValues : public Function<dim>
 public:
   ConstrainValues(); //need to pass down to the base class of how many components the function consists; default - 1
   virtual void
-  vector_value(const Point<dim>& p,
-               Vector<double>&   values)
+  vector_value(const Point<dim> & p,
+               Vector<double> &   values)
     const; //returns calculated values in the second argument;
   virtual void
-  vector_value_list(const std::vector<Point<dim>>& points,
-                    std::vector<Vector<double>>&   value_list)
+  vector_value_list(const std::vector<Point<dim>> & points,
+                    std::vector<Vector<double>> &   value_list)
     const; //values at several points at once
   //prevent from calling virtual function "vector_value" to frequently
 };
@@ -192,8 +192,8 @@ ConstrainValues<dim>::ConstrainValues()
 
 template <int dim>
 inline void
-ConstrainValues<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+ConstrainValues<dim>::vector_value(const Point<dim> & p,
+                                   Vector<double> &   values) const
 {
   Assert(values.size() == dim,
          ExcDimensionMismatch(values.size(),
@@ -205,8 +205,8 @@ ConstrainValues<dim>::vector_value(const Point<dim>& p,
 template <int dim>
 void
 ConstrainValues<dim>::vector_value_list(
-  const std::vector<Point<dim>>& points,
-  std::vector<Vector<double>>&   value_list) const
+  const std::vector<Point<dim>> & points,
+  std::vector<Vector<double>> &   value_list) const
 {
   Assert(
     value_list.size() == points.size(),

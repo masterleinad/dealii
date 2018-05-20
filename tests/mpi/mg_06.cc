@@ -44,7 +44,7 @@ Additional Information:
 
 template <int dim>
 void
-output(parallel::distributed::Triangulation<dim>& tr)
+output(parallel::distributed::Triangulation<dim> & tr)
 {
   const std::string filename
     = ("mg_06/mesh." + Utilities::int_to_string(tr.locally_owned_subdomain(), 4)
@@ -148,7 +148,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

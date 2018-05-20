@@ -126,7 +126,7 @@ main()
       test<2>(true);
       test<3>(true);
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

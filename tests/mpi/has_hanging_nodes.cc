@@ -132,7 +132,7 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   initlog();
 

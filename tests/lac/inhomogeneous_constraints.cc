@@ -79,7 +79,7 @@ private:
   void
   create_coarse_grid();
   void
-  estimate_smoothness(Vector<float>& smoothness_indicators) const;
+  estimate_smoothness(Vector<float> & smoothness_indicators) const;
   void
   postprocess();
 
@@ -112,12 +112,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> & p, const unsigned int component) const;
 };
 
 template <int dim>
 double
-BoundaryValues<dim>::value(const Point<dim>& p,
+BoundaryValues<dim>::value(const Point<dim> & p,
                            const unsigned int /*component*/) const
 {
   double sum = 0;
@@ -134,12 +134,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> & p, const unsigned int component) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> & p,
                           const unsigned int /*component*/) const
 {
   double product = 1;
@@ -303,7 +303,7 @@ LaplaceProblem<dim>::assemble_reference()
 
       hp_fe_values.reinit(cell);
 
-      const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+      const FEValues<dim> & fe_values = hp_fe_values.get_present_fe_values();
 
       std::vector<double> rhs_values(fe_values.n_quadrature_points);
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
@@ -376,7 +376,7 @@ LaplaceProblem<dim>::assemble_test_1()
 
       hp_fe_values.reinit(cell);
 
-      const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+      const FEValues<dim> & fe_values = hp_fe_values.get_present_fe_values();
 
       std::vector<double> rhs_values(fe_values.n_quadrature_points);
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
@@ -445,7 +445,7 @@ LaplaceProblem<dim>::assemble_test_2()
 
       hp_fe_values.reinit(cell);
 
-      const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+      const FEValues<dim> & fe_values = hp_fe_values.get_present_fe_values();
 
       std::vector<double> rhs_values(fe_values.n_quadrature_points);
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
@@ -611,7 +611,7 @@ LaplaceProblem<dim>::run()
 template <int dim>
 void
 LaplaceProblem<dim>::estimate_smoothness(
-  Vector<float>& smoothness_indicators) const
+  Vector<float> & smoothness_indicators) const
 {
   const unsigned int N = max_degree;
 

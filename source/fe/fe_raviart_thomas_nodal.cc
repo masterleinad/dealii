@@ -284,8 +284,8 @@ template <int dim>
 void
 FE_RaviartThomasNodal<dim>::
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const
+    const std::vector<Vector<double>> & support_point_values,
+    std::vector<double> &               nodal_values) const
 {
   Assert(support_point_values.size() == this->generalized_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),
@@ -342,16 +342,16 @@ FE_RaviartThomasNodal<dim>::hp_constraints_are_implemented() const
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_RaviartThomasNodal<dim>::hp_vertex_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> & fe_other) const
 {
   // we can presently only compute these
   // identities if both FEs are
   // FE_RaviartThomasNodals or the other is FE_Nothing.
   // In either case, no dofs are assigned on the vertex,
   // so we shouldn't be getting here at all.
-  if(dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -363,14 +363,14 @@ FE_RaviartThomasNodal<dim>::hp_vertex_dof_identities(
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> & fe_other) const
 {
   // we can presently only compute
   // these identities if both FEs are
   // FE_RaviartThomasNodals or if the other
   // one is FE_Nothing
-  if(const FE_RaviartThomasNodal<dim>* fe_q_other
-     = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
+  if(const FE_RaviartThomasNodal<dim> * fe_q_other
+     = dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&fe_other))
     {
       // dofs are located on faces; these are
       // only lines in 2d
@@ -410,7 +410,7 @@ FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
 
       return identities;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -426,14 +426,14 @@ FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> & fe_other) const
 {
   // we can presently only compute
   // these identities if both FEs are
   // FE_RaviartThomasNodals or if the other
   // one is FE_Nothing
-  if(const FE_RaviartThomasNodal<dim>* fe_q_other
-     = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
+  if(const FE_RaviartThomasNodal<dim> * fe_q_other
+     = dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&fe_other))
     {
       // dofs are located on faces; these are
       // only quads in 3d
@@ -456,7 +456,7 @@ FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
 
       return identities;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -472,10 +472,10 @@ FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
 template <int dim>
 FiniteElementDomination::Domination
 FE_RaviartThomasNodal<dim>::compare_for_face_domination(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> & fe_other) const
 {
-  if(const FE_RaviartThomasNodal<dim>* fe_q_other
-     = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
+  if(const FE_RaviartThomasNodal<dim> * fe_q_other
+     = dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&fe_other))
     {
       if(this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
@@ -484,8 +484,8 @@ FE_RaviartThomasNodal<dim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_q_other
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if(const FE_Nothing<dim> * fe_q_other
+          = dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if(fe_q_other->is_dominating())
         {
@@ -507,8 +507,8 @@ FE_RaviartThomasNodal<dim>::compare_for_face_domination(
 template <>
 void
 FE_RaviartThomasNodal<1>::get_face_interpolation_matrix(
-  const FiniteElement<1, 1>& /*x_source_fe*/,
-  FullMatrix<double>& /*interpolation_matrix*/) const
+  const FiniteElement<1, 1> & /*x_source_fe*/,
+  FullMatrix<double> & /*interpolation_matrix*/) const
 {
   Assert(false, ExcImpossibleInDim(1));
 }
@@ -516,9 +516,9 @@ FE_RaviartThomasNodal<1>::get_face_interpolation_matrix(
 template <>
 void
 FE_RaviartThomasNodal<1>::get_subface_interpolation_matrix(
-  const FiniteElement<1, 1>& /*x_source_fe*/,
+  const FiniteElement<1, 1> & /*x_source_fe*/,
   const unsigned int /*subface*/,
-  FullMatrix<double>& /*interpolation_matrix*/) const
+  FullMatrix<double> & /*interpolation_matrix*/) const
 {
   Assert(false, ExcImpossibleInDim(1));
 }
@@ -526,15 +526,15 @@ FE_RaviartThomasNodal<1>::get_subface_interpolation_matrix(
 template <int dim>
 void
 FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
-  const FiniteElement<dim>& x_source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  const FiniteElement<dim> & x_source_fe,
+  FullMatrix<double> &       interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
   // RaviartThomasNodal element
   AssertThrow(
     (x_source_fe.get_name().find("FE_RaviartThomasNodal<") == 0)
-      || (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&x_source_fe)
+      || (dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&x_source_fe)
           != nullptr),
     typename FiniteElement<dim>::ExcInterpolationNotImplemented());
 
@@ -546,8 +546,8 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
 
   // ok, source is a RaviartThomasNodal element, so
   // we will be able to do the work
-  const FE_RaviartThomasNodal<dim>& source_fe
-    = dynamic_cast<const FE_RaviartThomasNodal<dim>&>(x_source_fe);
+  const FE_RaviartThomasNodal<dim> & source_fe
+    = dynamic_cast<const FE_RaviartThomasNodal<dim> &>(x_source_fe);
 
   // Make sure, that the element,
   // for which the DoFs should be
@@ -587,7 +587,7 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
 
   for(unsigned int i = 0; i < source_fe.dofs_per_face; ++i)
     {
-      const Point<dim>& p = face_projection.point(i);
+      const Point<dim> & p = face_projection.point(i);
 
       for(unsigned int j = 0; j < this->dofs_per_face; ++j)
         {
@@ -629,16 +629,16 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
 template <int dim>
 void
 FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim>& x_source_fe,
-  const unsigned int        subface,
-  FullMatrix<double>&       interpolation_matrix) const
+  const FiniteElement<dim> & x_source_fe,
+  const unsigned int         subface,
+  FullMatrix<double> &       interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
   // RaviartThomasNodal element
   AssertThrow(
     (x_source_fe.get_name().find("FE_RaviartThomasNodal<") == 0)
-      || (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&x_source_fe)
+      || (dynamic_cast<const FE_RaviartThomasNodal<dim> *>(&x_source_fe)
           != nullptr),
     typename FiniteElement<dim>::ExcInterpolationNotImplemented());
 
@@ -650,8 +650,8 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
 
   // ok, source is a RaviartThomasNodal element, so
   // we will be able to do the work
-  const FE_RaviartThomasNodal<dim>& source_fe
-    = dynamic_cast<const FE_RaviartThomasNodal<dim>&>(x_source_fe);
+  const FE_RaviartThomasNodal<dim> & source_fe
+    = dynamic_cast<const FE_RaviartThomasNodal<dim> &>(x_source_fe);
 
   // Make sure, that the element,
   // for which the DoFs should be
@@ -692,7 +692,7 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
 
   for(unsigned int i = 0; i < source_fe.dofs_per_face; ++i)
     {
-      const Point<dim>& p = subface_projection.point(i);
+      const Point<dim> & p = subface_projection.point(i);
 
       for(unsigned int j = 0; j < this->dofs_per_face; ++j)
         {

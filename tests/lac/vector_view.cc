@@ -22,7 +22,7 @@ unsigned int       check_point = 0;
 
 template <typename number>
 void
-print(const Vector<number>& v)
+print(const Vector<number> & v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     deallog << v(i) << '\t';
@@ -31,7 +31,7 @@ print(const Vector<number>& v)
 
 template <typename T>
 void
-fill(T& a)
+fill(T & a)
 {
   for(unsigned int i = 0; i < a.size(); ++i)
     a(i) = i;
