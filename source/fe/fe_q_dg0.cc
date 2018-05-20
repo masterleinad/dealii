@@ -47,7 +47,7 @@ FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const unsigned int degree)
 
   // adjust unit support point for discontinuous node
   Point<dim> point;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     point[d] = 0.5;
   this->unit_support_points.push_back(point);
   AssertDimension(this->dofs_per_cell, this->unit_support_points.size());
@@ -75,7 +75,7 @@ FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const Quadrature<1>& points)
 
   // adjust unit support point for discontinuous node
   Point<dim> point;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     point[d] = 0.5;
   this->unit_support_points.push_back(point);
   AssertDimension(this->dofs_per_cell, this->unit_support_points.size());
@@ -99,15 +99,15 @@ FE_Q_DG0<dim, spacedim>::get_name() const
   unsigned int index = 0;
 
   // Decode the support points in one coordinate direction.
-  for(unsigned int j = 0; j < dofs_per_cell; j++)
+  for (unsigned int j = 0; j < dofs_per_cell; j++)
     {
-      if((dim > 1) ? (unit_support_points[j](1) == 0
-                      && ((dim > 2) ? unit_support_points[j](2) == 0 : true)) :
-                     true)
+      if ((dim > 1) ? (unit_support_points[j](1) == 0
+                       && ((dim > 2) ? unit_support_points[j](2) == 0 : true)) :
+                      true)
         {
-          if(index == 0)
+          if (index == 0)
             points[index] = unit_support_points[j](0);
-          else if(index == 1)
+          else if (index == 1)
             points[n_points - 1] = unit_support_points[j](0);
           else
             points[index - 1] = unit_support_points[j](0);
@@ -121,16 +121,16 @@ FE_Q_DG0<dim, spacedim>::get_name() const
     ExcMessage("Could not decode support points in one coordinate direction."));
 
   // Check whether the support points are equidistant.
-  for(unsigned int j = 0; j < n_points; j++)
-    if(std::fabs(points[j] - (double) j / this->degree) > 1e-15)
+  for (unsigned int j = 0; j < n_points; j++)
+    if (std::fabs(points[j] - (double) j / this->degree) > 1e-15)
       {
         type = false;
         break;
       }
 
-  if(type == true)
+  if (type == true)
     {
-      if(this->degree > 2)
+      if (this->degree > 2)
         namebuf << "FE_Q_DG0<" << Utilities::dim_string(dim, spacedim)
                 << ">(QIterated(QTrapez()," << this->degree << "))";
       else
@@ -142,13 +142,13 @@ FE_Q_DG0<dim, spacedim>::get_name() const
       // Check whether the support points come from QGaussLobatto.
       const QGaussLobatto<1> points_gl(n_points);
       type = true;
-      for(unsigned int j = 0; j < n_points; j++)
-        if(points[j] != points_gl.point(j)(0))
+      for (unsigned int j = 0; j < n_points; j++)
+        if (points[j] != points_gl.point(j)(0))
           {
             type = false;
             break;
           }
-      if(type == true)
+      if (type == true)
         namebuf << "FE_Q_DG0<" << Utilities::dim_string(dim, spacedim) << ">("
                 << this->degree << ")";
       else
@@ -180,7 +180,7 @@ FE_Q_DG0<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
     support_point_values[0].size() == this->n_components(),
     ExcDimensionMismatch(support_point_values[0].size(), this->n_components()));
 
-  for(unsigned int i = 0; i < this->dofs_per_cell - 1; ++i)
+  for (unsigned int i = 0; i < this->dofs_per_cell - 1; ++i)
     {
       const std::pair<unsigned int, unsigned int> index
         = this->system_to_component_index(i);
@@ -229,7 +229,7 @@ std::vector<unsigned int>
 FE_Q_DG0<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 1U);
-  for(unsigned int i = 1; i < dpo.size(); ++i)
+  for (unsigned int i = 1; i < dpo.size(); ++i)
     dpo[i] = dpo[i - 1] * (deg - 1);
 
   dpo[dim]++; //we need an additional DG0-node for a dim-dimensional object
@@ -243,7 +243,7 @@ FE_Q_DG0<dim, spacedim>::has_support_on_face(
   const unsigned int face_index) const
 {
   // discontinuous function has support on all faces
-  if(shape_index == this->dofs_per_cell - 1)
+  if (shape_index == this->dofs_per_cell - 1)
     return true;
   else
     return FE_Q_Base<TensorProductPolynomialsConst<dim>, dim, spacedim>::
@@ -257,7 +257,7 @@ FE_Q_DG0<dim, spacedim>::get_constant_modes() const
   Table<2, bool> constant_modes(2, this->dofs_per_cell);
 
   // 1 represented by FE_Q part
-  for(unsigned int i = 0; i < this->dofs_per_cell - 1; ++i)
+  for (unsigned int i = 0; i < this->dofs_per_cell - 1; ++i)
     constant_modes(0, i) = true;
 
   // 1 represented by DG0 part

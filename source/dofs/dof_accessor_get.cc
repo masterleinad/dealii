@@ -44,21 +44,21 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
   Vector<number>&    interpolated_values,
   const unsigned int fe_index) const
 {
-  if(!this->has_children())
+  if (!this->has_children())
     // if this cell has no children: simply return the exact values on this
     // cell unless the finite element we need to interpolate to is different than
     // the one we have on the current cell
     {
-      if((dynamic_cast<DoFHandler<DoFHandlerType::dimension,
-                                  DoFHandlerType::space_dimension>*>(
-            this->dof_handler)
-          != nullptr)
-         ||
-         // for hp-DoFHandlers, we need to require that on
-         // active cells, you either don't specify an fe_index,
-         // or that you specify the correct one
-         (fe_index == this->active_fe_index())
-         || (fe_index == DoFHandlerType::default_fe_index))
+      if ((dynamic_cast<DoFHandler<DoFHandlerType::dimension,
+                                   DoFHandlerType::space_dimension>*>(
+             this->dof_handler)
+           != nullptr)
+          ||
+          // for hp-DoFHandlers, we need to require that on
+          // active cells, you either don't specify an fe_index,
+          // or that you specify the correct one
+          (fe_index == this->active_fe_index())
+          || (fe_index == DoFHandlerType::default_fe_index))
         this->get_dof_values(values, interpolated_values);
       else
         {
@@ -115,7 +115,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
       // interpolating FE_Nothing), then simply skip all of the
       // following since the output vector would be of size zero
       // anyway (and in fact is of size zero, see the assertion above)
-      if(fe.dofs_per_cell > 0)
+      if (fe.dofs_per_cell > 0)
         {
           Vector<number> tmp1(dofs_per_cell);
           Vector<number> tmp2(dofs_per_cell);
@@ -146,7 +146,7 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
           // element) which have shape functions that are additive (interior ones)
           // and others that are overwriting (face degrees of freedom that need to
           // be continuous across the face).
-          for(unsigned int child = 0; child < this->n_children(); ++child)
+          for (unsigned int child = 0; child < this->n_children(); ++child)
             {
               // get the values from the present child, if necessary by
               // interpolation itself either from its own children or
@@ -159,10 +159,10 @@ DoFCellAccessor<DoFHandlerType, lda>::get_interpolated_dof_values(
                 .vmult(tmp2, tmp1);
 
               // and add up or set them in the output vector
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                if(fe.restriction_is_additive(i))
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
+                if (fe.restriction_is_additive(i))
                   interpolated_values(i) += tmp2(i);
-                else if(tmp2(i) != number())
+                else if (tmp2(i) != number())
                   interpolated_values(i) = tmp2(i);
             }
         }

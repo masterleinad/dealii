@@ -38,24 +38,24 @@ print_dofs(const DoFHandler<dim>& dof)
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
-  if(fe.has_support_points())
+  if (fe.has_support_points())
     {
       Quadrature<dim> quad(fe.get_unit_support_points());
       fevalues = std::shared_ptr<FEValues<dim>>(
         new FEValues<dim>(fe, quad, update_quadrature_points));
     }
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     {
       Point<dim> p = cell->center();
-      if(fevalues.get() != nullptr)
+      if (fevalues.get() != nullptr)
         fevalues->reinit(cell);
 
       cell->get_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
-        if(fevalues.get() != nullptr)
+      for (unsigned int i = 0; i < v.size(); ++i)
+        if (fevalues.get() != nullptr)
           deallog << fevalues->quadrature_point(i) << '\t' << v[i] << std::endl;
         else
           deallog << p << '\t' << v[i] << std::endl;
@@ -71,8 +71,8 @@ check_renumbering(DoFHandler<dim>& dof)
   deallog << element.get_name() << std::endl;
 
   DoFRenumbering::boost::Cuthill_McKee(dof);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_levels();
-      ++level)
+  for (unsigned int level = 0; level < dof.get_triangulation().n_levels();
+       ++level)
     DoFRenumbering::Cuthill_McKee(dof, level);
   print_dofs(dof);
 }

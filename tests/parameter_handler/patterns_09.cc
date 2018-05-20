@@ -36,7 +36,7 @@ main()
 
   std::string test = "5; 3.14; Ciao";
 
-  if(pattern.match(test))
+  if (pattern.match(test))
     deallog << "OK" << std::endl;
   else
     deallog << "Not OK" << std::endl;

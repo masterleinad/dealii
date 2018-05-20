@@ -110,7 +110,7 @@ namespace Utilities
       {
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
-        if(job_supports_mpi())
+        if (job_supports_mpi())
           {
 #  ifdef DEBUG
             {
@@ -135,7 +135,7 @@ namespace Utilities
                                  0,
                                  mpi_communicator);
               AssertThrowMPI(ierr2);
-              if(rank == 0)
+              if (rank == 0)
                 Assert(size_min == size_max,
                        ExcMessage(
                          "values has different size across MPI processes."));
@@ -162,7 +162,7 @@ namespace Utilities
           {
             (void) mpi_op;
             (void) mpi_communicator;
-            if(values != output)
+            if (values != output)
               std::copy(values.begin(), values.end(), output.begin());
           }
       }
@@ -176,7 +176,7 @@ namespace Utilities
       {
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
-        if(job_supports_mpi())
+        if (job_supports_mpi())
           {
             const int ierr = MPI_Allreduce(
               values != output ?
@@ -199,7 +199,7 @@ namespace Utilities
           {
             (void) mpi_op;
             (void) mpi_communicator;
-            if(values != output)
+            if (values != output)
               std::copy(values.begin(), values.end(), output.begin());
           }
       }
@@ -261,7 +261,7 @@ namespace Utilities
       Number
         entries[SymmetricTensor<rank, dim, Number>::n_independent_components];
 
-      for(unsigned int i = 0; i < n_entries; ++i)
+      for (unsigned int i = 0; i < n_entries; ++i)
         entries[i] = local[local.unrolled_to_component_indices(i)];
 
       Number global_entries
@@ -269,7 +269,7 @@ namespace Utilities
       sum(entries, mpi_communicator, global_entries);
 
       SymmetricTensor<rank, dim, Number> global;
-      for(unsigned int i = 0; i < n_entries; ++i)
+      for (unsigned int i = 0; i < n_entries; ++i)
         global[global.unrolled_to_component_indices(i)] = global_entries[i];
 
       return global;
@@ -293,7 +293,7 @@ namespace Utilities
           ArrayView<Number>(&global.val[0], global.n_nonzero_elements()));
 #else
       (void) mpi_communicator;
-      if(!PointerComparison::equal(&local, &global))
+      if (!PointerComparison::equal(&local, &global))
         global = local;
 #endif
     }

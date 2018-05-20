@@ -230,10 +230,10 @@ namespace SUNDIALS
   template <typename VectorType>
   ARKode<VectorType>::~ARKode()
   {
-    if(arkode_mem)
+    if (arkode_mem)
       ARKodeFree(&arkode_mem);
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const int ierr = MPI_Comm_free(&communicator);
         (void) ierr;
@@ -259,7 +259,7 @@ namespace SUNDIALS
     // solution. Here we take only a
     // view of it.
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is                = solution.locally_owned_elements();
         const size_t   local_system_size = is.n_elements();
@@ -284,7 +284,7 @@ namespace SUNDIALS
 
     output_step(0, solution, 0);
 
-    while(t < data.final_time)
+    while (t < data.final_time)
       {
         next_time += data.output_period;
 
@@ -297,18 +297,18 @@ namespace SUNDIALS
 
         copy(solution, yy);
 
-        while(solver_should_restart(t, solution))
+        while (solver_should_restart(t, solution))
           reset(t, h, solution);
 
         step_number++;
 
-        if(output_step)
+        if (output_step)
           output_step(t, solution, step_number);
       }
 
       // Free the vectors which are no longer used.
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         N_VDestroy_Parallel(yy);
         N_VDestroy_Parallel(abs_tolls);
@@ -331,16 +331,16 @@ namespace SUNDIALS
   {
     unsigned int system_size;
 
-    if(arkode_mem)
+    if (arkode_mem)
       ARKodeFree(&arkode_mem);
 
     arkode_mem = ARKodeCreate();
 
     // Free the vectors which are no longer used.
-    if(yy)
+    if (yy)
       {
 #  ifdef DEAL_II_WITH_MPI
-        if(is_serial_vector<VectorType>::value == false)
+        if (is_serial_vector<VectorType>::value == false)
           {
             N_VDestroy_Parallel(yy);
             N_VDestroy_Parallel(abs_tolls);
@@ -357,7 +357,7 @@ namespace SUNDIALS
     (void) status;
     system_size = solution.size();
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is                = solution.locally_owned_elements();
         const size_t   local_system_size = is.n_elements();
@@ -387,7 +387,7 @@ namespace SUNDIALS
       yy);
     AssertARKode(status);
 
-    if(get_local_tolerances)
+    if (get_local_tolerances)
       {
         copy(abs_tolls, get_local_tolerances());
         status
@@ -417,11 +417,11 @@ namespace SUNDIALS
     // Initialize solver
     ARKodeMem ARKode_mem = (ARKodeMem) arkode_mem;
 
-    if(solve_jacobian_system)
+    if (solve_jacobian_system)
       {
         status = ARKodeSetNewton(arkode_mem);
         AssertARKode(status);
-        if(data.implicit_function_is_linear)
+        if (data.implicit_function_is_linear)
           {
             status = ARKodeSetLinear(
               arkode_mem, data.implicit_function_is_time_independent ? 0 : 1);
@@ -429,7 +429,7 @@ namespace SUNDIALS
           }
 
         ARKode_mem->ark_lsolve = t_arkode_solve_jacobian<VectorType>;
-        if(setup_jacobian)
+        if (setup_jacobian)
           {
             ARKode_mem->ark_lsetup = t_arkode_setup_jacobian<VectorType>;
 #  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
@@ -444,11 +444,11 @@ namespace SUNDIALS
         AssertARKode(status);
       }
 
-    if(solve_mass_system)
+    if (solve_mass_system)
       {
         ARKode_mem->ark_msolve = t_arkode_solve_mass<VectorType>;
 
-        if(setup_mass)
+        if (setup_mass)
           {
             ARKode_mem->ark_msetup = t_arkode_setup_mass<VectorType>;
 #  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)

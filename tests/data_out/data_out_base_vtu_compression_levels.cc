@@ -48,21 +48,21 @@ template <int dim, int spacedim>
 void
 check_all(std::ostream& log)
 {
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     {
       DataOutBase::VtkFlags flags;
-      switch(i)
+      switch (i)
         {
-          case(0):
+          case (0):
             flags.compression_level = DataOutBase::VtkFlags::no_compression;
             break;
-          case(1):
+          case (1):
             flags.compression_level = DataOutBase::VtkFlags::best_speed;
             break;
-          case(2):
+          case (2):
             flags.compression_level = DataOutBase::VtkFlags::best_compression;
             break;
-          case(3):
+          case (3):
             flags.compression_level
               = DataOutBase::VtkFlags::default_compression;
             break;

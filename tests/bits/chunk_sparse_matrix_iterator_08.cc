@@ -24,31 +24,31 @@ test(const unsigned int chunk_size)
 {
   deallog << "Chunk size: " << chunk_size << std::endl;
   ChunkSparsityPattern sp(5, 5, 3, chunk_size);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
-      if(((i + 2 * j + 1) % 3 == 0) || (i == j))
+  for (unsigned int i = 0; i < 5; ++i)
+    for (unsigned int j = 0; j < 5; ++j)
+      if (((i + 2 * j + 1) % 3 == 0) || (i == j))
         sp.add(i, j);
   sp.compress();
 
   ChunkSparseMatrix<double> m(sp);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
-      if(((i + 2 * j + 1) % 3 == 0) || (i == j))
+  for (unsigned int i = 0; i < 5; ++i)
+    for (unsigned int j = 0; j < 5; ++j)
+      if (((i + 2 * j + 1) % 3 == 0) || (i == j))
         m.set(i, j, i * j);
 
   ChunkSparseMatrix<double>::iterator i = m.begin();
-  for(; i != m.end(); ++i)
+  for (; i != m.end(); ++i)
     i->value() /= 2;
 
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
-      if(((i + 2 * j + 1) % 3 == 0) || (i == j))
+  for (unsigned int i = 0; i < 5; ++i)
+    for (unsigned int j = 0; j < 5; ++j)
+      if (((i + 2 * j + 1) % 3 == 0) || (i == j))
         {
           deallog << i << ' ' << j << ' ' << m.el(i, j) << std::endl;
           Assert(std::fabs(m.el(i, j) - (i * j / 2.)) < 1e-14,
                  ExcInternalError());
         }
-      else if(sp.exists(i, j))
+      else if (sp.exists(i, j))
         {
           deallog << i << ' ' << j << ' ' << m.el(i, j) << std::endl;
           Assert(std::fabs(m.el(i, j)) < 1e-14, ExcInternalError());
@@ -70,7 +70,7 @@ main()
       test(5);
       test(7);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -84,7 +84,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

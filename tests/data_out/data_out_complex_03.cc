@@ -51,7 +51,7 @@ check()
   dof_handler.distribute_dofs(fe);
 
   Vector<std::complex<double>> v(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = std::complex<double>(1. * i, -1. * i);
 
   DataOut<dim> data_out;
@@ -73,7 +73,7 @@ main()
       check<2>();
       check<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -86,7 +86,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

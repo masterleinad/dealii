@@ -45,27 +45,27 @@ setup_tria(parallel::distributed::Triangulation<dim>& triangulation)
   GridGenerator::subdivided_hyper_cube(triangulation, n_subdiv, 0, 1);
   triangulation.refine_global(2);
   {
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      if(cell->is_locally_owned() && cell->center().norm() < 0.55)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      if (cell->is_locally_owned() && cell->center().norm() < 0.55)
         cell->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      if(cell->is_locally_owned() && cell->center().norm() > 0.3
-         && cell->center().norm() < 0.42)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      if (cell->is_locally_owned() && cell->center().norm() > 0.3
+          && cell->center().norm() < 0.42)
         cell->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      if(cell->is_locally_owned() && cell->center().norm() > 0.335
-         && cell->center().norm() < 0.39)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      if (cell->is_locally_owned() && cell->center().norm() > 0.335
+          && cell->center().norm() < 0.39)
         cell->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
   }
@@ -92,16 +92,16 @@ extract_locally_active_level_dofs(const DoFHandlerType& dof_handler,
 
   typename DoFHandlerType::cell_iterator cell = dof_handler.begin(level),
                                          endc = dof_handler.end(level);
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       const types::subdomain_id id = cell->level_subdomain_id();
-      if(id != dof_handler.get_triangulation().locally_owned_subdomain())
+      if (id != dof_handler.get_triangulation().locally_owned_subdomain())
         continue;
 
       dof_indices.resize(cell->get_fe().dofs_per_cell);
       cell->get_mg_dof_indices(dof_indices);
-      for(unsigned int i = 0; i < dof_indices.size(); ++i)
-        if(!dof_set.is_element(dof_indices[i]))
+      for (unsigned int i = 0; i < dof_indices.size(); ++i)
+        if (!dof_set.is_element(dof_indices[i]))
           active_dofs.push_back(dof_indices[i]);
     }
 
@@ -149,11 +149,11 @@ check_fe(FiniteElement<dim>& fe)
     //std::map<std::string,std::vector<types::global_dof_index> > dofmap;
     std::map<std::string, std::vector<types::global_dof_index>> mgdofmap;
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofhref.begin();
-        cell != dofhref.end();
-        ++cell)
+    for (typename DoFHandler<dim>::level_cell_iterator cell = dofhref.begin();
+         cell != dofhref.end();
+         ++cell)
       {
-        if(!cell->is_locally_owned_on_level())
+        if (!cell->is_locally_owned_on_level())
           continue;
 
         std::vector<types::global_dof_index>& d
@@ -162,11 +162,11 @@ check_fe(FiniteElement<dim>& fe)
         cell->get_mg_dof_indices(d);
       }
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofh.begin();
-        cell != dofh.end();
-        ++cell)
+    for (typename DoFHandler<dim>::level_cell_iterator cell = dofh.begin();
+         cell != dofh.end();
+         ++cell)
       {
-        if(cell->level_subdomain_id() == numbers::artificial_subdomain_id)
+        if (cell->level_subdomain_id() == numbers::artificial_subdomain_id)
           continue;
 
         std::vector<types::global_dof_index>& renumbered
@@ -189,7 +189,7 @@ check_fe(FiniteElement<dim>& fe)
   mg_constrained_dofs.initialize(dofh, dirichlet_boundary);
 
   const unsigned int n_levels = tr.n_global_levels();
-  for(unsigned int level = 0; level < n_levels; ++level)
+  for (unsigned int level = 0; level < n_levels; ++level)
     {
       deallog << "Level " << level << ":" << std::endl;
 

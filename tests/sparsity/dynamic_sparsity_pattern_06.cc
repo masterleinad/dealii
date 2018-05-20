@@ -27,8 +27,8 @@ test()
 {
   const unsigned int     N = 100;
   DynamicSparsityPattern csp(N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < 10; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < 10; ++j)
       csp.add(i, (i + (i + 1) * (j * j + i)) % N);
   csp.symmetrize();
 

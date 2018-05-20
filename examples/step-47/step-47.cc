@@ -61,9 +61,9 @@ namespace Step47
   double
   sign(double d)
   {
-    if(d > 0)
+    if (d > 0)
       return 1;
-    else if(d < 0)
+    else if (d < 0)
       return -1;
     else
       return 0;
@@ -141,7 +141,7 @@ namespace Step47
   double
   Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   {
-    if(p.square() < 0.5 * 0.5)
+    if (p.square() < 0.5 * 0.5)
       return 20;
     else
       return 1;
@@ -161,9 +161,9 @@ namespace Step47
     (void) component;
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    for(unsigned int i = 0; i < n_points; ++i)
+    for (unsigned int i = 0; i < n_points; ++i)
       {
-        if(points[i].square() < 0.5 * 0.5)
+        if (points[i].square() < 0.5 * 0.5)
           values[i] = 20;
         else
           values[i] = 1;
@@ -213,8 +213,8 @@ namespace Step47
   LaplaceProblem<dim>::interface_intersects_cell(
     const typename Triangulation<dim>::cell_iterator& cell) const
   {
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell - 1; ++v)
-      if(level_set(cell->vertex(v)) * level_set(cell->vertex(v + 1)) < 0)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell - 1; ++v)
+      if (level_set(cell->vertex(v)) * level_set(cell->vertex(v + 1)) < 0)
         return true;
 
     // we get here only if all vertices have the same sign, which means that
@@ -226,11 +226,11 @@ namespace Step47
   void
   LaplaceProblem<dim>::setup_system()
   {
-    for(typename hp::DoFHandler<dim>::cell_iterator cell
-        = dof_handler.begin_active();
-        cell != dof_handler.end();
-        ++cell)
-      if(interface_intersects_cell(cell) == false)
+    for (typename hp::DoFHandler<dim>::cell_iterator cell
+         = dof_handler.begin_active();
+         cell != dof_handler.end();
+         ++cell)
+      if (interface_intersects_cell(cell) == false)
         cell->set_active_fe_index(0);
       else
         cell->set_active_fe_index(1);
@@ -283,7 +283,7 @@ namespace Step47
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
         cell_matrix.reinit(dofs_per_cell, dofs_per_cell);
@@ -292,7 +292,7 @@ namespace Step47
         cell_matrix = 0;
         cell_rhs    = 0;
 
-        if(cell->active_fe_index() == 0)
+        if (cell->active_fe_index() == 0)
           {
             plain_fe_values.reinit(cell);
 
@@ -300,10 +300,10 @@ namespace Step47
             coefficient.value_list(plain_fe_values.get_quadrature_points(),
                                    coefficient_values);
 
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for (unsigned int j = 0; j < dofs_per_cell; ++j)
                     cell_matrix(i, j)
                       += (coefficient_values[q_point]
                           * plain_fe_values.shape_grad(i, q_point)
@@ -323,8 +323,8 @@ namespace Step47
 
             std::vector<double> level_set_values(
               GeometryInfo<dim>::vertices_per_cell);
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
-                ++v)
+            for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+                 ++v)
               level_set_values[v] = level_set(cell->vertex(v));
 
             FEValues<dim> this_fe_values(
@@ -340,14 +340,15 @@ namespace Step47
             coefficient.value_list(this_fe_values.get_quadrature_points(),
                                    coefficient_values);
 
-            for(unsigned int q_point = 0;
-                q_point < this_fe_values.n_quadrature_points;
-                ++q_point)
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                if(cell->get_fe().system_to_component_index(i).first == 0)
+            for (unsigned int q_point = 0;
+                 q_point < this_fe_values.n_quadrature_points;
+                 ++q_point)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
+                if (cell->get_fe().system_to_component_index(i).first == 0)
                   {
-                    for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                      if(cell->get_fe().system_to_component_index(j).first == 0)
+                    for (unsigned int j = 0; j < dofs_per_cell; ++j)
+                      if (cell->get_fe().system_to_component_index(j).first
+                          == 0)
                         cell_matrix(i, j)
                           += (coefficient_values[q_point]
                               * this_fe_values.shape_grad(i, q_point)
@@ -377,8 +378,9 @@ namespace Step47
                   }
                 else
                   {
-                    for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                      if(cell->get_fe().system_to_component_index(j).first == 0)
+                    for (unsigned int j = 0; j < dofs_per_cell; ++j)
+                      if (cell->get_fe().system_to_component_index(j).first
+                          == 0)
                         cell_matrix(i, j)
                           += (coefficient_values[q_point]
                               * ((std::fabs(level_set(
@@ -474,11 +476,11 @@ namespace Step47
 
     // find the type of cut
     int sign_ls[GeometryInfo<dim>::vertices_per_cell];
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       {
-        if(level_set_values[v] > 0)
+        if (level_set_values[v] > 0)
           sign_ls[v] = 1;
-        else if(level_set_values[v] < 0)
+        else if (level_set_values[v] < 0)
           sign_ls[v] = -1;
         else
           sign_ls[v] = 0;
@@ -490,10 +492,10 @@ namespace Step47
     // ++++, ---- type 2: -+++, +-++, ++-+, +++-, +---, -+--, --+-, ---+ type
     // 3: +--+, ++--, +-+-, -++-, --++, -+-+
 
-    if(sign_ls[0] == sign_ls[1] && sign_ls[0] == sign_ls[2]
-       && sign_ls[0] == sign_ls[3])
+    if (sign_ls[0] == sign_ls[1] && sign_ls[0] == sign_ls[2]
+        && sign_ls[0] == sign_ls[3])
       type = 1;
-    else if(sign_ls[0] * sign_ls[1] * sign_ls[2] * sign_ls[3] < 0)
+    else if (sign_ls[0] * sign_ls[1] * sign_ls[2] * sign_ls[3] < 0)
       type = 2;
     else
       type = 3;
@@ -512,10 +514,10 @@ namespace Step47
     Point<dim> E(0, 0);
     Point<dim> F(0, 0);
 
-    if(type == 1)
+    if (type == 1)
       return std::pair<unsigned int, Quadrature<dim>>(1, plain_quadrature);
 
-    if(type == 2)
+    if (type == 2)
       {
         const unsigned int n_q_points = plain_quadrature.size();
 
@@ -526,17 +528,17 @@ namespace Step47
 
         std::vector<Point<dim>> v(GeometryInfo<dim>::vertices_per_cell);
 
-        if(sign_ls[0] != sign_ls[1] && sign_ls[0] != sign_ls[2]
-           && sign_ls[0] != sign_ls[3])
+        if (sign_ls[0] != sign_ls[1] && sign_ls[0] != sign_ls[2]
+            && sign_ls[0] != sign_ls[3])
           Pos = 0;
-        else if(sign_ls[1] != sign_ls[0] && sign_ls[1] != sign_ls[2]
-                && sign_ls[1] != sign_ls[3])
+        else if (sign_ls[1] != sign_ls[0] && sign_ls[1] != sign_ls[2]
+                 && sign_ls[1] != sign_ls[3])
           Pos = 1;
-        else if(sign_ls[2] != sign_ls[0] && sign_ls[2] != sign_ls[1]
-                && sign_ls[2] != sign_ls[3])
+        else if (sign_ls[2] != sign_ls[0] && sign_ls[2] != sign_ls[1]
+                 && sign_ls[2] != sign_ls[3])
           Pos = 2;
-        else if(sign_ls[3] != sign_ls[0] && sign_ls[3] != sign_ls[1]
-                && sign_ls[3] != sign_ls[2])
+        else if (sign_ls[3] != sign_ls[0] && sign_ls[3] != sign_ls[1]
+                 && sign_ls[3] != sign_ls[2])
           Pos = 3;
         else
           assert(0); // error message
@@ -547,7 +549,7 @@ namespace Step47
 
         //    2-------3 | | | | | | 0-------1
 
-        if(Pos == 0)
+        if (Pos == 0)
           {
             A[0] = 1.
                    - level_set_values[1]
@@ -566,7 +568,7 @@ namespace Step47
             F(0) = 0.;
             F(1) = 0.5 * B(1);
           }
-        else if(Pos == 1)
+        else if (Pos == 1)
           {
             A[0] = level_set_values[0]
                    / (level_set_values[0] - level_set_values[1]);
@@ -584,7 +586,7 @@ namespace Step47
             F(0) = 1.;
             F(1) = 0.5 * B(1);
           }
-        else if(Pos == 2)
+        else if (Pos == 2)
           {
             A[0] = 1
                    - level_set_values[3]
@@ -602,7 +604,7 @@ namespace Step47
             F(0) = 0.;
             F(1) = 0.5 * (1. + B(1));
           }
-        else if(Pos == 3)
+        else if (Pos == 3)
           {
             A[0] = level_set_values[2]
                    / (level_set_values[2] - level_set_values[3]);
@@ -645,13 +647,13 @@ namespace Step47
         output << F(0) << "   " << F(1) << std::endl;
         output << std::endl;
 
-        if(Pos == 0)
+        if (Pos == 0)
           output << v3(0) << "   " << v3(1) << std::endl;
-        else if(Pos == 1)
+        else if (Pos == 1)
           output << v2(0) << "   " << v2(1) << std::endl;
-        else if(Pos == 2)
+        else if (Pos == 2)
           output << v1(0) << "   " << v1(1) << std::endl;
-        else if(Pos == 3)
+        else if (Pos == 3)
           output << v0(0) << "   " << v0(1) << std::endl;
         output << C(0) << "   " << C(1) << std::endl;
 
@@ -672,7 +674,7 @@ namespace Step47
 
         // lookup table for the decomposition
 
-        if(dim == 2)
+        if (dim == 2)
           {
             unsigned int subcell_v_indices[4][5][4] = {{{0, 8, 9, 7},
                                                         {9, 7, 5, 6},
@@ -695,11 +697,11 @@ namespace Step47
                                                         {0, 6, 2, 4},
                                                         {0, 1, 6, 5}}};
 
-            for(unsigned int subcell = 0; subcell < 5; subcell++)
+            for (unsigned int subcell = 0; subcell < 5; subcell++)
               {
                 //std::cout << "subcell : " << subcell << std::endl;
                 std::vector<Point<dim>> vertices;
-                for(unsigned int i = 0; i < 4; i++)
+                for (unsigned int i = 0; i < 4; i++)
                   {
                     vertices.push_back(
                       subcell_vertices[subcell_v_indices[Pos][subcell][i]]);
@@ -724,7 +726,7 @@ namespace Step47
 
     // Type three decomposition (+--+, ++--, +-+-, -++-, --++, -+-+)
 
-    if(type == 3)
+    if (type == 3)
       {
         const unsigned int n_q_points = plain_quadrature.size();
 
@@ -735,7 +737,7 @@ namespace Step47
 
         std::vector<Point<dim>> v(GeometryInfo<dim>::vertices_per_cell);
 
-        if(sign_ls[0] == sign_ls[1] && sign_ls[2] == sign_ls[3])
+        if (sign_ls[0] == sign_ls[1] && sign_ls[2] == sign_ls[3])
           {
             Pos  = 0;
             A(0) = 0.;
@@ -745,7 +747,7 @@ namespace Step47
             B(1) = level_set_values[1]
                    / ((level_set_values[1] - level_set_values[3]));
           }
-        else if(sign_ls[0] == sign_ls[2] && sign_ls[1] == sign_ls[3])
+        else if (sign_ls[0] == sign_ls[2] && sign_ls[1] == sign_ls[3])
           {
             Pos  = 1;
             A(0) = level_set_values[0]
@@ -755,7 +757,7 @@ namespace Step47
                    / ((level_set_values[2] - level_set_values[3]));
             B(1) = 1.;
           }
-        else if(sign_ls[0] == sign_ls[3] && sign_ls[1] == sign_ls[2])
+        else if (sign_ls[0] == sign_ls[3] && sign_ls[1] == sign_ls[2])
           {
             std::cout
               << "Error: the element has two cut lines and this is not allowed"
@@ -790,17 +792,17 @@ namespace Step47
         std::vector<Point<dim>> xfem_points;
         std::vector<double>     xfem_weights;
 
-        if(dim == 2)
+        if (dim == 2)
           {
             unsigned int subcell_v_indices[2][2][4]
               = {{{0, 1, 4, 5}, {4, 5, 2, 3}}, {{0, 4, 2, 5}, {4, 1, 5, 3}}};
 
             //std::cout << "Pos : " << Pos << std::endl;
-            for(unsigned int subcell = 0; subcell < 2; subcell++)
+            for (unsigned int subcell = 0; subcell < 2; subcell++)
               {
                 //std::cout << "subcell : " << subcell << std::endl;
                 std::vector<Point<dim>> vertices;
-                for(unsigned int i = 0; i < 4; i++)
+                for (unsigned int i = 0; i < 4; i++)
                   {
                     vertices.push_back(
                       subcell_vertices[subcell_v_indices[Pos][subcell][i]]);
@@ -855,9 +857,9 @@ namespace Step47
 
     std::vector<double> JxW(n_q_points);
 
-    for(unsigned int i = 0; i < n_q_points; i++)
+    for (unsigned int i = 0; i < n_q_points; i++)
       {
-        switch(dim)
+        switch (dim)
           {
             case 2:
               {
@@ -891,11 +893,11 @@ namespace Step47
         Tensor<2, dim> jacobian;
 
         // Calculate Jacobian of transformation
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int e = 0; e < dim; ++e)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int e = 0; e < dim; ++e)
             {
-              for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell;
-                  j++)
+              for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell;
+                   j++)
                 {
                   jacobian[d][e] += grad_phi[j][e] * v[j](d);
                 }
@@ -907,8 +909,9 @@ namespace Step47
         // Map integration points from reference element to subcell of
         // reference element
         Point<dim> q_prime;
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; j++)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell;
+               j++)
             q_prime[d] += v[j](d) * phi[j];
         xfem_points.push_back(q_prime);
       }
@@ -1003,7 +1006,7 @@ namespace Step47
            ExcInternalError());
     Assert(inputs.solution_values[0].size() == 2, ExcInternalError());
 
-    for(unsigned int q = 0; q < n_quadrature_points; ++q)
+    for (unsigned int q = 0; q < n_quadrature_points; ++q)
       {
         computed_quantities[q](0)
           = (inputs.solution_values[q](0) +
@@ -1060,7 +1063,7 @@ namespace Step47
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         hp_fe_values.reinit(cell);
 
@@ -1070,7 +1073,7 @@ namespace Step47
                                Vector<double>(2));
         fe_values.get_function_values(solution, solution_values);
 
-        for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+        for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
           {
             const double local_error
               = (solution_values[q](0)
@@ -1088,11 +1091,11 @@ namespace Step47
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 6; ++cycle)
+    for (unsigned int cycle = 0; cycle < 6; ++cycle)
       {
         std::cout << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_ball(triangulation);
             //GridGenerator::hyper_cube (triangulation, -1, 1);
@@ -1129,7 +1132,7 @@ main()
       LaplaceProblem<2> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1143,7 +1146,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

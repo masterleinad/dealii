@@ -36,7 +36,7 @@ main()
   Vector<double> v1(3);
   Vector<double> v2(3);
 
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     u(i) = i * i;
   deallog << "Distance " << H.least_squares(v1, u) << std::endl;
 }

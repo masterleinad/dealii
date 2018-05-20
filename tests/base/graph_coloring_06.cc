@@ -55,12 +55,12 @@ check()
   dof_handler.distribute_dofs(fe);
 
   // Create an adapted mesh
-  for(unsigned int l = 0; l < 11 - 2 * dim; ++l)
+  for (unsigned int l = 0; l < 11 - 2 * dim; ++l)
     {
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active();
-      for(; cell < dof_handler.end(); ++cell)
-        if(cell->center().distance(Point<dim>()) < cell->diameter())
+      for (; cell < dof_handler.end(); ++cell)
+        if (cell->center().distance(Point<dim>()) < cell->diameter())
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
@@ -78,7 +78,7 @@ check()
         typename DoFHandler<dim>::active_cell_iterator const&)>(
         &get_conflict_indices_cfem<dim>));
 
-  for(unsigned int color = 0; color < coloring.size(); ++color)
+  for (unsigned int color = 0; color < coloring.size(); ++color)
     deallog << coloring[color].size() << std::endl;
 }
 

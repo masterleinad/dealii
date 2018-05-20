@@ -83,17 +83,17 @@ FE_RaviartThomas<dim>::FE_RaviartThomas(const unsigned int deg)
 
   // TODO[TL]: for anisotropic refinement we will probably need a table of submatrices with an array for each refine case
   FullMatrix<double> face_embeddings[GeometryInfo<dim>::max_children_per_face];
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
     face_embeddings[i].reinit(this->dofs_per_face, this->dofs_per_face);
   FETools::compute_face_embedding_matrices<dim, double>(
     *this, face_embeddings, 0, 0);
   this->interface_constraints.reinit((1 << (dim - 1)) * this->dofs_per_face,
                                      this->dofs_per_face);
   unsigned int target_row = 0;
-  for(unsigned int d = 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
-    for(unsigned int i = 0; i < face_embeddings[d].m(); ++i)
+  for (unsigned int d = 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
+    for (unsigned int i = 0; i < face_embeddings[d].m(); ++i)
       {
-        for(unsigned int j = 0; j < face_embeddings[d].n(); ++j)
+        for (unsigned int j = 0; j < face_embeddings[d].n(); ++j)
           this->interface_constraints(target_row, j) = face_embeddings[d](i, j);
         ++target_row;
       }
@@ -140,7 +140,7 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
 
   unsigned int n_face_points = (dim > 1) ? 1 : 0;
   // compute (deg+1)^(dim-1)
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     n_face_points *= deg + 1;
 
   this->generalized_support_points.resize(
@@ -150,7 +150,7 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
   // Number of the point being entered
   unsigned int current = 0;
 
-  if(dim > 1)
+  if (dim > 1)
     {
       QGauss<dim - 1>                   face_points(deg + 1);
       TensorProductPolynomials<dim - 1> legendre
@@ -161,13 +161,13 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
       //       Assert (face_points.size() == this->dofs_per_face,
       //            ExcInternalError());
 
-      for(unsigned int k = 0; k < n_face_points; ++k)
+      for (unsigned int k = 0; k < n_face_points; ++k)
         {
           this->generalized_face_support_points[k] = face_points.point(k);
           // Compute its quadrature
           // contribution for each
           // moment.
-          for(unsigned int i = 0; i < legendre.n(); ++i)
+          for (unsigned int i = 0; i < legendre.n(); ++i)
             {
               boundary_weights(k, i)
                 = face_points.weight(k)
@@ -177,8 +177,8 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
 
       Quadrature<dim> faces
         = QProjector<dim>::project_to_all_faces(face_points);
-      for(; current < GeometryInfo<dim>::faces_per_cell * n_face_points;
-          ++current)
+      for (; current < GeometryInfo<dim>::faces_per_cell * n_face_points;
+           ++current)
         {
           // Enter the support point
           // into the vector
@@ -189,15 +189,15 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
         }
     }
 
-  if(deg == 0)
+  if (deg == 0)
     return;
 
   // Create Legendre basis for the space D_xi Q_k
   std::unique_ptr<AnisotropicPolynomials<dim>> polynomials[dim];
-  for(unsigned int dd = 0; dd < dim; ++dd)
+  for (unsigned int dd = 0; dd < dim; ++dd)
     {
       std::vector<std::vector<Polynomials::Polynomial<double>>> poly(dim);
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         poly[d] = Polynomials::Legendre::generate_complete_basis(deg);
       poly[dd] = Polynomials::Legendre::generate_complete_basis(deg - 1);
 
@@ -208,11 +208,11 @@ FE_RaviartThomas<dim>::initialize_support_points(const unsigned int deg)
   interior_weights.reinit(
     TableIndices<3>(n_interior_points, polynomials[0]->n(), dim));
 
-  for(unsigned int k = 0; k < cell_quadrature.size(); ++k)
+  for (unsigned int k = 0; k < cell_quadrature.size(); ++k)
     {
       this->generalized_support_points[current++] = cell_quadrature.point(k);
-      for(unsigned int i = 0; i < polynomials[0]->n(); ++i)
-        for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i < polynomials[0]->n(); ++i)
+        for (unsigned int d = 0; d < dim; ++d)
           interior_weights(k, i, d)
             = cell_quadrature.weight(k)
               * polynomials[d]->compute_value(i, cell_quadrature.point(k));
@@ -229,7 +229,7 @@ FE_RaviartThomas<1>::initialize_restriction()
   // there is only one refinement case in 1d,
   // which is the isotropic one (first index of
   // the matrix array has to be 0)
-  for(unsigned int i = 0; i < GeometryInfo<1>::max_children_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<1>::max_children_per_cell; ++i)
     this->restriction[0][i].reinit(0, 0);
 }
 
@@ -253,7 +253,7 @@ FE_RaviartThomas<dim>::initialize_restriction()
   const unsigned int n_face_points = q_base.size();
   // First, compute interpolation on
   // subfaces
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
     {
       // The shape functions of the
       // child cell are evaluated
@@ -265,13 +265,13 @@ FE_RaviartThomas<dim>::initialize_restriction()
       // ordered by point
       Table<2, double> cached_values_on_face(this->dofs_per_cell,
                                              q_face.size());
-      for(unsigned int k = 0; k < q_face.size(); ++k)
-        for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+      for (unsigned int k = 0; k < q_face.size(); ++k)
+        for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
           cached_values_on_face(i, k) = this->shape_value_component(
             i, q_face.point(k), GeometryInfo<dim>::unit_normal_direction[face]);
 
-      for(unsigned int sub = 0; sub < GeometryInfo<dim>::max_children_per_face;
-          ++sub)
+      for (unsigned int sub = 0; sub < GeometryInfo<dim>::max_children_per_face;
+           ++sub)
         {
           // The weight functions for
           // the coarse face are
@@ -294,11 +294,11 @@ FE_RaviartThomas<dim>::initialize_restriction()
           // are equal to the
           // corresponding shape
           // functions.
-          for(unsigned int k = 0; k < n_face_points; ++k)
-            for(unsigned int i_child = 0; i_child < this->dofs_per_cell;
-                ++i_child)
-              for(unsigned int i_face = 0; i_face < this->dofs_per_face;
-                  ++i_face)
+          for (unsigned int k = 0; k < n_face_points; ++k)
+            for (unsigned int i_child = 0; i_child < this->dofs_per_cell;
+                 ++i_child)
+              for (unsigned int i_face = 0; i_face < this->dofs_per_face;
+                   ++i_face)
                 {
                   // The quadrature
                   // weights on the
@@ -317,16 +317,16 @@ FE_RaviartThomas<dim>::initialize_restriction()
         }
     }
 
-  if(this->degree == 1)
+  if (this->degree == 1)
     return;
 
   // Create Legendre basis for the space D_xi Q_k. Here, we cannot
   // use the shape functions
   std::unique_ptr<AnisotropicPolynomials<dim>> polynomials[dim];
-  for(unsigned int dd = 0; dd < dim; ++dd)
+  for (unsigned int dd = 0; dd < dim; ++dd)
     {
       std::vector<std::vector<Polynomials::Polynomial<double>>> poly(dim);
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         poly[d]
           = Polynomials::Legendre::generate_complete_basis(this->degree - 1);
       poly[dd]
@@ -345,22 +345,22 @@ FE_RaviartThomas<dim>::initialize_restriction()
   // ordered by point
   Table<3, double> cached_values_on_cell(
     this->dofs_per_cell, q_cell.size(), dim);
-  for(unsigned int k = 0; k < q_cell.size(); ++k)
-    for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
-      for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int k = 0; k < q_cell.size(); ++k)
+    for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
+      for (unsigned int d = 0; d < dim; ++d)
         cached_values_on_cell(i, k, d)
           = this->shape_value_component(i, q_cell.point(k), d);
 
-  for(unsigned int child = 0; child < GeometryInfo<dim>::max_children_per_cell;
-      ++child)
+  for (unsigned int child = 0; child < GeometryInfo<dim>::max_children_per_cell;
+       ++child)
     {
       Quadrature<dim> q_sub = QProjector<dim>::project_to_child(q_cell, child);
 
-      for(unsigned int k = 0; k < q_sub.size(); ++k)
-        for(unsigned int i_child = 0; i_child < this->dofs_per_cell; ++i_child)
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int i_weight = 0; i_weight < polynomials[d]->n();
-                ++i_weight)
+      for (unsigned int k = 0; k < q_sub.size(); ++k)
+        for (unsigned int i_child = 0; i_child < this->dofs_per_cell; ++i_child)
+          for (unsigned int d = 0; d < dim; ++d)
+            for (unsigned int i_weight = 0; i_weight < polynomials[d]->n();
+                 ++i_weight)
               {
                 this->restriction[iso][child](
                   start_cell_dofs + i_weight * dim + d, i_child)
@@ -377,7 +377,7 @@ FE_RaviartThomas<dim>::get_dpo_vector(const unsigned int deg)
   // the element is face-based and we have
   // (deg+1)^(dim-1) DoFs per face
   unsigned int dofs_per_face = 1;
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     dofs_per_face *= deg + 1;
 
   // and then there are interior dofs
@@ -395,11 +395,11 @@ std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_RaviartThomas<dim>::get_constant_modes() const
 {
   Table<2, bool> constant_modes(dim, this->dofs_per_cell);
-  for(unsigned int d = 0; d < dim; ++d)
-    for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for (unsigned int d = 0; d < dim; ++d)
+    for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
       constant_modes(d, i) = true;
   std::vector<unsigned int> components;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     components.push_back(d);
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(constant_modes,
                                                               components);
@@ -422,11 +422,11 @@ FE_RaviartThomas<dim>::has_support_on_face(const unsigned int shape_index,
   // Return computed values if we
   // know them easily. Otherwise, it
   // is always safe to return true.
-  switch(this->degree)
+  switch (this->degree)
     {
       case 1:
         {
-          switch(dim)
+          switch (dim)
             {
               case 2:
                 {
@@ -469,9 +469,9 @@ FE_RaviartThomas<dim>::convert_generalized_support_point_values_to_dof_values(
   std::fill(nodal_values.begin(), nodal_values.end(), 0.);
 
   const unsigned int n_face_points = boundary_weights.size(0);
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
-    for(unsigned int k = 0; k < n_face_points; ++k)
-      for(unsigned int i = 0; i < boundary_weights.size(1); ++i)
+  for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for (unsigned int k = 0; k < n_face_points; ++k)
+      for (unsigned int i = 0; i < boundary_weights.size(1); ++i)
         {
           nodal_values[i + face * this->dofs_per_face]
             += boundary_weights(k, i)
@@ -484,9 +484,9 @@ FE_RaviartThomas<dim>::convert_generalized_support_point_values_to_dof_values(
   const unsigned int start_cell_points
     = GeometryInfo<dim>::faces_per_cell * n_face_points;
 
-  for(unsigned int k = 0; k < interior_weights.size(0); ++k)
-    for(unsigned int i = 0; i < interior_weights.size(1); ++i)
-      for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int k = 0; k < interior_weights.size(0); ++k)
+    for (unsigned int i = 0; i < interior_weights.size(1); ++i)
+      for (unsigned int d = 0; d < dim; ++d)
         nodal_values[start_cell_dofs + i * dim + d]
           += interior_weights(k, i, d)
              * support_point_values[k + start_cell_points](d);

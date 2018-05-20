@@ -77,7 +77,7 @@ check_all(std::ostream& log)
   const char*           format = "%d%d%d%s.eps";
   DataOutBase::EpsFlags flags;
 
-  if(true)
+  if (true)
     {
       sprintf(name, "cont%d%d%d.eps", dim, 4, 4);
 #if SEPARATE_FILES == 1
@@ -89,7 +89,7 @@ check_all(std::ostream& log)
       check_cont<dim>(4, 4, flags, out);
     }
 
-  for(unsigned int i = 0; i < 5; ++i)
+  for (unsigned int i = 0; i < 5; ++i)
     {
       flags.height_vector = i;
       flags.color_vector  = i;

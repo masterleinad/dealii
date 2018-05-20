@@ -39,13 +39,13 @@ test()
 
   std::map<types::global_dof_index, Point<dim>> points;
   DoFTools::map_dofs_to_support_points(MappingQGeneric<dim>(1), dofh, points);
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
-      for(typename std::map<types::global_dof_index, Point<dim>>::const_iterator
-            p
-          = points.begin();
-          p != points.end();
-          ++p)
+      for (typename std::map<types::global_dof_index,
+                             Point<dim>>::const_iterator p
+           = points.begin();
+           p != points.end();
+           ++p)
         deallog << p->first << " -> " << p->second << std::endl;
     }
 
@@ -56,9 +56,9 @@ test()
   IndexSet relevant_set;
   DoFTools::extract_locally_relevant_dofs(dofh, relevant_set);
 
-  for(unsigned int i = 0; i < dofh.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dofh.n_dofs(); ++i)
     {
-      if(relevant_set.is_element(i))
+      if (relevant_set.is_element(i))
         {
           AssertThrow(points.find(i) != points.end(), ExcInternalError());
         }
@@ -78,7 +78,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

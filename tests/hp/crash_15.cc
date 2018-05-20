@@ -44,17 +44,17 @@ test()
   tria.refine_global(1);
 
   hp::FECollection<dim> fe_collection;
-  for(unsigned int i = 0; i < tria.n_active_cells(); ++i)
+  for (unsigned int i = 0; i < tria.n_active_cells(); ++i)
     fe_collection.push_back(
       FESystem<dim>(FE_Q<dim>(2), 1, FE_DGQ<dim>(i % 4), 1));
 
   hp::DoFHandler<dim> dof_handler(tria);
 
   unsigned int fe_index = 0;
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell, ++fe_index)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell, ++fe_index)
     {
       deallog << "Setting fe_index=" << fe_index << " on cell " << cell
               << std::endl;
@@ -68,16 +68,17 @@ test()
   std::vector<types::global_dof_index> line_dof_indices_2(
     fe_collection[0].dofs_per_line + 2 * fe_collection[0].dofs_per_vertex);
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
-    for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell; ++line)
-      if(cell->line(line)->n_active_fe_indices() > 1)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
+    for (unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+         ++line)
+      if (cell->line(line)->n_active_fe_indices() > 1)
         {
           deallog << "line=" << cell->line(line) << std::endl;
-          for(unsigned int i = 0; i < cell->line(line)->n_active_fe_indices();
-              ++i)
+          for (unsigned int i = 0; i < cell->line(line)->n_active_fe_indices();
+               ++i)
             {
               deallog << "  active_fe_index="
                       << cell->line(line)->nth_active_fe_index(i) << " ("
@@ -88,7 +89,7 @@ test()
               cell->line(line)->get_dof_indices(
                 line_dof_indices_1, cell->line(line)->nth_active_fe_index(i));
               deallog << "  dof indices=";
-              for(unsigned int p = 0; p < line_dof_indices_1.size(); ++p)
+              for (unsigned int p = 0; p < line_dof_indices_1.size(); ++p)
                 deallog << line_dof_indices_1[p] << ' ';
               deallog << std::endl;
             }
@@ -96,11 +97,11 @@ test()
           // if there are multiple active fe
           // indices, make sure that all their
           // fe indices were unified
-          for(unsigned int i = 0; i < cell->line(line)->n_active_fe_indices();
-              ++i)
-            for(unsigned int j = i + 1;
-                j < cell->line(line)->n_active_fe_indices();
-                ++j)
+          for (unsigned int i = 0; i < cell->line(line)->n_active_fe_indices();
+               ++i)
+            for (unsigned int j = i + 1;
+                 j < cell->line(line)->n_active_fe_indices();
+                 ++j)
               {
                 cell->line(line)->get_dof_indices(
                   line_dof_indices_1, cell->line(line)->nth_active_fe_index(i));

@@ -37,7 +37,7 @@ namespace Functions
     Assert(n_components > 0, ExcZero());
 
     std::string vnames;
-    switch(dim)
+    switch (dim)
       {
         case 1:
           vnames = "x,t";
@@ -70,7 +70,7 @@ namespace Functions
 
     // The expression of the function
     std::string expr = "0";
-    for(unsigned int i = 1; i < n_components; ++i)
+    for (unsigned int i = 1; i < n_components; ++i)
       expr += "; 0";
 
     prm.declare_entry(
@@ -117,7 +117,7 @@ namespace Functions
     std::vector<std::string> const_list
       = Utilities::split_string_list(constants_list, ',');
     std::map<std::string, double> constants;
-    for(unsigned int i = 0; i < const_list.size(); ++i)
+    for (unsigned int i = 0; i < const_list.size(); ++i)
       {
         std::vector<std::string> this_c
           = Utilities::split_string_list(const_list[i], '=');
@@ -134,7 +134,7 @@ namespace Functions
     constants["Pi"] = numbers::PI;
 
     const unsigned int nn = (Utilities::split_string_list(vnames)).size();
-    switch(nn)
+    switch (nn)
       {
         case dim:
           // Time independent function

@@ -36,7 +36,7 @@ test()
 
   // now the same with one of the elements
   // being non-primitive
-  if(dim > 1)
+  if (dim > 1)
     {
       hp::FECollection<dim> fe_collection;
       fe_collection.push_back(FESystem<dim>(FE_Q<dim>(2), dim));

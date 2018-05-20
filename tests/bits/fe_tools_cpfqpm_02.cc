@@ -36,13 +36,13 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   // support points. otherwise,
   // interpolation doesn't really
   // work
-  if(fe.n_components() != 1)
+  if (fe.n_components() != 1)
     return;
 
   // ignore this check if this fe has already
   // been treated
   static std::set<std::string> already_checked;
-  if(already_checked.find(fe.get_name()) != already_checked.end())
+  if (already_checked.find(fe.get_name()) != already_checked.end())
     return;
   already_checked.insert(fe.get_name());
 
@@ -56,7 +56,7 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   // at least as many degrees of freedom in
   // the finite element as there are
   // quadrature points
-  if(fe.dofs_per_cell < q_rhs.size())
+  if (fe.dofs_per_cell < q_rhs.size())
     return;
 
   deallog << "dofs_per_cell=" << fe.dofs_per_cell
@@ -79,7 +79,7 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   // the product should be the identity
   // matrix now. make sure that this is
   // indeed the case
-  for(unsigned int i = 0; i < product.m(); ++i)
+  for (unsigned int i = 0; i < product.m(); ++i)
     product(i, i) -= 1;
 
   output_matrix(product);

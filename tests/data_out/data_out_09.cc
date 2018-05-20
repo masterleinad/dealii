@@ -52,7 +52,7 @@ test()
 
   Vector<double> v_node(dof_handler.n_dofs());
   Vector<double> v_cell(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     {
       v_node[i] = i;
       v_cell[i] = 10 + i;
@@ -92,7 +92,7 @@ test()
 
       data_out.write_vtk(deallog.get_file_stream());
     }
-  catch(...)
+  catch (...)
     {
       deallog << "exception" << std::endl;
     }

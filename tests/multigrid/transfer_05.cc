@@ -44,19 +44,19 @@ check(const unsigned int fe_degree)
 
   // run a few different sizes...
   unsigned int sizes[] = {1, 2, 3};
-  for(unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
-      ++cycle)
+  for (unsigned int cycle = 0; cycle < sizeof(sizes) / sizeof(unsigned int);
+       ++cycle)
     {
       unsigned int n_refinements = 0;
       unsigned int n_subdiv      = sizes[cycle];
-      if(n_subdiv > 1)
-        while(n_subdiv % 2 == 0)
+      if (n_subdiv > 1)
+        while (n_subdiv % 2 == 0)
           {
             n_refinements += 1;
             n_subdiv /= 2;
           }
       n_refinements += 3 - dim;
-      if(fe_degree < 3)
+      if (fe_degree < 3)
         n_refinements += 1;
 
       parallel::distributed::Triangulation<dim> tr(
@@ -68,27 +68,27 @@ check(const unsigned int fe_degree)
       tr.refine_global(n_refinements);
 
       // adaptive refinement into a circle
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() < 0.5)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() < 0.5)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() > 0.3
-           && cell->center().norm() < 0.4)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() > 0.3
+            && cell->center().norm() < 0.4)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->center().norm() > 0.33
-           && cell->center().norm() < 0.37)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->center().norm() > 0.33
+            && cell->center().norm() < 0.37)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
 
@@ -124,23 +124,23 @@ check(const unsigned int fe_degree)
 
       // initialize
       v.reinit(mgdof.locally_owned_dofs(), MPI_COMM_WORLD);
-      for(unsigned int b = 0; b < nb; ++b)
+      for (unsigned int b = 0; b < nb; ++b)
         bv.block(b).reinit(mgdof.locally_owned_dofs(), MPI_COMM_WORLD);
 
-      for(unsigned int l = lbv.min_level(); l <= lbv.max_level(); ++l)
+      for (unsigned int l = lbv.min_level(); l <= lbv.max_level(); ++l)
         {
           lv[l].reinit(mgdof.locally_owned_mg_dofs(l), MPI_COMM_WORLD);
 
           lbv[l].reinit(nb);
-          for(unsigned int b = 0; b < nb; ++b)
+          for (unsigned int b = 0; b < nb; ++b)
             lbv[l].block(b).reinit(mgdof.locally_owned_mg_dofs(l),
                                    MPI_COMM_WORLD);
 
           lbv[l].collect_sizes();
 
           // set values:
-          for(unsigned int b = 0; b < nb; ++b)
-            for(unsigned int i = 0; i < lbv[l].block(b).local_size(); ++i)
+          for (unsigned int b = 0; b < nb; ++b)
+            for (unsigned int i = 0; i < lbv[l].block(b).local_size(); ++i)
               lbv[l].block(b).local_element(i) = random_value<double>();
 
           lbv[l].compress(VectorOperation::insert);
@@ -148,9 +148,9 @@ check(const unsigned int fe_degree)
 
       // check copy_from_mg
       transfer.copy_from_mg(mgdof, bv, lbv);
-      for(unsigned int b = 0; b < nb; ++b)
+      for (unsigned int b = 0; b < nb; ++b)
         {
-          for(unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
+          for (unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
             lv[l] = lbv[l].block(b);
 
           transfer_ref.copy_from_mg(mgdof, v, lv);
@@ -164,16 +164,16 @@ check(const unsigned int fe_degree)
       // set correctly in copy_to_mg().
       MGLevelObject<LinearAlgebra::distributed::BlockVector<Number>> lbv2(
         0, tr.n_global_levels() - 1);
-      for(unsigned int b = 0; b < nb; ++b)
-        for(unsigned int i = 0; i < bv.block(b).local_size(); ++i)
+      for (unsigned int b = 0; b < nb; ++b)
+        for (unsigned int i = 0; i < bv.block(b).local_size(); ++i)
           bv.block(b).local_element(i) = random_value<double>();
 
       transfer.copy_to_mg(mgdof, lbv2, bv);
       // Also check that the block vector has its (global) size set on each level:
-      for(unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
+      for (unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
         {
           unsigned int total_size = 0;
-          for(unsigned int b = 0; b < nb; ++b)
+          for (unsigned int b = 0; b < nb; ++b)
             total_size += lbv2[l].block(b).size();
 
           AssertThrow(total_size == lbv2[l].size(),
@@ -181,11 +181,11 @@ check(const unsigned int fe_degree)
         }
 
       // Finally check the difference:
-      for(unsigned int b = 0; b < nb; ++b)
+      for (unsigned int b = 0; b < nb; ++b)
         {
           v = bv.block(b);
           transfer_ref.copy_to_mg(mgdof, lv, v);
-          for(unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
+          for (unsigned int l = lv.min_level(); l <= lv.max_level(); ++l)
             {
               lv[l] -= lbv2[l].block(b);
               deallog << "Diff copy_to_mg   l" << l << ": " << lv[l].l2_norm()

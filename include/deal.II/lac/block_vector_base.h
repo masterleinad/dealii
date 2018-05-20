@@ -1127,8 +1127,8 @@ namespace internal
       // currently point into, then we
       // can save the computation of
       // the block
-      if((global_index + d >= next_break_backward)
-         && (global_index + d <= next_break_forward))
+      if ((global_index + d >= next_break_backward)
+          && (global_index + d <= next_break_forward))
         return parent->block(current_block)(index_within_block + d);
 
       // if the index is not within the
@@ -1263,8 +1263,8 @@ namespace internal
       // currently point into, then we
       // can save the computation of
       // the block
-      if((global_index + d >= next_break_backward)
-         && (global_index + d <= next_break_forward))
+      if ((global_index + d >= next_break_backward)
+          && (global_index + d <= next_break_forward))
         return Iterator(*parent,
                         global_index + d,
                         current_block,
@@ -1288,8 +1288,8 @@ namespace internal
       // currently point into, then we
       // can save the computation of
       // the block
-      if((global_index - d >= next_break_backward)
-         && (global_index - d <= next_break_forward))
+      if ((global_index - d >= next_break_backward)
+          && (global_index - d <= next_break_forward))
         return Iterator(*parent,
                         global_index - d,
                         current_block,
@@ -1312,8 +1312,8 @@ namespace internal
       // currently point into, then we
       // can save the computation of
       // the block
-      if((global_index + d >= next_break_backward)
-         && (global_index + d <= next_break_forward))
+      if ((global_index + d >= next_break_backward)
+          && (global_index + d <= next_break_forward))
         {
           global_index += d;
           index_within_block += d;
@@ -1336,8 +1336,8 @@ namespace internal
       // currently point into, then we
       // can save the computation of
       // the block
-      if((global_index - d >= next_break_backward)
-         && (global_index - d <= next_break_forward))
+      if ((global_index - d >= next_break_backward)
+          && (global_index - d <= next_break_forward))
         {
           global_index -= d;
           index_within_block -= d;
@@ -1362,7 +1362,7 @@ namespace internal
       // times that people want to
       // initialize iterators
       // past-the-end
-      if(global_index < parent.size())
+      if (global_index < parent.size())
         {
           const std::pair<size_type, size_type> indices
             = parent.block_indices.global_to_local(global_index);
@@ -1391,7 +1391,7 @@ namespace internal
     void
     Iterator<BlockVectorType, Constness>::move_forward()
     {
-      if(global_index != next_break_forward)
+      if (global_index != next_break_forward)
         ++index_within_block;
       else
         {
@@ -1405,7 +1405,7 @@ namespace internal
           next_break_backward = next_break_forward + 1;
 
           // compute new break forward
-          if(current_block < parent->block_indices.size())
+          if (current_block < parent->block_indices.size())
             next_break_forward
               += parent->block_indices.block_size(current_block);
           else
@@ -1423,9 +1423,9 @@ namespace internal
     void
     Iterator<BlockVectorType, Constness>::move_backward()
     {
-      if(global_index != next_break_backward)
+      if (global_index != next_break_backward)
         --index_within_block;
-      else if(current_block != 0)
+      else if (current_block != 0)
         {
           // ok, we traverse a boundary
           // between blocks:
@@ -1473,7 +1473,7 @@ BlockVectorBase<VectorType>::locally_owned_elements() const
 
   // copy index sets from blocks into the global one, shifted
   // by the appropriate amount for each block
-  for(unsigned int b = 0; b < n_blocks(); ++b)
+  for (unsigned int b = 0; b < n_blocks(); ++b)
     {
       IndexSet x = block(b).locally_owned_elements();
       is.add_indices(x, block_indices.block_start(b));
@@ -1522,7 +1522,7 @@ BlockVectorBase<VectorType>::collect_sizes()
 {
   std::vector<size_type> sizes(n_blocks());
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     sizes[i] = block(i).size();
 
   block_indices.reinit(sizes);
@@ -1533,7 +1533,7 @@ inline void
 BlockVectorBase<VectorType>::compress(
   ::dealii::VectorOperation::values operation)
 {
-  for(unsigned int i = 0; i < n_blocks(); ++i)
+  for (unsigned int i = 0; i < n_blocks(); ++i)
     block(i).compress(operation);
 }
 
@@ -1579,8 +1579,8 @@ template <class VectorType>
 bool
 BlockVectorBase<VectorType>::all_zero() const
 {
-  for(size_type i = 0; i < n_blocks(); ++i)
-    if(components[i].all_zero() == false)
+  for (size_type i = 0; i < n_blocks(); ++i)
+    if (components[i].all_zero() == false)
       return false;
 
   return true;
@@ -1590,8 +1590,8 @@ template <class VectorType>
 bool
 BlockVectorBase<VectorType>::is_non_negative() const
 {
-  for(size_type i = 0; i < n_blocks(); ++i)
-    if(components[i].is_non_negative() == false)
+  for (size_type i = 0; i < n_blocks(); ++i)
+    if (components[i].is_non_negative() == false)
       return false;
 
   return true;
@@ -1605,7 +1605,7 @@ typename BlockVectorBase<VectorType>::value_type BlockVectorBase<VectorType>::
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
   value_type sum = 0.;
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     sum += components[i] * v.components[i];
 
   return sum;
@@ -1616,7 +1616,7 @@ typename BlockVectorBase<VectorType>::real_type
 BlockVectorBase<VectorType>::norm_sqr() const
 {
   real_type sum = 0.;
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     sum += components[i].norm_sqr();
 
   return sum;
@@ -1628,7 +1628,7 @@ BlockVectorBase<VectorType>::mean_value() const
 {
   value_type sum = 0.;
   // need to do static_cast as otherwise it won't work with value_type=complex<T>
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     sum += components[i].mean_value()
            * (typename numbers::NumberTraits<value_type>::real_type(
                components[i].size()));
@@ -1641,7 +1641,7 @@ typename BlockVectorBase<VectorType>::real_type
 BlockVectorBase<VectorType>::l1_norm() const
 {
   real_type sum = 0.;
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     sum += components[i].l1_norm();
 
   return sum;
@@ -1659,10 +1659,10 @@ typename BlockVectorBase<VectorType>::real_type
 BlockVectorBase<VectorType>::linfty_norm() const
 {
   real_type sum = 0.;
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       value_type newval = components[i].linfty_norm();
-      if(sum < newval)
+      if (sum < newval)
         sum = newval;
     }
   return sum;
@@ -1679,7 +1679,7 @@ BlockVectorBase<VectorType>::add_and_dot(
   AssertDimension(n_blocks(), W.n_blocks());
 
   value_type sum = 0.;
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     sum += components[i].add_and_dot(a, V.components[i], W.components[i]);
 
   return sum;
@@ -1692,7 +1692,7 @@ BlockVectorBase<VectorType>::operator+=(const BlockVectorBase<VectorType>& v)
   Assert(n_blocks() == v.n_blocks(),
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i] += v.components[i];
     }
@@ -1707,7 +1707,7 @@ BlockVectorBase<VectorType>::operator-=(const BlockVectorBase<VectorType>& v)
   Assert(n_blocks() == v.n_blocks(),
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i] -= v.components[i];
     }
@@ -1734,7 +1734,7 @@ BlockVectorBase<VectorType>::add(const std::vector<size_type>& indices,
   Assert(indices.size() == values.size(),
          ExcDimensionMismatch(indices.size(), values.size()));
   const size_type n_indices = indices.size();
-  for(size_type i = 0; i < n_indices; ++i)
+  for (size_type i = 0; i < n_indices; ++i)
     (*this)(indices[i]) += values(i);
 }
 
@@ -1745,7 +1745,7 @@ BlockVectorBase<VectorType>::add(const size_type  n_indices,
                                  const size_type* indices,
                                  const Number*    values)
 {
-  for(size_type i = 0; i < n_indices; ++i)
+  for (size_type i = 0; i < n_indices; ++i)
     (*this)(indices[i]) += values[i];
 }
 
@@ -1755,7 +1755,7 @@ BlockVectorBase<VectorType>::add(const value_type a)
 {
   AssertIsFinite(a);
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].add(a);
     }
@@ -1771,7 +1771,7 @@ BlockVectorBase<VectorType>::add(const value_type                   a,
   Assert(n_blocks() == v.n_blocks(),
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].add(a, v.components[i]);
     }
@@ -1792,7 +1792,7 @@ BlockVectorBase<VectorType>::add(const value_type                   a,
   Assert(n_blocks() == w.n_blocks(),
          ExcDimensionMismatch(n_blocks(), w.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].add(a, v.components[i], b, w.components[i]);
     }
@@ -1808,7 +1808,7 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
   Assert(n_blocks() == v.n_blocks(),
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].sadd(x, v.components[i]);
     }
@@ -1826,7 +1826,7 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
   Assert(n_blocks() == v.n_blocks(),
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].sadd(x, a, v.components[i]);
     }
@@ -1849,7 +1849,7 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
   Assert(n_blocks() == w.n_blocks(),
          ExcDimensionMismatch(n_blocks(), w.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].sadd(x, a, v.components[i], b, w.components[i]);
     }
@@ -1877,7 +1877,7 @@ BlockVectorBase<VectorType>::sadd(const value_type                   x,
   Assert(n_blocks() == y.n_blocks(),
          ExcDimensionMismatch(n_blocks(), y.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].sadd(
         x, a, v.components[i], b, w.components[i], c, y.components[i]);
@@ -1891,7 +1891,7 @@ BlockVectorBase<VectorType>::scale(const BlockVector2& v)
 {
   Assert(n_blocks() == v.n_blocks(),
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     components[i].scale(v.block(i));
 }
 
@@ -1910,7 +1910,7 @@ BlockVectorBase<VectorType>::equ(const value_type                   a,
   Assert(n_blocks() == w.n_blocks(),
          ExcDimensionMismatch(n_blocks(), w.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     {
       components[i].equ(a, v.components[i], b, w.components[i]);
     }
@@ -1934,7 +1934,7 @@ BlockVectorBase<VectorType>::equ(const value_type a, const BlockVector2& v)
   Assert(n_blocks() == v.n_blocks(),
          ExcDimensionMismatch(n_blocks(), v.n_blocks()));
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     components[i].equ(a, v.components[i]);
 }
 
@@ -1942,7 +1942,7 @@ template <class VectorType>
 void
 BlockVectorBase<VectorType>::update_ghost_values() const
 {
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     block(i).update_ghost_values();
 }
 
@@ -1952,7 +1952,7 @@ BlockVectorBase<VectorType>::operator=(const value_type s)
 {
   AssertIsFinite(s);
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     components[i] = s;
 
   return *this;
@@ -1964,7 +1964,7 @@ BlockVectorBase<VectorType>::operator=(const BlockVectorBase<VectorType>& v)
 {
   AssertDimension(n_blocks(), v.n_blocks());
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     components[i] = v.components[i];
 
   return *this;
@@ -1977,7 +1977,7 @@ BlockVectorBase<VectorType>::operator=(const BlockVectorBase<VectorType2>& v)
 {
   AssertDimension(n_blocks(), v.n_blocks());
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     components[i] = v.components[i];
 
   return *this;
@@ -1990,8 +1990,8 @@ BlockVectorBase<VectorType>::operator=(const VectorType& v)
   Assert(size() == v.size(), ExcDimensionMismatch(size(), v.size()));
 
   size_type index_v = 0;
-  for(size_type b = 0; b < n_blocks(); ++b)
-    for(size_type i = 0; i < block(b).size(); ++i, ++index_v)
+  for (size_type b = 0; b < n_blocks(); ++b)
+    for (size_type i = 0; i < block(b).size(); ++i, ++index_v)
       block(b)(i) = v(index_v);
 
   return *this;
@@ -2005,8 +2005,8 @@ operator==(const BlockVectorBase<VectorType2>& v) const
 {
   Assert(block_indices == v.block_indices, ExcDifferentBlockIndices());
 
-  for(size_type i = 0; i < n_blocks(); ++i)
-    if(!(components[i] == v.components[i]))
+  for (size_type i = 0; i < n_blocks(); ++i)
+    if (!(components[i] == v.components[i]))
       return false;
 
   return true;
@@ -2018,7 +2018,7 @@ BlockVectorBase<VectorType>::operator*=(const value_type factor)
 {
   AssertIsFinite(factor);
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     components[i] *= factor;
 
   return *this;
@@ -2031,7 +2031,7 @@ BlockVectorBase<VectorType>::operator/=(const value_type factor)
   AssertIsFinite(factor);
   Assert(factor != 0., ExcDivideByZero());
 
-  for(size_type i = 0; i < n_blocks(); ++i)
+  for (size_type i = 0; i < n_blocks(); ++i)
     components[i] /= factor;
 
   return *this;
@@ -2076,7 +2076,7 @@ BlockVectorBase<VectorType>::extract_subvector_to(
   const std::vector<size_type>& indices,
   std::vector<OtherNumber>&     values) const
 {
-  for(size_type i = 0; i < indices.size(); ++i)
+  for (size_type i = 0; i < indices.size(); ++i)
     values[i] = operator()(indices[i]);
 }
 
@@ -2088,7 +2088,7 @@ BlockVectorBase<VectorType>::extract_subvector_to(
   const ForwardIterator indices_end,
   OutputIterator        values_begin) const
 {
-  while(indices_begin != indices_end)
+  while (indices_begin != indices_end)
     {
       *values_begin = operator()(*indices_begin);
       indices_begin++;

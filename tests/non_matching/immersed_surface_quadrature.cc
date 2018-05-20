@@ -27,7 +27,7 @@ template <int dim>
 void
 print_quadrature(const NonMatching::ImmersedSurfaceQuadrature<dim>& quadrature)
 {
-  for(unsigned int i = 0; i < quadrature.size(); ++i)
+  for (unsigned int i = 0; i < quadrature.size(); ++i)
     {
       deallog << quadrature.point(i) << ", " << quadrature.weight(i) << ", "
               << quadrature.normal_vector(i) << std::endl;

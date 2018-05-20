@@ -100,7 +100,7 @@ public:
   bool
   is_enriched(const Point<dim>& point) const
   {
-    if(origin.distance(point) < radius)
+    if (origin.distance(point) < radius)
       return true;
     else
       return false;
@@ -224,9 +224,9 @@ namespace Step36
     GridGenerator::hyper_cube(triangulation, -10, 10);
     triangulation.refine_global(2); // 64 cells
 
-    for(auto cell = triangulation.begin_active(); cell != triangulation.end();
-        ++cell)
-      if(std::sqrt(cell->center().square()) < 5.0)
+    for (auto cell = triangulation.begin_active(); cell != triangulation.end();
+         ++cell)
+      if (std::sqrt(cell->center().square()) < 5.0)
         cell->set_refine_flag();
 
     triangulation.execute_coarsening_and_refinement(); // 120 cells
@@ -249,11 +249,11 @@ namespace Step36
     // |         | pou|    |
     // +---------+----+----+
     // see discussion in Step46.
-    for(typename hp::DoFHandler<dim>::cell_iterator cell
-        = dof_handler.begin_active();
-        cell != dof_handler.end();
-        ++cell)
-      if(enrichment.is_enriched(cell->center()))
+    for (typename hp::DoFHandler<dim>::cell_iterator cell
+         = dof_handler.begin_active();
+         cell != dof_handler.end();
+         ++cell)
+      if (enrichment.is_enriched(cell->center()))
         cell->set_material_id(pou_material_id);
       else
         cell->set_material_id(fe_material_id);
@@ -263,14 +263,14 @@ namespace Step36
   std::pair<unsigned int, unsigned int>
   EigenvalueProblem<dim>::setup_system()
   {
-    for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-        = dof_handler.begin_active();
-        cell != dof_handler.end();
-        ++cell)
+    for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+         = dof_handler.begin_active();
+         cell != dof_handler.end();
+         ++cell)
       {
-        if(cell->material_id() == fe_material_id)
+        if (cell->material_id() == fe_material_id)
           cell->set_active_fe_index(fe_fe_index);
-        else if(cell->material_id() == pou_material_id)
+        else if (cell->material_id() == pou_material_id)
           cell->set_active_fe_index(pou_fe_index);
         else
           Assert(false, ExcNotImplemented());
@@ -300,7 +300,7 @@ namespace Step36
                                     /* keep constrained dofs */ false);
 
     std::vector<types::global_dof_index> n_locally_owned_dofs(n_mpi_processes);
-    for(unsigned int i = 0; i < n_mpi_processes; i++)
+    for (unsigned int i = 0; i < n_mpi_processes; i++)
       n_locally_owned_dofs[i]
         = locally_owned_dofs_per_processor[i].n_elements();
 
@@ -317,7 +317,7 @@ namespace Step36
     eigenfunctions.resize(number_of_eigenvalues);
     eigenfunctions_locally_relevant.resize(number_of_eigenvalues);
     vec_estimated_error_per_cell.resize(number_of_eigenvalues);
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
       {
         eigenfunctions[i].reinit(locally_owned_dofs,
                                  mpi_communicator); //without ghost dofs
@@ -333,11 +333,11 @@ namespace Step36
 
     unsigned int n_pou_cells = 0, n_fem_cells = 0;
 
-    for(typename hp::DoFHandler<dim>::cell_iterator cell
-        = dof_handler.begin_active();
-        cell != dof_handler.end();
-        ++cell)
-      if(cell_is_pou(cell))
+    for (typename hp::DoFHandler<dim>::cell_iterator cell
+         = dof_handler.begin_active();
+         cell != dof_handler.end();
+         ++cell)
+      if (cell_is_pou(cell))
         n_pou_cells++;
       else
         n_fem_cells++;
@@ -373,8 +373,8 @@ namespace Step36
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->subdomain_id() == this_mpi_process)
+    for (; cell != endc; ++cell)
+      if (cell->subdomain_id() == this_mpi_process)
         {
           fe_values_hp.reinit(cell);
           const FEValues<dim>& fe_values = fe_values_hp.get_present_fe_values();
@@ -394,9 +394,9 @@ namespace Step36
           potential.value_list(fe_values.get_quadrature_points(),
                                potential_values);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = i; j < dofs_per_cell; ++j)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int j = i; j < dofs_per_cell; ++j)
                 {
                   cell_stiffness_matrix(i, j)
                     += (fe_values[fe_extractor].gradient(i, q_point)
@@ -413,8 +413,8 @@ namespace Step36
                 }
 
           // exploit symmetry
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = i; j < dofs_per_cell; ++j)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = i; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(j, i) = cell_stiffness_matrix(i, j);
                 cell_mass_matrix(j, i)      = cell_mass_matrix(i, j);
@@ -449,7 +449,7 @@ namespace Step36
                       eigenfunctions,
                       eigenfunctions.size());
 
-    for(unsigned int i = 0; i < eigenfunctions.size(); i++)
+    for (unsigned int i = 0; i < eigenfunctions.size(); i++)
       {
         constraints.distribute(eigenfunctions[i]);
         eigenfunctions_locally_relevant[i] = eigenfunctions[i];
@@ -473,7 +473,7 @@ namespace Step36
       std::vector<const PETScWrappers::MPI::Vector*> sol(number_of_eigenvalues);
       std::vector<Vector<float>*> error(number_of_eigenvalues);
 
-      for(unsigned int i = 0; i < number_of_eigenvalues; i++)
+      for (unsigned int i = 0; i < number_of_eigenvalues; i++)
         {
           sol[i]   = &eigenfunctions_locally_relevant[i];
           error[i] = &vec_estimated_error_per_cell[i];
@@ -491,10 +491,10 @@ namespace Step36
     }
 
     // sum up for a global:
-    for(unsigned int c = 0; c < estimated_error_per_cell.size(); c++)
+    for (unsigned int c = 0; c < estimated_error_per_cell.size(); c++)
       {
         double er = 0.0;
-        for(unsigned int i = 0; i < number_of_eigenvalues; i++)
+        for (unsigned int i = 0; i < number_of_eigenvalues; i++)
           er += vec_estimated_error_per_cell[i][c]
                 * vec_estimated_error_per_cell[i][c];
 
@@ -522,12 +522,12 @@ namespace Step36
       typename hp::DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
         endc = dof_handler.end();
-      for(unsigned int index = 0; cell != endc; ++cell, ++index)
+      for (unsigned int index = 0; cell != endc; ++cell, ++index)
         fe_index(index) = cell->active_fe_index();
     }
 
     Assert(cycle < 10, ExcNotImplemented());
-    if(this_mpi_process == 0)
+    if (this_mpi_process == 0)
       {
         std::string filename = "solution-";
         filename += ('0' + cycle);
@@ -543,7 +543,7 @@ namespace Step36
       }
 
     // second output without making mesh finer
-    if(this_mpi_process == 0)
+    if (this_mpi_process == 0)
       {
         std::string filename = "mesh-";
         filename += ('0' + cycle);
@@ -560,7 +560,7 @@ namespace Step36
 
     // scalar data for plotting
     //output scalar data (eigenvalues, energies, ndofs, etc)
-    if(this_mpi_process == 0)
+    if (this_mpi_process == 0)
       {
         const std::string scalar_fname = "scalar-data.txt";
 
@@ -575,7 +575,7 @@ namespace Step36
                << triangulation.n_active_cells() << sep << dof_handler.n_dofs()
                << sep << std::scientific;
 
-        for(unsigned int i = 0; i < eigenvalues.size(); i++)
+        for (unsigned int i = 0; i < eigenvalues.size(); i++)
           output << eigenvalues[i] << sep;
 
         output << std::endl;
@@ -587,7 +587,7 @@ namespace Step36
   void
   EigenvalueProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 4; cycle++)
+    for (unsigned int cycle = 0; cycle < 4; cycle++)
       {
         pcout << "Cycle " << cycle << std::endl;
         const std::pair<unsigned int, unsigned int> n_cells = setup_system();
@@ -609,7 +609,7 @@ namespace Step36
         refine_grid();
 
         pcout << std::endl;
-        for(unsigned int i = 0; i < eigenvalues.size(); ++i)
+        for (unsigned int i = 0; i < eigenvalues.size(); ++i)
           pcout << "      Eigenvalue " << i << " : " << eigenvalues[i]
                 << std::endl;
       }
@@ -631,7 +631,7 @@ main(int argc, char** argv)
         step36.run();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -645,7 +645,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

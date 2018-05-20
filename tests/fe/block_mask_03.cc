@@ -28,7 +28,7 @@ test()
   BlockMask         m(12, false);
 
   // verify equality
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     AssertThrow(m[i] == v[i], ExcInternalError());
 
   deallog << "OK" << std::endl;

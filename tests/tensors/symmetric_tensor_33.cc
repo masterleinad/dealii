@@ -32,7 +32,7 @@ check()
   // build one in which all numbers have both real and imaginary components
   SymmetricTensor<rank, dim, std::complex<double>> tc, tc_conj;
 
-  for(unsigned int i = 0; i < t.n_independent_components; ++i)
+  for (unsigned int i = 0; i < t.n_independent_components; ++i)
     {
       t.access_raw_entry(i)  = 1.0 * (i + 1);
       ti.access_raw_entry(i) = std::complex<double>(0, 1.0 * (i + 1));

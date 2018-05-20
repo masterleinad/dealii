@@ -88,13 +88,13 @@ main(int argc, char** argv)
   chunk_sizes.push_back(std::make_pair(75, 50));
   chunk_sizes.push_back(std::make_pair(100, 75));
 
-  for(unsigned int i = 0; i < sizes.size(); ++i)
-    for(unsigned int j = 0; j < block_sizes.size(); ++j)
-      for(unsigned int k = 0; k < chunk_sizes.size(); ++k)
+  for (unsigned int i = 0; i < sizes.size(); ++i)
+    for (unsigned int j = 0; j < block_sizes.size(); ++j)
+      for (unsigned int k = 0; k < chunk_sizes.size(); ++k)
         test<double>(sizes[i], block_sizes[j], chunk_sizes[k]);
 
-  for(unsigned int i = 0; i < sizes.size(); ++i)
-    for(unsigned int j = 0; j < block_sizes.size(); ++j)
-      for(unsigned int k = 0; k < chunk_sizes.size(); ++k)
+  for (unsigned int i = 0; i < sizes.size(); ++i)
+    for (unsigned int j = 0; j < block_sizes.size(); ++j)
+      for (unsigned int k = 0; k < chunk_sizes.size(); ++k)
         test<float>(sizes[i], block_sizes[j], chunk_sizes[k]);
 }

@@ -39,7 +39,7 @@ test(std::ostream& /*out*/)
     {
       gi.read_xda(in);
     }
-  catch(const typename Triangulation<dim>::DistortedCellList& distorted_cells)
+  catch (const typename Triangulation<dim>::DistortedCellList& distorted_cells)
     {
       // ignore distorted cells
       deallog << distorted_cells.distorted_cells.size()

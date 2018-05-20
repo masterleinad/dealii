@@ -81,7 +81,7 @@ main()
   BlockSparseMatrix<double> a(sparsity_pattern);
   BlockSparseMatrix<double> b(sparsity_pattern);
 
-  for(unsigned int i = 0; i < a.n(); ++i)
+  for (unsigned int i = 0; i < a.n(); ++i)
     {
       a.set(i, i, 1.);
       b.set(i, i, 5.);
@@ -102,7 +102,7 @@ main()
 
   BlockVector<double> u;
   op_a.reinit_domain_vector(u, true);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     {
       u[i] = (double) (i + 1);
     }

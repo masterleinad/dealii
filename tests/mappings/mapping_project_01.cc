@@ -45,8 +45,8 @@ dim2_grid()
   deallog << "The test point has real coordinates: " << testp
           << ", and unit coordinates: "
           << mapping.transform_real_to_unit_cell(cell, testp) << std::endl;
-  for(; cell != endc; ++cell)
-    for(unsigned int face = 0; face < GeometryInfo<2>::faces_per_cell; ++face)
+  for (; cell != endc; ++cell)
+    for (unsigned int face = 0; face < GeometryInfo<2>::faces_per_cell; ++face)
       {
         deallog << "For face: " << face << ", the test point projects to: "
                 << mapping.project_real_point_to_unit_point_on_face(
@@ -75,8 +75,8 @@ dim3_grid()
   deallog << "The test point has real coordinates: " << testp
           << ", and unit coordinates: "
           << mapping.transform_real_to_unit_cell(cell, testp) << std::endl;
-  for(; cell != endc; ++cell)
-    for(unsigned int face = 0; face < GeometryInfo<3>::faces_per_cell; ++face)
+  for (; cell != endc; ++cell)
+    for (unsigned int face = 0; face < GeometryInfo<3>::faces_per_cell; ++face)
       {
         deallog << "For face: " << face << ", the test point projects to: "
                 << mapping.project_real_point_to_unit_point_on_face(
@@ -109,8 +109,8 @@ dim3_parallelepiped_grid()
           << ", and unit coordinates: "
           << mapping.transform_real_to_unit_cell(cell, testp) << std::endl;
 
-  for(; cell != endc; ++cell)
-    for(unsigned int face = 0; face < GeometryInfo<3>::faces_per_cell; ++face)
+  for (; cell != endc; ++cell)
+    for (unsigned int face = 0; face < GeometryInfo<3>::faces_per_cell; ++face)
       {
         deallog << "For face: " << face << ", the test point projects to: "
                 << mapping.project_real_point_to_unit_point_on_face(

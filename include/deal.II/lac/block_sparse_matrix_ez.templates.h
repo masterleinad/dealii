@@ -48,8 +48,8 @@ BlockSparseMatrixEZ<number>::operator=(const BlockSparseMatrixEZ<number>& m)
   // anything except than checking
   // whether the base objects want to
   // do something
-  for(unsigned int r = 0; r < n_block_rows(); ++r)
-    for(unsigned int c = 0; c < n_block_cols(); ++c)
+  for (unsigned int r = 0; r < n_block_rows(); ++r)
+    for (unsigned int c = 0; c < n_block_cols(); ++c)
       block(r, c) = m.block(r, c);
   return *this;
 }
@@ -61,8 +61,8 @@ BlockSparseMatrixEZ<number>::operator=(const double d)
   (void) d;
   Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-  for(unsigned int r = 0; r < n_block_rows(); ++r)
-    for(unsigned int c = 0; c < n_block_cols(); ++c)
+  for (unsigned int r = 0; r < n_block_rows(); ++r)
+    for (unsigned int c = 0; c < n_block_cols(); ++c)
       block(r, c) = 0;
 
   return *this;
@@ -100,9 +100,9 @@ template <typename number>
 bool
 BlockSparseMatrixEZ<number>::empty() const
 {
-  for(unsigned int r = 0; r < n_block_rows(); ++r)
-    for(unsigned int c = 0; c < n_block_cols(); ++c)
-      if(block(r, c).empty() == false)
+  for (unsigned int r = 0; r < n_block_rows(); ++r)
+    for (unsigned int c = 0; c < n_block_cols(); ++c)
+      if (block(r, c).empty() == false)
         return false;
   return true;
 }
@@ -118,13 +118,13 @@ BlockSparseMatrixEZ<number>::collect_sizes()
 
   // first find out the row sizes
   // from the first block column
-  for(unsigned int r = 0; r < rows; ++r)
+  for (unsigned int r = 0; r < rows; ++r)
     row_sizes[r] = blocks[r][0].m();
   // then check that the following
   // block columns have the same
   // sizes
-  for(unsigned int c = 1; c < columns; ++c)
-    for(unsigned int r = 0; r < rows; ++r)
+  for (unsigned int c = 1; c < columns; ++c)
+    for (unsigned int r = 0; r < rows; ++r)
       Assert(row_sizes[r] == blocks[r][c].m(),
              ExcDimensionMismatch(row_sizes[r], blocks[r][c].m()));
 
@@ -133,10 +133,10 @@ BlockSparseMatrixEZ<number>::collect_sizes()
   row_indices.reinit(row_sizes);
 
   // then do the same with the columns
-  for(unsigned int c = 0; c < columns; ++c)
+  for (unsigned int c = 0; c < columns; ++c)
     col_sizes[c] = blocks[0][c].n();
-  for(unsigned int r = 1; r < rows; ++r)
-    for(unsigned int c = 0; c < columns; ++c)
+  for (unsigned int r = 1; r < rows; ++r)
+    for (unsigned int c = 0; c < columns; ++c)
       Assert(col_sizes[c] == blocks[r][c].n(),
              ExcDimensionMismatch(col_sizes[c], blocks[r][c].n()));
 

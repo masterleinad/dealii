@@ -32,13 +32,13 @@ test()
   // create a vector that consists of elements indexed from 0 to 100
   // everything belongs to proc 0
   IndexSet idx(100);
-  if(myid == 0)
+  if (myid == 0)
     idx.add_range(0, 100);
 
   TrilinosWrappers::MPI::Vector vec(idx, MPI_COMM_WORLD);
 
-  for(unsigned int i = vec.local_range().first; i < vec.local_range().second;
-      ++i)
+  for (unsigned int i = vec.local_range().first; i < vec.local_range().second;
+       ++i)
     vec(i) = i;
   vec.compress(VectorOperation::insert);
 
@@ -47,7 +47,7 @@ test()
 
   cm.distribute(vec);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -60,7 +60,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

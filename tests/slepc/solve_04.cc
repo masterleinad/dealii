@@ -46,23 +46,23 @@ check_solve(SolverType&               solver,
       solver.set_problem_type(EPS_HEP);
       // reset vectors and set them as initial space
       // to avoid dependency on random numbers:
-      for(unsigned int i = 0; i < u.size(); i++)
-        for(unsigned int j = 0; j < u[i].size(); ++j)
+      for (unsigned int i = 0; i < u.size(); i++)
+        for (unsigned int j = 0; j < u[i].size(); ++j)
           u[i][j] = random_value<double>();
 
-      for(auto& vector : u)
+      for (auto& vector : u)
         vector.compress(VectorOperation::insert);
 
       solver.set_initial_space(u);
       // solve
       solver.solve(A, v, u, v.size());
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch (dealii::SolverControl::NoConvergence& e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
 
-  switch(solver_number)
+  switch (solver_number)
     {
       case 1:
         check_solver_within_range(
@@ -94,10 +94,10 @@ check_solve(SolverType&               solver,
     }
 
   deallog << "Eigenvalues:";
-  for(unsigned int i = 0; i < v.size(); i++)
+  for (unsigned int i = 0; i < v.size(); i++)
     {
       deallog << " " << v[i];
-      if(i != (v.size() - 1))
+      if (i != (v.size() - 1))
         deallog << ",";
     }
   deallog << std::endl << std::endl;

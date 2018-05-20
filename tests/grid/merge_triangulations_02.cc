@@ -43,21 +43,21 @@ mesh_info(const Triangulation<dim>& tria)
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active(),
       endc = tria.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-            ++face)
+        for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+             ++face)
           {
-            if(cell->face(face)->at_boundary())
+            if (cell->face(face)->at_boundary())
               boundary_count[cell->face(face)->boundary_id()]++;
           }
       }
 
     deallog << " boundary indicators: ";
-    for(std::map<unsigned int, unsigned int>::iterator it
-        = boundary_count.begin();
-        it != boundary_count.end();
-        ++it)
+    for (std::map<unsigned int, unsigned int>::iterator it
+         = boundary_count.begin();
+         it != boundary_count.end();
+         ++it)
       {
         deallog << it->first << "(" << it->second << " times) ";
       }

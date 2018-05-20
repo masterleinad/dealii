@@ -31,7 +31,7 @@ main()
   // test a non-empty rectangular table
   TransposeTable<double> table(3, 4);
   std::iota(table.begin(), table.end(), 1.0);
-  for(const auto entry : table)
+  for (const auto entry : table)
     {
       deallog << entry.row() << ", " << entry.column() << ", " << entry.value()
               << std::endl;
@@ -39,7 +39,7 @@ main()
 
   deallog << "backwards order:" << std::endl;
   auto it = table.end() - 1;
-  for(; it >= table.begin(); --it)
+  for (; it >= table.begin(); --it)
     {
       deallog << it->row() << ", " << it->column() << ", " << it->value()
               << std::endl;
@@ -49,7 +49,7 @@ main()
 
   deallog << "every other entry:" << std::endl;
   it = table.begin();
-  for(; it < table.end(); it += 2)
+  for (; it < table.end(); it += 2)
     {
       deallog << it->row() << ", " << it->column() << ", " << it->value()
               << std::endl;
@@ -58,7 +58,7 @@ main()
   // print every other entry
   it = table.end() - 1;
   deallog << "every other entry:" << std::endl;
-  for(; it >= table.begin(); it -= 2)
+  for (; it >= table.begin(); it -= 2)
     {
       deallog << it->row() << ", " << it->column() << ", " << it->value()
               << std::endl;

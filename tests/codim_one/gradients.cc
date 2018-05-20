@@ -93,7 +93,7 @@ test(std::string filename)
   Tensor<1, spacedim> exp;
   exp[0] = 1;
   exp[1] = 0;
-  if(spacedim == 3)
+  if (spacedim == 3)
     exp[2] = 0;
   Functions::Monomial<spacedim> monomial(exp);
 
@@ -119,7 +119,7 @@ test(std::string filename)
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       cell->get_dof_indices(local_dof_indices);
@@ -137,10 +137,10 @@ test(std::string filename)
       cell_tangentials[0][1]
         = -cell_normals[0][0]
           / sqrt(pow(cell_normals[0][0], 2) + pow(cell_normals[0][1], 2));
-      if(spacedim == 3)
+      if (spacedim == 3)
         cell_tangentials[0][2] = 0.;
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
           shape_directional_derivative[i]
             = fe_values.shape_grad(i, 0) * cell_tangentials[0];
@@ -157,7 +157,7 @@ test(std::string filename)
               << "dir.deriv. "
               << projected_directional_derivative(cell->index()) << "; "
               << std::endl;
-      if(spacedim == 2)
+      if (spacedim == 2)
         deallog << "exact solution "
                 << cos(2 * numbers::PI * (cell->index() + .5)
                        / triangulation.n_cells())

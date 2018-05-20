@@ -66,9 +66,9 @@ TestFunction<dim>::TestFunction(const unsigned int p_order) : p_order(p_order)
 {
   std::vector<double> coeff(p_order);
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
-      for(unsigned int c = 0; c < p_order; ++c)
+      for (unsigned int c = 0; c < p_order; ++c)
         coeff[c] = random_value<double>();
       base.push_back(Polynomials::Polynomial<double>(coeff));
     }
@@ -80,7 +80,7 @@ TestFunction<dim>::value(const Point<dim>& p,
                          const unsigned int /*component*/) const
 {
   double val = base[0].value(p(0));
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     val *= base[i].value(p(i));
   return val;
 }
@@ -130,7 +130,7 @@ TestFEQConstraints<dim>::refine_grid_random()
   const unsigned int n_cells = triangulation.n_active_cells();
   Vector<double>     estimated_error_per_cell(n_cells);
 
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for (unsigned int i = 0; i < n_cells; ++i)
     estimated_error_per_cell(i) = random_value<double>();
 
   GridRefinement::refine_and_coarsen_fixed_number(
@@ -145,7 +145,7 @@ TestFEQConstraints<dim>::make_grid_and_dofs()
   GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(2);
 
-  for(unsigned int i = 0; i < refinements; ++i)
+  for (unsigned int i = 0; i < refinements; ++i)
     refine_grid_random();
 
   dof_handler.distribute_dofs(fe);
@@ -213,7 +213,7 @@ TestFEQConstraints<dim>::test()
   deallog << "Normed L2-Error 1: " << l2norm1
           << "  Normed L2-Error 2: " << l2norm2 << std::endl
           << "Normed L2-Diff: " << l2error << "   ";
-  if(l2error < 1.0e-16)
+  if (l2error < 1.0e-16)
     deallog << "OK" << std::endl;
   else
     deallog << "Error !" << std::endl;
@@ -245,7 +245,7 @@ main()
   // uniformly and several times (pseudo-)
   // randomly.
   TestFEQConstraints<3>* test;
-  for(unsigned int p = 1; p < 4; ++p)
+  for (unsigned int p = 1; p < 4; ++p)
     {
       test = new TestFEQConstraints<3>(p, ref_level[p - 1]);
       test->run();

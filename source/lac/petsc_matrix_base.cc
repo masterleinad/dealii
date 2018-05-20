@@ -36,7 +36,7 @@ namespace PETScWrappers
       // if we are asked to visit the past-the-end line (or a line that is not
       // stored on the current processor), then simply release all our caches
       // and go on with life
-      if(matrix->in_local_range(this->a_row) == false)
+      if (matrix->in_local_range(this->a_row) == false)
         {
           colnum_cache.reset();
           value_cache.reset();
@@ -442,7 +442,7 @@ namespace PETScWrappers
                   const bool        transpose_left)
     {
       const bool use_vector = (V.size() == inputright.m() ? true : false);
-      if(transpose_left == false)
+      if (transpose_left == false)
         {
           Assert(inputleft.n() == inputright.m(),
                  ExcDimensionMismatch(inputleft.n(), inputright.m()));
@@ -457,9 +457,9 @@ namespace PETScWrappers
 
       PetscErrorCode ierr;
 
-      if(use_vector == false)
+      if (use_vector == false)
         {
-          if(transpose_left)
+          if (transpose_left)
             {
               ierr = MatTransposeMatMult(inputleft,
                                          inputright,
@@ -483,7 +483,7 @@ namespace PETScWrappers
           Mat tmp;
           ierr = MatDuplicate(inputleft, MAT_COPY_VALUES, &tmp);
           AssertThrow(ierr == 0, ExcPETScError(ierr));
-          if(transpose_left)
+          if (transpose_left)
             {
 #  if DEAL_II_PETSC_VERSION_LT(3, 8, 0)
               ierr = MatTranspose(tmp, MAT_REUSE_MATRIX, &tmp);
@@ -601,12 +601,12 @@ namespace PETScWrappers
     const PetscScalar* values;
 
     MatrixBase::size_type row;
-    for(row = loc_range.first; row < loc_range.second; ++row)
+    for (row = loc_range.first; row < loc_range.second; ++row)
       {
         PetscErrorCode ierr = MatGetRow(*this, row, &ncols, &colnums, &values);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        for(PetscInt col = 0; col < ncols; ++col)
+        for (PetscInt col = 0; col < ncols; ++col)
           {
             out << "(" << row << "," << colnums[col] << ") " << values[col]
                 << std::endl;

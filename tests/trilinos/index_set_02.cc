@@ -30,13 +30,13 @@ test()
   unsigned int n_proc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
   unsigned int myid   = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       set_my.add_range(0, 50);
       set_ghost.add_range(0, 50);
       set_ghost.add_range(55, 60);
     }
-  else if(myid == 1)
+  else if (myid == 1)
     {
       set_my.add_range(50, 100);
       set_ghost.add_range(45, 100);

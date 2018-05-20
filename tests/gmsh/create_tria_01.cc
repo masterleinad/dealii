@@ -34,10 +34,11 @@ gmsh_grid(const char* name)
 
   int hash  = 0;
   int index = 0;
-  for(typename Triangulation<dim>::active_cell_iterator c = tria.begin_active();
-      c != tria.end();
-      ++c, ++index)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+  for (typename Triangulation<dim>::active_cell_iterator c
+       = tria.begin_active();
+       c != tria.end();
+       ++c, ++index)
+    for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       hash += (index * i * c->vertex_index(i)) % (tria.n_active_cells() + 1);
   deallog << "  hash=" << hash << std::endl;
 }

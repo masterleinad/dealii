@@ -59,22 +59,22 @@ test()
   // assign the result, which should contain all 3s to 'ghosted'
   ghosted = distributed;
 
-  if(my_id == 0)
+  if (my_id == 0)
     {
       deallog << "Distributed:" << std::endl;
-      for(unsigned int i = begin_index; i < end_index; ++i)
+      for (unsigned int i = begin_index; i < end_index; ++i)
         deallog << i << ": " << distributed(i) << std::endl;
 
       deallog << "Ghosted:" << std::endl;
-      for(unsigned int i = local_begin; i < local_end; ++i)
+      for (unsigned int i = local_begin; i < local_end; ++i)
         deallog << i << ": " << ghosted(i) << std::endl;
     }
 
   // verify correct value
-  for(unsigned int i = begin_index; i < end_index; ++i)
+  for (unsigned int i = begin_index; i < end_index; ++i)
     Assert(distributed(i) == 3, ExcInternalError());
 
-  for(unsigned int i = local_begin; i < local_end; ++i)
+  for (unsigned int i = local_begin; i < local_end; ++i)
     Assert(ghosted(i) == 3, ExcInternalError());
 }
 
@@ -87,7 +87,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

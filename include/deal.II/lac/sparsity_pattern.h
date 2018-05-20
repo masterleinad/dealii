@@ -1383,7 +1383,7 @@ SparsityPattern::n_nonzero_elements() const
 {
   Assert(compressed, ExcNotCompressed());
 
-  if((rowstart != nullptr) && (colnums != nullptr))
+  if ((rowstart != nullptr) && (colnums != nullptr))
     return rowstart[rows] - rowstart[0];
   else
     // the object is empty or has zero size
@@ -1428,16 +1428,16 @@ SparsityPattern::operator==(const SparsityPattern& sp2) const
   // comparing the essential ones, we can say that two sparsity patterns are
   // equal even if one is compressed and the other is not (in which case some
   // of the member variables are not yet set correctly)
-  if(rows != sp2.rows || cols != sp2.cols || compressed != sp2.compressed
-     || store_diagonal_first_in_row != sp2.store_diagonal_first_in_row)
+  if (rows != sp2.rows || cols != sp2.cols || compressed != sp2.compressed
+      || store_diagonal_first_in_row != sp2.store_diagonal_first_in_row)
     return false;
 
-  for(size_type i = 0; i < rows + 1; ++i)
-    if(rowstart[i] != sp2.rowstart[i])
+  for (size_type i = 0; i < rows + 1; ++i)
+    if (rowstart[i] != sp2.rowstart[i])
       return false;
 
-  for(size_type i = 0; i < rowstart[rows]; ++i)
-    if(colnums[i] != sp2.colnums[i])
+  for (size_type i = 0; i < rowstart[rows]; ++i)
+    if (colnums[i] != sp2.colnums[i])
       return false;
 
   return true;
@@ -1491,7 +1491,7 @@ SparsityPattern::copy_from(const size_type       n_rows,
   const bool                is_square = (n_rows == n_cols);
   std::vector<unsigned int> row_lengths;
   row_lengths.reserve(n_rows);
-  for(ForwardIterator i = begin; i != end; ++i)
+  for (ForwardIterator i = begin; i != end; ++i)
     row_lengths.push_back(std::distance(i->begin(), i->end())
                           + (is_square ? 1 : 0));
   reinit(n_rows, n_cols, row_lengths);
@@ -1505,18 +1505,18 @@ SparsityPattern::copy_from(const size_type       n_rows,
   typedef
     typename std::iterator_traits<ForwardIterator>::value_type::const_iterator
       inner_iterator;
-  for(ForwardIterator i = begin; i != end; ++i, ++row)
+  for (ForwardIterator i = begin; i != end; ++i, ++row)
     {
       size_type*           cols = &colnums[rowstart[row]] + (is_square ? 1 : 0);
       const inner_iterator end_of_row = i->end();
-      for(inner_iterator j = i->begin(); j != end_of_row; ++j)
+      for (inner_iterator j = i->begin(); j != end_of_row; ++j)
         {
           const size_type col
             = internal::SparsityPatternTools::get_column_index_from_iterator(
               *j);
           Assert(col < n_cols, ExcIndexRange(col, 0, n_cols));
 
-          if((col != row) || !is_square)
+          if ((col != row) || !is_square)
             *cols++ = col;
         }
     }

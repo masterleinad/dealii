@@ -25,7 +25,7 @@ test(int i)
 {
   deallog << "Task " << i << " starting..." << std::endl;
 
-  if(i < 10)
+  if (i < 10)
     {
       Threads::Task<> t1 = Threads::new_task(test, 10 * i + 1);
       Threads::Task<> t2 = Threads::new_task(test, 10 * i + 2);

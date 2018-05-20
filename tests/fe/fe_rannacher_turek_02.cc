@@ -42,12 +42,12 @@ test_values()
     fe, quadrature, update_values | update_gradients | update_JxW_values);
   fev.reinit(dofh.begin_active());
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
     {
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for (unsigned int q = 0; q < quadrature.size(); ++q)
         {
           deallog << fev.shape_value(i, q) << " ";
-          for(unsigned int d = 0; d < 2; ++d)
+          for (unsigned int d = 0; d < 2; ++d)
             {
               deallog << fev.shape_grad(i, q)[d] << " ";
             }

@@ -648,7 +648,7 @@ Multigrid<VectorType>::Multigrid(const DoFHandler<dim>&          mg_dof_handler,
 {
   const unsigned int dof_handler_max_level
     = mg_dof_handler.get_triangulation().n_global_levels() - 1;
-  if(max_level == numbers::invalid_unsigned_int)
+  if (max_level == numbers::invalid_unsigned_int)
     maxlevel = dof_handler_max_level;
   else
     maxlevel = max_level;
@@ -677,7 +677,7 @@ Multigrid<VectorType>::Multigrid(const MGMatrixBase<VectorType>&     matrix,
     edge_up(nullptr, typeid(*this).name()),
     debug(0)
 {
-  if(max_level == numbers::invalid_unsigned_int)
+  if (max_level == numbers::invalid_unsigned_int)
     maxlevel = matrix.get_maxlevel();
   else
     maxlevel = max_level;
@@ -719,7 +719,7 @@ namespace internal
           int)
     {
       signals.transfer_to_mg(true);
-      if(uses_dof_handler_vector)
+      if (uses_dof_handler_vector)
         transfer.copy_to_mg(dof_handler_vector, multigrid.defect, src);
       else
         transfer.copy_to_mg(*dof_handler_vector[0], multigrid.defect, src);
@@ -728,7 +728,7 @@ namespace internal
       multigrid.cycle();
 
       signals.transfer_to_global(true);
-      if(uses_dof_handler_vector)
+      if (uses_dof_handler_vector)
         transfer.copy_from_mg(dof_handler_vector, dst, multigrid.solution);
       else
         transfer.copy_from_mg(*dof_handler_vector[0], dst, multigrid.solution);
@@ -779,7 +779,7 @@ namespace internal
       int)
     {
       signals.transfer_to_mg(true);
-      if(uses_dof_handler_vector)
+      if (uses_dof_handler_vector)
         transfer.copy_to_mg(dof_handler_vector, multigrid.defect, src);
       else
         transfer.copy_to_mg(*dof_handler_vector[0], multigrid.defect, src);
@@ -788,7 +788,7 @@ namespace internal
       multigrid.cycle();
 
       signals.transfer_to_global(true);
-      if(uses_dof_handler_vector)
+      if (uses_dof_handler_vector)
         transfer.copy_from_mg_add(dof_handler_vector, dst, multigrid.solution);
       else
         transfer.copy_from_mg_add(
@@ -851,7 +851,7 @@ PreconditionMG<dim, VectorType, TRANSFER>::PreconditionMG(
     transfer(&transfer),
     uses_dof_handler_vector(true)
 {
-  for(unsigned int i = 0; i < dof_handler.size(); ++i)
+  for (unsigned int i = 0; i < dof_handler.size(); ++i)
     {
       dof_handler_vector[i]     = dof_handler[i];
       dof_handler_vector_raw[i] = dof_handler[i];

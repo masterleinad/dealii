@@ -32,13 +32,13 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(2);
   unsigned int rank = Utilities::MPI::this_mpi_process(mpi_comm);
-  if(rank == 0)
+  if (rank == 0)
     {
       typename Triangulation<2>::active_cell_iterator cell
         = tria.begin_active(),
         end_cell = tria.end();
-      for(; cell != end_cell; ++cell)
-        if(cell->is_locally_owned())
+      for (; cell != end_cell; ++cell)
+        if (cell->is_locally_owned())
           cell->set_refine_flag();
     }
 
@@ -50,13 +50,13 @@ test()
   AssertThrow(tria.n_vertices() == vertex_to_cell.size(),
               ExcMessage("Wrong number of vertices"));
   std::vector<unsigned int> n_cells;
-  for(unsigned int i = 0; i < vertex_to_cell.size(); ++i)
+  for (unsigned int i = 0; i < vertex_to_cell.size(); ++i)
     n_cells.push_back(vertex_to_cell[i].size());
 
-  if(rank == 0)
+  if (rank == 0)
     {
       std::vector<unsigned int> histogram(5, 0);
-      for(unsigned int i = 0; i < n_cells.size(); ++i)
+      for (unsigned int i = 0; i < n_cells.size(); ++i)
         histogram[n_cells[i]] += 1;
 
       AssertThrow(histogram[0] == 0, ExcMessage("Wrong cell distribution"));
@@ -65,10 +65,10 @@ test()
       AssertThrow(histogram[3] == 4, ExcMessage("Wrong cell distribution"));
       AssertThrow(histogram[4] == 27, ExcMessage("Wrong cell distribution"));
     }
-  if(rank == 1)
+  if (rank == 1)
     {
       std::vector<unsigned int> histogram(5, 0);
-      for(unsigned int i = 0; i < n_cells.size(); ++i)
+      for (unsigned int i = 0; i < n_cells.size(); ++i)
         histogram[n_cells[i]] += 1;
 
       AssertThrow(histogram[0] == 0, ExcMessage("Wrong cell distribution"));

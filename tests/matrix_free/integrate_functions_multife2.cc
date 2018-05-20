@@ -69,7 +69,7 @@ public:
   void
   test_functions(VectorType& dst) const
   {
-    for(unsigned int comp = 0; comp < dst.size(); ++comp)
+    for (unsigned int comp = 0; comp < dst.size(); ++comp)
       dst[comp] = 0;
     VectorType src_dummy;
     data.cell_loop(&MatrixFreeTest<dim, fe_degree, Number>::operator(),
@@ -106,7 +106,7 @@ operator()(const MatrixFree<dim, Number>& data,
   AlignedVector<VectorizedArray<Number>> gradients1(dim * n_q_points1);
   std::vector<types::global_dof_index>   dof_indices0(dofs_per_cell0);
   std::vector<types::global_dof_index>   dof_indices1(dofs_per_cell1);
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval0.reinit(cell);
       fe_eval1.reinit(cell);
@@ -114,30 +114,30 @@ operator()(const MatrixFree<dim, Number>& data,
 
       // compare values with the ones the FEValues
       // gives us. Those are seen as reference
-      for(unsigned int j = 0; j < data.n_components_filled(cell); ++j)
+      for (unsigned int j = 0; j < data.n_components_filled(cell); ++j)
         {
           // FE 0, Quad 0
           // generate random numbers at quadrature
           // points and test them with basis functions
           // and their gradients
-          for(unsigned int q = 0; q < n_q_points0; ++q)
+          for (unsigned int q = 0; q < n_q_points0; ++q)
             {
               values0[q][j] = random_value<double>();
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 gradients0[q * dim + d][j]
                   = -1. + 2. * (random_value<double>());
             }
           fe_val0.reinit(data.get_cell_iterator(cell, j, 0));
           data.get_cell_iterator(cell, j, 0)->get_dof_indices(dof_indices0);
 
-          for(unsigned int i = 0; i < dofs_per_cell0; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell0; ++i)
             {
               double sum = 0.;
-              for(unsigned int q = 0; q < n_q_points0; ++q)
+              for (unsigned int q = 0; q < n_q_points0; ++q)
                 {
                   sum += values0[q][j] * fe_val0.shape_value(i, q)
                          * fe_val0.JxW(q);
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for (unsigned int d = 0; d < dim; ++d)
                     sum += (gradients0[q * dim + d][j]
                             * fe_val0.shape_grad(i, q)[d] * fe_val0.JxW(q));
                 }
@@ -148,21 +148,21 @@ operator()(const MatrixFree<dim, Number>& data,
           fe_val1.reinit(data.get_cell_iterator(cell, j, 1));
           data.get_cell_iterator(cell, j, 1)->get_dof_indices(dof_indices1);
 
-          for(unsigned int q = 0; q < n_q_points1; ++q)
+          for (unsigned int q = 0; q < n_q_points1; ++q)
             {
               values1[q][j] = random_value<double>();
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 gradients1[q * dim + d][j]
                   = -1. + 2. * (random_value<double>());
             }
-          for(unsigned int i = 0; i < dofs_per_cell1; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell1; ++i)
             {
               double sum = 0.;
-              for(unsigned int q = 0; q < n_q_points1; ++q)
+              for (unsigned int q = 0; q < n_q_points1; ++q)
                 {
                   sum += values1[q][j] * fe_val1.shape_value(i, q)
                          * fe_val1.JxW(q);
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for (unsigned int d = 0; d < dim; ++d)
                     sum += (gradients1[q * dim + d][j]
                             * fe_val1.shape_grad(i, q)[d] * fe_val1.JxW(q));
                 }
@@ -171,14 +171,14 @@ operator()(const MatrixFree<dim, Number>& data,
 
           // FE 0, Quad 1
           fe_val01.reinit(data.get_cell_iterator(cell, j, 0));
-          for(unsigned int i = 0; i < dofs_per_cell0; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell0; ++i)
             {
               double sum = 0.;
-              for(unsigned int q = 0; q < n_q_points1; ++q)
+              for (unsigned int q = 0; q < n_q_points1; ++q)
                 {
                   sum += values1[q][j] * fe_val01.shape_value(i, q)
                          * fe_val01.JxW(q);
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for (unsigned int d = 0; d < dim; ++d)
                     sum += (gradients1[q * dim + d][j]
                             * fe_val01.shape_grad(i, q)[d] * fe_val01.JxW(q));
                 }
@@ -187,11 +187,11 @@ operator()(const MatrixFree<dim, Number>& data,
         }
 
       // FE 0, Quad 0
-      for(unsigned int q = 0; q < n_q_points0; ++q)
+      for (unsigned int q = 0; q < n_q_points0; ++q)
         {
           fe_eval0.submit_value(values0[q], q);
           Tensor<1, dim, VectorizedArray<Number>> submit;
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             submit[d] = gradients0[q * dim + d];
           fe_eval0.submit_gradient(submit, q);
         }
@@ -199,11 +199,11 @@ operator()(const MatrixFree<dim, Number>& data,
       fe_eval0.distribute_local_to_global(dst[0]);
 
       // FE 1, Quad 1
-      for(unsigned int q = 0; q < n_q_points1; ++q)
+      for (unsigned int q = 0; q < n_q_points1; ++q)
         {
           fe_eval1.submit_value(values1[q], q);
           Tensor<1, dim, VectorizedArray<Number>> submit;
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             submit[d] = gradients1[q * dim + d];
           fe_eval1.submit_gradient(submit, q);
         }
@@ -211,11 +211,11 @@ operator()(const MatrixFree<dim, Number>& data,
       fe_eval1.distribute_local_to_global(dst[2]);
 
       // FE 0, Quad 1
-      for(unsigned int q = 0; q < n_q_points1; ++q)
+      for (unsigned int q = 0; q < n_q_points1; ++q)
         {
           fe_eval01.submit_value(values1[q], q);
           Tensor<1, dim, VectorizedArray<Number>> submit;
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             submit[d] = gradients1[q * dim + d];
           fe_eval01.submit_gradient(submit, q);
         }
@@ -237,8 +237,8 @@ test()
   typename Triangulation<dim>::active_cell_iterator cell, endc;
   cell = tria.begin_active();
   endc = tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 0.5)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 0.5)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
@@ -246,13 +246,13 @@ test()
   tria.execute_coarsening_and_refinement();
   tria.refine_global(1);
   cell = tria.begin_active();
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       cell                 = tria.begin_active();
       endc                 = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }

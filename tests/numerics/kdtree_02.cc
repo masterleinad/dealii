@@ -44,16 +44,16 @@ main()
   std::vector<double>       distances;
 
   // Get closest points. Do a few rounds
-  for(auto& p : test_points)
+  for (auto& p : test_points)
     {
-      for(unsigned int i = 1; i < points.size() + 1; ++i)
+      for (unsigned int i = 1; i < points.size() + 1; ++i)
         {
           auto res = kdtree.get_closest_points(p, i);
 
           deallog << std::endl
                   << "The first " << i << " closest points to " << p
                   << " are:" << std::endl;
-          for(unsigned int j = 0; j < i; ++j)
+          for (unsigned int j = 0; j < i; ++j)
             {
               deallog << "points[" << res[j].first
                       << "] = " << points[res[j].first]

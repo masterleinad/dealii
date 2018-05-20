@@ -39,7 +39,7 @@ main(int argc, char* argv[])
 
   const int        n = n_ranks / 2;
   std::vector<int> ranks;
-  for(unsigned int i = 0; i < n_ranks; i += 2)
+  for (unsigned int i = 0; i < n_ranks; i += 2)
     ranks.push_back(i);
 
   // Construct a group containing all of the even ranks in world_group
@@ -47,7 +47,7 @@ main(int argc, char* argv[])
   ierr = MPI_Group_incl(world_group, n, ranks.data(), &even_group);
   AssertThrowMPI(ierr);
 
-  if(my_id % 2 == 0)
+  if (my_id % 2 == 0)
     {
       MPI_Comm group_comm;
       ierr

@@ -38,7 +38,7 @@ test()
   IndexSet relevant_set, boundary_dofs;
   DoFTools::extract_boundary_dofs(
     dofh, std::vector<bool>(1, true), boundary_dofs);
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     boundary_dofs.write(deallog.get_file_stream());
 
   // the result of extract_boundary_dofs is supposed to be a subset of the
@@ -57,7 +57,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

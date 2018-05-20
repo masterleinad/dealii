@@ -73,7 +73,7 @@ test()
             << " is_locally_owned_on_level? "
             << cell->is_locally_owned_on_level() << std::endl;
     ++c.n_cells;
-    if(cell->is_locally_owned_on_level())
+    if (cell->is_locally_owned_on_level())
       ++c.n_own_cells;
     else
       ++c.n_ghost_cells;

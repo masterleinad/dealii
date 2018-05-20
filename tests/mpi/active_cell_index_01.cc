@@ -29,10 +29,10 @@ void
 check(const parallel::distributed::Triangulation<dim>& tria)
 {
   unsigned int index = 0;
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell, ++index)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell, ++index)
     AssertThrow(cell->active_cell_index() == index, ExcInternalError());
 
   AssertThrow(index == tria.n_active_cells(), ExcInternalError());
@@ -51,7 +51,7 @@ check()
 
   check(tria);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK for " << dim << "d" << std::endl;
 }
 

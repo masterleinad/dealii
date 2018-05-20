@@ -33,7 +33,7 @@ test(const unsigned int& ref)
   GridGenerator::hyper_cube(tria);
   tria.refine_global(ref);
   std::vector<CellId> cell_ids;
-  for(auto cell : tria.active_cell_iterators())
+  for (auto cell : tria.active_cell_iterators())
     {
       cell_ids.push_back(cell->id());
     }
@@ -44,16 +44,16 @@ test(const unsigned int& ref)
 
   unsigned int i  = 0;
   bool         ok = true;
-  for(auto cell : tria.active_cell_iterators())
+  for (auto cell : tria.active_cell_iterators())
     {
-      if(cell->id() != unpacked[i++])
+      if (cell->id() != unpacked[i++])
         {
           deallog << "NOT OK; problem with cell " << i << std::endl;
           ok = false;
         }
     }
 
-  if(ok)
+  if (ok)
     deallog << "OK!" << std::endl;
 }
 

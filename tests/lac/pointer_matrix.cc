@@ -27,8 +27,8 @@ main()
 
   FullMatrix<double> A(5, 5);
   unsigned int       k = 0;
-  for(unsigned int i = 0; i < A.m(); ++i)
-    for(unsigned int j = 0; j < A.n(); ++j)
+  for (unsigned int i = 0; i < A.m(); ++i)
+    for (unsigned int j = 0; j < A.n(); ++j)
       A(i, j) = ++k;
 
   PointerMatrix<FullMatrix<double>, Vector<double>> P(&A, "P");
@@ -38,7 +38,7 @@ main()
   Vector<double> y2(5);
   Vector<double> diff(5);
 
-  for(unsigned int i = 0; i < x.size(); ++i)
+  for (unsigned int i = 0; i < x.size(); ++i)
     {
       x    = 0.;
       x(i) = 1.;

@@ -57,13 +57,13 @@ test()
   tr.execute_coarsening_and_refinement();
 
   unsigned int checksum = tr.get_checksum();
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
       deallog << "Checksum: " << checksum << std::endl;
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -76,7 +76,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

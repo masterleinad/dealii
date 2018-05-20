@@ -75,7 +75,7 @@ test(const unsigned int degree)
     = dof_sys.begin_active(),
     endc = dof_sys.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       deallog << "Cell " << cell << ": OK" << std::endl;
@@ -87,7 +87,7 @@ main()
 {
   initlog();
 
-  for(unsigned int d = 1; d < 4; ++d)
+  for (unsigned int d = 1; d < 4; ++d)
     {
       test<2, 2>(d);
       test<2, 3>(d);

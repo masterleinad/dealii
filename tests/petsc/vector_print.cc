@@ -34,7 +34,7 @@ main(int argc, char** argv)
         IndexSet indices(5);
         indices.add_range(0, 5);
         PETScWrappers::MPI::Vector v(indices, MPI_COMM_WORLD);
-        for(unsigned int i = 0; i < v.size(); ++i)
+        for (unsigned int i = 0; i < v.size(); ++i)
           v(i) = i * 1.2345678901234567;
 
         // print with old precision
@@ -51,7 +51,7 @@ main(int argc, char** argv)
         deallog << numbers::PI << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -65,7 +65,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

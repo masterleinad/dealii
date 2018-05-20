@@ -36,7 +36,7 @@ test()
 
     deallog << "Pool properties:";
 
-    for(unsigned int i = 0; i < pool.get_properties(handle).size(); ++i)
+    for (unsigned int i = 0; i < pool.get_properties(handle).size(); ++i)
       deallog << " " << pool.get_properties(handle)[i];
 
     deallog << std::endl;

@@ -65,9 +65,9 @@ test()
   constraints.condense(sparsity);
 
   // output what we have
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    for(unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
-      if(sparsity.exists(i, j))
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    for (unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
+      if (sparsity.exists(i, j))
         deallog << i << ' ' << j << std::endl;
 }
 
@@ -82,7 +82,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -96,7 +96,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

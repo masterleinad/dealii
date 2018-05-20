@@ -24,13 +24,13 @@ template <int dim>
 void
 test()
 {
-  if(dim == 1)
+  if (dim == 1)
     return;
 
   deallog << "Test for dim = " << dim << std::endl << std::endl;
   hp::FECollection<dim>     fe;
   std::vector<unsigned int> degrees;
-  for(unsigned int i = 0; i < 7 - dim; ++i)
+  for (unsigned int i = 0; i < 7 - dim; ++i)
     {
       fe.push_back(FE_RaviartThomasNodal<dim>(i));
       degrees.push_back(i);

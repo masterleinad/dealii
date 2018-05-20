@@ -179,7 +179,7 @@ namespace Step32
     TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
                                                 Vector<double>&   values) const
     {
-      for(unsigned int c = 0; c < this->n_components; ++c)
+      for (unsigned int c = 0; c < this->n_components; ++c)
         values(c) = TemperatureInitialValues<dim>::value(p, c);
     }
 
@@ -261,7 +261,7 @@ namespace Step32
           utmp.add(src.block(0));
         }
 
-        if(do_solve_A == true)
+        if (do_solve_A == true)
           {
             SolverControl solver_control(5000, utmp.l2_norm() * 1e-2);
             TrilinosWrappers::SolverCG solver(solver_control);
@@ -1005,7 +1005,7 @@ namespace Step32
 
     std::ifstream parameter_file(parameter_filename);
 
-    if(!parameter_file)
+    if (!parameter_file)
       {
         parameter_file.close();
 
@@ -1267,14 +1267,14 @@ namespace Step32
     typename DoFHandler<dim>::active_cell_iterator cell
       = stokes_dof_handler.begin_active(),
       endc = stokes_dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           fe_values[velocities].get_function_values(stokes_solution,
                                                     velocity_values);
 
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int q = 0; q < n_q_points; ++q)
             max_local_velocity
               = std::max(max_local_velocity, velocity_values[q].norm());
         }
@@ -1310,15 +1310,15 @@ namespace Step32
     typename DoFHandler<dim>::active_cell_iterator cell
       = stokes_dof_handler.begin_active(),
       endc = stokes_dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           fe_values[velocities].get_function_values(stokes_solution,
                                                     velocity_values);
 
           double max_local_velocity = 1e-10;
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int q = 0; q < n_q_points; ++q)
             max_local_velocity
               = std::max(max_local_velocity, velocity_values[q].norm());
           max_local_cfl
@@ -1354,7 +1354,7 @@ namespace Step32
   BoussinesqFlowProblem<dim>::get_entropy_variation(
     const double average_temperature) const
   {
-    if(parameters.stabilization_alpha != 2)
+    if (parameters.stabilization_alpha != 2)
       return 1.;
 
     const QGauss<dim>  quadrature_formula(parameters.temperature_degree + 1);
@@ -1387,15 +1387,15 @@ namespace Step32
     typename DoFHandler<dim>::active_cell_iterator cell
       = temperature_dof_handler.begin_active(),
       endc = temperature_dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           fe_values.get_function_values(old_temperature_solution,
                                         old_temperature_values);
           fe_values.get_function_values(old_old_temperature_solution,
                                         old_old_temperature_values);
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int q = 0; q < n_q_points; ++q)
             {
               const double T
                 = (old_temperature_values[q] + old_old_temperature_values[q])
@@ -1464,13 +1464,13 @@ namespace Step32
     double min_local_temperature = std::numeric_limits<double>::max(),
            max_local_temperature = -std::numeric_limits<double>::max();
 
-    if(timestep_number != 0)
+    if (timestep_number != 0)
       {
         typename DoFHandler<dim>::active_cell_iterator cell
           = temperature_dof_handler.begin_active(),
           endc = temperature_dof_handler.end();
-        for(; cell != endc; ++cell)
-          if(cell->is_locally_owned())
+        for (; cell != endc; ++cell)
+          if (cell->is_locally_owned())
             {
               fe_values.reinit(cell);
               fe_values.get_function_values(old_temperature_solution,
@@ -1478,7 +1478,7 @@ namespace Step32
               fe_values.get_function_values(old_old_temperature_solution,
                                             old_old_temperature_values);
 
-              for(unsigned int q = 0; q < n_q_points; ++q)
+              for (unsigned int q = 0; q < n_q_points; ++q)
                 {
                   const double temperature
                     = (1. + time_step / old_time_step)
@@ -1498,14 +1498,14 @@ namespace Step32
         typename DoFHandler<dim>::active_cell_iterator cell
           = temperature_dof_handler.begin_active(),
           endc = temperature_dof_handler.end();
-        for(; cell != endc; ++cell)
-          if(cell->is_locally_owned())
+        for (; cell != endc; ++cell)
+          if (cell->is_locally_owned())
             {
               fe_values.reinit(cell);
               fe_values.get_function_values(old_temperature_solution,
                                             old_temperature_values);
 
-              for(unsigned int q = 0; q < n_q_points; ++q)
+              for (unsigned int q = 0; q < n_q_points; ++q)
                 {
                   const double temperature = old_temperature_values[q];
 
@@ -1548,7 +1548,7 @@ namespace Step32
     const double                                global_entropy_variation,
     const double                                cell_diameter) const
   {
-    if(global_u_infty == 0)
+    if (global_u_infty == 0)
       return 5e-3 * cell_diameter;
 
     const unsigned int n_q_points = old_temperature.size();
@@ -1556,7 +1556,7 @@ namespace Step32
     double max_residual = 0;
     double max_velocity = 0;
 
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for (unsigned int q = 0; q < n_q_points; ++q)
       {
         const Tensor<1, dim> u
           = (old_velocity_values[q] + old_old_velocity_values[q]) / 2;
@@ -1580,7 +1580,7 @@ namespace Step32
              / (EquationData::density(T) * EquationData::specific_heat));
 
         double residual = std::abs(dT_dt + u_grad_T - kappa_Delta_T - gamma);
-        if(parameters.stabilization_alpha == 2)
+        if (parameters.stabilization_alpha == 2)
           residual *= std::abs(T - average_temperature);
 
         max_residual = std::max(residual, max_residual);
@@ -1589,14 +1589,14 @@ namespace Step32
 
     const double max_viscosity
       = (parameters.stabilization_beta * max_velocity * cell_diameter);
-    if(timestep_number == 0)
+    if (timestep_number == 0)
       return max_viscosity;
     else
       {
         Assert(old_time_step > 0, ExcInternalError());
 
         double entropy_viscosity;
-        if(parameters.stabilization_alpha == 2)
+        if (parameters.stabilization_alpha == 2)
           entropy_viscosity
             = (parameters.stabilization_c_R * cell_diameter * cell_diameter
                * max_residual / global_entropy_variation);
@@ -1687,8 +1687,8 @@ namespace Step32
       = temperature_dof_handler.begin_active(),
       endc = temperature_dof_handler.end();
 
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell->get_dof_indices(local_dof_indices);
           fe_values.reinit(cell);
@@ -1698,16 +1698,16 @@ namespace Step32
 
           cell_vector   = 0;
           matrix_for_bc = 0;
-          for(unsigned int point = 0; point < n_q_points; ++point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int point = 0; point < n_q_points; ++point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
                 cell_vector(i) += rhs_values[point]
                                   * fe_values.shape_value(i, point)
                                   * fe_values.JxW(point);
-                if(temperature_constraints.is_inhomogeneously_constrained(
-                     local_dof_indices[i]))
+                if (temperature_constraints.is_inhomogeneously_constrained(
+                      local_dof_indices[i]))
                   {
-                    for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                    for (unsigned int j = 0; j < dofs_per_cell; ++j)
                       matrix_for_bc(j, i) += fe_values.shape_value(i, point)
                                              * fe_values.shape_value(j, point)
                                              * fe_values.JxW(point);
@@ -1831,9 +1831,9 @@ namespace Step32
                                               MPI_COMM_WORLD);
 
     Table<2, DoFTools::Coupling> coupling(dim + 1, dim + 1);
-    for(unsigned int c = 0; c < dim + 1; ++c)
-      for(unsigned int d = 0; d < dim + 1; ++d)
-        if(!((c == dim) && (d == dim)))
+    for (unsigned int c = 0; c < dim + 1; ++c)
+      for (unsigned int d = 0; d < dim + 1; ++d)
+        if (!((c == dim) && (d == dim)))
           coupling[c][d] = DoFTools::always;
         else
           coupling[c][d] = DoFTools::none;
@@ -1867,9 +1867,9 @@ namespace Step32
                                               MPI_COMM_WORLD);
 
     Table<2, DoFTools::Coupling> coupling(dim + 1, dim + 1);
-    for(unsigned int c = 0; c < dim + 1; ++c)
-      for(unsigned int d = 0; d < dim + 1; ++d)
-        if(c == d)
+    for (unsigned int c = 0; c < dim + 1; ++c)
+      for (unsigned int d = 0; d < dim + 1; ++d)
+        if (c == d)
           coupling[c][d] = DoFTools::always;
         else
           coupling[c][d] = DoFTools::none;
@@ -2162,17 +2162,17 @@ namespace Step32
 
     data.local_matrix = 0;
 
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for (unsigned int q = 0; q < n_q_points; ++q)
       {
-        for(unsigned int k = 0; k < dofs_per_cell; ++k)
+        for (unsigned int k = 0; k < dofs_per_cell; ++k)
           {
             scratch.grad_phi_u[k]
               = scratch.stokes_fe_values[velocities].gradient(k, q);
             scratch.phi_p[k] = scratch.stokes_fe_values[pressure].value(k, q);
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             data.local_matrix(i, j)
               += (EquationData::eta
                     * scalar_product(scratch.grad_phi_u[i],
@@ -2287,7 +2287,7 @@ namespace Step32
   void
   BoussinesqFlowProblem<dim>::build_stokes_preconditioner()
   {
-    if(rebuild_stokes_preconditioner == false)
+    if (rebuild_stokes_preconditioner == false)
       return;
 
     TimerOutput::Scope timer_section(computing_timer,
@@ -2356,21 +2356,21 @@ namespace Step32
       &triangulation, cell->level(), cell->index(), &temperature_dof_handler);
     scratch.temperature_fe_values.reinit(temperature_cell);
 
-    if(rebuild_stokes_matrix)
+    if (rebuild_stokes_matrix)
       data.local_matrix = 0;
     data.local_rhs = 0;
 
     scratch.temperature_fe_values.get_function_values(
       old_temperature_solution, scratch.old_temperature_values);
 
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for (unsigned int q = 0; q < n_q_points; ++q)
       {
         const double old_temperature = scratch.old_temperature_values[q];
 
-        for(unsigned int k = 0; k < dofs_per_cell; ++k)
+        for (unsigned int k = 0; k < dofs_per_cell; ++k)
           {
             scratch.phi_u[k] = scratch.stokes_fe_values[velocities].value(k, q);
-            if(rebuild_stokes_matrix)
+            if (rebuild_stokes_matrix)
               {
                 scratch.grads_phi_u[k]
                   = scratch.stokes_fe_values[velocities].symmetric_gradient(k,
@@ -2382,9 +2382,9 @@ namespace Step32
               }
           }
 
-        if(rebuild_stokes_matrix == true)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        if (rebuild_stokes_matrix == true)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               data.local_matrix(i, j)
                 += (EquationData::eta * 2
                       * (scratch.grads_phi_u[i] * scratch.grads_phi_u[j])
@@ -2397,7 +2397,7 @@ namespace Step32
         const Tensor<1, dim> gravity = EquationData::gravity_vector(
           scratch.stokes_fe_values.quadrature_point(q));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           data.local_rhs(i) += (EquationData::density(old_temperature) * gravity
                                 * scratch.phi_u[i])
                                * scratch.stokes_fe_values.JxW(q);
@@ -2411,7 +2411,7 @@ namespace Step32
   BoussinesqFlowProblem<dim>::copy_local_to_global_stokes_system(
     const Assembly::CopyData::StokesSystem<dim>& data)
   {
-    if(rebuild_stokes_matrix == true)
+    if (rebuild_stokes_matrix == true)
       stokes_constraints.distribute_local_to_global(data.local_matrix,
                                                     data.local_rhs,
                                                     data.local_dof_indices,
@@ -2429,7 +2429,7 @@ namespace Step32
     TimerOutput::Scope timer_section(computing_timer,
                                      "   Assemble Stokes system");
 
-    if(rebuild_stokes_matrix == true)
+    if (rebuild_stokes_matrix == true)
       stokes_matrix = 0;
 
     stokes_rhs = 0;
@@ -2461,7 +2461,7 @@ namespace Step32
         update_values),
       Assembly::CopyData::StokesSystem<dim>(stokes_fe));
 
-    if(rebuild_stokes_matrix == true)
+    if (rebuild_stokes_matrix == true)
       stokes_matrix.compress(VectorOperation::add);
     stokes_rhs.compress(VectorOperation::add);
 
@@ -2498,17 +2498,17 @@ namespace Step32
     data.local_mass_matrix      = 0;
     data.local_stiffness_matrix = 0;
 
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for (unsigned int q = 0; q < n_q_points; ++q)
       {
-        for(unsigned int k = 0; k < dofs_per_cell; ++k)
+        for (unsigned int k = 0; k < dofs_per_cell; ++k)
           {
             scratch.grad_phi_T[k]
               = scratch.temperature_fe_values.shape_grad(k, q);
             scratch.phi_T[k] = scratch.temperature_fe_values.shape_value(k, q);
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             {
               data.local_mass_matrix(i, j)
                 += (scratch.phi_T[i] * scratch.phi_T[j]
@@ -2538,7 +2538,7 @@ namespace Step32
   void
   BoussinesqFlowProblem<dim>::assemble_temperature_matrix()
   {
-    if(rebuild_temperature_matrices == false)
+    if (rebuild_temperature_matrices == false)
       return;
 
     TimerOutput::Scope timer_section(computing_timer,
@@ -2661,9 +2661,9 @@ namespace Step32
                           global_entropy_variation,
                           cell->diameter());
 
-    for(unsigned int q = 0; q < n_q_points; ++q)
+    for (unsigned int q = 0; q < n_q_points; ++q)
       {
-        for(unsigned int k = 0; k < dofs_per_cell; ++k)
+        for (unsigned int k = 0; k < dofs_per_cell; ++k)
           {
             scratch.phi_T[k] = scratch.temperature_fe_values.shape_value(k, q);
             scratch.grad_phi_T[k]
@@ -2712,7 +2712,7 @@ namespace Step32
                   * extrapolated_strain_rate)
              / (EquationData::density(ext_T) * EquationData::specific_heat));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
             data.local_rhs(i)
               += (T_term_for_rhs * scratch.phi_T[i]
@@ -2721,10 +2721,10 @@ namespace Step32
                   + time_step * gamma * scratch.phi_T[i])
                  * scratch.temperature_fe_values.JxW(q);
 
-            if(temperature_constraints.is_inhomogeneously_constrained(
-                 data.local_dof_indices[i]))
+            if (temperature_constraints.is_inhomogeneously_constrained(
+                  data.local_dof_indices[i]))
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   data.matrix_for_bc(j, i)
                     += (scratch.phi_T[i] * scratch.phi_T[j]
                           * (use_bdf2_scheme ? ((2 * time_step + old_time_step)
@@ -2773,7 +2773,7 @@ namespace Step32
   {
     const bool use_bdf2_scheme = (timestep_number != 0);
 
-    if(use_bdf2_scheme == true)
+    if (use_bdf2_scheme == true)
       {
         temperature_matrix.copy_from(temperature_mass_matrix);
         temperature_matrix
@@ -2786,7 +2786,7 @@ namespace Step32
         temperature_matrix.add(time_step, temperature_stiffness_matrix);
       }
 
-    if(rebuild_temperature_preconditioner == true)
+    if (rebuild_temperature_preconditioner == true)
       {
         T_preconditioner
           = std::make_shared<TrilinosWrappers::PreconditionJacobi>();
@@ -2911,8 +2911,8 @@ namespace Step32
            + distributed_stokes_solution.block(1).local_range().first),
         end = (distributed_stokes_solution.block(0).size()
                + distributed_stokes_solution.block(1).local_range().second);
-      for(unsigned int i = start; i < end; ++i)
-        if(stokes_constraints.is_constrained(i))
+      for (unsigned int i = start; i < end; ++i)
+        if (stokes_constraints.is_constrained(i))
           distributed_stokes_solution(i) = 0;
 
       PrimitiveVectorMemory<TrilinosWrappers::MPI::BlockVector> mem;
@@ -2945,7 +2945,7 @@ namespace Step32
           n_iterations = solver_control.last_step();
         }
 
-      catch(SolverControl::NoConvergence&)
+      catch (SolverControl::NoConvergence&)
         {
           const LinearSolvers::BlockSchurPreconditioner<
             TrilinosWrappers::PreconditionAMG,
@@ -3047,9 +3047,10 @@ namespace Step32
                                -std::numeric_limits<double>::max()};
       double global_temperature[2];
 
-      for(unsigned int i = distributed_temperature_solution.local_range().first;
-          i < distributed_temperature_solution.local_range().second;
-          ++i)
+      for (unsigned int i
+           = distributed_temperature_solution.local_range().first;
+           i < distributed_temperature_solution.local_range().second;
+           ++i)
         {
           temperature[0] = std::min<double>(
             temperature[0], distributed_temperature_solution(i));
@@ -3180,9 +3181,9 @@ namespace Step32
            ExcInternalError());
     Assert(inputs.solution_values[0].size() == dim + 2, ExcInternalError());
 
-    for(unsigned int q = 0; q < n_quadrature_points; ++q)
+    for (unsigned int q = 0; q < n_quadrature_points; ++q)
       {
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           computed_quantities[q](d) = (inputs.solution_values[q](d)
                                        * EquationData::year_in_seconds * 100);
 
@@ -3194,7 +3195,7 @@ namespace Step32
         computed_quantities[q](dim + 1) = temperature;
 
         Tensor<2, dim> grad_u;
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           grad_u[d] = inputs.solution_gradients[q][d];
         const SymmetricTensor<2, dim> strain_rate = symmetrize(grad_u);
         computed_quantities[q](dim + 2)
@@ -3277,16 +3278,16 @@ namespace Step32
         joint_endc       = joint_dof_handler.end(),
         stokes_cell      = stokes_dof_handler.begin_active(),
         temperature_cell = temperature_dof_handler.begin_active();
-      for(; joint_cell != joint_endc;
-          ++joint_cell, ++stokes_cell, ++temperature_cell)
-        if(joint_cell->is_locally_owned())
+      for (; joint_cell != joint_endc;
+           ++joint_cell, ++stokes_cell, ++temperature_cell)
+        if (joint_cell->is_locally_owned())
           {
             joint_cell->get_dof_indices(local_joint_dof_indices);
             stokes_cell->get_dof_indices(local_stokes_dof_indices);
             temperature_cell->get_dof_indices(local_temperature_dof_indices);
 
-            for(unsigned int i = 0; i < joint_fe.dofs_per_cell; ++i)
-              if(joint_fe.system_to_base_index(i).first.first == 0)
+            for (unsigned int i = 0; i < joint_fe.dofs_per_cell; ++i)
+              if (joint_fe.system_to_base_index(i).first.first == 0)
                 {
                   Assert(joint_fe.system_to_base_index(i).second
                            < local_stokes_dof_indices.size(),
@@ -3345,12 +3346,12 @@ namespace Step32
     // (<code>.visit</code>) and Paraview (<code>.pvtu</code>) on the zeroth
     // processor that describes how the individual files are defining the
     // global data set.
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+             ++i)
           filenames.push_back(std::string("solution-")
                               + Utilities::int_to_string(out_index, 5) + "."
                               + Utilities::int_to_string(i, 4) + ".vtu");
@@ -3421,11 +3422,11 @@ namespace Step32
       parallel::distributed::GridRefinement::refine_and_coarsen_fixed_fraction(
         triangulation, estimated_error_per_cell, 0.3, 0.1);
 
-      if(triangulation.n_levels() > max_grid_level)
-        for(typename Triangulation<dim>::active_cell_iterator cell
-            = triangulation.begin_active(max_grid_level);
-            cell != triangulation.end();
-            ++cell)
+      if (triangulation.n_levels() > max_grid_level)
+        for (typename Triangulation<dim>::active_cell_iterator cell
+             = triangulation.begin_active(max_grid_level);
+             cell != triangulation.end();
+             ++cell)
           cell->clear_refine_flag();
 
       // With all flags marked as necessary, we can then tell the
@@ -3547,22 +3548,22 @@ namespace Step32
 
         pcout << std::endl;
 
-        if((timestep_number == 0)
-           && (pre_refinement_step < parameters.initial_adaptive_refinement))
+        if ((timestep_number == 0)
+            && (pre_refinement_step < parameters.initial_adaptive_refinement))
           {
             refine_mesh(parameters.initial_global_refinement
                         + parameters.initial_adaptive_refinement);
             ++pre_refinement_step;
             goto start_time_iteration;
           }
-        else if((timestep_number > 0)
-                && (timestep_number % parameters.adaptive_refinement_interval
-                    == 0))
+        else if ((timestep_number > 0)
+                 && (timestep_number % parameters.adaptive_refinement_interval
+                     == 0))
           refine_mesh(parameters.initial_global_refinement
                       + parameters.initial_adaptive_refinement);
 
-        if((parameters.generate_graphical_output == true)
-           && (timestep_number % parameters.graphical_output_interval == 0))
+        if ((parameters.generate_graphical_output == true)
+            && (timestep_number % parameters.graphical_output_interval == 0))
           output_results();
 
         // In order to speed up linear solvers, we extrapolate the solutions
@@ -3575,7 +3576,7 @@ namespace Step32
         // the number of the time step), we check whether the current time
         // step number is divisible by 100, and if so we let the computing
         // timer print a summary of CPU times spent so far.
-        if(time > parameters.end_time * EquationData::year_in_seconds)
+        if (time > parameters.end_time * EquationData::year_in_seconds)
           break;
 
         TrilinosWrappers::MPI::BlockVector old_old_stokes_solution;
@@ -3583,7 +3584,7 @@ namespace Step32
         old_stokes_solution          = stokes_solution;
         old_old_temperature_solution = old_temperature_solution;
         old_temperature_solution     = temperature_solution;
-        if(old_time_step > 0)
+        if (old_time_step > 0)
           {
             //Trilinos sadd does not like ghost vectors even as input. Copy
             //into distributed vectors for now:
@@ -3609,18 +3610,18 @@ namespace Step32
             }
           }
 
-        if((timestep_number > 0) && (timestep_number % 100 == 0))
+        if ((timestep_number > 0) && (timestep_number % 100 == 0))
           computing_timer.print_summary();
 
         time += time_step;
         ++timestep_number;
       }
-    while(true);
+    while (true);
 
     // If we are generating graphical output, do so also for the last time
     // step unless we had just done so before we left the do-while loop
-    if((parameters.generate_graphical_output == true)
-       && !((timestep_number - 1) % parameters.graphical_output_interval == 0))
+    if ((parameters.generate_graphical_output == true)
+        && !((timestep_number - 1) % parameters.graphical_output_interval == 0))
       output_results();
   }
 } // namespace Step32
@@ -3649,7 +3650,7 @@ main(int argc, char* argv[])
         argc, argv, numbers::invalid_unsigned_int);
 
       std::string parameter_filename;
-      if(argc >= 2)
+      if (argc >= 2)
         parameter_filename = argv[1];
       else
         parameter_filename = "step-32.prm";
@@ -3659,7 +3660,7 @@ main(int argc, char* argv[])
       BoussinesqFlowProblem<dim>             flow_problem(parameters);
       flow_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -3673,7 +3674,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

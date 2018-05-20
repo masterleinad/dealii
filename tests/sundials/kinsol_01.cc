@@ -41,7 +41,7 @@ main(int argc, char** argv)
   ParameterHandler                             prm;
   data.add_parameters(prm);
 
-  if(false)
+  if (false)
     {
       std::ofstream ofile(SOURCE_DIR "/kinsol_01.prm");
       prm.print_parameters(ofile, ParameterHandler::ShortText);
@@ -59,13 +59,13 @@ main(int argc, char** argv)
   kinsol.reinit_vector = [N](VectorType& v) { v.reinit(N); };
 
   kinsol.residual = [](const VectorType& u, VectorType& F) -> int {
-    for(unsigned int i = 0; i < u.size(); ++i)
+    for (unsigned int i = 0; i < u.size(); ++i)
       F[i] = u[i] * u[i] - (i + 1) * (i + 1);
     return 0;
   };
 
   kinsol.iteration_function = [](const VectorType& u, VectorType& F) -> int {
-    for(unsigned int i = 0; i < u.size(); ++i)
+    for (unsigned int i = 0; i < u.size(); ++i)
       F[i] = u[i] * u[i] - i * i - u[i];
     return 0;
   };

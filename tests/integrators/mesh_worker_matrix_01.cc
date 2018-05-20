@@ -59,16 +59,16 @@ template <int dim>
 void
 Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
-  if(!cells)
+  if (!cells)
     return;
-  for(unsigned int k = 0; k < info.n_matrices(); ++k)
+  for (unsigned int k = 0; k < info.n_matrices(); ++k)
     {
       const unsigned int  block_row = info.matrix(k).row;
       const unsigned int  block_col = info.matrix(k).column;
       FullMatrix<double>& M1        = info.matrix(k).matrix;
-      if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+      if (block_row == block_col)
+        for (unsigned int i = 0; i < M1.m(); ++i)
+          for (unsigned int j = 0; j < M1.n(); ++j)
             {
               M1(i, j) = 10.;
             }
@@ -79,16 +79,16 @@ template <int dim>
 void
 Local<dim>::bdry(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 {
-  if(!faces)
+  if (!faces)
     return;
-  for(unsigned int k = 0; k < info.n_matrices(); ++k)
+  for (unsigned int k = 0; k < info.n_matrices(); ++k)
     {
       const unsigned int  block_row = info.matrix(k).row;
       const unsigned int  block_col = info.matrix(k).column;
       FullMatrix<double>& M1        = info.matrix(k).matrix;
-      if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+      if (block_row == block_col)
+        for (unsigned int i = 0; i < M1.m(); ++i)
+          for (unsigned int j = 0; j < M1.n(); ++j)
             {
               M1(i, j) = 1.;
             }
@@ -102,16 +102,16 @@ Local<dim>::face(MeshWorker::DoFInfo<dim>& info1,
                  CellInfo&,
                  CellInfo&) const
 {
-  if(!faces)
+  if (!faces)
     return;
-  for(unsigned int k = 0; k < info1.n_matrices(); ++k)
+  for (unsigned int k = 0; k < info1.n_matrices(); ++k)
     {
       const unsigned int  block_row = info1.matrix(k).row;
       const unsigned int  block_col = info1.matrix(k).column;
       FullMatrix<double>& M1        = info1.matrix(k).matrix;
-      if(block_row == block_col)
-        for(unsigned int i = 0; i < M1.m(); ++i)
-          for(unsigned int j = 0; j < M1.n(); ++j)
+      if (block_row == block_col)
+        for (unsigned int i = 0; i < M1.m(); ++i)
+          for (unsigned int j = 0; j < M1.n(); ++j)
             {
               info1.matrix(k, false).matrix(i, j) = 1.;
               info2.matrix(k, false).matrix(i, j) = 1.;
@@ -196,14 +196,14 @@ test(const FiniteElement<dim>& fe)
   // tr.execute_coarsening_and_refinement();
   //  tr.refine_global(1);
   deallog << "Triangulation levels";
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     deallog << ' ' << l << ':' << tr.n_cells(l);
   deallog << std::endl;
 
   unsigned int cn = 0;
-  for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
-      cell != tr.end();
-      ++cell, ++cn)
+  for (typename Triangulation<dim>::cell_iterator cell = tr.begin();
+       cell != tr.end();
+       ++cell, ++cn)
     cell->set_user_index(cn);
 
   DoFHandler<dim> dofs(tr);
@@ -231,6 +231,6 @@ main()
   fe2.push_back(&q1);
   fe2.push_back(&sys1);
 
-  for(unsigned int i = 0; i < fe2.size(); ++i)
+  for (unsigned int i = 0; i < fe2.size(); ++i)
     test(*fe2[i]);
 }

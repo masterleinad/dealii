@@ -81,12 +81,12 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
   dealii::types::global_dof_index i_min          = 0;
   dealii::types::global_dof_index this_subdomain = subdomain_association[0];
 
-  for(dealii::types::global_dof_index index = 1;
-      index < subdomain_association.size();
-      ++index)
+  for (dealii::types::global_dof_index index = 1;
+       index < subdomain_association.size();
+       ++index)
     {
       //found index different from the current one
-      if(subdomain_association[index] != this_subdomain)
+      if (subdomain_association[index] != this_subdomain)
         {
           index_sets[this_subdomain].add_range(i_min, index);
           i_min          = index;
@@ -95,7 +95,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
     }
 
   // the very last element is of different index
-  if(i_min == subdomain_association.size() - 1)
+  if (i_min == subdomain_association.size() - 1)
     {
       index_sets[this_subdomain].add_index(i_min);
     }
@@ -106,7 +106,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
       index_sets[this_subdomain].add_range(i_min, subdomain_association.size());
     }
 
-  for(unsigned int i = 0; i < n_subdomains; i++)
+  for (unsigned int i = 0; i < n_subdomains; i++)
     index_sets[i].compress();
 
   return index_sets;
@@ -171,7 +171,7 @@ test()
     dealii::Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
       endc = triangulation.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const dealii::Point<dim>& center = cell->center();
         const double              x      = center[0];
@@ -205,7 +205,7 @@ test()
                                           /* keep constrained dofs */ true);
   std::vector<dealii::types::global_dof_index> n_locally_owned_dofs(
     n_mpi_processes);
-  for(unsigned int i = 0; i < n_mpi_processes; i++)
+  for (unsigned int i = 0; i < n_mpi_processes; i++)
     n_locally_owned_dofs[i] = locally_owned_dofs_per_processor[i].n_elements();
 
   dealii::SparsityTools::distribute_sparsity_pattern(
@@ -219,7 +219,7 @@ test()
     locally_owned_dofs, locally_owned_dofs, csp, mpi_communicator);
 
   eigenfunctions.resize(5);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
     eigenfunctions[i].reinit(locally_owned_dofs,
                              mpi_communicator); //without ghost dofs
 
@@ -248,16 +248,16 @@ test()
   typename dealii::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
-    if(cell->subdomain_id() == this_mpi_process)
+  for (; cell != endc; ++cell)
+    if (cell->subdomain_id() == this_mpi_process)
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;
         cell_mass_matrix      = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
                 cell_stiffness_matrix(i, j)
                   += (fe_values.shape_grad(i, q_point)
@@ -284,7 +284,7 @@ test()
   {
     std::vector<std::complex<double>> lambda(eigenfunctions.size());
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       eigenfunctions[i] = PetscScalar();
 
     dealii::SolverControl solver_control(
@@ -310,10 +310,10 @@ test()
                       eigenfunctions,
                       eigenvalues.size());
 
-    for(unsigned int i = 0; i < lambda.size(); i++)
+    for (unsigned int i = 0; i < lambda.size(); i++)
       eigenvalues[i] = lambda[i].real();
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       dealii::deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-orthonormal:
@@ -322,11 +322,11 @@ test()
     {
       const double               precision = 1e-7;
       PETScWrappers::MPI::Vector Ax(eigenfunctions[0]), Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {
           mass_matrix.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for (unsigned int j = 0; j < eigenfunctions.size(); j++)
             Assert(std::abs(eigenfunctions[j] * Bx - (i == j)) < precision,
                    ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
                               + " and " + Utilities::int_to_string(j)
@@ -358,7 +358,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -372,7 +372,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

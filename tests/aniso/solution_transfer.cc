@@ -43,7 +43,7 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double ret_value = sin(p[0] * 4) * cos(p[1] * 4);
-    if(dim == 3)
+    if (dim == 3)
       ret_value *= sin(5 * p[2] + 1);
     return ret_value;
   };
@@ -79,7 +79,7 @@ transfer(std::ostream& out)
   // test a): pure refinement
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_refine_flag(RefinementCase<dim>::cut_x);
 
   tria.prepare_coarsening_and_refinement();
@@ -104,7 +104,7 @@ transfer(std::ostream& out)
   SolutionTransfer<dim> soltrans2(dof_handler);
   cell = tria.begin_active(tria.n_levels() - 1);
   endc = tria.end(tria.n_levels() - 1);
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_coarsen_flag();
   Vector<double> old_solution = solution;
   tria.prepare_coarsening_and_refinement();

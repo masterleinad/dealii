@@ -178,7 +178,7 @@ namespace Step53
     in.push(boost::iostreams::basic_gzip_decompressor<>());
     in.push(boost::iostreams::file_source("topography.txt.gz"));
 
-    for(unsigned int line = 0; line < 83600; ++line)
+    for (unsigned int line = 0; line < 83600; ++line)
       {
         try
           {
@@ -187,7 +187,7 @@ namespace Step53
 
             data.push_back(elevation);
           }
-        catch(...)
+        catch (...)
           {
             AssertThrow(false,
                         ExcMessage("Could not read all 83,600 data points "
@@ -310,9 +310,9 @@ namespace Step53
     const double R_plus_d = p / std::cos(theta);
 
     Point<3> phi_theta_d;
-    if(phi < 0)
+    if (phi < 0)
       phi_theta_d[0] = phi + 2 * numbers::PI;
-    else if(phi > 2 * numbers::PI)
+    else if (phi > 2 * numbers::PI)
       phi_theta_d[0] = phi - 2 * numbers::PI;
     else
       phi_theta_d[0] = phi;
@@ -404,10 +404,10 @@ namespace Step53
     // mother to children, this also happens after several recursive
     // refinement steps.
     triangulation.set_manifold(0, geometry);
-    for(Triangulation<3>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
+    for (Triangulation<3>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
       cell->set_all_manifold_ids(0);
 
     // The last step is to refine the mesh beyond its initial $1\times 2\times 1$
@@ -420,14 +420,14 @@ namespace Step53
     // surface of the domain (and this is what the last <code>true</code> argument
     // in the call to GridGenerator::subdivided_hyper_rectangle() above meant: to
     // "color" the boundaries by assigning each boundary a unique boundary indicator).
-    for(unsigned int i = 0; i < 6; ++i)
+    for (unsigned int i = 0; i < 6; ++i)
       {
-        for(Triangulation<3>::active_cell_iterator cell
-            = triangulation.begin_active();
-            cell != triangulation.end();
-            ++cell)
-          for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
-            if(cell->face(f)->boundary_id() == 5)
+        for (Triangulation<3>::active_cell_iterator cell
+             = triangulation.begin_active();
+             cell != triangulation.end();
+             ++cell)
+          for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+            if (cell->face(f)->boundary_id() == 5)
               {
                 cell->set_refine_flag();
                 break;
@@ -460,7 +460,7 @@ main()
     {
       Step53::run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -474,7 +474,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

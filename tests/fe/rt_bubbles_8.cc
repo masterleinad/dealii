@@ -59,10 +59,10 @@ test(const unsigned int degree)
 
   Assert(fe.get_fe().n_components() == dim, ExcInternalError());
 
-  for(unsigned int q_point = 0; q_point < q.size(); ++q_point)
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
-      for(unsigned int j = 0; j < dofs_per_cell; ++j)
-        for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int q_point = 0; q_point < q.size(); ++q_point)
+    for (unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int d = 0; d < dim; ++d)
           mass_matrix(i, j)
             += (fe.shape_value_component(i, q_point, d)
                 * fe.shape_value_component(j, q_point, d) * fe.JxW(q_point));
@@ -74,7 +74,7 @@ test(const unsigned int degree)
   SolverCG<>              solver(solver_control, vector_memory);
 
   Vector<double> tmp1(dofs_per_cell), tmp2(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     tmp1(i) = 1. * Testing::rand() / RAND_MAX;
 
   deallog << "solving degree = " << degree << std::endl;
@@ -92,7 +92,7 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  for(unsigned int i = 1; i < 4; ++i)
+  for (unsigned int i = 1; i < 4; ++i)
     {
       test<2>(i);
       test<3>(i);

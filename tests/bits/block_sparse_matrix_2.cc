@@ -54,7 +54,7 @@ main()
 
   DoFTools::make_sparsity_pattern(dof_handler, sparsity_pattern.block(0, 0));
 
-  for(unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
+  for (unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
     {
       sparsity_pattern.block(0, 1).add(j, 0);
       sparsity_pattern.block(1, 0).add(0, j);

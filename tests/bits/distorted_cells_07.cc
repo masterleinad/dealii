@@ -33,10 +33,10 @@ void
 check(const unsigned int testcase)
 {
   std::vector<Point<dim>> vertices;
-  for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
     vertices.push_back(GeometryInfo<dim>::unit_cell_vertex(v));
 
-  switch(testcase)
+  switch (testcase)
     {
       case 2:
         deallog << "Twisted cell in " << dim << "d" << std::endl;
@@ -49,7 +49,7 @@ check(const unsigned int testcase)
   std::vector<CellData<dim>> cells;
   {
     CellData<dim> cell;
-    for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+    for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
       cell.vertices[j] = j;
     cells.push_back(cell);
   }
@@ -61,7 +61,7 @@ check(const unsigned int testcase)
     {
       coarse_grid.create_triangulation(vertices, cells, SubCellData());
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch (typename Triangulation<dim>::DistortedCellList& dcv)
     {
       flag = true;
     }
@@ -77,7 +77,7 @@ check(const unsigned int testcase)
     {
       fe_values.reinit(coarse_grid.begin());
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

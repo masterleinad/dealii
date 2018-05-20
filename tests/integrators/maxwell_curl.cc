@@ -89,7 +89,7 @@ TestMaxwellCurl(Triangulation<dim>& tr)
   deallog << "curl_matrix" << std::endl;
   curl_check.print(deallog, 10);
 
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
     {
       fe_face_values.reinit(cell, face);
       nitsche_curl_matrix<dim>(

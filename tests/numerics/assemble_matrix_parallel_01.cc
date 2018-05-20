@@ -164,7 +164,7 @@ BoundaryValues<dim>::value(const Point<dim>& p,
                            const unsigned int /*component*/) const
 {
   double sum = 0;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     sum += std::sin(numbers::PI * p[d]);
   return sum;
 }
@@ -186,7 +186,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
                           const unsigned int /*component*/) const
 {
   double product = 1;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     product *= (p[d] + 1);
   return product;
 }
@@ -195,15 +195,15 @@ template <int dim>
 LaplaceProblem<dim>::LaplaceProblem()
   : dof_handler(triangulation), max_degree(5)
 {
-  if(dim == 2)
-    for(unsigned int degree = 2; degree <= max_degree; ++degree)
+  if (dim == 2)
+    for (unsigned int degree = 2; degree <= max_degree; ++degree)
       {
         fe_collection.push_back(FE_Q<dim>(degree));
         quadrature_collection.push_back(QGauss<dim>(degree + 1));
         face_quadrature_collection.push_back(QGauss<dim - 1>(degree + 1));
       }
   else
-    for(unsigned int degree = 1; degree < max_degree - 1; ++degree)
+    for (unsigned int degree = 1; degree < max_degree - 1; ++degree)
       {
         fe_collection.push_back(FE_Q<dim>(degree));
         quadrature_collection.push_back(QGauss<dim>(degree + 1));
@@ -292,14 +292,14 @@ LaplaceProblem<dim>::local_assemble(
 
   const RightHandSide<dim> rhs_function;
 
-  for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
-      ++q_point)
+  for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+       ++q_point)
     {
       const double rhs_value
         = rhs_function.value(fe_values.quadrature_point(q_point), 0);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             data.local_matrix(i, j)
               += (fe_values.shape_grad(i, q_point)
                   * fe_values.shape_grad(j, q_point) * fe_values.JxW(q_point));
@@ -335,12 +335,12 @@ LaplaceProblem<dim>::assemble_reference()
   Assembly::Scratch::Data<dim> assembly_data(fe_collection,
                                              quadrature_collection);
 
-  for(unsigned int color = 0; color < graph.size(); ++color)
-    for(typename std::vector<
-          typename hp::DoFHandler<dim>::active_cell_iterator>::const_iterator p
-        = graph[color].begin();
-        p != graph[color].end();
-        ++p)
+  for (unsigned int color = 0; color < graph.size(); ++color)
+    for (typename std::vector<
+           typename hp::DoFHandler<dim>::active_cell_iterator>::const_iterator p
+         = graph[color].begin();
+         p != graph[color].end();
+         ++p)
       {
         local_assemble(*p, assembly_data, copy_data);
         copy_local_to_global(copy_data);
@@ -382,17 +382,17 @@ void
 LaplaceProblem<dim>::postprocess()
 {
   Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
-  for(unsigned int i = 0; i < estimated_error_per_cell.size(); ++i)
+  for (unsigned int i = 0; i < estimated_error_per_cell.size(); ++i)
     estimated_error_per_cell(i) = i;
 
   GridRefinement::refine_and_coarsen_fixed_number(
     triangulation, estimated_error_per_cell, 0.3, 0.03);
   triangulation.execute_coarsening_and_refinement();
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     cell->set_active_fe_index(rand() % fe_collection.size());
 }
 
@@ -400,9 +400,9 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for (unsigned int cycle = 0; cycle < 3; ++cycle)
     {
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_cube(triangulation, 0, 1/* ,
                                      Point<dim>(),
@@ -415,7 +415,7 @@ LaplaceProblem<dim>::run()
       assemble_reference();
       assemble_test();
 
-      if(cycle < 2)
+      if (cycle < 2)
         postprocess();
     }
 }

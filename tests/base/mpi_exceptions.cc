@@ -47,13 +47,13 @@ main(int argc, char** argv)
   mpi_error_codes.push_back(MPI_ERR_INTERN);
   mpi_error_codes.push_back(MPI_ERR_LASTCODE);
 
-  for(unsigned int i = 0; i < mpi_error_codes.size(); ++i)
+  for (unsigned int i = 0; i < mpi_error_codes.size(); ++i)
     {
       try
         {
           throw ExcMPI(mpi_error_codes[i]);
         }
-      catch(const ExceptionBase& exc)
+      catch (const ExceptionBase& exc)
         {
           deallog << exc.get_exc_name() << std::endl;
           exc.print_info(deallog.get_file_stream());

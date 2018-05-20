@@ -670,7 +670,7 @@ namespace SLEPcWrappers
     unsigned int n_converged = 0;
     solve(n_eigenpairs, &n_converged);
 
-    if(n_converged > n_eigenpairs)
+    if (n_converged > n_eigenpairs)
       n_converged = n_eigenpairs;
     AssertThrow(
       n_converged == n_eigenpairs,
@@ -680,7 +680,7 @@ namespace SLEPcWrappers
     eigenvectors.resize(n_converged, eigenvectors.front());
     eigenvalues.resize(n_converged);
 
-    for(unsigned int index = 0; index < n_converged; ++index)
+    for (unsigned int index = 0; index < n_converged; ++index)
       get_eigenpair(index, eigenvalues[index], eigenvectors[index]);
   }
 
@@ -707,7 +707,7 @@ namespace SLEPcWrappers
     unsigned int n_converged = 0;
     solve(n_eigenpairs, &n_converged);
 
-    if(n_converged >= n_eigenpairs)
+    if (n_converged >= n_eigenpairs)
       n_converged = n_eigenpairs;
 
     AssertThrow(
@@ -718,7 +718,7 @@ namespace SLEPcWrappers
     eigenvectors.resize(n_converged, eigenvectors.front());
     eigenvalues.resize(n_converged);
 
-    for(unsigned int index = 0; index < n_converged; ++index)
+    for (unsigned int index = 0; index < n_converged; ++index)
       get_eigenpair(index, eigenvalues[index], eigenvectors[index]);
   }
 
@@ -755,7 +755,7 @@ namespace SLEPcWrappers
     unsigned int n_converged = 0;
     solve(n_eigenpairs, &n_converged);
 
-    if(n_converged >= n_eigenpairs)
+    if (n_converged >= n_eigenpairs)
       n_converged = n_eigenpairs;
 
     AssertThrow(
@@ -770,7 +770,7 @@ namespace SLEPcWrappers
     real_eigenvalues.resize(n_converged);
     imag_eigenvalues.resize(n_converged);
 
-    for(unsigned int index = 0; index < n_converged; ++index)
+    for (unsigned int index = 0; index < n_converged; ++index)
       get_eigenpair(index,
                     real_eigenvalues[index],
                     imag_eigenvalues[index],
@@ -784,7 +784,7 @@ namespace SLEPcWrappers
   {
     std::vector<Vec> vecs(this_initial_space.size());
 
-    for(unsigned int i = 0; i < this_initial_space.size(); i++)
+    for (unsigned int i = 0; i < this_initial_space.size(); i++)
       {
         Assert(this_initial_space[i].l2_norm() > 0.0,
                ExcMessage("Initial vectors should be nonzero."));

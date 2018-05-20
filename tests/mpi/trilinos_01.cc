@@ -28,7 +28,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -44,21 +44,21 @@ test()
 
   // only one CPU checks has_ghost_elements()
   MPI_Barrier(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << v_tmp.has_ghost_elements() << std::endl;
       int dummy = 0;
       MPI_Send(&dummy, 1, MPI_INT, 1, 12345, MPI_COMM_WORLD);
     }
 
-  if(myid == 1)
+  if (myid == 1)
     {
       MPI_Status  status;
       MPI_Request request;
       int         flag  = 0;
       int         tests = 0;
 
-      while(!flag && tests < 10)
+      while (!flag && tests < 10)
         {
           tests++;
           MPI_Iprobe(0, 12345, MPI_COMM_WORLD, &flag, &status);
@@ -74,7 +74,7 @@ test()
 
   deallog << v_tmp.has_ghost_elements() << std::endl;
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -87,7 +87,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

@@ -31,7 +31,7 @@ test()
   FlatManifold<dim, spacedim> manifold(periodicity);
 
   Point<spacedim> x1, x2;
-  for(unsigned int d = 0; d < spacedim; ++d)
+  for (unsigned int d = 0; d < spacedim; ++d)
     {
       x1[d] = 0.1;
       x2[d] = 0.9;

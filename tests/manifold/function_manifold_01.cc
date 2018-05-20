@@ -36,7 +36,7 @@ test(unsigned int ref = 1)
   std::string push_forward_expression;
   std::string pull_back_expression;
 
-  switch(spacedim)
+  switch (spacedim)
     {
       case 2:
         push_forward_expression = "x; y";
@@ -56,10 +56,10 @@ test(unsigned int ref = 1)
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria, 0, 1);
 
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     {
       cell->set_all_manifold_ids(1);
     }

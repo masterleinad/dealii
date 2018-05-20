@@ -28,7 +28,7 @@ test(int n)
 
   QTrianglePolar quad(n);
 
-  for(auto p : quad.get_points())
+  for (auto p : quad.get_points())
     deallog << p << std::endl;
 
   deallog << std::endl
@@ -40,7 +40,7 @@ test(int n)
 
   auto quad2 = quad.compute_affine_transformation(get_simplex<dim>());
 
-  for(auto p : quad2.get_points())
+  for (auto p : quad2.get_points())
     deallog << p << std::endl;
 
   deallog << std::endl

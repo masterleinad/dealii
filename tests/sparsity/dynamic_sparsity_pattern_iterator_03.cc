@@ -33,7 +33,7 @@ test()
   sp.compress();
 
   DynamicSparsityPattern::const_iterator i = sp.begin();
-  for(; i != sp.end(); ++i)
+  for (; i != sp.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 
   deallog << "OK" << std::endl;
@@ -52,7 +52,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -66,7 +66,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

@@ -24,14 +24,14 @@ test()
 {
   const unsigned int     N = 100;
   DynamicSparsityPattern csp(N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < 10; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < 10; ++j)
       csp.add(i, (i + (i + 1) * (j * j + i)) % N);
 
   SparsityPattern sp;
   sp.copy_from(csp);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < sp.row_length(i); ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < sp.row_length(i); ++j)
       deallog << i << ' ' << j << ' ' << sp.column_number(i, j) << std::endl;
 }
 

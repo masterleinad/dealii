@@ -120,15 +120,15 @@ LaplaceEigenspectrumProblem::assemble_system()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       cell_A = 0;
       cell_B = 0;
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             {
               cell_A(i, j) += fe_values.shape_grad(i, q_point)
                               * fe_values.shape_grad(j, q_point)
@@ -160,12 +160,12 @@ LaplaceEigenspectrumProblem::solve()
   {
     const double               precision = 1e-7;
     PETScWrappers::MPI::Vector Ax(x[0]), Bx(x[0]);
-    for(unsigned int i = 0; i < x.size(); ++i)
+    for (unsigned int i = 0; i < x.size(); ++i)
       {
         B.vmult(Bx, x[i]);
 
-        for(unsigned int j = 0; j < x.size(); j++)
-          if(j != i)
+        for (unsigned int j = 0; j < x.size(); j++)
+          if (j != i)
             Assert(std::abs(x[j] * Bx) < precision,
                    ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
                               + " and " + Utilities::int_to_string(j)
@@ -193,7 +193,7 @@ LaplaceEigenspectrumProblem::run()
   // set the old eigenvalue to a silly number.
   double old_lambda = 1000;
 
-  for(unsigned int c = 0; c < 5; ++c)
+  for (unsigned int c = 0; c < 5; ++c)
     {
       // obtain numerical result
       triangulation.refine_global(1);
@@ -230,7 +230,7 @@ main(int argc, char** argv)
       }
     }
 
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -244,7 +244,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

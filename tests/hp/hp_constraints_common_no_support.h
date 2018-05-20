@@ -61,10 +61,10 @@ do_check(const Triangulation<dim>&    triangulation,
   hp::DoFHandler<dim> dof_handler(triangulation);
 
   // distribute fe_indices randomly
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % fe.size());
   dof_handler.distribute_dofs(fe);
 
@@ -114,13 +114,13 @@ test_with_hanging_nodes_random(const hp::FECollection<dim>& fe)
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 
-  for(unsigned int i = 0; i < 7 - dim; ++i)
+  for (unsigned int i = 0; i < 7 - dim; ++i)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        if(Testing::rand() % 4 == 0)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        if (Testing::rand() % 4 == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
@@ -136,13 +136,13 @@ test_with_hanging_nodes_random_aniso(const hp::FECollection<dim>& fe)
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(1);
 
-  for(unsigned int i = 0; i < 7 - dim; ++i)
+  for (unsigned int i = 0; i < 7 - dim; ++i)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        if(Testing::rand() % 4 == 0)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        if (Testing::rand() % 4 == 0)
           cell->set_refine_flag(RefinementCase<dim>(
             Testing::rand() % RefinementCase<dim>::isotropic_refinement + 1));
       triangulation.execute_coarsening_and_refinement();
@@ -165,10 +165,10 @@ template <int dim>
 void
 test_with_wrong_face_orientation(const hp::FECollection<dim>& fe)
 {
-  if(dim != 3)
+  if (dim != 3)
     return;
 
-  for(unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i)
     {
       Triangulation<dim> triangulation;
       GridGenerator::hyper_ball(triangulation);
@@ -189,7 +189,7 @@ template <int dim>
 void
 test_with_2d_deformed_mesh(const hp::FECollection<dim>& fe)
 {
-  if(dim != 2)
+  if (dim != 2)
     return;
 
   std::vector<Point<dim>> points_glob;
@@ -236,10 +236,10 @@ template <int dim>
 void
 test_with_2d_deformed_refined_mesh(const hp::FECollection<dim>& fe)
 {
-  if(dim != 2)
+  if (dim != 2)
     return;
 
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     {
       std::vector<Point<dim>> points_glob;
       std::vector<Point<dim>> points;
@@ -276,7 +276,7 @@ test_with_2d_deformed_refined_mesh(const hp::FECollection<dim>& fe)
       Triangulation<dim> triangulation;
       triangulation.create_triangulation(points_glob, cells, SubCellData());
 
-      switch(i)
+      switch (i)
         {
           case 0:
             triangulation.begin_active()->set_refine_flag();
@@ -323,7 +323,7 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
     (dim == 3 ? Point<dim>(2, 1, 1) :
                 (dim == 2 ? Point<dim>(2, 1) : Point<dim>(2.))));
 
-  if(do_refine)
+  if (do_refine)
     {
       (++triangulation.begin_active())->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
@@ -333,8 +333,8 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
 
   // for every pair of finite elements,
   // assign them to each of the two sides of the domain
-  for(unsigned int fe1 = 0; fe1 < fe.size(); ++fe1)
-    for(unsigned int fe2 = 0; fe2 < fe.size(); ++fe2)
+  for (unsigned int fe1 = 0; fe1 < fe.size(); ++fe1)
+    for (unsigned int fe2 = 0; fe2 < fe.size(); ++fe2)
       {
         deallog << "Testing " << fe[fe1].get_name() << " vs. "
                 << fe[fe2].get_name() << std::endl;
@@ -346,7 +346,7 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
         cell->set_active_fe_index(fe1);
         ++cell;
 
-        for(; cell != dof_handler.end(); ++cell)
+        for (; cell != dof_handler.end(); ++cell)
           cell->set_active_fe_index(fe2);
 
         dof_handler.distribute_dofs(fe);
@@ -376,14 +376,14 @@ test_interpolation_base(const hp::FECollection<dim>&     fe,
         // VectorTools::interpolate...)
         const unsigned int min_degree
           = std::min(polynomial_degrees[fe1], polynomial_degrees[fe2]);
-        for(unsigned int test = 0; test < dim + 1; ++test)
+        for (unsigned int test = 0; test < dim + 1; ++test)
           {
             Tensor<1, dim> exponents;
-            if(test < dim)
+            if (test < dim)
               exponents[test] = min_degree;
             else
               {
-                for(unsigned int i = 0; i < dim; ++i)
+                for (unsigned int i = 0; i < dim; ++i)
                   exponents[i] = min_degree;
               }
 

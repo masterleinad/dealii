@@ -70,7 +70,7 @@ main(int argc, char** argv)
   A2.reinit(sparsity_pattern);
 
   SparseMatrix<double>::iterator it = A_tmp.begin(), endit = A_tmp.end();
-  for(; it != endit; ++it)
+  for (; it != endit; ++it)
     {
       A.set(it->row(), it->column(), it->value());
       A2.set(it->row(), it->column(), 1000. * it->value()); // scale A2 by 1000.
@@ -81,7 +81,7 @@ main(int argc, char** argv)
   const unsigned int n_dofs = dof_handler.n_dofs();
 
   PETScWrappers::MPI::Vector right_hand_side(MPI_COMM_WORLD, n_dofs, n_dofs);
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     right_hand_side[i] = 1.;
   right_hand_side.compress(VectorOperation::insert);
 
@@ -99,7 +99,7 @@ main(int argc, char** argv)
 
     deallog << "prec A , matrix A : ";
     A.residual(residual, solution, right_hand_side);
-    if(residual.l2_norm() > 1.e-6)
+    if (residual.l2_norm() > 1.e-6)
       deallog << residual.l2_norm() << std::endl;
     else
       deallog << "OK" << std::endl;
@@ -115,14 +115,14 @@ main(int argc, char** argv)
 
     deallog << "prec A2, matrix A, A residual : ";
     A.residual(residual, solution, right_hand_side);
-    if(residual.l2_norm() > 1.e-6)
+    if (residual.l2_norm() > 1.e-6)
       deallog << residual.l2_norm() << std::endl;
     else
       deallog << "OK" << std::endl;
 
     deallog << "prec A2, matrix A, A2 residual : ";
     A2.residual(residual, solution, right_hand_side);
-    if(residual.l2_norm() < 1.e-6)
+    if (residual.l2_norm() < 1.e-6)
       deallog << residual.l2_norm() << std::endl;
     else
       deallog << "OK" << std::endl;

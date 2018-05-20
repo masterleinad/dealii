@@ -78,7 +78,7 @@ test(unsigned int ref = 1)
   ps[9][0][0] = 5 + 1e-10;
   ps[9][1][0] = -1e-10;
 
-  for(unsigned int i = 0; i < ps.size(); ++i)
+  for (unsigned int i = 0; i < ps.size(); ++i)
     {
       middle
         = manifold.get_new_point(make_array_view(ps[i]), make_array_view(ws));

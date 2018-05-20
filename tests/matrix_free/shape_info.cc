@@ -35,7 +35,7 @@ template <int dim>
 void
 test(const FiniteElement<dim>& fe, const Quadrature<1>& quad)
 {
-  for(unsigned int i = 0; i < fe.n_base_elements(); ++i)
+  for (unsigned int i = 0; i < fe.n_base_elements(); ++i)
     {
       internal::MatrixFreeFunctions::ShapeInfo<double> shape_info;
       shape_info.reinit(quad, fe, i);

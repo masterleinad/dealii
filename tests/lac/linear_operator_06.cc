@@ -26,7 +26,7 @@
 
 #define PRINTME(name, var)                              \
   deallog << "Block vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
+  for (unsigned int i = 0; i < var.n_blocks(); ++i)     \
     deallog << "[block " << i << " ]  " << var.block(i);
 
 using namespace dealii;
@@ -61,8 +61,8 @@ main()
   // BlockSparseMatrix:
   {
     BlockDynamicSparsityPattern dsp(5, 3);
-    for(unsigned int i = 0; i < 5; ++i)
-      for(unsigned int j = 0; j < 3; ++j)
+    for (unsigned int i = 0; i < 5; ++i)
+      for (unsigned int j = 0; j < 3; ++j)
         dsp.block(i, j).reinit(10, 5);
     dsp.collect_sizes();
 

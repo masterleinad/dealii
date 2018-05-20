@@ -56,23 +56,23 @@ namespace LocalIntegrators
       const unsigned int n_dofs       = fe.dofs_per_cell;
       const unsigned int n_components = fe.get_fe().n_components();
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = fe.JxW(k) * factor;
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               double Mii = 0.0;
-              for(unsigned int d = 0; d < n_components; ++d)
+              for (unsigned int d = 0; d < n_components; ++d)
                 Mii += dx
                        * (fe.shape_grad_component(i, k, d)
                           * fe.shape_grad_component(i, k, d));
 
               M(i, i) += Mii;
 
-              for(unsigned int j = i + 1; j < n_dofs; ++j)
+              for (unsigned int j = i + 1; j < n_dofs; ++j)
                 {
                   double Mij = 0.0;
-                  for(unsigned int d = 0; d < n_components; ++d)
+                  for (unsigned int d = 0; d < n_components; ++d)
                     Mij += dx
                            * (fe.shape_grad_component(j, k, d)
                               * fe.shape_grad_component(i, k, d));
@@ -102,10 +102,10 @@ namespace LocalIntegrators
       Assert(result.size() == n_dofs,
              ExcDimensionMismatch(result.size(), n_dofs));
 
-      for(unsigned int k = 0; k < nq; ++k)
+      for (unsigned int k = 0; k < nq; ++k)
         {
           const double dx = factor * fe.JxW(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             result(i) += dx * (input[k] * fe.shape_grad(i, k));
         }
     }
@@ -131,11 +131,11 @@ namespace LocalIntegrators
       Assert(result.size() == n_dofs,
              ExcDimensionMismatch(result.size(), n_dofs));
 
-      for(unsigned int k = 0; k < nq; ++k)
+      for (unsigned int k = 0; k < nq; ++k)
         {
           const double dx = factor * fe.JxW(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int d = 0; d < n_comp; ++d)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int d = 0; d < n_comp; ++d)
               {
                 result(i)
                   += dx * (input[d][k] * fe.shape_grad_component(i, k, d));
@@ -169,13 +169,13 @@ namespace LocalIntegrators
       Assert(M.m() == n_dofs, ExcDimensionMismatch(M.m(), n_dofs));
       Assert(M.n() == n_dofs, ExcDimensionMismatch(M.n(), n_dofs));
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = fe.JxW(k) * factor;
           const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < n_comp; ++d)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
+              for (unsigned int d = 0; d < n_comp; ++d)
                 M(i, j) += dx
                            * (2. * fe.shape_value_component(i, k, d) * penalty
                                 * fe.shape_value_component(j, k, d)
@@ -212,19 +212,19 @@ namespace LocalIntegrators
       Assert(M.m() == n_dofs, ExcDimensionMismatch(M.m(), n_dofs));
       Assert(M.n() == n_dofs, ExcDimensionMismatch(M.n(), n_dofs));
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = fe.JxW(k) * factor;
           const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
               {
                 double udotn   = 0.;
                 double vdotn   = 0.;
                 double ngradun = 0.;
                 double ngradvn = 0.;
 
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     udotn += n[d] * fe.shape_value_component(j, k, d);
                     vdotn += n[d] * fe.shape_value_component(i, k, d);
@@ -232,7 +232,7 @@ namespace LocalIntegrators
                     ngradvn += n * fe.shape_grad_component(i, k, d) * n[d];
                   }
 
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     const double v_t
                       = fe.shape_value_component(i, k, d) - vdotn * n[d];
@@ -281,11 +281,11 @@ namespace LocalIntegrators
       AssertDimension(Dinput.size(), fe.n_quadrature_points);
       AssertDimension(data.size(), fe.n_quadrature_points);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
           const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               const double dnv = fe.shape_grad(i, k) * n;
               const double dnu = Dinput[k] * n;
@@ -333,12 +333,12 @@ namespace LocalIntegrators
       AssertVectorVectorDimension(Dinput, n_comp, fe.n_quadrature_points);
       AssertVectorVectorDimension(data, n_comp, fe.n_quadrature_points);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
           const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int d = 0; d < n_comp; ++d)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int d = 0; d < n_comp; ++d)
               {
                 const double dnv = fe.shape_grad_component(i, k, d) * n;
                 const double dnu = Dinput[d][k] * n;
@@ -398,15 +398,15 @@ namespace LocalIntegrators
       const double nue = (factor2 < 0) ? factor1 : factor2;
       const double nu  = .5 * (nui + nue);
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
           const Tensor<1, dim> n  = fe1.normal_vector(k);
-          for(unsigned int d = 0; d < fe1.get_fe().n_components(); ++d)
+          for (unsigned int d = 0; d < fe1.get_fe().n_components(); ++d)
             {
-              for(unsigned int i = 0; i < n_dofs; ++i)
+              for (unsigned int i = 0; i < n_dofs; ++i)
                 {
-                  for(unsigned int j = 0; j < n_dofs; ++j)
+                  for (unsigned int j = 0; j < n_dofs; ++j)
                     {
                       const double vi   = fe1.shape_value_component(i, k, d);
                       const double dnvi = n * fe1.shape_grad_component(i, k, d);
@@ -480,16 +480,16 @@ namespace LocalIntegrators
       const double nue = (factor2 < 0) ? factor1 : factor2;
       const double nu  = .5 * (nui + nue);
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
           const Tensor<1, dim> n  = fe1.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               // We compute the tangential component by subtracting
               // the normal component from the total. Thus, compute
               // the normal component first
-              for(unsigned int j = 0; j < n_dofs; ++j)
+              for (unsigned int j = 0; j < n_dofs; ++j)
                 {
                   double u1dotn = 0.;
                   double v1dotn = 0.;
@@ -501,7 +501,7 @@ namespace LocalIntegrators
                   double ngradu2n = 0.;
                   double ngradv2n = 0.;
 
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for (unsigned int d = 0; d < dim; ++d)
                     {
                       u1dotn += n[d] * fe1.shape_value_component(j, k, d);
                       v1dotn += n[d] * fe1.shape_value_component(i, k, d);
@@ -517,7 +517,7 @@ namespace LocalIntegrators
                   // The following code is equal to ip_matrix() with
                   // the only exception that all variables introduced
                   // below denote tangential components.
-                  for(unsigned int d = 0; d < dim; ++d)
+                  for (unsigned int d = 0; d < dim; ++d)
                     {
                       const double vi
                         = fe1.shape_value_component(i, k, d) - v1dotn * n[d];
@@ -596,12 +596,12 @@ namespace LocalIntegrators
 
       const unsigned int n_dofs = fe1.dofs_per_cell;
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
           const Tensor<1, dim> n  = fe1.normal_vector(k);
 
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               const double          vi   = fe1.shape_value(i, k);
               const Tensor<1, dim>& Dvi  = fe1.shape_grad(i, k);
@@ -673,13 +673,13 @@ namespace LocalIntegrators
       const double nue     = (ext_factor < 0) ? int_factor : ext_factor;
       const double penalty = .5 * pen * (nui + nue);
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
           const Tensor<1, dim> n  = fe1.normal_vector(k);
 
-          for(unsigned int i = 0; i < n1; ++i)
-            for(unsigned int d = 0; d < n_comp; ++d)
+          for (unsigned int i = 0; i < n1; ++i)
+            for (unsigned int d = 0; d < n_comp; ++d)
               {
                 const double          vi   = fe1.shape_value_component(i, k, d);
                 const Tensor<1, dim>& Dvi  = fe1.shape_grad_component(i, k, d);
@@ -741,7 +741,7 @@ namespace LocalIntegrators
 
       double penalty1 = deg1sq / dinfo1.cell->extent_in_direction(normal1);
       double penalty2 = deg2sq / dinfo2.cell->extent_in_direction(normal2);
-      if(dinfo1.cell->has_children() ^ dinfo2.cell->has_children())
+      if (dinfo1.cell->has_children() ^ dinfo2.cell->has_children())
         {
           Assert(dinfo1.face == dinfo2.face, ExcInternalError());
           Assert(dinfo1.face->has_children(), ExcInternalError());

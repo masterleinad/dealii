@@ -181,7 +181,7 @@ protected:
 template <int N>
 TableIndices<N>::TableIndices()
 {
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     indices[i] = 0;
 }
 
@@ -256,7 +256,7 @@ TableIndices<N>::TableIndices(const std::size_t index0,
                               const std::size_t index7,
                               const std::size_t index8)
 {
-  switch(N)
+  switch (N)
     {
       case 1:
         Assert(index1 == numbers::invalid_unsigned_int,
@@ -295,12 +295,12 @@ TableIndices<N>::TableIndices(const std::size_t index0,
 
   // Always access "indices" with indices modulo N to avoid bogus compiler
   // warnings (although such access is always in dead code...
-  switch(N)
+  switch (N)
     {
       default:
         // For TableIndices of size 10 or larger als default initialize the
         // remaining indices to numbers::invalid_unsigned_int:
-        for(unsigned int i = 0; i < N; ++i)
+        for (unsigned int i = 0; i < N; ++i)
           indices[i] = numbers::invalid_unsigned_int;
         DEAL_II_FALLTHROUGH;
       case 9:
@@ -350,8 +350,8 @@ template <int N>
 inline bool
 TableIndices<N>::operator==(const TableIndices<N>& other) const
 {
-  for(unsigned int i = 0; i < N; ++i)
-    if(indices[i] != other.indices[i])
+  for (unsigned int i = 0; i < N; ++i)
+    if (indices[i] != other.indices[i])
       return false;
   return true;
 }
@@ -389,10 +389,10 @@ std::ostream&
 operator<<(std::ostream& out, const TableIndices<N>& indices)
 {
   out << '[';
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       out << indices[i];
-      if(i + 1 != N)
+      if (i + 1 != N)
         out << ',';
     }
   out << ']';

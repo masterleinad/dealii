@@ -32,7 +32,7 @@ test()
   {
     AssertThrow(n_processes == 2, ExcNotImplemented());
     IndexSet index(10);
-    for(unsigned int i = 0; i < 10; i += 2)
+    for (unsigned int i = 0; i < 10; i += 2)
       index.add_range(i + myid, i + myid + 1);
     index.compress();
 
@@ -54,7 +54,7 @@ test()
     AssertThrow(index == index2, ExcInternalError());
   }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -67,7 +67,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

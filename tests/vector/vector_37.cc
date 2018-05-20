@@ -22,7 +22,7 @@
 void
 test(Vector<double>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
 
   v.compress();
@@ -30,7 +30,7 @@ test(Vector<double>& v)
   v.add(1.);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     AssertThrow(v(i) == i + 1., ExcInternalError());
 
   deallog << "OK" << std::endl;
@@ -46,7 +46,7 @@ main()
       Vector<double> v(100);
       test(v);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -60,7 +60,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

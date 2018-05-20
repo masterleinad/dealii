@@ -126,12 +126,12 @@ namespace NonMatching
     std::vector<unsigned int> immersed_gtl(immersed_fe.n_components(),
                                            numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0, j = 0; i < space_gtl.size(); ++i)
-      if(space_c[i])
+    for (unsigned int i = 0, j = 0; i < space_gtl.size(); ++i)
+      if (space_c[i])
         space_gtl[i] = j++;
 
-    for(unsigned int i = 0, j = 0; i < immersed_gtl.size(); ++i)
-      if(immersed_c[i])
+    for (unsigned int i = 0, j = 0; i < immersed_gtl.size(); ++i)
+      if (immersed_c[i])
         immersed_gtl[i] = j++;
 
     // [TODO]: when the add_entries_local_to_global below will implement
@@ -153,7 +153,7 @@ namespace NonMatching
     //        }
     //  }
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         // Reinitialize the cell and the fe_values
         fe_v.reinit(cell);
@@ -166,13 +166,13 @@ namespace NonMatching
         const auto  cpm   = GridTools::compute_point_locations(cache, Xpoints);
         const auto& cells = std::get<0>(cpm);
 
-        for(unsigned int c = 0; c < cells.size(); ++c)
+        for (unsigned int c = 0; c < cells.size(); ++c)
           {
             // Get the ones in the current outer cell
             typename DoFHandler<dim0, spacedim>::cell_iterator ocell(*cells[c],
                                                                      &space_dh);
             // Make sure we act only on locally_owned cells
-            if(ocell->is_locally_owned())
+            if (ocell->is_locally_owned())
               {
                 ocell->get_dof_indices(odofs);
                 // [TODO]: When the following function will be implemented
@@ -257,12 +257,12 @@ namespace NonMatching
     std::vector<unsigned int> immersed_gtl(immersed_fe.n_components(),
                                            numbers::invalid_unsigned_int);
 
-    for(unsigned int i = 0, j = 0; i < space_gtl.size(); ++i)
-      if(space_c[i])
+    for (unsigned int i = 0, j = 0; i < space_gtl.size(); ++i)
+      if (space_c[i])
         space_gtl[i] = j++;
 
-    for(unsigned int i = 0, j = 0; i < immersed_gtl.size(); ++i)
-      if(immersed_c[i])
+    for (unsigned int i = 0, j = 0; i < immersed_gtl.size(); ++i)
+      if (immersed_c[i])
         immersed_gtl[i] = j++;
 
     FullMatrix<typename Matrix::value_type> cell_matrix(
@@ -279,7 +279,7 @@ namespace NonMatching
       = immersed_dh.begin_active(),
       endc = immersed_dh.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         // Reinitialize the cell and the fe_values
         fe_v.reinit(cell);
@@ -294,13 +294,13 @@ namespace NonMatching
         const auto& qpoints = std::get<1>(cpm);
         const auto& maps    = std::get<2>(cpm);
 
-        for(unsigned int c = 0; c < cells.size(); ++c)
+        for (unsigned int c = 0; c < cells.size(); ++c)
           {
             // Get the ones in the current outer cell
             typename DoFHandler<dim0, spacedim>::active_cell_iterator ocell(
               *cells[c], &space_dh);
             // Make sure we act only on locally_owned cells
-            if(ocell->is_locally_owned())
+            if (ocell->is_locally_owned())
               {
                 const std::vector<Point<dim0>>&  qps = qpoints[c];
                 const std::vector<unsigned int>& ids = maps[c];
@@ -313,23 +313,23 @@ namespace NonMatching
                 // Reset the matrices.
                 cell_matrix = typename Matrix::value_type();
 
-                for(unsigned int i = 0; i < space_dh.get_fe().dofs_per_cell;
-                    ++i)
+                for (unsigned int i = 0; i < space_dh.get_fe().dofs_per_cell;
+                     ++i)
                   {
                     const auto comp_i
                       = space_dh.get_fe().system_to_component_index(i).first;
-                    if(space_gtl[comp_i] != numbers::invalid_unsigned_int)
-                      for(unsigned int j = 0;
-                          j < immersed_dh.get_fe().dofs_per_cell;
-                          ++j)
+                    if (space_gtl[comp_i] != numbers::invalid_unsigned_int)
+                      for (unsigned int j = 0;
+                           j < immersed_dh.get_fe().dofs_per_cell;
+                           ++j)
                         {
                           const auto comp_j = immersed_dh.get_fe()
                                                 .system_to_component_index(j)
                                                 .first;
-                          if(space_gtl[comp_i] == immersed_gtl[comp_j])
-                            for(unsigned int oq = 0;
-                                oq < o_fe_v.n_quadrature_points;
-                                ++oq)
+                          if (space_gtl[comp_i] == immersed_gtl[comp_j])
+                            for (unsigned int oq = 0;
+                                 oq < o_fe_v.n_quadrature_points;
+                                 ++oq)
                               {
                                 // Get the corresponding q point
                                 const unsigned int q = ids[oq];

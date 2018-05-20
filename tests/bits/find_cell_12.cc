@@ -55,10 +55,10 @@ test()
 
   Triangulation<2>::active_cell_iterator cell = triangulation.begin_active(),
                                          endc = triangulation.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       Point<2> cell_center = cell->center();
-      if(std::abs(cell_center(0) - 1500) < 550)
+      if (std::abs(cell_center(0) - 1500) < 550)
         {
           cell->set_refine_flag();
         }
@@ -78,7 +78,7 @@ test()
               << " level = " << current_cell.first->level() << std::endl;
       deallog << " pos: " << current_cell.second << std::endl;
     }
-  catch(GridTools::ExcPointNotFound<2>& e)
+  catch (GridTools::ExcPointNotFound<2>& e)
     {
       deallog << "outside" << std::endl;
     }

@@ -39,12 +39,12 @@ test()
   GridGenerator::hyper_cube(tr, -1.0, 1.0);
   tr.refine_global(8 - 2 * dim);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
-    if(!cell->is_ghost() && !cell->is_artificial())
-      if(cell->center().norm() < 0.3)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
+    if (!cell->is_ghost() && !cell->is_artificial())
+      if (cell->center().norm() < 0.3)
         {
           cell->set_refine_flag();
         }
@@ -64,9 +64,9 @@ test()
   std::copy(
     renumbering.begin(), renumbering.end(), complete_renumbering.begin());
   unsigned int offset = renumbering.size();
-  for(unsigned int i = 1; i < nprocs; ++i)
+  for (unsigned int i = 1; i < nprocs; ++i)
     {
-      if(myid == i)
+      if (myid == i)
         MPI_Send(
           &renumbering[0],
           renumbering.size(),
@@ -74,7 +74,7 @@ test()
           0,
           i,
           MPI_COMM_WORLD);
-      else if(myid == 0)
+      else if (myid == 0)
         MPI_Recv(
           &complete_renumbering[offset],
           dofh.locally_owned_dofs_per_processor()[i].n_elements(),
@@ -86,10 +86,10 @@ test()
       offset += dofh.locally_owned_dofs_per_processor()[i].n_elements();
     }
 
-  if(myid == 0)
+  if (myid == 0)
     {
       AssertDimension(offset, complete_renumbering.size());
-      for(unsigned int i = 0; i < complete_renumbering.size(); ++i)
+      for (unsigned int i = 0; i < complete_renumbering.size(); ++i)
         deallog << complete_renumbering[i] << std::endl;
     }
 }
@@ -103,7 +103,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       std::ofstream logfile("output");
       deallog.attach(logfile);

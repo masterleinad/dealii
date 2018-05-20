@@ -100,7 +100,7 @@ test1()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       const unsigned int                     n_q_points    = quadrature.size();
@@ -108,8 +108,8 @@ test1()
       const std::vector<dealii::Point<dim>>& q_points
         = fe_values.get_quadrature_points();
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           deallog << "dof=" << i << " qp=" << q_points[q_point]
                   << " f(qp)=" << function.value(q_points[q_point])
                   << " N(qp)=" << fe_values.shape_value(i, q_point)
@@ -132,7 +132,7 @@ main(int argc, char** argv)
     {
       test1<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -146,7 +146,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -238,7 +238,7 @@ namespace Step37
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler,
                                                        dirichlet_boundary);
 
-    for(unsigned int level = 0; level < nlevels; ++level)
+    for (unsigned int level = 0; level < nlevels; ++level)
       {
         IndexSet relevant_dofs;
         DoFTools::extract_locally_relevant_level_dofs(
@@ -329,14 +329,14 @@ namespace Step37
     solution.update_ghost_values();
     FEEvaluation<dim, degree_finite_element> phi(
       *system_matrix.get_matrix_free());
-    for(unsigned int cell = 0;
-        cell < system_matrix.get_matrix_free()->n_macro_cells();
-        ++cell)
+    for (unsigned int cell = 0;
+         cell < system_matrix.get_matrix_free()->n_macro_cells();
+         ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values_plain(solution);
         phi.evaluate(false, true);
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           {
             phi.submit_gradient(-phi.get_gradient(q), q);
             // phi.submit_value(make_vectorized_array<double>(1.0), q);
@@ -363,10 +363,10 @@ namespace Step37
                                                          mg_smoother;
     MGLevelObject<typename SmootherType::AdditionalData> smoother_data;
     smoother_data.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for (unsigned int level = 0; level < triangulation.n_global_levels();
+         ++level)
       {
-        if(level > 0)
+        if (level > 0)
           {
             smoother_data[level].smoothing_range     = 15.;
             smoother_data[level].degree              = 4;
@@ -394,8 +394,8 @@ namespace Step37
     MGLevelObject<MatrixFreeOperators::MGInterfaceOperator<LevelMatrixType>>
       mg_interface_matrices;
     mg_interface_matrices.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for (unsigned int level = 0; level < triangulation.n_global_levels();
+         ++level)
       mg_interface_matrices[level].initialize(mg_matrices[level]);
     mg::Matrix<LinearAlgebra::distributed::Vector<float>> mg_interface(
       mg_interface_matrices);
@@ -429,7 +429,7 @@ namespace Step37
   void
   LaplaceProblem<dim>::output_results(const unsigned int cycle) const
   {
-    if(triangulation.n_global_active_cells() > 1000000)
+    if (triangulation.n_global_active_cells() > 1000000)
       return;
 
     DataOut<dim> data_out;
@@ -445,12 +445,12 @@ namespace Step37
       + ".vtu");
     data_out.write_vtu(output);
 
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+             ++i)
           filenames.emplace_back("solution-" + std::to_string(cycle) + "."
                                  + std::to_string(i) + ".vtu");
 
@@ -460,7 +460,7 @@ namespace Step37
         data_out.write_pvtu_record(master_output, filenames);
       }
 
-    if(dim == 2 && Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD) == 1)
+    if (dim == 2 && Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD) == 1)
       {
         std::map<types::global_dof_index, Point<dim>> support_points;
         MappingQ<dim> mapping(degree_finite_element);
@@ -495,11 +495,11 @@ namespace Step37
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 2; ++cycle)
+    for (unsigned int cycle = 0; cycle < 2; ++cycle)
       {
         pcout << "Cycle " << cycle << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             Point<dim> center;
             GridGenerator::hyper_ball(triangulation, center, 12);
@@ -513,11 +513,11 @@ namespace Step37
           }
         else
           {
-            for(auto cell : triangulation.active_cell_iterators())
-              if(cell->is_locally_owned())
+            for (auto cell : triangulation.active_cell_iterators())
+              if (cell->is_locally_owned())
                 {
-                  if((cell->center()[0] < -8. && cell->center()[1] < 0)
-                     || (cell->center()[0] > 9. && cell->center()[1] > 5))
+                  if ((cell->center()[0] < -8. && cell->center()[1] < 0)
+                      || (cell->center()[0] > 9. && cell->center()[1] > 5))
                     cell->set_refine_flag();
                 }
             triangulation.execute_coarsening_and_refinement();
@@ -526,7 +526,7 @@ namespace Step37
         setup_system();
         assemble_rhs();
 
-        if(cycle == 0 && dim == 2)
+        if (cycle == 0 && dim == 2)
           {
             pcout << "Constraints:" << std::endl;
             non_homogeneous_constraints.print(std::cout);
@@ -551,7 +551,7 @@ main(int argc, char* argv[])
       LaplaceProblem<dimension> laplace_problem;
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -564,7 +564,7 @@ main(int argc, char* argv[])
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -38,9 +38,9 @@ remove_iges_header(const std::string& in_filename,
   std::ofstream out(out_filename);
   std::string   line;
   unsigned int  counter = 5;
-  while(counter--)
+  while (counter--)
     std::getline(in, line);
-  while(std::getline(in, line))
+  while (std::getline(in, line))
     out << line << std::endl;
   in.close();
   out.close();
@@ -66,24 +66,24 @@ test()
   auto v1 = create_curves_from_triangulation_boundary(tria1);
   auto v3 = create_curves_from_triangulation_boundary(tria3);
 
-  if(spacedim == 3)
+  if (spacedim == 3)
     {
       Triangulation<2, 3> tria4;
       GridGenerator::hyper_sphere(tria4);
       auto v4 = create_curves_from_triangulation_boundary(tria4);
 
-      if(v4.size() != 0)
+      if (v4.size() != 0)
         deallog << "Not OK!: size is " << v4.size() << std::endl;
       else
         deallog << "OK" << std::endl;
     }
 
-  if(v1.size() != 1)
+  if (v1.size() != 1)
     deallog << "Not OK: size is " << v1.size() << std::endl;
   else
     deallog << "OK" << std::endl;
 
-  if(v3.size() != 2)
+  if (v3.size() != 2)
     deallog << "Not OK!: size is " << v3.size() << std::endl;
   else
     deallog << "OK" << std::endl;

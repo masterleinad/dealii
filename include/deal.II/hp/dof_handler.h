@@ -1033,11 +1033,11 @@ namespace hp
   {
     // extract the set of boundary ids and forget about the function object pointers
     std::set<types::boundary_id> boundary_ids_only;
-    for(typename std::map<types::boundary_id,
-                          const Function<spacedim, number>*>::const_iterator p
-        = boundary_ids.begin();
-        p != boundary_ids.end();
-        ++p)
+    for (typename std::map<types::boundary_id,
+                           const Function<spacedim, number>*>::const_iterator p
+         = boundary_ids.begin();
+         p != boundary_ids.end();
+         ++p)
       boundary_ids_only.insert(p->first);
 
     // then just hand everything over to the other function that does the work
@@ -1077,7 +1077,7 @@ namespace hp
     // have a copy constructor. do it one level at a time
     const unsigned int n_levels = levels.size();
     ar&                n_levels;
-    for(unsigned int i = 0; i < n_levels; ++i)
+    for (unsigned int i = 0; i < n_levels; ++i)
       ar& levels[i];
 
     // boost dereferences a nullptr when serializing a nullptr
@@ -1085,13 +1085,13 @@ namespace hp
     // Therefore, work around it.
     bool faces_is_nullptr = (faces.get() == nullptr);
     ar&  faces_is_nullptr;
-    if(!faces_is_nullptr)
+    if (!faces_is_nullptr)
       ar& faces;
 
     // the same issue as above
     const unsigned int n_has_children = has_children.size();
     ar&                n_has_children;
-    for(unsigned int i = 0; i < n_has_children; ++i)
+    for (unsigned int i = 0; i < n_has_children; ++i)
       ar& has_children[i];
 
     // write out the number of triangulation cells and later check during
@@ -1127,7 +1127,7 @@ namespace hp
     unsigned int size;
     ar&          size;
     levels.resize(size);
-    for(unsigned int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; ++i)
       {
         std::unique_ptr<dealii::internal::hp::DoFLevel> level;
         ar&                                             level;
@@ -1137,13 +1137,13 @@ namespace hp
     //Workaround for nullptr, see in save().
     bool faces_is_nullptr = true;
     ar&  faces_is_nullptr;
-    if(!faces_is_nullptr)
+    if (!faces_is_nullptr)
       ar& faces;
 
     // the same issue as above
     ar& size;
     has_children.resize(size);
-    for(unsigned int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; ++i)
       {
         std::unique_ptr<std::vector<bool>> has_children_on_level;
         ar&                                has_children_on_level;

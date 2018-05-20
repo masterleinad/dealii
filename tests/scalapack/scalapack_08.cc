@@ -85,7 +85,7 @@ test(const unsigned int size,
   const unsigned int max_num_values = 5;
   pcout << "comparing the SVD and Eigendecomposition of a s.p.d matrix"
         << std::endl;
-  for(unsigned i = 0; i < max_num_values; ++i)
+  for (unsigned i = 0; i < max_num_values; ++i)
     AssertThrow(std::abs(eigenvalues[size - 1 - i] - singular_values[i]) < tol,
                 ExcMessage("singular and eigenvalues do not match"));
   pcout
@@ -94,9 +94,9 @@ test(const unsigned int size,
 
   Vector<NumberType> eigenvector(size), l_singular_vector(size),
     r_singular_vector(size);
-  for(unsigned int i = 0; i < max_num_values; ++i)
+  for (unsigned int i = 0; i < max_num_values; ++i)
     {
-      for(unsigned int j = 0; j < size; ++j)
+      for (unsigned int j = 0; j < size; ++j)
         {
           eigenvector[j]       = eigenvectors(j, size - 1 - i);
           l_singular_vector[j] = l_singular_vectors(j, i);
@@ -128,8 +128,8 @@ main(int argc, char** argv)
   const std::vector<unsigned int> blocks     = {{32, 64}};
   const double                    tol_double = 1e-10;
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol_double);
 }

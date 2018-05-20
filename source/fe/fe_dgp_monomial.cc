@@ -85,7 +85,7 @@ namespace internal
       {
         Assert(p.size() == k + 1, ExcDimensionMismatch(p.size(), k + 1));
         const double h = 1. / k;
-        for(unsigned int i = 0; i < p.size(); ++i)
+        for (unsigned int i = 0; i < p.size(); ++i)
           p[i](0) = i * h;
       }
 
@@ -96,7 +96,7 @@ namespace internal
         Assert(k <= 4, ExcNotImplemented());
         Assert(p.size() == start_index2d[k + 1] - start_index2d[k],
                ExcInternalError());
-        for(unsigned int i = 0; i < p.size(); ++i)
+        for (unsigned int i = 0; i < p.size(); ++i)
           {
             p[i](0) = points2d[start_index2d[k] + i][0];
             p[i](1) = points2d[start_index2d[k] + i][1];
@@ -110,7 +110,7 @@ namespace internal
         Assert(k <= 2, ExcNotImplemented());
         Assert(p.size() == start_index3d[k + 1] - start_index3d[k],
                ExcInternalError());
-        for(unsigned int i = 0; i < p.size(); ++i)
+        for (unsigned int i = 0; i < p.size(); ++i)
           {
             p[i](0) = points3d[start_index3d[k] + i][0];
             p[i](1) = points3d[start_index3d[k] + i][1];
@@ -186,7 +186,7 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
   const FE_DGPMonomial<dim>* source_dgp_monomial
     = dynamic_cast<const FE_DGPMonomial<dim>*>(&source_fe);
 
-  if(source_dgp_monomial)
+  if (source_dgp_monomial)
     {
       // ok, source_fe is a DGP_Monomial
       // element. Then, the interpolation
@@ -205,7 +205,7 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
             interpolation_matrix.m() :
             interpolation_matrix.n();
 
-      for(unsigned int i = 0; i < min_mn; ++i)
+      for (unsigned int i = 0; i < min_mn; ++i)
         interpolation_matrix(i, i) = 1.;
     }
   else
@@ -215,13 +215,13 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
 
       FullMatrix<double> source_fe_matrix(unit_points.size(),
                                           source_fe.dofs_per_cell);
-      for(unsigned int j = 0; j < source_fe.dofs_per_cell; ++j)
-        for(unsigned int k = 0; k < unit_points.size(); ++k)
+      for (unsigned int j = 0; j < source_fe.dofs_per_cell; ++j)
+        for (unsigned int k = 0; k < unit_points.size(); ++k)
           source_fe_matrix(k, j) = source_fe.shape_value(j, unit_points[k]);
 
       FullMatrix<double> this_matrix(this->dofs_per_cell, this->dofs_per_cell);
-      for(unsigned int j = 0; j < this->dofs_per_cell; ++j)
-        for(unsigned int k = 0; k < unit_points.size(); ++k)
+      for (unsigned int j = 0; j < this->dofs_per_cell; ++j)
+        for (unsigned int k = 0; k < unit_points.size(); ++k)
           this_matrix(k, j) = this->poly_space.compute_value(j, unit_points[k]);
 
       this_matrix.gauss_jordan();
@@ -247,7 +247,7 @@ FE_DGPMonomial<dim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 0U);
   dpo[dim] = deg + 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     {
       dpo[dim] *= deg + 1 + i;
       dpo[dim] /= i + 1;
@@ -318,7 +318,7 @@ FE_DGPMonomial<dim>::hp_vertex_dof_identities(
 {
   // there are no such constraints for DGPMonomial
   // elements at all
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -334,7 +334,7 @@ FE_DGPMonomial<dim>::hp_line_dof_identities(
 {
   // there are no such constraints for DGPMonomial
   // elements at all
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -350,7 +350,7 @@ FE_DGPMonomial<dim>::hp_quad_dof_identities(
 {
   // there are no such constraints for DGPMonomial
   // elements at all
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -368,7 +368,7 @@ FE_DGPMonomial<dim>::compare_for_face_domination(
   // elements, see
   // the description of
   // FiniteElementDomination::Domination
-  if(dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGPMonomial<dim>*>(&fe_other) != nullptr)
     return FiniteElementDomination::no_requirements;
 
   Assert(false, ExcNotImplemented());
@@ -389,15 +389,15 @@ FE_DGPMonomial<2>::has_support_on_face(const unsigned int shape_index,
                                        const unsigned int face_index) const
 {
   bool support_on_face = false;
-  if(face_index == 1 || face_index == 2)
+  if (face_index == 1 || face_index == 2)
     support_on_face = true;
   else
     {
       const std::array<unsigned int, 2> degrees
         = this->poly_space.directional_degrees(shape_index);
 
-      if((face_index == 0 && degrees[1] == 0)
-         || (face_index == 3 && degrees[0] == 0))
+      if ((face_index == 0 && degrees[1] == 0)
+          || (face_index == 3 && degrees[0] == 0))
         support_on_face = true;
     }
   return support_on_face;
@@ -409,16 +409,16 @@ FE_DGPMonomial<3>::has_support_on_face(const unsigned int shape_index,
                                        const unsigned int face_index) const
 {
   bool support_on_face = false;
-  if(face_index == 1 || face_index == 3 || face_index == 4)
+  if (face_index == 1 || face_index == 3 || face_index == 4)
     support_on_face = true;
   else
     {
       const std::array<unsigned int, 3> degrees
         = this->poly_space.directional_degrees(shape_index);
 
-      if((face_index == 0 && degrees[1] == 0)
-         || (face_index == 2 && degrees[2] == 0)
-         || (face_index == 5 && degrees[0] == 0))
+      if ((face_index == 0 && degrees[1] == 0)
+          || (face_index == 2 && degrees[2] == 0)
+          || (face_index == 5 && degrees[0] == 0))
         support_on_face = true;
     }
   return support_on_face;

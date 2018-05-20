@@ -50,7 +50,7 @@ main()
 
       subscriptor_2 = subscriptor_1;
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -64,7 +64,7 @@ main()
 
       subscriptor_2 = std::move(subscriptor_1);
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -78,7 +78,7 @@ main()
 
       subscriptor_2 = std::move(subscriptor_1);
     }
-  catch(ExceptionBase& e)
+  catch (ExceptionBase& e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

@@ -48,7 +48,7 @@ SparseLUDecomposition<number>::clear()
 
   SparseMatrix<number>::clear();
 
-  if(own_sparsity)
+  if (own_sparsity)
     {
       delete own_sparsity;
       own_sparsity = nullptr;
@@ -66,10 +66,10 @@ SparseLUDecomposition<number>::initialize(
 
   const SparsityPattern* sparsity_pattern_to_use = nullptr;
 
-  if(data.use_this_sparsity)
+  if (data.use_this_sparsity)
     sparsity_pattern_to_use = data.use_this_sparsity;
-  else if(data.use_previous_sparsity && !this->empty()
-          && (this->m() == matrix.m()))
+  else if (data.use_previous_sparsity && !this->empty()
+           && (this->m() == matrix.m()))
     {
       // Use the sparsity that was
       // previously used. This is
@@ -81,7 +81,7 @@ SparseLUDecomposition<number>::initialize(
       // unchanged grid.
       sparsity_pattern_to_use = &this->get_sparsity_pattern();
     }
-  else if(data.extra_off_diagonals == 0)
+  else if (data.extra_off_diagonals == 0)
     {
       // Use same sparsity as matrix
       sparsity_pattern_to_use = &matrix_sparsity;
@@ -94,7 +94,7 @@ SparseLUDecomposition<number>::initialize(
       // own_sparsity wasn't deleted
       // before (e.g. by clear()), do
       // it here
-      if(own_sparsity)
+      if (own_sparsity)
         {
           // release the sparsity
           SparseMatrix<number>::clear();
@@ -135,7 +135,7 @@ SparseLUDecomposition<number>::prebuild_lower_bound()
 
   prebuilt_lower_bound.resize(N);
 
-  for(size_type row = 0; row < N; row++)
+  for (size_type row = 0; row < N; row++)
     {
       prebuilt_lower_bound[row]
         = Utilities::lower_bound(&column_numbers[rowstart_indices[row] + 1],
@@ -151,16 +151,16 @@ SparseLUDecomposition<number>::copy_from(const SparseMatrix<somenumber>& matrix)
 {
   // check whether we use the same sparsity
   // pattern as the input matrix
-  if(&this->get_sparsity_pattern() == &matrix.get_sparsity_pattern())
+  if (&this->get_sparsity_pattern() == &matrix.get_sparsity_pattern())
     {
       const somenumber*   input_ptr = matrix.val.get();
       number*             this_ptr  = this->val.get();
       const number* const end_ptr   = this_ptr + this->n_nonzero_elements();
-      if(std::is_same<somenumber, number>::value == true)
+      if (std::is_same<somenumber, number>::value == true)
         std::memcpy(
           this_ptr, input_ptr, this->n_nonzero_elements() * sizeof(number));
       else
-        for(; this_ptr != end_ptr; ++input_ptr, ++this_ptr)
+        for (; this_ptr != end_ptr; ++input_ptr, ++this_ptr)
           *this_ptr = *input_ptr;
       return;
     }
@@ -170,19 +170,19 @@ SparseLUDecomposition<number>::copy_from(const SparseMatrix<somenumber>& matrix)
   SparseMatrix<number>::operator=(number(0));
 
   // both allow more and less entries in the new matrix
-  for(size_type row = 0; row < this->m(); ++row)
+  for (size_type row = 0; row < this->m(); ++row)
     {
       typename SparseMatrix<number>::iterator index = this->begin(row);
       typename SparseMatrix<somenumber>::const_iterator in_index
         = matrix.begin(row);
       index->value() = in_index->value();
       ++index, ++in_index;
-      while(index < this->end(row) && in_index < matrix.end(row))
+      while (index < this->end(row) && in_index < matrix.end(row))
         {
-          while(index->column() < in_index->column() && index < this->end(row))
+          while (index->column() < in_index->column() && index < this->end(row))
             ++index;
-          while(in_index->column() < index->column()
-                && in_index < matrix.end(row))
+          while (in_index->column() < index->column()
+                 && in_index < matrix.end(row))
             ++in_index;
 
           index->value() = in_index->value();
@@ -195,7 +195,7 @@ template <typename number>
 void
 SparseLUDecomposition<number>::strengthen_diagonal_impl()
 {
-  for(size_type row = 0; row < this->m(); ++row)
+  for (size_type row = 0; row < this->m(); ++row)
     {
       // get the global index of the first
       // non-diagonal element in this row
@@ -204,9 +204,9 @@ SparseLUDecomposition<number>::strengthen_diagonal_impl()
         = this->begin(row);
 
       number rowsum = 0;
-      for(typename SparseMatrix<number>::iterator p = diagonal_element + 1;
-          p != this->end(row);
-          ++p)
+      for (typename SparseMatrix<number>::iterator p = diagonal_element + 1;
+           p != this->end(row);
+           ++p)
         rowsum += std::fabs(p->value());
 
       diagonal_element->value()

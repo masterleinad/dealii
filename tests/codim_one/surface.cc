@@ -69,7 +69,7 @@ test(std::string filename)
   std::vector<Point<spacedim>> expectedcellnormals(
     fe_values.n_quadrature_points);
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
       const std::vector<Tensor<1, spacedim>>& cellnormals
@@ -77,7 +77,7 @@ test(std::string filename)
       const std::vector<Point<spacedim>>& quad_points
         = fe_values.get_quadrature_points();
 
-      for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
+      for (unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
         {
           expectedcellnormals[i] = quad_points[i] / quad_points[i].norm();
           area += fe_values.JxW(i);

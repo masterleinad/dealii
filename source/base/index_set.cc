@@ -46,7 +46,7 @@ IndexSet::IndexSet(const Epetra_Map& map)
                     "means some entries are not present on any processor."));
 
   // For a contiguous map, we do not need to go through the whole data...
-  if(map.LinearMap())
+  if (map.LinearMap())
     add_range(size_type(map.MinMyGID64()), size_type(map.MaxMyGID64() + 1));
   else
     {
@@ -72,7 +72,7 @@ IndexSet::IndexSet(const Epetra_Map& map)
                     "means some entries are not present on any processor."));
 
   // For a contiguous map, we do not need to go through the whole data...
-  if(map.LinearMap())
+  if (map.LinearMap())
     add_range(size_type(map.MinMyGID()), size_type(map.MaxMyGID() + 1));
   else
     {
@@ -98,13 +98,13 @@ IndexSet::add_range(const size_type begin, const size_type end)
          ExcIndexRangeType<size_type>(end, 0, index_space_size + 1));
   Assert(begin <= end, ExcIndexRangeType<size_type>(begin, 0, end));
 
-  if(begin != end)
+  if (begin != end)
     {
       const Range new_range(begin, end);
 
       // the new index might be larger than the last index present in the
       // ranges. Then we can skip the binary search
-      if(ranges.size() == 0 || begin > ranges.back().end)
+      if (ranges.size() == 0 || begin > ranges.back().end)
         ranges.push_back(new_range);
       else
         ranges.insert(
@@ -129,7 +129,7 @@ IndexSet::do_compress() const
   // ranges. since the ranges are sorted by their first index, determining
   // overlap isn't all that hard
   std::vector<Range>::iterator store = ranges.begin();
-  for(std::vector<Range>::iterator i = ranges.begin(); i != ranges.end();)
+  for (std::vector<Range>::iterator i = ranges.begin(); i != ranges.end();)
     {
       std::vector<Range>::iterator next = i;
       ++next;
@@ -138,7 +138,7 @@ IndexSet::do_compress() const
       size_type last_index  = i->end;
 
       // see if we can merge any of the following ranges
-      while(next != ranges.end() && (next->begin <= last_index))
+      while (next != ranges.end() && (next->begin <= last_index))
         {
           last_index = std::max(last_index, next->end);
           ++next;
@@ -150,7 +150,7 @@ IndexSet::do_compress() const
       ++store;
     }
   // use a compact array with exactly the right amount of storage
-  if(store != ranges.end())
+  if (store != ranges.end())
     {
       std::vector<Range> new_ranges(ranges.begin(), store);
       ranges.swap(new_ranges);
@@ -158,13 +158,13 @@ IndexSet::do_compress() const
 
   // now compute indices within set and the range with most elements
   size_type next_index = 0, largest_range_size = 0;
-  for(std::vector<Range>::iterator i = ranges.begin(); i != ranges.end(); ++i)
+  for (std::vector<Range>::iterator i = ranges.begin(); i != ranges.end(); ++i)
     {
       Assert(i->begin < i->end, ExcInternalError());
 
       i->nth_index_in_set = next_index;
       next_index += (i->end - i->begin);
-      if(i->end - i->begin > largest_range_size)
+      if (i->end - i->begin > largest_range_size)
         {
           largest_range_size = i->end - i->begin;
           largest_range      = i - ranges.begin();
@@ -188,13 +188,13 @@ IndexSet IndexSet::operator&(const IndexSet& is) const
                                      r2 = is.ranges.begin();
   IndexSet result(size());
 
-  while((r1 != ranges.end()) && (r2 != is.ranges.end()))
+  while ((r1 != ranges.end()) && (r2 != is.ranges.end()))
     {
       // if r1 and r2 do not overlap at all, then move the pointer that sits
       // to the left of the other up by one
-      if(r1->end <= r2->begin)
+      if (r1->end <= r2->begin)
         ++r1;
-      else if(r2->end <= r1->begin)
+      else if (r2->end <= r1->begin)
         ++r2;
       else
         {
@@ -210,7 +210,7 @@ IndexSet IndexSet::operator&(const IndexSet& is) const
           // now move that iterator that ends earlier one up. note that it has
           // to be this one because a subsequent range may still have a chance
           // of overlapping with the range that ends later
-          if(r1->end <= r2->end)
+          if (r1->end <= r2->end)
             ++r1;
           else
             ++r2;
@@ -231,14 +231,14 @@ IndexSet::get_view(const size_type begin, const size_type end) const
   IndexSet                           result(end - begin);
   std::vector<Range>::const_iterator r1 = ranges.begin();
 
-  while(r1 != ranges.end())
+  while (r1 != ranges.end())
     {
-      if((r1->end > begin) && (r1->begin < end))
+      if ((r1->end > begin) && (r1->begin < end))
         {
           result.add_range(std::max(r1->begin, begin) - begin,
                            std::min(r1->end, end) - begin);
         }
-      else if(r1->begin >= end)
+      else if (r1->begin >= end)
         break;
 
       ++r1;
@@ -262,16 +262,16 @@ IndexSet::subtract_set(const IndexSet& other)
   std::vector<Range>::iterator own_it   = ranges.begin();
   std::vector<Range>::iterator other_it = other.ranges.begin();
 
-  while(own_it != ranges.end() && other_it != other.ranges.end())
+  while (own_it != ranges.end() && other_it != other.ranges.end())
     {
       //advance own iterator until we get an overlap
-      if(own_it->end <= other_it->begin)
+      if (own_it->end <= other_it->begin)
         {
           ++own_it;
           continue;
         }
       //we are done with other_it, so advance
-      if(own_it->begin >= other_it->end)
+      if (own_it->begin >= other_it->end)
         {
           ++other_it;
           continue;
@@ -279,7 +279,7 @@ IndexSet::subtract_set(const IndexSet& other)
 
       //Now own_it and other_it overlap.  First save the part of own_it that
       //is before other_it (if not empty).
-      if(own_it->begin < other_it->begin)
+      if (own_it->begin < other_it->begin)
         {
           Range r(own_it->begin, other_it->begin);
           r.nth_index_in_set = 0; //fix warning of unused variable
@@ -289,7 +289,7 @@ IndexSet::subtract_set(const IndexSet& other)
       // in any case. As removal would invalidate iterators, we just shrink
       // the range to an empty one.
       own_it->begin = other_it->end;
-      if(own_it->begin > own_it->end)
+      if (own_it->begin > own_it->end)
         {
           own_it->begin = own_it->end;
           ++own_it;
@@ -301,9 +301,9 @@ IndexSet::subtract_set(const IndexSet& other)
 
   // Now delete all empty ranges we might
   // have created.
-  for(std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();)
+  for (std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();)
     {
-      if(it->begin >= it->end)
+      if (it->begin >= it->end)
         it = ranges.erase(it);
       else
         ++it;
@@ -311,7 +311,7 @@ IndexSet::subtract_set(const IndexSet& other)
 
   // done, now add the temporary ranges
   const std::vector<Range>::iterator end = new_ranges.end();
-  for(std::vector<Range>::iterator it = new_ranges.begin(); it != end; ++it)
+  for (std::vector<Range>::iterator it = new_ranges.begin(); it != end; ++it)
     add_range(it->begin, it->end);
 
   compress();
@@ -327,7 +327,7 @@ IndexSet::pop_back()
   const size_type index = ranges.back().end - 1;
   --ranges.back().end;
 
-  if(ranges.back().begin == ranges.back().end)
+  if (ranges.back().begin == ranges.back().end)
     ranges.pop_back();
 
   return index;
@@ -343,7 +343,7 @@ IndexSet::pop_front()
   const size_type index = ranges.front().begin;
   ++ranges.front().begin;
 
-  if(ranges.front().begin == ranges.front().end)
+  if (ranges.front().begin == ranges.front().end)
     ranges.erase(ranges.begin());
 
   // We have to set this in any case, because nth_index_in_set is no longer
@@ -356,7 +356,7 @@ IndexSet::pop_front()
 void
 IndexSet::add_indices(const IndexSet& other, const unsigned int offset)
 {
-  if((this == &other) && (offset == 0))
+  if ((this == &other) && (offset == 0))
     return;
 
   Assert(other.ranges.size() == 0
@@ -373,17 +373,17 @@ IndexSet::add_indices(const IndexSet& other, const unsigned int offset)
   std::vector<Range> new_ranges;
   // just get the start and end of the ranges right in this method, everything
   // else will be done in compress()
-  while(r1 != ranges.end() || r2 != other.ranges.end())
+  while (r1 != ranges.end() || r2 != other.ranges.end())
     {
       // the two ranges do not overlap or we are at the end of one of the
       // ranges
-      if(r2 == other.ranges.end()
-         || (r1 != ranges.end() && r1->end < (r2->begin + offset)))
+      if (r2 == other.ranges.end()
+          || (r1 != ranges.end() && r1->end < (r2->begin + offset)))
         {
           new_ranges.push_back(*r1);
           ++r1;
         }
-      else if(r1 == ranges.end() || (r2->end + offset) < r1->begin)
+      else if (r1 == ranges.end() || (r2->end + offset) < r1->begin)
         {
           new_ranges.emplace_back(r2->begin + offset, r2->end + offset);
           ++r2;
@@ -412,7 +412,7 @@ IndexSet::write(std::ostream& out) const
   out << size() << " ";
   out << ranges.size() << std::endl;
   std::vector<Range>::const_iterator r = ranges.begin();
-  for(; r != ranges.end(); ++r)
+  for (; r != ranges.end(); ++r)
     {
       out << r->begin << " " << r->end << std::endl;
     }
@@ -429,7 +429,7 @@ IndexSet::read(std::istream& in)
   in >> s >> n_ranges;
   ranges.clear();
   set_size(s);
-  for(unsigned int i = 0; i < n_ranges; ++i)
+  for (unsigned int i = 0; i < n_ranges; ++i)
     {
       AssertThrow(in, ExcIO());
 
@@ -447,7 +447,7 @@ IndexSet::block_write(std::ostream& out) const
             sizeof(index_space_size));
   size_t n_ranges = ranges.size();
   out.write(reinterpret_cast<const char*>(&n_ranges), sizeof(n_ranges));
-  if(ranges.empty() == false)
+  if (ranges.empty() == false)
     out.write(reinterpret_cast<const char*>(&*ranges.begin()),
               ranges.size() * sizeof(Range));
   AssertThrow(out, ExcIO());
@@ -464,7 +464,7 @@ IndexSet::block_read(std::istream& in)
   ranges.clear();
   set_size(size);
   ranges.resize(n_ranges, Range(0, 0));
-  if(n_ranges)
+  if (n_ranges)
     in.read(reinterpret_cast<char*>(&*ranges.begin()),
             ranges.size() * sizeof(Range));
 
@@ -479,9 +479,9 @@ IndexSet::fill_index_vector(std::vector<size_type>& indices) const
   indices.clear();
   indices.reserve(n_elements());
 
-  for(std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();
-      ++it)
-    for(size_type i = it->begin; i < it->end; ++i)
+  for (std::vector<Range>::iterator it = ranges.begin(); it != ranges.end();
+       ++it)
+    for (size_type i = it->begin; i < it->end; ++i)
       indices.push_back(i);
 
   Assert(indices.size() == n_elements(), ExcInternalError());
@@ -497,7 +497,7 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
   (void) communicator;
 
 #  ifdef DEBUG
-  if(!overlapping)
+  if (!overlapping)
     {
       const size_type n_global_elements
         = Utilities::MPI::sum(n_elements(), communicator);
@@ -525,7 +525,7 @@ IndexSet::make_trilinos_map(const MPI_Comm& communicator,
   const bool linear
     = overlapping ? false : is_ascending_and_one_to_one(communicator);
 
-  if(linear)
+  if (linear)
     return Epetra_Map(TrilinosWrappers::types::int_type(size()),
                       TrilinosWrappers::types::int_type(n_elements()),
                       0,
@@ -563,14 +563,14 @@ IndexSet::is_ascending_and_one_to_one(const MPI_Comm& communicator) const
   // the IndexSet can't be complete.
   const size_type n_global_elements
     = Utilities::MPI::sum(n_elements(), communicator);
-  if(n_global_elements != size())
+  if (n_global_elements != size())
     return false;
 
 #ifdef DEAL_II_WITH_MPI
   // Non-contiguous IndexSets can't be linear.
   const bool all_contiguous
     = (Utilities::MPI::min(is_contiguous() ? 1 : 0, communicator) == 1);
-  if(!all_contiguous)
+  if (!all_contiguous)
     return false;
 
   bool is_globally_ascending = true;
@@ -583,19 +583,19 @@ IndexSet::is_ascending_and_one_to_one(const MPI_Comm& communicator) const
   const std::vector<types::global_dof_index> global_dofs
     = Utilities::MPI::gather(communicator, first_local_dof, 0);
 
-  if(my_rank == 0)
+  if (my_rank == 0)
     {
       // find out if the received std::vector is ascending
       types::global_dof_index index = 0;
-      while(global_dofs[index] == numbers::invalid_dof_index)
+      while (global_dofs[index] == numbers::invalid_dof_index)
         ++index;
       types::global_dof_index old_dof = global_dofs[index++];
-      for(; index < global_dofs.size(); ++index)
+      for (; index < global_dofs.size(); ++index)
         {
           const types::global_dof_index new_dof = global_dofs[index];
-          if(new_dof != numbers::invalid_dof_index)
+          if (new_dof != numbers::invalid_dof_index)
             {
-              if(new_dof <= old_dof)
+              if (new_dof <= old_dof)
                 {
                   is_globally_ascending = false;
                   break;

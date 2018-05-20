@@ -43,24 +43,24 @@ test()
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   GridGenerator::hyper_cube(tria, 0, 1);
   tria.refine_global(1);
-  for(unsigned int cycle = 0; cycle < 2; ++cycle)
+  for (unsigned int cycle = 0; cycle < 2; ++cycle)
     {
-      for(typename parallel::distributed::Triangulation<
-            dim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for (typename parallel::distributed::Triangulation<
+             dim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           {
-            if(dim == 2)
-              if(cell->vertex(v)[0] < 0.25 && cell->vertex(v)[1] < 0.25)
+            if (dim == 2)
+              if (cell->vertex(v)[0] < 0.25 && cell->vertex(v)[1] < 0.25)
                 {
                   cell->set_refine_flag();
                   break;
                 }
-            if(dim == 3)
-              if(cell->vertex(v)[0] < 0.25 && cell->vertex(v)[1] < 0.25
-                 && cell->vertex(v)[2] < 0.25)
+            if (dim == 3)
+              if (cell->vertex(v)[0] < 0.25 && cell->vertex(v)[1] < 0.25
+                  && cell->vertex(v)[2] < 0.25)
                 {
                   cell->set_refine_flag();
                   break;

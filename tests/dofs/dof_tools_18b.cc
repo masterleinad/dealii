@@ -33,7 +33,7 @@ make_masks(const unsigned int            n,
 {
   m1.reinit(n, n);
   m2.reinit(n, n);
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     m1(i, 0) = m1(0, i) = m2(i, 0) = m2(0, i) = m1(i, i) = m2(i, i)
       = DoFTools::nonzero;
 }
@@ -55,10 +55,10 @@ check_this(const DoFHandler<dim>& dof_handler)
   // pattern (if we write out the
   // whole pattern, the output file
   // would be in the range of 40 MB)
-  for(unsigned int l = 0; l < 20; ++l)
+  for (unsigned int l = 0; l < 20; ++l)
     {
       const unsigned int line = l * (sp.n_rows() / 20);
-      for(unsigned int c = 0; c < sp.row_length(line); ++c)
+      for (unsigned int c = 0; c < sp.row_length(line); ++c)
         deallog << sp.column_number(line, c) << " ";
       deallog << std::endl;
     }
@@ -69,7 +69,7 @@ check_this(const DoFHandler<dim>& dof_handler)
           << sp.n_nonzero_elements() << std::endl;
 
   unsigned int hash = 0;
-  for(unsigned int l = 0; l < sp.n_rows(); ++l)
+  for (unsigned int l = 0; l < sp.n_rows(); ++l)
     hash += l * sp.row_length(l);
   deallog << hash << std::endl;
 }

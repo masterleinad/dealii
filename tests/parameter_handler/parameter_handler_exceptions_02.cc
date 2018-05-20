@@ -34,7 +34,7 @@ check(const char* p)
   prm.add_action("test_2", [](const std::string& s) {
     // throw an exception from the action for
     // everything but the default value
-    if(s != "0")
+    if (s != "0")
       throw 1;
   });
   prm.leave_subsection();
@@ -46,7 +46,7 @@ check(const char* p)
       prm.parse_input(in);
       deallog << "Done reading parameters..." << std::endl;
     }
-  catch(...)
+  catch (...)
     {
       deallog << "Caught an exception -- ignoring..." << std::endl;
     }

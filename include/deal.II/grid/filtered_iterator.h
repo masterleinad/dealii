@@ -911,7 +911,7 @@ inline FilteredIterator<BaseIterator>::FilteredIterator(Predicate           p,
                                                         const BaseIterator& bi)
   : BaseIterator(bi), predicate(new PredicateTemplate<Predicate>(p))
 {
-  if((this->state() == IteratorState::valid) && !(*predicate)(*this))
+  if ((this->state() == IteratorState::valid) && !(*predicate)(*this))
     set_to_next_positive(bi);
 }
 
@@ -960,7 +960,7 @@ inline FilteredIterator<BaseIterator>&
 FilteredIterator<BaseIterator>::set_to_next_positive(const BaseIterator& bi)
 {
   BaseIterator::operator=(bi);
-  while((this->state() == IteratorState::valid) && (!(*predicate)(*this)))
+  while ((this->state() == IteratorState::valid) && (!(*predicate)(*this)))
     BaseIterator::operator++();
 
   return *this;
@@ -971,7 +971,7 @@ inline FilteredIterator<BaseIterator>&
 FilteredIterator<BaseIterator>::set_to_previous_positive(const BaseIterator& bi)
 {
   BaseIterator::operator=(bi);
-  while((this->state() == IteratorState::valid) && (!(*predicate)(*this)))
+  while ((this->state() == IteratorState::valid) && (!(*predicate)(*this)))
     BaseIterator::operator--();
 
   return *this;
@@ -1026,10 +1026,10 @@ template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
 FilteredIterator<BaseIterator>::operator++()
 {
-  if(this->state() == IteratorState::valid)
+  if (this->state() == IteratorState::valid)
     do
       BaseIterator::operator++();
-    while((this->state() == IteratorState::valid) && !(*predicate)(*this));
+    while ((this->state() == IteratorState::valid) && !(*predicate)(*this));
   return *this;
 }
 
@@ -1039,10 +1039,10 @@ FilteredIterator<BaseIterator>::operator++(int)
 {
   const FilteredIterator old_state = *this;
 
-  if(this->state() == IteratorState::valid)
+  if (this->state() == IteratorState::valid)
     do
       BaseIterator::operator++();
-    while((this->state() == IteratorState::valid) && !(*predicate)(*this));
+    while ((this->state() == IteratorState::valid) && !(*predicate)(*this));
   return old_state;
 }
 
@@ -1050,10 +1050,10 @@ template <typename BaseIterator>
 inline FilteredIterator<BaseIterator>&
 FilteredIterator<BaseIterator>::operator--()
 {
-  if(this->state() == IteratorState::valid)
+  if (this->state() == IteratorState::valid)
     do
       BaseIterator::operator--();
-    while((this->state() == IteratorState::valid) && !(*predicate)(*this));
+    while ((this->state() == IteratorState::valid) && !(*predicate)(*this));
   return *this;
 }
 
@@ -1063,10 +1063,10 @@ FilteredIterator<BaseIterator>::operator--(int)
 {
   const FilteredIterator old_state = *this;
 
-  if(this->state() == IteratorState::valid)
+  if (this->state() == IteratorState::valid)
     do
       BaseIterator::operator--();
-    while((this->state() == IteratorState::valid) && !(*predicate)(*this));
+    while ((this->state() == IteratorState::valid) && !(*predicate)(*this));
   return old_state;
 }
 

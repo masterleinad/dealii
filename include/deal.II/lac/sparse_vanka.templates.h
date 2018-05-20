@@ -56,7 +56,7 @@ SparseVanka<number>::SparseVanka(const SparseMatrix<number>& M,
   Assert(M.m() == selected->size(),
          ExcDimensionMismatch(M.m(), selected->size()));
 
-  if(conserve_mem == false)
+  if (conserve_mem == false)
     compute_inverses();
 }
 
@@ -65,11 +65,11 @@ SparseVanka<number>::~SparseVanka()
 {
   typename std::vector<
     SmartPointer<FullMatrix<float>, SparseVanka<number>>>::iterator i;
-  for(i = inverses.begin(); i != inverses.end(); ++i)
+  for (i = inverses.begin(); i != inverses.end(); ++i)
     {
       FullMatrix<float>* p = *i;
       *i                   = nullptr;
-      if(p != nullptr)
+      if (p != nullptr)
         delete p;
     }
 }
@@ -91,7 +91,7 @@ SparseVanka<number>::initialize(const SparseMatrix<number>& M,
   Assert(M.m() == selected->size(),
          ExcDimensionMismatch(M.m(), selected->size()));
 
-  if(conserve_mem == false)
+  if (conserve_mem == false)
     compute_inverses();
 }
 
@@ -133,11 +133,11 @@ SparseVanka<number>::compute_inverses()
   unsigned int thread = 0;
   blocking[0].first   = 0;
 
-  for(size_type i = 0; (i < matrix->m()) && (thread + 1 < n_threads); ++i)
+  for (size_type i = 0; (i < matrix->m()) && (thread + 1 < n_threads); ++i)
     {
-      if((*selected)[i] == true)
+      if ((*selected)[i] == true)
         ++c;
-      if(c == n_inverses_per_thread)
+      if (c == n_inverses_per_thread)
         {
           blocking[thread].second    = i;
           blocking[thread + 1].first = i;
@@ -153,7 +153,7 @@ SparseVanka<number>::compute_inverses()
 
   // Now spawn the threads
   Threads::ThreadGroup<> threads;
-  for(unsigned int i = 0; i < n_threads; ++i)
+  for (unsigned int i = 0; i < n_threads; ++i)
     threads += Threads::new_thread(
       fun_ptr, *this, blocking[i].first, blocking[i].second);
   threads.join_all();
@@ -172,8 +172,8 @@ SparseVanka<number>::compute_inverses(const size_type begin,
 
   // traverse all rows of the matrix
   // which are selected
-  for(size_type row = begin; row < end; ++row)
-    if((*selected)[row] == true)
+  for (size_type row = begin; row < end; ++row)
+    if ((*selected)[row] == true)
       compute_inverse(row, local_indices);
 }
 
@@ -197,7 +197,7 @@ SparseVanka<number>::compute_inverse(const size_type         row,
   // collect the dofs that couple
   // with @p row
   local_indices.resize(row_length);
-  for(size_type i = 0; i < row_length; ++i)
+  for (size_type i = 0; i < row_length; ++i)
     local_indices[i] = structure.column_number(row, i);
 
   // Build local matrix
@@ -264,9 +264,9 @@ SparseVanka<number>::apply_preconditioner(
   // traverse all rows of the matrix
   // which are selected
   const size_type n = matrix->m();
-  for(size_type row = 0; row < n; ++row)
-    if(((*selected)[row] == true)
-       && ((range_is_restricted == false) || ((*dof_mask)[row] == true)))
+  for (size_type row = 0; row < n; ++row)
+    if (((*selected)[row] == true)
+        && ((range_is_restricted == false) || ((*dof_mask)[row] == true)))
       {
         const size_type row_length = structure.row_length(row);
 
@@ -275,7 +275,7 @@ SparseVanka<number>::apply_preconditioner(
         // the entry in the global
         // vector to the local matrix
         // to be used
-        if(conserve_mem == true)
+        if (conserve_mem == true)
           {
             inverses[row] = &local_matrix;
             inverses[row]->reinit(row_length, row_length);
@@ -297,15 +297,15 @@ SparseVanka<number>::apply_preconditioner(
         // all degrees of freedom that
         // couple with @p row.
         local_index.clear();
-        for(size_type i = 0; i < row_length; ++i)
+        for (size_type i = 0; i < row_length; ++i)
           local_index.insert(std::pair<size_type, size_type>(
             structure.column_number(row, i), i));
 
         // Build local matrix and rhs
-        for(std::map<size_type, size_type>::const_iterator is
-            = local_index.begin();
-            is != local_index.end();
-            ++is)
+        for (std::map<size_type, size_type>::const_iterator is
+             = local_index.begin();
+             is != local_index.end();
+             ++is)
           {
             // irow loops over all DoFs that
             // couple with the present DoF
@@ -322,10 +322,10 @@ SparseVanka<number>::apply_preconditioner(
             // couples with
             // number of DoFs coupling to
             // irow (including irow itself)
-            for(typename SparseMatrix<number>::const_iterator p
-                = matrix->begin(irow);
-                p != matrix->end(irow);
-                ++p)
+            for (typename SparseMatrix<number>::const_iterator p
+                 = matrix->begin(irow);
+                 p != matrix->end(irow);
+                 ++p)
               {
                 // find out whether this DoF
                 // (that couples with @p irow,
@@ -339,37 +339,37 @@ SparseVanka<number>::apply_preconditioner(
                 //
                 // note that if so, we already
                 // have copied the entry above
-                if(js == local_index.end())
+                if (js == local_index.end())
                   {
-                    if(!range_is_restricted
-                       || ((*dof_mask)[p->column()] == true))
+                    if (!range_is_restricted
+                        || ((*dof_mask)[p->column()] == true))
                       b(i) -= p->value() * dst(p->column());
                   }
                 else
                   // if so, then build the
                   // matrix out of it
-                  if(conserve_mem == true)
+                  if (conserve_mem == true)
                   (*inverses[row])(i, js->second) = p->value();
               }
           }
 
         // Compute new values
-        if(conserve_mem == true)
+        if (conserve_mem == true)
           inverses[row]->gauss_jordan();
 
         // apply preconditioner
         inverses[row]->vmult(x, b);
 
         // Distribute new values
-        for(std::map<size_type, size_type>::const_iterator is
-            = local_index.begin();
-            is != local_index.end();
-            ++is)
+        for (std::map<size_type, size_type>::const_iterator is
+             = local_index.begin();
+             is != local_index.end();
+             ++is)
           {
             const size_type irow = is->first;
             const size_type i    = is->second;
 
-            if(!range_is_restricted || ((*dof_mask)[irow] == true))
+            if (!range_is_restricted || ((*dof_mask)[irow] == true))
               dst(irow) = x(i);
             // do nothing if not in
             // the range
@@ -378,7 +378,7 @@ SparseVanka<number>::apply_preconditioner(
         // if we don't store the
         // inverses, then unalias the
         // local matrix
-        if(conserve_mem == true)
+        if (conserve_mem == true)
           inverses[row] = nullptr;
       }
 }
@@ -389,7 +389,7 @@ SparseVanka<number>::memory_consumption() const
 {
   std::size_t mem
     = (sizeof(*this) + MemoryConsumption::memory_consumption(*selected));
-  for(size_type i = 0; i < inverses.size(); ++i)
+  for (size_type i = 0; i < inverses.size(); ++i)
     mem += MemoryConsumption::memory_consumption(*inverses[i]);
 
   return mem;
@@ -452,17 +452,17 @@ SparseBlockVanka<number>::compute_dof_masks(
   // consecutive, with other
   // consecutive regions where we do
   // not have to do something
-  if(true)
+  if (true)
     {
       unsigned int c     = 0;
       unsigned int block = 0;
       intervals[0].first = 0;
 
-      for(size_type i = 0; (i < M.m()) && (block + 1 < n_blocks); ++i)
+      for (size_type i = 0; (i < M.m()) && (block + 1 < n_blocks); ++i)
         {
-          if(selected[i] == true)
+          if (selected[i] == true)
             ++c;
-          if(c == n_inverses_per_block)
+          if (c == n_inverses_per_block)
             {
               intervals[block].second    = i;
               intervals[block + 1].first = i;
@@ -480,11 +480,11 @@ SparseBlockVanka<number>::compute_dof_masks(
   // class wants to see. the way how
   // we do this depends on the
   // requested blocking strategy
-  switch(blocking_strategy)
+  switch (blocking_strategy)
     {
       case index_intervals:
         {
-          for(unsigned int block = 0; block < n_blocks; ++block)
+          for (unsigned int block = 0; block < n_blocks; ++block)
             std::fill_n(dof_masks[block].begin() + intervals[block].first,
                         intervals[block].second - intervals[block].first,
                         true);
@@ -514,14 +514,14 @@ SparseBlockVanka<number>::compute_dof_masks(
           // accesses
           const SparsityPattern& structure = M.get_sparsity_pattern();
 
-          for(size_type row = 0; row < M.m(); ++row)
-            if(selected[row] == true)
+          for (size_type row = 0; row < M.m(); ++row)
+            if (selected[row] == true)
               {
                 // first find out to
                 // which block the
                 // present row belongs
                 unsigned int block_number = 0;
-                while(row >= intervals[block_number].second)
+                while (row >= intervals[block_number].second)
                   ++block_number;
                 Assert(block_number < n_blocks, ExcInternalError());
 
@@ -532,7 +532,7 @@ SparseBlockVanka<number>::compute_dof_masks(
                 // present index wants
                 // to write
                 const size_type row_length = structure.row_length(row);
-                for(size_type i = 0; i < row_length; ++i)
+                for (size_type i = 0; i < row_length; ++i)
                   ++access_count[block_number][structure.column_number(row, i)];
               };
 
@@ -548,11 +548,11 @@ SparseBlockVanka<number>::compute_dof_masks(
           // the of course we leave it
           // to the block we put it
           // into in the first place
-          for(size_type row = 0; row < M.m(); ++row)
-            if(selected[row] == true)
+          for (size_type row = 0; row < M.m(); ++row)
+            if (selected[row] == true)
               {
                 unsigned int block_number = 0;
-                while(row >= intervals[block_number].second)
+                while (row >= intervals[block_number].second)
                   ++block_number;
 
                 dof_masks[block_number][row] = true;
@@ -564,8 +564,8 @@ SparseBlockVanka<number>::compute_dof_masks(
                 // the most often
                 size_type    max_accesses     = 0;
                 unsigned int max_access_block = 0;
-                for(unsigned int block = 0; block < n_blocks; ++block)
-                  if(access_count[block][row] > max_accesses)
+                for (unsigned int block = 0; block < n_blocks; ++block)
+                  if (access_count[block][row] > max_accesses)
                     {
                       max_accesses     = access_count[block][row];
                       max_access_block = block;
@@ -591,7 +591,7 @@ SparseBlockVanka<number>::vmult(Vector<number2>&       dst,
 
   // if no blocking is required, pass
   // down to the underlying class
-  if(n_blocks == 1)
+  if (n_blocks == 1)
     this->apply_preconditioner(dst, src);
   else
     // otherwise: blocking requested
@@ -617,7 +617,7 @@ SparseBlockVanka<number>::vmult(Vector<number2>&       dst,
       const mem_fun_p comp
         = &SparseVanka<number>::template apply_preconditioner<number2>;
       Threads::ThreadGroup<> threads;
-      for(unsigned int block = 0; block < n_blocks; ++block)
+      for (unsigned int block = 0; block < n_blocks; ++block)
         threads
           += Threads::new_thread(comp,
                                  *static_cast<const SparseVanka<number>*>(this),
@@ -626,7 +626,7 @@ SparseBlockVanka<number>::vmult(Vector<number2>&       dst,
                                  &dof_masks[block]);
       threads.join_all();
 #else
-      for(unsigned int block = 0; block < n_blocks; ++block)
+      for (unsigned int block = 0; block < n_blocks; ++block)
         this->apply_preconditioner(dst, src, &dof_masks[block]);
 #endif
     }
@@ -637,7 +637,7 @@ std::size_t
 SparseBlockVanka<number>::memory_consumption() const
 {
   std::size_t mem = SparseVanka<number>::memory_consumption();
-  for(size_type i = 0; i < dof_masks.size(); ++i)
+  for (size_type i = 0; i < dof_masks.size(); ++i)
     mem += MemoryConsumption::memory_consumption(dof_masks[i]);
   return mem;
 }

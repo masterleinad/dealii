@@ -60,7 +60,7 @@ double
 Lh(const Point<dim>& x_q, const TableIndices<dim>& indices)
 {
   double res = 1.0;
-  for(unsigned int d = 0; d < dim; d++)
+  for (unsigned int d = 0; d < dim; d++)
     {
       const double x = 2.0 * (x_q[d] - 0.5);
       Assert((x_q[d] <= 1.0) && (x_q[d] >= 0.),
@@ -78,8 +78,8 @@ LegendreFunction<2>::value(const dealii::Point<2>& point,
 {
   double f = 0.0;
 
-  for(unsigned int i = 0; i < coefficients.size(0); i++)
-    for(unsigned int j = 0; j < coefficients.size(1); j++)
+  for (unsigned int i = 0; i < coefficients.size(0); i++)
+    for (unsigned int j = 0; j < coefficients.size(1); j++)
       f += Lh(point, TableIndices<2>(i, j)) * coefficients(i, j);
 
   return f;
@@ -92,9 +92,9 @@ LegendreFunction<3>::value(const dealii::Point<3>& point,
 {
   double f = 0.0;
 
-  for(unsigned int i = 0; i < coefficients.size(0); i++)
-    for(unsigned int j = 0; j < coefficients.size(1); j++)
-      for(unsigned int k = 0; k < coefficients.size(2); k++)
+  for (unsigned int i = 0; i < coefficients.size(0); i++)
+    for (unsigned int j = 0; j < coefficients.size(1); j++)
+      for (unsigned int k = 0; k < coefficients.size(2); k++)
         f += Lh(point, TableIndices<3>(i, j, k)) * coefficients(i, j, k);
 
   return f;
@@ -103,8 +103,8 @@ LegendreFunction<3>::value(const dealii::Point<3>& point,
 void
 print(const Table<2, double>& coeff)
 {
-  for(unsigned int i = 0; i < coeff.size(0); i++)
-    for(unsigned int j = 0; j < coeff.size(1); j++)
+  for (unsigned int i = 0; i < coeff.size(0); i++)
+    for (unsigned int j = 0; j < coeff.size(1); j++)
       deallog << coeff(i, j) << " ";
   deallog << std::endl;
 }
@@ -112,9 +112,9 @@ print(const Table<2, double>& coeff)
 void
 print(const Table<3, double>& coeff)
 {
-  for(unsigned int i = 0; i < coeff.size(0); i++)
-    for(unsigned int j = 0; j < coeff.size(1); j++)
-      for(unsigned int k = 0; k < coeff.size(2); k++)
+  for (unsigned int i = 0; i < coeff.size(0); i++)
+    for (unsigned int j = 0; j < coeff.size(1); j++)
+      for (unsigned int k = 0; k < coeff.size(2); k++)
         deallog << coeff(i, j, k) << " ";
   deallog << std::endl;
 }
@@ -127,7 +127,7 @@ void resize(Table<2, double>& coeff, const unsigned int N)
 void resize(Table<3, double>& coeff, const unsigned int N)
 {
   TableIndices<3> size;
-  for(unsigned int d = 0; d < 3; d++)
+  for (unsigned int d = 0; d < 3; d++)
     size[d] = N;
   coeff.reinit(size);
 }
@@ -147,7 +147,7 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
   hp::QCollection<dim>  quadrature_formula;
 
   // add some extra FEs in fe_collection
-  for(unsigned int p = 1; p <= max_poly; p++)
+  for (unsigned int p = 1; p <= max_poly; p++)
     {
       fe_collection.push_back(FE_Q<dim>(p));
       quadrature_formula.push_back(QGauss<dim>(p + 1 + 5));
@@ -204,8 +204,8 @@ main()
     const unsigned int p        = 1;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d);
     unsigned int       ind = 0;
-    for(unsigned int i = 0; i < coeff_1d; i++)
-      for(unsigned int j = 0; j < coeff_1d; j++)
+    for (unsigned int i = 0; i < coeff_1d; i++)
+      for (unsigned int j = 0; j < coeff_1d; j++)
         coeff_in(i, j) = 1.0 + ind++;
 
     LegendreFunction<dim> function(coeff_in);
@@ -218,8 +218,8 @@ main()
     const unsigned int p        = 2;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d);
     unsigned int       ind = 0;
-    for(unsigned int i = 0; i < coeff_1d; i++)
-      for(unsigned int j = 0; j < coeff_1d; j++)
+    for (unsigned int i = 0; i < coeff_1d; i++)
+      for (unsigned int j = 0; j < coeff_1d; j++)
         coeff_in(i, j) = 1.0 + ind++;
 
     LegendreFunction<dim> function(coeff_in);
@@ -232,9 +232,9 @@ main()
     const unsigned int p        = 1;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d, coeff_1d);
     unsigned int       ind = 0;
-    for(unsigned int i = 0; i < coeff_1d; i++)
-      for(unsigned int j = 0; j < coeff_1d; j++)
-        for(unsigned int k = 0; k < coeff_1d; k++)
+    for (unsigned int i = 0; i < coeff_1d; i++)
+      for (unsigned int j = 0; j < coeff_1d; j++)
+        for (unsigned int k = 0; k < coeff_1d; k++)
           coeff_in(i, j, k) = 1.0 + ind++;
 
     LegendreFunction<dim> function(coeff_in);
@@ -247,9 +247,9 @@ main()
     const unsigned int p        = 2;
     Table<dim, double> coeff_in(coeff_1d, coeff_1d, coeff_1d);
     unsigned int       ind = 0;
-    for(unsigned int i = 0; i < coeff_1d; i++)
-      for(unsigned int j = 0; j < coeff_1d; j++)
-        for(unsigned int k = 0; k < coeff_1d; k++)
+    for (unsigned int i = 0; i < coeff_1d; i++)
+      for (unsigned int j = 0; j < coeff_1d; j++)
+        for (unsigned int k = 0; k < coeff_1d; k++)
           coeff_in(i, j, k) = 1.0 + ind++;
 
     LegendreFunction<dim> function(coeff_in);

@@ -274,7 +274,7 @@ PolynomialSpace<dim>::PolynomialSpace(const std::vector<Pol>& pols)
   // to identity. This map can be
   // changed by the user through the
   // set_numbering function
-  for(unsigned int i = 0; i < n_pols; ++i)
+  for (unsigned int i = 0; i < n_pols; ++i)
     {
       index_map[i]         = i;
       index_map_inverse[i] = i;
@@ -300,11 +300,11 @@ template <class StreamType>
 void
 PolynomialSpace<dim>::output_indices(StreamType& out) const
 {
-  for(unsigned int i = 0; i < n_pols; ++i)
+  for (unsigned int i = 0; i < n_pols; ++i)
     {
       const std::array<unsigned int, dim> ix = compute_index(i);
       out << i << "\t";
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         out << ix[d] << " ";
       out << std::endl;
     }
@@ -321,28 +321,28 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
   double v[dim][order + 1];
   {
     std::vector<double> tmp(order + 1);
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       {
         polynomials[indices[d]].value(p(d), tmp);
-        for(unsigned int j = 0; j < order + 1; ++j)
+        for (unsigned int j = 0; j < order + 1; ++j)
           v[d][j] = tmp[j];
       }
   }
 
   Tensor<order, dim> derivative;
-  switch(order)
+  switch (order)
     {
       case 1:
         {
           Tensor<1, dim>& derivative_1
             = *reinterpret_cast<Tensor<1, dim>*>(&derivative);
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             {
               derivative_1[d] = 1.;
-              for(unsigned int x = 0; x < dim; ++x)
+              for (unsigned int x = 0; x < dim; ++x)
                 {
                   unsigned int x_order = 0;
-                  if(d == x)
+                  if (d == x)
                     ++x_order;
 
                   derivative_1[d] *= v[x][x_order];
@@ -355,16 +355,16 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
         {
           Tensor<2, dim>& derivative_2
             = *reinterpret_cast<Tensor<2, dim>*>(&derivative);
-          for(unsigned int d1 = 0; d1 < dim; ++d1)
-            for(unsigned int d2 = 0; d2 < dim; ++d2)
+          for (unsigned int d1 = 0; d1 < dim; ++d1)
+            for (unsigned int d2 = 0; d2 < dim; ++d2)
               {
                 derivative_2[d1][d2] = 1.;
-                for(unsigned int x = 0; x < dim; ++x)
+                for (unsigned int x = 0; x < dim; ++x)
                   {
                     unsigned int x_order = 0;
-                    if(d1 == x)
+                    if (d1 == x)
                       ++x_order;
-                    if(d2 == x)
+                    if (d2 == x)
                       ++x_order;
 
                     derivative_2[d1][d2] *= v[x][x_order];
@@ -377,19 +377,19 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
         {
           Tensor<3, dim>& derivative_3
             = *reinterpret_cast<Tensor<3, dim>*>(&derivative);
-          for(unsigned int d1 = 0; d1 < dim; ++d1)
-            for(unsigned int d2 = 0; d2 < dim; ++d2)
-              for(unsigned int d3 = 0; d3 < dim; ++d3)
+          for (unsigned int d1 = 0; d1 < dim; ++d1)
+            for (unsigned int d2 = 0; d2 < dim; ++d2)
+              for (unsigned int d3 = 0; d3 < dim; ++d3)
                 {
                   derivative_3[d1][d2][d3] = 1.;
-                  for(unsigned int x = 0; x < dim; ++x)
+                  for (unsigned int x = 0; x < dim; ++x)
                     {
                       unsigned int x_order = 0;
-                      if(d1 == x)
+                      if (d1 == x)
                         ++x_order;
-                      if(d2 == x)
+                      if (d2 == x)
                         ++x_order;
-                      if(d3 == x)
+                      if (d3 == x)
                         ++x_order;
 
                       derivative_3[d1][d2][d3] *= v[x][x_order];
@@ -402,22 +402,22 @@ PolynomialSpace<dim>::compute_derivative(const unsigned int i,
         {
           Tensor<4, dim>& derivative_4
             = *reinterpret_cast<Tensor<4, dim>*>(&derivative);
-          for(unsigned int d1 = 0; d1 < dim; ++d1)
-            for(unsigned int d2 = 0; d2 < dim; ++d2)
-              for(unsigned int d3 = 0; d3 < dim; ++d3)
-                for(unsigned int d4 = 0; d4 < dim; ++d4)
+          for (unsigned int d1 = 0; d1 < dim; ++d1)
+            for (unsigned int d2 = 0; d2 < dim; ++d2)
+              for (unsigned int d3 = 0; d3 < dim; ++d3)
+                for (unsigned int d4 = 0; d4 < dim; ++d4)
                   {
                     derivative_4[d1][d2][d3][d4] = 1.;
-                    for(unsigned int x = 0; x < dim; ++x)
+                    for (unsigned int x = 0; x < dim; ++x)
                       {
                         unsigned int x_order = 0;
-                        if(d1 == x)
+                        if (d1 == x)
                           ++x_order;
-                        if(d2 == x)
+                        if (d2 == x)
                           ++x_order;
-                        if(d3 == x)
+                        if (d3 == x)
                           ++x_order;
-                        if(d4 == x)
+                        if (d4 == x)
                           ++x_order;
 
                         derivative_4[d1][d2][d3][d4] *= v[x][x_order];

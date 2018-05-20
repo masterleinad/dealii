@@ -51,10 +51,10 @@ test(std::ostream& /*out*/)
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
 
-  for(unsigned int i = 0; i < 1; ++i)
+  for (unsigned int i = 0; i < 1; ++i)
     {
       std::vector<bool> flags(tr.n_active_cells());
-      for(unsigned int j = 0; j < flags.size(); ++j)
+      for (unsigned int j = 0; j < flags.size(); ++j)
         flags[j] = (Testing::rand() < 0.2 * RAND_MAX);
 
       InterGridMap<Triangulation<dim>> intergrid_map;
@@ -62,11 +62,11 @@ test(std::ostream& /*out*/)
 
       // refine tr and tr2
       unsigned int index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell, ++index)
-        if(flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell, ++index)
+        if (flags[index])
           {
             cell->set_refine_flag();
             intergrid_map[cell]->set_refine_flag();

@@ -37,7 +37,7 @@ BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry& e)
 template <typename number, typename BlockVectorType>
 BlockMatrixArray<number, BlockVectorType>::Entry::~Entry()
 {
-  if(matrix)
+  if (matrix)
     delete matrix;
 }
 
@@ -100,10 +100,10 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
   typename std::vector<Entry>::const_iterator m   = entries.begin();
   typename std::vector<Entry>::const_iterator end = entries.end();
 
-  for(; m != end; ++m)
+  for (; m != end; ++m)
     {
       aux.reinit(dst.block(m->row));
-      if(m->transpose)
+      if (m->transpose)
         m->matrix->Tvmult(aux, src.block(m->col));
       else
         m->matrix->vmult(aux, src.block(m->col));
@@ -140,10 +140,10 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
     mem);
   typename BlockVectorType::BlockType& aux = *p_aux;
 
-  for(; m != end; ++m)
+  for (; m != end; ++m)
     {
       aux.reinit(dst.block(m->col));
-      if(m->transpose)
+      if (m->transpose)
         m->matrix->vmult(aux, src.block(m->row));
       else
         m->matrix->Tvmult(aux, src.block(m->row));
@@ -182,14 +182,14 @@ BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
 
   number result = 0.;
 
-  for(unsigned int i = 0; i < block_rows; ++i)
+  for (unsigned int i = 0; i < block_rows; ++i)
     {
       aux.reinit(u.block(i));
-      for(m = entries.begin(); m != end; ++m)
+      for (m = entries.begin(); m != end; ++m)
         {
-          if(m->row != i)
+          if (m->row != i)
             continue;
-          if(m->transpose)
+          if (m->transpose)
             m->matrix->Tvmult_add(aux, v.block(m->col));
           else
             m->matrix->vmult(aux, v.block(m->col));
@@ -269,26 +269,26 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
 
   // Loop over all entries, since
   // they are not ordered by rows.
-  for(; m != end; ++m)
+  for (; m != end; ++m)
     {
       const size_type i = m->row;
       // Ignore everything not in
       // this row
-      if(i != row_num)
+      if (i != row_num)
         continue;
       const size_type j = m->col;
       // Only use the lower (upper)
       // triangle for forward
       // (backward) substitution
-      if(((j > i) && !backward) || ((j < i) && backward))
+      if (((j > i) && !backward) || ((j < i) && backward))
         continue;
-      if(j == i)
+      if (j == i)
         {
           diagonals.push_back(m);
         }
       else
         {
-          if(m->transpose)
+          if (m->transpose)
             m->matrix->Tvmult(aux, dst.block(j));
           else
             m->matrix->vmult(aux, dst.block(j));
@@ -300,9 +300,9 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
   // Inverting the diagonal block is
   // simple, if there is only one
   // matrix
-  if(diagonals.size() == 1)
+  if (diagonals.size() == 1)
     {
-      if(diagonals[0]->transpose)
+      if (diagonals[0]->transpose)
         diagonals[0]->matrix->Tvmult(aux, dst.block(row_num));
       else
         diagonals[0]->matrix->vmult(aux, dst.block(row_num));
@@ -311,14 +311,14 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
   else
     {
       aux = 0.;
-      for(size_type i = 0; i < diagonals.size(); ++i)
+      for (size_type i = 0; i < diagonals.size(); ++i)
         {
           m = diagonals[i];
           // First, divide by the current
           // factor, such that we can
           // multiply by it later.
           aux /= m->prefix;
-          if(m->transpose)
+          if (m->transpose)
             m->matrix->Tvmult_add(aux, dst.block(row_num));
           else
             m->matrix->vmult_add(aux, dst.block(row_num));
@@ -358,14 +358,14 @@ BlockTrianglePrecondition<number, BlockVectorType>::vmult(
 
   dst.equ(1., src);
 
-  if(backward)
+  if (backward)
     {
-      for(unsigned int i = n_block_rows(); i > 0;)
+      for (unsigned int i = n_block_rows(); i > 0;)
         do_row(dst, --i);
     }
   else
     {
-      for(unsigned int i = 0; i < n_block_rows(); ++i)
+      for (unsigned int i = 0; i < n_block_rows(); ++i)
         do_row(dst, i);
     }
 }

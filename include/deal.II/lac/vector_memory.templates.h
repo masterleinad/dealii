@@ -38,7 +38,7 @@ template <typename VectorType>
 inline GrowingVectorMemory<VectorType>::Pool::~Pool()
 {
   // Nothing to do if memory was unused.
-  if(data == nullptr)
+  if (data == nullptr)
     return;
 
   // delete the 'data' object. this also releases all vectors
@@ -51,13 +51,13 @@ template <typename VectorType>
 inline void
 GrowingVectorMemory<VectorType>::Pool::initialize(const size_type size)
 {
-  if(data == nullptr)
+  if (data == nullptr)
     {
       data = new std::vector<entry_type>(size);
 
-      for(typename std::vector<entry_type>::iterator i = data->begin();
-          i != data->end();
-          ++i)
+      for (typename std::vector<entry_type>::iterator i = data->begin();
+           i != data->end();
+           ++i)
         {
           i->first  = false;
           i->second = std_cxx14::make_unique<VectorType>();
@@ -81,7 +81,7 @@ inline GrowingVectorMemory<VectorType>::~GrowingVectorMemory()
 {
   AssertNothrow(current_alloc == 0,
                 StandardExceptions::ExcMemoryLeak(current_alloc));
-  if(log_statistics)
+  if (log_statistics)
     {
       deallog << "GrowingVectorMemory:Overall allocated vectors: "
               << total_alloc << std::endl;
@@ -100,11 +100,11 @@ GrowingVectorMemory<VectorType>::alloc()
   ++current_alloc;
   // see if there is a free vector
   // available in our list
-  for(typename std::vector<entry_type>::iterator i = pool.data->begin();
-      i != pool.data->end();
-      ++i)
+  for (typename std::vector<entry_type>::iterator i = pool.data->begin();
+       i != pool.data->end();
+       ++i)
     {
-      if(i->first == false)
+      if (i->first == false)
         {
           i->first = true;
           return i->second.get();
@@ -124,11 +124,11 @@ GrowingVectorMemory<VectorType>::free(const VectorType* const v)
 {
   Threads::Mutex::ScopedLock lock(mutex);
 
-  for(typename std::vector<entry_type>::iterator i = pool.data->begin();
-      i != pool.data->end();
-      ++i)
+  for (typename std::vector<entry_type>::iterator i = pool.data->begin();
+       i != pool.data->end();
+       ++i)
     {
-      if(v == i->second.get())
+      if (v == i->second.get())
         {
           i->first = false;
           --current_alloc;
@@ -144,7 +144,7 @@ GrowingVectorMemory<VectorType>::release_unused_memory()
 {
   Threads::Mutex::ScopedLock lock(mutex);
 
-  if(pool.data != nullptr)
+  if (pool.data != nullptr)
     pool.data->clear();
 }
 
@@ -156,9 +156,9 @@ GrowingVectorMemory<VectorType>::memory_consumption() const
 
   std::size_t                                            result = sizeof(*this);
   const typename std::vector<entry_type>::const_iterator end = pool.data->end();
-  for(typename std::vector<entry_type>::const_iterator i = pool.data->begin();
-      i != end;
-      ++i)
+  for (typename std::vector<entry_type>::const_iterator i = pool.data->begin();
+       i != end;
+       ++i)
     result += sizeof(*i) + MemoryConsumption::memory_consumption(i->second);
 
   return result;

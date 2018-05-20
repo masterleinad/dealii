@@ -98,14 +98,14 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   // taking almost verbatim from the MappingQ class.
   std::vector<unsigned int> renumber(n_q_points);
   std::vector<unsigned int> dpo(dim + 1, 1U);
-  for(unsigned int i = 1; i < dpo.size(); ++i)
+  for (unsigned int i = 1; i < dpo.size(); ++i)
     dpo[i] = dpo[i - 1] * (map_degree - 1);
 
   FETools::lexicographic_to_hierarchic_numbering(
     FiniteElementData<dim>(dpo, 1, map_degree), renumber);
 
   // finally we assign the quadrature points in the required order.
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for (unsigned int q = 0; q < n_q_points; ++q)
     this->quadrature_points[renumber[q]] = q_iterated.point(q);
 }
 
@@ -203,7 +203,7 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   // threads
   Threads::Mutex::ScopedLock lock(fe_values_mutex);
   fe_values.reinit(dof_cell);
-  if(mg_vector)
+  if (mg_vector)
     {
       dof_cell->get_mg_dof_indices(dof_indices);
       fe_values.get_function_values(
@@ -216,10 +216,10 @@ MappingQEulerian<dim, VectorType, spacedim>::MappingQEulerianGeneric::
   // and finally compute the positions of the support points in the deformed
   // configuration.
   std::vector<Point<spacedim>> a(n_support_pts);
-  for(unsigned int q = 0; q < n_support_pts; ++q)
+  for (unsigned int q = 0; q < n_support_pts; ++q)
     {
       a[q] = fe_values.quadrature_point(q);
-      for(unsigned int d = 0; d < spacedim; ++d)
+      for (unsigned int d = 0; d < spacedim; ++d)
         a[q](d) += shift_vector[q](d);
     }
 

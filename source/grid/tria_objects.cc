@@ -44,22 +44,22 @@ namespace internal
       unsigned int n_objects        = 0;
       unsigned int n_unused_pairs   = 0;
       unsigned int n_unused_singles = 0;
-      for(unsigned int i = 0; i < used.size(); ++i)
+      for (unsigned int i = 0; i < used.size(); ++i)
         {
-          if(used[i])
+          if (used[i])
             ++n_objects;
-          else if(i + 1 < used.size())
+          else if (i + 1 < used.size())
             {
-              if(used[i + 1])
+              if (used[i + 1])
                 {
                   ++n_unused_singles;
-                  if(next_free_single == 0)
+                  if (next_free_single == 0)
                     next_free_single = i;
                 }
               else
                 {
                   ++n_unused_pairs;
-                  if(next_free_pair == 0)
+                  if (next_free_pair == 0)
                     next_free_pair = i;
                   ++i;
                 }
@@ -77,11 +77,11 @@ namespace internal
 
       unsigned int new_size
         = used.size() + new_objects_in_pairs - 2 * n_unused_pairs;
-      if(additional_single_objects > 0)
+      if (additional_single_objects > 0)
         new_size += additional_single_objects;
 
       // only allocate space if necessary
-      if(new_size > cells.size())
+      if (new_size > cells.size())
         {
           cells.reserve(new_size);
           cells.insert(cells.end(), new_size - cells.size(), G());
@@ -99,7 +99,7 @@ namespace internal
           children.insert(
             children.end(), factor * new_size - children.size(), -1);
 
-          if(G::dimension > 1)
+          if (G::dimension > 1)
             {
               refinement_cases.reserve(new_size);
               refinement_cases.insert(
@@ -122,7 +122,7 @@ namespace internal
                              numbers::flat_manifold_id);
         }
 
-      if(n_unused_singles == 0)
+      if (n_unused_singles == 0)
         {
           next_free_single               = new_size - 1;
           reverse_order_next_free_single = true;
@@ -139,14 +139,14 @@ namespace internal
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 
       int pos = next_free_pair, last = used.size() - 1;
-      for(; pos < last; ++pos)
-        if(!used[pos])
+      for (; pos < last; ++pos)
+        if (!used[pos])
           {
             // this should be a pair slot
             Assert(!used[pos + 1], ExcInternalError());
             break;
           }
-      if(pos >= last)
+      if (pos >= last)
         // no free slot
         return tria.end_hex();
       else
@@ -167,7 +167,7 @@ namespace internal
               std::bind(std::equal_to<bool>(), std::placeholders::_1, true));
 
       // see above...
-      if(new_size > cells.size())
+      if (new_size > cells.size())
         {
           cells.reserve(new_size);
           cells.insert(cells.end(), new_size - cells.size(), TriaObject<3>());
@@ -237,22 +237,22 @@ namespace internal
       unsigned int n_quads          = 0;
       unsigned int n_unused_pairs   = 0;
       unsigned int n_unused_singles = 0;
-      for(unsigned int i = 0; i < used.size(); ++i)
+      for (unsigned int i = 0; i < used.size(); ++i)
         {
-          if(used[i])
+          if (used[i])
             ++n_quads;
-          else if(i + 1 < used.size())
+          else if (i + 1 < used.size())
             {
-              if(used[i + 1])
+              if (used[i + 1])
                 {
                   ++n_unused_singles;
-                  if(next_free_single == 0)
+                  if (next_free_single == 0)
                     next_free_single = i;
                 }
               else
                 {
                   ++n_unused_pairs;
-                  if(next_free_pair == 0)
+                  if (next_free_pair == 0)
                     next_free_pair = i;
                   ++i;
                 }
@@ -268,11 +268,11 @@ namespace internal
 
       unsigned int new_size
         = used.size() + new_quads_in_pairs - 2 * n_unused_pairs;
-      if(additional_single_quads > 0)
+      if (additional_single_quads > 0)
         new_size += additional_single_quads;
 
       // see above...
-      if(new_size > cells.size())
+      if (new_size > cells.size())
         {
           // reseve space for the base class
           TriaObjects<TriaObject<2>>::reserve_space(new_quads_in_pairs,
@@ -285,7 +285,7 @@ namespace internal
                                    true);
         }
 
-      if(n_unused_singles == 0)
+      if (n_unused_singles == 0)
         {
           next_free_single               = new_size - 1;
           reverse_order_next_free_single = true;

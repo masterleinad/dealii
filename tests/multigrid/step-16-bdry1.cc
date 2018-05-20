@@ -207,7 +207,7 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 
   Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-  for(unsigned int i = 0; i < n_points; ++i)
+  for (unsigned int i = 0; i < n_points; ++i)
     values[i] = Coefficient<dim>::value(points[i]);
 }
 
@@ -228,7 +228,7 @@ LaplaceProblem<dim>::setup_system()
   mg_dof_handler.distribute_mg_dofs(fe);
   deallog << "Number of degrees of freedom: " << mg_dof_handler.n_dofs();
 
-  for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+  for (unsigned int l = 0; l < triangulation.n_levels(); ++l)
     deallog << "   " << 'L' << l << ": " << mg_dof_handler.n_dofs(l);
   deallog << std::endl;
 
@@ -266,7 +266,7 @@ LaplaceProblem<dim>::setup_system()
   mg_matrices.clear_elements();
   mg_sparsity_patterns.resize(0, n_levels - 1);
 
-  for(unsigned int level = 0; level < n_levels; ++level)
+  for (unsigned int level = 0; level < n_levels; ++level)
     {
       DynamicSparsityPattern csp;
       csp.reinit(mg_dof_handler.n_dofs(level), mg_dof_handler.n_dofs(level));
@@ -305,7 +305,7 @@ LaplaceProblem<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = mg_dof_handler.begin_active(),
     endc = mg_dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -315,10 +315,10 @@ LaplaceProblem<dim>::assemble_system()
       coefficient.value_list(fe_values.get_quadrature_points(),
                              coefficient_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += (coefficient_values[q_point]
                                     * fe_values.shape_grad(i, q_point)
                                     * fe_values.shape_grad(j, q_point)
@@ -341,7 +341,7 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
   deallog << "assemble_multigrid " << (use_mw ? "(mesh_worker)" : "")
           << std::endl;
 
-  if(use_mw == true)
+  if (use_mw == true)
     {
       mg_matrices      = 0.;
       mg_interface_in  = 0.;
@@ -369,10 +369,10 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
                                              assembler);
 
       const unsigned int nlevels = triangulation.n_levels();
-      for(unsigned int level = 0; level < nlevels; ++level)
+      for (unsigned int level = 0; level < nlevels; ++level)
         {
-          for(unsigned int i = 0; i < mg_dof_handler.n_dofs(level); ++i)
-            if(mg_matrices[level].diag_element(i) == 0)
+          for (unsigned int i = 0; i < mg_dof_handler.n_dofs(level); ++i)
+            if (mg_matrices[level].diag_element(i) == 0)
               mg_matrices[level].set(i, i, 1.);
         }
     }
@@ -399,7 +399,7 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
         triangulation.n_levels());
       ConstraintMatrix empty_constraints;
 
-      for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+      for (unsigned int level = 0; level < triangulation.n_levels(); ++level)
         {
           boundary_constraints[level].add_lines(
             mg_constrained_dofs.get_refinement_edge_indices(level));
@@ -412,7 +412,7 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
         = mg_dof_handler.begin_mg(),
         endc = mg_dof_handler.end_mg();
 
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
           cell_matrix = 0;
           fe_values.reinit(cell);
@@ -420,9 +420,9 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
           coefficient.value_list(fe_values.get_quadrature_points(),
                                  coefficient_values);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += (coefficient_values[q_point]
                                       * fe_values.shape_grad(i, q_point)
                                       * fe_values.shape_grad(j, q_point)
@@ -435,9 +435,9 @@ LaplaceProblem<dim>::assemble_multigrid(bool use_mw)
 
           const unsigned int lvl = cell->level();
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              if(
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
+              if (
                 mg_constrained_dofs.at_refinement_edge(lvl,
                                                        local_dof_indices[i])
                 && !mg_constrained_dofs.at_refinement_edge(lvl,
@@ -521,22 +521,22 @@ void
 LaplaceProblem<dim>::refine_grid(const std::string& reftype)
 {
   bool cell_refined = false;
-  if(reftype == "center" || !cell_refined)
+  if (reftype == "center" || !cell_refined)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        for(unsigned int vertex = 0;
-            vertex < GeometryInfo<dim>::vertices_per_cell;
-            ++vertex)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        for (unsigned int vertex = 0;
+             vertex < GeometryInfo<dim>::vertices_per_cell;
+             ++vertex)
           {
             {
               const Point<dim> p = cell->vertex(vertex);
               const Point<dim> origin
                 = (dim == 2 ? Point<dim>(0, 0) : Point<dim>(0, 0, 0));
               const double dist = p.distance(origin);
-              if(dist < 0.25 / numbers::PI)
+              if (dist < 0.25 / numbers::PI)
                 {
                   cell->set_refine_flag();
                   cell_refined = true;
@@ -545,7 +545,7 @@ LaplaceProblem<dim>::refine_grid(const std::string& reftype)
             }
           }
     }
-  if(reftype == "global" || !cell_refined)
+  if (reftype == "global" || !cell_refined)
     triangulation.refine_global(1);
   else
     triangulation.execute_coarsening_and_refinement();
@@ -572,11 +572,11 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 8; ++cycle)
+  for (unsigned int cycle = 0; cycle < 8; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_cube(triangulation, -1, 1, true);
 
@@ -595,7 +595,7 @@ LaplaceProblem<dim>::run()
 
       deallog << "   Number of degrees of freedom: " << mg_dof_handler.n_dofs()
               << " (by level: ";
-      for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+      for (unsigned int level = 0; level < triangulation.n_levels(); ++level)
         deallog << mg_dof_handler.n_dofs(level)
                 << (level == triangulation.n_levels() - 1 ? ")" : ", ");
       deallog << std::endl;
@@ -622,7 +622,7 @@ main()
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -636,7 +636,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

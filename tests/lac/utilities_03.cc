@@ -69,11 +69,11 @@ x * Cheb2(3,L(ev)) / Cheb2(3,L(aL));
 double
 cheb2(const unsigned int d, const double x)
 {
-  if(d == 0)
+  if (d == 0)
     {
       return 1.;
     }
-  else if(d == 1)
+  else if (d == 1)
     {
       return x;
     }
@@ -94,7 +94,7 @@ check(const int          degree,
     exact(size), diff(size);
   GrowingVectorMemory<LinearAlgebra::distributed::Vector<double>> vector_memory;
 
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     ev(i) = -1. + 2. * (1. + i) / (1. + size);
   DiagonalMatrix<LinearAlgebra::distributed::Vector<double>> mat;
   mat.reinit(ev);
@@ -104,10 +104,10 @@ check(const int          degree,
   // to be filtered
   unsigned int n_in  = 0;
   unsigned int n_out = 0;
-  for(unsigned int i = 0; i < size; ++i)
-    if(std::abs(ev(i)) <= std::abs(a_L))
+  for (unsigned int i = 0; i < size; ++i)
+    if (std::abs(ev(i)) <= std::abs(a_L))
       {
-        if(ev(i) >= a && ev(i) <= b)
+        if (ev(i) >= a && ev(i) <= b)
           n_in++;
         else
           n_out++;
@@ -125,7 +125,7 @@ check(const int          degree,
   const double scaling = scale ? cheb2(degree, L(a_L)) : 1.; // p(L(a_L))
   deallog << " Scaling: " << scaling << " @ " << a_L << std::endl;
   exact = 0.;
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     exact(i) = x(i) * cheb2(degree, L(ev(i))) / scaling;
   deallog << " Input norm: " << x.l2_norm() << std::endl;
   deallog << " Exact norm: " << exact.l2_norm() << std::endl;
@@ -144,8 +144,8 @@ check(const int          degree,
 #ifdef EXTRA_OUTPUT
   // extra output for debugging:
   unsigned int max_i = 0;
-  for(unsigned int i = 1; i < size; ++i)
-    if(std::abs(diff(i)) > std::abs(diff(max_i)))
+  for (unsigned int i = 1; i < size; ++i)
+    if (std::abs(diff(i)) > std::abs(diff(max_i)))
       max_i = i;
 
   deallog << " i =" << max_i << std::endl

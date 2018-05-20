@@ -76,16 +76,16 @@ test(bool transpose = false)
   // for a number of different solution
   // vectors, make up a matching rhs vector
   // and check what the UMFPACK solver finds
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     {
       Vector<double> solution(dof_handler.n_dofs());
       Vector<double> x(dof_handler.n_dofs());
       Vector<double> b(dof_handler.n_dofs());
 
-      for(unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
+      for (unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
         solution(j) = j + j * (i + 1) * (i + 1);
 
-      if(transpose)
+      if (transpose)
         B.Tvmult(b, solution);
       else
         B.vmult(b, solution);

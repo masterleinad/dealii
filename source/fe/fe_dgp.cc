@@ -41,7 +41,7 @@ FE_DGP<dim, spacedim>::FE_DGP(const unsigned int degree)
   // sizes
   this->reinit_restriction_and_prolongation_matrices();
   // Fill prolongation matrices with embedding operators
-  if(dim == spacedim)
+  if (dim == spacedim)
     {
       FETools::compute_embedding_matrices(*this, this->prolongation);
       // Fill restriction matrices with L2-projection
@@ -81,7 +81,7 @@ FE_DGP<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   std::vector<unsigned int> dpo(dim + 1, 0U);
   dpo[dim] = deg + 1;
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     {
       dpo[dim] *= deg + 1 + i;
       dpo[dim] /= i + 1;
@@ -149,7 +149,7 @@ FE_DGP<dim, spacedim>::hp_vertex_dof_identities(
   const FiniteElement<dim, spacedim>& fe_other) const
 {
   // there are no such constraints for DGP elements at all
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -164,7 +164,7 @@ FE_DGP<dim, spacedim>::hp_line_dof_identities(
   const FiniteElement<dim, spacedim>& fe_other) const
 {
   // there are no such constraints for DGP elements at all
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -179,7 +179,7 @@ FE_DGP<dim, spacedim>::hp_quad_dof_identities(
   const FiniteElement<dim, spacedim>& fe_other) const
 {
   // there are no such constraints for DGP elements at all
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -195,7 +195,7 @@ FE_DGP<dim, spacedim>::compare_for_face_domination(
 {
   // check whether both are discontinuous elements, see the description of
   // FiniteElementDomination::Domination
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
     return FiniteElementDomination::no_requirements;
 
   Assert(false, ExcNotImplemented());

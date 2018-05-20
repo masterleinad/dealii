@@ -39,7 +39,7 @@ check(const char* p)
       prm.parse_input(in);
       deallog << "Done reading parameters..." << std::endl;
     }
-  catch(...)
+  catch (...)
     {
       deallog << "Caught an exception -- ignoring..." << std::endl;
     }

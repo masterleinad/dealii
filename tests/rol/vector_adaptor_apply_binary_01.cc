@@ -37,10 +37,10 @@ prepare_vector(VectorType& v)
   const unsigned int local_size  = set - myid;
   unsigned int       global_size = 0;
   unsigned int       my_start    = 0;
-  for(unsigned int i = 0; i < numproc; ++i)
+  for (unsigned int i = 0; i < numproc; ++i)
     {
       global_size += set - i;
-      if(i < myid)
+      if (i < myid)
         my_start += set - i;
     }
   // each processor owns some indices and all
@@ -65,10 +65,10 @@ test()
 
   Testing::srand(1);
 
-  for(auto iterator = a.begin(); iterator != a.end(); iterator++)
+  for (auto iterator = a.begin(); iterator != a.end(); iterator++)
     *iterator = static_cast<double>(Testing::rand()) / RAND_MAX;
 
-  for(auto iterator = b.begin(); iterator != b.end(); iterator++)
+  for (auto iterator = b.begin(); iterator != b.end(); iterator++)
     *iterator = static_cast<double>(Testing::rand()) / RAND_MAX;
 
   a.compress(VectorOperation::insert);
@@ -102,7 +102,7 @@ main(int argc, char** argv)
   unsigned int myid = dealii::Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(dealii::Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog.depth_console(10); // initlog();
       deallog << std::setprecision(4);
@@ -113,7 +113,7 @@ main(int argc, char** argv)
       test<LinearAlgebraTrilinos::MPI::Vector>();
       test<LinearAlgebra::distributed::Vector<double>>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -127,7 +127,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

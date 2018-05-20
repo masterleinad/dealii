@@ -29,7 +29,7 @@ main()
   deallog.attach(logfile);
 
   DynamicSparsityPattern dsp(8, 8);
-  for(unsigned int i = 0; i < 8; ++i)
+  for (unsigned int i = 0; i < 8; ++i)
     dsp.add(i, i);
 
   // create a graph with components 0,2 and 1,3 that are disconnected
@@ -40,9 +40,9 @@ main()
   dsp.add(3, 1);
 
   // couple all indices between 3 and 7 except 4
-  for(unsigned int i = 3; i < 7; ++i)
-    for(unsigned int j = 3; j < 7; ++j)
-      if(i != 4 && j != 4)
+  for (unsigned int i = 3; i < 7; ++i)
+    for (unsigned int j = 3; j < 7; ++j)
+      if (i != 4 && j != 4)
         dsp.add(i, j);
 
   // indices 4,7 couple
@@ -53,6 +53,6 @@ main()
   std::vector<types::global_dof_index> permutation(8);
   SparsityTools::reorder_hierarchical(dsp, permutation);
 
-  for(unsigned int i = 0; i < permutation.size(); ++i)
+  for (unsigned int i = 0; i < permutation.size(); ++i)
     deallog << permutation[i] << std::endl;
 }

@@ -40,9 +40,9 @@ check(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   FullMatrix<float> m(fe2.dofs_per_cell, fe1.dofs_per_cell);
   FETools::get_interpolation_matrix(fe1, fe2, m);
 
-  for(unsigned int i = 0; i < m.m(); ++i)
+  for (unsigned int i = 0; i < m.m(); ++i)
     {
-      for(unsigned int j = 0; j < m.n(); ++j)
+      for (unsigned int j = 0; j < m.n(); ++j)
         deallog << m(i, j) << ' ';
 
       deallog << std::endl;

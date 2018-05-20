@@ -36,7 +36,7 @@ namespace CUDAWrappers
     {
       const typename SparseMatrix<Number>::size_type idx
         = threadIdx.x + blockIdx.x * blockDim.x;
-      if(idx < N)
+      if (idx < N)
         val[idx] *= a;
     }
 
@@ -125,9 +125,9 @@ namespace CUDAWrappers
       const typename SparseMatrix<Number>::size_type row
         = threadIdx.x + blockIdx.x * blockDim.x;
 
-      if(row < n_rows)
+      if (row < n_rows)
         {
-          for(int j = row_ptr_dev[row]; j < row_ptr_dev[row + 1]; ++j)
+          for (int j = row_ptr_dev[row]; j < row_ptr_dev[row + 1]; ++j)
             dealii::LinearAlgebra::CUDAWrappers::atomicAdd_wrapper(
               &sums[column_index_dev[j]], abs(val_dev[j]));
         }
@@ -144,10 +144,10 @@ namespace CUDAWrappers
       const typename SparseMatrix<Number>::size_type row
         = threadIdx.x + blockIdx.x * blockDim.x;
 
-      if(row < n_rows)
+      if (row < n_rows)
         {
           sums[row] = (Number) 0.;
-          for(int j = row_ptr_dev[row]; j < row_ptr_dev[row + 1]; ++j)
+          for (int j = row_ptr_dev[row]; j < row_ptr_dev[row + 1]; ++j)
             sums[row] += abs(val_dev[j]);
         }
     }
@@ -199,28 +199,28 @@ namespace CUDAWrappers
   template <typename Number>
   SparseMatrix<Number>::~SparseMatrix<Number>()
   {
-    if(val_dev != nullptr)
+    if (val_dev != nullptr)
       {
         cudaError_t error_code = cudaFree(val_dev);
         AssertCuda(error_code);
         val_dev = nullptr;
       }
 
-    if(column_index_dev != nullptr)
+    if (column_index_dev != nullptr)
       {
         cudaError_t error_code = cudaFree(column_index_dev);
         AssertCuda(error_code);
         column_index_dev = nullptr;
       }
 
-    if(row_ptr_dev != nullptr)
+    if (row_ptr_dev != nullptr)
       {
         cudaError_t error_code = cudaFree(row_ptr_dev);
         AssertCuda(error_code);
         row_ptr_dev = nullptr;
       }
 
-    if(descr != nullptr)
+    if (descr != nullptr)
       {
         cusparseStatus_t cusparse_error_code = cusparseDestroyMatDescr(descr);
         AssertCusparse(cusparse_error_code);
@@ -250,11 +250,11 @@ namespace CUDAWrappers
 
     // dealii::SparseMatrix stores the diagonal first in each row so we need to do some
     // reordering
-    for(int row = 0; row < n_rows; ++row)
+    for (int row = 0; row < n_rows; ++row)
       {
         auto         p_end   = sparse_matrix_host.end(row);
         unsigned int counter = 0;
-        for(auto p = sparse_matrix_host.begin(row); p != p_end; ++p)
+        for (auto p = sparse_matrix_host.begin(row); p != p_end; ++p)
           {
             val.emplace_back(p->value());
             column_index.emplace_back(p->column());
@@ -267,7 +267,7 @@ namespace CUDAWrappers
         int const          diag_index = column_index[offset];
         Number             diag_elem  = sparse_matrix_host.diag_element(row);
         unsigned int       pos        = 1;
-        while((column_index[offset + pos] < row) && (pos < counter))
+        while ((column_index[offset + pos] < row) && (pos < counter))
           {
             val[offset + pos - 1]          = val[offset + pos];
             column_index[offset + pos - 1] = column_index[offset + pos];

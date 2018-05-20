@@ -367,7 +367,7 @@ namespace internal
 
       // see if the dof_indices array has been compressed for this
       // particular cell
-      if(is_compressed_entry(active_fe_indices[obj_index]) == false)
+      if (is_compressed_entry(active_fe_indices[obj_index]) == false)
         return dof_indices[dof_offsets[obj_index] + local_index];
       else
         return dof_indices[dof_offsets[obj_index]] + local_index;
@@ -405,7 +405,7 @@ namespace internal
       Assert(obj_index < active_fe_indices.size(),
              ExcIndexRange(obj_index, 0, active_fe_indices.size()));
 
-      if(is_compressed_entry(active_fe_indices[obj_index]) == false)
+      if (is_compressed_entry(active_fe_indices[obj_index]) == false)
         return active_fe_indices[obj_index];
       else
         return get_toggled_compression_state(active_fe_indices[obj_index]);

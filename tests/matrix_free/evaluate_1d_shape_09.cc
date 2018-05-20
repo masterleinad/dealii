@@ -29,29 +29,29 @@ test()
 {
   deallog << "Test " << M << " x " << N << std::endl;
   AlignedVector<double> shape(M * N);
-  for(unsigned int i = 0; i < M; ++i)
-    for(unsigned int j = 0; j < (N + 1) / 2; ++j)
+  for (unsigned int i = 0; i < M; ++i)
+    for (unsigned int j = 0; j < (N + 1) / 2; ++j)
       {
         shape[i * N + j] = -1. + 2. * (double) Testing::rand() / RAND_MAX;
-        if(((i + type) % 2) == 1)
+        if (((i + type) % 2) == 1)
           shape[i * N + N - 1 - j] = -shape[i * N + j];
         else
           shape[i * N + N - 1 - j] = shape[i * N + j];
-        if(j == N / 2 && ((i + type) % 2) == 1)
+        if (j == N / 2 && ((i + type) % 2) == 1)
           shape[i * N + j] = 0.;
       }
 
   VectorizedArray<double> x[N], x_ref[N], y[M], y_ref[M];
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
       x[i][v] = random_value<double>();
 
   // compute reference
-  for(unsigned int i = 0; i < M; ++i)
+  for (unsigned int i = 0; i < M; ++i)
     {
       y[i]     = 1.;
       y_ref[i] = add ? y[i] : VectorizedArray<double>();
-      for(unsigned int j = 0; j < N; ++j)
+      for (unsigned int j = 0; j < N; ++j)
         y_ref[i] += shape[i * N + j] * x[j];
     }
 
@@ -63,51 +63,51 @@ test()
                                    VectorizedArray<double>,
                                    double>
     evaluator(shape, shape, shape);
-  if(type == 0)
+  if (type == 0)
     evaluator.template values<0, false, add>(x, y);
-  if(type == 1)
+  if (type == 1)
     evaluator.template gradients<0, false, add>(x, y);
-  if(type == 2)
+  if (type == 2)
     evaluator.template hessians<0, false, add>(x, y);
 
   deallog << "Errors no transpose: ";
-  for(unsigned int i = 0; i < M; ++i)
+  for (unsigned int i = 0; i < M; ++i)
     {
       deallog << y[i][0] - y_ref[i][0] << " ";
-      for(unsigned int v = 1; v < VectorizedArray<double>::n_array_elements;
-          ++v)
+      for (unsigned int v = 1; v < VectorizedArray<double>::n_array_elements;
+           ++v)
         AssertThrow(std::abs(y[i][v] - y_ref[i][v]) < 1e-12,
                     ExcInternalError());
     }
   deallog << std::endl;
 
-  for(unsigned int i = 0; i < M; ++i)
-    for(unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
+  for (unsigned int i = 0; i < M; ++i)
+    for (unsigned int v = 0; v < VectorizedArray<double>::n_array_elements; ++v)
       y[i][v] = random_value<double>();
 
   // compute reference
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       x[i]     = 2.;
       x_ref[i] = add ? x[i] : VectorizedArray<double>();
-      for(unsigned int j = 0; j < M; ++j)
+      for (unsigned int j = 0; j < M; ++j)
         x_ref[i] += shape[j * N + i] * y[j];
     }
 
   // apply function for tensor product
-  if(type == 0)
+  if (type == 0)
     evaluator.template values<0, true, add>(y, x);
-  if(type == 1)
+  if (type == 1)
     evaluator.template gradients<0, true, add>(y, x);
-  if(type == 2)
+  if (type == 2)
     evaluator.template hessians<0, true, add>(y, x);
 
   deallog << "Errors transpose:    ";
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       deallog << x[i][0] - x_ref[i][0] << " ";
-      for(unsigned int v = 1; v < VectorizedArray<double>::n_array_elements;
-          ++v)
+      for (unsigned int v = 1; v < VectorizedArray<double>::n_array_elements;
+           ++v)
         AssertThrow(std::abs(x[i][v] - x_ref[i][v]) < 1e-12,
                     ExcInternalError());
     }

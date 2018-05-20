@@ -37,9 +37,9 @@ test()
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
   tria.refine_global(5 - dim);
@@ -90,11 +90,11 @@ test()
   dirichlet_boundary[0] = &homogeneous_dirichlet_bc;
   std::vector<std::set<types::global_dof_index>> boundary_indices(nlevels);
   MGTools::make_boundary_list(dof, dirichlet_boundary, boundary_indices);
-  for(unsigned int level = 0; level < nlevels; ++level)
+  for (unsigned int level = 0; level < nlevels; ++level)
     {
       std::set<types::global_dof_index>::iterator bc_it
         = boundary_indices[level].begin();
-      for(; bc_it != boundary_indices[level].end(); ++bc_it)
+      for (; bc_it != boundary_indices[level].end(); ++bc_it)
         mg_constraints[level].add_line(*bc_it);
       mg_constraints[level].close();
       typename MatrixFree<dim>::AdditionalData data;
@@ -123,15 +123,15 @@ test()
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_quadrature_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_quadrature_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                          * fe_values.shape_grad(j, q_point)
                                        + 10. * fe_values.shape_value(i, q_point)
@@ -146,15 +146,15 @@ test()
     // now to the MG assembly
     typename DoFHandler<dim>::cell_iterator cellm = dof.begin(),
                                             endcm = dof.end();
-    for(; cellm != endcm; ++cellm)
+    for (; cellm != endcm; ++cellm)
       {
         cell_matrix = 0;
         fe_values.reinit(cellm);
 
-        for(unsigned int q_point = 0; q_point < n_quadrature_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_quadrature_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                          * fe_values.shape_grad(j, q_point)
                                        + 10. * fe_values.shape_value(i, q_point)
@@ -172,9 +172,9 @@ test()
   Vector<double> src(dof.n_dofs());
   Vector<double> result_spmv(src), result_mf(src);
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i) == false)
+      if (constraints.is_constrained(i) == false)
         src(i) = random_value<double>();
     }
 
@@ -188,14 +188,14 @@ test()
   const double diff_norm = result_mf.linfty_norm();
   deallog << "Norm of difference active: " << diff_norm << std::endl;
 
-  for(unsigned int level = 0; level < nlevels; ++level)
+  for (unsigned int level = 0; level < nlevels; ++level)
     {
       Vector<double> src(dof.n_dofs(level));
       Vector<double> result_spmv(src), result_mf(src);
 
-      for(unsigned int i = 0; i < dof.n_dofs(level); ++i)
+      for (unsigned int i = 0; i < dof.n_dofs(level); ++i)
         {
-          if(mg_constraints[level].is_constrained(i) == false)
+          if (mg_constraints[level].is_constrained(i) == false)
             src(i) = random_value<double>();
         }
 

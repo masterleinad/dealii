@@ -53,14 +53,14 @@ test()
   GridGenerator::hyper_cube(tr);
 
   tr.refine_global(1);
-  for(unsigned int step = 0; step < 5; ++step)
+  for (unsigned int step = 0; step < 5; ++step)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tr.begin_active(),
         endc = tr.end();
 
-      for(; cell != endc; ++cell)
-        if(Testing::rand() % 42 == 1)
+      for (; cell != endc; ++cell)
+        if (Testing::rand() % 42 == 1)
           cell->set_refine_flag();
 
       tr.execute_coarsening_and_refinement();
@@ -105,9 +105,9 @@ test()
     {
       cm.distribute(x_test);
     }
-  catch(const ExceptionBase& e)
+  catch (const ExceptionBase& e)
     {
-      if(myid == 0)
+      if (myid == 0)
         deallog << "Exception: " << e.get_exc_name() << std::endl;
       throwing = true;
     }
@@ -137,7 +137,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

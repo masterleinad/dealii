@@ -31,7 +31,7 @@ test()
   GridGenerator::hyper_shell(tria, Point<dim>(), 0.5, 1., 96, true);
   tria.set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
-  if(dim == 2)
+  if (dim == 2)
     tria.refine_global(2);
 
   FE_Q<dim>       fe(fe_degree);

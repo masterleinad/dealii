@@ -81,8 +81,8 @@ check_qph(Triangulation<dim>&          tr,
   FEValues<dim>   fe_values(dummy_fe, rhs_quadrature, update_quadrature_points);
   dof_handler.distribute_dofs(dummy_fe);
   typename Triangulation<dim, dim>::active_cell_iterator cell;
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
-    if(cell->is_locally_owned())
+  for (cell = tr.begin_active(); cell != tr.end(); ++cell)
+    if (cell->is_locally_owned())
       {
         typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                 &dof_handler);
@@ -91,7 +91,7 @@ check_qph(Triangulation<dim>&          tr,
           = fe_values.get_quadrature_points();
         const std::vector<std::shared_ptr<const DATA>> qpd
           = manager.get_data(cell);
-        for(unsigned int q = 0; q < q_points.size(); q++)
+        for (unsigned int q = 0; q < q_points.size(); q++)
           {
             const double value  = func.value(q_points[q]);
             const double value2 = qpd[q]->value;
@@ -122,8 +122,8 @@ test()
     FE_Q<dim>       dummy_fe(1);
     FEValues<dim>   fe_values(dummy_fe, rhs, update_quadrature_points);
     dof_handler.distribute_dofs(dummy_fe);
-    for(cell = tr.begin_active(); cell != tr.end(); ++cell)
-      if(cell->is_locally_owned())
+    for (cell = tr.begin_active(); cell != tr.end(); ++cell)
+      if (cell->is_locally_owned())
         {
           typename DoFHandler<dim>::active_cell_iterator dof_cell(*cell,
                                                                   &dof_handler);
@@ -133,7 +133,7 @@ test()
           data_storage.initialize(cell, rhs.size());
           std::vector<std::shared_ptr<MyQData>> qpd
             = data_storage.get_data(cell);
-          for(unsigned int q = 0; q < rhs.size(); q++)
+          for (unsigned int q = 0; q < rhs.size(); q++)
             qpd[q]->value = my_func.value(q_points[q]);
         }
     dof_handler.clear();

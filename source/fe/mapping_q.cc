@@ -88,7 +88,7 @@ MappingQ<dim, spacedim>::MappingQ(const MappingQ<dim, spacedim>& mapping)
   Assert(q1_mapping->get_degree() == 1, ExcInternalError());
 
   // Same as the other constructor: if possible reuse the Q1 mapping
-  if(this->polynomial_degree == 1)
+  if (this->polynomial_degree == 1)
     {
       qp_mapping = q1_mapping;
     }
@@ -140,7 +140,7 @@ MappingQ<dim, spacedim>::get_data(const UpdateFlags      update_flags,
                                     update_flags,
                                     quadrature);
 
-  if(!use_mapping_q_on_all_cells)
+  if (!use_mapping_q_on_all_cells)
     data->mapping_q1_data = Utilities::dynamic_unique_cast<
       typename MappingQGeneric<dim, spacedim>::InternalData>(
       std::move(q1_mapping->get_data(update_flags, quadrature)));
@@ -169,7 +169,7 @@ MappingQ<dim, spacedim>::get_face_data(
                         update_flags,
                         quadrature);
 
-  if(!use_mapping_q_on_all_cells)
+  if (!use_mapping_q_on_all_cells)
     data->mapping_q1_data = Utilities::dynamic_unique_cast<
       typename MappingQGeneric<dim, spacedim>::InternalData>(
       std::move(q1_mapping->get_face_data(update_flags, quadrature)));
@@ -198,7 +198,7 @@ MappingQ<dim, spacedim>::get_subface_data(
                         update_flags,
                         quadrature);
 
-  if(!use_mapping_q_on_all_cells)
+  if (!use_mapping_q_on_all_cells)
     data->mapping_q1_data = Utilities::dynamic_unique_cast<
       typename MappingQGeneric<dim, spacedim>::InternalData>(
       std::move(q1_mapping->get_subface_data(update_flags, quadrature)));
@@ -247,7 +247,7 @@ MappingQ<dim, spacedim>::fill_fe_values(
 
   // depending on the results above, decide whether the Q1 mapping or
   // the Qp mapping needs to handle this cell
-  if(data.use_mapping_q1_on_current_cell)
+  if (data.use_mapping_q1_on_current_cell)
     q1_mapping->fill_fe_values(cell,
                                updated_cell_similarity,
                                quadrature,
@@ -290,7 +290,7 @@ MappingQ<dim, spacedim>::fill_fe_face_values(
 
   // depending on the results above, decide whether the Q1 mapping or
   // the Qp mapping needs to handle this cell
-  if(data.use_mapping_q1_on_current_cell)
+  if (data.use_mapping_q1_on_current_cell)
     q1_mapping->fill_fe_face_values(
       cell, face_no, quadrature, *data.mapping_q1_data, output_data);
   else
@@ -326,7 +326,7 @@ MappingQ<dim, spacedim>::fill_fe_subface_values(
 
   // depending on the results above, decide whether the Q1 mapping or
   // the Qp mapping needs to handle this cell
-  if(data.use_mapping_q1_on_current_cell)
+  if (data.use_mapping_q1_on_current_cell)
     q1_mapping->fill_fe_subface_values(cell,
                                        face_no,
                                        subface_no,
@@ -356,7 +356,7 @@ MappingQ<dim, spacedim>::transform(
   Assert(data != nullptr, ExcInternalError());
 
   // check whether we should in fact work on the Q1 portion of it
-  if(data->use_mapping_q1_on_current_cell)
+  if (data->use_mapping_q1_on_current_cell)
     q1_mapping->transform(input, mapping_type, *data->mapping_q1_data, output);
   else
     // otherwise use the full mapping
@@ -379,7 +379,7 @@ MappingQ<dim, spacedim>::transform(
   const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
-  if(data->use_mapping_q1_on_current_cell)
+  if (data->use_mapping_q1_on_current_cell)
     q1_mapping->transform(input, mapping_type, *data->mapping_q1_data, output);
   else
     // otherwise use the full mapping
@@ -402,7 +402,7 @@ MappingQ<dim, spacedim>::transform(
   const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
-  if(data->use_mapping_q1_on_current_cell)
+  if (data->use_mapping_q1_on_current_cell)
     q1_mapping->transform(input, mapping_type, *data->mapping_q1_data, output);
   else
     // otherwise use the full mapping
@@ -425,7 +425,7 @@ MappingQ<dim, spacedim>::transform(
   const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
-  if(data->use_mapping_q1_on_current_cell)
+  if (data->use_mapping_q1_on_current_cell)
     q1_mapping->transform(input, mapping_type, *data->mapping_q1_data, output);
   else
     // otherwise use the full mapping
@@ -448,7 +448,7 @@ MappingQ<dim, spacedim>::transform(
   const InternalData* data = dynamic_cast<const InternalData*>(&mapping_data);
 
   // check whether we should in fact work on the Q1 portion of it
-  if(data->use_mapping_q1_on_current_cell)
+  if (data->use_mapping_q1_on_current_cell)
     q1_mapping->transform(input, mapping_type, *data->mapping_q1_data, output);
   else
     // otherwise use the full mapping
@@ -464,7 +464,7 @@ MappingQ<dim, spacedim>::transform_unit_to_real_cell(
   // first see, whether we want to use a linear or a higher order
   // mapping, then either use our own facilities or that of the Q1
   // mapping we store
-  if(use_mapping_q_on_all_cells || cell->has_boundary_lines())
+  if (use_mapping_q_on_all_cells || cell->has_boundary_lines())
     return qp_mapping->transform_unit_to_real_cell(cell, p);
   else
     return q1_mapping->transform_unit_to_real_cell(cell, p);
@@ -476,8 +476,8 @@ MappingQ<dim, spacedim>::transform_real_to_unit_cell(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell,
   const Point<spacedim>&                                      p) const
 {
-  if(cell->has_boundary_lines() || use_mapping_q_on_all_cells
-     || (dim != spacedim))
+  if (cell->has_boundary_lines() || use_mapping_q_on_all_cells
+      || (dim != spacedim))
     return qp_mapping->transform_real_to_unit_cell(cell, p);
   else
     return q1_mapping->transform_real_to_unit_cell(cell, p);

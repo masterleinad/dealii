@@ -36,12 +36,12 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(fe);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "FE=" << fe.get_name() << ", case=" << i << std::endl;
 
       std::set<types::boundary_id> boundary_ids;
-      for(unsigned int j = 0; j <= i; ++j)
+      for (unsigned int j = 0; j <= i; ++j)
         boundary_ids.insert(j);
 
       ConstraintMatrix cm;
@@ -58,12 +58,12 @@ test_hyper_cube()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     tr.begin_active()->face(i)->set_boundary_id(i);
 
   tr.refine_global(2);
 
-  for(unsigned int degree = 1; degree < 4; ++degree)
+  for (unsigned int degree = 1; degree < 4; ++degree)
     {
       FESystem<dim> fe(FE_Q<dim>(degree), dim);
       test(tr, fe);

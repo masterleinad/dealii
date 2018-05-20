@@ -41,15 +41,15 @@ test()
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   create_mesh(tria);
 
-  if(dim == 2)
+  if (dim == 2)
     tria.refine_global(1);
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active();
     typename Triangulation<dim>::active_cell_iterator endc    = tria.end();
     unsigned int                                      counter = 0;
-    for(; cell != endc; ++cell, ++counter)
-      if(cell->is_locally_owned() && counter % 3 == 0)
+    for (; cell != endc; ++cell, ++counter)
+      if (cell->is_locally_owned() && counter % 3 == 0)
         cell->set_refine_flag();
     tria.execute_coarsening_and_refinement();
   }
@@ -88,7 +88,7 @@ test()
 
   // Set random seed for reproducibility
   Testing::srand(42);
-  for(unsigned int i = 0; i < in.local_size(); ++i)
+  for (unsigned int i = 0; i < in.local_size(); ++i)
     {
       const double entry  = Testing::rand() / (double) RAND_MAX;
       in.local_element(i) = entry;

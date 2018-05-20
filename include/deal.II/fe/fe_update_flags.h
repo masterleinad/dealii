@@ -246,43 +246,43 @@ inline StreamType&
 operator<<(StreamType& s, const UpdateFlags u)
 {
   s << " UpdateFlags|";
-  if(u & update_values)
+  if (u & update_values)
     s << "values|";
-  if(u & update_gradients)
+  if (u & update_gradients)
     s << "gradients|";
-  if(u & update_hessians)
+  if (u & update_hessians)
     s << "hessians|";
-  if(u & update_3rd_derivatives)
+  if (u & update_3rd_derivatives)
     s << "3rd_derivatives|";
-  if(u & update_quadrature_points)
+  if (u & update_quadrature_points)
     s << "quadrature_points|";
-  if(u & update_JxW_values)
+  if (u & update_JxW_values)
     s << "JxW_values|";
-  if(u & update_normal_vectors)
+  if (u & update_normal_vectors)
     s << "normal_vectors|";
-  if(u & update_jacobians)
+  if (u & update_jacobians)
     s << "jacobians|";
-  if(u & update_inverse_jacobians)
+  if (u & update_inverse_jacobians)
     s << "inverse_jacobians|";
-  if(u & update_jacobian_grads)
+  if (u & update_jacobian_grads)
     s << "jacobian_grads|";
-  if(u & update_covariant_transformation)
+  if (u & update_covariant_transformation)
     s << "covariant_transformation|";
-  if(u & update_contravariant_transformation)
+  if (u & update_contravariant_transformation)
     s << "contravariant_transformation|";
-  if(u & update_transformation_values)
+  if (u & update_transformation_values)
     s << "transformation_values|";
-  if(u & update_transformation_gradients)
+  if (u & update_transformation_gradients)
     s << "transformation_gradients|";
-  if(u & update_jacobian_pushed_forward_grads)
+  if (u & update_jacobian_pushed_forward_grads)
     s << "jacobian_pushed_forward_grads|";
-  if(u & update_jacobian_2nd_derivatives)
+  if (u & update_jacobian_2nd_derivatives)
     s << "jacobian_2nd_derivatives|";
-  if(u & update_jacobian_pushed_forward_2nd_derivatives)
+  if (u & update_jacobian_pushed_forward_2nd_derivatives)
     s << "jacobian_pushed_forward_2nd_derivatives|";
-  if(u & update_jacobian_3rd_derivatives)
+  if (u & update_jacobian_3rd_derivatives)
     s << "jacobian_3rd_derivatives|";
-  if(u & update_jacobian_pushed_forward_3rd_derivatives)
+  if (u & update_jacobian_pushed_forward_3rd_derivatives)
     s << "jacobian_pushed_forward_3rd_derivatives|";
 
   //TODO: check that 'u' really only has the flags set that are handled above

@@ -34,7 +34,7 @@ test1()
   unsigned int    tmp  = 1;
   Threads::Task<> task = Threads::new_task(&add_one, tmp);
   task.join();
-  if(tmp != 2)
+  if (tmp != 2)
     exit(1);
 }
 
@@ -65,7 +65,7 @@ test2()
 {
   const int        maxi = 10000;
   std::vector<int> v(maxi);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v[i] = i + 1;
   int result = 0;
   WorkStream::run(v.begin(),
@@ -76,7 +76,7 @@ test2()
                   copy_data());
   std::cout << "result: " << result << std::endl;
 
-  if(result != maxi * (maxi + 1) / 2)
+  if (result != maxi * (maxi + 1) / 2)
     exit(2);
 }
 

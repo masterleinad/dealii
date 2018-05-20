@@ -82,7 +82,7 @@ test()
     fe_collection.push_back(
       FESystem<dim>(FE_Nothing<dim>(), 1, FE_Q<dim>(1), 1));
     const unsigned int ind = fe_collection.find_least_face_dominating_fe(fes);
-    if(ind == numbers::invalid_unsigned_int)
+    if (ind == numbers::invalid_unsigned_int)
       deallog << "numbers::invalid_unsigned_int" << std::endl;
     else
       deallog << ind << std::endl;
@@ -121,7 +121,7 @@ test()
     fe_collection.push_back(FESystem<dim>(FE_Q<dim>(3), 1, FE_Q<dim>(4), 1));
     fe_collection.push_back(FESystem<dim>(FE_Q<dim>(4), 1, FE_Q<dim>(3), 1));
     const unsigned int ind = fe_collection.find_least_face_dominating_fe(fes);
-    if(ind == numbers::invalid_unsigned_int)
+    if (ind == numbers::invalid_unsigned_int)
       deallog << "numbers::invalid_unsigned_int" << std::endl;
     else
       deallog << ind << std::endl;

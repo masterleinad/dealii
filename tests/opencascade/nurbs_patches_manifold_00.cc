@@ -48,7 +48,7 @@ main()
 
   deallog << "=======================================" << std::endl;
   int len = 10;
-  for(unsigned int i = 0; i <= 10; ++i)
+  for (unsigned int i = 0; i <= 10; ++i)
     {
       double step = ((double) i) / 10;
       deallog << " pos = " << step << std::endl;

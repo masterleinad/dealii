@@ -64,8 +64,8 @@ public:
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         val += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return val;
   }
@@ -73,11 +73,11 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    for(unsigned int c = 0; c < v.size(); ++c)
+    for (unsigned int c = 0; c < v.size(); ++c)
       {
         v(c) = 0;
-        for(unsigned int d = 0; d < dim; ++d)
-          for(unsigned int i = 0; i <= q; ++i)
+        for (unsigned int d = 0; d < dim; ++d)
+          for (unsigned int i = 0; i <= q; ++i)
             v(c) += (d + 1) * (i + 1) * std::pow(p[d], 1. * i) + c;
       }
   }
@@ -104,7 +104,7 @@ do_project(const Triangulation<dim>& triangulation,
 
   Vector<double> projection(dof_handler.n_dofs());
   Vector<float>  error(triangulation.n_active_cells());
-  for(unsigned int q = 0; q <= p + 2 - order_difference; ++q)
+  for (unsigned int q = 0; q <= p + 2 - order_difference; ++q)
     {
       // project the function
       VectorTools::project(dof_handler,
@@ -128,8 +128,8 @@ do_project(const Triangulation<dim>& triangulation,
               << ", rel. error=" << error.l2_norm() / projection.l2_norm()
               << std::endl;
 
-      if(q <= p - order_difference)
-        if(error.l2_norm() > 1e-10 * projection.l2_norm())
+      if (q <= p - order_difference)
+        if (error.l2_norm() > 1e-10 * projection.l2_norm())
           deallog << "Projection failed with relative error "
                   << error.l2_norm() / projection.l2_norm() << std::endl;
     }
@@ -185,10 +185,10 @@ test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
                                  const unsigned int        p,
                                  const unsigned int        order_difference = 0)
 {
-  if(dim != 3)
+  if (dim != 3)
     return;
 
-  for(unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i)
     {
       Triangulation<dim> triangulation;
       GridGenerator::hyper_ball(triangulation);
@@ -212,7 +212,7 @@ test_with_2d_deformed_mesh(const FiniteElement<dim>& fe,
                            const unsigned int        p,
                            const unsigned int        order_difference = 0)
 {
-  if(dim != 2)
+  if (dim != 2)
     return;
 
   std::vector<Point<dim>> points_glob;
@@ -261,10 +261,10 @@ test_with_2d_deformed_refined_mesh(const FiniteElement<dim>& fe,
                                    const unsigned int        p,
                                    const unsigned int order_difference = 0)
 {
-  if(dim != 2)
+  if (dim != 2)
     return;
 
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     {
       std::vector<Point<dim>> points_glob;
       std::vector<Point<dim>> points;
@@ -301,7 +301,7 @@ test_with_2d_deformed_refined_mesh(const FiniteElement<dim>& fe,
       Triangulation<dim> triangulation;
       triangulation.create_triangulation(points_glob, cells, SubCellData());
 
-      switch(i)
+      switch (i)
         {
           case 0:
             triangulation.begin_active()->set_refine_flag();

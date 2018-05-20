@@ -31,16 +31,16 @@ test(const unsigned int size, const bool reinit_square)
   // it with some numbers
   LAPACKFullMatrix<double> M(size, size);
 
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = 0; j < size; ++j)
       M(i, j) = i + 2. * j;
 
   // initialise a second matrix with the standard constructor and fill
   // it with some numbers
   LAPACKFullMatrix<double> N(size + 2, size - 2);
 
-  for(unsigned int i = 0; i < N.m(); ++i)
-    for(unsigned int j = 0; j < N.n(); ++j)
+  for (unsigned int i = 0; i < N.m(); ++i)
+    for (unsigned int j = 0; j < N.n(); ++j)
       N(i, j) = i + 2. * j;
 
   // clearly, this should be the case
@@ -49,13 +49,13 @@ test(const unsigned int size, const bool reinit_square)
 
   // if reinit_square is true, reinitialise the rectangle matrix to a
   // square matrix (use reinit (const unsigned int))
-  if(reinit_square)
+  if (reinit_square)
     {
       // reinitialise the matrix and fill it with some numbers
       N.reinit(size);
 
-      for(unsigned int i = 0; i < N.m(); ++i)
-        for(unsigned int j = 0; j < N.n(); ++j)
+      for (unsigned int i = 0; i < N.m(); ++i)
+        for (unsigned int j = 0; j < N.n(); ++j)
           N(i, j) = i + 2. * j;
     }
 
@@ -66,8 +66,8 @@ test(const unsigned int size, const bool reinit_square)
       // reinitialise the matrix and fill it with some numbers
       M.reinit(size + 2, size - 2);
 
-      for(unsigned int i = 0; i < M.m(); ++i)
-        for(unsigned int j = 0; j < M.n(); ++j)
+      for (unsigned int i = 0; i < M.m(); ++i)
+        for (unsigned int j = 0; j < M.n(); ++j)
           M(i, j) = i + 2. * j;
     }
 
@@ -76,8 +76,8 @@ test(const unsigned int size, const bool reinit_square)
   AssertThrow(N.n() == M.n(), ExcInternalError());
 
   // in fact, this should be true too, so check
-  for(unsigned int i = 0; i < M.m(); ++i)
-    for(unsigned int j = 0; j < M.n(); ++j)
+  for (unsigned int i = 0; i < M.m(); ++i)
+    for (unsigned int j = 0; j < M.n(); ++j)
       AssertThrow(M(i, j) == N(i, j), ExcInternalError());
 
   deallog << "OK" << std::endl;

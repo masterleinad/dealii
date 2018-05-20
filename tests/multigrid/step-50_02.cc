@@ -144,7 +144,7 @@ namespace Step50
   double
   Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
   {
-    if(p.square() < 0.5 * 0.5)
+    if (p.square() < 0.5 * 0.5)
       return 5;
     else
       return 1;
@@ -164,7 +164,7 @@ namespace Step50
 
     Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-    for(unsigned int i = 0; i < n_points; ++i)
+    for (unsigned int i = 0; i < n_points; ++i)
       values[i] = Coefficient<dim>::value(points[i]);
   }
 
@@ -228,7 +228,7 @@ namespace Step50
     mg_matrices.resize(0, n_levels - 1);
     mg_matrices.clear_elements();
 
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for (unsigned int level = 0; level < n_levels; ++level)
       {
         DynamicSparsityPattern dsp(mg_dof_handler.n_dofs(level),
                                    mg_dof_handler.n_dofs(level));
@@ -274,8 +274,8 @@ namespace Step50
     typename DoFHandler<dim>::active_cell_iterator cell
       = mg_dof_handler.begin_active(),
       endc = mg_dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           cell_rhs    = 0;
@@ -285,10 +285,10 @@ namespace Step50
           coefficient.value_list(fe_values.get_quadrature_points(),
                                  coefficient_values);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   cell_matrix(i, j) += (coefficient_values[q_point]
                                         * fe_values.shape_grad(i, q_point)
                                         * fe_values.shape_grad(j, q_point)
@@ -334,8 +334,8 @@ namespace Step50
     std::vector<ConstraintMatrix> boundary_constraints(
       triangulation.n_global_levels());
     ConstraintMatrix empty_constraints;
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for (unsigned int level = 0; level < triangulation.n_global_levels();
+         ++level)
       {
         IndexSet dofset;
         DoFTools::extract_locally_relevant_level_dofs(
@@ -352,8 +352,8 @@ namespace Step50
     typename DoFHandler<dim>::cell_iterator cell = mg_dof_handler.begin(),
                                             endc = mg_dof_handler.end();
 
-    for(; cell != endc; ++cell)
-      if(cell->level_subdomain_id() == triangulation.locally_owned_subdomain())
+    for (; cell != endc; ++cell)
+      if (cell->level_subdomain_id() == triangulation.locally_owned_subdomain())
         {
           cell_matrix = 0;
           fe_values.reinit(cell);
@@ -361,9 +361,9 @@ namespace Step50
           coefficient.value_list(fe_values.get_quadrature_points(),
                                  coefficient_values);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += (coefficient_values[q_point]
                                       * fe_values.shape_grad(i, q_point)
                                       * fe_values.shape_grad(j, q_point)
@@ -378,9 +378,9 @@ namespace Step50
             = mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
-              if(
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
+              if (
                 interface_dofs_on_level.is_element(
                   local_dof_indices[i]) // at_refinement_edge(i)
                 && !interface_dofs_on_level.is_element(
@@ -410,7 +410,7 @@ namespace Step50
             mg_interface_matrices[cell->level()]);
         }
 
-    for(unsigned int i = 0; i < triangulation.n_global_levels(); ++i)
+    for (unsigned int i = 0; i < triangulation.n_global_levels(); ++i)
       {
         mg_matrices[i].compress(VectorOperation::add);
         mg_interface_matrices[i].compress(VectorOperation::add);
@@ -454,7 +454,7 @@ namespace Step50
     SolverControl      solver_control(500, 1e-8 * system_rhs.l2_norm(), false);
     SolverCG<vector_t> solver(solver_control);
 
-    if(false)
+    if (false)
       {
         /*
          TrilinosWrappers::PreconditionAMG prec;
@@ -484,12 +484,12 @@ namespace Step50
   void
   LaplaceProblem<dim>::refine_grid()
   {
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
-        if(cell->vertex(v)[0] <= 0.5 && cell->vertex(v)[1] <= 0.5)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        if (cell->vertex(v)[0] <= 0.5 && cell->vertex(v)[1] <= 0.5)
           cell->set_refine_flag();
     triangulation.execute_coarsening_and_refinement();
   }
@@ -498,11 +498,11 @@ namespace Step50
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 2; ++cycle)
+    for (unsigned int cycle = 0; cycle < 2; ++cycle)
       {
         deallog << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation);
             triangulation.refine_global(5);
@@ -517,8 +517,8 @@ namespace Step50
 
         deallog << "   Number of degrees of freedom: "
                 << mg_dof_handler.n_dofs() << " (by level: ";
-        for(unsigned int level = 0; level < triangulation.n_global_levels();
-            ++level)
+        for (unsigned int level = 0; level < triangulation.n_global_levels();
+             ++level)
           deallog << mg_dof_handler.n_dofs(level)
                   << (level == triangulation.n_global_levels() - 1 ? ")" :
                                                                      ", ");
@@ -546,7 +546,7 @@ main(int argc, char* argv[])
       LaplaceProblem<2> laplace_problem(1 /*degree*/);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -558,7 +558,7 @@ main(int argc, char* argv[])
                 << "----------------------------------------------------"
                 << std::endl;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

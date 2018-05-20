@@ -31,7 +31,7 @@
 
 #define PRINTME(name, var)                              \
   deallog << "Block vector: " name << ":" << std::endl; \
-  for(unsigned int i = 0; i < var.n_blocks(); ++i)      \
+  for (unsigned int i = 0; i < var.n_blocks(); ++i)     \
     deallog << "[block " << i << " ]  " << var.block(i);
 
 using namespace dealii;
@@ -58,8 +58,8 @@ main()
   DoFTools::count_dofs_per_component(dof_handler, dpc);
 
   BlockDynamicSparsityPattern dsp(3, 3);
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for (unsigned int i = 0; i < 3; ++i)
+    for (unsigned int j = 0; j < 3; ++j)
       dsp.block(i, j).reinit(dpc[i], dpc[j]);
   dsp.collect_sizes();
 
@@ -71,11 +71,11 @@ main()
 
   // Come up with a simple structure:
 
-  for(unsigned int i = 0; i < a.block(0, 0).m(); ++i)
+  for (unsigned int i = 0; i < a.block(0, 0).m(); ++i)
     a.block(0, 0).set(i, i, 10.);
-  for(unsigned int i = 0; i < a.block(1, 1).m(); ++i)
+  for (unsigned int i = 0; i < a.block(1, 1).m(); ++i)
     a.block(1, 1).set(i, i, 5.);
-  for(unsigned int i = 0; i < a.block(2, 2).m(); ++i)
+  for (unsigned int i = 0; i < a.block(2, 2).m(); ++i)
     a.block(2, 2).set(i, i, 3.);
 
   auto op_a = block_operator(a);
@@ -90,7 +90,7 @@ main()
   {
     BlockVector<double> u;
     op_a.reinit_domain_vector(u, false);
-    for(unsigned int i = 0; i < u.size(); ++i)
+    for (unsigned int i = 0; i < u.size(); ++i)
       {
         u[i] = (double) (i + 1);
       }
@@ -160,7 +160,7 @@ main()
   {
     BlockVector<double> u;
     op_c.reinit_domain_vector(u, false);
-    for(unsigned int i = 0; i < u.size(); ++i)
+    for (unsigned int i = 0; i < u.size(); ++i)
       {
         u[i] = (double) (i + 1);
       }

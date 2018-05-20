@@ -56,7 +56,7 @@ main()
     {
       prm.parse_input_from_xml(in);
     }
-  catch(ParameterHandler::ExcEntryUndeclared& exc)
+  catch (ParameterHandler::ExcEntryUndeclared& exc)
     {
       deallog << exc.get_exc_name() << std::endl;
       exc.print_info(deallog.get_file_stream());

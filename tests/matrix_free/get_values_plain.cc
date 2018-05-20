@@ -58,7 +58,7 @@ public:
   {
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
     FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval_plain(data);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src);
@@ -66,9 +66,10 @@ public:
         fe_eval_plain.reinit(cell);
         fe_eval_plain.read_dof_values_plain(src);
 
-        for(unsigned int i = 0; i < fe_eval.dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < VectorizedArray<Number>::n_array_elements;
-              ++j)
+        for (unsigned int i = 0; i < fe_eval.dofs_per_cell; ++i)
+          for (unsigned int j = 0;
+               j < VectorizedArray<Number>::n_array_elements;
+               ++j)
             {
               error += std::fabs(fe_eval.get_dof_value(i)[j]
                                  - fe_eval_plain.get_dof_value(i)[j]);
@@ -112,9 +113,9 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   Vector<number> solution(dof.n_dofs());
 
   // create vector with random entries
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = random_value<double>();
       solution(i)        = entry;
@@ -145,14 +146,14 @@ test()
   tria.set_manifold(0, manifold);
 
   // refine a few cells
-  for(unsigned int i = 0; i < 11 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 11 - 3 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
         endc               = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }

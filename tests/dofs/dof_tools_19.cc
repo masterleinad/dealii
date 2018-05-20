@@ -46,7 +46,8 @@ check_this(const DoFHandler<dim>& dof_handler)
   // check this element for that
   // reason. this case is covered in
   // rt_crash_01, however
-  if(dof_handler.get_fe().get_name().find("RaviartThomas") != std::string::npos)
+  if (dof_handler.get_fe().get_name().find("RaviartThomas")
+      != std::string::npos)
     return;
 
   Functions::ConstantFunction<dim> test_func(
@@ -54,7 +55,7 @@ check_this(const DoFHandler<dim>& dof_handler)
 
   // don't run this test if hanging
   // nodes are not implemented
-  if(dof_handler.get_fe().constraints_are_implemented() == false)
+  if (dof_handler.get_fe().constraints_are_implemented() == false)
     return;
 
   ConstraintMatrix cm;

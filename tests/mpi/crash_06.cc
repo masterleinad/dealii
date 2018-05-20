@@ -45,12 +45,12 @@ test(FiniteElement<dim>& fe)
   GridGenerator::hyper_ball(triangulation);
   triangulation.refine_global(1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(; cell != triangulation.end(); ++cell)
-        if(Testing::rand() % 2)
+      for (; cell != triangulation.end(); ++cell)
+        if (Testing::rand() % 2)
           cell->set_refine_flag();
     }
 
@@ -63,7 +63,7 @@ test(FiniteElement<dim>& fe)
   ConstraintMatrix constraints;
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -82,7 +82,7 @@ testit()
   fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_DGQ<dim>(2)));
   fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_Q_DG0<dim>(2)));
 
-  for(unsigned int i = 0; i < fes.size(); ++i)
+  for (unsigned int i = 0; i < fes.size(); ++i)
     {
       deallog << fes[i]->get_name() << std::endl;
       test<dim>(*fes[i]);

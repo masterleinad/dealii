@@ -28,14 +28,14 @@ void
 test()
 {
   hp::FECollection<dim> fe_collection;
-  for(unsigned int k = 1; k < 4; ++k)
+  for (unsigned int k = 1; k < 4; ++k)
     {
-      for(unsigned int i = 1; i < 4; ++i)
+      for (unsigned int i = 1; i < 4; ++i)
         fe_collection.push_back(
           FESystem<dim>(FE_Q<dim>(k), 1, FE_DGQ<dim>(i), 1));
 
-      for(unsigned int i = 0; i < fe_collection.size(); ++i)
-        for(unsigned int j = 0; j < fe_collection.size(); ++j)
+      for (unsigned int i = 0; i < fe_collection.size(); ++i)
+        for (unsigned int j = 0; j < fe_collection.size(); ++j)
           {
             const std::vector<std::pair<unsigned int, unsigned int>> identities
               = fe_collection[i].hp_line_dof_identities(fe_collection[j]);
@@ -44,7 +44,7 @@ test()
                     << " and " << fe_collection[j].get_name() << ": "
                     << identities.size() << std::endl;
 
-            for(unsigned int k = 0; k < identities.size(); ++k)
+            for (unsigned int k = 0; k < identities.size(); ++k)
               {
                 Assert(identities[k].first < fe_collection[i].dofs_per_line,
                        ExcInternalError());

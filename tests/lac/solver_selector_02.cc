@@ -55,7 +55,7 @@ check(const MatrixType& A, const VectorType& f)
   std::vector<std::string>::const_iterator name;
 
   solver.set_control(mycont);
-  for(name = names.begin(); name != names.end(); ++name)
+  for (name = names.begin(); name != names.end(); ++name)
     {
       solver.select(*name);
       u = 0.;

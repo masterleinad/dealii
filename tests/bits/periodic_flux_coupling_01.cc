@@ -81,9 +81,9 @@ template <int dim>
 void
 MakeFlux<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 3; ++cycle)
+  for (unsigned int cycle = 0; cycle < 3; ++cycle)
     {
-      if(cycle == 0)
+      if (cycle == 0)
         make_grid();
       else
         {
@@ -96,10 +96,10 @@ MakeFlux<dim>::run()
           refn_point = Point<dim>(0.005, 0.995);
           typename Triangulation<dim>::active_cell_iterator cell_it
             = triangulation.begin_active();
-          for(; cell_it != triangulation.end(); ++cell_it)
+          for (; cell_it != triangulation.end(); ++cell_it)
             {
-              if(cell_it->is_locally_owned()
-                 && cell_it->point_inside(refn_point))
+              if (cell_it->is_locally_owned()
+                  && cell_it->point_inside(refn_point))
                 {
                   cell_it->set_refine_flag();
                   break;
@@ -115,8 +115,8 @@ MakeFlux<dim>::run()
       // set up full mask not doing anything
       const unsigned int n_components = dof_handler.get_fe().n_components();
       Table<2, DoFTools::Coupling> mask(n_components, n_components);
-      for(unsigned int i = 0; i < n_components; ++i)
-        for(unsigned int j = 0; j < n_components; ++j)
+      for (unsigned int i = 0; i < n_components; ++i)
+        for (unsigned int j = 0; j < n_components; ++j)
           mask(i, j) = DoFTools::always;
       DoFTools::make_flux_sparsity_pattern(dof_handler, dsp, mask, mask);
       deallog << Utilities::int_to_string(dof_handler.n_dofs(), 2) << std::endl;
@@ -135,7 +135,7 @@ main(int argc, char** argv)
       MakeFlux<2> test;
       test.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -149,7 +149,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

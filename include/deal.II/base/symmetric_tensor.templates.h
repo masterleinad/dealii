@@ -37,7 +37,7 @@ std::array<Number, 2>
 eigenvalues(const SymmetricTensor<2, 2, Number>& T)
 {
   const Number upp_tri_sq = T[0][1] * T[0][1];
-  if(upp_tri_sq == internal::NumberType<Number>::value(0.0))
+  if (upp_tri_sq == internal::NumberType<Number>::value(0.0))
     {
       // The tensor is diagonal
       std::array<Number, 2> eig_vals = {{T[0][0], T[1][1]}};
@@ -72,7 +72,7 @@ eigenvalues(const SymmetricTensor<2, 3, Number>& T)
 {
   const Number upp_tri_sq
     = T[0][1] * T[0][1] + T[0][2] * T[0][2] + T[1][2] * T[1][2];
-  if(upp_tri_sq == internal::NumberType<Number>::value(0.0))
+  if (upp_tri_sq == internal::NumberType<Number>::value(0.0))
     {
       // The tensor is diagonal
       std::array<Number, 3> eig_vals = {{T[0][0], T[1][1], T[2][2]}};
@@ -154,68 +154,68 @@ namespace internal
       // Make the first row and column to be of the
       // desired form
       h = 0.0;
-      for(int i = 1; i < dim; i++)
+      for (int i = 1; i < dim; i++)
         h += A[0][i] * A[0][i];
 
       g = 0.0;
-      if(A[0][1] > 0.0)
+      if (A[0][1] > 0.0)
         g = -std::sqrt(h);
       else
         g = std::sqrt(h);
       e[0] = g;
 
       std::array<Number, dim> u;
-      for(int i = 1; i < dim; i++)
+      for (int i = 1; i < dim; i++)
         {
           u[i] = A[0][i];
-          if(i == 1)
+          if (i == 1)
             u[i] -= g;
         }
 
       std::array<Number, dim> q;
       const Number            omega = h - g * A[0][1];
-      if(omega > 0.0)
+      if (omega > 0.0)
         {
           omega_inv = 1.0 / omega;
           K         = 0.0;
-          for(int i = 1; i < dim; i++)
+          for (int i = 1; i < dim; i++)
             {
               f = 0.0;
-              for(int j = 1; j < dim; j++)
+              for (int j = 1; j < dim; j++)
                 f += A[i][j] * u[j];
               q[i] = omega_inv * f;
               K += u[i] * f;
             }
           K *= 0.5 * omega_inv * omega_inv;
 
-          for(int i = 1; i < dim; i++)
+          for (int i = 1; i < dim; i++)
             q[i] = q[i] - K * u[i];
 
           d[0] = A[0][0];
-          for(int i = 1; i < dim; i++)
+          for (int i = 1; i < dim; i++)
             d[i] = A[i][i] - 2.0 * q[i] * u[i];
 
           // Store inverse Householder transformation
           // in Q
-          for(int j = 1; j < dim; j++)
+          for (int j = 1; j < dim; j++)
             {
               f = omega_inv * u[j];
-              for(int i = 1; i < dim; i++)
+              for (int i = 1; i < dim; i++)
                 Q[i][j] = Q[i][j] - f * u[i];
             }
 
           // For dim = 3: Calculate updated A[1][2] and
           // store it in e[1]
-          for(int i = 1; i < dim - 1; i++)
+          for (int i = 1; i < dim - 1; i++)
             e[i] = A[i][i + 1] - q[i] * u[i + 1] - u[i] * q[i + 1];
         }
       else
         {
-          for(int i = 0; i < dim; i++)
+          for (int i = 0; i < dim; i++)
             d[i] = A[i][i];
 
           // For dim = 3:
-          for(int i = 1; i < dim - 1; i++)
+          for (int i = 1; i < dim - 1; i++)
             e[i] = A[i][i + 1];
         }
     }
@@ -246,32 +246,32 @@ namespace internal
       // Transfer the off-diagonal entries to an auxiliary array
       // The third element is used only as temporary workspace
       std::array<Number, dim> e;
-      for(unsigned int i = 0; i < dim - 1; ++i)
+      for (unsigned int i = 0; i < dim - 1; ++i)
         e[i] = ee[i];
 
       // Create some intermediate storage
       Number g, r, p, f, b, s, c, t;
 
       // Loop over all off-diagonal elements
-      for(int l = 0; l < dim - 1; l++)
+      for (int l = 0; l < dim - 1; l++)
         {
-          for(unsigned int it = 0; it <= max_n_it; ++it)
+          for (unsigned int it = 0; it <= max_n_it; ++it)
             {
               // Check for convergence and exit iteration loop
               // if the off-diagonal element e[l] is zero
               int m = l;
-              for(; m <= dim - 2; m++)
+              for (; m <= dim - 2; m++)
                 {
                   g = std::abs(w[m]) + std::abs(w[m + 1]);
-                  if(std::abs(e[m]) + g == g)
+                  if (std::abs(e[m]) + g == g)
                     break;
                 }
-              if(m == l)
+              if (m == l)
                 break;
 
               // Throw if no convergence is achieved within a
               // stipulated number of iterations
-              if(it == max_n_it)
+              if (it == max_n_it)
                 {
                   AssertThrow(
                     false,
@@ -285,7 +285,7 @@ namespace internal
               r = std::sqrt(g * g + 1.0);
               // .. and then compute g = d_m - k_s for the
               // plane rotation (Press2007a eq 11.4.22)
-              if(g > 0.0)
+              if (g > 0.0)
                 g = w[m] - w[l] + e[l] / (g + r);
               else
                 g = w[m] - w[l] + e[l] / (g - r);
@@ -295,13 +295,13 @@ namespace internal
               // rotations to recover the tridiagonal form
               s = c = 1.0;
               p     = 0.0;
-              for(int i = m - 1; i >= l; i--)
+              for (int i = m - 1; i >= l; i--)
                 {
                   f = s * e[i];
                   b = c * e[i];
 
                   // Branch to recover from underflow
-                  if(std::abs(f) > std::abs(g))
+                  if (std::abs(f) > std::abs(g))
                     {
                       c        = g / f;
                       r        = std::sqrt(c * c + 1.0);
@@ -323,7 +323,7 @@ namespace internal
                   g        = c * r - b;
 
                   // Form the eigenvectors
-                  for(int k = 0; k < dim; k++)
+                  for (int k = 0; k < dim; k++)
                     {
                       t           = Q[k][i + 1];
                       Q[k][i + 1] = s * Q[k][i] + c * t;
@@ -338,13 +338,13 @@ namespace internal
 
       // Structure the data to be outputted
       std::array<std::pair<Number, Tensor<1, dim, Number>>, dim> eig_vals_vecs;
-      for(unsigned int e = 0; e < dim; ++e)
+      for (unsigned int e = 0; e < dim; ++e)
         {
           eig_vals_vecs[e].first = w[e];
 
           // The column "e" of Q contains the non-normalized
           // eigenvector associated with the eigenvalue "e"
-          for(unsigned int a = 0; a < dim; ++a)
+          for (unsigned int a = 0; a < dim; ++a)
             {
               eig_vals_vecs[e].second[a] = Q[a][e];
             }
@@ -381,7 +381,7 @@ namespace internal
       // The diagonal elements of the tridiagonal matrix;
       // this will ultimately store the eigenvalues
       std::array<Number, dim> w;
-      for(int i = 0; i < dim; i++)
+      for (int i = 0; i < dim; i++)
         w[i] = A[i][i];
 
       // Calculate (tr(A))^{2}
@@ -390,19 +390,19 @@ namespace internal
 
       // Number of iterations
       const unsigned int max_n_it = 50;
-      for(unsigned int it = 0; it <= max_n_it; it++)
+      for (unsigned int it = 0; it <= max_n_it; it++)
         {
           // Test for convergence
           so = 0.0;
-          for(int p = 0; p < dim; p++)
-            for(int q = p + 1; q < dim; q++)
+          for (int p = 0; p < dim; p++)
+            for (int q = p + 1; q < dim; q++)
               so += std::abs(A[p][q]);
-          if(so == 0.0)
+          if (so == 0.0)
             break;
 
           // Throw if no convergence is achieved within a
           // stipulated number of iterations
-          if(it == max_n_it)
+          if (it == max_n_it)
             {
               AssertThrow(
                 false,
@@ -414,26 +414,26 @@ namespace internal
           // Compute threshold value which dictates whether or
           // not a Jacobi rotation is performed
           const unsigned int n_it_skip = 4;
-          if(it < n_it_skip)
+          if (it < n_it_skip)
             thresh = 0.2 * so / (dim * dim);
           else
             thresh = 0.0;
 
           // Perform sweep
-          for(int p = 0; p < dim; p++)
-            for(int q = p + 1; q < dim; q++)
+          for (int p = 0; p < dim; p++)
+            for (int q = p + 1; q < dim; q++)
               {
                 g = 100.0 * std::abs(A[p][q]);
 
                 // After a given number of iterations the
                 // rotation is skipped if the off-diagonal
                 // element is small
-                if(it > n_it_skip && std::abs(w[p]) + g == std::abs(w[p])
-                   && std::abs(w[q]) + g == std::abs(w[q]))
+                if (it > n_it_skip && std::abs(w[p]) + g == std::abs(w[p])
+                    && std::abs(w[q]) + g == std::abs(w[q]))
                   {
                     A[p][q] = 0.0;
                   }
-                else if(std::abs(A[p][q]) > thresh)
+                else if (std::abs(A[p][q]) > thresh)
                   {
                     // Calculate Jacobi transformation
                     h = w[q] - w[p];
@@ -441,7 +441,7 @@ namespace internal
                     // Compute surrogate for angle theta resulting from
                     // angle transformation and subsequent smallest solution
                     // of quadratic equation
-                    if(std::abs(h) + g == std::abs(h))
+                    if (std::abs(h) + g == std::abs(h))
                       {
                         // Prevent overflow for large theta^2. This computation
                         // is the algebraic equivalent of t = 1/(2*theta).
@@ -450,7 +450,7 @@ namespace internal
                     else
                       {
                         theta = 0.5 * h / A[p][q];
-                        if(theta < 0.0)
+                        if (theta < 0.0)
                           t = -1.0 / (std::sqrt(1.0 + theta * theta) - theta);
                         else
                           t = 1.0 / (std::sqrt(1.0 + theta * theta) + theta);
@@ -468,19 +468,19 @@ namespace internal
                     w[p] -= z;
                     w[q] += z;
                     // ... by executing the various rotations in sequence
-                    for(int r = 0; r < p; r++)
+                    for (int r = 0; r < p; r++)
                       {
                         t       = A[r][p];
                         A[r][p] = c * t - s * A[r][q];
                         A[r][q] = s * t + c * A[r][q];
                       }
-                    for(int r = p + 1; r < q; r++)
+                    for (int r = p + 1; r < q; r++)
                       {
                         t       = A[p][r];
                         A[p][r] = c * t - s * A[r][q];
                         A[r][q] = s * t + c * A[r][q];
                       }
-                    for(int r = q + 1; r < dim; r++)
+                    for (int r = q + 1; r < dim; r++)
                       {
                         t       = A[p][r];
                         A[p][r] = c * t - s * A[q][r];
@@ -488,7 +488,7 @@ namespace internal
                       }
 
                     // Update the eigenvectors
-                    for(int r = 0; r < dim; r++)
+                    for (int r = 0; r < dim; r++)
                       {
                         t       = Q[r][p];
                         Q[r][p] = c * t - s * Q[r][q];
@@ -500,13 +500,13 @@ namespace internal
 
       // Structure the data to be outputted
       std::array<std::pair<Number, Tensor<1, dim, Number>>, dim> eig_vals_vecs;
-      for(unsigned int e = 0; e < dim; ++e)
+      for (unsigned int e = 0; e < dim; ++e)
         {
           eig_vals_vecs[e].first = w[e];
 
           // The column "e" of Q contains the non-normalized
           // eigenvector associated with the eigenvalue "e"
-          for(unsigned int a = 0; a < dim; ++a)
+          for (unsigned int a = 0; a < dim; ++a)
             {
               eig_vals_vecs[e].second[a] = Q[a][e];
             }
@@ -535,14 +535,14 @@ namespace internal
 
       Number t, u; // Intermediate storage
       t = std::abs(w[0]);
-      for(unsigned int i = 1; i < dim; ++i)
+      for (unsigned int i = 1; i < dim; ++i)
         {
           u = std::abs(w[i]);
-          if(u > t)
+          if (u > t)
             t = u;
         }
 
-      if(t < 1.0)
+      if (t < 1.0)
         u = t;
       else
         u = t * t;
@@ -558,7 +558,7 @@ namespace internal
       // Compute eigenvectors
       // http://www.math.harvard.edu/archive/21b_fall_04/exhibits/2dmatrices/
       // https://math.stackexchange.com/a/1548616
-      if(A[1][0] != 0.0)
+      if (A[1][0] != 0.0)
         {
           // First eigenvector
           eig_vals_vecs[0].second[0] = w[0] - A[1][1];
@@ -585,7 +585,7 @@ namespace internal
       // If vectors are nearly linearly dependent, or if there might have
       // been large cancelations in the calculation of A[i][i] - w[0], fall
       // back to QL algorithm
-      if(eig_vals_vecs[0].second * eig_vals_vecs[1].second > error)
+      if (eig_vals_vecs[0].second * eig_vals_vecs[1].second > error)
         {
           return ql_implicit_shifts(A);
         }
@@ -609,14 +609,14 @@ namespace internal
       const std::array<Number, dim> w = eigenvalues(A);
 
       t = std::abs(w[0]);
-      for(unsigned int i = 1; i < dim; ++i)
+      for (unsigned int i = 1; i < dim; ++i)
         {
           u = std::abs(w[i]);
-          if(u > t)
+          if (u > t)
             t = u;
         }
 
-      if(t < 1.0)
+      if (t < 1.0)
         u = t;
       else
         u = t * t;
@@ -645,14 +645,14 @@ namespace internal
       // Note that this simultaneously ensures that multiple eigenvalues do
       // not cause problems: If w[0] = w[1], then A - w[0] * I has rank 1,
       // i.e. all columns of A - w[0] * I are linearly dependent.
-      if(norm <= error)
+      if (norm <= error)
         {
           return ql_implicit_shifts(A);
         }
       else // This is the standard branch
         {
           norm = std::sqrt(1.0 / norm);
-          for(unsigned j = 0; j < dim; j++)
+          for (unsigned j = 0; j < dim; j++)
             Q[j][0] = Q[j][0] * norm;
         }
 
@@ -662,14 +662,14 @@ namespace internal
       Q[1][1] = Q[1][1] + A[1][2] * w[1];
       Q[2][1] = (A[0][0] - w[1]) * (A[1][1] - w[1]) - Q[2][1];
       norm    = Q[0][1] * Q[0][1] + Q[1][1] * Q[1][1] + Q[2][1] * Q[2][1];
-      if(norm <= error)
+      if (norm <= error)
         {
           return ql_implicit_shifts(A);
         }
       else
         {
           norm = std::sqrt(1.0 / norm);
-          for(unsigned int j = 0; j < dim; j++)
+          for (unsigned int j = 0; j < dim; j++)
             Q[j][1] = Q[j][1] * norm;
         }
 
@@ -681,13 +681,13 @@ namespace internal
 
       // Structure the data to be outputted
       std::array<std::pair<Number, Tensor<1, dim, Number>>, dim> eig_vals_vecs;
-      for(unsigned int e = 0; e < dim; ++e)
+      for (unsigned int e = 0; e < dim; ++e)
         {
           eig_vals_vecs[e].first = w[e];
 
           // The column "e" of Q contains the non-normalized
           // eigenvector associated with the eigenvalue "e"
-          for(unsigned int a = 0; a < dim; ++a)
+          for (unsigned int a = 0; a < dim; ++a)
             {
               eig_vals_vecs[e].second[a] = Q[a][e];
             }
@@ -730,17 +730,17 @@ namespace internal
       Assert(axis < 3, ExcIndexRange(axis, 0, 3));
 
       Tensor<2, 3> R;
-      switch(axis)
+      switch (axis)
         {
-          case(0):
+          case (0):
             R = dealii::Physics::Transformations::Rotations::rotation_matrix_3d(
               {1, 0, 0}, rotation_angle);
             break;
-          case(1):
+          case (1):
             R = dealii::Physics::Transformations::Rotations::rotation_matrix_3d(
               {0, 1, 0}, rotation_angle);
             break;
-          case(2):
+          case (2):
             R = dealii::Physics::Transformations::Rotations::rotation_matrix_3d(
               {0, 0, 1}, rotation_angle);
             break;
@@ -766,7 +766,7 @@ namespace internal
       const SymmetricTensor<2, dim, Number>& T,
       const SymmetricTensorEigenvectorMethod method)
     {
-      switch(method)
+      switch (method)
         {
           case SymmetricTensorEigenvectorMethod::hybrid:
             return internal::SymmetricTensorImplementation::hybrid(T);
@@ -796,13 +796,13 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
              const SymmetricTensorEigenvectorMethod method)
 {
   // Not much to do when there's only a single entry
-  if(dim == 1)
+  if (dim == 1)
     return internal::SymmetricTensorImplementation::
       perform_eigenvector_decomposition(T, method);
 
   std::array<std::pair<Number, Tensor<1, dim, Number>>, dim> eig_vals_vecs;
 
-  if(Differentiation::AD::is_ad_number<Number>::value && dim > 1)
+  if (Differentiation::AD::is_ad_number<Number>::value && dim > 1)
     {
       // If the tensor is diagonal, then we have a bit on an issue when using
       // auto-differentiable numbers. The reason for this is that all of the
@@ -813,16 +813,16 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
       // tensor @p T in an objective manner: through an infinitesimal rotation we
       // make it non-diagonal (although we introduce some numerical error).
       bool is_diagonal = true;
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i + 1; j < dim; ++j)
-          if(T[i][j] != 0.0)
+      for (unsigned int i = 0; i < dim; ++i)
+        for (unsigned int j = i + 1; j < dim; ++j)
+          if (T[i][j] != 0.0)
             {
               is_diagonal = false;
               break;
             }
 
       // If our tensor is not diagonal, then just carry on as per usual.
-      if(!is_diagonal)
+      if (!is_diagonal)
         eig_vals_vecs = internal::SymmetricTensorImplementation::
           perform_eigenvector_decomposition(T, method);
       else
@@ -847,22 +847,24 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
           // first and second derivatives. What's apparent is that all AD numbers and
           // eigen-decomposition algorithms are not made equal!
           double sf = 1.0;
-          if(Differentiation::AD::is_taped_ad_number<Number>::value)
+          if (Differentiation::AD::is_taped_ad_number<Number>::value)
             {
               // Adol-C taped
-              if(method == SymmetricTensorEigenvectorMethod::ql_implicit_shifts)
+              if (method
+                  == SymmetricTensorEigenvectorMethod::ql_implicit_shifts)
                 sf = (dim == 2 ? 2e11 : 2e11);
-              else if(method == SymmetricTensorEigenvectorMethod::jacobi)
+              else if (method == SymmetricTensorEigenvectorMethod::jacobi)
                 sf = (dim == 2 ? 1e6 : 1e9);
               else
                 AssertThrow(false, ExcNotImplemented());
             }
-          else if(Differentiation::AD::is_sacado_rad_number<Number>::value)
+          else if (Differentiation::AD::is_sacado_rad_number<Number>::value)
             {
               // Sacado::Rad
-              if(method == SymmetricTensorEigenvectorMethod::ql_implicit_shifts)
+              if (method
+                  == SymmetricTensorEigenvectorMethod::ql_implicit_shifts)
                 sf = (dim == 2 ? 1e8 : 1e9);
-              else if(method == SymmetricTensorEigenvectorMethod::jacobi)
+              else if (method == SymmetricTensorEigenvectorMethod::jacobi)
                 sf = (dim == 2 ? 1e8 : 1e9);
               else
                 AssertThrow(false, ExcNotImplemented());
@@ -877,9 +879,10 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
                             Number>::value,
                      ExcInternalError());
 
-              if(method == SymmetricTensorEigenvectorMethod::ql_implicit_shifts)
+              if (method
+                  == SymmetricTensorEigenvectorMethod::ql_implicit_shifts)
                 sf = (dim == 2 ? 1e7 : 2.5e7);
-              else if(method == SymmetricTensorEigenvectorMethod::jacobi)
+              else if (method == SymmetricTensorEigenvectorMethod::jacobi)
                 sf = (dim == 2 ? 1e2 : 1e7);
               else
                 AssertThrow(false, ExcNotImplemented());
@@ -892,7 +895,7 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
           const double rotation_angle = delta * numbers::PI / 180.0;
 
           Tensor<2, dim, Number> T_prime_ns;
-          if(dim == 2)
+          if (dim == 2)
             {
               const Tensor<2, dim, Number> T_prime_ns
                 = internal::SymmetricTensorImplementation::dediagonalize_tensor(
@@ -906,8 +909,8 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
               //            http://www.alglib.net/eigen/nonsymmetric/nonsymmetricevd.php
               //            https://groups.google.com/forum/#!topic/stan-users/QJe1TNioiyg
               SymmetricTensor<2, dim, Number> T_prime;
-              for(unsigned int i = 0; i < dim; ++i)
-                for(unsigned int j = i; j < dim; ++j)
+              for (unsigned int i = 0; i < dim; ++i)
+                for (unsigned int j = i; j < dim; ++j)
                   T_prime[i][j] = T_prime_ns[i][j];
 
               eig_vals_vecs = internal::SymmetricTensorImplementation::
@@ -919,7 +922,7 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
 
               SymmetricTensor<2, dim, Number> T_prime;
               Tensor<2, dim, Number>          T_prime_ns;
-              for(unsigned int i = 0; i < dim; ++i)
+              for (unsigned int i = 0; i < dim; ++i)
                 {
                   // This is a little bit hacky, so here's a brief explanation as to
                   // what the principal of this operation is:
@@ -942,7 +945,7 @@ eigenvectors(const SymmetricTensor<2, dim, Number>& T,
                   // instead.
                   // TODO[JPP]: Keep the full row and perform the eigen-decomposition on the
                   //            non-symmetric T_prime_ns. See related comment above in 2d case.
-                  for(unsigned int j = i; j < dim; ++j)
+                  for (unsigned int j = i; j < dim; ++j)
                     T_prime[i][j] = T_prime_ns[i][j];
                 }
               eig_vals_vecs = internal::SymmetricTensorImplementation::

@@ -73,16 +73,16 @@ test()
 
   DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
                                       endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
 
       std::vector<Point<2>> locations = fe_values.get_quadrature_points();
       cell->get_dof_indices(local_dof_indices);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         {
-          if(constraints.is_constrained(local_dof_indices[i]))
+          if (constraints.is_constrained(local_dof_indices[i]))
             deallog << "DoF " << local_dof_indices[i] << ", copy "
                     << fe.system_to_base_index(i).first.second
                     << ", base element "
@@ -102,7 +102,7 @@ main()
     {
       test<2>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -116,7 +116,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

@@ -78,7 +78,7 @@ check_all(std::ostream& log)
   char                 name[100];
   const char*          format = "%d%d%s.dx";
   DataOutBase::DXFlags flags(false, false, false, false);
-  if(dim == 2 && spacedim == 2)
+  if (dim == 2 && spacedim == 2)
     {
       sprintf(name, format, dim, spacedim, "ffffcont");
 #if SEPARATE_FILES == 1
@@ -89,7 +89,7 @@ check_all(std::ostream& log)
 #endif
       check_cont<dim>(4, 4, flags, out);
     }
-  if(true)
+  if (true)
     {
       sprintf(name, format, dim, spacedim, "ffff");
 #if SEPARATE_FILES == 1
@@ -101,7 +101,7 @@ check_all(std::ostream& log)
       check<dim, spacedim>(flags, out);
     }
   flags.int_binary = true;
-  if(true)
+  if (true)
     {
       sprintf(name, format, dim, spacedim, "tfff");
 #if SEPARATE_FILES == 1
@@ -113,7 +113,7 @@ check_all(std::ostream& log)
       check<dim, spacedim>(flags, out);
     }
   flags.coordinates_binary = true;
-  if(true)
+  if (true)
     {
       sprintf(name, format, dim, spacedim, "ttff");
 #if SEPARATE_FILES == 1
@@ -125,7 +125,7 @@ check_all(std::ostream& log)
       check<dim, spacedim>(flags, out);
     }
   flags.data_binary = true;
-  if(true)
+  if (true)
     {
       sprintf(name, format, dim, spacedim, "tttf");
 #if SEPARATE_FILES == 1
@@ -137,7 +137,7 @@ check_all(std::ostream& log)
       check<dim, spacedim>(flags, out);
     }
   flags.data_double = true;
-  if(true)
+  if (true)
     {
       sprintf(name, format, dim, spacedim, "tttf");
 #if SEPARATE_FILES == 1

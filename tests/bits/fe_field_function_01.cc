@@ -31,7 +31,7 @@
 double
 abs_zero(double a)
 {
-  if(std::abs(a) < 1e-10)
+  if (std::abs(a) < 1e-10)
     return 0;
   else
     return a;

@@ -53,7 +53,7 @@ test()
   out << "e" << std::endl;
 
   Triangulation<2, 3>::active_cell_iterator it = tria.begin_active();
-  for(; it != tria.end(); ++it)
+  for (; it != tria.end(); ++it)
     {
       Point<3>     p  = it->center(true);
       Tensor<1, 3> t1 = manifold.get_tangent_vector(p, it->vertex(0));

@@ -81,12 +81,12 @@ main()
   gradient_phi_max = -1;
 
   cell = dof_handler.begin_active();
-  for(unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
+  for (unsigned int cell_no = 0; cell != endc; ++cell, ++cell_no)
     {
-      if(gradient_phi(cell_no) < gradient_phi_min)
+      if (gradient_phi(cell_no) < gradient_phi_min)
         gradient_phi_min = gradient_phi(cell_no);
 
-      if(gradient_phi(cell_no) > gradient_phi_max)
+      if (gradient_phi(cell_no) > gradient_phi_max)
         gradient_phi_max = gradient_phi(cell_no);
     }
 

@@ -62,7 +62,7 @@ transfer(std::ostream& out)
   dof_handler.distribute_dofs(fe);
   solution.reinit(dof_handler.n_dofs());
 
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for (unsigned int i = 0; i < solution.size(); ++i)
     solution(i) = i;
 
   SolutionTransfer<dim, Vector<double>, hp::DoFHandler<dim>> soltrans(
@@ -72,7 +72,7 @@ transfer(std::ostream& out)
                                                     endc = tria.end();
   ++cell;
   ++cell;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_refine_flag();
 
   Vector<double> old_solution = solution;

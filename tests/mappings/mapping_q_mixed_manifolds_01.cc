@@ -75,21 +75,21 @@ test()
   tria.set_manifold(1, *cylinder_manifold);
 
   FE_Nothing<dim> fe;
-  for(unsigned int degree = 6; degree < 7; ++degree)
+  for (unsigned int degree = 6; degree < 7; ++degree)
     {
       MappingQGeneric<dim> mapping(degree);
 
       QGauss<dim>   quad(degree + 1);
       FEValues<dim> fe_values(mapping, fe, quad, update_JxW_values);
       double        sum = 0.;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
         {
           fe_values.reinit(cell);
           double local_sum = 0;
-          for(unsigned int q = 0; q < quad.size(); ++q)
+          for (unsigned int q = 0; q < quad.size(); ++q)
             local_sum += fe_values.JxW(q);
           sum += local_sum;
         }

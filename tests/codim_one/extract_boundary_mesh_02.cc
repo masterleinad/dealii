@@ -48,19 +48,19 @@ test_vertices_orientation(
     endc = boundary_mesh.end();
   typename Triangulation<s_dim + 1, spacedim>::face_iterator face;
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       face = surface_to_volume_mapping[cell];
 
       deallog << "Surface cell: " << cell << " with vertices:" << std::endl;
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for (unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         deallog << "  " << cell->vertex(k) << std::endl;
 
       deallog << "Volume face: " << face << " with vertices:" << std::endl;
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for (unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         deallog << "  " << face->vertex(k) << std::endl;
 
-      for(unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
+      for (unsigned int k = 0; k < GeometryInfo<s_dim>::vertices_per_cell; ++k)
         {
           Point<spacedim> diff(face->vertex(k));
           diff -= cell->vertex(k);

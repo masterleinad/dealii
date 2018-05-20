@@ -38,7 +38,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
       parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
 
@@ -56,12 +56,12 @@ test()
       // refinement that are close to
       // the north pole
       unsigned int x_flagged_cells = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        if(!cell->is_ghost() && !cell->is_artificial())
-          if(cell->center()[2] > R1 * 0.75)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        if (!cell->is_ghost() && !cell->is_artificial())
+          if (cell->center()[2] > R1 * 0.75)
             {
               ++x_flagged_cells;
               cell->set_refine_flag();
@@ -76,12 +76,12 @@ test()
       triangulation.prepare_coarsening_and_refinement();
       {
         unsigned int n_flagged_cells = 0;
-        for(typename Triangulation<dim>::active_cell_iterator cell
-            = triangulation.begin_active();
-            cell != triangulation.end();
-            ++cell)
-          if(!cell->is_ghost() && !cell->is_artificial())
-            if(cell->refine_flag_set())
+        for (typename Triangulation<dim>::active_cell_iterator cell
+             = triangulation.begin_active();
+             cell != triangulation.end();
+             ++cell)
+          if (!cell->is_ghost() && !cell->is_artificial())
+            if (cell->refine_flag_set())
               ++n_flagged_cells;
 
         Assert(n_flagged_cells == x_flagged_cells, ExcInternalError());
@@ -94,18 +94,18 @@ test()
                       MPI_SUM,
                       MPI_COMM_WORLD);
 
-        if(myid == 0)
+        if (myid == 0)
           deallog << "# flagged cells = " << global_f_c << std::endl;
       }
 
       triangulation.execute_coarsening_and_refinement();
 
-      if(myid == 0)
+      if (myid == 0)
         deallog << "#cells = " << triangulation.n_global_active_cells()
                 << std::endl;
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -118,7 +118,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

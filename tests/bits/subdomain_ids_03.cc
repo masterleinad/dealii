@@ -47,11 +47,11 @@ test()
   // (octant)
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int subdomain = 0;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()(d) > 0)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()(d) > 0)
           subdomain |= (1 << d);
       AssertThrow(subdomain < (1 << dim), ExcInternalError());
 
@@ -68,7 +68,7 @@ test()
   std::vector<types::global_dof_index> new_indices(dof_handler.n_dofs());
   DoFRenumbering::compute_subdomain_wise(new_indices, dof_handler);
 
-  for(unsigned int i = 0; i < new_indices.size(); ++i)
+  for (unsigned int i = 0; i < new_indices.size(); ++i)
     deallog << i << ' ' << new_indices[i] << std::endl;
 }
 

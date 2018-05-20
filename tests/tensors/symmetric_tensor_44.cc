@@ -25,7 +25,7 @@ template <int rank, int dim, typename NumberType>
 void
 fill_tensor(SymmetricTensor<rank, dim, NumberType>& t)
 {
-  for(unsigned int i = 0; i != t.n_independent_components; ++i)
+  for (unsigned int i = 0; i != t.n_independent_components; ++i)
     {
       t.access_raw_entry(i) = i + 1;
     }
@@ -35,7 +35,7 @@ template <int rank, int dim, typename NumberType>
 void
 fill_tensor(Tensor<rank, dim, NumberType>& t)
 {
-  for(unsigned int i = 0; i != t.n_independent_components; ++i)
+  for (unsigned int i = 0; i != t.n_independent_components; ++i)
     {
       t[t.unrolled_to_component_indices(i)] = i + 1;
     }

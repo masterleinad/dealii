@@ -38,16 +38,16 @@ test(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature)
 {
   deallog << fe.get_name() << ' ' << fe.dofs_per_cell << ' ';
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-    for(unsigned int q = 0; q < quadrature.size(); ++q)
-      for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int q = 0; q < quadrature.size(); ++q)
+      for (unsigned int c = 0; c < fe.n_components(); ++c)
         {
           const Point<dim> point = quadrature.point(q);
 
           const Tensor<1, dim> gradient = fe.shape_grad_component(i, point, c);
 
           Tensor<1, dim> fd_grad;
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             {
               Point<dim> point_plus_dx = point;
               point_plus_dx[d] += delta_x;
@@ -65,7 +65,7 @@ template <template <int, int> class FE>
 void
 check(const unsigned int min_degree, const unsigned int max_degree)
 {
-  for(unsigned int degree = min_degree; degree <= max_degree; ++degree)
+  for (unsigned int degree = min_degree; degree <= max_degree; ++degree)
     {
       FE<1, 1> fe1(degree);
       test<1>(fe1, QGauss<1>(degree + 1));
@@ -80,7 +80,7 @@ template <template <int> class FE>
 void
 check1(const unsigned int min_degree, const unsigned int max_degree)
 {
-  for(unsigned int degree = min_degree; degree <= max_degree; ++degree)
+  for (unsigned int degree = min_degree; degree <= max_degree; ++degree)
     {
       FE<1> fe1(degree);
       test<1>(fe1, QGauss<1>(degree + 1));
@@ -96,7 +96,7 @@ template <>
 void
 check1<FE_Nedelec>(const unsigned int min_degree, const unsigned int max_degree)
 {
-  for(unsigned int degree = min_degree; degree <= max_degree; ++degree)
+  for (unsigned int degree = min_degree; degree <= max_degree; ++degree)
     {
       test<2>(FE_Nedelec<2>(degree), QGauss<2>(degree + 1));
       test<3>(FE_Nedelec<3>(degree), QGauss<3>(degree + 1));
@@ -110,7 +110,7 @@ void
 check1<FE_RaviartThomas>(const unsigned int min_degree,
                          const unsigned int max_degree)
 {
-  for(unsigned int degree = min_degree; degree <= max_degree; ++degree)
+  for (unsigned int degree = min_degree; degree <= max_degree; ++degree)
     {
       test<2>(FE_RaviartThomas<2>(degree), QGauss<2>(degree + 1));
     }
@@ -121,7 +121,7 @@ void
 check1<FE_RaviartThomasNodal>(const unsigned int min_degree,
                               const unsigned int max_degree)
 {
-  for(unsigned int degree = min_degree; degree <= max_degree; ++degree)
+  for (unsigned int degree = min_degree; degree <= max_degree; ++degree)
     {
       test<2>(FE_RaviartThomasNodal<2>(degree), QGauss<2>(degree + 1));
       test<3>(FE_RaviartThomasNodal<3>(degree), QGauss<3>(degree + 1));

@@ -57,7 +57,7 @@ test()
   unsigned int           N = 0;
   std::vector<size_type> local_rows_per_process(get_n_mpi_processes());
   std::vector<size_type> start_row(get_n_mpi_processes());
-  for(unsigned int i = 0; i < get_n_mpi_processes(); ++i)
+  for (unsigned int i = 0; i < get_n_mpi_processes(); ++i)
     {
       N += (i + 1) * 10;
       local_rows_per_process[i] = (i + 1) * 10;
@@ -69,13 +69,13 @@ test()
   // processes. note that only one of the
   // four blocks uses Inodes
   DynamicSparsityPattern csp(N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       {
         csp.add(i, i);
-        if(i + local_rows_per_process.back() < N)
+        if (i + local_rows_per_process.back() < N)
           csp.add(i, i + local_rows_per_process.back());
-        if(i > local_rows_per_process.back())
+        if (i > local_rows_per_process.back())
           csp.add(i, i - local_rows_per_process.back());
       }
 
@@ -101,8 +101,8 @@ test()
   // no write into the exact same matrix
   // entries as have been created by the
   // sparsity pattern above
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < csp.row_length(i); ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < csp.row_length(i); ++j)
       m.add(i, csp.column_number(i, j), 1.);
 
   m.compress(VectorOperation::add);
@@ -120,7 +120,7 @@ main(int argc, char** argv)
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -134,7 +134,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

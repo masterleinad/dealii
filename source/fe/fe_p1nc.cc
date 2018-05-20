@@ -44,13 +44,13 @@ FE_P1NC::requires_update_flags(const UpdateFlags flags) const
 {
   UpdateFlags out = update_default;
 
-  if(flags & update_values)
+  if (flags & update_values)
     out |= update_values | update_quadrature_points;
-  if(flags & update_gradients)
+  if (flags & update_gradients)
     out |= update_gradients;
-  if(flags & update_cell_normal_vectors)
+  if (flags & update_cell_normal_vectors)
     out |= update_cell_normal_vectors | update_JxW_values;
-  if(flags & update_hessians)
+  if (flags & update_hessians)
     out |= update_hessians;
 
   return out;
@@ -140,7 +140,7 @@ FE_P1NC::get_data(
   output_data.initialize(n_q_points, FE_P1NC(), data->update_each);
 
   // this is a linear element, so its second derivatives are zero
-  if(data->update_each & update_hessians)
+  if (data->update_each & update_hessians)
     output_data.shape_hessians.fill(Tensor<2, 2>());
 
   return data;
@@ -162,7 +162,7 @@ FE_P1NC::get_face_data(
   output_data.initialize(n_q_points, FE_P1NC(), data->update_each);
 
   // this is a linear element, so its second derivatives are zero
-  if(data->update_each & update_hessians)
+  if (data->update_each & update_hessians)
     output_data.shape_hessians.fill(Tensor<2, 2>());
 
   return data;
@@ -184,7 +184,7 @@ FE_P1NC::get_subface_data(
   output_data.initialize(n_q_points, FE_P1NC(), data->update_each);
 
   // this is a linear element, so its second derivatives are zero
-  if(data->update_each & update_hessians)
+  if (data->update_each & update_hessians)
     output_data.shape_hessians.fill(Tensor<2, 2>());
 
   return data;
@@ -212,17 +212,17 @@ FE_P1NC::fill_fe_values(
     = get_linear_shape_coefficients(cell);
 
   // compute on the cell
-  if(flags & update_values)
-    for(unsigned int i = 0; i < n_q_points; ++i)
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+  if (flags & update_values)
+    for (unsigned int i = 0; i < n_q_points; ++i)
+      for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
         output_data.shape_values[k][i]
           = (coeffs[k][0] * mapping_data.quadrature_points[i](0)
              + coeffs[k][1] * mapping_data.quadrature_points[i](1)
              + coeffs[k][2]);
 
-  if(flags & update_gradients)
-    for(unsigned int i = 0; i < n_q_points; ++i)
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+  if (flags & update_gradients)
+    for (unsigned int i = 0; i < n_q_points; ++i)
+      for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
         output_data.shape_gradients[k][i]
           = Point<2>(coeffs[k][0], coeffs[k][1]);
 }
@@ -249,9 +249,9 @@ FE_P1NC::fill_fe_face_values(
   const Quadrature<2> quadrature_on_face
     = QProjector<2>::project_to_face(quadrature, face_no);
 
-  if(flags & update_values)
-    for(unsigned int i = 0; i < quadrature_on_face.size(); ++i)
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+  if (flags & update_values)
+    for (unsigned int i = 0; i < quadrature_on_face.size(); ++i)
+      for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
         {
           const Point<2> quadrature_point = mapping.transform_unit_to_real_cell(
             cell, quadrature_on_face.point(i));
@@ -261,9 +261,9 @@ FE_P1NC::fill_fe_face_values(
                + coeffs[k][1] * quadrature_point(1) + coeffs[k][2]);
         }
 
-  if(flags & update_gradients)
-    for(unsigned int i = 0; i < quadrature_on_face.size(); ++i)
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+  if (flags & update_gradients)
+    for (unsigned int i = 0; i < quadrature_on_face.size(); ++i)
+      for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
         output_data.shape_gradients[k][i]
           = Point<2>(coeffs[k][0], coeffs[k][1]);
 }
@@ -291,10 +291,10 @@ FE_P1NC::fill_fe_subface_values(
   const Quadrature<2> quadrature_on_subface
     = QProjector<2>::project_to_subface(quadrature, face_no, sub_no);
 
-  if(flags & update_values)
-    for(unsigned int i = 0; i < quadrature_on_subface.size(); ++i)
+  if (flags & update_values)
+    for (unsigned int i = 0; i < quadrature_on_subface.size(); ++i)
       {
-        for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+        for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
           {
             const Point<2> quadrature_point
               = mapping.transform_unit_to_real_cell(
@@ -306,9 +306,9 @@ FE_P1NC::fill_fe_subface_values(
           }
       }
 
-  if(flags & update_gradients)
-    for(unsigned int i = 0; i < quadrature_on_subface.size(); ++i)
-      for(unsigned int k = 0; k < this->dofs_per_cell; ++k)
+  if (flags & update_gradients)
+    for (unsigned int i = 0; i < quadrature_on_subface.size(); ++i)
+      for (unsigned int k = 0; k < this->dofs_per_cell; ++k)
         output_data.shape_gradients[k][i]
           = Point<2>(coeffs[k][0], coeffs[k][1]);
 }

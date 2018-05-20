@@ -48,8 +48,8 @@ test(const unsigned int n, const unsigned int k, const NumberType eps)
   A.mTmult(C, A);
   AL.mTmult(CL, AL);
 
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < n; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       AssertThrow(std::abs(C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, C(i, j), CL(i, j), C(i, j) - CL(i, j)));
 
@@ -57,8 +57,8 @@ test(const unsigned int n, const unsigned int k, const NumberType eps)
 
   AL.mTmult(CL, AL, true);
 
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < n; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       AssertThrow(std::abs(2. * C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, 2. * C(i, j), CL(i, j), 2. * C(i, j) - CL(i, j)));
 
@@ -77,12 +77,12 @@ main()
     {3, 3}, {7, 7}, {51, 51}, {320, 320}, {3, 9}, {9, 7}, {10, 5}, {320, 120}};
 
   deallog.push("double");
-  for(auto el : sizes)
+  for (auto el : sizes)
     test<double>(el[0], el[1], 1e-13);
   deallog.pop();
 
   deallog.push("float");
-  for(auto el : sizes)
+  for (auto el : sizes)
     test<float>(el[0], el[1], 1e-5);
   deallog.pop();
 }

@@ -116,7 +116,7 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "  Results";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for (unsigned int i = 0; i < n_functionals; ++i)
     deallog << '\t' << assembler(i);
   deallog << std::endl;
 
@@ -141,7 +141,7 @@ test_mesh(DoFHandler<dim>& mgdofs)
     lctrl);
 
   deallog << "MGResults";
-  for(unsigned int i = 0; i < n_functionals; ++i)
+  for (unsigned int i = 0; i < n_functionals; ++i)
     deallog << '\t' << assembler(i);
   deallog << std::endl;
 }

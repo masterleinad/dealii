@@ -49,13 +49,13 @@ helmholtz_operator(
   FEEvaluation<dim, fe_degree, fe_degree + 1, 2, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
 
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
 
       fe_eval.read_dof_values(src);
       fe_eval.evaluate(true, true, false);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int q = 0; q < n_q_points; ++q)
         {
           fe_eval.submit_value(
             make_vectorized_array(Number(10)) * fe_eval.get_value(q), q);
@@ -81,7 +81,7 @@ public:
     std::vector<LinearAlgebra::distributed::Vector<Number>>&       dst,
     const std::vector<LinearAlgebra::distributed::Vector<Number>>& src) const
   {
-    for(unsigned int i = 0; i < dst.size(); ++i)
+    for (unsigned int i = 0; i < dst.size(); ++i)
       dst[i] = 0;
     const std::function<void(
       const MatrixFree<dim, Number>&,
@@ -108,28 +108,28 @@ test()
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
   cell                                                   = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->is_locally_owned())
-      if(cell->center().norm() < 0.2)
+  for (; cell != endc; ++cell)
+    if (cell->is_locally_owned())
+      if (cell->center().norm() < 0.2)
         cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  if(dim < 3 && fe_degree < 2)
+  if (dim < 3 && fe_degree < 2)
     tria.refine_global(2);
   else
     tria.refine_global(1);
-  if(tria.begin(tria.n_levels() - 1)->is_locally_owned())
+  if (tria.begin(tria.n_levels() - 1)->is_locally_owned())
     tria.begin(tria.n_levels() - 1)->set_refine_flag();
-  if(tria.last()->is_locally_owned())
+  if (tria.last()->is_locally_owned())
     tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       cell                 = tria.begin_active();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(cell->is_locally_owned())
-          if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (cell->is_locally_owned())
+          if (counter % (7 - i) == 0)
             cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -165,17 +165,17 @@ test()
   MatrixFreeTest<dim, fe_degree, number>                  mf(mf_data);
   LinearAlgebra::distributed::Vector<number>              ref;
   std::vector<LinearAlgebra::distributed::Vector<number>> in(2), out(2);
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       mf_data.initialize_dof_vector(in[i]);
       mf_data.initialize_dof_vector(out[i]);
     }
   mf_data.initialize_dof_vector(ref);
 
-  for(unsigned int i = 0; i < in[0].local_size(); ++i)
+  for (unsigned int i = 0; i < in[0].local_size(); ++i)
     {
       const unsigned int glob_index = owned_set.nth_index_in_set(i);
-      if(constraints.is_constrained(glob_index))
+      if (constraints.is_constrained(glob_index))
         continue;
       in[0].local_element(i) = random_value<double>();
       in[1].local_element(i) = random_value<double>();
@@ -214,16 +214,16 @@ test()
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   cell_matrix(i, j)
                     += ((fe_values.shape_grad(i, q_point)
                            * fe_values.shape_grad(j, q_point)
@@ -240,7 +240,7 @@ test()
   sparse_matrix.compress(VectorOperation::add);
 
   deallog << "Norm of difference (component 1/2): ";
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       sparse_matrix.vmult(ref, in[i]);
       out[i] -= ref;
@@ -259,7 +259,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

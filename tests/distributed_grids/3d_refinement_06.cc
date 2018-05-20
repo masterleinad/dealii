@@ -48,7 +48,7 @@ test(std::ostream& /*out*/)
     // level-1 cell once more. this
     // will introduce more level-1
     // cells as well.
-    for(unsigned int c = 0; c < 8; ++c)
+    for (unsigned int c = 0; c < 8; ++c)
       tr.begin(1)->child(c)->set_refine_flag();
     tr.execute_coarsening_and_refinement();
 
@@ -63,7 +63,7 @@ test(std::ostream& /*out*/)
     GridGenerator::subdivided_hyper_cube(tr, 2);
     tr.begin_active()->set_refine_flag();
     tr.execute_coarsening_and_refinement();
-    for(unsigned int c = 0; c < 8; ++c)
+    for (unsigned int c = 0; c < 8; ++c)
       tr.begin(0)->child(c)->set_refine_flag();
     tr.execute_coarsening_and_refinement();
 

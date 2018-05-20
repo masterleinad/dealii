@@ -69,7 +69,7 @@ PersistentTriangulation<dim, spacedim>::restore()
 {
   // for each of the previous
   // refinement sweeps
-  for(unsigned int i = 0; i < refine_flags.size() + 1; ++i)
+  for (unsigned int i = 0; i < refine_flags.size() + 1; ++i)
     restore(i);
 }
 
@@ -77,7 +77,7 @@ template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::restore(const unsigned int step)
 {
-  if(step == 0)
+  if (step == 0)
     // copy the old triangulation.
     // this will yield an error if
     // the underlying triangulation
@@ -145,7 +145,7 @@ PersistentTriangulation<dim, spacedim>::write_flags(std::ostream& out) const
 
   out << mn_persistent_tria_flags_begin << ' ' << n_flag_levels << std::endl;
 
-  for(unsigned int i = 0; i < n_flag_levels; ++i)
+  for (unsigned int i = 0; i < n_flag_levels; ++i)
     {
       this->write_bool_vector(mn_tria_refine_flags_begin,
                               refine_flags[i],
@@ -177,7 +177,7 @@ PersistentTriangulation<dim, spacedim>::read_flags(std::istream& in)
 
   unsigned int n_flag_levels;
   in >> n_flag_levels;
-  for(unsigned int i = 0; i < n_flag_levels; ++i)
+  for (unsigned int i = 0; i < n_flag_levels; ++i)
     {
       refine_flags.emplace_back();
       coarsen_flags.emplace_back();

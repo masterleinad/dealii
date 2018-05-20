@@ -26,7 +26,7 @@ void
 test()
 {
   int number = 5;
-  for(unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i)
     {
       std::ostringstream s;
       s << "test test" << number << "test test";

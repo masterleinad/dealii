@@ -230,11 +230,11 @@ namespace StokesClass
         // if the solver fails, report the error from processor 0 with some additional
         // information about its location, and throw a quiet exception on all other
         // processors
-        catch(const std::exception& exc)
+        catch (const std::exception& exc)
           {
-            if(Utilities::MPI::this_mpi_process(
-                 src.block(0).get_mpi_communicator())
-               == 0)
+            if (Utilities::MPI::this_mpi_process(
+                  src.block(0).get_mpi_communicator())
+                == 0)
               AssertThrow(
                 false,
                 ExcMessage(
@@ -260,7 +260,7 @@ namespace StokesClass
       // now either solve with the top left block (if do_solve_A==true)
       // or just apply one preconditioner sweep (for the first few
       // iterations of our two-stage outer GMRES iteration)
-      if(do_solve_A == true)
+      if (do_solve_A == true)
         {
           Assert(false, ExcNotImplemented());
         }
@@ -313,7 +313,7 @@ namespace StokesClass
                         const unsigned int /*component*/) const
   {
     double Chi = 1.0;
-    for(unsigned int s = 0; s < sinker.n_sinkers; ++s)
+    for (unsigned int s = 0; s < sinker.n_sinkers; ++s)
       {
         double dist = p.distance(sinker.centers[s]);
         double temp
@@ -333,7 +333,7 @@ namespace StokesClass
            ExcDimensionMismatch(values.size(), points.size()));
     Assert(component == 0, ExcIndexRange(component, 0, 1));
     const unsigned int n_points = points.size();
-    for(unsigned int i = 0; i < n_points; ++i)
+    for (unsigned int i = 0; i < n_points; ++i)
       values[i] = value(points[i], component);
   }
 
@@ -357,7 +357,7 @@ namespace StokesClass
                                    Vector<double>&   values) const
   {
     double Chi = 1.0;
-    for(unsigned int s = 0; s < sinker.n_sinkers; ++s)
+    for (unsigned int s = 0; s < sinker.n_sinkers; ++s)
       {
         double dist = p.distance(sinker.centers[s]);
         double temp
@@ -366,13 +366,13 @@ namespace StokesClass
         Chi *= temp;
       }
 
-    if(sinker.problem_dim == 2)
+    if (sinker.problem_dim == 2)
       {
         values[0] = 0;
         values[1] = beta * (Chi - 1.0);
         values[2] = 0;
       }
-    else if(sinker.problem_dim == 3)
+    else if (sinker.problem_dim == 3)
       {
         values[0] = 0;
         values[1] = 0;
@@ -397,7 +397,7 @@ namespace StokesClass
                                                   Vector<double>& values) const
   {
     (void) p;
-    for(unsigned int i = 0; i < values.size(); ++i)
+    for (unsigned int i = 0; i < values.size(); ++i)
       values(i) = 0.0;
     return;
   }
@@ -418,7 +418,7 @@ namespace StokesClass
     Vector<double>&   values) const
   {
     (void) p;
-    for(unsigned int i = 0; i < values.size(); ++i)
+    for (unsigned int i = 0; i < values.size(); ++i)
       values(i) = 0.0;
     return;
   }
@@ -470,19 +470,19 @@ namespace StokesClass
     FEEvaluation<dim, degree_v, degree_v + 1, dim, number> velocity(*this->data,
                                                                     0);
     viscosity_x_2.reinit(n_cells, velocity.n_q_points);
-    for(unsigned int cell = 0; cell < n_cells; ++cell)
+    for (unsigned int cell = 0; cell < n_cells; ++cell)
       {
         velocity.reinit(cell);
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for (unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             VectorizedArray<number> return_value
               = make_vectorized_array<number>(1.);
-            for(unsigned int i = 0;
-                i < VectorizedArray<number>::n_array_elements;
-                ++i)
+            for (unsigned int i = 0;
+                 i < VectorizedArray<number>::n_array_elements;
+                 ++i)
               {
                 Point<dim> p;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     p(d) = velocity.quadrature_point(q)(d)[i];
                   }
@@ -504,7 +504,7 @@ namespace StokesClass
     FEEvaluation<dim, degree_v, degree_v + 1, dim, number>   velocity(data, 0);
     FEEvaluation<dim, degree_v - 1, degree_v + 1, 1, number> pressure(data, 1);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         velocity.reinit(cell);
         velocity.read_dof_values(src.block(0));
@@ -513,7 +513,7 @@ namespace StokesClass
         pressure.read_dof_values(src.block(1));
         pressure.evaluate(true, false, false);
 
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for (unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             SymmetricTensor<2, dim, vector_t> sym_grad_u
               = velocity.get_symmetric_gradient(q);
@@ -523,7 +523,7 @@ namespace StokesClass
 
             sym_grad_u *= viscosity_x_2(cell, q);
             // subtract p * I
-            for(unsigned int d = 0; d < dim; ++d)
+            for (unsigned int d = 0; d < dim; ++d)
               sym_grad_u[d][d] -= pres;
 
             velocity.submit_symmetric_gradient(sym_grad_u, q);
@@ -606,19 +606,19 @@ namespace StokesClass
     FEEvaluation<dim, degree_p, degree_p + 2, 1, number> pressure(*this->data,
                                                                   0);
     one_over_viscosity.reinit(n_cells, pressure.n_q_points);
-    for(unsigned int cell = 0; cell < n_cells; ++cell)
+    for (unsigned int cell = 0; cell < n_cells; ++cell)
       {
         pressure.reinit(cell);
-        for(unsigned int q = 0; q < pressure.n_q_points; ++q)
+        for (unsigned int q = 0; q < pressure.n_q_points; ++q)
           {
             VectorizedArray<number> return_value
               = make_vectorized_array<number>(1.);
-            for(unsigned int i = 0;
-                i < VectorizedArray<number>::n_array_elements;
-                ++i)
+            for (unsigned int i = 0;
+                 i < VectorizedArray<number>::n_array_elements;
+                 ++i)
               {
                 Point<dim> p;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   p(d) = pressure.quadrature_point(q)(d)[i];
                 return_value[i] = 1.0 / viscosity_function.value(p);
               }
@@ -636,7 +636,7 @@ namespace StokesClass
   {
     FEEvaluation<dim, degree_p, degree_p + 2, 1, number> pressure(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         AssertDimension(one_over_viscosity.size(0), data.n_macro_cells());
         AssertDimension(one_over_viscosity.size(1), pressure.n_q_points);
@@ -644,7 +644,7 @@ namespace StokesClass
         pressure.reinit(cell);
         pressure.read_dof_values(src);
         pressure.evaluate(true, false);
-        for(unsigned int q = 0; q < pressure.n_q_points; ++q)
+        for (unsigned int q = 0; q < pressure.n_q_points; ++q)
           pressure.submit_value(
             one_over_viscosity(cell, q) * pressure.get_value(q), q);
         pressure.integrate(true, false);
@@ -685,7 +685,7 @@ namespace StokesClass
     this->set_constrained_entries_to_one(diagonal);
     inverse_diagonal              = diagonal;
     const unsigned int local_size = inverse_diagonal.local_size();
-    for(unsigned int i = 0; i < local_size; ++i)
+    for (unsigned int i = 0; i < local_size; ++i)
       {
         Assert(inverse_diagonal.local_element(i) > 0.,
                ExcMessage("No diagonal entry in a positive definite operator "
@@ -703,18 +703,18 @@ namespace StokesClass
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, degree_p, degree_p + 2, 1, number> pressure(data, 0);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         pressure.reinit(cell);
         AlignedVector<VectorizedArray<number>> diagonal(pressure.dofs_per_cell);
-        for(unsigned int i = 0; i < pressure.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < pressure.dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < pressure.dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < pressure.dofs_per_cell; ++j)
               pressure.begin_dof_values()[j] = VectorizedArray<number>();
             pressure.begin_dof_values()[i] = make_vectorized_array<number>(1.);
 
             pressure.evaluate(true, false, false);
-            for(unsigned int q = 0; q < pressure.n_q_points; ++q)
+            for (unsigned int q = 0; q < pressure.n_q_points; ++q)
               pressure.submit_value(
                 one_over_viscosity(cell, q) * pressure.get_value(q), q);
             pressure.integrate(true, false);
@@ -722,7 +722,7 @@ namespace StokesClass
             diagonal[i] = pressure.begin_dof_values()[i];
           }
 
-        for(unsigned int i = 0; i < pressure.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < pressure.dofs_per_cell; ++i)
           pressure.begin_dof_values()[i] = diagonal[i];
         pressure.distribute_local_to_global(dst);
       }
@@ -781,19 +781,19 @@ namespace StokesClass
     FEEvaluation<dim, degree_v, degree_v + 1, dim, number> velocity(*this->data,
                                                                     0);
     viscosity_x_2.reinit(n_cells, velocity.n_q_points);
-    for(unsigned int cell = 0; cell < n_cells; ++cell)
+    for (unsigned int cell = 0; cell < n_cells; ++cell)
       {
         velocity.reinit(cell);
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for (unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             VectorizedArray<number> return_value
               = make_vectorized_array<number>(1.);
-            for(unsigned int i = 0;
-                i < VectorizedArray<number>::n_array_elements;
-                ++i)
+            for (unsigned int i = 0;
+                 i < VectorizedArray<number>::n_array_elements;
+                 ++i)
               {
                 Point<dim> p;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     p(d) = velocity.quadrature_point(q)(d)[i];
                   }
@@ -813,7 +813,7 @@ namespace StokesClass
   {
     FEEvaluation<dim, degree_v, degree_v + 1, dim, number> velocity(data);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         AssertDimension(viscosity_x_2.size(0), data.n_macro_cells());
         AssertDimension(viscosity_x_2.size(1), velocity.n_q_points);
@@ -821,7 +821,7 @@ namespace StokesClass
         velocity.reinit(cell);
         velocity.read_dof_values(src);
         velocity.evaluate(false, true, false);
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for (unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             velocity.submit_symmetric_gradient(
               viscosity_x_2(cell, q) * velocity.get_symmetric_gradient(q), q);
@@ -855,7 +855,7 @@ namespace StokesClass
 
     this->set_constrained_entries_to_one(inverse_diagonal);
 
-    for(unsigned int i = 0; i < inverse_diagonal.local_size(); ++i)
+    for (unsigned int i = 0; i < inverse_diagonal.local_size(); ++i)
       {
         Assert(inverse_diagonal.local_element(i) > 0.,
                ExcMessage("No diagonal entry in a positive definite operator "
@@ -873,18 +873,18 @@ namespace StokesClass
     const std::pair<unsigned int, unsigned int>& cell_range) const
   {
     FEEvaluation<dim, degree_v, degree_v + 1, dim, number> velocity(data, 0);
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         velocity.reinit(cell);
         AlignedVector<VectorizedArray<number>> diagonal(velocity.dofs_per_cell);
-        for(unsigned int i = 0; i < velocity.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < velocity.dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < velocity.dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < velocity.dofs_per_cell; ++j)
               velocity.begin_dof_values()[j] = VectorizedArray<number>();
             velocity.begin_dof_values()[i] = make_vectorized_array<number>(1.);
 
             velocity.evaluate(false, true, false);
-            for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+            for (unsigned int q = 0; q < velocity.n_q_points; ++q)
               {
                 velocity.submit_symmetric_gradient(
                   viscosity_x_2(cell, q) * velocity.get_symmetric_gradient(q),
@@ -895,7 +895,7 @@ namespace StokesClass
             diagonal[i] = velocity.begin_dof_values()[i];
           }
 
-        for(unsigned int i = 0; i < velocity.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < velocity.dofs_per_cell; ++i)
           velocity.begin_dof_values()[i] = diagonal[i];
         velocity.distribute_local_to_global(dst);
       }
@@ -980,17 +980,17 @@ namespace StokesClass
     sinker.problem_dim = dim;
     sinker.n_sinkers   = n_sinkers;
     std::srand(171);
-    for(unsigned int s = 0; s < sinker.n_sinkers; ++s)
+    for (unsigned int s = 0; s < sinker.n_sinkers; ++s)
       {
         std::vector<double> coords(dim);
-        if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-          for(unsigned int i = 0; i < dim; ++i)
+        if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+          for (unsigned int i = 0; i < dim; ++i)
             coords[i] = std::rand() / (double) RAND_MAX;
 
         MPI_Bcast(&(coords[0]), dim, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
         Tensor<1, dim, double> coords_tens;
-        for(unsigned int i = 0; i < dim; ++i)
+        for (unsigned int i = 0; i < dim; ++i)
           coords_tens[i] = coords[i];
         sinker.centers.push_back(Point<dim>(coords_tens));
       }
@@ -1091,7 +1091,7 @@ namespace StokesClass
     mg_constrained_dofs.make_zero_boundary_constraints(dof_handler_u,
                                                        dirichlet_boundary);
 
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for (unsigned int level = 0; level < n_levels; ++level)
       {
         IndexSet relevant_dofs;
         DoFTools::extract_locally_relevant_level_dofs(
@@ -1186,30 +1186,30 @@ namespace StokesClass
     FEEvaluation<dim, velocity_degree - 1, velocity_degree + 1, 1, double>
       pressure(*stokes_matrix.get_matrix_free(), 1);
 
-    for(unsigned int cell = 0;
-        cell < stokes_matrix.get_matrix_free()->n_macro_cells();
-        ++cell)
+    for (unsigned int cell = 0;
+         cell < stokes_matrix.get_matrix_free()->n_macro_cells();
+         ++cell)
       {
         velocity.reinit(cell);
         pressure.reinit(cell);
-        for(unsigned int q = 0; q < velocity.n_q_points; ++q)
+        for (unsigned int q = 0; q < velocity.n_q_points; ++q)
           {
             Tensor<1, dim, VectorizedArray<double>> rhs_u;
-            for(unsigned int d = 0; d < dim; ++d)
+            for (unsigned int d = 0; d < dim; ++d)
               rhs_u[d] = make_vectorized_array<double>(1.0);
             VectorizedArray<double> rhs_p = make_vectorized_array<double>(1.0);
-            for(unsigned int i = 0;
-                i < VectorizedArray<double>::n_array_elements;
-                ++i)
+            for (unsigned int i = 0;
+                 i < VectorizedArray<double>::n_array_elements;
+                 ++i)
               {
                 Point<dim> p;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   p(d) = velocity.quadrature_point(q)(d)[i];
 
                 Vector<double> rhs_temp(dim + 1);
                 right_hand_side.vector_value(p, rhs_temp);
 
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   rhs_u[d][i] = rhs_temp(d);
                 rhs_p[i] = rhs_temp(dim);
               }
@@ -1269,10 +1269,10 @@ namespace StokesClass
     mg::SmootherRelaxation<SmootherType, vector_t>           mg_smoother;
     MGLevelObject<typename SmootherType::AdditionalData>     smoother_data;
     smoother_data.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for (unsigned int level = 0; level < triangulation.n_global_levels();
+         ++level)
       {
-        if(level > 0)
+        if (level > 0)
           {
             smoother_data[level].smoothing_range     = 15.;
             smoother_data[level].degree              = 4;
@@ -1294,8 +1294,8 @@ namespace StokesClass
     MGLevelObject<MatrixFreeOperators::MGInterfaceOperator<LevelMatrixType>>
       mg_interface_matrices;
     mg_interface_matrices.resize(0, triangulation.n_global_levels() - 1);
-    for(unsigned int level = 0; level < triangulation.n_global_levels();
-        ++level)
+    for (unsigned int level = 0; level < triangulation.n_global_levels();
+         ++level)
       mg_interface_matrices[level].initialize(mg_matrices[level]);
     mg::Matrix<vector_t> mg_interface(mg_interface_matrices);
 
@@ -1341,7 +1341,7 @@ namespace StokesClass
                      distributed_stokes_rhs,
                      preconditioner_cheap);
       }
-    catch(SolverControl::NoConvergence)
+    catch (SolverControl::NoConvergence)
       {
         deallog
           << "********************************************************************"
@@ -1381,21 +1381,21 @@ namespace StokesClass
             << std::endl;
 
     unsigned int initial_ref;
-    if(dim == 2)
+    if (dim == 2)
       {
         initial_ref = 5;
       }
-    else if(dim == 3)
+    else if (dim == 3)
       {
         initial_ref = 3;
       }
 
     unsigned int n_cycles = 1;
-    if(dim == 2)
+    if (dim == 2)
       n_cycles = 2;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
-        if(cycle == 0)
+        if (cycle == 0)
           make_grid(initial_ref);
         else
           triangulation.refine_global();
@@ -1437,7 +1437,7 @@ main(int argc, char* argv[])
         deallog.pop();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1450,7 +1450,7 @@ main(int argc, char* argv[])
                 << std::endl;
       throw;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

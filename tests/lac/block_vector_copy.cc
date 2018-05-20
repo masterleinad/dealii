@@ -23,25 +23,25 @@ void
 test()
 {
   std::vector<double> v(9);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v[i] = double(i + 1);
 
   std::vector<types::global_dof_index> partition(3);
-  for(unsigned int i = 0; i < partition.size(); ++i)
+  for (unsigned int i = 0; i < partition.size(); ++i)
     partition[i] = 3;
 
   dealii::BlockVector<double> b(partition);
   AssertThrow(b.n_blocks() == partition.size(), ExcInternalError());
 
   unsigned int size = 0;
-  for(unsigned int i = 0; i < b.n_blocks(); ++i)
+  for (unsigned int i = 0; i < b.n_blocks(); ++i)
     {
       AssertThrow(b.block(i).size() == partition[i], ExcInternalError());
       size += b.block(i).size();
     }
   AssertThrow(b.size() == size, ExcInternalError());
 
-  for(unsigned int i = 0; i < b.size(); ++i)
+  for (unsigned int i = 0; i < b.size(); ++i)
     {
       b(i) = v[i];
       AssertThrow(b(i) == v[i], ExcInternalError());
@@ -76,7 +76,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       std::cerr << std::endl
                 << std::endl
@@ -89,7 +89,7 @@ main()
       // abort
       return 0;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

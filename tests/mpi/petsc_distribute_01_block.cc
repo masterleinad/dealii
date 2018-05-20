@@ -49,20 +49,20 @@ test()
   AssertThrow(vec.block(1).local_range().second == 100 * myid + 100,
               ExcInternalError());
 
-  for(unsigned int i = vec.block(0).local_range().first;
-      i < vec.block(0).local_range().second;
-      ++i)
+  for (unsigned int i = vec.block(0).local_range().first;
+       i < vec.block(0).local_range().second;
+       ++i)
     vec.block(0)(i) = i;
-  for(unsigned int i = vec.block(1).local_range().first;
-      i < vec.block(1).local_range().second;
-      ++i)
+  for (unsigned int i = vec.block(1).local_range().first;
+       i < vec.block(1).local_range().second;
+       ++i)
     vec.block(1)(i) = i;
   vec.compress(VectorOperation::insert);
 
   // verify correctness so far
   {
     double exact_l1 = 0;
-    for(unsigned int i = 0; i < vec.block(0).size(); ++i)
+    for (unsigned int i = 0; i < vec.block(0).size(); ++i)
       exact_l1 += 2 * i;
     AssertThrow(vec.l1_norm() == exact_l1, ExcInternalError());
   }
@@ -88,9 +88,9 @@ test()
   // note that we tell each processor about all constraints, but most
   // of them will throw away this information since it is not for a
   // DoF inside the locally relevant range
-  for(unsigned int p = 0; p < n_processes; ++p)
+  for (unsigned int p = 0; p < n_processes; ++p)
     {
-      if((p != 0) && locally_relevant_range.is_element(p * 100 + 10))
+      if ((p != 0) && locally_relevant_range.is_element(p * 100 + 10))
         {
           cm.add_line(p * 100 + 10);
           cm.add_entry(p * 100 + 10, p * 100 - 25, 1);
@@ -100,8 +100,8 @@ test()
                        1);
         }
 
-      if((p != n_processes - 1)
-         && locally_relevant_range.is_element(p * 100 + 90))
+      if ((p != n_processes - 1)
+          && locally_relevant_range.is_element(p * 100 + 90))
         {
           cm.add_line(p * 100 + 90);
           cm.add_entry(p * 100 + 90, p * 100 + 105, 1);
@@ -117,48 +117,48 @@ test()
   cm.distribute(vec);
 
   // verify correctness
-  if(myid != 0)
+  if (myid != 0)
     AssertThrow(
       get_real_assert_zero_imag(vec(vec.block(0).local_range().first + 10))
         == vec.block(0).local_range().first - 25,
       ExcInternalError());
 
-  if(myid != n_processes - 1)
+  if (myid != n_processes - 1)
     AssertThrow(
       get_real_assert_zero_imag(vec(vec.block(0).local_range().first + 90))
         == vec.block(0).local_range().first + 105,
       ExcInternalError());
 
-  if(myid != 0)
+  if (myid != 0)
     AssertThrow(get_real_assert_zero_imag(vec(
                   vec.block(0).size() + vec.block(1).local_range().first + 10))
                   == vec.block(1).local_range().first - 25,
                 ExcInternalError());
 
-  if(myid != n_processes - 1)
+  if (myid != n_processes - 1)
     AssertThrow(get_real_assert_zero_imag(vec(
                   vec.block(0).size() + vec.block(1).local_range().first + 90))
                   == vec.block(1).local_range().first + 105,
                 ExcInternalError());
 
-  for(unsigned int i = vec.block(0).local_range().first;
-      i < vec.block(0).local_range().second;
-      ++i)
+  for (unsigned int i = vec.block(0).local_range().first;
+       i < vec.block(0).local_range().second;
+       ++i)
     {
-      if((i != vec.block(0).local_range().first + 10)
-         && (i != vec.block(0).local_range().first + 90))
+      if ((i != vec.block(0).local_range().first + 10)
+          && (i != vec.block(0).local_range().first + 90))
         {
           PetscScalar val = vec.block(0)(i);
           AssertThrow(std::fabs(get_real_assert_zero_imag(val) - i) <= 1e-6,
                       ExcInternalError());
         }
     }
-  for(unsigned int i = vec.block(1).local_range().first;
-      i < vec.block(1).local_range().second;
-      ++i)
+  for (unsigned int i = vec.block(1).local_range().first;
+       i < vec.block(1).local_range().second;
+       ++i)
     {
-      if((i != vec.block(1).local_range().first + 10)
-         && (i != vec.block(1).local_range().first + 90))
+      if ((i != vec.block(1).local_range().first + 10)
+          && (i != vec.block(1).local_range().first + 90))
         {
           PetscScalar val = vec.block(1)(i);
           AssertThrow(std::fabs(get_real_assert_zero_imag(val) - i) <= 1e-6,
@@ -170,15 +170,15 @@ test()
     double exact_l1 = 0;
 
     // add up original values of vector entries
-    for(unsigned int i = 0; i < vec.block(0).size(); ++i)
+    for (unsigned int i = 0; i < vec.block(0).size(); ++i)
       exact_l1 += i;
 
     // but then correct for the constrained values
-    for(unsigned int p = 0; p < n_processes; ++p)
+    for (unsigned int p = 0; p < n_processes; ++p)
       {
-        if(p != 0)
+        if (p != 0)
           exact_l1 = exact_l1 - (p * 100 + 10) + (p * 100 - 25);
-        if(p != n_processes - 1)
+        if (p != n_processes - 1)
           exact_l1 = exact_l1 - (p * 100 + 90) + (p * 100 + 105);
       }
 
@@ -187,7 +187,7 @@ test()
 
     // generate output. write the norm divided by two so that it matches the
     // results of the _01 test
-    if(myid == 0)
+    if (myid == 0)
       deallog << "Norm = " << l1_norm / 2 << std::endl;
   }
 }
@@ -201,7 +201,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -78,11 +78,11 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
   types::global_dof_index i_min          = 0;
   types::global_dof_index this_subdomain = subdomain_association[0];
 
-  for(types::global_dof_index index = 1; index < subdomain_association.size();
-      ++index)
+  for (types::global_dof_index index = 1; index < subdomain_association.size();
+       ++index)
     {
       //found index different from the current one
-      if(subdomain_association[index] != this_subdomain)
+      if (subdomain_association[index] != this_subdomain)
         {
           index_sets[this_subdomain].add_range(i_min, index);
           i_min          = index;
@@ -91,7 +91,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
     }
 
   // the very last element is of different index
-  if(i_min == subdomain_association.size() - 1)
+  if (i_min == subdomain_association.size() - 1)
     {
       index_sets[this_subdomain].add_index(i_min);
     }
@@ -102,7 +102,7 @@ locally_owned_dofs_per_subdomain(const DoFHandlerType& dof_handler)
       index_sets[this_subdomain].add_range(i_min, subdomain_association.size());
     }
 
-  for(unsigned int i = 0; i < n_subdomains; i++)
+  for (unsigned int i = 0; i < n_subdomains; i++)
     index_sets[i].compress();
 
   return index_sets;
@@ -145,7 +145,7 @@ test()
     Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active(),
       endc = triangulation.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const Point<dim>& center = cell->center();
         const double      x      = center[0];
@@ -177,7 +177,7 @@ test()
                                   constraints,
                                   /* keep constrained dofs */ true);
   std::vector<types::global_dof_index> n_locally_owned_dofs(n_mpi_processes);
-  for(unsigned int i = 0; i < n_mpi_processes; i++)
+  for (unsigned int i = 0; i < n_mpi_processes; i++)
     n_locally_owned_dofs[i] = locally_owned_dofs_per_processor[i].n_elements();
 
   SparsityTools::distribute_sparsity_pattern(
@@ -193,12 +193,12 @@ test()
   eigenvalues.resize(number_of_eigenvalues);
 
   arpack_vectors.resize(number_of_eigenvalues + 1);
-  for(unsigned int i = 0; i < arpack_vectors.size(); ++i)
+  for (unsigned int i = 0; i < arpack_vectors.size(); ++i)
     arpack_vectors[i].reinit(locally_owned_dofs,
                              mpi_communicator); //without ghost dofs
 
   eigenfunctions.resize(2 * number_of_eigenvalues);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
     eigenfunctions[i].reinit(locally_owned_dofs,
                              mpi_communicator); //without ghost dofs
 
@@ -223,21 +223,21 @@ test()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
-    if(cell->subdomain_id() == this_mpi_process)
+  for (; cell != endc; ++cell)
+    if (cell->subdomain_id() == this_mpi_process)
       {
         fe_values.reinit(cell);
         cell_stiffness_matrix = 0;
         cell_mass_matrix      = 0;
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             const Point<dim> cur_point = fe_values.quadrature_point(q_point);
             Tensor<1, dim>   advection;
             advection[0] = 10.;
             advection[1] = 10. * cur_point[0];
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
                   cell_stiffness_matrix(i, j)
                     += (fe_values.shape_grad(i, q_point)
@@ -269,7 +269,7 @@ test()
     const double                      shift = 4.0;
     std::vector<std::complex<double>> lambda(eigenfunctions.size());
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       eigenfunctions[i] = 0.;
 
     static ReductionControl inner_control_c(/*maxiter*/ stiffness_matrix.m(),
@@ -315,13 +315,13 @@ test()
     deallog.depth_file(previous_depth);
 
     // extract real and complex components of eigenvectors
-    for(unsigned int i = 0; i < eigenvalues.size(); ++i)
+    for (unsigned int i = 0; i < eigenvalues.size(); ++i)
       {
         eigenfunctions[i] = arpack_vectors[i];
-        if(eigenvalues[i].imag() != 0.)
+        if (eigenvalues[i].imag() != 0.)
           {
             eigenfunctions[i + eigenvalues.size()] = arpack_vectors[i + 1];
-            if(i + 1 < eigenvalues.size())
+            if (i + 1 < eigenvalues.size())
               {
                 eigenfunctions[i + 1] = arpack_vectors[i];
                 eigenfunctions[i + 1 + eigenvalues.size()]
@@ -332,7 +332,7 @@ test()
           }
       }
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-normal:
@@ -344,7 +344,7 @@ test()
         Bx(eigenfunctions[0]);
       TrilinosWrappers::MPI::Vector Ay(eigenfunctions[0]),
         By(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenvalues.size(); ++i)
+      for (unsigned int i = 0; i < eigenvalues.size(); ++i)
         {
           stiffness_matrix.vmult(Ax, eigenfunctions[i]);
           stiffness_matrix.vmult(Ay, eigenfunctions[i + eigenvalues.size()]);
@@ -359,7 +359,7 @@ test()
           tmpx.scale(Ax);
           tmpy.scale(Ay);
           tmpx += tmpy;
-          if(std::sqrt(tmpx.l1_norm()) > precision)
+          if (std::sqrt(tmpx.l1_norm()) > precision)
             deallog << "Returned vector " << i << " is not an eigenvector!"
                     << " L2 norm of the residual is "
                     << std::sqrt(tmpx.l1_norm()) << std::endl;
@@ -369,7 +369,7 @@ test()
                        + eigenfunctions[i + eigenvalues.size()] * By - 1.)
               + std::abs(eigenfunctions[i + eigenvalues.size()] * Bx
                          - eigenfunctions[i] * By);
-          if(tmp > precision)
+          if (tmp > precision)
             deallog << "Eigenvector " << i << " is not normal! failing norm is "
                     << tmp << std::endl;
         }
@@ -393,7 +393,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -407,7 +407,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

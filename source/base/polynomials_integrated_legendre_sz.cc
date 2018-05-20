@@ -27,12 +27,12 @@ IntegratedLegendreSZ::get_coefficients(const unsigned int k)
   std::vector<double> coefficients(k + 1);
 
   // first two polynomials are hard-coded:
-  if(k == 0)
+  if (k == 0)
     {
       coefficients[0] = -1.;
       return coefficients;
     }
-  else if(k == 1)
+  else if (k == 1)
     {
       coefficients[0] = 0.;
       coefficients[1] = 1.;
@@ -49,7 +49,7 @@ IntegratedLegendreSZ::get_coefficients(const unsigned int k)
   const double c = k - 3.0;
 
   // To maintain stability, delay the division (multiplication by a) until the end.
-  for(unsigned int i = 1; i <= k - 2; i++)
+  for (unsigned int i = 1; i <= k - 2; i++)
     {
       coefficients[i] = b * coefficients_km1[i - 1] - c * coefficients_km2[i];
     }
@@ -58,7 +58,7 @@ IntegratedLegendreSZ::get_coefficients(const unsigned int k)
   coefficients[k]     = b * coefficients_km1[k - 1];
   coefficients[k - 1] = b * coefficients_km1[k - 2];
 
-  for(unsigned int i = 0; i < coefficients.size(); i++)
+  for (unsigned int i = 0; i < coefficients.size(); i++)
     {
       coefficients[i] *= a;
     }
@@ -71,7 +71,7 @@ IntegratedLegendreSZ::generate_complete_basis(const unsigned int degree)
 {
   std::vector<Polynomials::Polynomial<double>> v;
   v.reserve(degree + 1);
-  for(unsigned int i = 0; i <= degree; ++i)
+  for (unsigned int i = 0; i <= degree; ++i)
     {
       v.push_back(IntegratedLegendreSZ(i));
     }

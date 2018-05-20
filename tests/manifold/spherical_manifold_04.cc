@@ -49,7 +49,7 @@ test(const double R)
 
   // derived
   Point<dim> center;
-  for(unsigned int d = 0; d < dim; d++)
+  for (unsigned int d = 0; d < dim; d++)
     center[d] = d;
 
   Triangulation<dim> triangulation;
@@ -72,10 +72,10 @@ test(const double R)
   const unsigned int n_q_points              = quadrature_formula.size();
 
   double volume = 0.;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int q = 0; q < n_q_points; ++q)
         volume += fe_values.JxW(q);
     }
 

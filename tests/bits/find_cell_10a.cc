@@ -59,9 +59,9 @@ void create_coarse_grid(Triangulation<2>& coarse_grid)
   const unsigned int n_cells = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
   std::vector<CellData<2>> cells(n_cells, CellData<2>());
-  for(unsigned int i = 0; i < n_cells; ++i)
+  for (unsigned int i = 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     }

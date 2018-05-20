@@ -76,7 +76,7 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
     {7, 6, 5, 4},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
     {
       cells[0].vertices[j] = cell_vertices_0[j];
       cells[1].vertices[j] = cell_vertices_1[orientation][j];
@@ -92,11 +92,11 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
   Triangulation<2>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<2>::faces_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<2>::faces_per_cell; ++j)
     {
-      if(cell_1->face(j)->center()(1) > 2.9)
+      if (cell_1->face(j)->center()(1) > 2.9)
         face_1 = cell_1->face(j);
-      if(cell_2->face(j)->center()(1) < -2.9)
+      if (cell_2->face(j)->center()(1) < -2.9)
         face_2 = cell_2->face(j);
     }
   face_1->set_boundary_id(42);
@@ -144,7 +144,7 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
     {15, 13, 14, 12, 11, 9, 10, 8},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
     {
       cells[0].vertices[j] = cell_vertices_0[j];
       cells[1].vertices[j] = cell_vertices_1[orientation][j];
@@ -160,11 +160,11 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
   Triangulation<3>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<3>::faces_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<3>::faces_per_cell; ++j)
     {
-      if(cell_1->face(j)->center()(2) > 2.9)
+      if (cell_1->face(j)->center()(2) > 2.9)
         face_1 = cell_1->face(j);
-      if(cell_2->face(j)->center()(2) < -2.9)
+      if (cell_2->face(j)->center()(2) < -2.9)
         face_2 = cell_2->face(j);
     }
   face_1->set_boundary_id(42);
@@ -198,21 +198,21 @@ print_matching(DoFHandler<dim>& dof_handler,
   FEValuesExtractors::Scalar pressure(3);
 
   ComponentMask velocity_mask;
-  if(constrain_only_velocity)
+  if (constrain_only_velocity)
     velocity_mask = fe.component_mask(v);
 
   // Look for the two outermost faces:
   typename DoFHandler<dim>::face_iterator face_1;
   typename DoFHandler<dim>::face_iterator face_2;
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(0);
-      cell != dof_handler.end(0);
-      ++cell)
+  for (typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin(0);
+       cell != dof_handler.end(0);
+       ++cell)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
         {
-          if(cell->face(j)->center()(dim == 2 ? 1 : 2) > 2.9)
+          if (cell->face(j)->center()(dim == 2 ? 1 : 2) > 2.9)
             face_1 = cell->face(j);
-          if(cell->face(j)->center()(dim == 2 ? 1 : 2) < -2.9)
+          if (cell->face(j)->center()(dim == 2 ? 1 : 2) < -2.9)
             face_2 = cell->face(j);
         }
     }
@@ -228,24 +228,24 @@ print_matching(DoFHandler<dim>& dof_handler,
 
   // Print out all DoF support points on the two faces:
   deallog << "DoFs of face_1:";
-  for(unsigned int c = 0; c < fe.n_components(); c++)
+  for (unsigned int c = 0; c < fe.n_components(); c++)
     {
       deallog << std::endl << " component " << c << ":";
-      for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_face; ++i)
         {
-          if(fe.face_system_to_component_index(i).first == c)
+          if (fe.face_system_to_component_index(i).first == c)
             deallog << " (" << dofs_1[i] << " - " << support_points[dofs_1[i]]
                     << ")";
         }
     }
   deallog << std::endl;
   deallog << "DoFs of face_2:";
-  for(unsigned int c = 0; c < fe.n_components(); c++)
+  for (unsigned int c = 0; c < fe.n_components(); c++)
     {
       deallog << std::endl << " component " << c << ":";
-      for(unsigned int i = 0; i < fe.dofs_per_face; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_face; ++i)
         {
-          if(fe.face_system_to_component_index(i).first == c)
+          if (fe.face_system_to_component_index(i).first == c)
             deallog << " (" << dofs_2[i] << " - " << support_points[dofs_2[i]]
                     << ")";
         }
@@ -253,8 +253,11 @@ print_matching(DoFHandler<dim>& dof_handler,
   deallog << std::endl;
 
   std::bitset<3> orientation;
-  if(not GridTools::orthogonal_equality(
-       orientation, face_1, face_2, dim == 2 ? 1 : 2, dealii::Tensor<1, dim>()))
+  if (not GridTools::orthogonal_equality(orientation,
+                                         face_1,
+                                         face_2,
+                                         dim == 2 ? 1 : 2,
+                                         dealii::Tensor<1, dim>()))
     std::cerr << " not match! oh noze!! " << std::endl;
   deallog << "Orientation: " << orientation[0] << orientation[1]
           << orientation[2] << std::endl;
@@ -292,7 +295,7 @@ main()
 
   deallog << "Test for 2D, Q1:" << std::endl << std::endl;
 
-  for(int i = 0; i < 2; ++i)
+  for (int i = 0; i < 2; ++i)
     {
       // Generate a triangulation and match:
       Triangulation<2> triangulation;
@@ -308,7 +311,7 @@ main()
 
   deallog << "Test for 3D, Q1:" << std::endl << std::endl;
 
-  for(int i = 0; i < 8; ++i)
+  for (int i = 0; i < 8; ++i)
     {
       // Generate a triangulation and match:
       Triangulation<3> triangulation;
@@ -325,7 +328,7 @@ main()
   deallog << "Test for 3D, Q1, correct subface iteration:" << std::endl
           << std::endl;
 
-  for(int i = 0; i < 8; ++i)
+  for (int i = 0; i < 8; ++i)
     {
       // Generate a triangulation and match:
       Triangulation<3> triangulation;
@@ -343,7 +346,7 @@ main()
   deallog << "Test for 3D, Taylor-Hood with Component-Mask on v:" << std::endl
           << std::endl;
 
-  for(int i = 0; i < 8; ++i)
+  for (int i = 0; i < 8; ++i)
     {
       // Generate a triangulation and match:
       Triangulation<3> triangulation;

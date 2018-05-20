@@ -75,7 +75,7 @@ cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
                        info.fe_values(de),
                        info.fe_values(de + 1));
 
-  if(dim > 2)
+  if (dim > 2)
     {
       ++de;
       L2::mass_matrix(dinfo.matrix(dm++, false).matrix, info.fe_values(de));
@@ -130,7 +130,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   matrices.add(d, d, "curl-curl");
   matrices.add(d + 1, d, "curl");
 
-  if(dim > 2)
+  if (dim > 2)
     {
       ++d;
       matrices.add(d, d, "mass-Hdiv");
@@ -143,8 +143,8 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   matrices.reinit(sparsity);
 
-  if(debugging)
-    for(unsigned int i = 0; i < matrices.size(); ++i)
+  if (debugging)
+    for (unsigned int i = 0; i < matrices.size(); ++i)
       deallog << "Block " << '(' << matrices.block(i).row << ','
               << matrices.block(i).column << ") " << std::setw(3) << std::right
               << matrices.matrix(i).m() << std::left << 'x' << std::setw(3)
@@ -156,7 +156,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   UpdateFlags update_flags = update_values | update_gradients;
   info_box.add_update_flags_cell(update_flags);
   info_box.initialize(fe, mapping, &dof.block_info());
-  if(debugging)
+  if (debugging)
     deallog << "Infobox ready" << std::endl;
 
   MeshWorker::DoFInfo<dim> dof_info(dof.block_info());
@@ -178,19 +178,19 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
                                                         nullptr,
                                                         assembler);
 
-  for(unsigned int b = 0; b < matrices.size(); ++b)
-    if(b % 3 == 0)
-      for(unsigned int i = 0; i < matrices.block(b).matrix.m(); ++i)
-        if(matrices.block(b).matrix.diag_element(i) == 0.)
+  for (unsigned int b = 0; b < matrices.size(); ++b)
+    if (b % 3 == 0)
+      for (unsigned int i = 0; i < matrices.block(b).matrix.m(); ++i)
+        if (matrices.block(b).matrix.diag_element(i) == 0.)
           matrices.block(b).matrix.diag_element(i) = 1.;
-  if(debugging)
+  if (debugging)
     deallog << "Matrices ready" << std::endl;
   // Set up vectors
   BlockVector<double> source(dof.block_info().global());
   BlockVector<double> result1(dof.block_info().global());
   BlockVector<double> result2(dof.block_info().global());
   BlockVector<double> aux(dof.block_info().global());
-  for(unsigned int i = 0; i < source.size(); ++i)
+  for (unsigned int i = 0; i < source.size(); ++i)
     source(i) = i % 5;
 
   // now check, whether d*d =
@@ -198,12 +198,12 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   SolverControl            control(100, 1.e-13, false, false);
   SolverCG<Vector<double>> solver(control);
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       deallog << "Form " << d << std::endl;
       const unsigned int m = 3 * d;
 
-      if(d > 0)
+      if (d > 0)
         {
           matrices.matrix(m + 2).vmult(result2.block(d + 1), aux.block(d));
           deallog << "d^2            " << result2.block(d + 1).l2_norm()
@@ -226,7 +226,7 @@ test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
       matrices.matrix(m + 2).Tvmult(result1.block(d), aux.block(d + 1));
       matrices.matrix(m + 1).vmult(result2.block(d), source.block(d));
 
-      if(debugging)
+      if (debugging)
         deallog << "u " << source.block(d).l2_norm() << ' '
                 << matrices.name(m + 2) << ' ' << result1.block(d + 1).l2_norm()
                 << ' ' << matrices.name(m + 3) << ' '
@@ -253,21 +253,21 @@ run2d(unsigned int degree)
 
   FESystem<2> fe(h1, 1, hdiv, 1, l2, 1);
 
-  if(true)
+  if (true)
     {
       Triangulation<2> tr;
       TestGrids::hypercube(tr, 1);
       test_cochain(tr, fe);
     }
 
-  if(true)
+  if (true)
     {
       Triangulation<2> tr;
       TestGrids::hypercube(tr, 2, true);
       test_cochain(tr, fe);
     }
 
-  if(true)
+  if (true)
     {
       Triangulation<2> tr;
       TestGrids::hypercube(tr, 3, true);
@@ -286,28 +286,28 @@ run3d(unsigned int degree)
   deallog << "Setup" << std::endl;
 
   FE_Q<3> h1(degree + 1);
-  if(debugging)
+  if (debugging)
     deallog << "H1" << std::endl;
   FE_Nedelec<3> hcurl(degree);
-  if(debugging)
+  if (debugging)
     deallog << "Hcurl" << std::endl;
   FE_RaviartThomas<3> hdiv(degree);
-  if(debugging)
+  if (debugging)
     deallog << "Hdiv" << std::endl;
   FE_DGQ<3> l2(degree);
-  if(debugging)
+  if (debugging)
     deallog << "L2" << std::endl;
 
   FESystem<3> fe(h1, 1, hcurl, 1, hdiv, 1, l2, 1);
 
-  if(true)
+  if (true)
     {
       Triangulation<3> tr;
       TestGrids::hypercube(tr, 1);
       test_cochain(tr, fe);
     }
 
-  if(true)
+  if (true)
     {
       Triangulation<3> tr(Triangulation<3>::limit_level_difference_at_vertices);
       TestGrids::hypercube(tr, 2, true);

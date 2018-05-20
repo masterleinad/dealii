@@ -233,7 +233,7 @@ namespace Step19
   void
   parse_command_line(const int argc, char* const* argv)
   {
-    if(argc < 2)
+    if (argc < 2)
       {
         print_usage_message();
         exit(1);
@@ -243,7 +243,7 @@ namespace Step19
     // handle than the <code>argc</code>/<code>argv</code> mechanism. We omit
     // the name of the executable at the zeroth index:
     std::list<std::string> args;
-    for(int i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
       args.emplace_back(argv[i]);
 
     // Then process all these parameters. If the parameter is <code>-p</code>,
@@ -252,11 +252,11 @@ namespace Step19
     // format. Finally, for <code>-o</code> it is the name of the output
     // file. In all cases, once we've treated a parameter, we remove it from
     // the list of parameters:
-    while(args.size())
+    while (args.size())
       {
-        if(args.front() == std::string("-p"))
+        if (args.front() == std::string("-p"))
           {
-            if(args.size() == 1)
+            if (args.size() == 1)
               {
                 std::cerr << "Error: flag '-p' must be followed by the "
                           << "name of a parameter file." << std::endl;
@@ -276,10 +276,10 @@ namespace Step19
             // set in the parameter file. We therefore need to extract them
             // from the parameter file here, because they may be overridden by
             // later command line parameters:
-            if(output_file == "")
+            if (output_file == "")
               output_file = prm.get("Output file");
 
-            if(output_format == "")
+            if (output_format == "")
               output_format = prm.get("Output format");
 
             // Finally, let us note that if we were interested in the values
@@ -300,9 +300,9 @@ namespace Step19
             //
             // Alas, let's move on to handling of output formats:
           }
-        else if(args.front() == std::string("-x"))
+        else if (args.front() == std::string("-x"))
           {
-            if(args.size() == 1)
+            if (args.size() == 1)
               {
                 std::cerr << "Error: flag '-x' must be followed by the "
                           << "name of an output format." << std::endl;
@@ -313,9 +313,9 @@ namespace Step19
             output_format = args.front();
             args.pop_front();
           }
-        else if(args.front() == std::string("-o"))
+        else if (args.front() == std::string("-o"))
           {
-            if(args.size() == 1)
+            if (args.size() == 1)
               {
                 std::cerr << "Error: flag '-o' must be followed by the "
                           << "name of an output file." << std::endl;
@@ -339,7 +339,7 @@ namespace Step19
 
     // Next check a few things and create errors if the checks fail. Firstly,
     // there must be at least one input file
-    if(input_file_names.size() == 0)
+    if (input_file_names.size() == 0)
       {
         std::cerr << "Error: No input file specified." << std::endl;
         print_usage_message();
@@ -376,7 +376,7 @@ namespace Step19
 
     // For all the other input files, we read their data into an intermediate
     // object, and then merge that into the first object declared above:
-    for(unsigned int i = 1; i < input_file_names.size(); ++i)
+    for (unsigned int i = 1; i < input_file_names.size(); ++i)
       {
         std::ifstream input(input_file_names[i]);
         AssertThrow(input, ExcIO());
@@ -438,10 +438,10 @@ namespace Step19
     const std::pair<unsigned int, unsigned int> dimensions
       = DataOutBase::determine_intermediate_format_dimensions(input);
 
-    switch(dimensions.first)
+    switch (dimensions.first)
       {
         case 1:
-          switch(dimensions.second)
+          switch (dimensions.second)
             {
               case 1:
                 do_convert<1, 1>();
@@ -455,7 +455,7 @@ namespace Step19
           break;
 
         case 2:
-          switch(dimensions.second)
+          switch (dimensions.second)
             {
               case 2:
                 do_convert<2, 2>();
@@ -469,7 +469,7 @@ namespace Step19
           break;
 
         case 3:
-          switch(dimensions.second)
+          switch (dimensions.second)
             {
               case 3:
                 do_convert<3, 3>();
@@ -502,7 +502,7 @@ main(int argc, char** argv)
 
       convert();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -516,7 +516,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

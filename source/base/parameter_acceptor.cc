@@ -54,16 +54,16 @@ ParameterAcceptor::initialize(
   ParameterHandler&                   prm)
 {
   declare_all_parameters(prm);
-  if(filename != "")
+  if (filename != "")
     {
       // check the extension of input file
-      if(filename.substr(filename.find_last_of('.') + 1) == "prm")
+      if (filename.substr(filename.find_last_of('.') + 1) == "prm")
         {
           try
             {
               prm.parse_input(filename);
             }
-          catch(const dealii::PathSearch::ExcFileNotFound&)
+          catch (const dealii::PathSearch::ExcFileNotFound&)
             {
               std::ofstream out(filename);
               Assert(out, ExcIO());
@@ -76,10 +76,10 @@ ParameterAcceptor::initialize(
                                      + "We created it for you."));
             }
         }
-      else if(filename.substr(filename.find_last_of('.') + 1) == "xml")
+      else if (filename.substr(filename.find_last_of('.') + 1) == "xml")
         {
           std::ifstream is(filename);
-          if(!is)
+          if (!is)
             {
               std::ofstream out(filename);
               Assert(out, ExcIO());
@@ -100,14 +100,14 @@ ParameterAcceptor::initialize(
             "Invalid extension of parameter file. Please use .prm or .xml"));
     }
 
-  if(output_filename != "")
+  if (output_filename != "")
     {
       std::ofstream outfile(output_filename.c_str());
       Assert(outfile, ExcIO());
       std::string extension
         = output_filename.substr(output_filename.find_last_of('.') + 1);
 
-      if(extension == "prm")
+      if (extension == "prm")
         {
           outfile << "# Parameter file generated with " << std::endl
                   << "# DEAL_II_PACKAGE_VERSION = " << DEAL_II_PACKAGE_VERSION
@@ -119,9 +119,9 @@ ParameterAcceptor::initialize(
               "Only Text or ShortText can be specified in output_style_for_prm_format."))
             prm.print_parameters(outfile, output_style_for_prm_format);
         }
-      else if(extension == "xml")
+      else if (extension == "xml")
         prm.print_parameters(outfile, ParameterHandler::XML);
-      else if(extension == "latex" || extension == "tex")
+      else if (extension == "latex" || extension == "tex")
         prm.print_parameters(outfile, ParameterHandler::LaTeX);
       else
         AssertThrow(false, ExcNotImplemented());
@@ -159,8 +159,8 @@ ParameterAcceptor::parse_parameters(ParameterHandler&)
 void
 ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)
 {
-  for(unsigned int i = 0; i < class_list.size(); ++i)
-    if(class_list[i] != nullptr)
+  for (unsigned int i = 0; i < class_list.size(); ++i)
+    if (class_list[i] != nullptr)
       {
         class_list[i]->enter_my_subsection(prm);
         class_list[i]->parse_parameters(prm);
@@ -172,8 +172,8 @@ ParameterAcceptor::parse_all_parameters(ParameterHandler& prm)
 void
 ParameterAcceptor::declare_all_parameters(ParameterHandler& prm)
 {
-  for(unsigned int i = 0; i < class_list.size(); ++i)
-    if(class_list[i] != nullptr)
+  for (unsigned int i = 0; i < class_list.size(); ++i)
+    if (class_list[i] != nullptr)
       {
         class_list[i]->enter_my_subsection(prm);
         class_list[i]->declare_parameters(prm);
@@ -195,7 +195,7 @@ ParameterAcceptor::get_section_path() const
   // Split string list removes trailing empty strings, but not
   // preceding ones. Make sure that if we had an absolute path,
   // we don't store as first section the empty string.
-  if(is_absolute)
+  if (is_absolute)
     sections.erase(sections.begin());
   else
     {
@@ -203,14 +203,14 @@ ParameterAcceptor::get_section_path() const
       // to ours. This is tricky. If the previous class has a path with a
       // trailing /, then the full path is used, else only the path except the
       // last one
-      for(int i = acceptor_id - 1; i >= 0; --i)
-        if(class_list[i] != nullptr)
+      for (int i = acceptor_id - 1; i >= 0; --i)
+        if (class_list[i] != nullptr)
           {
             bool has_trailing = class_list[i]->get_section_name().back() == sep;
             auto previous_path = class_list[i]->get_section_path();
 
             // See if we need to remove last piece of the path
-            if((previous_path.size() > 0) && has_trailing == false)
+            if ((previous_path.size() > 0) && has_trailing == false)
               previous_path.resize(previous_path.size() - 1);
 
             sections.insert(
@@ -227,7 +227,7 @@ ParameterAcceptor::enter_my_subsection(ParameterHandler& prm
                                        = ParameterAcceptor::prm)
 {
   const auto sections = get_section_path();
-  for(const auto& sec : sections)
+  for (const auto& sec : sections)
     {
       prm.enter_subsection(sec);
     }
@@ -238,7 +238,7 @@ ParameterAcceptor::leave_my_subsection(ParameterHandler& prm
                                        = ParameterAcceptor::prm)
 {
   const auto sections = get_section_path();
-  for(unsigned int i = 0; i < sections.size(); ++i)
+  for (unsigned int i = 0; i < sections.size(); ++i)
     {
       prm.leave_subsection();
     }

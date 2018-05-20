@@ -92,7 +92,7 @@ MixedElastoPlasticity<dim>::make_grid_and_dofs()
   // stress -> 0 gamma -> 1
   std::vector<unsigned int> block_component(
     n_stress_components + n_gamma_components, 1);
-  for(unsigned int ii = 0; ii < n_stress_components; ii++)
+  for (unsigned int ii = 0; ii < n_stress_components; ii++)
     block_component[ii] = 0;
 
   DoFRenumbering::component_wise(dof_handler);
@@ -162,7 +162,7 @@ MixedElastoPlasticity<dim>::assemble_system()
   {
     fe_values.reinit(cell);
     cell->get_dof_indices(local_dof_indices);
-    for(unsigned int i = 0; i < dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < dofs_per_cell; ++i)
       {
         // 0 = stress (symmetric 2nd order tensor), 1 = Gamma (scalar) interpolation fields
         const unsigned int i_group = fe.system_to_base_index(i).first.first;
@@ -174,7 +174,7 @@ MixedElastoPlasticity<dim>::assemble_system()
         deallog << "\t" << i << "\t" << i_group << "\t" << i_index << "\t"
                 << i_node;
 
-        if(i_group == 0) // if i corresponds to tensor stress
+        if (i_group == 0) // if i corresponds to tensor stress
           solution(local_dof_indices[i]) = stress_value;
         else // i corresponds to scalar gamma
           solution(local_dof_indices[i]) = gamma_value;
@@ -195,15 +195,15 @@ MixedElastoPlasticity<dim>::assemble_system()
     // expect the nodal stress value at the quadrature point
     // constant stress field, therefore expect zero divergence
     // constant gamma field, therefore nodal value should equal value at quadrature point
-    for(unsigned int q = 0; q < quadrature_formula.size(); ++q)
+    for (unsigned int q = 0; q < quadrature_formula.size(); ++q)
       {
         deallog << local_values[q] << std::endl
                 << local_divergences[q] << std::endl
                 << local_scalar_values[q] << std::endl;
 
-        for(unsigned int m = 0; m < dim; m++)
+        for (unsigned int m = 0; m < dim; m++)
           {
-            for(unsigned int n = 0; n < dim; n++)
+            for (unsigned int n = 0; n < dim; n++)
               AssertThrow((local_values[q])[m][n] == stress_value,
                           ExcInternalError());
 

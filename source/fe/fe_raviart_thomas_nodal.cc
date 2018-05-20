@@ -68,31 +68,31 @@ FE_RaviartThomasNodal<dim>::FE_RaviartThomasNodal(const unsigned int deg)
   // prolongation matrices to the
   // right sizes. There are no
   // restriction matrices implemented
-  for(unsigned int ref_case = RefinementCase<dim>::cut_x;
-      ref_case < RefinementCase<dim>::isotropic_refinement + 1;
-      ++ref_case)
+  for (unsigned int ref_case = RefinementCase<dim>::cut_x;
+       ref_case < RefinementCase<dim>::isotropic_refinement + 1;
+       ++ref_case)
     {
       const unsigned int nc
         = GeometryInfo<dim>::n_children(RefinementCase<dim>(ref_case));
 
-      for(unsigned int i = 0; i < nc; ++i)
+      for (unsigned int i = 0; i < nc; ++i)
         this->prolongation[ref_case - 1][i].reinit(n_dofs, n_dofs);
     }
   // Fill prolongation matrices with embedding operators
   FETools::compute_embedding_matrices(*this, this->prolongation);
   // TODO[TL]: for anisotropic refinement we will probably need a table of submatrices with an array for each refine case
   FullMatrix<double> face_embeddings[GeometryInfo<dim>::max_children_per_face];
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
     face_embeddings[i].reinit(this->dofs_per_face, this->dofs_per_face);
   FETools::compute_face_embedding_matrices<dim, double>(
     *this, face_embeddings, 0, 0);
   this->interface_constraints.reinit((1 << (dim - 1)) * this->dofs_per_face,
                                      this->dofs_per_face);
   unsigned int target_row = 0;
-  for(unsigned int d = 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
-    for(unsigned int i = 0; i < face_embeddings[d].m(); ++i)
+  for (unsigned int d = 0; d < GeometryInfo<dim>::max_children_per_face; ++d)
+    for (unsigned int i = 0; i < face_embeddings[d].m(); ++i)
       {
-        for(unsigned int j = 0; j < face_embeddings[d].n(); ++j)
+        for (unsigned int j = 0; j < face_embeddings[d].n(); ++j)
           this->interface_constraints(target_row, j) = face_embeddings[d](i, j);
         ++target_row;
       }
@@ -146,17 +146,17 @@ FE_RaviartThomasNodal<dim>::initialize_support_points(const unsigned int deg)
   // uniquely. This is the deg of
   // the Raviart-Thomas element plus
   // one.
-  if(dim > 1)
+  if (dim > 1)
     {
       QGauss<dim - 1> face_points(deg + 1);
       Assert(face_points.size() == this->dofs_per_face, ExcInternalError());
-      for(unsigned int k = 0; k < this->dofs_per_face; ++k)
+      for (unsigned int k = 0; k < this->dofs_per_face; ++k)
         this->generalized_face_support_points[k] = face_points.point(k);
       Quadrature<dim> faces
         = QProjector<dim>::project_to_all_faces(face_points);
-      for(unsigned int k = 0;
-          k < this->dofs_per_face * GeometryInfo<dim>::faces_per_cell;
-          ++k)
+      for (unsigned int k = 0;
+           k < this->dofs_per_face * GeometryInfo<dim>::faces_per_cell;
+           ++k)
         this->generalized_support_points[k]
           = faces.point(k
                         + QProjector<dim>::DataSetDescriptor::face(
@@ -165,7 +165,7 @@ FE_RaviartThomasNodal<dim>::initialize_support_points(const unsigned int deg)
       current = this->dofs_per_face * GeometryInfo<dim>::faces_per_cell;
     }
 
-  if(deg == 0)
+  if (deg == 0)
     return;
   // In the interior, we need
   // anisotropic Gauss quadratures,
@@ -173,10 +173,10 @@ FE_RaviartThomasNodal<dim>::initialize_support_points(const unsigned int deg)
   QGauss<1> high(deg + 1);
   QGauss<1> low(deg);
 
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       std::unique_ptr<QAnisotropic<dim>> quadrature;
-      switch(dim)
+      switch (dim)
         {
           case 1:
             quadrature = std_cxx14::make_unique<QAnisotropic<dim>>(high);
@@ -195,7 +195,7 @@ FE_RaviartThomasNodal<dim>::initialize_support_points(const unsigned int deg)
             Assert(false, ExcNotImplemented());
         }
 
-      for(unsigned int k = 0; k < quadrature->size(); ++k)
+      for (unsigned int k = 0; k < quadrature->size(); ++k)
         this->generalized_support_points[current++] = quadrature->point(k);
     }
   Assert(current == this->dofs_per_cell, ExcInternalError());
@@ -208,7 +208,7 @@ FE_RaviartThomasNodal<dim>::get_dpo_vector(const unsigned int deg)
   // the element is face-based and we have
   // (deg+1)^(dim-1) DoFs per face
   unsigned int dofs_per_face = 1;
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     dofs_per_face *= deg + 1;
 
   // and then there are interior dofs
@@ -236,7 +236,7 @@ FE_RaviartThomasNodal<dim>::get_ria_vector(const unsigned int deg)
   const unsigned int dofs_per_cell
     = PolynomialsRaviartThomas<dim>::compute_n_pols(deg);
   unsigned int dofs_per_face = deg + 1;
-  for(unsigned int d = 2; d < dim; ++d)
+  for (unsigned int d = 2; d < dim; ++d)
     dofs_per_face *= deg + 1;
   // all face dofs need to be
   // non-additive, since they have
@@ -244,9 +244,9 @@ FE_RaviartThomasNodal<dim>::get_ria_vector(const unsigned int deg)
   // however, the interior dofs are
   // made additive
   std::vector<bool> ret_val(dofs_per_cell, false);
-  for(unsigned int i = GeometryInfo<dim>::faces_per_cell * dofs_per_face;
-      i < dofs_per_cell;
-      ++i)
+  for (unsigned int i = GeometryInfo<dim>::faces_per_cell * dofs_per_face;
+       i < dofs_per_cell;
+       ++i)
     ret_val[i] = true;
 
   return ret_val;
@@ -272,7 +272,7 @@ FE_RaviartThomasNodal<dim>::has_support_on_face(
   // is that shape functions with
   // support on one face are zero on
   // the opposite face.
-  if(support_face < GeometryInfo<dim>::faces_per_cell)
+  if (support_face < GeometryInfo<dim>::faces_per_cell)
     return (face_index != GeometryInfo<dim>::opposite_face[support_face]);
 
   // In all other cases, return true,
@@ -302,10 +302,10 @@ FE_RaviartThomasNodal<dim>::
   // direction and orientation.
   unsigned int fbase = 0;
   unsigned int f     = 0;
-  for(; f < GeometryInfo<dim>::faces_per_cell;
-      ++f, fbase += this->dofs_per_face)
+  for (; f < GeometryInfo<dim>::faces_per_cell;
+       ++f, fbase += this->dofs_per_face)
     {
-      for(unsigned int i = 0; i < this->dofs_per_face; ++i)
+      for (unsigned int i = 0; i < this->dofs_per_face; ++i)
         {
           nodal_values[fbase + i] = support_point_values[fbase + i](
             GeometryInfo<dim>::unit_normal_direction[f]);
@@ -318,9 +318,9 @@ FE_RaviartThomasNodal<dim>::
   Assert((this->dofs_per_cell - fbase) % dim == 0, ExcInternalError());
 
   f = 0;
-  while(fbase < this->dofs_per_cell)
+  while (fbase < this->dofs_per_cell)
     {
-      for(unsigned int i = 0; i < istep; ++i)
+      for (unsigned int i = 0; i < istep; ++i)
         {
           nodal_values[fbase + i] = support_point_values[fbase + i](f);
         }
@@ -349,9 +349,9 @@ FE_RaviartThomasNodal<dim>::hp_vertex_dof_identities(
   // FE_RaviartThomasNodals or the other is FE_Nothing.
   // In either case, no dofs are assigned on the vertex,
   // so we shouldn't be getting here at all.
-  if(dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other) != nullptr)
+  if (dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -369,12 +369,12 @@ FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
   // these identities if both FEs are
   // FE_RaviartThomasNodals or if the other
   // one is FE_Nothing
-  if(const FE_RaviartThomasNodal<dim>* fe_q_other
-     = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
+  if (const FE_RaviartThomasNodal<dim>* fe_q_other
+      = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
     {
       // dofs are located on faces; these are
       // only lines in 2d
-      if(dim != 2)
+      if (dim != 2)
         return std::vector<std::pair<unsigned int, unsigned int>>();
 
       // dofs are located along lines, so two
@@ -401,16 +401,16 @@ FE_RaviartThomasNodal<dim>::hp_line_dof_identities(
 
       std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-      if(p == q)
-        for(unsigned int i = 0; i < p + 1; ++i)
+      if (p == q)
+        for (unsigned int i = 0; i < p + 1; ++i)
           identities.emplace_back(i, i);
 
-      else if(p % 2 == 0 && q % 2 == 0)
+      else if (p % 2 == 0 && q % 2 == 0)
         identities.emplace_back(p / 2, q / 2);
 
       return identities;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -432,12 +432,12 @@ FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
   // these identities if both FEs are
   // FE_RaviartThomasNodals or if the other
   // one is FE_Nothing
-  if(const FE_RaviartThomasNodal<dim>* fe_q_other
-     = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
+  if (const FE_RaviartThomasNodal<dim>* fe_q_other
+      = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
     {
       // dofs are located on faces; these are
       // only quads in 3d
-      if(dim != 3)
+      if (dim != 3)
         return std::vector<std::pair<unsigned int, unsigned int>>();
 
       // this works exactly like the line
@@ -447,16 +447,16 @@ FE_RaviartThomasNodal<dim>::hp_quad_dof_identities(
 
       std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-      if(p == q)
-        for(unsigned int i = 0; i < p; ++i)
+      if (p == q)
+        for (unsigned int i = 0; i < p; ++i)
           identities.emplace_back(i, i);
 
-      else if(p % 2 != 0 && q % 2 != 0)
+      else if (p % 2 != 0 && q % 2 != 0)
         identities.emplace_back(p / 2, q / 2);
 
       return identities;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -474,20 +474,20 @@ FiniteElementDomination::Domination
 FE_RaviartThomasNodal<dim>::compare_for_face_domination(
   const FiniteElement<dim>& fe_other) const
 {
-  if(const FE_RaviartThomasNodal<dim>* fe_q_other
-     = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
+  if (const FE_RaviartThomasNodal<dim>* fe_q_other
+      = dynamic_cast<const FE_RaviartThomasNodal<dim>*>(&fe_other))
     {
-      if(this->degree < fe_q_other->degree)
+      if (this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
-      else if(this->degree == fe_q_other->degree)
+      else if (this->degree == fe_q_other->degree)
         return FiniteElementDomination::either_element_can_dominate;
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_q_other
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if (const FE_Nothing<dim>* fe_q_other
+           = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
     {
-      if(fe_q_other->is_dominating())
+      if (fe_q_other->is_dominating())
         {
           return FiniteElementDomination::other_element_dominates;
         }
@@ -585,11 +585,11 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
   const Quadrature<dim> face_projection
     = QProjector<dim>::project_to_face(quad_face_support, 0);
 
-  for(unsigned int i = 0; i < source_fe.dofs_per_face; ++i)
+  for (unsigned int i = 0; i < source_fe.dofs_per_face; ++i)
     {
       const Point<dim>& p = face_projection.point(i);
 
-      for(unsigned int j = 0; j < this->dofs_per_face; ++j)
+      for (unsigned int j = 0; j < this->dofs_per_face; ++j)
         {
           double matrix_entry
             = this->shape_value_component(this->face_to_cell_index(j, 0), p, 0);
@@ -600,9 +600,9 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
           // 1 or 0. Unfortunately, this
           // is required to avoid problems
           // with higher order elements.
-          if(std::fabs(matrix_entry - 1.0) < eps)
+          if (std::fabs(matrix_entry - 1.0) < eps)
             matrix_entry = 1.0;
-          if(std::fabs(matrix_entry) < eps)
+          if (std::fabs(matrix_entry) < eps)
             matrix_entry = 0.0;
 
           interpolation_matrix(i, j) = matrix_entry;
@@ -614,11 +614,11 @@ FE_RaviartThomasNodal<dim>::get_face_interpolation_matrix(
   // this point. this must be so
   // since the shape functions sum up
   // to 1
-  for(unsigned int j = 0; j < source_fe.dofs_per_face; ++j)
+  for (unsigned int j = 0; j < source_fe.dofs_per_face; ++j)
     {
       double sum = 0.;
 
-      for(unsigned int i = 0; i < this->dofs_per_face; ++i)
+      for (unsigned int i = 0; i < this->dofs_per_face; ++i)
         sum += interpolation_matrix(j, i);
 
       Assert(std::fabs(sum - 1) < 2e-13 * this->degree * (dim - 1),
@@ -690,11 +690,11 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
   const Quadrature<dim> subface_projection
     = QProjector<dim>::project_to_subface(quad_face_support, 0, subface);
 
-  for(unsigned int i = 0; i < source_fe.dofs_per_face; ++i)
+  for (unsigned int i = 0; i < source_fe.dofs_per_face; ++i)
     {
       const Point<dim>& p = subface_projection.point(i);
 
-      for(unsigned int j = 0; j < this->dofs_per_face; ++j)
+      for (unsigned int j = 0; j < this->dofs_per_face; ++j)
         {
           double matrix_entry
             = this->shape_value_component(this->face_to_cell_index(j, 0), p, 0);
@@ -705,9 +705,9 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
           // 1 or 0. Unfortunately, this
           // is required to avoid problems
           // with higher order elements.
-          if(std::fabs(matrix_entry - 1.0) < eps)
+          if (std::fabs(matrix_entry - 1.0) < eps)
             matrix_entry = 1.0;
-          if(std::fabs(matrix_entry) < eps)
+          if (std::fabs(matrix_entry) < eps)
             matrix_entry = 0.0;
 
           interpolation_matrix(i, j) = matrix_entry;
@@ -719,11 +719,11 @@ FE_RaviartThomasNodal<dim>::get_subface_interpolation_matrix(
   // this point. this must be so
   // since the shape functions sum up
   // to 1
-  for(unsigned int j = 0; j < source_fe.dofs_per_face; ++j)
+  for (unsigned int j = 0; j < source_fe.dofs_per_face; ++j)
     {
       double sum = 0.;
 
-      for(unsigned int i = 0; i < this->dofs_per_face; ++i)
+      for (unsigned int i = 0; i < this->dofs_per_face; ++i)
         sum += interpolation_matrix(j, i);
 
       Assert(std::fabs(sum - 1) < 2e-13 * this->degree * (dim - 1),

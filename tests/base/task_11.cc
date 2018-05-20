@@ -53,7 +53,7 @@ test()
   // force all tasks to wait until we are done starting
   mutex.acquire();
 
-  for(unsigned int t = 0; t < 10; ++t)
+  for (unsigned int t = 0; t < 10; ++t)
     tg += Threads::new_task(a_task);
 
   // now let the tasks run
@@ -72,14 +72,14 @@ main()
   const unsigned int n = testing_max_num_threads();
 
   // if we have a machine with less than 5 cores fake the output:
-  if(MultithreadInfo::n_threads() < n)
+  if (MultithreadInfo::n_threads() < n)
     {
       // you should buy more cores, seriously.
       deallog << "* default thread limit for tests: " << n << std::endl;
       deallog << "max concurrent running: " << n << " should be: " << n
               << std::endl;
     }
-  else if(MultithreadInfo::n_threads() == n)
+  else if (MultithreadInfo::n_threads() == n)
     {
       deallog << "* default thread limit for tests: "
               << MultithreadInfo::n_threads() << std::endl;

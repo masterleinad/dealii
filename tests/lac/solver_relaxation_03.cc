@@ -46,7 +46,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(SolverControl::NoConvergence& e)
+  catch (SolverControl::NoConvergence& e)
     {
       result = e.last_residual;
     }
@@ -66,7 +66,7 @@ main()
   SolverRichardson<> rich(control);
   SolverRelaxation<> relax(control);
 
-  for(unsigned int size = 33; size <= 33; size *= 3)
+  for (unsigned int size = 33; size <= 33; size *= 3)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -84,7 +84,7 @@ main()
       std::vector<types::global_dof_index> perm(dim);
       std::vector<types::global_dof_index> iperm(dim);
 
-      for(unsigned int blocksize = 4; blocksize < 32; blocksize <<= 1)
+      for (unsigned int blocksize = 4; blocksize < 32; blocksize <<= 1)
         {
           deallog << "Block size " << blocksize << std::endl;
 
@@ -99,10 +99,10 @@ main()
           std::vector<types::global_dof_index> ibperm(n_blocks);
 
           relax_data.block_list.reinit(n_blocks, dim, blocksize);
-          for(unsigned int block = 0; block < n_blocks; ++block)
+          for (unsigned int block = 0; block < n_blocks; ++block)
             {
               bperm[block] = n_blocks - block - 1;
-              for(unsigned int i = 0; i < blocksize; ++i)
+              for (unsigned int i = 0; i < blocksize; ++i)
                 relax_data.block_list.add(block, i + block * blocksize);
             }
           relax_data.block_list.compress();
@@ -120,14 +120,14 @@ main()
           bperm[1] = bperm[2];
           bperm[2] = swap;
 
-          for(unsigned int block = 0; block < n_blocks; ++block)
+          for (unsigned int block = 0; block < n_blocks; ++block)
             {
               ibperm[bperm[block]] = block;
-              for(unsigned int i = 0; i < blocksize; ++i)
+              for (unsigned int i = 0; i < blocksize; ++i)
                 perm[i + block * blocksize] = i + bperm[block] * blocksize;
             }
 
-          for(unsigned int i = 0; i < dim; ++i)
+          for (unsigned int i = 0; i < dim; ++i)
             iperm[perm[i]] = i;
 
           deallog << "Size " << bperm.size() << std::endl;
@@ -151,7 +151,7 @@ main()
 
           relax_data.order.resize(1);
           relax_data.order[0].resize(bperm.size());
-          for(unsigned int i = 0; i < bperm.size(); ++i)
+          for (unsigned int i = 0; i < bperm.size(); ++i)
             relax_data.order[0][i] = bperm[i];
 
           RelaxationBlockSOR<SparseMatrix<double>, double> relax_sor;
@@ -201,7 +201,7 @@ main()
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
               deallog.pop();
             }
-          catch(std::exception& e)
+          catch (std::exception& e)
             {
               std::cerr << "Exception: " << e.what() << std::endl;
             }

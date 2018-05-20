@@ -79,7 +79,7 @@ main()
 {
   deallog.attach(logfile);
 
-  for(unsigned int n = 1; n < 5; n++)
+  for (unsigned int n = 1; n < 5; n++)
     {
       deallog << "Test<1,2>, continuous finite element q_" << n << std::endl;
       test<1, 2>(SOURCE_DIR "/grids/circle_2.inp", n);

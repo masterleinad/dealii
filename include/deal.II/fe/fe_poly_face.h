@@ -117,12 +117,12 @@ protected:
     // initialize fields only if really
     // necessary. otherwise, don't
     // allocate memory
-    if(data->update_each & update_values)
+    if (data->update_each & update_values)
       {
         values.resize(poly_space.n());
         data->shape_values.resize(poly_space.n(),
                                   std::vector<double>(n_q_points));
-        for(unsigned int i = 0; i < n_q_points; ++i)
+        for (unsigned int i = 0; i < n_q_points; ++i)
           {
             poly_space.compute(quadrature.point(i),
                                values,
@@ -131,14 +131,14 @@ protected:
                                empty_vector_of_3rd_order_tensors,
                                empty_vector_of_4th_order_tensors);
 
-            for(unsigned int k = 0; k < poly_space.n(); ++k)
+            for (unsigned int k = 0; k < poly_space.n(); ++k)
               data->shape_values[k][i] = values[k];
           }
       }
     // No derivatives of this element
     // are implemented.
-    if(data->update_each & update_gradients
-       || data->update_each & update_hessians)
+    if (data->update_each & update_gradients
+        || data->update_each & update_hessians)
       {
         Assert(false, ExcNotImplemented());
       }

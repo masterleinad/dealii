@@ -58,7 +58,7 @@ test()
   hp::DoFHandler<2>::active_cell_iterator cell = hp_dof_handler.begin_active(),
                                           endc = hp_dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_active_fe_index(1);
   hp_dof_handler.begin_active()->set_active_fe_index(0);
 

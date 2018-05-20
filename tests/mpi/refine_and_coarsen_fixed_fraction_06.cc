@@ -59,7 +59,7 @@ test()
     std::ifstream in(SOURCE_DIR
                      "/refine_and_coarsen_fixed_fraction_06/indicators");
     Assert(in, ExcMessage("File missing"));
-    for(unsigned int i = 0; i < indicators.size(); ++i)
+    for (unsigned int i = 0; i < indicators.size(); ++i)
       in >> indicators(i);
   }
 
@@ -76,22 +76,22 @@ test()
     float coarsen_indicator = min_indicator - 1,
           refine_indicator  = max_indicator + 1;
     unsigned int cell_index = 0;
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-        cell != tr.end();
-        ++cell, ++cell_index)
-      if(cell->refine_flag_set())
+    for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+         cell != tr.end();
+         ++cell, ++cell_index)
+      if (cell->refine_flag_set())
         refine_indicator = std::min(refine_indicator, indicators(cell_index));
-      else if(cell->coarsen_flag_set())
+      else if (cell->coarsen_flag_set())
         coarsen_indicator = std::max(coarsen_indicator, indicators(cell_index));
-    if(myid == 0)
+    if (myid == 0)
       {
         deallog << "thresholds = " << refine_indicator << ' '
                 << coarsen_indicator << std::endl;
       }
 
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-        cell != tr.end();
-        ++cell)
+    for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+         cell != tr.end();
+         ++cell)
       {
         cell->clear_coarsen_flag();
         cell->clear_refine_flag();
@@ -110,22 +110,22 @@ test()
     float coarsen_indicator = min_indicator - 1,
           refine_indicator  = max_indicator + 1;
     unsigned int cell_index = 0;
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-        cell != tr.end();
-        ++cell, ++cell_index)
-      if(cell->refine_flag_set())
+    for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+         cell != tr.end();
+         ++cell, ++cell_index)
+      if (cell->refine_flag_set())
         refine_indicator = std::min(refine_indicator, indicators(cell_index));
-      else if(cell->coarsen_flag_set())
+      else if (cell->coarsen_flag_set())
         coarsen_indicator = std::max(coarsen_indicator, indicators(cell_index));
-    if(myid == 0)
+    if (myid == 0)
       {
         deallog << "thresholds = " << refine_indicator << ' '
                 << coarsen_indicator << std::endl;
       }
 
-    for(Triangulation<2>::active_cell_iterator cell = tr.begin_active();
-        cell != tr.end();
-        ++cell)
+    for (Triangulation<2>::active_cell_iterator cell = tr.begin_active();
+         cell != tr.end();
+         ++cell)
       {
         cell->clear_coarsen_flag();
         cell->clear_refine_flag();
@@ -142,7 +142,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -171,8 +171,8 @@ namespace Step24
                                      Source(Point<dim>(-0.05, -0.15), 0.015)};
     static const unsigned int n_sources = sizeof(sources) / sizeof(sources[0]);
 
-    for(unsigned int i = 0; i < n_sources; ++i)
-      if(p.distance(sources[i].location) < sources[i].radius)
+    for (unsigned int i = 0; i < n_sources; ++i)
+      if (p.distance(sources[i].location) < sources[i].radius)
         return 1;
 
     return 0;
@@ -216,8 +216,8 @@ namespace Step24
     const double detector_step_angle = 2.25;
     const double detector_radius     = 0.5;
 
-    for(double detector_angle = 2 * numbers::PI; detector_angle >= 0;
-        detector_angle -= detector_step_angle / 360 * 2 * numbers::PI)
+    for (double detector_angle = 2 * numbers::PI; detector_angle >= 0;
+         detector_angle -= detector_step_angle / 360 * 2 * numbers::PI)
       detector_locations.push_back(
         Point<dim>(std::cos(detector_angle), std::sin(detector_angle))
         * detector_radius);
@@ -347,24 +347,24 @@ namespace Step24
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
         endc = dof_handler.end();
-      for(; cell != endc; ++cell)
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-          if(cell->at_boundary(f))
+      for (; cell != endc; ++cell)
+        for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          if (cell->at_boundary(f))
             {
               cell_matrix = 0;
 
               fe_values.reinit(cell, f);
 
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
+                  for (unsigned int j = 0; j < dofs_per_cell; ++j)
                     cell_matrix(i, j) += (fe_values.shape_value(i, q_point)
                                           * fe_values.shape_value(j, q_point)
                                           * fe_values.JxW(q_point));
 
               cell->get_dof_indices(local_dof_indices);
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   boundary_matrix.add(local_dof_indices[i],
                                       local_dof_indices[j],
                                       cell_matrix(i, j));
@@ -475,8 +475,8 @@ namespace Step24
     Vector<double> G2(solution_v.size());
 
     const double end_time = 0.7;
-    for(time = time_step; time <= end_time;
-        time += time_step, ++timestep_number)
+    for (time = time_step; time <= end_time;
+         time += time_step, ++timestep_number)
       {
         std::cout << std::endl;
         std::cout << "time_step " << timestep_number << " @ t=" << time
@@ -510,7 +510,7 @@ namespace Step24
         output_results();
 
         detector_data << time;
-        for(unsigned int i = 0; i < detector_locations.size(); ++i)
+        for (unsigned int i = 0; i < detector_locations.size(); ++i)
           detector_data << " "
                         << VectorTools::point_value(
                              dof_handler, solution_p, detector_locations[i])
@@ -538,7 +538,7 @@ main()
       TATForwardProblem<2> forward_problem_solver;
       forward_problem_solver.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -552,7 +552,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

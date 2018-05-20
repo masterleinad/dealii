@@ -83,11 +83,11 @@ test(unsigned int chunk_size)
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                  endc = dof.end();
   unsigned int counter                                = 0;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j, ++counter)
-          if(counter % 42 == 0)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < fe.dofs_per_cell; ++j, ++counter)
+          if (counter % 42 == 0)
             local_mat(i, j) = 0;
           else
             local_mat(i, j) = random_value<double>();
@@ -101,8 +101,8 @@ test(unsigned int chunk_size)
   // now check that the entries are indeed the
   // same
   double frobenius = 0.;
-  for(unsigned int i = 0; i < sparse.m(); ++i)
-    for(unsigned int j = 0; j < sparse.n(); ++j)
+  for (unsigned int i = 0; i < sparse.m(); ++i)
+    for (unsigned int j = 0; j < sparse.n(); ++j)
       frobenius += numbers::NumberTraits<double>::abs_square(
         sparse.el(i, j) - chunk_sparse.el(i, j));
   deallog << "Difference between chunk and sparse matrix: "

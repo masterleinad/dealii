@@ -53,7 +53,7 @@ VectorFunction<2>::value(const Point<2>& p, const unsigned int component) const
 
   const double PI  = numbers::PI;
   double       val = 0.0;
-  switch(component)
+  switch (component)
     {
       case 0:
         val = pow(p(0), 3);
@@ -73,7 +73,7 @@ VectorFunction<3>::value(const Point<3>& p, const unsigned int component) const
 
   const double PI  = numbers::PI;
   double       val = 0.0;
-  switch(component)
+  switch (component)
     {
       case 0:
         val = pow(p(0), 3);
@@ -93,7 +93,7 @@ void
 VectorFunction<dim>::vector_value(const Point<dim>& p,
                                   Vector<double>&   values) const
 {
-  for(int i = 0; i < dim; ++i)
+  for (int i = 0; i < dim; ++i)
     values(i) = value(p, i);
 }
 
@@ -133,24 +133,24 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
   fe_values.get_function_third_derivatives(function_vals, vector_values);
 
-  for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for (unsigned int c = 0; c < fe.n_components(); ++c)
     // use a vector extractor if there
     // are sufficiently many components
     // left after the current component
     // 'c'
-    if(c + dim <= fe.n_components())
+    if (c + dim <= fe.n_components())
       {
         FEValuesExtractors::Vector vector_components(c);
         fe_values[vector_components].get_function_third_derivatives(
           function_vals, selected_vector_values);
         deallog << "component=" << c << std::endl;
 
-        for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
-          for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+          for (unsigned int d = 0; d < dim; ++d)
             {
-              for(unsigned int e = 0; e < dim; ++e)
-                for(unsigned int f = 0; f < dim; ++f)
-                  for(unsigned int g = 0; g < dim; ++g)
+              for (unsigned int e = 0; e < dim; ++e)
+                for (unsigned int f = 0; f < dim; ++f)
+                  for (unsigned int g = 0; g < dim; ++g)
                     deallog
                       << selected_vector_values[q][d][e][f][g]
                       << (e < dim - 1 && f < dim - 1 && g < dim - 1 ? ", " :

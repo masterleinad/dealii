@@ -116,13 +116,13 @@ namespace
           const unsigned int                    level,
           std::vector<types::global_dof_index>& dof_indices)
   {
-    if(mg_constrained_dofs != nullptr
-       && mg_constrained_dofs->get_level_constraint_matrix(level)
-              .n_constraints()
-            > 0)
-      for(auto& ind : dof_indices)
-        if(mg_constrained_dofs->get_level_constraint_matrix(level)
-             .is_identity_constrained(ind))
+    if (mg_constrained_dofs != nullptr
+        && mg_constrained_dofs->get_level_constraint_matrix(level)
+               .n_constraints()
+             > 0)
+      for (auto& ind : dof_indices)
+        if (mg_constrained_dofs->get_level_constraint_matrix(level)
+              .is_identity_constrained(ind))
           {
             Assert(mg_constrained_dofs->get_level_constraint_matrix(level)
                        .get_constraint_entries(ind)
@@ -147,7 +147,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
   const unsigned int dofs_per_cell = mg_dof.get_fe().dofs_per_cell;
 
   this->sizes.resize(n_levels);
-  for(unsigned int l = 0; l < n_levels; ++l)
+  for (unsigned int l = 0; l < n_levels; ++l)
     this->sizes[l] = mg_dof.n_dofs(l);
 
   // reset the size of the array of
@@ -165,7 +165,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
   prolongation_matrices.reserve(n_levels - 1);
   prolongation_sparsities.reserve(n_levels - 1);
 
-  for(unsigned int i = 0; i < n_levels - 1; ++i)
+  for (unsigned int i = 0; i < n_levels - 1; ++i)
     {
       prolongation_sparsities.emplace_back(
         new typename internal::MatrixSelector<VectorType>::Sparsity);
@@ -185,7 +185,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
   // matrices themselves. note that we only
   // need to take care of cells on the coarser
   // level which have children
-  for(unsigned int level = 0; level < n_levels - 1; ++level)
+  for (unsigned int level = 0; level < n_levels - 1; ++level)
     {
       // reset the dimension of the structure.  note that for the number of
       // entries per row, the number of parent dofs coupling to a child dof is
@@ -200,12 +200,12 @@ MGTransferPrebuilt<VectorType>::build_matrices(
       DynamicSparsityPattern dsp(
         this->sizes[level + 1], this->sizes[level], level_p1_relevant_dofs);
       typename DoFHandler<dim>::cell_iterator cell, endc = mg_dof.end(level);
-      for(cell = mg_dof.begin(level); cell != endc; ++cell)
-        if(cell->has_children()
-           && (mg_dof.get_triangulation().locally_owned_subdomain()
-                 == numbers::invalid_subdomain_id
-               || cell->level_subdomain_id()
-                    == mg_dof.get_triangulation().locally_owned_subdomain()))
+      for (cell = mg_dof.begin(level); cell != endc; ++cell)
+        if (cell->has_children()
+            && (mg_dof.get_triangulation().locally_owned_subdomain()
+                  == numbers::invalid_subdomain_id
+                || cell->level_subdomain_id()
+                     == mg_dof.get_triangulation().locally_owned_subdomain()))
           {
             cell->get_mg_dof_indices(dof_indices_parent);
 
@@ -214,7 +214,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
             Assert(cell->n_children()
                      == GeometryInfo<dim>::max_children_per_cell,
                    ExcNotImplemented());
-            for(unsigned int child = 0; child < cell->n_children(); ++child)
+            for (unsigned int child = 0; child < cell->n_children(); ++child)
               {
                 // set an alias to the prolongation matrix for this child
                 const FullMatrix<double>& prolongation
@@ -231,11 +231,11 @@ MGTransferPrebuilt<VectorType>::build_matrices(
                 // now tag the entries in the
                 // matrix which will be used
                 // for this pair of parent/child
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   {
                     entries.resize(0);
-                    for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                      if(prolongation(i, j) != 0)
+                    for (unsigned int j = 0; j < dofs_per_cell; ++j)
+                      if (prolongation(i, j) != 0)
                         entries.push_back(dof_indices_parent[j]);
                     dsp.add_entries(
                       dof_indices_child[i], entries.begin(), entries.end());
@@ -254,12 +254,12 @@ MGTransferPrebuilt<VectorType>::build_matrices(
       FullMatrix<double> prolongation;
 
       // now actually build the matrices
-      for(cell = mg_dof.begin(level); cell != endc; ++cell)
-        if(cell->has_children()
-           && (mg_dof.get_triangulation().locally_owned_subdomain()
-                 == numbers::invalid_subdomain_id
-               || cell->level_subdomain_id()
-                    == mg_dof.get_triangulation().locally_owned_subdomain()))
+      for (cell = mg_dof.begin(level); cell != endc; ++cell)
+        if (cell->has_children()
+            && (mg_dof.get_triangulation().locally_owned_subdomain()
+                  == numbers::invalid_subdomain_id
+                || cell->level_subdomain_id()
+                     == mg_dof.get_triangulation().locally_owned_subdomain()))
           {
             cell->get_mg_dof_indices(dof_indices_parent);
 
@@ -268,18 +268,18 @@ MGTransferPrebuilt<VectorType>::build_matrices(
             Assert(cell->n_children()
                      == GeometryInfo<dim>::max_children_per_cell,
                    ExcNotImplemented());
-            for(unsigned int child = 0; child < cell->n_children(); ++child)
+            for (unsigned int child = 0; child < cell->n_children(); ++child)
               {
                 // set an alias to the prolongation matrix for this child
                 prolongation = mg_dof.get_fe().get_prolongation_matrix(
                   child, cell->refinement_case());
 
-                if(this->mg_constrained_dofs != nullptr
-                   && this->mg_constrained_dofs->have_boundary_indices())
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                    if(this->mg_constrained_dofs->is_boundary_index(
-                         level, dof_indices_parent[j]))
-                      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                if (this->mg_constrained_dofs != nullptr
+                    && this->mg_constrained_dofs->have_boundary_indices())
+                  for (unsigned int j = 0; j < dofs_per_cell; ++j)
+                    if (this->mg_constrained_dofs->is_boundary_index(
+                          level, dof_indices_parent[j]))
+                      for (unsigned int i = 0; i < dofs_per_cell; ++i)
                         prolongation(i, j) = 0.;
 
                 cell->child(child)->get_mg_dof_indices(dof_indices_child);
@@ -288,7 +288,7 @@ MGTransferPrebuilt<VectorType>::build_matrices(
                   this->mg_constrained_dofs, level + 1, dof_indices_child);
 
                 // now set the entries in the matrix
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   prolongation_matrices[level]->set(dof_indices_child[i],
                                                     dofs_per_cell,
                                                     dof_indices_parent.data(),
@@ -306,7 +306,7 @@ template <typename VectorType>
 void
 MGTransferPrebuilt<VectorType>::print_matrices(std::ostream& os) const
 {
-  for(unsigned int level = 0; level < prolongation_matrices.size(); ++level)
+  for (unsigned int level = 0; level < prolongation_matrices.size(); ++level)
     {
       os << "Level " << level << std::endl;
       prolongation_matrices[level]->print(os);
@@ -319,7 +319,7 @@ std::size_t
 MGTransferPrebuilt<VectorType>::memory_consumption() const
 {
   std::size_t result = MGLevelGlobalTransfer<VectorType>::memory_consumption();
-  for(unsigned int i = 0; i < prolongation_matrices.size(); ++i)
+  for (unsigned int i = 0; i < prolongation_matrices.size(); ++i)
     result += prolongation_matrices[i]->memory_consumption()
               + prolongation_sparsities[i]->memory_consumption();
 

@@ -51,15 +51,15 @@ plot_shape_functions(const unsigned int degree)
     fe_rt, q, update_values | update_gradients | update_quadrature_points);
   fe.reinit(c);
 
-  for(unsigned int q_point = 0; q_point < q.size(); ++q_point)
+  for (unsigned int q_point = 0; q_point < q.size(); ++q_point)
     {
-      if(q_point % QIterated<1>(q_trapez, div).size() == 0)
+      if (q_point % QIterated<1>(q_trapez, div).size() == 0)
         deallog << std::endl;
 
       deallog << fe.quadrature_point(q_point) << " ";
 
-      for(unsigned int i = 0; i < fe_rt.dofs_per_cell; ++i)
-        for(unsigned int c = 0; c < fe.get_fe().n_components(); ++c)
+      for (unsigned int i = 0; i < fe_rt.dofs_per_cell; ++i)
+        for (unsigned int c = 0; c < fe.get_fe().n_components(); ++c)
           deallog << " " << fe.shape_value_component(i, q_point, c);
 
       deallog << std::endl;

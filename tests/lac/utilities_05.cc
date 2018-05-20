@@ -45,7 +45,7 @@ test(const NumberType a, const NumberType b)
   const NumberType norm = res.l2_norm();
   deallog << norm << std::endl;
 
-  if(norm > 1e-12 || csr[2] < 0.)
+  if (norm > 1e-12 || csr[2] < 0.)
     {
       deallog << "x:" << std::endl;
       x.print(deallog.get_file_stream());

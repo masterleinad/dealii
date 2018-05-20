@@ -29,8 +29,8 @@ void
 test(PETScWrappers::FullMatrix& m)
 {
   // assign some matrix elements
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
       m.set(i, j, i + 2 * j);
 
   m.compress(VectorOperation::insert);
@@ -41,9 +41,9 @@ test(PETScWrappers::FullMatrix& m)
 
   // Generate some output
   deallog << "initial matrix: " << std::endl;
-  for(unsigned int i = 0; i < m.m(); ++i)
+  for (unsigned int i = 0; i < m.m(); ++i)
     {
-      for(unsigned int j = 0; j < m.n(); ++j)
+      for (unsigned int j = 0; j < m.n(); ++j)
         deallog << m(i, j) << " ";
       deallog << std::endl;
     }
@@ -53,8 +53,8 @@ test(PETScWrappers::FullMatrix& m)
   m.reinit(5, 5);
 
   // set some entries
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
       m.set(i, j, j + 2 * i);
   m.compress(VectorOperation::insert);
 
@@ -64,9 +64,9 @@ test(PETScWrappers::FullMatrix& m)
 
   // Generate some output
   deallog << "after reinit: " << std::endl;
-  for(unsigned int i = 0; i < m.m(); ++i)
+  for (unsigned int i = 0; i < m.m(); ++i)
     {
-      for(unsigned int j = 0; j < m.n(); ++j)
+      for (unsigned int j = 0; j < m.n(); ++j)
         deallog << m(i, j) << " ";
       deallog << std::endl;
     }
@@ -90,7 +90,7 @@ main(int argc, char** argv)
         test(m);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -104,7 +104,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

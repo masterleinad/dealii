@@ -383,15 +383,15 @@ namespace Step40
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           cell_rhs    = 0;
 
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             {
               const double rhs_value
                 = (fe_values.quadrature_point(q_point)[1]
@@ -403,9 +403,9 @@ namespace Step40
                      1 :
                      -1);
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for (unsigned int j = 0; j < dofs_per_cell; ++j)
                     cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                           * fe_values.shape_grad(j, q_point)
                                           * fe_values.JxW(q_point));
@@ -572,7 +572,7 @@ namespace Step40
     data_out.add_data_vector(locally_relevant_solution, "u");
 
     Vector<float> subdomain(triangulation.n_active_cells());
-    for(unsigned int i = 0; i < subdomain.size(); ++i)
+    for (unsigned int i = 0; i < subdomain.size(); ++i)
       subdomain(i) = triangulation.locally_owned_subdomain();
     data_out.add_data_vector(subdomain, "subdomain");
 
@@ -599,12 +599,12 @@ namespace Step40
     // filenames that we create first. Note that only one processor needs to
     // generate this file; we arbitrarily choose processor zero to take over
     // this job.
-    if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+    if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(mpi_communicator);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
+             ++i)
           filenames.push_back("solution-" + Utilities::int_to_string(cycle, 2)
                               + "." + Utilities::int_to_string(i, 4) + ".vtu");
 
@@ -644,11 +644,11 @@ namespace Step40
           << " MPI rank(s)..." << std::endl;
 
     const unsigned int n_cycles = 8;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         pcout << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation);
             triangulation.refine_global(5);
@@ -666,7 +666,7 @@ namespace Step40
         assemble_system();
         solve();
 
-        if(Utilities::MPI::n_mpi_processes(mpi_communicator) <= 32)
+        if (Utilities::MPI::n_mpi_processes(mpi_communicator) <= 32)
           {
             TimerOutput::Scope t(computing_timer, "output");
             output_results(cycle);
@@ -707,7 +707,7 @@ main(int argc, char* argv[])
       LaplaceProblem<2> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -721,7 +721,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

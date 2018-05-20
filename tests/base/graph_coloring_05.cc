@@ -56,9 +56,9 @@ check()
   // Create an adapted mesh
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active();
-  for(; cell < dof_handler.end(); ++cell)
+  for (; cell < dof_handler.end(); ++cell)
     {
-      if((cell->center()[0] == 0.625) && (cell->center()[1] == 0.625))
+      if ((cell->center()[0] == 0.625) && (cell->center()[1] == 0.625))
         cell->set_refine_flag();
     }
   triangulation.execute_coarsening_and_refinement();
@@ -74,16 +74,16 @@ check()
         &get_conflict_indices_cfem<dim>)));
 
   // Check that a color does not contain a conflict index twice
-  for(unsigned int color = 0; color < coloring.size(); ++color)
+  for (unsigned int color = 0; color < coloring.size(); ++color)
     {
       std::set<types::global_dof_index> color_set;
-      for(unsigned int i = 0; i < coloring[color].size(); ++i)
+      for (unsigned int i = 0; i < coloring[color].size(); ++i)
         {
           std::vector<types::global_dof_index> dofs
             = get_conflict_indices_cfem<dim>(coloring[color][i]);
-          for(unsigned int j = 0; j < dofs.size(); ++j)
+          for (unsigned int j = 0; j < dofs.size(); ++j)
             {
-              if(color_set.count(dofs[j]) != 0)
+              if (color_set.count(dofs[j]) != 0)
                 deallog << "Error in color: " << color << std::endl;
               color_set.insert(dofs[j]);
             }

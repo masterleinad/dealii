@@ -47,18 +47,18 @@ test()
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   GridGenerator::subdivided_hyper_cube(tria, 1);
   // set periodic boundary conditions in x and z directions
-  for(typename Triangulation<dim>::cell_iterator cell = tria.begin();
-      cell != tria.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(f / 2 != 1 && cell->at_boundary(f))
+  for (typename Triangulation<dim>::cell_iterator cell = tria.begin();
+       cell != tria.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (f / 2 != 1 && cell->at_boundary(f))
         cell->face(f)->set_all_boundary_ids(f + 10);
 
   std::vector<
     GridTools::PeriodicFacePair<typename Triangulation<dim>::cell_iterator>>
     periodic_faces;
   GridTools::collect_periodic_faces(tria, 0 + 10, 1 + 10, 0, periodic_faces);
-  if(dim == 3)
+  if (dim == 3)
     GridTools::collect_periodic_faces(tria, 4 + 10, 5 + 10, 2, periodic_faces);
   tria.add_periodicity(periodic_faces);
   tria.refine_global(5);
@@ -71,7 +71,7 @@ test()
 
   dof_handler.distribute_mg_dofs(fe);
   deallog << "Number of DoFs per level: ";
-  for(unsigned int level = 0; level < tria.n_global_levels(); ++level)
+  for (unsigned int level = 0; level < tria.n_global_levels(); ++level)
     deallog << dof_handler.n_dofs(level) << " ";
   deallog << std::endl;
 }

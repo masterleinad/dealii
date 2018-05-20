@@ -93,42 +93,42 @@ public:
   void
   vmult_interface_down(BlockVectorType& dst, const BlockVectorType& src) const
   {
-    for(unsigned int b = 0; b < src.n_blocks(); ++b)
+    for (unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult_interface_down(dst.block(b), src.block(b));
   }
 
   void
   vmult_interface_up(BlockVectorType& dst, const BlockVectorType& src) const
   {
-    for(unsigned int b = 0; b < src.n_blocks(); ++b)
+    for (unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult_interface_up(dst.block(b), src.block(b));
   }
 
   void
   vmult(BlockVectorType& dst, const BlockVectorType& src) const
   {
-    for(unsigned int b = 0; b < src.n_blocks(); ++b)
+    for (unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult(dst.block(b), src.block(b));
   }
 
   void
   Tvmult(BlockVectorType& dst, const BlockVectorType& src) const
   {
-    for(unsigned int b = 0; b < src.n_blocks(); ++b)
+    for (unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.Tvmult(dst.block(b), src.block(b));
   }
 
   void
   vmult_add(BlockVectorType& dst, const BlockVectorType& src) const
   {
-    for(unsigned int b = 0; b < src.n_blocks(); ++b)
+    for (unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.vmult_add(dst.block(b), src.block(b));
   }
 
   void
   Tvmult_add(BlockVectorType& dst, const BlockVectorType& src) const
   {
-    for(unsigned int b = 0; b < src.n_blocks(); ++b)
+    for (unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.Tvmult_add(dst.block(b), src.block(b));
   }
 
@@ -137,7 +137,7 @@ public:
                       const BlockVectorType& src,
                       const value_type       omega) const
   {
-    for(unsigned int b = 0; b < src.n_blocks(); ++b)
+    for (unsigned int b = 0; b < src.n_blocks(); ++b)
       laplace.precondition_Jacobi(dst.block(b), src.block(b), omega);
   }
 
@@ -194,7 +194,7 @@ template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
 do_test(const DoFHandler<dim>& dof, const unsigned int nb)
 {
-  if(types_are_equal<number, float>::value == true)
+  if (types_are_equal<number, float>::value == true)
     {
       deallog.push("float");
     }
@@ -249,7 +249,7 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
   fine_matrix.compute_diagonal();
 
   LinearAlgebra::distributed::BlockVector<number> in(nb), sol(nb);
-  for(unsigned int b = 0; b < nb; ++b)
+  for (unsigned int b = 0; b < nb; ++b)
     {
       fine_level_data->initialize_dof_vector(in.block(b));
       fine_level_data->initialize_dof_vector(sol.block(b));
@@ -266,12 +266,12 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
     DoFTools::make_hanging_node_constraints(dof, hanging_node_constraints);
     hanging_node_constraints.close();
 
-    for(unsigned int i = 0; i < in.block(0).local_size(); ++i)
-      if(!hanging_node_constraints.is_constrained(
-           in.block(0).get_partitioner()->local_to_global(i)))
+    for (unsigned int i = 0; i < in.block(0).local_size(); ++i)
+      if (!hanging_node_constraints.is_constrained(
+            in.block(0).get_partitioner()->local_to_global(i)))
         in.block(0).local_element(i) = 1.;
 
-    for(unsigned int b = 1; b < nb; ++b)
+    for (unsigned int b = 1; b < nb; ++b)
       in.block(b) = in.block(0);
   }
 
@@ -286,8 +286,9 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
   MGLevelObject<MatrixFree<dim, number>> mg_level_data;
   mg_matrices.resize(0, dof.get_triangulation().n_global_levels() - 1);
   mg_level_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     {
       typename MatrixFree<dim, number>::AdditionalData mg_additional_data;
       mg_additional_data.tasks_parallel_scheme
@@ -318,8 +319,9 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
   MGLevelObject<MGInterfaceOperator<LevelMatrixType>> mg_interface_matrices;
   mg_interface_matrices.resize(0,
                                dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     mg_interface_matrices[level].initialize(mg_matrices[level]);
 
   MGTransferBlockMatrixFree<dim, number> mg_transfer(mg_constrained_dofs);
@@ -358,12 +360,13 @@ do_test(const DoFHandler<dim>& dof, const unsigned int nb)
     solver.solve(fine_matrix, sol, in, preconditioner);
   }
 
-  if(types_are_equal<number, float>::value == true)
+  if (types_are_equal<number, float>::value == true)
     deallog.pop();
 
   fine_matrix.clear();
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     mg_matrices[level].clear();
 }
 
@@ -378,16 +381,16 @@ test(const unsigned int nbands = 1)
   GridGenerator::hyper_cube(tria);
   tria.refine_global(6 - dim);
   const unsigned int n_runs = fe_degree == 1 ? 6 - dim : 5 - dim;
-  for(unsigned int i = 0; i < n_runs; ++i)
+  for (unsigned int i = 0; i < n_runs; ++i)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
-        if(cell->is_locally_owned()
-           && ((cell->center().norm() < 0.5
-                && (cell->level() < 5 || cell->center().norm() > 0.45))
-               || (dim == 2 && cell->center().norm() > 1.2)))
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
+        if (cell->is_locally_owned()
+            && ((cell->center().norm() < 0.5
+                 && (cell->level() < 5 || cell->center().norm() > 0.45))
+                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
       FE_Q<dim>       fe(fe_degree);
@@ -404,7 +407,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog.attach(logfile);
       deallog << std::setprecision(4);

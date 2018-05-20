@@ -29,7 +29,7 @@ test()
 
   Vector<double> v3;
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       v1(i) = i * 1.;
       v2(i) = i * 1. + n * 1.;

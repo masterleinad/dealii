@@ -28,16 +28,16 @@ test(const bool is_singular)
   A = 0;
 
   // generate a singular matrix if is_singular == true
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
-      if(i == j && (i != n - 1 || !is_singular))
+  for (unsigned int i = 0; i < n; ++i)
+    for (unsigned int j = 0; j < n; ++j)
+      if (i == j && (i != n - 1 || !is_singular))
         A(i, j) = 1.0;
 
   try
     {
       A.compute_lu_factorization();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << "matrix is singular" << std::endl;
       // Some implementations of LAPACK do not detect that the vector we pass

@@ -43,7 +43,7 @@ main()
 
   Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                            endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_coarsen_flag();
   tria.execute_coarsening_and_refinement();
 

@@ -68,13 +68,13 @@ public:
     FEEvaluation<dim, degree, degree + 1, dim, Number> phi(data);
     vector_t coeff = make_vectorized_array(global_coefficient);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values(src);
         phi.evaluate(false, true, false);
 
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_divergence(coeff * phi.get_divergence(q), q);
 
         phi.integrate(false, true);
@@ -86,7 +86,7 @@ public:
   vmult(VectorType& dst, const VectorType& src) const
   {
     AssertDimension(dst.size(), dim);
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       dst[d] = 0;
     data.cell_loop(
       &MatrixFreeTest<dim, degree, VectorType>::local_apply, this, dst, src);
@@ -105,14 +105,14 @@ test()
   tria.refine_global(4 - dim);
 
   // refine a few cells
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
         endc               = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -143,8 +143,8 @@ test()
   const unsigned int dofs_per_block = dof_handler_sca.n_dofs();
   {
     BlockDynamicSparsityPattern csp(dim, dim);
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int e = 0; e < dim; ++e)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int e = 0; e < dim; ++e)
         csp.block(d, e).reinit(dofs_per_block, dofs_per_block);
 
     csp.collect_sizes();
@@ -156,7 +156,7 @@ test()
   system_matrix.reinit(sparsity_pattern);
 
   solution.reinit(dim);
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     solution.block(i).reinit(dofs_per_block);
   solution.collect_sizes();
 
@@ -166,7 +166,7 @@ test()
   vec2.resize(dim);
   vec1[0].reinit(dofs_per_block);
   vec2[0].reinit(vec1[0]);
-  for(unsigned int i = 1; i < dim; ++i)
+  for (unsigned int i = 1; i < dim; ++i)
     {
       vec1[i].reinit(vec1[0]);
       vec2[i].reinit(vec1[0]);
@@ -195,22 +195,22 @@ test()
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 const Tensor<2, dim> phi_grad = fe_values[sc].gradient(k, q);
                 phi_div[k]                    = trace(phi_grad);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for (unsigned int j = 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (phi_div[i] * phi_div[j] * global_coefficient)
@@ -218,8 +218,8 @@ test()
                   }
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             local_matrix(i, j) = local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
@@ -229,14 +229,14 @@ test()
   }
 
   // first system_rhs with random numbers
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       {
         const double val       = -1. + 2. * random_value<double>();
         system_rhs.block(i)(j) = val;
       }
   constraints.condense(system_rhs);
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     vec1[i] = system_rhs.block(i);
 
   // setup matrix-free structure
@@ -257,8 +257,8 @@ test()
 
   // Verification
   double error = 0.;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       error += std::fabs(solution.block(i)(j) - vec2[i](j));
   double relative = solution.block(0).l1_norm();
   deallog << "  Verification fe degree " << fe_degree << ": "

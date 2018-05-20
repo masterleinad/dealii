@@ -33,8 +33,8 @@ test_rotation_matrix_3d_z_axis(const double angle)
   Tensor<2, 3>       R_z = unit_symmetric_tensor<3>();
   const Tensor<2, 2> R_2d
     = Transformations::Rotations::rotation_matrix_2d(angle);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for (unsigned int i = 0; i < 2; ++i)
+    for (unsigned int j = 0; j < 2; ++j)
       R_z[i][j] = R_2d[i][j];
 
   Assert(std::abs(determinant(R_z) - 1.0) < 1e-9,

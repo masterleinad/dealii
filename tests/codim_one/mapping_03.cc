@@ -42,7 +42,7 @@ test(unsigned int degree)
 
   // Try to project a point on the
   // surface
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     p[i] = .2;
 
   Point<dim - 1> q

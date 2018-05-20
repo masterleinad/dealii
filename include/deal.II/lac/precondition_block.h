@@ -895,7 +895,7 @@ template <typename MatrixType, typename inverse_type>
 inline bool
 PreconditionBlock<MatrixType, inverse_type>::empty() const
 {
-  if(A == nullptr)
+  if (A == nullptr)
     return true;
   return A->empty();
 }
@@ -912,7 +912,7 @@ PreconditionBlock<MatrixType, inverse_type>::el(size_type i, size_type j) const
   const size_type ib = i % bs;
   const size_type jb = j % bs;
 
-  if(jb + nb * bs != j)
+  if (jb + nb * bs != j)
     {
       return 0.;
     }
@@ -936,7 +936,7 @@ inline PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
 
   // This is the end accessor, which
   // does not have a valid block.
-  if(a_block == matrix->size())
+  if (a_block == matrix->size())
     return;
 
   const size_type r = row % bs;
@@ -994,11 +994,11 @@ inline
   Assert(*this != accessor.matrix->end(), ExcIteratorPastEnd());
 
   ++accessor.b_iterator;
-  if(accessor.b_iterator == accessor.b_end)
+  if (accessor.b_iterator == accessor.b_end)
     {
       ++accessor.a_block;
 
-      if(accessor.a_block < accessor.matrix->size())
+      if (accessor.a_block < accessor.matrix->size())
         {
           accessor.b_iterator
             = accessor.matrix->inverse(accessor.a_block).begin();
@@ -1031,11 +1031,11 @@ inline bool
 PreconditionBlockJacobi<MatrixType, inverse_type>::const_iterator::
 operator==(const const_iterator& other) const
 {
-  if(accessor.a_block == accessor.matrix->size()
-     && accessor.a_block == other.accessor.a_block)
+  if (accessor.a_block == accessor.matrix->size()
+      && accessor.a_block == other.accessor.a_block)
     return true;
 
-  if(accessor.a_block != other.accessor.a_block)
+  if (accessor.a_block != other.accessor.a_block)
     return false;
 
   return (accessor.row() == other.accessor.row()

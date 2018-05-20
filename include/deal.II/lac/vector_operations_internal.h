@@ -52,7 +52,7 @@ namespace internal
     void
     print(const T& t, const char* format)
     {
-      if(format != nullptr)
+      if (format != nullptr)
         std::printf(format, t);
       else
         std::printf(" %5.2f", double(t));
@@ -62,7 +62,7 @@ namespace internal
     void
     print(const std::complex<T>& t, const char* format)
     {
-      if(format != nullptr)
+      if (format != nullptr)
         std::printf(format, t.real(), t.imag());
       else
         std::printf(" %5.2f+%5.2fi", double(t.real()), double(t.imag()));
@@ -127,7 +127,7 @@ namespace internal
         // to be smaller). this is advantageous because our accumulation
         // algorithms favor lengths of a power of 2 due to pairwise summation ->
         // at most one 'oddly' sized chunk
-        if(chunk_size > 512)
+        if (chunk_size > 512)
           chunk_size = ((chunk_size + 511) / 512) * 512;
         n_chunks = (vec_size + chunk_size - 1) / chunk_size;
         AssertIndexRange((n_chunks - 1) * chunk_size, vec_size);
@@ -162,9 +162,9 @@ namespace internal
       size_type vec_size = end - start;
       // only go to the parallel function in case there are at least 4 parallel
       // items, otherwise the overhead is too large
-      if(vec_size
-           >= 4 * internal::VectorImplementation::minimum_parallel_grain_size
-         && MultithreadInfo::n_threads() > 1)
+      if (vec_size
+            >= 4 * internal::VectorImplementation::minimum_parallel_grain_size
+          && MultithreadInfo::n_threads() > 1)
         {
           Assert(
             partitioner.get() != nullptr,
@@ -180,7 +180,7 @@ namespace internal
             *tbb_partitioner);
           partitioner->release_one_partitioner(tbb_partitioner);
         }
-      else if(vec_size > 0)
+      else if (vec_size > 0)
         functor(start, end);
 #else
       functor(start, end);
@@ -204,12 +204,12 @@ namespace internal
       {
         Assert(end >= begin, ExcInternalError());
 
-        if(value == Number())
+        if (value == Number())
           {
 #ifdef DEAL_II_WITH_CXX17
-            if constexpr(std::is_trivial<Number>::value)
+            if constexpr (std::is_trivial<Number>::value)
 #else
-            if(std::is_trivial<Number>::value)
+            if (std::is_trivial<Number>::value)
 #endif
               {
                 std::memset(dst + begin, 0, sizeof(Number) * (end - begin));
@@ -238,22 +238,22 @@ namespace internal
         Assert(end >= begin, ExcInternalError());
 
 #if __GNUG__ && __GNUC__ < 5
-        if(__has_trivial_copy(Number)
-           && std::is_same<Number, OtherNumber>::value)
+        if (__has_trivial_copy(Number)
+            && std::is_same<Number, OtherNumber>::value)
 #else
 #  ifdef DEAL_II_WITH_CXX17
-        if constexpr(std::is_trivially_copyable<Number>()
-                     && std::is_same<Number, OtherNumber>::value)
+        if constexpr (std::is_trivially_copyable<Number>()
+                      && std::is_same<Number, OtherNumber>::value)
 #  else
-        if(std::is_trivially_copyable<Number>()
-           && std::is_same<Number, OtherNumber>::value)
+        if (std::is_trivially_copyable<Number>()
+            && std::is_same<Number, OtherNumber>::value)
 #  endif
 #endif
           std::memcpy(dst + begin, src + begin, (end - begin) * sizeof(Number));
         else
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               dst[i] = src[i];
           }
       }
@@ -272,15 +272,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] *= factor;
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] *= factor;
           }
       }
@@ -299,15 +299,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] += factor * v_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] += factor * v_val[i];
           }
       }
@@ -327,15 +327,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = x * val[i] + a * v_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = x * val[i] + a * v_val[i];
           }
       }
@@ -356,15 +356,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] -= v_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] -= v_val[i];
           }
       }
@@ -383,15 +383,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] += factor;
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] += factor;
           }
       }
@@ -409,15 +409,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] += v_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] += v_val[i];
           }
       }
@@ -440,15 +440,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = val[i] + a * v_val[i] + b * w_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = val[i] + a * v_val[i] + b * w_val[i];
           }
       }
@@ -470,15 +470,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = x * val[i] + v_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = x * val[i] + v_val[i];
           }
       }
@@ -503,15 +503,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = x * val[i] + a * v_val[i] + b * w_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = x * val[i] + a * v_val[i] + b * w_val[i];
           }
       }
@@ -533,15 +533,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] *= v_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] *= v_val[i];
           }
       }
@@ -560,15 +560,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a * u_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a * u_val[i];
           }
       }
@@ -592,15 +592,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a * u_val[i] + b * v_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a * u_val[i] + b * v_val[i];
           }
       }
@@ -628,15 +628,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a * u_val[i] + b * v_val[i] + c * w_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a * u_val[i] + b * v_val[i] + c * w_val[i];
           }
       }
@@ -660,15 +660,15 @@ namespace internal
       void
       operator()(const size_type begin, const size_type end) const
       {
-        if(parallel::internal::EnableOpenMPSimdFor<Number>::value)
+        if (parallel::internal::EnableOpenMPSimdFor<Number>::value)
           {
             DEAL_II_OPENMP_SIMD_PRAGMA
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a_val[i] / b_val[i];
           }
         else
           {
-            for(size_type i = begin; i < end; ++i)
+            for (size_type i = begin; i < end; ++i)
               val[i] = a_val[i] / b_val[i];
           }
       }
@@ -923,7 +923,7 @@ namespace internal
                          ResultType&      result)
     {
       const size_type vec_size = last - first;
-      if(vec_size <= vector_accumulation_recursion_threshold * 32)
+      if (vec_size <= vector_accumulation_recursion_threshold * 32)
         {
           // the vector is short enough so we perform the summation. first
           // work on the regular part. The innermost 32 values are expanded in
@@ -958,7 +958,7 @@ namespace internal
 
           // now work on the remainder, i.e., the last up to 32 values. Use
           // switch statement with fall-through to work on these values.
-          if(remainder > 0)
+          if (remainder > 0)
             {
               // if we got here, it means that (vec_size <= vector_accumulation_recursion_threshold * 32),
               // which is to say that the domain can be split into n_chunks <= vector_accumulation_recursion_threshold:
@@ -972,30 +972,30 @@ namespace internal
               const size_type remainder_inner = remainder % 8;
               ResultType      r0 = ResultType(), r1 = ResultType(),
                          r2 = ResultType();
-              switch(inner_chunks)
+              switch (inner_chunks)
                 {
                   case 3:
                     r2 = op(index++);
-                    for(size_type j = 1; j < 8; ++j)
+                    for (size_type j = 1; j < 8; ++j)
                       r2 += op(index++);
                     DEAL_II_FALLTHROUGH;
                   case 2:
                     r1 = op(index++);
-                    for(size_type j = 1; j < 8; ++j)
+                    for (size_type j = 1; j < 8; ++j)
                       r1 += op(index++);
                     r1 += r2;
                     DEAL_II_FALLTHROUGH;
                   case 1:
                     r2 = op(index++);
-                    for(size_type j = 1; j < 8; ++j)
+                    for (size_type j = 1; j < 8; ++j)
                       r2 += op(index++);
                     DEAL_II_FALLTHROUGH;
                   default:
-                    for(size_type j = 0; j < remainder_inner; ++j)
+                    for (size_type j = 0; j < remainder_inner; ++j)
                       r0 += op(index++);
                     r0 += r2;
                     r0 += r1;
-                    if(n_chunks == vector_accumulation_recursion_threshold)
+                    if (n_chunks == vector_accumulation_recursion_threshold)
                       outer_results[vector_accumulation_recursion_threshold - 1]
                         += r0;
                     else
@@ -1011,11 +1011,11 @@ namespace internal
 
           // now sum the results from the chunks stored in outer_results[0,n_chunks)
           // recursively
-          while(n_chunks > 1)
+          while (n_chunks > 1)
             {
-              if(n_chunks % 2 == 1)
+              if (n_chunks % 2 == 1)
                 outer_results[n_chunks++] = ResultType();
-              for(size_type i = 0; i < n_chunks; i += 2)
+              for (size_type i = 0; i < n_chunks; i += 2)
                 outer_results[i / 2] = outer_results[i] + outer_results[i + 1];
               n_chunks /= 2;
             }
@@ -1057,14 +1057,14 @@ namespace internal
     {
       // note that each chunk is chosen to have a width of 32, thereby the index
       // is incremented by 4*8 for each @p i.
-      for(size_type i = 0; i < n_chunks; ++i)
+      for (size_type i = 0; i < n_chunks; ++i)
         {
           ResultType r0 = op(index);
           ResultType r1 = op(index + 1);
           ResultType r2 = op(index + 2);
           ResultType r3 = op(index + 3);
           index += 4;
-          for(size_type j = 1; j < 8; ++j, index += 4)
+          for (size_type j = 1; j < 8; ++j, index += 4)
             {
               r0 += op(index);
               r1 += op(index + 1);
@@ -1099,14 +1099,14 @@ namespace internal
 
       const unsigned int nvecs = VectorizedArray<Number>::n_array_elements;
       const size_type    regular_chunks = n_chunks / nvecs;
-      for(size_type i = 0; i < regular_chunks; ++i)
+      for (size_type i = 0; i < regular_chunks; ++i)
         {
           VectorizedArray<Number> r0 = op.do_vectorized(index);
           VectorizedArray<Number> r1 = op.do_vectorized(index + nvecs);
           VectorizedArray<Number> r2 = op.do_vectorized(index + 2 * nvecs);
           VectorizedArray<Number> r3 = op.do_vectorized(index + 3 * nvecs);
           index += nvecs * 4;
-          for(size_type j = 1; j < 8; ++j, index += nvecs * 4)
+          for (size_type j = 1; j < 8; ++j, index += nvecs * 4)
             {
               r0 += op.do_vectorized(index);
               r1 += op.do_vectorized(index + nvecs);
@@ -1127,13 +1127,13 @@ namespace internal
       // Here we assume that nvecs < 32/2 = 16 as well as 16%nvecs==0.
       AssertIndexRange(VectorizedArray<Number>::n_array_elements, 17);
       Assert(16 % nvecs == 0, ExcInternalError());
-      if(n_chunks % VectorizedArray<Number>::n_array_elements != 0)
+      if (n_chunks % VectorizedArray<Number>::n_array_elements != 0)
         {
           VectorizedArray<Number> r0  = VectorizedArray<Number>(),
                                   r1  = VectorizedArray<Number>();
           const size_type start_irreg = regular_chunks * nvecs;
-          for(size_type c = start_irreg; c < n_chunks; ++c)
-            for(size_type j = 0; j < 32; j += 2 * nvecs, index += 2 * nvecs)
+          for (size_type c = start_irreg; c < n_chunks; ++c)
+            for (size_type j = 0; j < 32; j += 2 * nvecs, index += 2 * nvecs)
               {
                 r0 += op.do_vectorized(index);
                 r1 += op.do_vectorized(index + nvecs);
@@ -1198,13 +1198,13 @@ namespace internal
         // if that happens to be smaller). this is advantageous because our
         // algorithm favors lengths of a power of 2 due to pairwise summation ->
         // at most one 'oddly' sized chunk
-        if(chunk_size > 512)
+        if (chunk_size > 512)
           chunk_size = ((chunk_size + 511) / 512) * 512;
         n_chunks = (vec_size + chunk_size - 1) / chunk_size;
         AssertIndexRange((n_chunks - 1) * chunk_size, vec_size);
         AssertIndexRange(vec_size, n_chunks * chunk_size + 1);
 
-        if(n_chunks > threshold_array_allocate)
+        if (n_chunks > threshold_array_allocate)
           {
             // make sure we allocate an even number of elements,
             // access to the new last element is needed in do_sum()
@@ -1222,7 +1222,7 @@ namespace internal
       void
       operator()(const tbb::blocked_range<size_type>& range) const
       {
-        for(size_type i = range.begin(); i < range.end(); ++i)
+        for (size_type i = range.begin(); i < range.end(); ++i)
           accumulate_recursive(op,
                                start + i * chunk_size,
                                std::min(start + (i + 1) * chunk_size, end),
@@ -1232,11 +1232,11 @@ namespace internal
       ResultType
       do_sum() const
       {
-        while(n_chunks > 1)
+        while (n_chunks > 1)
           {
-            if(n_chunks % 2 == 1)
+            if (n_chunks % 2 == 1)
               array_ptr[n_chunks++] = ResultType();
-            for(size_type i = 0; i < n_chunks; i += 2)
+            for (size_type i = 0; i < n_chunks; i += 2)
               array_ptr[i / 2] = array_ptr[i] + array_ptr[i + 1];
             n_chunks /= 2;
           }
@@ -1274,9 +1274,9 @@ namespace internal
       size_type vec_size = end - start;
       // only go to the parallel function in case there are at least 4 parallel
       // items, otherwise the overhead is too large
-      if(vec_size
-           >= 4 * internal::VectorImplementation::minimum_parallel_grain_size
-         && MultithreadInfo::n_threads() > 1)
+      if (vec_size
+            >= 4 * internal::VectorImplementation::minimum_parallel_grain_size
+          && MultithreadInfo::n_threads() > 1)
         {
           Assert(
             partitioner.get() != nullptr,

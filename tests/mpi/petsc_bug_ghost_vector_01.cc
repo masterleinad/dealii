@@ -112,9 +112,9 @@ test()
 
     std::vector<std::vector<double>> step_sizes(2);
     //----------------INFLOW ---------------
-    for(unsigned int i = 0; i < inflow_cells; ++i)
+    for (unsigned int i = 0; i < inflow_cells; ++i)
       step_sizes[0].push_back(cell_size_x);
-    for(unsigned int i = 0; i < h_cells; ++i)
+    for (unsigned int i = 0; i < h_cells; ++i)
       step_sizes[1].push_back(cell_size_y);
 
     GridGenerator::subdivided_hyper_rectangle(tmp_tria_fluid,
@@ -126,9 +126,9 @@ test()
     //------------------------LOWER-------------
     step_sizes[0].clear();
     step_sizes[1].clear();
-    for(unsigned int i = 0; i < solid_cells_x; ++i)
+    for (unsigned int i = 0; i < solid_cells_x; ++i)
       step_sizes[0].push_back(cell_size_x);
-    for(unsigned int i = 0; i < v_space_cells; ++i)
+    for (unsigned int i = 0; i < v_space_cells; ++i)
       step_sizes[1].push_back(cell_size_y);
 
     GridGenerator::subdivided_hyper_rectangle(
@@ -148,7 +148,7 @@ test()
     //---------------------------UPPER--------
 
     step_sizes[1].clear();
-    for(unsigned int i = 0; i < (h_cells - v_space_cells - solid_cells_y); ++i)
+    for (unsigned int i = 0; i < (h_cells - v_space_cells - solid_cells_y); ++i)
       step_sizes[1].push_back(cell_size_y);
 
     GridGenerator::subdivided_hyper_rectangle(
@@ -167,9 +167,9 @@ test()
     //----------------------------outflow----------
     step_sizes[0].clear();
     step_sizes[1].clear();
-    for(unsigned int i = 0; i < outflow_cells; ++i)
+    for (unsigned int i = 0; i < outflow_cells; ++i)
       step_sizes[0].push_back(cell_size_x);
-    for(unsigned int i = 0; i < h_cells; ++i)
+    for (unsigned int i = 0; i < h_cells; ++i)
       step_sizes[1].push_back(cell_size_y);
     GridGenerator::subdivided_hyper_rectangle(tmp_rectangle,
                                               step_sizes,
@@ -198,7 +198,7 @@ test()
     data_out.attach_dof_handler(dof_handler);
 
     Vector<float> subdomain(fluid_triangulation.n_active_cells());
-    for(unsigned int i = 0; i < subdomain.size(); ++i)
+    for (unsigned int i = 0; i < subdomain.size(); ++i)
       subdomain(i) = fluid_triangulation.locally_owned_subdomain();
     data_out.add_data_vector(subdomain, "subdomain");
 
@@ -220,14 +220,14 @@ test()
 
     // ensure that all elements we can access locally are initially at
     // zero. check this first for the locally owned elements...
-    for(unsigned int i = 0; i < handler.n_dofs(); ++i)
-      if(locally_owned_dofs.is_element(i))
+    for (unsigned int i = 0; i < handler.n_dofs(); ++i)
+      if (locally_owned_dofs.is_element(i))
         AssertThrow(get_real_assert_zero_imag(vector(i)) == 0,
                     ExcInternalError());
     // ...end then also for the ghost elements
-    for(unsigned int i = 0; i < handler.n_dofs(); ++i)
-      if(locally_relevant_dofs.is_element(i)
-         && !locally_owned_dofs.is_element(i))
+    for (unsigned int i = 0; i < handler.n_dofs(); ++i)
+      if (locally_relevant_dofs.is_element(i)
+          && !locally_owned_dofs.is_element(i))
         AssertThrow(get_real_assert_zero_imag(vector(i)) == 0,
                     ExcInternalError());
   }
@@ -238,7 +238,7 @@ main(int argc, char* argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

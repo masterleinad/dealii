@@ -54,16 +54,16 @@ test()
   FEValues<dim - 1, dim> fe_values(
     mapping, fe, quadrature, update_normal_vectors);
 
-  for(typename Triangulation<dim - 1, dim>::active_cell_iterator cell
-      = boundary_mesh.begin_active();
-      cell != boundary_mesh.end();
-      ++cell)
+  for (typename Triangulation<dim - 1, dim>::active_cell_iterator cell
+       = boundary_mesh.begin_active();
+       cell != boundary_mesh.end();
+       ++cell)
     {
       deallog << "Cell = " << cell << ", with center at " << cell->center()
               << std::endl;
       fe_values.reinit(cell);
 
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for (unsigned int q = 0; q < quadrature.size(); ++q)
         deallog << "  cell_normal[" << q << "] = " << fe_values.normal_vector(q)
                 << std::endl;
     }

@@ -80,7 +80,7 @@ FE_RannacherTurek<dim>::initialize_support_points()
   dealii::QGauss<dim - 1> face_quadrature(this->n_face_support_points);
   this->weights = face_quadrature.get_weights();
   this->generalized_support_points.resize(4 * face_quadrature.size());
-  for(unsigned int q = 0; q < face_quadrature.size(); ++q)
+  for (unsigned int q = 0; q < face_quadrature.size(); ++q)
     {
       this->generalized_support_points[0 * face_quadrature.size() + q]
         = dealii::Point<dim>(0, 1 - face_quadrature.point(q)(0));
@@ -108,10 +108,10 @@ FE_RannacherTurek<dim>::convert_generalized_support_point_values_to_dof_values(
 
   std::vector<Vector<double>>::const_iterator value
     = support_point_values.begin();
-  for(unsigned int face = 0; face < dealii::GeometryInfo<dim>::faces_per_cell;
-      ++face)
+  for (unsigned int face = 0; face < dealii::GeometryInfo<dim>::faces_per_cell;
+       ++face)
     {
-      for(unsigned int q = 0; q < q_points_per_face; ++q)
+      for (unsigned int q = 0; q < q_points_per_face; ++q)
         {
           nodal_values[face] += (*value)[0] * this->weights[q];
           ++value;

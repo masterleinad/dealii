@@ -23,17 +23,17 @@
 void
 output_matrix(const FullMatrix<double>& m)
 {
-  if((m.m() == 0) || (m.n() == 0))
+  if ((m.m() == 0) || (m.n() == 0))
     {
       deallog << "(Empty matrix)" << std::endl;
       return;
     }
 
   deallog << m.l1_norm() << ' ' << m.linfty_norm() << std::endl;
-  if(m.m() == m.n())
+  if (m.m() == m.n())
     deallog << m.frobenius_norm() << std::endl;
 
-  for(unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
+  for (unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
     deallog << m(i, i) << ' ' << m(i, std::min(m.m(), m.n()) - i - 1) << ' ';
   deallog << std::endl;
 }
@@ -43,9 +43,9 @@ void
 check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 {
   // check all combinations of fe1 and fe2
-  for(unsigned int subface = 0;
-      subface < GeometryInfo<dim>::max_children_per_face;
-      ++subface)
+  for (unsigned int subface = 0;
+       subface < GeometryInfo<dim>::max_children_per_face;
+       ++subface)
     {
       FullMatrix<double> face_constraints;
       try
@@ -56,7 +56,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
           deallog << fe1.get_name() << "  vs.  " << fe1.get_name() << std::endl;
           output_matrix(face_constraints);
         }
-      catch(...)
+      catch (...)
         {}
 
       try
@@ -67,10 +67,10 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
           deallog << fe2.get_name() << "  vs.  " << fe2.get_name() << std::endl;
           output_matrix(face_constraints);
         }
-      catch(...)
+      catch (...)
         {}
 
-      if(fe1.dofs_per_face <= fe2.dofs_per_face)
+      if (fe1.dofs_per_face <= fe2.dofs_per_face)
         try
           {
             face_constraints.reinit(fe2.dofs_per_face, fe1.dofs_per_face);
@@ -81,10 +81,10 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                     << std::endl;
             output_matrix(face_constraints);
           }
-        catch(...)
+        catch (...)
           {}
 
-      if(fe2.dofs_per_face <= fe1.dofs_per_face)
+      if (fe2.dofs_per_face <= fe1.dofs_per_face)
         try
           {
             face_constraints.reinit(fe1.dofs_per_face, fe2.dofs_per_face);
@@ -95,7 +95,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
                     << std::endl;
             output_matrix(face_constraints);
           }
-        catch(...)
+        catch (...)
           {}
     }
 }
@@ -118,7 +118,7 @@ check(const unsigned int degree1, const unsigned int degree2)
 
     check_this(fe1, fe2);
   }
-  if(degree1 > 0 && degree2 > 0)
+  if (degree1 > 0 && degree2 > 0)
     {
       deallog << "Checking FE_TraceQ in " << dim << "d:" << std::endl;
 
@@ -156,7 +156,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -169,7 +169,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

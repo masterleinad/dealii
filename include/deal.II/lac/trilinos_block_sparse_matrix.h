@@ -445,8 +445,8 @@ namespace TrilinosWrappers
   {
     Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
-      for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for (size_type r = 0; r < this->n_block_rows(); ++r)
+      for (size_type c = 0; c < this->n_block_cols(); ++c)
         this->block(r, c) = d;
 
     return *this;
@@ -456,9 +456,9 @@ namespace TrilinosWrappers
   BlockSparseMatrix::is_compressed() const
   {
     bool compressed = true;
-    for(size_type row = 0; row < n_block_rows(); ++row)
-      for(size_type col = 0; col < n_block_cols(); ++col)
-        if(block(row, col).is_compressed() == false)
+    for (size_type row = 0; row < n_block_rows(); ++row)
+      for (size_type col = 0; col < n_block_cols(); ++col)
+        if (block(row, col).is_compressed() == false)
           {
             compressed = false;
             break;
@@ -497,7 +497,7 @@ namespace TrilinosWrappers
                            std::integral_constant<bool, true>,
                            std::integral_constant<bool, true>) const
   {
-    if(transpose == true)
+    if (transpose == true)
       BaseClass::Tvmult_block_block(dst, src);
     else
       BaseClass::vmult_block_block(dst, src);
@@ -511,7 +511,7 @@ namespace TrilinosWrappers
                            std::integral_constant<bool, false>,
                            std::integral_constant<bool, true>) const
   {
-    if(transpose == true)
+    if (transpose == true)
       BaseClass::Tvmult_nonblock_block(dst, src);
     else
       BaseClass::vmult_nonblock_block(dst, src);
@@ -525,7 +525,7 @@ namespace TrilinosWrappers
                            std::integral_constant<bool, true>,
                            std::integral_constant<bool, false>) const
   {
-    if(transpose == true)
+    if (transpose == true)
       BaseClass::Tvmult_block_nonblock(dst, src);
     else
       BaseClass::vmult_block_nonblock(dst, src);
@@ -539,7 +539,7 @@ namespace TrilinosWrappers
                            std::integral_constant<bool, false>,
                            std::integral_constant<bool, false>) const
   {
-    if(transpose == true)
+    if (transpose == true)
       BaseClass::Tvmult_nonblock_nonblock(dst, src);
     else
       BaseClass::vmult_nonblock_nonblock(dst, src);
@@ -552,7 +552,7 @@ namespace TrilinosWrappers
     Assert(this->n_block_rows() != 0, ExcNotInitialized());
 
     std::vector<IndexSet> domain_indices;
-    for(size_type c = 0; c < this->n_block_cols(); ++c)
+    for (size_type c = 0; c < this->n_block_cols(); ++c)
       domain_indices.push_back(
         this->sub_objects[0][c]->locally_owned_domain_indices());
 
@@ -566,7 +566,7 @@ namespace TrilinosWrappers
     Assert(this->n_block_rows() != 0, ExcNotInitialized());
 
     std::vector<IndexSet> range_indices;
-    for(size_type r = 0; r < this->n_block_rows(); ++r)
+    for (size_type r = 0; r < this->n_block_rows(); ++r)
       range_indices.push_back(
         this->sub_objects[r][0]->locally_owned_range_indices());
 

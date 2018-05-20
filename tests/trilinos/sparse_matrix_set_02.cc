@@ -31,13 +31,13 @@ test(TrilinosWrappers::SparseMatrix& m)
 
   // first set a few entries one-by-one and
   // initialize the sparsity pattern for m2
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
-      if(std::fabs((double) i - j) < 2)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
+      if (std::fabs((double) i - j) < 2)
         {
           double value;
-          if(i == j)
-            if(i > 0 && i < m.m() - 1)
+          if (i == j)
+            if (i > 0 && i < m.m() - 1)
               value = 2.;
             else
               value = 1.;
@@ -56,7 +56,7 @@ test(TrilinosWrappers::SparseMatrix& m)
     full_matrix(0, 1) = full_matrix(1, 0) = -1.;
     std::vector<types::global_dof_index> local_indices(2);
 
-    for(unsigned int i = 0; i < m.m() - 1; ++i)
+    for (unsigned int i = 0; i < m.m() - 1; ++i)
       {
         local_indices[0] = i;
         local_indices[1] = i + 1;
@@ -94,7 +94,7 @@ main(int argc, char** argv)
         test(m);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -108,7 +108,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -59,7 +59,7 @@ check_all(std::ostream& log)
 
   char                  name[100];
   DataOutBase::VtkFlags flags;
-  if(true)
+  if (true)
     {
       sprintf(name, "%d%d.vtu", dim, spacedim);
 #if SEPARATE_FILES == 1

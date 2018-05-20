@@ -46,8 +46,8 @@ test()
 
   DynamicSparsityPattern csp(local_relevant);
 
-  for(unsigned int i = 0; i < 2 * numproc; ++i)
-    if(local_relevant.is_element(i))
+  for (unsigned int i = 0; i < 2 * numproc; ++i)
+    if (local_relevant.is_element(i))
       csp.add(i, i);
 
   csp.add(0, 1);
@@ -69,9 +69,9 @@ test()
   //////////////////////////////////////////////
   unsigned int start_row = mat.local_range().first;
   unsigned int end_row   = mat.local_range().second;
-  for(auto r = start_row; r < end_row; ++r)
+  for (auto r = start_row; r < end_row; ++r)
     {
-      for(auto itr = mat.begin(r); itr != mat.end(r); ++itr)
+      for (auto itr = mat.begin(r); itr != mat.end(r); ++itr)
         {
           deallog << itr->row() << ' ' << itr->column() << ' ' << itr->value()
                   << std::endl;
@@ -79,7 +79,7 @@ test()
     }
   /////////////////////////////////////////////
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

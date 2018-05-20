@@ -101,7 +101,7 @@ namespace Step22
   {
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
-    if(component == 0)
+    if (component == 0)
       return (p[0] < 0 ? -1 : (p[0] > 0 ? 1 : 0));
     return 0;
   }
@@ -111,7 +111,7 @@ namespace Step22
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                     Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
+    for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
   }
 
@@ -140,7 +140,7 @@ namespace Step22
   RightHandSide<dim>::vector_value(const Point<dim>& p,
                                    Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
+    for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
   }
 
@@ -229,25 +229,25 @@ namespace Step22
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
         local_rhs    = 0;
         right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                           rhs_values);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
                 div_phi_u[k] = fe_values[velocities].divergence(k, q);
                 phi_p[k]     = fe_values[pressure].value(k, q);
               }
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for (unsigned int j = 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
@@ -261,8 +261,8 @@ namespace Step22
                                 * rhs_values[q](component_i) * fe_values.JxW(q);
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             local_matrix(i, j) = local_matrix(j, i);
         cell->get_dof_indices(local_dof_indices);
         constraints.distribute_local_to_global(local_matrix,
@@ -357,19 +357,19 @@ namespace Step22
       GridGenerator::subdivided_hyper_rectangle(
         triangulation, subdivisions, bottom_left, top_right);
     }
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(cell->face(f)->center()[dim - 1] == 0)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (cell->face(f)->center()[dim - 1] == 0)
           cell->face(f)->set_all_boundary_ids(1);
     triangulation.refine_global(4 - dim);
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 2;
-        ++refinement_cycle)
+    for (unsigned int refinement_cycle = 0; refinement_cycle < 2;
+         ++refinement_cycle)
       {
         deallog << "Refinement cycle " << refinement_cycle << std::endl;
-        if(refinement_cycle > 0)
+        if (refinement_cycle > 0)
           refine_mesh();
         setup_dofs();
         deallog << "   Assembling..." << std::endl;

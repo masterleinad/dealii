@@ -66,19 +66,19 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
 
   const double nu = 3.14159265358e-2;
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       local_matrix = 0;
       fe_values.reinit(cell);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int comp_i = 0; comp_i < fe.n_components(); ++comp_i)
-          for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-            for(unsigned int comp_j = 0; comp_j < fe.n_components(); ++comp_j)
-              for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int comp_i = 0; comp_i < fe.n_components(); ++comp_i)
+          for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+            for (unsigned int comp_j = 0; comp_j < fe.n_components(); ++comp_j)
+              for (unsigned int q = 0; q < n_q_points; ++q)
                 {
                   // velocity-velocity coupling?
-                  if((comp_i < dim) && (comp_j < dim))
-                    if(comp_i == comp_j)
+                  if ((comp_i < dim) && (comp_j < dim))
+                    if (comp_i == comp_j)
                       local_matrix(i, j)
                         += (nu
                             * (fe_values.shape_grad_component(i, q, comp_i)
@@ -86,14 +86,14 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
                             * fe_values.JxW(q));
 
                   // velocity-pressure coupling
-                  if((comp_i < dim) && (comp_j == dim))
+                  if ((comp_i < dim) && (comp_j == dim))
                     local_matrix(i, j)
                       += (-fe_values.shape_grad_component(i, q, comp_i)[comp_i]
                           * fe_values.shape_value_component(j, q, comp_j)
                           * fe_values.JxW(q));
 
                   // pressure-velocity coupling
-                  if((comp_i == dim) && (comp_j < dim))
+                  if ((comp_i == dim) && (comp_j < dim))
                     local_matrix(i, j)
                       += (fe_values.shape_value_component(i, q, comp_i)
                           * fe_values.shape_grad_component(j, q, comp_j)[comp_j]
@@ -101,8 +101,8 @@ create_stokes_matrix_2(const DoFHandler<dim>& dof_handler,
                 };
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
@@ -136,21 +136,22 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
 
   const double nu = 3.14159265358e-2;
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       local_matrix = 0;
       fe_values.reinit(cell);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int comp_i = 0; comp_i < fe.n_components(); ++comp_i)
-          if(fe.get_nonzero_components(i)[comp_i] == true)
-            for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-              for(unsigned int comp_j = 0; comp_j < fe.n_components(); ++comp_j)
-                if(fe.get_nonzero_components(j)[comp_j] == true)
-                  for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int comp_i = 0; comp_i < fe.n_components(); ++comp_i)
+          if (fe.get_nonzero_components(i)[comp_i] == true)
+            for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+              for (unsigned int comp_j = 0; comp_j < fe.n_components();
+                   ++comp_j)
+                if (fe.get_nonzero_components(j)[comp_j] == true)
+                  for (unsigned int q = 0; q < n_q_points; ++q)
                     {
                       // velocity-velocity coupling?
-                      if((comp_i < dim) && (comp_j < dim))
-                        if(comp_i == comp_j)
+                      if ((comp_i < dim) && (comp_j < dim))
+                        if (comp_i == comp_j)
                           local_matrix(i, j)
                             += (nu
                                 * (fe_values.shape_grad_component(i, q, comp_i)
@@ -159,7 +160,7 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                                 * fe_values.JxW(q));
 
                       // velocity-pressure coupling
-                      if((comp_i < dim) && (comp_j == dim))
+                      if ((comp_i < dim) && (comp_j == dim))
                         local_matrix(i, j)
                           += (-fe_values.shape_grad_component(
                                 i, q, comp_i)[comp_i]
@@ -167,7 +168,7 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                               * fe_values.JxW(q));
 
                       // pressure-velocity coupling
-                      if((comp_i == dim) && (comp_j < dim))
+                      if ((comp_i == dim) && (comp_j < dim))
                         local_matrix(i, j)
                           += (fe_values.shape_value_component(i, q, comp_i)
                               * fe_values.shape_grad_component(
@@ -176,8 +177,8 @@ create_stokes_matrix_3(const DoFHandler<dim>& dof_handler,
                     };
 
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
           A.add(local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
     };
 }
@@ -226,9 +227,9 @@ test(const unsigned int p)
   // written out a little bit, only
   // write every so-many-th element
   SparseMatrix<double>::const_iterator p2 = A2.begin(), p3 = A3.begin();
-  for(unsigned int i = 0; i < A2.n_nonzero_elements(); ++i, ++p2, ++p3)
+  for (unsigned int i = 0; i < A2.n_nonzero_elements(); ++i, ++p2, ++p3)
     {
-      if(i % (dim * dim * dim) == 0)
+      if (i % (dim * dim * dim) == 0)
         deallog << i << ' ' << p2->value() << std::endl;
       Assert(p3->value() == p2->value(), ExcInternalError());
     };

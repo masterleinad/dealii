@@ -63,7 +63,7 @@ test()
   VectorTools::interpolate(
     dofh, Functions::ConstantFunction<dim, PetscScalar>(1), x);
   const double norm = x.l2_norm();
-  if(myid == 0)
+  if (myid == 0)
     deallog << dofh.n_locally_owned_dofs() << ' ' << dofh.n_dofs() << std::endl
             << norm << std::endl;
 }
@@ -76,7 +76,7 @@ main(int argc, char* argv[])
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

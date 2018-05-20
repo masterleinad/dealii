@@ -478,7 +478,7 @@ namespace PETScWrappers
       // function in Petsc that would take a pointer to an array of
       // PetscScalar values and simply copy n elements verbatim into the
       // vector...
-      for(size_type i = 0; i < v.size(); ++i)
+      for (size_type i = 0; i < v.size(); ++i)
         (*this)(i) = v(i);
 
       compress(::dealii::VectorOperation::insert);

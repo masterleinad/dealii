@@ -56,7 +56,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<double>& values) const
   {
-    for(unsigned int d = 0; d < this->n_components; ++d)
+    for (unsigned int d = 0; d < this->n_components; ++d)
       values(d) = value(p, d);
   }
 
@@ -82,9 +82,9 @@ boundary_q(const DoFHandler<1>&)
 void
 write_map(const std::map<types::global_dof_index, double>& bv)
 {
-  for(std::map<types::global_dof_index, double>::const_iterator i = bv.begin();
-      i != bv.end();
-      ++i)
+  for (std::map<types::global_dof_index, double>::const_iterator i = bv.begin();
+       i != bv.end();
+       ++i)
     // also output log of value to also display small numbers
     deallog << i->first << ' ' << i->second << " "
             << (std::abs(i->second) > 0 ? std::log(std::abs(i->second)) :
@@ -97,7 +97,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     {
       GridGenerator::hyper_ball(tr, Point<dim>(), 1);
     }
@@ -108,7 +108,7 @@ check()
   GridTools::copy_boundary_to_manifold_id(tr);
 
   static const SphericalManifold<dim> boundary;
-  if(dim != 1)
+  if (dim != 1)
     {
       tr.set_manifold(0, boundary);
     }
@@ -131,12 +131,12 @@ check()
 
   // test four different cases for the parameter: 1, 1e-20, 1e-170, 1e-800 (= 0)
   double factors[] = {1., 1e-40, 1e-170, 1e-800};
-  for(unsigned int it = 0; it < 4; ++it)
+  for (unsigned int it = 0; it < 4; ++it)
     {
       deallog.push(Utilities::int_to_string(it, 1));
 
       // check all of them
-      for(unsigned int i = 0; i < fe_list.size(); ++i)
+      for (unsigned int i = 0; i < fe_list.size(); ++i)
         {
           function_list[i]->set_scaling(factors[it]);
           const FiniteElement<dim>& fe = *fe_list[i];
@@ -164,7 +164,7 @@ check()
     }
 
   // delete objects now no more needed
-  for(unsigned int i = 0; i < fe_list.size(); ++i)
+  for (unsigned int i = 0; i < fe_list.size(); ++i)
     {
       delete fe_list[i];
       delete function_list[i];

@@ -45,7 +45,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(SolverControl::NoConvergence& e)
+  catch (SolverControl::NoConvergence& e)
     {
       result = e.last_residual;
     }
@@ -65,7 +65,7 @@ main()
   SolverRichardson<> rich(control);
   SolverRelaxation<> relax(control);
 
-  for(unsigned int size = 33; size <= 33; size *= 3)
+  for (unsigned int size = 33; size <= 33; size *= 3)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -79,7 +79,7 @@ main()
       SparseMatrix<double> A(structure);
       testproblem.five_point(A);
 
-      for(unsigned int blocksize = 2; blocksize < 32; blocksize <<= 1)
+      for (unsigned int blocksize = 2; blocksize < 32; blocksize <<= 1)
         {
           deallog << "Block size " << blocksize << std::endl;
 
@@ -90,9 +90,9 @@ main()
             prec_data(blocksize, 0.8);
 
           relax_data.block_list.reinit(n_blocks, dim, blocksize);
-          for(unsigned int block = 0; block < n_blocks; ++block)
+          for (unsigned int block = 0; block < n_blocks; ++block)
             {
-              for(unsigned int i = 0; i < blocksize; ++i)
+              for (unsigned int i = 0; i < blocksize; ++i)
                 relax_data.block_list.add(block, i + block * blocksize);
             }
           relax_data.block_list.compress();
@@ -146,7 +146,7 @@ main()
               deallog << "diff " << std::fabs(r1 - r2) / r1 << std::endl;
               deallog.pop();
             }
-          catch(std::exception& e)
+          catch (std::exception& e)
             {
               std::cerr << "Exception: " << e.what() << std::endl;
             }

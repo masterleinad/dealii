@@ -32,7 +32,7 @@ checkApply_Constraints(FullMatrix<number>& A,
 
   F.apply_constraints(V, matrix_is_symmetric);
 
-  for(unsigned int i = 0; i < V.size(); ++i)
+  for (unsigned int i = 0; i < V.size(); ++i)
     deallog << V(i) << '\t';
   deallog << std::endl;
 }

@@ -403,7 +403,7 @@ namespace Differentiation
         directional_derivative(const Sacado::Fad::DFad<NumberType>& x,
                                const unsigned int                   direction)
         {
-          if(x.hasFastAccess())
+          if (x.hasFastAccess())
             return x.fastAccessDx(direction);
           else
             return x.dx(direction);

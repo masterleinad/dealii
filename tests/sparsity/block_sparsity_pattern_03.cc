@@ -42,11 +42,11 @@ main()
 
   csp.print(deallog.get_file_stream());
 
-  for(types::global_dof_index row = 0; row < csp.n_rows(); ++row)
+  for (types::global_dof_index row = 0; row < csp.n_rows(); ++row)
     {
       types::global_dof_index rlen = csp.row_length(row);
 
-      for(types::global_dof_index c = 0; c < rlen; ++c)
+      for (types::global_dof_index c = 0; c < rlen; ++c)
         {
           types::global_dof_index column = csp.column_number(row, c);
           deallog << row << "," << column << std::endl;

@@ -51,18 +51,18 @@ TridiagonalMatrix<number>::all_zero() const
   typename std::vector<number>::const_iterator e;
 
   e = diagonal.end();
-  for(i = diagonal.begin(); i != e; ++i)
-    if(*i != 0.)
+  for (i = diagonal.begin(); i != e; ++i)
+    if (*i != 0.)
       return false;
 
   e = left.end();
-  for(i = left.begin(); i != e; ++i)
-    if(*i != 0.)
+  for (i = left.begin(); i != e; ++i)
+    if (*i != 0.)
       return false;
 
   e = right.end();
-  for(i = right.begin(); i != e; ++i)
-    if(*i != 0.)
+  for (i = right.begin(); i != e; ++i)
+    if (*i != 0.)
       return false;
   return true;
 }
@@ -78,7 +78,7 @@ TridiagonalMatrix<number>::vmult(Vector<number>&       w,
   Assert(w.size() == n(), ExcDimensionMismatch(w.size(), n()));
   Assert(v.size() == n(), ExcDimensionMismatch(v.size(), n()));
 
-  if(n() == 0)
+  if (n() == 0)
     return;
 
   // The actual loop skips the first
@@ -92,19 +92,19 @@ TridiagonalMatrix<number>::vmult(Vector<number>&       w,
   // later or is equal to the right
   // one for symmetric storage
   typename std::vector<number>::const_iterator l = left.begin();
-  if(is_symmetric)
+  if (is_symmetric)
     l = r;
   else
     ++l;
 
-  if(adding)
+  if (adding)
     {
       // Treat first row separately
       w(0) += (*d) * v(0) + (*r) * v(1);
       ++d;
       ++r;
       // All rows with three entries
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
+      for (size_type i = 1; i < e; ++i, ++d, ++r, ++l)
         w(i) += (*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1);
       // Last row is special again
       w(e) += (*l) * v(e - 1) + (*d) * v(e);
@@ -114,7 +114,7 @@ TridiagonalMatrix<number>::vmult(Vector<number>&       w,
       w(0) = (*d) * v(0) + (*r) * v(1);
       ++d;
       ++r;
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
+      for (size_type i = 1; i < e; ++i, ++d, ++r, ++l)
         w(i) = (*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1);
       w(e) = (*l) * v(e - 1) + (*d) * v(e);
     }
@@ -139,24 +139,24 @@ TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
   Assert(w.size() == n(), ExcDimensionMismatch(w.size(), n()));
   Assert(v.size() == n(), ExcDimensionMismatch(v.size(), n()));
 
-  if(n() == 0)
+  if (n() == 0)
     return;
 
   const size_type                              e = n() - 1;
   typename std::vector<number>::const_iterator d = diagonal.begin();
   typename std::vector<number>::const_iterator r = right.begin();
   typename std::vector<number>::const_iterator l = left.begin();
-  if(is_symmetric)
+  if (is_symmetric)
     l = r;
   else
     ++l;
 
-  if(adding)
+  if (adding)
     {
       w(0) += (*d) * v(0) + (*l) * v(1);
       ++d;
       ++l;
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
+      for (size_type i = 1; i < e; ++i, ++d, ++r, ++l)
         w(i) += (*l) * v(i + 1) + (*d) * v(i) + (*r) * v(i - 1);
       w(e) += (*d) * v(e) + (*r) * v(e - 1);
     }
@@ -165,7 +165,7 @@ TridiagonalMatrix<number>::Tvmult(Vector<number>&       w,
       w(0) = (*d) * v(0) + (*l) * v(1);
       ++d;
       ++l;
-      for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
+      for (size_type i = 1; i < e; ++i, ++d, ++r, ++l)
         w(i) = (*l) * v(i + 1) + (*d) * v(i) + (*r) * v(i - 1);
       w(e) = (*d) * v(e) + (*r) * v(e - 1);
     }
@@ -190,7 +190,7 @@ TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number>& w,
   typename std::vector<number>::const_iterator d = diagonal.begin();
   typename std::vector<number>::const_iterator r = right.begin();
   typename std::vector<number>::const_iterator l = left.begin();
-  if(is_symmetric)
+  if (is_symmetric)
     l = r;
   else
     ++l;
@@ -198,7 +198,7 @@ TridiagonalMatrix<number>::matrix_scalar_product(const Vector<number>& w,
   number result = w(0) * ((*d) * v(0) + (*r) * v(1));
   ++d;
   ++r;
-  for(size_type i = 1; i < e; ++i, ++d, ++r, ++l)
+  for (size_type i = 1; i < e; ++i, ++d, ++r, ++l)
     result += w(i) * ((*l) * v(i - 1) + (*d) * v(i) + (*r) * v(i + 1));
   result += w(e) * ((*l) * v(e - 1) + (*d) * v(e));
   return result;

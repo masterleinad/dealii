@@ -70,7 +70,7 @@ void
 check()
 {
   // check for q=1,2
-  for(unsigned int q = 1; q <= 2; ++q)
+  for (unsigned int q = 1; q <= 2; ++q)
     {
       deallog << "q=" << q << std::endl;
 
@@ -81,8 +81,8 @@ check()
       Assert(q <= Matrices::n_constraint_matrices, ExcInternalError());
       x.fill(Matrices::constraint_matrices[q - 1]);
 
-      for(unsigned int i = 0; i < x.m(); ++i)
-        for(unsigned int j = 0; j < x.n(); ++j)
+      for (unsigned int i = 0; i < x.m(); ++i)
+        for (unsigned int j = 0; j < x.n(); ++j)
           {
             deallog << i << ' ' << j << ' ' << x(i, j) << ' '
                     << fe.constraints()(i, j) << std::endl;

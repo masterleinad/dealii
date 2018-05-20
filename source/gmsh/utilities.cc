@@ -54,7 +54,7 @@ namespace Gmsh
   {
     std::string base_name      = prm.output_base_name;
     char        dir_template[] = "ctfbc-XXXXXX";
-    if(base_name == "")
+    if (base_name == "")
       {
         const char* temp = mkdtemp(dir_template);
         AssertThrow(temp != nullptr,
@@ -98,7 +98,7 @@ namespace Gmsh
     gridin.attach_triangulation(tria);
     gridin.read_msh(grid_file);
 
-    if(base_name != prm.output_base_name)
+    if (base_name != prm.output_base_name)
       {
         // declaring the list without a type, i.e.,
         //
@@ -112,7 +112,7 @@ namespace Gmsh
            &msh_file_name,
            &log_file_name,
            &warnings_file_name}};
-        for(const std::string* filename : filenames)
+        for (const std::string* filename : filenames)
           {
             const auto ret_value = std::remove(filename->c_str());
             AssertThrow(ret_value == 0,

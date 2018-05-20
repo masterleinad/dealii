@@ -47,7 +47,7 @@ test()
 
   hp::FECollection<dim> fe_collection;
   hp::QCollection<dim>  q_collection;
-  for(unsigned int i = 1; i <= 4; ++i)
+  for (unsigned int i = 1; i <= 4; ++i)
     {
       fe_collection.push_back(FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)));
       q_collection.push_back(QGauss<dim>(i + 2));
@@ -55,16 +55,16 @@ test()
 
   hp::DoFHandler<dim> dof_handler(tria);
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % fe_collection.size());
 
   dof_handler.distribute_dofs(fe_collection);
 
   Vector<double> vec(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < vec.size(); ++i)
+  for (unsigned int i = 0; i < vec.size(); ++i)
     vec(i) = i;
 
   Vector<float> diff(tria.n_active_cells());
@@ -75,7 +75,7 @@ test()
                                    VectorTools::Linfty_norm,
                                    VectorTools::H1_seminorm,
                                    VectorTools::W1p_seminorm};
-  for(unsigned int i = 0; i < sizeof(norms) / sizeof(norms[0]); ++i)
+  for (unsigned int i = 0; i < sizeof(norms) / sizeof(norms[0]); ++i)
     {
       VectorTools::integrate_difference(dof_handler,
                                         vec,

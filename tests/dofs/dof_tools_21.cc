@@ -60,7 +60,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   Vector<double> constrained(dof_handler.n_dofs());
 
   // Ensure that we can interpolate:
-  if(dof_handler.get_fe().get_unit_support_points().size() == 0)
+  if (dof_handler.get_fe().get_unit_support_points().size() == 0)
     return;
 
   VectorTools::interpolate(dof_handler, test_func, unconstrained);

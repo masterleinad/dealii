@@ -31,8 +31,8 @@ test(bool have_set)
 
   DynamicSparsityPattern sp(size, 5, have_set ? owned : empty_set);
 
-  for(unsigned int i = my_start; i < my_start + 5; ++i)
-    for(DynamicSparsityPattern::iterator p = sp.begin(i); p != sp.end(i); ++p)
+  for (unsigned int i = my_start; i < my_start + 5; ++i)
+    for (DynamicSparsityPattern::iterator p = sp.begin(i); p != sp.end(i); ++p)
       deallog << p->row() << ' ' << p->column() << std::endl;
 
   deallog << "OK" << std::endl;
@@ -48,7 +48,7 @@ main()
       test(false);
       test(true);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -62,7 +62,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

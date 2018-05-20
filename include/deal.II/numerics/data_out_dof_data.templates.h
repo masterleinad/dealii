@@ -74,24 +74,24 @@ namespace internal
         update_flags(update_flags)
     {
       unsigned int n_q_points = 0;
-      if(use_face_values == false)
+      if (use_face_values == false)
         {
           dealii::hp::QCollection<dim> quadrature(
             QIterated<dim>(QTrapez<1>(), n_subdivisions));
           n_q_points = quadrature[0].size();
           x_fe_values.resize(this->finite_elements.size());
-          for(unsigned int i = 0; i < this->finite_elements.size(); ++i)
+          for (unsigned int i = 0; i < this->finite_elements.size(); ++i)
             {
               // check if there is a finite element that is equal to the
               // present one, then we can re-use the FEValues object
-              for(unsigned int j = 0; j < i; ++j)
-                if(this->finite_elements[i].get()
-                   == this->finite_elements[j].get())
+              for (unsigned int j = 0; j < i; ++j)
+                if (this->finite_elements[i].get()
+                    == this->finite_elements[j].get())
                   {
                     x_fe_values[i] = x_fe_values[j];
                     break;
                   }
-              if(x_fe_values[i].get() == nullptr)
+              if (x_fe_values[i].get() == nullptr)
                 x_fe_values[i]
                   = std::make_shared<dealii::hp::FEValues<dim, spacedim>>(
                     this->mapping_collection,
@@ -106,18 +106,18 @@ namespace internal
             QIterated<dim - 1>(QTrapez<1>(), n_subdivisions));
           n_q_points = quadrature[0].size();
           x_fe_face_values.resize(this->finite_elements.size());
-          for(unsigned int i = 0; i < this->finite_elements.size(); ++i)
+          for (unsigned int i = 0; i < this->finite_elements.size(); ++i)
             {
               // check if there is a finite element that is equal to the
               // present one, then we can re-use the FEValues object
-              for(unsigned int j = 0; j < i; ++j)
-                if(this->finite_elements[i].get()
-                   == this->finite_elements[j].get())
+              for (unsigned int j = 0; j < i; ++j)
+                if (this->finite_elements[i].get()
+                    == this->finite_elements[j].get())
                   {
                     x_fe_face_values[i] = x_fe_face_values[j];
                     break;
                   }
-              if(x_fe_face_values[i].get() == nullptr)
+              if (x_fe_face_values[i].get() == nullptr)
                 x_fe_face_values[i]
                   = std::make_shared<dealii::hp::FEFaceValues<dim, spacedim>>(
                     this->mapping_collection,
@@ -134,9 +134,9 @@ namespace internal
       patch_values_system.solution_gradients.resize(n_q_points);
       patch_values_system.solution_hessians.resize(n_q_points);
 
-      for(unsigned int dataset = 0; dataset < n_postprocessor_outputs.size();
-          ++dataset)
-        if(n_postprocessor_outputs[dataset] != 0)
+      for (unsigned int dataset = 0; dataset < n_postprocessor_outputs.size();
+           ++dataset)
+        if (n_postprocessor_outputs[dataset] != 0)
           postprocessed_values[dataset].resize(
             n_q_points,
             dealii::Vector<double>(n_postprocessor_outputs[dataset]));
@@ -156,24 +156,24 @@ namespace internal
         finite_elements(data.finite_elements),
         update_flags(data.update_flags)
     {
-      if(data.x_fe_values.empty() == false)
+      if (data.x_fe_values.empty() == false)
         {
           Assert(data.x_fe_face_values.empty() == true, ExcInternalError());
           dealii::hp::QCollection<dim> quadrature(
             QIterated<dim>(QTrapez<1>(), n_subdivisions));
           x_fe_values.resize(this->finite_elements.size());
-          for(unsigned int i = 0; i < this->finite_elements.size(); ++i)
+          for (unsigned int i = 0; i < this->finite_elements.size(); ++i)
             {
               // check if there is a finite element that is equal to the
               // present one, then we can re-use the FEValues object
-              for(unsigned int j = 0; j < i; ++j)
-                if(this->finite_elements[i].get()
-                   == this->finite_elements[j].get())
+              for (unsigned int j = 0; j < i; ++j)
+                if (this->finite_elements[i].get()
+                    == this->finite_elements[j].get())
                   {
                     x_fe_values[i] = x_fe_values[j];
                     break;
                   }
-              if(x_fe_values[i].get() == nullptr)
+              if (x_fe_values[i].get() == nullptr)
                 x_fe_values[i]
                   = std::make_shared<dealii::hp::FEValues<dim, spacedim>>(
                     this->mapping_collection,
@@ -187,18 +187,18 @@ namespace internal
           dealii::hp::QCollection<dim - 1> quadrature(
             QIterated<dim - 1>(QTrapez<1>(), n_subdivisions));
           x_fe_face_values.resize(this->finite_elements.size());
-          for(unsigned int i = 0; i < this->finite_elements.size(); ++i)
+          for (unsigned int i = 0; i < this->finite_elements.size(); ++i)
             {
               // check if there is a finite element that is equal to the
               // present one, then we can re-use the FEValues object
-              for(unsigned int j = 0; j < i; ++j)
-                if(this->finite_elements[i].get()
-                   == this->finite_elements[j].get())
+              for (unsigned int j = 0; j < i; ++j)
+                if (this->finite_elements[i].get()
+                    == this->finite_elements[j].get())
                   {
                     x_fe_face_values[i] = x_fe_face_values[j];
                     break;
                   }
-              if(x_fe_face_values[i].get() == nullptr)
+              if (x_fe_face_values[i].get() == nullptr)
                 x_fe_face_values[i]
                   = std::make_shared<dealii::hp::FEFaceValues<dim, spacedim>>(
                     this->mapping_collection,
@@ -217,20 +217,20 @@ namespace internal
       const typename dealii::Triangulation<dim, spacedim>::cell_iterator& cell,
       const unsigned int                                                  face)
     {
-      for(unsigned int dataset = 0; dataset < dof_data.size(); ++dataset)
+      for (unsigned int dataset = 0; dataset < dof_data.size(); ++dataset)
         {
           bool duplicate = false;
-          for(unsigned int j = 0; j < dataset; ++j)
-            if(finite_elements[dataset].get() == finite_elements[j].get())
+          for (unsigned int j = 0; j < dataset; ++j)
+            if (finite_elements[dataset].get() == finite_elements[j].get())
               duplicate = true;
-          if(duplicate == false)
+          if (duplicate == false)
             {
               typename DoFHandlerType::active_cell_iterator dh_cell(
                 &cell->get_triangulation(),
                 cell->level(),
                 cell->index(),
                 dof_data[dataset]->dof_handler);
-              if(x_fe_values.empty())
+              if (x_fe_values.empty())
                 {
                   AssertIndexRange(face, GeometryInfo<dim>::faces_per_cell);
                   x_fe_face_values[dataset]->reinit(dh_cell, face);
@@ -239,9 +239,9 @@ namespace internal
                 x_fe_values[dataset]->reinit(dh_cell);
             }
         }
-      if(dof_data.empty())
+      if (dof_data.empty())
         {
-          if(x_fe_values.empty())
+          if (x_fe_values.empty())
             {
               AssertIndexRange(face, GeometryInfo<dim>::faces_per_cell);
               x_fe_face_values[0]->reinit(cell, face);
@@ -257,7 +257,7 @@ namespace internal
       const unsigned int dataset) const
     {
       AssertIndexRange(dataset, finite_elements.size());
-      if(x_fe_values.empty())
+      if (x_fe_values.empty())
         return x_fe_face_values[dataset]->get_present_fe_values();
       else
         return x_fe_values[dataset]->get_present_fe_values();
@@ -274,10 +274,10 @@ namespace internal
                       patch_values_system.solution_gradients.size());
       AssertDimension(patch_values_system.solution_values.size(),
                       patch_values_system.solution_hessians.size());
-      if(patch_values_system.solution_values[0].size() == n_components)
+      if (patch_values_system.solution_values[0].size() == n_components)
         return;
-      for(unsigned int k = 0; k < patch_values_system.solution_values.size();
-          ++k)
+      for (unsigned int k = 0; k < patch_values_system.solution_values.size();
+           ++k)
         {
           patch_values_system.solution_values[k].reinit(n_components);
           patch_values_system.solution_gradients[k].resize(n_components);
@@ -334,7 +334,7 @@ namespace internal
     get_component(const std::complex<NumberType>& value,
                   const ComponentExtractor        extract_component)
     {
-      switch(extract_component)
+      switch (extract_component)
         {
           case ComponentExtractor::real_part:
             return value.real();
@@ -359,7 +359,7 @@ namespace internal
                         "part from a real number."));
 
       Tensor<rank, dim, double> t;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         t[d] = get_component(value[d], extract_component);
 
       return t;
@@ -388,7 +388,7 @@ namespace internal
                                   names.size()));
 
       // check that the names use only allowed characters
-      for(unsigned int i = 0; i < names.size(); ++i)
+      for (unsigned int i = 0; i < names.size(); ++i)
         Assert(names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                           "0123456789_<>()")
@@ -425,7 +425,7 @@ namespace internal
           data_postprocessor->get_data_component_interpretation().size()));
 
       // check that the names use only allowed characters
-      for(unsigned int i = 0; i < names.size(); ++i)
+      for (unsigned int i = 0; i < names.size(); ++i)
         Assert(names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                           "0123456789_<>()")
@@ -638,7 +638,7 @@ namespace internal
       const ComponentExtractor                             extract_component,
       std::vector<dealii::Vector<double>>& patch_values_system) const
     {
-      if(typeid(typename VectorType::value_type) == typeid(double))
+      if (typeid(typename VectorType::value_type) == typeid(double))
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -669,17 +669,17 @@ namespace internal
 
           std::vector<dealii::Vector<typename VectorType::value_type>> tmp(
             n_eval_points);
-          for(unsigned int i = 0; i < n_eval_points; i++)
+          for (unsigned int i = 0; i < n_eval_points; i++)
             tmp[i].reinit(n_components);
 
           fe_patch_values.get_function_values(*vector, tmp);
 
           AssertDimension(patch_values_system.size(), n_eval_points);
-          for(unsigned int i = 0; i < n_eval_points; i++)
+          for (unsigned int i = 0; i < n_eval_points; i++)
             {
               AssertDimension(patch_values_system[i].size(), n_components);
 
-              for(unsigned int j = 0; j < n_components; ++j)
+              for (unsigned int j = 0; j < n_components; ++j)
                 patch_values_system[i](j)
                   = get_component(tmp[i](j), extract_component);
             }
@@ -694,7 +694,7 @@ namespace internal
       const ComponentExtractor                             extract_component,
       std::vector<double>&                                 patch_values) const
     {
-      if(typeid(typename VectorType::value_type) == typeid(double))
+      if (typeid(typename VectorType::value_type) == typeid(double))
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -716,7 +716,7 @@ namespace internal
 
           fe_patch_values.get_function_values(*vector, tmp);
 
-          for(unsigned int i = 0; i < tmp.size(); i++)
+          for (unsigned int i = 0; i < tmp.size(); i++)
             patch_values[i] = get_component(tmp[i], extract_component);
         }
     }
@@ -730,7 +730,7 @@ namespace internal
       std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>&
         patch_gradients_system) const
     {
-      if(typeid(typename VectorType::value_type) == typeid(double))
+      if (typeid(typename VectorType::value_type) == typeid(double))
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -765,17 +765,17 @@ namespace internal
                                          DoFHandlerType::space_dimension,
                                          typename VectorType::value_type>>>
             tmp(n_eval_points);
-          for(unsigned int i = 0; i < n_eval_points; i++)
+          for (unsigned int i = 0; i < n_eval_points; i++)
             tmp[i].resize(n_components);
 
           fe_patch_values.get_function_gradients(*vector, tmp);
 
           AssertDimension(patch_gradients_system.size(), n_eval_points);
-          for(unsigned int i = 0; i < n_eval_points; i++)
+          for (unsigned int i = 0; i < n_eval_points; i++)
             {
               AssertDimension(patch_gradients_system[i].size(), n_components);
 
-              for(unsigned int j = 0; j < n_components; j++)
+              for (unsigned int j = 0; j < n_components; j++)
                 patch_gradients_system[i][j]
                   = get_component(tmp[i][j], extract_component);
             }
@@ -791,7 +791,7 @@ namespace internal
       std::vector<Tensor<1, DoFHandlerType::space_dimension>>& patch_gradients)
       const
     {
-      if(typeid(typename VectorType::value_type) == typeid(double))
+      if (typeid(typename VectorType::value_type) == typeid(double))
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -820,7 +820,7 @@ namespace internal
 
           fe_patch_values.get_function_gradients(*vector, tmp);
 
-          for(unsigned int i = 0; i < tmp.size(); i++)
+          for (unsigned int i = 0; i < tmp.size(); i++)
             patch_gradients[i] = get_component(tmp[i], extract_component);
         }
     }
@@ -834,7 +834,7 @@ namespace internal
       std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>&
         patch_hessians_system) const
     {
-      if(typeid(typename VectorType::value_type) == typeid(double))
+      if (typeid(typename VectorType::value_type) == typeid(double))
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -869,17 +869,17 @@ namespace internal
                                          DoFHandlerType::space_dimension,
                                          typename VectorType::value_type>>>
             tmp(n_eval_points);
-          for(unsigned int i = 0; i < n_eval_points; i++)
+          for (unsigned int i = 0; i < n_eval_points; i++)
             tmp[i].resize(n_components);
 
           fe_patch_values.get_function_hessians(*vector, tmp);
 
           AssertDimension(patch_hessians_system.size(), n_eval_points);
-          for(unsigned int i = 0; i < n_eval_points; i++)
+          for (unsigned int i = 0; i < n_eval_points; i++)
             {
               AssertDimension(patch_hessians_system[i].size(), n_components);
 
-              for(unsigned int j = 0; j < n_components; j++)
+              for (unsigned int j = 0; j < n_components; j++)
                 patch_hessians_system[i][j]
                   = get_component(tmp[i][j], extract_component);
             }
@@ -895,7 +895,7 @@ namespace internal
       std::vector<Tensor<2, DoFHandlerType::space_dimension>>& patch_hessians)
       const
     {
-      if(typeid(typename VectorType::value_type) == typeid(double))
+      if (typeid(typename VectorType::value_type) == typeid(double))
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -923,7 +923,7 @@ namespace internal
 
           fe_patch_values.get_function_hessians(*vector, tmp);
 
-          for(unsigned int i = 0; i < tmp.size(); i++)
+          for (unsigned int i = 0; i < tmp.size(); i++)
             patch_hessians[i] = get_component(tmp[i], extract_component);
         }
     }
@@ -1015,7 +1015,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::add_data_vector(
   // postprocessor. if we do, we know that we have type_dof_data, which makes
   // things a bit simpler, we also don't need to deal with some of the other
   // stuff and use a different constructor of DataEntry
-  if(triangulation != nullptr)
+  if (triangulation != nullptr)
     {
       Assert(&dof_handler.get_triangulation() == triangulation,
              ExcMessage("The triangulation attached to the DoFHandler does not "
@@ -1055,7 +1055,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     const bool deduce_output_names)
 {
   // Check available mesh information:
-  if(triangulation == nullptr)
+  if (triangulation == nullptr)
     {
       Assert(dof_handler != nullptr, ExcInternalError());
       triangulation
@@ -1064,7 +1064,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
           &dof_handler->get_triangulation(), typeid(*this).name());
     }
 
-  if(dof_handler != nullptr)
+  if (dof_handler != nullptr)
     {
       Assert(&dof_handler->get_triangulation() == triangulation,
              ExcMessage("The triangulation attached to the DoFHandler does not "
@@ -1073,7 +1073,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
 
   // Figure out the data type:
   DataVectorType actual_type = type;
-  if(type == type_automatic)
+  if (type == type_automatic)
     {
       Assert(
         (dof_handler == nullptr)
@@ -1082,7 +1082,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
           "Unable to determine the type of vector automatically because the number of DoFs "
           "is equal to the number of cells. Please specify DataVectorType."));
 
-      if(data_vector.size() == triangulation->n_active_cells())
+      if (data_vector.size() == triangulation->n_active_cells())
         actual_type = type_cell_data;
       else
         actual_type = type_dof_data;
@@ -1092,7 +1092,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
 
   // If necessary, append '_1', '_2', etc. to component names:
   std::vector<std::string> deduced_names;
-  if(deduce_output_names && actual_type == type_dof_data)
+  if (deduce_output_names && actual_type == type_dof_data)
     {
       Assert(names.size() == 1, ExcInternalError());
       Assert(dof_handler != nullptr, ExcInternalError());
@@ -1103,9 +1103,9 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
       const std::string  name         = names[0];
       const unsigned int n_components = dof_handler->get_fe(0).n_components();
       deduced_names.resize(n_components);
-      if(n_components > 1)
+      if (n_components > 1)
         {
-          for(unsigned int i = 0; i < n_components; ++i)
+          for (unsigned int i = 0; i < n_components; ++i)
             {
               deduced_names[i] = name + '_' + Utilities::to_string(i);
             }
@@ -1121,7 +1121,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     }
 
   // Check that things have the right sizes for the data type:
-  switch(actual_type)
+  switch (actual_type)
     {
       case type_cell_data:
         Assert(data_vector.size() == triangulation->n_active_cells(),
@@ -1159,7 +1159,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     internal::DataOutImplementation::DataEntry<DoFHandlerType, VectorType>>(
     dof_handler, &data_vector, deduced_names, data_component_interpretation);
 
-  if(actual_type == type_dof_data)
+  if (actual_type == type_dof_data)
     {
       // output vectors for which at least part of the data is to be interpreted
       // as vector fields cannot be complex-valued, because we cannot visualize
@@ -1202,13 +1202,13 @@ void
 DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
   clear_input_data_references()
 {
-  for(unsigned int i = 0; i < dof_data.size(); ++i)
+  for (unsigned int i = 0; i < dof_data.size(); ++i)
     dof_data[i]->clear();
 
-  for(unsigned int i = 0; i < cell_data.size(); ++i)
+  for (unsigned int i = 0; i < cell_data.size(); ++i)
     cell_data[i]->clear();
 
-  if(dofs != nullptr)
+  if (dofs != nullptr)
     dofs = nullptr;
 }
 
@@ -1219,7 +1219,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::clear()
   dof_data.erase(dof_data.begin(), dof_data.end());
   cell_data.erase(cell_data.begin(), cell_data.end());
 
-  if(dofs != nullptr)
+  if (dofs != nullptr)
     dofs = nullptr;
 
   // delete patches
@@ -1239,19 +1239,19 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_dataset_names()
     internal::DataOutImplementation::DataEntryBase<DoFHandlerType>>>::
     const_iterator data_iterator;
 
-  for(data_iterator d = dof_data.begin(); d != dof_data.end(); ++d)
-    for(unsigned int i = 0; i < (*d)->names.size(); ++i)
-      if((*d)->is_complex_valued() == false)
+  for (data_iterator d = dof_data.begin(); d != dof_data.end(); ++d)
+    for (unsigned int i = 0; i < (*d)->names.size(); ++i)
+      if ((*d)->is_complex_valued() == false)
         names.push_back((*d)->names[i]);
       else
         {
           names.push_back((*d)->names[i] + "_re");
           names.push_back((*d)->names[i] + "_im");
         }
-  for(data_iterator d = cell_data.begin(); d != cell_data.end(); ++d)
+  for (data_iterator d = cell_data.begin(); d != cell_data.end(); ++d)
     {
       Assert((*d)->names.size() == 1, ExcInternalError());
-      if((*d)->is_complex_valued() == false)
+      if ((*d)->is_complex_valued() == false)
         names.push_back((*d)->names[0]);
       else
         {
@@ -1276,14 +1276,14 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     const_iterator data_iterator;
 
   unsigned int output_component = 0;
-  for(data_iterator d = dof_data.begin(); d != dof_data.end(); ++d)
-    for(unsigned int i = 0; i < (*d)->n_output_variables;)
+  for (data_iterator d = dof_data.begin(); d != dof_data.end(); ++d)
+    for (unsigned int i = 0; i < (*d)->n_output_variables;)
       // see what kind of data we have
       // here. note that for the purpose of
       // the current function all we care
       // about is vector data
-      if((*d)->data_component_interpretation[i]
-         == DataComponentInterpretation::component_is_part_of_vector)
+      if ((*d)->data_component_interpretation[i]
+          == DataComponentInterpretation::component_is_part_of_vector)
         {
           // ensure that there is a
           // continuous number of next
@@ -1292,7 +1292,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
           Assert(i + patch_space_dim <= (*d)->n_output_variables,
                  Exceptions::DataOutImplementation::ExcInvalidVectorDeclaration(
                    i, (*d)->names[i]));
-          for(unsigned int dd = 1; dd < patch_space_dim; ++dd)
+          for (unsigned int dd = 1; dd < patch_space_dim; ++dd)
             Assert(
               (*d)->data_component_interpretation[i + dd]
                 == DataComponentInterpretation::component_is_part_of_vector,
@@ -1306,8 +1306,8 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
           // output format writer decide what
           // to do here
           std::string name = (*d)->names[i];
-          for(unsigned int dd = 1; dd < patch_space_dim; ++dd)
-            if(name != (*d)->names[i + dd])
+          for (unsigned int dd = 1; dd < patch_space_dim; ++dd)
+            if (name != (*d)->names[i + dd])
               {
                 name = "";
                 break;
@@ -1358,7 +1358,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_fes() const
   const unsigned int dhspacedim = DoFHandlerType::space_dimension;
   std::vector<std::shared_ptr<dealii::hp::FECollection<dhdim, dhspacedim>>>
     finite_elements(this->dof_data.size());
-  for(unsigned int i = 0; i < this->dof_data.size(); ++i)
+  for (unsigned int i = 0; i < this->dof_data.size(); ++i)
     {
       Assert(dof_data[i]->dof_handler != nullptr,
              Exceptions::DataOutImplementation::ExcNoDoFHandlerSelected());
@@ -1370,18 +1370,18 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_fes() const
       // because we need different FEValues objects for different dof
       // handlers.
       bool duplicate = false;
-      for(unsigned int j = 0; j < i; ++j)
-        if(dof_data[i]->dof_handler == dof_data[j]->dof_handler)
+      for (unsigned int j = 0; j < i; ++j)
+        if (dof_data[i]->dof_handler == dof_data[j]->dof_handler)
           {
             finite_elements[i] = finite_elements[j];
             duplicate          = true;
           }
-      if(duplicate == false)
+      if (duplicate == false)
         finite_elements[i]
           = std::make_shared<dealii::hp::FECollection<dhdim, dhspacedim>>(
             this->dof_data[i]->dof_handler->get_fe_collection());
     }
-  if(this->dof_data.empty())
+  if (this->dof_data.empty())
     {
       finite_elements.resize(1);
       finite_elements[0]

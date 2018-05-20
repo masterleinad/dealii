@@ -201,12 +201,12 @@ SystemIntegrator<dim>::cell(
   const unsigned int   n_dofs       = fe.dofs_per_cell;
   const Advection<dim> advection;
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const Tensor<1, dim> advection_directions
         = advection.value(fe.quadrature_point(k));
-      for(unsigned int i = 0; i < n_dofs; ++i)
-        for(unsigned int j = 0; j < n_dofs; ++j)
+      for (unsigned int i = 0; i < n_dofs; ++i)
+        for (unsigned int j = 0; j < n_dofs; ++j)
           local_matrix(i, j)
             += (fe.shape_grad(i, k) * fe.shape_grad(j, k)
                 + fe.shape_value(i, k)
@@ -218,10 +218,10 @@ SystemIntegrator<dim>::cell(
   Vector<double>&          b = dinfo.vector(0).block(0);
   const RightHandSide<dim> right_hand_side;
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const double fval = right_hand_side.value(fe.quadrature_point(k));
-      for(unsigned int i = 0; i < n_dofs; ++i)
+      for (unsigned int i = 0; i < n_dofs; ++i)
         b(i) += fe.JxW(k) * (fe.shape_value(i, k) * fval);
     }
 }
@@ -238,10 +238,10 @@ SystemIntegrator<dim>::boundary(
   Vector<double>&               b        = dinfo.vector(0).block(0);
   const FluxBoundaryValues<dim> flux_bd;
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const double flux_bd_value = flux_bd.value(fe.quadrature_point(k));
-      for(unsigned int i = 0; i < n_dofs; ++i)
+      for (unsigned int i = 0; i < n_dofs; ++i)
         b(i) += fe.JxW(k) * (fe.shape_value(i, k) * flux_bd_value);
     }
 }
@@ -263,22 +263,22 @@ SystemIntegrator<dim>::face(
   const unsigned int       n_points = fe1.n_quadrature_points;
   const unsigned int       n_dofs   = fe1.dofs_per_cell;
   double                   h_e;
-  if(dim == 3)
+  if (dim == 3)
     h_e = std::sqrt(dinfo1.face->measure());
   else
     h_e = dinfo1.face->measure();
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const double      dx = fe1.JxW(k);
       const Point<dim>& n  = (Point<dim>) fe1.normal_vector(k);
-      for(unsigned int i = 0; i < n_dofs; ++i)
+      for (unsigned int i = 0; i < n_dofs; ++i)
         {
           // average
           const double value1i = 0.5 * fe1.shape_value(i, k);
           const double value2i = 0.5 * fe2.shape_value(i, k);
 
-          for(unsigned int j = 0; j < n_dofs; ++j)
+          for (unsigned int j = 0; j < n_dofs; ++j)
             {
               // normal jump
               const double grad1j = -n * fe1.shape_grad(j, k);
@@ -326,12 +326,12 @@ MatrixIntegrator<dim>::cell(
   const unsigned int   n_dofs   = fe.dofs_per_cell;
   const Advection<dim> advection;
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const Tensor<1, dim> advection_directions
         = advection.value(fe.quadrature_point(k));
-      for(unsigned int i = 0; i < n_dofs; ++i)
-        for(unsigned int j = 0; j < n_dofs; ++j)
+      for (unsigned int i = 0; i < n_dofs; ++i)
+        for (unsigned int j = 0; j < n_dofs; ++j)
           local_matrix(i, j)
             += (fe.shape_grad(i, k) * fe.shape_grad(j, k)
                 + fe.shape_value(i, k)
@@ -364,22 +364,22 @@ MatrixIntegrator<dim>::face(
   const unsigned int       n_points = fe1.n_quadrature_points;
   const unsigned int       n_dofs   = fe1.dofs_per_cell;
   double                   h_e;
-  if(dim == 3)
+  if (dim == 3)
     h_e = std::sqrt(dinfo1.face->measure());
   else
     h_e = dinfo1.face->measure();
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const double      dx = fe1.JxW(k);
       const Point<dim>& n  = (Point<dim>) fe1.normal_vector(k);
-      for(unsigned int i = 0; i < n_dofs; ++i)
+      for (unsigned int i = 0; i < n_dofs; ++i)
         {
           // average
           const double value1i = 0.5 * fe1.shape_value(i, k);
           const double value2i = 0.5 * fe2.shape_value(i, k);
 
-          for(unsigned int j = 0; j < n_dofs; ++j)
+          for (unsigned int j = 0; j < n_dofs; ++j)
             {
               // normal jump
               const double grad1j = -n * fe1.shape_grad(j, k);
@@ -425,10 +425,10 @@ RHSIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&                  dinfo,
   Vector<double>&          b        = dinfo.vector(0).block(0);
   const RightHandSide<dim> right_hand_side;
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const double fval = right_hand_side.value(fe.quadrature_point(k));
-      for(unsigned int i = 0; i < n_dofs; ++i)
+      for (unsigned int i = 0; i < n_dofs; ++i)
         b(i) += fe.JxW(k) * (fe.shape_value(i, k) * fval);
     }
 }
@@ -445,10 +445,10 @@ RHSIntegrator<dim>::boundary(
   Vector<double>&               b        = dinfo.vector(0).block(0);
   const FluxBoundaryValues<dim> flux_bd;
 
-  for(unsigned int k = 0; k < n_points; ++k)
+  for (unsigned int k = 0; k < n_points; ++k)
     {
       const double flux_bd_value = flux_bd.value(fe.quadrature_point(k));
-      for(unsigned int i = 0; i < n_dofs; ++i)
+      for (unsigned int i = 0; i < n_dofs; ++i)
         b(i) += fe.JxW(k) * (fe.shape_value(i, k) * flux_bd_value);
     }
 }
@@ -542,7 +542,7 @@ MeshWorkerConstraintMatrixTest<dim>::setup_system()
   std::string str("FE_DGQ");
   std::string fe_name = fe.get_name();
   std::size_t found   = fe_name.find(str);
-  if(found != std::string::npos)
+  if (found != std::string::npos)
     DoFTools::make_flux_sparsity_pattern(
       dof_handler, c_sparsity, constraints, false);
   else
@@ -648,15 +648,15 @@ MeshWorkerConstraintMatrixTest<dim>::createInhomConstraints()
   std::map<types::global_dof_index, Point<dim>> support_points;
   DoFTools::map_dofs_to_support_points(
     this->mapping, this->dof_handler, support_points);
-  for(unsigned int dof_index = 0; dof_index < this->dof_handler.n_dofs();
-      ++dof_index)
+  for (unsigned int dof_index = 0; dof_index < this->dof_handler.n_dofs();
+       ++dof_index)
     {
-      if(!this->constraints.is_constrained(dof_index)
-         && !this->constraintsInhom.is_constrained(dof_index))
+      if (!this->constraints.is_constrained(dof_index)
+          && !this->constraintsInhom.is_constrained(dof_index))
         {
           const Point<dim> p = support_points[dof_index];
 
-          if(std::sqrt(p.square()) < 1e-6)
+          if (std::sqrt(p.square()) < 1e-6)
             {
               this->constraintsInhom.add_line(dof_index);
               this->constraintsInhom.set_inhomogeneity(dof_index, 2);
@@ -685,8 +685,8 @@ MeshWorkerConstraintMatrixTest<dim>::run()
   // make diagonal entries and constraints component equal
   constraintsAll.distribute(system_rhs);
   constraintsAll.distribute(rhs);
-  for(unsigned int i = 0; i < error_matrix.m(); ++i)
-    if(constraintsAll.is_constrained(i))
+  for (unsigned int i = 0; i < error_matrix.m(); ++i)
+    if (constraintsAll.is_constrained(i))
       {
         system_matrix.diag_element(i) = 1;
         matrix.diag_element(i)        = 1;

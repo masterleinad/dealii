@@ -50,7 +50,7 @@ make_constraint_matrix(const DoFHandler<2>& dof_handler, int version)
   std::vector<
     GridTools::PeriodicFacePair<typename DoFHandler<dim>::cell_iterator>>
     periodicity_vectorDof;
-  switch(version)
+  switch (version)
     {
       case 0:
         GridTools::collect_periodic_faces(
@@ -101,8 +101,8 @@ make_constraint_matrix(const DoFHandler<2>& dof_handler, int version)
   std::map<types::global_dof_index, Point<dim>> support_points;
   DoFTools::map_dofs_to_support_points(
     MappingQ<dim, dim>(1), dof_handler, support_points);
-  for(const auto& line : constraints.get_lines())
-    for(const auto& entry : line.entries)
+  for (const auto& line : constraints.get_lines())
+    for (const auto& entry : line.entries)
       deallog << "DoF " << line.index << " at " << support_points[line.index]
               << " is constrained to "
               << " DoF " << entry.first << " at " << support_points[entry.first]
@@ -119,7 +119,7 @@ public:
   virtual double
   value(const Point<dim>& p, const unsigned int component = 0) const override
   {
-    if(dim == 3)
+    if (dim == 3)
       return std::sin(p(0) + 1.) * std::sin(p(1) + 2.) * std::sin(p(2) + 3.);
     return std::sin(p(0) + 1.) * std::sin(p(1) + 2.);
   }
@@ -141,13 +141,13 @@ check_periodicity(const DoFHandler<2>& dof_handler,
                   const unsigned int   cycle)
 {
   unsigned int n_points = 2;
-  for(unsigned int i = 0; i < cycle; i++)
+  for (unsigned int i = 0; i < cycle; i++)
     n_points *= 2;
 
   //don't test exactly at the support points, since point_value is not stable there
   const double eps = 1. / (16. * n_points);
 
-  for(unsigned int i = 1; i < n_points; i++)
+  for (unsigned int i = 1; i < n_points; i++)
     {
       Vector<double> value1(1);
       Vector<double> value2(1);
@@ -162,7 +162,7 @@ check_periodicity(const DoFHandler<2>& dof_handler,
       VectorTools::point_value(dof_handler, solution, point1, value1);
       VectorTools::point_value(dof_handler, solution, point2, value2);
 
-      if(std::abs(value2[0] - value1[0]) > 1e-8)
+      if (std::abs(value2[0] - value1[0]) > 1e-8)
         {
           std::cout << point1 << "\t"
                     << "fail" << std::endl;
@@ -176,7 +176,7 @@ check_periodicity(const DoFHandler<2>& dof_handler,
                     << "pass" << std::endl;
         }
     }
-  for(unsigned int i = 1; i < n_points; i++)
+  for (unsigned int i = 1; i < n_points; i++)
     {
       Vector<double> value1(1);
       Vector<double> value2(1);
@@ -191,7 +191,7 @@ check_periodicity(const DoFHandler<2>& dof_handler,
       VectorTools::point_value(dof_handler, solution, point1, value1);
       VectorTools::point_value(dof_handler, solution, point2, value2);
 
-      if(std::abs(value2[0] - value1[0]) > 1e-8)
+      if (std::abs(value2[0] - value1[0]) > 1e-8)
         {
           std::cout << point1 << "\t"
                     << "fail" << std::endl;
@@ -234,7 +234,7 @@ main(int argc, char* argv[])
   std::vector<Vector<double>> projection(8,
                                          Vector<double>(dof_handler.n_dofs()));
 
-  for(unsigned int i = 0; i < 8; ++i)
+  for (unsigned int i = 0; i < 8; ++i)
     {
       deallog << "Testing version " << i << std::endl;
       constraints[i] = make_constraint_matrix(dof_handler, i);

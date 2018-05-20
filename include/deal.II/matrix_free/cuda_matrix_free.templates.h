@@ -58,8 +58,8 @@ namespace CUDAWrappers
     {
       // src is N X M
       // dst is M X N
-      for(unsigned int i = 0; i < N; ++i)
-        for(unsigned int j = 0; j < M; ++j)
+      for (unsigned int i = 0; i < N; ++i)
+        for (unsigned int j = 0; j < M; ++j)
           dst[j * N + i] = src[i * M + j];
     }
 
@@ -187,13 +187,13 @@ namespace CUDAWrappers
 
       data->row_start.resize(n_colors);
 
-      if(update_flags & update_quadrature_points)
+      if (update_flags & update_quadrature_points)
         data->q_points.resize(n_colors);
 
-      if(update_flags & update_JxW_values)
+      if (update_flags & update_JxW_values)
         data->JxW.resize(n_colors);
 
-      if(update_flags & update_gradients)
+      if (update_flags & update_gradients)
         data->inv_jacobian.resize(n_colors);
     }
 
@@ -217,12 +217,12 @@ namespace CUDAWrappers
       // TODO this should be a templated parameter.
       const unsigned int n_dofs_1d = fe_degree + 1;
 
-      if(data->parallelization_scheme
-         == MatrixFree<dim, Number>::parallel_in_elem)
+      if (data->parallelization_scheme
+          == MatrixFree<dim, Number>::parallel_in_elem)
         {
-          if(dim == 1)
+          if (dim == 1)
             data->block_dim[color] = dim3(n_dofs_1d * cells_per_block);
-          else if(dim == 2)
+          else if (dim == 2)
             data->block_dim[color]
               = dim3(n_dofs_1d * cells_per_block, n_dofs_1d);
           else
@@ -234,13 +234,13 @@ namespace CUDAWrappers
 
       local_to_global_host.resize(n_cells * padding_length);
 
-      if(update_flags & update_quadrature_points)
+      if (update_flags & update_quadrature_points)
         q_points_host.resize(n_cells * padding_length);
 
-      if(update_flags & update_JxW_values)
+      if (update_flags & update_JxW_values)
         JxW_host.resize(n_cells * padding_length);
 
-      if(update_flags & update_gradients)
+      if (update_flags & update_gradients)
         inv_jacobian_host.resize(n_cells * padding_length * dim * dim);
 
       constraint_mask_host.resize(n_cells);
@@ -254,7 +254,7 @@ namespace CUDAWrappers
     {
       cell->get_dof_indices(local_dof_indices);
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
         lexicographic_dof_indices[i] = local_dof_indices[lexicographic_inv[i]];
 
       memcpy(&local_to_global_host[cell_id * padding_length],
@@ -264,7 +264,7 @@ namespace CUDAWrappers
       fe_values.reinit(cell);
 
       // Quadrature points
-      if(update_flags & update_quadrature_points)
+      if (update_flags & update_quadrature_points)
         {
           const std::vector<Point<dim>>& q_points
             = fe_values.get_quadrature_points();
@@ -273,15 +273,15 @@ namespace CUDAWrappers
                  q_points_per_cell * sizeof(Point<dim>));
         }
 
-      if(update_flags & update_JxW_values)
+      if (update_flags & update_JxW_values)
         {
           std::vector<double> JxW_values_double = fe_values.get_JxW_values();
           const unsigned int  offset            = cell_id * padding_length;
-          for(unsigned int i = 0; i < q_points_per_cell; ++i)
+          for (unsigned int i = 0; i < q_points_per_cell; ++i)
             JxW_host[i + offset] = static_cast<Number>(JxW_values_double[i]);
         }
 
-      if(update_flags & update_gradients)
+      if (update_flags & update_gradients)
         {
           const std::vector<DerivativeForm<1, dim, dim>>& inv_jacobians
             = fe_values.get_inverse_jacobians();
@@ -298,8 +298,8 @@ namespace CUDAWrappers
       const unsigned int n_cells = data->n_cells[color];
 
       // Local-to-global mapping
-      if(data->parallelization_scheme
-         == MatrixFree<dim, Number>::parallel_over_elem)
+      if (data->parallelization_scheme
+          == MatrixFree<dim, Number>::parallel_over_elem)
         internal::transpose_in_place(
           local_to_global_host, n_cells, padding_length);
 
@@ -308,10 +308,10 @@ namespace CUDAWrappers
                      n_cells * padding_length);
 
       // Quadrature points
-      if(update_flags & update_quadrature_points)
+      if (update_flags & update_quadrature_points)
         {
-          if(data->parallelization_scheme
-             == MatrixFree<dim, Number>::parallel_over_elem)
+          if (data->parallelization_scheme
+              == MatrixFree<dim, Number>::parallel_over_elem)
             internal::transpose_in_place(
               q_points_host, n_cells, padding_length);
 
@@ -320,17 +320,17 @@ namespace CUDAWrappers
         }
 
       // Jacobian determinants/quadrature weights
-      if(update_flags & update_JxW_values)
+      if (update_flags & update_JxW_values)
         {
-          if(data->parallelization_scheme
-             == MatrixFree<dim, Number>::parallel_over_elem)
+          if (data->parallelization_scheme
+              == MatrixFree<dim, Number>::parallel_over_elem)
             internal::transpose_in_place(JxW_host, n_cells, padding_length);
 
           alloc_and_copy(&data->JxW[color], JxW_host, n_cells * padding_length);
         }
 
       // Inverse jacobians
-      if(update_flags & update_gradients)
+      if (update_flags & update_gradients)
         {
           // Reorder so that all J_11 elements are together, all J_12 elements are
           // together, etc., i.e., reorder indices from
@@ -342,8 +342,8 @@ namespace CUDAWrappers
           // Transpose second time means we get the following index order:
           // q*n_cells*dim*dim + i*n_cells + cell_id which is good for an
           // element-level parallelization
-          if(data->parallelization_scheme
-             == MatrixFree<dim, Number>::parallel_over_elem)
+          if (data->parallelization_scheme
+              == MatrixFree<dim, Number>::parallel_over_elem)
             internal::transpose_in_place(
               inv_jacobian_host, n_cells * dim * dim, padding_length);
 
@@ -381,7 +381,7 @@ namespace CUDAWrappers
     {
       const unsigned int dof
         = threadIdx.x + blockDim.x * (blockIdx.x + gridDim.x * blockIdx.y);
-      if(dof < n_constrained_dofs)
+      if (dof < n_constrained_dofs)
         dst[constrained_dofs[dof]] = src[constrained_dofs[dof]];
     }
 
@@ -395,7 +395,7 @@ namespace CUDAWrappers
     {
       const unsigned int dof
         = threadIdx.x + blockDim.x * (blockIdx.x + gridDim.x * blockIdx.y);
-      if(dof < n_constrained_dofs)
+      if (dof < n_constrained_dofs)
         dst[constrained_dofs[dof]] = val;
     }
 
@@ -418,13 +418,13 @@ namespace CUDAWrappers
         = local_cell + cells_per_block * (blockIdx.x + gridDim.x * blockIdx.y);
 
       Number* gq[dim];
-      for(int d = 0; d < dim; ++d)
+      for (int d = 0; d < dim; ++d)
         gq[d] = &gradients[d][local_cell * functor::n_q_points];
 
       SharedData<dim, Number> shared_data(
         &values[local_cell * functor::n_local_dofs], gq);
 
-      if(cell < gpu_data.n_cells)
+      if (cell < gpu_data.n_cells)
         func(cell, &gpu_data, &shared_data, src, dst);
     }
   } // namespace internal
@@ -442,13 +442,13 @@ namespace CUDAWrappers
                                   const Quadrature<1>&    quad,
                                   const AdditionalData    additional_data)
   {
-    if(typeid(Number) == typeid(double))
+    if (typeid(Number) == typeid(double))
       cudaDeviceSetSharedMemConfig(cudaSharedMemBankSizeEightByte);
 
     const UpdateFlags& update_flags = additional_data.mapping_update_flags;
 
-    if(additional_data.parallelization_scheme != parallel_over_elem
-       && additional_data.parallelization_scheme != parallel_in_elem)
+    if (additional_data.parallelization_scheme != parallel_over_elem
+        && additional_data.parallelization_scheme != parallel_in_elem)
       AssertThrow(false, ExcMessage("Invalid parallelization scheme."));
 
     this->parallelization_scheme = additional_data.parallelization_scheme;
@@ -486,7 +486,7 @@ namespace CUDAWrappers
                                                 cudaMemcpyHostToDevice);
     AssertCuda(cuda_error);
 
-    if(update_flags & update_gradients)
+    if (update_flags & update_gradients)
       {
         cuda_error = cudaMemcpyToSymbol(internal::global_shape_gradients,
                                         &shape_info.shape_gradients[0],
@@ -521,13 +521,13 @@ namespace CUDAWrappers
     n_colors = graph.size();
 
     helper.setup_color_arrays(n_colors);
-    for(unsigned int i = 0; i < n_colors; ++i)
+    for (unsigned int i = 0; i < n_colors; ++i)
       {
         n_cells[i] = graph[i].size();
         helper.setup_cell_arrays(i);
         typename std::vector<CellFilter>::iterator cell     = graph[i].begin(),
                                                    end_cell = graph[i].end();
-        for(unsigned int cell_id = 0; cell != end_cell; ++cell, ++cell_id)
+        for (unsigned int cell_id = 0; cell != end_cell; ++cell, ++cell_id)
           helper.get_cell_data(*cell, cell_id);
 
         helper.alloc_and_copy_arrays(i);
@@ -535,13 +535,13 @@ namespace CUDAWrappers
 
     // Setup row starts
     row_start[0] = 0;
-    for(unsigned int i = 0; i < n_colors - 1; ++i)
+    for (unsigned int i = 0; i < n_colors - 1; ++i)
       row_start[i + 1] = row_start[i] + n_cells[i] * get_padding_length();
 
     // Constrained indices
     n_constrained_dofs = constraints.n_constraints();
 
-    if(n_constrained_dofs != 0)
+    if (n_constrained_dofs != 0)
       {
         const unsigned int constraint_n_blocks
           = std::ceil(static_cast<double>(n_constrained_dofs)
@@ -561,9 +561,9 @@ namespace CUDAWrappers
 
         unsigned int       i_constraint = 0;
         const unsigned int n_dofs       = dof_handler.n_dofs();
-        for(unsigned int i = 0; i < n_dofs; ++i)
+        for (unsigned int i = 0; i < n_dofs; ++i)
           {
-            if(constraints.is_constrained(i))
+            if (constraints.is_constrained(i))
               {
                 constrained_dofs_host[i_constraint] = i;
                 ++i_constraint;
@@ -605,9 +605,9 @@ namespace CUDAWrappers
   void
   MatrixFree<dim, Number>::free()
   {
-    for(unsigned int i = 0; i < q_points.size(); ++i)
+    for (unsigned int i = 0; i < q_points.size(); ++i)
       {
-        if(q_points[i] != nullptr)
+        if (q_points[i] != nullptr)
           {
             cudaError_t cuda_error = cudaFree(q_points[i]);
             AssertCuda(cuda_error);
@@ -615,9 +615,9 @@ namespace CUDAWrappers
           }
       }
 
-    for(unsigned int i = 0; i < local_to_global.size(); ++i)
+    for (unsigned int i = 0; i < local_to_global.size(); ++i)
       {
-        if(local_to_global[i] != nullptr)
+        if (local_to_global[i] != nullptr)
           {
             cudaError_t cuda_error = cudaFree(local_to_global[i]);
             AssertCuda(cuda_error);
@@ -625,9 +625,9 @@ namespace CUDAWrappers
           }
       }
 
-    for(unsigned int i = 0; i < inv_jacobian.size(); ++i)
+    for (unsigned int i = 0; i < inv_jacobian.size(); ++i)
       {
-        if(inv_jacobian[i] != nullptr)
+        if (inv_jacobian[i] != nullptr)
           {
             cudaError_t cuda_error = cudaFree(inv_jacobian[i]);
             AssertCuda(cuda_error);
@@ -635,9 +635,9 @@ namespace CUDAWrappers
           }
       }
 
-    for(unsigned int i = 0; i < JxW.size(); ++i)
+    for (unsigned int i = 0; i < JxW.size(); ++i)
       {
-        if(JxW[i] != nullptr)
+        if (JxW[i] != nullptr)
           {
             cudaError_t cuda_error = cudaFree(JxW[i]);
             AssertCuda(cuda_error);
@@ -645,9 +645,9 @@ namespace CUDAWrappers
           }
       }
 
-    for(unsigned int i = 0; i < constraint_mask.size(); ++i)
+    for (unsigned int i = 0; i < constraint_mask.size(); ++i)
       {
-        if(constraint_mask[i] != nullptr)
+        if (constraint_mask[i] != nullptr)
           {
             cudaError_t cuda_error = cudaFree(constraint_mask[i]);
             AssertCuda(cuda_error);
@@ -661,7 +661,7 @@ namespace CUDAWrappers
     JxW.clear();
     constraint_mask.clear();
 
-    if(constrained_dofs != nullptr)
+    if (constrained_dofs != nullptr)
       {
         cudaError_t cuda_error = cudaFree(constrained_dofs);
         AssertCuda(cuda_error);
@@ -706,7 +706,7 @@ namespace CUDAWrappers
                                      const CUDAVector<Number>& src,
                                      CUDAVector<Number>&       dst) const
   {
-    for(unsigned int i = 0; i < n_colors; ++i)
+    for (unsigned int i = 0; i < n_colors; ++i)
       internal::apply_kernel_shmem<dim, Number, functor>
         <<<grid_dim[i], block_dim[i]>>>(
           func, get_data(i), src.get_values(), dst.get_values());
@@ -723,7 +723,7 @@ namespace CUDAWrappers
                         + n_constrained_dofs * sizeof(unsigned int);
 
     // For each color, add local_to_global, inv_jacobian, JxW, and q_points.
-    for(unsigned int i = 0; i < n_colors; ++i)
+    for (unsigned int i = 0; i < n_colors; ++i)
       {
         bytes += n_cells[i] * padding_length * sizeof(unsigned int)
                  + n_cells[i] * padding_length * dim * dim * sizeof(Number)

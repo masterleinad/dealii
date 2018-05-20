@@ -33,7 +33,7 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double value = 1.2 * p[0];
-    for(unsigned int d = 1; d < dim; ++d)
+    for (unsigned int d = 1; d < dim; ++d)
       value -= 2.7 * d * p[d];
     return value;
   }
@@ -42,7 +42,7 @@ public:
   {
     Tensor<1, dim> grad;
     grad[0] = 1.2;
-    for(unsigned int d = 1; d < dim; ++d)
+    for (unsigned int d = 1; d < dim; ++d)
       grad[d] = -2.7 * d;
     return grad;
   }
@@ -57,7 +57,7 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  if(fe_degree == 0)
+  if (fe_degree == 0)
     return;
 
   Triangulation<dim> tria;

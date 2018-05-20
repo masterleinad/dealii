@@ -418,16 +418,16 @@ namespace CUDAWrappers
     LinearAlgebra::CUDAWrappers::Vector<Number>&       x,
     const LinearAlgebra::CUDAWrappers::Vector<Number>& b)
   {
-    if(additional_data.solver_type == "Cholesky")
+    if (additional_data.solver_type == "Cholesky")
       internal::cholesky_factorization(
         cuda_handle.cusolver_sp_handle, A, b.get_values(), x.get_values());
-    else if(additional_data.solver_type == "LU_dense")
+    else if (additional_data.solver_type == "LU_dense")
       internal::lu_factorization(cuda_handle.cusparse_handle,
                                  cuda_handle.cusolver_dn_handle,
                                  A,
                                  b.get_values(),
                                  x.get_values());
-    else if(additional_data.solver_type == "LU_host")
+    else if (additional_data.solver_type == "LU_host")
       internal::lu_factorization(
         cuda_handle.cusolver_sp_handle, A, b.get_values(), x.get_values());
     else

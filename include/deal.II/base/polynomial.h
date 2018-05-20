@@ -752,7 +752,7 @@ namespace Polynomials
   inline unsigned int
   Polynomial<number>::degree() const
   {
-    if(in_lagrange_product_form == true)
+    if (in_lagrange_product_form == true)
       {
         return lagrange_support_points.size();
       }
@@ -767,14 +767,14 @@ namespace Polynomials
   inline number
   Polynomial<number>::value(const number x) const
   {
-    if(in_lagrange_product_form == false)
+    if (in_lagrange_product_form == false)
       {
         Assert(coefficients.size() > 0, ExcEmptyObject());
 
         // Horner scheme
         const unsigned int m     = coefficients.size();
         number             value = coefficients.back();
-        for(int k = m - 2; k >= 0; --k)
+        for (int k = m - 2; k >= 0; --k)
           value = value * x + coefficients[k];
         return value;
       }
@@ -783,7 +783,7 @@ namespace Polynomials
         // direct evaluation of Lagrange polynomial
         const unsigned int m     = lagrange_support_points.size();
         number             value = 1.;
-        for(unsigned int j = 0; j < m; ++j)
+        for (unsigned int j = 0; j < m; ++j)
           value *= x - lagrange_support_points[j];
         value *= lagrange_weight;
         return value;
@@ -821,13 +821,13 @@ namespace Polynomials
 
     // initial values P_0(x), P_1(x):
     p0 = 1.0;
-    if(degree == 0)
+    if (degree == 0)
       return p0;
     p1 = ((alpha + beta + 2) * xeval + (alpha - beta)) / 2;
-    if(degree == 1)
+    if (degree == 1)
       return p1;
 
-    for(unsigned int i = 1; i < degree; ++i)
+    for (unsigned int i = 1; i < degree; ++i)
       {
         const Number v  = 2 * i + (alpha + beta);
         const Number a1 = 2 * (i + 1) * (i + (alpha + beta + 1)) * v;
@@ -871,7 +871,7 @@ namespace Polynomials
 
     // If symmetric, we only need to compute the half of points
     const unsigned int n_points = (alpha == beta ? degree / 2 : degree);
-    for(unsigned int k = 0; k < n_points; ++k)
+    for (unsigned int k = 0; k < n_points; ++k)
       {
         // we take the zeros of the Chebyshev polynomial (alpha=beta=-0.5) as
         // initial values, corrected by the initial value
@@ -879,14 +879,14 @@ namespace Polynomials
                    - 0.5
                        * std::cos(static_cast<Number>(2 * k + 1) / (2 * degree)
                                   * numbers::PI);
-        if(k > 0)
+        if (k > 0)
           r = (r + x[k - 1]) / 2;
 
         unsigned int converged = numbers::invalid_unsigned_int;
-        for(unsigned int it = 1; it < 1000; ++it)
+        for (unsigned int it = 1; it < 1000; ++it)
           {
             Number s = 0.;
-            for(unsigned int i = 0; i < k; ++i)
+            for (unsigned int i = 0; i < k; ++i)
               s += 1. / (r - x[i]);
 
             // derivative of P_n^{alpha,beta}, rescaled to [0, 1]
@@ -898,13 +898,13 @@ namespace Polynomials
             const Number f = jacobi_polynomial_value(degree, alpha, beta, r);
             const Number delta = f / (f * s - J_x);
             r += delta;
-            if(converged == numbers::invalid_unsigned_int
-               && std::abs(delta) < tolerance)
+            if (converged == numbers::invalid_unsigned_int
+                && std::abs(delta) < tolerance)
               converged = it;
 
             // do one more iteration to ensure accuracy also for tighter
             // types than double (e.g. long double)
-            if(it == converged + 1)
+            if (it == converged + 1)
               break;
           }
 
@@ -916,7 +916,7 @@ namespace Polynomials
       }
 
     // in case we assumed symmetry, fill up the missing values
-    for(unsigned int k = n_points; k < degree; ++k)
+    for (unsigned int k = n_points; k < degree; ++k)
       x[k] = 1.0 - x[degree - k - 1];
 
     return x;

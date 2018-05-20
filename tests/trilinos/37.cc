@@ -24,7 +24,7 @@
 void
 test(TrilinosWrappers::MPI::Vector& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
 
   v.compress(VectorOperation::insert);
@@ -32,7 +32,7 @@ test(TrilinosWrappers::MPI::Vector& v)
   v.add(1.);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     AssertThrow(v(i) == i + 1., ExcInternalError());
 
   deallog << "OK" << std::endl;
@@ -54,7 +54,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -68,7 +68,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

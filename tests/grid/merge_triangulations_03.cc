@@ -58,9 +58,9 @@ flatten_triangulation(Triangulation<dim>& tria_in, Triangulation<dim>& tria_out)
   std::vector<CellData<dim>> cells(n_active_cells, CellData<dim>());
 
   unsigned int cell_counter = 0;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
         {
           cells[cell_counter].vertices[j] = cell->vertex_index(j);
         }
@@ -90,20 +90,20 @@ mesh_info(const Triangulation<dim>& tria, const std::string& filename)
     typename Triangulation<dim>::active_cell_iterator cell
       = tria.begin_active(),
       endc = tria.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-            ++face)
+        for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+             ++face)
           {
-            if(cell->face(face)->at_boundary())
+            if (cell->face(face)->at_boundary())
               boundary_count[cell->face(face)->boundary_id()]++;
           }
       }
     deallog << " boundary indicators: ";
-    for(std::map<unsigned int, unsigned int>::iterator it
-        = boundary_count.begin();
-        it != boundary_count.end();
-        ++it)
+    for (std::map<unsigned int, unsigned int>::iterator it
+         = boundary_count.begin();
+         it != boundary_count.end();
+         ++it)
       {
         deallog << it->first << "(" << it->second << " times) ";
       }

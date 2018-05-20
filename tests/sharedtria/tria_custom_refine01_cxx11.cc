@@ -43,12 +43,12 @@ test()
 
     typename Triangulation<dim>::active_cell_iterator cell
       = shared_tria.begin_active();
-    for(unsigned int i = 0; i < shared_tria.n_active_cells(); ++i)
+    for (unsigned int i = 0; i < shared_tria.n_active_cells(); ++i)
       {
         unsigned int j = 0;
-        if(i < 4)
+        if (i < 4)
           j = 1;
-        else if(i < 8)
+        else if (i < 8)
           j = 2;
 
         cell->set_subdomain_id(j % nproc);
@@ -67,8 +67,8 @@ test()
   typename Triangulation<dim>::active_cell_iterator cell
     = shared_tria.begin_active(),
     endc = shared_tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->subdomain_id() != numbers::artificial_subdomain_id)
+  for (; cell != endc; ++cell)
+    if (cell->subdomain_id() != numbers::artificial_subdomain_id)
       deallog << "(" << cell->id().to_string() << "," << cell->subdomain_id()
               << ")" << std::endl;
 }

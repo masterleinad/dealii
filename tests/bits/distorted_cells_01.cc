@@ -34,10 +34,10 @@ void
 check(const unsigned int testcase)
 {
   std::vector<Point<dim>> vertices;
-  for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+  for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
     vertices.push_back(GeometryInfo<dim>::unit_cell_vertex(v));
 
-  switch(testcase)
+  switch (testcase)
     {
       case 1:
         deallog << "Pinched cell in " << dim << "d" << std::endl;
@@ -54,7 +54,7 @@ check(const unsigned int testcase)
   std::vector<CellData<dim>> cells;
   {
     CellData<dim> cell;
-    for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+    for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
       cell.vertices[j] = j;
     cells.push_back(cell);
   }
@@ -66,7 +66,7 @@ check(const unsigned int testcase)
     {
       coarse_grid.create_triangulation(vertices, cells, SubCellData());
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch (typename Triangulation<dim>::DistortedCellList& dcv)
     {
       flag = true;
 
@@ -83,7 +83,7 @@ main()
 {
   initlog();
 
-  for(unsigned int testcase = 1; testcase <= 2; ++testcase)
+  for (unsigned int testcase = 1; testcase <= 2; ++testcase)
     {
       check<1>(testcase);
       check<2>(testcase);

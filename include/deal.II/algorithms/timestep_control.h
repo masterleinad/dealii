@@ -275,7 +275,7 @@ namespace Algorithms
     now_val          = start_val;
     step_val         = start_step_val;
     current_step_val = step_val;
-    if(print_step > 0.)
+    if (print_step > 0.)
       next_print_val = now_val + print_step;
     else
       next_print_val = now_val - 1.;

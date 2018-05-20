@@ -61,7 +61,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   LA.compute_inverse_svd();
 
   deallog << "Singular values";
-  for(unsigned int i = 0; i < LA.n_rows(); ++i)
+  for (unsigned int i = 0; i < LA.n_rows(); ++i)
     deallog << ' ' << LA.singular_value(i);
   deallog << std::endl;
 
@@ -70,16 +70,16 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   Vector<double> v1(m);
   Vector<double> v2(m);
 
-  for(unsigned int i = 0; i < u1.size(); ++i)
+  for (unsigned int i = 0; i < u1.size(); ++i)
     u1(i) = i * i;
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = i * i;
 
   // Test if LA is a left inverse of A
   A.vmult(v2, u1);
   LA.vmult(u2, v2);
   u2 -= u1;
-  if(u2.l2_norm() < 1.e-12)
+  if (u2.l2_norm() < 1.e-12)
     deallog << "vmult ok" << std::endl;
   else
     deallog << "vmult error " << u2.l2_norm() << std::endl;
@@ -88,7 +88,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   LA.vmult(u2, v1);
   A.vmult(v2, u2);
   v2 -= v1;
-  if(v2.l2_norm() < 1.e-12)
+  if (v2.l2_norm() < 1.e-12)
     deallog << "vmult ok" << std::endl;
   else
     deallog << "vmult error " << v2.l2_norm() << std::endl;
@@ -98,7 +98,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   A.Tvmult(u2, v1);
   LA.Tvmult(v2, u2);
   v2 -= v1;
-  if(v2.l2_norm() < 1.e-12)
+  if (v2.l2_norm() < 1.e-12)
     deallog << "Tvmult ok" << std::endl;
   else
     deallog << "Tvmult error " << v2.l2_norm() << std::endl;
@@ -106,7 +106,7 @@ test_rect(unsigned int m, unsigned int n, const double* values)
   LA.Tvmult(v2, u1);
   A.Tvmult(u2, v2);
   u2 -= u1;
-  if(u2.l2_norm() < 1.e-12)
+  if (u2.l2_norm() < 1.e-12)
     deallog << "Tvmult ok" << std::endl;
   else
     deallog << "Tvmult error " << u2.l2_norm() << std::endl;

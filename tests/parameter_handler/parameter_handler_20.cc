@@ -41,7 +41,7 @@ check(const char* content)
       deallog << foo.get_double("val2") << std::endl;
     }
 
-  catch(ParameterHandler::ExcCannotParseLine&)
+  catch (ParameterHandler::ExcCannotParseLine&)
     {
       deallog << "parse_input() failed" << std::endl;
     }

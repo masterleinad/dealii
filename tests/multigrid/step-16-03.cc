@@ -117,7 +117,7 @@ template <int dim>
 double
 Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 {
-  if(p.square() < 0.5 * 0.5)
+  if (p.square() < 0.5 * 0.5)
     return 20;
   else
     return 1;
@@ -136,7 +136,7 @@ Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
 
   Assert(component == 0, ExcIndexRange(component, 0, 1));
 
-  for(unsigned int i = 0; i < n_points; ++i)
+  for (unsigned int i = 0; i < n_points; ++i)
     values[i] = Coefficient<dim>::value(points[i]);
 }
 
@@ -187,7 +187,7 @@ LaplaceProblem<dim>::setup_system()
   mg_matrices.clear_elements();
   mg_sparsity_patterns.resize(min_level, n_levels - 1);
 
-  for(unsigned int level = min_level; level < n_levels; ++level)
+  for (unsigned int level = min_level; level < n_levels; ++level)
     {
       DynamicSparsityPattern csp;
       csp.reinit(mg_dof_handler.n_dofs(level), mg_dof_handler.n_dofs(level));
@@ -225,7 +225,7 @@ LaplaceProblem<dim>::assemble_system()
   typename DoFHandler<dim>::active_cell_iterator cell
     = mg_dof_handler.begin_active(),
     endc = mg_dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       cell_rhs    = 0;
@@ -235,10 +235,10 @@ LaplaceProblem<dim>::assemble_system()
       coefficient.value_list(fe_values.get_quadrature_points(),
                              coefficient_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               cell_matrix(i, j) += (coefficient_values[q_point]
                                     * fe_values.shape_grad(i, q_point)
                                     * fe_values.shape_grad(j, q_point)
@@ -277,7 +277,8 @@ LaplaceProblem<dim>::assemble_multigrid()
 
   std::vector<ConstraintMatrix> boundary_constraints(triangulation.n_levels());
   ConstraintMatrix              empty_constraints;
-  for(unsigned int level = min_level; level < triangulation.n_levels(); ++level)
+  for (unsigned int level = min_level; level < triangulation.n_levels();
+       ++level)
     {
       boundary_constraints[level].add_lines(
         mg_constrained_dofs.get_refinement_edge_indices(level));
@@ -290,7 +291,7 @@ LaplaceProblem<dim>::assemble_multigrid()
     = mg_dof_handler.begin(min_level),
     endc = mg_dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell_matrix = 0;
       fe_values.reinit(cell);
@@ -298,9 +299,9 @@ LaplaceProblem<dim>::assemble_multigrid()
       coefficient.value_list(fe_values.get_quadrature_points(),
                              coefficient_values);
 
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             cell_matrix(i, j)
               += (coefficient_values[q_point] * fe_values.shape_grad(i, q_point)
                   * fe_values.shape_grad(j, q_point) * fe_values.JxW(q_point));
@@ -312,23 +313,24 @@ LaplaceProblem<dim>::assemble_multigrid()
 
       const unsigned int lvl = cell->level();
 
-      for(unsigned int i = 0; i < dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < dofs_per_cell; ++j)
-          if(mg_constrained_dofs.at_refinement_edge(lvl, local_dof_indices[i])
-             && !mg_constrained_dofs.at_refinement_edge(lvl,
-                                                        local_dof_indices[j])
-             && ((!mg_constrained_dofs.is_boundary_index(lvl,
-                                                         local_dof_indices[i])
-                  && !mg_constrained_dofs.is_boundary_index(
-                       lvl,
-                       local_dof_indices
-                         [j])) // ( !boundary(i) && !boundary(j) )
-                 || (mg_constrained_dofs.is_boundary_index(lvl,
-                                                           local_dof_indices[i])
-                     && local_dof_indices[i]
-                          == local_dof_indices
-                               [j]) // ( boundary(i) && boundary(j) && i==j )
-                 ))
+      for (unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < dofs_per_cell; ++j)
+          if (mg_constrained_dofs.at_refinement_edge(lvl, local_dof_indices[i])
+              && !mg_constrained_dofs.at_refinement_edge(lvl,
+                                                         local_dof_indices[j])
+              && ((!mg_constrained_dofs.is_boundary_index(lvl,
+                                                          local_dof_indices[i])
+                   && !mg_constrained_dofs.is_boundary_index(
+                        lvl,
+                        local_dof_indices
+                          [j])) // ( !boundary(i) && !boundary(j) )
+                  || (mg_constrained_dofs.is_boundary_index(
+                        lvl,
+                        local_dof_indices[i])
+                      && local_dof_indices[i]
+                           == local_dof_indices
+                                [j]) // ( boundary(i) && boundary(j) && i==j )
+                  ))
             {
               // do nothing, so add entries to interface matrix
             }
@@ -415,11 +417,11 @@ template <int dim>
 void
 LaplaceProblem<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 8; ++cycle)
+  for (unsigned int cycle = 0; cycle < 8; ++cycle)
     {
       deallog << "Cycle " << cycle << ':' << std::endl;
 
-      if(cycle == 0)
+      if (cycle == 0)
         {
           GridGenerator::hyper_ball(triangulation);
 
@@ -438,8 +440,8 @@ LaplaceProblem<dim>::run()
 
       deallog << "   Number of degrees of freedom: " << mg_dof_handler.n_dofs()
               << " (by level: ";
-      for(unsigned int level = min_level; level < triangulation.n_levels();
-          ++level)
+      for (unsigned int level = min_level; level < triangulation.n_levels();
+           ++level)
         deallog << mg_dof_handler.n_dofs(level)
                 << (level == triangulation.n_levels() - 1 ? ")" : ", ");
       deallog << std::endl;
@@ -467,7 +469,7 @@ main()
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -481,7 +483,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

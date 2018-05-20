@@ -62,7 +62,7 @@ main(int argc, char** argv)
   data.add_parameters(prm);
 
   // Set to true to reset input file.
-  if(false)
+  if (false)
     {
       std::ofstream ofile(SOURCE_DIR "/harmonic_oscillator_02.prm");
       prm.print_parameters(ofile, ParameterHandler::ShortText);

@@ -28,7 +28,7 @@ test()
 {
   Triangulation<dim>                  tria;
   static const SphericalManifold<dim> x;
-  if(dim == 2)
+  if (dim == 2)
     {
       tria.set_manifold(0, x);
       GridGenerator::hyper_ball(tria);
@@ -42,12 +42,12 @@ test()
     GridOutFlags::EpsFlagsBase::width, 300, .5, false, 5, true);
   grid_out.set_flags(eps2);
 
-  if(dim != 1)
+  if (dim != 1)
     grid_out.write_eps(tria, logfile);
   grid_out.write_gnuplot(tria, logfile);
   grid_out.set_flags(GridOutFlags::Ucd(true));
   grid_out.write_ucd(tria, logfile);
-  if(dim != 1)
+  if (dim != 1)
     grid_out.write_dx(tria, logfile);
 }
 

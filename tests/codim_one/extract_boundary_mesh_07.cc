@@ -92,9 +92,9 @@ namespace Step38
       typename DoFHandler<boundary_dim, spacedim>::cell_iterator,
       typename DoFHandler<spacedim>::face_iterator>::iterator Iterator;
 
-    for(Iterator = element_assignment.begin();
-        Iterator != element_assignment.end();
-        ++Iterator)
+    for (Iterator = element_assignment.begin();
+         Iterator != element_assignment.end();
+         ++Iterator)
       {
         deallog << "element_assignment maps " << Iterator->first << " onto "
                 << Iterator->second << std::endl;

@@ -57,22 +57,22 @@ namespace LocalIntegrators
       const unsigned int n_dofs       = fe.dofs_per_cell;
       const unsigned int n_components = fe.get_fe().n_components();
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = fe.JxW(k) * factor;
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               double Mii = 0.0;
-              for(unsigned int d = 0; d < n_components; ++d)
+              for (unsigned int d = 0; d < n_components; ++d)
                 Mii += dx * fe.shape_value_component(i, k, d)
                        * fe.shape_value_component(i, k, d);
 
               M(i, i) += Mii;
 
-              for(unsigned int j = i + 1; j < n_dofs; ++j)
+              for (unsigned int j = i + 1; j < n_dofs; ++j)
                 {
                   double Mij = 0.0;
-                  for(unsigned int d = 0; d < n_components; ++d)
+                  for (unsigned int d = 0; d < n_components; ++d)
                     Mij += dx * fe.shape_value_component(j, k, d)
                            * fe.shape_value_component(i, k, d);
 
@@ -110,22 +110,22 @@ namespace LocalIntegrators
       AssertDimension(M.n(), n_dofs);
       AssertDimension(weights.size(), fe.n_quadrature_points);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = fe.JxW(k) * weights[k];
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               double Mii = 0.0;
-              for(unsigned int d = 0; d < n_components; ++d)
+              for (unsigned int d = 0; d < n_components; ++d)
                 Mii += dx * fe.shape_value_component(i, k, d)
                        * fe.shape_value_component(i, k, d);
 
               M(i, i) += Mii;
 
-              for(unsigned int j = i + 1; j < n_dofs; ++j)
+              for (unsigned int j = i + 1; j < n_dofs; ++j)
                 {
                   double Mij = 0.0;
-                  for(unsigned int d = 0; d < n_components; ++d)
+                  for (unsigned int d = 0; d < n_components; ++d)
                     Mij += dx * fe.shape_value_component(j, k, d)
                            * fe.shape_value_component(i, k, d);
 
@@ -156,8 +156,8 @@ namespace LocalIntegrators
       AssertDimension(fe.get_fe().n_components(), 1);
       AssertDimension(input.size(), fe.n_quadrature_points);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
-        for(unsigned int i = 0; i < n_dofs; ++i)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+        for (unsigned int i = 0; i < n_dofs; ++i)
           result(i) += fe.JxW(k) * factor * input[k] * fe.shape_value(i, k);
     }
 
@@ -182,9 +182,9 @@ namespace LocalIntegrators
       AssertDimension(result.size(), n_dofs);
       AssertDimension(input.size(), fe.get_fe().n_components());
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
-        for(unsigned int i = 0; i < n_dofs; ++i)
-          for(unsigned int d = 0; d < n_components; ++d)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+        for (unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int d = 0; d < n_components; ++d)
             result(i) += fe.JxW(k) * factor * fe.shape_value_component(i, k, d)
                          * input[d][k];
     }
@@ -228,13 +228,13 @@ namespace LocalIntegrators
       AssertDimension(M21.n(), n1_dofs);
       AssertDimension(M22.n(), n2_dofs);
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double dx = fe1.JxW(k);
 
-          for(unsigned int i = 0; i < n1_dofs; ++i)
-            for(unsigned int j = 0; j < n1_dofs; ++j)
-              for(unsigned int d = 0; d < n_components; ++d)
+          for (unsigned int i = 0; i < n1_dofs; ++i)
+            for (unsigned int j = 0; j < n1_dofs; ++j)
+              for (unsigned int d = 0; d < n_components; ++d)
                 {
                   const double u1
                     = factor1 * fe1.shape_value_component(j, k, d);

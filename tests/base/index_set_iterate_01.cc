@@ -32,10 +32,10 @@ test(IndexSet& index_set)
   Assert(!endit->is_valid(), ExcInternalError());
 
   // print intervals
-  for(IndexSet::IntervalIterator it = index_set.begin_intervals(); it != endit;
-      ++it)
+  for (IndexSet::IntervalIterator it = index_set.begin_intervals(); it != endit;
+       ++it)
     {
-      if(it->n_elements() == 1)
+      if (it->n_elements() == 1)
         deallog << *(it->begin()) << " ";
       else
         deallog << "[" << *(it->begin()) << "," << it->last() << "] ";
@@ -44,16 +44,17 @@ test(IndexSet& index_set)
 
   // print entries
   {
-    for(IndexSet::ElementIterator it = index_set.begin(); it != index_set.end();
-        ++it)
+    for (IndexSet::ElementIterator it = index_set.begin();
+         it != index_set.end();
+         ++it)
       deallog << *it << " ";
     deallog << std::endl;
   }
 
   // check comparison, distance, and n_elements:
   unsigned int c = 0;
-  for(IndexSet::IntervalIterator it = index_set.begin_intervals(); it != endit;
-      ++it, ++c)
+  for (IndexSet::IntervalIterator it = index_set.begin_intervals(); it != endit;
+       ++it, ++c)
     {
       IndexSet::IntervalIterator it2 = it;
       Assert(it == it2, ExcInternalError());
@@ -84,7 +85,7 @@ test(IndexSet& index_set)
     IndexSet::ElementIterator it = index_set.begin();
 
     unsigned int c = 0;
-    for(; it != index_set.end(); ++it, ++c)
+    for (; it != index_set.end(); ++it, ++c)
       {
         Assert(it < index_set.end(), ExcInternalError());
 
@@ -106,7 +107,7 @@ test(IndexSet& index_set)
     IndexSet::ElementIterator it  = index_set.begin();
     IndexSet::ElementIterator it2 = index_set.begin();
 
-    for(; it != index_set.end(); ++it, it2++)
+    for (; it != index_set.end(); ++it, it2++)
       Assert(it == it2, ExcInternalError());
   }
 
@@ -115,7 +116,7 @@ test(IndexSet& index_set)
     IndexSet::IntervalIterator it  = index_set.begin_intervals();
     IndexSet::IntervalIterator it2 = index_set.begin_intervals();
 
-    for(; it != index_set.end_intervals(); ++it, it2++)
+    for (; it != index_set.end_intervals(); ++it, it2++)
       Assert(it == it2, ExcInternalError());
   }
 

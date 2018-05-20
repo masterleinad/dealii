@@ -85,14 +85,14 @@ test()
   std::map<types::global_dof_index, double> boundary_values;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, exact_solution, boundary_values);
-  if(dim == 1)
+  if (dim == 1)
     VectorTools::interpolate_boundary_values(
       dof_handler, 1, exact_solution, boundary_values);
 
-  for(std::map<types::global_dof_index, double>::iterator i
-      = boundary_values.begin();
-      i != boundary_values.end();
-      ++i)
+  for (std::map<types::global_dof_index, double>::iterator i
+       = boundary_values.begin();
+       i != boundary_values.end();
+       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
 }
 
@@ -110,7 +110,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -123,7 +123,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

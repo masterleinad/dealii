@@ -41,7 +41,7 @@ void
 copier(const CopyData& ad)
 {
   // write into the five elements of 'result' starting at ad.computed%result.size()
-  for(unsigned int j = 0; j < 5; ++j)
+  for (unsigned int j = 0; j < 5; ++j)
     result((ad.computed + j) % result.size()) += ad.computed;
 }
 
@@ -49,7 +49,7 @@ void
 test()
 {
   std::vector<unsigned int> v;
-  for(unsigned int i = 0; i < 200; ++i)
+  for (unsigned int i = 0; i < 200; ++i)
     v.push_back(i);
 
   WorkStream::run(
@@ -57,18 +57,18 @@ test()
 
   // now simulate what we should have gotten
   Vector<double> comp(result.size());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       const unsigned int ad_computed = v[i] * 2;
-      for(unsigned int j = 0; j < 5; ++j)
+      for (unsigned int j = 0; j < 5; ++j)
         comp((ad_computed + j) % result.size()) += ad_computed;
     }
 
   // and compare
-  for(unsigned int i = 0; i < result.size(); ++i)
+  for (unsigned int i = 0; i < result.size(); ++i)
     AssertThrow(result(i) == comp(i), ExcInternalError());
 
-  for(unsigned int i = 0; i < result.size(); ++i)
+  for (unsigned int i = 0; i < result.size(); ++i)
     deallog << result(i) << std::endl;
 }
 

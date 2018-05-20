@@ -29,7 +29,7 @@ main()
   const unsigned int N = 10000;
   Vector<double>     x(N), y(N), z(N);
 
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       x(i) = 2. * i;
       y(i) = -1. * i;

@@ -34,7 +34,7 @@ namespace internal
       //
       // note that all arrays should have equal sizes (checked by
       // @p{monitor_memory}
-      if(total_cells > refine_flags.size())
+      if (total_cells > refine_flags.size())
         {
           refine_flags.reserve(total_cells);
           refine_flags.insert(refine_flags.end(),
@@ -59,7 +59,7 @@ namespace internal
                                      total_cells - level_subdomain_ids.size(),
                                      0);
 
-          if(dimension < space_dimension)
+          if (dimension < space_dimension)
             {
               direction_flags.reserve(total_cells);
               direction_flags.insert(direction_flags.end(),
@@ -121,7 +121,7 @@ namespace internal
       //
       // note that all arrays should have equal
       // sizes (checked by @p{monitor_memory}
-      if(total_cells > refine_flags.size())
+      if (total_cells > refine_flags.size())
         {
           refine_flags.reserve(total_cells);
           refine_flags.insert(refine_flags.end(),
@@ -146,7 +146,7 @@ namespace internal
                                      total_cells - level_subdomain_ids.size(),
                                      0);
 
-          if(dimension < space_dimension)
+          if (dimension < space_dimension)
             {
               direction_flags.reserve(total_cells);
               direction_flags.insert(direction_flags.end(),

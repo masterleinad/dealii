@@ -54,12 +54,12 @@ public:
     FEEvaluation<dim, fe_degree, fe_degree + 1, 3, Number> fe_eval(data);
     const unsigned int n_q_points = fe_eval.n_q_points;
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(src);
         fe_eval.evaluate(true, false);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
             Tensor<1, 3, VectorizedArray<double>> val = fe_eval.get_value(q);
             val[0] *= make_vectorized_array(0.8314159);
@@ -85,11 +85,11 @@ public:
     const unsigned int                     n_q_points = fe_eval.n_q_points;
     AlignedVector<VectorizedArray<Number>> inverse_coefficients(3 * n_q_points);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         mass_inv.fill_inverse_JxW_values(inverse_coefficients);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
             inverse_coefficients[q] *= make_vectorized_array(1. / 0.8314159);
             inverse_coefficients[n_q_points + q]
@@ -155,7 +155,7 @@ do_test(const DoFHandler<dim>& dof)
   Vector<number> in(dof.n_dofs()), inverse(dof.n_dofs()),
     reference(dof.n_dofs());
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
       const double entry = random_value<double>();
       in(i)              = entry;
@@ -185,20 +185,20 @@ test()
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
 
-  if(dim < 3 || fe_degree < 2)
+  if (dim < 3 || fe_degree < 2)
     tria.refine_global(1);
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 1e-8)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 

@@ -31,9 +31,9 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "hyper_cube" << std::endl;
 
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -43,11 +43,11 @@ test()
 
       Assert(tr.n_active_cells() == 1, ExcInternalError());
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "subdomainid = " << tr.begin_active()->subdomain_id()
                 << std::endl;
 
-      if(myid == numproc - 1)
+      if (myid == numproc - 1)
         {
           Assert(tr.begin_active()->subdomain_id() == (unsigned int) myid,
                  ExcInternalError());
@@ -60,11 +60,11 @@ test()
         }
 
       const unsigned int checksum = tr.get_checksum();
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -75,7 +75,7 @@ main(int argc, char* argv[])
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

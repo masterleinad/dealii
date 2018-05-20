@@ -106,7 +106,7 @@ diffusionMechanics<dim>::diffusionMechanics(const unsigned int mech_degree,
     face_quadrature_formula(2)
 {
   //Nodal Solution names
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       nodal_solution_names.push_back("u");
     }
@@ -162,14 +162,14 @@ template <int dim>
 void
 diffusionMechanics<dim>::set_active_fe_indices()
 {
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
-      if(cell_is_in_omega1_domain(cell))
+      if (cell_is_in_omega1_domain(cell))
         cell->set_active_fe_index(0);
-      else if(cell_is_in_omega2_domain(cell))
+      else if (cell_is_in_omega2_domain(cell))
         cell->set_active_fe_index(1);
       else
         Assert(false, ExcNotImplemented());
@@ -225,11 +225,11 @@ diffusionMechanics<dim>::run()
                                             Point<3>(alen, blen, clen));
 
   //Mark cells by sub-domain
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
-    if(cell->center()[dim - 1] >= 0.75 * clen)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
+    if (cell->center()[dim - 1] >= 0.75 * clen)
       cell->set_material_id(omega1_domain_id);
     else
       cell->set_material_id(omega2_domain_id);

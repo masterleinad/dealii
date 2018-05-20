@@ -30,7 +30,7 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  for(unsigned int size = 4; size <= 16; size *= 2)
+  for (unsigned int size = 4; size <= 16; size *= 2)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -59,9 +59,9 @@ main()
 
       Vector<double> v(dim);
       Vector<double> tmp1(dim), tmp2(dim);
-      for(unsigned int i = 0; i < 3; ++i)
+      for (unsigned int i = 0; i < 3; ++i)
         {
-          for(unsigned int j = 0; j < dim; ++j)
+          for (unsigned int j = 0; j < dim; ++j)
             v(j) = random_value<double>();
 
           A.vmult(tmp1, v);

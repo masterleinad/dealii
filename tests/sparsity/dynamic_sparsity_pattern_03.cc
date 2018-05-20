@@ -27,14 +27,14 @@ test()
   // number of entries per row
   const unsigned int     N = 1000;
   DynamicSparsityPattern csp(N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < 40; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < 40; ++j)
       csp.add(i, (i + (i + 1) * (j * j + i)) % N);
 
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       std::vector<bool> xx(1000, false);
-      for(unsigned int j = 0; j < 40; ++j)
+      for (unsigned int j = 0; j < 40; ++j)
         xx[(i + (i + 1) * (j * j + i)) % N] = true;
 
       Assert(static_cast<unsigned int>(std::count(xx.begin(), xx.end(), true))

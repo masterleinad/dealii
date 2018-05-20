@@ -59,8 +59,8 @@ public:
   {
     typename DataOut<dim>::active_cell_iterator cell
       = this->triangulation->begin_active();
-    while((cell != this->triangulation->end())
-          && (cell->subdomain_id() != subdomain_id))
+    while ((cell != this->triangulation->end())
+           && (cell->subdomain_id() != subdomain_id))
       ++cell;
 
     return cell;
@@ -69,7 +69,7 @@ public:
   virtual typename DataOut<dim>::cell_iterator
   next_cell(const typename DataOut<dim>::cell_iterator& old_cell)
   {
-    if(old_cell != this->triangulation->end())
+    if (old_cell != this->triangulation->end())
       {
         const IteratorFilters::SubdomainEqualTo predicate(subdomain_id);
 
@@ -111,7 +111,7 @@ void
 TemperatureInitialValues<dim>::vector_value(const Point<dim>& p,
                                             Vector<double>&   values) const
 {
-  for(unsigned int c = 0; c < this->n_components; ++c)
+  for (unsigned int c = 0; c < this->n_components; ++c)
     values(c) = TemperatureInitialValues<dim>::value(p, c);
 }
 
@@ -131,15 +131,15 @@ test()
   //tr.set_manifold (1, boundary);
 
   tr.refine_global(1);
-  if(1)
-    for(unsigned int step = 0; step < 5; ++step)
+  if (1)
+    for (unsigned int step = 0; step < 5; ++step)
       {
         typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active(),
           endc = tr.end();
 
-        for(; cell != endc; ++cell)
-          if(Testing::rand() % 42 == 1)
+        for (; cell != endc; ++cell)
+          if (Testing::rand() % 42 == 1)
             cell->set_refine_flag();
 
         tr.execute_coarsening_and_refinement();
@@ -167,41 +167,41 @@ test()
   x_rel.reinit(relevant_set, MPI_COMM_WORLD);
   x_rel = x;
 
-  for(unsigned int steps = 0; steps < 7; ++steps)
+  for (unsigned int steps = 0; steps < 7; ++steps)
     {
       {
         typename Triangulation<dim>::active_cell_iterator cell
           = tr.begin_active(),
           endc = tr.end();
 
-        for(; cell != endc; ++cell)
-          if(!cell->is_artificial() && !cell->is_ghost())
+        for (; cell != endc; ++cell)
+          if (!cell->is_artificial() && !cell->is_ghost())
             {
-              if(Testing::rand() % 12 == 1)
+              if (Testing::rand() % 12 == 1)
                 cell->set_refine_flag();
-              else if(Testing::rand() % 7 == 1)
+              else if (Testing::rand() % 7 == 1)
                 cell->set_coarsen_flag();
             }
       }
-      for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
-          cell != tr.end();
-          ++cell)
+      for (typename Triangulation<dim>::cell_iterator cell = tr.begin();
+           cell != tr.end();
+           ++cell)
         {
-          if(!cell->has_children())
+          if (!cell->has_children())
             continue;
 
           bool coarsen_me = false;
-          for(unsigned int i = 0; i < cell->n_children(); ++i)
-            if(cell->child(i)->coarsen_flag_set())
+          for (unsigned int i = 0; i < cell->n_children(); ++i)
+            if (cell->child(i)->coarsen_flag_set())
               {
                 coarsen_me = true;
                 break;
               }
-          if(coarsen_me)
-            for(unsigned int i = 0; i < cell->n_children(); ++i)
+          if (coarsen_me)
+            for (unsigned int i = 0; i < cell->n_children(); ++i)
               {
-                if(cell->child(i)->active()
-                   && cell->child(i)->is_locally_owned())
+                if (cell->child(i)->active()
+                    && cell->child(i)->is_locally_owned())
                   {
                     cell->child(i)->clear_refine_flag();
                     cell->child(i)->set_coarsen_flag();
@@ -259,8 +259,8 @@ test()
 
   x_ref -= x;
   double err = x_ref.linfty_norm();
-  if(err > 1.0e-12)
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (err > 1.0e-12)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << "err:" << err << std::endl;
 
   //  x_rel=x_ref; //uncomment to output error
@@ -282,7 +282,7 @@ test()
   tr.reset_manifold(0);
   tr.reset_manifold(1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -295,7 +295,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

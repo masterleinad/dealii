@@ -30,7 +30,7 @@ check()
   // with only one eigenvalue
   const unsigned int size = 20;
   FullMatrix<double> A(size, size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     A(i, i) = 2;
 
   Vector<double> in(size), out(size);
@@ -42,11 +42,11 @@ check()
     solver.solve(A, out, in, PreconditionIdentity());
     AssertThrow(control.last_step() == 1, ExcInternalError());
   }
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(std::abs(out(i) - 0.5) < 1e-12, ExcInternalError());
 
   // Check 2: should only do 5 iterations but the solution should not be exact
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     A(i, i) = 1 + i;
 
   out = 0;
@@ -57,8 +57,8 @@ check()
     AssertThrow(control.last_step() == 5, ExcInternalError());
   }
   bool solved_exactly = true;
-  for(unsigned int i = 0; i < size; ++i)
-    if(std::abs(out(i) - 1. / (1 + size)) > 1e-8)
+  for (unsigned int i = 0; i < size; ++i)
+    if (std::abs(out(i) - 1. / (1 + size)) > 1e-8)
       solved_exactly = false;
   AssertThrow(solved_exactly == false, ExcInternalError());
 

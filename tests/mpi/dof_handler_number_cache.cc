@@ -48,11 +48,11 @@ test()
   triangulation.refine_global(2);
 
   const unsigned int n_refinements[] = {0, 4, 3, 2};
-  for(unsigned int i = 0; i < n_refinements[dim]; ++i)
+  for (unsigned int i = 0; i < n_refinements[dim]; ++i)
     {
       // refine one-fifth of cells randomly
       std::vector<bool> flags(triangulation.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
+      for (unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
         flags[Testing::rand() % flags.size()] = true;
       // make sure there's at least one that
       // will be refined
@@ -60,13 +60,13 @@ test()
 
       // refine triangulation
       unsigned int index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        if(!cell->is_ghost() && !cell->is_artificial())
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        if (!cell->is_ghost() && !cell->is_artificial())
           {
-            if(flags[index])
+            if (flags[index])
               cell->set_refine_flag();
             ++index;
           }
@@ -78,13 +78,13 @@ test()
       // some of them will actually be
       // coarsened)
       index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active();
-          cell != triangulation.end();
-          ++cell)
-        if(!cell->is_ghost() && !cell->is_artificial())
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active();
+           cell != triangulation.end();
+           ++cell)
+        if (!cell->is_ghost() && !cell->is_artificial())
           {
-            if(!flags[index])
+            if (!flags[index])
               cell->set_coarsen_flag();
             ++index;
           }
@@ -93,13 +93,13 @@ test()
       dof_handler.distribute_dofs(fe);
 
       const unsigned int N = dof_handler.n_dofs();
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << N << std::endl;
 
       Assert(dof_handler.n_locally_owned_dofs() <= N, ExcInternalError());
-      for(unsigned int i = 0;
-          i < dof_handler.n_locally_owned_dofs_per_processor().size();
-          ++i)
+      for (unsigned int i = 0;
+           i < dof_handler.n_locally_owned_dofs_per_processor().size();
+           ++i)
         AssertThrow(dof_handler.n_locally_owned_dofs_per_processor()[i] <= N,
                     ExcInternalError());
       AssertThrow(std::accumulate(
@@ -111,11 +111,11 @@ test()
 
       IndexSet all(N), really_all(N);
       // poor man's union operation
-      for(unsigned int i = 0;
-          i < dof_handler.n_locally_owned_dofs_per_processor().size();
-          ++i)
-        for(unsigned int j = 0; j < N; ++j)
-          if(dof_handler.locally_owned_dofs_per_processor()[i].is_element(j))
+      for (unsigned int i = 0;
+           i < dof_handler.n_locally_owned_dofs_per_processor().size();
+           ++i)
+        for (unsigned int j = 0; j < N; ++j)
+          if (dof_handler.locally_owned_dofs_per_processor()[i].is_element(j))
             {
               AssertThrow(all.is_element(j) == false, ExcInternalError());
               all.add_index(j);
@@ -131,7 +131,7 @@ main(int argc, char* argv[])
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -150,7 +150,7 @@ namespace with_hp
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         dofs_per_cell = cell->get_fe().dofs_per_cell;
@@ -160,16 +160,16 @@ namespace with_hp
         cell_rhs   = 0;
         n_q_points = fe_values.get_present_fe_values().n_quadrature_points;
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
               cell_matrix(i, j)
                 += (fe_values.get_present_fe_values().shape_grad(i, q_point)
                     * fe_values.get_present_fe_values().shape_grad(j, q_point)
                     * fe_values.get_present_fe_values().JxW(q_point));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             cell_rhs(i)
               += (-2.0
                   * fe_values.get_present_fe_values().shape_value(i, q_point)
@@ -178,12 +178,12 @@ namespace with_hp
         local_dof_indices.resize(dofs_per_cell);
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           system_rhs(local_dof_indices[i]) += cell_rhs(i);
       }
 
@@ -301,33 +301,33 @@ namespace without_hp
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
 
         cell_matrix = 0;
         cell_rhs    = 0;
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
-            for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
               cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                     * fe_values.shape_grad(j, q_point)
                                     * fe_values.JxW(q_point));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             cell_rhs(i) += (-2.0 * fe_values.shape_value(i, q_point)
                             * fe_values.JxW(q_point));
 
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           system_rhs(local_dof_indices[i]) += cell_rhs(i);
       }
 

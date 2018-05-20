@@ -47,7 +47,7 @@ test()
   IndexSet indices(3);
   indices.add_range(0, 3);
   PETScWrappers::MPI::Vector v(indices, MPI_COMM_WORLD);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = 2;
   v.compress(VectorOperation::insert);
 
@@ -57,8 +57,8 @@ test()
   A.Tmmult(C, B, v);
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < C.m(); ++i)
-    for(unsigned int j = 0; j < C.n(); ++j)
+  for (unsigned int i = 0; i < C.m(); ++i)
+    for (unsigned int j = 0; j < C.n(); ++j)
       AssertThrow(C(i, j) == 6 * i + 2 * j + 2, ExcInternalError());
 
   deallog << "OK" << std::endl;
@@ -76,7 +76,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -90,7 +90,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

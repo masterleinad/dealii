@@ -26,8 +26,8 @@ test()
   const unsigned int       m = 7;
   const unsigned int       n = 11;
   LAPACKFullMatrix<double> A(m, n);
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < m; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       A(i, j) = random_value<double>();
 
   LAPACKFullMatrix<double> A_check(A);
@@ -38,8 +38,8 @@ test()
   A *= factor;
 
   // test multiplication
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < m; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       AssertThrow(std::abs(A(i, j) - factor * A_check(i, j)) < 1.e-12,
                   ExcInternalError());
 
@@ -47,8 +47,8 @@ test()
   A /= factor;
 
   // test division
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < m; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       AssertThrow(std::abs(A(i, j) - A_check(i, j)) < 1.e-12,
                   ExcInternalError());
 

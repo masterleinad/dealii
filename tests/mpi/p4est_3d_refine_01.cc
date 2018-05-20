@@ -33,9 +33,9 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "hyper_cube" << std::endl;
 
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -43,10 +43,10 @@ test()
       GridGenerator::hyper_cube(tr);
       tr.refine_global(1);
 
-      while(tr.n_active_cells()
-            < 20000 / Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD))
+      while (tr.n_active_cells()
+             < 20000 / Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD))
         {
-          if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+          if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
             deallog << "refine_loop..." << std::endl;
           std::vector<bool> flags(tr.n_active_cells(), false);
 
@@ -54,7 +54,7 @@ test()
           // time (but at least one).
           // note that only the own marked cells
           // will be refined.
-          for(unsigned int i = 0; i < tr.n_active_cells() / 5 + 1; ++i)
+          for (unsigned int i = 0; i < tr.n_active_cells() / 5 + 1; ++i)
             {
               const unsigned int x = Testing::rand() % flags.size();
               flags[x]             = true;
@@ -63,29 +63,29 @@ test()
           unsigned int index  = 0;
           unsigned int locals = 0;
 
-          for(typename Triangulation<dim>::active_cell_iterator cell
-              = tr.begin_active();
-              cell != tr.end();
-              ++cell, ++index)
-            if(flags[index])
+          for (typename Triangulation<dim>::active_cell_iterator cell
+               = tr.begin_active();
+               cell != tr.end();
+               ++cell, ++index)
+            if (flags[index])
               {
-                if(cell->subdomain_id() == myid)
+                if (cell->subdomain_id() == myid)
                   ++locals;
                 cell->set_refine_flag();
               }
 
           //and atleast one cell:
-          if(!locals)
+          if (!locals)
             {
-              for(typename Triangulation<dim>::active_cell_iterator cell
-                  = tr.begin_active();
-                  cell != tr.end();
-                  ++cell)
-                if(cell->subdomain_id() == myid)
+              for (typename Triangulation<dim>::active_cell_iterator cell
+                   = tr.begin_active();
+                   cell != tr.end();
+                   ++cell)
+                if (cell->subdomain_id() == myid)
                   {
                     cell->set_refine_flag();
                     ++locals;
-                    if(locals > 5)
+                    if (locals > 5)
 
                       break;
                   }
@@ -95,7 +95,7 @@ test()
           tr.execute_coarsening_and_refinement();
 
           unsigned int checksum = tr.get_checksum();
-          if(myid == 0)
+          if (myid == 0)
             {
               deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
               deallog << "Checksum: " << checksum << std::endl;
@@ -103,7 +103,7 @@ test()
         }
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -116,7 +116,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

@@ -40,7 +40,7 @@ test(std::ostream& /*out*/)
       tr, subdivisions, Point<3>(0, 0, 0), Point<3>(2, 2, 1));
     tr.begin_active()->set_refine_flag();
     tr.execute_coarsening_and_refinement();
-    for(unsigned int c = 0; c < 8; ++c)
+    for (unsigned int c = 0; c < 8; ++c)
       tr.begin(0)->child(c)->set_refine_flag();
     tr.execute_coarsening_and_refinement();
 

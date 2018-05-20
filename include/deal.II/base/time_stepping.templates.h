@@ -73,9 +73,9 @@ namespace TimeStepping
   {
     status.method = method;
 
-    switch(method)
+    switch (method)
       {
-        case(FORWARD_EULER):
+        case (FORWARD_EULER):
           {
             this->n_stages = 1;
             this->b.push_back(1.0);
@@ -83,7 +83,7 @@ namespace TimeStepping
 
             break;
           }
-        case(RK_THIRD_ORDER):
+        case (RK_THIRD_ORDER):
           {
             this->n_stages = 3;
             this->b.reserve(this->n_stages);
@@ -106,7 +106,7 @@ namespace TimeStepping
 
             break;
           }
-        case(RK_CLASSIC_FOURTH_ORDER):
+        case (RK_CLASSIC_FOURTH_ORDER):
           {
             this->n_stages = 4;
             this->b.reserve(this->n_stages);
@@ -171,7 +171,7 @@ namespace TimeStepping
     compute_stages(f, t, delta_t, y, f_stages);
 
     // Linear combinations of the stages.
-    for(unsigned int i = 0; i < this->n_stages; ++i)
+    for (unsigned int i = 0; i < this->n_stages; ++i)
       y.sadd(1., delta_t * this->b[i], f_stages[i]);
 
     return (t + delta_t);
@@ -193,10 +193,10 @@ namespace TimeStepping
     const VectorType&                                                 y,
     std::vector<VectorType>& f_stages) const
   {
-    for(unsigned int i = 0; i < this->n_stages; ++i)
+    for (unsigned int i = 0; i < this->n_stages; ++i)
       {
         VectorType Y(y);
-        for(unsigned int j = 0; j < i; ++j)
+        for (unsigned int j = 0; j < i; ++j)
           Y.sadd(1., delta_t * this->a[i][j], f_stages[j]);
         // Evaluate the function f at the point (t+c[i]*delta_t,Y).
         f_stages[i] = f(t + this->c[i] * delta_t, Y);
@@ -229,9 +229,9 @@ namespace TimeStepping
   {
     status.method = method;
 
-    switch(method)
+    switch (method)
       {
-        case(BACKWARD_EULER):
+        case (BACKWARD_EULER):
           {
             this->n_stages = 1;
             this->a.push_back(std::vector<double>(1, 1.0));
@@ -240,7 +240,7 @@ namespace TimeStepping
 
             break;
           }
-        case(IMPLICIT_MIDPOINT):
+        case (IMPLICIT_MIDPOINT):
           {
             this->a.push_back(std::vector<double>(1, 0.5));
             this->b.push_back(1.0);
@@ -249,7 +249,7 @@ namespace TimeStepping
 
             break;
           }
-        case(CRANK_NICOLSON):
+        case (CRANK_NICOLSON):
           {
             this->n_stages = 2;
             this->b.reserve(this->n_stages);
@@ -263,7 +263,7 @@ namespace TimeStepping
 
             break;
           }
-        case(SDIRK_TWO_STAGES):
+        case (SDIRK_TWO_STAGES):
           {
             this->n_stages = 2;
             this->b.reserve(this->n_stages);
@@ -303,10 +303,10 @@ namespace TimeStepping
     compute_stages(f, id_minus_tau_J_inverse, t, delta_t, y, f_stages);
 
     // If necessary, compute the linear combinations of the stages.
-    if(skip_linear_combi == false)
+    if (skip_linear_combi == false)
       {
         y = old_y;
-        for(unsigned int i = 0; i < this->n_stages; ++i)
+        for (unsigned int i = 0; i < this->n_stages; ++i)
           y.sadd(1., delta_t * this->b[i], f_stages[i]);
       }
 
@@ -343,10 +343,10 @@ namespace TimeStepping
     std::vector<VectorType>&                            f_stages)
   {
     VectorType z(y);
-    for(unsigned int i = 0; i < this->n_stages; ++i)
+    for (unsigned int i = 0; i < this->n_stages; ++i)
       {
         VectorType old_y(z);
-        for(unsigned int j = 0; j < i; ++j)
+        for (unsigned int j = 0; j < i; ++j)
           old_y.sadd(1., delta_t * this->a[i][j], f_stages[j]);
 
         // Solve the nonlinear system using Newton's method
@@ -380,12 +380,12 @@ namespace TimeStepping
     unsigned int i                     = 0;
     const double initial_residual_norm = residual.l2_norm();
     double       norm_residual         = initial_residual_norm;
-    while(i < max_it)
+    while (i < max_it)
       {
         y.sadd(1.0, -1.0, id_minus_tau_J_inverse(residual));
         get_residual(y, residual);
         norm_residual = residual.l2_norm();
-        if(norm_residual < tolerance)
+        if (norm_residual < tolerance)
           break;
         ++i;
       }
@@ -447,9 +447,9 @@ namespace TimeStepping
   {
     status.method = method;
 
-    switch(method)
+    switch (method)
       {
-        case(HEUN_EULER):
+        case (HEUN_EULER):
           {
             this->n_stages = 2;
             this->a.push_back(std::vector<double>());
@@ -463,7 +463,7 @@ namespace TimeStepping
 
             break;
           }
-        case(BOGACKI_SHAMPINE):
+        case (BOGACKI_SHAMPINE):
           {
             last_same_as_first = true;
             this->n_stages     = 4;
@@ -499,7 +499,7 @@ namespace TimeStepping
 
             break;
           }
-        case(DOPRI):
+        case (DOPRI):
           {
             last_same_as_first = true;
             this->n_stages     = 7;
@@ -565,7 +565,7 @@ namespace TimeStepping
 
             break;
           }
-        case(FEHLBERG):
+        case (FEHLBERG):
           {
             this->n_stages = 6;
             this->c.reserve(this->n_stages);
@@ -619,7 +619,7 @@ namespace TimeStepping
 
             break;
           }
-        case(CASH_KARP):
+        case (CASH_KARP):
           {
             this->n_stages = 6;
             this->c.reserve(this->n_stages);
@@ -685,7 +685,7 @@ namespace TimeStepping
   void
   EmbeddedExplicitRungeKutta<VectorType>::free_memory()
   {
-    if(last_stage != nullptr)
+    if (last_stage != nullptr)
       delete last_stage;
 
     last_stage = nullptr;
@@ -721,14 +721,14 @@ namespace TimeStepping
     VectorType              error(y);
     std::vector<VectorType> f_stages(this->n_stages, y);
 
-    while(!done)
+    while (!done)
       {
         error = 0.;
         y     = old_y;
         // Compute the different stages needed.
         compute_stages(f, t, delta_t, y, f_stages);
 
-        for(unsigned int i = 0; i < this->n_stages; ++i)
+        for (unsigned int i = 0; i < this->n_stages; ++i)
           {
             y.sadd(1., delta_t * this->b1[i], f_stages[i]);
             error.sadd(1., delta_t * (b2[i] - b1[i]), f_stages[i]);
@@ -736,14 +736,14 @@ namespace TimeStepping
 
         error_norm = error.l2_norm();
         // Check if the norm of error is less than the coarsening tolerance
-        if(error_norm < coarsen_tol)
+        if (error_norm < coarsen_tol)
           {
             done = true;
             // Increase the guessed time step
             double new_delta_t = delta_t * coarsen_param;
             // Check that the guessed time step is smaller than the maximum time
             // step allowed.
-            if(new_delta_t > max_delta_t)
+            if (new_delta_t > max_delta_t)
               {
                 status.exit_delta_t  = MAX_DELTA_T;
                 status.delta_t_guess = max_delta_t;
@@ -755,7 +755,7 @@ namespace TimeStepping
               }
           }
         // Check if the norm of error is less than the refining tolerance
-        else if(error_norm < refine_tol)
+        else if (error_norm < refine_tol)
           {
             done                 = true;
             status.exit_delta_t  = DELTA_T;
@@ -764,7 +764,7 @@ namespace TimeStepping
         else
           {
             // If the time step is already the smallest acceptable, exit.
-            if(delta_t == min_delta_t)
+            if (delta_t == min_delta_t)
               {
                 done                 = true;
                 status.exit_delta_t  = MIN_DELTA_T;
@@ -774,7 +774,7 @@ namespace TimeStepping
             else
               {
                 delta_t *= refine_param;
-                if(delta_t < min_delta_t)
+                if (delta_t < min_delta_t)
                   delta_t = min_delta_t;
               }
           }
@@ -783,9 +783,9 @@ namespace TimeStepping
       }
 
     // Save the last stage if necessary
-    if(last_same_as_first == true)
+    if (last_same_as_first == true)
       {
-        if(last_stage == nullptr)
+        if (last_stage == nullptr)
           last_stage = new VectorType(f_stages.back());
         else
           *last_stage = f_stages.back();
@@ -836,19 +836,19 @@ namespace TimeStepping
 
     // If the last stage is the same as the first, we can skip the evaluation
     // of the first stage.
-    if(last_same_as_first == true)
+    if (last_same_as_first == true)
       {
-        if(last_stage != nullptr)
+        if (last_stage != nullptr)
           {
             f_stages[0] = *last_stage;
             i           = 1;
           }
       }
 
-    for(; i < this->n_stages; ++i)
+    for (; i < this->n_stages; ++i)
       {
         Y = y;
-        for(unsigned int j = 0; j < i; ++j)
+        for (unsigned int j = 0; j < i; ++j)
           Y.sadd(1.0, delta_t * this->a[i][j], f_stages[j]);
         f_stages[i] = f(t + this->c[i] * delta_t, Y);
       }

@@ -26,7 +26,7 @@ main()
 {
   initlog();
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       ParameterHandler prm;
       prm.enter_subsection("Testing");
@@ -34,7 +34,7 @@ main()
       prm.leave_subsection();
 
       // test both relevant parse_input functions
-      if(i == 0)
+      if (i == 0)
         {
           prm.parse_input(SOURCE_DIR "/prm/parameter_handler_backslash_08.prm");
         }

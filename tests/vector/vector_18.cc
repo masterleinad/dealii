@@ -24,7 +24,7 @@ test(Vector<double>& v)
 {
   // set some elements of the vector
   double norm = 0;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     {
       v(i) = i;
       norm += std::fabs(1. * i) * std::fabs(1. * i);
@@ -49,7 +49,7 @@ main()
       Vector<double> v(100);
       test(v);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -63,7 +63,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

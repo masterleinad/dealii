@@ -233,7 +233,7 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
 
   // Main loop
   int iter = 0;
-  for(; conv == SolverControl::iterate; iter++)
+  for (; conv == SolverControl::iterate; iter++)
     {
       y.add(additional_data.shift, x);
 
@@ -251,7 +251,7 @@ EigenPower<VectorType>::solve(double& value, const MatrixType& A, VectorType& x)
           Assert(i < x.size(), ExcInternalError());
           entry = y(i++);
         }
-      while(std::fabs(entry) < thresh);
+      while (std::fabs(entry) < thresh);
 
       --i;
 
@@ -332,7 +332,7 @@ EigenInverse<VectorType>::solve(double&           value,
   // Main loop
   double    res  = -std::numeric_limits<double>::max();
   size_type iter = 0;
-  for(; conv == SolverControl::iterate; iter++)
+  for (; conv == SolverControl::iterate; iter++)
     {
       solver.solve(A_s, y, x, prec);
 
@@ -349,14 +349,14 @@ EigenInverse<VectorType>::solve(double&           value,
           Assert(i < x.size(), ExcInternalError());
           entry = y(i++);
         }
-      while(std::fabs(entry) < thresh);
+      while (std::fabs(entry) < thresh);
 
       --i;
 
       // Compute unshifted eigenvalue
       value = (entry * x(i) < 0. ? -1. : 1.) / length - current_shift;
 
-      if(iter == goal)
+      if (iter == goal)
         {
           const auto&  relaxation = additional_data.relaxation;
           const double new_shift
@@ -371,7 +371,7 @@ EigenInverse<VectorType>::solve(double&           value,
       // Update normalized eigenvector
       x.equ(1. / length, y);
       // Compute residual
-      if(additional_data.use_residual)
+      if (additional_data.use_residual)
         {
           y.equ(value, x);
           A.vmult(r, x);

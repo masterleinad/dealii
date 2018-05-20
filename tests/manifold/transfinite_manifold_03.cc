@@ -31,20 +31,20 @@ template <int dim, int spacedim>
 void
 do_test(const Triangulation<dim, spacedim>& tria)
 {
-  for(unsigned int degree = 1; degree < 5; ++degree)
+  for (unsigned int degree = 1; degree < 5; ++degree)
     {
       MappingQGeneric<dim, spacedim> mapping(degree);
       FE_Nothing<dim, spacedim>      fe;
       QGauss<dim>                    gauss(degree + 1);
       FEValues<dim, spacedim> fe_values(mapping, fe, gauss, update_JxW_values);
       double                  volume = 0;
-      for(typename Triangulation<dim, spacedim>::cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
+      for (typename Triangulation<dim, spacedim>::cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
         {
           fe_values.reinit(cell);
-          for(unsigned int q = 0; q < gauss.size(); ++q)
+          for (unsigned int q = 0; q < gauss.size(); ++q)
             volume += fe_values.JxW(q);
         }
 
@@ -114,23 +114,23 @@ test_cylinder(unsigned int ref = 1)
   GridGenerator::cylinder(tria);
 
   tria.set_all_manifold_ids(1);
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     {
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        if(cell->at_boundary(face))
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        if (cell->at_boundary(face))
           {
             bool cell_at_surfaces = true;
-            for(unsigned int i = 1; i < GeometryInfo<dim>::vertices_per_face;
-                ++i)
-              if(std::abs(cell->face(face)->vertex(i)[0]
-                          - cell->face(face)->vertex(0)[0])
-                 > 1e-10)
+            for (unsigned int i = 1; i < GeometryInfo<dim>::vertices_per_face;
+                 ++i)
+              if (std::abs(cell->face(face)->vertex(i)[0]
+                           - cell->face(face)->vertex(0)[0])
+                  > 1e-10)
                 cell_at_surfaces = false;
-            if(cell_at_surfaces == false)
+            if (cell_at_surfaces == false)
               cell->face(face)->set_all_manifold_ids(0);
           }
     }

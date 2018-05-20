@@ -61,13 +61,13 @@ FE_Nothing<dim, spacedim>::get_name() const
 {
   std::ostringstream namebuf;
   namebuf << "FE_Nothing<" << dim << ">(";
-  if(this->n_components() > 1)
+  if (this->n_components() > 1)
     {
       namebuf << this->n_components();
-      if(dominate)
+      if (dominate)
         namebuf << ", dominating";
     }
-  else if(dominate)
+  else if (dominate)
     namebuf << "dominating";
   namebuf << ")";
   return namebuf.str();
@@ -174,14 +174,14 @@ FE_Nothing<dim, spacedim>::
 operator==(const FiniteElement<dim, spacedim>& f) const
 {
   // Compare fields stored in the base class
-  if(!(this->FiniteElement<dim, spacedim>::operator==(f)))
+  if (!(this->FiniteElement<dim, spacedim>::operator==(f)))
     return false;
 
   // Then make sure the other object is really of type FE_Nothing,
   // and compare the data that has been passed to both objects'
   // constructors.
-  if(const FE_Nothing<dim, spacedim>* f_nothing
-     = dynamic_cast<const FE_Nothing<dim, spacedim>*>(&f))
+  if (const FE_Nothing<dim, spacedim>* f_nothing
+      = dynamic_cast<const FE_Nothing<dim, spacedim>*>(&f))
     return ((dominate == f_nothing->dominate)
             && (this->components == f_nothing->components));
   else
@@ -194,12 +194,12 @@ FE_Nothing<dim, spacedim>::compare_for_face_domination(
   const FiniteElement<dim, spacedim>& fe) const
 {
   // if FE_Nothing does not dominate, there are no requirements
-  if(!dominate)
+  if (!dominate)
     {
       return FiniteElementDomination::no_requirements;
     }
   // if it does and the other is FE_Nothing, either can dominate
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe) != nullptr)
     {
       return FiniteElementDomination::either_element_can_dominate;
     }

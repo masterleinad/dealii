@@ -35,7 +35,7 @@ test_applies(std::string                                            description,
   deallog << description << ": " << tmp << std::endl;
 
   // test apply_add
-  for(auto& i : tmp)
+  for (auto& i : tmp)
     i = 100.;
   expr.apply_add(tmp);
   deallog << "100. * 1_n + " << description << ": " << tmp << std::endl;
@@ -52,7 +52,7 @@ main()
   // Tests:
 
   Vector<std::complex<double>> u(25);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     {
       u[i] = (double) (i + 1);
     }

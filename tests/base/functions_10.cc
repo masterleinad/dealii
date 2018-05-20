@@ -25,7 +25,7 @@ Table<1, double>
 fill(const std::array<std::vector<double>, 1>& coordinates)
 {
   Table<1, double> data(coordinates[0].size());
-  for(unsigned int i = 0; i < coordinates[0].size(); ++i)
+  for (unsigned int i = 0; i < coordinates[0].size(); ++i)
     data[i] = coordinates[0][i];
   return data;
 }
@@ -34,8 +34,8 @@ Table<2, double>
 fill(const std::array<std::vector<double>, 2>& coordinates)
 {
   Table<2, double> data(coordinates[0].size(), coordinates[1].size());
-  for(unsigned int i = 0; i < coordinates[0].size(); ++i)
-    for(unsigned int j = 0; j < coordinates[1].size(); ++j)
+  for (unsigned int i = 0; i < coordinates[0].size(); ++i)
+    for (unsigned int j = 0; j < coordinates[1].size(); ++j)
       data[i][j] = coordinates[0][i] * coordinates[1][j];
   return data;
 }
@@ -45,9 +45,9 @@ fill(const std::array<std::vector<double>, 3>& coordinates)
 {
   Table<3, double> data(
     coordinates[0].size(), coordinates[1].size(), coordinates[2].size());
-  for(unsigned int i = 0; i < coordinates[0].size(); ++i)
-    for(unsigned int j = 0; j < coordinates[1].size(); ++j)
-      for(unsigned int k = 0; k < coordinates[2].size(); ++k)
+  for (unsigned int i = 0; i < coordinates[0].size(); ++i)
+    for (unsigned int j = 0; j < coordinates[1].size(); ++j)
+      for (unsigned int k = 0; k < coordinates[2].size(); ++k)
         data[i][j][k]
           = coordinates[0][i] * coordinates[1][j] * coordinates[2][k];
   return data;
@@ -60,8 +60,8 @@ check()
   // have coordinate arrays that span an interval starting at d+1
   // d+5 nonuniform intervals
   std::array<std::vector<double>, dim> coordinates;
-  for(unsigned int d = 0; d < dim; ++d)
-    for(unsigned int i = 0; i < d + 5; ++i)
+  for (unsigned int d = 0; d < dim; ++d)
+    for (unsigned int i = 0; i < d + 5; ++i)
       coordinates[d].push_back(d + 1 + 1. * i * i);
 
   const Table<dim, double> data = fill(coordinates);
@@ -70,26 +70,26 @@ check()
 
   // now choose a number of randomly chosen points inside the box and
   // verify that the function values and gradients returned are correct
-  for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         p[d] = coordinates[d][0]
                + (random_value<double>())
                    * (coordinates[d].back() - coordinates[d][0]);
 
       double exact_value = 1;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         exact_value *= p[d];
 
       AssertThrow(std::fabs(exact_value - f.value(p)) < 1e-12,
                   ExcInternalError());
 
       Tensor<1, dim> exact_gradient;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         {
           exact_gradient[d] = 1.0;
-          for(unsigned int k = 0; k < dim; ++k)
+          for (unsigned int k = 0; k < dim; ++k)
             exact_gradient[d] *= (k == d) ? 1.0 : p[k];
         }
 
@@ -100,7 +100,7 @@ check()
   // now also verify that it computes values outside the box correctly, as
   // documented
   double value_at_bottom_left = 1;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     value_at_bottom_left *= coordinates[d][0];
 
   AssertThrow(std::fabs(f.value(Point<dim>()) - value_at_bottom_left) < 1e-12,
@@ -108,7 +108,7 @@ check()
 
   Point<dim> top_right;
   double     value_at_top_right = 1;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     {
       top_right[d] = 1000;
       value_at_top_right *= coordinates[d].back();

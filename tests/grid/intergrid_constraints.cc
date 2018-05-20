@@ -79,7 +79,7 @@ check()
 
   // make several loops to refine the
   // two grids
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       deallog << "Refinement step " << i << std::endl;
 
@@ -95,7 +95,7 @@ check()
       // entirely discontinuous here,
       // so renumbering functions
       // don't work
-      if(dim != 3)
+      if (dim != 3)
         {
           DoFRenumbering::Cuthill_McKee(dof_1);
           DoFRenumbering::Cuthill_McKee(dof_2);
@@ -111,7 +111,7 @@ check()
       intergrid_map.make_mapping(dof_1, dof_2);
       ConstraintMatrix intergrid_constraints;
 
-      if(dim != 3)
+      if (dim != 3)
         {
           // dq quadratic
           DoFTools::compute_intergrid_constraints(
@@ -135,7 +135,7 @@ check()
       // quadratic. continuous
       // elements only work for 1d at
       // present!
-      if(dim == 1)
+      if (dim == 1)
         DoFTools::compute_intergrid_constraints(
           dof_1, 3, dof_2, 5, intergrid_map, intergrid_constraints);
 
@@ -148,11 +148,11 @@ check()
       typename DoFHandler<dim>::cell_iterator cell, endc;
       cell = dof_1.begin();
       endc = dof_1.end();
-      for(unsigned int index = 0; cell != endc; ++cell)
-        if(cell->active())
+      for (unsigned int index = 0; cell != endc; ++cell)
+        if (cell->active())
           {
             ++index;
-            if(index % (2 * dim) == 0)
+            if (index % (2 * dim) == 0)
               {
                 cell->set_refine_flag();
 
@@ -164,7 +164,7 @@ check()
                 // happened
                 typename DoFHandler<dim>::cell_iterator cell2(
                   &tria_2, cell->level(), cell->index(), &dof_2);
-                if(!cell2->has_children())
+                if (!cell2->has_children())
                   cell2->set_refine_flag();
               };
           };
@@ -175,11 +175,11 @@ check()
       // next refine grid 2 a little more
       cell = dof_2.begin();
       endc = dof_2.end();
-      for(unsigned int index = 0; cell != endc; ++cell)
-        if(cell->active())
+      for (unsigned int index = 0; cell != endc; ++cell)
+        if (cell->active())
           {
             ++index;
-            if(index % (2 * dim) == 1)
+            if (index % (2 * dim) == 1)
               cell->set_refine_flag();
           };
 

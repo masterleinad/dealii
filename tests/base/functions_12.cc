@@ -26,33 +26,33 @@ check()
 
   Table<2, double> exponents(n_mon, dim);
 
-  for(unsigned int i = 0; i < n_mon; ++i)
-    for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int i = 0; i < n_mon; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
       exponents[i][d] = i + d;
 
   std::vector<double> coeffs(n_mon);
-  for(unsigned int i = 0; i < n_mon; ++i)
+  for (unsigned int i = 0; i < n_mon; ++i)
     coeffs[i] = std::pow(-1.0, static_cast<double>(i)) * (i + 1);
 
   Functions::Polynomial<dim> poly(exponents, coeffs);
 
   Point<dim> p;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     p[d] = d;
 
   deallog << dim << "-D check" << std::endl;
   deallog << "Polynomial: ";
-  for(unsigned int i = 0; i < n_mon; ++i)
+  for (unsigned int i = 0; i < n_mon; ++i)
     {
       deallog << coeffs[i];
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         deallog << " x" << d << "^" << exponents[i][d];
-      if(i < n_mon - 1)
+      if (i < n_mon - 1)
         deallog << " + ";
     }
   deallog << std::endl;
   deallog << "Point: ";
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     deallog << p[d] << " ";
   deallog << std::endl;
 

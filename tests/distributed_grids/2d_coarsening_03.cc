@@ -43,7 +43,8 @@ test(std::ostream& /*out*/)
       {
         gi.read_xda(in);
       }
-    catch(const typename Triangulation<dim>::DistortedCellList& distorted_cells)
+    catch (
+      const typename Triangulation<dim>::DistortedCellList& distorted_cells)
       {
         // ignore distorted cells
         deallog << distorted_cells.distorted_cells.size()
@@ -59,7 +60,8 @@ test(std::ostream& /*out*/)
       {
         gi.read_xda(in);
       }
-    catch(const typename Triangulation<dim>::DistortedCellList& distorted_cells)
+    catch (
+      const typename Triangulation<dim>::DistortedCellList& distorted_cells)
       {
         // ignore distorted cells
         deallog << distorted_cells.distorted_cells.size()
@@ -74,7 +76,7 @@ test(std::ostream& /*out*/)
     {
       tr.refine_global(1);
     }
-  catch(const typename Triangulation<dim>::DistortedCellList& distorted_cells)
+  catch (const typename Triangulation<dim>::DistortedCellList& distorted_cells)
     {
       // ignore distorted cells
       deallog << distorted_cells.distorted_cells.size()
@@ -85,7 +87,7 @@ test(std::ostream& /*out*/)
     {
       tr2.refine_global(1);
     }
-  catch(const typename Triangulation<dim>::DistortedCellList& distorted_cells)
+  catch (const typename Triangulation<dim>::DistortedCellList& distorted_cells)
     {
       // ignore distorted cells
       deallog << distorted_cells.distorted_cells.size()
@@ -95,11 +97,11 @@ test(std::ostream& /*out*/)
   deallog << tr.n_active_cells() << ' ' << tr2.n_active_cells() << std::endl;
   assert_tria_equal(tr, tr2);
 
-  for(unsigned int i = 0; i < 1; ++i)
+  for (unsigned int i = 0; i < 1; ++i)
     {
       // refine one-fifth of cells randomly
       std::vector<bool> flags(tr.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
+      for (unsigned int k = 0; k < flags.size() / 5 + 1; ++k)
         flags[Testing::rand() % flags.size()] = true;
       // make sure there's at least one that
       // will be refined
@@ -110,11 +112,11 @@ test(std::ostream& /*out*/)
 
       // refine tr and tr2
       unsigned int index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell, ++index)
-        if(flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell, ++index)
+        if (flags[index])
           {
             cell->set_refine_flag();
             intergrid_map[cell]->set_refine_flag();
@@ -126,11 +128,11 @@ test(std::ostream& /*out*/)
       // some of them will actually be
       // coarsened)
       index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell, ++index)
-        if(!flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell, ++index)
+        if (!flags[index])
           {
             cell->set_coarsen_flag();
             intergrid_map[cell]->set_coarsen_flag();
@@ -140,7 +142,7 @@ test(std::ostream& /*out*/)
         {
           tr.execute_coarsening_and_refinement();
         }
-      catch(
+      catch (
         const typename Triangulation<dim>::DistortedCellList& distorted_cells)
         {
           // ignore distorted cells
@@ -152,7 +154,7 @@ test(std::ostream& /*out*/)
         {
           tr2.execute_coarsening_and_refinement();
         }
-      catch(
+      catch (
         const typename Triangulation<dim>::DistortedCellList& distorted_cells)
         {
           // ignore distorted cells

@@ -25,9 +25,9 @@ void
 test(TrilinosWrappers::SparseMatrix& m)
 {
   // first set a few entries one-by-one
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         m.set(i, j, i * j * .5 + .5);
 
   m.compress(VectorOperation::insert);
@@ -38,13 +38,13 @@ test(TrilinosWrappers::SparseMatrix& m)
   {
     std::vector<types::global_dof_index> col_indices(m.n() / 3 + 1);
     std::vector<double>                  col_values(m.n() / 3 + 1);
-    for(unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int i = 0; i < m.m(); ++i)
       {
         unsigned int col_index = 0;
         // count the number of elements in this
         // row
-        for(unsigned int j = 0; j < m.n(); ++j)
-          if((i + 2 * j + 1) % 3 == 0)
+        for (unsigned int j = 0; j < m.n(); ++j)
+          if ((i + 2 * j + 1) % 3 == 0)
             ++col_index;
 
         col_indices.resize(col_index);
@@ -52,8 +52,8 @@ test(TrilinosWrappers::SparseMatrix& m)
         col_index = 0;
 
         // extract column values
-        for(unsigned int j = 0; j < m.n(); ++j)
-          if((i + 2 * j + 1) % 3 == 0)
+        for (unsigned int j = 0; j < m.n(); ++j)
+          if ((i + 2 * j + 1) % 3 == 0)
             {
               col_indices[col_index] = j;
               col_values[col_index]  = i * j * .5 + .5;
@@ -93,7 +93,7 @@ main(int argc, char** argv)
         test(m);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -107,7 +107,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

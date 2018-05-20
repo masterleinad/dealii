@@ -35,12 +35,12 @@ void
 print(parallel::distributed::Triangulation<dim>& tr)
 {
   deallog << "*****" << std::endl;
-  for(typename parallel::distributed::Triangulation<dim>::cell_iterator cell
-      = tr.begin();
-      cell != tr.end();
-      ++cell)
+  for (typename parallel::distributed::Triangulation<dim>::cell_iterator cell
+       = tr.begin();
+       cell != tr.end();
+       ++cell)
     {
-      if(cell->level_subdomain_id() != numbers::artificial_subdomain_id)
+      if (cell->level_subdomain_id() != numbers::artificial_subdomain_id)
         deallog << "cell=" << cell->id()
                 << " level_subdomain_id=" << cell->level_subdomain_id()
                 << std::endl;
@@ -60,31 +60,31 @@ do_test()
 
   GridGenerator::subdivided_hyper_cube(triangulation, 1, -1, 1);
   triangulation.refine_global(2);
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    if(cell->is_locally_owned() && cell->center().norm() < 0.55)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    if (cell->is_locally_owned() && cell->center().norm() < 0.55)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
   print(triangulation);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    if(cell->is_locally_owned() && cell->center().norm() > 0.3
-       && cell->center().norm() < 0.42)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    if (cell->is_locally_owned() && cell->center().norm() > 0.3
+        && cell->center().norm() < 0.42)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
   print(triangulation);
 
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    if(cell->is_locally_owned() && cell->center().norm() > 0.335
-       && cell->center().norm() < 0.39)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    if (cell->is_locally_owned() && cell->center().norm() > 0.335
+        && cell->center().norm() < 0.39)
       cell->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
   print(triangulation);

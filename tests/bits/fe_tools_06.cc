@@ -30,15 +30,15 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   // support points. otherwise,
   // interpolation doesn't really
   // work
-  if((fe1.get_unit_support_points().size() == 0)
-     || (fe2.get_unit_support_points().size() == 0))
+  if ((fe1.get_unit_support_points().size() == 0)
+      || (fe2.get_unit_support_points().size() == 0))
     return;
   //  likewise for non-primitive elements
-  if(!fe1.is_primitive() || !fe2.is_primitive())
+  if (!fe1.is_primitive() || !fe2.is_primitive())
     return;
   // we need to have dof_constraints
   // for this test
-  if(!fe1.constraints_are_implemented() || !fe2.constraints_are_implemented())
+  if (!fe1.constraints_are_implemented() || !fe2.constraints_are_implemented())
     return;
 
   std::unique_ptr<Triangulation<dim>> tria(make_tria<dim>());
@@ -51,7 +51,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   cm2.close();
 
   Vector<double> in(dof1->n_dofs());
-  for(unsigned int i = 0; i < in.size(); ++i)
+  for (unsigned int i = 0; i < in.size(); ++i)
     in(i) = i;
   Vector<double> out(dof1->n_dofs());
 

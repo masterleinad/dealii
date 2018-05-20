@@ -62,15 +62,15 @@ test()
   hp::DoFHandler<1, spacedim> dof_handler(triangulation);
 
   unsigned int index = 0;
-  for(typename hp::DoFHandler<1, spacedim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell, ++index)
+  for (typename hp::DoFHandler<1, spacedim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell, ++index)
     cell->set_active_fe_index(index);
 
   dof_handler.distribute_dofs(fe);
 
-  for(types::boundary_id b : {12, 13, 14, 15})
+  for (types::boundary_id b : {12, 13, 14, 15})
     {
       const unsigned int N
         = dof_handler.n_boundary_dofs(std::set<types::boundary_id>{b});

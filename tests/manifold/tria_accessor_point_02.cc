@@ -37,10 +37,10 @@ test(unsigned int ref = 1)
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_shell(tria, Point<spacedim>(), .3, .6, 12);
 
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     {
       cell->set_all_manifold_ids(1);
     }
@@ -48,13 +48,13 @@ test(unsigned int ref = 1)
   tria.set_manifold(1, manifold);
   tria.refine_global(1);
 
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     {
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-        if(cell->face(f)->at_boundary())
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+        if (cell->face(f)->at_boundary())
           deallog << "Center: " << cell->face(f)->center(true, true)
                   << ", Norm: " << cell->face(f)->center(true, true).norm()
                   << std::endl;

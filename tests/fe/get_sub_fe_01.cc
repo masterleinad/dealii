@@ -49,7 +49,7 @@ fails(const FiniteElement<dim>& fe, const ComponentMask& m)
       deallog << "  ERROR: we succeeded and got " << child.get_name()
               << " but we should have failed!" << std::endl;
     }
-  catch(...)
+  catch (...)
     {
       deallog << "  failed as expected" << std::endl;
     }
@@ -75,7 +75,7 @@ check()
                  const unsigned int first,
                  const unsigned int last) -> ComponentMask {
     ComponentMask c(n_components, false);
-    for(unsigned int i = first; i <= last; ++i)
+    for (unsigned int i = first; i <= last; ++i)
       c.set(i, true);
     return c;
   };

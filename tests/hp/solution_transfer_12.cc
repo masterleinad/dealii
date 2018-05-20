@@ -52,9 +52,9 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double f = 0.25 + 2 * p[0];
-    if(dim > 1)
+    if (dim > 1)
       f += 0.772 * p[1];
-    if(dim > 2)
+    if (dim > 2)
       f -= 3.112 * p[2];
     return f;
   };
@@ -70,7 +70,7 @@ transfer(std::ostream& out)
   tria.refine_global(5 - dim);
   const unsigned int    max_degree = 6 - dim;
   hp::FECollection<dim> fe_q;
-  for(unsigned int deg = 1; deg <= max_degree; ++deg)
+  for (unsigned int deg = 1; deg <= max_degree; ++deg)
     {
       fe_q.push_back(FE_Q_Hierarchical<dim>(deg));
     }
@@ -83,7 +83,7 @@ transfer(std::ostream& out)
                                                     endc = tria.end();
   ++cell;
   ++cell;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_refine_flag();
   tria.prepare_coarsening_and_refinement();
   tria.execute_coarsening_and_refinement();
@@ -94,9 +94,9 @@ transfer(std::ostream& out)
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
       endc = q_dof_handler.end();
-    for(; cell != endc; ++cell, ++counter)
+    for (; cell != endc; ++cell, ++counter)
       {
-        if(counter < 15)
+        if (counter < 15)
           cell->set_active_fe_index(1);
         else
           cell->set_active_fe_index(Testing::rand() % max_degree);
@@ -124,7 +124,7 @@ transfer(std::ostream& out)
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
       endc = q_dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         hp_fe_val.reinit(cell, 0);
         const FEValues<dim>& fe_val = hp_fe_val.get_present_fe_values();
@@ -135,7 +135,7 @@ transfer(std::ostream& out)
         Assert(local_dof_indices.size() >= fe_val.n_quadrature_points,
                ExcInternalError());
 
-        for(unsigned int q = 0; q < fe_val.n_quadrature_points; ++q)
+        for (unsigned int q = 0; q < fe_val.n_quadrature_points; ++q)
           {
             q_solution[local_dof_indices[q]]
               = func.value(fe_val.quadrature_point(q), 0);
@@ -153,13 +153,13 @@ transfer(std::ostream& out)
   counter = 0;
   cell    = tria.begin_active();
   endc    = tria.end();
-  for(; cell != endc; ++cell, ++counter)
+  for (; cell != endc; ++cell, ++counter)
     {
-      if(counter > 120)
+      if (counter > 120)
         cell->set_coarsen_flag();
-      else if(Testing::rand() % 3 == 0)
+      else if (Testing::rand() % 3 == 0)
         cell->set_refine_flag();
-      else if(Testing::rand() % 3 == 3)
+      else if (Testing::rand() % 3 == 3)
         cell->set_coarsen_flag();
     }
 
@@ -173,9 +173,9 @@ transfer(std::ostream& out)
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
       endc = q_dof_handler.end();
-    for(; cell != endc; ++cell, ++counter)
+    for (; cell != endc; ++cell, ++counter)
       {
-        if(counter > 20 && counter < 90)
+        if (counter > 20 && counter < 90)
           cell->set_active_fe_index(0);
         else
           cell->set_active_fe_index(Testing::rand() % max_degree);
@@ -197,12 +197,12 @@ transfer(std::ostream& out)
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = q_dof_handler.begin_active(),
       endc = q_dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         hp_fe_val.reinit(cell, 0);
         const FEValues<dim>& fe_val = hp_fe_val.get_present_fe_values();
         fe_val.get_function_values(q_solution, vals);
-        for(unsigned int q = 0; q < fe_val.n_quadrature_points; ++q)
+        for (unsigned int q = 0; q < fe_val.n_quadrature_points; ++q)
           {
             error
               += std::fabs(func.value(fe_val.quadrature_point(q), 0) - vals[q]);

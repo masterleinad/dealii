@@ -27,13 +27,13 @@ test_cpu()
   double             a[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
   const unsigned int dim     = 3;
   Tensor<2, dim>     t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       t[i][j] = a[i][j];
 
   deallog.push("values");
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       deallog << t[i][j] << std::endl;
   deallog.pop();
 
@@ -46,13 +46,13 @@ __global__ void init_kernel(Tensor<2, 3>* t, const unsigned int N)
 {
   const unsigned int i = threadIdx.y;
   const unsigned int j = threadIdx.x;
-  if((i < N) && (j < N))
+  if ((i < N) && (j < N))
     (*t)[i][j] = j + i * N + 1.;
 }
 
 __global__ void norm_kernel(Tensor<2, 3>* t, double* norm)
 {
-  if(threadIdx.x == 0)
+  if (threadIdx.x == 0)
     *norm = t->norm_square();
 }
 

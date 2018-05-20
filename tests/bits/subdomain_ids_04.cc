@@ -47,11 +47,11 @@ test()
   // (octant)
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int subdomain = 0;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()(d) > 0)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()(d) > 0)
           subdomain |= (1 << d);
       AssertThrow(subdomain < (1 << dim), ExcInternalError());
 
@@ -77,12 +77,12 @@ test()
   std::vector<types::subdomain_id> subdomain_association(dof_handler.n_dofs());
   DoFTools::get_subdomain_association(dof_handler, subdomain_association);
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     deallog << i << ' ' << subdomain_association[i] << std::endl;
 
   unsigned int present_subdomain = 0;
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    if(subdomain_association[i] != present_subdomain)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    if (subdomain_association[i] != present_subdomain)
       {
         // we must just have crossed the
         // boundary to another subdomain

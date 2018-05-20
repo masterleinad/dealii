@@ -69,7 +69,7 @@ public:
   void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       v(i) = p[i] * p[0] / 2;
   }
 };

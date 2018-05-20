@@ -53,38 +53,38 @@ test(const unsigned int m,
   A = AL;
   B = BL;
   D = NumberType();
-  for(unsigned int i = 0; i < k; ++i)
+  for (unsigned int i = 0; i < k; ++i)
     D(i, i) = DL(i);
 
   // non-symmetric
   C.triple_product(D, A, B, true);
   AL.Tmmult(CL, BL, DL);
 
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < m; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       AssertThrow(std::abs(C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, C(i, j), CL(i, j), C(i, j) - CL(i, j)));
 
   deallog << "OK non-symmetric" << std::endl;
 
   AL.Tmmult(CL, BL, DL, true);
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < m; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       AssertThrow(std::abs(2. * C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                   ExcEl(i, j, 2. * C(i, j), CL(i, j), 2. * C(i, j) - CL(i, j)));
 
   deallog << "OK non-symmetric adding" << std::endl;
 
   // symmetric (B==A)
-  if(m == n)
+  if (m == n)
     {
       C = 0.;
       C.triple_product(D, A, A, true, false, 1.);
 
       AL.Tmmult(CL, AL, DL);
 
-      for(unsigned int i = 0; i < m; ++i)
-        for(unsigned int j = 0; j < n; ++j)
+      for (unsigned int i = 0; i < m; ++i)
+        for (unsigned int j = 0; j < n; ++j)
           AssertThrow(std::abs(C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
                       ExcEl(i, j, C(i, j), CL(i, j), C(i, j) - CL(i, j)));
 
@@ -92,8 +92,8 @@ test(const unsigned int m,
 
       AL.Tmmult(CL, AL, DL, true);
 
-      for(unsigned int i = 0; i < m; ++i)
-        for(unsigned int j = 0; j < n; ++j)
+      for (unsigned int i = 0; i < m; ++i)
+        for (unsigned int j = 0; j < n; ++j)
           AssertThrow(
             std::abs(2. * C(i, j) - CL(i, j)) < eps * std::abs(CL(i, j)),
             ExcEl(i, j, 2. * C(i, j), CL(i, j), 2. * C(i, j) - CL(i, j)));
@@ -120,12 +120,12 @@ main()
                                                           {320, 320, 120}};
 
   deallog.push("double");
-  for(auto el : sizes)
+  for (auto el : sizes)
     test<double>(el[0], el[1], el[2], 1e-13);
   deallog.pop();
 
   deallog.push("float");
-  for(auto el : sizes)
+  for (auto el : sizes)
     test<float>(el[0], el[1], el[2], 1e-5);
   deallog.pop();
 }

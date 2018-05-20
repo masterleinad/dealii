@@ -83,9 +83,9 @@ void create_triangulation(Triangulation<3>& triangulation)
   };
 
   std::vector<CellData<3>> cells(n_cells, CellData<3>());
-  for(unsigned i = 0; i < n_cells; ++i)
+  for (unsigned i = 0; i < n_cells; ++i)
     {
-      for(unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
+      for (unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
         cells[i].vertices[j] = cell_vertices[i][j];
       cells[i].material_id = 0;
     }
@@ -109,9 +109,10 @@ evaluate(const FE_Nedelec<3>&  fe,
   std::vector<Vector<double>> values(n_q_points, Vector<double>(3));
   std::vector<Tensor<1, 3>>   values_ref(n_q_points);
 
-  for(DoFHandler<3>::active_cell_iterator cell = dof_handler_ref.begin_active();
-      cell != dof_handler_ref.end();
-      ++cell)
+  for (DoFHandler<3>::active_cell_iterator cell
+       = dof_handler_ref.begin_active();
+       cell != dof_handler_ref.end();
+       ++cell)
     {
       fe_values.reinit(cell);
       fe_values[component].get_function_values(u_ref, values_ref);
@@ -119,9 +120,9 @@ evaluate(const FE_Nedelec<3>&  fe,
                                           values);
       std::vector<types::global_dof_index> dof_indices(fe.dofs_per_cell);
       cell->get_dof_indices(dof_indices);
-      for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
         {
-          for(unsigned int d = 0; d < 3; ++d)
+          for (unsigned int d = 0; d < 3; ++d)
             deallog << values_ref[q_point][d] - values[q_point](d) << "  ";
 
           deallog << std::endl;
@@ -132,7 +133,7 @@ evaluate(const FE_Nedelec<3>&  fe,
 void
 set_reference_solution(Vector<double>& vector)
 {
-  for(unsigned int i = 0; i < vector.size(); ++i)
+  for (unsigned int i = 0; i < vector.size(); ++i)
     vector(i) = 1.0;
 }
 

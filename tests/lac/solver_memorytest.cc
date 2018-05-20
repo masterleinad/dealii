@@ -51,7 +51,7 @@ check_solve(const MatrixType&                          A,
     {
       solver.solve(A, u, f, prec_no);
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       deallog << e.what() << std::endl;
     }
@@ -65,7 +65,7 @@ main()
   deallog << std::setprecision(4);
   deallog.attach(logfile);
 
-  for(unsigned int size = 4; size <= 30; size *= 3)
+  for (unsigned int size = 4; size <= 30; size *= 3)
     {
       unsigned int dim = (size - 1) * (size - 1);
 

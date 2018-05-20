@@ -373,7 +373,7 @@ BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes,
   (void) end;
   reinit(block_sizes, true);
   InputIterator start = first;
-  for(size_type b = 0; b < block_sizes.size(); ++b)
+  for (size_type b = 0; b < block_sizes.size(); ++b)
     {
       InputIterator end = start;
       std::advance(end, static_cast<signed int>(block_sizes[b]));
@@ -424,7 +424,7 @@ template <typename Number>
 inline void
 BlockVector<Number>::compress(::dealii::VectorOperation::values operation)
 {
-  for(size_type i = 0; i < this->n_blocks(); ++i)
+  for (size_type i = 0; i < this->n_blocks(); ++i)
     this->components[i].compress(operation);
 }
 

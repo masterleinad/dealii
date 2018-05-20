@@ -11,7 +11,7 @@ KDTree<dim>::KDTree(const unsigned int&            max_leaf_size,
                     const std::vector<Point<dim>>& pts)
   : max_leaf_size(max_leaf_size)
 {
-  if(pts.size() > 0)
+  if (pts.size() > 0)
     set_points(pts);
 }
 
@@ -51,7 +51,7 @@ KDTree<dim>::get_closest_points(const Point<dim>&  target,
 
   // convert it to the format we want to return
   std::vector<std::pair<unsigned int, double>> matches(n_points);
-  for(unsigned int i = 0; i < n_points; ++i)
+  for (unsigned int i = 0; i < n_points; ++i)
     matches[i] = std::make_pair(indices[i], distances[i]);
 
   return matches;

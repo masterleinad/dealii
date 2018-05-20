@@ -60,7 +60,7 @@ template <typename number>
 FullMatrix<number>::FullMatrix(const IdentityMatrix& id)
   : Table<2, number>(id.m(), id.n())
 {
-  for(size_type i = 0; i < id.m(); ++i)
+  for (size_type i = 0; i < id.m(); ++i)
     (*this)(i, i) = 1;
 }
 
@@ -78,7 +78,7 @@ FullMatrix<number>&
 FullMatrix<number>::operator=(const IdentityMatrix& id)
 {
   this->reinit(id.m(), id.n());
-  for(size_type i = 0; i < id.m(); ++i)
+  for (size_type i = 0; i < id.m(); ++i)
     (*this)(i, i) = 1.;
 
   return *this;
@@ -91,8 +91,8 @@ FullMatrix<number>::operator=(const LAPACKFullMatrix<number2>& M)
 {
   Assert(this->m() == M.n_rows(), ExcDimensionMismatch(this->m(), M.n_rows()));
   Assert(this->n() == M.n_cols(), ExcDimensionMismatch(this->n(), M.n_cols()));
-  for(size_type i = 0; i < this->m(); ++i)
-    for(size_type j = 0; j < this->n(); ++j)
+  for (size_type i = 0; i < this->m(); ++i)
+    for (size_type j = 0; j < this->n(); ++j)
       (*this)(i, j) = M(i, j);
 
   return *this;
@@ -106,8 +106,8 @@ FullMatrix<number>::all_zero() const
 
   const number*       p = &this->values[0];
   const number* const e = &this->values[0] + this->n_elements();
-  while(p != e)
-    if(*p++ != number(0.0))
+  while (p != e)
+    if (*p++ != number(0.0))
       return false;
 
   return true;
@@ -121,7 +121,7 @@ FullMatrix<number>::operator*=(const number factor)
 
   number*       p = &(*this)(0, 0);
   const number* e = &(*this)(0, 0) + n() * m();
-  while(p != e)
+  while (p != e)
     *p++ *= factor;
 
   return *this;
@@ -140,7 +140,7 @@ FullMatrix<number>::operator/=(const number factor)
 
   AssertIsFinite(factor_inv);
 
-  while(p != e)
+  while (p != e)
     *p++ *= factor_inv;
 
   return *this;
@@ -166,10 +166,10 @@ FullMatrix<number>::vmult(Vector<number2>&       dst,
   // operator
   const number2*  src_ptr = &(*const_cast<Vector<number2>*>(&src))(0);
   const size_type size_m = m(), size_n = n();
-  for(size_type i = 0; i < size_m; ++i)
+  for (size_type i = 0; i < size_m; ++i)
     {
       number2 s = adding ? dst(i) : 0.;
-      for(size_type j = 0; j < size_n; ++j)
+      for (size_type j = 0; j < size_n; ++j)
         s += src_ptr[j] * number2(*(e++));
       dst(i) = s;
     }
@@ -194,16 +194,16 @@ FullMatrix<number>::Tvmult(Vector<number2>&       dst,
   const size_type size_m = m(), size_n = n();
 
   // zero out data if we are not adding
-  if(!adding)
-    for(size_type j = 0; j < size_n; ++j)
+  if (!adding)
+    for (size_type j = 0; j < size_n; ++j)
       dst_ptr[j] = 0.;
 
   // write the loop in a way that we can
   // access the data contiguously
-  for(size_type i = 0; i < size_m; ++i)
+  for (size_type i = 0; i < size_m; ++i)
     {
       const number2 d = src(i);
-      for(size_type j = 0; j < size_n; ++j)
+      for (size_type j = 0; j < size_n; ++j)
         dst_ptr[j] += d * number2(*(e++));
     };
 }
@@ -225,10 +225,10 @@ FullMatrix<number>::residual(Vector<number2>&       dst,
 
   number          res    = 0.;
   const size_type size_m = m(), size_n = n();
-  for(size_type i = 0; i < size_m; ++i)
+  for (size_type i = 0; i < size_m; ++i)
     {
       number s = number(right(i));
-      for(size_type j = 0; j < size_n; ++j)
+      for (size_type j = 0; j < size_n; ++j)
         s -= number(src(j)) * (*this)(i, j);
       dst(i) = s;
       res += s * s;
@@ -249,10 +249,10 @@ FullMatrix<number>::forward(Vector<number2>&       dst,
 
   size_type i, j;
   size_type nu = ((m() < n()) ? m() : n());
-  for(i = 0; i < nu; ++i)
+  for (i = 0; i < nu; ++i)
     {
       typename ProductType<number, number2>::type s = src(i);
-      for(j = 0; j < i; ++j)
+      for (j = 0; j < i; ++j)
         s -=
           typename ProductType<number, number2>::type(dst(j)) * (*this)(i, j);
       dst(i) = number2(s) / number2((*this)(i, i));
@@ -270,10 +270,10 @@ FullMatrix<number>::backward(Vector<number2>&       dst,
 
   size_type j;
   size_type nu = (m() < n() ? m() : n());
-  for(std::make_signed<size_type>::type i = nu - 1; i >= 0; --i)
+  for (std::make_signed<size_type>::type i = nu - 1; i >= 0; --i)
     {
       typename ProductType<number, number2>::type s = src(i);
-      for(j = i + 1; j < nu; ++j)
+      for (j = i + 1; j < nu; ++j)
         s -=
           typename ProductType<number, number2>::type(dst(j)) * (*this)(i, j);
       dst(i) = number2(s) / number2((*this)(i, i));
@@ -299,8 +299,8 @@ FullMatrix<number>::fill(const FullMatrix<number2>& src,
   const size_type rows = std::min(m() - dst_offset_i, src.m() - src_offset_i);
   const size_type cols = std::min(n() - dst_offset_j, src.n() - src_offset_j);
 
-  for(size_type i = 0; i < rows; ++i)
-    for(size_type j = 0; j < cols; ++j)
+  for (size_type i = 0; i < rows; ++i)
+    for (size_type j = 0; j < cols; ++j)
       (*this)(dst_offset_i + i, dst_offset_j + j)
         = src(src_offset_i + i, src_offset_j + j);
 }
@@ -317,8 +317,8 @@ FullMatrix<number>::fill_permutation(const FullMatrix<number2>&    src,
   Assert(p_cols.size() == this->n_cols(),
          ExcDimensionMismatch(p_cols.size(), this->n_cols()));
 
-  for(size_type i = 0; i < this->n_rows(); ++i)
-    for(size_type j = 0; j < this->n_cols(); ++j)
+  for (size_type i = 0; i < this->n_rows(); ++i)
+    for (size_type j = 0; j < this->n_cols(); ++j)
       (*this)(i, j) = src(p_rows[i], p_cols[j]);
 }
 
@@ -330,7 +330,7 @@ FullMatrix<number>::add_row(const size_type i,
 {
   Assert(!this->empty(), ExcEmptyMatrix());
 
-  for(size_type k = 0; k < n(); ++k)
+  for (size_type k = 0; k < n(); ++k)
     (*this)(i, k) += s * (*this)(j, k);
 }
 
@@ -345,7 +345,7 @@ FullMatrix<number>::add_row(const size_type i,
   Assert(!this->empty(), ExcEmptyMatrix());
 
   const size_type size_m = n();
-  for(size_type l = 0; l < size_m; ++l)
+  for (size_type l = 0; l < size_m; ++l)
     (*this)(i, l) += s * (*this)(j, l) + t * (*this)(k, l);
 }
 
@@ -357,7 +357,7 @@ FullMatrix<number>::add_col(const size_type i,
 {
   Assert(!this->empty(), ExcEmptyMatrix());
 
-  for(size_type k = 0; k < m(); ++k)
+  for (size_type k = 0; k < m(); ++k)
     (*this)(k, i) += s * (*this)(k, j);
 }
 
@@ -371,7 +371,7 @@ FullMatrix<number>::add_col(const size_type i,
 {
   Assert(!this->empty(), ExcEmptyMatrix());
 
-  for(size_t l = 0; l < m(); ++l)
+  for (size_t l = 0; l < m(); ++l)
     (*this)(l, i) += s * (*this)(l, j) + t * (*this)(l, k);
 }
 
@@ -381,7 +381,7 @@ FullMatrix<number>::swap_row(const size_type i, const size_type j)
 {
   Assert(!this->empty(), ExcEmptyMatrix());
 
-  for(size_type k = 0; k < n(); ++k)
+  for (size_type k = 0; k < n(); ++k)
     std::swap((*this)(i, k), (*this)(j, k));
 }
 
@@ -391,7 +391,7 @@ FullMatrix<number>::swap_col(const size_type i, const size_type j)
 {
   Assert(!this->empty(), ExcEmptyMatrix());
 
-  for(size_type k = 0; k < m(); ++k)
+  for (size_type k = 0; k < m(); ++k)
     std::swap((*this)(k, i), (*this)(k, j));
 }
 
@@ -402,7 +402,7 @@ FullMatrix<number>::diagadd(const number src)
   Assert(!this->empty(), ExcEmptyMatrix());
   Assert(m() == n(), ExcDimensionMismatch(m(), n()));
 
-  for(size_type i = 0; i < n(); ++i)
+  for (size_type i = 0; i < n(); ++i)
     (*this)(i, i) += src;
 }
 
@@ -416,8 +416,8 @@ FullMatrix<number>::equ(const number a, const FullMatrix<number2>& A)
   Assert(m() == A.m(), ExcDimensionMismatch(m(), A.m()));
   Assert(n() == A.n(), ExcDimensionMismatch(n(), A.n()));
 
-  for(size_type i = 0; i < m(); ++i)
-    for(size_type j = 0; j < n(); ++j)
+  for (size_type i = 0; i < m(); ++i)
+    for (size_type j = 0; j < n(); ++j)
       (*this)(i, j) = a * number(A(i, j));
 }
 
@@ -436,8 +436,8 @@ FullMatrix<number>::equ(const number               a,
   Assert(m() == B.m(), ExcDimensionMismatch(m(), B.m()));
   Assert(n() == B.n(), ExcDimensionMismatch(n(), B.n()));
 
-  for(size_type i = 0; i < m(); ++i)
-    for(size_type j = 0; j < n(); ++j)
+  for (size_type i = 0; i < m(); ++i)
+    for (size_type j = 0; j < n(); ++j)
       (*this)(i, j) = a * number(A(i, j)) + b * number(B(i, j));
 }
 
@@ -460,8 +460,8 @@ FullMatrix<number>::equ(const number               a,
   Assert(m() == C.m(), ExcDimensionMismatch(m(), C.m()));
   Assert(n() == C.n(), ExcDimensionMismatch(n(), C.n()));
 
-  for(size_type i = 0; i < m(); ++i)
-    for(size_type j = 0; j < n(); ++j)
+  for (size_type i = 0; i < m(); ++i)
+    for (size_type j = 0; j < n(); ++j)
       (*this)(i, j)
         = a * number(A(i, j)) + b * number(B(i, j)) + c * number(C(i, j));
 }
@@ -482,12 +482,13 @@ FullMatrix<number>::mmult(FullMatrix<number2>&       dst,
   // works for us (it is usually not efficient to use BLAS for very small
   // matrices):
 #ifdef DEAL_II_WITH_LAPACK
-  if((std::is_same<number, double>::value || std::is_same<number, float>::value)
-     && std::is_same<number, number2>::value)
-    if(this->n() * this->m() * src.n() > 300
-       && src.n() <= std::numeric_limits<types::blas_int>::max()
-       && this->m() <= std::numeric_limits<types::blas_int>::max()
-       && this->n() <= std::numeric_limits<types::blas_int>::max())
+  if ((std::is_same<number, double>::value
+       || std::is_same<number, float>::value)
+      && std::is_same<number, number2>::value)
+    if (this->n() * this->m() * src.n() > 300
+        && src.n() <= std::numeric_limits<types::blas_int>::max()
+        && this->m() <= std::numeric_limits<types::blas_int>::max()
+        && this->n() <= std::numeric_limits<types::blas_int>::max())
       {
         // In case we have the BLAS function gemm detected by CMake, we
         // use that algorithm for matrix-matrix multiplication since it
@@ -535,11 +536,11 @@ FullMatrix<number>::mmult(FullMatrix<number2>&       dst,
   // arrange the loops in a way that we keep write operations low, (writing is
   // usually more costly than reading), even though we need to access the data
   // in src not in a contiguous way.
-  for(size_type i = 0; i < m; i++)
-    for(size_type j = 0; j < n; j++)
+  for (size_type i = 0; i < m; i++)
+    for (size_type j = 0; j < n; j++)
       {
         number2 add_value = adding ? dst(i, j) : 0.;
-        for(size_type k = 0; k < l; k++)
+        for (size_type k = 0; k < l; k++)
           add_value += (number2)(*this)(i, k) * (number2)(src(k, j));
         dst(i, j) = add_value;
       }
@@ -561,12 +562,13 @@ FullMatrix<number>::Tmmult(FullMatrix<number2>&       dst,
   // works for us (it is usually not efficient to use BLAS for very small
   // matrices):
 #ifdef DEAL_II_WITH_LAPACK
-  if((std::is_same<number, double>::value || std::is_same<number, float>::value)
-     && std::is_same<number, number2>::value)
-    if(this->n() * this->m() * src.n() > 300
-       && src.n() <= std::numeric_limits<types::blas_int>::max()
-       && this->n() <= std::numeric_limits<types::blas_int>::max()
-       && this->m() <= std::numeric_limits<types::blas_int>::max())
+  if ((std::is_same<number, double>::value
+       || std::is_same<number, float>::value)
+      && std::is_same<number, number2>::value)
+    if (this->n() * this->m() * src.n() > 300
+        && src.n() <= std::numeric_limits<types::blas_int>::max()
+        && this->n() <= std::numeric_limits<types::blas_int>::max()
+        && this->m() <= std::numeric_limits<types::blas_int>::max())
       {
         // In case we have the BLAS function gemm detected by CMake, we
         // use that algorithm for matrix-matrix multiplication since it
@@ -613,17 +615,17 @@ FullMatrix<number>::Tmmult(FullMatrix<number2>&       dst,
   const size_type m = n(), n = src.n(), l = this->m();
 
   // symmetric matrix if the two matrices are the same
-  if(PointerComparison::equal(this, &src))
-    for(size_type i = 0; i < m; ++i)
-      for(size_type j = i; j < m; ++j)
+  if (PointerComparison::equal(this, &src))
+    for (size_type i = 0; i < m; ++i)
+      for (size_type j = i; j < m; ++j)
         {
           number2 add_value = 0.;
-          for(size_type k = 0; k < l; ++k)
+          for (size_type k = 0; k < l; ++k)
             add_value += (number2)(*this)(k, i) * (number2)(*this)(k, j);
-          if(adding)
+          if (adding)
             {
               dst(i, j) += add_value;
-              if(i < j)
+              if (i < j)
                 dst(j, i) += add_value;
             }
           else
@@ -635,11 +637,11 @@ FullMatrix<number>::Tmmult(FullMatrix<number2>&       dst,
   // optimized gemm operation in case the matrix is big, so this shouldn't be
   // too bad.
   else
-    for(size_type i = 0; i < m; i++)
-      for(size_type j = 0; j < n; j++)
+    for (size_type i = 0; i < m; i++)
+      for (size_type j = 0; j < n; j++)
         {
           number2 add_value = adding ? dst(i, j) : 0.;
-          for(size_type k = 0; k < l; k++)
+          for (size_type k = 0; k < l; k++)
             add_value += (number2)(*this)(k, i) * (number2)(src(k, j));
           dst(i, j) = add_value;
         }
@@ -661,12 +663,13 @@ FullMatrix<number>::mTmult(FullMatrix<number2>&       dst,
   // works for us (it is usually not efficient to use BLAS for very small
   // matrices):
 #ifdef DEAL_II_WITH_LAPACK
-  if((std::is_same<number, double>::value || std::is_same<number, float>::value)
-     && std::is_same<number, number2>::value)
-    if(this->n() * this->m() * src.m() > 300
-       && src.m() <= std::numeric_limits<types::blas_int>::max()
-       && this->n() <= std::numeric_limits<types::blas_int>::max()
-       && this->m() <= std::numeric_limits<types::blas_int>::max())
+  if ((std::is_same<number, double>::value
+       || std::is_same<number, float>::value)
+      && std::is_same<number, number2>::value)
+    if (this->n() * this->m() * src.m() > 300
+        && src.m() <= std::numeric_limits<types::blas_int>::max()
+        && this->n() <= std::numeric_limits<types::blas_int>::max()
+        && this->m() <= std::numeric_limits<types::blas_int>::max())
       {
         // In case we have the BLAS function gemm detected by CMake, we
         // use that algorithm for matrix-matrix multiplication since it
@@ -713,17 +716,17 @@ FullMatrix<number>::mTmult(FullMatrix<number2>&       dst,
   const size_type m = this->m(), n = src.m(), l = this->n();
 
   // symmetric matrix if the two matrices are the same
-  if(PointerComparison::equal(this, &src))
-    for(size_type i = 0; i < m; ++i)
-      for(size_type j = i; j < m; ++j)
+  if (PointerComparison::equal(this, &src))
+    for (size_type i = 0; i < m; ++i)
+      for (size_type j = i; j < m; ++j)
         {
           number2 add_value = 0.;
-          for(size_type k = 0; k < l; ++k)
+          for (size_type k = 0; k < l; ++k)
             add_value += (number2)(*this)(i, k) * (number2)(*this)(j, k);
-          if(adding)
+          if (adding)
             {
               dst(i, j) += add_value;
-              if(i < j)
+              if (i < j)
                 dst(j, i) += add_value;
             }
           else
@@ -732,11 +735,11 @@ FullMatrix<number>::mTmult(FullMatrix<number2>&       dst,
   else
     // arrange the loops in a way that we keep write operations low, (writing is
     // usually more costly than reading).
-    for(size_type i = 0; i < m; i++)
-      for(size_type j = 0; j < n; j++)
+    for (size_type i = 0; i < m; i++)
+      for (size_type j = 0; j < n; j++)
         {
           number2 add_value = adding ? dst(i, j) : 0.;
-          for(size_type k = 0; k < l; k++)
+          for (size_type k = 0; k < l; k++)
             add_value += (number2)(*this)(i, k) * (number2)(src(j, k));
           dst(i, j) = add_value;
         }
@@ -758,12 +761,13 @@ FullMatrix<number>::TmTmult(FullMatrix<number2>&       dst,
   // works for us (it is usually not efficient to use BLAS for very small
   // matrices):
 #ifdef DEAL_II_WITH_LAPACK
-  if((std::is_same<number, double>::value || std::is_same<number, float>::value)
-     && std::is_same<number, number2>::value)
-    if(this->n() * this->m() * src.m() > 300
-       && src.m() <= std::numeric_limits<types::blas_int>::max()
-       && this->n() <= std::numeric_limits<types::blas_int>::max()
-       && this->m() <= std::numeric_limits<types::blas_int>::max())
+  if ((std::is_same<number, double>::value
+       || std::is_same<number, float>::value)
+      && std::is_same<number, number2>::value)
+    if (this->n() * this->m() * src.m() > 300
+        && src.m() <= std::numeric_limits<types::blas_int>::max()
+        && this->n() <= std::numeric_limits<types::blas_int>::max()
+        && this->m() <= std::numeric_limits<types::blas_int>::max())
       {
         // In case we have the BLAS function gemm detected by CMake, we
         // use that algorithm for matrix-matrix multiplication since it
@@ -813,11 +817,11 @@ FullMatrix<number>::TmTmult(FullMatrix<number2>&       dst,
   // in the calling matrix in a non-contiguous way, possibly leading to cache
   // misses. However, we should usually end up in the optimized gemm operation
   // in case the matrix is big, so this shouldn't be too bad.
-  for(size_type i = 0; i < m; i++)
-    for(size_type j = 0; j < n; j++)
+  for (size_type i = 0; i < m; i++)
+    for (size_type j = 0; j < n; j++)
       {
         number2 add_value = adding ? dst(i, j) : 0.;
-        for(size_type k = 0; k < l; k++)
+        for (size_type k = 0; k < l; k++)
           add_value += (number2)(*this)(k, i) * (number2)(src(j, k));
         dst(i, j) = add_value;
       }
@@ -832,7 +836,7 @@ FullMatrix<number>::triple_product(const FullMatrix<number>& A,
                                    const bool                transpose_D,
                                    const number              scaling)
 {
-  if(transpose_B)
+  if (transpose_B)
     {
       AssertDimension(B.m(), A.m());
       AssertDimension(B.n(), m());
@@ -842,7 +846,7 @@ FullMatrix<number>::triple_product(const FullMatrix<number>& A,
       AssertDimension(B.n(), A.m());
       AssertDimension(B.m(), m());
     }
-  if(transpose_D)
+  if (transpose_D)
     {
       AssertDimension(D.n(), A.n());
       AssertDimension(D.m(), n());
@@ -855,25 +859,25 @@ FullMatrix<number>::triple_product(const FullMatrix<number>& A,
 
   // For all entries of the product
   // AD
-  for(size_type i = 0; i < A.m(); ++i)
-    for(size_type j = 0; j < n(); ++j)
+  for (size_type i = 0; i < A.m(); ++i)
+    for (size_type j = 0; j < n(); ++j)
       {
         // Compute the entry
         number ADij = 0.;
-        if(transpose_D)
-          for(size_type k = 0; k < A.n(); ++k)
+        if (transpose_D)
+          for (size_type k = 0; k < A.n(); ++k)
             ADij += A(i, k) * D(j, k);
         else
-          for(size_type k = 0; k < A.n(); ++k)
+          for (size_type k = 0; k < A.n(); ++k)
             ADij += A(i, k) * D(k, j);
         // And add it to this after
         // multiplying with the right
         // factor from B
-        if(transpose_B)
-          for(size_type k = 0; k < m(); ++k)
+        if (transpose_B)
+          for (size_type k = 0; k < m(); ++k)
             this->operator()(k, j) += scaling * ADij * B(i, k);
         else
-          for(size_type k = 0; k < m(); ++k)
+          for (size_type k = 0; k < m(); ++k)
             this->operator()(k, j) += scaling * ADij * B(k, i);
       }
 }
@@ -892,12 +896,12 @@ FullMatrix<number>::matrix_norm_square(const Vector<number2>& v) const
   const size_type n_rows  = m();
   const number*   val_ptr = &this->values[0];
 
-  for(size_type row = 0; row < n_rows; ++row)
+  for (size_type row = 0; row < n_rows; ++row)
     {
       number2             s              = 0.;
       const number* const val_end_of_row = val_ptr + n_rows;
       const number2*      v_ptr          = v.begin();
-      while(val_ptr != val_end_of_row)
+      while (val_ptr != val_end_of_row)
         s += number2(*val_ptr++) * number2(*v_ptr++);
 
       sum += s * numbers::NumberTraits<number2>::conjugate(v(row));
@@ -922,12 +926,12 @@ FullMatrix<number>::matrix_scalar_product(const Vector<number2>& u,
   const size_type n_cols  = n();
   const number*   val_ptr = &this->values[0];
 
-  for(size_type row = 0; row < n_rows; ++row)
+  for (size_type row = 0; row < n_rows; ++row)
     {
       number2             s              = number2(0.);
       const number* const val_end_of_row = val_ptr + n_cols;
       const number2*      v_ptr          = v.begin();
-      while(val_ptr != val_end_of_row)
+      while (val_ptr != val_end_of_row)
         s += number2(*val_ptr++) * number2(*v_ptr++);
 
       sum += s * u(row);
@@ -943,8 +947,8 @@ FullMatrix<number>::symmetrize()
   Assert(m() == n(), ExcNotQuadratic());
 
   const size_type N = m();
-  for(size_type i = 0; i < N; ++i)
-    for(size_type j = i + 1; j < N; ++j)
+  for (size_type i = 0; i < N; ++i)
+    for (size_type j = i + 1; j < N; ++j)
       {
         const number t = ((*this)(i, j) + (*this)(j, i)) / number(2.);
         (*this)(i, j) = (*this)(j, i) = t;
@@ -960,12 +964,12 @@ FullMatrix<number>::l1_norm() const
   real_type       sum = 0, max = 0;
   const size_type n_rows = m(), n_cols = n();
 
-  for(size_type col = 0; col < n_cols; ++col)
+  for (size_type col = 0; col < n_cols; ++col)
     {
       sum = 0;
-      for(size_type row = 0; row < n_rows; ++row)
+      for (size_type row = 0; row < n_rows; ++row)
         sum += std::abs((*this)(row, col));
-      if(sum > max)
+      if (sum > max)
         max = sum;
     }
   return max;
@@ -980,12 +984,12 @@ FullMatrix<number>::linfty_norm() const
   real_type       sum = 0, max = 0;
   const size_type n_rows = m(), n_cols = n();
 
-  for(size_type row = 0; row < n_rows; ++row)
+  for (size_type row = 0; row < n_rows; ++row)
     {
       sum = 0;
-      for(size_type col = 0; col < n_cols; ++col)
+      for (size_type col = 0; col < n_cols; ++col)
         sum += std::abs((*this)(row, col));
-      if(sum > max)
+      if (sum > max)
         max = sum;
     }
   return max;
@@ -1001,8 +1005,8 @@ FullMatrix<number>::add(const number a, const FullMatrix<number2>& A)
   Assert(m() == A.m(), ExcDimensionMismatch(m(), A.m()));
   Assert(n() == A.n(), ExcDimensionMismatch(n(), A.n()));
 
-  for(size_type i = 0; i < m(); ++i)
-    for(size_type j = 0; j < n(); ++j)
+  for (size_type i = 0; i < m(); ++i)
+    for (size_type j = 0; j < n(); ++j)
       (*this)(i, j) += a * number(A(i, j));
 }
 
@@ -1021,8 +1025,8 @@ FullMatrix<number>::add(const number               a,
   Assert(m() == B.m(), ExcDimensionMismatch(m(), B.m()));
   Assert(n() == B.n(), ExcDimensionMismatch(n(), B.n()));
 
-  for(size_type i = 0; i < m(); ++i)
-    for(size_type j = 0; j < n(); ++j)
+  for (size_type i = 0; i < m(); ++i)
+    for (size_type j = 0; j < n(); ++j)
       (*this)(i, j) += a * number(A(i, j)) + b * number(B(i, j));
 }
 
@@ -1045,8 +1049,8 @@ FullMatrix<number>::add(const number               a,
   Assert(m() == C.m(), ExcDimensionMismatch(m(), C.m()));
   Assert(n() == C.n(), ExcDimensionMismatch(n(), C.n()));
 
-  for(size_type i = 0; i < m(); ++i)
-    for(size_type j = 0; j < n(); ++j)
+  for (size_type i = 0; i < m(); ++i)
+    for (size_type j = 0; j < n(); ++j)
       (*this)(i, j)
         += a * number(A(i, j)) + b * number(B(i, j)) + c * number(C(i, j));
 }
@@ -1070,8 +1074,8 @@ FullMatrix<number>::add(const FullMatrix<number2>& src,
   const size_type rows = std::min(m() - dst_offset_i, src.m() - src_offset_i);
   const size_type cols = std::min(n() - dst_offset_j, src.n() - src_offset_j);
 
-  for(size_type i = 0; i < rows; ++i)
-    for(size_type j = 0; j < cols; ++j)
+  for (size_type i = 0; i < rows; ++i)
+    for (size_type j = 0; j < cols; ++j)
       (*this)(dst_offset_i + i, dst_offset_j + j)
         += factor * number(src(src_offset_i + i, src_offset_j + j));
 }
@@ -1095,8 +1099,8 @@ FullMatrix<number>::Tadd(const FullMatrix<number2>& src,
   const size_type rows = std::min(m() - dst_offset_i, src.n() - src_offset_j);
   const size_type cols = std::min(n() - dst_offset_j, src.m() - src_offset_i);
 
-  for(size_type i = 0; i < rows; ++i)
-    for(size_type j = 0; j < cols; ++j)
+  for (size_type i = 0; i < rows; ++i)
+    for (size_type j = 0; j < cols; ++j)
       (*this)(dst_offset_i + i, dst_offset_j + j)
         += factor * number(src(src_offset_i + j, src_offset_j + i));
 }
@@ -1112,8 +1116,8 @@ FullMatrix<number>::Tadd(const number a, const FullMatrix<number2>& A)
   Assert(m() == A.m(), ExcDimensionMismatch(m(), A.m()));
   Assert(n() == A.n(), ExcDimensionMismatch(n(), A.n()));
 
-  for(size_type i = 0; i < n(); ++i)
-    for(size_type j = 0; j < m(); ++j)
+  for (size_type i = 0; i < n(); ++i)
+    for (size_type j = 0; j < m(); ++j)
       (*this)(i, j) += a * number(A(j, i));
 }
 
@@ -1185,7 +1189,7 @@ FullMatrix<number>::determinant() const
   Assert(this->n_cols() == this->n_rows(),
          ExcDimensionMismatch(this->n_cols(), this->n_rows()));
 
-  switch(this->n_cols())
+  switch (this->n_cols())
     {
       case 1:
         return (*this)(0, 0);
@@ -1213,7 +1217,7 @@ FullMatrix<number>::trace() const
          ExcDimensionMismatch(this->n_cols(), this->n_rows()));
 
   number tr = 0;
-  for(size_type i = 0; i < this->n_rows(); ++i)
+  for (size_type i = 0; i < this->n_rows(); ++i)
     tr += (*this)(i, i);
 
   return tr;
@@ -1226,7 +1230,7 @@ FullMatrix<number>::frobenius_norm() const
   Assert(!this->empty(), ExcEmptyMatrix());
 
   real_type s = 0.;
-  for(size_type i = 0; i < this->n_rows() * this->n_cols(); ++i)
+  for (size_type i = 0; i < this->n_rows() * this->n_cols(); ++i)
     s += numbers::NumberTraits<number>::abs_square(this->values[i]);
   return std::sqrt(s);
 }
@@ -1239,8 +1243,8 @@ FullMatrix<number>::relative_symmetry_norm2() const
 
   real_type s = 0.;
   real_type a = 0.;
-  for(size_type i = 0; i < this->n_rows(); ++i)
-    for(size_type j = 0; j < this->n_cols(); ++j)
+  for (size_type i = 0; i < this->n_rows(); ++i)
+    for (size_type j = 0; j < this->n_cols(); ++j)
       {
         const number x_ij = (*this)(i, j);
         const number x_ji = (*this)(j, i);
@@ -1249,7 +1253,7 @@ FullMatrix<number>::relative_symmetry_norm2() const
         s += numbers::NumberTraits<number>::abs_square(x_ij);
       }
 
-  if(s != 0.)
+  if (s != 0.)
     return std::sqrt(a) / std::sqrt(s);
   return 0;
 }
@@ -1267,7 +1271,7 @@ FullMatrix<number>::invert(const FullMatrix<number2>& M)
   Assert(this->n_rows() == M.n_rows(),
          ExcDimensionMismatch(this->n_rows(), M.n_rows()));
 
-  if(PointerComparison::equal(&M, this))
+  if (PointerComparison::equal(&M, this))
     {
       // avoid overwriting source
       // by destination matrix:
@@ -1275,7 +1279,7 @@ FullMatrix<number>::invert(const FullMatrix<number2>& M)
       invert(M2);
     }
   else
-    switch(this->n_cols())
+    switch (this->n_cols())
       {
         case 1:
           (*this)(0, 0) = number2(1.0) / M(0, 0);
@@ -1456,7 +1460,7 @@ FullMatrix<number>::cholesky(const FullMatrix<number2>& A)
   Assert(A.relative_symmetry_norm2() < 1.0e-10,
          ExcMessage("A must be symmetric."));
 
-  if(PointerComparison::equal(&A, this))
+  if (PointerComparison::equal(&A, this))
     {
       // avoid overwriting source
       // by destination matrix:
@@ -1468,13 +1472,13 @@ FullMatrix<number>::cholesky(const FullMatrix<number2>& A)
       /* reinit *this to 0 */
       this->reinit(A.m(), A.n());
 
-      for(size_type i = 0; i < this->n_cols(); i++)
+      for (size_type i = 0; i < this->n_cols(); i++)
         {
           double SLik2 = 0.0;
-          for(size_type j = 0; j < i; j++)
+          for (size_type j = 0; j < i; j++)
             {
               double SLikLjk = 0.0;
-              for(size_type k = 0; k < j; k++)
+              for (size_type k = 0; k < j; k++)
                 {
                   SLikLjk += (*this)(i, k) * (*this)(j, k);
                 };
@@ -1498,9 +1502,9 @@ FullMatrix<number>::outer_product(const Vector<number2>& V,
          ExcMessage("Vectors V, W must be the same size."));
   this->reinit(V.size(), V.size());
 
-  for(size_type i = 0; i < this->n(); i++)
+  for (size_type i = 0; i < this->n(); i++)
     {
-      for(size_type j = 0; j < this->n(); j++)
+      for (size_type j = 0; j < this->n(); j++)
         {
           (*this)(i, j) = V(i) * W(j);
         }
@@ -1516,7 +1520,7 @@ FullMatrix<number>::left_invert(const FullMatrix<number2>& A)
 
   // If the matrix is square, simply do a
   // standard inversion
-  if(A.m() == A.n())
+  if (A.m() == A.n())
     {
       FullMatrix<number2> left_inv(A.n(), A.m());
       left_inv.invert(A);
@@ -1535,7 +1539,7 @@ FullMatrix<number>::left_invert(const FullMatrix<number2>& A)
 
   A_t.Tadd(A, 1);
   A_t.mmult(A_t_times_A, A);
-  if(number(A_t_times_A.determinant()) == number(0))
+  if (number(A_t_times_A.determinant()) == number(0))
     Assert(false, ExcSingular()) else
     {
       A_t_times_A_inv.invert(A_t_times_A);
@@ -1554,7 +1558,7 @@ FullMatrix<number>::right_invert(const FullMatrix<number2>& A)
 
   // If the matrix is square, simply do a
   // standard inversion
-  if(A.m() == A.n())
+  if (A.m() == A.n())
     {
       FullMatrix<number2> right_inv(A.n(), A.m());
       right_inv.invert(A);
@@ -1573,7 +1577,7 @@ FullMatrix<number>::right_invert(const FullMatrix<number2>& A)
 
   A_t.Tadd(A, 1);
   A.mmult(A_times_A_t, A_t);
-  if(number(A_times_A_t.determinant()) == number(0))
+  if (number(A_times_A_t.determinant()) == number(0))
     Assert(false, ExcSingular()) else
     {
       A_times_A_t_inv.invert(A_times_A_t);
@@ -1602,8 +1606,8 @@ FullMatrix<number>::copy_from(const Tensor<2, dim>& T,
   AssertIndexRange(src_r_i, src_r_j + 1);
   AssertIndexRange(src_c_i, src_c_j + 1);
 
-  for(size_type i = 0; i < src_r_j - src_r_i + 1; i++)
-    for(size_type j = 0; j < src_c_j - src_c_i + 1; j++)
+  for (size_type i = 0; i < src_r_j - src_r_i + 1; i++)
+    for (size_type j = 0; j < src_c_j - src_c_i + 1; j++)
       {
         const unsigned int src_r_index = static_cast<unsigned int>(i + src_r_i);
         const unsigned int src_c_index = static_cast<unsigned int>(j + src_c_i);
@@ -1629,8 +1633,8 @@ void FullMatrix<number>::copy_to(Tensor<2, dim>&    T,
   AssertIndexRange(src_r_i, src_r_j + 1);
   AssertIndexRange(src_c_j, src_c_j + 1);
 
-  for(size_type i = 0; i < src_r_j - src_r_i + 1; i++)
-    for(size_type j = 0; j < src_c_j - src_c_i + 1; j++)
+  for (size_type i = 0; i < src_r_j - src_r_i + 1; i++)
+    for (size_type j = 0; j < src_c_j - src_c_i + 1; j++)
       {
         const unsigned int dst_r_index = static_cast<unsigned int>(i + dst_r);
         const unsigned int dst_c_index = static_cast<unsigned int>(j + dst_c);
@@ -1653,7 +1657,7 @@ FullMatrix<number>::precondition_Jacobi(Vector<somenumber>&       dst,
   somenumber*       dst_ptr = dst.begin();
   const somenumber* src_ptr = src.begin();
 
-  for(size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr)
+  for (size_type i = 0; i < n; ++i, ++dst_ptr, ++src_ptr)
     *dst_ptr = somenumber(om) * *src_ptr / somenumber((*this)(i, i));
 }
 
@@ -1677,27 +1681,27 @@ FullMatrix<number>::print_formatted(std::ostream&      out,
   std::ios::fmtflags old_flags     = out.flags();
   std::streamsize    old_precision = out.precision(precision);
 
-  if(scientific)
+  if (scientific)
     {
       out.setf(std::ios::scientific, std::ios::floatfield);
-      if(!width)
+      if (!width)
         width = precision + 7;
     }
   else
     {
       out.setf(std::ios::fixed, std::ios::floatfield);
-      if(!width)
+      if (!width)
         width = precision + 2;
     }
 
-  for(size_type i = 0; i < m(); ++i)
+  for (size_type i = 0; i < m(); ++i)
     {
-      for(size_type j = 0; j < n(); ++j)
+      for (size_type j = 0; j < n(); ++j)
         // we might have complex numbers, so use abs also to check for nan
         // since there is no isnan on complex numbers
-        if(std::isnan(std::abs((*this)(i, j))))
+        if (std::isnan(std::abs((*this)(i, j))))
           out << std::setw(width) << (*this)(i, j) << ' ';
-        else if(std::abs((*this)(i, j)) > threshold)
+        else if (std::abs((*this)(i, j)) > threshold)
           out << std::setw(width) << (*this)(i, j) * number(denominator) << ' ';
         else
           out << std::setw(width) << zero_string << ' ';
@@ -1723,9 +1727,9 @@ FullMatrix<number>::gauss_jordan()
   // efficient to use Lapack for very small
   // matrices):
 #ifdef DEAL_II_WITH_LAPACK
-  if(std::is_same<number, double>::value || std::is_same<number, float>::value)
-    if(this->n_cols() > 15
-       && this->n_cols() <= std::numeric_limits<types::blas_int>::max())
+  if (std::is_same<number, double>::value || std::is_same<number, float>::value)
+    if (this->n_cols() > 15
+        && this->n_cols() <= std::numeric_limits<types::blas_int>::max())
       {
         // In case we have the LAPACK functions
         // getrf and getri detected by CMake,
@@ -1790,7 +1794,7 @@ FullMatrix<number>::gauss_jordan()
   // fear that the matrix is not
   // regular
   double diagonal_sum = 0;
-  for(size_type i = 0; i < N; ++i)
+  for (size_type i = 0; i < N; ++i)
     diagonal_sum += std::abs((*this)(i, i));
   const double typical_diagonal_element = diagonal_sum / N;
   (void) typical_diagonal_element;
@@ -1799,10 +1803,10 @@ FullMatrix<number>::gauss_jordan()
   // the permutations that we find
   // during pivot search
   std::vector<size_type> p(N);
-  for(size_type i = 0; i < N; ++i)
+  for (size_type i = 0; i < N; ++i)
     p[i] = i;
 
-  for(size_type j = 0; j < N; ++j)
+  for (size_type j = 0; j < N; ++j)
     {
       // pivot search: search that
       // part of the line on and
@@ -1810,9 +1814,9 @@ FullMatrix<number>::gauss_jordan()
       // the largest element
       real_type max = std::abs((*this)(j, j));
       size_type r   = j;
-      for(size_type i = j + 1; i < N; ++i)
+      for (size_type i = j + 1; i < N; ++i)
         {
-          if(std::abs((*this)(i, j)) > max)
+          if (std::abs((*this)(i, j)) > max)
             {
               max = std::abs((*this)(i, j));
               r   = i;
@@ -1823,9 +1827,9 @@ FullMatrix<number>::gauss_jordan()
       Assert(max > 1.e-16 * typical_diagonal_element, ExcNotRegular(max));
 
       // row interchange
-      if(r > j)
+      if (r > j)
         {
-          for(size_type k = 0; k < N; ++k)
+          for (size_type k = 0; k < N; ++k)
             std::swap((*this)(j, k), (*this)(r, k));
 
           std::swap(p[j], p[r]);
@@ -1834,18 +1838,18 @@ FullMatrix<number>::gauss_jordan()
       // transformation
       const number hr = number(1.) / (*this)(j, j);
       (*this)(j, j)   = hr;
-      for(size_type k = 0; k < N; ++k)
+      for (size_type k = 0; k < N; ++k)
         {
-          if(k == j)
+          if (k == j)
             continue;
-          for(size_type i = 0; i < N; ++i)
+          for (size_type i = 0; i < N; ++i)
             {
-              if(i == j)
+              if (i == j)
                 continue;
               (*this)(i, k) -= (*this)(i, j) * (*this)(j, k) * hr;
             }
         }
-      for(size_type i = 0; i < N; ++i)
+      for (size_type i = 0; i < N; ++i)
         {
           (*this)(i, j) *= hr;
           (*this)(j, i) *= -hr;
@@ -1854,11 +1858,11 @@ FullMatrix<number>::gauss_jordan()
     }
   // column interchange
   std::vector<number> hv(N);
-  for(size_type i = 0; i < N; ++i)
+  for (size_type i = 0; i < N; ++i)
     {
-      for(size_type k = 0; k < N; ++k)
+      for (size_type k = 0; k < N; ++k)
         hv[p[k]] = (*this)(i, k);
-      for(size_type k = 0; k < N; ++k)
+      for (size_type k = 0; k < N; ++k)
         (*this)(i, k) = hv[k];
     }
 }

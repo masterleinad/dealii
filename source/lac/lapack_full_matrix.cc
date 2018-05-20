@@ -70,8 +70,8 @@ LAPACKFullMatrix<number>::grow_or_shrink(const size_type n)
   const size_type        s = std::min(std::min(this->m(), n), this->n());
   TransposeTable<number> copy(std::move(*this));
   this->TransposeTable<number>::reinit(n, n);
-  for(size_type i = 0; i < s; ++i)
-    for(size_type j = 0; j < s; ++j)
+  for (size_type i = 0; i < s; ++i)
+    for (size_type j = 0; j < s; ++j)
       (*this)(i, j) = copy(i, j);
 }
 
@@ -89,10 +89,10 @@ LAPACKFullMatrix<number>::remove_row_and_column(const size_type row,
   TransposeTable<number> copy(std::move(*this));
   this->TransposeTable<number>::reinit(nrows, ncols);
 
-  for(size_type j = 0; j < ncols; ++j)
+  for (size_type j = 0; j < ncols; ++j)
     {
       const size_type jj = (j < col ? j : j + 1);
-      for(size_type i = 0; i < nrows; ++i)
+      for (size_type i = 0; i < nrows; ++i)
         {
           const size_type ii = (i < row ? i : i + 1);
           (*this)(i, j)      = copy(ii, jj);
@@ -115,8 +115,8 @@ LAPACKFullMatrix<number>::operator=(const FullMatrix<number2>& M)
 {
   Assert(this->m() == M.m(), ExcDimensionMismatch(this->m(), M.m()));
   Assert(this->n() == M.n(), ExcDimensionMismatch(this->n(), M.n()));
-  for(size_type i = 0; i < this->m(); ++i)
-    for(size_type j = 0; j < this->n(); ++j)
+  for (size_type i = 0; i < this->m(); ++i)
+    for (size_type j = 0; j < this->n(); ++j)
       (*this)(i, j) = M(i, j);
 
   state    = LAPACKSupport::matrix;
@@ -131,8 +131,8 @@ LAPACKFullMatrix<number>::operator=(const SparseMatrix<number2>& M)
 {
   Assert(this->m() == M.n(), ExcDimensionMismatch(this->m(), M.n()));
   Assert(this->n() == M.m(), ExcDimensionMismatch(this->n(), M.m()));
-  for(size_type i = 0; i < this->m(); ++i)
-    for(size_type j = 0; j < this->n(); ++j)
+  for (size_type i = 0; i < this->m(); ++i)
+    for (size_type j = 0; j < this->n(); ++j)
       (*this)(i, j) = M.el(i, j);
 
   state    = LAPACKSupport::matrix;
@@ -147,7 +147,7 @@ LAPACKFullMatrix<number>::operator=(const number d)
   (void) d;
   Assert(d == number(0), ExcScalarAssignmentOnlyForZeroValue());
 
-  if(this->n_elements() != 0)
+  if (this->n_elements() != 0)
     this->reset_values();
 
   state = LAPACKSupport::matrix;
@@ -249,7 +249,7 @@ namespace
     // Note that potrf() is called with LAPACKSupport::L , so the
     // factorization is stored in lower triangular part.
     // Also see discussion here http://icl.cs.utk.edu/lapack-forum/viewtopic.php?f=2&t=2646
-    if(a > 0.)
+    if (a > 0.)
       {
         // simple update via a sequence of Givens rotations.
         // Observe that
@@ -262,13 +262,13 @@ namespace
         // rotations to make the matrix lower-triangular
         // Also see LINPACK's dchud http://www.netlib.org/linpack/dchud.f
         z *= std::sqrt(a);
-        for(typename LAPACKFullMatrix<number>::size_type k = 0; k < N; ++k)
+        for (typename LAPACKFullMatrix<number>::size_type k = 0; k < N; ++k)
           {
             const std::array<number, 3> csr
               = Utilities::LinearAlgebra::givens_rotation(A(k, k), z(k));
             A(k, k) = csr[2];
-            for(typename LAPACKFullMatrix<number>::size_type i = k + 1; i < N;
-                ++i)
+            for (typename LAPACKFullMatrix<number>::size_type i = k + 1; i < N;
+                 ++i)
               {
                 const number t = A(i, k);
                 A(i, k)        = csr[0] * A(i, k) + csr[1] * z(i);
@@ -304,13 +304,13 @@ namespace
         // https://infoscience.epfl.ch/record/161468/files/cholupdate.pdf and
         // "Analysis of a recursive Least Squares Hyperbolic Rotation Algorithm for Signal Processing", Alexander, Pan, Plemmons, 1988.
         z *= std::sqrt(-a);
-        for(typename LAPACKFullMatrix<number>::size_type k = 0; k < N; ++k)
+        for (typename LAPACKFullMatrix<number>::size_type k = 0; k < N; ++k)
           {
             const std::array<number, 3> csr
               = Utilities::LinearAlgebra::hyperbolic_rotation(A(k, k), z(k));
             A(k, k) = csr[2];
-            for(typename LAPACKFullMatrix<number>::size_type i = k + 1; i < N;
-                ++i)
+            for (typename LAPACKFullMatrix<number>::size_type i = k + 1; i < N;
+                 ++i)
               {
                 const number t = A(i, k);
                 A(i, k)        = csr[0] * A(i, k) - csr[1] * z(i);
@@ -341,7 +341,7 @@ LAPACKFullMatrix<number>::rank1_update(const number a, const Vector<number>& v)
 
   AssertIsFinite(a);
 
-  if(state == LAPACKSupport::matrix)
+  if (state == LAPACKSupport::matrix)
     {
       {
         const types::blas_int N    = this->m();
@@ -356,11 +356,11 @@ LAPACKFullMatrix<number>::rank1_update(const number a, const Vector<number>& v)
       // FIXME: we should really only update upper or lower triangular parts
       // of symmetric matrices and make sure the interface is consistent,
       // for example operator(i,j) gives correct results regardless of storage.
-      for(size_type i = 0; i < N; ++i)
-        for(size_type j = 0; j < i; ++j)
+      for (size_type i = 0; i < N; ++i)
+        for (size_type j = 0; j < i; ++j)
           (*this)(i, j) = (*this)(j, i);
     }
-  else if(state == LAPACKSupport::cholesky)
+  else if (state == LAPACKSupport::cholesky)
     {
       cholesky_rank1(*this, a, v);
     }
@@ -381,8 +381,8 @@ LAPACKFullMatrix<number>::vmult(Vector<number>&       w,
   const number          null  = 0.;
 
   // use trmv for triangular matrices
-  if((property == upper_triangular || property == lower_triangular)
-     && (mm == nn) && state == matrix)
+  if ((property == upper_triangular || property == lower_triangular)
+      && (mm == nn) && state == matrix)
     {
       Assert(adding == false, ExcNotImplemented());
 
@@ -405,7 +405,7 @@ LAPACKFullMatrix<number>::vmult(Vector<number>&       w,
       return;
     }
 
-  switch(state)
+  switch (state)
     {
       case matrix:
       case inverse_matrix:
@@ -445,7 +445,7 @@ LAPACKFullMatrix<number>::vmult(Vector<number>&       w,
                work.data(),
                &one);
           // Multiply by singular values
-          for(size_type i = 0; i < wr.size(); ++i)
+          for (size_type i = 0; i < wr.size(); ++i)
             work[i] *= wr[i];
           // Multiply with U
           gemv("N",
@@ -480,7 +480,7 @@ LAPACKFullMatrix<number>::vmult(Vector<number>&       w,
                work.data(),
                &one);
           // Multiply by singular values
-          for(size_type i = 0; i < wr.size(); ++i)
+          for (size_type i = 0; i < wr.size(); ++i)
             work[i] *= wr[i];
           // Multiply with V
           gemv("T",
@@ -514,8 +514,8 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
   const number          null  = 0.;
 
   // use trmv for triangular matrices
-  if((property == upper_triangular || property == lower_triangular)
-     && (mm == nn) && state == matrix)
+  if ((property == upper_triangular || property == lower_triangular)
+      && (mm == nn) && state == matrix)
     {
       Assert(adding == false, ExcNotImplemented());
 
@@ -538,7 +538,7 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
       return;
     }
 
-  switch(state)
+  switch (state)
     {
       case matrix:
       case inverse_matrix:
@@ -579,7 +579,7 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
                work.data(),
                &one);
           // Multiply by singular values
-          for(size_type i = 0; i < wr.size(); ++i)
+          for (size_type i = 0; i < wr.size(); ++i)
             work[i] *= wr[i];
           // Multiply with V
           gemv("T",
@@ -615,7 +615,7 @@ LAPACKFullMatrix<number>::Tvmult(Vector<number>&       w,
                work.data(),
                &one);
           // Multiply by singular values
-          for(size_type i = 0; i < wr.size(); ++i)
+          for (size_type i = 0; i < wr.size(); ++i)
             work[i] *= wr[i];
           // Multiply with U
           gemv("N",
@@ -752,8 +752,8 @@ LAPACKFullMatrix<number>::Tmmult(LAPACKFullMatrix<number>&       C,
   // following http://icl.cs.utk.edu/lapack-forum/viewtopic.php?f=2&t=768#p2577
   // do left-multiplication manually. Note that Xscal would require to first
   // copy the input vector as multiplication is done inplace.
-  for(types::blas_int j = 0; j < nn; ++j)
-    for(types::blas_int i = 0; i < kk; ++i)
+  for (types::blas_int j = 0; j < nn; ++j)
+    for (types::blas_int i = 0; i < kk; ++i)
       {
         Assert(j * kk + i < static_cast<types::blas_int>(work.size()),
                ExcInternalError());
@@ -789,8 +789,8 @@ LAPACKFullMatrix<number>::scale_rows(const Vector<number>& V)
 
   const types::blas_int nn = A.n();
   const types::blas_int kk = A.m();
-  for(types::blas_int j = 0; j < nn; ++j)
-    for(types::blas_int i = 0; i < kk; ++i)
+  for (types::blas_int j = 0; j < nn; ++j)
+    for (types::blas_int i = 0; i < kk; ++i)
       A(i, j) *= V(i);
 }
 
@@ -812,7 +812,7 @@ LAPACKFullMatrix<number>::Tmmult(LAPACKFullMatrix<number>&       C,
   const number          alpha = 1.;
   const number          beta  = (adding ? 1. : 0.);
 
-  if(PointerComparison::equal(this, &B))
+  if (PointerComparison::equal(this, &B))
     {
       syrk(&LAPACKSupport::U,
            "T",
@@ -826,8 +826,8 @@ LAPACKFullMatrix<number>::Tmmult(LAPACKFullMatrix<number>&       C,
            &nn);
 
       // fill-in lower triangular part
-      for(types::blas_int j = 0; j < nn; ++j)
-        for(types::blas_int i = 0; i < j; ++i)
+      for (types::blas_int j = 0; j < nn; ++j)
+        for (types::blas_int i = 0; i < j; ++i)
           C(j, i) = C(i, j);
 
       C.property = symmetric;
@@ -902,7 +902,7 @@ LAPACKFullMatrix<number>::mTmult(LAPACKFullMatrix<number>&       C,
   const number          alpha = 1.;
   const number          beta  = (adding ? 1. : 0.);
 
-  if(PointerComparison::equal(this, &B))
+  if (PointerComparison::equal(this, &B))
     {
       syrk(&LAPACKSupport::U,
            "N",
@@ -916,8 +916,8 @@ LAPACKFullMatrix<number>::mTmult(LAPACKFullMatrix<number>&       C,
            &nn);
 
       // fill-in lower triangular part
-      for(types::blas_int j = 0; j < nn; ++j)
-        for(types::blas_int i = 0; i < j; ++i)
+      for (types::blas_int j = 0; j < nn; ++j)
+        for (types::blas_int i = 0; i < j; ++i)
           C(j, i) = C(i, j);
 
       C.property = symmetric;
@@ -1107,7 +1107,7 @@ LAPACKFullMatrix<number>::norm(const char type) const
   const types::blas_int N      = this->n();
   const types::blas_int M      = this->m();
   const number* const   values = &this->values[0];
-  if(property == symmetric)
+  if (property == symmetric)
     {
       const types::blas_int lda = std::max<types::blas_int>(1, N);
       const types::blas_int lwork
@@ -1135,7 +1135,7 @@ LAPACKFullMatrix<number>::trace() const
   Assert(this->n() == this->m(), ExcDimensionMismatch(this->n(), this->m()));
 
   number tr = 0;
-  for(size_type i = 0; i < this->m(); ++i)
+  for (size_type i = 0; i < this->m(); ++i)
     tr += (*this)(i, i);
 
   return tr;
@@ -1303,15 +1303,15 @@ template <typename number>
 void
 LAPACKFullMatrix<number>::compute_inverse_svd(const double threshold)
 {
-  if(state == LAPACKSupport::matrix)
+  if (state == LAPACKSupport::matrix)
     compute_svd();
 
   Assert(state == LAPACKSupport::svd, ExcState(state));
 
   const double lim = std::abs(wr[0]) * threshold;
-  for(size_type i = 0; i < wr.size(); ++i)
+  for (size_type i = 0; i < wr.size(); ++i)
     {
-      if(std::abs(wr[i]) > lim)
+      if (std::abs(wr[i]) > lim)
         wr[i] = number(1.) / wr[i];
       else
         wr[i] = 0.;
@@ -1324,15 +1324,15 @@ void
 LAPACKFullMatrix<number>::compute_inverse_svd_with_kernel(
   const unsigned int kernel_size)
 {
-  if(state == LAPACKSupport::matrix)
+  if (state == LAPACKSupport::matrix)
     compute_svd();
 
   Assert(state == LAPACKSupport::svd, ExcState(state));
 
   const unsigned int n_wr = wr.size();
-  for(size_type i = 0; i < n_wr - kernel_size; ++i)
+  for (size_type i = 0; i < n_wr - kernel_size; ++i)
     wr[i] = number(1.) / wr[i];
-  for(size_type i = n_wr - kernel_size; i < n_wr; ++i)
+  for (size_type i = n_wr - kernel_size; i < n_wr; ++i)
     wr[i] = 0.;
   state = LAPACKSupport::inverse_svd;
 }
@@ -1349,9 +1349,9 @@ LAPACKFullMatrix<number>::invert()
   number* const   values = &this->values[0];
   types::blas_int info   = 0;
 
-  if(property != symmetric)
+  if (property != symmetric)
     {
-      if(state == matrix)
+      if (state == matrix)
         compute_lu_factorization();
 
       ipiv.resize(mm);
@@ -1360,14 +1360,14 @@ LAPACKFullMatrix<number>::invert()
     }
   else
     {
-      if(state == matrix)
+      if (state == matrix)
         compute_cholesky_factorization();
 
       const types::blas_int lda = std::max<types::blas_int>(1, nn);
       potri(&LAPACKSupport::L, &nn, values, &lda, &info);
       // inverse is stored in lower diagonal, set the upper diagonal appropriately:
-      for(types::blas_int i = 0; i < nn; ++i)
-        for(types::blas_int j = i + 1; j < nn; ++j)
+      for (types::blas_int i = 0; i < nn; ++i)
+        for (types::blas_int j = i + 1; j < nn; ++j)
           this->el(i, j) = this->el(j, i);
     }
 
@@ -1389,16 +1389,16 @@ LAPACKFullMatrix<number>::solve(Vector<number>& v, const bool transposed) const
   const types::blas_int n_rhs  = 1;
   types::blas_int       info   = 0;
 
-  if(state == lu)
+  if (state == lu)
     {
       getrs(
         trans, &nn, &n_rhs, values, &nn, ipiv.data(), v.begin(), &nn, &info);
     }
-  else if(state == cholesky)
+  else if (state == cholesky)
     {
       potrs(&LAPACKSupport::L, &nn, &n_rhs, values, &nn, v.begin(), &nn, &info);
     }
-  else if(property == upper_triangular || property == lower_triangular)
+  else if (property == upper_triangular || property == lower_triangular)
     {
       const char uplo
         = (property == upper_triangular ? LAPACKSupport::U : LAPACKSupport::L);
@@ -1433,17 +1433,17 @@ LAPACKFullMatrix<number>::solve(LAPACKFullMatrix<number>& B,
   const types::blas_int n_rhs  = B.n();
   types::blas_int       info   = 0;
 
-  if(state == lu)
+  if (state == lu)
     {
       getrs(
         trans, &nn, &n_rhs, values, &nn, ipiv.data(), &B.values[0], &nn, &info);
     }
-  else if(state == cholesky)
+  else if (state == cholesky)
     {
       potrs(
         &LAPACKSupport::L, &nn, &n_rhs, values, &nn, &B.values[0], &nn, &info);
     }
-  else if(property == upper_triangular || property == lower_triangular)
+  else if (property == upper_triangular || property == lower_triangular)
     {
       const char uplo
         = (property == upper_triangular ? LAPACKSupport::U : LAPACKSupport::L);
@@ -1511,7 +1511,7 @@ LAPACKFullMatrix<number>::determinant() const
   Assert(state == lu, ExcState(state));
   Assert(ipiv.size() == this->m(), ExcInternalError());
   number det = 1.0;
-  for(size_type i = 0; i < this->m(); ++i)
+  for (size_type i = 0; i < this->m(); ++i)
     det
       *= (ipiv[i] == types::blas_int(i + 1) ? this->el(i, i) : -this->el(i, i));
   return det;
@@ -1525,9 +1525,9 @@ LAPACKFullMatrix<number>::compute_eigenvalues(const bool right, const bool left)
   const types::blas_int nn = this->n();
   wr.resize(nn);
   wi.resize(nn);
-  if(right)
+  if (right)
     vr.resize(nn * nn);
-  if(left)
+  if (left)
     vl.resize(nn * nn);
 
   number* const values = &this->values[0];
@@ -1592,7 +1592,7 @@ LAPACKFullMatrix<number>::compute_eigenvalues(const bool right, const bool left)
 
   Assert(info >= 0, ExcInternalError());
   //TODO:[GK] What if the QR method fails?
-  if(info != 0)
+  if (info != 0)
     std::cerr << "LAPACK error in geev" << std::endl;
 
   state = LAPACKSupport::State(LAPACKSupport::eigenvalues | unusable);
@@ -1688,17 +1688,17 @@ LAPACKFullMatrix<number>::compute_eigenvalues_symmetric(
 
   // Negative return value implies a wrong argument. This should be internal.
   Assert(info >= 0, ExcInternalError());
-  if(info != 0)
+  if (info != 0)
     std::cerr << "LAPACK error in syevx" << std::endl;
 
   eigenvalues.reinit(n_eigenpairs);
   eigenvectors.reinit(nn, n_eigenpairs, true);
 
-  for(size_type i = 0; i < static_cast<size_type>(n_eigenpairs); ++i)
+  for (size_type i = 0; i < static_cast<size_type>(n_eigenpairs); ++i)
     {
       eigenvalues(i) = wr[i];
       size_type col_begin(i * nn);
-      for(size_type j = 0; j < static_cast<size_type>(nn); ++j)
+      for (size_type j = 0; j < static_cast<size_type>(nn); ++j)
         {
           eigenvectors(j, i) = values_eigenvectors[col_begin + j];
         }
@@ -1810,18 +1810,18 @@ LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
 
   // Negative return value implies a wrong argument. This should be internal.
   Assert(info >= 0, ExcInternalError());
-  if(info != 0)
+  if (info != 0)
     std::cerr << "LAPACK error in sygvx" << std::endl;
 
   eigenvalues.reinit(n_eigenpairs);
   eigenvectors.resize(n_eigenpairs);
 
-  for(size_type i = 0; i < static_cast<size_type>(n_eigenpairs); ++i)
+  for (size_type i = 0; i < static_cast<size_type>(n_eigenpairs); ++i)
     {
       eigenvalues(i) = wr[i];
       size_type col_begin(i * nn);
       eigenvectors[i].reinit(nn, true);
-      for(size_type j = 0; j < static_cast<size_type>(nn); ++j)
+      for (size_type j = 0; j < static_cast<size_type>(nn); ++j)
         {
           eigenvectors[i](j) = values_eigenvectors[col_begin + j];
         }
@@ -1906,14 +1906,14 @@ LAPACKFullMatrix<number>::compute_generalized_eigenvalues_symmetric(
   // Negative return value implies a wrong argument. This should be internal.
 
   Assert(info >= 0, ExcInternalError());
-  if(info != 0)
+  if (info != 0)
     std::cerr << "LAPACK error in sygv" << std::endl;
 
-  for(size_type i = 0; i < eigenvectors.size(); ++i)
+  for (size_type i = 0; i < eigenvectors.size(); ++i)
     {
       size_type col_begin(i * nn);
       eigenvectors[i].reinit(nn, true);
-      for(size_type j = 0; j < static_cast<size_type>(nn); ++j)
+      for (size_type j = 0; j < static_cast<size_type>(nn); ++j)
         {
           eigenvectors[i](j) = values_A[col_begin + j];
         }
@@ -1944,29 +1944,29 @@ LAPACKFullMatrix<number>::print_formatted(std::ostream&      out,
   std::ios::fmtflags old_flags     = out.flags();
   std::streamsize    old_precision = out.precision(precision);
 
-  if(scientific)
+  if (scientific)
     {
       out.setf(std::ios::scientific, std::ios::floatfield);
-      if(!width)
+      if (!width)
         width = precision + 7;
     }
   else
     {
       out.setf(std::ios::fixed, std::ios::floatfield);
-      if(!width)
+      if (!width)
         width = precision + 2;
     }
 
-  for(size_type i = 0; i < this->m(); ++i)
+  for (size_type i = 0; i < this->m(); ++i)
     {
       // Cholesky is stored in lower triangular, so just output this part:
       const size_type nc = state == LAPACKSupport::cholesky ? i + 1 : this->n();
-      for(size_type j = 0; j < nc; ++j)
+      for (size_type j = 0; j < nc; ++j)
         // we might have complex numbers, so use abs also to check for nan
         // since there is no isnan on complex numbers
-        if(std::isnan(std::abs((*this)(i, j))))
+        if (std::isnan(std::abs((*this)(i, j))))
           out << std::setw(width) << (*this)(i, j) << ' ';
-        else if(std::abs(this->el(i, j)) > threshold)
+        else if (std::abs(this->el(i, j)) > threshold)
           out << std::setw(width) << this->el(i, j) * denominator << ' ';
         else
           out << std::setw(width) << zero_string << ' ';

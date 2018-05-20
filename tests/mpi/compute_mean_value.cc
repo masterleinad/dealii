@@ -70,7 +70,7 @@ test()
   const double mean
     = VectorTools::compute_mean_value(dofh, QGauss<dim>(2), x_rel, 0);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "mean=" << mean << std::endl;
 
   Assert(std::fabs(mean - 2) < 1e-3, ExcInternalError());
@@ -85,7 +85,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

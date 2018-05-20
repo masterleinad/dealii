@@ -36,10 +36,10 @@ test()
     Triangulation<dim>::limit_level_difference_at_vertices,
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   GridGenerator::hyper_cube(tria, 0, 1);
-  for(unsigned int face = 2; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (unsigned int face = 2; face < GeometryInfo<dim>::faces_per_cell; ++face)
     tria.begin()->face(face)->set_all_boundary_ids(face);
 
-  for(unsigned int d = 1; d < dim; ++d)
+  for (unsigned int d = 1; d < dim; ++d)
     {
       std::vector<
         GridTools::PeriodicFacePair<typename Triangulation<dim>::cell_iterator>>
@@ -57,19 +57,19 @@ test()
   dof_handler.distribute_mg_dofs(fe);
 
   std::vector<types::global_dof_index> dof_indices(fe.dofs_per_cell);
-  for(unsigned int level = 0; level < tria.n_global_levels(); ++level)
+  for (unsigned int level = 0; level < tria.n_global_levels(); ++level)
     {
       deallog << "Level " << level << std::endl;
-      for(typename DoFHandler<dim>::cell_iterator cell
-          = dof_handler.begin(level);
-          cell != dof_handler.end(level);
-          ++cell)
-        if(cell->level_subdomain_id() != numbers::artificial_subdomain_id)
+      for (typename DoFHandler<dim>::cell_iterator cell
+           = dof_handler.begin(level);
+           cell != dof_handler.end(level);
+           ++cell)
+        if (cell->level_subdomain_id() != numbers::artificial_subdomain_id)
           {
             deallog << "Cell with center: " << cell->center() << ", owned by "
                     << cell->level_subdomain_id() << ": ";
             cell->get_mg_dof_indices(dof_indices);
-            for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
               deallog << dof_indices[i] << " ";
             deallog << std::endl;
           }
@@ -90,7 +90,7 @@ main(int argc, char* argv[])
     {
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -103,7 +103,7 @@ main(int argc, char* argv[])
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -41,7 +41,7 @@ test()
   // particular we take the quadrant
   // (octant)
   active_cell_iterator cell = tria.begin_active(), endc = tria.end();
-  for(unsigned int i = 0; cell != endc; ++cell)
+  for (unsigned int i = 0; cell != endc; ++cell)
     {
       unsigned int subdomain = i % 3;
 
@@ -51,15 +51,15 @@ test()
 
   // Count the cells that are on the boundary and have a subdomain_id of 0
   std::set<active_cell_iterator> cell_set;
-  for(cell = tria.begin_active(); cell != endc; ++cell)
-    if((cell->subdomain_id() == 0) && (cell->at_boundary()))
+  for (cell = tria.begin_active(); cell != endc; ++cell)
+    if ((cell->subdomain_id() == 0) && (cell->at_boundary()))
       cell_set.insert(cell);
 
   unsigned int n_filtered_cells = 0;
-  for(auto filtered_cell :
-      filter_iterators(tria.active_cell_iterators(),
-                       IteratorFilters::AtBoundary(),
-                       IteratorFilters::SubdomainEqualTo(0)))
+  for (auto filtered_cell :
+       filter_iterators(tria.active_cell_iterators(),
+                        IteratorFilters::AtBoundary(),
+                        IteratorFilters::SubdomainEqualTo(0)))
     {
       AssertThrow(cell_set.count(filtered_cell) == 1,
                   ExcMessage("Wrong cell filtered."));

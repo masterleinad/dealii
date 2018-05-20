@@ -26,7 +26,7 @@ test(int i)
 {
   deallog << "Task " << i << " starting..." << std::endl;
   sleep(1);
-  if(i < 10)
+  if (i < 10)
     {
       Threads::new_task(test, 10 + i).join();
     }

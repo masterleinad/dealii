@@ -43,7 +43,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -64,11 +64,11 @@ test()
   data_out.add_data_vector(x, "x");
   data_out.build_patches();
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int i = 0;
-          i < dofh.n_locally_owned_dofs_per_processor().size();
-          ++i)
+      for (unsigned int i = 0;
+           i < dofh.n_locally_owned_dofs_per_processor().size();
+           ++i)
         deallog << dofh.n_locally_owned_dofs_per_processor()[i] << std::endl;
       data_out.write_vtu(deallog.get_file_stream());
     }
@@ -83,7 +83,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

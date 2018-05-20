@@ -25,7 +25,7 @@ void
 fill(Vector<Number>& v)
 {
   v = 0;
-  for(unsigned int i = 0; i < v.size(); i++)
+  for (unsigned int i = 0; i < v.size(); i++)
     v(i) = counter + i * 2;
 
   ++counter;
@@ -36,10 +36,10 @@ void
 test(const std::vector<unsigned int>& size_sequence)
 {
   Vector<Number> v, v_old;
-  for(unsigned int j = 0; j < size_sequence.size(); ++j)
+  for (unsigned int j = 0; j < size_sequence.size(); ++j)
     {
       const unsigned int s = size_sequence[j];
-      if(v.size() == 0)
+      if (v.size() == 0)
         {
           v.reinit(s);
         }
@@ -47,14 +47,14 @@ test(const std::vector<unsigned int>& size_sequence)
         {
           const unsigned int check_s = (s > v.size() ? v.size() : s);
           v.grow_or_shrink(s);
-          for(unsigned int i = 0; i < check_s; ++i)
+          for (unsigned int i = 0; i < check_s; ++i)
             AssertThrow(v(i) == v_old(i),
                         ExcMessage("s=" + std::to_string(s)
                                    + " i=" + std::to_string(i) + " "
                                    + std::to_string(v(i))
                                    + "!=" + std::to_string(v_old(i))));
 
-          for(unsigned int i = check_s; i < s; ++i)
+          for (unsigned int i = check_s; i < s; ++i)
             AssertThrow(v(i) == 0.,
                         ExcMessage("s=" + std::to_string(s)
                                    + " i=" + std::to_string(i) + " "

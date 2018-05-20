@@ -54,7 +54,7 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(1);
 
-  if(fe_degree > 0)
+  if (fe_degree > 0)
     {
       FE_Q<dim>       fe(fe_degree);
       DoFHandler<dim> dof(tria);

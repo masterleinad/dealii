@@ -20,7 +20,7 @@
 #  include <unistd.h>
 #endif
 
-#if(defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
+#if (defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
 #  include <sys/sysctl.h>
 #  include <sys/types.h>
 #endif
@@ -52,7 +52,7 @@ MultithreadInfo::get_n_cpus()
   return sysconf(_SC_NPROCESSORS_ONLN);
 }
 
-#  elif(defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
+#  elif (defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
 // This is only tested on a dual G5 2.5GHz running MacOSX 10.3.6
 // and on an Intel Mac Book Pro.
 // If it doesn't work please contact the mailinglist.
@@ -117,14 +117,14 @@ MultithreadInfo::set_thread_limit(const unsigned int max_threads)
   // then also see if something was given in the environment
   {
     const char* penv = getenv("DEAL_II_NUM_THREADS");
-    if(penv != nullptr)
+    if (penv != nullptr)
       {
         unsigned int max_threads_env = numbers::invalid_unsigned_int;
         try
           {
             max_threads_env = Utilities::string_to_int(std::string(penv));
           }
-        catch(...)
+        catch (...)
           {
             AssertThrow(
               false,
@@ -142,7 +142,7 @@ MultithreadInfo::set_thread_limit(const unsigned int max_threads)
           ExcMessage("When specifying the <DEAL_II_NUM_THREADS> environment "
                      "variable, it needs to be a positive number."));
 
-        if(n_max_threads != numbers::invalid_unsigned_int)
+        if (n_max_threads != numbers::invalid_unsigned_int)
           n_max_threads = std::min(n_max_threads, max_threads_env);
         else
           n_max_threads = max_threads_env;
@@ -150,12 +150,12 @@ MultithreadInfo::set_thread_limit(const unsigned int max_threads)
   }
   // Without restrictions from the user query TBB for the recommended number
   // of threads:
-  if(n_max_threads == numbers::invalid_unsigned_int)
+  if (n_max_threads == numbers::invalid_unsigned_int)
     n_max_threads = tbb::task_scheduler_init::default_num_threads();
 
   // Initialize the scheduler and destroy the old one before doing so
   static tbb::task_scheduler_init dummy(tbb::task_scheduler_init::deferred);
-  if(dummy.is_active())
+  if (dummy.is_active())
     dummy.terminate();
   dummy.initialize(n_max_threads);
 }
@@ -211,7 +211,7 @@ void
 MultithreadInfo::initialize_multithreading()
 {
   static bool done = false;
-  if(done)
+  if (done)
     return;
 
   MultithreadInfo::set_thread_limit(numbers::invalid_unsigned_int);

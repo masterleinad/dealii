@@ -41,11 +41,11 @@ test(unsigned int ref = 1)
   p1[0] = 1;
   p0[1] = .1;
 
-  if(spacedim == 2)
+  if (spacedim == 2)
     {
       p1[1] = 2 * numbers::PI - .1; // theta
     }
-  else if(spacedim == 3)
+  else if (spacedim == 3)
     {
       p1[1] = numbers::PI - .1;
       p1[2] = 2 * numbers::PI - .1;
@@ -56,12 +56,12 @@ test(unsigned int ref = 1)
 
   const std::vector<Point<spacedim>>& vertices = tria.get_vertices();
 
-  for(unsigned int i = 0; i < vertices.size(); ++i)
+  for (unsigned int i = 0; i < vertices.size(); ++i)
     {
       Point<spacedim> p0 = manifold.push_forward(vertices[i]);
       Point<spacedim> p1 = manifold.pull_back(p0);
 
-      if(p1.distance(vertices[i]) > 1e-10)
+      if (p1.distance(vertices[i]) > 1e-10)
         deallog << "ERROR! d: " << p1.distance(vertices[i]) << " - " << p1
                 << " != " << vertices[i] << std::endl;
     }

@@ -45,7 +45,7 @@ namespace
     Assert(face->has_children(), ExcInternalError());
     Assert(subface_no < face->n_children(), ExcInternalError());
 
-    if(face->child(subface_no)->has_children())
+    if (face->child(subface_no)->has_children())
       // although the subface is refine, it
       // still matches the face of the cell
       // invoking the
@@ -1294,7 +1294,7 @@ namespace
   measure(const TriaAccessor<3, 3, 3>& accessor)
   {
     unsigned int vertex_indices[GeometryInfo<3>::vertices_per_cell];
-    for(unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
+    for (unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
       vertex_indices[i] = accessor.vertex_index(i);
 
     return GridTools::cell_measure<3>(
@@ -1321,9 +1321,9 @@ namespace
     // whether the triple product (v01 x v02) * v03 forms a positive
     // volume relative to |v01|*|v02|*|v03|. the test checks the
     // squares of these to avoid taking norms/square roots:
-    if(std::abs((v03 * normal) * (v03 * normal)
-                / ((v03 * v03) * (v01 * v01) * (v02 * v02)))
-       >= 1e-24)
+    if (std::abs((v03 * normal) * (v03 * normal)
+                 / ((v03 * v03) * (v01 * v01) * (v02 * v02)))
+        >= 1e-24)
       {
         Assert(
           false,
@@ -1378,7 +1378,7 @@ namespace
   get_new_point_on_object(const TriaAccessor<structdim, dim, spacedim>& obj,
                           const bool use_interpolation)
   {
-    if(use_interpolation)
+    if (use_interpolation)
       {
         TriaRawIterator<TriaAccessor<structdim, dim, spacedim>> it(obj);
         const auto points_and_weights
@@ -1444,10 +1444,10 @@ TriaAccessor<structdim, dim, spacedim>::bounding_box() const
   std::pair<Point<spacedim>, Point<spacedim>> boundary_points
     = std::make_pair(this->vertex(0), this->vertex(0));
 
-  for(unsigned int v = 1; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
+  for (unsigned int v = 1; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
     {
       const Point<spacedim>& x = this->vertex(v);
-      for(unsigned int k = 0; k < spacedim; ++k)
+      for (unsigned int k = 0; k < spacedim; ++k)
         {
           boundary_points.first[k]  = std::min(boundary_points.first[k], x[k]);
           boundary_points.second[k] = std::max(boundary_points.second[k], x[k]);
@@ -1542,18 +1542,18 @@ TriaAccessor<3, 3, 3>::set_all_manifold_ids(
 {
   set_manifold_id(manifold_ind);
 
-  if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+  if (this->has_children())
+    for (unsigned int c = 0; c < this->n_children(); ++c)
       this->child(c)->set_all_manifold_ids(manifold_ind);
 
   // for hexes also set manifold_id
   // of bounding quads and lines
 
   // Six bonding quads
-  for(unsigned int i = 0; i < 6; ++i)
+  for (unsigned int i = 0; i < 6; ++i)
     this->quad(i)->set_manifold_id(manifold_ind);
   // Twelve bounding lines
-  for(unsigned int i = 0; i < 12; ++i)
+  for (unsigned int i = 0; i < 12; ++i)
     this->line(i)->set_manifold_id(manifold_ind);
 }
 
@@ -1566,7 +1566,7 @@ TriaAccessor<structdim, dim, spacedim>::intermediate_point(
   std::array<Point<spacedim>, GeometryInfo<structdim>::vertices_per_cell> p;
   std::array<double, GeometryInfo<structdim>::vertices_per_cell>          w;
 
-  for(unsigned int i = 0; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<structdim>::vertices_per_cell; ++i)
     {
       p[i] = this->vertex(i);
       w[i] = GeometryInfo<structdim>::d_linear_shape_function(coordinates, i);
@@ -1678,16 +1678,17 @@ TriaAccessor<structdim, dim, spacedim>::real_to_unit_cell_affine_approximation(
   // copy vertices to avoid expensive resolution of vertex index inside loop
   std::array<Point<spacedim>, GeometryInfo<structdim>::vertices_per_cell>
     vertices;
-  for(unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
+  for (unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
     vertices[v] = this->vertex(v);
-  for(unsigned int d = 0; d < spacedim; ++d)
-    for(unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
-      for(unsigned int e = 0; e < structdim; ++e)
+  for (unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell;
+         ++v)
+      for (unsigned int e = 0; e < structdim; ++e)
         A[d][e] += vertices[v][d] * TransformR2UAffine<structdim>::KA[v][e];
 
   // b = vertex * Kb
   Tensor<1, spacedim> b = point;
-  for(unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
+  for (unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell; ++v)
     b -= vertices[v] * TransformR2UAffine<structdim>::Kb[v];
 
   DerivativeForm<1, spacedim, structdim> A_inv = A.covariant_form().transpose();
@@ -1700,12 +1701,12 @@ TriaAccessor<structdim, dim, spacedim>::center(
   const bool respect_manifold,
   const bool use_interpolation) const
 {
-  if(respect_manifold == false)
+  if (respect_manifold == false)
     {
       Assert(use_interpolation == false, ExcNotImplemented());
       Point<spacedim> p;
-      for(unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell;
-          ++v)
+      for (unsigned int v = 0; v < GeometryInfo<structdim>::vertices_per_cell;
+           ++v)
         p += vertex(v);
       return p / GeometryInfo<structdim>::vertices_per_cell;
     }
@@ -1746,7 +1747,7 @@ CellAccessor<2>::point_inside(const Point<2>& p) const
   // we want the faces in counter
   // clockwise orientation
   static const int direction[4] = {-1, 1, 1, -1};
-  for(unsigned int f = 0; f < 4; ++f)
+  for (unsigned int f = 0; f < 4; ++f)
     {
       // vector from the first vertex
       // of the line to the point
@@ -1770,7 +1771,7 @@ CellAccessor<2>::point_inside(const Point<2>& p) const
       // is not the case, we can be
       // sure that the point is
       // outside
-      if((-face[1] * to_p[0] + face[0] * to_p[1]) < 0)
+      if ((-face[1] * to_p[0] + face[0] * to_p[1]) < 0)
         return false;
     };
 
@@ -1799,8 +1800,8 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
   Point<spacedim>    maxp     = this->vertex(0);
   Point<spacedim>    minp     = this->vertex(0);
 
-  for(unsigned int v = 1; v < GeometryInfo<dim>::vertices_per_cell; ++v)
-    for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int v = 1; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (unsigned int d = 0; d < dim; ++d)
       {
         maxp[d] = std::max(maxp[d], this->vertex(v)[d]);
         minp[d] = std::min(minp[d], this->vertex(v)[d]);
@@ -1808,8 +1809,8 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
 
   // rule out points outside the
   // bounding box of this cell
-  for(unsigned int d = 0; d < dim; d++)
-    if((p[d] < minp[d]) || (p[d] > maxp[d]))
+  for (unsigned int d = 0; d < dim; d++)
+    if ((p[d] < minp[d]) || (p[d] > maxp[d]))
       return false;
 
   // now we need to check more carefully: transform to the
@@ -1826,7 +1827,7 @@ CellAccessor<3>::point_inside(const Point<3>& p) const
         StaticMappingQ1<dim, spacedim>::mapping.transform_real_to_unit_cell(
           cell_iterator, p)));
     }
-  catch(const Mapping<dim, spacedim>::ExcTransformationFailed&)
+  catch (const Mapping<dim, spacedim>::ExcTransformationFailed&)
     {
       return false;
     }
@@ -1876,7 +1877,7 @@ template <int dim, int spacedim>
 bool
 CellAccessor<dim, spacedim>::at_boundary() const
 {
-  switch(dim)
+  switch (dim)
     {
       case 1:
         return at_boundary(0) || at_boundary(1);
@@ -1923,8 +1924,8 @@ CellAccessor<dim, spacedim>::recursively_set_material_id(
 {
   set_material_id(mat_id);
 
-  if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+  if (this->has_children())
+    for (unsigned int c = 0; c < this->n_children(); ++c)
       this->child(c)->recursively_set_material_id(mat_id);
 }
 
@@ -1965,7 +1966,7 @@ bool
 CellAccessor<dim, spacedim>::direction_flag() const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  if(dim == spacedim)
+  if (dim == spacedim)
     return true;
   else
     return this->tria->levels[this->present_level]
@@ -1978,7 +1979,7 @@ CellAccessor<dim, spacedim>::set_direction_flag(
   const bool new_direction_flag) const
 {
   Assert(this->used(), TriaAccessorExceptions::ExcCellNotUsed());
-  if(dim < spacedim)
+  if (dim < spacedim)
     this->tria->levels[this->present_level]
       ->direction_flags[this->present_index]
       = new_direction_flag;
@@ -2050,8 +2051,8 @@ void
 CellAccessor<dim, spacedim>::recursively_set_subdomain_id(
   const types::subdomain_id new_subdomain_id) const
 {
-  if(this->has_children())
-    for(unsigned int c = 0; c < this->n_children(); ++c)
+  if (this->has_children())
+    for (unsigned int c = 0; c < this->n_children(); ++c)
       this->child(c)->recursively_set_subdomain_id(new_subdomain_id);
   else
     set_subdomain_id(new_subdomain_id);
@@ -2065,7 +2066,7 @@ CellAccessor<dim, spacedim>::set_neighbor(
 {
   AssertIndexRange(i, GeometryInfo<dim>::faces_per_cell);
 
-  if(pointer.state() == IteratorState::valid)
+  if (pointer.state() == IteratorState::valid)
     {
       this->tria->levels[this->present_level]
         ->neighbors[this->present_index * GeometryInfo<dim>::faces_per_cell + i]
@@ -2098,16 +2099,16 @@ CellAccessor<dim, spacedim>::id() const
   CellAccessor<dim, spacedim> ptr             = *this;
   const unsigned int          n_child_indices = ptr.level();
 
-  while(ptr.level() > 0)
+  while (ptr.level() > 0)
     {
       const TriaIterator<CellAccessor<dim, spacedim>> parent = ptr.parent();
       const unsigned int n_children = parent->n_children();
 
       // determine which child we are
       unsigned char v = static_cast<unsigned char>(-1);
-      for(unsigned int c = 0; c < n_children; ++c)
+      for (unsigned int c = 0; c < n_children; ++c)
         {
-          if(parent->child_index(c) == ptr.index())
+          if (parent->child_index(c) == ptr.index())
             {
               v = c;
               break;
@@ -2142,7 +2143,7 @@ CellAccessor<dim, spacedim>::neighbor_of_neighbor_internal(
   // dimensional space, so we have to
   // fall back onto the generic code
   // below
-  if((dim == 1) && (spacedim == dim))
+  if ((dim == 1) && (spacedim == dim))
     return GeometryInfo<dim>::opposite_face[neighbor];
 
   const TriaIterator<CellAccessor<dim, spacedim>> neighbor_cell
@@ -2166,7 +2167,7 @@ CellAccessor<dim, spacedim>::neighbor_of_neighbor_internal(
   const unsigned int neighbor_guess
     = GeometryInfo<dim>::opposite_face[neighbor];
 
-  if(neighbor_cell->face_index(neighbor_guess) == this_face_index)
+  if (neighbor_cell->face_index(neighbor_guess) == this_face_index)
     return neighbor_guess;
   else
     // if the guess was false, then
@@ -2174,9 +2175,10 @@ CellAccessor<dim, spacedim>::neighbor_of_neighbor_internal(
     // neighbors and find the number
     // the hard way
     {
-      for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
-          ++face_no)
-        if(neighbor_cell->face_index(face_no) == this_face_index)
+      for (unsigned int face_no = 0;
+           face_no < GeometryInfo<dim>::faces_per_cell;
+           ++face_no)
+        if (neighbor_cell->face_index(face_no) == this_face_index)
           return face_no;
 
       // running over all neighbors
@@ -2222,7 +2224,7 @@ CellAccessor<dim, spacedim>::neighbor_of_coarser_neighbor(
   Assert(neighbor_is_coarser(neighbor),
          TriaAccessorExceptions::ExcNeighborIsNotCoarser());
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
@@ -2249,30 +2251,30 @@ CellAccessor<dim, spacedim>::neighbor_of_coarser_neighbor(
           const TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> face_guess
             = neighbor_cell->face(face_no_guess);
 
-          if(face_guess->has_children())
-            for(unsigned int subface_no = 0;
-                subface_no < face_guess->n_children();
-                ++subface_no)
-              if(face_guess->child_index(subface_no) == this_face_index)
+          if (face_guess->has_children())
+            for (unsigned int subface_no = 0;
+                 subface_no < face_guess->n_children();
+                 ++subface_no)
+              if (face_guess->child_index(subface_no) == this_face_index)
                 return std::make_pair(face_no_guess, subface_no);
 
           // if the guess was false, then
           // we need to loop over all faces
           // and subfaces and find the
           // number the hard way
-          for(unsigned int face_no = 0;
-              face_no < GeometryInfo<2>::faces_per_cell;
-              ++face_no)
+          for (unsigned int face_no = 0;
+               face_no < GeometryInfo<2>::faces_per_cell;
+               ++face_no)
             {
-              if(face_no != face_no_guess)
+              if (face_no != face_no_guess)
                 {
                   const TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> face
                     = neighbor_cell->face(face_no);
-                  if(face->has_children())
-                    for(unsigned int subface_no = 0;
-                        subface_no < face->n_children();
-                        ++subface_no)
-                      if(face->child_index(subface_no) == this_face_index)
+                  if (face->has_children())
+                    for (unsigned int subface_no = 0;
+                         subface_no < face->n_children();
+                         ++subface_no)
+                      if (face->child_index(subface_no) == this_face_index)
                         return std::make_pair(face_no, subface_no);
                 }
             }
@@ -2303,12 +2305,12 @@ CellAccessor<dim, spacedim>::neighbor_of_coarser_neighbor(
           const TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> face_guess
             = neighbor_cell->face(face_no_guess);
 
-          if(face_guess->has_children())
-            for(unsigned int subface_no = 0;
-                subface_no < face_guess->n_children();
-                ++subface_no)
+          if (face_guess->has_children())
+            for (unsigned int subface_no = 0;
+                 subface_no < face_guess->n_children();
+                 ++subface_no)
               {
-                if(face_guess->child_index(subface_no) == this_face_index)
+                if (face_guess->child_index(subface_no) == this_face_index)
                   // call a helper function, that translates the current
                   // subface number to a subface number for the current
                   // FaceRefineCase
@@ -2316,12 +2318,12 @@ CellAccessor<dim, spacedim>::neighbor_of_coarser_neighbor(
                     face_no_guess,
                     translate_subface_no(face_guess, subface_no));
 
-                if(face_guess->child(subface_no)->has_children())
-                  for(unsigned int subsub_no = 0;
-                      subsub_no < face_guess->child(subface_no)->n_children();
-                      ++subsub_no)
-                    if(face_guess->child(subface_no)->child_index(subsub_no)
-                       == this_face_index)
+                if (face_guess->child(subface_no)->has_children())
+                  for (unsigned int subsub_no = 0;
+                       subsub_no < face_guess->child(subface_no)->n_children();
+                       ++subsub_no)
+                    if (face_guess->child(subface_no)->child_index(subsub_no)
+                        == this_face_index)
                       // call a helper function, that translates the current
                       // subface number and subsubface number to a subface
                       // number for the current FaceRefineCase
@@ -2333,35 +2335,35 @@ CellAccessor<dim, spacedim>::neighbor_of_coarser_neighbor(
 
           // if the guess was false, then we need to loop over all faces and
           // subfaces and find the number the hard way
-          for(unsigned int face_no = 0;
-              face_no < GeometryInfo<3>::faces_per_cell;
-              ++face_no)
+          for (unsigned int face_no = 0;
+               face_no < GeometryInfo<3>::faces_per_cell;
+               ++face_no)
             {
-              if(face_no == face_no_guess)
+              if (face_no == face_no_guess)
                 continue;
 
               const TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> face
                 = neighbor_cell->face(face_no);
 
-              if(!face->has_children())
+              if (!face->has_children())
                 continue;
 
-              for(unsigned int subface_no = 0; subface_no < face->n_children();
-                  ++subface_no)
+              for (unsigned int subface_no = 0; subface_no < face->n_children();
+                   ++subface_no)
                 {
-                  if(face->child_index(subface_no) == this_face_index)
+                  if (face->child_index(subface_no) == this_face_index)
                     // call a helper function, that translates the current
                     // subface number to a subface number for the current
                     // FaceRefineCase
                     return std::make_pair(
                       face_no, translate_subface_no(face, subface_no));
 
-                  if(face->child(subface_no)->has_children())
-                    for(unsigned int subsub_no = 0;
-                        subsub_no < face->child(subface_no)->n_children();
-                        ++subsub_no)
-                      if(face->child(subface_no)->child_index(subsub_no)
-                         == this_face_index)
+                  if (face->child(subface_no)->has_children())
+                    for (unsigned int subsub_no = 0;
+                         subsub_no < face->child(subface_no)->n_children();
+                         ++subsub_no)
+                      if (face->child(subface_no)->child_index(subsub_no)
+                          == this_face_index)
                         // call a helper function, that translates the current
                         // subface number and subsubface number to a subface
                         // number for the current FaceRefineCase
@@ -2417,9 +2419,9 @@ CellAccessor<dim, spacedim>::has_periodic_neighbor(
   typedef TriaIterator<CellAccessor<dim, spacedim>> cell_iterator;
   // my_it : is the iterator to the current cell.
   cell_iterator my_it(*this);
-  if(this->tria->periodic_face_map.find(
-       std::pair<cell_iterator, unsigned int>(my_it, i_face))
-     != this->tria->periodic_face_map.end())
+  if (this->tria->periodic_face_map.find(
+        std::pair<cell_iterator, unsigned int>(my_it, i_face))
+      != this->tria->periodic_face_map.end())
     return true;
   return false;
 }
@@ -2457,9 +2459,9 @@ TriaIterator<CellAccessor<dim, spacedim>>
 CellAccessor<dim, spacedim>::neighbor_or_periodic_neighbor(
   const unsigned int i_face) const
 {
-  if(!(this->face(i_face)->at_boundary()))
+  if (!(this->face(i_face)->at_boundary()))
     return this->neighbor(i_face);
-  else if(this->has_periodic_neighbor(i_face))
+  else if (this->has_periodic_neighbor(i_face))
     return this->periodic_neighbor(i_face);
   else
     AssertThrow(false, TriaAccessorExceptions::ExcNoPeriodicNeighbor());
@@ -2572,9 +2574,9 @@ CellAccessor<dim, spacedim>::periodic_neighbor_of_coarser_periodic_neighbor(
   cell_iterator p_nb_of_p_nb = nb_face_pair->second.first.first;
   TriaIterator<TriaAccessor<dim - 1, dim, spacedim>> parent_face_it
     = p_nb_of_p_nb->face(nb_face_pair->second.first.second);
-  for(unsigned int i_subface = 0; i_subface < parent_face_it->n_children();
-      ++i_subface)
-    if(parent_face_it->child_index(i_subface) == my_face_index)
+  for (unsigned int i_subface = 0; i_subface < parent_face_it->n_children();
+       ++i_subface)
+    if (parent_face_it->child_index(i_subface) == my_face_index)
       return (std::pair<unsigned int, unsigned int>(face_num_of_nb, i_subface));
   /*
    * Obviously, if the execution reaches to this point, some of our assumptions should have
@@ -2713,12 +2715,12 @@ template <int dim, int spacedim>
 bool
 CellAccessor<dim, spacedim>::has_boundary_lines() const
 {
-  if(dim == 1)
+  if (dim == 1)
     return at_boundary();
   else
     {
-      for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
-        if(this->line(l)->at_boundary())
+      for (unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+        if (this->line(l)->at_boundary())
           return true;
 
       return false;
@@ -2738,7 +2740,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
   Assert(this->neighbor(face)->has_children() == true,
          ExcMessage("The neighbor must have children!"));
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
@@ -2757,7 +2759,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
           // face under consideration. as we are
           // normally interested in one of this
           // child's child, search for the right one.
-          while(sub_neighbor->has_children())
+          while (sub_neighbor->has_children())
             {
               Assert((GeometryInfo<dim>::face_refinement_case(
                         sub_neighbor->refinement_case(), neighbor_neighbor)
@@ -2842,9 +2844,9 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
 
           const RefinementCase<dim - 1> mother_face_ref_case
             = mother_face->refinement_case();
-          if(mother_face_ref_case
-             == static_cast<RefinementCase<dim - 1>>(
-                  RefinementCase<2>::cut_xy)) // total_children==4
+          if (mother_face_ref_case
+              == static_cast<RefinementCase<dim - 1>>(
+                   RefinementCase<2>::cut_xy)) // total_children==4
             {
               // this case is quite easy. we are sure,
               // that the neighbor is not coarser.
@@ -2880,16 +2882,16 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
               // these we need.
               unsigned int first_child_to_find;
               unsigned int neighbor_child_index;
-              if(total_children == 2)
+              if (total_children == 2)
                 first_child_to_find = subface;
               else
                 {
                   first_child_to_find = subface / 2;
-                  if(total_children == 3 && subface == 1
-                     && !mother_face->child(0)->has_children())
+                  if (total_children == 3 && subface == 1
+                      && !mother_face->child(0)->has_children())
                     first_child_to_find = 1;
                 }
-              if(neighbor_is_coarser(face))
+              if (neighbor_is_coarser(face))
                 {
                   std::pair<unsigned int, unsigned int> indices
                     = neighbor_of_coarser_neighbor(face);
@@ -2938,8 +2940,8 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                   // |       |
                   // *-------*
                   unsigned int iso_subface;
-                  if(neighbor->face(neighbor_neighbor)->refinement_case()
-                     == RefinementCase<2>::cut_x)
+                  if (neighbor->face(neighbor_neighbor)->refinement_case()
+                      == RefinementCase<2>::cut_x)
                     iso_subface = 2 * first_child_to_find + indices.second;
                   else
                     {
@@ -2975,10 +2977,10 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
               // has children, which are not refined
               // along the given subface. go down that
               // list and deliver the last of those.
-              while(neighbor_child->has_children()
-                    && GeometryInfo<dim>::face_refinement_case(
-                         neighbor_child->refinement_case(), neighbor_neighbor)
-                         == RefinementCase<2>::no_refinement)
+              while (neighbor_child->has_children()
+                     && GeometryInfo<dim>::face_refinement_case(
+                          neighbor_child->refinement_case(), neighbor_neighbor)
+                          == RefinementCase<2>::no_refinement)
                 neighbor_child
                   = neighbor_child->child(GeometryInfo<dim>::child_cell_on_face(
                     neighbor_child->refinement_case(), neighbor_neighbor, 0));
@@ -2989,11 +2991,11 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
               // neighbor_child. If there are three,
               // we have to check which of the two
               // possibilities applies.
-              if(total_children == 3)
+              if (total_children == 3)
                 {
-                  if(mother_face->child(0)->has_children())
+                  if (mother_face->child(0)->has_children())
                     {
-                      if(subface < 2)
+                      if (subface < 2)
                         neighbor_child = neighbor_child->child(
                           GeometryInfo<dim>::child_cell_on_face(
                             neighbor_child->refinement_case(),
@@ -3008,7 +3010,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                     {
                       Assert(mother_face->child(1)->has_children(),
                              ExcInternalError());
-                      if(subface > 0)
+                      if (subface > 0)
                         neighbor_child = neighbor_child->child(
                           GeometryInfo<dim>::child_cell_on_face(
                             neighbor_child->refinement_case(),
@@ -3020,7 +3022,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                             mother_face->child(1)->refinement_case()));
                     }
                 }
-              else if(total_children == 4)
+              else if (total_children == 4)
                 {
                   neighbor_child = neighbor_child->child(
                     GeometryInfo<dim>::child_cell_on_face(
@@ -3038,7 +3040,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
           // children, which are not refined along the
           // given subface. go down that list and
           // deliver the last of those.
-          while(neighbor_child->has_children())
+          while (neighbor_child->has_children())
             neighbor_child
               = neighbor_child->child(GeometryInfo<dim>::child_cell_on_face(
                 neighbor_child->refinement_case(), neighbor_neighbor, 0));
@@ -3047,7 +3049,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
           // check, whether the face neighbor_child matches the requested
           // subface.
           typename Triangulation<dim, spacedim>::face_iterator requested;
-          switch(this->subface_case(face))
+          switch (this->subface_case(face))
             {
               case internal::SubfaceCase<3>::case_x:
               case internal::SubfaceCase<3>::case_y:
@@ -3061,7 +3063,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
 
               case internal::SubfaceCase<3>::case_x1y:
               case internal::SubfaceCase<3>::case_y1x:
-                switch(subface)
+                switch (subface)
                   {
                     case 0:
                     case 1:
@@ -3076,7 +3078,7 @@ CellAccessor<dim, spacedim>::neighbor_child_on_subface(
                 break;
               case internal::SubfaceCase<3>::case_x2y:
               case internal::SubfaceCase<3>::case_y2x:
-                switch(subface)
+                switch (subface)
                   {
                     case 0:
                       requested = mother_face->child(0);

@@ -59,9 +59,9 @@ namespace LinearAlgebra
     {
       Epetra_Map input_map
         = parallel_partitioner.make_trilinos_map(communicator, false);
-      if(vector->Map().SameAs(input_map) == false)
+      if (vector->Map().SameAs(input_map) == false)
         vector = std_cxx14::make_unique<Epetra_FEVector>(input_map);
-      else if(omit_zeroing_entries == false)
+      else if (omit_zeroing_entries == false)
         {
           const int ierr = vector->PutScalar(0.);
           Assert(ierr == 0, ExcTrilinosError(ierr));
@@ -92,11 +92,11 @@ namespace LinearAlgebra
       //  - First case: both vectors have the same layout.
       //  - Second case: both vectors have the same size but different layout.
       //  - Third case: the vectors have different size.
-      if(vector->Map().SameAs(V.trilinos_vector().Map()))
+      if (vector->Map().SameAs(V.trilinos_vector().Map()))
         *vector = V.trilinos_vector();
       else
         {
-          if(size() == V.size())
+          if (size() == V.size())
             {
               Epetra_Import data_exchange(vector->Map(),
                                           V.trilinos_vector().Map());
@@ -134,13 +134,13 @@ namespace LinearAlgebra
     {
       // If no communication pattern is given, create one. Otherwsie, use the
       // one given.
-      if(communication_pattern == nullptr)
+      if (communication_pattern == nullptr)
         {
           // The first time import is called, a communication pattern is created.
           // Check if the communication pattern already exists and if it can be
           // reused.
-          if((source_stored_elements.size() != V.get_stored_elements().size())
-             || (source_stored_elements != V.get_stored_elements()))
+          if ((source_stored_elements.size() != V.get_stored_elements().size())
+              || (source_stored_elements != V.get_stored_elements()))
             {
               create_epetra_comm_pattern(
                 V.get_stored_elements(),
@@ -166,7 +166,7 @@ namespace LinearAlgebra
       double*         values = source_vector.Values();
       std::copy(V.begin(), V.end(), values);
 
-      if(operation == VectorOperation::insert)
+      if (operation == VectorOperation::insert)
         vector->Export(source_vector, import, Insert);
       else
         vector->Export(source_vector, import, Add);
@@ -201,7 +201,7 @@ namespace LinearAlgebra
       // Downcast V. If fails, throws an exception.
       const Vector& down_V = dynamic_cast<const Vector&>(V);
       // If the maps are the same we can Update right away.
-      if(vector->Map().SameAs(down_V.trilinos_vector().Map()))
+      if (vector->Map().SameAs(down_V.trilinos_vector().Map()))
         {
           const int ierr = vector->Update(1., down_V.trilinos_vector(), 1.);
           Assert(ierr == 0, ExcTrilinosError(ierr));
@@ -274,7 +274,7 @@ namespace LinearAlgebra
     {
       AssertIsFinite(a);
       const unsigned local_size(vector->MyLength());
-      for(unsigned int i = 0; i < local_size; ++i)
+      for (unsigned int i = 0; i < local_size; ++i)
         (*vector)[0][i] += a;
     }
 
@@ -372,7 +372,7 @@ namespace LinearAlgebra
       // Downcast V. If fails, throws an exception.
       const Vector& down_V = dynamic_cast<const Vector&>(V);
       // If we don't have the same map, copy.
-      if(vector->Map().SameAs(down_V.trilinos_vector().Map()) == false)
+      if (vector->Map().SameAs(down_V.trilinos_vector().Map()) == false)
         this->sadd(0., a, V);
       else
         {
@@ -391,9 +391,9 @@ namespace LinearAlgebra
       double*       start_ptr = (*vector)[0];
       const double *ptr = start_ptr, *eptr = start_ptr + vector->MyLength();
       unsigned int  flag = 0;
-      while(ptr != eptr)
+      while (ptr != eptr)
         {
-          if(*ptr != 0)
+          if (*ptr != 0)
             {
               flag = 1;
               break;
@@ -490,7 +490,7 @@ namespace LinearAlgebra
       IndexSet is(size());
 
       // easy case: local range is contiguous
-      if(vector->Map().LinearMap())
+      if (vector->Map().LinearMap())
         {
 #    ifndef DEAL_II_WITH_64BIT_INDICES
           is.add_range(vector->Map().MinMyGID(), vector->Map().MaxMyGID() + 1);
@@ -499,7 +499,7 @@ namespace LinearAlgebra
                        vector->Map().MaxMyGID64() + 1);
 #    endif
         }
-      else if(vector->Map().NumMyElements() > 0)
+      else if (vector->Map().NumMyElements() > 0)
         {
           const size_type n_indices = vector->Map().NumMyElements();
 #    ifndef DEAL_II_WITH_64BIT_INDICES
@@ -546,16 +546,16 @@ namespace LinearAlgebra
       Assert(ierr == 0, ExcTrilinosError(ierr));
       (void) ierr;
       out.precision(precision);
-      if(scientific)
+      if (scientific)
         out.setf(std::ios::scientific, std::ios::floatfield);
       else
         out.setf(std::ios::fixed, std::ios::floatfield);
 
-      if(across)
-        for(int i = 0; i < vector->MyLength(); ++i)
+      if (across)
+        for (int i = 0; i < vector->MyLength(); ++i)
           out << val[i] << ' ';
       else
-        for(int i = 0; i < vector->MyLength(); ++i)
+        for (int i = 0; i < vector->MyLength(); ++i)
           out << val[i] << std::endl;
       out << std::endl;
 

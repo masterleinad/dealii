@@ -49,7 +49,7 @@ test()
   IndexSet                      owned_indices_2(10);
   owned_indices_2.add_range(my_id * 5, (my_id + 1) * 5);
   w.reinit(owned_indices_2, MPI_COMM_WORLD);
-  for(unsigned int i = my_id * 5; i < (my_id + 1) * 5; ++i)
+  for (unsigned int i = my_id * 5; i < (my_id + 1) * 5; ++i)
     w(i) = 2;
 
   deallog << "v: ";
@@ -79,7 +79,7 @@ main(int argc, char** argv)
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -93,7 +93,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

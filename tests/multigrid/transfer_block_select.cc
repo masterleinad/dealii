@@ -48,7 +48,7 @@ reinit_vector_by_blocks(
   std::vector<bool> selected(n_blocks, false);
   selected[selected_block] = true;
 
-  if(ndofs.size() == 0)
+  if (ndofs.size() == 0)
     {
       std::vector<std::vector<types::global_dof_index>> new_dofs(
         mg_dof.get_triangulation().n_levels(),
@@ -57,7 +57,7 @@ reinit_vector_by_blocks(
       MGTools::count_dofs_per_block(mg_dof, ndofs);
     }
 
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
       v[level].reinit(ndofs[level][selected_block]);
     }
@@ -81,7 +81,7 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   vector<types::global_dof_index> ndofs(fe.n_blocks());
   DoFTools::count_dofs_per_block(mgdof, ndofs);
 
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     DoFRenumbering::component_wise(mgdof, l);
   std::vector<std::vector<types::global_dof_index>> mg_ndofs(
     mgdof.get_triangulation().n_levels(),
@@ -89,13 +89,13 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   MGTools::count_dofs_per_block(mgdof, mg_ndofs);
 
   deallog << "Global  dofs:";
-  for(unsigned int i = 0; i < ndofs.size(); ++i)
+  for (unsigned int i = 0; i < ndofs.size(); ++i)
     deallog << ' ' << ndofs[i];
   deallog << std::endl;
-  for(unsigned int l = 0; l < mg_ndofs.size(); ++l)
+  for (unsigned int l = 0; l < mg_ndofs.size(); ++l)
     {
       deallog << "Level " << l << " dofs:";
-      for(unsigned int i = 0; i < mg_ndofs[l].size(); ++i)
+      for (unsigned int i = 0; i < mg_ndofs[l].size(); ++i)
         deallog << ' ' << mg_ndofs[l][i];
       deallog << std::endl;
     }
@@ -132,7 +132,7 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   // from one up
   BlockVector<double> v;
   v.reinit(ndofs);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i + 1;
 
   // See what part gets copied to mg
@@ -140,18 +140,18 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   reinit_vector_by_blocks(mgdof, u, selected, mg_ndofs);
 
   transfer.copy_to_mg(mgdof, u, v);
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     deallog << ' ' << (int) u[2](i);
   deallog << std::endl;
 
   // Now do the opposite: fill a
   // multigrid vector counting the
   // dofs and see where the numbers go
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     u[2](i) = i + 1;
   v = 0.;
   transfer.copy_from_mg(mgdof, v, u);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << (int) v(i);
   deallog << std::endl;
   v.equ(-1., v);

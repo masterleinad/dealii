@@ -55,11 +55,11 @@ test(std::ostream& /*out*/)
   deallog << " Number of cells: " << tr.n_active_cells() << ' '
           << tr2.n_active_cells() << std::endl;
 
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       // refine one-tenth of cells randomly
       std::vector<bool> flags(tr.n_active_cells(), false);
-      for(unsigned int k = 0; k < flags.size() / 30 + 1; ++k)
+      for (unsigned int k = 0; k < flags.size() / 30 + 1; ++k)
         flags[Testing::rand() % flags.size()] = true;
       // make sure there's at least one that
       // will be refined
@@ -70,11 +70,11 @@ test(std::ostream& /*out*/)
 
       // refine tr and tr2
       unsigned int index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell, ++index)
-        if(flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell, ++index)
+        if (flags[index])
           {
             cell->set_refine_flag();
             intergrid_map[cell]->set_refine_flag();
@@ -86,11 +86,11 @@ test(std::ostream& /*out*/)
       // some of them will actually be
       // coarsened)
       index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell, ++index)
-        if(!flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell, ++index)
+        if (!flags[index])
           {
             cell->set_coarsen_flag();
             intergrid_map[cell]->set_coarsen_flag();

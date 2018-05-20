@@ -24,7 +24,7 @@ template <typename number>
 void
 check()
 {
-  for(unsigned int n = 1; n <= 3; ++n)
+  for (unsigned int n = 1; n <= 3; ++n)
     {
       const std::complex<number> array[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 

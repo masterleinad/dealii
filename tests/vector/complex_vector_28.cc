@@ -24,8 +24,8 @@ void
 test(Vector<std::complex<double>>& v)
 {
   // set some entries of the vector
-  for(unsigned int i = 0; i < v.size(); ++i)
-    if(i % 3 == 0)
+  for (unsigned int i = 0; i < v.size(); ++i)
+    if (i % 3 == 0)
       v(i) = std::complex<double>(i + 1., i + 2.);
   v.compress();
 
@@ -54,7 +54,7 @@ main()
       Vector<std::complex<double>> v(100);
       test(v);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -68,7 +68,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

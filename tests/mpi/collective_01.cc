@@ -34,14 +34,14 @@ test()
   unsigned int       myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   const unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Running on " << numprocs << " CPU(s)." << std::endl;
 
   Utilities::MPI::MinMaxAvg result;
 
   double value = 0.0;
   result       = Utilities::MPI::min_max_avg(value, MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     print_it(result);
   Assert(result.sum == 0.0, ExcInternalError());
   Assert(result.min == 0.0, ExcInternalError());
@@ -50,7 +50,7 @@ test()
 
   value  = 1.0;
   result = Utilities::MPI::min_max_avg(value, MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     print_it(result);
   Assert(result.sum == numprocs, ExcInternalError());
   Assert(result.min == 1.0, ExcInternalError());
@@ -58,18 +58,18 @@ test()
   Assert(result.avg == 1.0, ExcInternalError());
 
   value = 0.0;
-  if(myid == 0)
+  if (myid == 0)
     value = 1.0;
 
   result = Utilities::MPI::min_max_avg(value, MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     print_it(result);
   Assert(result.sum == 1.0, ExcInternalError());
   Assert(result.min == (numprocs > 1) ? 0.0 : 1.0, ExcInternalError());
   Assert(result.max == 1.0, ExcInternalError());
   Assert(result.max_index == 0, ExcInternalError());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "done" << std::endl;
 }
 
@@ -86,7 +86,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

@@ -52,8 +52,8 @@ check_this(const DoFHandler<dim>& dof_handler)
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
-  for(const auto& dof : locally_relevant_dofs)
-    if(is_hanging_node_constrained[dof])
+  for (const auto& dof : locally_relevant_dofs)
+    if (is_hanging_node_constrained[dof])
       AssertThrow(constraints.is_constrained(dof), ExcInternalError());
 
   AssertThrow(std::count(is_hanging_node_constrained.begin(),
@@ -77,11 +77,11 @@ check(const FiniteElement<dim>& fe, const std::string& name)
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria, 0., 1.);
   tria.refine_global(1);
-  for(unsigned int ref = 0; ref < 2; ++ref)
+  for (unsigned int ref = 0; ref < 2; ++ref)
     {
-      for(auto cell : tria.active_cell_iterators())
-        if(cell->is_locally_owned() && cell->center()(0) < .5
-           && cell->center()(1) < .5)
+      for (auto cell : tria.active_cell_iterators())
+        if (cell->is_locally_owned() && cell->center()(0) < .5
+            && cell->center()(1) < .5)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }

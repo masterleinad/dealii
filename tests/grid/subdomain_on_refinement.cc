@@ -45,7 +45,7 @@ test()
   tria.refine_global(2);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     AssertThrow(cell->subdomain_id() == 42, ExcInternalError());
   deallog << "OK" << std::endl;
 }

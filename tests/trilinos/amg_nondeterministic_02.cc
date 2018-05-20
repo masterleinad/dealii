@@ -504,21 +504,21 @@ run()
 
   IndexSet owned(dim);
 
-  if(myid == 0)
+  if (myid == 0)
     owned.add_range(0, dim / 2);
   else
     owned.add_range(dim / 2, dim);
-  if(numproc == 1)
+  if (numproc == 1)
     owned.add_range(0, dim);
 
   TrilinosWrappers::SparsityPattern sp(owned);
 
   unsigned int n = sizeof(mati) / sizeof(*mati);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     sp.add(mati[i], matj[i]);
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     sp.add(i, i);
 
   sp.compress();
@@ -528,10 +528,10 @@ run()
   TrilinosWrappers::MPI::Vector  x2(owned, MPI_COMM_WORLD);
   TrilinosWrappers::MPI::Vector  b(owned, MPI_COMM_WORLD);
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     mat.set(i, i, 1.0);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       mat.set(mati[i], matj[i], matv[i]);
       b(mati[i]) = 1.0;
@@ -555,11 +555,11 @@ run()
     prec.vmult(x2, b);
   }
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int j = 0; j < 10; ++j)
+      for (unsigned int j = 0; j < 10; ++j)
         {
-          if(x1[j] != x2[j])
+          if (x1[j] != x2[j])
             deallog << "FAIL: j=" << j << ": " << x1[j] << " != " << x2[j]
                     << std::endl;
         }
@@ -581,11 +581,11 @@ run()
     prec.vmult(x2, b);
   }
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int j = 0; j < 10; ++j)
+      for (unsigned int j = 0; j < 10; ++j)
         {
-          if(x1[j] != x2[j])
+          if (x1[j] != x2[j])
             deallog << "FAIL: j=" << j << ": " << x1[j] << " != " << x2[j]
                     << std::endl;
         }

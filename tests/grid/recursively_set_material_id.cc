@@ -25,12 +25,12 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int t = 0; t < 2; ++t)
+  for (unsigned int t = 0; t < 2; ++t)
     {
       deallog << "dim=" << dim << ", test=" << t << std::endl;
 
       Triangulation<dim> tr;
-      if(dim > 1)
+      if (dim > 1)
         {
           GridGenerator::hyper_ball(tr);
           tr.reset_manifold(0);
@@ -43,14 +43,14 @@ test()
       // for test 1, refine a second
       // time isotropically. for test
       // 2, cut in only one direction
-      if(t == 0)
+      if (t == 0)
         tr.refine_global(1);
       else
         {
-          for(typename Triangulation<dim>::active_cell_iterator cell
-              = tr.begin_active();
-              cell != tr.end();
-              ++cell)
+          for (typename Triangulation<dim>::active_cell_iterator cell
+               = tr.begin_active();
+               cell != tr.end();
+               ++cell)
             cell->set_refine_flag(RefinementCase<dim>::cut_x);
           tr.execute_coarsening_and_refinement();
         }
@@ -66,16 +66,16 @@ test()
       // active cells inherited this
       // flag
       unsigned int n = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->material_id() == 1)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->material_id() == 1)
           ++n;
 
       deallog << n << std::endl;
 
-      if(t == 0)
+      if (t == 0)
         {
           AssertThrow(n == GeometryInfo<dim>::max_children_per_cell,
                       ExcInternalError());

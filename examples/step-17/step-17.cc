@@ -217,13 +217,13 @@ namespace Step17
     point_1(0) = 0.5;
     point_2(0) = -0.5;
 
-    if(((p - point_1).norm_square() < 0.2 * 0.2)
-       || ((p - point_2).norm_square() < 0.2 * 0.2))
+    if (((p - point_1).norm_square() < 0.2 * 0.2)
+        || ((p - point_2).norm_square() < 0.2 * 0.2))
       values(0) = 1;
     else
       values(0) = 0;
 
-    if(p.square() < 0.2 * 0.2)
+    if (p.square() < 0.2 * 0.2)
       values(1) = 1;
     else
       values(1) = 0;
@@ -240,7 +240,7 @@ namespace Step17
     Assert(value_list.size() == n_points,
            ExcDimensionMismatch(value_list.size(), n_points));
 
-    for(unsigned int p = 0; p < n_points; ++p)
+    for (unsigned int p = 0; p < n_points; ++p)
       RightHandSide<dim>::vector_value(points[p], value_list[p]);
   }
 
@@ -500,8 +500,8 @@ namespace Step17
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->subdomain_id() == this_mpi_process)
+    for (; cell != endc; ++cell)
+      if (cell->subdomain_id() == this_mpi_process)
         {
           cell_matrix = 0;
           cell_rhs    = 0;
@@ -511,17 +511,18 @@ namespace Step17
           lambda.value_list(fe_values.get_quadrature_points(), lambda_values);
           mu.value_list(fe_values.get_quadrature_points(), mu_values);
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               const unsigned int component_i
                 = fe.system_to_component_index(i).first;
 
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
                   const unsigned int component_j
                     = fe.system_to_component_index(j).first;
 
-                  for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_q_points;
+                       ++q_point)
                     {
                       cell_matrix(i, j)
                         += ((fe_values.shape_grad(i, q_point)[component_i]
@@ -542,12 +543,12 @@ namespace Step17
 
           right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                             rhs_values);
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               const unsigned int component_i
                 = fe.system_to_component_index(i).first;
 
-              for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+              for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
                 cell_rhs(i) += fe_values.shape_value(i, q_point)
                                * rhs_values[q_point](component_i)
                                * fe_values.JxW(q_point);
@@ -810,8 +811,8 @@ namespace Step17
     PETScWrappers::MPI::Vector distributed_all_errors(
       mpi_communicator, triangulation.n_active_cells(), n_local_cells);
 
-    for(unsigned int i = 0; i < local_error_per_cell.size(); ++i)
-      if(local_error_per_cell(i) != 0)
+    for (unsigned int i = 0; i < local_error_per_cell.size(); ++i)
+      if (local_error_per_cell(i) != 0)
         distributed_all_errors(i) = local_error_per_cell(i);
     distributed_all_errors.compress(VectorOperation::insert);
 
@@ -913,7 +914,7 @@ namespace Step17
     // This being done, process zero goes ahead with setting up the
     // output file as in step-8, and attaching the (localized)
     // solution vector to the output object.
-    if(this_mpi_process == 0)
+    if (this_mpi_process == 0)
       {
         std::ofstream output("solution-" + std::to_string(cycle) + ".vtk");
 
@@ -921,7 +922,7 @@ namespace Step17
         data_out.attach_dof_handler(dof_handler);
 
         std::vector<std::string> solution_names;
-        switch(dim)
+        switch (dim)
           {
             case 1:
               solution_names.emplace_back("displacement");
@@ -978,11 +979,11 @@ namespace Step17
   void
   ElasticProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 10; ++cycle)
+    for (unsigned int cycle = 0; cycle < 10; ++cycle)
       {
         pcout << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation, -1, 1);
             triangulation.refine_global(3);
@@ -997,7 +998,7 @@ namespace Step17
 
         pcout << "   Number of degrees of freedom: " << dof_handler.n_dofs()
               << " (by partition:";
-        for(unsigned int p = 0; p < n_mpi_processes; ++p)
+        for (unsigned int p = 0; p < n_mpi_processes; ++p)
           pcout << (p == 0 ? ' ' : '+')
                 << (DoFTools::count_dofs_with_subdomain_association(dof_handler,
                                                                     p));
@@ -1037,7 +1038,7 @@ main(int argc, char** argv)
       ElasticProblem<2> elastic_problem;
       elastic_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1051,7 +1052,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -33,9 +33,9 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "hyper_cube" << std::endl;
 
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -45,19 +45,19 @@ test()
 
       int level = 0;
 
-      for(int i = 0; i < 29; ++i)
+      for (int i = 0; i < 29; ++i)
         {
-          if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+          if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
             deallog << "refine_loop... level=" << level << std::endl;
 
-          if(myid == 0)
+          if (myid == 0)
             tr.begin_active(level)->set_refine_flag();
 
           deallog.push("crap");
           tr.execute_coarsening_and_refinement();
           deallog.pop();
 
-          if(myid == 0)
+          if (myid == 0)
             {
               deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
             }
@@ -66,7 +66,7 @@ test()
         }
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -79,7 +79,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog.depth_file(3);

@@ -54,17 +54,17 @@ compare_meshes(DoFHandler<dim>& shared_dof_handler,
     = shared_dof_handler.locally_owned_dofs_per_processor();
   std::vector<IndexSet> distributed_dofs_per_proc
     = distributed_dof_handler.locally_owned_dofs_per_processor();
-  for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-      ++i)
+  for (unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+       ++i)
     Assert(shared_dofs_per_proc[i] == distributed_dofs_per_proc[i],
            ExcInternalError());
 
   typename DoFHandler<dim>::active_cell_iterator cell
     = distributed_dof_handler.begin_active(),
     endc = distributed_dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->subdomain_id() == numbers::artificial_subdomain_id)
+      if (cell->subdomain_id() == numbers::artificial_subdomain_id)
         continue;
 
       typename Triangulation<dim>::active_cell_iterator tria_shared_cell
@@ -80,7 +80,7 @@ compare_meshes(DoFHandler<dim>& shared_dof_handler,
       std::vector<types::global_dof_index> shared_cell_dofs(fe.dofs_per_cell);
       cell->get_dof_indices(distributed_cell_dofs);
       dof_shared_cell->get_dof_indices(shared_cell_dofs);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         Assert(distributed_cell_dofs[i] == shared_cell_dofs[i],
                ExcInternalError());
     }

@@ -70,7 +70,8 @@ public:
                typename LAPLACEOPERATOR::value_type>>& dst,
              const InVector&                           src) const
   {
-    for(unsigned int level = dst.min_level(); level <= dst.max_level(); ++level)
+    for (unsigned int level = dst.min_level(); level <= dst.max_level();
+         ++level)
       laplace_operator[level].initialize_dof_vector(dst[level]);
     MGTransferMatrixFree<dim, typename LAPLACEOPERATOR::value_type>::copy_to_mg(
       mg_dof_handler, dst, src);
@@ -112,7 +113,7 @@ template <int dim, int fe_degree, int n_q_points_1d, typename number>
 void
 do_test(const DoFHandler<dim>& dof)
 {
-  if(std::is_same<number, float>::value == true)
+  if (std::is_same<number, float>::value == true)
     {
       deallog.push("float");
     }
@@ -179,9 +180,9 @@ do_test(const DoFHandler<dim>& dof)
     DoFTools::make_hanging_node_constraints(dof, hanging_node_constraints);
     hanging_node_constraints.close();
 
-    for(unsigned int i = 0; i < in.local_size(); ++i)
-      if(!hanging_node_constraints.is_constrained(
-           in.get_partitioner()->local_to_global(i)))
+    for (unsigned int i = 0; i < in.local_size(); ++i)
+      if (!hanging_node_constraints.is_constrained(
+            in.get_partitioner()->local_to_global(i)))
         in.local_element(i) = 1.;
   }
 
@@ -197,8 +198,9 @@ do_test(const DoFHandler<dim>& dof)
   MGLevelObject<MatrixFree<dim, number>> mg_level_data;
   mg_matrices.resize(0, dof.get_triangulation().n_global_levels() - 1);
   mg_level_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     {
       typename MatrixFree<dim, number>::AdditionalData mg_additional_data;
       mg_additional_data.tasks_parallel_scheme
@@ -228,8 +230,9 @@ do_test(const DoFHandler<dim>& dof)
   MGLevelObject<MGInterfaceOperator<LevelMatrixType>> mg_interface_matrices;
   mg_interface_matrices.resize(0,
                                dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     mg_interface_matrices[level].initialize(mg_matrices[level]);
 
   MGTransferMF<dim, LevelMatrixType> mg_transfer(mg_matrices,
@@ -249,8 +252,9 @@ do_test(const DoFHandler<dim>& dof)
 
   MGLevelObject<typename SMOOTHER::AdditionalData> smoother_data;
   smoother_data.resize(0, dof.get_triangulation().n_global_levels() - 1);
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     {
       smoother_data[level].smoothing_range     = 15.;
       smoother_data[level].degree              = 5;
@@ -281,12 +285,13 @@ do_test(const DoFHandler<dim>& dof)
     solver.solve(fine_matrix, sol, in, preconditioner);
   }
 
-  if(std::is_same<number, float>::value == true)
+  if (std::is_same<number, float>::value == true)
     deallog.pop();
 
   fine_matrix.clear();
-  for(unsigned int level = 0; level < dof.get_triangulation().n_global_levels();
-      ++level)
+  for (unsigned int level = 0;
+       level < dof.get_triangulation().n_global_levels();
+       ++level)
     mg_matrices[level].clear();
 }
 
@@ -301,16 +306,16 @@ test()
   GridGenerator::hyper_cube(tria);
   tria.refine_global(6 - dim);
   const unsigned int n_runs = fe_degree == 1 ? 6 - dim : 5 - dim;
-  for(unsigned int i = 0; i < n_runs; ++i)
+  for (unsigned int i = 0; i < n_runs; ++i)
     {
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell)
-        if(cell->is_locally_owned()
-           && ((cell->center().norm() < 0.5
-                && (cell->level() < 5 || cell->center().norm() > 0.45))
-               || (dim == 2 && cell->center().norm() > 1.2)))
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell)
+        if (cell->is_locally_owned()
+            && ((cell->center().norm() < 0.5
+                 && (cell->level() < 5 || cell->center().norm() > 0.45))
+                || (dim == 2 && cell->center().norm() > 1.2)))
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
       FE_Q<dim>       fe(fe_degree);
@@ -327,7 +332,7 @@ main(int argc, char** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog.attach(logfile);
       deallog << std::setprecision(4);

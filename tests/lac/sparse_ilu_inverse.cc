@@ -31,22 +31,22 @@ main()
   deallog << std::setprecision(3);
   deallog.attach(logfile);
 
-  for(unsigned int N = 1; N < 5; ++N)
+  for (unsigned int N = 1; N < 5; ++N)
     {
       deallog << "N=" << N << std::endl;
 
       SparsityPattern structure(N, N, N);
-      for(unsigned int i = 0; i < N; ++i)
-        for(unsigned int j = 0; j < N; ++j)
+      for (unsigned int i = 0; i < N; ++i)
+        for (unsigned int j = 0; j < N; ++j)
           structure.add(i, j);
       structure.compress();
       SparseMatrix<double> A(structure);
-      for(unsigned int i = 0; i < N; ++i)
+      for (unsigned int i = 0; i < N; ++i)
         {
           A.set(i, i, 2);
-          if(i >= 1)
+          if (i >= 1)
             A.set(i, i - 1, -1);
-          if(i < N - 1)
+          if (i < N - 1)
             A.set(i, i + 1, -1);
         }
 
@@ -58,12 +58,12 @@ main()
       // inverse
       FullMatrix<double> inverse(N, N);
       Vector<double>     tmp1(N), tmp2(N);
-      for(unsigned int i = 0; i < N; ++i)
+      for (unsigned int i = 0; i < N; ++i)
         {
           tmp1    = 0;
           tmp1(i) = 1;
           ilu.vmult(tmp2, tmp1);
-          for(unsigned int j = 0; j < N; ++j)
+          for (unsigned int j = 0; j < N; ++j)
             inverse(i, j) = tmp2(j);
         }
 

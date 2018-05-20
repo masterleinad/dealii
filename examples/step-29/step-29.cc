@@ -127,7 +127,7 @@ namespace Step29
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
 
-    for(unsigned int p = 0; p < points.size(); ++p)
+    for (unsigned int p = 0; p < points.size(); ++p)
       DirichletBoundaryValues<dim>::vector_value(points[p], value_list[p]);
   }
 
@@ -346,7 +346,7 @@ namespace Step29
     // The computation itself is straightforward: We iterate over each entry
     // in the output vector and compute $|u|$ from the corresponding values of
     // $v$ and $w$:
-    for(unsigned int i = 0; i < computed_quantities.size(); i++)
+    for (unsigned int i = 0; i < computed_quantities.size(); i++)
       {
         Assert(computed_quantities[i].size() == 1,
                ExcDimensionMismatch(computed_quantities[i].size(), 1));
@@ -467,11 +467,11 @@ namespace Step29
     typename Triangulation<dim>::cell_iterator cell = triangulation.begin(),
                                                endc = triangulation.end();
 
-    for(; cell != endc; ++cell)
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        if(cell->face(face)->at_boundary()
-           && ((cell->face(face)->center() - transducer).norm_square() < 0.01))
+    for (; cell != endc; ++cell)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        if (cell->face(face)->at_boundary()
+            && ((cell->face(face)->center() - transducer).norm_square() < 0.01))
           {
             cell->face(face)->set_boundary_id(1);
             cell->face(face)->set_manifold_id(1);
@@ -582,7 +582,7 @@ namespace Step29
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         // On each cell, we first need to reset the local contribution matrix
         // and request the FEValues object to compute the shape functions for
@@ -590,9 +590,9 @@ namespace Step29
         cell_matrix = 0;
         fe_values.reinit(cell);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
                 // At this point, it is important to keep in mind that we are
                 // dealing with a finite element system with two
@@ -626,8 +626,8 @@ namespace Step29
                 // behind primitive vector valued elements, take a look at
                 // step-8 or the @ref vector_valued module, where these topics
                 // are explained in depth.
-                if(fe.system_to_component_index(i).first
-                   == fe.system_to_component_index(j).first)
+                if (fe.system_to_component_index(i).first
+                    == fe.system_to_component_index(j).first)
                   {
                     // If both DoFs $i$ and $j$ belong to same component,
                     // i.e. their shape functions are both $\phi$'s or both
@@ -640,8 +640,8 @@ namespace Step29
                     // their contributions, where values and gradients of the
                     // shape functions are supplied by our FEValues object.
 
-                    for(unsigned int q_point = 0; q_point < n_q_points;
-                        ++q_point)
+                    for (unsigned int q_point = 0; q_point < n_q_points;
+                         ++q_point)
                       cell_matrix(i, j)
                         += (((fe_values.shape_value(i, q_point)
                               * fe_values.shape_value(j, q_point))
@@ -668,10 +668,10 @@ namespace Step29
         // is at the boundary, and second has the correct boundary indicator
         // associated with $\Gamma_2$, the part of the boundary where we have
         // absorbing boundary conditions:
-        for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-            ++face)
-          if(cell->face(face)->at_boundary()
-             && (cell->face(face)->boundary_id() == 0))
+        for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+             ++face)
+          if (cell->face(face)->at_boundary()
+              && (cell->face(face)->boundary_id() == 0))
             {
               // These faces will certainly contribute to the off-diagonal
               // blocks of the system matrix, so we ask the FEFaceValues
@@ -682,12 +682,12 @@ namespace Step29
               // Next, we loop through all DoFs of the current cell to find
               // pairs that belong to different components and both have
               // support on the current face:
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
-                  if((fe.system_to_component_index(i).first
-                      != fe.system_to_component_index(j).first)
-                     && fe.has_support_on_face(i, face)
-                     && fe.has_support_on_face(j, face))
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
+                  if ((fe.system_to_component_index(i).first
+                       != fe.system_to_component_index(j).first)
+                      && fe.has_support_on_face(i, face)
+                      && fe.has_support_on_face(j, face))
                     // The check whether shape functions have support on a
                     // face is not strictly necessary: if we don't check for
                     // it we would simply add up terms to the local cell
@@ -709,8 +709,8 @@ namespace Step29
                     // already checked that DoF $i$ and $j$ belong to
                     // different components, it suffices here to test for one
                     // of them to which component it belongs.
-                    for(unsigned int q_point = 0; q_point < n_face_q_points;
-                        ++q_point)
+                    for (unsigned int q_point = 0; q_point < n_face_q_points;
+                         ++q_point)
                       cell_matrix(i, j)
                         += ((fe.system_to_component_index(i).first == 0) ? -1 :
                                                                            1)
@@ -726,8 +726,8 @@ namespace Step29
         cell->get_dof_indices(local_dof_indices);
 
         // ...and then add the entries to the system matrix one by one:
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
       }
@@ -893,7 +893,7 @@ main()
       UltrasoundProblem<2> ultrasound_problem(prm);
       ultrasound_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -906,7 +906,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

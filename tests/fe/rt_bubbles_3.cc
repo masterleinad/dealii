@@ -31,9 +31,9 @@ test(const unsigned int degree)
   FE_RT_Bubbles<dim>        fe_rt_bubbles(degree);
   const FullMatrix<double>& constraints = fe_rt_bubbles.constraints();
 
-  for(unsigned int i = 0; i < constraints.m(); ++i)
+  for (unsigned int i = 0; i < constraints.m(); ++i)
     {
-      for(unsigned int j = 0; j < constraints.n(); ++j)
+      for (unsigned int j = 0; j < constraints.n(); ++j)
         deallog << constraints(i, j) << ' ';
       deallog << std::endl;
     }
@@ -49,7 +49,7 @@ main()
   deallog << std::fixed;
   deallog.attach(logfile);
 
-  for(unsigned int degree = 1; degree < 4; ++degree)
+  for (unsigned int degree = 1; degree < 4; ++degree)
     {
       test<2>(degree);
       test<3>(degree);

@@ -56,7 +56,7 @@ LaplaceProblem<dim>::run()
     triangulation.n_active_cells());
   SparsityTools::reorder_Cuthill_McKee(cell_connectivity, permutation);
 
-  for(unsigned int i = 0; i < permutation.size(); ++i)
+  for (unsigned int i = 0; i < permutation.size(); ++i)
     deallog << permutation[i] << std::endl;
 }
 
@@ -70,7 +70,7 @@ main()
       LaplaceProblem<3> laplace_problem_3d;
       laplace_problem_3d.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -83,7 +83,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

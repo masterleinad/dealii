@@ -823,7 +823,7 @@ namespace LinearAlgebra
     const std::vector<size_type>& indices,
     std::vector<Number2>&         extracted_values) const
   {
-    for(size_type i = 0; i < indices.size(); ++i)
+    for (size_type i = 0; i < indices.size(); ++i)
       extracted_values[i] = operator()(indices[i]);
   }
 
@@ -835,7 +835,7 @@ namespace LinearAlgebra
     const ForwardIterator indices_end,
     OutputIterator        values_begin) const
   {
-    while(indices_begin != indices_end)
+    while (indices_begin != indices_end)
       {
         *values_begin = operator()(*indices_begin);
         indices_begin++;
@@ -878,7 +878,7 @@ namespace LinearAlgebra
                                const ReadWriteVector<Number2>& values)
   {
     const size_type size = indices.size();
-    for(size_type i = 0; i < size; ++i)
+    for (size_type i = 0; i < size; ++i)
       {
         Assert(
           numbers::is_finite(values[i]),
@@ -895,7 +895,7 @@ namespace LinearAlgebra
                                const size_type* indices,
                                const Number2*   values_to_add)
   {
-    for(size_type i = 0; i < n_indices; ++i)
+    for (size_type i = 0; i < n_indices; ++i)
       {
         Assert(
           numbers::is_finite(values[i]),
@@ -919,7 +919,7 @@ namespace LinearAlgebra
   ReadWriteVector<Number>::FunctorTemplate<Functor>::
   operator()(const size_type begin, const size_type end)
   {
-    for(size_type i = begin; i < end; ++i)
+    for (size_type i = begin; i < end; ++i)
       functor(parent.values[i]);
   }
 

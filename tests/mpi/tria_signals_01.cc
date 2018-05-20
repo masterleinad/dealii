@@ -141,7 +141,7 @@ test()
     typename TriaType::active_cell_iterator       cell = tria.begin_active();
     const typename TriaType::active_cell_iterator endc = tria.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell->set_coarsen_flag();
       }

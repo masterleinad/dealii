@@ -90,7 +90,7 @@ namespace TrilinosWrappers
     // Build the AMG preconditioner.
     Teuchos::ParameterList parameter_list;
 
-    if(additional_data.elliptic == true)
+    if (additional_data.elliptic == true)
       ML_Epetra::SetDefaults("SA", parameter_list);
     else
       {
@@ -109,7 +109,7 @@ namespace TrilinosWrappers
                        static_cast<int>(additional_data.smoother_sweeps));
     parameter_list.set("cycle applications",
                        static_cast<int>(additional_data.n_cycles));
-    if(additional_data.w_cycle == true)
+    if (additional_data.w_cycle == true)
       parameter_list.set("prec type", "MGW");
     else
       parameter_list.set("prec type", "MGV");
@@ -121,7 +121,7 @@ namespace TrilinosWrappers
                        additional_data.aggregation_threshold);
     parameter_list.set("coarse: max size", 2000);
 
-    if(additional_data.output_details)
+    if (additional_data.output_details)
       parameter_list.set("ML output", 10);
     else
       parameter_list.set("ML output", 0);
@@ -134,7 +134,7 @@ namespace TrilinosWrappers
       domain_map, constant_modes_dimension > 0 ? constant_modes_dimension : 1);
     std::vector<double> dummy(constant_modes_dimension);
 
-    if(constant_modes_dimension > 0)
+    if (constant_modes_dimension > 0)
       {
         const size_type n_rows = TrilinosWrappers::n_global_rows(matrix);
         const bool      constant_modes_are_global
@@ -144,7 +144,7 @@ namespace TrilinosWrappers
               n_rows :
               additional_data.constant_modes[0].size();
         const size_type my_size = domain_map.NumMyElements();
-        if(constant_modes_are_global == false)
+        if (constant_modes_are_global == false)
           Assert(n_relevant_rows == my_size,
                  ExcDimensionMismatch(n_relevant_rows, my_size));
         Assert(n_rows
@@ -159,8 +159,8 @@ namespace TrilinosWrappers
 
         // Reshape null space as a contiguous vector of doubles so that
         // Trilinos can read from it.
-        for(size_type d = 0; d < constant_modes_dimension; ++d)
-          for(size_type row = 0; row < my_size; ++row)
+        for (size_type d = 0; d < constant_modes_dimension; ++d)
+          for (size_type row = 0; row < my_size; ++row)
             {
               TrilinosWrappers::types::int_type global_row_id
                 = constant_modes_are_global ?
@@ -173,7 +173,7 @@ namespace TrilinosWrappers
         parameter_list.set("null space: type", "pre-computed");
         parameter_list.set("null space: dimension",
                            distributed_constant_modes.NumVectors());
-        if(my_size > 0)
+        if (my_size > 0)
           parameter_list.set("null space: vectors",
                              distributed_constant_modes.Values());
         // We need to set a valid pointer to data even if there is no data on
@@ -248,7 +248,7 @@ namespace TrilinosWrappers
     vector_distributor = std::make_shared<Epetra_Map>(
       static_cast<TrilinosWrappers::types::int_type>(n_rows), 0, communicator);
 
-    if(trilinos_matrix.get() == nullptr)
+    if (trilinos_matrix.get() == nullptr)
       trilinos_matrix = std::make_shared<SparseMatrix>();
 
     trilinos_matrix->reinit(*vector_distributor,
@@ -275,7 +275,7 @@ namespace TrilinosWrappers
 
     // todo: find a way to read out ML's data
     // sizes
-    if(trilinos_matrix.get() != nullptr)
+    if (trilinos_matrix.get() != nullptr)
       memory += trilinos_matrix->memory_consumption();
     return memory;
   }

@@ -84,13 +84,13 @@ ladutenko_circle(Triangulation<dim>& triangulation,
   typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active(),
     endc = triangulation.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->center().distance(center) < 1e-10)
+      if (cell->center().distance(center) < 1e-10)
         {
-          for(unsigned int vertex_n = 0;
-              vertex_n < GeometryInfo<dim>::vertices_per_cell;
-              ++vertex_n)
+          for (unsigned int vertex_n = 0;
+               vertex_n < GeometryInfo<dim>::vertices_per_cell;
+               ++vertex_n)
             {
               cell->vertex(vertex_n)
                 *= core_radius / center.distance(cell->vertex(vertex_n));
@@ -108,15 +108,15 @@ ladutenko_circle(Triangulation<dim>& triangulation,
   // and
   // Step 5: Refine the outer loop
   cell = triangulation.begin_active();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         {
           const double dist = center.distance(cell->vertex(v));
-          if(dist > core_radius * 1.0001 && dist < radius - 1.0e-5)
+          if (dist > core_radius * 1.0001 && dist < radius - 1.0e-5)
             cell->vertex(v) *= inner_radius / dist;
         }
-      if(cell->at_boundary())
+      if (cell->at_boundary())
         {
           cell->set_refine_flag();
         }
@@ -155,10 +155,10 @@ QuadraticTimeCircle<dim>::QuadraticTimeCircle(
   typename Triangulation<dim>::active_cell_iterator cell
     = triangulation.begin_active(),
     endc = triangulation.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       // do not use any curved cells on the interior.
-      if(!cell->at_boundary())
+      if (!cell->at_boundary())
         {
           cell->set_all_manifold_ids(straight_manifold_id);
         }
@@ -205,7 +205,7 @@ main(int argc, char** argv)
 
   unsigned int n_global_refines = 2;
 
-  for(unsigned int i = 0; i < n_cycles; ++i)
+  for (unsigned int i = 0; i < n_cycles; ++i)
     {
       n_global_refines += 1;
       QuadraticTimeCircle<dim> quadratic_time_circle(n_global_refines);

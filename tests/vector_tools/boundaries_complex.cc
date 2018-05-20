@@ -51,7 +51,7 @@ public:
   virtual void
   vector_value(const Point<dim>& p, Vector<std::complex<double>>& values) const
   {
-    for(unsigned int d = 0; d < this->n_components; ++d)
+    for (unsigned int d = 0; d < this->n_components; ++d)
       values(d) = value(p, d);
   }
 };
@@ -67,10 +67,10 @@ boundary_q(const DoFHandler<dim>&)
 void
 write_map(const std::map<types::global_dof_index, std::complex<double>>& bv)
 {
-  for(std::map<types::global_dof_index, std::complex<double>>::const_iterator i
-      = bv.begin();
-      i != bv.end();
-      ++i)
+  for (std::map<types::global_dof_index, std::complex<double>>::const_iterator i
+       = bv.begin();
+       i != bv.end();
+       ++i)
     deallog << i->first << ' ' << i->second << std::endl;
 }
 
@@ -79,7 +79,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     {
       GridGenerator::hyper_ball(tr, Point<dim>(), 1);
     }
@@ -89,14 +89,14 @@ check()
                               1. / std::sqrt(static_cast<double>(dim)));
   GridTools::copy_boundary_to_manifold_id(tr);
   static const SphericalManifold<dim> boundary;
-  if(dim != 1)
+  if (dim != 1)
     {
       tr.set_manifold(0, boundary);
     }
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // use a cubic mapping to make
@@ -123,7 +123,7 @@ check()
       std::complex<double>(1, 0)));
 
   // check all of them
-  for(unsigned int i = 0; i < fe_list.size(); ++i)
+  for (unsigned int i = 0; i < fe_list.size(); ++i)
     {
       const FiniteElement<dim>& fe = *fe_list[i];
 
@@ -143,7 +143,7 @@ check()
       // project boundary values
       // presently this is not
       // implemented for 3d
-      if(dim != 3)
+      if (dim != 3)
         {
           deallog << "Projected boundary values" << std::endl;
           std::map<types::global_dof_index, std::complex<double>> projected_bv;
@@ -154,7 +154,7 @@ check()
     }
 
   // delete objects now no more needed
-  for(unsigned int i = 0; i < fe_list.size(); ++i)
+  for (unsigned int i = 0; i < fe_list.size(); ++i)
     {
       delete fe_list[i];
       delete function_list[i];

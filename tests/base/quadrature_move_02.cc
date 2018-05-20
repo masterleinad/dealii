@@ -36,7 +36,7 @@ check_q_assign_move(Args&&... args)
 
   const std::vector<double>     weights2 = quad2.get_weights();
   const std::vector<Point<dim>> points2  = quad2.get_points();
-  for(unsigned int i = 0; i < size1; ++i)
+  for (unsigned int i = 0; i < size1; ++i)
     {
       AssertThrow(std::abs(weights1[i] - weights2[i]) < 1.e-16,
                   ExcInternalError());
@@ -69,14 +69,14 @@ main()
   check_quadrature_assign_move<QMilne>();
   check_quadrature_assign_move<QWeddle>();
 
-  for(unsigned int p = 2; p < 5; ++p)
+  for (unsigned int p = 2; p < 5; ++p)
     {
       check_quadrature_assign_move<QGauss>(p);
       check_quadrature_assign_move<QGaussLobatto>(p);
     }
 
   const auto ep = QGaussRadauChebyshev<1>::right;
-  for(unsigned int p = 2; p < 5; ++p)
+  for (unsigned int p = 2; p < 5; ++p)
     {
       deallog << "Gauss Log R: " << check_q_assign_move<QGaussLogR, 1>(p)
               << std::endl;

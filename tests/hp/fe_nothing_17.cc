@@ -53,7 +53,7 @@ transfer(std::ostream& out)
   dof_handler.distribute_dofs(fe);
   solution.reinit(dof_handler.n_dofs());
 
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for (unsigned int i = 0; i < solution.size(); ++i)
     solution(i) = i;
 
   SolutionTransfer<dim> soltrans(dof_handler);
@@ -63,7 +63,7 @@ transfer(std::ostream& out)
                                                     endc = tria.end();
   ++cell;
   ++cell;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_refine_flag();
 
   tria.prepare_coarsening_and_refinement();
@@ -83,7 +83,7 @@ transfer(std::ostream& out)
   endc = tria.end(tria.n_levels() - 1);
   cell->set_refine_flag();
   ++cell;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     cell->set_coarsen_flag();
   Vector<double> old_solution = solution;
   tria.prepare_coarsening_and_refinement();

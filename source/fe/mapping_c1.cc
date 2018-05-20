@@ -68,12 +68,12 @@ MappingC1<2>::MappingC1Generic::add_line_support_points(
   // loop over each of the lines, and if it is at the boundary, then first get
   // the boundary description and second compute the points on it. if not at
   // the boundary, get the respective points from another function
-  for(unsigned int line_no = 0; line_no < GeometryInfo<dim>::lines_per_cell;
-      ++line_no)
+  for (unsigned int line_no = 0; line_no < GeometryInfo<dim>::lines_per_cell;
+       ++line_no)
     {
       const Triangulation<dim>::line_iterator line = cell->line(line_no);
 
-      if(line->at_boundary())
+      if (line->at_boundary())
         {
           // first get the normal vectors at the two vertices of this line
           // from the boundary description
@@ -134,7 +134,7 @@ MappingC1<2>::MappingC1Generic::add_line_support_points(
             = {Point<2>(t1, s_t1), Point<2>(t2, s_t2)};
           // then transform these points to real coordinates by rotating,
           // scaling and shifting
-          for(unsigned int i = 0; i < 2; ++i)
+          for (unsigned int i = 0; i < 2; ++i)
             {
               Point<2> real_point(std::cos(alpha) * new_unit_points[i][0]
                                     - std::sin(alpha) * new_unit_points[i][1],

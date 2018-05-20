@@ -95,9 +95,9 @@ namespace PETScWrappers
 
       // if the vectors have different sizes,
       // then first resize the present one
-      if(size() != v.size())
+      if (size() != v.size())
         {
-          if(v.has_ghost_elements())
+          if (v.has_ghost_elements())
             reinit(v.locally_owned_elements(), v.ghost_indices, v.communicator);
           else
             reinit(v.communicator, v.size(), v.local_size(), true);
@@ -106,7 +106,7 @@ namespace PETScWrappers
       PetscErrorCode ierr = VecCopy(v.vector, vector);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-      if(has_ghost_elements())
+      if (has_ghost_elements())
         {
           ierr = VecGhostUpdateBegin(vector, INSERT_VALUES, SCATTER_FORWARD);
           AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -143,7 +143,7 @@ namespace PETScWrappers
         AssertThrowMPI(ierr);
       }
 
-      if(k_global || has_ghost_elements())
+      if (k_global || has_ghost_elements())
         {
           // FIXME: I'd like to use this here,
           // but somehow it leads to odd errors
@@ -162,17 +162,17 @@ namespace PETScWrappers
 
       // finally clear the new vector if so
       // desired
-      if(omit_zeroing_entries == false)
+      if (omit_zeroing_entries == false)
         *this = 0;
     }
 
     void
     Vector::reinit(const Vector& v, const bool omit_zeroing_entries)
     {
-      if(v.has_ghost_elements())
+      if (v.has_ghost_elements())
         {
           reinit(v.locally_owned_elements(), v.ghost_indices, v.communicator);
-          if(!omit_zeroing_entries)
+          if (!omit_zeroing_entries)
             {
               const PetscErrorCode ierr = VecSet(vector, 0.0);
               AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -333,7 +333,7 @@ namespace PETScWrappers
       unsigned int       old_precision = out.precision(precision);
 
       out.precision(precision);
-      if(scientific)
+      if (scientific)
         out.setf(std::ios::scientific, std::ios::floatfield);
       else
         out.setf(std::ios::fixed, std::ios::floatfield);
@@ -343,26 +343,27 @@ namespace PETScWrappers
       // which is clearly slow, but nobody is going to print a whole
       // matrix this way on a regular basis for production runs, so
       // the slowness of the barrier doesn't matter
-      for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(communicator);
-          i++)
+      for (unsigned int i = 0;
+           i < Utilities::MPI::n_mpi_processes(communicator);
+           i++)
         {
           const int mpi_ierr = MPI_Barrier(communicator);
           AssertThrowMPI(mpi_ierr);
 
-          if(i == Utilities::MPI::this_mpi_process(communicator))
+          if (i == Utilities::MPI::this_mpi_process(communicator))
             {
-              if(across)
+              if (across)
                 {
                   out << "[Proc" << i << " " << istart << "-" << iend - 1 << "]"
                       << ' ';
-                  for(PetscInt i = 0; i < nlocal; ++i)
+                  for (PetscInt i = 0; i < nlocal; ++i)
                     out << val[i] << ' ';
                 }
               else
                 {
                   out << "[Proc " << i << " " << istart << "-" << iend - 1
                       << "]" << std::endl;
-                  for(PetscInt i = 0; i < nlocal; ++i)
+                  for (PetscInt i = 0; i < nlocal; ++i)
                     out << val[i] << std::endl;
                 }
               out << std::endl;

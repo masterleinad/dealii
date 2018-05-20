@@ -70,7 +70,7 @@ public:
   void
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       v(i) = p[i] * p[0] / 2;
   }
 };
@@ -83,7 +83,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   parallel::distributed::Triangulation<dim> triangulation(

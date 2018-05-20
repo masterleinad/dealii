@@ -40,9 +40,9 @@ main()
   std::ofstream out("output");
   std::string   line;
   unsigned int  counter = 5;
-  while(counter--)
+  while (counter--)
     std::getline(in, line);
-  while(std::getline(in, line))
+  while (std::getline(in, line))
     out << line << std::endl;
   in.close();
   out.close();

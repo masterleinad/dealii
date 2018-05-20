@@ -56,11 +56,11 @@ plot_transformation(Mapping<dim>&                            mapping,
   deallog.push(name);
 
   unsigned int k = 0;
-  for(unsigned int nz = 0; nz <= ((dim > 2) ? div : 0); ++nz)
+  for (unsigned int nz = 0; nz <= ((dim > 2) ? div : 0); ++nz)
     {
-      for(unsigned int ny = 0; ny <= ((dim > 1) ? div : 0); ++ny)
+      for (unsigned int ny = 0; ny <= ((dim > 1) ? div : 0); ++ny)
         {
-          for(unsigned int nx = 0; nx <= div; ++nx)
+          for (unsigned int nx = 0; nx <= div; ++nx)
             {
               deallog << fe_values.quadrature_point(k);
               double J = fe_values.JxW(k) / q.weight(k);
@@ -94,15 +94,15 @@ plot_faces(Mapping<dim>&                            mapping,
                                           | update_JxW_values
                                           | update_normal_vectors));
 
-  for(unsigned int face_nr = 0; face_nr < GeometryInfo<dim>::faces_per_cell;
-      ++face_nr)
+  for (unsigned int face_nr = 0; face_nr < GeometryInfo<dim>::faces_per_cell;
+       ++face_nr)
     {
       fe_values.reinit(cell, face_nr);
 
       unsigned int k = 0;
-      for(unsigned int ny = 0; ny < ((dim > 2) ? nq : 1); ++ny)
+      for (unsigned int ny = 0; ny < ((dim > 2) ? nq : 1); ++ny)
         {
-          for(unsigned int nx = 0; nx < nq; ++nx)
+          for (unsigned int nx = 0; nx < nq; ++nx)
             {
               const Point<dim>     x  = fe_values.quadrature_point(k);
               const Tensor<1, dim> n  = fe_values.normal_vector(k);
@@ -136,11 +136,11 @@ plot_subfaces(Mapping<dim>&                            mapping,
     fe,
     q,
     UpdateFlags(update_quadrature_points | update_normal_vectors));
-  for(unsigned int face_nr = 0; face_nr < GeometryInfo<dim>::faces_per_cell;
-      ++face_nr)
-    for(unsigned int sub_nr = 0;
-        sub_nr < GeometryInfo<dim>::max_children_per_face;
-        ++sub_nr)
+  for (unsigned int face_nr = 0; face_nr < GeometryInfo<dim>::faces_per_cell;
+       ++face_nr)
+    for (unsigned int sub_nr = 0;
+         sub_nr < GeometryInfo<dim>::max_children_per_face;
+         ++sub_nr)
       {
         fe_values.reinit(cell, face_nr, sub_nr);
 
@@ -148,9 +148,9 @@ plot_subfaces(Mapping<dim>&                            mapping,
           = fe_values.get_all_normal_vectors();
 
         unsigned int k = 0;
-        for(unsigned int ny = 0; ny < ((dim > 2) ? nq : 1); ++ny)
+        for (unsigned int ny = 0; ny < ((dim > 2) ? nq : 1); ++ny)
           {
-            for(unsigned int nx = 0; nx < nq; ++nx)
+            for (unsigned int nx = 0; nx < nq; ++nx)
               {
                 Point<dim>     x = fe_values.quadrature_point(k);
                 Tensor<1, dim> n = normals[k];
@@ -190,7 +190,7 @@ compute_area(Mapping<dim>&                            mapping,
   const std::vector<double>& JxW = fe_values.get_JxW_values();
 
   double area = 0;
-  for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
+  for (unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
     area += JxW[i];
   deallog << "  area=" << area << std::endl;
 }
@@ -231,7 +231,7 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
   show.clear();
   show.resize(4, std::vector<unsigned int>(mapping_size, 0));
   // tria0: 3x3 square rotated
-  if(1)
+  if (1)
     {
       tria = new Triangulation<2>();
       tria_ptr.push_back(tria);
@@ -244,7 +244,7 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
                                     Point<2>(left, right)};
       const int                cell_vertices[1][4] = {{1, 2, 0, 3}};
       std::vector<CellData<2>> cells(1, CellData<2>());
-      for(unsigned int j = 0; j < 4; ++j)
+      for (unsigned int j = 0; j < 4; ++j)
         cells[0].vertices[j] = cell_vertices[0][j];
       cells[0].material_id = 0;
 
@@ -256,7 +256,7 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
     }
 
   // tria1: arbitrary quadrilateral
-  if(1)
+  if (1)
     {
       tria = new Triangulation<2>();
       tria_ptr.push_back(tria);
@@ -271,7 +271,7 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
     }
 
   // tria2: crazy cell
-  if(2)
+  if (2)
     {
       Manifold<2>* boundary1 = new SphericalManifold<2>(Point<2>(3, 1));
       Manifold<2>* boundary2 = new SphericalManifold<2>(Point<2>(2, 5));
@@ -293,11 +293,11 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       double pi    = std::acos(-1.);
       double alpha = 2 * std::atan(0.5);
       exact_areas.push_back(4 + pi - 2.5 * (alpha - std::sin(alpha)));
-      for(unsigned int i = 0; i <= 3; ++i)
+      for (unsigned int i = 0; i <= 3; ++i)
         show[2][i] = 1;
     }
 
-  if(3)
+  if (3)
     {
       tria = new Triangulation<2>();
       tria_ptr.push_back(tria);
@@ -312,7 +312,7 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       show[3][4] = 1;
     }
 
-  if(4 && false)
+  if (4 && false)
     {
       Manifold<2>* boundary1 = new SphericalManifold<2>(Point<2>(2.5, -0.5));
       boundary_ptr.push_back(boundary1);
@@ -328,7 +328,7 @@ void create_triangulations(std::vector<Triangulation<2>*>& tria_ptr,
       tria->set_manifold(1, *boundary1);
       tria->begin_active()->face(1)->set_manifold_id(1);
       exact_areas.push_back(0.);
-      for(unsigned int i = 0; i <= 4; ++i)
+      for (unsigned int i = 0; i <= 4; ++i)
         show[4][i] = 1;
     }
 }
@@ -343,7 +343,7 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
   show.resize(4, std::vector<unsigned int>(mapping_size, 0));
 
   // 2x2 cube
-  if(1)
+  if (1)
     {
       tria = new Triangulation<3>();
       tria_ptr.push_back(tria);
@@ -352,7 +352,7 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
     }
 
   // arbitrary quadrilateral
-  if(1)
+  if (1)
     {
       tria = new Triangulation<3>();
       tria_ptr.push_back(tria);
@@ -365,7 +365,7 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
     }
 
   // cube+part of ball
-  if(2)
+  if (2)
     {
       Point<3> m(2, 2, 2);
       Point<3> v(3, 3, 3);
@@ -382,7 +382,7 @@ void create_triangulations(std::vector<Triangulation<3>*>& tria_ptr,
       exact_areas.push_back(8. + pi / 3 * h * h * (3 * r - h));
     }
 
-  if(3)
+  if (3)
     {
       tria = new Triangulation<3>();
       tria_ptr.push_back(tria);
@@ -443,7 +443,7 @@ mapping_test()
 
   FE_Q<dim> fe_q4(4);
 
-  for(unsigned int i = 0; i < tria_ptr.size(); ++i)
+  for (unsigned int i = 0; i < tria_ptr.size(); ++i)
     {
       DoFHandler<dim> dof(*tria_ptr[i]);
       dof.distribute_dofs(fe_q4);
@@ -452,10 +452,10 @@ mapping_test()
       deallog << "Triangulation" << i << ":" << std::endl;
 
       deallog << "exact_area=" << exact_areas[i] << std::endl;
-      for(unsigned int j = 0; j < mapping_size; ++j)
-        if(show[i][j])
+      for (unsigned int j = 0; j < mapping_size; ++j)
+        if (show[i][j])
           {
-            if(true)
+            if (true)
               {
                 std::ostringstream ost;
                 ost << "Mapping" << dim << "d-" << i << '-'
@@ -465,7 +465,7 @@ mapping_test()
                 compute_area(*mapping_ptr[j], fe_q4, cell);
               }
 
-            if(dim > 1)
+            if (dim > 1)
               {
                 std::ostringstream ost;
                 ost << "MappingFace" << dim << "d-" << i << '-'
@@ -474,7 +474,7 @@ mapping_test()
                 plot_faces(*mapping_ptr[j], fe_q4, cell, ost.str());
               }
 
-            if(dim > 1)
+            if (dim > 1)
               {
                 std::ostringstream ost;
                 ost << "MappingSubface" << dim << "d-" << i << '-'
@@ -484,11 +484,11 @@ mapping_test()
               }
 
             // Test for transform_*_to_*_cell
-            if(true)
+            if (true)
               {
                 Mapping<dim>& mapping = *mapping_ptr[j];
                 Point<dim>    p_unit;
-                switch(dim)
+                switch (dim)
                   {
                     case 1:
                       p_unit = Point<dim>(6 / 7.);
@@ -513,12 +513,12 @@ mapping_test()
 
   // delete all triangulations and
   // boundary objects
-  for(unsigned int i = 0; i < tria_ptr.size(); ++i)
-    if(tria_ptr[i] != nullptr)
+  for (unsigned int i = 0; i < tria_ptr.size(); ++i)
+    if (tria_ptr[i] != nullptr)
       delete tria_ptr[i];
 
-  for(unsigned int i = 0; i < boundary_ptr.size(); ++i)
-    if(boundary_ptr[i] != nullptr)
+  for (unsigned int i = 0; i < boundary_ptr.size(); ++i)
+    if (boundary_ptr[i] != nullptr)
       delete boundary_ptr[i];
 }
 

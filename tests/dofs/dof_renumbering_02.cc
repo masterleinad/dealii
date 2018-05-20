@@ -38,24 +38,24 @@ print_dofs(const DoFHandler<dim>& dof)
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
-  if(fe.has_support_points())
+  if (fe.has_support_points())
     {
       Quadrature<dim> quad(fe.get_unit_support_points());
       fevalues = std::shared_ptr<FEValues<dim>>(
         new FEValues<dim>(fe, quad, update_quadrature_points));
     }
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     {
       Point<dim> p = cell->center();
-      if(fevalues.get() != nullptr)
+      if (fevalues.get() != nullptr)
         fevalues->reinit(cell);
 
       cell->get_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
-        if(fevalues.get() != nullptr)
+      for (unsigned int i = 0; i < v.size(); ++i)
+        if (fevalues.get() != nullptr)
           deallog << fevalues->quadrature_point(i) << '\t' << v[i] << std::endl;
         else
           deallog << p << '\t' << v[i] << std::endl;
@@ -71,24 +71,24 @@ print_dofs(const DoFHandler<dim>& dof, unsigned int level)
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
-  if(fe.has_support_points())
+  if (fe.has_support_points())
     {
       Quadrature<dim> quad(fe.get_unit_support_points());
       fevalues = std::shared_ptr<FEValues<dim>>(
         new FEValues<dim>(fe, quad, update_quadrature_points));
     }
 
-  for(typename DoFHandler<dim>::cell_iterator cell = dof.begin(level);
-      cell != dof.end(level);
-      ++cell)
+  for (typename DoFHandler<dim>::cell_iterator cell = dof.begin(level);
+       cell != dof.end(level);
+       ++cell)
     {
       Point<dim> p = cell->center();
-      if(fevalues.get() != nullptr)
+      if (fevalues.get() != nullptr)
         fevalues->reinit(cell);
 
       cell->get_mg_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
-        if(fevalues.get() != nullptr)
+      for (unsigned int i = 0; i < v.size(); ++i)
+        if (fevalues.get() != nullptr)
           deallog << fevalues->quadrature_point(i) << '\t' << v[i] << std::endl;
         else
           deallog << p << '\t' << v[i] << std::endl;
@@ -107,19 +107,19 @@ check_renumbering(DoFHandler<dim>& mgdof)
   // Prepare a reordering of
   // components for later use
   std::vector<unsigned int> order(element.n_components());
-  for(unsigned int i = 0; i < order.size(); ++i)
+  for (unsigned int i = 0; i < order.size(); ++i)
     order[i] = order.size() - i - 1;
 
   Tensor<1, dim> direction;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     direction[i] = -5.0001 + 1.13 * i;
 
   deallog << std::endl << "Downstream numbering cell-wise" << std::endl;
   DoFRenumbering::downstream(dof, direction);
   print_dofs(dof);
   // Check level ordering
-  for(unsigned int level = 0; level < dof.get_triangulation().n_levels();
-      ++level)
+  for (unsigned int level = 0; level < dof.get_triangulation().n_levels();
+       ++level)
     {
       deallog << "Level " << level << std::endl;
       DoFRenumbering::downstream(mgdof, level, direction);
@@ -130,8 +130,8 @@ check_renumbering(DoFHandler<dim>& mgdof)
   DoFRenumbering::downstream(dof, direction, true);
   print_dofs(dof);
   // Check level ordering
-  for(unsigned int level = 0; level < dof.get_triangulation().n_levels();
-      ++level)
+  for (unsigned int level = 0; level < dof.get_triangulation().n_levels();
+       ++level)
     {
       deallog << "Level " << level << std::endl;
       DoFRenumbering::downstream(mgdof, level, direction, true);

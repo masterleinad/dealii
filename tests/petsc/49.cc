@@ -26,13 +26,13 @@ test(PETScWrappers::MPI::Vector& v)
 {
   Vector<PetscScalar> w(v.size());
 
-  for(unsigned int i = 0; i < w.size(); ++i)
+  for (unsigned int i = 0; i < w.size(); ++i)
     w(i) = i;
 
   v = w;
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i, ExcInternalError());
       AssertThrow(v(i) == i, ExcInternalError());
@@ -56,7 +56,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -70,7 +70,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

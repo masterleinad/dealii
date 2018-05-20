@@ -1402,11 +1402,11 @@ DoFHandler<dim, spacedim>::n_boundary_dofs(
 {
   // extract the set of boundary ids and forget about the function object pointers
   std::set<types::boundary_id> boundary_ids_only;
-  for(typename std::map<types::boundary_id,
-                        const Function<spacedim, number>*>::const_iterator p
-      = boundary_ids.begin();
-      p != boundary_ids.end();
-      ++p)
+  for (typename std::map<types::boundary_id,
+                         const Function<spacedim, number>*>::const_iterator p
+       = boundary_ids.begin();
+       p != boundary_ids.end();
+       ++p)
     boundary_ids_only.insert(p->first);
 
   // then just hand everything over to the other function that does the work
@@ -1442,7 +1442,7 @@ DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // have a copy constructor. do it one level at a time
   unsigned int n_levels = levels.size();
   ar&          n_levels;
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for (unsigned int i = 0; i < levels.size(); ++i)
     ar& levels[i];
 
   // boost dereferences a nullptr when serializing a nullptr
@@ -1450,7 +1450,7 @@ DoFHandler<dim, spacedim>::save(Archive& ar, const unsigned int) const
   // Therefore, work around it.
   bool faces_is_nullptr = (faces.get() == nullptr);
   ar&  faces_is_nullptr;
-  if(!faces_is_nullptr)
+  if (!faces_is_nullptr)
     ar& faces;
 
   // write out the number of triangulation cells and later check during
@@ -1485,7 +1485,7 @@ DoFHandler<dim, spacedim>::load(Archive& ar, const unsigned int)
   unsigned int size;
   ar&          size;
   levels.resize(size);
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for (unsigned int i = 0; i < levels.size(); ++i)
     {
       std::unique_ptr<internal::DoFHandlerImplementation::DoFLevel<dim>> level;
       ar&                                                                level;
@@ -1495,7 +1495,7 @@ DoFHandler<dim, spacedim>::load(Archive& ar, const unsigned int)
   //Workaround for nullptr, see in save().
   bool faces_is_nullptr = true;
   ar&  faces_is_nullptr;
-  if(!faces_is_nullptr)
+  if (!faces_is_nullptr)
     ar& faces;
 
   // these are the checks that correspond to the last block in the save()

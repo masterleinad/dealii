@@ -26,13 +26,13 @@ check_norms()
 {
   const number acc  = 1e1 * std::numeric_limits<number>::epsilon();
   unsigned int skip = 73;
-  for(unsigned int size = 1; size < 200000; size += skip)
+  for (unsigned int size = 1; size < 200000; size += skip)
     {
       // test correctness
-      if(size > 10000)
+      if (size > 10000)
         skip += 17;
       LinearAlgebra::Vector<number> vec(size);
-      for(unsigned int i = 0; i < size; ++i)
+      for (unsigned int i = 0; i < size; ++i)
         vec[i] = i + 1;
 
       const number l1_norm = vec.l1_norm();
@@ -42,7 +42,7 @@ check_norms()
 
       // test accuracy of summation
       const long double value = 3.14159265358979323846;
-      for(unsigned int i = 0; i < size; ++i)
+      for (unsigned int i = 0; i < size; ++i)
         vec[i] = (number) value;
       const number l1_norma = vec.l1_norm();
       AssertThrow(std::abs(l1_norma - value * size) < acc * size * value,
@@ -60,14 +60,14 @@ check_complex_norms()
 {
   const number acc  = 1e2 * std::numeric_limits<number>::epsilon();
   unsigned int skip = 73;
-  for(unsigned int size = 1; size < 100000; size += skip)
+  for (unsigned int size = 1; size < 100000; size += skip)
     {
       // test correctness
-      if(size > 10000)
+      if (size > 10000)
         skip += 17;
       LinearAlgebra::Vector<std::complex<number>> vec(size);
       long double                                 sum = 0.;
-      for(unsigned int i = 0; i < size; ++i)
+      for (unsigned int i = 0; i < size; ++i)
         {
           vec(i) = std::complex<number>(i + 1, i + 2);
           sum += std::sqrt((long double) (i + 1) * (i + 1)
@@ -79,7 +79,7 @@ check_complex_norms()
 
       // test accuracy of summation
       const std::complex<long double> value(3.14159265358979323846, 0.1);
-      for(unsigned int i = 0; i < size; ++i)
+      for (unsigned int i = 0; i < size; ++i)
         vec[i] = std::complex<number>(value);
       const number l1_norma = vec.l1_norm();
       AssertThrow(std::abs(l1_norma - std::abs(value) * size)

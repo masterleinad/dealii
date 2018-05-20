@@ -66,14 +66,14 @@ namespace internal
                      PolicyBase<dim, spacedim>& policy)
   {
     std::string policy_name;
-    if(dynamic_cast<const typename dealii::internal::DoFHandlerImplementation::
-                      Policy::Sequential<dealii::DoFHandler<dim, spacedim>>*>(
-         &policy)
-       || dynamic_cast<
-            const typename dealii::internal::DoFHandlerImplementation::Policy::
-              Sequential<dealii::hp::DoFHandler<dim, spacedim>>*>(&policy))
+    if (dynamic_cast<const typename dealii::internal::DoFHandlerImplementation::
+                       Policy::Sequential<dealii::DoFHandler<dim, spacedim>>*>(
+          &policy)
+        || dynamic_cast<
+             const typename dealii::internal::DoFHandlerImplementation::Policy::
+               Sequential<dealii::hp::DoFHandler<dim, spacedim>>*>(&policy))
       policy_name = "Policy::Sequential<";
-    else if(
+    else if (
       dynamic_cast<
         const typename dealii::internal::DoFHandlerImplementation::Policy::
           ParallelDistributed<dealii::DoFHandler<dim, spacedim>>*>(&policy)
@@ -82,14 +82,14 @@ namespace internal
              ParallelDistributed<dealii::hp::DoFHandler<dim, spacedim>>*>(
            &policy))
       policy_name = "Policy::ParallelDistributed<";
-    else if(dynamic_cast<
-              const typename dealii::internal::DoFHandlerImplementation::
-                Policy::ParallelShared<dealii::DoFHandler<dim, spacedim>>*>(
-              &policy)
-            || dynamic_cast<const typename dealii::internal::
-                              DoFHandlerImplementation::Policy::ParallelShared<
-                                dealii::hp::DoFHandler<dim, spacedim>>*>(
-                 &policy))
+    else if (dynamic_cast<
+               const typename dealii::internal::DoFHandlerImplementation::
+                 Policy::ParallelShared<dealii::DoFHandler<dim, spacedim>>*>(
+               &policy)
+             || dynamic_cast<const typename dealii::internal::
+                               DoFHandlerImplementation::Policy::ParallelShared<
+                                 dealii::hp::DoFHandler<dim, spacedim>>*>(
+                  &policy))
       policy_name = "Policy::ParallelShared<";
     else
       AssertThrow(false, ExcNotImplemented());
@@ -151,7 +151,7 @@ namespace internal
         // count lines -> 28 (don't forget to count
         // mother and children separately!)
         types::global_dof_index max_couplings;
-        switch(dof_handler.tria->max_adjacent_cells())
+        switch (dof_handler.tria->max_adjacent_cells())
           {
             case 4:
               max_couplings = 19 * dof_handler.get_fe().dofs_per_vertex
@@ -252,7 +252,7 @@ namespace internal
           = dof_handler.tria->max_adjacent_cells();
 
         types::global_dof_index max_couplings;
-        if(max_adjacent_cells <= 8)
+        if (max_adjacent_cells <= 8)
           max_couplings = 7 * 7 * 7 * dof_handler.get_fe().dofs_per_vertex
                           + 7 * 6 * 7 * 3 * dof_handler.get_fe().dofs_per_line
                           + 9 * 4 * 7 * 3 * dof_handler.get_fe().dofs_per_quad
@@ -282,7 +282,7 @@ namespace internal
                                          * dof_handler.get_fe().dofs_per_vertex,
                                        numbers::invalid_dof_index);
 
-        for(unsigned int i = 0; i < dof_handler.tria->n_levels(); ++i)
+        for (unsigned int i = 0; i < dof_handler.tria->n_levels(); ++i)
           {
             dof_handler.levels.emplace_back(
               new internal::DoFHandlerImplementation::DoFLevel<1>);
@@ -306,7 +306,7 @@ namespace internal
                                          * dof_handler.get_fe().dofs_per_vertex,
                                        numbers::invalid_dof_index);
 
-        for(unsigned int i = 0; i < dof_handler.tria->n_levels(); ++i)
+        for (unsigned int i = 0; i < dof_handler.tria->n_levels(); ++i)
           {
             dof_handler.levels.emplace_back(
               new internal::DoFHandlerImplementation::DoFLevel<2>);
@@ -325,7 +325,7 @@ namespace internal
         dof_handler.faces = std_cxx14::make_unique<
           internal::DoFHandlerImplementation::DoFFaces<2>>();
         // avoid access to n_raw_lines when there are no cells
-        if(dof_handler.tria->n_cells() > 0)
+        if (dof_handler.tria->n_cells() > 0)
           {
             dof_handler.faces->lines.dofs.resize(
               dof_handler.tria->n_raw_lines()
@@ -341,7 +341,7 @@ namespace internal
                                          * dof_handler.get_fe().dofs_per_vertex,
                                        numbers::invalid_dof_index);
 
-        for(unsigned int i = 0; i < dof_handler.tria->n_levels(); ++i)
+        for (unsigned int i = 0; i < dof_handler.tria->n_levels(); ++i)
           {
             dof_handler.levels.emplace_back(
               new internal::DoFHandlerImplementation::DoFLevel<3>);
@@ -360,7 +360,7 @@ namespace internal
           internal::DoFHandlerImplementation::DoFFaces<3>>();
 
         // avoid access to n_raw_lines when there are no cells
-        if(dof_handler.tria->n_cells() > 0)
+        if (dof_handler.tria->n_cells() > 0)
           {
             dof_handler.faces->lines.dofs.resize(
               dof_handler.tria->n_raw_lines()
@@ -385,7 +385,7 @@ namespace internal
         const unsigned int& dofs_per_line = dof_handler.get_fe().dofs_per_line;
         const unsigned int& n_levels      = tria.n_levels();
 
-        for(unsigned int i = 0; i < n_levels; ++i)
+        for (unsigned int i = 0; i < n_levels; ++i)
           {
             dof_handler.mg_levels.emplace_back(
               new internal::DoFHandlerImplementation::DoFLevel<1>);
@@ -402,29 +402,29 @@ namespace internal
         std::vector<unsigned int> max_level(n_vertices, 0);
         std::vector<unsigned int> min_level(n_vertices, n_levels);
 
-        for(typename dealii::Triangulation<1, spacedim>::cell_iterator cell
-            = tria.begin();
-            cell != tria.end();
-            ++cell)
+        for (typename dealii::Triangulation<1, spacedim>::cell_iterator cell
+             = tria.begin();
+             cell != tria.end();
+             ++cell)
           {
             const unsigned int level = cell->level();
 
-            for(unsigned int vertex = 0;
-                vertex < GeometryInfo<1>::vertices_per_cell;
-                ++vertex)
+            for (unsigned int vertex = 0;
+                 vertex < GeometryInfo<1>::vertices_per_cell;
+                 ++vertex)
               {
                 const unsigned int vertex_index = cell->vertex_index(vertex);
 
-                if(min_level[vertex_index] > level)
+                if (min_level[vertex_index] > level)
                   min_level[vertex_index] = level;
 
-                if(max_level[vertex_index] < level)
+                if (max_level[vertex_index] < level)
                   max_level[vertex_index] = level;
               }
           }
 
-        for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
-          if(tria.vertex_used(vertex))
+        for (unsigned int vertex = 0; vertex < n_vertices; ++vertex)
+          if (tria.vertex_used(vertex))
             {
               Assert(min_level[vertex] < n_levels, ExcInternalError());
               Assert(max_level[vertex] >= min_level[vertex],
@@ -455,7 +455,7 @@ namespace internal
           = dof_handler.get_triangulation();
         const unsigned int& n_levels = tria.n_levels();
 
-        for(unsigned int i = 0; i < n_levels; ++i)
+        for (unsigned int i = 0; i < n_levels; ++i)
           {
             dof_handler.mg_levels.emplace_back(
               std_cxx14::make_unique<
@@ -478,29 +478,29 @@ namespace internal
         std::vector<unsigned int> max_level(n_vertices, 0);
         std::vector<unsigned int> min_level(n_vertices, n_levels);
 
-        for(typename dealii::Triangulation<2, spacedim>::cell_iterator cell
-            = tria.begin();
-            cell != tria.end();
-            ++cell)
+        for (typename dealii::Triangulation<2, spacedim>::cell_iterator cell
+             = tria.begin();
+             cell != tria.end();
+             ++cell)
           {
             const unsigned int level = cell->level();
 
-            for(unsigned int vertex = 0;
-                vertex < GeometryInfo<2>::vertices_per_cell;
-                ++vertex)
+            for (unsigned int vertex = 0;
+                 vertex < GeometryInfo<2>::vertices_per_cell;
+                 ++vertex)
               {
                 const unsigned int vertex_index = cell->vertex_index(vertex);
 
-                if(min_level[vertex_index] > level)
+                if (min_level[vertex_index] > level)
                   min_level[vertex_index] = level;
 
-                if(max_level[vertex_index] < level)
+                if (max_level[vertex_index] < level)
                   max_level[vertex_index] = level;
               }
           }
 
-        for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
-          if(tria.vertex_used(vertex))
+        for (unsigned int vertex = 0; vertex < n_vertices; ++vertex)
+          if (tria.vertex_used(vertex))
             {
               Assert(min_level[vertex] < n_levels, ExcInternalError());
               Assert(max_level[vertex] >= min_level[vertex],
@@ -529,7 +529,7 @@ namespace internal
           = dof_handler.get_triangulation();
         const unsigned int& n_levels = tria.n_levels();
 
-        for(unsigned int i = 0; i < n_levels; ++i)
+        for (unsigned int i = 0; i < n_levels; ++i)
           {
             dof_handler.mg_levels.emplace_back(
               std_cxx14::make_unique<
@@ -554,29 +554,29 @@ namespace internal
         std::vector<unsigned int> max_level(n_vertices, 0);
         std::vector<unsigned int> min_level(n_vertices, n_levels);
 
-        for(typename dealii::Triangulation<3, spacedim>::cell_iterator cell
-            = tria.begin();
-            cell != tria.end();
-            ++cell)
+        for (typename dealii::Triangulation<3, spacedim>::cell_iterator cell
+             = tria.begin();
+             cell != tria.end();
+             ++cell)
           {
             const unsigned int level = cell->level();
 
-            for(unsigned int vertex = 0;
-                vertex < GeometryInfo<3>::vertices_per_cell;
-                ++vertex)
+            for (unsigned int vertex = 0;
+                 vertex < GeometryInfo<3>::vertices_per_cell;
+                 ++vertex)
               {
                 const unsigned int vertex_index = cell->vertex_index(vertex);
 
-                if(min_level[vertex_index] > level)
+                if (min_level[vertex_index] > level)
                   min_level[vertex_index] = level;
 
-                if(max_level[vertex_index] < level)
+                if (max_level[vertex_index] < level)
                   max_level[vertex_index] = level;
               }
           }
 
-        for(unsigned int vertex = 0; vertex < n_vertices; ++vertex)
-          if(tria.vertex_used(vertex))
+        for (unsigned int vertex = 0; vertex < n_vertices; ++vertex)
+          if (tria.vertex_used(vertex))
             {
               Assert(min_level[vertex] < n_levels, ExcInternalError());
               Assert(max_level[vertex] >= min_level[vertex],
@@ -799,15 +799,15 @@ DoFHandler<dim, spacedim>::DoFHandler(const Triangulation<dim, spacedim>& tria)
   : tria(&tria, typeid(*this).name()), faces(nullptr), mg_faces(nullptr)
 {
   // decide whether we need a sequential or a parallel distributed policy
-  if(dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(&tria)
-     != nullptr)
+  if (dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(&tria)
+      != nullptr)
     policy
       = std_cxx14::make_unique<internal::DoFHandlerImplementation::Policy::
                                  ParallelShared<DoFHandler<dim, spacedim>>>(
         *this);
-  else if(dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(&tria)
-          == nullptr)
+  else if (dynamic_cast<
+             const parallel::distributed::Triangulation<dim, spacedim>*>(&tria)
+           == nullptr)
     policy
       = std_cxx14::make_unique<internal::DoFHandlerImplementation::Policy::
                                  Sequential<DoFHandler<dim, spacedim>>>(*this);
@@ -846,15 +846,15 @@ DoFHandler<dim, spacedim>::initialize(const Triangulation<dim, spacedim>& t,
   number_cache.n_global_dofs = 0;
 
   // decide whether we need a sequential or a parallel distributed policy
-  if(dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(&t)
-     != nullptr)
+  if (dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(&t)
+      != nullptr)
     policy
       = std_cxx14::make_unique<internal::DoFHandlerImplementation::Policy::
                                  ParallelShared<DoFHandler<dim, spacedim>>>(
         *this);
-  else if(dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(&t)
-          != nullptr)
+  else if (dynamic_cast<
+             const parallel::distributed::Triangulation<dim, spacedim>*>(&t)
+           != nullptr)
     policy = std_cxx14::make_unique<
       internal::DoFHandlerImplementation::Policy::ParallelDistributed<
         DoFHandler<dim, spacedim>>>(*this);
@@ -874,7 +874,7 @@ DoFHandler<dim, spacedim>::begin(const unsigned int level) const
 {
   typename Triangulation<dim, spacedim>::cell_iterator cell
     = this->get_triangulation().begin(level);
-  if(cell == this->get_triangulation().end(level))
+  if (cell == this->get_triangulation().end(level))
     return end(level);
   return cell_iterator(*cell, this);
 }
@@ -885,10 +885,10 @@ DoFHandler<dim, spacedim>::begin_active(const unsigned int level) const
 {
   // level is checked in begin
   cell_iterator i = begin(level);
-  if(i.state() != IteratorState::valid)
+  if (i.state() != IteratorState::valid)
     return i;
-  while(i->has_children())
-    if((++i).state() != IteratorState::valid)
+  while (i->has_children())
+    if ((++i).state() != IteratorState::valid)
       return i;
   return i;
 }
@@ -906,7 +906,7 @@ DoFHandler<dim, spacedim>::end(const unsigned int level) const
 {
   typename Triangulation<dim, spacedim>::cell_iterator cell
     = this->get_triangulation().end(level);
-  if(cell.state() != IteratorState::valid)
+  if (cell.state() != IteratorState::valid)
     return end();
   return cell_iterator(*cell, this);
 }
@@ -917,7 +917,7 @@ DoFHandler<dim, spacedim>::end_active(const unsigned int level) const
 {
   typename Triangulation<dim, spacedim>::cell_iterator cell
     = this->get_triangulation().end_active(level);
-  if(cell.state() != IteratorState::valid)
+  if (cell.state() != IteratorState::valid)
     return active_cell_iterator(end());
   return active_cell_iterator(*cell, this);
 }
@@ -930,7 +930,7 @@ DoFHandler<dim, spacedim>::begin_mg(const unsigned int level) const
   //     "levels if mg dofs got distributed."));
   typename Triangulation<dim, spacedim>::cell_iterator cell
     = this->get_triangulation().begin(level);
-  if(cell == this->get_triangulation().end(level))
+  if (cell == this->get_triangulation().end(level))
     return end_mg(level);
   return level_cell_iterator(*cell, this);
 }
@@ -943,7 +943,7 @@ DoFHandler<dim, spacedim>::end_mg(const unsigned int level) const
   //     "levels if mg dofs got distributed."));
   typename Triangulation<dim, spacedim>::cell_iterator cell
     = this->get_triangulation().end(level);
-  if(cell.state() != IteratorState::valid)
+  if (cell.state() != IteratorState::valid)
     return end();
   return level_cell_iterator(*cell, this);
 }
@@ -1034,12 +1034,12 @@ DoFHandler<dim, spacedim>::n_boundary_dofs() const
   // and so every boundary line is
   // also part of a boundary face.
   active_cell_iterator cell = begin_active(), endc = end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         {
           cell->face(f)->get_dof_indices(dofs_on_face);
-          for(unsigned int i = 0; i < dofs_per_face; ++i)
+          for (unsigned int i = 0; i < dofs_per_face; ++i)
             boundary_dofs.insert(dofs_on_face[i]);
         }
 
@@ -1064,16 +1064,16 @@ DoFHandler<dim, spacedim>::n_boundary_dofs(
   // function, but with a different
   // check for the boundary indicator
   active_cell_iterator cell = begin_active(), endc = end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f)
-         && (std::find(boundary_ids.begin(),
-                       boundary_ids.end(),
-                       cell->face(f)->boundary_id())
-             != boundary_ids.end()))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f)
+          && (std::find(boundary_ids.begin(),
+                        boundary_ids.end(),
+                        cell->face(f)->boundary_id())
+              != boundary_ids.end()))
         {
           cell->face(f)->get_dof_indices(dofs_on_face);
-          for(unsigned int i = 0; i < dofs_per_face; ++i)
+          for (unsigned int i = 0; i < dofs_per_face; ++i)
             boundary_dofs.insert(dofs_on_face[i]);
         }
 
@@ -1093,16 +1093,16 @@ DoFHandler<dim, spacedim>::memory_consumption() const
        + MemoryConsumption::memory_consumption(faces) + sizeof(number_cache)
        + MemoryConsumption::memory_consumption(mg_number_cache)
        + MemoryConsumption::memory_consumption(vertex_dofs));
-  for(unsigned int i = 0; i < levels.size(); ++i)
+  for (unsigned int i = 0; i < levels.size(); ++i)
     mem += MemoryConsumption::memory_consumption(*levels[i]);
 
-  for(unsigned int level = 0; level < mg_levels.size(); ++level)
+  for (unsigned int level = 0; level < mg_levels.size(); ++level)
     mem += mg_levels[level]->memory_consumption();
 
-  if(mg_faces != nullptr)
+  if (mg_faces != nullptr)
     mem += MemoryConsumption::memory_consumption(*mg_faces);
 
-  for(unsigned int i = 0; i < mg_vertex_dofs.size(); ++i)
+  for (unsigned int i = 0; i < mg_vertex_dofs.size(); ++i)
     mem += sizeof(MGVertexDoFs)
            + (1 + mg_vertex_dofs[i].get_finest_level()
               - mg_vertex_dofs[i].get_coarsest_level())
@@ -1126,7 +1126,7 @@ DoFHandler<dim, spacedim>::distribute_dofs(
 
   // Only recreate the FECollection if we don't already store
   // the exact same FiniteElement object.
-  if(fe_collection.size() == 0 || fe_collection[0] != ff)
+  if (fe_collection.size() == 0 || fe_collection[0] != ff)
     fe_collection = hp::FECollection<dim, spacedim>(ff);
 
   // delete all levels and set them
@@ -1155,9 +1155,9 @@ DoFHandler<dim, spacedim>::distribute_dofs(
   // only if this is a sequential
   // triangulation. it doesn't work
   // correctly yet if it is parallel
-  if(dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
-       &*tria)
-     == nullptr)
+  if (dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
+        &*tria)
+      == nullptr)
     block_info_object.initialize(*this, false, true);
 }
 
@@ -1194,9 +1194,9 @@ DoFHandler<dim, spacedim>::distribute_mg_dofs()
   // only if this is a sequential
   // triangulation. it doesn't work
   // correctly yet if it is parallel
-  if(dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
-       &*tria)
-     == nullptr)
+  if (dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
+        &*tria)
+      == nullptr)
     block_info_object.initialize(*this, true, false);
 }
 
@@ -1240,16 +1240,17 @@ DoFHandler<dim, spacedim>::renumber_dofs(
     ExcMessage("You need to distribute DoFs before you can renumber them."));
 
 #ifdef DEBUG
-  if(dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(&*tria)
-     != nullptr)
+  if (dynamic_cast<const parallel::shared::Triangulation<dim, spacedim>*>(
+        &*tria)
+      != nullptr)
     {
       Assert(new_numbers.size() == n_dofs()
                || new_numbers.size() == n_locally_owned_dofs(),
              ExcMessage("Incorrect size of the input array."));
     }
-  else if(dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(&*tria)
-          != nullptr)
+  else if (dynamic_cast<
+             const parallel::distributed::Triangulation<dim, spacedim>*>(&*tria)
+           != nullptr)
     {
       AssertDimension(new_numbers.size(), n_locally_owned_dofs());
     }
@@ -1267,17 +1268,17 @@ DoFHandler<dim, spacedim>::renumber_dofs(
   // [0...n_dofs()) into itself but
   // only globally, not on each
   // processor
-  if(n_locally_owned_dofs() == n_dofs())
+  if (n_locally_owned_dofs() == n_dofs())
     {
       std::vector<types::global_dof_index> tmp(new_numbers);
       std::sort(tmp.begin(), tmp.end());
       std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
       types::global_dof_index                              i = 0;
-      for(; p != tmp.end(); ++p, ++i)
+      for (; p != tmp.end(); ++p, ++i)
         Assert(*p == i, ExcNewNumbersNotConsecutive(i));
     }
   else
-    for(types::global_dof_index i = 0; i < new_numbers.size(); ++i)
+    for (types::global_dof_index i = 0; i < new_numbers.size(); ++i)
       Assert(
         new_numbers[i] < n_dofs(),
         ExcMessage("New DoF index is not less than the total number of dofs."));
@@ -1305,17 +1306,17 @@ DoFHandler<dim, spacedim>::renumber_dofs(
   // on a single processor. this doesn't need to hold in the case of a
   // parallel mesh since we map the interval [0...n_dofs(level)) into itself
   // but only globally, not on each processor
-  if(n_locally_owned_dofs() == n_dofs())
+  if (n_locally_owned_dofs() == n_dofs())
     {
       std::vector<types::global_dof_index> tmp(new_numbers);
       std::sort(tmp.begin(), tmp.end());
       std::vector<types::global_dof_index>::const_iterator p = tmp.begin();
       types::global_dof_index                              i = 0;
-      for(; p != tmp.end(); ++p, ++i)
+      for (; p != tmp.end(); ++p, ++i)
         Assert(*p == i, ExcNewNumbersNotConsecutive(i));
     }
   else
-    for(types::global_dof_index i = 0; i < new_numbers.size(); ++i)
+    for (types::global_dof_index i = 0; i < new_numbers.size(); ++i)
       Assert(
         new_numbers[i] < n_dofs(level),
         ExcMessage("New DoF index is not less than the total number of dofs."));
@@ -1336,7 +1337,7 @@ template <int dim, int spacedim>
 unsigned int
 DoFHandler<dim, spacedim>::max_couplings_between_boundary_dofs() const
 {
-  switch(dim)
+  switch (dim)
     {
       case 1:
         return get_fe().dofs_per_vertex;
@@ -1434,7 +1435,7 @@ DoFHandler<dim, spacedim>::MGVertexDoFs::init(
   coarsest_level = cl;
   finest_level   = fl;
 
-  if(coarsest_level <= finest_level)
+  if (coarsest_level <= finest_level)
     {
       const unsigned int n_levels  = finest_level - coarsest_level + 1;
       const unsigned int n_indices = n_levels * dofs_per_vertex;

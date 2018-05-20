@@ -267,8 +267,8 @@ namespace PETScWrappers
     {
       Assert(d == 0, ExcScalarAssignmentOnlyForZeroValue());
 
-      for(size_type r = 0; r < this->n_block_rows(); ++r)
-        for(size_type c = 0; c < this->n_block_cols(); ++c)
+      for (size_type r = 0; r < this->n_block_rows(); ++r)
+        for (size_type c = 0; c < this->n_block_cols(); ++c)
           this->block(r, c) = d;
 
       return *this;

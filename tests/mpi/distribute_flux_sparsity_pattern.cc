@@ -113,9 +113,9 @@ namespace LinearAdvectionTest
                                                     fe.n_components());
     Table<2, DoFTools::Coupling> flux_integral_mask(fe.n_components(),
                                                     fe.n_components());
-    for(unsigned int i = 0; i < fe.n_components(); ++i)
+    for (unsigned int i = 0; i < fe.n_components(); ++i)
       {
-        for(unsigned int j = 0; j < fe.n_components(); ++j)
+        for (unsigned int j = 0; j < fe.n_components(); ++j)
           {
             cell_integral_mask(i, j) = DoFTools::always;
             flux_integral_mask(i, j) = DoFTools::nonzero;
@@ -151,9 +151,9 @@ namespace LinearAdvectionTest
     FullMatrix<double>& neighbor_to_current_flux,
     FullMatrix<double>& neighbor_to_neighbor_flux)
   {
-    for(unsigned int q_point_n = 0;
-        q_point_n < neighbor_face_values.n_quadrature_points;
-        ++q_point_n)
+    for (unsigned int q_point_n = 0;
+         q_point_n < neighbor_face_values.n_quadrature_points;
+         ++q_point_n)
       {
         /*
          * Note that if we are integrating the neighbor's test functions, then
@@ -162,9 +162,10 @@ namespace LinearAdvectionTest
          * Do integration on both cells (rather than use something like
          * upwinding) since this is just a test.
          */
-        for(unsigned int i = 0; i < neighbor_face_values.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < neighbor_face_values.dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < neighbor_face_values.dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < neighbor_face_values.dofs_per_cell;
+                 ++j)
               {
                 current_to_current_flux(i, j)
                   += current_face_values.shape_value(i, q_point_n)
@@ -227,16 +228,16 @@ namespace LinearAdvectionTest
     typename DoFHandler<dim>::active_cell_iterator current_cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; current_cell != endc; ++current_cell)
+    for (; current_cell != endc; ++current_cell)
       {
-        if(current_cell->is_locally_owned())
+        if (current_cell->is_locally_owned())
           {
-            for(unsigned int face_n = 0;
-                face_n < GeometryInfo<dim>::faces_per_cell;
-                ++face_n)
+            for (unsigned int face_n = 0;
+                 face_n < GeometryInfo<dim>::faces_per_cell;
+                 ++face_n)
               {
                 const int neighbor_index = current_cell->neighbor_index(face_n);
-                if(neighbor_index != -1) // interior face
+                if (neighbor_index != -1) // interior face
                   {
                     typename DoFHandler<dim>::active_cell_iterator neighbor_cell
                       = current_cell->neighbor(face_n);
@@ -248,18 +249,18 @@ namespace LinearAdvectionTest
                      * Always integrate if the current cell is more refined
                      * than the neighbor.
                      */
-                    if(current_cell->level() > neighbor_cell->level())
+                    if (current_cell->level() > neighbor_cell->level())
                       {
                         do_face_integration     = true;
                         neighbor_is_level_lower = true;
                       }
                     // If the neighbor is not active, then it is at a higher
                     // refinement level (so we do not need to integrate now)
-                    if(neighbor_cell->active())
+                    if (neighbor_cell->active())
                       {
-                        if(neighbor_cell->is_locally_owned())
+                        if (neighbor_cell->is_locally_owned())
                           {
-                            if(neighbor_cell < current_cell)
+                            if (neighbor_cell < current_cell)
                               {
                                 do_face_integration = true;
                               }
@@ -269,16 +270,16 @@ namespace LinearAdvectionTest
                             Assert(neighbor_cell->is_ghost(),
                                    ExcMessage("All neighbors should be locally "
                                               "owned or ghost cells."));
-                            if(current_cell->level() == neighbor_cell->level()
-                               && current_cell->subdomain_id()
-                                    < neighbor_cell->subdomain_id())
+                            if (current_cell->level() == neighbor_cell->level()
+                                && current_cell->subdomain_id()
+                                     < neighbor_cell->subdomain_id())
                               {
                                 do_face_integration = true;
                               }
                           }
                       }
 
-                    if(do_face_integration)
+                    if (do_face_integration)
                       {
                         const unsigned int neighbor_face_n
                           = current_cell->neighbor_face_no(face_n);

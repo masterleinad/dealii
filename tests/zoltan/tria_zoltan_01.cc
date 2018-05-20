@@ -36,7 +36,7 @@ test(const MPI_Comm& mpi_communicator)
   GridGenerator::subdivided_hyper_cube(triangulation, 2, 0, 1);
 
   // Some dummy output.
-  if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+  if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
     std::cout << "Number of vertices: " << triangulation.n_vertices()
               << std::endl;
 }
@@ -53,7 +53,7 @@ main(int argc, char* argv[])
       test<2>(MPI_COMM_WORLD);
       test<3>(MPI_COMM_WORLD);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -66,7 +66,7 @@ main(int argc, char* argv[])
                 << std::endl;
       throw;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

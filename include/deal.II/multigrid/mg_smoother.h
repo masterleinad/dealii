@@ -666,7 +666,7 @@ namespace mg
 
     this->resize(min, max);
 
-    for(unsigned int i = min; i <= max; ++i)
+    for (unsigned int i = min; i <= max; ++i)
       (*this)[i].initialize(m[i], data);
   }
 
@@ -682,7 +682,7 @@ namespace mg
 
     this->resize(min, max);
 
-    for(unsigned int i = min; i <= max; ++i)
+    for (unsigned int i = min; i <= max; ++i)
       (*this)[i].initialize(m[i], data[i]);
   }
 
@@ -696,22 +696,22 @@ namespace mg
     unsigned int maxlevel = this->max_level();
     unsigned int steps2   = this->steps;
 
-    if(this->variable)
+    if (this->variable)
       steps2 *= (1 << (maxlevel - level));
 
     bool T = this->transpose;
-    if(this->symmetric && (steps2 % 2 == 0))
+    if (this->symmetric && (steps2 % 2 == 0))
       T = false;
-    if(this->debug > 0)
+    if (this->debug > 0)
       deallog << 'S' << level << ' ';
 
-    for(unsigned int i = 0; i < steps2; ++i)
+    for (unsigned int i = 0; i < steps2; ++i)
       {
-        if(T)
+        if (T)
           (*this)[level].Tstep(u, rhs);
         else
           (*this)[level].step(u, rhs);
-        if(this->symmetric)
+        if (this->symmetric)
           T = !T;
       }
   }
@@ -726,28 +726,28 @@ namespace mg
     unsigned int maxlevel = this->max_level();
     unsigned int steps2   = this->steps;
 
-    if(this->variable)
+    if (this->variable)
       steps2 *= (1 << (maxlevel - level));
 
     bool T = this->transpose;
-    if(this->symmetric && (steps2 % 2 == 0))
+    if (this->symmetric && (steps2 % 2 == 0))
       T = false;
-    if(this->debug > 0)
+    if (this->debug > 0)
       deallog << 'S' << level << ' ';
 
-    if(T)
+    if (T)
       (*this)[level].Tvmult(u, rhs);
     else
       (*this)[level].vmult(u, rhs);
-    if(this->symmetric)
+    if (this->symmetric)
       T = !T;
-    for(unsigned int i = 1; i < steps2; ++i)
+    for (unsigned int i = 1; i < steps2; ++i)
       {
-        if(T)
+        if (T)
           (*this)[level].Tstep(u, rhs);
         else
           (*this)[level].step(u, rhs);
-        if(this->symmetric)
+        if (this->symmetric)
           T = !T;
       }
   }
@@ -780,7 +780,7 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::clear()
   smoothers.clear_elements();
 
   unsigned int i = matrices.min_level(), max_level = matrices.max_level();
-  for(; i <= max_level; ++i)
+  for (; i <= max_level; ++i)
     matrices[i] = LinearOperator<VectorType>();
 }
 
@@ -797,7 +797,7 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -824,7 +824,7 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -850,7 +850,7 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -879,7 +879,7 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -900,22 +900,22 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::smooth(
   unsigned int maxlevel = smoothers.max_level();
   unsigned int steps2   = this->steps;
 
-  if(this->variable)
+  if (this->variable)
     steps2 *= (1 << (maxlevel - level));
 
   bool T = this->transpose;
-  if(this->symmetric && (steps2 % 2 == 0))
+  if (this->symmetric && (steps2 % 2 == 0))
     T = false;
-  if(this->debug > 0)
+  if (this->debug > 0)
     deallog << 'S' << level << ' ';
 
-  for(unsigned int i = 0; i < steps2; ++i)
+  for (unsigned int i = 0; i < steps2; ++i)
     {
-      if(T)
+      if (T)
         smoothers[level].Tstep(u, rhs);
       else
         smoothers[level].step(u, rhs);
-      if(this->symmetric)
+      if (this->symmetric)
         T = !T;
     }
 }
@@ -930,28 +930,28 @@ MGSmootherRelaxation<MatrixType, RelaxationType, VectorType>::apply(
   unsigned int maxlevel = smoothers.max_level();
   unsigned int steps2   = this->steps;
 
-  if(this->variable)
+  if (this->variable)
     steps2 *= (1 << (maxlevel - level));
 
   bool T = this->transpose;
-  if(this->symmetric && (steps2 % 2 == 0))
+  if (this->symmetric && (steps2 % 2 == 0))
     T = false;
-  if(this->debug > 0)
+  if (this->debug > 0)
     deallog << 'S' << level << ' ';
 
-  if(T)
+  if (T)
     smoothers[level].Tvmult(u, rhs);
   else
     smoothers[level].vmult(u, rhs);
-  if(this->symmetric)
+  if (this->symmetric)
     T = !T;
-  for(unsigned int i = 1; i < steps2; ++i)
+  for (unsigned int i = 1; i < steps2; ++i)
     {
-      if(T)
+      if (T)
         smoothers[level].Tstep(u, rhs);
       else
         smoothers[level].step(u, rhs);
-      if(this->symmetric)
+      if (this->symmetric)
         T = !T;
     }
 }
@@ -984,7 +984,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::clear()
   smoothers.clear_elements();
 
   unsigned int i = matrices.min_level(), max_level = matrices.max_level();
-  for(; i <= max_level; ++i)
+  for (; i <= max_level; ++i)
     matrices[i] = LinearOperator<VectorType>();
 }
 
@@ -1001,7 +1001,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -1028,7 +1028,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       // Workaround: Unfortunately, not every "m[i]" object has a rich
       // enough interface to populate reinit_(domain|range)_vector. Thus,
@@ -1054,7 +1054,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       matrices[i] = &(m[i].block(row, col));
       smoothers[i].initialize(m[i].block(row, col), data);
@@ -1079,7 +1079,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::initialize(
   matrices.resize(min, max);
   smoothers.resize(min, max);
 
-  for(unsigned int i = min; i <= max; ++i)
+  for (unsigned int i = min; i <= max; ++i)
     {
       matrices[i] = &(m[i].block(row, col));
       smoothers[i].initialize(m[i].block(row, col), data[i]);
@@ -1096,7 +1096,7 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::smooth(
   unsigned int maxlevel = matrices.max_level();
   unsigned int steps2   = this->steps;
 
-  if(this->variable)
+  if (this->variable)
     steps2 *= (1 << (maxlevel - level));
 
   typename VectorMemory<VectorType>::Pointer r(this->vector_memory);
@@ -1106,42 +1106,42 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::smooth(
   d->reinit(u, true);
 
   bool T = this->transpose;
-  if(this->symmetric && (steps2 % 2 == 0))
+  if (this->symmetric && (steps2 % 2 == 0))
     T = false;
-  if(this->debug > 0)
+  if (this->debug > 0)
     deallog << 'S' << level << ' ';
 
-  for(unsigned int i = 0; i < steps2; ++i)
+  for (unsigned int i = 0; i < steps2; ++i)
     {
-      if(T)
+      if (T)
         {
-          if(this->debug > 0)
+          if (this->debug > 0)
             deallog << 'T';
           matrices[level].Tvmult(*r, u);
           r->sadd(-1., 1., rhs);
-          if(this->debug > 2)
+          if (this->debug > 2)
             deallog << ' ' << r->l2_norm() << ' ';
           smoothers[level].Tvmult(*d, *r);
-          if(this->debug > 1)
+          if (this->debug > 1)
             deallog << ' ' << d->l2_norm() << ' ';
         }
       else
         {
-          if(this->debug > 0)
+          if (this->debug > 0)
             deallog << 'N';
           matrices[level].vmult(*r, u);
           r->sadd(-1., rhs);
-          if(this->debug > 2)
+          if (this->debug > 2)
             deallog << ' ' << r->l2_norm() << ' ';
           smoothers[level].vmult(*d, *r);
-          if(this->debug > 1)
+          if (this->debug > 1)
             deallog << ' ' << d->l2_norm() << ' ';
         }
       u += *d;
-      if(this->symmetric)
+      if (this->symmetric)
         T = !T;
     }
-  if(this->debug > 0)
+  if (this->debug > 0)
     deallog << std::endl;
 }
 
@@ -1155,69 +1155,69 @@ MGSmootherPrecondition<MatrixType, PreconditionerType, VectorType>::apply(
   unsigned int maxlevel = matrices.max_level();
   unsigned int steps2   = this->steps;
 
-  if(this->variable)
+  if (this->variable)
     steps2 *= (1 << (maxlevel - level));
 
   bool T = this->transpose;
-  if(this->symmetric && (steps2 % 2 == 0))
+  if (this->symmetric && (steps2 % 2 == 0))
     T = false;
-  if(this->debug > 0)
+  if (this->debug > 0)
     deallog << 'S' << level << ' ';
 
   // first step where we overwrite the result
-  if(this->debug > 2)
+  if (this->debug > 2)
     deallog << ' ' << rhs.l2_norm() << ' ';
-  if(this->debug > 0)
+  if (this->debug > 0)
     deallog << (T ? 'T' : 'N');
-  if(T)
+  if (T)
     smoothers[level].Tvmult(u, rhs);
   else
     smoothers[level].vmult(u, rhs);
-  if(this->debug > 1)
+  if (this->debug > 1)
     deallog << ' ' << u.l2_norm() << ' ';
-  if(this->symmetric)
+  if (this->symmetric)
     T = !T;
 
   typename VectorMemory<VectorType>::Pointer r(this->vector_memory);
   typename VectorMemory<VectorType>::Pointer d(this->vector_memory);
 
-  if(steps2 > 1)
+  if (steps2 > 1)
     {
       r->reinit(u, true);
       d->reinit(u, true);
     }
 
-  for(unsigned int i = 1; i < steps2; ++i)
+  for (unsigned int i = 1; i < steps2; ++i)
     {
-      if(T)
+      if (T)
         {
-          if(this->debug > 0)
+          if (this->debug > 0)
             deallog << 'T';
           matrices[level].Tvmult(*r, u);
           r->sadd(-1., 1., rhs);
-          if(this->debug > 2)
+          if (this->debug > 2)
             deallog << ' ' << r->l2_norm() << ' ';
           smoothers[level].Tvmult(*d, *r);
-          if(this->debug > 1)
+          if (this->debug > 1)
             deallog << ' ' << d->l2_norm() << ' ';
         }
       else
         {
-          if(this->debug > 0)
+          if (this->debug > 0)
             deallog << 'N';
           matrices[level].vmult(*r, u);
           r->sadd(-1., rhs);
-          if(this->debug > 2)
+          if (this->debug > 2)
             deallog << ' ' << r->l2_norm() << ' ';
           smoothers[level].vmult(*d, *r);
-          if(this->debug > 1)
+          if (this->debug > 1)
             deallog << ' ' << d->l2_norm() << ' ';
         }
       u += *d;
-      if(this->symmetric)
+      if (this->symmetric)
         T = !T;
     }
-  if(this->debug > 0)
+  if (this->debug > 0)
     deallog << std::endl;
 }
 

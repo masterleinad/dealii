@@ -56,7 +56,7 @@ test()
                    TimeDependent::TimeSteppingData(0, 0),
                    TimeDependent::TimeSteppingData(0, 0));
   const unsigned int n_time_steps = 10000;
-  for(unsigned int i = 0; i < n_time_steps; ++i)
+  for (unsigned int i = 0; i < n_time_steps; ++i)
     td.add_timestep(new TimeStep(i));
 
   end_sweep_flags = std::vector<bool>(n_time_steps, false);

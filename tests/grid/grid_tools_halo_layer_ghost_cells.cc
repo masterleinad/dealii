@@ -40,9 +40,9 @@ test()
   // Mark a small block at the corner of the hypercube
   std::vector<cell_iterator> ghost_cells_tria;
   cell_iterator              cell = tria.begin_active(), endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->is_ghost() == true)
+      if (cell->is_ghost() == true)
         ghost_cells_tria.push_back(cell);
     }
   std::sort(ghost_cells_tria.begin(), ghost_cells_tria.end());
@@ -57,18 +57,18 @@ test()
               ExcMessage("Ghost cell halo layer wrong size."));
   std::sort(ghost_cell_halo_layer.begin(), ghost_cell_halo_layer.end());
 
-  for(unsigned int proc = 0;
-      proc < Utilities::MPI::n_mpi_processes(mpi_communicator);
-      ++proc)
+  for (unsigned int proc = 0;
+       proc < Utilities::MPI::n_mpi_processes(mpi_communicator);
+       ++proc)
     {
-      if(proc == Utilities::MPI::this_mpi_process(mpi_communicator))
+      if (proc == Utilities::MPI::this_mpi_process(mpi_communicator))
         {
-          for(typename std::vector<cell_iterator>::const_iterator it_1
-              = ghost_cells_tria.begin(),
-              it_2 = ghost_cell_halo_layer.begin();
-              it_1 != ghost_cells_tria.end()
-              && it_2 != ghost_cell_halo_layer.end();
-              ++it_1, ++it_2)
+          for (typename std::vector<cell_iterator>::const_iterator it_1
+               = ghost_cells_tria.begin(),
+               it_2 = ghost_cell_halo_layer.begin();
+               it_1 != ghost_cells_tria.end()
+               && it_2 != ghost_cell_halo_layer.end();
+               ++it_1, ++it_2)
             {
               const cell_iterator& cell_1 = *it_1;
               const cell_iterator& cell_2 = *it_2;

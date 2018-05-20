@@ -30,7 +30,7 @@ verify(const std::string& s)
     {
       Utilities::string_to_int(s);
     }
-  catch(...)
+  catch (...)
     {
       exception_caught = true;
     }

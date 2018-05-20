@@ -162,8 +162,8 @@ Step4<dim>::setup_system()
   // set up full mask not doing anything
   const unsigned int n_components = dof_handler.get_fe().n_components();
   Table<2, DoFTools::Coupling> mask(n_components, n_components);
-  for(unsigned int i = 0; i < n_components; ++i)
-    for(unsigned int j = 0; j < n_components; ++j)
+  for (unsigned int i = 0; i < n_components; ++i)
+    for (unsigned int j = 0; j < n_components; ++j)
       mask(i, j) = DoFTools::always;
   DoFTools::make_flux_sparsity_pattern(dof_handler, dsp, mask, mask);
   sparsity_pattern.copy_from(dsp);
@@ -189,7 +189,7 @@ Step4<dim>::setup_system()
                                          integrator,
                                          assembler);
 
-  for(unsigned int i = 0; i < system_rhs.size(); ++i)
+  for (unsigned int i = 0; i < system_rhs.size(); ++i)
     system_rhs(i) = 0.01 * i - 0.000001 * i * i;
 }
 
@@ -233,7 +233,7 @@ void
 Step4<2>::check_periodicity(const unsigned int cycle) const
 {
   unsigned int n_points = 4;
-  for(unsigned int i = 0; i < cycle; i++)
+  for (unsigned int i = 0; i < cycle; i++)
     n_points *= 2;
 
   //don't test exactly at the support points, since point_value is not stable there
@@ -241,7 +241,7 @@ Step4<2>::check_periodicity(const unsigned int cycle) const
 
   bool all_passed = true;
 
-  for(unsigned int i = 1; i < n_points; i++)
+  for (unsigned int i = 1; i < n_points; i++)
     {
       Vector<double> value1(1);
       Vector<double> value2(1);
@@ -259,7 +259,7 @@ Step4<2>::check_periodicity(const unsigned int cycle) const
       const double rel_error = std::abs((value2[0] - value1[0]) / value1[0]);
       const double rel_tol   = 1. / std::pow(2., cycle);
 
-      if(rel_error < rel_tol)
+      if (rel_error < rel_tol)
         deallog << point1 << "\t pass" << std::endl;
       else
         {
@@ -276,9 +276,9 @@ template <int dim>
 void
 Step4<dim>::run()
 {
-  for(unsigned int cycle = 0; cycle < 4; ++cycle)
+  for (unsigned int cycle = 0; cycle < 4; ++cycle)
     {
-      if(cycle == 0)
+      if (cycle == 0)
         make_grid();
       else
         triangulation.refine_global(1);
@@ -302,7 +302,7 @@ main(int argc, char** argv)
       Step4<2> test;
       test.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -316,7 +316,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

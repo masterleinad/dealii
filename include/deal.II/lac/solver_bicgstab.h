@@ -381,7 +381,7 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
       rhobar = r * rbar;
       beta   = rhobar * alpha / (rho * omega);
       rho    = rhobar;
-      if(startup == true)
+      if (startup == true)
         {
           p       = r;
           startup = false;
@@ -400,7 +400,7 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
 
       //TODO:[?] Find better breakdown criterion
 
-      if(std::fabs(alpha) > 1.e10)
+      if (std::fabs(alpha) > 1.e10)
         return IterationResult(true, state, step, res);
 
       res = std::sqrt(r.add_and_dot(-alpha, v, r));
@@ -411,7 +411,7 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
       // note: the vector *Vx we pass to the iteration_status signal here is only
       // the current approximation, not the one we will return with,
       // which will be x=*Vx + alpha*y
-      if(this->iteration_status(step, res, *Vx) == SolverControl::success)
+      if (this->iteration_status(step, res, *Vx) == SolverControl::success)
         {
           Vx->add(alpha, y);
           print_vectors(step, *Vx, r, y);
@@ -424,7 +424,7 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
       omega  = rhobar / (t * t);
       Vx->add(alpha, y, omega, z);
 
-      if(additional_data.exact_residual)
+      if (additional_data.exact_residual)
         {
           r.add(-omega, t);
           res = criterion(A, *Vx, *Vb);
@@ -435,7 +435,7 @@ SolverBicgstab<VectorType>::iterate(const MatrixType&         A,
       state = this->iteration_status(step, res, *Vx);
       print_vectors(step, *Vx, r, y);
     }
-  while(state == SolverControl::iterate);
+  while (state == SolverControl::iterate);
   return IterationResult(false, state, step, res);
 }
 
@@ -474,9 +474,9 @@ SolverBicgstab<VectorType>::solve(const MatrixType&         A,
   // iterate while the inner iteration returns a breakdown
   do
     {
-      if(step != 0)
+      if (step != 0)
         deallog << "Restart step " << step << std::endl;
-      if(start(A) == SolverControl::success)
+      if (start(A) == SolverControl::success)
         {
           state.state = SolverControl::success;
           break;
@@ -484,7 +484,7 @@ SolverBicgstab<VectorType>::solve(const MatrixType&         A,
       state = iterate(A, preconditioner);
       ++step;
     }
-  while(state.breakdown == true);
+  while (state.breakdown == true);
 
   // in case of failure: throw exception
   AssertThrow(

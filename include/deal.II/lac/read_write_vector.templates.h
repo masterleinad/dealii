@@ -50,7 +50,7 @@ namespace LinearAlgebra
   void
   ReadWriteVector<Number>::resize_val(const size_type new_alloc_size)
   {
-    if(new_alloc_size == 0)
+    if (new_alloc_size == 0)
       {
         values.reset();
         thread_loop_partitioner
@@ -63,9 +63,9 @@ namespace LinearAlgebra
           (void**) &new_values, 64, sizeof(Number) * new_alloc_size);
         values.reset(new_values);
 
-        if(new_alloc_size >= 4
-                               * dealii::internal::VectorImplementation::
-                                   minimum_parallel_grain_size)
+        if (new_alloc_size >= 4
+                                * dealii::internal::VectorImplementation::
+                                    minimum_parallel_grain_size)
           thread_loop_partitioner
             = std::make_shared<parallel::internal::TBBPartitioner>();
       }
@@ -83,7 +83,7 @@ namespace LinearAlgebra
     stored_elements.compress();
 
     // set entries to zero if so requested
-    if(omit_zeroing_entries == false)
+    if (omit_zeroing_entries == false)
       this->operator=(Number());
 
     // reset the communication patter
@@ -101,7 +101,7 @@ namespace LinearAlgebra
 
     stored_elements = v.get_stored_elements();
 
-    if(omit_zeroing_entries == false)
+    if (omit_zeroing_entries == false)
       this->operator=(Number());
 
     // reset the communication patter
@@ -120,7 +120,7 @@ namespace LinearAlgebra
     resize_val(stored_elements.n_elements());
 
     // initialize to zero
-    if(omit_zeroing_entries == false)
+    if (omit_zeroing_entries == false)
       this->operator=(Number());
 
     // reset the communication pattern
@@ -171,11 +171,11 @@ namespace LinearAlgebra
   ReadWriteVector<Number>&
   ReadWriteVector<Number>::operator=(const ReadWriteVector<Number>& in_vector)
   {
-    if(PointerComparison::equal(this, &in_vector))
+    if (PointerComparison::equal(this, &in_vector))
       return *this;
 
     thread_loop_partitioner = in_vector.thread_loop_partitioner;
-    if(n_elements() != in_vector.n_elements())
+    if (n_elements() != in_vector.n_elements())
       reinit(in_vector, true);
 
     dealii::internal::VectorOperations::Vector_copy<Number, Number> copier(
@@ -192,7 +192,7 @@ namespace LinearAlgebra
   ReadWriteVector<Number>::operator=(const ReadWriteVector<Number2>& in_vector)
   {
     thread_loop_partitioner = in_vector.thread_loop_partitioner;
-    if(n_elements() != in_vector.n_elements())
+    if (n_elements() != in_vector.n_elements())
       reinit(in_vector, true);
 
     dealii::internal::VectorOperations::Vector_copy<Number, Number2> copier(
@@ -212,7 +212,7 @@ namespace LinearAlgebra
     (void) s;
 
     const size_type this_size = n_elements();
-    if(this_size > 0)
+    if (this_size > 0)
       {
         dealii::internal::VectorOperations::Vector_set<Number> setter(
           Number(), values.get());
@@ -234,7 +234,7 @@ namespace LinearAlgebra
     // If no communication pattern is given, create one. Otherwise, use the
     // given one.
     std::shared_ptr<const Utilities::MPI::Partitioner> comm_pattern;
-    if(communication_pattern.get() == nullptr)
+    if (communication_pattern.get() == nullptr)
       {
         comm_pattern = std::make_shared<Utilities::MPI::Partitioner>(
           vec.locally_owned_elements(),
@@ -256,11 +256,11 @@ namespace LinearAlgebra
     tmp_vector.update_ghost_values();
 
     const IndexSet& stored = get_stored_elements();
-    if(operation == VectorOperation::add)
-      for(size_type i = 0; i < stored.n_elements(); ++i)
+    if (operation == VectorOperation::add)
+      for (size_type i = 0; i < stored.n_elements(); ++i)
         local_element(i) += tmp_vector(stored.nth_index_in_set(i));
     else
-      for(size_type i = 0; i < stored.n_elements(); ++i)
+      for (size_type i = 0; i < stored.n_elements(); ++i)
         local_element(i) = tmp_vector(stored.nth_index_in_set(i));
   }
 
@@ -338,17 +338,17 @@ namespace LinearAlgebra
 
     // If no communication pattern is given, create one. Otherwise, use the one
     // given.
-    if(communication_pattern == nullptr)
+    if (communication_pattern == nullptr)
       {
         // The first time import is called, we create a communication pattern.
         // Check if the communication pattern already exists and if it can be
         // reused.
-        if((source_elements.size() == source_stored_elements.size())
-           && (source_elements == source_stored_elements))
+        if ((source_elements.size() == source_stored_elements.size())
+            && (source_elements == source_stored_elements))
           {
             epetra_comm_pattern = std::dynamic_pointer_cast<
               const EpetraWrappers::CommunicationPattern>(comm_pattern);
-            if(epetra_comm_pattern == nullptr)
+            if (epetra_comm_pattern == nullptr)
               epetra_comm_pattern
                 = std::make_shared<const EpetraWrappers::CommunicationPattern>(
                   create_epetra_comm_pattern(source_elements, mpi_comm));
@@ -372,7 +372,7 @@ namespace LinearAlgebra
 
     Epetra_FEVector target_vector(import.TargetMap());
 
-    if(operation == VectorOperation::insert)
+    if (operation == VectorOperation::insert)
       {
         const int err = target_vector.Import(multivector, import, Insert);
         AssertThrow(err == 0,
@@ -384,10 +384,10 @@ namespace LinearAlgebra
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 
-        for(int i = 0; i < size; ++i)
+        for (int i = 0; i < size; ++i)
           values[i] = new_values[i];
       }
-    else if(operation == VectorOperation::add)
+    else if (operation == VectorOperation::add)
       {
         const int err = target_vector.Import(multivector, import, Add);
         AssertThrow(err == 0,
@@ -399,7 +399,7 @@ namespace LinearAlgebra
         Assert(size == 0 || values != nullptr,
                ExcInternalError("Import failed."));
 
-        for(int i = 0; i < size; ++i)
+        for (int i = 0; i < size; ++i)
           values[i] += new_values[i];
       }
     else
@@ -451,7 +451,7 @@ namespace LinearAlgebra
     std::shared_ptr<const CommunicationPatternBase>)
   {
     const unsigned int n_elements = stored_elements.n_elements();
-    if(operation == VectorOperation::insert)
+    if (operation == VectorOperation::insert)
       {
         cudaError_t error_code = cudaMemcpy(values.get(),
                                             cuda_vec.get_values(),
@@ -470,7 +470,7 @@ namespace LinearAlgebra
         AssertCuda(error_code);
 
         // Add the two vectors
-        for(unsigned int i = 0; i < n_elements; ++i)
+        for (unsigned int i = 0; i < n_elements; ++i)
           values[i] += tmp[i];
       }
   }
@@ -506,7 +506,7 @@ namespace LinearAlgebra
     boost::io::ios_flags_saver restore_flags(out);
 
     out.precision(precision);
-    if(scientific)
+    if (scientific)
       out.setf(std::ios::scientific, std::ios::floatfield);
     else
       out.setf(std::ios::fixed, std::ios::floatfield);
@@ -515,7 +515,7 @@ namespace LinearAlgebra
     stored_elements.print(out);
     out << std::endl;
     unsigned int i = 0;
-    for(const auto& idx : this->stored_elements)
+    for (const auto& idx : this->stored_elements)
       out << "[" << idx << "]: " << values[i++] << '\n';
     out << std::flush;
 

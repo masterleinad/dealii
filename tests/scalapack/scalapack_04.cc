@@ -107,8 +107,8 @@ main(int argc, char** argv)
       if (b <= s)
         test<float>(s,b,tol_float);*/
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol_double);
 }

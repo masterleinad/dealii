@@ -51,7 +51,7 @@ do_test(const DoFHandler<dim>&  dof,
         const unsigned int      parallel_option = 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
-  if(parallel_option > 0)
+  if (parallel_option > 0)
     deallog << "Parallel option: " << parallel_option << std::endl;
   //std::cout << "Number of cells: " << dof.get_triangulation().n_active_cells() << std::endl;
   //std::cout << "Number of degrees of freedom: " << dof.n_dofs() << std::endl;
@@ -62,10 +62,10 @@ do_test(const DoFHandler<dim>&  dof,
   {
     const QGauss<1>                                  quad(n_q_points_1d);
     typename MatrixFree<dim, number>::AdditionalData data;
-    if(parallel_option == 1)
+    if (parallel_option == 1)
       data.tasks_parallel_scheme
         = MatrixFree<dim, number>::AdditionalData::partition_color;
-    else if(parallel_option == 2)
+    else if (parallel_option == 2)
       data.tasks_parallel_scheme
         = MatrixFree<dim, number>::AdditionalData::color;
     else
@@ -85,9 +85,9 @@ do_test(const DoFHandler<dim>&  dof,
   Vector<number> in_dist(dof.n_dofs());
   Vector<number> out_dist(in_dist);
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = random_value<double>();
       in(i)              = entry;
@@ -121,15 +121,15 @@ do_test(const DoFHandler<dim>&  dof,
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                          * fe_values.shape_grad(j, q_point)
                                        + 10. * fe_values.shape_value(i, q_point)

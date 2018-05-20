@@ -2143,7 +2143,7 @@ namespace TrilinosWrappers
                                 const Epetra_MultiVector& dst,
                                 const bool                transpose)
       {
-        if(transpose == false)
+        if (transpose == false)
           {
             Assert(
               src.Map().SameAs(mtrx.DomainMap()) == true,
@@ -2172,7 +2172,7 @@ namespace TrilinosWrappers
                                 const Epetra_MultiVector& dst,
                                 const bool                transpose)
       {
-        if(transpose == false)
+        if (transpose == false)
           {
             Assert(src.Map().SameAs(op.OperatorDomainMap()) == true,
                    ExcMessage(
@@ -2758,14 +2758,14 @@ namespace TrilinosWrappers
       // step, then cycle until we
       // find a row with a nonzero
       // number of entries.
-      if(accessor.a_index >= accessor.colnum_cache->size())
+      if (accessor.a_index >= accessor.colnum_cache->size())
         {
           accessor.a_index = 0;
           ++accessor.a_row;
 
-          while((accessor.a_row < accessor.matrix->m())
-                && ((accessor.matrix->in_local_range(accessor.a_row) == false)
-                    || (accessor.matrix->row_length(accessor.a_row) == 0)))
+          while ((accessor.a_row < accessor.matrix->m())
+                 && ((accessor.matrix->in_local_range(accessor.a_row) == false)
+                     || (accessor.matrix->row_length(accessor.a_row) == 0)))
             ++accessor.a_row;
 
           accessor.visit_present_row();
@@ -2843,7 +2843,7 @@ namespace TrilinosWrappers
   SparseMatrix::begin(const size_type r) const
   {
     Assert(r < m(), ExcIndexRange(r, 0, m()));
-    if(in_local_range(r) && (row_length(r) > 0))
+    if (in_local_range(r) && (row_length(r) > 0))
       return const_iterator(this, r, 0);
     else
       return end(r);
@@ -2857,8 +2857,8 @@ namespace TrilinosWrappers
     // place the iterator on the first entry
     // past this line, or at the end of the
     // matrix
-    for(size_type i = r + 1; i < m(); ++i)
-      if(in_local_range(i) && (row_length(i) > 0))
+    for (size_type i = r + 1; i < m(); ++i)
+      if (in_local_range(i) && (row_length(i) > 0))
         return const_iterator(this, i, 0);
 
     // if there is no such line, then take the
@@ -2882,7 +2882,7 @@ namespace TrilinosWrappers
   SparseMatrix::begin(const size_type r)
   {
     Assert(r < m(), ExcIndexRange(r, 0, m()));
-    if(in_local_range(r) && (row_length(r) > 0))
+    if (in_local_range(r) && (row_length(r) > 0))
       return iterator(this, r, 0);
     else
       return end(r);
@@ -2896,8 +2896,8 @@ namespace TrilinosWrappers
     // place the iterator on the first entry
     // past this line, or at the end of the
     // matrix
-    for(size_type i = r + 1; i < m(); ++i)
-      if(in_local_range(i) && (row_length(i) > 0))
+    for (size_type i = r + 1; i < m(); ++i)
+      if (in_local_range(i) && (row_length(i) > 0))
         return iterator(this, i, 0);
 
     // if there is no such line, then take the
@@ -2949,7 +2949,7 @@ namespace TrilinosWrappers
            ExcDimensionMismatch(indices.size(), values.m()));
     Assert(values.m() == values.n(), ExcNotQuadratic());
 
-    for(size_type i = 0; i < indices.size(); ++i)
+    for (size_type i = 0; i < indices.size(); ++i)
       set(indices[i],
           indices.size(),
           indices.data(),
@@ -2964,7 +2964,7 @@ namespace TrilinosWrappers
   {
     AssertIsFinite(value);
 
-    if(value == 0)
+    if (value == 0)
       {
         // we have to check after Insert/Add in any case to be consistent
         // with the MPI communication model, but we can save some
@@ -2972,7 +2972,7 @@ namespace TrilinosWrappers
         // we pass on to the other function.
 
         // TODO: fix this (do not run compress here, but fail)
-        if(last_action == Insert)
+        if (last_action == Insert)
           {
             int ierr;
             ierr = matrix->GlobalAssemble(
@@ -3165,7 +3165,7 @@ namespace TrilinosWrappers
 
         // If the input operator is already setup for transpose operations, then
         // we must do similar with its inverse.
-        if(return_op.UseTranspose() == true)
+        if (return_op.UseTranspose() == true)
           std::swap(return_op.inv_vmult, return_op.inv_Tvmult);
 
         return return_op;

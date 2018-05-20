@@ -28,7 +28,7 @@ test()
   // non-quadratic blocks so as to make them
   // not specially store the diagonal
   BlockSparsityPattern bsp(1, 2);
-  for(unsigned int j = 0; j < 2; ++j)
+  for (unsigned int j = 0; j < 2; ++j)
     bsp.block(0, j).reinit(3, 2, 1);
   bsp.collect_sizes();
 
@@ -72,7 +72,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -86,7 +86,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

@@ -99,18 +99,18 @@ test_int(const unsigned int n_global = 0, const unsigned int n_local = 0)
   tria_distrib.refine_global(n_global);
   tria_sequential.refine_global(n_global);
 
-  for(unsigned int i = 0; i < n_local; i++)
+  for (unsigned int i = 0; i < n_local; i++)
     {
       // refine both the distributed and the sequential triangulation. the
       // following relies on the fact that the first cell of the "global"
       // triangulation happens to be on processor 0
-      if(this_mpi_process == 0)
+      if (this_mpi_process == 0)
         {
-          for(typename Triangulation<dim>::active_cell_iterator cell
-              = tria_distrib.begin_active();
-              cell != tria_distrib.end();
-              ++cell)
-            if(cell->is_locally_owned())
+          for (typename Triangulation<dim>::active_cell_iterator cell
+               = tria_distrib.begin_active();
+               cell != tria_distrib.end();
+               ++cell)
+            if (cell->is_locally_owned())
               {
                 cell->set_refine_flag();
                 break;

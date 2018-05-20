@@ -52,9 +52,9 @@ main()
   deallog << "size block(1,0):" << csp.block(1, 0).n_rows() << "x"
           << csp.block(1, 0).n_cols() << std::endl;
 
-  for(int i = 0; i < 13; ++i)
+  for (int i = 0; i < 13; ++i)
     {
-      if(i == 0 || i == 3 || i == 5)
+      if (i == 0 || i == 3 || i == 5)
         {
           csp.add(i, 0);
           csp.add(i, i);

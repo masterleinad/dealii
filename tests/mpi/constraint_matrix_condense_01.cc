@@ -56,14 +56,14 @@ test()
       dof_handler, std::vector<bool>(1, true), boundary_dofs);
 
     unsigned int first_nboundary_dof = 0;
-    while(boundary_dofs.is_element(first_nboundary_dof))
+    while (boundary_dofs.is_element(first_nboundary_dof))
       first_nboundary_dof++;
 
-    if(locally_relevant_dofs.is_element(first_nboundary_dof))
+    if (locally_relevant_dofs.is_element(first_nboundary_dof))
       {
         constraints.add_line(first_nboundary_dof);
-        for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-          if(boundary_dofs.is_element(i) == true)
+        for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+          if (boundary_dofs.is_element(i) == true)
             constraints.add_entry(first_nboundary_dof, i, -1);
       }
   }
@@ -79,7 +79,7 @@ main(int argc, char* argv[])
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

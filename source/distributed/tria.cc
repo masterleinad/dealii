@@ -48,11 +48,11 @@ namespace
     vertex_touch_count.resize(triangulation.n_vertices());
     vertex_to_cell.resize(triangulation.n_vertices());
 
-    for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
         {
           ++vertex_touch_count[cell->vertex_index(v)];
           vertex_to_cell[cell->vertex_index(v)].emplace_back(cell, v);
@@ -73,11 +73,11 @@ namespace
     edge_touch_count.resize(triangulation.n_active_lines());
     edge_to_cell.resize(triangulation.n_active_lines());
 
-    for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
-      for(unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+    for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
+      for (unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
         {
           ++edge_touch_count[cell->line(l)->index()];
           edge_to_cell[cell->line(l)->index()].emplace_back(cell, l);
@@ -115,8 +115,8 @@ namespace
                      false)
              == triangulation.get_used_vertices().end(),
            ExcInternalError());
-    if(set_vertex_info == true)
-      for(unsigned int v = 0; v < triangulation.n_vertices(); ++v)
+    if (set_vertex_info == true)
+      for (unsigned int v = 0; v < triangulation.n_vertices(); ++v)
         {
           connectivity->vertices[3 * v] = triangulation.get_vertices()[v][0];
           connectivity->vertices[3 * v + 1]
@@ -133,14 +133,14 @@ namespace
     typename Triangulation<dim, spacedim>::active_cell_iterator cell
       = triangulation.begin_active(),
       endc = triangulation.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const unsigned int index
           = coarse_cell_to_p4est_tree_permutation[cell->index()];
 
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           {
-            if(set_vertex_info == true)
+            if (set_vertex_info == true)
               connectivity
                 ->tree_to_vertex[index * GeometryInfo<dim>::vertices_per_cell
                                  + v]
@@ -152,8 +152,8 @@ namespace
 
         // neighborship information. if a cell is at a boundary, then enter
         // the index of the cell itself here
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-          if(cell->face(f)->at_boundary() == false)
+        for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          if (cell->face(f)->at_boundary() == false)
             connectivity
               ->tree_to_tree[index * GeometryInfo<dim>::faces_per_cell + f]
               = coarse_cell_to_p4est_tree_permutation[cell->neighbor(f)
@@ -165,10 +165,10 @@ namespace
 
         // fill tree_to_face, which is essentially neighbor_to_neighbor;
         // however, we have to remap the resulting face number as well
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-          if(cell->face(f)->at_boundary() == false)
+        for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          if (cell->face(f)->at_boundary() == false)
             {
-              switch(dim)
+              switch (dim)
                 {
                   case 2:
                     {
@@ -204,7 +204,7 @@ namespace
                         = {cell, cell->neighbor(f)};
                       unsigned int smaller_idx = 0;
 
-                      if(f > cell->neighbor_of_neighbor(f))
+                      if (f > cell->neighbor_of_neighbor(f))
                         smaller_idx = 1;
 
                       unsigned int larger_idx = (smaller_idx + 1) % 2;
@@ -228,16 +228,16 @@ namespace
 
                       // loop over vertices on face from other cell and compare
                       // global vertex numbers
-                      for(unsigned int i = 0;
-                          i < GeometryInfo<dim>::vertices_per_face;
-                          ++i)
+                      for (unsigned int i = 0;
+                           i < GeometryInfo<dim>::vertices_per_face;
+                           ++i)
                         {
                           unsigned int idx
                             = cell_list[larger_idx]->vertex_index(
                               GeometryInfo<dim>::face_to_cell_vertices(
                                 face_idx_list[larger_idx], i));
 
-                          if(idx == g_idx)
+                          if (idx == g_idx)
                             {
                               v = i;
                               break;
@@ -271,7 +271,7 @@ namespace
     Assert(connectivity->ctt_offset[triangulation.n_vertices()] == num_vtt,
            ExcInternalError());
 
-    for(unsigned int v = 0; v < triangulation.n_vertices(); ++v)
+    for (unsigned int v = 0; v < triangulation.n_vertices(); ++v)
       {
         Assert(vertex_to_cell[v].size() == vertex_touch_count[v],
                ExcInternalError());
@@ -280,7 +280,7 @@ namespace
           std::pair<typename Triangulation<dim, spacedim>::active_cell_iterator,
                     unsigned int>>::const_iterator p
           = vertex_to_cell[v].begin();
-        for(unsigned int c = 0; c < vertex_touch_count[v]; ++c, ++p)
+        for (unsigned int c = 0; c < vertex_touch_count[v]; ++c, ++p)
           {
             connectivity->corner_to_tree[connectivity->ctt_offset[v] + c]
               = coarse_cell_to_p4est_tree_permutation[p->first->index()];
@@ -307,8 +307,8 @@ namespace
   delete_all_children_and_self(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
-    if(cell->has_children())
-      for(unsigned int c = 0; c < cell->n_children(); ++c)
+    if (cell->has_children())
+      for (unsigned int c = 0; c < cell->n_children(); ++c)
         delete_all_children_and_self<dim, spacedim>(cell->child(c));
     else
       cell->set_coarsen_flag();
@@ -319,8 +319,8 @@ namespace
   delete_all_children(
     const typename Triangulation<dim, spacedim>::cell_iterator& cell)
   {
-    if(cell->has_children())
-      for(unsigned int c = 0; c < cell->n_children(); ++c)
+    if (cell->has_children())
+      for (unsigned int c = 0; c < cell->n_children(); ++c)
         delete_all_children_and_self<dim, spacedim>(cell->child(c));
   }
 
@@ -335,15 +335,15 @@ namespace
     const types::subdomain_id                                   my_subdomain,
     const std::vector<std::vector<bool>>&                       marked_vertices)
   {
-    if(dealii_cell->level_subdomain_id() == numbers::artificial_subdomain_id)
+    if (dealii_cell->level_subdomain_id() == numbers::artificial_subdomain_id)
       {
         //important: only assign the level_subdomain_id if it is a ghost cell
         // even though we could fill in all.
         bool used = false;
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           {
-            if(marked_vertices[dealii_cell->level()]
-                              [dealii_cell->vertex_index(v)])
+            if (marked_vertices[dealii_cell->level()]
+                               [dealii_cell->vertex_index(v)])
               {
                 used = true;
                 break;
@@ -362,16 +362,16 @@ namespace
         // *---*---*
         // |   | M |
         // *---*---*
-        if(!used && dealii_cell->active()
-           && dealii_cell->is_artificial() == false
-           && dealii_cell->level() + 1
-                < static_cast<int>(marked_vertices.size()))
+        if (!used && dealii_cell->active()
+            && dealii_cell->is_artificial() == false
+            && dealii_cell->level() + 1
+                 < static_cast<int>(marked_vertices.size()))
           {
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
-                ++v)
+            for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+                 ++v)
               {
-                if(marked_vertices[dealii_cell->level() + 1]
-                                  [dealii_cell->vertex_index(v)])
+                if (marked_vertices[dealii_cell->level() + 1]
+                                   [dealii_cell->vertex_index(v)])
                   {
                     used = true;
                     break;
@@ -380,14 +380,15 @@ namespace
           }
 
         // Like above, but now the other way around
-        if(!used && dealii_cell->active()
-           && dealii_cell->is_artificial() == false && dealii_cell->level() > 0)
+        if (!used && dealii_cell->active()
+            && dealii_cell->is_artificial() == false
+            && dealii_cell->level() > 0)
           {
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
-                ++v)
+            for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+                 ++v)
               {
-                if(marked_vertices[dealii_cell->level() - 1]
-                                  [dealii_cell->vertex_index(v)])
+                if (marked_vertices[dealii_cell->level() - 1]
+                                   [dealii_cell->vertex_index(v)])
                   {
                     used = true;
                     break;
@@ -395,7 +396,7 @@ namespace
               }
           }
 
-        if(used)
+        if (used)
           {
             int owner = internal::p4est::functions<dim>::comm_find_owner(
               &forest, tree_index, &p4est_cell, my_subdomain);
@@ -405,13 +406,13 @@ namespace
           }
       }
 
-    if(dealii_cell->has_children())
+    if (dealii_cell->has_children())
       {
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
-          switch(dim)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
+          switch (dim)
             {
               case 2:
                 P4EST_QUADRANT_INIT(&p4est_child[c]);
@@ -426,8 +427,8 @@ namespace
         internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                             p4est_child);
 
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           {
             determine_level_subdomain_id_recursively<dim, spacedim>(
               tree,
@@ -451,14 +452,14 @@ namespace
     const types::subdomain_id                                   my_subdomain)
   {
     // check if this cell exists in the local p4est cell
-    if(sc_array_bsearch(const_cast<sc_array_t*>(&tree.quadrants),
-                        &p4est_cell,
-                        internal::p4est::functions<dim>::quadrant_compare)
-       != -1)
+    if (sc_array_bsearch(const_cast<sc_array_t*>(&tree.quadrants),
+                         &p4est_cell,
+                         internal::p4est::functions<dim>::quadrant_compare)
+        != -1)
       {
         // yes, cell found in local part of p4est
         delete_all_children<dim, spacedim>(dealii_cell);
-        if(!dealii_cell->has_children())
+        if (!dealii_cell->has_children())
           dealii_cell->set_subdomain_id(my_subdomain);
       }
     else
@@ -468,16 +469,16 @@ namespace
         // no children of its own, we need to refine it, and if it does
         // already have children then loop over all children and see if they
         // are locally available as well
-        if(dealii_cell->has_children() == false)
+        if (dealii_cell->has_children() == false)
           dealii_cell->set_refine_flag();
         else
           {
             typename internal::p4est::types<dim>::quadrant
               p4est_child[GeometryInfo<dim>::max_children_per_cell];
-            for(unsigned int c = 0;
-                c < GeometryInfo<dim>::max_children_per_cell;
-                ++c)
-              switch(dim)
+            for (unsigned int c = 0;
+                 c < GeometryInfo<dim>::max_children_per_cell;
+                 ++c)
+              switch (dim)
                 {
                   case 2:
                     P4EST_QUADRANT_INIT(&p4est_child[c]);
@@ -492,14 +493,14 @@ namespace
             internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                                 p4est_child);
 
-            for(unsigned int c = 0;
-                c < GeometryInfo<dim>::max_children_per_cell;
-                ++c)
-              if(internal::p4est::functions<dim>::quadrant_overlaps_tree(
-                   const_cast<typename internal::p4est::types<dim>::tree*>(
-                     &tree),
-                   &p4est_child[c])
-                 == false)
+            for (unsigned int c = 0;
+                 c < GeometryInfo<dim>::max_children_per_cell;
+                 ++c)
+              if (internal::p4est::functions<dim>::quadrant_overlaps_tree(
+                    const_cast<typename internal::p4est::types<dim>::tree*>(
+                      &tree),
+                    &p4est_child[c])
+                  == false)
                 {
                   // no, this child is locally not available in the p4est.
                   // delete all its children but, because this may not be
@@ -533,11 +534,11 @@ namespace
   {
     const int l = ghost_quadrant.level;
 
-    for(int i = 0; i < l; ++i)
+    for (int i = 0; i < l; ++i)
       {
         typename Triangulation<dim, spacedim>::cell_iterator cell(
           tria, i, dealii_index);
-        if(cell->has_children() == false)
+        if (cell->has_children() == false)
           {
             cell->clear_coarsen_flag();
             cell->set_refine_flag();
@@ -552,7 +553,7 @@ namespace
 
     typename Triangulation<dim, spacedim>::cell_iterator cell(
       tria, l, dealii_index);
-    if(cell->has_children())
+    if (cell->has_children())
       delete_all_children<dim, spacedim>(cell);
     else
       {
@@ -580,23 +581,23 @@ namespace
                          &p4est_cell,
                          internal::p4est::functions<dim>::quadrant_compare);
 
-    if(idx == -1
-       && (internal::p4est::functions<dim>::quadrant_overlaps_tree(
-             const_cast<typename internal::p4est::types<dim>::tree*>(&tree),
-             &p4est_cell)
-           == false))
+    if (idx == -1
+        && (internal::p4est::functions<dim>::quadrant_overlaps_tree(
+              const_cast<typename internal::p4est::types<dim>::tree*>(&tree),
+              &p4est_cell)
+            == false))
       return; //this quadrant and none of its children belongs to us.
 
     bool p4est_has_children = (idx == -1);
 
-    if(p4est_has_children && dealii_cell->has_children())
+    if (p4est_has_children && dealii_cell->has_children())
       {
         //recurse further
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
-          switch(dim)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
+          switch (dim)
             {
               case 2:
                 P4EST_QUADRANT_INIT(&p4est_child[c]);
@@ -611,14 +612,14 @@ namespace
         internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                             p4est_child);
 
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           {
             attach_mesh_data_recursively<dim, spacedim>(
               tree, dealii_cell->child(c), p4est_child[c], pack_callbacks);
           }
       }
-    else if(!p4est_has_children && !dealii_cell->has_children())
+    else if (!p4est_has_children && !dealii_cell->has_children())
       {
         // this active cell didn't change
         typename internal::p4est::types<dim>::quadrant* q;
@@ -634,7 +635,7 @@ namespace
         Assert(dealii_cell->active(), ExcInternalError());
 
         // call all callbacks
-        for(const auto& it : pack_callbacks)
+        for (const auto& it : pack_callbacks)
           {
             void* ptr
               = static_cast<char*>(q->p.user_data) + it.first; //add offset
@@ -644,7 +645,7 @@ namespace
               ptr);
           }
       }
-    else if(p4est_has_children)
+    else if (p4est_has_children)
       {
         // this cell got refined in p4est, but the dealii_cell has not yet been
         // refined
@@ -653,9 +654,9 @@ namespace
         // quadrants
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
-          switch(dim)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
+          switch (dim)
             {
               case 2:
                 P4EST_QUADRANT_INIT(&p4est_child[c]);
@@ -690,7 +691,7 @@ namespace
         Assert(dealii_cell->active(), ExcInternalError());
 
         // call all callbacks
-        for(const auto& it : pack_callbacks)
+        for (const auto& it : pack_callbacks)
           {
             // compute the address where this particular callback is allowed
             // to write its data, using the correct offset
@@ -703,8 +704,8 @@ namespace
           }
 
         // mark other children as invalid, so that unpack only happens once
-        for(unsigned int i = 1; i < GeometryInfo<dim>::max_children_per_cell;
-            ++i)
+        for (unsigned int i = 1; i < GeometryInfo<dim>::max_children_per_cell;
+             ++i)
           {
             int child_idx = sc_array_bsearch(
               const_cast<sc_array_t*>(&tree.quadrants),
@@ -737,12 +738,12 @@ namespace
         // only tolerate one level of coarsening at a time, so check
         // that the children are all active
         Assert(dealii_cell->active() == false, ExcInternalError());
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           Assert(dealii_cell->child(c)->active(), ExcInternalError());
 
         // then call all callbacks
-        for(const auto& it : pack_callbacks)
+        for (const auto& it : pack_callbacks)
           {
             void* ptr
               = static_cast<char*>(q->p.user_data) + it.first; //add offset
@@ -768,23 +769,23 @@ namespace
                          &p4est_cell,
                          internal::p4est::functions<dim>::quadrant_compare);
 
-    if(idx == -1
-       && (internal::p4est::functions<dim>::quadrant_overlaps_tree(
-             const_cast<typename internal::p4est::types<dim>::tree*>(&tree),
-             &p4est_cell)
-           == false))
+    if (idx == -1
+        && (internal::p4est::functions<dim>::quadrant_overlaps_tree(
+              const_cast<typename internal::p4est::types<dim>::tree*>(&tree),
+              &p4est_cell)
+            == false))
       return; // This quadrant and none of its children belongs to us.
 
     const bool p4est_has_children = (idx == -1);
 
-    if(p4est_has_children && dealii_cell->has_children())
+    if (p4est_has_children && dealii_cell->has_children())
       {
         //recurse further
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
-          switch(dim)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
+          switch (dim)
             {
               case 2:
                 P4EST_QUADRANT_INIT(&p4est_child[c]);
@@ -799,14 +800,14 @@ namespace
         internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                             p4est_child);
 
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           {
             get_cell_weights_recursively<dim, spacedim>(
               tree, dealii_cell->child(c), p4est_child[c], signals, weight);
           }
       }
-    else if(!p4est_has_children && !dealii_cell->has_children())
+    else if (!p4est_has_children && !dealii_cell->has_children())
       {
         // This active cell didn't change
         weight.push_back(1000);
@@ -814,7 +815,7 @@ namespace
           dealii_cell,
           parallel::distributed::Triangulation<dim, spacedim>::CELL_PERSIST);
       }
-    else if(p4est_has_children)
+    else if (p4est_has_children)
       {
         // This cell will be refined
         unsigned int parent_weight(1000);
@@ -822,8 +823,8 @@ namespace
           dealii_cell,
           parallel::distributed::Triangulation<dim, spacedim>::CELL_REFINE);
 
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           {
             // We assign the weight of the parent cell equally to all children
             weight.push_back(parent_weight);
@@ -857,25 +858,25 @@ namespace
       = sc_array_bsearch(const_cast<sc_array_t*>(&tree.quadrants),
                          &p4est_cell,
                          internal::p4est::functions<dim>::quadrant_compare);
-    if(idx == -1
-       && (internal::p4est::functions<dim>::quadrant_overlaps_tree(
-             const_cast<typename internal::p4est::types<dim>::tree*>(&tree),
-             &p4est_cell)
-           == false))
+    if (idx == -1
+        && (internal::p4est::functions<dim>::quadrant_overlaps_tree(
+              const_cast<typename internal::p4est::types<dim>::tree*>(&tree),
+              &p4est_cell)
+            == false))
       // this quadrant and none of its children belong to us.
       return;
 
     const bool p4est_has_children = (idx == -1);
-    if(p4est_has_children)
+    if (p4est_has_children)
       {
         Assert(dealii_cell->has_children(), ExcInternalError());
 
         //recurse further
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
-          switch(dim)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
+          switch (dim)
             {
               case 2:
                 P4EST_QUADRANT_INIT(&p4est_child[c]);
@@ -890,8 +891,8 @@ namespace
         internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                             p4est_child);
 
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           {
             post_mesh_data_recursively<dim, spacedim>(tree,
                                                       dealii_cell->child(c),
@@ -915,7 +916,7 @@ namespace
           = *static_cast<typename parallel::distributed::
                            Triangulation<dim, spacedim>::CellStatus*>(
             q->p.user_data);
-        switch(status)
+        switch (status)
           {
             case parallel::distributed::Triangulation<dim,
                                                       spacedim>::CELL_PERSIST:
@@ -1020,18 +1021,18 @@ namespace
   {
     // count how many flags are set and allocate that much memory
     unsigned int n_refine_flags = 0, n_coarsen_flags = 0;
-    for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-        = triangulation.begin_active();
-        cell != triangulation.end();
-        ++cell)
+    for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+         = triangulation.begin_active();
+         cell != triangulation.end();
+         ++cell)
       {
         //skip cells that are not local
-        if(cell->subdomain_id() != my_subdomain)
+        if (cell->subdomain_id() != my_subdomain)
           continue;
 
-        if(cell->refine_flag_set())
+        if (cell->refine_flag_set())
           ++n_refine_flags;
-        else if(cell->coarsen_flag_set())
+        else if (cell->coarsen_flag_set())
           ++n_coarsen_flags;
       }
 
@@ -1045,7 +1046,7 @@ namespace
     // coarse_cell_to_p4est_tree_permutation permutation. in order to make
     // sure that the output array is already in the correct order, traverse
     // our coarse cells in the same order in which p4est will:
-    for(unsigned int c = 0; c < triangulation.n_cells(0); ++c)
+    for (unsigned int c = 0; c < triangulation.n_cells(0); ++c)
       {
         unsigned int coarse_cell_index
           = p4est_tree_to_coarse_cell_permutation[c];
@@ -1065,10 +1066,10 @@ namespace
     Assert(coarsen_list.size() == n_coarsen_flags, ExcInternalError());
 
     // make sure that our ordering in fact worked
-    for(unsigned int i = 1; i < refine_list.size(); ++i)
+    for (unsigned int i = 1; i < refine_list.size(); ++i)
       Assert(refine_list[i].p.which_tree >= refine_list[i - 1].p.which_tree,
              ExcInternalError());
-    for(unsigned int i = 1; i < coarsen_list.size(); ++i)
+    for (unsigned int i = 1; i < coarsen_list.size(); ++i)
       Assert(coarsen_list[i].p.which_tree >= coarsen_list[i - 1].p.which_tree,
              ExcInternalError());
 
@@ -1083,13 +1084,13 @@ namespace
     const typename internal::p4est::types<dim>::quadrant&       p4est_cell,
     const types::subdomain_id                                   my_subdomain)
   {
-    if(!cell->has_children())
+    if (!cell->has_children())
       {
-        if(cell->subdomain_id() == my_subdomain)
+        if (cell->subdomain_id() == my_subdomain)
           {
-            if(cell->refine_flag_set())
+            if (cell->refine_flag_set())
               refine_list.push_back(p4est_cell);
-            else if(cell->coarsen_flag_set())
+            else if (cell->coarsen_flag_set())
               coarsen_list.push_back(p4est_cell);
           }
       }
@@ -1097,9 +1098,9 @@ namespace
       {
         typename internal::p4est::types<dim>::quadrant
           p4est_child[GeometryInfo<dim>::max_children_per_cell];
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
-          switch(dim)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
+          switch (dim)
             {
               case 2:
                 P4EST_QUADRANT_INIT(&p4est_child[c]);
@@ -1112,8 +1113,8 @@ namespace
             }
         internal::p4est::functions<dim>::quadrant_childrenv(&p4est_cell,
                                                             p4est_child);
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           {
             p4est_child[c].p.which_tree = p4est_cell.p.which_tree;
             build_lists(cell->child(c), p4est_child[c], my_subdomain);
@@ -1134,7 +1135,7 @@ namespace
 
     // if there are no more cells in our list the current cell can't be
     // flagged for refinement
-    if(this_object->current_refine_pointer == this_object->refine_list.end())
+    if (this_object->current_refine_pointer == this_object->refine_list.end())
       return false;
 
     Assert(coarse_cell_index
@@ -1143,7 +1144,7 @@ namespace
 
     // if p4est hasn't yet reached the tree of the next flagged cell the
     // current cell can't be flagged for refinement
-    if(coarse_cell_index < this_object->current_refine_pointer->p.which_tree)
+    if (coarse_cell_index < this_object->current_refine_pointer->p.which_tree)
       return false;
 
     // now we're in the right tree in the forest
@@ -1159,8 +1160,8 @@ namespace
            ExcInternalError());
 
     // now, if the p4est cell is one in the list, it is supposed to be refined
-    if(internal::p4est::functions<dim>::quadrant_is_equal(
-         quadrant, &*this_object->current_refine_pointer))
+    if (internal::p4est::functions<dim>::quadrant_is_equal(
+          quadrant, &*this_object->current_refine_pointer))
       {
         ++this_object->current_refine_pointer;
         return true;
@@ -1183,7 +1184,7 @@ namespace
 
     // if there are no more cells in our list the current cell can't be
     // flagged for coarsening
-    if(this_object->current_coarsen_pointer == this_object->coarsen_list.end())
+    if (this_object->current_coarsen_pointer == this_object->coarsen_list.end())
       return false;
 
     Assert(coarse_cell_index
@@ -1192,7 +1193,7 @@ namespace
 
     // if p4est hasn't yet reached the tree of the next flagged cell the
     // current cell can't be flagged for coarsening
-    if(coarse_cell_index < this_object->current_coarsen_pointer->p.which_tree)
+    if (coarse_cell_index < this_object->current_coarsen_pointer->p.which_tree)
       return false;
 
     // now we're in the right tree in the forest
@@ -1209,16 +1210,16 @@ namespace
 
     // now, if the p4est cell is one in the list, it is supposed to be
     // coarsened
-    if(internal::p4est::functions<dim>::quadrant_is_equal(
-         children[0], &*this_object->current_coarsen_pointer))
+    if (internal::p4est::functions<dim>::quadrant_is_equal(
+          children[0], &*this_object->current_coarsen_pointer))
       {
         // move current pointer one up
         ++this_object->current_coarsen_pointer;
 
         // note that the next 3 cells in our list need to correspond to the
         // other siblings of the cell we have just found
-        for(unsigned int c = 1; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 1; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           {
             Assert(internal::p4est::functions<dim>::quadrant_is_equal(
                      children[c], &*this_object->current_coarsen_pointer),
@@ -1347,7 +1348,7 @@ namespace parallel
         {
           Triangulation<dim, spacedim>::clear();
         }
-      catch(...)
+      catch (...)
         {}
 
       AssertNothrow(triangulation_has_content == false, ExcInternalError());
@@ -1367,7 +1368,7 @@ namespace parallel
           dealii::Triangulation<dim, spacedim>::create_triangulation(
             vertices, cells, subcelldata);
         }
-      catch(
+      catch (
         const typename dealii::Triangulation<dim, spacedim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
@@ -1388,7 +1389,7 @@ namespace parallel
         {
           copy_local_forest_to_triangulation();
         }
-      catch(const typename Triangulation<dim>::DistortedCellList&)
+      catch (const typename Triangulation<dim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
           // cells
@@ -1505,7 +1506,7 @@ namespace parallel
             first_vertex_indices.resize(cells);
             std::vector<unsigned int> n_vertices_on_cell(cells);
             std::vector<unsigned int> first_indices(cells);
-            for(unsigned int c = 0; c < cells; ++c)
+            for (unsigned int c = 0; c < cells; ++c)
               {
                 // The first 'vertex index' is the number of vertices.
                 // Additionally, we need to store the pointer to this
@@ -1525,12 +1526,12 @@ namespace parallel
                        n_vertices_on_cell[c] * sizeof(unsigned int));
                 ptr += n_vertices_on_cell[c] * sizeof(unsigned int);
               }
-            for(unsigned int c = 0; c < cells; ++c)
+            for (unsigned int c = 0; c < cells; ++c)
               first_vertex_indices[c] = &vertex_indices[first_indices[c]];
 
             vertices.clear();
             first_vertices.resize(cells);
-            for(unsigned int c = 0; c < cells; ++c)
+            for (unsigned int c = 0; c < cells; ++c)
               {
                 first_indices[c] = vertices.size();
                 vertices.resize(vertices.size() + n_vertices_on_cell[c]);
@@ -1539,7 +1540,7 @@ namespace parallel
                        n_vertices_on_cell[c] * sizeof(dealii::Point<spacedim>));
                 ptr += n_vertices_on_cell[c] * sizeof(dealii::Point<spacedim>);
               }
-            for(unsigned int c = 0; c < cells; ++c)
+            for (unsigned int c = 0; c < cells; ++c)
               first_vertices[c] = &vertices[first_indices[c]];
 
             Assert(ptr == buffer.data() + buffer.size(), ExcInternalError());
@@ -1576,16 +1577,16 @@ namespace parallel
         {
           // see if we have to
           // recurse...
-          if(dealii_cell->has_children())
+          if (dealii_cell->has_children())
             {
               typename dealii::internal::p4est::types<dim>::quadrant
                 p4est_child[GeometryInfo<dim>::max_children_per_cell];
               dealii::internal::p4est::init_quadrant_children<dim>(p4est_cell,
                                                                    p4est_child);
 
-              for(unsigned int c = 0;
-                  c < GeometryInfo<dim>::max_children_per_cell;
-                  ++c)
+              for (unsigned int c = 0;
+                   c < GeometryInfo<dim>::max_children_per_cell;
+                   ++c)
                 fill_vertices_recursively<dim, spacedim>(
                   tria,
                   tree_index,
@@ -1604,11 +1605,11 @@ namespace parallel
           // If one of the vertices of the cell is interesting,
           // send all moved vertices of the cell to all processors
           // adjacent to all cells adjacent to this vertex
-          if(dealii_cell->is_locally_owned())
+          if (dealii_cell->is_locally_owned())
             {
               std::set<dealii::types::subdomain_id> send_to;
-              for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
-                  ++v)
+              for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+                   ++v)
                 {
                   const std::map<unsigned int,
                                  std::set<dealii::types::subdomain_id>>::
@@ -1616,8 +1617,8 @@ namespace parallel
                     = vertices_with_ghost_neighbors.find(
                       dealii_cell->vertex_index(v));
 
-                  if(neighbor_subdomains_of_vertex
-                     != vertices_with_ghost_neighbors.end())
+                  if (neighbor_subdomains_of_vertex
+                      != vertices_with_ghost_neighbors.end())
                     {
                       Assert(neighbor_subdomains_of_vertex->second.size() != 0,
                              ExcInternalError());
@@ -1627,24 +1628,24 @@ namespace parallel
                     }
                 }
 
-              if(send_to.size() > 0)
+              if (send_to.size() > 0)
                 {
                   std::vector<unsigned int>            vertex_indices;
                   std::vector<dealii::Point<spacedim>> local_vertices;
-                  for(unsigned int v = 0;
-                      v < GeometryInfo<dim>::vertices_per_cell;
-                      ++v)
-                    if(vertex_locally_moved[dealii_cell->vertex_index(v)])
+                  for (unsigned int v = 0;
+                       v < GeometryInfo<dim>::vertices_per_cell;
+                       ++v)
+                    if (vertex_locally_moved[dealii_cell->vertex_index(v)])
                       {
                         vertex_indices.push_back(v);
                         local_vertices.push_back(dealii_cell->vertex(v));
                       }
 
-                  if(vertex_indices.size() > 0)
-                    for(std::set<dealii::types::subdomain_id>::iterator it
-                        = send_to.begin();
-                        it != send_to.end();
-                        ++it)
+                  if (vertex_indices.size() > 0)
+                    for (std::set<dealii::types::subdomain_id>::iterator it
+                         = send_to.begin();
+                         it != send_to.end();
+                         ++it)
                       {
                         const dealii::types::subdomain_id subdomain = *it;
 
@@ -1698,8 +1699,8 @@ namespace parallel
           const dealii::Point<spacedim>* const vertices,
           const unsigned int* const            vertex_indices)
         {
-          if(dealii::internal::p4est::quadrant_is_equal<dim>(p4est_cell,
-                                                             quadrant))
+          if (dealii::internal::p4est::quadrant_is_equal<dim>(p4est_cell,
+                                                              quadrant))
             {
               Assert(!dealii_cell->is_artificial(), ExcInternalError());
               Assert(!dealii_cell->has_children(), ExcInternalError());
@@ -1708,17 +1709,17 @@ namespace parallel
               const unsigned int n_vertices = vertex_indices[0];
 
               // update dof indices of cell
-              for(unsigned int i = 0; i < n_vertices; ++i)
+              for (unsigned int i = 0; i < n_vertices; ++i)
                 dealii_cell->vertex(vertex_indices[i + 1]) = vertices[i];
 
               return;
             }
 
-          if(!dealii_cell->has_children())
+          if (!dealii_cell->has_children())
             return;
 
-          if(!dealii::internal::p4est::quadrant_is_ancestor<dim>(p4est_cell,
-                                                                 quadrant))
+          if (!dealii::internal::p4est::quadrant_is_ancestor<dim>(p4est_cell,
+                                                                  quadrant))
             return;
 
           typename dealii::internal::p4est::types<dim>::quadrant
@@ -1726,8 +1727,8 @@ namespace parallel
           dealii::internal::p4est::init_quadrant_children<dim>(p4est_cell,
                                                                p4est_child);
 
-          for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-              ++c)
+          for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+               ++c)
             set_vertices_recursively<dim, spacedim>(tria,
                                                     p4est_child[c],
                                                     dealii_cell->child(c),
@@ -1744,20 +1745,20 @@ namespace parallel
     {
       triangulation_has_content = false;
 
-      if(parallel_ghost != nullptr)
+      if (parallel_ghost != nullptr)
         {
           dealii::internal::p4est::functions<dim>::ghost_destroy(
             parallel_ghost);
           parallel_ghost = nullptr;
         }
 
-      if(parallel_forest != nullptr)
+      if (parallel_forest != nullptr)
         {
           dealii::internal::p4est::functions<dim>::destroy(parallel_forest);
           parallel_forest = nullptr;
         }
 
-      if(connectivity != nullptr)
+      if (connectivity != nullptr)
         {
           dealii::internal::p4est::functions<dim>::connectivity_destroy(
             connectivity);
@@ -1776,7 +1777,7 @@ namespace parallel
     bool
     Triangulation<dim, spacedim>::has_hanging_nodes() const
     {
-      if(this->n_global_levels() <= 1)
+      if (this->n_global_levels() <= 1)
         return false; // can not have hanging nodes without refined cells
 
       // if there are any active cells with level less than n_global_levels()-1, then
@@ -1786,11 +1787,11 @@ namespace parallel
       // The problem is that we cannot just ask for the first active cell, but
       // instead need to filter over locally owned cells.
       bool have_coarser_cell = false;
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active(this->n_global_levels() - 2);
-          cell != this->end(this->n_global_levels() - 2);
-          ++cell)
-        if(cell->is_locally_owned())
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active(this->n_global_levels() - 2);
+           cell != this->end(this->n_global_levels() - 2);
+           ++cell)
+        if (cell->is_locally_owned())
           {
             have_coarser_cell = true;
             break;
@@ -1841,7 +1842,7 @@ namespace parallel
       // signal that serialization is going to happen
       this->signals.pre_distributed_save();
 
-      if(this->my_subdomain == 0)
+      if (this->my_subdomain == 0)
         {
           const unsigned int buffer_size_per_cell
             = (cell_attached_data.cumulative_fixed_data_size > 0 ?
@@ -1860,7 +1861,7 @@ namespace parallel
             << this->n_cells(0) << std::endl;
         }
 
-      if(cell_attached_data.cumulative_fixed_data_size > 0)
+      if (cell_attached_data.cumulative_fixed_data_size > 0)
         {
           const_cast<
             dealii::parallel::distributed::Triangulation<dim, spacedim>*>(this)
@@ -1905,7 +1906,7 @@ namespace parallel
         ExcMessage(
           "Triangulation may only contain coarse cells when calling load()."));
 
-      if(parallel_ghost != nullptr)
+      if (parallel_ghost != nullptr)
         {
           dealii::internal::p4est::functions<dim>::ghost_destroy(
             parallel_ghost);
@@ -1969,7 +1970,7 @@ namespace parallel
                                                         this,
                                                         &connectivity);
 #  endif
-      if(numcpus != Utilities::MPI::n_mpi_processes(this->mpi_communicator))
+      if (numcpus != Utilities::MPI::n_mpi_processes(this->mpi_communicator))
         // We are changing the number of CPUs so we need to repartition.
         // Note that p4est actually distributes the cells between the changed
         // number of CPUs and so everything works without this call, but
@@ -1981,7 +1982,7 @@ namespace parallel
         {
           copy_local_forest_to_triangulation();
         }
-      catch(const typename Triangulation<dim>::DistortedCellList&)
+      catch (const typename Triangulation<dim>::DistortedCellList&)
         {
           // the underlying
           // triangulation should not
@@ -2014,7 +2015,7 @@ namespace parallel
     {
       parallel::Triangulation<dim, spacedim>::update_number_cache();
 
-      if(settings & construct_multigrid_hierarchy)
+      if (settings & construct_multigrid_hierarchy)
         parallel::Triangulation<dim, spacedim>::fill_level_ghost_owners();
     }
 
@@ -2237,14 +2238,14 @@ namespace parallel
       const unsigned int deal_to_p4est_line_index[12]
         = {4, 5, 0, 1, 6, 7, 2, 3, 8, 9, 10, 11};
 
-      for(Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
+      for (Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
         {
           const unsigned int index
             = coarse_cell_to_p4est_tree_permutation[cell->index()];
-          for(unsigned int e = 0; e < GeometryInfo<3>::lines_per_cell; ++e)
+          for (unsigned int e = 0; e < GeometryInfo<3>::lines_per_cell; ++e)
             connectivity->tree_to_edge[index * GeometryInfo<3>::lines_per_cell
                                        + deal_to_p4est_line_index[e]]
               = cell->line(e)->index();
@@ -2260,7 +2261,7 @@ namespace parallel
       Assert(connectivity->ett_offset[this->n_active_lines()] == num_ett,
              ExcInternalError());
 
-      for(unsigned int v = 0; v < this->n_active_lines(); ++v)
+      for (unsigned int v = 0; v < this->n_active_lines(); ++v)
         {
           Assert(edge_to_cell[v].size() == edge_touch_count[v],
                  ExcInternalError());
@@ -2269,7 +2270,7 @@ namespace parallel
             std::pair<Triangulation<dim, spacedim>::active_cell_iterator,
                       unsigned int>>::const_iterator p
             = edge_to_cell[v].begin();
-          for(unsigned int c = 0; c < edge_touch_count[v]; ++c, ++p)
+          for (unsigned int c = 0; c < edge_touch_count[v]; ++c, ++p)
             {
               connectivity->edge_to_tree[connectivity->ett_offset[v] + c]
                 = coarse_cell_to_p4est_tree_permutation[p->first->index()];
@@ -2302,7 +2303,7 @@ namespace parallel
       enforce_mesh_balance_over_periodic_boundaries(
         Triangulation<dim, spacedim>& tria)
       {
-        if(tria.get_periodic_face_map().size() == 0)
+        if (tria.get_periodic_face_map().size() == 0)
           return false;
 
         std::vector<bool> flags_before[2];
@@ -2311,7 +2312,7 @@ namespace parallel
 
         std::vector<unsigned int> topological_vertex_numbering(
           tria.n_vertices());
-        for(unsigned int i = 0; i < topological_vertex_numbering.size(); ++i)
+        for (unsigned int i = 0; i < topological_vertex_numbering.size(); ++i)
           topological_vertex_numbering[i] = i;
         // combine vertices that have different locations (and thus, different
         // vertex_index) but represent the same topological entity over periodic
@@ -2333,9 +2334,9 @@ namespace parallel
         typename std::map<std::pair<cell_iterator, unsigned int>,
                           std::pair<std::pair<cell_iterator, unsigned int>,
                                     std::bitset<3>>>::const_iterator it;
-        for(it = tria.get_periodic_face_map().begin();
-            it != tria.get_periodic_face_map().end();
-            ++it)
+        for (it = tria.get_periodic_face_map().begin();
+             it != tria.get_periodic_face_map().end();
+             ++it)
           {
             const cell_iterator& cell_1           = it->first.first;
             const unsigned int   face_no_1        = it->first.second;
@@ -2343,11 +2344,11 @@ namespace parallel
             const unsigned int   face_no_2        = it->second.first.second;
             const std::bitset<3> face_orientation = it->second.second;
 
-            if(cell_1->level() == cell_2->level())
+            if (cell_1->level() == cell_2->level())
               {
-                for(unsigned int v = 0;
-                    v < GeometryInfo<dim - 1>::vertices_per_cell;
-                    ++v)
+                for (unsigned int v = 0;
+                     v < GeometryInfo<dim - 1>::vertices_per_cell;
+                     ++v)
                   {
                     // take possible non-standard orientation of face on cell[0] into
                     // account
@@ -2374,10 +2375,10 @@ namespace parallel
           }
 
         // There must not be any chains!
-        for(unsigned int i = 0; i < topological_vertex_numbering.size(); ++i)
+        for (unsigned int i = 0; i < topological_vertex_numbering.size(); ++i)
           {
             const unsigned int j = topological_vertex_numbering[i];
-            if(j != i)
+            if (j != i)
               Assert(topological_vertex_numbering[j] == j, ExcInternalError());
           }
 
@@ -2385,7 +2386,7 @@ namespace parallel
         // for periodic boundary conditions
         bool             continue_iterating = true;
         std::vector<int> vertex_level(tria.n_vertices());
-        while(continue_iterating)
+        while (continue_iterating)
           {
             // store highest level one of the cells adjacent to a vertex
             // belongs to
@@ -2393,21 +2394,21 @@ namespace parallel
             typename Triangulation<dim, spacedim>::active_cell_iterator cell
               = tria.begin_active(),
               endc = tria.end();
-            for(; cell != endc; ++cell)
+            for (; cell != endc; ++cell)
               {
-                if(cell->refine_flag_set())
-                  for(unsigned int vertex = 0;
-                      vertex < GeometryInfo<dim>::vertices_per_cell;
-                      ++vertex)
+                if (cell->refine_flag_set())
+                  for (unsigned int vertex = 0;
+                       vertex < GeometryInfo<dim>::vertices_per_cell;
+                       ++vertex)
                     vertex_level
                       [topological_vertex_numbering[cell->vertex_index(vertex)]]
                       = std::max(vertex_level[topological_vertex_numbering
                                                 [cell->vertex_index(vertex)]],
                                  cell->level() + 1);
-                else if(!cell->coarsen_flag_set())
-                  for(unsigned int vertex = 0;
-                      vertex < GeometryInfo<dim>::vertices_per_cell;
-                      ++vertex)
+                else if (!cell->coarsen_flag_set())
+                  for (unsigned int vertex = 0;
+                       vertex < GeometryInfo<dim>::vertices_per_cell;
+                       ++vertex)
                     vertex_level
                       [topological_vertex_numbering[cell->vertex_index(vertex)]]
                       = std::max(vertex_level[topological_vertex_numbering
@@ -2422,9 +2423,9 @@ namespace parallel
                     // to correct this by iterating over the entire
                     // process until we are converged
                     Assert(cell->coarsen_flag_set(), ExcInternalError());
-                    for(unsigned int vertex = 0;
-                        vertex < GeometryInfo<dim>::vertices_per_cell;
-                        ++vertex)
+                    for (unsigned int vertex = 0;
+                         vertex < GeometryInfo<dim>::vertices_per_cell;
+                         ++vertex)
                       vertex_level[topological_vertex_numbering
                                      [cell->vertex_index(vertex)]]
                         = std::max(vertex_level[topological_vertex_numbering
@@ -2444,15 +2445,15 @@ namespace parallel
             // refinement flags, but we will also have to remove
             // coarsening flags on cells adjacent to vertices that will
             // see refinement
-            for(cell = tria.last_active(); cell != endc; --cell)
-              if(cell->refine_flag_set() == false)
+            for (cell = tria.last_active(); cell != endc; --cell)
+              if (cell->refine_flag_set() == false)
                 {
-                  for(unsigned int vertex = 0;
-                      vertex < GeometryInfo<dim>::vertices_per_cell;
-                      ++vertex)
-                    if(vertex_level[topological_vertex_numbering
-                                      [cell->vertex_index(vertex)]]
-                       >= cell->level() + 1)
+                  for (unsigned int vertex = 0;
+                       vertex < GeometryInfo<dim>::vertices_per_cell;
+                       ++vertex)
+                    if (vertex_level[topological_vertex_numbering
+                                       [cell->vertex_index(vertex)]]
+                        >= cell->level() + 1)
                       {
                         // remove coarsen flag...
                         cell->clear_coarsen_flag();
@@ -2460,16 +2461,16 @@ namespace parallel
                         // ...and if necessary also refine the current
                         // cell, at the same time updating the level
                         // information about vertices
-                        if(vertex_level[topological_vertex_numbering
-                                          [cell->vertex_index(vertex)]]
-                           > cell->level() + 1)
+                        if (vertex_level[topological_vertex_numbering
+                                           [cell->vertex_index(vertex)]]
+                            > cell->level() + 1)
                           {
                             cell->set_refine_flag();
                             continue_iterating = true;
 
-                            for(unsigned int v = 0;
-                                v < GeometryInfo<dim>::vertices_per_cell;
-                                ++v)
+                            for (unsigned int v = 0;
+                                 v < GeometryInfo<dim>::vertices_per_cell;
+                                 ++v)
                               vertex_level[topological_vertex_numbering
                                              [cell->vertex_index(v)]]
                                 = std::max(
@@ -2485,27 +2486,27 @@ namespace parallel
                 }
 
             // clear coarsen flag if not all children were marked
-            for(typename Triangulation<dim, spacedim>::cell_iterator cell
-                = tria.begin();
-                cell != tria.end();
-                ++cell)
+            for (typename Triangulation<dim, spacedim>::cell_iterator cell
+                 = tria.begin();
+                 cell != tria.end();
+                 ++cell)
               {
                 // nothing to do if we are already on the finest level
-                if(cell->active())
+                if (cell->active())
                   continue;
 
                 const unsigned int n_children       = cell->n_children();
                 unsigned int       flagged_children = 0;
-                for(unsigned int child = 0; child < n_children; ++child)
-                  if(cell->child(child)->active()
-                     && cell->child(child)->coarsen_flag_set())
+                for (unsigned int child = 0; child < n_children; ++child)
+                  if (cell->child(child)->active()
+                      && cell->child(child)->coarsen_flag_set())
                     ++flagged_children;
 
                 // if not all children were flagged for coarsening, remove
                 // coarsen flags
-                if(flagged_children < n_children)
-                  for(unsigned int child = 0; child < n_children; ++child)
-                    if(cell->child(child)->active())
+                if (flagged_children < n_children)
+                  for (unsigned int child = 0; child < n_children; ++child)
+                    if (cell->child(child)->active())
                       cell->child(child)->clear_coarsen_flag();
               }
           }
@@ -2532,12 +2533,12 @@ namespace parallel
             prepare_coarsening_and_refinement();
           this->update_periodic_face_map();
           // enforce 2:1 mesh balance over periodic boundaries
-          if(this->smooth_grid
-             & dealii::Triangulation<dim, spacedim>::
-                 limit_level_difference_at_vertices)
+          if (this->smooth_grid
+              & dealii::Triangulation<dim, spacedim>::
+                  limit_level_difference_at_vertices)
             mesh_changed = enforce_mesh_balance_over_periodic_boundaries(*this);
         }
-      while(mesh_changed);
+      while (mesh_changed);
 
       // check if any of the refinement flags were changed during this
       // function and return that value
@@ -2568,7 +2569,7 @@ namespace parallel
       // we will miss level cells at shared vertices if we ignore this.
       // See tests/mpi/mg_06. In particular, the flag is still necessary
       // even though we force it for the original smooth_grid in the constructor.
-      if(settings & construct_multigrid_hierarchy)
+      if (settings & construct_multigrid_hierarchy)
         this->smooth_grid
           = dealii::Triangulation<dim,
                                   spacedim>::limit_level_difference_at_vertices;
@@ -2583,13 +2584,14 @@ namespace parallel
       // of the local partition changes (likely) and gives a deterministic
       // ordering of the cells (useful for snapshot/resume).
       // TODO: is there a more efficient way to do this?
-      if(settings & mesh_reconstruction_after_repartitioning)
-        while(this->begin_active()->level() > 0)
+      if (settings & mesh_reconstruction_after_repartitioning)
+        while (this->begin_active()->level() > 0)
           {
-            for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-                = this->begin_active();
-                cell != this->end();
-                ++cell)
+            for (typename Triangulation<dim, spacedim>::active_cell_iterator
+                   cell
+                 = this->begin_active();
+                 cell != this->end();
+                 ++cell)
               {
                 cell->set_coarsen_flag();
               }
@@ -2600,7 +2602,7 @@ namespace parallel
                 dealii::Triangulation<dim, spacedim>::
                   execute_coarsening_and_refinement();
               }
-            catch(
+            catch (
               const typename Triangulation<dim, spacedim>::DistortedCellList&)
               {
                 // the underlying triangulation should not be checking for
@@ -2610,7 +2612,7 @@ namespace parallel
           }
 
       // query p4est for the ghost cells
-      if(parallel_ghost != nullptr)
+      if (parallel_ghost != nullptr)
         {
           dealii::internal::p4est::functions<dim>::ghost_destroy(
             parallel_ghost);
@@ -2627,29 +2629,29 @@ namespace parallel
 
       // set all cells to artificial. we will later set it to the correct
       // subdomain in match_tree_recursively
-      for(typename Triangulation<dim, spacedim>::cell_iterator cell
-          = this->begin(0);
-          cell != this->end(0);
-          ++cell)
+      for (typename Triangulation<dim, spacedim>::cell_iterator cell
+           = this->begin(0);
+           cell != this->end(0);
+           ++cell)
         cell->recursively_set_subdomain_id(numbers::artificial_subdomain_id);
 
       do
         {
-          for(typename Triangulation<dim, spacedim>::cell_iterator cell
-              = this->begin(0);
-              cell != this->end(0);
-              ++cell)
+          for (typename Triangulation<dim, spacedim>::cell_iterator cell
+               = this->begin(0);
+               cell != this->end(0);
+               ++cell)
             {
               // if this processor stores no part of the forest that comes out
               // of this coarse grid cell, then we need to delete all children
               // of this cell (the coarse grid cell remains)
-              if(tree_exists_locally<dim, spacedim>(
-                   parallel_forest,
-                   coarse_cell_to_p4est_tree_permutation[cell->index()])
-                 == false)
+              if (tree_exists_locally<dim, spacedim>(
+                    parallel_forest,
+                    coarse_cell_to_p4est_tree_permutation[cell->index()])
+                  == false)
                 {
                   delete_all_children<dim, spacedim>(cell);
-                  if(!cell->has_children())
+                  if (!cell->has_children())
                     cell->set_subdomain_id(numbers::artificial_subdomain_id);
                 }
 
@@ -2681,14 +2683,15 @@ namespace parallel
           types::subdomain_id                                  ghost_owner = 0;
           typename dealii::internal::p4est::types<dim>::topidx ghost_tree  = 0;
 
-          for(unsigned int g_idx = 0; g_idx < parallel_ghost->ghosts.elem_count;
-              ++g_idx)
+          for (unsigned int g_idx = 0;
+               g_idx < parallel_ghost->ghosts.elem_count;
+               ++g_idx)
             {
-              while(
+              while (
                 g_idx
                 >= (unsigned int) parallel_ghost->proc_offsets[ghost_owner + 1])
                 ++ghost_owner;
-              while(
+              while (
                 g_idx
                 >= (unsigned int) parallel_ghost->tree_offsets[ghost_tree + 1])
                 ++ghost_tree;
@@ -2709,11 +2712,11 @@ namespace parallel
 
           // see if any flags are still set
           mesh_changed = false;
-          for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-              = this->begin_active();
-              cell != this->end();
-              ++cell)
-            if(cell->refine_flag_set() || cell->coarsen_flag_set())
+          for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+               = this->begin_active();
+               cell != this->end();
+               ++cell)
+            if (cell->refine_flag_set() || cell->coarsen_flag_set())
               {
                 mesh_changed = true;
                 break;
@@ -2726,26 +2729,27 @@ namespace parallel
               dealii::Triangulation<dim, spacedim>::
                 execute_coarsening_and_refinement();
             }
-          catch(const typename Triangulation<dim, spacedim>::DistortedCellList&)
+          catch (
+            const typename Triangulation<dim, spacedim>::DistortedCellList&)
             {
               // the underlying triangulation should not be checking for
               // distorted cells
               Assert(false, ExcInternalError());
             }
         }
-      while(mesh_changed);
+      while (mesh_changed);
 
 #  ifdef DEBUG
       // check if correct number of ghosts is created
       unsigned int num_ghosts = 0;
 
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
         {
-          if(cell->subdomain_id() != this->my_subdomain
-             && cell->subdomain_id() != numbers::artificial_subdomain_id)
+          if (cell->subdomain_id() != this->my_subdomain
+              && cell->subdomain_id() != numbers::artificial_subdomain_id)
             ++num_ghosts;
         }
 
@@ -2756,25 +2760,25 @@ namespace parallel
       // fill level_subdomain_ids for geometric multigrid
       // the level ownership of a cell is defined as the owner if the cell is active or as the owner of child(0)
       // we need this information for all our ancestors and the same-level neighbors of our own cells (=level ghosts)
-      if(settings & construct_multigrid_hierarchy)
+      if (settings & construct_multigrid_hierarchy)
         {
           // step 1: We set our own ids all the way down and all the others to
           // -1. Note that we do not fill other cells we could figure out the
           // same way, because we might accidentally set an id for a cell that
           // is not a ghost cell.
-          for(unsigned int lvl = this->n_levels(); lvl > 0;)
+          for (unsigned int lvl = this->n_levels(); lvl > 0;)
             {
               --lvl;
               typename Triangulation<dim, spacedim>::cell_iterator cell,
                 endc = this->end(lvl);
-              for(cell = this->begin(lvl); cell != endc; ++cell)
+              for (cell = this->begin(lvl); cell != endc; ++cell)
                 {
-                  if((!cell->has_children()
-                      && cell->subdomain_id()
-                           == this->locally_owned_subdomain())
-                     || (cell->has_children()
-                         && cell->child(0)->level_subdomain_id()
-                              == this->locally_owned_subdomain()))
+                  if ((!cell->has_children()
+                       && cell->subdomain_id()
+                            == this->locally_owned_subdomain())
+                      || (cell->has_children()
+                          && cell->child(0)->level_subdomain_id()
+                               == this->locally_owned_subdomain()))
                     cell->set_level_subdomain_id(
                       this->locally_owned_subdomain());
                   else
@@ -2789,13 +2793,13 @@ namespace parallel
           //step 2: make sure all the neighbors to our level_cells exist. Need
           //to look up in p4est...
           std::vector<std::vector<bool>> marked_vertices(this->n_levels());
-          for(unsigned int lvl = 0; lvl < this->n_levels(); ++lvl)
+          for (unsigned int lvl = 0; lvl < this->n_levels(); ++lvl)
             marked_vertices[lvl] = mark_locally_active_vertices_on_level(lvl);
 
-          for(typename Triangulation<dim, spacedim>::cell_iterator cell
-              = this->begin(0);
-              cell != this->end(0);
-              ++cell)
+          for (typename Triangulation<dim, spacedim>::cell_iterator cell
+               = this->begin(0);
+               cell != this->end(0);
+               ++cell)
             {
               typename dealii::internal::p4est::types<dim>::quadrant
                                  p4est_coarse_cell;
@@ -2818,20 +2822,20 @@ namespace parallel
             }
 
           //step 3: make sure we have the parent of our level cells
-          for(unsigned int lvl = this->n_levels(); lvl > 0;)
+          for (unsigned int lvl = this->n_levels(); lvl > 0;)
             {
               --lvl;
               typename Triangulation<dim, spacedim>::cell_iterator cell,
                 endc = this->end(lvl);
-              for(cell = this->begin(lvl); cell != endc; ++cell)
+              for (cell = this->begin(lvl); cell != endc; ++cell)
                 {
-                  if(cell->has_children())
-                    for(unsigned int c = 0;
-                        c < GeometryInfo<dim>::max_children_per_cell;
-                        ++c)
+                  if (cell->has_children())
+                    for (unsigned int c = 0;
+                         c < GeometryInfo<dim>::max_children_per_cell;
+                         ++c)
                       {
-                        if(cell->child(c)->level_subdomain_id()
-                           == this->locally_owned_subdomain())
+                        if (cell->child(c)->level_subdomain_id()
+                            == this->locally_owned_subdomain())
                           {
                             //at least one of the children belongs to us, so
                             //make sure we set the level subdomain id
@@ -2857,7 +2861,7 @@ namespace parallel
         const unsigned int total_local_cells = this->n_active_cells();
         (void) total_local_cells;
 
-        if(Utilities::MPI::n_mpi_processes(this->mpi_communicator) == 1)
+        if (Utilities::MPI::n_mpi_processes(this->mpi_communicator) == 1)
           Assert(
             static_cast<unsigned int>(parallel_forest->local_num_quadrants)
               == total_local_cells,
@@ -2868,12 +2872,12 @@ namespace parallel
 
         // count the number of owned, active cells and compare with p4est.
         unsigned int n_owned = 0;
-        for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-            = this->begin_active();
-            cell != this->end();
-            ++cell)
+        for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+             = this->begin_active();
+             cell != this->end();
+             ++cell)
           {
-            if(cell->subdomain_id() == this->my_subdomain)
+            if (cell->subdomain_id() == this->my_subdomain)
               ++n_owned;
           }
 
@@ -2891,11 +2895,11 @@ namespace parallel
     {
       // do not allow anisotropic refinement
 #  ifdef DEBUG
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->refine_flag_set())
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->refine_flag_set())
           Assert(
             cell->refine_flag_set()
               == RefinementPossibilities<dim>::isotropic_refinement,
@@ -2903,15 +2907,16 @@ namespace parallel
 #  endif
 
       // safety check: p4est has an upper limit on the level of a cell
-      if(this->n_levels() == dealii::internal::p4est::functions<dim>::max_level)
+      if (this->n_levels()
+          == dealii::internal::p4est::functions<dim>::max_level)
         {
-          for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-              = this->begin_active(
-                dealii::internal::p4est::functions<dim>::max_level - 1);
-              cell
-              != this->end(dealii::internal::p4est::functions<dim>::max_level
-                           - 1);
-              ++cell)
+          for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+               = this->begin_active(
+                 dealii::internal::p4est::functions<dim>::max_level - 1);
+               cell
+               != this->end(dealii::internal::p4est::functions<dim>::max_level
+                            - 1);
+               ++cell)
             {
               AssertThrow(
                 !(cell->refine_flag_set()),
@@ -2928,11 +2933,11 @@ namespace parallel
 
       // make sure all flags are cleared on cells we don't own, since nothing
       // good can come of that if they are still around
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
-        if(cell->is_ghost() || cell->is_artificial())
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
+        if (cell->is_ghost() || cell->is_artificial())
           {
             cell->clear_refine_flag();
             cell->clear_coarsen_flag();
@@ -2950,7 +2955,7 @@ namespace parallel
       Assert(parallel_forest->user_pointer == this, ExcInternalError());
       parallel_forest->user_pointer = &refine_and_coarsen_list;
 
-      if(parallel_ghost != nullptr)
+      if (parallel_ghost != nullptr)
         {
           dealii::internal::p4est::functions<dim>::ghost_destroy(
             parallel_ghost);
@@ -2987,11 +2992,11 @@ namespace parallel
       // (such as SolutionTransfer data) to the p4est
       attach_mesh_data();
 
-      if(!(settings & no_automatic_repartitioning))
+      if (!(settings & no_automatic_repartitioning))
         {
           // partition the new mesh between all processors. If cell weights have
           // not been given balance the number of cells.
-          if(this->signals.cell_weight.num_slots() == 0)
+          if (this->signals.cell_weight.num_slots() == 0)
             dealii::internal::p4est::functions<dim>::partition(
               parallel_forest,
               /* prepare coarsening */ 1,
@@ -3022,10 +3027,10 @@ namespace parallel
       // finally copy back from local part of tree to deal.II
       // triangulation. before doing so, make sure there are no refine or
       // coarsen flags pending
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
         {
           cell->clear_refine_flag();
           cell->clear_coarsen_flag();
@@ -3035,7 +3040,7 @@ namespace parallel
         {
           copy_local_forest_to_triangulation();
         }
-      catch(const typename Triangulation<dim>::DistortedCellList&)
+      catch (const typename Triangulation<dim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
           // cells
@@ -3058,9 +3063,9 @@ namespace parallel
       // *---*---*
       //  ^- the parent can be owned by somebody else, so O is not a neighbor
       // one level coarser
-      if(settings & construct_multigrid_hierarchy)
+      if (settings & construct_multigrid_hierarchy)
         {
-          for(unsigned int lvl = 0; lvl < this->n_global_levels(); ++lvl)
+          for (unsigned int lvl = 0; lvl < this->n_global_levels(); ++lvl)
             {
               std::vector<bool> active_verts
                 = this->mark_locally_active_vertices_on_level(lvl);
@@ -3070,17 +3075,17 @@ namespace parallel
               typename Triangulation<dim, spacedim>::cell_iterator cell
                 = this->begin(maybe_coarser_lvl),
                 endc = this->end(lvl);
-              for(; cell != endc; ++cell)
-                if(cell->level() == static_cast<int>(lvl) || cell->active())
+              for (; cell != endc; ++cell)
+                if (cell->level() == static_cast<int>(lvl) || cell->active())
                   {
                     const bool is_level_artificial
                       = (cell->level_subdomain_id()
                          == numbers::artificial_subdomain_id);
                     bool need_to_know = false;
-                    for(unsigned int vertex = 0;
-                        vertex < GeometryInfo<dim>::vertices_per_cell;
-                        ++vertex)
-                      if(active_verts[cell->vertex_index(vertex)])
+                    for (unsigned int vertex = 0;
+                         vertex < GeometryInfo<dim>::vertices_per_cell;
+                         ++vertex)
+                      if (active_verts[cell->vertex_index(vertex)])
                         {
                           need_to_know = true;
                           break;
@@ -3112,11 +3117,11 @@ namespace parallel
     Triangulation<dim, spacedim>::repartition()
     {
 #  ifdef DEBUG
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
-        if(cell->is_locally_owned())
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
+        if (cell->is_locally_owned())
           Assert(
             !cell->refine_flag_set() && !cell->coarsen_flag_set(),
             ExcMessage(
@@ -3127,7 +3132,7 @@ namespace parallel
       // (such as SolutionTransfer data) to the p4est
       attach_mesh_data();
 
-      if(this->signals.cell_weight.num_slots() == 0)
+      if (this->signals.cell_weight.num_slots() == 0)
         {
           // no cell weights given -- call p4est's 'partition' without a
           // callback for cell weights
@@ -3162,7 +3167,7 @@ namespace parallel
         {
           copy_local_forest_to_triangulation();
         }
-      catch(const typename Triangulation<dim>::DistortedCellList&)
+      catch (const typename Triangulation<dim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
           // cells
@@ -3186,7 +3191,7 @@ namespace parallel
       {
         const std::vector<bool> locally_owned_vertices
           = dealii::GridTools::get_locally_owned_vertices(*this);
-        for(unsigned int i = 0; i < locally_owned_vertices.size(); ++i)
+        for (unsigned int i = 0; i < locally_owned_vertices.size(); ++i)
           Assert((vertex_locally_moved[i] == false)
                    || (locally_owned_vertices[i] == true),
                  ExcMessage("The vertex_locally_moved argument must not "
@@ -3210,10 +3215,10 @@ namespace parallel
                 cellmap_t;
       cellmap_t needs_to_get_cells;
 
-      for(typename Triangulation<dim, spacedim>::cell_iterator cell
-          = this->begin(0);
-          cell != this->end(0);
-          ++cell)
+      for (typename Triangulation<dim, spacedim>::cell_iterator cell
+           = this->begin(0);
+           cell != this->end(0);
+           ++cell)
         {
           typename dealii::internal::p4est::types<dim>::quadrant
             p4est_coarse_cell;
@@ -3238,9 +3243,9 @@ namespace parallel
 
       unsigned int idx = 0;
 
-      for(typename cellmap_t::iterator it = needs_to_get_cells.begin();
-          it != needs_to_get_cells.end();
-          ++it, ++buffer, ++idx)
+      for (typename cellmap_t::iterator it = needs_to_get_cells.begin();
+           it != needs_to_get_cells.end();
+           ++it, ++buffer, ++idx)
         {
           const unsigned int num_cells = it->second.tree_index.size();
           (void) num_cells;
@@ -3279,7 +3284,7 @@ namespace parallel
       // receive ghostcelldata
       std::vector<char>                                        receive;
       CommunicateLocallyMovedVertices::CellInfo<dim, spacedim> cellinfo;
-      for(unsigned int i = 0; i < senders.size(); ++i)
+      for (unsigned int i = 0; i < senders.size(); ++i)
         {
           MPI_Status status;
           int        len;
@@ -3302,7 +3307,7 @@ namespace parallel
 
           cellinfo.unpack_data(receive);
           const unsigned int cells = cellinfo.tree_index.size();
-          for(unsigned int c = 0; c < cells; ++c)
+          for (unsigned int c = 0; c < cells; ++c)
             {
               typename dealii::parallel::distributed::
                 Triangulation<dim, spacedim>::cell_iterator cell(
@@ -3329,7 +3334,7 @@ namespace parallel
 
       // complete all sends, so that we can
       // safely destroy the buffers.
-      if(requests.size() > 0)
+      if (requests.size() > 0)
         {
           const int ierr = MPI_Waitall(
             requests.size(), requests.data(), MPI_STATUSES_IGNORE);
@@ -3354,8 +3359,8 @@ namespace parallel
       Assert(size > 0, ExcMessage("register_data_attach(), size==0"));
 
       unsigned int remaining_callback_counter = 0;
-      for(auto it : cell_attached_data.pack_callbacks)
-        if(std::get<0>(it) != numbers::invalid_unsigned_int)
+      for (auto it : cell_attached_data.pack_callbacks)
+        if (std::get<0>(it) != numbers::invalid_unsigned_int)
           ++remaining_callback_counter;
 
       Assert(
@@ -3398,16 +3403,16 @@ namespace parallel
              ExcInternalError());
 
       // Recurse over p4est and hand the caller the data back
-      for(typename Triangulation<dim, spacedim>::cell_iterator cell
-          = this->begin(0);
-          cell != this->end(0);
-          ++cell)
+      for (typename Triangulation<dim, spacedim>::cell_iterator cell
+           = this->begin(0);
+           cell != this->end(0);
+           ++cell)
         {
           // skip coarse cells that are not ours
-          if(tree_exists_locally<dim, spacedim>(
-               parallel_forest,
-               coarse_cell_to_p4est_tree_permutation[cell->index()])
-             == false)
+          if (tree_exists_locally<dim, spacedim>(
+                parallel_forest,
+                coarse_cell_to_p4est_tree_permutation[cell->index()])
+              == false)
             continue;
 
           typename dealii::internal::p4est::types<dim>::quadrant
@@ -3424,7 +3429,7 @@ namespace parallel
         }
 
       --cell_attached_data.n_attached_datas;
-      if(cell_attached_data.n_attached_deserialize > 0)
+      if (cell_attached_data.n_attached_deserialize > 0)
         --cell_attached_data.n_attached_deserialize;
 
       // deregister corresponding pack_callback function
@@ -3442,8 +3447,8 @@ namespace parallel
       // would destroy the saved data before the second SolutionTransfer can
       // get it. This created a bug that is documented in
       // tests/mpi/p4est_save_03 with more than one SolutionTransfer.
-      if(cell_attached_data.n_attached_datas == 0
-         && cell_attached_data.n_attached_deserialize == 0)
+      if (cell_attached_data.n_attached_datas == 0
+          && cell_attached_data.n_attached_deserialize == 0)
         {
           // everybody got their data, time for cleanup!
           cell_attached_data.cumulative_fixed_data_size = 0;
@@ -3493,9 +3498,10 @@ namespace parallel
 
       std::vector<bool> marked_vertices(this->n_vertices(), false);
       cell_iterator     cell = this->begin(level), endc = this->end(level);
-      for(; cell != endc; ++cell)
-        if(cell->level_subdomain_id() == this->locally_owned_subdomain())
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+      for (; cell != endc; ++cell)
+        if (cell->level_subdomain_id() == this->locally_owned_subdomain())
+          for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+               ++v)
             marked_vertices[cell->vertex_index(v)] = true;
 
       /**
@@ -3517,10 +3523,10 @@ namespace parallel
       // through all the periodict directions (which are at most as many as
       // the number of space dimensions) we can be sure that all connections
       // to vertices have been created.
-      for(unsigned int repetition = 0; repetition < dim; ++repetition)
-        for(it = this->get_periodic_face_map().begin();
-            it != this->get_periodic_face_map().end();
-            ++it)
+      for (unsigned int repetition = 0; repetition < dim; ++repetition)
+        for (it = this->get_periodic_face_map().begin();
+             it != this->get_periodic_face_map().end();
+             ++it)
           {
             const cell_iterator&  cell_1           = it->first.first;
             const unsigned int    face_no_1        = it->first.second;
@@ -3528,11 +3534,11 @@ namespace parallel
             const unsigned int    face_no_2        = it->second.first.second;
             const std::bitset<3>& face_orientation = it->second.second;
 
-            if(cell_1->level() == level && cell_2->level() == level)
+            if (cell_1->level() == level && cell_2->level() == level)
               {
-                for(unsigned int v = 0;
-                    v < GeometryInfo<dim - 1>::vertices_per_cell;
-                    ++v)
+                for (unsigned int v = 0;
+                     v < GeometryInfo<dim - 1>::vertices_per_cell;
+                     ++v)
                   {
                     // take possible non-standard orientation of faces into account
                     const unsigned int vface0
@@ -3541,10 +3547,10 @@ namespace parallel
                         face_orientation[0],
                         face_orientation[1],
                         face_orientation[2]);
-                    if(marked_vertices[cell_1->face(face_no_1)->vertex_index(
-                         vface0)]
-                       || marked_vertices[cell_2->face(face_no_2)->vertex_index(
-                            v)])
+                    if (marked_vertices[cell_1->face(face_no_1)->vertex_index(
+                          vface0)]
+                        || marked_vertices[cell_2->face(face_no_2)
+                                             ->vertex_index(v)])
                       marked_vertices[cell_1->face(face_no_1)->vertex_index(
                         vface0)]
                         = marked_vertices[cell_2->face(face_no_2)->vertex_index(
@@ -3575,7 +3581,7 @@ namespace parallel
       it           = periodicity_vector.begin();
       periodic_end = periodicity_vector.end();
 
-      for(; it < periodic_end; ++it)
+      for (; it < periodic_end; ++it)
         {
           const cell_iterator first_cell  = it->cell[0];
           const cell_iterator second_cell = it->cell[1];
@@ -3598,14 +3604,14 @@ namespace parallel
           // The result is given below.
 
           unsigned int p4est_orientation = 0;
-          if(dim == 2)
+          if (dim == 2)
             p4est_orientation = it->orientation[1];
           else
             {
               const unsigned int  face_idx_list[] = {face_left, face_right};
               const cell_iterator cell_list[]     = {first_cell, second_cell};
               unsigned int        lower_idx, higher_idx;
-              if(face_left <= face_right)
+              if (face_left <= face_right)
                 {
                   higher_idx = 1;
                   lower_idx  = 0;
@@ -3621,8 +3627,8 @@ namespace parallel
                 = p8est_face_corners[face_idx_list[lower_idx]][0];
               unsigned int first_dealii_idx_on_face
                 = numbers::invalid_unsigned_int;
-              for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face;
-                  ++i)
+              for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face;
+                   ++i)
                 {
                   const unsigned int first_dealii_idx_on_cell
                     = GeometryInfo<dim>::face_to_cell_vertices(
@@ -3633,7 +3639,7 @@ namespace parallel
                       cell_list[lower_idx]->face_flip(face_idx_list[lower_idx]),
                       cell_list[lower_idx]->face_rotation(
                         face_idx_list[lower_idx]));
-                  if(first_p4est_idx_on_cell == first_dealii_idx_on_cell)
+                  if (first_p4est_idx_on_cell == first_dealii_idx_on_cell)
                     {
                       first_dealii_idx_on_face = i;
                       break;
@@ -3709,7 +3715,7 @@ namespace parallel
         {
           copy_local_forest_to_triangulation();
         }
-      catch(const typename Triangulation<dim>::DistortedCellList&)
+      catch (const typename Triangulation<dim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
           // cells
@@ -3770,7 +3776,7 @@ namespace parallel
           dealii::parallel::Triangulation<dim, spacedim>::copy_triangulation(
             other_tria);
         }
-      catch(
+      catch (
         const typename dealii::Triangulation<dim, spacedim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
@@ -3788,11 +3794,11 @@ namespace parallel
         ExcMessage("Parallel distributed triangulations can only be copied, "
                    "if they are not refined!"));
 
-      if(const dealii::parallel::distributed::Triangulation<dim, spacedim>*
-           other_tria_x
-         = dynamic_cast<
-           const dealii::parallel::distributed::Triangulation<dim, spacedim>*>(
-           &other_tria))
+      if (const dealii::parallel::distributed::Triangulation<dim, spacedim>*
+            other_tria_x
+          = dynamic_cast<
+            const dealii::parallel::distributed::Triangulation<dim, spacedim>*>(
+            &other_tria))
         {
           coarse_cell_to_p4est_tree_permutation
             = other_tria_x->coarse_cell_to_p4est_tree_permutation;
@@ -3816,7 +3822,7 @@ namespace parallel
         {
           copy_local_forest_to_triangulation();
         }
-      catch(const typename Triangulation<dim>::DistortedCellList&)
+      catch (const typename Triangulation<dim>::DistortedCellList&)
         {
           // the underlying triangulation should not be checking for distorted
           // cells
@@ -3832,7 +3838,7 @@ namespace parallel
     Triangulation<dim, spacedim>::attach_mesh_data()
     {
       // check if there is anything at all to do here
-      if(cell_attached_data.cumulative_fixed_data_size == 0)
+      if (cell_attached_data.cumulative_fixed_data_size == 0)
         {
           Assert(cell_attached_data.n_attached_datas == 0, ExcInternalError());
           return;
@@ -3850,16 +3856,16 @@ namespace parallel
       // Recurse over p4est and Triangulation
       // to find refined/coarsened/kept
       // cells. Then query and attach the data.
-      for(typename Triangulation<dim, spacedim>::cell_iterator cell
-          = this->begin(0);
-          cell != this->end(0);
-          ++cell)
+      for (typename Triangulation<dim, spacedim>::cell_iterator cell
+           = this->begin(0);
+           cell != this->end(0);
+           ++cell)
         {
           //skip coarse cells, that are not ours
-          if(tree_exists_locally<dim, spacedim>(
-               parallel_forest,
-               coarse_cell_to_p4est_tree_permutation[cell->index()])
-             == false)
+          if (tree_exists_locally<dim, spacedim>(
+                parallel_forest,
+                coarse_cell_to_p4est_tree_permutation[cell->index()])
+              == false)
             continue;
 
           typename dealii::internal::p4est::types<dim>::quadrant
@@ -3892,10 +3898,10 @@ namespace parallel
       // Note that we need to follow the p4est ordering
       // instead of the deal.II ordering to get the cell_weights
       // in the same order p4est will encounter them during repartitioning.
-      for(unsigned int c = 0; c < this->n_cells(0); ++c)
+      for (unsigned int c = 0; c < this->n_cells(0); ++c)
         {
           // skip coarse cells, that are not ours
-          if(tree_exists_locally<dim, spacedim>(parallel_forest, c) == false)
+          if (tree_exists_locally<dim, spacedim>(parallel_forest, c) == false)
             continue;
 
           const unsigned int coarse_cell_index

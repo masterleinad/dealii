@@ -141,10 +141,10 @@ void
 Test_Solver_Output::run()
 {
   const unsigned int n_cycles = 2;
-  for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+  for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
     {
       pcout << "   Cycle: " << cycle << std::endl;
-      if(cycle == 0)
+      if (cycle == 0)
         {
           make_grid();
         }
@@ -240,16 +240,16 @@ Test_Solver_Output::assemble_system()
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  for(auto cell : dof_handler.active_cell_iterators())
+  for (auto cell : dof_handler.active_cell_iterators())
     {
-      if(cell->is_locally_owned())
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           cell_rhs    = 0;
 
           fe_values.reinit(cell);
 
-          for(unsigned int qp = 0; qp < n_q_points; ++qp)
+          for (unsigned int qp = 0; qp < n_q_points; ++qp)
             {
               const double rhs_value
                 = (fe_values.quadrature_point(qp)[1]
@@ -259,9 +259,9 @@ Test_Solver_Output::assemble_system()
                                           * fe_values.quadrature_point(qp)[0]) ?
                      1 :
                      -1);
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for (unsigned int j = 0; j < dofs_per_cell; ++j)
                     {
                       cell_matrix(i, j)
                         += (fe_values.shape_grad(i, qp)
@@ -443,7 +443,7 @@ Test_Solver_Output::output(unsigned int cycle)
   data_out.add_data_vector(locally_relevant_solution, "u");
 
   Vector<float> subdomain(triangulation.n_active_cells());
-  for(unsigned int i = 0; i < subdomain.size(); ++i)
+  for (unsigned int i = 0; i < subdomain.size(); ++i)
     subdomain(i) = triangulation.locally_owned_subdomain();
   data_out.add_data_vector(subdomain, "subdomain");
   data_out.build_patches();
@@ -454,11 +454,11 @@ Test_Solver_Output::output(unsigned int cycle)
   std::ofstream output((filename + ".vtu").c_str());
   data_out.write_vtu(output);
 
-  if(Utilities::MPI::this_mpi_process(mpi_comm) == 0)
+  if (Utilities::MPI::this_mpi_process(mpi_comm) == 0)
     {
       std::vector<std::string> filenames;
-      for(unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(mpi_comm);
-          ++i)
+      for (unsigned int i = 0; i < Utilities::MPI::n_mpi_processes(mpi_comm);
+           ++i)
         filenames.push_back("solution-" + Utilities::int_to_string(cycle, 2)
                             + "." + Utilities::int_to_string(i, 4) + ".vtu");
       std::ofstream master_output(
@@ -503,9 +503,9 @@ main(int argc, char* argv[])
   Assert(inputfile.good() && inputfile.is_open(), ExcIO());
   std::string       line;
   const std::string key = "*****";
-  while(std::getline(inputfile, line))
+  while (std::getline(inputfile, line))
     {
-      if(line.find(key) != std::string::npos)
+      if (line.find(key) != std::string::npos)
         deallog << line << std::endl;
     }
   inputfile.close();

@@ -69,20 +69,20 @@ Subscriptor::check_no_subscribers() const noexcept
   // an assertion in the triangulation. If we kill the program at this point, we
   // will never be able to learn what caused the problem. In this situation,
   // just display a message and continue the program.
-  if(counter != 0)
+  if (counter != 0)
     {
-      if(std::uncaught_exception() == false)
+      if (std::uncaught_exception() == false)
         {
           std::string infostring;
-          for(map_iterator it = counter_map.begin(); it != counter_map.end();
-              ++it)
+          for (map_iterator it = counter_map.begin(); it != counter_map.end();
+               ++it)
             {
-              if(it->second > 0)
+              if (it->second > 0)
                 infostring += std::string("\n  from Subscriber ")
                               + std::string(it->first);
             }
 
-          if(infostring == "")
+          if (infostring == "")
             infostring = "<none>";
 
           AssertNothrow(
@@ -131,7 +131,7 @@ void
 Subscriptor::subscribe(const char* id) const
 {
 #ifdef DEBUG
-  if(object_info == nullptr)
+  if (object_info == nullptr)
     object_info = &typeid(*this);
   ++counter;
 
@@ -141,7 +141,7 @@ Subscriptor::subscribe(const char* id) const
   const char* const name = (id != 0) ? id : unknown_subscriber;
 
   map_iterator it = counter_map.find(name);
-  if(it == counter_map.end())
+  if (it == counter_map.end())
     counter_map.insert(map_value_type(name, 1U));
 
   else
@@ -162,7 +162,7 @@ Subscriptor::unsubscribe(const char* id) const
   AssertNothrow(counter > 0, ExcNoSubscriber(object_info->name(), name));
   // This is for the case that we do
   // not abort after the exception
-  if(counter == 0)
+  if (counter == 0)
     return;
 
   --counter;
@@ -192,7 +192,7 @@ void
 Subscriptor::list_subscribers() const
 {
 #ifndef DEAL_II_WITH_THREADS
-  for(map_iterator it = counter_map.begin(); it != counter_map.end(); ++it)
+  for (map_iterator it = counter_map.begin(); it != counter_map.end(); ++it)
     deallog << it->second << '/' << counter << " subscriptions from \""
             << it->first << '\"' << std::endl;
 #else

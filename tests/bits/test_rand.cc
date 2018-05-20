@@ -25,10 +25,10 @@ main()
 {
   initlog();
   unsigned int random_value = 0;
-  for(unsigned long long int i = 0; i < 300000000ULL; ++i)
+  for (unsigned long long int i = 0; i < 300000000ULL; ++i)
     {
       random_value = Testing::rand();
-      if(i % 100000 == 0)
+      if (i % 100000 == 0)
         deallog << random_value << '\n';
     }
   deallog << std::flush;

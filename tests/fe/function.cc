@@ -54,7 +54,7 @@ vector_values(const FiniteElement<dim>& fe)
   DoFRenumbering::component_wise(dof);
 
   Vector<float> v(dof.n_dofs());
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
 
   FEValues<dim>              feval(fe, quadrature, update_values);
@@ -65,15 +65,15 @@ vector_values(const FiniteElement<dim>& fe)
   const typename DoFHandler<dim>::active_cell_iterator end = dof.end();
 
   unsigned int cell_no = 0;
-  while(cell != end)
+  while (cell != end)
     {
       deallog << "Cell " << cell_no++ << std::endl;
       feval.reinit(cell);
       feval.get_function_values(v, local);
-      for(unsigned int c = 0; c < fe.n_components(); ++c)
+      for (unsigned int c = 0; c < fe.n_components(); ++c)
         {
           deallog << "Component " << c;
-          for(unsigned int k = 0; k < quadrature.size(); ++k)
+          for (unsigned int k = 0; k < quadrature.size(); ++k)
             deallog << '\t' << (int) local[k](c);
           deallog << std::endl;
         }

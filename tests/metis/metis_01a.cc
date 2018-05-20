@@ -61,12 +61,12 @@ partition(const SparsityPattern& sparsity_pattern,
   int_rowstart.reserve(sparsity_pattern.n_rows() + 1);
   std::vector<idx_t> int_colnums;
   int_colnums.reserve(sparsity_pattern.n_nonzero_elements());
-  for(SparsityPattern::size_type row = 0; row < sparsity_pattern.n_rows();
-      ++row)
+  for (SparsityPattern::size_type row = 0; row < sparsity_pattern.n_rows();
+       ++row)
     {
-      for(SparsityPattern::iterator col = sparsity_pattern.begin(row);
-          col < sparsity_pattern.end(row);
-          ++col)
+      for (SparsityPattern::iterator col = sparsity_pattern.begin(row);
+           col < sparsity_pattern.end(row);
+           ++col)
         int_colnums.push_back(col->column());
       int_rowstart.push_back(int_colnums.size());
     }
@@ -77,13 +77,13 @@ partition(const SparsityPattern& sparsity_pattern,
   deallog << "METIS inputs:" << std::endl;
   deallog << "IDXTYPEWIDTH=" << IDXTYPEWIDTH << std::endl;
   deallog << n << ' ' << ncon << ' ' << nparts << std::endl;
-  for(unsigned int i = 0; i < int_rowstart.size(); ++i)
+  for (unsigned int i = 0; i < int_rowstart.size(); ++i)
     deallog << int_rowstart[i] << ' ';
   deallog << std::endl;
-  for(unsigned int i = 0; i < int_colnums.size(); ++i)
+  for (unsigned int i = 0; i < int_colnums.size(); ++i)
     deallog << int_colnums[i] << ' ';
   deallog << std::endl;
-  for(unsigned int i = 0; i < METIS_NOPTIONS; ++i)
+  for (unsigned int i = 0; i < METIS_NOPTIONS; ++i)
     deallog << options[i] << ' ';
   deallog << std::endl;
   deallog << sizeof(idx_t) << std::endl;
@@ -110,7 +110,7 @@ partition(const SparsityPattern& sparsity_pattern,
 
   deallog << "METIS outputs:" << std::endl;
   deallog << dummy << std::endl;
-  for(unsigned int i = 0; i < int_partition_indices.size(); ++i)
+  for (unsigned int i = 0; i < int_partition_indices.size(); ++i)
     deallog << i << ' ' << int_partition_indices[i] << std::endl;
   deallog << std::endl;
 }
@@ -140,7 +140,7 @@ main()
     {
       test<1>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -154,7 +154,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

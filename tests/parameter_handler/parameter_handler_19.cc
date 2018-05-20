@@ -36,7 +36,7 @@ check()
     {
       prm.leave_subsection();
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       deallog << "Exception " << e.what() << std::endl;
     }
@@ -48,7 +48,7 @@ check()
       std::string s = "set dim=2\nsubsection test\n\n"; // note: missing "end"
       prm.parse_input_from_string(s.c_str());
     }
-  catch(const ParameterHandler::ExcUnbalancedSubsections& exc)
+  catch (const ParameterHandler::ExcUnbalancedSubsections& exc)
     {
       deallog << exc.get_exc_name() << std::endl;
       exc.print_info(deallog.get_file_stream());
@@ -61,7 +61,7 @@ check()
       prm.leave_subsection();
       deallog << "error, why could we leave a subsection?" << std::endl;
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       deallog << "Exception " << e.what() << std::endl;
     }
@@ -85,7 +85,7 @@ check()
         std::string s = "end\nsubsection test2\nset y=7\n";
         prm.parse_input_from_string(s.c_str());
       }
-    catch(const ParameterHandler::ExcUnbalancedSubsections& exc)
+    catch (const ParameterHandler::ExcUnbalancedSubsections& exc)
       {
         deallog << exc.get_exc_name() << std::endl;
         exc.print_info(deallog.get_file_stream());

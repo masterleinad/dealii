@@ -43,14 +43,14 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   hp::FECollection<dim> element;
@@ -60,10 +60,10 @@ check()
 
   hp::DoFHandler<dim> dof(tr);
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % element.size());
 
   dof.distribute_dofs(element);
@@ -123,8 +123,8 @@ check()
   // compute reference: need to cancel constrained entries as these will in
   // general get different values
   matrix.add(-1., matrix_ref);
-  for(unsigned int i = 0; i < matrix.m(); ++i)
-    if(constraints.is_constrained(i) == true)
+  for (unsigned int i = 0; i < matrix.m(); ++i)
+    if (constraints.is_constrained(i) == true)
       matrix.diag_element(i) = 0;
   deallog << "Matrix error Frobenius: " << matrix.frobenius_norm() << std::endl;
 

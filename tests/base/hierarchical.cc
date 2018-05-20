@@ -34,11 +34,11 @@ main()
     = Hierarchical::generate_complete_basis(10);
 
   const unsigned int div = 30;
-  for(unsigned int i = 0; i <= div; ++i)
+  for (unsigned int i = 0; i <= div; ++i)
     {
       const double x = 1. * i / div;
       deallog << x << " ";
-      for(unsigned int j = 0; j < p.size(); ++j)
+      for (unsigned int j = 0; j < p.size(); ++j)
         deallog << p[j].value(x) << " ";
       deallog << std::endl;
     }

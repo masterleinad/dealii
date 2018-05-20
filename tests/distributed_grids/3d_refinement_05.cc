@@ -46,13 +46,13 @@ test(std::ostream& /*out*/)
 
   Assert(tr.n_active_cells() == tr2.n_active_cells(), ExcInternalError());
 
-  while(tr.n_active_cells() < 50000)
+  while (tr.n_active_cells() < 50000)
     {
       std::vector<bool> flags(tr.n_active_cells(), false);
 
       // refine one fifth of all cells each
       // time (but at least one)
-      for(unsigned int i = 0; i < tr.n_active_cells() / 5 + 1; ++i)
+      for (unsigned int i = 0; i < tr.n_active_cells() / 5 + 1; ++i)
         {
           const unsigned int x = Testing::rand() % flags.size();
           //deallog << "Refining cell " << x << std::endl;
@@ -64,11 +64,11 @@ test(std::ostream& /*out*/)
 
       // refine tr and tr2
       unsigned int index = 0;
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell, ++index)
-        if(flags[index])
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell, ++index)
+        if (flags[index])
           {
             cell->set_refine_flag();
             intergrid_map[cell]->set_refine_flag();

@@ -37,8 +37,8 @@ main()
   SolverBicgstab<>      bicgstab(control, mem);
 
   SparsityPattern sparsity_pattern(4, 4, 4);
-  for(unsigned int i = 0; i < 4; ++i)
-    for(unsigned int j = 0; j < 4; ++j)
+  for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int j = 0; j < 4; ++j)
       sparsity_pattern.add(i, j);
   sparsity_pattern.compress();
 
@@ -76,7 +76,7 @@ main()
   // change
   bicgstab.solve(M, solution, rhs, ilu);
 
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     deallog << solution(i) << std::endl;
 
   Vector<double> res(4);

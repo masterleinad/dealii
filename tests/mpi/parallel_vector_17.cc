@@ -29,7 +29,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // all processors own 2 elements
@@ -52,7 +52,7 @@ test()
   MPI_Comm newcomm;
   MPI_Comm_split(MPI_COMM_WORLD, myid / 2, myid % 2, &newcomm);
   IndexSet local_owned_b(6);
-  if(myid < 2)
+  if (myid < 2)
     local_owned_b.add_range(myid * 3, myid * 3 + 3);
   v6.reinit(local_owned_b, newcomm);
 

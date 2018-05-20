@@ -28,8 +28,8 @@ void
 hilbert(LAPACKFullMatrix<number>& M, const bool nonsymmetric)
 {
   const unsigned int n = M.n_rows();
-  for(unsigned int i = 0; i < n; ++i)
-    for(unsigned int j = 0; j < n; ++j)
+  for (unsigned int i = 0; i < n; ++i)
+    for (unsigned int j = 0; j < n; ++j)
       M(i, j) = 1. / (i + j + 1.) * (nonsymmetric ? ((i < j) ? -1. : 1.) : 1.);
 }
 
@@ -48,7 +48,7 @@ test(const unsigned int size, const bool nonsymmetric)
   Vector<double> x(size);
   Vector<double> y(size);
 
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     {
       u(i) = i + 2.;
       x(i) = i + 2.;

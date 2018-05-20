@@ -35,7 +35,7 @@ test(int n, const Point<dim>& split_point, stream_type& deallog)
           << std::endl
           << std::endl;
 
-  for(auto p : quad.get_points())
+  for (auto p : quad.get_points())
     deallog << p << std::endl;
 }
 

@@ -57,7 +57,7 @@ main()
   AssertCuda(cuda_error);
 
   // Print the results and test
-  for(int i = 0; i < n; ++i)
+  for (int i = 0; i < n; ++i)
     {
       std::cout << "y[" << i << "] = " << host_y[i] << "\n";
       AssertThrow(std::abs(host_y[i] - 2 * host_x[i]) < 1.e-10,

@@ -90,7 +90,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   fe_values[extractor].get_function_gradients(fe_function, grads);
 
   // now compare
-  for(unsigned int q = 0; q < quadrature.size(); ++q)
+  for (unsigned int q = 0; q < quadrature.size(); ++q)
     {
       deallog << "  curls[q]= " << curls[q] << std::endl
               << "  grads[q]= " << grads[q] << std::endl;

@@ -43,7 +43,7 @@ test(unsigned n_refinements)
 {
   unsigned int rank = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(rank == 0)
+  if (rank == 0)
     {
       deallog << "Checking in " << dim << " space dimensions" << std::endl
               << "---------------------------------------" << std::endl;
@@ -62,13 +62,13 @@ test(unsigned n_refinements)
   // do some local refinement
   Point<dim> p0;
   p0 *= 0.;
-  for(int i = 0; i < n_refinements; ++i)
+  for (int i = 0; i < n_refinements; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell;
-      for(cell = tria2.begin_active(); cell != tria2.end(); ++cell)
+      for (cell = tria2.begin_active(); cell != tria2.end(); ++cell)
         {
-          if(cell->is_locally_owned()
-             && (cell->center().distance(p0) < 0.71 / double(i + 1)))
+          if (cell->is_locally_owned()
+              && (cell->center().distance(p0) < 0.71 / double(i + 1)))
             cell->set_refine_flag();
         }
 
@@ -94,21 +94,22 @@ test(unsigned n_refinements)
   // For this test case, all weights are one and their sum
   // should be equal to number of degrees of freedom
   unsigned local_sum = 0.;
-  for(size_t i = 0; i < transfer_representation.size(); ++i)
+  for (size_t i = 0; i < transfer_representation.size(); ++i)
     {
       TransferRep::value_type m = transfer_representation[i];
-      for(TransferRep::value_type::const_iterator it = m.begin(); it != m.end();
-          ++it)
+      for (TransferRep::value_type::const_iterator it = m.begin();
+           it != m.end();
+           ++it)
         local_sum += it->second;
     }
 
   unsigned global_sum = Utilities::MPI::sum(local_sum, MPI_COMM_WORLD);
 
-  if(rank == 0)
+  if (rank == 0)
     {
       deallog << "# dofs = " << dof_handler2.n_dofs() << std::endl;
       deallog << "sum(weights) = " << global_sum << std::endl;
-      if(dof_handler2.n_dofs() == global_sum)
+      if (dof_handler2.n_dofs() == global_sum)
         deallog << "OK" << std::endl;
       else
         deallog << "Failed" << std::endl;
@@ -126,7 +127,7 @@ main(int argc, char* argv[])
 
   unsigned n_refinements = 2;
 
-  if(rank == 0)
+  if (rank == 0)
     {
       std::ofstream logfile("output");
       deallog.attach(logfile);

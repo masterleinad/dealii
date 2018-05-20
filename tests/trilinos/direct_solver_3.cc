@@ -190,19 +190,19 @@ Step4<dim>::assemble_system()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      if(cell->is_locally_owned())
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           cell_matrix  = 0;
           cell_rhs     = 0;
           cell_rhs_two = 0;
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                         * fe_values.shape_grad(j, q_point)
                                         * fe_values.JxW(q_point));

@@ -69,15 +69,15 @@ namespace internal
     std::vector<unsigned int> shape_function_to_row_table(
       fe.dofs_per_cell * fe.n_components(), numbers::invalid_unsigned_int);
     unsigned int row = 0;
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
       {
         // loop over all components that are nonzero for this particular
         // shape function. if a component is zero then we leave the
         // value in the table unchanged (at the invalid value)
         // otherwise it is mapped to the next free entry
         unsigned int nth_nonzero_component = 0;
-        for(unsigned int c = 0; c < fe.n_components(); ++c)
-          if(fe.get_nonzero_components(i)[c] == true)
+        for (unsigned int c = 0; c < fe.n_components(); ++c)
+          if (fe.get_nonzero_components(i)[c] == true)
             {
               shape_function_to_row_table[i * fe.n_components() + c]
                 = row + nth_nonzero_component;
@@ -142,18 +142,18 @@ namespace FEValuesViews
     const std::vector<unsigned int> shape_function_to_row_table
       = dealii::internal::make_shape_function_to_row_table(fe);
 
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
       {
         const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-        if(is_primitive == true)
+        if (is_primitive == true)
           shape_function_data[i].is_nonzero_shape_function_component
             = (component == fe.system_to_component_index(i).first);
         else
           shape_function_data[i].is_nonzero_shape_function_component
             = (fe.get_nonzero_components(i)[component] == true);
 
-        if(shape_function_data[i].is_nonzero_shape_function_component == true)
+        if (shape_function_data[i].is_nonzero_shape_function_component == true)
           shape_function_data[i].row_index
             = shape_function_to_row_table[i * fe.n_components() + component];
         else
@@ -193,23 +193,23 @@ namespace FEValuesViews
     const std::vector<unsigned int> shape_function_to_row_table
       = dealii::internal::make_shape_function_to_row_table(fe);
 
-    for(unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int d = 0; d < spacedim; ++d)
       {
         const unsigned int component = first_vector_component + d;
 
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
           {
             const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-            if(is_primitive == true)
+            if (is_primitive == true)
               shape_function_data[i].is_nonzero_shape_function_component[d]
                 = (component == fe.system_to_component_index(i).first);
             else
               shape_function_data[i].is_nonzero_shape_function_component[d]
                 = (fe.get_nonzero_components(i)[component] == true);
 
-            if(shape_function_data[i].is_nonzero_shape_function_component[d]
-               == true)
+            if (shape_function_data[i].is_nonzero_shape_function_component[d]
+                == true)
               shape_function_data[i].row_index[d]
                 = shape_function_to_row_table[i * fe.n_components()
                                               + component];
@@ -219,23 +219,23 @@ namespace FEValuesViews
           }
       }
 
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
       {
         unsigned int n_nonzero_components = 0;
-        for(unsigned int d = 0; d < spacedim; ++d)
-          if(shape_function_data[i].is_nonzero_shape_function_component[d]
-             == true)
+        for (unsigned int d = 0; d < spacedim; ++d)
+          if (shape_function_data[i].is_nonzero_shape_function_component[d]
+              == true)
             ++n_nonzero_components;
 
-        if(n_nonzero_components == 0)
+        if (n_nonzero_components == 0)
           shape_function_data[i].single_nonzero_component = -2;
-        else if(n_nonzero_components > 1)
+        else if (n_nonzero_components > 1)
           shape_function_data[i].single_nonzero_component = -1;
         else
           {
-            for(unsigned int d = 0; d < spacedim; ++d)
-              if(shape_function_data[i].is_nonzero_shape_function_component[d]
-                 == true)
+            for (unsigned int d = 0; d < spacedim; ++d)
+              if (shape_function_data[i].is_nonzero_shape_function_component[d]
+                  == true)
                 {
                   shape_function_data[i].single_nonzero_component
                     = shape_function_data[i].row_index[d];
@@ -282,25 +282,25 @@ namespace FEValuesViews
     const std::vector<unsigned int> shape_function_to_row_table
       = dealii::internal::make_shape_function_to_row_table(fe);
 
-    for(unsigned int d = 0;
-        d < dealii::SymmetricTensor<2, dim>::n_independent_components;
-        ++d)
+    for (unsigned int d = 0;
+         d < dealii::SymmetricTensor<2, dim>::n_independent_components;
+         ++d)
       {
         const unsigned int component = first_tensor_component + d;
 
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
           {
             const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-            if(is_primitive == true)
+            if (is_primitive == true)
               shape_function_data[i].is_nonzero_shape_function_component[d]
                 = (component == fe.system_to_component_index(i).first);
             else
               shape_function_data[i].is_nonzero_shape_function_component[d]
                 = (fe.get_nonzero_components(i)[component] == true);
 
-            if(shape_function_data[i].is_nonzero_shape_function_component[d]
-               == true)
+            if (shape_function_data[i].is_nonzero_shape_function_component[d]
+                == true)
               shape_function_data[i].row_index[d]
                 = shape_function_to_row_table[i * fe.n_components()
                                               + component];
@@ -310,27 +310,27 @@ namespace FEValuesViews
           }
       }
 
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
       {
         unsigned int n_nonzero_components = 0;
-        for(unsigned int d = 0;
-            d < dealii::SymmetricTensor<2, dim>::n_independent_components;
-            ++d)
-          if(shape_function_data[i].is_nonzero_shape_function_component[d]
-             == true)
+        for (unsigned int d = 0;
+             d < dealii::SymmetricTensor<2, dim>::n_independent_components;
+             ++d)
+          if (shape_function_data[i].is_nonzero_shape_function_component[d]
+              == true)
             ++n_nonzero_components;
 
-        if(n_nonzero_components == 0)
+        if (n_nonzero_components == 0)
           shape_function_data[i].single_nonzero_component = -2;
-        else if(n_nonzero_components > 1)
+        else if (n_nonzero_components > 1)
           shape_function_data[i].single_nonzero_component = -1;
         else
           {
-            for(unsigned int d = 0;
-                d < dealii::SymmetricTensor<2, dim>::n_independent_components;
-                ++d)
-              if(shape_function_data[i].is_nonzero_shape_function_component[d]
-                 == true)
+            for (unsigned int d = 0;
+                 d < dealii::SymmetricTensor<2, dim>::n_independent_components;
+                 ++d)
+              if (shape_function_data[i].is_nonzero_shape_function_component[d]
+                  == true)
                 {
                   shape_function_data[i].single_nonzero_component
                     = shape_function_data[i].row_index[d];
@@ -373,23 +373,23 @@ namespace FEValuesViews
     const std::vector<unsigned int> shape_function_to_row_table
       = dealii::internal::make_shape_function_to_row_table(fe);
 
-    for(unsigned int d = 0; d < dim * dim; ++d)
+    for (unsigned int d = 0; d < dim * dim; ++d)
       {
         const unsigned int component = first_tensor_component + d;
 
-        for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
           {
             const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-            if(is_primitive == true)
+            if (is_primitive == true)
               shape_function_data[i].is_nonzero_shape_function_component[d]
                 = (component == fe.system_to_component_index(i).first);
             else
               shape_function_data[i].is_nonzero_shape_function_component[d]
                 = (fe.get_nonzero_components(i)[component] == true);
 
-            if(shape_function_data[i].is_nonzero_shape_function_component[d]
-               == true)
+            if (shape_function_data[i].is_nonzero_shape_function_component[d]
+                == true)
               shape_function_data[i].row_index[d]
                 = shape_function_to_row_table[i * fe.n_components()
                                               + component];
@@ -399,23 +399,23 @@ namespace FEValuesViews
           }
       }
 
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
       {
         unsigned int n_nonzero_components = 0;
-        for(unsigned int d = 0; d < dim * dim; ++d)
-          if(shape_function_data[i].is_nonzero_shape_function_component[d]
-             == true)
+        for (unsigned int d = 0; d < dim * dim; ++d)
+          if (shape_function_data[i].is_nonzero_shape_function_component[d]
+              == true)
             ++n_nonzero_components;
 
-        if(n_nonzero_components == 0)
+        if (n_nonzero_components == 0)
           shape_function_data[i].single_nonzero_component = -2;
-        else if(n_nonzero_components > 1)
+        else if (n_nonzero_components > 1)
           shape_function_data[i].single_nonzero_component = -1;
         else
           {
-            for(unsigned int d = 0; d < dim * dim; ++d)
-              if(shape_function_data[i].is_nonzero_shape_function_component[d]
-                 == true)
+            for (unsigned int d = 0; d < dim * dim; ++d)
+              if (shape_function_data[i].is_nonzero_shape_function_component[d]
+                  == true)
                 {
                   shape_function_data[i].single_nonzero_component
                     = shape_function_data[i].row_index[d];
@@ -464,22 +464,22 @@ namespace FEValuesViews
                 values.end(),
                 dealii::internal::NumberType<Number>::value(0.0));
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
-        if(shape_function_data[shape_function]
-             .is_nonzero_shape_function_component)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
+        if (shape_function_data[shape_function]
+              .is_nonzero_shape_function_component)
           {
             const Number& value = dof_values[shape_function];
             // For auto-differentiable numbers, the fact that a DoF value is zero
             // does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
-            if(dealii::internal::CheckForZero<Number>::value(value) == true)
+            if (dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
 
             const double* shape_value_ptr
               = &shape_values(shape_function_data[shape_function].row_index, 0);
-            for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                ++q_point)
+            for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                 ++q_point)
               values[q_point] += value * (*shape_value_ptr++);
           }
     }
@@ -507,23 +507,23 @@ namespace FEValuesViews
         derivatives.end(),
         typename ProductType<Number, dealii::Tensor<order, spacedim>>::type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
-        if(shape_function_data[shape_function]
-             .is_nonzero_shape_function_component)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
+        if (shape_function_data[shape_function]
+              .is_nonzero_shape_function_component)
           {
             const Number& value = dof_values[shape_function];
             // For auto-differentiable numbers, the fact that a DoF value is zero
             // does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
-            if(dealii::internal::CheckForZero<Number>::value(value) == true)
+            if (dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
 
             const dealii::Tensor<order, spacedim>* shape_derivative_ptr
               = &shape_derivatives[shape_function_data[shape_function]
                                      .row_index][0];
-            for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                ++q_point)
+            for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                 ++q_point)
               derivatives[q_point] += value * (*shape_derivative_ptr++);
           }
     }
@@ -548,23 +548,23 @@ namespace FEValuesViews
                 typename Scalar<dim, spacedim>::template OutputType<
                   Number>::laplacian_type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
-        if(shape_function_data[shape_function]
-             .is_nonzero_shape_function_component)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
+        if (shape_function_data[shape_function]
+              .is_nonzero_shape_function_component)
           {
             const Number& value = dof_values[shape_function];
             // For auto-differentiable numbers, the fact that a DoF value is zero
             // does not imply that its derivatives are zero as well. So we
             // can't filter by value for these number types.
-            if(dealii::internal::CheckForZero<Number>::value(value) == true)
+            if (dealii::internal::CheckForZero<Number>::value(value) == true)
               continue;
 
             const dealii::Tensor<2, spacedim>* shape_hessian_ptr
               = &shape_hessians[shape_function_data[shape_function].row_index]
                                [0];
-            for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                ++q_point)
+            for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                 ++q_point)
               laplacians[q_point] += value * trace(*shape_hessian_ptr++);
           }
     }
@@ -592,13 +592,13 @@ namespace FEValuesViews
         values.end(),
         typename ProductType<Number, dealii::Tensor<1, spacedim>>::type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -606,27 +606,27 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
               const double* shape_value_ptr = &shape_values(snc, 0);
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point)
                 values[q_point][comp] += value * (*shape_value_ptr++);
             }
           else
-            for(unsigned int d = 0; d < spacedim; ++d)
-              if(shape_function_data[shape_function]
-                   .is_nonzero_shape_function_component[d])
+            for (unsigned int d = 0; d < spacedim; ++d)
+              if (shape_function_data[shape_function]
+                    .is_nonzero_shape_function_component[d])
                 {
                   const double* shape_value_ptr = &shape_values(
                     shape_function_data[shape_function].row_index[d], 0);
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     values[q_point][d] += value * (*shape_value_ptr++);
                 }
         }
@@ -655,13 +655,13 @@ namespace FEValuesViews
         typename ProductType<Number,
                              dealii::Tensor<order + 1, spacedim>>::type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -669,29 +669,29 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
               const dealii::Tensor<order, spacedim>* shape_derivative_ptr
                 = &shape_derivatives[snc][0];
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point)
                 derivatives[q_point][comp] += value * (*shape_derivative_ptr++);
             }
           else
-            for(unsigned int d = 0; d < spacedim; ++d)
-              if(shape_function_data[shape_function]
-                   .is_nonzero_shape_function_component[d])
+            for (unsigned int d = 0; d < spacedim; ++d)
+              if (shape_function_data[shape_function]
+                    .is_nonzero_shape_function_component[d])
                 {
                   const dealii::Tensor<order, spacedim>* shape_derivative_ptr
                     = &shape_derivatives[shape_function_data[shape_function]
                                            .row_index[d]][0];
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     derivatives[q_point][d]
                       += value * (*shape_derivative_ptr++);
                 }
@@ -722,13 +722,13 @@ namespace FEValuesViews
         typename ProductType<Number,
                              dealii::SymmetricTensor<2, spacedim>>::type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -736,31 +736,31 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
               const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                 = &shape_gradients[snc][0];
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point)
                 symmetric_gradients[q_point]
                   += value
                      * dealii::SymmetricTensor<2, spacedim>(
                          symmetrize_single_row(comp, *shape_gradient_ptr++));
             }
           else
-            for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                ++q_point)
+            for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                 ++q_point)
               {
                 typename ProductType<Number, dealii::Tensor<2, spacedim>>::type
                   grad;
-                for(unsigned int d = 0; d < spacedim; ++d)
-                  if(shape_function_data[shape_function]
-                       .is_nonzero_shape_function_component[d])
+                for (unsigned int d = 0; d < spacedim; ++d)
+                  if (shape_function_data[shape_function]
+                        .is_nonzero_shape_function_component[d])
                     grad[d]
                       = value
                         * shape_gradients[shape_function_data[shape_function]
@@ -790,13 +790,13 @@ namespace FEValuesViews
                 typename Vector<dim, spacedim>::template OutputType<
                   Number>::divergence_type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -804,29 +804,29 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
               const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                 = &shape_gradients[snc][0];
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point)
                 divergences[q_point] += value * (*shape_gradient_ptr++)[comp];
             }
           else
-            for(unsigned int d = 0; d < spacedim; ++d)
-              if(shape_function_data[shape_function]
-                   .is_nonzero_shape_function_component[d])
+            for (unsigned int d = 0; d < spacedim; ++d)
+              if (shape_function_data[shape_function]
+                    .is_nonzero_shape_function_component[d])
                 {
                   const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                     = &shape_gradients[shape_function_data[shape_function]
                                          .row_index[d]][0];
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     divergences[q_point] += value * (*shape_gradient_ptr++)[d];
                 }
         }
@@ -854,7 +854,7 @@ namespace FEValuesViews
                   Number,
                   typename dealii::internal::CurlType<spacedim>::type>::type());
 
-      switch(spacedim)
+      switch (spacedim)
         {
           case 1:
             {
@@ -866,14 +866,14 @@ namespace FEValuesViews
 
           case 2:
             {
-              for(unsigned int shape_function = 0;
-                  shape_function < dofs_per_cell;
-                  ++shape_function)
+              for (unsigned int shape_function = 0;
+                   shape_function < dofs_per_cell;
+                   ++shape_function)
                 {
                   const int snc = shape_function_data[shape_function]
                                     .single_nonzero_component;
 
-                  if(snc == -2)
+                  if (snc == -2)
                     // shape function is zero for the selected components
                     continue;
 
@@ -881,11 +881,11 @@ namespace FEValuesViews
                   // For auto-differentiable numbers, the fact that a DoF value is zero
                   // does not imply that its derivatives are zero as well. So we
                   // can't filter by value for these number types.
-                  if(dealii::internal::CheckForZero<Number>::value(value)
-                     == true)
+                  if (dealii::internal::CheckForZero<Number>::value(value)
+                      == true)
                     continue;
 
-                  if(snc != -1)
+                  if (snc != -1)
                     {
                       const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                         = &shape_gradients[snc][0];
@@ -895,18 +895,18 @@ namespace FEValuesViews
                                >= 0,
                              ExcInternalError());
                       // we're in 2d, so the formula for the curl is simple:
-                      if(shape_function_data[shape_function]
-                           .single_nonzero_component_index
-                         == 0)
-                        for(unsigned int q_point = 0;
-                            q_point < n_quadrature_points;
-                            ++q_point)
+                      if (shape_function_data[shape_function]
+                            .single_nonzero_component_index
+                          == 0)
+                        for (unsigned int q_point = 0;
+                             q_point < n_quadrature_points;
+                             ++q_point)
                           curls[q_point][0]
                             -= value * (*shape_gradient_ptr++)[1];
                       else
-                        for(unsigned int q_point = 0;
-                            q_point < n_quadrature_points;
-                            ++q_point)
+                        for (unsigned int q_point = 0;
+                             q_point < n_quadrature_points;
+                             ++q_point)
                           curls[q_point][0]
                             += value * (*shape_gradient_ptr++)[0];
                     }
@@ -915,32 +915,32 @@ namespace FEValuesViews
                     // all of them must necessarily be within the 2-component window
                     // this FEValuesViews::Vector object considers, however.
                     {
-                      if(shape_function_data[shape_function]
-                           .is_nonzero_shape_function_component[0])
+                      if (shape_function_data[shape_function]
+                            .is_nonzero_shape_function_component[0])
                         {
                           const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                             = &shape_gradients
                                 [shape_function_data[shape_function]
                                    .row_index[0]][0];
 
-                          for(unsigned int q_point = 0;
-                              q_point < n_quadrature_points;
-                              ++q_point)
+                          for (unsigned int q_point = 0;
+                               q_point < n_quadrature_points;
+                               ++q_point)
                             curls[q_point][0]
                               -= value * (*shape_gradient_ptr++)[1];
                         }
 
-                      if(shape_function_data[shape_function]
-                           .is_nonzero_shape_function_component[1])
+                      if (shape_function_data[shape_function]
+                            .is_nonzero_shape_function_component[1])
                         {
                           const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                             = &shape_gradients
                                 [shape_function_data[shape_function]
                                    .row_index[1]][0];
 
-                          for(unsigned int q_point = 0;
-                              q_point < n_quadrature_points;
-                              ++q_point)
+                          for (unsigned int q_point = 0;
+                               q_point < n_quadrature_points;
+                               ++q_point)
                             curls[q_point][0]
                               += value * (*shape_gradient_ptr++)[0];
                         }
@@ -951,14 +951,14 @@ namespace FEValuesViews
 
           case 3:
             {
-              for(unsigned int shape_function = 0;
-                  shape_function < dofs_per_cell;
-                  ++shape_function)
+              for (unsigned int shape_function = 0;
+                   shape_function < dofs_per_cell;
+                   ++shape_function)
                 {
                   const int snc = shape_function_data[shape_function]
                                     .single_nonzero_component;
 
-                  if(snc == -2)
+                  if (snc == -2)
                     // shape function is zero for the selected components
                     continue;
 
@@ -966,23 +966,23 @@ namespace FEValuesViews
                   // For auto-differentiable numbers, the fact that a DoF value is zero
                   // does not imply that its derivatives are zero as well. So we
                   // can't filter by value for these number types.
-                  if(dealii::internal::CheckForZero<Number>::value(value)
-                     == true)
+                  if (dealii::internal::CheckForZero<Number>::value(value)
+                      == true)
                     continue;
 
-                  if(snc != -1)
+                  if (snc != -1)
                     {
                       const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                         = &shape_gradients[snc][0];
 
-                      switch(shape_function_data[shape_function]
-                               .single_nonzero_component_index)
+                      switch (shape_function_data[shape_function]
+                                .single_nonzero_component_index)
                         {
                           case 0:
                             {
-                              for(unsigned int q_point = 0;
-                                  q_point < n_quadrature_points;
-                                  ++q_point)
+                              for (unsigned int q_point = 0;
+                                   q_point < n_quadrature_points;
+                                   ++q_point)
                                 {
                                   curls[q_point][1]
                                     += value * (*shape_gradient_ptr)[2];
@@ -995,9 +995,9 @@ namespace FEValuesViews
 
                           case 1:
                             {
-                              for(unsigned int q_point = 0;
-                                  q_point < n_quadrature_points;
-                                  ++q_point)
+                              for (unsigned int q_point = 0;
+                                   q_point < n_quadrature_points;
+                                   ++q_point)
                                 {
                                   curls[q_point][0]
                                     -= value * (*shape_gradient_ptr)[2];
@@ -1010,9 +1010,9 @@ namespace FEValuesViews
 
                           case 2:
                             {
-                              for(unsigned int q_point = 0;
-                                  q_point < n_quadrature_points;
-                                  ++q_point)
+                              for (unsigned int q_point = 0;
+                                   q_point < n_quadrature_points;
+                                   ++q_point)
                                 {
                                   curls[q_point][0]
                                     += value * (*shape_gradient_ptr)[1];
@@ -1032,17 +1032,17 @@ namespace FEValuesViews
                     // all of them must necessarily be within the 3-component window
                     // this FEValuesViews::Vector object considers, however.
                     {
-                      if(shape_function_data[shape_function]
-                           .is_nonzero_shape_function_component[0])
+                      if (shape_function_data[shape_function]
+                            .is_nonzero_shape_function_component[0])
                         {
                           const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                             = &shape_gradients
                                 [shape_function_data[shape_function]
                                    .row_index[0]][0];
 
-                          for(unsigned int q_point = 0;
-                              q_point < n_quadrature_points;
-                              ++q_point)
+                          for (unsigned int q_point = 0;
+                               q_point < n_quadrature_points;
+                               ++q_point)
                             {
                               curls[q_point][1]
                                 += value * (*shape_gradient_ptr)[2];
@@ -1051,17 +1051,17 @@ namespace FEValuesViews
                             }
                         }
 
-                      if(shape_function_data[shape_function]
-                           .is_nonzero_shape_function_component[1])
+                      if (shape_function_data[shape_function]
+                            .is_nonzero_shape_function_component[1])
                         {
                           const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                             = &shape_gradients
                                 [shape_function_data[shape_function]
                                    .row_index[1]][0];
 
-                          for(unsigned int q_point = 0;
-                              q_point < n_quadrature_points;
-                              ++q_point)
+                          for (unsigned int q_point = 0;
+                               q_point < n_quadrature_points;
+                               ++q_point)
                             {
                               curls[q_point][0]
                                 -= value * (*shape_gradient_ptr)[2];
@@ -1070,17 +1070,17 @@ namespace FEValuesViews
                             }
                         }
 
-                      if(shape_function_data[shape_function]
-                           .is_nonzero_shape_function_component[2])
+                      if (shape_function_data[shape_function]
+                            .is_nonzero_shape_function_component[2])
                         {
                           const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                             = &shape_gradients
                                 [shape_function_data[shape_function]
                                    .row_index[2]][0];
 
-                          for(unsigned int q_point = 0;
-                              q_point < n_quadrature_points;
-                              ++q_point)
+                          for (unsigned int q_point = 0;
+                               q_point < n_quadrature_points;
+                               ++q_point)
                             {
                               curls[q_point][0]
                                 += value * (*shape_gradient_ptr)[1];
@@ -1114,13 +1114,13 @@ namespace FEValuesViews
                 typename Vector<dim, spacedim>::template OutputType<
                   Number>::laplacian_type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -1128,30 +1128,30 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
               const dealii::Tensor<2, spacedim>* shape_hessian_ptr
                 = &shape_hessians[snc][0];
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point)
                 laplacians[q_point][comp]
                   += value * trace(*shape_hessian_ptr++);
             }
           else
-            for(unsigned int d = 0; d < spacedim; ++d)
-              if(shape_function_data[shape_function]
-                   .is_nonzero_shape_function_component[d])
+            for (unsigned int d = 0; d < spacedim; ++d)
+              if (shape_function_data[shape_function]
+                    .is_nonzero_shape_function_component[d])
                 {
                   const dealii::Tensor<2, spacedim>* shape_hessian_ptr
                     = &shape_hessians[shape_function_data[shape_function]
                                         .row_index[d]][0];
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     laplacians[q_point][d]
                       += value * trace(*shape_hessian_ptr++);
                 }
@@ -1184,13 +1184,13 @@ namespace FEValuesViews
         typename ProductType<Number,
                              dealii::SymmetricTensor<2, spacedim>>::type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -1198,35 +1198,36 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const TableIndices<2> comp = dealii::
                 SymmetricTensor<2, spacedim>::unrolled_to_component_indices(
                   shape_function_data[shape_function]
                     .single_nonzero_component_index);
               const double* shape_value_ptr = &shape_values(snc, 0);
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point)
                 values[q_point][comp] += value * (*shape_value_ptr++);
             }
           else
-            for(unsigned int d = 0;
-                d < dealii::SymmetricTensor<2,
-                                            spacedim>::n_independent_components;
-                ++d)
-              if(shape_function_data[shape_function]
-                   .is_nonzero_shape_function_component[d])
+            for (unsigned int d = 0;
+                 d
+                 < dealii::SymmetricTensor<2,
+                                           spacedim>::n_independent_components;
+                 ++d)
+              if (shape_function_data[shape_function]
+                    .is_nonzero_shape_function_component[d])
                 {
                   const TableIndices<2> comp
                     = dealii::SymmetricTensor<2, spacedim>::
                       unrolled_to_component_indices(d);
                   const double* shape_value_ptr = &shape_values(
                     shape_function_data[shape_function].row_index[d], 0);
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     values[q_point][comp] += value * (*shape_value_ptr++);
                 }
         }
@@ -1253,13 +1254,13 @@ namespace FEValuesViews
                 typename SymmetricTensor<2, dim, spacedim>::template OutputType<
                   Number>::divergence_type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -1267,10 +1268,10 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
@@ -1283,25 +1284,24 @@ namespace FEValuesViews
               const unsigned int jj = dealii::SymmetricTensor<2, spacedim>::
                 unrolled_to_component_indices(comp)[1];
 
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point, ++shape_gradient_ptr)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point, ++shape_gradient_ptr)
                 {
                   divergences[q_point][ii] += value * (*shape_gradient_ptr)[jj];
 
-                  if(ii != jj)
+                  if (ii != jj)
                     divergences[q_point][jj]
                       += value * (*shape_gradient_ptr)[ii];
                 }
             }
           else
             {
-              for(unsigned int d = 0;
-                  d
-                  < dealii::SymmetricTensor<2,
-                                            spacedim>::n_independent_components;
-                  ++d)
-                if(shape_function_data[shape_function]
-                     .is_nonzero_shape_function_component[d])
+              for (unsigned int d = 0;
+                   d < dealii::SymmetricTensor<2, spacedim>::
+                         n_independent_components;
+                   ++d)
+                if (shape_function_data[shape_function]
+                      .is_nonzero_shape_function_component[d])
                   {
                     Assert(false, ExcNotImplemented());
 
@@ -1320,10 +1320,11 @@ namespace FEValuesViews
                     const dealii::Tensor<1, spacedim>* shape_gradient_ptr
                       = &shape_gradients[shape_function_data[shape_function]
                                            .row_index[d]][0];
-                    for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                        ++q_point, ++shape_gradient_ptr)
+                    for (unsigned int q_point = 0;
+                         q_point < n_quadrature_points;
+                         ++q_point, ++shape_gradient_ptr)
                       {
-                        for(unsigned int j = 0; j < spacedim; ++j)
+                        for (unsigned int j = 0; j < spacedim; ++j)
                           {
                             const unsigned int vector_component
                               = dealii::SymmetricTensor<2, spacedim>::
@@ -1361,13 +1362,13 @@ namespace FEValuesViews
         values.end(),
         typename ProductType<Number, dealii::Tensor<2, spacedim>>::type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -1375,10 +1376,10 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
@@ -1388,22 +1389,22 @@ namespace FEValuesViews
                   comp);
 
               const double* shape_value_ptr = &shape_values(snc, 0);
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point)
                 values[q_point][indices] += value * (*shape_value_ptr++);
             }
           else
-            for(unsigned int d = 0; d < dim * dim; ++d)
-              if(shape_function_data[shape_function]
-                   .is_nonzero_shape_function_component[d])
+            for (unsigned int d = 0; d < dim * dim; ++d)
+              if (shape_function_data[shape_function]
+                    .is_nonzero_shape_function_component[d])
                 {
                   const TableIndices<2> indices = dealii::Tensor<2, spacedim>::
                     unrolled_to_component_indices(d);
 
                   const double* shape_value_ptr = &shape_values(
                     shape_function_data[shape_function].row_index[d], 0);
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     values[q_point][indices] += value * (*shape_value_ptr++);
                 }
         }
@@ -1429,13 +1430,13 @@ namespace FEValuesViews
                 typename Tensor<2, dim, spacedim>::template OutputType<
                   Number>::divergence_type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -1443,10 +1444,10 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
@@ -1460,17 +1461,17 @@ namespace FEValuesViews
               const unsigned int ii = indices[0];
               const unsigned int jj = indices[1];
 
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point, ++shape_gradient_ptr)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point, ++shape_gradient_ptr)
                 {
                   divergences[q_point][ii] += value * (*shape_gradient_ptr)[jj];
                 }
             }
           else
             {
-              for(unsigned int d = 0; d < dim * dim; ++d)
-                if(shape_function_data[shape_function]
-                     .is_nonzero_shape_function_component[d])
+              for (unsigned int d = 0; d < dim * dim; ++d)
+                if (shape_function_data[shape_function]
+                      .is_nonzero_shape_function_component[d])
                   {
                     Assert(false, ExcNotImplemented());
                   }
@@ -1498,13 +1499,13 @@ namespace FEValuesViews
                 typename Tensor<2, dim, spacedim>::template OutputType<
                   Number>::gradient_type());
 
-      for(unsigned int shape_function = 0; shape_function < dofs_per_cell;
-          ++shape_function)
+      for (unsigned int shape_function = 0; shape_function < dofs_per_cell;
+           ++shape_function)
         {
           const int snc
             = shape_function_data[shape_function].single_nonzero_component;
 
-          if(snc == -2)
+          if (snc == -2)
             // shape function is zero for the selected components
             continue;
 
@@ -1512,10 +1513,10 @@ namespace FEValuesViews
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(snc != -1)
+          if (snc != -1)
             {
               const unsigned int comp = shape_function_data[shape_function]
                                           .single_nonzero_component_index;
@@ -1529,17 +1530,17 @@ namespace FEValuesViews
               const unsigned int ii = indices[0];
               const unsigned int jj = indices[1];
 
-              for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                  ++q_point, ++shape_gradient_ptr)
+              for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                   ++q_point, ++shape_gradient_ptr)
                 {
                   gradients[q_point][ii][jj] += value * (*shape_gradient_ptr);
                 }
             }
           else
             {
-              for(unsigned int d = 0; d < dim * dim; ++d)
-                if(shape_function_data[shape_function]
-                     .is_nonzero_shape_function_component[d])
+              for (unsigned int d = 0; d < dim * dim; ++d)
+                if (shape_function_data[shape_function]
+                      .is_nonzero_shape_function_component[d])
                   {
                     Assert(false, ExcNotImplemented());
                   }
@@ -2511,13 +2512,13 @@ namespace internal
       // actually want to use.
       const unsigned int n_scalars = fe.n_components();
       scalars.resize(n_scalars);
-      for(unsigned int component = 0; component < n_scalars; ++component)
+      for (unsigned int component = 0; component < n_scalars; ++component)
         {
           // Use a typedef here to work around an issue with gcc-4.1:
           typedef dealii::FEValuesViews::Scalar<dim, spacedim> ScalarView;
           scalars[component].ScalarView::~ScalarView();
 
-          new(&scalars[component])
+          new (&scalars[component])
             dealii::FEValuesViews::Scalar<dim, spacedim>(fe_values, component);
         }
 
@@ -2528,13 +2529,13 @@ namespace internal
         = (fe.n_components() >= spacedim ? fe.n_components() - spacedim + 1 :
                                            0);
       vectors.resize(n_vectors);
-      for(unsigned int component = 0; component < n_vectors; ++component)
+      for (unsigned int component = 0; component < n_vectors; ++component)
         {
           // Use a typedef here to work around an issue with gcc-4.1:
           typedef dealii::FEValuesViews::Vector<dim, spacedim> VectorView;
           vectors[component].VectorView::~VectorView();
 
-          new(&vectors[component])
+          new (&vectors[component])
             dealii::FEValuesViews::Vector<dim, spacedim>(fe_values, component);
         }
 
@@ -2544,9 +2545,9 @@ namespace internal
              fe.n_components() - (dim * dim + dim) / 2 + 1 :
              0);
       symmetric_second_order_tensors.resize(n_symmetric_second_order_tensors);
-      for(unsigned int component = 0;
-          component < n_symmetric_second_order_tensors;
-          ++component)
+      for (unsigned int component = 0;
+           component < n_symmetric_second_order_tensors;
+           ++component)
         {
           // Use a typedef here to work around an issue with gcc-4.1:
           typedef dealii::FEValuesViews::SymmetricTensor<2, dim, spacedim>
@@ -2554,7 +2555,7 @@ namespace internal
           symmetric_second_order_tensors[component]
             .SymmetricTensorView::~SymmetricTensorView();
 
-          new(&symmetric_second_order_tensors[component])
+          new (&symmetric_second_order_tensors[component])
             dealii::FEValuesViews::SymmetricTensor<2, dim, spacedim>(fe_values,
                                                                      component);
         }
@@ -2564,14 +2565,14 @@ namespace internal
         = (fe.n_components() >= dim * dim ? fe.n_components() - dim * dim + 1 :
                                             0);
       second_order_tensors.resize(n_second_order_tensors);
-      for(unsigned int component = 0; component < n_second_order_tensors;
-          ++component)
+      for (unsigned int component = 0; component < n_second_order_tensors;
+           ++component)
         {
           // Use a typedef here to work around an issue with gcc-4.1:
           typedef dealii::FEValuesViews::Tensor<2, dim, spacedim> TensorView;
           second_order_tensors[component].TensorView::~TensorView();
 
-          new(&second_order_tensors[component])
+          new (&second_order_tensors[component])
             dealii::FEValuesViews::Tensor<2, dim, spacedim>(fe_values,
                                                             component);
         }
@@ -2780,7 +2781,7 @@ FEValuesBase<dim, spacedim>::CellIterator<CI>::get_interpolated_dof_values(
     cell->get_fe().dofs_per_cell);
   cell->get_dof_indices(dof_indices);
 
-  for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
     out[i] = (in.is_element(dof_indices[i]) ? 1 : 0);
 }
 
@@ -2838,55 +2839,55 @@ namespace internal
       const unsigned int n_quadrature_points,
       const UpdateFlags  flags)
     {
-      if(flags & update_quadrature_points)
+      if (flags & update_quadrature_points)
         this->quadrature_points.resize(
           n_quadrature_points,
           Point<spacedim>(numbers::signaling_nan<Tensor<1, spacedim>>()));
 
-      if(flags & update_JxW_values)
+      if (flags & update_JxW_values)
         this->JxW_values.resize(n_quadrature_points,
                                 numbers::signaling_nan<double>());
 
-      if(flags & update_jacobians)
+      if (flags & update_jacobians)
         this->jacobians.resize(
           n_quadrature_points,
           numbers::signaling_nan<DerivativeForm<1, dim, spacedim>>());
 
-      if(flags & update_jacobian_grads)
+      if (flags & update_jacobian_grads)
         this->jacobian_grads.resize(
           n_quadrature_points,
           numbers::signaling_nan<DerivativeForm<2, dim, spacedim>>());
 
-      if(flags & update_jacobian_pushed_forward_grads)
+      if (flags & update_jacobian_pushed_forward_grads)
         this->jacobian_pushed_forward_grads.resize(
           n_quadrature_points, numbers::signaling_nan<Tensor<3, spacedim>>());
 
-      if(flags & update_jacobian_2nd_derivatives)
+      if (flags & update_jacobian_2nd_derivatives)
         this->jacobian_2nd_derivatives.resize(
           n_quadrature_points,
           numbers::signaling_nan<DerivativeForm<3, dim, spacedim>>());
 
-      if(flags & update_jacobian_pushed_forward_2nd_derivatives)
+      if (flags & update_jacobian_pushed_forward_2nd_derivatives)
         this->jacobian_pushed_forward_2nd_derivatives.resize(
           n_quadrature_points, numbers::signaling_nan<Tensor<4, spacedim>>());
 
-      if(flags & update_jacobian_3rd_derivatives)
+      if (flags & update_jacobian_3rd_derivatives)
         this->jacobian_3rd_derivatives.resize(n_quadrature_points);
 
-      if(flags & update_jacobian_pushed_forward_3rd_derivatives)
+      if (flags & update_jacobian_pushed_forward_3rd_derivatives)
         this->jacobian_pushed_forward_3rd_derivatives.resize(
           n_quadrature_points, numbers::signaling_nan<Tensor<5, spacedim>>());
 
-      if(flags & update_inverse_jacobians)
+      if (flags & update_inverse_jacobians)
         this->inverse_jacobians.resize(
           n_quadrature_points,
           numbers::signaling_nan<DerivativeForm<1, spacedim, dim>>());
 
-      if(flags & update_boundary_forms)
+      if (flags & update_boundary_forms)
         this->boundary_forms.resize(
           n_quadrature_points, numbers::signaling_nan<Tensor<1, spacedim>>());
 
-      if(flags & update_normal_vectors)
+      if (flags & update_normal_vectors)
         this->normal_vectors.resize(
           n_quadrature_points, numbers::signaling_nan<Tensor<1, spacedim>>());
     }
@@ -2928,21 +2929,21 @@ namespace internal
       // count the total number of non-zero components accumulated
       // over all shape functions
       unsigned int n_nonzero_shape_components = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         n_nonzero_shape_components += fe.n_nonzero_components(i);
       Assert(n_nonzero_shape_components >= fe.dofs_per_cell,
              ExcInternalError());
 
       // with the number of rows now known, initialize those fields
       // that we will need to their correct size
-      if(flags & update_values)
+      if (flags & update_values)
         {
           this->shape_values.reinit(n_nonzero_shape_components,
                                     n_quadrature_points);
           this->shape_values.fill(numbers::signaling_nan<double>());
         }
 
-      if(flags & update_gradients)
+      if (flags & update_gradients)
         {
           this->shape_gradients.reinit(n_nonzero_shape_components,
                                        n_quadrature_points);
@@ -2950,7 +2951,7 @@ namespace internal
             numbers::signaling_nan<Tensor<1, spacedim>>());
         }
 
-      if(flags & update_hessians)
+      if (flags & update_hessians)
         {
           this->shape_hessians.reinit(n_nonzero_shape_components,
                                       n_quadrature_points);
@@ -2958,7 +2959,7 @@ namespace internal
             numbers::signaling_nan<Tensor<2, spacedim>>());
         }
 
-      if(flags & update_3rd_derivatives)
+      if (flags & update_3rd_derivatives)
         {
           this->shape_3rd_derivatives.reinit(n_nonzero_shape_components,
                                              n_quadrature_points);
@@ -3044,18 +3045,18 @@ namespace internal
     // pointers for accessing the data. this saves some lookup time and
     // indexing. moreover, the order of the loops is such that we can access
     // the shape_values data stored contiguously
-    for(unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
+    for (unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
       {
         const Number2 value = dof_values_ptr[shape_func];
         // For auto-differentiable numbers, the fact that a DoF value is zero
         // does not imply that its derivatives are zero as well. So we
         // can't filter by value for these number types.
-        if(!Differentiation::AD::is_ad_number<Number2>::value)
-          if(value == dealii::internal::NumberType<Number2>::value(0.0))
+        if (!Differentiation::AD::is_ad_number<Number2>::value)
+          if (value == dealii::internal::NumberType<Number2>::value(0.0))
             continue;
 
         const double* shape_value_ptr = &shape_values(shape_func, 0);
-        for(unsigned int point = 0; point < n_quadrature_points; ++point)
+        for (unsigned int point = 0; point < n_quadrature_points; ++point)
           values[point] += value * (*shape_value_ptr++);
       }
   }
@@ -3073,14 +3074,14 @@ namespace internal
   {
     typedef typename VectorType::value_type Number;
     // initialize with zero
-    for(unsigned int i = 0; i < values.size(); ++i)
+    for (unsigned int i = 0; i < values.size(); ++i)
       std::fill_n(
         values[i].begin(), values[i].size(), typename VectorType::value_type());
 
     // see if there the current cell has DoFs at all, and if not
     // then there is nothing else to do.
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    if(dofs_per_cell == 0)
+    if (dofs_per_cell == 0)
       return;
 
     const unsigned int n_quadrature_points = shape_values.n_cols();
@@ -3089,33 +3090,34 @@ namespace internal
     // Assert that we can write all components into the result vectors
     const unsigned result_components = n_components * component_multiple;
     (void) result_components;
-    if(quadrature_points_fastest)
+    if (quadrature_points_fastest)
       {
         AssertDimension(values.size(), result_components);
-        for(unsigned int i = 0; i < values.size(); ++i)
+        for (unsigned int i = 0; i < values.size(); ++i)
           AssertDimension(values[i].size(), n_quadrature_points);
       }
     else
       {
         AssertDimension(values.size(), n_quadrature_points);
-        for(unsigned int i = 0; i < values.size(); ++i)
+        for (unsigned int i = 0; i < values.size(); ++i)
           AssertDimension(values[i].size(), result_components);
       }
 
     // add up contributions of trial functions.  now check whether the shape
     // function is primitive or not. if it is, then set its only non-zero
     // component, otherwise loop over components
-    for(unsigned int mc = 0; mc < component_multiple; ++mc)
-      for(unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
+    for (unsigned int mc = 0; mc < component_multiple; ++mc)
+      for (unsigned int shape_func = 0; shape_func < dofs_per_cell;
+           ++shape_func)
         {
           const Number& value = dof_values_ptr[shape_func + mc * dofs_per_cell];
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(fe.is_primitive(shape_func))
+          if (fe.is_primitive(shape_func))
             {
               const unsigned int comp
                 = fe.system_to_component_index(shape_func).first
@@ -3125,22 +3127,22 @@ namespace internal
 
               const double* shape_value_ptr = &shape_values(row, 0);
 
-              if(quadrature_points_fastest)
+              if (quadrature_points_fastest)
                 {
                   VectorType& values_comp = values[comp];
-                  for(unsigned int point = 0; point < n_quadrature_points;
-                      ++point)
+                  for (unsigned int point = 0; point < n_quadrature_points;
+                       ++point)
                     values_comp[point] += value * (*shape_value_ptr++);
                 }
               else
-                for(unsigned int point = 0; point < n_quadrature_points;
-                    ++point)
+                for (unsigned int point = 0; point < n_quadrature_points;
+                     ++point)
                   values[point][comp] += value * (*shape_value_ptr++);
             }
           else
-            for(unsigned int c = 0; c < n_components; ++c)
+            for (unsigned int c = 0; c < n_components; ++c)
               {
-                if(fe.get_nonzero_components(shape_func)[c] == false)
+                if (fe.get_nonzero_components(shape_func)[c] == false)
                   continue;
 
                 const unsigned int row
@@ -3149,16 +3151,16 @@ namespace internal
                 const double*      shape_value_ptr = &shape_values(row, 0);
                 const unsigned int comp            = c + mc * n_components;
 
-                if(quadrature_points_fastest)
+                if (quadrature_points_fastest)
                   {
                     VectorType& values_comp = values[comp];
-                    for(unsigned int point = 0; point < n_quadrature_points;
-                        ++point)
+                    for (unsigned int point = 0; point < n_quadrature_points;
+                         ++point)
                       values_comp[point] += value * (*shape_value_ptr++);
                   }
                 else
-                  for(unsigned int point = 0; point < n_quadrature_points;
-                      ++point)
+                  for (unsigned int point = 0; point < n_quadrature_points;
+                       ++point)
                     values[point][comp] += value * (*shape_value_ptr++);
               }
         }
@@ -3190,18 +3192,18 @@ namespace internal
     // increment pointers for accessing the data. this saves some lookup time
     // and indexing. moreover, the order of the loops is such that we can
     // access the shape_gradients/hessians data stored contiguously
-    for(unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
+    for (unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
       {
         const Number& value = dof_values_ptr[shape_func];
         // For auto-differentiable numbers, the fact that a DoF value is zero
         // does not imply that its derivatives are zero as well. So we
         // can't filter by value for these number types.
-        if(dealii::internal::CheckForZero<Number>::value(value) == true)
+        if (dealii::internal::CheckForZero<Number>::value(value) == true)
           continue;
 
         const Tensor<order, spacedim>* shape_derivative_ptr
           = &shape_derivatives[shape_func][0];
-        for(unsigned int point = 0; point < n_quadrature_points; ++point)
+        for (unsigned int point = 0; point < n_quadrature_points; ++point)
           derivatives[point] += value * (*shape_derivative_ptr++);
       }
   }
@@ -3218,7 +3220,7 @@ namespace internal
     const unsigned int component_multiple        = 1)
   {
     // initialize with zero
-    for(unsigned int i = 0; i < derivatives.size(); ++i)
+    for (unsigned int i = 0; i < derivatives.size(); ++i)
       std::fill_n(derivatives[i].begin(),
                   derivatives[i].size(),
                   Tensor<order, spacedim, Number>());
@@ -3226,7 +3228,7 @@ namespace internal
     // see if there the current cell has DoFs at all, and if not
     // then there is nothing else to do.
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    if(dofs_per_cell == 0)
+    if (dofs_per_cell == 0)
       return;
 
     const unsigned int n_quadrature_points = shape_derivatives[0].size();
@@ -3235,33 +3237,34 @@ namespace internal
     // Assert that we can write all components into the result vectors
     const unsigned result_components = n_components * component_multiple;
     (void) result_components;
-    if(quadrature_points_fastest)
+    if (quadrature_points_fastest)
       {
         AssertDimension(derivatives.size(), result_components);
-        for(unsigned int i = 0; i < derivatives.size(); ++i)
+        for (unsigned int i = 0; i < derivatives.size(); ++i)
           AssertDimension(derivatives[i].size(), n_quadrature_points);
       }
     else
       {
         AssertDimension(derivatives.size(), n_quadrature_points);
-        for(unsigned int i = 0; i < derivatives.size(); ++i)
+        for (unsigned int i = 0; i < derivatives.size(); ++i)
           AssertDimension(derivatives[i].size(), result_components);
       }
 
     // add up contributions of trial functions.  now check whether the shape
     // function is primitive or not. if it is, then set its only non-zero
     // component, otherwise loop over components
-    for(unsigned int mc = 0; mc < component_multiple; ++mc)
-      for(unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
+    for (unsigned int mc = 0; mc < component_multiple; ++mc)
+      for (unsigned int shape_func = 0; shape_func < dofs_per_cell;
+           ++shape_func)
         {
           const Number& value = dof_values_ptr[shape_func + mc * dofs_per_cell];
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(fe.is_primitive(shape_func))
+          if (fe.is_primitive(shape_func))
             {
               const unsigned int comp
                 = fe.system_to_component_index(shape_func).first
@@ -3272,19 +3275,19 @@ namespace internal
               const Tensor<order, spacedim>* shape_derivative_ptr
                 = &shape_derivatives[row][0];
 
-              if(quadrature_points_fastest)
-                for(unsigned int point = 0; point < n_quadrature_points;
-                    ++point)
+              if (quadrature_points_fastest)
+                for (unsigned int point = 0; point < n_quadrature_points;
+                     ++point)
                   derivatives[comp][point] += value * (*shape_derivative_ptr++);
               else
-                for(unsigned int point = 0; point < n_quadrature_points;
-                    ++point)
+                for (unsigned int point = 0; point < n_quadrature_points;
+                     ++point)
                   derivatives[point][comp] += value * (*shape_derivative_ptr++);
             }
           else
-            for(unsigned int c = 0; c < n_components; ++c)
+            for (unsigned int c = 0; c < n_components; ++c)
               {
-                if(fe.get_nonzero_components(shape_func)[c] == false)
+                if (fe.get_nonzero_components(shape_func)[c] == false)
                   continue;
 
                 const unsigned int row
@@ -3294,14 +3297,14 @@ namespace internal
                   = &shape_derivatives[row][0];
                 const unsigned int comp = c + mc * n_components;
 
-                if(quadrature_points_fastest)
-                  for(unsigned int point = 0; point < n_quadrature_points;
-                      ++point)
+                if (quadrature_points_fastest)
+                  for (unsigned int point = 0; point < n_quadrature_points;
+                       ++point)
                     derivatives[comp][point]
                       += value * (*shape_derivative_ptr++);
                 else
-                  for(unsigned int point = 0; point < n_quadrature_points;
-                      ++point)
+                  for (unsigned int point = 0; point < n_quadrature_points;
+                       ++point)
                     derivatives[point][comp]
                       += value * (*shape_derivative_ptr++);
               }
@@ -3328,19 +3331,19 @@ namespace internal
     // add up contributions of trial functions. note that here we deal with
     // scalar finite elements and also note that the Laplacian is
     // the trace of the Hessian.
-    for(unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
+    for (unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
       {
         const Number2 value = dof_values_ptr[shape_func];
         // For auto-differentiable numbers, the fact that a DoF value is zero
         // does not imply that its derivatives are zero as well. So we
         // can't filter by value for these number types.
-        if(!Differentiation::AD::is_ad_number<Number2>::value)
-          if(value == dealii::internal::NumberType<Number2>::value(0.0))
+        if (!Differentiation::AD::is_ad_number<Number2>::value)
+          if (value == dealii::internal::NumberType<Number2>::value(0.0))
             continue;
 
         const Tensor<2, spacedim>* shape_hessian_ptr
           = &shape_hessians[shape_func][0];
-        for(unsigned int point = 0; point < n_quadrature_points; ++point)
+        for (unsigned int point = 0; point < n_quadrature_points; ++point)
           laplacians[point] += value * trace(*shape_hessian_ptr++);
       }
   }
@@ -3357,7 +3360,7 @@ namespace internal
     const unsigned int component_multiple        = 1)
   {
     // initialize with zero
-    for(unsigned int i = 0; i < laplacians.size(); ++i)
+    for (unsigned int i = 0; i < laplacians.size(); ++i)
       std::fill_n(laplacians[i].begin(),
                   laplacians[i].size(),
                   typename VectorType::value_type());
@@ -3365,7 +3368,7 @@ namespace internal
     // see if there the current cell has DoFs at all, and if not
     // then there is nothing else to do.
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
-    if(dofs_per_cell == 0)
+    if (dofs_per_cell == 0)
       return;
 
     const unsigned int n_quadrature_points = shape_hessians[0].size();
@@ -3374,33 +3377,34 @@ namespace internal
     // Assert that we can write all components into the result vectors
     const unsigned result_components = n_components * component_multiple;
     (void) result_components;
-    if(quadrature_points_fastest)
+    if (quadrature_points_fastest)
       {
         AssertDimension(laplacians.size(), result_components);
-        for(unsigned int i = 0; i < laplacians.size(); ++i)
+        for (unsigned int i = 0; i < laplacians.size(); ++i)
           AssertDimension(laplacians[i].size(), n_quadrature_points);
       }
     else
       {
         AssertDimension(laplacians.size(), n_quadrature_points);
-        for(unsigned int i = 0; i < laplacians.size(); ++i)
+        for (unsigned int i = 0; i < laplacians.size(); ++i)
           AssertDimension(laplacians[i].size(), result_components);
       }
 
     // add up contributions of trial functions.  now check whether the shape
     // function is primitive or not. if it is, then set its only non-zero
     // component, otherwise loop over components
-    for(unsigned int mc = 0; mc < component_multiple; ++mc)
-      for(unsigned int shape_func = 0; shape_func < dofs_per_cell; ++shape_func)
+    for (unsigned int mc = 0; mc < component_multiple; ++mc)
+      for (unsigned int shape_func = 0; shape_func < dofs_per_cell;
+           ++shape_func)
         {
           const Number& value = dof_values_ptr[shape_func + mc * dofs_per_cell];
           // For auto-differentiable numbers, the fact that a DoF value is zero
           // does not imply that its derivatives are zero as well. So we
           // can't filter by value for these number types.
-          if(dealii::internal::CheckForZero<Number>::value(value) == true)
+          if (dealii::internal::CheckForZero<Number>::value(value) == true)
             continue;
 
-          if(fe.is_primitive(shape_func))
+          if (fe.is_primitive(shape_func))
             {
               const unsigned int comp
                 = fe.system_to_component_index(shape_func).first
@@ -3410,24 +3414,24 @@ namespace internal
 
               const Tensor<2, spacedim>* shape_hessian_ptr
                 = &shape_hessians[row][0];
-              if(quadrature_points_fastest)
+              if (quadrature_points_fastest)
                 {
                   VectorType& laplacians_comp = laplacians[comp];
-                  for(unsigned int point = 0; point < n_quadrature_points;
-                      ++point)
+                  for (unsigned int point = 0; point < n_quadrature_points;
+                       ++point)
                     laplacians_comp[point]
                       += value * trace(*shape_hessian_ptr++);
                 }
               else
-                for(unsigned int point = 0; point < n_quadrature_points;
-                    ++point)
+                for (unsigned int point = 0; point < n_quadrature_points;
+                     ++point)
                   laplacians[point][comp]
                     += value * trace(*shape_hessian_ptr++);
             }
           else
-            for(unsigned int c = 0; c < n_components; ++c)
+            for (unsigned int c = 0; c < n_components; ++c)
               {
-                if(fe.get_nonzero_components(shape_func)[c] == false)
+                if (fe.get_nonzero_components(shape_func)[c] == false)
                   continue;
 
                 const unsigned int row
@@ -3437,17 +3441,17 @@ namespace internal
                   = &shape_hessians[row][0];
                 const unsigned int comp = c + mc * n_components;
 
-                if(quadrature_points_fastest)
+                if (quadrature_points_fastest)
                   {
                     VectorType& laplacians_comp = laplacians[comp];
-                    for(unsigned int point = 0; point < n_quadrature_points;
-                        ++point)
+                    for (unsigned int point = 0; point < n_quadrature_points;
+                         ++point)
                       laplacians_comp[point]
                         += value * trace(*shape_hessian_ptr++);
                   }
                 else
-                  for(unsigned int point = 0; point < n_quadrature_points;
-                      ++point)
+                  for (unsigned int point = 0; point < n_quadrature_points;
+                       ++point)
                     laplacians[point][comp]
                       += value * trace(*shape_hessian_ptr++);
               }
@@ -3492,7 +3496,7 @@ FEValuesBase<dim, spacedim>::get_function_values(
   AssertDimension(indices.size(), dofs_per_cell);
 
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_values(
     dof_values.data(), this->finite_element_output.shape_values, values);
@@ -3541,7 +3545,7 @@ FEValuesBase<dim, spacedim>::get_function_values(
          ExcAccessToUninitializedField("update_values"));
 
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_values(
     dof_values.data(),
@@ -3573,7 +3577,7 @@ FEValuesBase<dim, spacedim>::get_function_values(
          ExcNotMultiple(indices.size(), dofs_per_cell));
 
   boost::container::small_vector<Number, 200> dof_values(indices.size());
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for (unsigned int i = 0; i < indices.size(); ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_values(
     dof_values.data(),
@@ -3624,7 +3628,7 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
   AssertDimension(indices.size(), dofs_per_cell);
 
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_derivatives(
     dof_values.data(), this->finite_element_output.shape_gradients, gradients);
@@ -3677,7 +3681,7 @@ FEValuesBase<dim, spacedim>::get_function_gradients(
          ExcAccessToUninitializedField("update_gradients"));
 
   boost::container::small_vector<Number, 200> dof_values(indices.size());
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for (unsigned int i = 0; i < indices.size(); ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_derivatives(
     dof_values.data(),
@@ -3728,7 +3732,7 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
   AssertDimension(indices.size(), dofs_per_cell);
 
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_derivatives(
     dof_values.data(), this->finite_element_output.shape_hessians, hessians);
@@ -3781,7 +3785,7 @@ FEValuesBase<dim, spacedim>::get_function_hessians(
          ExcNotMultiple(indices.size(), dofs_per_cell));
 
   boost::container::small_vector<Number, 200> dof_values(indices.size());
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for (unsigned int i = 0; i < indices.size(); ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_derivatives(
     dof_values.data(),
@@ -3830,7 +3834,7 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
   AssertDimension(indices.size(), dofs_per_cell);
 
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_laplacians(
     dof_values.data(), this->finite_element_output.shape_hessians, laplacians);
@@ -3878,7 +3882,7 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
          ExcAccessToUninitializedField("update_hessians"));
 
   boost::container::small_vector<Number, 200> dof_values(indices.size());
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for (unsigned int i = 0; i < indices.size(); ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_laplacians(
     dof_values.data(),
@@ -3906,7 +3910,7 @@ FEValuesBase<dim, spacedim>::get_function_laplacians(
          ExcAccessToUninitializedField("update_hessians"));
 
   boost::container::small_vector<Number, 200> dof_values(indices.size());
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for (unsigned int i = 0; i < indices.size(); ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_laplacians(
     dof_values.data(),
@@ -3959,7 +3963,7 @@ FEValuesBase<dim, spacedim>::get_function_third_derivatives(
   AssertDimension(indices.size(), dofs_per_cell);
 
   boost::container::small_vector<Number, 200> dof_values(dofs_per_cell);
-  for(unsigned int i = 0; i < dofs_per_cell; ++i)
+  for (unsigned int i = 0; i < dofs_per_cell; ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_derivatives(
     dof_values.data(),
@@ -4014,7 +4018,7 @@ FEValuesBase<dim, spacedim>::get_function_third_derivatives(
          ExcNotMultiple(indices.size(), dofs_per_cell));
 
   boost::container::small_vector<Number, 200> dof_values(indices.size());
-  for(unsigned int i = 0; i < indices.size(); ++i)
+  for (unsigned int i = 0; i < indices.size(); ++i)
     dof_values[i] = internal::get_vector_element(fe_function, indices[i]);
   internal::do_function_derivatives(
     dof_values.data(),
@@ -4110,13 +4114,13 @@ void
 FEValuesBase<dim, spacedim>::maybe_invalidate_previous_present_cell(
   const typename Triangulation<dim, spacedim>::cell_iterator& cell)
 {
-  if(present_cell.get() != nullptr)
+  if (present_cell.get() != nullptr)
     {
-      if(&cell->get_triangulation()
-         != &present_cell
-               ->
-               operator typename Triangulation<dim, spacedim>::cell_iterator()
-               ->get_triangulation())
+      if (&cell->get_triangulation()
+          != &present_cell
+                ->
+                operator typename Triangulation<dim, spacedim>::cell_iterator()
+                ->get_triangulation())
         {
           // the triangulations for the previous cell and the current cell
           // do not match. disconnect from the previous triangulation and
@@ -4170,19 +4174,19 @@ FEValuesBase<dim, spacedim>::check_cell_similarity(
   //
   // TODO: Is it reasonable to introduce a flag "unsafe" in the constructor of
   // FEValues to re-enable this feature?
-  if(MultithreadInfo::n_threads() > 1)
+  if (MultithreadInfo::n_threads() > 1)
     {
       cell_similarity = CellSimilarity::none;
       return;
     }
 
   // case that there has not been any cell before
-  if(this->present_cell.get() == nullptr)
+  if (this->present_cell.get() == nullptr)
     cell_similarity = CellSimilarity::none;
   else
     // in MappingQ, data can have been modified during the last call. Then, we
     // can't use that data on the new cell.
-    if(cell_similarity == CellSimilarity::invalid_next_cell)
+    if (cell_similarity == CellSimilarity::invalid_next_cell)
     cell_similarity = CellSimilarity::none;
   else
     cell_similarity
@@ -4193,13 +4197,13 @@ FEValuesBase<dim, spacedim>::check_cell_similarity(
            CellSimilarity::translation :
            CellSimilarity::none);
 
-  if((dim < spacedim) && (cell_similarity == CellSimilarity::translation))
+  if ((dim < spacedim) && (cell_similarity == CellSimilarity::translation))
     {
-      if(static_cast<
-           const typename Triangulation<dim, spacedim>::cell_iterator&>(
-           *this->present_cell)
-           ->direction_flag()
-         != cell->direction_flag())
+      if (static_cast<
+            const typename Triangulation<dim, spacedim>::cell_iterator&>(
+            *this->present_cell)
+            ->direction_flag()
+          != cell->direction_flag())
         cell_similarity = CellSimilarity::inverted_translation;
     }
   // TODO: here, one could implement other checks for similarity, e.g. for
@@ -4259,7 +4263,7 @@ FEValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
 {
   // You can compute normal vectors to the cells only in the
   // codimension one case.
-  if(dim != spacedim - 1)
+  if (dim != spacedim - 1)
     Assert((update_flags & update_normal_vectors) == false,
            ExcMessage("You can only pass the 'update_normal_vectors' "
                       "flag to FEFaceValues or FESubfaceValues objects, "
@@ -4270,7 +4274,7 @@ FEValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   const UpdateFlags flags = this->compute_update_flags(update_flags);
 
   // initialize the base classes
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     this->mapping_output.initialize(this->n_quadrature_points, flags);
   this->finite_element_output.initialize(
     this->n_quadrature_points, *this->fe, flags);
@@ -4288,7 +4292,7 @@ FEValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   Threads::Task<
     std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>>
     mapping_get_data;
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     mapping_get_data = Threads::new_task(
       &Mapping<dim, spacedim>::get_data, *this->mapping, flags, quadrature);
 
@@ -4296,7 +4300,7 @@ FEValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
 
   // then collect answers from the two task above
   this->fe_data = std::move(fe_get_data.return_value());
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     this->mapping_data = std::move(mapping_get_data.return_value());
   else
     this->mapping_data = std_cxx14::make_unique<
@@ -4317,13 +4321,13 @@ namespace
     // see if the existing pointer is non-null and if the type of
     // the old object pointed to matches that of the one we'd
     // like to create
-    if(present_cell.get() && (typeid(*present_cell.get()) == typeid(Type)))
+    if (present_cell.get() && (typeid(*present_cell.get()) == typeid(Type)))
       {
         // call destructor of the old object
         static_cast<const Type*>(present_cell.get())->~Type();
 
         // then construct a new object in-place
-        new(const_cast<void*>(static_cast<const void*>(present_cell.get())))
+        new (const_cast<void*>(static_cast<const void*>(present_cell.get())))
           Type(new_cell);
       }
     else
@@ -4386,7 +4390,7 @@ FEValues<dim, spacedim>::do_reinit()
   // specific to the mapping. also let it inspect the
   // cell similarity flag and, if necessary, update
   // it
-  if(this->update_flags & update_mapping)
+  if (this->update_flags & update_mapping)
     {
       this->cell_similarity
         = this->get_mapping().fill_fe_values(*this->present_cell,
@@ -4501,7 +4505,7 @@ FEFaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   const UpdateFlags flags = this->compute_update_flags(update_flags);
 
   // initialize the base classes
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     this->mapping_output.initialize(this->n_quadrature_points, flags);
   this->finite_element_output.initialize(
     this->n_quadrature_points, *this->fe, flags);
@@ -4520,7 +4524,7 @@ FEFaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   Threads::Task<
     std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>>
     mapping_get_data;
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     mapping_get_data = Threads::new_task(&Mapping<dim, spacedim>::get_face_data,
                                          *this->mapping,
                                          flags,
@@ -4530,7 +4534,7 @@ FEFaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
 
   // then collect answers from the two task above
   this->fe_data = std::move(fe_get_data.return_value());
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     this->mapping_data = std::move(mapping_get_data.return_value());
   else
     this->mapping_data = std_cxx14::make_unique<
@@ -4595,7 +4599,7 @@ FEFaceValues<dim, spacedim>::do_reinit(const unsigned int face_no)
     = *this->present_cell;
   this->present_face_index = cell->face_index(face_no);
 
-  if(this->update_flags & update_mapping)
+  if (this->update_flags & update_mapping)
     {
       this->get_mapping().fill_fe_face_values(*this->present_cell,
                                               face_no,
@@ -4660,7 +4664,7 @@ FESubfaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   const UpdateFlags flags = this->compute_update_flags(update_flags);
 
   // initialize the base classes
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     this->mapping_output.initialize(this->n_quadrature_points, flags);
   this->finite_element_output.initialize(
     this->n_quadrature_points, *this->fe, flags);
@@ -4680,7 +4684,7 @@ FESubfaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
   Threads::Task<
     std::unique_ptr<typename Mapping<dim, spacedim>::InternalDataBase>>
     mapping_get_data;
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     mapping_get_data
       = Threads::new_task(&Mapping<dim, spacedim>::get_subface_data,
                           *this->mapping,
@@ -4691,7 +4695,7 @@ FESubfaceValues<dim, spacedim>::initialize(const UpdateFlags update_flags)
 
   // then collect answers from the two task above
   this->fe_data = std::move(fe_get_data.return_value());
-  if(flags & update_mapping)
+  if (flags & update_mapping)
     this->mapping_data = std::move(mapping_get_data.return_value());
   else
     this->mapping_data = std_cxx14::make_unique<
@@ -4775,18 +4779,18 @@ FESubfaceValues<dim, spacedim>::do_reinit(const unsigned int face_no,
   const typename Triangulation<dim, spacedim>::cell_iterator cell
     = *this->present_cell;
 
-  if(!cell->face(face_no)->has_children())
+  if (!cell->face(face_no)->has_children())
     // no subfaces at all, so set present_face_index to this face rather
     // than any subface
     this->present_face_index = cell->face_index(face_no);
-  else if(dim != 3)
+  else if (dim != 3)
     this->present_face_index = cell->face(face_no)->child_index(subface_no);
   else
     {
       // this is the same logic we use in cell->neighbor_child_on_subface(). See
       // there for an explanation of the different cases
       unsigned int subface_index = numbers::invalid_unsigned_int;
-      switch(cell->subface_case(face_no))
+      switch (cell->subface_case(face_no))
         {
           case internal::SubfaceCase<3>::case_x:
           case internal::SubfaceCase<3>::case_y:
@@ -4801,7 +4805,7 @@ FESubfaceValues<dim, spacedim>::do_reinit(const unsigned int face_no,
             break;
           case internal::SubfaceCase<3>::case_x1y:
           case internal::SubfaceCase<3>::case_y1x:
-            switch(subface_no)
+            switch (subface_no)
               {
                 case 0:
                 case 1:
@@ -4817,7 +4821,7 @@ FESubfaceValues<dim, spacedim>::do_reinit(const unsigned int face_no,
             break;
           case internal::SubfaceCase<3>::case_x2y:
           case internal::SubfaceCase<3>::case_y2x:
-            switch(subface_no)
+            switch (subface_no)
               {
                 case 0:
                   subface_index = cell->face(face_no)->child_index(0);
@@ -4841,7 +4845,7 @@ FESubfaceValues<dim, spacedim>::do_reinit(const unsigned int face_no,
     }
 
   // now ask the mapping and the finite element to do the actual work
-  if(this->update_flags & update_mapping)
+  if (this->update_flags & update_mapping)
     {
       this->get_mapping().fill_fe_subface_values(*this->present_cell,
                                                  face_no,

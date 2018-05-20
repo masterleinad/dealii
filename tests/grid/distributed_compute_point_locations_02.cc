@@ -55,7 +55,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
   parallel::shared::Triangulation<dim> sphere(mpi_communicator);
   Point<dim>                           sphere_center;
   // Defining center and radius
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     sphere_center[i] = 0.47 - i * 0.05;
   double radius = 0.4 - dim * 0.05;
   GridGenerator::hyper_ball(sphere, sphere_center, radius);
@@ -81,24 +81,24 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
   std::vector<std::vector<unsigned int>> computed_ranks;
 
   unsigned int computed_pts = 0;
-  for(auto cell : sphere.active_cell_iterators())
+  for (auto cell : sphere.active_cell_iterators())
     {
       // The points we consider are the cell centers
       auto center_pt = cell->center();
       // Store the point only if it is inside a locally owned sphere cell
-      if(cell->subdomain_id() == my_rank)
+      if (cell->subdomain_id() == my_rank)
         loc_owned_points.emplace_back(center_pt);
       // Find the cube cell where center pt lies
       auto my_pair = GridTools::find_active_cell_around_point(cache, center_pt);
       // If it is inside a locally owned cell it shall be returned
       // from distributed compute point locations
-      if(my_pair.first->is_locally_owned())
+      if (my_pair.first->is_locally_owned())
         {
           computed_pts++;
           auto cells_it = std::find(
             computed_cells.begin(), computed_cells.end(), my_pair.first);
 
-          if(cells_it == computed_cells.end())
+          if (cells_it == computed_cells.end())
             {
               // Cell not found: adding a new cell
               computed_cells.emplace_back(my_pair.first);
@@ -144,20 +144,20 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
 
   // Comparing the output with the previously computed computed result
   bool test_passed = true;
-  if(output_cells.size() != computed_cells.size())
+  if (output_cells.size() != computed_cells.size())
     {
       test_passed = false;
       deallog << "ERROR: non-matching number of cell found" << std::endl;
     }
 
   unsigned int output_computed_pts = 0;
-  for(unsigned int c = 0; c < output_cells.size(); c++)
+  for (unsigned int c = 0; c < output_cells.size(); c++)
     {
       output_computed_pts += output_points[c].size();
       const auto& cell = output_cells[c];
       auto        cell_it
         = std::find(computed_cells.begin(), computed_cells.end(), cell);
-      if(cell_it == computed_cells.end())
+      if (cell_it == computed_cells.end())
         {
           deallog << "ERROR: active cell " << cell->active_cell_index()
                   << " not found" << std::endl;
@@ -166,35 +166,35 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
       else
         {
           unsigned int c_cell = cell_it - computed_cells.begin();
-          if(output_points[c].size() != computed_points[c_cell].size())
+          if (output_points[c].size() != computed_points[c_cell].size())
             {
               test_passed = false;
               deallog << "ERROR: non-matching number of points for cell "
                       << cell->active_cell_index() << std::endl;
               deallog << "Distributed compute point location output:"
                       << std::endl;
-              for(unsigned int pt_idx = 0; pt_idx < output_points[c].size();
-                  pt_idx++)
+              for (unsigned int pt_idx = 0; pt_idx < output_points[c].size();
+                   pt_idx++)
                 deallog << output_points[c][pt_idx] << " from process "
                         << output_ranks[c][pt_idx] << " to " << my_rank
                         << std::endl;
               deallog << "Expected points:" << std::endl;
-              for(unsigned int pt_idx = 0;
-                  pt_idx < computed_points[c_cell].size();
-                  pt_idx++)
+              for (unsigned int pt_idx = 0;
+                   pt_idx < computed_points[c_cell].size();
+                   pt_idx++)
                 deallog << computed_points[c_cell][pt_idx] << std::endl;
             }
           else
             {
               // Checking if the points inside are the same
-              for(unsigned int pt_idx = 0; pt_idx < output_points[c].size();
-                  pt_idx++)
+              for (unsigned int pt_idx = 0; pt_idx < output_points[c].size();
+                   pt_idx++)
                 {
                   const auto& pt    = output_points[c][pt_idx];
                   auto        pt_it = std::find(computed_points[c_cell].begin(),
                                          computed_points[c_cell].end(),
                                          pt);
-                  if(pt_it == computed_points[c_cell].end())
+                  if (pt_it == computed_points[c_cell].end())
                     {
                       deallog << "ERROR: point " << pt << " not found"
                               << std::endl;
@@ -205,10 +205,10 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
                       unsigned int c_pt
                         = pt_it - computed_points[c_cell].begin();
                       // Checking the value of the transformed point
-                      if((output_qpoints[c][pt_idx]
-                          - computed_qpoints[c_cell][c_pt])
-                           .norm()
-                         > 1e-12)
+                      if ((output_qpoints[c][pt_idx]
+                           - computed_qpoints[c_cell][c_pt])
+                            .norm()
+                          > 1e-12)
                         {
                           // Cell not found: adding a new cell
                           deallog << "ERROR: qpoint " << c_pt << " not matching"
@@ -216,8 +216,8 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
                           test_passed = false;
                         }
                       // Checking the rank of the owner
-                      if(output_ranks[c][pt_idx]
-                         != computed_ranks[c_cell][c_pt])
+                      if (output_ranks[c][pt_idx]
+                          != computed_ranks[c_cell][c_pt])
                         {
                           // Cell not found: adding a new cell
                           deallog << "ERROR: rank of point " << c_pt
@@ -230,7 +230,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
         }
     }
 
-  if(output_computed_pts != computed_pts)
+  if (output_computed_pts != computed_pts)
     {
       deallog << "ERROR: the number of points is different from expected: "
               << std::endl;
@@ -240,7 +240,7 @@ test_compute_pt_loc(unsigned int ref_cube, unsigned int ref_sphere)
               << std::endl;
     }
 
-  if(test_passed)
+  if (test_passed)
     deallog << "Test passed" << std::endl;
   else
     deallog << "Test FAILED" << std::endl;

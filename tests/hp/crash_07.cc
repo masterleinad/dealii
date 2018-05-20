@@ -92,18 +92,20 @@ main()
 
   // distribute fe_indices randomly
   unsigned int cell_no = 0;
-  for(hp::DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell, ++cell_no)
+  for (hp::DoFHandler<2>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell, ++cell_no)
     cell->set_active_fe_index(0);
   (++dof_handler.begin_active())->set_active_fe_index(1);
   dof_handler.distribute_dofs(fe);
 
   deallog << "n_dofs=" << dof_handler.n_dofs() << std::endl;
 
-  for(hp::DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (hp::DoFHandler<2>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       deallog << "Cell=" << cell << std::endl;
       deallog << "    vertices=" << cell->vertex_index(0) << ' '
@@ -115,8 +117,8 @@ main()
       std::vector<types::global_dof_index> local_dofs(
         fe[cell->active_fe_index()].dofs_per_cell);
       cell->get_dof_indices(local_dofs);
-      for(unsigned int i = 0; i < fe[cell->active_fe_index()].dofs_per_cell;
-          ++i)
+      for (unsigned int i = 0; i < fe[cell->active_fe_index()].dofs_per_cell;
+           ++i)
         deallog << local_dofs[i] << ' ';
       deallog << std::endl;
     }

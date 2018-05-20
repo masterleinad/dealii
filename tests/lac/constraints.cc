@@ -33,7 +33,7 @@ std::ofstream logfile("output");
 
 void make_tria(Triangulation<3>& tria, int step)
 {
-  switch(step)
+  switch (step)
     {
       case 0:
       case 1:
@@ -58,8 +58,8 @@ void make_tria(Triangulation<3>& tria, int step)
           const int      cell_vertices[2][8]
             = {{0, 1, 2, 3, 4, 5, 6, 7}, {4, 5, 6, 7, 8, 9, 10, 11}};
           std::vector<CellData<3>> cells(2, CellData<3>());
-          for(unsigned int cell = 0; cell < 2; ++cell)
-            for(unsigned int j = 0; j < 8; ++j)
+          for (unsigned int cell = 0; cell < 2; ++cell)
+            for (unsigned int j = 0; j < 8; ++j)
               cells[cell].vertices[j] = cell_vertices[cell][j];
           cells[0].material_id = 0;
           cells[1].material_id = 0;
@@ -69,7 +69,7 @@ void make_tria(Triangulation<3>& tria, int step)
             cells,
             SubCellData()); // no boundary information
 
-          if(step == 0)
+          if (step == 0)
             tria.last_active()->set_refine_flag();
           else
             tria.begin_active()->set_refine_flag();
@@ -101,8 +101,8 @@ void make_tria(Triangulation<3>& tria, int step)
           const int      cell_vertices[2][8]
             = {{0, 1, 2, 3, 4, 5, 6, 7}, {1, 8, 9, 2, 5, 10, 11, 6}};
           std::vector<CellData<3>> cells(2, CellData<3>());
-          for(unsigned int cell = 0; cell < 2; ++cell)
-            for(unsigned int j = 0; j < 8; ++j)
+          for (unsigned int cell = 0; cell < 2; ++cell)
+            for (unsigned int j = 0; j < 8; ++j)
               cells[cell].vertices[j] = cell_vertices[cell][j];
           cells[0].material_id = 0;
           cells[1].material_id = 0;
@@ -112,7 +112,7 @@ void make_tria(Triangulation<3>& tria, int step)
             cells,
             SubCellData()); // no boundary information
 
-          if(step == 2)
+          if (step == 2)
             tria.last_active()->set_refine_flag();
           else
             tria.begin_active()->set_refine_flag();
@@ -144,8 +144,8 @@ void make_tria(Triangulation<3>& tria, int step)
           const int      cell_vertices[2][8]
             = {{0, 1, 2, 3, 4, 5, 6, 7}, {3, 2, 8, 9, 7, 6, 10, 11}};
           std::vector<CellData<3>> cells(2, CellData<3>());
-          for(unsigned int cell = 0; cell < 2; ++cell)
-            for(unsigned int j = 0; j < 8; ++j)
+          for (unsigned int cell = 0; cell < 2; ++cell)
+            for (unsigned int j = 0; j < 8; ++j)
               cells[cell].vertices[j] = cell_vertices[cell][j];
           cells[0].material_id = 0;
           cells[1].material_id = 0;
@@ -155,7 +155,7 @@ void make_tria(Triangulation<3>& tria, int step)
             cells,
             SubCellData()); // no boundary information
 
-          if(step == 4)
+          if (step == 4)
             tria.last_active()->set_refine_flag();
           else
             tria.begin_active()->set_refine_flag();
@@ -198,8 +198,8 @@ void make_tria(Triangulation<3>& tria, int step)
                                            {4, 5, 6, 7, 12, 13, 14, 15},
                                            {5, 10, 11, 6, 13, 16, 17, 14}};
           std::vector<CellData<3>> cells(4, CellData<3>());
-          for(unsigned int cell = 0; cell < 4; ++cell)
-            for(unsigned int j = 0; j < 8; ++j)
+          for (unsigned int cell = 0; cell < 4; ++cell)
+            for (unsigned int j = 0; j < 8; ++j)
               cells[cell].vertices[j] = cell_vertices[cell][j];
           cells[0].material_id = 0;
           cells[1].material_id = 0;
@@ -211,7 +211,7 @@ void make_tria(Triangulation<3>& tria, int step)
             cells,
             SubCellData()); // no boundary information
 
-          switch(step)
+          switch (step)
             {
               case 6:
                 tria.begin_active()->set_refine_flag();
@@ -243,9 +243,9 @@ main()
 
   FiniteElement<3>* fe = nullptr;
 
-  for(unsigned int element = 0; element < 2; ++element)
+  for (unsigned int element = 0; element < 2; ++element)
     {
-      switch(element)
+      switch (element)
         {
           case 0:
             fe = new FE_Q<3>(1);
@@ -255,7 +255,7 @@ main()
             break;
         };
 
-      for(int step = 0; step < 9; ++step)
+      for (int step = 0; step < 9; ++step)
         {
           deallog << "Element=" << element << ", Step=" << step << std::endl;
 

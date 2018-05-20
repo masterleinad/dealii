@@ -368,7 +368,7 @@ namespace Rol
     // Zero all the entries in dealii vector.
     vec_ptr->reinit(*vector_ptr, false);
 
-    if(vector_ptr->locally_owned_elements().is_element(i))
+    if (vector_ptr->locally_owned_elements().is_element(i))
       vec_ptr->operator[](i) = 1.;
 
     vec_ptr->compress(VectorOperation::insert);
@@ -385,9 +385,9 @@ namespace Rol
   {
     const typename VectorType::iterator vend = vector_ptr->end();
 
-    for(typename VectorType::iterator iterator = vector_ptr->begin();
-        iterator != vend;
-        iterator++)
+    for (typename VectorType::iterator iterator = vector_ptr->begin();
+         iterator != vend;
+         iterator++)
       *iterator = f.apply(*iterator);
 
     vector_ptr->compress(VectorOperation::insert);
@@ -411,9 +411,9 @@ namespace Rol
     const typename VectorType::const_iterator rolend = given_rol_vector.end();
 
     typename VectorType::const_iterator r_iterator = given_rol_vector.begin();
-    for(typename VectorType::iterator l_iterator = vector_ptr->begin();
-        l_iterator != vend && r_iterator != rolend;
-        l_iterator++, r_iterator++)
+    for (typename VectorType::iterator l_iterator = vector_ptr->begin();
+         l_iterator != vend && r_iterator != rolend;
+         l_iterator++, r_iterator++)
       *l_iterator = f.apply(*l_iterator, *r_iterator);
 
     vector_ptr->compress(VectorOperation::insert);
@@ -428,9 +428,9 @@ namespace Rol
 
     const typename VectorType::iterator vend = vector_ptr->end();
 
-    for(typename VectorType::iterator iterator = vector_ptr->begin();
-        iterator != vend;
-        iterator++)
+    for (typename VectorType::iterator iterator = vector_ptr->begin();
+         iterator != vend;
+         iterator++)
       r.reduce(*iterator, result);
     // Parallel reduction among processes is handled internally.
 

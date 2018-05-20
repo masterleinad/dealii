@@ -47,8 +47,8 @@ namespace PETScWrappers
       this->column_block_indices.reinit(n_block_columns, 0);
 
       // and reinitialize the blocks
-      for(size_type r = 0; r < this->n_block_rows(); ++r)
-        for(size_type c = 0; c < this->n_block_cols(); ++c)
+      for (size_type r = 0; r < this->n_block_rows(); ++r)
+        for (size_type c = 0; c < this->n_block_cols(); ++c)
           {
             BlockType* p            = new BlockType();
             this->sub_objects[r][c] = p;
@@ -68,17 +68,17 @@ namespace PETScWrappers
       this->sub_objects.reinit(bdsp.n_block_rows(), bdsp.n_block_cols());
 
       std::vector<types::global_dof_index> row_sizes;
-      for(unsigned int r = 0; r < bdsp.n_block_rows(); ++r)
+      for (unsigned int r = 0; r < bdsp.n_block_rows(); ++r)
         row_sizes.push_back(bdsp.block(r, 0).n_rows());
       this->row_block_indices.reinit(row_sizes);
 
       std::vector<types::global_dof_index> col_sizes;
-      for(unsigned int c = 0; c < bdsp.n_block_cols(); ++c)
+      for (unsigned int c = 0; c < bdsp.n_block_cols(); ++c)
         col_sizes.push_back(bdsp.block(0, c).n_cols());
       this->column_block_indices.reinit(col_sizes);
 
-      for(unsigned int r = 0; r < this->n_block_rows(); ++r)
-        for(unsigned int c = 0; c < this->n_block_cols(); ++c)
+      for (unsigned int r = 0; r < this->n_block_rows(); ++r)
+        for (unsigned int c = 0; c < this->n_block_cols(); ++c)
           {
             Assert(rows[r].size() == bdsp.block(r, c).n_rows(),
                    ExcMessage("invalid size"));
@@ -112,7 +112,7 @@ namespace PETScWrappers
     {
       std::vector<IndexSet> index_sets;
 
-      for(unsigned int i = 0; i < this->n_block_cols(); ++i)
+      for (unsigned int i = 0; i < this->n_block_cols(); ++i)
         index_sets.push_back(this->block(0, i).locally_owned_domain_indices());
 
       return index_sets;
@@ -123,7 +123,7 @@ namespace PETScWrappers
     {
       std::vector<IndexSet> index_sets;
 
-      for(unsigned int i = 0; i < this->n_block_rows(); ++i)
+      for (unsigned int i = 0; i < this->n_block_rows(); ++i)
         index_sets.push_back(this->block(i, 0).locally_owned_range_indices());
 
       return index_sets;

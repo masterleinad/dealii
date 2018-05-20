@@ -194,7 +194,7 @@ namespace Step15
   void
   MinimalSurfaceProblem<dim>::setup_system(const bool initial_step)
   {
-    if(initial_step)
+    if (initial_step)
       {
         dof_handler.distribute_dofs(fe);
         present_solution.reinit(dof_handler.n_dofs());
@@ -259,7 +259,7 @@ namespace Step15
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         cell_rhs    = 0;
@@ -285,7 +285,7 @@ namespace Step15
         // system itself then looks similar to what we always do with the
         // exception of the nonlinear terms, as does copying the results from
         // the local objects into the global ones:
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             const double coeff
               = 1.0
@@ -293,9 +293,9 @@ namespace Step15
                             + old_solution_gradients[q_point]
                                 * old_solution_gradients[q_point]);
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   {
                     cell_matrix(i, j)
                       += (((fe_values.shape_grad(i, q_point) * coeff
@@ -315,9 +315,9 @@ namespace Step15
           }
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           {
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               system_matrix.add(
                 local_dof_indices[i], local_dof_indices[j], cell_matrix(i, j));
 
@@ -467,10 +467,10 @@ namespace Step15
     std::map<types::global_dof_index, double> boundary_values;
     VectorTools::interpolate_boundary_values(
       dof_handler, 0, BoundaryValues<dim>(), boundary_values);
-    for(std::map<types::global_dof_index, double>::const_iterator p
-        = boundary_values.begin();
-        p != boundary_values.end();
-        ++p)
+    for (std::map<types::global_dof_index, double>::const_iterator p
+         = boundary_values.begin();
+         p != boundary_values.end();
+         ++p)
       present_solution(p->first) = p->second;
   }
 
@@ -518,7 +518,7 @@ namespace Step15
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_residual = 0;
         fe_values.reinit(cell);
@@ -530,19 +530,19 @@ namespace Step15
         // the residual:
         fe_values.get_function_gradients(evaluation_point, gradients);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             const double coeff
               = 1 / std::sqrt(1 + gradients[q_point] * gradients[q_point]);
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               cell_residual(i)
                 -= (fe_values.shape_grad(i, q_point) * coeff
                     * gradients[q_point] * fe_values.JxW(q_point));
           }
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           residual(local_dof_indices[i]) += cell_residual(i);
       }
 
@@ -566,8 +566,8 @@ namespace Step15
     std::vector<bool> boundary_dofs(dof_handler.n_dofs());
     DoFTools::extract_boundary_dofs(
       dof_handler, ComponentMask(), boundary_dofs);
-    for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-      if(boundary_dofs[i] == true)
+    for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+      if (boundary_dofs[i] == true)
         residual(i) = 0;
 
     // At the end of the function, we return the norm of the residual:
@@ -624,9 +624,9 @@ namespace Step15
     // Newton iterate already has the correct boundary values. In all
     // following mesh refinement loops, the mesh will be refined adaptively.
     double previous_res = 0;
-    while(first_step || (previous_res > 1e-3))
+    while (first_step || (previous_res > 1e-3))
       {
-        if(first_step == true)
+        if (first_step == true)
           {
             std::cout << "******** Initial mesh "
                       << " ********" << std::endl;
@@ -656,8 +656,8 @@ namespace Step15
         // residual at the end of this Newton step:
         std::cout << "  Initial residual: " << compute_residual(0) << std::endl;
 
-        for(unsigned int inner_iteration = 0; inner_iteration < 5;
-            ++inner_iteration)
+        for (unsigned int inner_iteration = 0; inner_iteration < 5;
+             ++inner_iteration)
           {
             assemble_system();
             previous_res = system_rhs.l2_norm();
@@ -703,7 +703,7 @@ main()
       MinimalSurfaceProblem<2> laplace_problem_2d;
       laplace_problem_2d.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -717,7 +717,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

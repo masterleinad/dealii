@@ -141,7 +141,7 @@ namespace MeshWorker
     inline void
     GnuplotPatch::write(const T& d) const
     {
-      if(os == nullptr)
+      if (os == nullptr)
         deallog << d;
       else
         (*os) << d;
@@ -150,7 +150,7 @@ namespace MeshWorker
     inline void
     GnuplotPatch::write_endl() const
     {
-      if(os == nullptr)
+      if (os == nullptr)
         deallog << std::endl;
       else
         (*os) << std::endl;
@@ -179,7 +179,7 @@ namespace MeshWorker
     inline void
     GnuplotPatch::initialize_info(DoFInfo<dim>& info, bool face)
     {
-      if(face)
+      if (face)
         info.initialize_quadrature(Utilities::fixed_power<dim - 1>(n_points),
                                    n_vectors + dim);
       else
@@ -205,14 +205,14 @@ namespace MeshWorker
       //      AssertDimension(np, Utilities::fixed_power<dim>(n_points));
       AssertDimension(nv, n_vectors + dim);
 
-      for(unsigned int k = 0; k < np; ++k)
+      for (unsigned int k = 0; k < np; ++k)
         {
-          if(k % row_length == 0)
+          if (k % row_length == 0)
             write_endl();
-          if(k % row_length2 == 0)
+          if (k % row_length2 == 0)
             write_endl();
 
-          for(unsigned int i = 0; i < nv; ++i)
+          for (unsigned int i = 0; i < nv; ++i)
             {
               write(info.quadrature_value(k, i));
               write('\t');

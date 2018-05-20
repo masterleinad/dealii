@@ -37,16 +37,16 @@ test()
 
     Point<spacedim> position;
     position(0) = 0.3;
-    if(spacedim > 1)
+    if (spacedim > 1)
       position(1) = 0.5;
-    if(spacedim > 2)
+    if (spacedim > 2)
       position(2) = 0.7;
 
     Point<dim> reference_position;
     reference_position(0) = 0.2;
-    if(dim > 1)
+    if (dim > 1)
       reference_position(1) = 0.4;
-    if(dim > 2)
+    if (dim > 2)
       reference_position(2) = 0.6;
 
     Particles::Particle<dim, spacedim> particle(
@@ -65,9 +65,9 @@ test()
     deallog << "Particle number: " << particle_handler.n_global_particles()
             << std::endl;
 
-    for(auto particle = particle_handler.begin();
-        particle != particle_handler.end();
-        ++particle)
+    for (auto particle = particle_handler.begin();
+         particle != particle_handler.end();
+         ++particle)
       {
         deallog << "Particle location: " << particle->get_location()
                 << std::endl;

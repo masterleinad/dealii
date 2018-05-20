@@ -25,6 +25,6 @@ main()
   deallog.attach(logfile);
 
   deallog << "dim=2:" << std::endl;
-  for(unsigned int degree = 0; degree < 2; ++degree)
+  for (unsigned int degree = 0; degree < 2; ++degree)
     deallog << degree << ": " << FE_ABF<2>(degree).degree << std::endl;
 }

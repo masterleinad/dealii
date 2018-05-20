@@ -46,17 +46,17 @@ test()
 
   hp::DoFHandler<dim> dof_handler(tria);
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % fe_collection.size());
 
   dof_handler.distribute_dofs(fe_collection);
 
   std::vector<unsigned int> active_fe_indices(tria.n_active_cells());
   DoFTools::get_active_fe_indices(dof_handler, active_fe_indices);
-  for(unsigned int i = 0; i < tria.n_active_cells(); ++i)
+  for (unsigned int i = 0; i < tria.n_active_cells(); ++i)
     deallog << active_fe_indices[i] << std::endl;
 }
 

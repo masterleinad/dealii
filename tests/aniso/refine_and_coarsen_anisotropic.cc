@@ -65,7 +65,7 @@ test_isotropic(int type, std::ostream* logfile)
                                      RefinementCase<3>::no_refinement)};
 
   Triangulation<dim> tria(Triangulation<dim>::allow_anisotropic_smoothing);
-  if(type == 0)
+  if (type == 0)
     GridGenerator::hyper_cube(tria);
   else
     GridGenerator::hyper_ball(tria);
@@ -77,13 +77,13 @@ test_isotropic(int type, std::ostream* logfile)
 
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(unsigned int cycle = 1; cycle < max_cycle + 1; ++cycle)
+  for (unsigned int cycle = 1; cycle < max_cycle + 1; ++cycle)
     {
       cell = tria.begin_active();
-      for(; cell != endc; ++cell)
-        if(Testing::rand() % 5 == 0)
+      for (; cell != endc; ++cell)
+        if (Testing::rand() % 5 == 0)
           {
-            if(Testing::rand() % 2 == 0)
+            if (Testing::rand() % 2 == 0)
               cell->set_refine_flag(
                 ref_cases[Testing::rand()
                           % RefinementCase<dim>::isotropic_refinement]);
@@ -93,7 +93,7 @@ test_isotropic(int type, std::ostream* logfile)
 
       tria.execute_coarsening_and_refinement();
 
-      if(!single_file)
+      if (!single_file)
         {
           // graphical output
           GridOut              grid_out;
@@ -109,7 +109,7 @@ test_isotropic(int type, std::ostream* logfile)
       *logfile << "cycle: " << cycle << ", number of cells: " << tria.n_cells()
                << std::endl;
 
-      if(tria.n_cells() > max_cells || cycle == max_cycle)
+      if (tria.n_cells() > max_cells || cycle == max_cycle)
         break;
     }
 }
@@ -119,7 +119,7 @@ main()
 {
   std::ostream* logfile;
 
-  if(single_file)
+  if (single_file)
     logfile = new std::ofstream("output");
   else
     logfile = &std::cout;
@@ -146,6 +146,6 @@ main()
 
   // clear whatever is in the buffer
   *logfile << std::flush;
-  if(single_file)
+  if (single_file)
     delete logfile;
 }

@@ -52,11 +52,11 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
     dim, std::vector<Tensor<1, dim>>(fev.n_quadrature_points));
 
   std::vector<types::global_dof_index> indices(nv);
-  for(unsigned int i = 0; i < nv; ++i)
+  for (unsigned int i = 0; i < nv; ++i)
     indices[i] = i;
 
   deallog << "Divergence-Residuals";
-  for(unsigned int i = 0; i < nv; ++i)
+  for (unsigned int i = 0; i < nv; ++i)
     {
       u    = 0.;
       u(i) = 1.;
@@ -75,11 +75,11 @@ test_cell(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
 
   v.reinit(nv);
   indices.resize(ns);
-  for(unsigned int i = 0; i < ns; ++i)
+  for (unsigned int i = 0; i < ns; ++i)
     indices[i] = i;
 
   deallog << "Gradient-Residuals";
-  for(unsigned int i = 0; i < ns; ++i)
+  for (unsigned int i = 0; i < ns; ++i)
     {
       w    = 0.;
       w(i) = 1.;
@@ -112,11 +112,11 @@ test_boundary(const FEValuesBase<dim>& fev, const FEValuesBase<dim>& fes)
     dim, std::vector<double>(fev.n_quadrature_points));
 
   std::vector<types::global_dof_index> indices(nv);
-  for(unsigned int i = 0; i < nv; ++i)
+  for (unsigned int i = 0; i < nv; ++i)
     indices[i] = i;
 
   deallog << "Residuals u dot n";
-  for(unsigned int i = 0; i < nv; ++i)
+  for (unsigned int i = 0; i < nv; ++i)
     {
       u    = 0.;
       u(i) = 1.;
@@ -190,7 +190,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fv, FiniteElement<dim>& fs)
                          face_quadrature,
                          update_values | update_gradients
                            | update_normal_vectors | update_JxW_values);
-  for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       deallog << "boundary_matrix " << i << std::endl;
       fev1.reinit(cell1, i);

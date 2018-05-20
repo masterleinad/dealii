@@ -43,19 +43,19 @@ test(const bool with_weighting, const bool write_to_vtk = false)
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation);
   triangulation.refine_global(4 - dim);
-  for(unsigned int i = 0; i < 11 - 2 * dim; ++i)
+  for (unsigned int i = 0; i < 11 - 2 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
-        if(index % (3 * dim) == 0)
+      for (unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+        if (index % (3 * dim) == 0)
           cell->set_refine_flag();
       triangulation.execute_coarsening_and_refinement();
     }
 
   // cell weighting
   std::vector<unsigned int> cell_weighting;
-  if(with_weighting)
+  if (with_weighting)
     {
       cell_weighting
         = std::vector<unsigned int>(triangulation.n_active_cells(), 1u);
@@ -63,9 +63,9 @@ test(const bool with_weighting, const bool write_to_vtk = false)
       const Point<dim>                                  origin;
       typename Triangulation<dim>::active_cell_iterator cell
         = triangulation.begin_active();
-      for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+      for (unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
         {
-          if(origin.distance(cell->center()) < 0.5)
+          if (origin.distance(cell->center()) < 0.5)
             cell_weighting[index] = 10u;
         }
     }
@@ -84,7 +84,7 @@ test(const bool with_weighting, const bool write_to_vtk = false)
   {
     typename Triangulation<dim>::active_cell_iterator cell
       = triangulation.begin_active();
-    for(unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
+    for (unsigned int index = 0; cell != triangulation.end(); ++cell, ++index)
       {
         partitions(index) = cell->subdomain_id();
         weights(index)    = (with_weighting ? cell_weighting[index] : 1.0);
@@ -99,7 +99,7 @@ test(const bool with_weighting, const bool write_to_vtk = false)
 
   data_out.write_vtk(deallog.get_file_stream());
 
-  if(write_to_vtk)
+  if (write_to_vtk)
     {
       std::stringstream filename;
       filename << "grid_" << dim << "d.with_weighting_" << with_weighting
@@ -126,7 +126,7 @@ main()
       test<2>(true);
       test<3>(true);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -140,7 +140,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

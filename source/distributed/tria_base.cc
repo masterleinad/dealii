@@ -67,9 +67,9 @@ namespace parallel
 #else
     dealii::Triangulation<dim, spacedim>::copy_triangulation(other_tria);
 
-    if(const dealii::parallel::Triangulation<dim, spacedim>* other_tria_x
-       = dynamic_cast<const dealii::parallel::Triangulation<dim, spacedim>*>(
-         &other_tria))
+    if (const dealii::parallel::Triangulation<dim, spacedim>* other_tria_x
+        = dynamic_cast<const dealii::parallel::Triangulation<dim, spacedim>*>(
+          &other_tria))
       {
         mpi_communicator = other_tria_x->get_communicator();
 
@@ -163,7 +163,7 @@ namespace parallel
     number_cache.ghost_owners.clear();
     number_cache.level_ghost_owners.clear();
 
-    if(this->n_levels() == 0)
+    if (this->n_levels() == 0)
       {
         // Skip communication done below if we do not have any cells
         // (meaning the Triangulation is empty on all processors). This will
@@ -177,11 +177,11 @@ namespace parallel
 
     {
       // find ghost owners
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
-        if(cell->is_ghost())
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
+        if (cell->is_ghost())
           number_cache.ghost_owners.insert(cell->subdomain_id());
 
       Assert(number_cache.ghost_owners.size()
@@ -189,12 +189,12 @@ namespace parallel
              ExcInternalError());
     }
 
-    if(this->n_levels() > 0)
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = this->begin_active();
-          cell != this->end();
-          ++cell)
-        if(cell->subdomain_id() == my_subdomain)
+    if (this->n_levels() > 0)
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = this->begin_active();
+           cell != this->end();
+           ++cell)
+        if (cell->subdomain_id() == my_subdomain)
           ++number_cache.n_locally_owned_active_cells[my_subdomain];
 
     unsigned int send_value
@@ -225,16 +225,16 @@ namespace parallel
     number_cache.level_ghost_owners.clear();
 
     // if there is nothing to do, then do nothing
-    if(this->n_levels() == 0)
+    if (this->n_levels() == 0)
       return;
 
     // find level ghost owners
-    for(typename Triangulation<dim, spacedim>::cell_iterator cell
-        = this->begin();
-        cell != this->end();
-        ++cell)
-      if(cell->level_subdomain_id() != numbers::artificial_subdomain_id
-         && cell->level_subdomain_id() != this->locally_owned_subdomain())
+    for (typename Triangulation<dim, spacedim>::cell_iterator cell
+         = this->begin();
+         cell != this->end();
+         ++cell)
+      if (cell->level_subdomain_id() != numbers::artificial_subdomain_id
+          && cell->level_subdomain_id() != this->locally_owned_subdomain())
         this->number_cache.level_ghost_owners.insert(
           cell->level_subdomain_id());
 
@@ -250,10 +250,10 @@ namespace parallel
       unsigned int dummy       = 0;
       unsigned int req_counter = 0;
 
-      for(std::set<types::subdomain_id>::iterator it
-          = this->number_cache.level_ghost_owners.begin();
-          it != this->number_cache.level_ghost_owners.end();
-          ++it, ++req_counter)
+      for (std::set<types::subdomain_id>::iterator it
+           = this->number_cache.level_ghost_owners.begin();
+           it != this->number_cache.level_ghost_owners.end();
+           ++it, ++req_counter)
         {
           ierr = MPI_Isend(&dummy,
                            1,
@@ -265,10 +265,10 @@ namespace parallel
           AssertThrowMPI(ierr);
         }
 
-      for(std::set<types::subdomain_id>::iterator it
-          = this->number_cache.level_ghost_owners.begin();
-          it != this->number_cache.level_ghost_owners.end();
-          ++it)
+      for (std::set<types::subdomain_id>::iterator it
+           = this->number_cache.level_ghost_owners.begin();
+           it != this->number_cache.level_ghost_owners.end();
+           ++it)
         {
           unsigned int dummy;
           ierr = MPI_Recv(&dummy,
@@ -281,7 +281,7 @@ namespace parallel
           AssertThrowMPI(ierr);
         }
 
-      if(requests.size() > 0)
+      if (requests.size() > 0)
         {
           ierr = MPI_Waitall(
             requests.size(), requests.data(), MPI_STATUSES_IGNORE);
@@ -349,19 +349,20 @@ namespace parallel
 
     std::vector<bool> vertex_of_own_cell(this->n_vertices(), false);
 
-    for(auto cell : this->active_cell_iterators())
-      if(cell->is_locally_owned())
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (auto cell : this->active_cell_iterators())
+      if (cell->is_locally_owned())
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           vertex_of_own_cell[cell->vertex_index(v)] = true;
 
     std::map<unsigned int, std::set<dealii::types::subdomain_id>> result;
-    for(auto cell : this->active_cell_iterators())
-      if(cell->is_ghost())
+    for (auto cell : this->active_cell_iterators())
+      if (cell->is_ghost())
         {
           const types::subdomain_id owner = cell->subdomain_id();
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+          for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+               ++v)
             {
-              if(vertex_of_own_cell[cell->vertex_index(v)])
+              if (vertex_of_own_cell[cell->vertex_index(v)])
                 result[cell->vertex_index(v)].insert(owner);
             }
         }

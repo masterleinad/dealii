@@ -123,25 +123,25 @@ PolynomialsAdini::compute(const Point<2>&            unit_point,
                           std::vector<Tensor<1, 2>>& grads,
                           std::vector<Tensor<2, 2>>& grad_grads) const
 {
-  if(values.empty() == false) // do not bother if empty
+  if (values.empty() == false) // do not bother if empty
     {
-      for(unsigned int i = 0; i < values.size(); ++i)
+      for (unsigned int i = 0; i < values.size(); ++i)
         {
           values[i] = compute_value(i, unit_point);
         }
     }
 
-  if(grads.empty() == false) // do not bother if empty
+  if (grads.empty() == false) // do not bother if empty
     {
-      for(unsigned int i = 0; i < grads.size(); ++i)
+      for (unsigned int i = 0; i < grads.size(); ++i)
         {
           grads[i] = compute_grad(i, unit_point);
         }
     }
 
-  if(grad_grads.empty() == false) // do not bother if empty
+  if (grad_grads.empty() == false) // do not bother if empty
     {
-      for(unsigned int i = 0; i < grad_grads.size(); ++i)
+      for (unsigned int i = 0; i < grad_grads.size(); ++i)
         {
           grad_grads[i] = compute_grad_grad(i, unit_point);
         }

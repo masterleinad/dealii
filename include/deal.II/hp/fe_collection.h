@@ -485,7 +485,7 @@ namespace hp
     // this collection. Inlining the definition of fe_pointers causes internal
     // compiler errors on GCC 7.1.1 so we define it separately:
     const auto fe_pointers = {&fes...};
-    for(auto p : fe_pointers)
+    for (auto p : fe_pointers)
       push_back(*p);
   }
 
@@ -519,11 +519,11 @@ namespace hp
   operator==(const FECollection<dim, spacedim>& fe_collection) const
   {
     const unsigned int n_elements = size();
-    if(n_elements != fe_collection.size())
+    if (n_elements != fe_collection.size())
       return false;
 
-    for(unsigned int i = 0; i < n_elements; ++i)
-      if(!(*finite_elements[i] == fe_collection[i]))
+    for (unsigned int i = 0; i < n_elements; ++i)
+      if (!(*finite_elements[i] == fe_collection[i]))
         return false;
 
     return true;
@@ -553,8 +553,8 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      if(finite_elements[i]->dofs_per_vertex > max)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
+      if (finite_elements[i]->dofs_per_vertex > max)
         max = finite_elements[i]->dofs_per_vertex;
 
     return max;
@@ -567,8 +567,8 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      if(finite_elements[i]->dofs_per_line > max)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
+      if (finite_elements[i]->dofs_per_line > max)
         max = finite_elements[i]->dofs_per_line;
 
     return max;
@@ -581,8 +581,8 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      if(finite_elements[i]->dofs_per_quad > max)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
+      if (finite_elements[i]->dofs_per_quad > max)
         max = finite_elements[i]->dofs_per_quad;
 
     return max;
@@ -595,8 +595,8 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      if(finite_elements[i]->dofs_per_hex > max)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
+      if (finite_elements[i]->dofs_per_hex > max)
         max = finite_elements[i]->dofs_per_hex;
 
     return max;
@@ -609,8 +609,8 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      if(finite_elements[i]->dofs_per_face > max)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
+      if (finite_elements[i]->dofs_per_face > max)
         max = finite_elements[i]->dofs_per_face;
 
     return max;
@@ -623,8 +623,8 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     unsigned int max = 0;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
-      if(finite_elements[i]->dofs_per_cell > max)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
+      if (finite_elements[i]->dofs_per_cell > max)
         max = finite_elements[i]->dofs_per_cell;
 
     return max;
@@ -637,7 +637,7 @@ namespace hp
     Assert(finite_elements.size() > 0, ExcNoFiniteElements());
 
     bool hp_constraints = true;
-    for(unsigned int i = 0; i < finite_elements.size(); ++i)
+    for (unsigned int i = 0; i < finite_elements.size(); ++i)
       hp_constraints = hp_constraints
                        && finite_elements[i]->hp_constraints_are_implemented();
 

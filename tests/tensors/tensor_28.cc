@@ -41,8 +41,8 @@ test_tensor(const Tensor<2, dim>& F)
   {
     Tensor<2, dim> tmp1;
     unsigned int   c = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = 0; j < dim; ++j)
+    for (unsigned int i = 0; i < dim; ++i)
+      for (unsigned int j = 0; j < dim; ++j)
         {
           tmp1[i][j] = c++;
         }
@@ -59,9 +59,9 @@ test_tensor(const Tensor<2, dim>& F)
   {
     Tensor<3, dim> tmp1;
     unsigned int   c = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = 0; j < dim; ++j)
-        for(unsigned int k = 0; k < dim; ++k)
+    for (unsigned int i = 0; i < dim; ++i)
+      for (unsigned int j = 0; j < dim; ++j)
+        for (unsigned int k = 0; k < dim; ++k)
           {
             tmp1[i][j][k] = c++;
           }
@@ -78,10 +78,10 @@ test_tensor(const Tensor<2, dim>& F)
   {
     Tensor<4, dim> tmp1;
     unsigned int   c = 1;
-    for(unsigned int i = 0; i < dim; ++i)
-      for(unsigned int j = 0; j < dim; ++j)
-        for(unsigned int k = 0; k < dim; ++k)
-          for(unsigned int l = 0; l < dim; ++l)
+    for (unsigned int i = 0; i < dim; ++i)
+      for (unsigned int j = 0; j < dim; ++j)
+        for (unsigned int k = 0; k < dim; ++k)
+          for (unsigned int l = 0; l < dim; ++l)
             {
               tmp1[i][j][k][l] = c++;
             }
@@ -105,8 +105,8 @@ test()
   // Test with non-trivial tensor
   Tensor<2, dim> F = unit_symmetric_tensor<dim>();
   double         c = 0.1;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         F[i][j] += c;
         c += 0.05;

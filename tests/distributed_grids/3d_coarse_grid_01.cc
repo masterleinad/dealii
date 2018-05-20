@@ -27,7 +27,7 @@ template <int dim>
 void
 test(std::ostream& /*out*/)
 {
-  if(true)
+  if (true)
     {
       deallog << "hyper_cube" << std::endl;
 
@@ -37,7 +37,7 @@ test(std::ostream& /*out*/)
       write_vtk(tr, "1");
     }
 
-  if(true)
+  if (true)
     {
       deallog << "hyper_ball" << std::endl;
 
@@ -47,7 +47,7 @@ test(std::ostream& /*out*/)
       write_vtk(tr, "2");
     }
 
-  if(true)
+  if (true)
     {
       deallog << "half_hyper_ball" << std::endl;
 

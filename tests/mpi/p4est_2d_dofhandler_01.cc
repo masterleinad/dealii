@@ -35,7 +35,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -47,7 +47,7 @@ test()
   static const FE_Q<dim> fe(2);
   dofh.distribute_dofs(fe);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "dofh.n_dofs() " << dofh.n_locally_owned_dofs_per_processor()
               << std::endl;
@@ -60,13 +60,13 @@ test()
   const unsigned int dofs_per_cell = dofh.get_fe().dofs_per_cell;
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-  if(myid == 0)
-    for(; cell != dofh.end(); ++cell)
-      if(!cell->is_artificial())
+  if (myid == 0)
+    for (; cell != dofh.end(); ++cell)
+      if (!cell->is_artificial())
         {
           cell->get_dof_indices(local_dof_indices);
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             deallog << local_dof_indices[i] << " ";
 
           deallog << std::endl;
@@ -82,7 +82,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

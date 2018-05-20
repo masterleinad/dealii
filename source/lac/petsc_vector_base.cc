@@ -40,7 +40,7 @@ namespace PETScWrappers
       // ghost elements). In this array, the locally owned elements come first
       // followed by the ghost elements whose position we can get from an
       // index set.
-      if(vector.ghosted)
+      if (vector.ghosted)
         {
           PetscInt       begin, end;
           PetscErrorCode ierr
@@ -61,8 +61,8 @@ namespace PETScWrappers
 
           PetscScalar value;
 
-          if(index >= static_cast<size_type>(begin)
-             && index < static_cast<size_type>(end))
+          if (index >= static_cast<size_type>(begin)
+              && index < static_cast<size_type>(end))
             {
               //local entry
               value = *(ptr + index - begin);
@@ -152,7 +152,7 @@ namespace PETScWrappers
 
   VectorBase::~VectorBase()
   {
-    if(obtained_ownership)
+    if (obtained_ownership)
       {
         const PetscErrorCode ierr = VecDestroy(&vector);
         AssertNothrow(ierr == 0, ExcPETScError(ierr));
@@ -163,7 +163,7 @@ namespace PETScWrappers
   void
   VectorBase::clear()
   {
-    if(obtained_ownership)
+    if (obtained_ownership)
       {
         const PetscErrorCode ierr = VecDestroy(&vector);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -185,7 +185,7 @@ namespace PETScWrappers
     PetscErrorCode ierr = VecSet(vector, s);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-    if(has_ghost_elements())
+    if (has_ghost_elements())
       {
         Vec ghost = PETSC_NULL;
         ierr      = VecGhostGetLocalForm(vector, &ghost);
@@ -390,7 +390,7 @@ namespace PETScWrappers
   {
     // We can only use our more efficient
     // routine in the serial case.
-    if(dynamic_cast<const PETScWrappers::MPI::Vector*>(this) != nullptr)
+    if (dynamic_cast<const PETScWrappers::MPI::Vector*>(this) != nullptr)
       {
         PetscScalar          sum;
         const PetscErrorCode ierr = VecSum(vector, &sum);
@@ -413,7 +413,7 @@ namespace PETScWrappers
       // executed in parallel
       const PetscScalar* ptr  = start_ptr;
       const PetscScalar* eptr = ptr + (size() / 4) * 4;
-      while(ptr != eptr)
+      while (ptr != eptr)
         {
           sum0 += *ptr++;
           sum1 += *ptr++;
@@ -421,7 +421,7 @@ namespace PETScWrappers
           sum3 += *ptr++;
         };
       // add up remaining elements
-      while(ptr != start_ptr + size())
+      while (ptr != start_ptr + size())
         sum0 += *ptr++;
 
       mean = (sum0 + sum1 + sum2 + sum3) / static_cast<PetscReal>(size());
@@ -475,7 +475,7 @@ namespace PETScWrappers
       // executed in parallel
       const PetscScalar* ptr  = start_ptr;
       const PetscScalar* eptr = ptr + (size() / 4) * 4;
-      while(ptr != eptr)
+      while (ptr != eptr)
         {
           sum0 += std::pow(numbers::NumberTraits<value_type>::abs(*ptr++), p);
           sum1 += std::pow(numbers::NumberTraits<value_type>::abs(*ptr++), p);
@@ -483,7 +483,7 @@ namespace PETScWrappers
           sum3 += std::pow(numbers::NumberTraits<value_type>::abs(*ptr++), p);
         }
       // add up remaining elements
-      while(ptr != start_ptr + size())
+      while (ptr != start_ptr + size())
         sum0 += std::pow(numbers::NumberTraits<value_type>::abs(*ptr++), p);
 
       norm = std::pow(sum0 + sum1 + sum2 + sum3, 1. / p);
@@ -543,9 +543,9 @@ namespace PETScWrappers
 
     const PetscScalar *ptr = start_ptr, *eptr = start_ptr + local_size();
     bool               flag = true;
-    while(ptr != eptr)
+    while (ptr != eptr)
       {
-        if(*ptr != value_type())
+        if (*ptr != value_type())
           {
             flag = false;
             break;
@@ -591,9 +591,9 @@ namespace PETScWrappers
 
     const PetscScalar *ptr = start_ptr, *eptr = start_ptr + local_size();
     bool               flag = true;
-    while(ptr != eptr)
+    while (ptr != eptr)
       {
-        if(!internal::is_non_negative(*ptr))
+        if (!internal::is_non_negative(*ptr))
           {
             flag = false;
             break;
@@ -787,16 +787,16 @@ namespace PETScWrappers
     const unsigned int       old_precision = out.precision(precision);
 
     out.precision(precision);
-    if(scientific)
+    if (scientific)
       out.setf(std::ios::scientific, std::ios::floatfield);
     else
       out.setf(std::ios::fixed, std::ios::floatfield);
 
-    if(across)
-      for(size_type i = 0; i < local_size(); ++i)
+    if (across)
+      for (size_type i = 0; i < local_size(); ++i)
         out << val[i] << ' ';
     else
-      for(size_type i = 0; i < local_size(); ++i)
+      for (size_type i = 0; i < local_size(); ++i)
         out << val[i] << std::endl;
     out << std::endl;
 
@@ -837,7 +837,7 @@ namespace PETScWrappers
     mem += local_size() * sizeof(PetscScalar);
     // assume that PETSc is storing one index
     // and one double per ghost element
-    if(ghosted)
+    if (ghosted)
       mem += ghost_indices.n_elements() * (sizeof(PetscScalar) + sizeof(int));
 
     //TODO[TH]: size of constant memory for PETSc?
@@ -863,7 +863,7 @@ namespace PETScWrappers
     // collective operation, so we
     // can skip the call if necessary
     // (unlike the above calls)
-    if(n_elements != 0)
+    if (n_elements != 0)
       {
         const PetscInt* petsc_indices
           = reinterpret_cast<const PetscInt*>(indices);

@@ -222,7 +222,7 @@ namespace Step22
   {
     rot_matrix[0][dim - 1] = -1.;
     rot_matrix[dim - 1][0] = 1.;
-    if(dim == 3)
+    if (dim == 3)
       rot_matrix[1][1] = 1.;
     offset[0] = 0;
     offset[1] = 0;
@@ -367,16 +367,16 @@ namespace Step22
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           local_matrix = 0;
           local_rhs    = 0;
 
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int q = 0; q < n_q_points; ++q)
             {
-              for(unsigned int k = 0; k < dofs_per_cell; ++k)
+              for (unsigned int k = 0; k < dofs_per_cell; ++k)
                 {
                   symgrad_phi_u[k]
                     = fe_values[velocities].symmetric_gradient(k, q);
@@ -384,9 +384,9 @@ namespace Step22
                   phi_p[k]     = fe_values[pressure].value(k, q);
                 }
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j <= i; ++j)
+                  for (unsigned int j = 0; j <= i; ++j)
                     {
                       local_matrix(i, j)
                         += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
@@ -397,14 +397,14 @@ namespace Step22
 
                   const unsigned int component_i
                     = fe.system_to_component_index(i).first;
-                  if(component_i == 0)
+                  if (component_i == 0)
                     local_rhs(i)
                       += fe_values.shape_value(i, q) * 1 * fe_values.JxW(q);
                 }
             }
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
               local_matrix(i, j) = local_matrix(j, i);
 
           cell->get_dof_indices(local_dof_indices);
@@ -482,16 +482,16 @@ namespace Step22
         const typename DoFHandler<dim>::active_cell_iterator cell
           = GridTools::find_active_cell_around_point(dof_handler, point);
 
-        if(cell->is_locally_owned())
+        if (cell->is_locally_owned())
           VectorTools::point_value(dof_handler, solution, point, value);
       }
-    catch(GridTools::ExcPointNotFound<dim>& p)
+    catch (GridTools::ExcPointNotFound<dim>& p)
       {
         pcout << "Point: " << point << " is not inside a cell!" << std::endl;
       }
 
     std::vector<double> tmp(value.size());
-    for(unsigned int i = 0; i < value.size(); ++i)
+    for (unsigned int i = 0; i < value.size(); ++i)
       tmp[i] = value[i];
 
     std::vector<double> tmp2(value.size());
@@ -503,7 +503,7 @@ namespace Step22
                proc,
                mpi_communicator);
 
-    for(unsigned int i = 0; i < value.size(); ++i)
+    for (unsigned int i = 0; i < value.size(); ++i)
       value[i] = tmp2[i];
   }
 
@@ -530,32 +530,32 @@ namespace Step22
     std::vector<types::global_dof_index> gdi(fe.dofs_per_cell);
 
     // first collect all points locally
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned() && cell->at_boundary())
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<dim>::faces_per_cell;
-            ++face_no)
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned() && cell->at_boundary())
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
           {
             const typename DoFHandler<dim>::face_iterator face
               = cell->face(face_no);
-            if(face->at_boundary())
+            if (face->at_boundary())
               {
-                if(face->boundary_id() == 0)
+                if (face->boundary_id() == 0)
                   {
                     fe_face_values.reinit(cell, face_no);
                     const std::vector<Point<dim>> tmp_points
                       = fe_face_values.get_quadrature_points();
-                    for(unsigned int i = 0; i < tmp_points.size(); ++i)
-                      for(unsigned int c = 0; c < dim; ++c)
+                    for (unsigned int i = 0; i < tmp_points.size(); ++i)
+                      for (unsigned int c = 0; c < dim; ++c)
                         local_quad_points_first.push_back(tmp_points[i](c));
                   }
-                else if(face->boundary_id() == 4)
+                else if (face->boundary_id() == 4)
                   {
                     fe_face_values.reinit(cell, face_no);
                     const std::vector<Point<dim>> tmp_points
                       = fe_face_values.get_quadrature_points();
-                    for(unsigned int i = 0; i < tmp_points.size(); ++i)
-                      for(unsigned int c = 0; c < dim; ++c)
+                    for (unsigned int i = 0; i < tmp_points.size(); ++i)
+                      for (unsigned int c = 0; c < dim; ++c)
                         local_quad_points_second.push_back(tmp_points[i](c));
                   }
               }
@@ -577,7 +577,7 @@ namespace Step22
                     mpi_communicator);
       std::vector<int> displacements(n_processes + 1);
       displacements[0] = 0;
-      for(unsigned int i = 1; i <= n_processes; ++i)
+      for (unsigned int i = 1; i <= n_processes; ++i)
         displacements[i] = displacements[i - 1] + n_elements[i - 1];
 
       global_quad_points_first.resize(displacements[n_processes]);
@@ -606,7 +606,7 @@ namespace Step22
                     mpi_communicator);
       std::vector<int> displacements(n_processes + 1);
       displacements[0] = 0;
-      for(unsigned int i = 1; i <= n_processes; ++i)
+      for (unsigned int i = 1; i <= n_processes; ++i)
         displacements[i] = displacements[i - 1] + n_elements[i - 1];
 
       global_quad_points_second.resize(displacements[n_processes]);
@@ -624,32 +624,32 @@ namespace Step22
     // get the values of the solution at these points and compare to the values
     // at the corresponding points on the boundary with the second indicator
     {
-      for(unsigned int i = 0; i < global_quad_points_first.size(); i += dim)
+      for (unsigned int i = 0; i < global_quad_points_first.size(); i += dim)
         {
           Vector<double> value_1(dim + 1);
           Vector<double> value_2(dim + 1);
 
           Point<dim>     point_1, point_2;
           Vector<double> vector_point_1(dim);
-          for(unsigned int c = 0; c < dim; ++c)
+          for (unsigned int c = 0; c < dim; ++c)
             {
               vector_point_1(c) = global_quad_points_first[i + c];
               point_1(c)        = vector_point_1(c);
             }
           Vector<double> vector_point_2(dim);
           rot_matrix.Tvmult(vector_point_2, vector_point_1);
-          for(unsigned int c = 0; c < dim; ++c)
+          for (unsigned int c = 0; c < dim; ++c)
             point_2(c) = vector_point_2(c) + offset[c];
 
           get_point_value(point_1, 0, value_1);
           get_point_value(point_2, 0, value_2);
 
-          if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+          if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
             {
               Vector<double> vel_value_1(dim);
               Vector<double> vel_value_2(dim);
               Vector<double> expected_vel(dim);
-              for(unsigned int c = 0; c < dim; ++c)
+              for (unsigned int c = 0; c < dim; ++c)
                 {
                   vel_value_1(c) = value_1(c);
                   vel_value_2(c) = value_2(c);
@@ -659,10 +659,10 @@ namespace Step22
                     << std::endl;
               Vector<double> error = expected_vel;
               error -= vel_value_2;
-              if(std::abs(error.l2_norm()) > 1e-8)
+              if (std::abs(error.l2_norm()) > 1e-8)
                 {
                   pcout << "first first_rotated second" << std::endl;
-                  for(unsigned int c = 0; c < dim; ++c)
+                  for (unsigned int c = 0; c < dim; ++c)
                     pcout << vel_value_1(c) << "\t" << expected_vel(c) << "\t"
                           << vel_value_2(c) << std::endl;
                   pcout << std::endl;
@@ -676,34 +676,34 @@ namespace Step22
     // get the values of the solution at these points and compare to the values
     // at the corresponding points on the boundary with the first indicator
     {
-      for(unsigned int i = 0; i < global_quad_points_second.size(); i += dim)
+      for (unsigned int i = 0; i < global_quad_points_second.size(); i += dim)
         {
           Vector<double> value_1(dim + 1);
           Vector<double> value_2(dim + 1);
 
           Point<dim>     point_1, point_2;
           Vector<double> vector_point_1(dim);
-          for(unsigned int c = 0; c < dim; ++c)
+          for (unsigned int c = 0; c < dim; ++c)
             {
               vector_point_1(c) = global_quad_points_second[i + c];
               point_1(c)        = vector_point_1(c);
             }
           Vector<double> vector_point_2(dim);
-          for(unsigned int c = 0; c < dim; ++c)
+          for (unsigned int c = 0; c < dim; ++c)
             vector_point_1(c) -= offset[c];
           rot_matrix.vmult(vector_point_2, vector_point_1);
-          for(unsigned int c = 0; c < dim; ++c)
+          for (unsigned int c = 0; c < dim; ++c)
             point_2(c) = vector_point_2(c);
 
           get_point_value(point_1, 0, value_1);
           get_point_value(point_2, 0, value_2);
 
-          if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+          if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
             {
               Vector<double> vel_value_1(dim);
               Vector<double> vel_value_2(dim);
               Vector<double> expected_vel(dim);
-              for(unsigned int c = 0; c < dim; ++c)
+              for (unsigned int c = 0; c < dim; ++c)
                 {
                   vel_value_1(c) = value_1(c);
                   vel_value_2(c) = value_2(c);
@@ -713,10 +713,10 @@ namespace Step22
                     << std::endl;
               Vector<double> error = expected_vel;
               error -= vel_value_2;
-              if(std::abs(error.l2_norm()) > 1e-8)
+              if (std::abs(error.l2_norm()) > 1e-8)
                 {
                   pcout << "first first_rotated second" << std::endl;
-                  for(unsigned int c = 0; c < dim; ++c)
+                  for (unsigned int c = 0; c < dim; ++c)
                     pcout << vel_value_1(c) << "\t" << expected_vel(c) << "\t"
                           << vel_value_2(c) << std::endl;
                   pcout << std::endl;
@@ -747,7 +747,7 @@ namespace Step22
                              DataOut<dim>::type_dof_data,
                              data_component_interpretation);
     Vector<float> subdomain(triangulation.n_active_cells());
-    for(unsigned int i = 0; i < subdomain.size(); ++i)
+    for (unsigned int i = 0; i < subdomain.size(); ++i)
       subdomain(i) = triangulation.locally_owned_subdomain();
     data_out.add_data_vector(subdomain, "subdomain");
     data_out.build_patches(degree + 1);
@@ -762,12 +762,12 @@ namespace Step22
     std::ofstream output(filename.str().c_str());
     data_out.write_vtu(output);
 
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+             ++i)
           filenames.push_back(std::string("solution-")
                               + Utilities::int_to_string(refinement_cycle, 2)
                               + "." + Utilities::int_to_string(i, 2) + ".vtu");
@@ -814,12 +814,12 @@ namespace Step22
 
     triangulation.refine_global(1);
 
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 3;
-        ++refinement_cycle)
+    for (unsigned int refinement_cycle = 0; refinement_cycle < 3;
+         ++refinement_cycle)
       {
         pcout << "Refinement cycle " << refinement_cycle << std::endl;
 
-        if(refinement_cycle > 0)
+        if (refinement_cycle > 0)
           refine_mesh();
 
         setup_dofs();
@@ -848,7 +848,7 @@ main(int argc, char* argv[])
 
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
           std::ofstream logfile("output");
           deallog.attach(logfile, false);
@@ -863,7 +863,7 @@ main(int argc, char* argv[])
           flow_problem.run();
         }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -877,7 +877,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

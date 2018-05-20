@@ -46,9 +46,9 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double f = p[0] * 2.0 + 1.0;
-    if(dim > 1)
+    if (dim > 1)
       f *= p[1] * 3.3 - 1.0;
-    if(dim > 2)
+    if (dim > 2)
       f *= p[2] * 5.0;
     return f;
   };
@@ -70,25 +70,25 @@ test(std::ostream& /*out*/)
 
   parallel::distributed::SolutionTransfer<dim, Vector<double>> soltrans(dofh);
 
-  for(int i = 0; i < 4; ++i)
+  for (int i = 0; i < 4; ++i)
     {
-      for(typename Triangulation<dim>::cell_iterator cell = tr.begin();
-          cell != tr.end();
-          ++cell)
+      for (typename Triangulation<dim>::cell_iterator cell = tr.begin();
+           cell != tr.end();
+           ++cell)
         {
-          if(cell->has_children() && !(Testing::rand() % 3))
-            for(unsigned int c = 0;
-                c < GeometryInfo<dim>::max_children_per_cell;
-                ++c)
-              if(!cell->child(c)->has_children())
+          if (cell->has_children() && !(Testing::rand() % 3))
+            for (unsigned int c = 0;
+                 c < GeometryInfo<dim>::max_children_per_cell;
+                 ++c)
+              if (!cell->child(c)->has_children())
                 cell->child(c)->set_coarsen_flag();
         }
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
         {
-          if(!(Testing::rand() % 3))
+          if (!(Testing::rand() % 3))
             {
               cell->clear_coarsen_flag();
               cell->set_refine_flag();
@@ -103,7 +103,7 @@ test(std::ostream& /*out*/)
       soltrans.prepare_for_coarsening_and_refinement(solution);
 
       tr.execute_coarsening_and_refinement();
-      if(0)
+      if (0)
         {
           std::ofstream out("grid-1.eps");
           GridOut       grid_out;

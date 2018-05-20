@@ -51,7 +51,7 @@ namespace Utilities
       const unsigned int n_import_targets = import_targets_data.size();
       const unsigned int n_ghost_targets  = ghost_targets_data.size();
 
-      if(n_import_targets > 0)
+      if (n_import_targets > 0)
         AssertDimension(locally_owned_array.size(), local_size());
 
       Assert(requests.size() == 0,
@@ -76,7 +76,7 @@ namespace Utilities
                              - n_ghost_indices() :
                            ghost_array.data();
 
-      for(unsigned int i = 0; i < n_ghost_targets; i++)
+      for (unsigned int i = 0; i < n_ghost_targets; i++)
         {
           // allow writing into ghost indices even though we are in a
           // const function
@@ -93,7 +93,7 @@ namespace Utilities
         }
 
       Number* temp_array_ptr = temporary_storage.data();
-      for(unsigned int i = 0; i < n_import_targets; i++)
+      for (unsigned int i = 0; i < n_import_targets; i++)
         {
           // copy the data to be sent to the import_data field
           std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
@@ -103,8 +103,9 @@ namespace Utilities
             end_my_imports = import_indices_data.begin()
                              + import_indices_chunks_by_rank_data[i + 1];
           unsigned int index = 0;
-          for(; my_imports != end_my_imports; ++my_imports)
-            for(unsigned int j = my_imports->first; j < my_imports->second; j++)
+          for (; my_imports != end_my_imports; ++my_imports)
+            for (unsigned int j = my_imports->first; j < my_imports->second;
+                 j++)
               temp_array_ptr[index++] = locally_owned_array[j];
           AssertDimension(index, import_targets_data[i].second);
 
@@ -138,7 +139,7 @@ namespace Utilities
       // receives are really necessary. this gives (much) better performance
       AssertDimension(ghost_targets().size() + import_targets().size(),
                       requests.size());
-      if(requests.size() > 0)
+      if (requests.size() > 0)
         {
           const int ierr = MPI_Waitall(
             requests.size(), requests.data(), MPI_STATUSES_IGNORE);
@@ -148,20 +149,20 @@ namespace Utilities
 
       // in case we only sent a subset of indices, we now need to move the data
       // to the correct positions and delete the old content
-      if(n_ghost_indices_in_larger_set > n_ghost_indices()
-         && ghost_array.size() == n_ghost_indices_in_larger_set)
+      if (n_ghost_indices_in_larger_set > n_ghost_indices()
+          && ghost_array.size() == n_ghost_indices_in_larger_set)
         {
           unsigned int offset
             = n_ghost_indices_in_larger_set - n_ghost_indices();
           // must copy ghost data into extended ghost array
-          for(std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
-                my_ghosts
-              = ghost_indices_subset_data.begin();
-              my_ghosts != ghost_indices_subset_data.end();
-              ++my_ghosts)
-            if(offset > my_ghosts->first)
-              for(unsigned int j = my_ghosts->first; j < my_ghosts->second;
-                  ++j, ++offset)
+          for (std::vector<std::pair<unsigned int,
+                                     unsigned int>>::const_iterator my_ghosts
+               = ghost_indices_subset_data.begin();
+               my_ghosts != ghost_indices_subset_data.end();
+               ++my_ghosts)
+            if (offset > my_ghosts->first)
+              for (unsigned int j = my_ghosts->first; j < my_ghosts->second;
+                   ++j, ++offset)
                 {
                   ghost_array[j]      = ghost_array[offset];
                   ghost_array[offset] = Number();
@@ -198,13 +199,13 @@ namespace Utilities
       // Having different code in debug and optimized mode is somewhat
       // dangerous, but it really saves communication so do it anyway
 #    ifndef DEBUG
-      if(vector_operation == VectorOperation::insert)
+      if (vector_operation == VectorOperation::insert)
         return;
 #    endif
 
       // nothing to do when we neither have import
       // nor ghost indices.
-      if(n_ghost_indices() == 0 && n_import_indices() == 0)
+      if (n_ghost_indices() == 0 && n_import_indices() == 0)
         return;
 
       const unsigned int n_import_targets = import_targets_data.size();
@@ -224,7 +225,7 @@ namespace Utilities
 
       // initiate the receive operations
       Number* temp_array_ptr = temporary_storage.data();
-      for(unsigned int i = 0; i < n_import_targets; i++)
+      for (unsigned int i = 0; i < n_import_targets; i++)
         {
           AssertThrow(
             static_cast<std::size_t>(import_targets_data[i].second)
@@ -251,12 +252,12 @@ namespace Utilities
       // move the data to send to the front of the array
       AssertIndexRange(n_ghost_indices(), n_ghost_indices_in_larger_set + 1);
       Number* ghost_array_ptr = ghost_array.data();
-      for(unsigned int i = 0; i < n_ghost_targets; i++)
+      for (unsigned int i = 0; i < n_ghost_targets; i++)
         {
           // in case we only sent a subset of indices, we now need to move the data
           // to the correct positions and delete the old content
-          if(n_ghost_indices_in_larger_set > n_ghost_indices()
-             && ghost_array.size() == n_ghost_indices_in_larger_set)
+          if (n_ghost_indices_in_larger_set > n_ghost_indices()
+              && ghost_array.size() == n_ghost_indices_in_larger_set)
             {
               std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
                 my_ghosts
@@ -266,11 +267,11 @@ namespace Utilities
                 = ghost_indices_subset_data.begin()
                   + ghost_indices_subset_chunks_by_rank_data[i + 1];
               unsigned int offset = 0;
-              for(; my_ghosts != end_my_ghosts; ++my_ghosts)
-                if(ghost_array_ptr + offset
-                   != ghost_array.data() + my_ghosts->first)
-                  for(unsigned int j = my_ghosts->first; j < my_ghosts->second;
-                      ++j, ++offset)
+              for (; my_ghosts != end_my_ghosts; ++my_ghosts)
+                if (ghost_array_ptr + offset
+                    != ghost_array.data() + my_ghosts->first)
+                  for (unsigned int j = my_ghosts->first; j < my_ghosts->second;
+                       ++j, ++offset)
                     {
                       ghost_array_ptr[offset] = ghost_array[j];
                       ghost_array[j]          = Number();
@@ -344,7 +345,7 @@ namespace Utilities
       // in optimized mode, no communication was started, so leave the
       // function directly (and only clear ghosts)
 #    ifndef DEBUG
-      if(vector_operation == VectorOperation::insert)
+      if (vector_operation == VectorOperation::insert)
         {
           Assert(
             requests.empty(),
@@ -354,9 +355,9 @@ namespace Utilities
                              "import_from_ghosted_array_start as is passed "
                              "to import_from_ghosted_array_finish."));
 #      ifdef DEAL_II_WITH_CXX17
-          if constexpr(std::is_trivial<Number>::value)
+          if constexpr (std::is_trivial<Number>::value)
 #      else
-          if(std::is_trivial<Number>::value)
+          if (std::is_trivial<Number>::value)
 #      endif
             std::memset(
               ghost_array.data(), 0, sizeof(Number) * ghost_array.size());
@@ -368,17 +369,17 @@ namespace Utilities
 #    endif
 
       // nothing to do when we neither have import nor ghost indices.
-      if(n_ghost_indices() == 0 && n_import_indices() == 0)
+      if (n_ghost_indices() == 0 && n_import_indices() == 0)
         return;
 
       const unsigned int n_import_targets = import_targets_data.size();
       const unsigned int n_ghost_targets  = ghost_targets_data.size();
 
-      if(vector_operation != dealii::VectorOperation::insert)
+      if (vector_operation != dealii::VectorOperation::insert)
         AssertDimension(n_ghost_targets + n_import_targets, requests.size());
 
       // first wait for the receive to complete
-      if(requests.size() > 0 && n_import_targets > 0)
+      if (requests.size() > 0 && n_import_targets > 0)
         {
           AssertDimension(locally_owned_array.size(), local_size());
           const int ierr = MPI_Waitall(
@@ -394,15 +395,15 @@ namespace Utilities
           // local values. For insert, nothing is done here (but in debug mode
           // we assert that the specified value is either zero or matches with
           // the ones already present
-          if(vector_operation != dealii::VectorOperation::insert)
-            for(; my_imports != import_indices_data.end(); ++my_imports)
-              for(unsigned int j = my_imports->first; j < my_imports->second;
-                  j++)
+          if (vector_operation != dealii::VectorOperation::insert)
+            for (; my_imports != import_indices_data.end(); ++my_imports)
+              for (unsigned int j = my_imports->first; j < my_imports->second;
+                   j++)
                 locally_owned_array[j] += *read_position++;
           else
-            for(; my_imports != import_indices_data.end(); ++my_imports)
-              for(unsigned int j = my_imports->first; j < my_imports->second;
-                  j++, read_position++)
+            for (; my_imports != import_indices_data.end(); ++my_imports)
+              for (unsigned int j = my_imports->first; j < my_imports->second;
+                   j++, read_position++)
                 // Below we use relatively large precision in units in the last place (ULP) as
                 // this Assert can be easily triggered in p::d::SolutionTransfer.
                 // The rationale is that during interpolation on two elements sharing
@@ -426,7 +427,7 @@ namespace Utilities
         }
 
       // wait for the send operations to complete
-      if(requests.size() > 0 && n_ghost_targets > 0)
+      if (requests.size() > 0 && n_ghost_targets > 0)
         {
           const int ierr = MPI_Waitall(
             n_ghost_targets, &requests[n_import_targets], MPI_STATUSES_IGNORE);
@@ -437,13 +438,13 @@ namespace Utilities
 
       // clear the ghost array in case we did not yet do that in the _start
       // function
-      if(ghost_array.size() > 0)
+      if (ghost_array.size() > 0)
         {
           Assert(ghost_array.begin() != nullptr, ExcInternalError());
 #    ifdef DEAL_II_WITH_CXX17
-          if constexpr(std::is_trivial<Number>::value)
+          if constexpr (std::is_trivial<Number>::value)
 #    else
-          if(std::is_trivial<Number>::value)
+          if (std::is_trivial<Number>::value)
 #    endif
             std::memset(
               ghost_array.data(), 0, sizeof(Number) * n_ghost_indices());

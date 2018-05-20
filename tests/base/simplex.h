@@ -89,7 +89,7 @@ exact_integral_one_over_r(const unsigned int vertex_index,
   //  end do;
 
   static double v[4][6][6] = {{{0}}};
-  if(v[0][0][0] == 0)
+  if (v[0][0][0] == 0)
     {
       v[0][0][0] = 0.17627471740390860505e1;
       v[0][0][1] = 0.64779357469631903702e0;
@@ -259,7 +259,7 @@ exact_integral_one_over_r_middle(const unsigned int i, const unsigned int j)
 
   static double v[6][6] = {{0}};
 
-  if(v[0][0] == 0)
+  if (v[0][0] == 0)
     {
       v[0][0] = 3.52549435;
       ;

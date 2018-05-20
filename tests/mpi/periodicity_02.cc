@@ -137,7 +137,7 @@ namespace Step22
   BoundaryValues<dim>::vector_value(const Point<dim>& p,
                                     Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
+    for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
   }
 
@@ -168,7 +168,7 @@ namespace Step22
   RightHandSide<dim>::vector_value(const Point<dim>& p,
                                    Vector<double>&   values) const
   {
-    for(unsigned int c = 0; c < this->n_components; ++c)
+    for (unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
   }
 
@@ -429,8 +429,8 @@ namespace Step22
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           fe_values.reinit(cell);
           local_matrix = 0;
@@ -439,9 +439,9 @@ namespace Step22
           right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                             rhs_values);
 
-          for(unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int q = 0; q < n_q_points; ++q)
             {
-              for(unsigned int k = 0; k < dofs_per_cell; ++k)
+              for (unsigned int k = 0; k < dofs_per_cell; ++k)
                 {
                   symgrad_phi_u[k]
                     = fe_values[velocities].symmetric_gradient(k, q);
@@ -449,9 +449,9 @@ namespace Step22
                   phi_p[k]     = fe_values[pressure].value(k, q);
                 }
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j <= i; ++j)
+                  for (unsigned int j = 0; j <= i; ++j)
                     {
                       local_matrix(i, j)
                         += (symgrad_phi_u[i] * symgrad_phi_u[j]
@@ -468,8 +468,8 @@ namespace Step22
                 }
             }
 
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
               local_matrix(i, j) = local_matrix(j, i);
 
           cell->get_dof_indices(local_dof_indices);
@@ -560,11 +560,11 @@ namespace Step22
     typename DoFHandler<dim>::active_cell_iterator cell
       = GridTools::find_active_cell_around_point(dof_handler, point);
 
-    if(cell->is_locally_owned())
+    if (cell->is_locally_owned())
       VectorTools::point_value(dof_handler, solution, point, value);
 
     std::vector<double> tmp(value.size());
-    for(unsigned int i = 0; i < value.size(); ++i)
+    for (unsigned int i = 0; i < value.size(); ++i)
       tmp[i] = value[i];
 
     std::vector<double> tmp2(value.size());
@@ -576,7 +576,7 @@ namespace Step22
                proc,
                mpi_communicator);
 
-    for(unsigned int i = 0; i < value.size(); ++i)
+    for (unsigned int i = 0; i < value.size(); ++i)
       value[i] = tmp2[i];
   }
 
@@ -590,13 +590,13 @@ namespace Step22
   StokesProblem<2>::check_periodicity(const unsigned int cycle) const
   {
     unsigned int n_points = 4;
-    for(unsigned int i = 0; i < cycle; i++)
+    for (unsigned int i = 0; i < cycle; i++)
       n_points *= 2;
 
     //don't test exactly at the support points, since point_value is not stable there
     const double eps = 1. / (16. * n_points);
 
-    for(unsigned int i = 1; i < n_points; i++)
+    for (unsigned int i = 1; i < n_points; i++)
       {
         Vector<double> value1(3);
         Vector<double> value2(3);
@@ -611,17 +611,17 @@ namespace Step22
         get_point_value(point1, 0, value1);
         get_point_value(point2, 0, value2);
 
-        if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+        if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
           {
             pcout << point1 << "\t" << value1[0] << "\t" << value1[1]
                   << std::endl;
-            if(std::abs(value2[0] - value1[1]) > 1e-8)
+            if (std::abs(value2[0] - value1[1]) > 1e-8)
               {
                 std::cout << point1 << "\t" << value1[1] << std::endl;
                 std::cout << point2 << "\t" << value2[0] << std::endl;
                 Assert(false, ExcInternalError());
               }
-            if(std::abs(value2[1] + value1[0]) > 1e-8)
+            if (std::abs(value2[1] + value1[0]) > 1e-8)
               {
                 std::cout << point1 << "\t" << value1[0] << std::endl;
                 std::cout << point2 << "\t" << value2[1] << std::endl;
@@ -651,7 +651,7 @@ namespace Step22
                              DataOut<dim>::type_dof_data,
                              data_component_interpretation);
     Vector<float> subdomain(triangulation.n_active_cells());
-    for(unsigned int i = 0; i < subdomain.size(); ++i)
+    for (unsigned int i = 0; i < subdomain.size(); ++i)
       subdomain(i) = triangulation.locally_owned_subdomain();
     data_out.add_data_vector(subdomain, "subdomain");
     data_out.build_patches(degree + 1);
@@ -666,12 +666,12 @@ namespace Step22
     std::ofstream output(filename.str().c_str());
     data_out.write_vtu(output);
 
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+             ++i)
           filenames.push_back(std::string("solution-")
                               + Utilities::int_to_string(refinement_cycle, 2)
                               + "." + Utilities::int_to_string(i, 2) + ".vtu");
@@ -739,12 +739,12 @@ namespace Step22
 
     triangulation.refine_global(4 - dim);
 
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 3;
-        ++refinement_cycle)
+    for (unsigned int refinement_cycle = 0; refinement_cycle < 3;
+         ++refinement_cycle)
       {
         pcout << "Refinement cycle " << refinement_cycle << std::endl;
 
-        if(refinement_cycle > 0)
+        if (refinement_cycle > 0)
           refine_mesh();
 
         setup_dofs();
@@ -773,7 +773,7 @@ main(int argc, char* argv[])
 
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
           std::ofstream logfile("output");
           deallog.attach(logfile, false);
@@ -788,7 +788,7 @@ main(int argc, char* argv[])
           flow_problem.run();
         }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -802,7 +802,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

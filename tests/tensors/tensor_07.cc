@@ -24,8 +24,8 @@ void
 test_constant()
 {
   Tensor<2, dim> t;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       t[i][j] = 2.;
   deallog << "Constant dim " << dim << '\t' << scalar_product(t, t)
           << " compare " << 4 * dim * dim << std::endl;
@@ -37,8 +37,8 @@ test_equal()
 {
   Tensor<2, dim> t;
   unsigned int   sum = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         t[i][j] = i + dim * j;
         sum += (i + dim * j) * (i + dim * j);
@@ -55,8 +55,8 @@ test_unequal()
   Tensor<2, dim> s;
   Tensor<2, dim> t;
   unsigned int   sum = 0;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
       {
         s[i][j] = i + dim * j;
         t[i][j] = dim * i + j;

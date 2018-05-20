@@ -37,8 +37,8 @@ main()
 
   const unsigned int   dim = 3;
   std::complex<double> a[dim][dim], b[dim][dim];
-  for(unsigned int d = 0; d < dim; ++d)
-    for(unsigned int e = 0; e < dim; ++e)
+  for (unsigned int d = 0; d < dim; ++d)
+    for (unsigned int e = 0; e < dim; ++e)
       {
         a[d][e] = std::complex<double>(a_double[d][e][0], a_double[d][e][1]);
         b[d][e] = std::complex<double>(b_double[d][e][0], b_double[d][e][1]);
@@ -56,14 +56,14 @@ main()
   // threshold and so on
   t.unroll(unrolled);
   deallog << "unrolled:";
-  for(unsigned i = 0; i < 9; i++)
+  for (unsigned i = 0; i < 9; i++)
     deallog << ' ' << unrolled(i);
   deallog << std::endl;
 
   deallog << "t=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
-      for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int j = 0; j < dim; ++j)
         deallog << t[i][j] << ' ';
       deallog << std::endl;
     };
@@ -73,14 +73,14 @@ main()
   tt = t * t;
 
   deallog << "tt=" << std::endl;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
-      for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int j = 0; j < dim; ++j)
         deallog << tt[i][j] << ' ';
       deallog << std::endl;
     };
 
-  if(true)
+  if (true)
     {
       deallog.push("Cross product");
       Tensor<1, 3, std::complex<double>> e1;
@@ -104,7 +104,7 @@ main()
       deallog.pop();
     }
 
-  if(tt == result)
+  if (tt == result)
     {
       deallog << "Result OK." << std::endl;
     }

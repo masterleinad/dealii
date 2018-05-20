@@ -50,7 +50,7 @@ test()
 
   const FE_Q<2> fe(1);
 
-  for(unsigned int test = 0; test < 2; ++test)
+  for (unsigned int test = 0; test < 2; ++test)
     {
       DoFHandler<2> dof_handler(tr);
       dof_handler.distribute_dofs(fe);
@@ -58,12 +58,12 @@ test()
       // in the second test run, revert the global order of DoF
       // indices. the point is to make sure that processors do not
       // have strictly increasing, contiguous groups of DoF indices.
-      if(test == 1)
+      if (test == 1)
         {
           IndexSet locally_owned_dofs = dof_handler.locally_owned_dofs();
           std::vector<types::global_dof_index> new_numbers(
             locally_owned_dofs.n_elements());
-          for(auto i : locally_owned_dofs)
+          for (auto i : locally_owned_dofs)
             new_numbers[locally_owned_dofs.index_within_set(i)]
               = dof_handler.n_dofs() - i - 1;
           dof_handler.renumber_dofs(new_numbers);
@@ -82,12 +82,12 @@ test()
       std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
       DoFHandler<2>::active_cell_iterator  cell = dof_handler.begin_active(),
                                           endc  = dof_handler.end();
-      for(; cell != endc; ++cell)
-        if(cell->subdomain_id() == tr.locally_owned_subdomain())
+      for (; cell != endc; ++cell)
+        if (cell->subdomain_id() == tr.locally_owned_subdomain())
           {
             deallog << "Cell=" << cell << std::endl;
             cell->get_dof_indices(local_dof_indices);
-            for(auto i : local_dof_indices)
+            for (auto i : local_dof_indices)
               deallog << i << ' ';
             deallog << std::endl;
           }

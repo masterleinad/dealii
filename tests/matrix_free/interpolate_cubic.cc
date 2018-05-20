@@ -33,9 +33,9 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double value = 1.;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int e = 0; e < dim; ++e)
-        for(unsigned int f = 0; f < dim; ++f)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int e = 0; e < dim; ++e)
+        for (unsigned int f = 0; f < dim; ++f)
           value += (1.3 + 0.9 * d * (e + 1) - 1.4 * (d + 1) * (e - 1.) * f)
                    * p[d] * p[e] * p[f];
     return value;
@@ -44,9 +44,9 @@ public:
   gradient(const Point<dim>& p, const unsigned int) const
   {
     Tensor<1, dim> grad;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int e = 0; e < dim; ++e)
-        for(unsigned int f = 0; f < dim; ++f)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int e = 0; e < dim; ++e)
+        for (unsigned int f = 0; f < dim; ++f)
           {
             grad[d] += (1.3 + 0.9 * d * (e + 1) - 1.4 * (d + 1) * (e - 1.) * f)
                        * p[e] * p[f];
@@ -61,9 +61,9 @@ public:
   hessian(const Point<dim>& p, const unsigned int) const
   {
     SymmetricTensor<2, dim> hess;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int e = 0; e < dim; ++e)
-        for(unsigned int f = 0; f < dim; ++f)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int e = 0; e < dim; ++e)
+        for (unsigned int f = 0; f < dim; ++f)
           {
             hess[d][e]
               += (1.3 + 0.9 * d * (e + 1) - 1.4 * (d + 1) * (e - 1.) * f)
@@ -83,7 +83,7 @@ template <int dim, int fe_degree>
 void
 test()
 {
-  if(fe_degree < 3)
+  if (fe_degree < 3)
     return;
 
   Triangulation<dim> tria;

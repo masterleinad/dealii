@@ -68,14 +68,14 @@ test(const unsigned int size, const unsigned int block_size)
 
   // add a skew-symmetric matrix to the s.p.d matrix
   // the positive definiteness is inherited from the symmetric part
-  for(unsigned int i = 1; i < size; ++i)
-    for(unsigned int j = i + 1; j < size; ++j)
+  for (unsigned int i = 1; i < size; ++i)
+    for (unsigned int j = i + 1; j < size; ++j)
       {
         full_in(i, j) *= 1.3;
         full_in(j, i) *= -1.3;
       }
   one = 0.;
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     one(i, i) = 1.;
   // invert via Lapack
   inverse.invert(full_in);
@@ -95,7 +95,7 @@ test(const unsigned int size, const unsigned int block_size)
   prod2.add(-1., one);
   const NumberType error = prod2.linfty_norm();
 
-  if(error > tol && this_mpi_process == 0)
+  if (error > tol && this_mpi_process == 0)
     {
       diff = 0;
       diff.add(1., inverse);
@@ -126,13 +126,13 @@ main(int argc, char** argv)
   const std::vector<unsigned int> sizes  = {{32, 64, 120, 320, 640}};
   const std::vector<unsigned int> blocks = {{32, 64}};
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<float>(s, b);
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b);
 }

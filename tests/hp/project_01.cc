@@ -40,7 +40,7 @@ public:
   value(const Point<dim>& p, const unsigned int = 0) const
   {
     double s = 1;
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       s *= p[i];
     return s;
   }
@@ -70,11 +70,11 @@ test()
   VectorTools::project(
     dh, cm, hp::QCollection<dim>(QGauss<dim>(3)), F<dim>(), v);
 
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dh.begin_active();
-      cell != dh.end();
-      ++cell)
-    for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dh.begin_active();
+       cell != dh.end();
+       ++cell)
+    for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
       {
         // check that the error is
         // somewhat small. it won't

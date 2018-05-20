@@ -37,7 +37,7 @@ PolynomialsP<1>::create_polynomial_ordering(
          ExcDimensionMismatch(index_map.size(), this->n()));
 
   // identity
-  for(unsigned int i = 0; i < this->n(); ++i)
+  for (unsigned int i = 0; i < this->n(); ++i)
     index_map[i] = i;
 }
 
@@ -67,7 +67,7 @@ PolynomialsP<2>::create_polynomial_ordering(
   // index_map[i] gives the number of
   // the polynomial in
   // PolynomialSpace.
-  for(unsigned int i = 0; i < this->n(); ++i)
+  for (unsigned int i = 0; i < this->n(); ++i)
     index_map[i] = imap2[p][i];
 }
 
@@ -95,7 +95,7 @@ PolynomialsP<3>::create_polynomial_ordering(
   // index_map[i] gives the number of
   // the polynomial in
   // PolynomialSpace.
-  for(unsigned int i = 0; i < this->n(); ++i)
+  for (unsigned int i = 0; i < this->n(); ++i)
     index_map[i] = imap3[p][i];
 }
 

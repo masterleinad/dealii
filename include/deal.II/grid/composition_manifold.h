@@ -202,9 +202,9 @@ CompositionManifold<dim, spacedim, chartdim, intermediate_dim, dim1, dim2>::
 
   DerivativeForm<1, chartdim, spacedim> DF_DG;
 
-  for(unsigned int d = 0; d < spacedim; ++d)
-    for(unsigned int c = 0; c < chartdim; ++c)
-      for(unsigned int s = 0; s < intermediate_dim; ++s)
+  for (unsigned int d = 0; d < spacedim; ++d)
+    for (unsigned int c = 0; c < chartdim; ++c)
+      for (unsigned int s = 0; s < intermediate_dim; ++s)
         DF_DG[d][c] += DG[d][s] * DF[s][c];
 
   return DF_DG;

@@ -41,16 +41,16 @@ test()
   parallel::distributed::Triangulation<dim> tria(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tria, -1, 1);
 
-  for(typename Triangulation<dim>::cell_iterator cell = tria.begin();
-      cell != tria.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (typename Triangulation<dim>::cell_iterator cell = tria.begin();
+       cell != tria.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_boundary_ids(f);
   std::vector<
     GridTools::PeriodicFacePair<typename Triangulation<dim>::cell_iterator>>
     periodic_faces;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     GridTools::collect_periodic_faces(
       tria, 2 * d, 2 * d + 1, d, periodic_faces);
   tria.add_periodicity(periodic_faces);
@@ -62,7 +62,7 @@ test()
   ConstraintMatrix   constraints;
   constraints.close();
 
-  for(unsigned int test = 0; test < 2; ++test)
+  for (unsigned int test = 0; test < 2; ++test)
     {
       tria.refine_global(1);
 
@@ -102,7 +102,7 @@ test()
 
       // Set random seed for reproducibility
       Testing::srand(42);
-      for(unsigned int i = 0; i < in.local_size(); ++i)
+      for (unsigned int i = 0; i < in.local_size(); ++i)
         {
           const double entry  = Testing::rand() / (double) RAND_MAX;
           in.local_element(i) = entry;

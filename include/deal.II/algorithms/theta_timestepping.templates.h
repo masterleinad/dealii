@@ -107,10 +107,10 @@ namespace Algorithms
     src2.add<const double*>(&vtheta, "Theta");
     src2.merge(in);
 
-    if(output != nullptr)
+    if (output != nullptr)
       (*output) << 0U << out;
 
-    for(unsigned int count = 1; d_explicit.time < control.final(); ++count)
+    for (unsigned int count = 1; d_explicit.time < control.final(); ++count)
       {
         const bool step_change = control.advance();
         d_implicit.time        = control.now();
@@ -120,7 +120,7 @@ namespace Algorithms
 
         op_explicit->notify(Events::new_time);
         op_implicit->notify(Events::new_time);
-        if(step_change)
+        if (step_change)
           {
             op_explicit->notify(Events::new_timestep_size);
             op_implicit->notify(Events::new_timestep_size);
@@ -131,7 +131,7 @@ namespace Algorithms
         (*op_explicit)(out1, src1);
         (*op_implicit)(out, src2);
 
-        if(output != nullptr && control.print())
+        if (output != nullptr && control.print())
           (*output) << count << out;
 
         d_explicit.time = control.now();

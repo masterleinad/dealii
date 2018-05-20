@@ -31,7 +31,7 @@ main()
 
   {
     Vector<double> u(10);
-    for(unsigned int i = 0; i < u.size(); ++i)
+    for (unsigned int i = 0; i < u.size(); ++i)
       u[i] = (double) (i + 1);
 
     deallog << "vector:          " << u;

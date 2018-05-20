@@ -38,24 +38,24 @@ main(int argc, char* argv[])
   typename parallel::distributed::Triangulation<3>::active_cell_iterator cell
     = triangulation.begin_active(),
     endc = triangulation.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      for(unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<3>::faces_per_cell; ++f)
         {
           const Point<3> face_center = cell->face(f)->center();
-          if(cell->face(f)->at_boundary())
+          if (cell->face(f)->at_boundary())
             {
-              if(std::abs(face_center[0] + (L)) < 1.0e-4)
+              if (std::abs(face_center[0] + (L)) < 1.0e-4)
                 cell->face(f)->set_boundary_id(1);
-              else if(std::abs(face_center[0] - (L)) < 1.0e-4)
+              else if (std::abs(face_center[0] - (L)) < 1.0e-4)
                 cell->face(f)->set_boundary_id(2);
-              else if(std::abs(face_center[1] + (L)) < 1.0e-4)
+              else if (std::abs(face_center[1] + (L)) < 1.0e-4)
                 cell->face(f)->set_boundary_id(3);
-              else if(std::abs(face_center[1] - (L)) < 1.0e-4)
+              else if (std::abs(face_center[1] - (L)) < 1.0e-4)
                 cell->face(f)->set_boundary_id(4);
-              else if(std::abs(face_center[2] + (L)) < 1.0e-4)
+              else if (std::abs(face_center[2] + (L)) < 1.0e-4)
                 cell->face(f)->set_boundary_id(5);
-              else if(std::abs(face_center[2] - (L)) < 1.0e-4)
+              else if (std::abs(face_center[2] - (L)) < 1.0e-4)
                 cell->face(f)->set_boundary_id(6);
             }
         }
@@ -64,7 +64,7 @@ main(int argc, char* argv[])
   std::vector<GridTools::PeriodicFacePair<
     typename parallel::distributed::Triangulation<3>::cell_iterator>>
     periodicity_vector;
-  for(int i = 0; i < 3; ++i)
+  for (int i = 0; i < 3; ++i)
     GridTools::collect_periodic_faces(triangulation,
                                       /*b_id1*/ 2 * i + 1,
                                       /*b_id2*/ 2 * i + 2,

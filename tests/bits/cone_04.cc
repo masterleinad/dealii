@@ -35,13 +35,14 @@ check()
 
   triangulation.refine_global(2);
 
-  for(const auto cell : triangulation.active_cell_iterators())
-    for(unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
-        ++face_no)
+  for (const auto cell : triangulation.active_cell_iterators())
+    for (unsigned int face_no = 0; face_no < GeometryInfo<dim>::faces_per_cell;
+         ++face_no)
       {
         const auto face = cell->face(face_no);
-        if(face->boundary_id() == 0)
-          for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        if (face->boundary_id() == 0)
+          for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face;
+               ++v)
             {
               const Point<dim>     vertex = face->vertex(v);
               const Tensor<1, dim> tangent_1({-vertex(2), 0., vertex(0)});

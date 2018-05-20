@@ -64,31 +64,31 @@ test(const unsigned int max_particles,
 
   // Compute the start of my global indices
   unsigned int my_global_start = 0;
-  for(unsigned int i = 0; i < my_proc; ++i)
+  for (unsigned int i = 0; i < my_proc; ++i)
     my_global_start += all_n_local_particles[i];
 
-  for(unsigned int i = 0; i < n_local_particles; ++i)
+  for (unsigned int i = 0; i < n_local_particles; ++i)
     particles[i] = std::make_pair(my_global_start + i, random_point<dim>());
 
   std::set<unsigned int>                        shared_indices;
   std::set<unsigned int>                        shared_procs_set;
   std::map<unsigned int, std::vector<particle>> shared_particles;
 
-  for(unsigned int i = 0; i < n_procs; ++i)
+  for (unsigned int i = 0; i < n_procs; ++i)
     {
       auto rank = random_index(n_procs);
-      if(rank != my_proc)
+      if (rank != my_proc)
         shared_procs_set.insert(rank);
     }
 
-  if(shared_procs_set.size())
+  if (shared_procs_set.size())
     {
       std::vector<unsigned int> shared_procs(shared_procs_set.begin(),
                                              shared_procs_set.end());
 
       deallog << "Proc " << my_proc << "/" << n_procs << ": sharing with  "
               << Patterns::Tools::to_string(shared_procs_set) << std::endl;
-      for(unsigned int i = 0; i < n_local_particles * shared_fraction; ++i)
+      for (unsigned int i = 0; i < n_local_particles * shared_fraction; ++i)
         shared_particles[shared_procs[random_index(shared_procs.size())]]
           .push_back(*(particles.begin() + i));
     }
@@ -101,7 +101,7 @@ test(const unsigned int max_particles,
 
   // now check that shared_particles and original_particles are the same
 
-  if(original_particles == shared_particles)
+  if (original_particles == shared_particles)
     deallog << "OK" << std::endl;
   else
     deallog << "Not OK" << std::endl;

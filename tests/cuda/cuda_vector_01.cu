@@ -43,7 +43,7 @@ test()
   LinearAlgebra::ReadWriteVector<double> read_write_1(size);
   LinearAlgebra::ReadWriteVector<double> read_write_2(size);
   LinearAlgebra::ReadWriteVector<double> read_write_3(size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     {
       read_write_1[i] = i;
       read_write_2[i] = 5. + i;
@@ -54,41 +54,41 @@ test()
   c.import(read_write_2, VectorOperation::insert);
 
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(read_write_2[i] == read_write_3[i],
                 ExcMessage("Vector a has been modified."));
 
   read_write_3.import(b, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(read_write_1[i] == read_write_3[i],
                 ExcMessage("Vector b has been modified."));
 
   read_write_3.import(c, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(read_write_2[i] == read_write_3[i],
                 ExcMessage("Vector c has been modified."));
 
   a *= 2.;
   read_write_3.import(a, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(2. * read_write_2[i] == read_write_3[i],
                 ExcMessage("Problem in operator *=."));
 
   c /= 2.;
   read_write_3.import(c, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(0.5 * read_write_2[i] == read_write_3[i],
                 ExcMessage("Problem in operator /=."));
 
   b += a;
   read_write_3.import(b, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(2. * read_write_2[i] + read_write_1[i] == read_write_3[i],
                 ExcMessage("Problem in operator +=."));
 
   b -= c;
   read_write_3.import(b, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(1.5 * read_write_2[i] + read_write_1[i] == read_write_3[i],
                 ExcMessage("Problem in operator -=."));
 
@@ -99,7 +99,7 @@ test()
 
   b = 0.;
   read_write_3.import(b, VectorOperation::insert);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     AssertThrow(read_write_3[i] == 0., ExcMessage("Problem in operator =."));
 }
 

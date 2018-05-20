@@ -153,7 +153,7 @@ test()
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 

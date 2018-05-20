@@ -30,7 +30,7 @@ main()
 
   ConvergenceTable table;
 
-  for(unsigned int i = 1; i <= 4; ++i)
+  for (unsigned int i = 1; i <= 4; ++i)
     {
       table.add_value("error", 1. / sqrt(i));
       table.add_value("error2", std::pow(1. / sqrt(i), 2.));

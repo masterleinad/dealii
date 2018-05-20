@@ -30,20 +30,20 @@ test()
   // that case
   {
     Point<dim> vertices[GeometryInfo<dim>::vertices_per_cell];
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       vertices[v] = GeometryInfo<dim>::unit_cell_vertex(v);
 
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         Point<dim> face_vertices[GeometryInfo<dim>::vertices_per_face];
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           face_vertices[v]
             = vertices[GeometryInfo<dim>::face_to_cell_vertices(f, v)];
 
         Tensor<1, dim> alternating_forms[GeometryInfo<dim>::vertices_per_face];
         GeometryInfo<dim - 1>::alternating_form_at_vertices(face_vertices,
                                                             alternating_forms);
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           {
             deallog << "Reference cell: face " << f << ": "
                     << alternating_forms[v] << std::endl;
@@ -56,22 +56,22 @@ test()
   // in the x-direction by a factor of 10
   {
     Point<dim> vertices[GeometryInfo<dim>::vertices_per_cell];
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       {
         vertices[v] = GeometryInfo<dim>::unit_cell_vertex(v);
         vertices[v][0] /= 10;
       }
 
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         Point<dim> face_vertices[GeometryInfo<dim>::vertices_per_face];
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           face_vertices[v]
             = vertices[GeometryInfo<dim>::face_to_cell_vertices(f, v)];
         Tensor<1, dim> alternating_forms[GeometryInfo<dim>::vertices_per_face];
         GeometryInfo<dim - 1>::alternating_form_at_vertices(face_vertices,
                                                             alternating_forms);
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           {
             deallog << "Squashed cell: face " << f << ": "
                     << alternating_forms[v] << std::endl;
@@ -79,7 +79,7 @@ test()
             // unaffected, but all
             // other faces are
             // squashed
-            if(f < 2)
+            if (f < 2)
               AssertThrow(
                 alternating_forms[v].norm() == 1,
                 ExcInternalError()) else AssertThrow(alternating_forms[v].norm()
@@ -95,28 +95,28 @@ test()
   // 1d)
   {
     Point<dim> vertices[GeometryInfo<dim>::vertices_per_cell];
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       {
         vertices[v] = GeometryInfo<dim>::unit_cell_vertex(v);
         vertices[v][0] /= 10;
 
-        if(dim > 1)
+        if (dim > 1)
           {
             std::swap(vertices[v][0], vertices[v][1]);
             vertices[v][1] *= -1;
           }
       }
 
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         Point<dim> face_vertices[GeometryInfo<dim>::vertices_per_face];
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           face_vertices[v]
             = vertices[GeometryInfo<dim>::face_to_cell_vertices(f, v)];
         Tensor<1, dim> alternating_forms[GeometryInfo<dim>::vertices_per_face];
         GeometryInfo<dim - 1>::alternating_form_at_vertices(face_vertices,
                                                             alternating_forms);
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           {
             deallog << "Squashed+rotated cell: face " << f << ": "
                     << alternating_forms[v] << std::endl;
@@ -132,7 +132,7 @@ test()
             // alternating form
             // vector would have
             // rotated along)
-            if(f < 2)
+            if (f < 2)
               AssertThrow(
                 alternating_forms[v].norm() == 1,
                 ExcInternalError()) else AssertThrow(alternating_forms[v].norm()
@@ -145,20 +145,20 @@ test()
   // pinched cell
   {
     Point<dim> vertices[GeometryInfo<dim>::vertices_per_cell];
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       vertices[v] = GeometryInfo<dim>::unit_cell_vertex(v);
     vertices[1] /= 10;
 
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         Point<dim> face_vertices[GeometryInfo<dim>::vertices_per_face];
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           face_vertices[v]
             = vertices[GeometryInfo<dim>::face_to_cell_vertices(f, v)];
         Tensor<1, dim> alternating_forms[GeometryInfo<dim>::vertices_per_face];
         GeometryInfo<dim - 1>::alternating_form_at_vertices(face_vertices,
                                                             alternating_forms);
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           deallog << "Pinched cell: face " << f << ": " << alternating_forms[v]
                   << std::endl;
       }
@@ -167,21 +167,21 @@ test()
   // inverted cell
   {
     Point<dim> vertices[GeometryInfo<dim>::vertices_per_cell];
-    for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+    for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
       vertices[v] = GeometryInfo<dim>::unit_cell_vertex(v);
     std::swap(vertices[0], vertices[1]);
 
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         Point<dim> face_vertices[GeometryInfo<dim>::vertices_per_face];
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           face_vertices[v]
             = vertices[GeometryInfo<dim>::face_to_cell_vertices(f, v)];
 
         Tensor<1, dim> alternating_forms[GeometryInfo<dim>::vertices_per_face];
         GeometryInfo<dim - 1>::alternating_form_at_vertices(face_vertices,
                                                             alternating_forms);
-        for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
+        for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face; ++v)
           deallog << "Inverted cell: face " << f << ": " << alternating_forms[v]
                   << std::endl;
       }

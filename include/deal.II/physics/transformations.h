@@ -814,15 +814,15 @@ namespace internal
         const Tensor<2, dim, Number>&                  F)
       {
         Tensor<2, dim, Number> tmp_1;
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int J = 0; J < dim; ++J)
-            for(unsigned int I = 0; I < dim; ++I)
+        for (unsigned int i = 0; i < dim; ++i)
+          for (unsigned int J = 0; J < dim; ++J)
+            for (unsigned int I = 0; I < dim; ++I)
               tmp_1[i][J] += F[i][I] * T[I][J];
 
         dealii::SymmetricTensor<2, dim, Number> out;
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = i; j < dim; ++j)
-            for(unsigned int J = 0; J < dim; ++J)
+        for (unsigned int i = 0; i < dim; ++i)
+          for (unsigned int j = i; j < dim; ++j)
+            for (unsigned int J = 0; J < dim; ++J)
               out[i][j] += F[j][J] * tmp_1[i][J];
 
         return out;
@@ -879,11 +879,11 @@ namespace internal
 
         // Push forward (inner) index 1
         Tensor<4, dim, Number> tmp;
-        for(unsigned int I = 0; I < dim; ++I)
-          for(unsigned int j = 0; j < dim; ++j)
-            for(unsigned int K = 0; K < dim; ++K)
-              for(unsigned int L = 0; L < dim; ++L)
-                for(unsigned int J = 0; J < dim; ++J)
+        for (unsigned int I = 0; I < dim; ++I)
+          for (unsigned int j = 0; j < dim; ++j)
+            for (unsigned int K = 0; K < dim; ++K)
+              for (unsigned int L = 0; L < dim; ++L)
+                for (unsigned int J = 0; J < dim; ++J)
                   tmp[I][j][K][L] += F[j][J] * H[I][J][K][L];
 
         // Push forward (outer) indices 0 and 3
@@ -891,11 +891,11 @@ namespace internal
 
         // Push forward (inner) index 2
         dealii::SymmetricTensor<4, dim, Number> out;
-        for(unsigned int i = 0; i < dim; ++i)
-          for(unsigned int j = i; j < dim; ++j)
-            for(unsigned int k = 0; k < dim; ++k)
-              for(unsigned int l = k; l < dim; ++l)
-                for(unsigned int K = 0; K < dim; ++K)
+        for (unsigned int i = 0; i < dim; ++i)
+          for (unsigned int j = i; j < dim; ++j)
+            for (unsigned int k = 0; k < dim; ++k)
+              for (unsigned int l = k; l < dim; ++l)
+                for (unsigned int K = 0; K < dim; ++K)
                   out[i][j][k][l] += F[k][K] * tmp[i][j][K][l];
 
         return out;

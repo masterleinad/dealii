@@ -31,9 +31,9 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         deallog << "hyper_cube" << std::endl;
 
       parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -44,7 +44,7 @@ test()
       // choose a point that is guaranteed to lie in the domain but not
       // at the interface between cells
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         p[d] = 1. / 3;
 
       typename parallel::distributed::Triangulation<dim>::active_cell_iterator
@@ -57,7 +57,7 @@ test()
       const unsigned int n_locally_owned_or_ghost
         = Utilities::MPI::sum(!cell->is_artificial() ? 1 : 0, MPI_COMM_WORLD);
 
-      if(myid == 0)
+      if (myid == 0)
         deallog << "Locally owned: " << n_locally_owned << std::endl
                 << "Locally owned or ghost: " << n_locally_owned_or_ghost
                 << std::endl;
@@ -73,7 +73,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

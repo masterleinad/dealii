@@ -36,7 +36,7 @@ test()
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
-  if(myid == 0)
+  if (myid == 0)
     deallog << "#cells = " << tr.n_global_active_cells() << std::endl;
 
   deallog << "proc " << myid << ", n levels " << tr.n_levels() << std::endl;
@@ -54,10 +54,10 @@ test()
   //   Assert(tr.begin(1)==tr.end(1), ExcInternalError());
 
   const unsigned int checksum = tr.get_checksum();
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "Checksum: " << checksum << std::endl;
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 

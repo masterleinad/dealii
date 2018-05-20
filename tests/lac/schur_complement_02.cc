@@ -84,7 +84,7 @@ main()
       SparseMatrix<double> D(sparsity_pattern);
       Vector<double>       y(rc);
       Vector<double>       g(rc);
-      for(unsigned int i = 0; i < rc; ++i)
+      for (unsigned int i = 0; i < rc; ++i)
         {
           A.diag_element(i) = 1.0 * (i + 1);
           B.diag_element(i) = 2.0 * (i + 1);

@@ -37,7 +37,7 @@ template <int dim>
 Point<dim>
 transform(const Point<dim> p)
 {
-  switch(dim)
+  switch (dim)
     {
       case 1:
         return p;
@@ -64,7 +64,7 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // function plus a trend on this
   // grid
   Vector<double> tmp(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < tmp.size(); ++i)
+  for (unsigned int i = 0; i < tmp.size(); ++i)
     tmp(i) = i; //(i + 13*i%17);
 
   // restrict this function to the
@@ -73,18 +73,18 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // higher level
   Vector<double> x(tmp.size());
   Vector<double> v(fe.dofs_per_cell);
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
-      cell != dof_handler.end();
-      ++cell)
-    if(cell->has_children() && cell->child(0)->active())
+  for (typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+       cell != dof_handler.end();
+       ++cell)
+    if (cell->has_children() && cell->child(0)->active())
       {
         // first make sure that what
         // we do is reasonable. for
         // this, _all_ children have
         // to be active, not only
         // some of them
-        for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
-            ++c)
+        for (unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell;
+             ++c)
           AssertThrow(cell->child(c)->active(), ExcInternalError());
 
         // then restrict and prolongate
@@ -98,10 +98,10 @@ check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // cycle should not alter it any
   // more:
   Vector<double> x2(x.size());
-  for(typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
-      cell != dof_handler.end();
-      ++cell)
-    if(cell->has_children() && cell->child(0)->active())
+  for (typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+       cell != dof_handler.end();
+       ++cell)
+    if (cell->has_children() && cell->child(0)->active())
       {
         cell->get_interpolated_dof_values(x, v);
         cell->set_dof_values_by_interpolation(v, x2);
@@ -225,15 +225,15 @@ test()
        nullptr),
   };
 
-  for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
-    if(fe_list[i] != nullptr)
+  for (unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
+    if (fe_list[i] != nullptr)
       {
         deallog << dim << "d, uniform grid, fe #" << i;
         check_element(tr, *fe_list[i]);
       }
 
-  for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
-    if(fe_list[i] != nullptr)
+  for (unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
+    if (fe_list[i] != nullptr)
       delete fe_list[i];
 }
 

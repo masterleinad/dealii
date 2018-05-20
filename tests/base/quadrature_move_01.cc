@@ -31,11 +31,11 @@ check_q_move(Args&&... args)
 
   std::vector<double> weights2 = quad2.get_weights();
 
-  if(size1 != size2)
+  if (size1 != size2)
     return "NOPE";
 
-  for(unsigned short i = 0; i < size1; ++i)
-    if(std::fabs(weights1[i] - weights2[i]) > 1.0e-16)
+  for (unsigned short i = 0; i < size1; ++i)
+    if (std::fabs(weights1[i] - weights2[i]) > 1.0e-16)
       return "NOPE";
 
   return "OK";
@@ -62,14 +62,14 @@ main()
   check_quadrature_move<QMilne>();
   check_quadrature_move<QWeddle>();
 
-  for(unsigned int p = 2; p < 5; ++p)
+  for (unsigned int p = 2; p < 5; ++p)
     {
       check_quadrature_move<QGauss>(p);
       check_quadrature_move<QGaussLobatto>(p);
     }
 
   const auto ep = QGaussRadauChebyshev<1>::right;
-  for(unsigned int p = 2; p < 5; ++p)
+  for (unsigned int p = 2; p < 5; ++p)
     {
       deallog << "Gauss Log R: " << check_q_move<QGaussLogR<1>>(p) << std::endl;
       deallog << "Gauss Radau Chebyshev: "

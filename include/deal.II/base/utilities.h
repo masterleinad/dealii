@@ -584,7 +584,7 @@ namespace Utilities
     // Let's see if we can cast from 'From' to 'To'. If so, do the cast,
     // and then release the pointer from the old
     // owner
-    if(To* cast = dynamic_cast<To*>(p.get()))
+    if (To* cast = dynamic_cast<To*>(p.get()))
       {
         std::unique_ptr<To> result(cast);
         p.release();
@@ -856,7 +856,7 @@ namespace Utilities
   fixed_power(const T n)
   {
     Assert(N >= 0, ExcNotImplemented());
-    switch(N)
+    switch (N)
       {
         case 0:
           return dealii::internal::NumberType<T>::value(1);
@@ -870,7 +870,7 @@ namespace Utilities
           return n * n * n * n;
         default:
           T result = n;
-          for(int d = 1; d < N; ++d)
+          for (int d = 1; d < N; ++d)
             result *= n;
           return result;
       }
@@ -896,52 +896,52 @@ namespace Utilities
 
     unsigned int len = static_cast<unsigned int>(last - first);
 
-    if(len == 0)
+    if (len == 0)
       return first;
 
-    while(true)
+    while (true)
       {
         // if length equals 8 or less,
         // then do a rolled out
         // search. use a switch without
         // breaks for that and roll-out
         // the loop somehow
-        if(len < 8)
+        if (len < 8)
           {
-            switch(len)
+            switch (len)
               {
                 case 7:
-                  if(!comp(*first, val))
+                  if (!comp(*first, val))
                     return first;
                   ++first;
                   DEAL_II_FALLTHROUGH;
                 case 6:
-                  if(!comp(*first, val))
+                  if (!comp(*first, val))
                     return first;
                   ++first;
                   DEAL_II_FALLTHROUGH;
                 case 5:
-                  if(!comp(*first, val))
+                  if (!comp(*first, val))
                     return first;
                   ++first;
                   DEAL_II_FALLTHROUGH;
                 case 4:
-                  if(!comp(*first, val))
+                  if (!comp(*first, val))
                     return first;
                   ++first;
                   DEAL_II_FALLTHROUGH;
                 case 3:
-                  if(!comp(*first, val))
+                  if (!comp(*first, val))
                     return first;
                   ++first;
                   DEAL_II_FALLTHROUGH;
                 case 2:
-                  if(!comp(*first, val))
+                  if (!comp(*first, val))
                     return first;
                   ++first;
                   DEAL_II_FALLTHROUGH;
                 case 1:
-                  if(!comp(*first, val))
+                  if (!comp(*first, val))
                     return first;
                   return first + 1;
                 default:
@@ -966,7 +966,7 @@ namespace Utilities
         // middle pointer, then the
         // insertion point must be
         // right of it
-        if(comp(*middle, val))
+        if (comp(*middle, val))
           {
             first = middle + 1;
             len -= half + 1;
@@ -990,12 +990,12 @@ namespace Utilities
     // conforming, but is not actually as it does not implement
     // std::is_trivially_copyable.
 #if __GNUG__ && __GNUC__ < 5
-    if(__has_trivial_copy(T) && sizeof(T) < 256)
+    if (__has_trivial_copy(T) && sizeof(T) < 256)
 #else
 #  ifdef DEAL_II_WITH_CXX17
-    if constexpr(std::is_trivially_copyable<T>() && sizeof(T) < 256)
+    if constexpr (std::is_trivially_copyable<T>() && sizeof(T) < 256)
 #  else
-    if(std::is_trivially_copyable<T>() && sizeof(T) < 256)
+    if (std::is_trivially_copyable<T>() && sizeof(T) < 256)
 #  endif
 #endif
       {
@@ -1058,12 +1058,12 @@ namespace Utilities
     // conforming, but is not actually as it does not implement
     // std::is_trivially_copyable.
 #if __GNUG__ && __GNUC__ < 5
-    if(__has_trivial_copy(T) && sizeof(T) < 256)
+    if (__has_trivial_copy(T) && sizeof(T) < 256)
 #else
 #  ifdef DEAL_II_WITH_CXX17
-    if constexpr(std::is_trivially_copyable<T>() && sizeof(T) < 256)
+    if constexpr (std::is_trivially_copyable<T>() && sizeof(T) < 256)
 #  else
-    if(std::is_trivially_copyable<T>() && sizeof(T) < 256)
+    if (std::is_trivially_copyable<T>() && sizeof(T) < 256)
 #  endif
 #endif
       {
@@ -1119,7 +1119,7 @@ namespace Utilities
     // we have to work around the fact that GCC 4.8.x claims to be C++
     // conforming, but is not actually as it does not implement
     // std::is_trivially_copyable.
-    if(
+    if (
 #if __GNUG__ && __GNUC__ < 5
       __has_trivial_copy(T)
 #else

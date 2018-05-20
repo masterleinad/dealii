@@ -41,11 +41,11 @@ main()
   std::string   line;
   unsigned int  counter = 0;
 
-  while(std::getline(in, line))
+  while (std::getline(in, line))
     {
       counter++;
-      if((counter == 4) || (counter == 5) || (counter == 6) || (counter == 18)
-         || (counter == 19))
+      if ((counter == 4) || (counter == 5) || (counter == 6) || (counter == 18)
+          || (counter == 19))
         {
         }
       else

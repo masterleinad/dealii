@@ -1599,11 +1599,11 @@ ConstraintMatrix::add_line(const size_type line)
   const size_type line_index = calculate_line_index(line);
 
   // check whether line already exists; it may, in which case we can just quit
-  if(is_constrained(line))
+  if (is_constrained(line))
     return;
 
   // if necessary enlarge vector of existing entries for cache
-  if(line_index >= lines_cache.size())
+  if (line_index >= lines_cache.size())
     lines_cache.resize(
       std::max(2 * static_cast<size_type>(lines_cache.size()), line_index + 1),
       numbers::invalid_size_type);
@@ -1642,10 +1642,10 @@ ConstraintMatrix::add_entry(const size_type line,
          ExcColumnNotStoredHere(line, column));
   ConstraintLine* line_ptr = &lines[lines_cache[line_index]];
   Assert(line_ptr->index == line, ExcInternalError());
-  for(ConstraintLine::Entries::const_iterator p = line_ptr->entries.begin();
-      p != line_ptr->entries.end();
-      ++p)
-    if(p->first == column)
+  for (ConstraintLine::Entries::const_iterator p = line_ptr->entries.begin();
+       p != line_ptr->entries.end();
+       ++p)
+    if (p->first == column)
       {
         Assert(std::fabs(p->second - value) < 1.e-14,
                ExcEntryAlreadyExists(line, column, p->second, value));
@@ -1687,8 +1687,8 @@ ConstraintMatrix::is_inhomogeneously_constrained(const size_type index) const
   // check whether the entry is constrained. could use is_constrained, but
   // that means computing the line index twice
   const size_type line_index = calculate_line_index(index);
-  if(line_index >= lines_cache.size()
-     || lines_cache[line_index] == numbers::invalid_size_type)
+  if (line_index >= lines_cache.size()
+      || lines_cache[line_index] == numbers::invalid_size_type)
     return false;
   else
     {
@@ -1703,8 +1703,8 @@ ConstraintMatrix::get_constraint_entries(const size_type line) const
   // check whether the entry is constrained. could use is_constrained, but
   // that means computing the line index twice
   const size_type line_index = calculate_line_index(line);
-  if(line_index >= lines_cache.size()
-     || lines_cache[line_index] == numbers::invalid_size_type)
+  if (line_index >= lines_cache.size()
+      || lines_cache[line_index] == numbers::invalid_size_type)
     return nullptr;
   else
     return &lines[lines_cache[line_index]].entries;
@@ -1716,8 +1716,8 @@ ConstraintMatrix::get_inhomogeneity(const size_type line) const
   // check whether the entry is constrained. could use is_constrained, but
   // that means computing the line index twice
   const size_type line_index = calculate_line_index(line);
-  if(line_index >= lines_cache.size()
-     || lines_cache[line_index] == numbers::invalid_size_type)
+  if (line_index >= lines_cache.size()
+      || lines_cache[line_index] == numbers::invalid_size_type)
     return 0;
   else
     return lines[lines_cache[line_index]].inhomogeneity;
@@ -1727,7 +1727,7 @@ inline types::global_dof_index
 ConstraintMatrix::calculate_line_index(const size_type line) const
 {
   //IndexSet is unused (serial case)
-  if(!local_lines.size())
+  if (!local_lines.size())
     return line;
 
   Assert(local_lines.is_element(line), ExcRowNotStoredHere(line));
@@ -1755,13 +1755,13 @@ ConstraintMatrix::distribute_local_to_global(const size_type index,
 {
   Assert(lines.empty() || sorted == true, ExcMatrixNotClosed());
 
-  if(is_constrained(index) == false)
+  if (is_constrained(index) == false)
     global_vector(index) += value;
   else
     {
       const ConstraintLine& position
         = lines[lines_cache[calculate_line_index(index)]];
-      for(size_type j = 0; j < position.entries.size(); ++j)
+      for (size_type j = 0; j < position.entries.size(); ++j)
         global_vector(position.entries[j].first)
           += value * position.entries[j].second;
     }
@@ -1778,17 +1778,17 @@ ConstraintMatrix::distribute_local_to_global(
   VectorType&        global_vector) const
 {
   Assert(lines.empty() || sorted == true, ExcMatrixNotClosed());
-  for(; local_vector_begin != local_vector_end;
-      ++local_vector_begin, ++local_indices_begin)
+  for (; local_vector_begin != local_vector_end;
+       ++local_vector_begin, ++local_indices_begin)
     {
-      if(is_constrained(*local_indices_begin) == false)
+      if (is_constrained(*local_indices_begin) == false)
         internal::ElementAccess<VectorType>::add(
           *local_vector_begin, *local_indices_begin, global_vector);
       else
         {
           const ConstraintLine& position
             = lines[lines_cache[calculate_line_index(*local_indices_begin)]];
-          for(size_type j = 0; j < position.entries.size(); ++j)
+          for (size_type j = 0; j < position.entries.size(); ++j)
             internal::ElementAccess<VectorType>::add(
               (*local_vector_begin) * position.entries[j].second,
               position.entries[j].first,
@@ -1822,17 +1822,17 @@ ConstraintMatrix::get_dof_values(const VectorType&  global_vector,
                                  ForwardIteratorVec local_vector_end) const
 {
   Assert(lines.empty() || sorted == true, ExcMatrixNotClosed());
-  for(; local_vector_begin != local_vector_end;
-      ++local_vector_begin, ++local_indices_begin)
+  for (; local_vector_begin != local_vector_end;
+       ++local_vector_begin, ++local_indices_begin)
     {
-      if(is_constrained(*local_indices_begin) == false)
+      if (is_constrained(*local_indices_begin) == false)
         *local_vector_begin = global_vector(*local_indices_begin);
       else
         {
           const ConstraintLine& position
             = lines[lines_cache[calculate_line_index(*local_indices_begin)]];
           typename VectorType::value_type value = position.inhomogeneity;
-          for(size_type j = 0; j < position.entries.size(); ++j)
+          for (size_type j = 0; j < position.entries.size(); ++j)
             value += (global_vector(position.entries[j].first)
                       * position.entries[j].second);
           *local_vector_begin = value;

@@ -170,7 +170,7 @@ namespace Step25
   {
     double t = this->get_time();
 
-    switch(dim)
+    switch (dim)
       {
         case 1:
           {
@@ -423,7 +423,7 @@ namespace Step25
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         local_nl_term = 0;
         // Once we re-initialize our <code>FEValues</code> instantiation to
@@ -439,8 +439,8 @@ namespace Step25
         // Now, we can evaluate $\int_K \sin\left[\theta w_{\mathrm{new}} +
         // (1-\theta) w_{\mathrm{old}}\right] \,\varphi_j\,\mathrm{d}x$ using
         // the desired quadrature formula.
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             local_nl_term(i)
               += (std::sin(theta * new_data_values[q_point]
                            + (1 - theta) * old_data_values[q_point])
@@ -450,7 +450,7 @@ namespace Step25
         // the cells to the global integral.
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           nl_term(local_dof_indices[i]) += local_nl_term(i);
       }
   }
@@ -488,7 +488,7 @@ namespace Step25
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         local_nl_matrix = 0;
         // Again, first we re-initialize our <code>FEValues</code>
@@ -500,9 +500,9 @@ namespace Step25
         // Then, we evaluate $\int_K \cos\left[\theta w_{\mathrm{new}} +
         // (1-\theta) w_{\mathrm{old}}\right]\, \varphi_i\,
         // \varphi_j\,\mathrm{d}x$ using the desired quadrature formula.
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               local_nl_matrix(i, j)
                 += (std::cos(theta * new_data_values[q_point]
                              + (1 - theta) * old_data_values[q_point])
@@ -514,8 +514,8 @@ namespace Step25
         // cells to the global integral.
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             nl_matrix.add(local_dof_indices[i],
                           local_dof_indices[j],
                           local_nl_matrix(i, j));
@@ -625,8 +625,8 @@ namespace Step25
     // of the problem, and then advance our solution according to the time
     // stepping formulas we discussed in the Introduction.
     unsigned int timestep_number = 1;
-    for(time += time_step; time <= final_time;
-        time += time_step, ++timestep_number)
+    for (time += time_step; time <= final_time;
+         time += time_step, ++timestep_number)
       {
         old_solution = solution;
 
@@ -650,20 +650,20 @@ namespace Step25
           {
             assemble_system();
 
-            if(first_iteration == true)
+            if (first_iteration == true)
               initial_rhs_norm = system_rhs.l2_norm();
 
             const unsigned int n_iterations = solve();
 
             solution += solution_update;
 
-            if(first_iteration == true)
+            if (first_iteration == true)
               std::cout << "    " << n_iterations;
             else
               std::cout << '+' << n_iterations;
             first_iteration = false;
           }
-        while(system_rhs.l2_norm() > 1e-6 * initial_rhs_norm);
+        while (system_rhs.l2_norm() > 1e-6 * initial_rhs_norm);
 
         std::cout << " CG iterations per nonlinear step." << std::endl;
 
@@ -689,7 +689,7 @@ namespace Step25
         // efficiency -- in particular, speed up the program and save disk
         // space -- we only output the solution every
         // <code>output_timestep_skip</code> time steps:
-        if(timestep_number % output_timestep_skip == 0)
+        if (timestep_number % output_timestep_skip == 0)
           output_results(timestep_number);
       }
   }
@@ -713,7 +713,7 @@ main()
       SineGordonProblem<1> sg_problem;
       sg_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -727,7 +727,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

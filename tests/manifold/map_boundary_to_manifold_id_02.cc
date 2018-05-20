@@ -29,20 +29,20 @@ template <int dim, int spacedim>
 void
 print_info(const Triangulation<dim, spacedim>& tria)
 {
-  for(auto cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (auto cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
       deallog << "C: " << cell << ", manifold id: " << (int) cell->manifold_id()
               << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           deallog << "f: " << cell->face(f)
                   << ", boundary id: " << (int) cell->face(f)->boundary_id()
                   << ", manifold id: " << (int) cell->face(f)->manifold_id()
                   << std::endl;
-          if(dim >= 3)
-            for(signed int e = 0;
-                e < static_cast<signed int>(GeometryInfo<dim>::lines_per_face);
-                ++e)
+          if (dim >= 3)
+            for (signed int e = 0;
+                 e < static_cast<signed int>(GeometryInfo<dim>::lines_per_face);
+                 ++e)
               deallog << "e: " << cell->face(f)->line(e) << ", boundary id: "
                       << (int) cell->face(f)->line(e)->boundary_id()
                       << ", manifold id: "
@@ -67,18 +67,18 @@ test()
 
   // Set the edge manifolds to something interesting
   deallog << "Set edge manifold IDs" << std::endl;
-  for(auto cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (auto cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
-      for(signed int e = 0;
-          e < static_cast<signed int>(GeometryInfo<dim>::lines_per_cell);
-          ++e)
+      for (signed int e = 0;
+           e < static_cast<signed int>(GeometryInfo<dim>::lines_per_cell);
+           ++e)
         cell->line(e)->set_manifold_id(e);
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           cell->face(f)->set_boundary_id(f);
-          for(signed int e = 0;
-              e < static_cast<signed int>(GeometryInfo<dim>::lines_per_face);
-              ++e)
+          for (signed int e = 0;
+               e < static_cast<signed int>(GeometryInfo<dim>::lines_per_face);
+               ++e)
             cell->face(f)->line(e)->set_boundary_id(f);
         }
     }
@@ -91,7 +91,7 @@ test()
   deallog << "All manifold ids to offset boundary id" << std::endl;
   auto                            bids = tria.get_boundary_ids();
   std::vector<types::manifold_id> mids(bids.size(), 0);
-  for(unsigned int i = 0; i < bids.size(); ++i)
+  for (unsigned int i = 0; i < bids.size(); ++i)
     mids[i] = 10 + bids[i];
   GridTools::map_boundary_to_manifold_ids(bids, mids, tria);
   print_info(tria);
@@ -100,7 +100,7 @@ test()
   // and then resetting the boundary ids
   deallog << "All manifold ids to offset boundary id + boundary id reset"
           << std::endl;
-  for(unsigned int i = 0; i < bids.size(); ++i)
+  for (unsigned int i = 0; i < bids.size(); ++i)
     mids[i] = 20 + bids[i];
   std::vector<types::boundary_id> rbids(bids.size(), 1);
   GridTools::map_boundary_to_manifold_ids(bids, mids, tria, rbids);

@@ -50,14 +50,14 @@ check()
   // try all possible block
   // masks, which we encode as bit
   // strings
-  for(unsigned int int_mask = 0; int_mask < (1U << element[0].n_blocks());
-      ++int_mask)
+  for (unsigned int int_mask = 0; int_mask < (1U << element[0].n_blocks());
+       ++int_mask)
     {
       std::vector<bool> component_mask(element[0].n_blocks());
-      for(unsigned int c = 0; c < element[0].n_blocks(); ++c)
+      for (unsigned int c = 0; c < element[0].n_blocks(); ++c)
         component_mask[c] = (int_mask & (1 << c));
 
-      for(unsigned int level = 0; level < tr.n_levels(); ++level)
+      for (unsigned int level = 0; level < tr.n_levels(); ++level)
         {
           deallog << "level=" << level << std::endl;
 
@@ -65,7 +65,7 @@ check()
           DoFTools::extract_level_dofs(
             level, dof, BlockMask(component_mask), dofs);
 
-          for(unsigned int d = 0; d < dofs.size(); ++d)
+          for (unsigned int d = 0; d < dofs.size(); ++d)
             deallog << dofs[d];
           deallog << std::endl;
         }

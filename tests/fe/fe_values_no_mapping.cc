@@ -36,8 +36,8 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double v = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         v += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return v;
   }
@@ -63,12 +63,12 @@ test()
   // choose a point that is not right in the middle of the cell so that the
   // Jacobian contains many nonzero entries
   Point<dim> quad_p;
-  for(int d = 0; d < dim; ++d)
+  for (int d = 0; d < dim; ++d)
     quad_p(d) = 0.42 + 0.11 * d;
   Quadrature<dim> quad(quad_p);
 
   Point<dim - 1> f_quad_p;
-  for(int d = 0; d < dim - 1; ++d)
+  for (int d = 0; d < dim - 1; ++d)
     f_quad_p(d) = 0.42 + 0.11 * d;
   Quadrature<dim - 1> f_quad(f_quad_p);
 
@@ -94,7 +94,7 @@ test()
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_val.reinit(cell);
         fe_val_m.reinit(cell);
@@ -103,7 +103,7 @@ test()
         fe_val_m.get_function_values(interpolant, values_m);
         Assert(values[0] == values_m[0], ExcInternalError())
 
-          for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
           fe_f_val.reinit(cell, f);
           fe_f_val_m.reinit(cell, f);
@@ -113,8 +113,8 @@ test()
           Assert(values[0] == values_m[0], ExcInternalError())
 
             // Also check the Jacobian with FESubfaceValues
-            if(cell->at_boundary(f) == false
-               && cell->neighbor(f)->level() < cell->level())
+            if (cell->at_boundary(f) == false
+                && cell->neighbor(f)->level() < cell->level())
           {
             fe_subf_val.reinit(cell->neighbor(f),
                                cell->neighbor_face_no(f),

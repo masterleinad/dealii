@@ -25,7 +25,7 @@ void
 diff(FullMatrix<double>& M)
 {
   const double err = M.frobenius_norm();
-  if(err < 1.e-14)
+  if (err < 1.e-14)
     deallog << "ok" << std::endl;
   else
     deallog << "oops " << err << std::endl;
@@ -42,18 +42,18 @@ test(const unsigned int n, const unsigned int m)
   FullMatrix<double> Bt(m, n);
   FullMatrix<double> Dt(n, m);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
-      for(unsigned int j = 0; j < n; ++j)
+      for (unsigned int j = 0; j < n; ++j)
         A(i, j) = random_value<double>();
-      for(unsigned int j = 0; j < m; ++j)
+      for (unsigned int j = 0; j < m; ++j)
         {
           B(i, j) = Bt(j, i) = random_value<double>();
           D(j, i) = Dt(i, j) = random_value<double>();
         }
     }
-  for(unsigned int i = 0; i < m; ++i)
-    for(unsigned int j = 0; j < m; ++j)
+  for (unsigned int i = 0; i < m; ++i)
+    for (unsigned int j = 0; j < m; ++j)
       C(i, j) = random_value<double>();
 
   // Compare first Schur complement

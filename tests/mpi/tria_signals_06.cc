@@ -106,12 +106,12 @@ test()
   tria.refine_global(1);
 
   // The following loop is borrowed from p4est_3d_refine_01 with some modifications.
-  for(int n_loop = 0;
-      // Terminate loop on global information to prevent premature termination
-      // on only part of processors. (n_loop < 20) is just a passive safety to
-      // avoid infinite loop.
-      (tria.n_global_active_cells() < 20000) && (n_loop < 20);
-      ++n_loop)
+  for (int n_loop = 0;
+       // Terminate loop on global information to prevent premature termination
+       // on only part of processors. (n_loop < 20) is just a passive safety to
+       // avoid infinite loop.
+       (tria.n_global_active_cells() < 20000) && (n_loop < 20);
+       ++n_loop)
     {
       std::vector<bool> flags(tria.n_active_cells(), false);
 
@@ -119,7 +119,7 @@ test()
       // Note that only the own marked cells will be refined.
       // But refine flags on own cells could be effected by flags on ghost cells
       // through mesh smoothing.
-      for(unsigned int i = 0; i < tria.n_active_cells() / 3 + 1; ++i)
+      for (unsigned int i = 0; i < tria.n_active_cells() / 3 + 1; ++i)
         {
           const unsigned int x = Testing::rand() % flags.size();
           flags[x]             = true;
@@ -128,34 +128,34 @@ test()
       unsigned int index  = 0;
       unsigned int locals = 0;
 
-      for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-          = tria.begin_active();
-          cell != tria.end();
-          ++cell, ++index)
-        if(flags[index])
+      for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+           = tria.begin_active();
+           cell != tria.end();
+           ++cell, ++index)
+        if (flags[index])
           {
-            if(cell->is_locally_owned())
+            if (cell->is_locally_owned())
               ++locals;
             cell->set_refine_flag();
           }
 
-      if(locals > 5)
+      if (locals > 5)
         {
           // Coarsen some cells randomly only if we have enough local cells
           // marked to be refined
           std::fill(flags.begin(), flags.end(), false);
-          for(unsigned int i = 0; i < tria.n_active_cells() / 3; ++i)
+          for (unsigned int i = 0; i < tria.n_active_cells() / 3; ++i)
             {
               const unsigned int x = Testing::rand() % flags.size();
               flags[x]             = true;
             }
 
           index = 0;
-          for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-              = tria.begin_active();
-              cell != tria.end();
-              ++cell, ++index)
-            if(flags[index] && !cell->refine_flag_set())
+          for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+               = tria.begin_active();
+               cell != tria.end();
+               ++cell, ++index)
+            if (flags[index] && !cell->refine_flag_set())
               {
                 cell->set_coarsen_flag();
               }

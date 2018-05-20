@@ -43,20 +43,20 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
     fe, quadrature, update_values | update_gradients | update_hessians);
   fe_values.reinit(dof.begin_active());
 
-  for(unsigned int c = 0; c < fe.n_components(); ++c)
+  for (unsigned int c = 0; c < fe.n_components(); ++c)
     {
       FEValuesExtractors::Scalar single_component(c);
 
-      for(unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
-        for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+      for (unsigned int i = 0; i < fe_values.dofs_per_cell; ++i)
+        for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
           {
             deallog << "i=" << i << ", q=" << q << std::endl;
             deallog << "   " << fe_values[single_component].value(i, q) << ' ';
-            for(unsigned int k = 0; k < dim; ++k)
+            for (unsigned int k = 0; k < dim; ++k)
               deallog << fe_values[single_component].gradient(i, q) << ' ';
             deallog << std::endl;
-            for(unsigned int k = 0; k < dim; ++k)
-              for(unsigned int l = 0; l < dim; ++l)
+            for (unsigned int k = 0; k < dim; ++k)
+              for (unsigned int l = 0; l < dim; ++l)
                 deallog << fe_values[single_component].hessian(i, q)[k][l]
                         << std::endl;
 

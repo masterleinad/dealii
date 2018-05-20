@@ -37,7 +37,7 @@ test()
   dof1.distribute_dofs(fe1);
 
   Vector<double> v1(dof1.n_dofs());
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = i;
 
   DataOut<dim> data_out;
@@ -59,7 +59,7 @@ test()
   // Sadly hdf5 is binary and we can not use hd5dump because it might
   // not be in the path. At least we can look at the xdmf
   // and make sure that the h5 file is created:
-  if(0 == Utilities::MPI::this_mpi_process(MPI_COMM_WORLD))
+  if (0 == Utilities::MPI::this_mpi_process(MPI_COMM_WORLD))
     {
       cat_file("out.xdmf");
       std::ifstream f("out.h5");
@@ -79,7 +79,7 @@ main(int argc, char* argv[])
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -92,7 +92,7 @@ main(int argc, char* argv[])
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

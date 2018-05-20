@@ -74,7 +74,7 @@ test(const unsigned int size,
 
   const NumberType error = diff.frobenius_norm() / inverse.frobenius_norm();
 
-  if(error > tol && this_mpi_process == 0)
+  if (error > tol && this_mpi_process == 0)
     {
       std::cout << "Error!" << std::endl << "expected to have:" << std::endl;
       inverse.print_formatted(std::cout);
@@ -100,13 +100,13 @@ main(int argc, char** argv)
   const double tol_double = 1e-10;
   const float  tol_float  = 1e-5;
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<float>(s, b, tol_float);
 
-  for(const auto& s : sizes)
-    for(const auto& b : blocks)
-      if(b <= s)
+  for (const auto& s : sizes)
+    for (const auto& b : blocks)
+      if (b <= s)
         test<double>(s, b, tol_double);
 }

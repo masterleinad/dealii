@@ -179,7 +179,7 @@ namespace CUDAWrappers
       // This loop simply multiply the shape function at the quadrature point by
       // the value finite element coefficient.
       Number t = 0;
-      for(int k = 0; k < n_q_points_1d; ++k)
+      for (int k = 0; k < n_q_points_1d; ++k)
         {
           const unsigned int shape_idx
             = dof_to_quad ? (q + k * n_q_points_1d) : (k + q * n_q_points_1d);
@@ -192,7 +192,7 @@ namespace CUDAWrappers
                * (in_place ? out[source_idx] : in[source_idx]);
         }
 
-      if(in_place)
+      if (in_place)
         __syncthreads();
 
       const unsigned int destination_idx
@@ -201,7 +201,7 @@ namespace CUDAWrappers
             (direction == 1) ? (i + n_q_points_1d * (q + n_q_points_1d * j)) :
                                (i + n_q_points_1d * (j + n_q_points_1d * q));
 
-      if(add)
+      if (add)
         out[destination_idx] += t;
       else
         out[destination_idx] = t;
@@ -215,7 +215,7 @@ namespace CUDAWrappers
                            n_q_points_1d,
                            Number>::value_at_quad_pts(Number* u)
     {
-      switch(dim)
+      switch (dim)
         {
           case 1:
             {
@@ -256,7 +256,7 @@ namespace CUDAWrappers
                            n_q_points_1d,
                            Number>::integrate_value(Number* u)
     {
-      switch(dim)
+      switch (dim)
         {
           case 1:
             {
@@ -298,7 +298,7 @@ namespace CUDAWrappers
                            Number>::gradient_at_quad_pts(const Number* const u,
                                                          Number* grad_u[dim])
     {
-      switch(dim)
+      switch (dim)
         {
           case 1:
             {
@@ -355,7 +355,7 @@ namespace CUDAWrappers
                            Number>::integrate_gradient(Number* u,
                                                        Number* grad_u[dim])
     {
-      switch(dim)
+      switch (dim)
         {
           case 1:
             {

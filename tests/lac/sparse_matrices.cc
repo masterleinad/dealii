@@ -35,7 +35,7 @@
       u = 0.;                               \
       solver.method(A, u, f, precond);      \
     }                                       \
-  catch(...)                                \
+  catch (...)                               \
     {}                                      \
   deallog.pop();                            \
   residuals.push_back(control.last_value())
@@ -66,8 +66,8 @@ check_vmult_quadratic(std::vector<double>& residuals,
                                                                      1.2);
   std::vector<types::global_dof_index>                          perm(A.n());
   std::vector<types::global_dof_index>                          iperm(A.n());
-  for(unsigned int i = 0; i < n_blocks; ++i)
-    for(unsigned int j = 0; j < block_size; ++j)
+  for (unsigned int i = 0; i < n_blocks; ++i)
+    for (unsigned int j = 0; j < block_size; ++j)
       {
         perm[block_size * i + j]        = block_size * ((i + 1) % n_blocks) + j;
         iperm[perm[block_size * i + j]] = block_size * i + j;
@@ -169,31 +169,31 @@ check_iterator(const MatrixType& A)
 
   typename MatrixType::const_iterator E = A.end();
 
-  if(A.m() < 10)
-    for(unsigned int r = 0; r < A.m(); ++r)
+  if (A.m() < 10)
+    for (unsigned int r = 0; r < A.m(); ++r)
       {
         typename MatrixType::const_iterator b = A.begin(r);
-        if(b == E)
+        if (b == E)
           deallog << "Final" << std::endl;
         else
           deallog << r << '\t' << b->row() << '\t' << b->column() << '\t'
                   << b->value() << std::endl;
         typename MatrixType::const_iterator e = A.end(r);
-        if(e == E)
+        if (e == E)
           deallog << "Final" << std::endl;
         else
           deallog << '\t' << e->row() << std::endl;
         deallog << "cols:";
 
-        for(typename MatrixType::const_iterator i = b; i != e; ++i)
+        for (typename MatrixType::const_iterator i = b; i != e; ++i)
           deallog << '\t' << ',' << i->column();
         deallog << std::endl;
       }
-  for(typename MatrixType::const_iterator i = A.begin(); i != A.end(); ++i)
+  for (typename MatrixType::const_iterator i = A.begin(); i != A.end(); ++i)
     deallog << '\t' << i->row() << '\t' << i->column() << '\t' << i->value()
             << std::endl;
   deallog << "Repeat row 2" << std::endl;
-  for(typename MatrixType::const_iterator i = A.begin(2); i != A.end(2); ++i)
+  for (typename MatrixType::const_iterator i = A.begin(2); i != A.end(2); ++i)
     deallog << '\t' << i->row() << '\t' << i->column() << '\t' << i->value()
             << std::endl;
 
@@ -324,7 +324,7 @@ main()
     check_iterator(E);
     E.print_statistics(deallog, true);
     E.add(-1., A);
-    if(E.l2_norm() < 1.e-14)
+    if (E.l2_norm() < 1.e-14)
       deallog << "Matrices are equal" << std::endl;
     else
       deallog << "Matrices differ!!" << std::endl;
@@ -349,8 +349,8 @@ main()
   check_vmult_quadratic(E_res, E, "9-SparseMatrixEZ<double>");
   E.print_statistics(deallog, true);
 
-  for(unsigned int i = 0; i < E_res.size(); ++i)
-    if(std::fabs(A_res[i] - E_res[i]) > 1.e-13)
+  for (unsigned int i = 0; i < E_res.size(); ++i)
+    if (std::fabs(A_res[i] - E_res[i]) > 1.e-13)
       deallog << "SparseMatrix and SparseMatrixEZ differ!!!" << std::endl;
   // dump A into a file, and re-read
   // it, then delete tmp file and
@@ -368,8 +368,8 @@ main()
   std::remove("sparse_matrices.tmp");
 
   SparseMatrix<double>::const_iterator p = A.begin(), p_tmp = A_tmp.begin();
-  for(; p != A.end(); ++p, ++p_tmp)
-    if(std::fabs(p->value() - p_tmp->value()) <= std::fabs(1e-14 * p->value()))
+  for (; p != A.end(); ++p, ++p_tmp)
+    if (std::fabs(p->value() - p_tmp->value()) <= std::fabs(1e-14 * p->value()))
       deallog << "write/read-error at global position " << (p - A.begin())
               << std::endl;
 }

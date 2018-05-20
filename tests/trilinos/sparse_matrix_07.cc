@@ -40,8 +40,8 @@ main(int argc, char** argv)
   SparseMatrix<double> matrix(sparsity);
   {
     double value = 1;
-    for(SparseMatrix<double>::iterator p = matrix.begin(); p != matrix.end();
-        ++p, ++value)
+    for (SparseMatrix<double>::iterator p = matrix.begin(); p != matrix.end();
+         ++p, ++value)
       p->value() = value;
   }
   deallog << "Original:" << std::endl;

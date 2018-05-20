@@ -56,7 +56,7 @@ main(int argc, char** argv)
   SUNDIALS::ARKode<VectorType>::AdditionalData data;
   data.add_parameters(prm);
 
-  if(false)
+  if (false)
     {
       std::ofstream ofile(SOURCE_DIR "/harmonic_oscillator_04.prm");
       prm.print_parameters(ofile, ParameterHandler::ShortText);
@@ -97,7 +97,7 @@ main(int argc, char** argv)
                         const unsigned int step_number) -> int {
     // limit the output to every 10th step and increase the precision to make
     // the test more robust
-    if(step_number % 10 == 0)
+    if (step_number % 10 == 0)
       out << t << " " << std::setprecision(10) << sol[0] << " " << sol[1] << " "
           << sol[2] << std::endl;
     return 0;

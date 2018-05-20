@@ -259,28 +259,28 @@ SolverCG<VectorType>::compute_eigs_and_cond(
   const boost::signals2::signal<void(double)>& cond_signal)
 {
   //Avoid computing eigenvalues unless they are needed.
-  if(!cond_signal.empty() || !eigenvalues_signal.empty())
+  if (!cond_signal.empty() || !eigenvalues_signal.empty())
     {
       TridiagonalMatrix<double> T(diagonal.size(), true);
-      for(size_type i = 0; i < diagonal.size(); ++i)
+      for (size_type i = 0; i < diagonal.size(); ++i)
         {
           T(i, i) = diagonal[i];
-          if(i < diagonal.size() - 1)
+          if (i < diagonal.size() - 1)
             T(i, i + 1) = offdiagonal[i];
         }
       T.compute_eigenvalues();
       //Need two eigenvalues to estimate the condition number.
-      if(diagonal.size() > 1)
+      if (diagonal.size() > 1)
         {
           double condition_number = T.eigenvalue(T.n() - 1) / T.eigenvalue(0);
           cond_signal(condition_number);
         }
       //Avoid copying the eigenvalues of T to a vector unless a signal is
       //connected.
-      if(!eigenvalues_signal.empty())
+      if (!eigenvalues_signal.empty())
         {
           std::vector<double> eigenvalues(T.n());
-          for(unsigned int j = 0; j < T.n(); ++j)
+          for (unsigned int j = 0; j < T.n(); ++j)
             {
               eigenvalues.at(j) = T.eigenvalue(j);
             }
@@ -338,7 +338,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
   // compute residual. if vector is
   // zero, then short-circuit the
   // full computation
-  if(!x.all_zero())
+  if (!x.all_zero())
     {
       A.vmult(g, x);
       g.add(-1., b);
@@ -348,10 +348,10 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
   res = g.l2_norm();
 
   conv = this->iteration_status(0, res, x);
-  if(conv != SolverControl::iterate)
+  if (conv != SolverControl::iterate)
     return;
 
-  if(std::is_same<PreconditionerType, PreconditionIdentity>::value == false)
+  if (std::is_same<PreconditionerType, PreconditionIdentity>::value == false)
     {
       preconditioner.vmult(h, g);
 
@@ -365,7 +365,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
       gh = res * res;
     }
 
-  while(conv == SolverControl::iterate)
+  while (conv == SolverControl::iterate)
     {
       it++;
       A.vmult(h, d);
@@ -380,10 +380,11 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
       print_vectors(it, x, g, d);
 
       conv = this->iteration_status(it, res, x);
-      if(conv != SolverControl::iterate)
+      if (conv != SolverControl::iterate)
         break;
 
-      if(std::is_same<PreconditionerType, PreconditionIdentity>::value == false)
+      if (std::is_same<PreconditionerType, PreconditionIdentity>::value
+          == false)
         {
           preconditioner.vmult(h, g);
 
@@ -406,7 +407,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
       // containing the diagonal
       // and the off diagonal of
       // the projected matrix.
-      if(do_eigenvalues)
+      if (do_eigenvalues)
         {
           diagonal.push_back(1. / alpha + eigen_beta_alpha);
           eigen_beta_alpha = beta / alpha;
@@ -422,7 +423,7 @@ SolverCG<VectorType>::solve(const MatrixType&         A,
     diagonal, offdiagonal, eigenvalues_signal, condition_number_signal);
 
   // in case of failure: throw exception
-  if(conv != SolverControl::success)
+  if (conv != SolverControl::success)
     AssertThrow(false, SolverControl::NoConvergence(it, res));
   // otherwise exit as normal
 }
@@ -441,7 +442,7 @@ SolverCG<VectorType>::connect_condition_number_slot(
   const std::function<void(double)>& slot,
   const bool                         every_iteration)
 {
-  if(every_iteration)
+  if (every_iteration)
     {
       return all_condition_numbers_signal.connect(slot);
     }
@@ -457,7 +458,7 @@ SolverCG<VectorType>::connect_eigenvalues_slot(
   const std::function<void(const std::vector<double>&)>& slot,
   const bool                                             every_iteration)
 {
-  if(every_iteration)
+  if (every_iteration)
     {
       return all_eigenvalues_signal.connect(slot);
     }

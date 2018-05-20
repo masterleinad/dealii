@@ -28,7 +28,7 @@ main()
   initlog();
 
   // this test only needs to compile, not run
-  if(false)
+  if (false)
     {
       SparseMatrix<double>::iterator* i;
       (*i)->value() = (int) 0;

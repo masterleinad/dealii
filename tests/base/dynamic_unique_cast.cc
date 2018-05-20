@@ -62,7 +62,7 @@ invalid_test()
     {
       std::unique_ptr<D> dd = Utilities::dynamic_unique_cast<D>(std::move(b));
     }
-  catch(const std::bad_cast&)
+  catch (const std::bad_cast&)
     {
       deallog << "OK" << std::endl;
     }

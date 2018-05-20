@@ -55,8 +55,8 @@ public:
     Assert(r > 0.0, ExcMessage("r is not positive"));
     dir /= r;
     SymmetricTensor<2, dim> dir_x_dir;
-    for(unsigned int i = 0; i < dim; i++)
-      for(unsigned int j = i; j < dim; j++)
+    for (unsigned int i = 0; i < dim; i++)
+      for (unsigned int j = i; j < dim; j++)
         dir_x_dir[i][j] = dir[i] * dir[j];
 
     return Z * std::exp(-Z * r)
@@ -89,7 +89,7 @@ private:
   {
     std::array<double, dim> res;
     res[0] = -Z * std::exp(-Z * sp[0]);
-    for(unsigned int i = 1; i < dim; i++)
+    for (unsigned int i = 1; i < dim; i++)
       res[i] = 0.;
     return res;
   }
@@ -99,7 +99,7 @@ private:
   {
     std::array<double, 6> res;
     res[0] = Z * Z * std::exp(-Z * sp[0]);
-    for(unsigned int i = 1; i < 6; i++)
+    for (unsigned int i = 1; i < 6; i++)
       res[i] = 0.;
     return res;
   }
@@ -114,22 +114,22 @@ check()
   Point<dim>   center;
   const double Z = 2.5;
   center[1]      = 2.0;
-  if(dim > 2)
+  if (dim > 2)
     center[2] = -1.5;
 
   ExpFunc<dim>  func(center, Z);
   ExpFunc2<dim> func2(center, Z);
 
-  for(double r = 0.1; r < 10; r += 0.35)
-    for(double theta = 0; theta < 2 * numbers::PI; theta += numbers::PI / 3.)
-      for(double phi = 0.01; phi <= numbers::PI; phi += numbers::PI / 4.)
+  for (double r = 0.1; r < 10; r += 0.35)
+    for (double theta = 0; theta < 2 * numbers::PI; theta += numbers::PI / 3.)
+      for (double phi = 0.01; phi <= numbers::PI; phi += numbers::PI / 4.)
         {
           std::array<double, dim> sp;
           sp[0]        = r;
           sp[1]        = theta;
           sp[2]        = phi;
           Point<dim> p = GeometricUtilities::Coordinates::from_spherical(sp);
-          for(unsigned int i = 0; i < dim; i++)
+          for (unsigned int i = 0; i < dim; i++)
             p[i] += center[i];
 
           // check values:

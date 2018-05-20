@@ -34,10 +34,10 @@ test()
   // try all possible block
   // masks, which we encode as bit
   // strings
-  for(unsigned int int_mask = 0; int_mask < (1U << fe.n_blocks()); ++int_mask)
+  for (unsigned int int_mask = 0; int_mask < (1U << fe.n_blocks()); ++int_mask)
     {
       std::vector<bool> block_mask(fe.n_blocks());
-      for(unsigned int c = 0; c < fe.n_blocks(); ++c)
+      for (unsigned int c = 0; c < fe.n_blocks(); ++c)
         block_mask[c] = (int_mask & (1 << c));
 
       // make sure that the round-trip works

@@ -54,18 +54,18 @@ main()
   Tensor<3, dim>          T1;
   Tensor<4, dim>          H1;
 
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     {
       v1[i] = 1 + i;
-      for(unsigned int j = 0; j < dim; ++j)
+      for (unsigned int j = 0; j < dim; ++j)
         {
           t1[i][j] = 1 + j + i * dim;
           s1[i][j] = 1 + j + i * dim;
           s2[i][j] = 2 + (j + i) * dim;
-          for(unsigned int k = 0; k < dim; ++k)
+          for (unsigned int k = 0; k < dim; ++k)
             {
               T1[i][j][k] = 1 + k + j * dim + i * dim * dim;
-              for(unsigned int l = 0; l < dim; ++l)
+              for (unsigned int l = 0; l < dim; ++l)
                 H1[i][j][k][l]
                   = 1 + l + k * dim + j * dim * dim + i * dim * dim * dim;
             }

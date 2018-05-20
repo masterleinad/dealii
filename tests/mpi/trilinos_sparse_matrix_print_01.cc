@@ -35,22 +35,22 @@ test()
   IndexSet row_partitioning(n_rows);
   IndexSet col_partitioning(n_cols);
 
-  if(n_procs == 1)
+  if (n_procs == 1)
     {
       row_partitioning.add_range(0, n_rows);
       col_partitioning.add_range(0, n_cols);
     }
-  else if(n_procs == 2)
+  else if (n_procs == 2)
     {
       // row_partitioning should be { [0, 2), [2, n_rows) }
       // col_partitioning should be { [0, 2), [2, n_cols) }
       // col_relevant_set should be { [0, 3), [1, n_cols) }
-      if(my_id == 0)
+      if (my_id == 0)
         {
           row_partitioning.add_range(0, 2);
           col_partitioning.add_range(0, 2);
         }
-      else if(my_id == 1)
+      else if (my_id == 1)
         {
           row_partitioning.add_range(2, n_rows);
           col_partitioning.add_range(2, n_cols);
@@ -61,18 +61,18 @@ test()
 
   TrilinosWrappers::SparsityPattern sp(
     row_partitioning, col_partitioning, MPI_COMM_WORLD);
-  if((n_procs == 1) || (my_id == 1))
+  if ((n_procs == 1) || (my_id == 1))
     sp.add(2, 3);
   sp.compress();
 
   TrilinosWrappers::SparseMatrix A;
   A.clear();
   A.reinit(sp);
-  if((n_procs == 1) || (my_id == 1))
+  if ((n_procs == 1) || (my_id == 1))
     A.add(2, 3, 2.0);
   A.compress(VectorOperation::add);
 
-  if((n_procs == 1) || (my_id == 1))
+  if ((n_procs == 1) || (my_id == 1))
     A.print(deallog.get_file_stream());
 }
 
@@ -88,7 +88,7 @@ main(int argc, char** argv)
 
   // let processor 1 speak if we run
   // in parallel
-  if((n_procs == 1) || (myid == 1))
+  if ((n_procs == 1) || (myid == 1))
     {
       initlog();
       deallog << std::setprecision(4);

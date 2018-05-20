@@ -64,6 +64,6 @@ main()
   mutex.release();
 
   // wait for thread to finish
-  while(spin_lock == 0)
+  while (spin_lock == 0)
     ;
 }

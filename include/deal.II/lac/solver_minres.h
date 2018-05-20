@@ -251,9 +251,9 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
   m[2]->reinit(b);
 
   SolverControl::State conv = this->iteration_status(0, r_l2, x);
-  while(conv == SolverControl::iterate)
+  while (conv == SolverControl::iterate)
     {
-      if(delta[1] != 0)
+      if (delta[1] != 0)
         v *= 1. / std::sqrt(delta[1]);
       else
         v.reinit(b);
@@ -274,12 +274,12 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
 
       Assert(delta[2] >= 0, ExcPreconditionerNotDefinite());
 
-      if(j == 1)
+      if (j == 1)
         {
           d_   = gamma;
           e[1] = std::sqrt(delta[2]);
         }
-      if(j > 1)
+      if (j > 1)
         {
           d_   = s * e[0] - c * gamma;
           e[0] = c * e[0] + s * gamma;
@@ -289,18 +289,18 @@ SolverMinRes<VectorType>::solve(const MatrixType&         A,
 
       const double d = std::sqrt(d_ * d_ + delta[2]);
 
-      if(j > 1)
+      if (j > 1)
         tau *= s / c;
       c = d_ / d;
       tau *= c;
 
       s = std::sqrt(delta[2]) / d;
 
-      if(j == 1)
+      if (j == 1)
         tau = r0 * c;
 
       m[0]->add(-e[0], *m[1]);
-      if(j > 1)
+      if (j > 1)
         m[0]->add(-f[0], *m[2]);
       *m[0] *= 1. / d;
       x.add(tau, *m[0]);

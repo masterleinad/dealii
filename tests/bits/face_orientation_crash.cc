@@ -42,7 +42,7 @@ check()
   // the 7 cells in turn, to make sure we
   // have a face with hanging nodes that has
   // face_orientation==false at least once
-  for(unsigned int i = 0; i < 7; ++i)
+  for (unsigned int i = 0; i < 7; ++i)
     {
       deallog << "Check " << i << std::endl;
 
@@ -67,8 +67,8 @@ check()
       ConstraintMatrix constraints;
       DoFTools::make_hanging_node_constraints(dof, constraints);
 
-      for(unsigned int j = 0; j < dof.n_dofs(); ++j)
-        if(constraints.is_constrained(j))
+      for (unsigned int j = 0; j < dof.n_dofs(); ++j)
+        if (constraints.is_constrained(j))
           deallog << j << std::endl;
     }
 

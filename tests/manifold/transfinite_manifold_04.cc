@@ -27,24 +27,24 @@ template <int dim, int spacedim>
 void
 do_test(const Triangulation<dim, spacedim>& tria)
 {
-  for(typename Triangulation<dim, spacedim>::cell_iterator cell = tria.begin();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::cell_iterator cell = tria.begin();
+       cell != tria.end();
+       ++cell)
     {
       deallog << "Lines on cell with center: " << cell->center() << std::endl;
-      for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
-          ++line)
+      for (unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+           ++line)
         deallog << cell->line(line)->center(/*respect_manifold=*/true)
                 << std::endl;
       deallog << "Faces on cell with center: " << cell->center() << std::endl;
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
         deallog << cell->face(face)->center(/*respect_manifold=*/true)
                 << std::endl;
       deallog << "Center with manifold: " << cell->center(true) << std::endl;
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        if(cell->at_boundary(face))
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        if (cell->at_boundary(face))
           {
             std::vector<Point<spacedim>> points;
             points.push_back(cell->face(face)->vertex(0));

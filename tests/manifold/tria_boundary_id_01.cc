@@ -37,12 +37,12 @@ print_triangulation_data(Stream&                   stream,
   // Boundary id count
   std::map<int, int> boundary_id_count;
   std::map<int, int> manifold_id_count;
-  for(const auto& cell : triangulation.active_cell_iterators())
+  for (const auto& cell : triangulation.active_cell_iterators())
     {
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
         {
-          if(cell->face(face)->at_boundary())
+          if (cell->face(face)->at_boundary())
             {
               boundary_id_count[cell->face(face)->boundary_id()]++;
               manifold_id_count[cell->face(face)->manifold_id()]++;
@@ -50,9 +50,9 @@ print_triangulation_data(Stream&                   stream,
           else
             {
               // Prevent double-accounting when face is shared
-              if(cell->neighbor_level(face) == cell->level())
+              if (cell->neighbor_level(face) == cell->level())
                 {
-                  if(cell->id() < cell->neighbor(face)->id())
+                  if (cell->id() < cell->neighbor(face)->id())
                     manifold_id_count[cell->face(face)->manifold_id()]++;
                 }
               else
@@ -61,12 +61,12 @@ print_triangulation_data(Stream&                   stream,
         }
     }
 
-  for(const auto& pair : boundary_id_count)
+  for (const auto& pair : boundary_id_count)
     {
       stream << "  Boundary: " << pair.first << "  ;"
              << "  Number of faces: " << pair.second << "\n";
     }
-  for(const auto& pair : manifold_id_count)
+  for (const auto& pair : manifold_id_count)
     {
       stream << "  Manifold: " << pair.first << "  ;"
              << "  Number of faces: " << pair.second << "\n";
@@ -96,20 +96,20 @@ main()
   // a manifold ID to the curved surface. Note that the manifold ID coincides
   // with the boundary IDs. This is the root cause of the issue...
   const types::manifold_id curved_manifold_id = 1;
-  for(const auto& cell : tria.active_cell_iterators())
+  for (const auto& cell : tria.active_cell_iterators())
     {
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
         {
-          if(cell->face(face)->at_boundary())
+          if (cell->face(face)->at_boundary())
             {
-              for(unsigned int vertex = 0;
-                  vertex < GeometryInfo<dim>::vertices_per_face;
-                  ++vertex)
+              for (unsigned int vertex = 0;
+                   vertex < GeometryInfo<dim>::vertices_per_face;
+                   ++vertex)
                 {
                   const Point<dim> pt_vertex = cell->face(face)->vertex(vertex);
 
-                  if(std::abs(pt_vertex.norm() - inner_radius) < tol)
+                  if (std::abs(pt_vertex.norm() - inner_radius) < tol)
                     cell->face(face)->set_manifold_id(curved_manifold_id);
                   else
                     cell->face(face)->set_boundary_id(curved_manifold_id);

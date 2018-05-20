@@ -157,7 +157,7 @@ namespace Step16
     LocalIntegrators::Laplace::cell_matrix(
       dinfo.matrix(0, false).matrix, info.fe_values(0), coefficient);
 
-    if(dinfo.n_vectors() > 0)
+    if (dinfo.n_vectors() > 0)
       {
         std::vector<double> rhs(info.fe_values(0).n_quadrature_points, 1.);
         LocalIntegrators::L2::L2(
@@ -266,7 +266,7 @@ namespace Step16
 
     deallog << "   Number of degrees of freedom: " << dof_handler.n_dofs()
             << " (by level: ";
-    for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+    for (unsigned int level = 0; level < triangulation.n_levels(); ++level)
       deallog << dof_handler.n_dofs(level)
               << (level == triangulation.n_levels() - 1 ? ")" : ", ");
     deallog << std::endl;
@@ -335,7 +335,7 @@ namespace Step16
     // the speed with which we can multiply with these matrices), we should
     // use separate and different sparsity patterns for these two kinds of
     // matrices.
-    for(unsigned int level = 0; level < n_levels; ++level)
+    for (unsigned int level = 0; level < n_levels; ++level)
       {
         DynamicSparsityPattern dsp(dof_handler.n_dofs(level),
                                    dof_handler.n_dofs(level));
@@ -406,8 +406,8 @@ namespace Step16
                                            matrix_integrator,
                                            assembler);
 
-    for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-      if(constraints.is_constrained(i))
+    for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+      if (constraints.is_constrained(i))
         system_matrix.set(i, i, 1.);
   }
 
@@ -449,11 +449,11 @@ namespace Step16
                                            assembler);
 
     const unsigned int nlevels = triangulation.n_levels();
-    for(unsigned int level = 0; level < nlevels; ++level)
+    for (unsigned int level = 0; level < nlevels; ++level)
       {
-        for(unsigned int i = 0; i < dof_handler.n_dofs(level); ++i)
-          if(mg_constrained_dofs.is_boundary_index(level, i)
-             || mg_constrained_dofs.at_refinement_edge(level, i))
+        for (unsigned int i = 0; i < dof_handler.n_dofs(level); ++i)
+          if (mg_constrained_dofs.is_boundary_index(level, i)
+              || mg_constrained_dofs.at_refinement_edge(level, i))
             mg_matrices[level].set(i, i, 1.);
       }
   }
@@ -606,11 +606,11 @@ namespace Step16
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 8; ++cycle)
+    for (unsigned int cycle = 0; cycle < 8; ++cycle)
       {
         deallog << "Cycle " << cycle << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             GridGenerator::hyper_ball(triangulation);
             triangulation.refine_global(1);
@@ -647,7 +647,7 @@ main()
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -661,7 +661,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

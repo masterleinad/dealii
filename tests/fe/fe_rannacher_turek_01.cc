@@ -32,7 +32,7 @@ test_known_values()
 {
   PolynomialsRannacherTurek<2> pols;
   Point<2>                     p(0.5, 0.5);
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     {
       deallog << pols.compute_value(i, p) - 0.25 << std::endl;
     }
@@ -66,22 +66,22 @@ test_nodal_matrix()
   std::vector<Vector<double>>  values(points.size(), Vector<double>(1));
   std::vector<double>          local_dofs(n_dofs);
 
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     {
-      for(unsigned int k = 0; k < values.size(); ++k)
+      for (unsigned int k = 0; k < values.size(); ++k)
         values[k][0] = fe.shape_value(i, points[k]);
       fe.convert_generalized_support_point_values_to_dof_values(values,
                                                                 local_dofs);
 
-      for(unsigned int j = 0; j < n_dofs; ++j)
+      for (unsigned int j = 0; j < n_dofs; ++j)
         N(j, i) = local_dofs[j];
     }
 
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     {
-      for(unsigned int j = 0; j < 4; ++j)
+      for (unsigned int j = 0; j < 4; ++j)
         {
-          if(i == j)
+          if (i == j)
             {
               deallog << N(i, j) - 1.0;
             }
@@ -89,7 +89,7 @@ test_nodal_matrix()
             {
               deallog << N(i, j) - 0.0;
             }
-          if(j + 1 < 4)
+          if (j + 1 < 4)
             deallog << " ";
           else
             deallog << std::endl;
@@ -111,7 +111,7 @@ test_interpolation()
   dofh.initialize(tr, fe);
 
   Vector<double> input_vector(dofh.n_dofs());
-  for(unsigned int i = 0; i < input_vector.size(); ++i)
+  for (unsigned int i = 0; i < input_vector.size(); ++i)
     {
       input_vector[i] = double(i);
     }
@@ -121,7 +121,7 @@ test_interpolation()
 
   typedef DoFHandler<2>::cell_iterator cell_it;
   cell_it                              cell = dofh.begin_active();
-  for(; cell != dofh.end(); ++cell)
+  for (; cell != dofh.end(); ++cell)
     {
       fev.reinit(cell);
 
@@ -135,7 +135,7 @@ test_interpolation()
       Vector<double> local_dofs(n_dofs);
       cell->get_dof_values(input_vector, local_dofs);
 
-      for(unsigned int j = 0; j < n_dofs; ++j)
+      for (unsigned int j = 0; j < n_dofs; ++j)
         {
           deallog << local_dofs[j] - interpolated_local_dofs[j] << " ";
         }

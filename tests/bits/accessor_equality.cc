@@ -89,7 +89,7 @@ test()
       {
         (dof_handler.begin_active() != dof_handler2.begin_active());
       }
-    catch(ExceptionBase& e)
+    catch (ExceptionBase& e)
       {
         deallog << e.get_exc_name() << std::endl;
       }

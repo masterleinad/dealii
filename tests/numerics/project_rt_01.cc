@@ -21,10 +21,10 @@ template <int dim>
 void
 test()
 {
-  if(dim != 1)
+  if (dim != 1)
     // this is interesting also in 3d, but is
     // exceedingly slow there. limit to the
     // case of RT(0) elements in 3d
-    for(unsigned int p = 0; p < (dim == 2 ? 3 : 1); ++p)
+    for (unsigned int p = 0; p < (dim == 2 ? 3 : 1); ++p)
       test_no_hanging_nodes(FE_RaviartThomas<dim>(p), p + 1, 1);
 }

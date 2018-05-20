@@ -207,7 +207,7 @@ SolverRichardson<VectorType>::solve(const MatrixType&         A,
   LogStream::Prefix prefix("Richardson");
 
   // Main loop
-  while(conv == SolverControl::iterate)
+  while (conv == SolverControl::iterate)
     {
       // Do not use residual,
       // but do it in 2 steps
@@ -219,7 +219,7 @@ SolverRichardson<VectorType>::solve(const MatrixType&         A,
       // residual
       last_criterion = criterion(r, d);
       conv           = this->iteration_status(iter, last_criterion, x);
-      if(conv != SolverControl::iterate)
+      if (conv != SolverControl::iterate)
         break;
 
       x.add(additional_data.omega, d);
@@ -229,7 +229,7 @@ SolverRichardson<VectorType>::solve(const MatrixType&         A,
     }
 
   // in case of failure: throw exception
-  if(conv != SolverControl::success)
+  if (conv != SolverControl::success)
     AssertThrow(false, SolverControl::NoConvergence(iter, last_criterion));
   // otherwise exit as normal
 }
@@ -261,7 +261,7 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
   LogStream::Prefix prefix("RichardsonT");
 
   // Main loop
-  while(conv == SolverControl::iterate)
+  while (conv == SolverControl::iterate)
     {
       // Do not use Tresidual,
       // but do it in 2 steps
@@ -271,7 +271,7 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
 
       last_criterion = criterion(r, d);
       conv           = this->iteration_status(iter, last_criterion, x);
-      if(conv != SolverControl::iterate)
+      if (conv != SolverControl::iterate)
         break;
 
       x.add(additional_data.omega, d);
@@ -281,7 +281,7 @@ SolverRichardson<VectorType>::Tsolve(const MatrixType&         A,
     }
 
   // in case of failure: throw exception
-  if(conv != SolverControl::success)
+  if (conv != SolverControl::success)
     AssertThrow(false, SolverControl::NoConvergence(iter, last_criterion));
 
   // otherwise exit as normal
@@ -300,7 +300,7 @@ inline typename VectorType::value_type
 SolverRichardson<VectorType>::criterion(const VectorType& r,
                                         const VectorType& d) const
 {
-  if(!additional_data.use_preconditioned_residual)
+  if (!additional_data.use_preconditioned_residual)
     return r.l2_norm();
   else
     return d.l2_norm();

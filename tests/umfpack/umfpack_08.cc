@@ -62,8 +62,8 @@ test()
 
   BlockSparsityPattern sparsity_pattern;
   sparsity_pattern.reinit(3, 3);
-  for(unsigned int i = 0; i < 3; ++i)
-    for(unsigned int j = 0; j < 3; ++j)
+  for (unsigned int i = 0; i < 3; ++i)
+    for (unsigned int j = 0; j < 3; ++j)
       sparsity_pattern.block(i, j).reinit(
         i != 2 ? dof_handler.n_dofs() / 3 :
                  dof_handler.n_dofs() - 2 * (dof_handler.n_dofs() / 3),
@@ -97,27 +97,28 @@ test()
     // scale lower left part of the matrix by
     // 1/2 and upper right part by 2 to make
     // matrix nonsymmetric
-    for(SparseMatrix<double>::iterator p = xB.begin(); p != xB.end(); ++p)
-      if(p->column() < p->row())
+    for (SparseMatrix<double>::iterator p = xB.begin(); p != xB.end(); ++p)
+      if (p->column() < p->row())
         p->value() = p->value() / 2;
-      else if(p->column() > p->row())
+      else if (p->column() > p->row())
         p->value() = p->value() * 2;
 
     // check that we've done it right
-    for(SparseMatrix<double>::iterator p = xB.begin(); p != xB.end(); ++p)
-      if(p->column() != p->row())
+    for (SparseMatrix<double>::iterator p = xB.begin(); p != xB.end(); ++p)
+      if (p->column() != p->row())
         AssertThrow(xB(p->row(), p->column()) != xB(p->column(), p->row()),
                     ExcInternalError());
 
     // now copy stuff over
-    for(SparseMatrix<double>::const_iterator i = xB.begin(); i != xB.end(); ++i)
+    for (SparseMatrix<double>::const_iterator i = xB.begin(); i != xB.end();
+         ++i)
       B.set(i->row(), i->column(), i->value());
   }
 
   // for a number of different solution
   // vectors, make up a matching rhs vector
   // and check what the UMFPACK solver finds
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     {
       BlockVector<double> solution(3);
       solution.block(0).reinit(dof_handler.n_dofs() / 3);
@@ -130,7 +131,7 @@ test()
       BlockVector<double> b;
       b.reinit(solution);
 
-      for(unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
+      for (unsigned int j = 0; j < dof_handler.n_dofs(); ++j)
         solution(j) = j + j * (i + 1) * (i + 1);
 
       B.vmult(b, solution);

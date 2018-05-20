@@ -44,13 +44,13 @@ setup_tria(parallel::distributed::Triangulation<dim>& tr)
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
 
-  for(typename parallel::distributed::Triangulation<dim>::active_cell_iterator
-        cell
-      = tr.begin_active();
-      cell != tr.end();
-      ++cell)
+  for (typename parallel::distributed::Triangulation<dim>::active_cell_iterator
+         cell
+       = tr.begin_active();
+       cell != tr.end();
+       ++cell)
     {
-      if(cell->id().to_string() == "0_2:11")
+      if (cell->id().to_string() == "0_2:11")
         cell->set_refine_flag();
     }
   tr.execute_coarsening_and_refinement();
@@ -92,11 +92,11 @@ check_fe(FiniteElement<dim>& fe)
     //std::map<std::string,std::vector<types::global_dof_index> > dofmap;
     std::map<std::string, std::vector<types::global_dof_index>> mgdofmap;
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofhref.begin();
-        cell != dofhref.end();
-        ++cell)
+    for (typename DoFHandler<dim>::level_cell_iterator cell = dofhref.begin();
+         cell != dofhref.end();
+         ++cell)
       {
-        if(!cell->is_locally_owned_on_level())
+        if (!cell->is_locally_owned_on_level())
           continue;
 
         std::vector<types::global_dof_index>& d
@@ -105,11 +105,11 @@ check_fe(FiniteElement<dim>& fe)
         cell->get_mg_dof_indices(d);
       }
 
-    for(typename DoFHandler<dim>::level_cell_iterator cell = dofh.begin();
-        cell != dofh.end();
-        ++cell)
+    for (typename DoFHandler<dim>::level_cell_iterator cell = dofh.begin();
+         cell != dofh.end();
+         ++cell)
       {
-        if(cell->level_subdomain_id() == numbers::artificial_subdomain_id)
+        if (cell->level_subdomain_id() == numbers::artificial_subdomain_id)
           continue;
 
         std::vector<types::global_dof_index>& renumbered
@@ -132,7 +132,7 @@ check_fe(FiniteElement<dim>& fe)
   mg_constrained_dofs.initialize(dofh, dirichlet_boundary);
 
   const unsigned int n_levels = tr.n_global_levels();
-  for(unsigned int level = 0; level < n_levels; ++level)
+  for (unsigned int level = 0; level < n_levels; ++level)
     {
       deallog << "Level " << level << ":" << std::endl;
 

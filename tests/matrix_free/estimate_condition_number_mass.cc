@@ -50,12 +50,12 @@ mass_operator(const MatrixFree<dim, Number>&               data,
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
 
-  for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+  for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
     {
       fe_eval.reinit(cell);
       fe_eval.read_dof_values(src);
       fe_eval.evaluate(true, false, false);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int q = 0; q < n_q_points; ++q)
         {
           fe_eval.submit_value(fe_eval.get_value(q), q);
         }
@@ -133,7 +133,7 @@ test(const FiniteElement<dim>& fe, const unsigned int n_iterations)
     {
       solver.solve(mf, out, in, PreconditionIdentity());
     }
-  catch(...)
+  catch (...)
     {}
   deallog << std::endl;
 }

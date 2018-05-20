@@ -55,7 +55,7 @@ plot_FE_System_shape_functions()
   // possible (and they _have_, in
   // the past, literally dozens of
   // assertions)
-  if(dim != 1)
+  if (dim != 1)
     {
       FESystem<dim> p3(
         FE_Nedelec<dim>(1),
@@ -69,7 +69,7 @@ plot_FE_System_shape_functions()
 
       // the following is simply too
       // expensive in 3d...
-      if(dim != 3)
+      if (dim != 3)
         {
           FESystem<dim> p4(
             p3,

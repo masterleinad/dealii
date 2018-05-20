@@ -45,18 +45,18 @@ test(TrilinosWrappers::MPI::Vector& v)
   // vector. have a bit pattern of where we
   // actually wrote elements to
   std::vector<bool> pattern(v.size(), false);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     {
       v(i)       = i;
       pattern[i] = true;
     }
   v.compress(VectorOperation::insert);
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     v(i) += i;
 
   // check that they are ok, and this time
   // all of them
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     AssertThrow((((pattern[i] == true) && (v(i) == 2 * i))
                  || ((pattern[i] == false) && (v(i) == 0))),
                 ExcInternalError());
@@ -80,7 +80,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -94,7 +94,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

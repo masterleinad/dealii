@@ -44,9 +44,9 @@ test(TrilinosWrappers::MPI::Vector& v)
   // actually wrote elements to
   std::vector<bool> pattern(v.size(), false);
   bool              flag = false;
-  for(unsigned int i = 0; i < v.size(); i += 1 + i)
+  for (unsigned int i = 0; i < v.size(); i += 1 + i)
     {
-      if(flag == true)
+      if (flag == true)
         v(i) += i;
       else
         v(i) = i;
@@ -57,7 +57,7 @@ test(TrilinosWrappers::MPI::Vector& v)
 
   // check that they are ok, and this time
   // all of them
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     AssertThrow((((pattern[i] == true) && (v(i) == i))
                  || ((pattern[i] == false) && (v(i) == 0))),
                 ExcInternalError());
@@ -81,7 +81,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -95,7 +95,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

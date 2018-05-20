@@ -52,10 +52,10 @@ test()
 
   M                    = 0.;
   unsigned int counter = 1;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = 0; j < size; ++j)
       {
-        if(j >= i)
+        if (j >= i)
           M(i, j) = counter;
 
         counter++;

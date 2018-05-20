@@ -77,9 +77,9 @@ PreconditionBlock<MatrixType, inverse_type>::initialize(
   this->reinit(
     nblocks, blocksize, parameters.same_diagonal, parameters.inversion);
 
-  if(parameters.invert_diagonal)
+  if (parameters.invert_diagonal)
     {
-      if(permutation.size() == M.m())
+      if (permutation.size() == M.m())
         invert_permuted_diagblocks();
       else
         invert_diagblocks();
@@ -112,22 +112,22 @@ PreconditionBlock<MatrixType, inverse_type>::invert_permuted_diagblocks()
 
   FullMatrix<inverse_type> M_cell(blocksize);
 
-  if(this->same_diagonal())
+  if (this->same_diagonal())
     {
-      for(size_type row_cell = 0; row_cell < blocksize; ++row_cell)
+      for (size_type row_cell = 0; row_cell < blocksize; ++row_cell)
         {
           typename MatrixType::const_iterator       entry   = M.begin(row_cell);
           const typename MatrixType::const_iterator row_end = M.end(row_cell);
-          while(entry != row_end)
+          while (entry != row_end)
             {
-              if(entry->column() < blocksize)
+              if (entry->column() < blocksize)
                 M_cell(row_cell, entry->column()) = entry->value();
               ++entry;
             }
         }
-      if(this->store_diagonals())
+      if (this->store_diagonals())
         this->diagonal(0) = M_cell;
-      switch(this->inversion)
+      switch (this->inversion)
         {
           case PreconditionBlockBase<inverse_type>::gauss_jordan:
             this->inverse(0).invert(M_cell);
@@ -154,10 +154,10 @@ PreconditionBlock<MatrixType, inverse_type>::invert_permuted_diagblocks()
       // of the unknowns.
       M_cell = 0;
 
-      for(unsigned int cell = 0; cell < this->size(); ++cell)
+      for (unsigned int cell = 0; cell < this->size(); ++cell)
         {
           const size_type cell_start = cell * blocksize;
-          for(size_type row_cell = 0; row_cell < blocksize; ++row_cell)
+          for (size_type row_cell = 0; row_cell < blocksize; ++row_cell)
             {
               const size_type urow = row_cell + cell_start;
 
@@ -166,23 +166,23 @@ PreconditionBlock<MatrixType, inverse_type>::invert_permuted_diagblocks()
               typename MatrixType::const_iterator       entry   = M.begin(row);
               const typename MatrixType::const_iterator row_end = M.end(row);
 
-              for(; entry != row_end; ++entry)
+              for (; entry != row_end; ++entry)
                 {
                   //if (entry->column()<cell_start)
-                  if(inverse_permutation[entry->column()] < cell_start)
+                  if (inverse_permutation[entry->column()] < cell_start)
                     continue;
 
                   const size_type column_cell
                     = inverse_permutation[entry->column()] - cell_start;
-                  if(column_cell >= blocksize)
+                  if (column_cell >= blocksize)
                     continue;
                   M_cell(row_cell, column_cell) = entry->value();
                 }
             }
 
-          if(this->store_diagonals())
+          if (this->store_diagonals())
             this->diagonal(cell) = M_cell;
-          switch(this->inversion)
+          switch (this->inversion)
             {
               case PreconditionBlockBase<inverse_type>::gauss_jordan:
                 this->inverse(cell).invert(M_cell);
@@ -215,7 +215,7 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
 
   const MatrixType& M = *this->A;
 
-  if(permutation.size() != 0)
+  if (permutation.size() != 0)
     Assert(
       permutation.size() == M.m() || permutation.size() == this->size(),
       ExcMessage(
@@ -240,7 +240,7 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
   FullMatrix<number> M_cell(this->blocksize);
 
   // Loop over all blocks
-  for(unsigned int rawcell = 0; rawcell < this->size(); ++rawcell)
+  for (unsigned int rawcell = 0; rawcell < this->size(); ++rawcell)
     {
       const unsigned int cell = cell_permuted ? permutation[rawcell] : rawcell;
       const size_type    block_start = cell * this->blocksize;
@@ -250,27 +250,27 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
       //       deallog << std::endl << cell << '-' << block_start
       //            << '-' << permuted_block_start << (permuted ? 't' : 'f') << '\t';
 
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         {
           //        deallog << ' ' << row;
           const typename MatrixType::const_iterator row_end = M.end(row);
           typename MatrixType::const_iterator       entry   = M.begin(row);
 
           b_cell_row = src(row);
-          for(; entry != row_end; ++entry)
+          for (; entry != row_end; ++entry)
             {
               const size_type column = entry->column();
               const size_type inverse_permuted_column
                 = permuted ? inverse_permutation[column] : column;
               b_cell_row -= entry->value() * prev(column);
               //TODO:[GK] Find out if this is really once column and once permuted
-              if(!this->inverses_ready()
-                 && inverse_permuted_column >= block_start
-                 && inverse_permuted_column < block_start + this->blocksize)
+              if (!this->inverses_ready()
+                  && inverse_permuted_column >= block_start
+                  && inverse_permuted_column < block_start + this->blocksize)
                 {
                   const size_type column_cell = column - block_start;
-                  if(transpose_diagonal)
+                  if (transpose_diagonal)
                     M_cell(column_cell, row_cell) = entry->value();
                   else
                     M_cell(row_cell, column_cell) = entry->value();
@@ -278,9 +278,9 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
             }
           b_cell(row_cell) = b_cell_row;
         }
-      if(this->inverses_ready())
+      if (this->inverses_ready())
         {
-          if(transpose_diagonal)
+          if (transpose_diagonal)
             this->inverse_Tvmult(cell, x_cell, b_cell);
           else
             this->inverse_vmult(cell, x_cell, b_cell);
@@ -292,8 +292,8 @@ PreconditionBlock<MatrixType, inverse_type>::forward_step(
         }
 
       // distribute x_cell to dst
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         dst(row) = prev(row) + this->relaxation * x_cell(row_cell);
     }
 }
@@ -311,7 +311,7 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
 
   const MatrixType& M = *this->A;
 
-  if(permutation.size() != 0)
+  if (permutation.size() != 0)
     Assert(
       permutation.size() == M.m() || permutation.size() == this->size(),
       ExcMessage(
@@ -333,7 +333,7 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
   number2   b_cell_row;
 
   FullMatrix<number> M_cell(this->blocksize);
-  for(unsigned int rawcell = this->size(); rawcell != 0;)
+  for (unsigned int rawcell = this->size(); rawcell != 0;)
     {
       --rawcell;
       const unsigned int cell = cell_permuted ? permutation[rawcell] : rawcell;
@@ -341,21 +341,21 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
       const size_type    block_end   = block_start + this->blocksize;
       const size_type    permuted_block_start
         = permuted ? permutation[block_start] : block_start;
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         {
           const typename MatrixType::const_iterator row_end = M.end(row);
           typename MatrixType::const_iterator       entry   = M.begin(row);
 
           b_cell_row = src(row);
-          for(; entry != row_end; ++entry)
+          for (; entry != row_end; ++entry)
             {
               const size_type column = entry->column();
               const size_type inverse_permuted_column
                 = permuted ? inverse_permutation[column] : column;
               b_cell_row -= entry->value() * prev(column);
-              if(!this->inverses_ready() && inverse_permuted_column < block_end
-                 && column >= block_start)
+              if (!this->inverses_ready() && inverse_permuted_column < block_end
+                  && column >= block_start)
                 {
                   const size_type column_cell = column - block_start;
                   // We need the
@@ -364,7 +364,7 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
                   // so we switch row
                   // and column
                   // indices
-                  if(transpose_diagonal)
+                  if (transpose_diagonal)
                     M_cell(column_cell, row_cell) = entry->value();
                   else
                     M_cell(row_cell, column_cell) = entry->value();
@@ -372,9 +372,9 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
             }
           b_cell(row_cell) = b_cell_row;
         }
-      if(this->inverses_ready())
+      if (this->inverses_ready())
         {
-          if(transpose_diagonal)
+          if (transpose_diagonal)
             this->inverse_Tvmult(cell, x_cell, b_cell);
           else
             this->inverse_vmult(cell, x_cell, b_cell);
@@ -386,8 +386,8 @@ PreconditionBlock<MatrixType, inverse_type>::backward_step(
         }
 
       // distribute x_cell to dst
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         dst(row) = prev(row) + this->relaxation * x_cell(row_cell);
     }
 }
@@ -411,22 +411,22 @@ PreconditionBlock<MatrixType, inverse_type>::invert_diagblocks()
 
   FullMatrix<inverse_type> M_cell(blocksize);
 
-  if(this->same_diagonal())
+  if (this->same_diagonal())
     {
-      for(size_type row_cell = 0; row_cell < blocksize; ++row_cell)
+      for (size_type row_cell = 0; row_cell < blocksize; ++row_cell)
         {
           typename MatrixType::const_iterator       entry   = M.begin(row_cell);
           const typename MatrixType::const_iterator row_end = M.end(row_cell);
-          while(entry != row_end)
+          while (entry != row_end)
             {
-              if(entry->column() < blocksize)
+              if (entry->column() < blocksize)
                 M_cell(row_cell, entry->column()) = entry->value();
               ++entry;
             }
         }
-      if(this->store_diagonals())
+      if (this->store_diagonals())
         this->diagonal(0) = M_cell;
-      switch(this->inversion)
+      switch (this->inversion)
         {
           case PreconditionBlockBase<inverse_type>::gauss_jordan:
             this->inverse(0).invert(M_cell);
@@ -446,30 +446,30 @@ PreconditionBlock<MatrixType, inverse_type>::invert_diagblocks()
     {
       M_cell = 0;
 
-      for(unsigned int cell = 0; cell < this->size(); ++cell)
+      for (unsigned int cell = 0; cell < this->size(); ++cell)
         {
           const size_type cell_start = cell * blocksize;
-          for(size_type row_cell = 0; row_cell < blocksize; ++row_cell)
+          for (size_type row_cell = 0; row_cell < blocksize; ++row_cell)
             {
               const size_type                     row   = row_cell + cell_start;
               typename MatrixType::const_iterator entry = M.begin(row);
               const typename MatrixType::const_iterator row_end = M.end(row);
 
-              for(; entry != row_end; ++entry)
+              for (; entry != row_end; ++entry)
                 {
-                  if(entry->column() < cell_start)
+                  if (entry->column() < cell_start)
                     continue;
 
                   const size_type column_cell = entry->column() - cell_start;
-                  if(column_cell >= blocksize)
+                  if (column_cell >= blocksize)
                     continue;
                   M_cell(row_cell, column_cell) = entry->value();
                 }
             }
 
-          if(this->store_diagonals())
+          if (this->store_diagonals())
             this->diagonal(cell) = M_cell;
-          switch(this->inversion)
+          switch (this->inversion)
             {
               case PreconditionBlockBase<inverse_type>::gauss_jordan:
                 this->inverse(cell).invert(M_cell);
@@ -497,7 +497,7 @@ PreconditionBlock<MatrixType, inverse_type>::set_permutation(
 {
   AssertDimension(new_permutation.size(), new_inverse_permutation.size());
 
-  if(this->inverses_ready())
+  if (this->inverses_ready())
     {
       AssertDimension(new_permutation.size(), this->size());
     }
@@ -539,28 +539,28 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::do_vmult(
   // of the unknowns.
   size_type row, row_cell, begin_diag_block = 0;
 
-  if(!this->inverses_ready())
+  if (!this->inverses_ready())
     {
       FullMatrix<number> M_cell(this->blocksize);
-      for(unsigned int cell = 0; cell < this->size(); ++cell)
+      for (unsigned int cell = 0; cell < this->size(); ++cell)
         {
-          for(row = cell * this->blocksize, row_cell = 0;
-              row_cell < this->blocksize;
-              ++row_cell, ++row)
+          for (row = cell * this->blocksize, row_cell = 0;
+               row_cell < this->blocksize;
+               ++row_cell, ++row)
             {
               b_cell(row_cell) = src(row);
-              for(size_type column_cell = 0, column = cell * this->blocksize;
-                  column_cell < this->blocksize;
-                  ++column_cell, ++column)
+              for (size_type column_cell = 0, column = cell * this->blocksize;
+                   column_cell < this->blocksize;
+                   ++column_cell, ++column)
                 M_cell(row_cell, column_cell) = M(row, column);
             }
           Householder<number> house(M_cell);
           house.least_squares(x_cell, b_cell);
           // distribute x_cell to dst
-          for(row = cell * this->blocksize, row_cell = 0;
-              row_cell < this->blocksize;
-              ++row_cell, ++row)
-            if(adding)
+          for (row = cell * this->blocksize, row_cell = 0;
+               row_cell < this->blocksize;
+               ++row_cell, ++row)
+            if (adding)
               dst(row) += x_cell(row_cell);
             else
               dst(row) = x_cell(row_cell);
@@ -569,20 +569,20 @@ PreconditionBlockJacobi<MatrixType, inverse_type>::do_vmult(
         }
     }
   else
-    for(unsigned int cell = 0; cell < this->size(); ++cell)
+    for (unsigned int cell = 0; cell < this->size(); ++cell)
       {
-        for(row = cell * this->blocksize, row_cell = 0;
-            row_cell < this->blocksize;
-            ++row_cell, ++row)
+        for (row = cell * this->blocksize, row_cell = 0;
+             row_cell < this->blocksize;
+             ++row_cell, ++row)
           {
             b_cell(row_cell) = src(row);
           }
         this->inverse_vmult(cell, x_cell, b_cell);
         // distribute x_cell to dst
-        for(row = cell * this->blocksize, row_cell = 0;
-            row_cell < this->blocksize;
-            ++row_cell, ++row)
-          if(adding)
+        for (row = cell * this->blocksize, row_cell = 0;
+             row_cell < this->blocksize;
+             ++row_cell, ++row)
+          if (adding)
             dst(row) += x_cell(row_cell);
           else
             dst(row) = x_cell(row_cell);
@@ -689,7 +689,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::forward(
 
   const MatrixType& M        = *this->A;
   const bool        permuted = (this->permutation.size() != 0);
-  if(permuted)
+  if (permuted)
     {
       Assert(this->permutation.size() == M.m(),
              ExcDimensionMismatch(this->permutation.size(), M.m()));
@@ -710,31 +710,31 @@ PreconditionBlockSOR<MatrixType, inverse_type>::forward(
   // inverses were not precomputed
   FullMatrix<number> M_cell(this->blocksize);
 
-  for(unsigned int cell = 0; cell < this->size(); ++cell)
+  for (unsigned int cell = 0; cell < this->size(); ++cell)
     {
       const size_type permuted_block_start
         = permuted ? this->permutation[block_start] : block_start;
 
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         {
           const typename MatrixType::const_iterator row_end = M.end(row);
           typename MatrixType::const_iterator       entry   = M.begin(row);
 
           b_cell_row = src(row);
-          for(; entry != row_end; ++entry)
+          for (; entry != row_end; ++entry)
             {
               const size_type column = entry->column();
               const size_type inverse_permuted_column
                 = permuted ? this->inverse_permutation[column] : column;
 
-              if(inverse_permuted_column < block_start)
+              if (inverse_permuted_column < block_start)
                 b_cell_row -= entry->value() * dst(column);
-              else if(!this->inverses_ready()
-                      && column < block_start + this->blocksize)
+              else if (!this->inverses_ready()
+                       && column < block_start + this->blocksize)
                 {
                   const size_type column_cell = column - block_start;
-                  if(transpose_diagonal)
+                  if (transpose_diagonal)
                     M_cell(column_cell, row_cell) = entry->value();
                   else
                     M_cell(row_cell, column_cell) = entry->value();
@@ -742,9 +742,9 @@ PreconditionBlockSOR<MatrixType, inverse_type>::forward(
             }
           b_cell(row_cell) = b_cell_row;
         }
-      if(this->inverses_ready())
+      if (this->inverses_ready())
         {
-          if(transpose_diagonal)
+          if (transpose_diagonal)
             this->inverse_Tvmult(cell, x_cell, b_cell);
           else
             this->inverse_vmult(cell, x_cell, b_cell);
@@ -756,8 +756,8 @@ PreconditionBlockSOR<MatrixType, inverse_type>::forward(
         }
 
       // distribute x_cell to dst
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         dst(row) = this->relaxation * x_cell(row_cell);
 
       block_start += this->blocksize;
@@ -777,7 +777,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
 
   const MatrixType& M        = *this->A;
   const bool        permuted = (this->permutation.size() != 0);
-  if(permuted)
+  if (permuted)
     {
       Assert(this->permutation.size() == M.m(),
              ExcDimensionMismatch(this->permutation.size(), M.m()));
@@ -797,7 +797,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
   number2   b_cell_row;
 
   FullMatrix<number> M_cell(this->blocksize);
-  for(unsigned int cell = this->size(); cell != 0;)
+  for (unsigned int cell = this->size(); cell != 0;)
     {
       --cell;
       const size_type block_start = block_end - this->blocksize;
@@ -805,21 +805,21 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
       const size_type permuted_block_start = (this->permutation.size() != 0) ?
                                                this->permutation[block_start] :
                                                block_start;
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         {
           const typename MatrixType::const_iterator row_end = M.end(row);
           typename MatrixType::const_iterator       entry   = M.begin(row);
 
           b_cell_row = src(row);
-          for(; entry != row_end; ++entry)
+          for (; entry != row_end; ++entry)
             {
               const size_type column = entry->column();
               const size_type inverse_permuted_column
                 = permuted ? this->inverse_permutation[column] : column;
-              if(inverse_permuted_column >= block_end)
+              if (inverse_permuted_column >= block_end)
                 b_cell_row -= entry->value() * dst(column);
-              else if(!this->inverses_ready() && column >= block_start)
+              else if (!this->inverses_ready() && column >= block_start)
                 {
                   const size_type column_cell = column - block_start;
                   // We need the
@@ -828,7 +828,7 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
                   // so we switch row
                   // and column
                   // indices
-                  if(transpose_diagonal)
+                  if (transpose_diagonal)
                     M_cell(column_cell, row_cell) = entry->value();
                   else
                     M_cell(row_cell, column_cell) = entry->value();
@@ -836,9 +836,9 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
             }
           b_cell(row_cell) = b_cell_row;
         }
-      if(this->inverses_ready())
+      if (this->inverses_ready())
         {
-          if(transpose_diagonal)
+          if (transpose_diagonal)
             this->inverse_Tvmult(cell, x_cell, b_cell);
           else
             this->inverse_vmult(cell, x_cell, b_cell);
@@ -850,8 +850,8 @@ PreconditionBlockSOR<MatrixType, inverse_type>::backward(
         }
 
       // distribute x_cell to dst
-      for(row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
-          ++row_cell, ++row)
+      for (row = permuted_block_start, row_cell = 0; row_cell < this->blocksize;
+           ++row_cell, ++row)
         dst(row) = this->relaxation * x_cell(row_cell);
       block_end = block_start;
     }
@@ -942,16 +942,16 @@ PreconditionBlockSSOR<MatrixType, inverse_type>::vmult(
   const double         scaling = (2. - this->relaxation) / this->relaxation;
 
   // Multiply with diagonal blocks
-  for(unsigned int cell = 0; cell < this->size(); ++cell)
+  for (unsigned int cell = 0; cell < this->size(); ++cell)
     {
       size_type row = cell * this->blocksize;
 
-      for(size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
+      for (size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
         cell_src(row_cell) = help(row + row_cell);
 
       this->diagonal(cell).vmult(cell_dst, cell_src);
 
-      for(size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
+      for (size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
         help(row + row_cell) = scaling * cell_dst(row_cell);
     }
 
@@ -975,16 +975,16 @@ PreconditionBlockSSOR<MatrixType, inverse_type>::Tvmult(
   const double         scaling = (2. - this->relaxation) / this->relaxation;
 
   // Multiply with diagonal blocks
-  for(unsigned int cell = 0; cell < this->size(); ++cell)
+  for (unsigned int cell = 0; cell < this->size(); ++cell)
     {
       size_type row = cell * this->blocksize;
 
-      for(size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
+      for (size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
         cell_src(row_cell) = help(row + row_cell);
 
       this->diagonal(cell).Tvmult(cell_dst, cell_src);
 
-      for(size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
+      for (size_type row_cell = 0; row_cell < this->blocksize; ++row_cell)
         help(row + row_cell) = scaling * cell_dst(row_cell);
     }
 

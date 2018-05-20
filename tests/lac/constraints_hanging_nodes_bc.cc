@@ -50,15 +50,15 @@ test()
   // refine some of the cells.
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(unsigned int counter = 0; cell != endc; ++cell, ++counter)
-    if(counter % 5 == 0)
+  for (unsigned int counter = 0; cell != endc; ++cell, ++counter)
+    if (counter % 5 == 0)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
   cell = tria.begin_active();
   endc = tria.end();
-  for(unsigned int counter = 0; cell != endc; ++cell, ++counter)
-    if(counter % 8 == 0)
+  for (unsigned int counter = 0; cell != endc; ++cell, ++counter)
+    if (counter % 8 == 0)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
@@ -77,9 +77,9 @@ test()
       dof, 0, Functions::ConstantFunction<dim>(1.), boundary_values);
     std::map<types::global_dof_index, double>::const_iterator boundary_value
       = boundary_values.begin();
-    for(; boundary_value != boundary_values.end(); ++boundary_value)
+    for (; boundary_value != boundary_values.end(); ++boundary_value)
       {
-        if(!correct_constraints.is_constrained(boundary_value->first))
+        if (!correct_constraints.is_constrained(boundary_value->first))
           {
             correct_constraints.add_line(boundary_value->first);
             correct_constraints.set_inhomogeneity(boundary_value->first,
@@ -102,21 +102,21 @@ test()
   // the two constraint matrices should look the
   // same, so go through them and check
   deallog << "Check that both constraint matrices are identical... ";
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
       AssertThrow(correct_constraints.is_constrained(i)
                     == library_constraints.is_constrained(i),
                   ExcInternalError());
       typedef const std::vector<std::pair<types::global_dof_index, double>>&
         constraint_format;
-      if(correct_constraints.is_constrained(i))
+      if (correct_constraints.is_constrained(i))
         {
           constraint_format correct
             = *correct_constraints.get_constraint_entries(i);
           constraint_format library
             = *library_constraints.get_constraint_entries(i);
           AssertThrow(correct.size() == library.size(), ExcInternalError());
-          for(unsigned int q = 0; q < correct.size(); ++q)
+          for (unsigned int q = 0; q < correct.size(); ++q)
             {
               AssertThrow(correct[q].first == library[q].first,
                           ExcInternalError());

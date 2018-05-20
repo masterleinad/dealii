@@ -27,9 +27,9 @@ main(int argc, char** argv)
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());
 
-  if(typeid(TrilinosScalar) == typeid(double))
+  if (typeid(TrilinosScalar) == typeid(double))
     deallog << "double" << std::endl;
-  else if(typeid(TrilinosScalar) == typeid(float))
+  else if (typeid(TrilinosScalar) == typeid(float))
     deallog << "float" << std::endl;
   else
     Assert(false, ExcNotImplemented());

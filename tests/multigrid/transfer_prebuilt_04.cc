@@ -38,14 +38,14 @@ check()
     Triangulation<dim>::limit_level_difference_at_vertices,
     parallel::distributed::Triangulation<dim>::construct_multigrid_hierarchy);
   GridGenerator::subdivided_hyper_cube(tr, 3);
-  for(unsigned int cycle = 0; cycle < (dim == 2 ? 10 : 7); ++cycle)
+  for (unsigned int cycle = 0; cycle < (dim == 2 ? 10 : 7); ++cycle)
     {
       // adaptive refinement into a circle
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = tr.begin_active();
-          cell != tr.end();
-          ++cell)
-        if(cell->is_locally_owned() && cell->vertex(0).norm() < 1e-10)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = tr.begin_active();
+           cell != tr.end();
+           ++cell)
+        if (cell->is_locally_owned() && cell->vertex(0).norm() < 1e-10)
           cell->set_refine_flag();
       tr.execute_coarsening_and_refinement();
 
@@ -64,7 +64,7 @@ check()
 
       unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-      if(0)
+      if (0)
         {
           std::ofstream grid_output(
             ("out" + Utilities::to_string(myid) + ".svg").c_str());

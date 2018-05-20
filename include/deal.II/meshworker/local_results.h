@@ -434,16 +434,16 @@ namespace MeshWorker
     bool                                 both)
   {
     M1.resize(matrices.size());
-    if(both)
+    if (both)
       M2.resize(matrices.size());
-    for(unsigned int i = 0; i < matrices.size(); ++i)
+    for (unsigned int i = 0; i < matrices.size(); ++i)
       {
         const unsigned int row = matrices.block(i).row;
         const unsigned int col = matrices.block(i).column;
 
         M1[i].row    = row;
         M1[i].column = col;
-        if(both)
+        if (both)
           {
             M2[i].row    = row;
             M2[i].column = col;
@@ -459,9 +459,9 @@ namespace MeshWorker
     bool                                   both)
   {
     M1.resize(matrices.size());
-    if(both)
+    if (both)
       M2.resize(matrices.size());
-    for(unsigned int i = 0; i < matrices.size(); ++i)
+    for (unsigned int i = 0; i < matrices.size(); ++i)
       {
         const MGLevelObject<MatrixBlock<MatrixType>>& o = matrices.block(i);
         const unsigned int row                          = o[o.min_level()].row;
@@ -469,7 +469,7 @@ namespace MeshWorker
 
         M1[i].row    = row;
         M1[i].column = col;
-        if(both)
+        if (both)
           {
             M2[i].row    = row;
             M2[i].column = col;
@@ -483,13 +483,13 @@ namespace MeshWorker
                                             const bool         both)
   {
     M1.resize(n);
-    if(both)
+    if (both)
       M2.resize(n);
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       {
         M1[i].row    = 0;
         M1[i].column = 0;
-        if(both)
+        if (both)
           {
             M2[i].row    = 0;
             M2[i].column = 0;
@@ -559,7 +559,7 @@ namespace MeshWorker
   inline MatrixBlock<FullMatrix<number>>&
   LocalResults<number>::matrix(unsigned int i, bool external)
   {
-    if(external)
+    if (external)
       {
         AssertIndexRange(i, M2.size());
         return M2[i];
@@ -602,7 +602,7 @@ namespace MeshWorker
   inline const MatrixBlock<FullMatrix<number>>&
   LocalResults<number>::matrix(unsigned int i, bool external) const
   {
-    if(external)
+    if (external)
       {
         AssertIndexRange(i, M2.size());
         return M2[i];
@@ -625,19 +625,19 @@ namespace MeshWorker
   {
     os << "J: " << J.size() << std::endl;
     os << "R: " << R.size() << std::endl;
-    for(unsigned int i = 0; i < R.size(); ++i)
+    for (unsigned int i = 0; i < R.size(); ++i)
       {
         os << "  " << R[i].n_blocks() << " -";
-        for(unsigned int j = 0; j < R[i].n_blocks(); ++j)
+        for (unsigned int j = 0; j < R[i].n_blocks(); ++j)
           os << ' ' << R[i].block(j).size();
         os << std::endl;
       }
     os << "M: " << M1.size() << " face " << M2.size() << std::endl;
-    for(unsigned int i = 0; i < M1.size(); ++i)
+    for (unsigned int i = 0; i < M1.size(); ++i)
       {
         os << "  " << M1[i].row << "," << M1[i].column << " "
            << M1[i].matrix.m() << 'x' << M1[i].matrix.n();
-        if(i < M2.size())
+        if (i < M2.size())
           os << " face " << M2[i].row << "," << M2[i].column << " "
              << M2[i].matrix.m() << 'x' << M2[i].matrix.n();
         os << std::endl;

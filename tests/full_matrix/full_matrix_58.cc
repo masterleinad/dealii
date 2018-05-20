@@ -29,20 +29,20 @@ main()
   FullMatrix<double> f(N, N);
 
   SparsityPattern s(N, N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       s.add(i, j);
   s.compress();
 
   SparseMatrix<double> sm(s);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       sm.set(i, j, i * j);
 
   f.copy_from(sm);
 
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       {
         deallog << i << ' ' << j << ' ' << f(i, j) << std::endl;
         AssertThrow(f(i, j) == sm(i, j), ExcInternalError());

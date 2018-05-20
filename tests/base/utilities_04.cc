@@ -28,7 +28,7 @@ split_string(const std::string& text, const char delim = '|')
   std::vector<std::string> result;
   std::string              word;
   std::stringstream        stream(text);
-  while(getline(stream, word, delim))
+  while (getline(stream, word, delim))
     result.push_back(word);
 
   return result;
@@ -46,9 +46,9 @@ test_function(const std::string& original_text,
   std::vector<std::string> should_be_vec = split_string(result);
 
   Assert(res_vec.size() == should_be_vec.size(), ExcInternalError());
-  for(unsigned int i = 0; i < res_vec.size(); ++i)
+  for (unsigned int i = 0; i < res_vec.size(); ++i)
     {
-      if(res_vec[i] != should_be_vec[i])
+      if (res_vec[i] != should_be_vec[i])
         std::cout << "'" << res_vec[i] << "!=" << should_be_vec[i] << "'"
                   << std::endl;
       Assert(res_vec[i] == should_be_vec[i], ExcInternalError());

@@ -24,7 +24,7 @@ template <typename number>
 void
 print(const Vector<number>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << v(i) << '\t';
   deallog << std::endl;
 }
@@ -33,7 +33,7 @@ template <typename T>
 void
 fill(T& a)
 {
-  for(unsigned int i = 0; i < a.size(); ++i)
+  for (unsigned int i = 0; i < a.size(); ++i)
     a(i) = i;
 }
 

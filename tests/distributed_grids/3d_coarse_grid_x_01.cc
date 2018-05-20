@@ -28,7 +28,7 @@ template <int dim>
 void
 test(std::ostream& /*out*/)
 {
-  if(true)
+  if (true)
     {
       deallog << "hyper_cube" << std::endl;
 
@@ -41,7 +41,7 @@ test(std::ostream& /*out*/)
       GridOut().write_gnuplot(tr, deallog.get_file_stream());
     }
 
-  if(true)
+  if (true)
     {
       deallog << "hyper_ball" << std::endl;
 
@@ -54,7 +54,7 @@ test(std::ostream& /*out*/)
       GridOut().write_gnuplot(tr, deallog.get_file_stream());
     }
 
-  if(true)
+  if (true)
     {
       deallog << "half_hyper_ball" << std::endl;
 

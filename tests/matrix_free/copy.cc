@@ -32,16 +32,16 @@ sub_test()
   GridGenerator::hyper_cube(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 1e-8)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   cell = tria.begin_active();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 0.2)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 0.2)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
-  if(dim < 3 || fe_degree < 2)
+  if (dim < 3 || fe_degree < 2)
     tria.refine_global(1);
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
@@ -53,12 +53,12 @@ sub_test()
   deallog << "Testing " << fe.get_name() << std::endl;
 
   // run test for several different meshes
-  for(unsigned int i = 0; i < 8 - 2 * dim; ++i)
+  for (unsigned int i = 0; i < 8 - 2 * dim; ++i)
     {
       cell                 = tria.begin_active();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (9 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (9 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
 
@@ -91,9 +91,9 @@ sub_test()
       mf_copy.copy_from(mf_data);
       MatrixFreeTest<dim, fe_degree, number> copied(mf_copy);
 
-      for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+      for (unsigned int i = 0; i < dof.n_dofs(); ++i)
         {
-          if(constraints.is_constrained(i))
+          if (constraints.is_constrained(i))
             continue;
           const double entry = random_value<double>();
           in_dist(i)         = entry;

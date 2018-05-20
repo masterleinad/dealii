@@ -32,11 +32,11 @@ print_formatted(const FullMatrix<number>& A,
                 const unsigned int        precision,
                 const unsigned int        width)
 {
-  for(unsigned int i = 0; i < A.m(); ++i)
+  for (unsigned int i = 0; i < A.m(); ++i)
     {
-      for(unsigned int j = 0; j < A.n(); ++j)
+      for (unsigned int j = 0; j < A.n(); ++j)
         {
-          if(A(i, j) != 0)
+          if (A(i, j) != 0)
             deallog << std::setw(width) << std::setprecision(precision)
                     << A(i, j);
           else
@@ -57,12 +57,12 @@ test_embedding(const FiniteElement<dim>& fe)
   std::vector<std::vector<FullMatrix<double>>> P;
 
   P.resize(RefinementCase<dim>::isotropic_refinement);
-  for(unsigned int ref = RefinementCase<dim>::cut_x;
-      ref < RefinementCase<dim>::isotropic_refinement + 1;
-      ++ref)
-    for(unsigned int c = 0;
-        c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref));
-        ++c)
+  for (unsigned int ref = RefinementCase<dim>::cut_x;
+       ref < RefinementCase<dim>::isotropic_refinement + 1;
+       ++ref)
+    for (unsigned int c = 0;
+         c < GeometryInfo<dim>::n_children(RefinementCase<dim>(ref));
+         ++c)
       {
         P[ref - 1].push_back(FullMatrix<double>());
         P[ref - 1][c].reinit(n, n);
@@ -70,7 +70,7 @@ test_embedding(const FiniteElement<dim>& fe)
 
   FETools::compute_embedding_matrices(fe, P);
 
-  for(unsigned int i = 0; i < nc; ++i)
+  for (unsigned int i = 0; i < nc; ++i)
     {
       deallog << fe.get_name() << " embedding " << i << std::endl;
       print_formatted(
@@ -92,9 +92,9 @@ test_projection(const FiniteElement<dim>& fe1,
   FullMatrix<double> P(n2, n1);
 
   FETools::get_projection_matrix(fe1, fe2, P);
-  for(unsigned int i = 0; i < P.m(); ++i)
-    for(unsigned int j = 0; j < P.n(); ++j)
-      if(std::fabs(P(i, j)) < 1e-14)
+  for (unsigned int i = 0; i < P.m(); ++i)
+    for (unsigned int j = 0; j < P.n(); ++j)
+      if (std::fabs(P(i, j)) < 1e-14)
         P(i, j) = 0;
   P.print_formatted(out, 8, false, 5);
 }
@@ -153,14 +153,14 @@ test_renumbering(const FiniteElement<dim>& fe)
   FETools::compute_component_wise(fe, v, start);
 
   deallog << fe.get_name() << std::endl << '[';
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << v[i];
   deallog << " ]" << std::endl;
 
-  for(unsigned int i = 0; i < start.size(); ++i)
+  for (unsigned int i = 0; i < start.size(); ++i)
     {
       deallog << "Base " << i << ':';
-      for(unsigned int j = 0; j < start[i].size(); ++j)
+      for (unsigned int j = 0; j < start[i].size(); ++j)
         deallog << ' ' << start[i][j];
       deallog << std::endl;
     }

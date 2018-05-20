@@ -26,8 +26,8 @@ const double entries[9] = {11, 12, 13, 21, 22, 23, 31, 32, 33};
 void
 random_matrix(FullMatrix<double>& A)
 {
-  for(unsigned int i = 0; i < A.m(); ++i)
-    for(unsigned int j = 0; j < A.n(); ++j)
+  for (unsigned int i = 0; i < A.m(); ++i)
+    for (unsigned int j = 0; j < A.n(); ++j)
       {
         double rnd = Testing::rand();
         rnd /= RAND_MAX;
@@ -50,7 +50,7 @@ main()
 
   FullMatrix<double>::const_iterator it  = T.begin();
   FullMatrix<double>::const_iterator end = T.end();
-  while(it != end)
+  while (it != end)
     {
       deallog << "Row " << it->row() << "\tCol " << it->column() << "\tVal "
               << it->value() << std::endl;
@@ -59,14 +59,14 @@ main()
 
   it  = T.begin(1);
   end = T.end(1);
-  while(it != end)
+  while (it != end)
     {
       deallog << "Row " << it->row() << "\tCol " << it->column() << "\tVal "
               << it->value() << std::endl;
       ++it;
     }
 
-  for(unsigned int i = 1; i < 10; ++i)
+  for (unsigned int i = 1; i < 10; ++i)
     {
       FullMatrix<double> A(i, i), B(i, i);
 
@@ -76,7 +76,7 @@ main()
 
       // Check if unit vectors are recovered
       deallog << "Inverse(dim=" << i << "):";
-      for(unsigned int j = 0; j < i; ++j)
+      for (unsigned int j = 0; j < i; ++j)
         {
           Vector<double> x(i);
           Vector<double> y(i);
@@ -86,13 +86,13 @@ main()
           B.vmult(z, y);
           z.add(-1., x);
           double a = z.l2_norm();
-          if(a > 1.e-12)
+          if (a > 1.e-12)
             deallog << a << ' ';
         }
       deallog << std::endl;
     }
 
-  if(true)
+  if (true)
     {
       FullMatrix<double> A(5, 5), C(5, 5), D(5, 5), H(5, 5);
       D(0, 0) = 1.;
@@ -103,7 +103,7 @@ main()
 
       A = D;
 
-      for(unsigned int i = 0; i < 4; ++i)
+      for (unsigned int i = 0; i < 4; ++i)
         {
           // Setup rotation matrix
           C = 0;
@@ -132,7 +132,7 @@ main()
 
       SolverControl control(500, 1.e-8, false, false);
 
-      if(true)
+      if (true)
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, 0.);
@@ -140,7 +140,7 @@ main()
           von_Mises.solve(eigen, A, u);
           deallog << "Eigenvalue: " << eigen << std::endl;
         }
-      if(true)
+      if (true)
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, -4.);
@@ -151,7 +151,7 @@ main()
       H = A;
       H.gauss_jordan();
       H.print_formatted(logfile, 3, false);
-      if(true)
+      if (true)
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, 0.);
@@ -159,7 +159,7 @@ main()
           von_Mises.solve(eigen, H, u);
           deallog << "Eigenvalue: " << eigen << std::endl;
         }
-      if(true)
+      if (true)
         {
           u = 1.;
           EigenPower<Vector<double>> von_Mises(control, mem, -4.);

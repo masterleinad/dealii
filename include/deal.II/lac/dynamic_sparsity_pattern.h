@@ -755,13 +755,13 @@ namespace DynamicSparsityPatternIterators
     Assert(sparsity_pattern == other.sparsity_pattern, ExcInternalError());
 
     // if *this is past-the-end, then it is less than no one
-    if(current_row == numbers::invalid_size_type)
+    if (current_row == numbers::invalid_size_type)
       return (false);
     // now *this should be an valid value
     Assert(current_row < sparsity_pattern->n_rows(), ExcInternalError());
 
     // if other is past-the-end
-    if(other.current_row == numbers::invalid_size_type)
+    if (other.current_row == numbers::invalid_size_type)
       return (true);
     // now other should be an valid value
     Assert(other.current_row < sparsity_pattern->n_rows(), ExcInternalError());
@@ -789,9 +789,9 @@ namespace DynamicSparsityPatternIterators
     // the sparsity pattern. consequently, rather than trying to
     // duplicate code here, just call the begin() function of the
     // sparsity pattern itself
-    if(current_entry == end_of_row)
+    if (current_entry == end_of_row)
       {
-        if(current_row + 1 < sparsity_pattern->n_rows())
+        if (current_row + 1 < sparsity_pattern->n_rows())
           *this = *sparsity_pattern->begin(current_row + 1);
         else
           *this = Accessor(sparsity_pattern); // invalid object
@@ -867,7 +867,7 @@ inline void
 DynamicSparsityPattern::Line::add(const size_type j)
 {
   // first check the last element (or if line is still empty)
-  if((entries.size() == 0) || (entries.back() < j))
+  if ((entries.size() == 0) || (entries.back() < j))
     {
       entries.push_back(j);
       return;
@@ -878,7 +878,7 @@ DynamicSparsityPattern::Line::add(const size_type j)
     = Utilities::lower_bound(entries.begin(), entries.end(), j);
 
   // If this entry is a duplicate, exit immediately
-  if(*it == j)
+  if (*it == j)
     return;
 
   // Insert at the right place in the vector. Vector grows automatically to
@@ -904,7 +904,7 @@ DynamicSparsityPattern::add(const size_type i, const size_type j)
   Assert(i < rows, ExcIndexRangeType<size_type>(i, 0, rows));
   Assert(j < cols, ExcIndexRangeType<size_type>(j, 0, cols));
 
-  if(rowset.size() > 0 && !rowset.is_element(i))
+  if (rowset.size() > 0 && !rowset.is_element(i))
     return;
 
   have_entries = true;
@@ -923,10 +923,10 @@ DynamicSparsityPattern::add_entries(const size_type row,
 {
   Assert(row < rows, ExcIndexRangeType<size_type>(row, 0, rows));
 
-  if(rowset.size() > 0 && !rowset.is_element(row))
+  if (rowset.size() > 0 && !rowset.is_element(row))
     return;
 
-  if(!have_entries && begin < end)
+  if (!have_entries && begin < end)
     have_entries = true;
 
   const size_type rowindex
@@ -939,10 +939,10 @@ DynamicSparsityPattern::row_length(const size_type row) const
 {
   Assert(row < n_rows(), ExcIndexRangeType<size_type>(row, 0, n_rows()));
 
-  if(!have_entries)
+  if (!have_entries)
     return 0;
 
-  if(rowset.size() > 0 && !rowset.is_element(row))
+  if (rowset.size() > 0 && !rowset.is_element(row))
     return 0;
 
   const size_type rowindex
@@ -982,10 +982,10 @@ DynamicSparsityPattern::begin(const size_type r) const
 {
   Assert(r < n_rows(), ExcIndexRangeType<size_type>(r, 0, n_rows()));
 
-  if(!have_entries)
+  if (!have_entries)
     return iterator(this);
 
-  if(rowset.size() > 0)
+  if (rowset.size() > 0)
     {
       // We have an IndexSet that describes the locally owned set. For
       // performance reasons we need to make sure that we don't do a
@@ -996,7 +996,7 @@ DynamicSparsityPattern::begin(const size_type r) const
       // of incrementing the row index, we potentially skip over entries
       // not in the rowset.
       IndexSet::ElementIterator it = rowset.at(r);
-      if(it == rowset.end())
+      if (it == rowset.end())
         return end(); // we don't own any row between r and the end
 
       // Instead of using row_length(*it)==0 in the while loop below,
@@ -1005,13 +1005,13 @@ DynamicSparsityPattern::begin(const size_type r) const
       // walking over this vector entry by entry anyways.
       size_type rowindex = rowset.index_within_set(*it);
 
-      while(it != rowset.end() && lines[rowindex].entries.size() == 0)
+      while (it != rowset.end() && lines[rowindex].entries.size() == 0)
         {
           ++it;
           ++rowindex;
         }
 
-      if(it == rowset.end())
+      if (it == rowset.end())
         return end();
       else
         return iterator(this, *it, 0);
@@ -1022,12 +1022,12 @@ DynamicSparsityPattern::begin(const size_type r) const
   // directly instead of going through the slower row_length() function
   size_type row = r;
 
-  while(row < n_rows() && lines[row].entries.size() == 0)
+  while (row < n_rows() && lines[row].entries.size() == 0)
     {
       ++row;
     }
 
-  if(row == n_rows())
+  if (row == n_rows())
     return iterator(this);
   else
     return iterator(this, row, 0);
@@ -1039,7 +1039,7 @@ DynamicSparsityPattern::end(const size_type r) const
   Assert(r < n_rows(), ExcIndexRangeType<size_type>(r, 0, n_rows()));
 
   unsigned int row = r + 1;
-  if(row == n_rows())
+  if (row == n_rows())
     return iterator(this);
   else
     return begin(row);

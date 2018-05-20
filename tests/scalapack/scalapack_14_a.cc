@@ -60,7 +60,7 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   create_random(full_A);
 
   std::vector<NumberType> scaling_factors(full_A.m());
-  for(unsigned int i = 0; i < scaling_factors.size(); ++i)
+  for (unsigned int i = 0; i < scaling_factors.size(); ++i)
     scaling_factors[i] = std::sqrt(i + 1);
 
   ScaLAPACKMatrix<NumberType> scalapack_A(
@@ -71,8 +71,8 @@ test(const unsigned int block_size_i, const unsigned int block_size_j)
   FullMatrix<NumberType> tmp_full_A(scalapack_A.m(), scalapack_A.n());
   scalapack_A.copy_to(tmp_full_A);
 
-  for(unsigned int i = 0; i < full_A.m(); ++i)
-    for(unsigned int j = 0; j < full_A.n(); ++j)
+  for (unsigned int i = 0; i < full_A.m(); ++i)
+    for (unsigned int j = 0; j < full_A.n(); ++j)
       full_A(i, j) *= scaling_factors[i];
 
   pcout << "   Row scaling for"
@@ -94,7 +94,7 @@ main(int argc, char** argv)
   const std::vector<unsigned int> blocks_i = {{16, 32, 64}};
   const std::vector<unsigned int> blocks_j = {{16, 32, 64}};
 
-  for(const auto& s : blocks_i)
-    for(const auto& b : blocks_j)
+  for (const auto& s : blocks_i)
+    for (const auto& b : blocks_j)
       test<double>(s, b);
 }

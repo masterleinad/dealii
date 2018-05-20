@@ -68,9 +68,9 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
   LinearAlgebra::CUDAWrappers::Vector<Number> in_device(n_dofs);
   LinearAlgebra::CUDAWrappers::Vector<Number> out_device(n_dofs);
 
-  for(unsigned int i = 0; i < n_dofs; ++i)
+  for (unsigned int i = 0; i < n_dofs; ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = Testing::rand() / (double) RAND_MAX;
       in(i)              = entry;
@@ -106,15 +106,15 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += ((fe_values.shape_grad(i, q_point)
                                          * fe_values.shape_grad(j, q_point)
                                        + 10. * fe_values.shape_value(i, q_point)
@@ -127,13 +127,13 @@ do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
           cell_matrix, local_dof_indices, sparse_matrix);
       }
   }
-  for(unsigned i = 0; i < n_dofs; ++i)
+  for (unsigned i = 0; i < n_dofs; ++i)
     in_host[i] = in[i];
   sparse_matrix.vmult(out_host, in_host);
 
   Number out_dist_cpu_norm = 0.;
   Number out_norm          = 0.;
-  for(unsigned i = 0; i < n_dofs; ++i)
+  for (unsigned i = 0; i < n_dofs; ++i)
     {
       out_norm += std::pow(out[i] - out_host[i], 2);
       out_dist_cpu_norm += std::pow(out_host[i], 2);

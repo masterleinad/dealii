@@ -40,9 +40,9 @@ evaluate_tensor_product(double* dst, double* src)
     double>
     evaluator;
 
-  if(type == 0)
+  if (type == 0)
     evaluator.template values<0, dof_to_quad, add, false>(src, dst);
-  if(type == 1)
+  if (type == 1)
     evaluator.template gradients<0, dof_to_quad, add, false>(src, dst);
 }
 
@@ -52,36 +52,36 @@ test()
 {
   deallog << "Test " << M << " x " << N << std::endl;
   LinearAlgebra::ReadWriteVector<double> shape_host(M * N);
-  for(unsigned int i = 0; i < (M + 1) / 2; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < (M + 1) / 2; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       {
         shape_host[i * N + j]
           = -1. + 2. * static_cast<double>(Testing::rand()) / RAND_MAX;
-        if(type == 1)
+        if (type == 1)
           shape_host[(M - 1 - i) * N + N - 1 - j] = -shape_host[i * N + j];
         else
           shape_host[(M - 1 - i) * N + N - 1 - j] = shape_host[i * N + j];
       }
-  if(type == 0 && M % 2 == 1 && N % 2 == 1)
+  if (type == 0 && M % 2 == 1 && N % 2 == 1)
     {
-      for(unsigned int i = 0; i < M; ++i)
+      for (unsigned int i = 0; i < M; ++i)
         shape_host[i * N + N / 2] = 0.;
       shape_host[M / 2 * N + N / 2] = 1.;
     }
-  if(type == 1 && M % 2 == 1 && N % 2 == 1)
+  if (type == 1 && M % 2 == 1 && N % 2 == 1)
     shape_host[M / 2 * N + N / 2] = 0.;
 
   LinearAlgebra::ReadWriteVector<double> x_host(N), x_ref(N), y_host(M),
     y_ref(M);
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     x_host[i] = static_cast<double>(Testing::rand()) / RAND_MAX;
 
   // Compute reference
-  for(unsigned int i = 0; i < M; ++i)
+  for (unsigned int i = 0; i < M; ++i)
     {
       y_host[i] = 1.;
       y_ref[i]  = add ? y_host[i] : 0.;
-      for(unsigned int j = 0; j < N; ++j)
+      for (unsigned int j = 0; j < N; ++j)
         y_ref[i] += shape_host[i * N + j] * x_host[j];
     }
 
@@ -115,22 +115,22 @@ test()
   // Check the results on the host
   y_host.import(y_dev, VectorOperation::insert);
   deallog << "Errors no transpose: ";
-  for(unsigned int i = 0; i < M; ++i)
+  for (unsigned int i = 0; i < M; ++i)
     deallog << y_host[i] - y_ref[i] << " ";
   deallog << std::endl;
 
-  for(unsigned int i = 0; i < M; ++i)
+  for (unsigned int i = 0; i < M; ++i)
     y_host[i] = static_cast<double>(Testing::rand()) / RAND_MAX;
 
   // Copy y_host to the device
   y_dev.import(y_host, VectorOperation::insert);
 
   // Compute reference
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       x_host[i] = 2.;
       x_ref[i]  = add ? x_host[i] : 0.;
-      for(unsigned int j = 0; j < M; ++j)
+      for (unsigned int j = 0; j < M; ++j)
         x_ref[i] += shape_host[j * N + i] * y_host[j];
     }
 
@@ -144,7 +144,7 @@ test()
   // Check the results on the host
   x_host.import(x_dev, VectorOperation::insert);
   deallog << "Errors transpose:    ";
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     deallog << x_host[i] - x_ref[i] << " ";
   deallog << std::endl;
 }

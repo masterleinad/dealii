@@ -28,7 +28,7 @@ check_this(const DoFHandler<dim>& dof_handler)
 {
   // don't check if fe has no support
   // points
-  if(dof_handler.get_fe().get_unit_support_points().size() == 0)
+  if (dof_handler.get_fe().get_unit_support_points().size() == 0)
     return;
 
   std::vector<Point<dim>> map(dof_handler.n_dofs());
@@ -37,7 +37,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   DoFTools::map_dofs_to_support_points(mapping, dof_handler, map);
 
   // output every third element
-  for(unsigned int i = 0; i < map.size(); i += 3)
+  for (unsigned int i = 0; i < map.size(); i += 3)
     deallog << map[i] << " ";
   deallog << std::endl;
 }

@@ -45,11 +45,11 @@ public:
   std::complex<double>
   value(const Point<dim>& p, const unsigned int c) const
   {
-    if(c == 0)
+    if (c == 0)
       return p[0] + p[1] + ((dim == 3) ? p[2] : 0.0);
-    if(c == 1)
+    if (c == 1)
       return p[0] * p[0] + p[1] * p[1];
-    if(c == 2)
+    if (c == 2)
       return p[2] + p[0] * p[1];
     else
       return numbers::signaling_nan<double>();

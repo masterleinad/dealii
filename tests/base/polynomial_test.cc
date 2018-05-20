@@ -38,7 +38,7 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
 
   p.compute(x, values, gradients, second, third, fourth);
 
-  for(unsigned int k = 0; k < n; ++k)
+  for (unsigned int k = 0; k < n; ++k)
     {
       // first make sure the
       // individual functions work in
@@ -46,13 +46,13 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
 
       // Check if compute_value is ok
       double val = p.compute_value(k, x);
-      if(std::fabs(val - values[k]) > eps)
+      if (std::fabs(val - values[k]) > eps)
         deallog << 'P' << k << ": values differ " << val << " != " << values[k]
                 << std::endl;
 
       // Check if compute_grad is ok
       Tensor<1, dim> grad = p.template compute_derivative<1>(k, x);
-      if((grad - gradients[k]) * (grad - gradients[k]) > eps * eps)
+      if ((grad - gradients[k]) * (grad - gradients[k]) > eps * eps)
         deallog << 'P' << k << ": gradients differ " << grad
                 << " != " << gradients[k] << std::endl;
 
@@ -60,23 +60,23 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
       Tensor<2, dim> grad2 = p.template compute_derivative<2>(k, x);
       Tensor<2, dim> diff  = grad2 - second[k];
 
-      if(diff.norm_square() > eps * eps)
+      if (diff.norm_square() > eps * eps)
         deallog << 'P' << k << ": second derivatives differ " << grad2
                 << " != " << second[k] << std::endl;
 
       // Check if third derivative is ok
       Tensor<3, dim> grad3 = p.template compute_derivative<3>(k, x);
-      if((grad3 - third[k]).norm_square() > 5e-15 * 5e-15)
+      if ((grad3 - third[k]).norm_square() > 5e-15 * 5e-15)
         deallog << 'P' << k << ": third derivatives differ " << grad3
                 << " != " << third[k] << std::endl;
 
-      if(diff.norm_square() > eps * eps)
+      if (diff.norm_square() > eps * eps)
         deallog << 'P' << k << ": second derivatives differ " << grad2
                 << " != " << second[k] << std::endl;
 
       // Check if third derivative is ok
       Tensor<4, dim> grad4 = p.template compute_derivative<4>(k, x);
-      if((grad3 - third[k]).norm_square() > eps * eps)
+      if ((grad3 - third[k]).norm_square() > eps * eps)
         deallog << 'P' << k << ": fourth derivatives differ " << grad4
                 << " != " << fourth[k] << std::endl;
 
@@ -92,22 +92,22 @@ check_poly(const Point<dim>& x, const PolynomialType& p)
       gradients[k] *= std::pow(10., dim);
 
       deallog << 'P' << k << "\t= " << values[k] << "\tgradient\t";
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         deallog << gradients[k][d] << '\t';
       deallog << "\t2nd\t";
-      for(unsigned int d1 = 0; d1 < dim; ++d1)
-        for(unsigned int d2 = 0; d2 < dim; ++d2)
+      for (unsigned int d1 = 0; d1 < dim; ++d1)
+        for (unsigned int d2 = 0; d2 < dim; ++d2)
           deallog << second[k][d1][d2] << '\t';
       deallog << "\t3rd\t";
-      for(unsigned int d1 = 0; d1 < dim; ++d1)
-        for(unsigned int d2 = 0; d2 < dim; ++d2)
-          for(unsigned int d3 = 0; d3 < dim; ++d3)
+      for (unsigned int d1 = 0; d1 < dim; ++d1)
+        for (unsigned int d2 = 0; d2 < dim; ++d2)
+          for (unsigned int d3 = 0; d3 < dim; ++d3)
             deallog << third[k][d1][d2][d3] << '\t';
       deallog << "\t4th\t";
-      for(unsigned int d1 = 0; d1 < dim; ++d1)
-        for(unsigned int d2 = 0; d2 < dim; ++d2)
-          for(unsigned int d3 = 0; d3 < dim; ++d3)
-            for(unsigned int d4 = 0; d4 < dim; ++d4)
+      for (unsigned int d1 = 0; d1 < dim; ++d1)
+        for (unsigned int d2 = 0; d2 < dim; ++d2)
+          for (unsigned int d3 = 0; d3 < dim; ++d3)
+            for (unsigned int d4 = 0; d4 < dim; ++d4)
               deallog << fourth[k][d1][d2][d3][d4] << '\t';
       deallog << std::endl;
     }
@@ -161,7 +161,7 @@ main()
 
   deallog.push("Lagrange");
   std::vector<Polynomial<double>> p;
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     p.push_back(LagrangeEquidistant(3, i));
 
   check_dimensions(p);
@@ -170,7 +170,7 @@ main()
   deallog.push("Legendre");
 
   p.clear();
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     p.push_back(Legendre(i));
 
   check_dimensions(p);
@@ -179,7 +179,7 @@ main()
   deallog.push("Hierarchical");
 
   p.clear();
-  for(unsigned int i = 0; i < 3; ++i)
+  for (unsigned int i = 0; i < 3; ++i)
     p.push_back(Hierarchical(i));
 
   check_dimensions(p);

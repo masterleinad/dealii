@@ -267,19 +267,19 @@ namespace Utilities
       // December 4, 2000.
       // Algorithm 4
       // We implement the latter below:
-      if(g == NumberType())
+      if (g == NumberType())
         {
           res[0] = std::copysign(1., f);
           res[1] = NumberType();
           res[2] = std::abs(f);
         }
-      else if(f == NumberType())
+      else if (f == NumberType())
         {
           res[0] = NumberType();
           res[1] = std::copysign(1., g);
           res[2] = std::abs(g);
         }
-      else if(std::abs(f) > std::abs(g))
+      else if (std::abs(f) > std::abs(g))
         {
           const NumberType tau = g / f;
           const NumberType u   = std::copysign(std::sqrt(1. + tau * tau), f);
@@ -335,7 +335,7 @@ namespace Utilities
       diagonal.push_back(a);
 
       // 3. Loop over steps
-      for(unsigned int i = 1; i < k; ++i)
+      for (unsigned int i = 1; i < k; ++i)
         {
           // 4. L2 norm of f
           const double b = f->l2_norm();
@@ -377,7 +377,7 @@ namespace Utilities
 
       Assert(info == 0, LAPACKSupport::ExcErrorCode("dstev", info));
 
-      if(eigenvalues != nullptr)
+      if (eigenvalues != nullptr)
         {
           eigenvalues->resize(diagonal.size());
           std::copy(diagonal.begin(), diagonal.end(), eigenvalues->begin());
@@ -447,7 +447,7 @@ namespace Utilities
       op.vmult(y, x);
       y.sadd(alpha * sigma, beta * sigma, x);
 
-      for(unsigned int i = 2; i <= degree; ++i)
+      for (unsigned int i = 2; i <= degree; ++i)
         {
           const double sigma_new = scale ? 1. / (tau - sigma) : 1.;
           op.vmult(yn, y);

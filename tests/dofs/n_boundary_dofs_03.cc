@@ -59,7 +59,7 @@ test()
 
   dof_handler.distribute_dofs(fe);
 
-  for(types::boundary_id b : {12, 13, 14, 15})
+  for (types::boundary_id b : {12, 13, 14, 15})
     {
       const unsigned int N
         = dof_handler.n_boundary_dofs(std::set<types::boundary_id>{b});

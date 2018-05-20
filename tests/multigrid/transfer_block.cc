@@ -47,7 +47,7 @@ reinit_vector_by_blocks(
   const unsigned int n_selected
     = std::accumulate(selected.begin(), selected.end(), 0U);
 
-  if(ndofs.size() == 0)
+  if (ndofs.size() == 0)
     {
       std::vector<std::vector<types::global_dof_index>> new_dofs(
         mg_dof.get_triangulation().n_levels(),
@@ -56,14 +56,14 @@ reinit_vector_by_blocks(
       MGTools::count_dofs_per_block(mg_dof, ndofs);
     }
 
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
       v[level].reinit(n_selected, 0);
       unsigned int k = 0;
-      for(unsigned int i = 0; i < selected.size() && (k < v[level].n_blocks());
-          ++i)
+      for (unsigned int i = 0; i < selected.size() && (k < v[level].n_blocks());
+           ++i)
         {
-          if(selected[i])
+          if (selected[i])
             {
               v[level].block(k++).reinit(ndofs[level][i]);
             }
@@ -79,8 +79,8 @@ check_block(const FiniteElement<dim>& fe,
             const vector<double>&     factors)
 {
   deallog << fe.get_name() << std::endl << "selected ";
-  for(unsigned int i = 0; i < selected.size(); ++i)
-    if(selected[i])
+  for (unsigned int i = 0; i < selected.size(); ++i)
+    if (selected[i])
       deallog << ' ' << i;
   deallog << std::endl;
 
@@ -96,7 +96,7 @@ check_block(const FiniteElement<dim>& fe,
   vector<types::global_dof_index> ndofs(fe.n_blocks());
   DoFTools::count_dofs_per_block(mgdof, ndofs);
 
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     DoFRenumbering::component_wise(mgdof, l);
   std::vector<std::vector<types::global_dof_index>> mg_ndofs(
     mgdof.get_triangulation().n_levels(),
@@ -104,13 +104,13 @@ check_block(const FiniteElement<dim>& fe,
   MGTools::count_dofs_per_block(mgdof, mg_ndofs);
 
   deallog << "Global  dofs:";
-  for(unsigned int i = 0; i < ndofs.size(); ++i)
+  for (unsigned int i = 0; i < ndofs.size(); ++i)
     deallog << ' ' << ndofs[i];
   deallog << std::endl;
-  for(unsigned int l = 0; l < mg_ndofs.size(); ++l)
+  for (unsigned int l = 0; l < mg_ndofs.size(); ++l)
     {
       deallog << "Level " << l << " dofs:";
-      for(unsigned int i = 0; i < mg_ndofs[l].size(); ++i)
+      for (unsigned int i = 0; i < mg_ndofs[l].size(); ++i)
         deallog << ' ' << mg_ndofs[l][i];
       deallog << std::endl;
     }
@@ -118,7 +118,7 @@ check_block(const FiniteElement<dim>& fe,
   PrimitiveVectorMemory<Vector<double>> mem;
   MGTransferBlock<double>               transfer;
   transfer.build_matrices(dof, mgdof, selected);
-  if(factors.size() > 0)
+  if (factors.size() > 0)
     transfer.initialize(factors, mem);
 
   MGLevelObject<BlockVector<double>> u(0, tr.n_levels() - 1);
@@ -133,13 +133,13 @@ check_block(const FiniteElement<dim>& fe,
   // These outputs are just the
   // number of dofs on each level
   deallog << "u0";
-  for(unsigned int b = 0; b < u[0].n_blocks(); ++b)
+  for (unsigned int b = 0; b < u[0].n_blocks(); ++b)
     deallog << '\t' << (int) (u[0].block(b) * u[0].block(b) + .4);
   deallog << std::endl << "u1";
-  for(unsigned int b = 0; b < u[1].n_blocks(); ++b)
+  for (unsigned int b = 0; b < u[1].n_blocks(); ++b)
     deallog << '\t' << (int) (u[1].block(b) * u[1].block(b) + .4);
   deallog << std::endl << "u2";
-  for(unsigned int b = 0; b < u[2].n_blocks(); ++b)
+  for (unsigned int b = 0; b < u[2].n_blocks(); ++b)
     deallog << '\t' << (int) (u[2].block(b) * u[2].block(b) + .4);
   deallog << std::endl;
 
@@ -150,10 +150,10 @@ check_block(const FiniteElement<dim>& fe,
   // After adding the restrictions,
   // things get bigger.
   deallog << "u1";
-  for(unsigned int b = 0; b < u[1].n_blocks(); ++b)
+  for (unsigned int b = 0; b < u[1].n_blocks(); ++b)
     deallog << '\t' << (int) (u[1].block(b) * u[1].block(b) + .5);
   deallog << std::endl << "u0";
-  for(unsigned int b = 0; b < u[0].n_blocks(); ++b)
+  for (unsigned int b = 0; b < u[0].n_blocks(); ++b)
     deallog << '\t' << (int) (u[0].block(b) * u[0].block(b) + .5);
   deallog << std::endl;
 
@@ -162,7 +162,7 @@ check_block(const FiniteElement<dim>& fe,
   // from one up
   BlockVector<double> v;
   v.reinit(ndofs);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = i + 1;
 
   // See what part gets copied to mg
@@ -170,18 +170,18 @@ check_block(const FiniteElement<dim>& fe,
   reinit_vector_by_blocks(mgdof, u, selected, mg_ndofs);
 
   transfer.copy_to_mg(mgdof, u, v);
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     deallog << ' ' << (int) u[2](i);
   deallog << std::endl;
 
   // Now do the opposite: fill a
   // multigrid vector counting the
   // dofs and see where the numbers go
-  for(unsigned int i = 0; i < u[2].size(); ++i)
+  for (unsigned int i = 0; i < u[2].size(); ++i)
     u[2](i) = i + 1;
   v = 0.;
   transfer.copy_from_mg(mgdof, v, u);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << (int) v(i);
   deallog << std::endl;
   v.equ(-1., v);

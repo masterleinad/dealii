@@ -65,15 +65,15 @@ test()
   Point<spacedim> real;
   Point<dim>      unit;
   double          eps = 1e-10;
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       deallog << cell << std::endl;
-      for(unsigned int q = 0; q < quad.size(); ++q)
+      for (unsigned int q = 0; q < quad.size(); ++q)
         {
           real = mapping.transform_unit_to_real_cell(cell, quad.point(q));
           unit = mapping.transform_real_to_unit_cell(cell, real);
           deallog << quad.point(q) << " -> " << real << std::endl;
-          if((unit - quad.point(q)).norm() > eps)
+          if ((unit - quad.point(q)).norm() > eps)
             deallog << quad.point(q) << " != " << unit << std::endl;
         }
     }

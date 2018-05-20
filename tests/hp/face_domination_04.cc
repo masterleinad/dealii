@@ -46,7 +46,7 @@ print_dofs(const hp::DoFHandler<2>::active_cell_iterator& cell)
   std::vector<types::global_dof_index> dof_indices(
     cell->get_fe().dofs_per_cell);
   cell->get_dof_indices(dof_indices);
-  for(unsigned int i = 0; i < dof_indices.size(); ++i)
+  for (unsigned int i = 0; i < dof_indices.size(); ++i)
     deallog << dof_indices[i] << ' ';
   deallog << std::endl;
 }
@@ -61,7 +61,7 @@ main()
   subdivisions[0] = 2;
   GridGenerator::subdivided_hyper_rectangle(
     triangulation, subdivisions, Point<dim>(0, 0), Point<dim>(2, 1));
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
       hp::FECollection<dim> fe_collection;
       fe_collection.push_back(FESystem<dim>(

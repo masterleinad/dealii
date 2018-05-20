@@ -59,11 +59,11 @@ namespace LocalIntegrators
       AssertDimension(M.m(), n_dofs);
       AssertDimension(M.n(), n_dofs);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = factor * fe.JxW(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
               {
                 const double divu
                   = fe[FEValuesExtractors::Vector(0)].divergence(j, k);
@@ -97,15 +97,15 @@ namespace LocalIntegrators
       AssertDimension(fetest.get_fe().n_components(), dim);
       AssertVectorVectorDimension(input, dim, fetest.n_quadrature_points);
 
-      for(unsigned int k = 0; k < fetest.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fetest.n_quadrature_points; ++k)
         {
           const double dx = factor * fetest.JxW(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               const double divv
                 = fetest[FEValuesExtractors::Vector(0)].divergence(i, k);
               double du = 0.;
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 du += input[d][k][d];
 
               result(i) += dx * du * divv;
@@ -133,19 +133,19 @@ namespace LocalIntegrators
       AssertDimension(M.m(), n_dofs);
       AssertDimension(M.n(), n_dofs);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
           const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
               {
                 const double divu
                   = fe[FEValuesExtractors::Vector(0)].divergence(j, k);
                 const double divv
                   = fe[FEValuesExtractors::Vector(0)].divergence(i, k);
                 double un = 0., vn = 0.;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     un += fe.shape_value_component(j, k, d) * n[d];
                     vn += fe.shape_value_component(i, k, d) * n[d];
@@ -192,25 +192,25 @@ namespace LocalIntegrators
       AssertVectorVectorDimension(Dinput, dim, fe.n_quadrature_points);
       AssertVectorVectorDimension(data, dim, fe.n_quadrature_points);
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
           const Tensor<1, dim> n  = fe.normal_vector(k);
 
           double umgn = 0.;
           double divu = 0.;
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             {
               umgn += (input[d][k] - data[d][k]) * n[d];
               divu += Dinput[d][k][d];
             }
 
-          for(unsigned int i = 0; i < n_dofs; ++i)
+          for (unsigned int i = 0; i < n_dofs; ++i)
             {
               double       vn = 0.;
               const double divv
                 = fe[FEValuesExtractors::Vector(0)].divergence(i, k);
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 vn += fe.shape_value_component(i, k, d) * n[d];
 
               result(i)
@@ -253,12 +253,12 @@ namespace LocalIntegrators
       const double fe = (factor2 < 0) ? factor1 : factor2;
       const double f  = .5 * (fi + fe);
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
           const Tensor<1, dim> n  = fe1.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
               {
                 double       uni = 0.;
                 double       une = 0.;
@@ -273,7 +273,7 @@ namespace LocalIntegrators
                 const double divve
                   = fe2[FEValuesExtractors::Vector(0)].divergence(i, k);
 
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   {
                     uni += fe1.shape_value_component(j, k, d) * n[d];
                     une += fe2.shape_value_component(j, k, d) * n[d];
@@ -339,7 +339,7 @@ namespace LocalIntegrators
       const double fe      = (ext_factor < 0) ? int_factor : ext_factor;
       const double penalty = .5 * pen * (fi + fe);
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx    = fe1.JxW(k);
           const Tensor<1, dim> n     = fe1.normal_vector(k);
@@ -347,7 +347,7 @@ namespace LocalIntegrators
           double               une   = 0.;
           double               divui = 0.;
           double               divue = 0.;
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             {
               uni += input1[d][k] * n[d];
               une += input2[d][k] * n[d];
@@ -355,7 +355,7 @@ namespace LocalIntegrators
               divue += Dinput2[d][k][d];
             }
 
-          for(unsigned int i = 0; i < n1; ++i)
+          for (unsigned int i = 0; i < n1; ++i)
             {
               double       vni = 0.;
               double       vne = 0.;
@@ -363,7 +363,7 @@ namespace LocalIntegrators
                 = fe1[FEValuesExtractors::Vector(0)].divergence(i, k);
               const double divve
                 = fe2[FEValuesExtractors::Vector(0)].divergence(i, k);
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 {
                   vni += fe1.shape_value_component(i, k, d) * n[d];
                   vne += fe2.shape_value_component(i, k, d) * n[d];

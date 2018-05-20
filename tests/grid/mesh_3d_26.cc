@@ -52,8 +52,8 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double v = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         v += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return v;
   }
@@ -69,7 +69,7 @@ test(Triangulation<dim>& triangulation)
   // create a MappingQ(3) which is used on ALL
   // cells
   MappingQ<3> mapping(3, true);
-  for(unsigned int p = 1; p < 7 - dim; ++p)
+  for (unsigned int p = 1; p < 7 - dim; ++p)
     {
       FE_Q<dim>       fe(p);
       DoFHandler<dim> dof_handler(triangulation);
@@ -77,7 +77,7 @@ test(Triangulation<dim>& triangulation)
 
       Vector<double> interpolant(dof_handler.n_dofs());
       Vector<float>  error(triangulation.n_active_cells());
-      for(unsigned int q = 0; q <= p + 2; ++q)
+      for (unsigned int q = 0; q <= p + 2; ++q)
         {
           // interpolate the function
           VectorTools::interpolate(
@@ -94,7 +94,7 @@ test(Triangulation<dim>& triangulation)
           deallog << fe.get_name() << ", P_" << q
                   << ", rel. error=" << error.l2_norm() / interpolant.l2_norm()
                   << std::endl;
-          if(q <= p)
+          if (q <= p)
             Assert(error.l2_norm() < 1e-12 * interpolant.l2_norm(),
                    ExcInternalError());
         }

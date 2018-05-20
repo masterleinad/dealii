@@ -36,18 +36,18 @@ mypartition(parallel::shared::Triangulation<dim>& tria)
       = tria.begin_active(),
       endc             = tria.end();
     unsigned int index = 0;
-    for(; cell != endc; ++cell, ++index)
+    for (; cell != endc; ++cell, ++index)
       cell->set_subdomain_id(assignment[index % 16]);
   }
 
-  for(int lvl = tria.n_levels() - 1; lvl >= 0; --lvl)
+  for (int lvl = tria.n_levels() - 1; lvl >= 0; --lvl)
     {
       typename parallel::shared::Triangulation<dim>::cell_iterator cell
         = tria.begin(lvl),
         endc = tria.end(lvl);
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
-          if(cell->active())
+          if (cell->active())
             cell->set_level_subdomain_id(cell->subdomain_id());
           else
             cell->set_level_subdomain_id(cell->child(0)->level_subdomain_id());
@@ -78,8 +78,8 @@ test()
     typename Triangulation<dim>::active_cell_iterator cell
       = shared_tria.begin_active(),
       endc = shared_tria.end();
-    for(; cell != endc; ++cell)
-      if(cell->subdomain_id() != numbers::artificial_subdomain_id)
+    for (; cell != endc; ++cell)
+      if (cell->subdomain_id() != numbers::artificial_subdomain_id)
         deallog << "(" << cell->id().to_string() << "," << cell->subdomain_id()
                 << ")" << std::endl;
   }
@@ -88,8 +88,8 @@ test()
     deallog << "(CellId,level_subdomain_id) for each cell:" << std::endl;
     typename Triangulation<dim>::cell_iterator cell = shared_tria.begin(),
                                                endc = shared_tria.end();
-    for(; cell != endc; ++cell)
-      if(cell->level_subdomain_id() != numbers::artificial_subdomain_id)
+    for (; cell != endc; ++cell)
+      if (cell->level_subdomain_id() != numbers::artificial_subdomain_id)
         deallog << "(" << cell->id().to_string() << ","
                 << cell->level_subdomain_id() << ")" << std::endl;
   }

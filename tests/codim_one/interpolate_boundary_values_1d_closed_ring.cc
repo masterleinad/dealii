@@ -61,29 +61,29 @@ test()
 
   // test left and right boundary
   // separatel
-  for(unsigned int boundary_id = 0; boundary_id < 2; ++boundary_id)
+  for (unsigned int boundary_id = 0; boundary_id < 2; ++boundary_id)
     {
       std::map<types::global_dof_index, double> bv;
       VectorTools::interpolate_boundary_values(
         dof_handler, boundary_id, Functions::SquareFunction<spacedim>(), bv);
       deallog << bv.size() << " boundary degrees of freedom" << std::endl;
 
-      for(std::map<types::global_dof_index, double>::const_iterator i
-          = bv.begin();
-          i != bv.end();
-          ++i)
+      for (std::map<types::global_dof_index, double>::const_iterator i
+           = bv.begin();
+           i != bv.end();
+           ++i)
         deallog << i->first << ' ' << i->second << std::endl;
 
-      for(DoFHandler<dim, spacedim>::active_cell_iterator cell
-          = dof_handler.begin_active();
-          cell != dof_handler.end();
-          ++cell)
-        for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-          if(cell->at_boundary(f)
-             && (cell->face(f)->boundary_id() == boundary_id))
-            for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face;
-                ++v)
-              for(unsigned int i = 0; i < fe.dofs_per_vertex; ++i)
+      for (DoFHandler<dim, spacedim>::active_cell_iterator cell
+           = dof_handler.begin_active();
+           cell != dof_handler.end();
+           ++cell)
+        for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+          if (cell->at_boundary(f)
+              && (cell->face(f)->boundary_id() == boundary_id))
+            for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_face;
+                 ++v)
+              for (unsigned int i = 0; i < fe.dofs_per_vertex; ++i)
                 {
                   AssertThrow(bv.find(cell->face(f)->vertex_dof_index(v, i))
                                 != bv.end(),

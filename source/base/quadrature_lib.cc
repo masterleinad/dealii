@@ -53,13 +53,13 @@ QGaussLobatto<0>::QGaussLobatto(const unsigned int)
 template <>
 QGauss<1>::QGauss(const unsigned int n) : Quadrature<1>(n)
 {
-  if(n == 0)
+  if (n == 0)
     return;
 
   std::vector<long double> points
     = Polynomials::jacobi_polynomial_roots<long double>(n, 0, 0);
 
-  for(unsigned int i = 0; i < (points.size() + 1) / 2; ++i)
+  for (unsigned int i = 0; i < (points.size() + 1) / 2; ++i)
     {
       this->quadrature_points[i][0]         = points[i];
       this->quadrature_points[n - i - 1][0] = 1. - points[i];
@@ -87,7 +87,7 @@ namespace internal
     gamma(const unsigned int n)
     {
       long double result = n - 1;
-      for(int i = n - 2; i > 1; --i)
+      for (int i = n - 2; i > 1; --i)
         result *= i;
       return result;
     }
@@ -110,7 +110,7 @@ namespace internal
       const long double factor
         = std::pow(2., alpha + beta + 1) * gamma(alpha + q) * gamma(beta + q)
           / ((q - 1) * gamma(q) * gamma(alpha + beta + q + 1));
-      for(unsigned int i = 0; i < q; ++i)
+      for (unsigned int i = 0; i < q; ++i)
         {
           const long double s
             = Polynomials::jacobi_polynomial_value(q - 1, alpha, beta, x[i]);
@@ -137,7 +137,7 @@ QGaussLobatto<1>::QGaussLobatto(const unsigned int n) : Quadrature<1>(n)
     = internal::QGaussLobatto::compute_quadrature_weights(points, 0, 0);
 
   // scale weights to the interval [0.0, 1.0]:
-  for(unsigned int i = 0; i < points.size(); ++i)
+  for (unsigned int i = 0; i < points.size(); ++i)
     {
       this->quadrature_points[i][0] = points[i];
       this->weights[i]              = 0.5 * w[i];
@@ -157,7 +157,7 @@ QTrapez<1>::QTrapez() : Quadrature<1>(2)
   static const double xpts[] = {0.0, 1.0};
   static const double wts[]  = {0.5, 0.5};
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i]           = wts[i];
@@ -170,7 +170,7 @@ QSimpson<1>::QSimpson() : Quadrature<1>(3)
   static const double xpts[] = {0.0, 0.5, 1.0};
   static const double wts[]  = {1. / 6., 2. / 3., 1. / 6.};
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i]           = wts[i];
@@ -184,7 +184,7 @@ QMilne<1>::QMilne() : Quadrature<1>(5)
   static const double wts[]
     = {7. / 90., 32. / 90., 12. / 90., 32. / 90., 7. / 90.};
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i]           = wts[i];
@@ -204,7 +204,7 @@ QWeddle<1>::QWeddle() : Quadrature<1>(7)
                                216. / 840.,
                                41. / 840.};
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(xpts[i]);
       this->weights[i]           = wts[i];
@@ -218,7 +218,7 @@ QGaussLog<1>::QGaussLog(const unsigned int n, const bool revert)
   std::vector<double> p = get_quadrature_points(n);
   std::vector<double> w = get_quadrature_weights(n);
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       // Using the change of variables x=1-t, it's possible to show
       // that int f(x)ln|1-x| = int f(1-t) ln|t|, which implies that
@@ -235,7 +235,7 @@ QGaussLog<1>::get_quadrature_points(const unsigned int n)
 {
   std::vector<double> q_points(n);
 
-  switch(n)
+  switch (n)
     {
       case 1:
         q_points[0] = 0.3333333333333333;
@@ -365,7 +365,7 @@ QGaussLog<1>::get_quadrature_weights(const unsigned int n)
 {
   std::vector<double> quadrature_weights(n);
 
-  switch(n)
+  switch (n)
     {
       case 1:
         quadrature_weights[0] = -1.0;
@@ -523,7 +523,7 @@ QGaussLogR<1>::QGaussLogR(const unsigned int n,
   // points.
   unsigned int ns_offset = (fraction == 1) ? n : 2 * n;
 
-  for(unsigned int i = 0, j = ns_offset; i < n; ++i, ++j)
+  for (unsigned int i = 0, j = ns_offset; i < n; ++i, ++j)
     {
       // The first i quadrature points are the same as quad1, and
       // are by default singular.
@@ -531,14 +531,14 @@ QGaussLogR<1>::QGaussLogR(const unsigned int n,
       this->weights[i]           = quad1.weight(i) * fraction;
 
       // We need to scale with -log|fraction*alpha|
-      if((alpha != 1) || (fraction != 1))
+      if ((alpha != 1) || (fraction != 1))
         {
           this->quadrature_points[j] = quad.point(i) * fraction;
           this->weights[j]
             = -std::log(alpha / fraction) * quad.weight(i) * fraction;
         }
       // In case we need the second quadrature as well, do it now.
-      if(fraction != 1)
+      if (fraction != 1)
         {
           this->quadrature_points[i + n]
             = quad2.point(i) * (1 - fraction) + Point<1>(fraction);
@@ -551,8 +551,8 @@ QGaussLogR<1>::QGaussLogR(const unsigned int n,
                                  * quad.weight(i) * (1 - fraction);
         }
     }
-  if(factor_out_singularity == true)
-    for(unsigned int i = 0; i < size(); ++i)
+  if (factor_out_singularity == true)
+    for (unsigned int i = 0; i < size(); ++i)
       {
         Assert(
           this->quadrature_points[i] != origin,
@@ -575,15 +575,16 @@ QGaussOneOverR<2>::quad_size(const Point<2> singularity, const unsigned int n)
   double eps       = 1e-8;
   bool   on_edge   = false;
   bool   on_vertex = false;
-  for(unsigned int i = 0; i < 2; ++i)
-    if((std::abs(singularity[i]) < eps) || (std::abs(singularity[i] - 1) < eps))
+  for (unsigned int i = 0; i < 2; ++i)
+    if ((std::abs(singularity[i]) < eps)
+        || (std::abs(singularity[i] - 1) < eps))
       on_edge = true;
-  if(on_edge
-     && (std::abs((singularity - Point<2>(.5, .5)).norm_square() - .5) < eps))
+  if (on_edge
+      && (std::abs((singularity - Point<2>(.5, .5)).norm_square() - .5) < eps))
     on_vertex = true;
-  if(on_vertex)
+  if (on_vertex)
     return (2 * n * n);
-  if(on_edge)
+  if (on_edge)
     return (4 * n * n);
   return (8 * n * n);
 }
@@ -620,13 +621,13 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
   unsigned int q_id = 0; // Current quad point index.
   Tensor<1, 2> dist;
 
-  for(unsigned int box = 0; box < 4; ++box)
+  for (unsigned int box = 0; box < 4; ++box)
     {
       dist        = (singularity - GeometryInfo<2>::unit_cell_vertex(box));
       dist        = Point<2>(std::abs(dist[0]), std::abs(dist[1]));
       double area = dist[0] * dist[1];
-      if(area > eps)
-        for(unsigned int q = 0; q < quads[box].size(); ++q, ++q_id)
+      if (area > eps)
+        for (unsigned int q = 0; q < quads[box].size(); ++q, ++q_id)
           {
             const Point<2>& qp = quads[box].point(q);
             this->quadrature_points[q_id]
@@ -678,13 +679,13 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
   std::vector<double>&   ws  = this->weights;
   double                 pi4 = numbers::PI / 4;
 
-  for(unsigned int q = 0; q < gauss.size(); ++q)
+  for (unsigned int q = 0; q < gauss.size(); ++q)
     {
       const Point<2>& gp = gauss.point(q);
       ps[q][0]           = gp[0];
       ps[q][1]           = gp[0] * std::tan(pi4 * gp[1]);
       ws[q]              = gauss.weight(q) * pi4 / std::cos(pi4 * gp[1]);
-      if(factor_out_singularity)
+      if (factor_out_singularity)
         ws[q] *= (ps[q] - GeometryInfo<2>::unit_cell_vertex(0)).norm();
       // The other half of the quadrilateral is symmetric with
       // respect to xy plane.
@@ -695,7 +696,7 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
 
   // Now we distribute these vertices in the correct manner
   double theta = 0;
-  switch(vertex_index)
+  switch (vertex_index)
     {
       case 0:
         theta = 0;
@@ -715,8 +716,8 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
   double R00 = std::cos(theta), R01 = -std::sin(theta);
   double R10 = std::sin(theta), R11 = std::cos(theta);
 
-  if(vertex_index != 0)
-    for(unsigned int q = 0; q < size(); ++q)
+  if (vertex_index != 0)
+    for (unsigned int q = 0; q < size(); ++q)
       {
         double x = ps[q][0] - .5, y = ps[q][1] - .5;
 
@@ -729,7 +730,7 @@ template <int dim>
 QSorted<dim>::QSorted(const Quadrature<dim>& quad) : Quadrature<dim>(quad)
 {
   std::vector<unsigned int> permutation(quad.size());
-  for(unsigned int i = 0; i < quad.size(); ++i)
+  for (unsigned int i = 0; i < quad.size(); ++i)
     permutation[i] = i;
 
   std::sort(permutation.begin(),
@@ -746,11 +747,11 @@ QSorted<dim>::QSorted(const Quadrature<dim>& quad) : Quadrature<dim>(quad)
   // if the quadrature points are also sorted lexicographically.
   // In particular, any reordering destroys that property
   // and we might need to modify the variable accordingly.
-  for(unsigned int i = 0; i < quad.size(); ++i)
+  for (unsigned int i = 0; i < quad.size(); ++i)
     {
       this->weights[i]           = quad.weight(permutation[i]);
       this->quadrature_points[i] = quad.point(permutation[i]);
-      if(permutation[i] != i)
+      if (permutation[i] != i)
         this->is_tensor_product_flag = false;
     }
 }
@@ -821,7 +822,8 @@ QTelles<dim>::QTelles(const unsigned int n, const Point<dim>& singularity)
 {}
 
 template <>
-QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
+QTelles<1>::QTelles(const Quadrature<1>& base_quad,
+                    const Point<1>&      singularity)
   : // We explicitly implement the Telles' variable change if dim == 1.
     Quadrature<1>(base_quad)
 {
@@ -835,9 +837,9 @@ QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
   std::vector<double>   weights_dummy(weights.size());
   unsigned int          cont = 0;
   const double          tol  = 1e-10;
-  for(unsigned int d = 0; d < quadrature_points.size(); ++d)
+  for (unsigned int d = 0; d < quadrature_points.size(); ++d)
     {
-      if(std::abs(quadrature_points[d][0] - singularity[0]) > tol)
+      if (std::abs(quadrature_points[d][0] - singularity[0]) > tol)
         {
           quadrature_points_dummy[d - cont] = quadrature_points[d];
           weights_dummy[d - cont]           = weights[d];
@@ -849,18 +851,18 @@ QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
           cont = 1;
         }
     }
-  if(cont == 1)
+  if (cont == 1)
     {
       quadrature_points.resize(quadrature_points_dummy.size() - 1);
       weights.resize(weights_dummy.size() - 1);
-      for(unsigned int d = 0; d < quadrature_points.size(); ++d)
+      for (unsigned int d = 0; d < quadrature_points.size(); ++d)
         {
           quadrature_points[d] = quadrature_points_dummy[d];
           weights[d]           = weights_dummy[d];
         }
     }
   // We need to check if the singularity is at the boundary of the interval.
-  if(std::abs(eta_star) <= tol)
+  if (std::abs(eta_star) <= tol)
     {
       gamma_bar
         = std::pow((eta_bar * eta_star + std::abs(eta_star)), 1.0 / 3.0)
@@ -880,7 +882,7 @@ QTelles<1>::QTelles(const Quadrature<1>& base_quad, const Point<1>& singularity)
                          1.0 / 3.0)
           + eta_bar;
     }
-  for(unsigned int q = 0; q < quadrature_points.size(); ++q)
+  for (unsigned int q = 0; q < quadrature_points.size(); ++q)
     {
       double gamma = quadrature_points[q][0] * 2 - 1;
       double eta   = (std::pow(gamma - gamma_bar, 3.0)
@@ -907,7 +909,7 @@ namespace internal
     {
       std::vector<double> points(n);
       // n point quadrature: index from 0 to n-1
-      for(unsigned short i = 0; i < n; ++i)
+      for (unsigned short i = 0; i < n; ++i)
         // would be cos((2i+1)Pi/(2N+2))
         // put + Pi so we start from the smallest point
         // then map from [-1,1] to [0,1]
@@ -929,7 +931,7 @@ namespace internal
     {
       std::vector<double> weights(n);
 
-      for(unsigned short i = 0; i < n; ++i)
+      for (unsigned short i = 0; i < n; ++i)
         {
           // same weights as on [-1,1]
           weights[i] = numbers::PI / double(n);
@@ -947,7 +949,7 @@ QGaussChebyshev<1>::QGaussChebyshev(const unsigned int n) : Quadrature<1>(n)
   std::vector<double> p = internal::QGaussChebyshev::get_quadrature_points(n);
   std::vector<double> w = internal::QGaussChebyshev::get_quadrature_weights(n);
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(p[i]);
       this->weights[i]           = w[i];
@@ -970,11 +972,11 @@ namespace internal
     {
       std::vector<double> points(n);
       // n point quadrature: index from 0 to n-1
-      for(unsigned short i = 0; i < n; ++i)
+      for (unsigned short i = 0; i < n; ++i)
         // would be -cos(2i Pi/(2N+1))
         // put + Pi so we start from the smallest point
         // then map from [-1,1] to [0,1]
-        switch(ep)
+        switch (ep)
           {
             case ::dealii::QGaussRadauChebyshev<1>::left:
               {
@@ -1016,14 +1018,14 @@ namespace internal
     {
       std::vector<double> weights(n);
 
-      for(unsigned short i = 0; i < n; ++i)
+      for (unsigned short i = 0; i < n; ++i)
         {
           // same weights as on [-1,1]
           weights[i] = 2. * numbers::PI / double(2 * (n - 1) + 1.);
-          if(ep == ::dealii::QGaussRadauChebyshev<1>::left && i == 0)
+          if (ep == ::dealii::QGaussRadauChebyshev<1>::left && i == 0)
             weights[i] /= 2.;
-          else if(ep == ::dealii::QGaussRadauChebyshev<1>::right
-                  && i == (n - 1))
+          else if (ep == ::dealii::QGaussRadauChebyshev<1>::right
+                   && i == (n - 1))
             weights[i] /= 2.;
         }
 
@@ -1042,7 +1044,7 @@ QGaussRadauChebyshev<1>::QGaussRadauChebyshev(const unsigned int n, EndPoint ep)
   std::vector<double> w
     = internal::QGaussRadauChebyshev::get_quadrature_weights(n, ep);
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(p[i]);
       this->weights[i]           = w[i];
@@ -1068,7 +1070,7 @@ namespace internal
     {
       std::vector<double> points(n);
       // n point quadrature: index from 0 to n-1
-      for(unsigned short i = 0; i < n; ++i)
+      for (unsigned short i = 0; i < n; ++i)
         // would be cos(i Pi/N)
         // put + Pi so we start from the smallest point
         // then map from [-1,1] to [0,1]
@@ -1085,11 +1087,11 @@ namespace internal
     {
       std::vector<double> weights(n);
 
-      for(unsigned short i = 0; i < n; ++i)
+      for (unsigned short i = 0; i < n; ++i)
         {
           // same weights as on [-1,1]
           weights[i] = numbers::PI / double((n - 1));
-          if(i == 0 || i == (n - 1))
+          if (i == 0 || i == (n - 1))
             weights[i] /= 2.;
         }
 
@@ -1110,7 +1112,7 @@ QGaussLobattoChebyshev<1>::QGaussLobattoChebyshev(const unsigned int n)
   std::vector<double> w
     = internal::QGaussLobattoChebyshev::get_quadrature_weights(n);
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       this->quadrature_points[i] = Point<1>(p[i]);
       this->weights[i]           = w[i];
@@ -1128,12 +1130,12 @@ QSimplex<dim>::QSimplex(const Quadrature<dim>& quad)
   std::vector<Point<dim>> qpoints;
   std::vector<double>     weights;
 
-  for(unsigned int i = 0; i < quad.size(); ++i)
+  for (unsigned int i = 0; i < quad.size(); ++i)
     {
       double r = 0;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         r += quad.point(i)[d];
-      if(r <= 1 + 1e-10)
+      if (r <= 1 + 1e-10)
         {
           this->quadrature_points.push_back(quad.point(i));
           this->weights.push_back(quad.weight(i));
@@ -1147,20 +1149,20 @@ QSimplex<dim>::compute_affine_transformation(
   const std::array<Point<dim>, dim + 1>& vertices) const
 {
   Tensor<2, dim> B;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     B[d] = vertices[d + 1] - vertices[0];
 
   B              = transpose(B);
   const double J = std::abs(determinant(B));
 
   // if the determinant is zero, we return an empty quadrature
-  if(J < 1e-12)
+  if (J < 1e-12)
     return Quadrature<dim>();
 
   std::vector<Point<dim>> qp(this->size());
   std::vector<double>     w(this->size());
 
-  for(unsigned int i = 0; i < this->size(); ++i)
+  for (unsigned int i = 0; i < this->size(); ++i)
     {
       qp[i] = Point<dim>(vertices[0] + B * this->point(i));
       w[i]  = J * this->weight(i);
@@ -1176,7 +1178,7 @@ QTrianglePolar::QTrianglePolar(const Quadrature<1>& radial_quadrature,
   const QAnisotropic<2> base(radial_quadrature, angular_quadrature);
   this->quadrature_points.resize(base.size());
   this->weights.resize(base.size());
-  for(unsigned int i = 0; i < base.size(); ++i)
+  for (unsigned int i = 0; i < base.size(); ++i)
     {
       const auto q = base.point(i);
       const auto w = base.weight(i);
@@ -1209,7 +1211,7 @@ QDuffy::QDuffy(const Quadrature<1>& radial_quadrature,
   const QAnisotropic<2> base(radial_quadrature, angular_quadrature);
   this->quadrature_points.resize(base.size());
   this->weights.resize(base.size());
-  for(unsigned int i = 0; i < base.size(); ++i)
+  for (unsigned int i = 0; i < base.size(); ++i)
     {
       const auto q = base.point(i);
       const auto w = base.weight(i);
@@ -1245,14 +1247,14 @@ QSplit<dim>::QSplit(const QSimplex<dim>& base, const Point<dim>& split_point)
   // face. In dimension three, we need to split the face in two triangles, so
   // we use once the first dim vertices of each face, and the second time the
   // the dim vertices of each face starting from 1.
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-    for(unsigned int start = 0; start < (dim > 2 ? 2 : 1); ++start)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for (unsigned int start = 0; start < (dim > 2 ? 2 : 1); ++start)
       {
-        for(unsigned int i = 0; i < dim; ++i)
+        for (unsigned int i = 0; i < dim; ++i)
           vertices[i + 1] = GeometryInfo<dim>::unit_cell_vertex(
             GeometryInfo<dim>::face_to_cell_vertices(f, i + start));
         const auto quad = base.compute_affine_transformation(vertices);
-        if(quad.size())
+        if (quad.size())
           {
             this->quadrature_points.insert(this->quadrature_points.end(),
                                            quad.get_points().begin(),

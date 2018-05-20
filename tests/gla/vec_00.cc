@@ -30,7 +30,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -43,7 +43,7 @@ test()
 
   IndexSet something(100);
   something.add_range(myid, myid + 1);
-  if(myid == numproc - 1)
+  if (myid == numproc - 1)
     something.add_range(numproc, 100);
 
   {
@@ -67,7 +67,7 @@ test()
   }
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -79,7 +79,7 @@ main(int argc, char** argv)
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);
@@ -103,6 +103,6 @@ main(int argc, char** argv)
       deallog.pop();
     }
 
-  if(myid == 9999)
+  if (myid == 9999)
     test<LA_Dummy>();
 }

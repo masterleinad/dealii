@@ -47,7 +47,7 @@ public:
   {
     // compute the linfty norm of p
     double m = 0;
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       m = std::max(m, std::fabs(p[d]));
 
     // let the value increase linearly away from the square
@@ -130,10 +130,11 @@ test()
                          true);
     deallog << v.l2_norm() << std::endl;
     Assert(v.l2_norm() != 0, ExcInternalError());
-    for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-        cell != dh.end();
-        ++cell)
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for (typename DoFHandler<dim>::active_cell_iterator cell
+         = dh.begin_active();
+         cell != dh.end();
+         ++cell)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         deallog << cell->vertex(i) << ' ' << v(cell->vertex_dof_index(i, 0))
                 << std::endl;
   }
@@ -153,10 +154,11 @@ test()
                          true);
     deallog << v.l2_norm() << std::endl;
     Assert(v.l2_norm() != 0, ExcInternalError());
-    for(typename DoFHandler<dim>::active_cell_iterator cell = dh.begin_active();
-        cell != dh.end();
-        ++cell)
-      for(unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+    for (typename DoFHandler<dim>::active_cell_iterator cell
+         = dh.begin_active();
+         cell != dh.end();
+         ++cell)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
         deallog << cell->vertex(i) << ' ' << v(cell->vertex_dof_index(i, 0))
                 << std::endl;
   }

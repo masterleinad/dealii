@@ -39,20 +39,20 @@ check_function_value_consistency(const Function<dim>& f,
   f.vector_value_list(quadrature.get_points(), f2);
 
   deallog << "value vs vector value list";
-  for(unsigned int d = 0; d < f.n_components; ++d)
-    for(unsigned int i = 0; i < f1.size(); ++i)
+  for (unsigned int d = 0; d < f.n_components; ++d)
+    for (unsigned int i = 0; i < f1.size(); ++i)
       {
         const double v = f.value(quadrature.point(i), d);
-        if(std::fabs(v - f2[i](d)) > threshold)
+        if (std::fabs(v - f2[i](d)) > threshold)
           deallog << "v-vl " << d << ':' << i << ':' << v - f2[i](d);
       }
   deallog << std::endl << "value list vs vector value list";
-  for(unsigned int d = 0; d < f.n_components; ++d)
+  for (unsigned int d = 0; d < f.n_components; ++d)
     {
       f.value_list(quadrature.get_points(), f1, d);
-      for(unsigned int i = 0; i < f1.size(); ++i)
+      for (unsigned int i = 0; i < f1.size(); ++i)
         {
-          if(std::fabs(f1[i] - f2[i](d)) > threshold)
+          if (std::fabs(f1[i] - f2[i](d)) > threshold)
             deallog << ' ' << d << ':' << i << ':' << f1[i] - f2[i](d);
         }
     }
@@ -76,22 +76,22 @@ check_function_gradient_consistency(const Function<dim>& f,
   f.vector_gradient_list(quadrature.get_points(), f2);
 
   deallog << "gradient vs vector gradient list";
-  for(unsigned int d = 0; d < f.n_components; ++d)
-    for(unsigned int i = 0; i < f1.size(); ++i)
+  for (unsigned int d = 0; d < f.n_components; ++d)
+    for (unsigned int i = 0; i < f1.size(); ++i)
       {
         const Tensor<1, dim> v = f.gradient(quadrature.point(i), d) - f2[i][d];
 
-        if(std::sqrt(v * v) > threshold)
+        if (std::sqrt(v * v) > threshold)
           deallog << "v-vl " << d << ':' << i << ':' << v;
       }
   deallog << std::endl << "gradient list vs vector gradient list";
-  for(unsigned int d = 0; d < f.n_components; ++d)
+  for (unsigned int d = 0; d < f.n_components; ++d)
     {
       f.gradient_list(quadrature.get_points(), f1, d);
-      for(unsigned int i = 0; i < f1.size(); ++i)
+      for (unsigned int i = 0; i < f1.size(); ++i)
         {
           const Tensor<1, dim> v = f1[i] - f2[i][d];
-          if(std::sqrt(v * v) > threshold)
+          if (std::sqrt(v * v) > threshold)
             deallog << ' ' << d << ':' << i << ':' << v;
         }
     }
@@ -189,8 +189,8 @@ check_gradient(const Function<dim>& f,
   dtest2.vector_gradients(points, gradients2);
 
   // Compare gradients and difference quotients
-  for(unsigned int k = 0; k < gradients.size(); ++k)
-    for(unsigned int i = 0; i < gradients[k].size(); ++i)
+  for (unsigned int k = 0; k < gradients.size(); ++k)
+    for (unsigned int i = 0; i < gradients[k].size(); ++i)
       {
         // Compute difference
         Tensor<1, dim> d1 = gradients1[k][i] - gradients[k][i];
@@ -198,7 +198,7 @@ check_gradient(const Function<dim>& f,
 
         // If the difference is
         // already small, we are fine
-        if(d1.norm() > 1.e-13)
+        if (d1.norm() > 1.e-13)
           {
             // Check for
             // convergence. For full
@@ -206,7 +206,7 @@ check_gradient(const Function<dim>& f,
             // should be 16 times as
             // large, so let's be a
             // bit generous
-            if(threshold * d2.norm() < d1.norm())
+            if (threshold * d2.norm() < d1.norm())
               {
                 deallog << "Gradient error: point " << i << " (" << points[i]
                         << " )"
@@ -214,7 +214,7 @@ check_gradient(const Function<dim>& f,
                         << k
                         //      << " norms " << d1.norm() << " " << d2.norm()
                         << std::endl;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   deallog << " " << gradients[k][i][d] << " "
                           << gradients1[i][k][d] << std::endl;
               }

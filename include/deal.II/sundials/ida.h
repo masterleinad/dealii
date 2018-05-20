@@ -412,11 +412,11 @@ namespace SUNDIALS
           Patterns::Selection("none|use_y_diff|use_y_dot"));
         prm.add_action("Correction type at initial time",
                        [&](const std::string& value) {
-                         if(value == "use_y_diff")
+                         if (value == "use_y_diff")
                            ic_type = use_y_diff;
-                         else if(value == "use_y_dot")
+                         else if (value == "use_y_dot")
                            ic_type = use_y_dot;
-                         else if(value == "none")
+                         else if (value == "none")
                            ic_type = none;
                          else
                            AssertThrow(false, ExcInternalError());
@@ -437,11 +437,11 @@ namespace SUNDIALS
           Patterns::Selection("none|use_y_diff|use_y_dot"));
         prm.add_action("Correction type after restart",
                        [&](const std::string& value) {
-                         if(value == "use_y_diff")
+                         if (value == "use_y_diff")
                            reset_type = use_y_diff;
-                         else if(value == "use_y_dot")
+                         else if (value == "use_y_dot")
                            reset_type = use_y_dot;
-                         else if(value == "none")
+                         else if (value == "none")
                            reset_type = none;
                          else
                            AssertThrow(false, ExcInternalError());

@@ -66,7 +66,7 @@ main()
     endc = dof_handler.end();
   FEValues<dim, dim + 1> fe_v(fe, quadrature_formula, update_values);
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_v.reinit(cell);
 

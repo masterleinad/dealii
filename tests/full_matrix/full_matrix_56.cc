@@ -38,8 +38,8 @@ const double entries3[9] = {1.808621732261680,
 void
 random_matrix(FullMatrix<double>& A)
 {
-  for(unsigned int i = 0; i < A.m(); ++i)
-    for(unsigned int j = 0; j < A.n(); ++j)
+  for (unsigned int i = 0; i < A.m(); ++i)
+    for (unsigned int j = 0; j < A.n(); ++j)
       {
         double rnd = Testing::rand();
         rnd /= RAND_MAX;
@@ -85,7 +85,7 @@ check()
   display_matrix(S2);
   deallog << std::endl;
   S2.add(-1.0, T2);
-  if(S2.frobenius_norm() > 1.0e-10)
+  if (S2.frobenius_norm() > 1.0e-10)
     {
       deallog << "NOT the same to 1e-10 tolerance" << std::endl;
     }
@@ -119,7 +119,7 @@ check()
   display_matrix(S3);
   deallog << std::endl;
   S3.add(-1.0, T3);
-  if(S3.frobenius_norm() > 1.0e-10)
+  if (S3.frobenius_norm() > 1.0e-10)
     {
       deallog << "NOT the same to 1e-10 tolerance" << std::endl;
     }
@@ -158,7 +158,7 @@ check()
 
   deallog << std::endl;
   S5.add(-1.0, T5);
-  if(S5.frobenius_norm() > 1.0e-10)
+  if (S5.frobenius_norm() > 1.0e-10)
     {
       deallog << "NOT the same to 1e-10 tolerance" << std::endl;
     }

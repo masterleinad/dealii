@@ -38,8 +38,8 @@ test()
 {
   const unsigned int N = 4;
   SparsityPattern    sparsity(N, N, N);
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       sparsity.add(i, j);
   sparsity.compress();
   SparseMatrix<double> A(sparsity), B(sparsity);
@@ -59,31 +59,31 @@ test()
   FullMatrix<double>                   local_matrix(N, N);
   Vector<double>                       local_vector(N);
   {
-    for(unsigned int i = 0; i < N; ++i)
+    for (unsigned int i = 0; i < N; ++i)
       local_dofs[i] = i;
 
     local_matrix = 0;
-    for(unsigned int i = 0; i < N; ++i)
-      for(unsigned int j = 0; j < N; ++j)
+    for (unsigned int i = 0; i < N; ++i)
+      for (unsigned int j = 0; j < N; ++j)
         local_matrix(i, j) = i * N + j;
-    for(unsigned int i = 0; i < N; ++i)
+    for (unsigned int i = 0; i < N; ++i)
       local_vector(i) = i + 1;
 
     // copy local to global by ourselves
-    for(unsigned int i = 0; i < N; ++i)
-      for(unsigned int j = 0; j < N; ++j)
+    for (unsigned int i = 0; i < N; ++i)
+      for (unsigned int j = 0; j < N; ++j)
         A.add(local_dofs[i], local_dofs[j], local_matrix(i, j));
-    for(unsigned int i = 0; i < N; ++i)
+    for (unsigned int i = 0; i < N; ++i)
       b1(local_dofs[i]) += local_vector(i);
 
     // or let other functions do that after
     // removing boundary values
     MatrixTools::local_apply_boundary_values(
       boundary_values, local_dofs, local_matrix, local_vector, false);
-    for(unsigned int i = 0; i < N; ++i)
-      for(unsigned int j = 0; j < N; ++j)
+    for (unsigned int i = 0; i < N; ++i)
+      for (unsigned int j = 0; j < N; ++j)
         B.add(local_dofs[i], local_dofs[j], local_matrix(i, j));
-    for(unsigned int i = 0; i < N; ++i)
+    for (unsigned int i = 0; i < N; ++i)
       b2(local_dofs[i]) += local_vector(i);
   }
 
@@ -124,7 +124,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -138,7 +138,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

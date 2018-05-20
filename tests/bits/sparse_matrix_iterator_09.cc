@@ -35,7 +35,7 @@ test()
   SparseMatrix<double> A(sparsity);
 
   // and loop over the elements of it
-  for(SparseMatrix<double>::const_iterator k = A.begin(); k != A.end(); ++k)
+  for (SparseMatrix<double>::const_iterator k = A.begin(); k != A.end(); ++k)
     deallog << k->row() << ' ' << k->column() << ' ' << k->value() << std::endl;
 }
 
@@ -48,7 +48,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -62,7 +62,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

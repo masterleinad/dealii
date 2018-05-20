@@ -44,15 +44,15 @@ test()
 
   std::vector<types::global_dof_index> local_dof_indices(
     fe_collection[0].dofs_per_cell);
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
 
       deallog << cell << std::endl;
-      for(unsigned int i = 0; i < local_dof_indices.size(); ++i)
+      for (unsigned int i = 0; i < local_dof_indices.size(); ++i)
         deallog << local_dof_indices[i] << ' ';
       deallog << std::endl;
     }

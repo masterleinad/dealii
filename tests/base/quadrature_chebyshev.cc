@@ -90,13 +90,13 @@ template <typename quadrature_type, unsigned short startn>
 void
 check_quadrature(double* exact_monomials)
 {
-  for(unsigned int n = startn; n < 18; ++n)
+  for (unsigned int n = startn; n < 18; ++n)
     {
       quadrature_type              quadrature(n);
       const std::vector<Point<1>>& points  = quadrature.get_points();
       const std::vector<double>&   weights = quadrature.get_weights();
 
-      for(unsigned int i = 0; i < 32; ++i)
+      for (unsigned int i = 0; i < 32; ++i)
         {
           long double quadrature_int = 0;
           double      err            = 0;
@@ -104,7 +104,7 @@ check_quadrature(double* exact_monomials)
           // Check the integral
           // x^i/sqrt(x(1-x))
           long double f = 1.;
-          for(unsigned int x = 0; x < quadrature.size(); ++x)
+          for (unsigned int x = 0; x < quadrature.size(); ++x)
             {
               f = std::pow(static_cast<long double>(points[x](0)), i * 1.0L);
               quadrature_int += f * static_cast<long double>(weights[x]);
@@ -113,7 +113,7 @@ check_quadrature(double* exact_monomials)
           deallog << "Quadrature order " << n << ", polynomial of degree " << i
                   << ": ";
 
-          if(err < 1.e-14)
+          if (err < 1.e-14)
             deallog << "exact." << std::endl;
           else
             deallog << "error " << err << std::endl;
@@ -124,13 +124,13 @@ check_quadrature(double* exact_monomials)
 void
 check_GRC_right(double* exact_monomials)
 {
-  for(unsigned int n = 1; n < 18; ++n)
+  for (unsigned int n = 1; n < 18; ++n)
     {
       QGaussRadauChebyshev<1> quadrature(n, QGaussRadauChebyshev<1>::right);
       const std::vector<Point<1>>& points  = quadrature.get_points();
       const std::vector<double>&   weights = quadrature.get_weights();
 
-      for(unsigned int i = 0; i < 32; ++i)
+      for (unsigned int i = 0; i < 32; ++i)
         {
           long double quadrature_int = 0;
           double      err            = 0;
@@ -138,7 +138,7 @@ check_GRC_right(double* exact_monomials)
           // Check the integral
           // x^i/sqrt(x(1-x))
           long double f = 1.;
-          for(unsigned int x = 0; x < quadrature.size(); ++x)
+          for (unsigned int x = 0; x < quadrature.size(); ++x)
             {
               f = std::pow(static_cast<long double>(points[x](0)), i * 1.0L);
               quadrature_int += f * static_cast<long double>(weights[x]);
@@ -147,7 +147,7 @@ check_GRC_right(double* exact_monomials)
           deallog << "Quadrature order " << n << ", polynomial of degree " << i
                   << ": ";
 
-          if(err < 2.e-15)
+          if (err < 2.e-15)
             deallog << "exact." << std::endl;
           else
             deallog << "error " << err << std::endl;

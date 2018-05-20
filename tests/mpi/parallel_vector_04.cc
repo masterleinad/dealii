@@ -29,7 +29,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -55,13 +55,13 @@ test()
 
   // set ghost dof on remote process, no
   // compress called
-  if(myid > 0)
+  if (myid > 0)
     v(1) = 7;
 
   AssertThrow(v(myid * 2) == myid * 4.0, ExcInternalError());
   AssertThrow(v(myid * 2 + 1) == myid * 4.0 + 2.0, ExcInternalError());
 
-  if(myid > 0)
+  if (myid > 0)
     AssertThrow(v(1) == 7.0, ExcInternalError());
 
   // reset to zero
@@ -79,9 +79,9 @@ test()
 
   // set element 1 on owning process to
   // something nonzero
-  if(myid == 0)
+  if (myid == 0)
     v(1) = 2.;
-  if(myid > 0)
+  if (myid > 0)
     AssertThrow(v(1) == 0., ExcInternalError());
 
   // check that all processors get the correct
@@ -94,7 +94,7 @@ test()
   v = 0;
   AssertThrow(v(1) == 0.0, ExcInternalError());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -107,7 +107,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

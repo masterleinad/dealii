@@ -38,7 +38,7 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   dof.distribute_dofs(fe);
 
   Vector<double> fe_function(dof.n_dofs());
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     fe_function(i) = (i + 1) * (i + 2);
 
   const QGauss<dim> quadrature(2);
@@ -55,10 +55,10 @@ test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
   dof.begin_active()->get_dof_indices(local_dof_indices);
 
-  for(unsigned int q = 0; q < quadrature.size(); ++q)
+  for (unsigned int q = 0; q < quadrature.size(); ++q)
     {
       Tensor<1, dim> div_alt;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         div_alt += fe_values[extractor].divergence(i, q)
                    * fe_function(local_dof_indices[i]);
 

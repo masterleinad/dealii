@@ -69,8 +69,8 @@ test()
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(0),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
-    if(cell->index() % 2 == 0)
+  for (; cell != endc; ++cell)
+    if (cell->index() % 2 == 0)
       cell->set_active_fe_index(1);
     else
       cell->set_active_fe_index(0);
@@ -90,14 +90,14 @@ test()
       = dof_handler.begin_active(),
       endc = dof_handler.end();
 
-    for(; cell != endc; cell++)
+    for (; cell != endc; cell++)
       {
         deallog << cell << ' ' << cell->active_fe_index() << std::endl << "   ";
         std::vector<types::global_dof_index> local_dof_indices(
           cell->get_fe().dofs_per_cell);
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < cell->get_fe().dofs_per_cell; ++i)
           deallog << local_dof_indices[i]
                   << (constraints.is_constrained(local_dof_indices[i]) ? "*" :
                                                                          "")

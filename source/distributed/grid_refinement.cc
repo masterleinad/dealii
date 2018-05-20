@@ -79,7 +79,7 @@ namespace
     AssertThrowMPI(ierr);
 
     // make sure only processor zero got something
-    if(Utilities::MPI::this_mpi_process(mpi_communicator) != 0)
+    if (Utilities::MPI::this_mpi_process(mpi_communicator) != 0)
       Assert((result[0] == 0) && (result[1] == 0), ExcInternalError());
 
     return std::make_pair(result[0], -result[1]);
@@ -108,7 +108,7 @@ namespace
     AssertThrowMPI(ierr);
 
     // make sure only processor zero got something
-    if(Utilities::MPI::this_mpi_process(mpi_communicator) != 0)
+    if (Utilities::MPI::this_mpi_process(mpi_communicator) != 0)
       Assert(result == 0, ExcInternalError());
 
     return result;
@@ -130,11 +130,11 @@ namespace
            ExcInternalError());
 
     unsigned int owned_index = 0;
-    for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-        = tria.begin_active();
-        cell != tria.end();
-        ++cell)
-      if(cell->subdomain_id() == tria.locally_owned_subdomain())
+    for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+         = tria.begin_active();
+         cell != tria.end();
+         ++cell)
+      if (cell->subdomain_id() == tria.locally_owned_subdomain())
         {
           locally_owned_indicators(owned_index)
             = criteria(cell->active_cell_index());
@@ -160,10 +160,10 @@ namespace
 
     // adjust the lower bound only if the end point is not equal to zero,
     // otherwise it could happen, that the result becomes negative
-    if(interesting_range[0] > 0)
+    if (interesting_range[0] > 0)
       interesting_range[0] *= 0.99;
 
-    if(interesting_range[1] > 0)
+    if (interesting_range[1] > 0)
       interesting_range[1] *= 1.01;
     else
       interesting_range[1]
@@ -187,11 +187,11 @@ namespace
 
     // as a final good measure, delete all flags again from cells that we don't
     // locally own
-    for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-        = tria.begin_active();
-        cell != tria.end();
-        ++cell)
-      if(cell->subdomain_id() != tria.locally_owned_subdomain())
+    for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+         = tria.begin_active();
+         cell != tria.end();
+         ++cell)
+      if (cell->subdomain_id() != tria.locally_owned_subdomain())
         {
           cell->clear_refine_flag();
           cell->clear_coarsen_flag();
@@ -227,7 +227,7 @@ namespace
                                mpi_communicator);
           AssertThrowMPI(ierr);
 
-          if(interesting_range[0] == interesting_range[1])
+          if (interesting_range[0] == interesting_range[1])
             return interesting_range[0];
 
           const double test_threshold
@@ -258,9 +258,9 @@ namespace
           // slave nodes also update their own interesting_range, however their
           // results are not significant since the values will be overwritten by
           // MPI_Bcast from the master node in next loop.
-          if(total_count > n_target_cells)
+          if (total_count > n_target_cells)
             interesting_range[0] = test_threshold;
-          else if(total_count < n_target_cells)
+          else if (total_count < n_target_cells)
             interesting_range[1] = test_threshold;
           else
             interesting_range[0] = interesting_range[1] = test_threshold;
@@ -275,10 +275,10 @@ namespace
           // a mistake of 1/2^N in the number of cells flagged if indicators
           // are perfectly equidistributed
           ++iteration;
-          if(iteration == 25)
+          if (iteration == 25)
             interesting_range[0] = interesting_range[1] = test_threshold;
         }
-      while(true);
+      while (true);
 
       Assert(false, ExcInternalError());
       return -1;
@@ -316,7 +316,7 @@ namespace
                                mpi_communicator);
           AssertThrowMPI(ierr);
 
-          if(interesting_range[0] == interesting_range[1])
+          if (interesting_range[0] == interesting_range[1])
             {
               // so we have found our threshold. since we adjust the range
               // at the top of the function to be slightly larger than the
@@ -345,8 +345,8 @@ namespace
           // accumulate the error of those our own elements above this threshold
           // and then add to it the number for all the others
           double my_error = 0;
-          for(unsigned int i = 0; i < criteria.size(); ++i)
-            if(criteria(i) > test_threshold)
+          for (unsigned int i = 0; i < criteria.size(); ++i)
+            if (criteria(i) > test_threshold)
               my_error += criteria(i);
 
           double total_error;
@@ -365,9 +365,9 @@ namespace
           // slave nodes also update their own interesting_range, however their
           // results are not significant since the values will be overwritten by
           // MPI_Bcast from the master node in next loop.
-          if(total_error > target_error)
+          if (total_error > target_error)
             interesting_range[0] = test_threshold;
-          else if(total_error < target_error)
+          else if (total_error < target_error)
             interesting_range[1] = test_threshold;
           else
             interesting_range[0] = interesting_range[1] = test_threshold;
@@ -383,10 +383,10 @@ namespace
           // 1/2^25 in the number of cells flagged if indicators are
           // perfectly equidistributed
           ++iteration;
-          if(iteration == 25)
+          if (iteration == 25)
             interesting_range[0] = interesting_range[1] = test_threshold;
         }
-      while(true);
+      while (true);
 
       Assert(false, ExcInternalError());
       return -1;
@@ -452,7 +452,7 @@ namespace parallel
 
         // compute bottom threshold only if necessary. otherwise use a threshold
         // lower than the smallest value we have locally
-        if(adjusted_fractions.second > 0)
+        if (adjusted_fractions.second > 0)
           bottom_threshold = RefineAndCoarsenFixedNumber::compute_threshold(
             locally_owned_indicators,
             global_min_and_max,
@@ -514,7 +514,7 @@ namespace parallel
           mpi_communicator);
         // compute bottom threshold only if necessary. otherwise use a threshold
         // lower than the smallest value we have locally
-        if(bottom_fraction_of_error > 0)
+        if (bottom_fraction_of_error > 0)
           bottom_threshold = RefineAndCoarsenFixedFraction::compute_threshold(
             locally_owned_indicators,
             global_min_and_max,

@@ -47,11 +47,11 @@ check_1d_parallelepiped_by_comparison(bool log)
   Triangulation<1> triangulation_cube;
   GridGenerator::hyper_cube(triangulation_cube, 0., 0.5);
 
-  if(log)
+  if (log)
     {
       logfile << "\ncheck 1d parallelepiped (hyper_cube): ";
-      if(GridTools::have_same_coarse_mesh(triangulation_parallelepiped,
-                                          triangulation_cube))
+      if (GridTools::have_same_coarse_mesh(triangulation_parallelepiped,
+                                           triangulation_cube))
         logfile << "OK";
       else
         logfile
@@ -75,11 +75,11 @@ check_2d_parallelepiped_by_comparison(bool log)
   Triangulation<2> triangulation_parallelogram;
   GridGenerator::parallelogram(triangulation_parallelogram, corners, false);
 
-  if(log)
+  if (log)
     {
       logfile << "\ncheck 2d parallelepiped (parallelogram): ";
-      if(GridTools::have_same_coarse_mesh(triangulation_parallelepiped,
-                                          triangulation_parallelogram))
+      if (GridTools::have_same_coarse_mesh(triangulation_parallelepiped,
+                                           triangulation_parallelogram))
         logfile << "OK";
 
       else

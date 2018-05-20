@@ -28,11 +28,11 @@ test(PETScWrappers::MPI::Vector& v, PETScWrappers::MPI::Vector& w)
   // vector, and record the expected scalar
   // product
   PetscScalar product = PetscScalar(0);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       const PetscScalar vi = std::complex<double>(i, (i % 2) * 2.0);
       v(i)                 = vi;
-      if(i % 3 == 0)
+      if (i % 3 == 0)
         {
           const PetscScalar wi = std::complex<double>(5.0 - i, 2.5 * (i % 6));
           w(i)                 = wi;
@@ -64,7 +64,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -78,7 +78,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

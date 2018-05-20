@@ -2595,9 +2595,9 @@ namespace DoFTools
   inline Coupling
   operator|=(Coupling& c1, const Coupling c2)
   {
-    if(c2 == always)
+    if (c2 == always)
       c1 = always;
-    else if(c1 != always && c2 == nonzero)
+    else if (c1 != always && c2 == nonzero)
       return c1 = nonzero;
     return c1;
   }
@@ -2610,9 +2610,9 @@ namespace DoFTools
   inline Coupling
   operator|(const Coupling c1, const Coupling c2)
   {
-    if(c1 == always || c2 == always)
+    if (c1 == always || c2 == always)
       return always;
-    if(c1 == nonzero || c2 == nonzero)
+    if (c1 == nonzero || c2 == nonzero)
       return nonzero;
     return none;
   }
@@ -2709,7 +2709,7 @@ namespace DoFTools
     // previous function into the
     // output arg
     point_to_index_map.clear();
-    for(types::global_dof_index i = 0; i < dof_handler.n_dofs(); ++i)
+    for (types::global_dof_index i = 0; i < dof_handler.n_dofs(); ++i)
       point_to_index_map[support_points[i]] = i;
   }
 } // namespace DoFTools

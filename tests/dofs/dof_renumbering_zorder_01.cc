@@ -40,24 +40,24 @@ print_dofs(const DoFHandler<dim>& dof, stream& out)
   std::vector<types::global_dof_index> v(fe.dofs_per_cell);
   std::shared_ptr<FEValues<dim>>       fevalues;
 
-  if(fe.has_support_points())
+  if (fe.has_support_points())
     {
       Quadrature<dim> quad(fe.get_unit_support_points());
       fevalues = std::shared_ptr<FEValues<dim>>(
         new FEValues<dim>(fe, quad, update_quadrature_points));
     }
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     {
       Point<dim> p = cell->center();
-      if(fevalues.get() != nullptr)
+      if (fevalues.get() != nullptr)
         fevalues->reinit(cell);
 
       cell->get_dof_indices(v);
-      for(unsigned int i = 0; i < v.size(); ++i)
-        if(fevalues.get() != nullptr)
+      for (unsigned int i = 0; i < v.size(); ++i)
+        if (fevalues.get() != nullptr)
           out << fevalues->quadrature_point(i) << '\t' << v[i] << std::endl;
         else
           out << p << '\t' << v[i] << std::endl;
@@ -86,7 +86,7 @@ check()
 
   print_dofs(dof, o2);
 
-  if(o1.str() == o2.str())
+  if (o1.str() == o2.str())
     deallog << "OK" << std::endl;
 }
 

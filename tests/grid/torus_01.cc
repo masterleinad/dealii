@@ -42,12 +42,12 @@ test<3, 3>()
 
   const TorusManifold<3> desc_torus(1.0, 0.4);
   unsigned int           c = 0;
-  for(Triangulation<dim, spacedim>::active_vertex_iterator v
-      = triangulation.begin_active_vertex();
-      v != triangulation.end_vertex();
-      ++v, ++c)
+  for (Triangulation<dim, spacedim>::active_vertex_iterator v
+       = triangulation.begin_active_vertex();
+       v != triangulation.end_vertex();
+       ++v, ++c)
     {
-      if(c % 3 != 0)
+      if (c % 3 != 0)
         continue;
       Point<3> p = v->vertex(0);
       Point<3> x(numbers::PI / 2.5, numbers::PI / 3.5, 1.0);

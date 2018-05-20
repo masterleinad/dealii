@@ -164,22 +164,22 @@ check()
 {
   Point<dim> center;
   center[1] = 2.0;
-  if(dim > 2)
+  if (dim > 2)
     center[2] = -1.5;
 
   RefFunc<dim> func(center);
   SphFunc<dim> func2(center);
 
-  for(double r = 0.1; r < 10; r += 0.35)
-    for(double theta = 0; theta < 2 * numbers::PI; theta += numbers::PI / 3.)
-      for(double phi = 0.01; phi <= numbers::PI; phi += numbers::PI / 4.)
+  for (double r = 0.1; r < 10; r += 0.35)
+    for (double theta = 0; theta < 2 * numbers::PI; theta += numbers::PI / 3.)
+      for (double phi = 0.01; phi <= numbers::PI; phi += numbers::PI / 4.)
         {
           std::array<double, dim> sp;
           sp[0]        = r;
           sp[1]        = theta;
           sp[2]        = phi;
           Point<dim> p = GeometricUtilities::Coordinates::from_spherical(sp);
-          for(unsigned int i = 0; i < dim; i++)
+          for (unsigned int i = 0; i < dim; i++)
             p[i] += center[i];
 
           // check values:

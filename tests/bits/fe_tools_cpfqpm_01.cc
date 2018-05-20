@@ -37,13 +37,13 @@ check_this(const FiniteElement<dim>& fe, const FiniteElement<dim>& /*fe2*/)
   // support points. otherwise,
   // interpolation doesn't really
   // work
-  if(fe.n_components() != 1)
+  if (fe.n_components() != 1)
     return;
 
   // ignore this check if this fe has already
   // been treated
   static std::set<std::string> already_checked;
-  if(already_checked.find(fe.get_name()) != already_checked.end())
+  if (already_checked.find(fe.get_name()) != already_checked.end())
     return;
   already_checked.insert(fe.get_name());
 

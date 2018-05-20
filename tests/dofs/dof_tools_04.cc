@@ -32,8 +32,8 @@ check_this(const DoFHandler<dim>& dof_handler)
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
-  for(types::global_dof_index dof = 0; dof < n_dofs; ++dof)
-    if(hanging_node_dofs[dof])
+  for (types::global_dof_index dof = 0; dof < n_dofs; ++dof)
+    if (hanging_node_dofs[dof])
       AssertThrow(constraints.is_constrained(dof), ExcInternalError());
 
   AssertThrow(

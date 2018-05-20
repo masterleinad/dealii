@@ -38,8 +38,8 @@ public:
   value(const Point<dim>& p, const unsigned int) const
   {
     double v = 0;
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int i = 0; i <= q; ++i)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i <= q; ++i)
         v += (d + 1) * (i + 1) * std::pow(p[d], 1. * i);
     return v;
   }
@@ -61,7 +61,7 @@ test(const FiniteElement<dim>& fe,
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation, -0.3, 0.7);
   triangulation.refine_global(dim == 2 ? 2 : 1);
-  if(distort_mesh)
+  if (distort_mesh)
     GridTools::distort_random(0.03, triangulation);
 
   MappingQ<dim> mapping(order_mapping);
@@ -73,11 +73,11 @@ test(const FiniteElement<dim>& fe,
   VectorTools::interpolate(mapping, dof_handler, f, interpolant);
 
   // Print function value in origin:
-  if(print_function_values)
+  if (print_function_values)
     {
       Functions::FEFieldFunction<dim> f2(dof_handler, interpolant, mapping);
       deallog << "Function value at (0.0,0.0): ";
-      for(unsigned int i = 0; i < fe.n_components(); ++i)
+      for (unsigned int i = 0; i < fe.n_components(); ++i)
         deallog << f2.value(Point<dim>(), i) << " ";
       deallog << std::endl;
     }

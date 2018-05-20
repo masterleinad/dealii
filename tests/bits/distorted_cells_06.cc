@@ -72,11 +72,11 @@ check()
   GridGenerator::subdivided_hyper_rectangle(coarse_grid, sub, p1, p2, true);
 
   // set bottom middle edge to use MyManifold
-  for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-    for(unsigned int e = 0; e < GeometryInfo<dim - 1>::faces_per_cell; ++e)
-      if(coarse_grid.begin_active()->face(f)->line(e)->center()[0] == 0)
-        if(coarse_grid.begin_active()->face(f)->line(e)->center()[1] == 0.5)
-          if(coarse_grid.begin_active()->face(f)->line(e)->center()[2] == 0)
+  for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+    for (unsigned int e = 0; e < GeometryInfo<dim - 1>::faces_per_cell; ++e)
+      if (coarse_grid.begin_active()->face(f)->line(e)->center()[0] == 0)
+        if (coarse_grid.begin_active()->face(f)->line(e)->center()[1] == 0.5)
+          if (coarse_grid.begin_active()->face(f)->line(e)->center()[2] == 0)
             coarse_grid.begin_active()->face(f)->line(e)->set_manifold_id(99);
   coarse_grid.set_manifold(99, my_manifold);
 
@@ -87,7 +87,7 @@ check()
     {
       coarse_grid.refine_global(1);
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch (typename Triangulation<dim>::DistortedCellList& dcv)
     {
       deallog << "Found " << dcv.distorted_cells.size() << " distorted cells"
               << std::endl;

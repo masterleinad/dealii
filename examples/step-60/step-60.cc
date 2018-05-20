@@ -692,7 +692,7 @@ namespace Step60
     // configuration will be a `displacement`, while the other will be an
     // absolute `deformation` field.
 
-    if(parameters.use_displacement == true)
+    if (parameters.use_displacement == true)
       embedded_mapping = std_cxx14::make_unique<
         MappingQEulerian<dim, Vector<double>, spacedim>>(
         parameters.embedded_configuration_finite_element_degree,
@@ -755,7 +755,7 @@ namespace Step60
     //
     // This is precisely what the `embedded_mapping` is there for.
     std::vector<Point<spacedim>> support_points(embedded_dh->n_dofs());
-    if(parameters.delta_refinement != 0)
+    if (parameters.delta_refinement != 0)
       DoFTools::map_dofs_to_support_points(
         *embedded_mapping, *embedded_dh, support_points);
 
@@ -815,18 +815,18 @@ namespace Step60
     // as the amount of local refinement they want around the embedded grid, we
     // make sure that the resulting meshes satisfy our requirements, and if this
     // is not the case, we bail out with an exception.
-    for(unsigned int i = 0; i < parameters.delta_refinement; ++i)
+    for (unsigned int i = 0; i < parameters.delta_refinement; ++i)
       {
         const auto point_locations = GridTools::compute_point_locations(
           *space_grid_tools_cache, support_points);
         const auto& cells = std::get<0>(point_locations);
-        for(auto cell : cells)
+        for (auto cell : cells)
           {
             cell->set_refine_flag();
-            for(unsigned int face_no = 0;
-                face_no < GeometryInfo<spacedim>::faces_per_cell;
-                ++face_no)
-              if(!cell->at_boundary(face_no))
+            for (unsigned int face_no = 0;
+                 face_no < GeometryInfo<spacedim>::faces_per_cell;
+                 ++face_no)
+              if (!cell->at_boundary(face_no))
                 {
                   auto neighbor = cell->neighbor(face_no);
                   neighbor->set_refine_flag();
@@ -870,7 +870,7 @@ namespace Step60
     space_dh->distribute_dofs(*space_fe);
 
     DoFTools::make_hanging_node_constraints(*space_dh, constraints);
-    for(auto id : parameters.homogeneous_dirichlet_ids)
+    for (auto id : parameters.homogeneous_dirichlet_ids)
       {
         VectorTools::interpolate_boundary_values(
           *space_dh, id, Functions::ZeroFunction<spacedim>(), constraints);
@@ -1104,7 +1104,7 @@ main(int argc, char** argv)
       DistributedLagrangeProblem<dim, spacedim>             problem(parameters);
 
       std::string parameter_file;
-      if(argc > 1)
+      if (argc > 1)
         parameter_file = argv[1];
       else
         parameter_file = "parameters.prm";
@@ -1112,7 +1112,7 @@ main(int argc, char** argv)
       ParameterAcceptor::initialize(parameter_file, "used_parameters.prm");
       problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1125,7 +1125,7 @@ main(int argc, char** argv)
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

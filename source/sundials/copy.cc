@@ -34,7 +34,7 @@ namespace SUNDIALS
     {
       const N_Vector_ID id     = N_VGetVectorID(vec);
       long int          length = -1;
-      switch(id)
+      switch (id)
         {
           case SUNDIALS_NVEC_SERIAL:
             {
@@ -66,7 +66,7 @@ namespace SUNDIALS
       const IndexSet is = dst.locally_owned_elements();
       const size_t   N  = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           dst[is.nth_index_in_set(i)] = NV_Ith_P(src, i);
         }
@@ -79,7 +79,7 @@ namespace SUNDIALS
       const IndexSet is = src.locally_owned_elements();
       const size_t   N  = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           NV_Ith_P(dst, i) = src[is.nth_index_in_set(i)];
         }
@@ -91,7 +91,7 @@ namespace SUNDIALS
       const IndexSet is = dst.locally_owned_elements();
       const size_t   N  = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           dst[is.nth_index_in_set(i)] = NV_Ith_P(src, i);
         }
@@ -104,7 +104,7 @@ namespace SUNDIALS
       IndexSet     is = src.locally_owned_elements();
       const size_t N  = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           NV_Ith_P(dst, i) = src[is.nth_index_in_set(i)];
         }
@@ -121,7 +121,7 @@ namespace SUNDIALS
       const IndexSet is = dst.locally_owned_elements();
       const size_t   N  = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           dst[is.nth_index_in_set(i)] = NV_Ith_P(src, i);
         }
@@ -134,7 +134,7 @@ namespace SUNDIALS
       const IndexSet is = src.locally_owned_elements();
       const size_t   N  = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           NV_Ith_P(dst, i) = src[is.nth_index_in_set(i)];
         }
@@ -146,7 +146,7 @@ namespace SUNDIALS
       const IndexSet is = dst.locally_owned_elements();
       const size_t   N  = is.n_elements();
       AssertDimension(N, N_Vector_length(src));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           dst[is.nth_index_in_set(i)] = NV_Ith_P(src, i);
         }
@@ -159,7 +159,7 @@ namespace SUNDIALS
       const IndexSet is = src.locally_owned_elements();
       const size_t   N  = is.n_elements();
       AssertDimension(N, N_Vector_length(dst));
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           NV_Ith_P(dst, i) = src[is.nth_index_in_set(i)];
         }
@@ -175,7 +175,7 @@ namespace SUNDIALS
     {
       const size_t N = dst.size();
       AssertDimension(N_Vector_length(src), N);
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           dst[i] = NV_Ith_S(src, i);
         }
@@ -186,7 +186,7 @@ namespace SUNDIALS
     {
       const size_t N = src.size();
       AssertDimension(N_Vector_length(dst), N);
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           NV_Ith_S(dst, i) = src[i];
         }
@@ -197,7 +197,7 @@ namespace SUNDIALS
     {
       const size_t N = dst.size();
       AssertDimension(N_Vector_length(src), N);
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           dst[i] = NV_Ith_S(src, i);
         }
@@ -208,7 +208,7 @@ namespace SUNDIALS
     {
       const size_t N = src.size();
       AssertDimension(N_Vector_length(dst), N);
-      for(size_t i = 0; i < N; ++i)
+      for (size_t i = 0; i < N; ++i)
         {
           NV_Ith_S(dst, i) = src[i];
         }

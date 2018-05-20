@@ -25,10 +25,10 @@ test()
   deallog << "dim=" << dim << std::endl;
 
   SymmetricTensor<4, dim> T, A, B;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           {
             // write some entries
             // into the tensors. may
@@ -41,18 +41,18 @@ test()
 
   T = A * B;
 
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           {
             deallog << (int) T[i][j][k][l] << std::endl;
 
             // calculate result by
             // hand
             double tmp = 0;
-            for(unsigned int a = 0; a < dim; ++a)
-              for(unsigned int b = 0; b < dim; ++b)
+            for (unsigned int a = 0; a < dim; ++a)
+              for (unsigned int b = 0; b < dim; ++b)
                 tmp += A[i][j][a][b] * B[a][b][k][l];
 
             AssertThrow(std::fabs(T[i][j][k][l] - tmp) < 1e-14 * tmp,

@@ -37,16 +37,17 @@ pack_function(
   static int some_number = cell->index();
   deallog << "packing cell " << cell->id() << " with data=" << some_number
           << " status=";
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
     deallog << "PERSIST";
-  else if(status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
     deallog << "REFINE";
-  else if(status
-          == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
     deallog << "COARSEN";
   deallog << std::endl;
 
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
     {
       Assert(cell->has_children(), ExcInternalError());
     }
@@ -74,16 +75,17 @@ unpack_function(
 
   deallog << "unpacking cell " << cell->id() << " with data=" << (*intdata)
           << " status=";
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_PERSIST)
     deallog << "PERSIST";
-  else if(status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
     deallog << "REFINE";
-  else if(status
-          == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
+  else if (status
+           == parallel::distributed::Triangulation<dim, dim>::CELL_COARSEN)
     deallog << "COARSEN";
   deallog << std::endl;
 
-  if(status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
+  if (status == parallel::distributed::Triangulation<dim, dim>::CELL_REFINE)
     {
       Assert(cell->has_children(), ExcInternalError());
     }
@@ -99,7 +101,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(true)
+  if (true)
     {
       parallel::distributed::Triangulation<dim> tr(
         MPI_COMM_WORLD,
@@ -140,11 +142,11 @@ test()
       tr.notify_ready_to_unpack(offset, unpack_function<dim>);
 
       const unsigned int checksum = tr.get_checksum();
-      if(myid == 0)
+      if (myid == 0)
         deallog << "Checksum: " << checksum << std::endl;
     }
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 

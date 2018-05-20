@@ -26,8 +26,8 @@ main()
 
   size_t             m = 2, n = 3;
   FullMatrix<double> A(m, n);
-  for(size_t i = 0; i < m; ++i)
-    for(size_t j = 0; j < n; ++j)
+  for (size_t i = 0; i < m; ++i)
+    for (size_t j = 0; j < n; ++j)
       A(i, j) = n * i + j;
 
   deallog << "Size of A:" << std::endl << A.m() << " " << A.n() << std::endl;

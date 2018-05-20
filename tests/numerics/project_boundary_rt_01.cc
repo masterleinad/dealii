@@ -52,11 +52,11 @@ void
 TestFunction<dim>::vector_value_list(const std::vector<Point<dim>>& points,
                                      std::vector<Vector<double>>& values) const
 {
-  for(unsigned int k = 0; k < points.size(); ++k)
+  for (unsigned int k = 0; k < points.size(); ++k)
     {
-      if(degree < 2)
+      if (degree < 2)
         {
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             values[k](d) = points[k](d) - d;
         }
       else
@@ -65,10 +65,10 @@ TestFunction<dim>::vector_value_list(const std::vector<Point<dim>>& points,
           // the distance to a
           // different point in each
           // component
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             {
               Point<dim> p = points[k];
-              for(unsigned int dd = 0; dd < dim; ++dd)
+              for (unsigned int dd = 0; dd < dim; ++dd)
                 p(dd) -= d;
               const double r2 = p.square();
               values[k](d)    = std::pow(r2, (int) degree / 2);
@@ -90,23 +90,23 @@ integrate_error(const DoFHandler<dim>& dof,
   std::vector<Vector<double>> fe_values(fe.n_quadrature_points,
                                         Vector<double>(dim));
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     {
-      for(unsigned int face = 0; face != GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face != GeometryInfo<dim>::faces_per_cell;
+           ++face)
         {
-          if(!cell->at_boundary(face))
+          if (!cell->at_boundary(face))
             continue;
 
           fe.reinit(cell, face);
           f.vector_value_list(fe.get_quadrature_points(), f_values);
           fe.get_function_values(u, fe_values);
-          for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+          for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
             {
               double diff = 0.;
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 diff += fe.normal_vector(k)[d]
                         * (f_values[k](d) - fe_values[k](d));
               result += fe.JxW(k) * diff * diff;
@@ -134,7 +134,7 @@ test_projection(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   TestFunction<dim>                         f(degree - 1);
   std::map<types::global_dof_index, double> boundary_constraints;
   typename FunctionMap<dim>::type           boundary_map;
-  for(types::boundary_id i = 0; i < 255; ++i)
+  for (types::boundary_id i = 0; i < 255; ++i)
     boundary_map[i] = &f;
   VectorTools::project_boundary_values(
     mapping, dof, boundary_map, quadrature, boundary_constraints);
@@ -145,10 +145,10 @@ test_projection(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
   // boundary values
   Vector<double> u(dof.n_dofs());
   u = -1.;
-  for(typename std::map<types::global_dof_index, double>::const_iterator i
-      = boundary_constraints.begin();
-      i != boundary_constraints.end();
-      ++i)
+  for (typename std::map<types::global_dof_index, double>::const_iterator i
+       = boundary_constraints.begin();
+       i != boundary_constraints.end();
+       ++i)
     u(i->first) = i->second;
 
   FEFaceValues<dim> feval(mapping,

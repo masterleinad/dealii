@@ -64,7 +64,7 @@ test()
     });
 
   // sort the output because it will come in in random order
-  for(auto& it : output)
+  for (auto& it : output)
     deallog << it << std::endl;
 }
 

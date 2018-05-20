@@ -38,11 +38,11 @@ public:
     Point<dim> middle
       = FlatManifold<dim>::get_new_point(surrounding_points, weights);
 
-    for(int i = 0; i < dim; ++i)
+    for (int i = 0; i < dim; ++i)
       middle(i) -= .5;
     middle
       *= std::sqrt(static_cast<double>(dim)) / (std::sqrt(middle.square()) * 2);
-    for(int i = 0; i < dim; ++i)
+    for (int i = 0; i < dim; ++i)
       middle(i) += .5;
 
     return middle;
@@ -81,32 +81,32 @@ CurvedLine<dim>::get_new_point_on_line(
   // z-value of the midpoint is either
   // 0 or 1, then the z-values of all
   // vertices of the line is like that
-  if(dim >= 3)
-    if(((middle(2) == 0) || (middle(2) == 1))
-       // find out, if the line is in the
-       // interior of the top or bottom face
-       // of the domain, or at the edge.
-       // lines at the edge need to undergo
-       // the usual treatment, while for
-       // interior lines taking the midpoint
-       // is sufficient
-       //
-       // note: the trick with the boundary
-       // id was invented after the above was
-       // written, so we are not very strict
-       // here with using these flags
-       && (line->manifold_id() == 1))
+  if (dim >= 3)
+    if (((middle(2) == 0) || (middle(2) == 1))
+        // find out, if the line is in the
+        // interior of the top or bottom face
+        // of the domain, or at the edge.
+        // lines at the edge need to undergo
+        // the usual treatment, while for
+        // interior lines taking the midpoint
+        // is sufficient
+        //
+        // note: the trick with the boundary
+        // id was invented after the above was
+        // written, so we are not very strict
+        // here with using these flags
+        && (line->manifold_id() == 1))
       return middle;
 
   double x = middle(0), y = middle(1);
 
-  if(y < x)
-    if(y < 1 - x)
+  if (y < x)
+    if (y < 1 - x)
       middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
     else
       middle(0) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
 
-  else if(y < 1 - x)
+  else if (y < 1 - x)
     middle(0) = 0.04 * std::sin(6 * 3.141592 * middle(1));
   else
     middle(1) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
@@ -127,18 +127,18 @@ CurvedLine<dim>::get_new_point_on_quad(
   // z-value of the midpoint is either
   // 0 or 1, then the z-values of all
   // vertices of the quad is like that
-  if((middle(2) == 0) || (middle(2) == 1))
+  if ((middle(2) == 0) || (middle(2) == 1))
     return middle;
 
   double x = middle(0), y = middle(1);
 
-  if(y < x)
-    if(y < 1 - x)
+  if (y < x)
+    if (y < 1 - x)
       middle(1) = 0.04 * std::sin(6 * 3.141592 * middle(0));
     else
       middle(0) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(1));
 
-  else if(y < 1 - x)
+  else if (y < 1 - x)
     middle(0) = 0.04 * std::sin(6 * 3.141592 * middle(1));
   else
     middle(1) = 1 + 0.04 * std::sin(6 * 3.141592 * middle(0));
@@ -161,13 +161,13 @@ test(const int test_case)
 
   tria.begin_active()->set_material_id(3);
 
-  if((dim == 1) && ((test_case == 2) || (test_case == 3)))
+  if ((dim == 1) && ((test_case == 2) || (test_case == 3)))
     {
       deallog << "Impossible for this dimension." << std::endl;
       return;
     };
 
-  switch(test_case)
+  switch (test_case)
     {
       case 1:
         {
@@ -181,7 +181,7 @@ test(const int test_case)
           tria.execute_coarsening_and_refinement();
 
           typename Triangulation<dim>::active_cell_iterator cell;
-          for(int i = 0; i < (dim == 2 ? 3 : 2); ++i)
+          for (int i = 0; i < (dim == 2 ? 3 : 2); ++i)
             {
               // refine the presently
               // last cell several
@@ -197,7 +197,7 @@ test(const int test_case)
       case 2:
       case 3:
         {
-          if(dim == 3)
+          if (dim == 3)
             {
               tria.begin_active()->face(4)->set_manifold_id(1);
               tria.begin_active()->face(5)->set_manifold_id(1);
@@ -206,7 +206,7 @@ test(const int test_case)
           // set the manifold function
           Ball<dim>       ball;
           CurvedLine<dim> curved_line;
-          if(test_case == 2)
+          if (test_case == 2)
             tria.set_manifold(1, ball);
           else
             tria.set_manifold(1, curved_line);
@@ -217,15 +217,15 @@ test(const int test_case)
 
           typename Triangulation<dim>::active_cell_iterator cell, endc;
           const unsigned int steps[4] = {0, 2, 2, 2};
-          for(unsigned int i = 0; i < steps[dim]; ++i)
+          for (unsigned int i = 0; i < steps[dim]; ++i)
             {
               cell = tria.begin_active();
               endc = tria.end();
 
               // refine all
               // boundary cells
-              for(; cell != endc; ++cell)
-                if(cell->at_boundary())
+              for (; cell != endc; ++cell)
+                if (cell->at_boundary())
                   cell->set_refine_flag();
 
               tria.execute_coarsening_and_refinement();
@@ -255,9 +255,9 @@ main()
   logfile << std::setprecision(8);
   deallog.attach(logfile);
 
-  for(unsigned int i = 1; i <= 3; ++i)
+  for (unsigned int i = 1; i <= 3; ++i)
     test<2>(i);
-  for(unsigned int i = 1; i <= 3; ++i)
+  for (unsigned int i = 1; i <= 3; ++i)
     test<3>(i);
 
   return 0;

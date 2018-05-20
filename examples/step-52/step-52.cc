@@ -216,16 +216,16 @@ namespace Step52
     DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
                                         endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix      = 0.;
         cell_mass_matrix = 0.;
 
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < dofs_per_cell; ++j)
               {
                 cell_matrix(i, j)
                   += ((-diffusion_coefficient * fe_values.shape_grad(i, q_point)
@@ -306,17 +306,17 @@ namespace Step52
     DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
                                         endc = dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_source = 0.;
 
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             const double source
               = get_source(time, fe_values.quadrature_point(q_point));
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               cell_source(i) += source * fe_values.shape_value(i, q_point)
                                 * fe_values.JxW(q_point);
           }
@@ -376,7 +376,7 @@ namespace Step52
   {
     std::string method_name;
 
-    switch(method)
+    switch (method)
       {
         case TimeStepping::FORWARD_EULER:
           {
@@ -475,7 +475,7 @@ namespace Step52
     TimeStepping::ExplicitRungeKutta<Vector<double>> explicit_runge_kutta(
       method);
     output_results(0, method);
-    for(unsigned int i = 0; i < n_time_steps; ++i)
+    for (unsigned int i = 0; i < n_time_steps; ++i)
       {
         time = explicit_runge_kutta.evolve_one_time_step(
           std::bind(&Diffusion::evaluate_diffusion,
@@ -486,7 +486,7 @@ namespace Step52
           time_step,
           solution);
 
-        if((i + 1) % 10 == 0)
+        if ((i + 1) % 10 == 0)
           output_results(i + 1, method);
       }
   }
@@ -510,7 +510,7 @@ namespace Step52
     TimeStepping::ImplicitRungeKutta<Vector<double>> implicit_runge_kutta(
       method);
     output_results(0, method);
-    for(unsigned int i = 0; i < n_time_steps; ++i)
+    for (unsigned int i = 0; i < n_time_steps; ++i)
       {
         time = implicit_runge_kutta.evolve_one_time_step(
           std::bind(&Diffusion::evaluate_diffusion,
@@ -526,7 +526,7 @@ namespace Step52
           time_step,
           solution);
 
-        if((i + 1) % 10 == 0)
+        if ((i + 1) % 10 == 0)
           output_results(i + 1, method);
       }
   }
@@ -577,9 +577,9 @@ namespace Step52
     // Now for the time loop. The last time step is chosen such that the final
     // time is exactly reached.
     unsigned int n_steps = 0;
-    while(time < final_time)
+    while (time < final_time)
       {
-        if(time + time_step > final_time)
+        if (time + time_step > final_time)
           time_step = final_time - time;
 
         time = embedded_explicit_runge_kutta.evolve_one_time_step(
@@ -591,7 +591,7 @@ namespace Step52
           time_step,
           solution);
 
-        if((n_steps + 1) % 10 == 0)
+        if ((n_steps + 1) % 10 == 0)
           output_results(n_steps + 1, method);
 
         time_step = embedded_explicit_runge_kutta.get_status().delta_t_guess;
@@ -616,12 +616,12 @@ namespace Step52
     Triangulation<2>::active_cell_iterator cell = triangulation.begin_active(),
                                            endc = triangulation.end();
 
-    for(; cell != endc; ++cell)
-      for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
-        if(cell->face(f)->at_boundary())
+    for (; cell != endc; ++cell)
+      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+        if (cell->face(f)->at_boundary())
           {
-            if((cell->face(f)->center()[0] == 0.)
-               || (cell->face(f)->center()[0] == 5.))
+            if ((cell->face(f)->center()[0] == 0.)
+                || (cell->face(f)->center()[0] == 5.))
               cell->face(f)->set_boundary_id(1);
             else
               cell->face(f)->set_boundary_id(0);
@@ -730,7 +730,7 @@ main()
       Step52::Diffusion diffusion;
       diffusion.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -743,7 +743,7 @@ main()
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

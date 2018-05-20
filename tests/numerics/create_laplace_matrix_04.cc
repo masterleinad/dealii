@@ -46,7 +46,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     {
       GridGenerator::hyper_ball(tr, Point<dim>(), 1);
       tr.reset_manifold(0);
@@ -56,7 +56,7 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
@@ -104,13 +104,13 @@ check()
   // multiply matrix by 100 to
   // make test more sensitive
   deallog << "Matrix: " << std::endl;
-  for(SparseMatrix<double>::const_iterator p = matrix.begin();
-      p != matrix.end();
-      ++p)
+  for (SparseMatrix<double>::const_iterator p = matrix.begin();
+       p != matrix.end();
+       ++p)
     deallog << p->value() * 100 << std::endl;
 
   deallog << "RHS vector: " << std::endl;
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

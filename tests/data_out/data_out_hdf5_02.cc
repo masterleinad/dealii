@@ -32,7 +32,7 @@ template <int dim, int spacedim>
 void
 create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
 {
-  for(unsigned int p = 0; p < patches.size(); ++p)
+  for (unsigned int p = 0; p < patches.size(); ++p)
     {
       DataOutBase::Patch<dim, spacedim>& patch = patches[p];
 
@@ -40,8 +40,8 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
       const unsigned int nsubp = nsub + 1;
 
       patch.n_subdivisions = nsub;
-      for(unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
-        for(unsigned int d = 0; d < spacedim; ++d)
+      for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
+        for (unsigned int d = 0; d < spacedim; ++d)
           patch.vertices[v](d)
             = p + cell_coordinates[d][v] + ((d >= dim) ? v : 0);
 
@@ -51,10 +51,10 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
       unsigned int n4 = (dim > 3) ? nsubp : 1;
       patch.data.reinit(5, n1 * n2 * n3 * n4);
 
-      for(unsigned int i4 = 0; i4 < n4; ++i4)
-        for(unsigned int i3 = 0; i3 < n3; ++i3)
-          for(unsigned int i2 = 0; i2 < n2; ++i2)
-            for(unsigned int i1 = 0; i1 < n1; ++i1)
+      for (unsigned int i4 = 0; i4 < n4; ++i4)
+        for (unsigned int i3 = 0; i3 < n3; ++i3)
+          for (unsigned int i2 = 0; i2 < n2; ++i2)
+            for (unsigned int i1 = 0; i1 < n1; ++i1)
               {
                 const unsigned int i
                   = i1 + nsubp * (i2 + nsubp * (i3 + nsubp * i4));
@@ -112,7 +112,7 @@ check()
   unsigned int n_data_sets = data_filter.n_data_sets();
 
   // The vector names generated here must match those generated in the HDF5 file
-  for(unsigned int i = 0; i < n_data_sets; ++i)
+  for (unsigned int i = 0; i < n_data_sets; ++i)
     {
       entry.add_attribute(data_filter.get_data_set_name(i),
                           data_filter.get_data_set_dim(i));
@@ -167,7 +167,7 @@ main(int argc, char* argv[])
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -180,7 +180,7 @@ main(int argc, char* argv[])
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

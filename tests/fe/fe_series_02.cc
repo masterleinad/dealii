@@ -67,7 +67,7 @@ LegendreFunction<dim>::value(const dealii::Point<dim>& point,
 
   double f = 0.0;
 
-  for(int l = 0; l < int(coefficients.size()); l++)
+  for (int l = 0; l < int(coefficients.size()); l++)
     {
       const double m = 0.5;                // mid-point
       const double h = 0.5;                // half-length
@@ -120,12 +120,12 @@ test(const LegendreFunction<dim>& func, const unsigned int poly_degree)
     legendre.calculate(local_dof_values, cell_active_fe_index, coeff_out);
   }
 
-  for(unsigned int i = 0; i < coeff_in.size(); i++)
+  for (unsigned int i = 0; i < coeff_in.size(); i++)
     deallog << coeff_in[i] << " ";
 
   deallog << std::endl;
 
-  for(unsigned int i = 0; i < N; i++)
+  for (unsigned int i = 0; i < N; i++)
     deallog << coeff_out[i] << " ";
 
   deallog << std::endl;

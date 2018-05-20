@@ -31,7 +31,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -79,14 +79,14 @@ test()
   cm.add_entry(1, 2, 3.0);
   cm.close();
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "before: " << get_real_assert_zero_imag(vb(1)) << std::endl;
   cm.distribute(vb); // this should set x(1)= 3.0 * x(2) = 12.0
-  if(myid == 0)
+  if (myid == 0)
     deallog << "after: " << get_real_assert_zero_imag(vb(1)) << std::endl;
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

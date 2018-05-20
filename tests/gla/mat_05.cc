@@ -30,7 +30,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -43,8 +43,8 @@ test()
 
   DynamicSparsityPattern csp(local_relevant);
 
-  for(unsigned int i = 0; i < 2 * numproc; ++i)
-    if(local_relevant.is_element(i))
+  for (unsigned int i = 0; i < 2 * numproc; ++i)
+    if (local_relevant.is_element(i))
       csp.add(i, i);
 
   csp.add(0, 1);
@@ -66,7 +66,7 @@ test()
   mat.compress(VectorOperation::add);
 
   deallog << "l1-norm: " << mat.l1_norm() << std::endl;
-  if(myid == 0)
+  if (myid == 0)
     deallog << "mat(0,1): " << get_real_assert_zero_imag(mat(0, 1))
             << std::endl;
 
@@ -84,12 +84,12 @@ test()
     typename LA::MPI::SparseMatrix mat2;
     mat2.reinit(mat);
     deallog << "l1-norm: " << mat2.l1_norm() << std::endl;
-    if(myid == 0)
+    if (myid == 0)
       deallog << "mat(0,1): " << get_real_assert_zero_imag(mat2(0, 1))
               << std::endl;
     mat2.add(0, 1, 0.3);
     mat2.compress(VectorOperation::add);
-    if(myid == 0)
+    if (myid == 0)
       deallog << "after adding mat(0,1): "
               << get_real_assert_zero_imag(mat2(0, 1)) << std::endl;
   }
@@ -100,18 +100,18 @@ test()
     mat2.reinit(local_active, local_active, csp, MPI_COMM_WORLD);
     mat2.copy_from(mat);
     deallog << "l1-norm: " << mat2.l1_norm() << std::endl;
-    if(myid == 0)
+    if (myid == 0)
       deallog << "mat(0,1): " << get_real_assert_zero_imag(mat2(0, 1))
               << std::endl;
     mat2.add(0, 1, 0.3);
     mat2.compress(VectorOperation::add);
-    if(myid == 0)
+    if (myid == 0)
       deallog << "after adding mat(0,1): "
               << get_real_assert_zero_imag(mat2(0, 1)) << std::endl;
   }
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

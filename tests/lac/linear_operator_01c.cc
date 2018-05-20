@@ -68,23 +68,23 @@ main()
 
   Vector<double> residual; // keep storage location to trigger bug.
 
-  for(unsigned int j = 0; j < 1000; ++j)
+  for (unsigned int j = 0; j < 1000; ++j)
     {
       // test Tvmult:
       residual = lo_A_inv_t * b;
       residual -= answer;
-      if(residual.l2_norm() > 1e-10)
+      if (residual.l2_norm() > 1e-10)
         ++n_mistakes;
 
       // test Tvmult_add:
       residual = lo_A_inv_t * b - answer;
-      if(residual.l2_norm() > 1e-10)
+      if (residual.l2_norm() > 1e-10)
         ++n_mistakes;
     }
 
   deallog.depth_file(3);
 
   deallog << "number of mistakes: " << n_mistakes << std::endl;
-  if(n_mistakes != 0)
+  if (n_mistakes != 0)
     deallog << "Ooops!" << std::endl;
 }

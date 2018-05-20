@@ -52,16 +52,16 @@ check(const unsigned int p)
   // values equal to the index of the
   // line)
   Vector<double> coarse_grid_values(fe_ned.dofs_per_cell);
-  for(unsigned int i = 0; i < coarse_grid_values.size(); ++i)
+  for (unsigned int i = 0; i < coarse_grid_values.size(); ++i)
     coarse_grid_values(i) = i;
 
   // then transfer this function
   // from the coarse grid to the
   // child cells.
   Vector<double> values(dof.n_dofs());
-  for(typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
-      c != dof.end();
-      ++c)
+  for (typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
+       c != dof.end();
+       ++c)
     {
       Vector<double> tmp(fe_ned.dofs_per_cell);
       fe_ned.get_prolongation_matrix(c->index()).vmult(tmp, coarse_grid_values);
@@ -77,18 +77,18 @@ check(const unsigned int p)
   FEValues<dim>               fe(
     fe_ned, quadrature, update_values | update_quadrature_points);
 
-  for(typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
-      c != dof.end();
-      ++c)
+  for (typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
+       c != dof.end();
+       ++c)
     {
       deallog << "  CELL " << c << std::endl;
       fe.reinit(c);
       fe.get_function_values(values, shape_values);
 
-      for(unsigned int q = 0; q < quadrature.size(); ++q)
+      for (unsigned int q = 0; q < quadrature.size(); ++q)
         {
           deallog << ", xq=" << fe.quadrature_point(q) << ", f=[";
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             deallog << (d == 0 ? "" : " ") << shape_values[q](d);
 
           deallog << "]" << std::endl;

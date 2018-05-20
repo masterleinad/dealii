@@ -1484,7 +1484,7 @@ namespace LinearAlgebra
     Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
                                          std::vector<OtherNumber>& values) const
     {
-      for(size_type i = 0; i < indices.size(); ++i)
+      for (size_type i = 0; i < indices.size(); ++i)
         values[i] = operator()(indices[i]);
     }
 
@@ -1495,7 +1495,7 @@ namespace LinearAlgebra
                                          const ForwardIterator indices_end,
                                          OutputIterator values_begin) const
     {
-      while(indices_begin != indices_end)
+      while (indices_begin != indices_end)
         {
           *values_begin = operator()(*indices_begin);
           indices_begin++;
@@ -1510,7 +1510,7 @@ namespace LinearAlgebra
                         const ::dealii::Vector<OtherNumber>& values)
     {
       AssertDimension(indices.size(), values.size());
-      for(size_type i = 0; i < indices.size(); ++i)
+      for (size_type i = 0; i < indices.size(); ++i)
         {
           Assert(
             numbers::is_finite(values[i]),
@@ -1527,7 +1527,7 @@ namespace LinearAlgebra
                         const size_type*   indices,
                         const OtherNumber* values)
     {
-      for(size_type i = 0; i < n_elements; ++i, ++indices, ++values)
+      for (size_type i = 0; i < n_elements; ++i, ++indices, ++values)
         {
           Assert(
             numbers::is_finite(*values),
@@ -1604,7 +1604,7 @@ namespace internal
                           bool omit_zeroing_entries)
       {
         matrix.initialize_dof_vector(v);
-        if(!omit_zeroing_entries)
+        if (!omit_zeroing_entries)
           v = Number();
       }
 
@@ -1615,7 +1615,7 @@ namespace internal
                            bool omit_zeroing_entries)
       {
         matrix.initialize_dof_vector(v);
-        if(!omit_zeroing_entries)
+        if (!omit_zeroing_entries)
           v = Number();
       }
     };

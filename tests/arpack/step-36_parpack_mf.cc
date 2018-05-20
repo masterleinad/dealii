@@ -117,7 +117,7 @@ test()
 
   eigenfunctions.resize(number_of_eigenvalues);
   eigenvalues.resize(number_of_eigenvalues);
-  for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+  for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
     mf_data->initialize_dof_vector(eigenfunctions[i]);
 
   // test PArpack with matrix-free
@@ -166,10 +166,10 @@ test()
                       eigenvalues.size());
     deallog.depth_file(previous_depth);
 
-    for(unsigned int i = 0; i < lambda.size(); i++)
+    for (unsigned int i = 0; i < lambda.size(); i++)
       eigenvalues[i] = lambda[i].real();
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-orthonormal:
@@ -179,11 +179,11 @@ test()
       const double                               precision = 1e-7;
       LinearAlgebra::distributed::Vector<double> Ax(eigenfunctions[0]),
         Bx(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {
           mass.vmult(Bx, eigenfunctions[i]);
 
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for (unsigned int j = 0; j < eigenfunctions.size(); j++)
             Assert(std::abs(eigenfunctions[j] * Bx - (i == j)) < precision,
                    ExcMessage("Eigenvectors " + Utilities::int_to_string(i)
                               + " and " + Utilities::int_to_string(j)
@@ -215,7 +215,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -229,7 +229,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

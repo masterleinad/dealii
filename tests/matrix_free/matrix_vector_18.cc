@@ -69,15 +69,15 @@ private:
     const unsigned int n_q_points = fe_eval.n_q_points;
 
     Tensor<1, dim, VectorizedArray<Number>> ones;
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       ones[d] = Number(1);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         fe_eval.reinit(cell);
         fe_eval.read_dof_values(in);
         fe_eval.evaluate(true, true, true);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
             fe_eval.submit_value(Number(10) * fe_eval.get_value(q), q);
             fe_eval.submit_gradient(fe_eval.get_gradient(q)
@@ -98,17 +98,17 @@ do_test(const DoFHandler<dim>&  dof,
         const unsigned int      parallel_option = 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
-  if(parallel_option > 0)
+  if (parallel_option > 0)
     deallog << "Parallel option: " << parallel_option << std::endl;
 
   MatrixFree<dim, number> mf_data;
   {
     const QGauss<1>                                  quad(fe_degree + 1);
     typename MatrixFree<dim, number>::AdditionalData data;
-    if(parallel_option == 1)
+    if (parallel_option == 1)
       data.tasks_parallel_scheme
         = MatrixFree<dim, number>::AdditionalData::partition_color;
-    else if(parallel_option == 2)
+    else if (parallel_option == 2)
       data.tasks_parallel_scheme
         = MatrixFree<dim, number>::AdditionalData::color;
     else
@@ -128,9 +128,9 @@ do_test(const DoFHandler<dim>&  dof,
   Vector<number>                         in_dist(dof.n_dofs());
   Vector<number>                         out_dist(in_dist);
 
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = random_value<double>();
       in(i)              = entry;
@@ -162,20 +162,20 @@ do_test(const DoFHandler<dim>&  dof,
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     Tensor<1, dim> ones;
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       ones[d] = 1.;
 
     typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
                                                    endc = dof.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         cell_matrix = 0;
         fe_values.reinit(cell);
 
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j)
                   += ((fe_values.shape_grad(i, q_point)
                          * (fe_values.shape_grad(j, q_point)
@@ -205,15 +205,15 @@ test()
 {
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);
-  if(dim < 3 || fe_degree < 2)
+  if (dim < 3 || fe_degree < 2)
     tria.refine_global(1);
   tria.begin(tria.n_levels() - 1)->set_refine_flag();
   tria.last()->set_refine_flag();
   tria.execute_coarsening_and_refinement();
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    if(cell->center().norm() < 1e-8)
+  for (; cell != endc; ++cell)
+    if (cell->center().norm() < 1e-8)
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 

@@ -116,7 +116,7 @@ public:
   double
   value(const Point<dim>& point, const unsigned int component = 0) const
   {
-    switch(component)
+    switch (component)
       {
         case 0:
           return point[0];
@@ -142,7 +142,7 @@ public:
   double
   value(const Point<dim>& point, const unsigned int component = 0) const
   {
-    switch(component)
+    switch (component)
       {
         case 0:
           return point[0];
@@ -288,22 +288,23 @@ JxWError<dim>::setup_matrices()
   typename DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
       cell_system = 0.0;
       cell_rhs    = 0.0;
       fe_values.reinit(cell);
 
-      for(unsigned int q_point_n = 0; q_point_n < fe_values.n_quadrature_points;
-          ++q_point_n)
+      for (unsigned int q_point_n = 0;
+           q_point_n < fe_values.n_quadrature_points;
+           ++q_point_n)
         {
           const double point_forcing = manufactured_forcing->value(
             fe_values.quadrature_point(q_point_n));
 
-          for(unsigned int test_n = 0; test_n < dofs_per_cell; ++test_n)
+          for (unsigned int test_n = 0; test_n < dofs_per_cell; ++test_n)
             {
-              for(unsigned int trial_n = 0; trial_n < dofs_per_cell; ++trial_n)
+              for (unsigned int trial_n = 0; trial_n < dofs_per_cell; ++trial_n)
                 {
                   cell_system(test_n, trial_n)
                     += fe_values.JxW(q_point_n)
@@ -379,8 +380,8 @@ main(int argc, char** argv)
   std::ofstream logfile("output");
   deallog << std::setprecision(10);
   deallog.attach(logfile);
-  for(unsigned int n_global_refines = 3; n_global_refines < 6;
-      ++n_global_refines)
+  for (unsigned int n_global_refines = 3; n_global_refines < 6;
+       ++n_global_refines)
     {
       JxWError<dim> solver(n_global_refines);
       deallog << "L2 error: " << solver.run() << std::endl;

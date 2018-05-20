@@ -36,7 +36,7 @@ public:
   {
     // Shift the y coordinate to 4*x*(1-x)
     Point<spacedim> p = candidate;
-    if(spacedim > 1)
+    if (spacedim > 1)
       p[1] = 4 * p[0] * (1 - p[0]);
     return p;
   }

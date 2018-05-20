@@ -35,16 +35,16 @@ using namespace dealii;
 void
 print_patches(const SparsityPattern& bl)
 {
-  for(unsigned int i = 0; i < bl.n_rows(); ++i)
+  for (unsigned int i = 0; i < bl.n_rows(); ++i)
     {
       deallog << "Block " << std::setw(3) << i;
       std::vector<unsigned int> entries;
-      for(SparsityPattern::iterator b = bl.begin(i); b != bl.end(i); ++b)
+      for (SparsityPattern::iterator b = bl.begin(i); b != bl.end(i); ++b)
         entries.push_back(b->column());
 
       std::sort(entries.begin(), entries.end());
 
-      for(unsigned int i = 0; i < entries.size(); ++i)
+      for (unsigned int i = 0; i < entries.size(); ++i)
         deallog << ' ' << std::setw(4) << entries[i];
       deallog << std::endl;
     }

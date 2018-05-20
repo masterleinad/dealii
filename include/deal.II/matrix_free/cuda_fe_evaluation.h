@@ -204,7 +204,7 @@ namespace CUDAWrappers
     inv_jac         = data->inv_jacobian + padding_length * cell_id;
     JxW             = data->JxW + padding_length * cell_id;
 
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       gradients[i] = shdata->gradients[i];
   }
 
@@ -228,7 +228,7 @@ namespace CUDAWrappers
     // Use the read-only data cache.
     values[idx] = __ldg(&src[src_idx]);
 
-    if(constraint_mask)
+    if (constraint_mask)
       internal::resolve_hanging_nodes_shmem<dim, fe_degree, false>(
         values, constraint_mask);
 
@@ -246,7 +246,7 @@ namespace CUDAWrappers
   {
     static_assert(n_components_ == 1, "This function only supports FE with one \
                   components");
-    if(constraint_mask)
+    if (constraint_mask)
       internal::resolve_hanging_nodes_shmem<dim, fe_degree, true>(
         values, constraint_mask);
 
@@ -278,13 +278,13 @@ namespace CUDAWrappers
       n_q_points_1d,
       Number>
       evaluator_tensor_product;
-    if(evaluate_grad == true)
+    if (evaluate_grad == true)
       {
         evaluator_tensor_product.gradient_at_quad_pts(values, gradients);
         __syncthreads();
       }
 
-    if(evaluate_val == true)
+    if (evaluate_val == true)
       {
         evaluator_tensor_product.value_at_quad_pts(values);
         __syncthreads();
@@ -308,18 +308,18 @@ namespace CUDAWrappers
       n_q_points_1d,
       Number>
       evaluator_tensor_product;
-    if(integrate_val == true)
+    if (integrate_val == true)
       {
         evaluator_tensor_product.integrate_value(values);
         __syncthreads();
-        if(integrate_grad == true)
+        if (integrate_grad == true)
           {
             evaluator_tensor_product.integrate_gradient<true>(values,
                                                               gradients);
             __syncthreads();
           }
       }
-    else if(integrate_grad == true)
+    else if (integrate_grad == true)
       {
         evaluator_tensor_product.integrate_gradient<false>(values, gradients);
         __syncthreads();
@@ -372,10 +372,10 @@ namespace CUDAWrappers
     // TODO optimize if the mesh is uniform
     const Number* inv_jacobian = &inv_jac[q_point];
     gradient_type grad;
-    for(int d_1 = 0; d_1 < dim; ++d_1)
+    for (int d_1 = 0; d_1 < dim; ++d_1)
       {
         Number tmp = 0.;
-        for(int d_2 = 0; d_2 < dim; ++d_2)
+        for (int d_2 = 0; d_2 < dim; ++d_2)
           tmp += inv_jacobian[padding_length * n_cells * (dim * d_2 + d_1)]
                  * gradients[d_2][q_point];
         grad[d_1] = tmp;
@@ -395,10 +395,10 @@ namespace CUDAWrappers
   {
     // TODO optimize if the mesh is uniform
     const Number* inv_jacobian = &inv_jac[q_point];
-    for(int d_1 = 0; d_1 < dim; ++d_1)
+    for (int d_1 = 0; d_1 < dim; ++d_1)
       {
         Number tmp = 0.;
-        for(int d_2 = 0; d_2 < dim; ++d_2)
+        for (int d_2 = 0; d_2 < dim; ++d_2)
           tmp += inv_jacobian[n_cells * padding_length * (dim * d_1 + d_2)]
                  * grad_in[d_2];
         gradients[d_1][q_point] = tmp * JxW[q_point];

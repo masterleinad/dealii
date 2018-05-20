@@ -51,7 +51,7 @@ reinit_vector_by_blocks(
   std::vector<bool> selected(n_blocks, false);
   selected[selected_block] = true;
 
-  if(ndofs.size() == 0)
+  if (ndofs.size() == 0)
     {
       std::vector<std::vector<types::global_dof_index>> new_dofs(
         mg_dof.get_triangulation().n_levels(),
@@ -60,7 +60,7 @@ reinit_vector_by_blocks(
       MGTools::count_dofs_per_block(mg_dof, ndofs);
     }
 
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
       v[level].reinit(ndofs[level][selected_block]);
     }
@@ -79,7 +79,7 @@ reinit_vector_by_blocks(
   const unsigned int n_selected
     = std::accumulate(selected.begin(), selected.end(), 0U);
 
-  if(ndofs.size() == 0)
+  if (ndofs.size() == 0)
     {
       std::vector<std::vector<types::global_dof_index>> new_dofs(
         mg_dof.get_triangulation().n_levels(),
@@ -88,14 +88,14 @@ reinit_vector_by_blocks(
       MGTools::count_dofs_per_block(mg_dof, ndofs);
     }
 
-  for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
+  for (unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
       v[level].reinit(n_selected, 0);
       unsigned int k = 0;
-      for(unsigned int i = 0; i < selected.size() && (k < v[level].n_blocks());
-          ++i)
+      for (unsigned int i = 0; i < selected.size() && (k < v[level].n_blocks());
+           ++i)
         {
-          if(selected[i])
+          if (selected[i])
             {
               v[level].block(k++).reinit(ndofs[level][i]);
             }
@@ -123,11 +123,11 @@ check_block(const FiniteElement<dim>& fe)
   // Make sure all orderings are the
   // same
   Tensor<1, dim> direction;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     direction[d] = d * d * d;
   DoFRenumbering::downstream(dof, direction);
   DoFRenumbering::component_wise(dof);
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     {
       DoFRenumbering::downstream(mgdof, l, direction);
       DoFRenumbering::component_wise(mgdof, l);
@@ -205,7 +205,7 @@ check_block(const FiniteElement<dim>& fe)
   // Check copy to mg and back
   BlockVector<double> u;
   u.reinit(ndofs);
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     u(i) = i + 1;
 
   std::vector<std::vector<types::global_dof_index>> cached_sizes;
@@ -224,7 +224,7 @@ check_block(const FiniteElement<dim>& fe)
   transfer_block.copy_to_mg(mgdof, wb, u);
   transfer_select.copy_to_mg(mgdof, ws, u);
 
-  for(unsigned int l = 0; l < tr.n_levels(); ++l)
+  for (unsigned int l = 0; l < tr.n_levels(); ++l)
     {
       wb[l].add(-1., v[l]);
       ws[l].add(-1., v[l].block(0));
@@ -236,12 +236,12 @@ check_block(const FiniteElement<dim>& fe)
   // multigrid vector counting the
   // dofs and see where the numbers go
   u = 0.;
-  for(unsigned int i = 0; i < v[2].size(); ++i)
+  for (unsigned int i = 0; i < v[2].size(); ++i)
     {
       v[2](i)  = i + 1;
       wb[2](i) = i + 1;
     }
-  for(unsigned int i = 0; i < ws[2].size(); ++i)
+  for (unsigned int i = 0; i < ws[2].size(); ++i)
     ws[2](i) = i + 1;
   BlockVector<double> uu;
   uu.reinit(u);

@@ -336,7 +336,7 @@ namespace Particles
 
     ar& location& reference_location& id& n_properties;
 
-    if(n_properties > 0)
+    if (n_properties > 0)
       {
         properties = new double[n_properties];
         ar& boost::serialization::make_array(properties, n_properties);
@@ -349,13 +349,13 @@ namespace Particles
   Particle<dim, spacedim>::save(Archive& ar, const unsigned int) const
   {
     unsigned int n_properties = 0;
-    if((property_pool != nullptr)
-       && (properties != PropertyPool::invalid_handle))
+    if ((property_pool != nullptr)
+        && (properties != PropertyPool::invalid_handle))
       n_properties = get_properties().size();
 
     ar& location& reference_location& id& n_properties;
 
-    if(n_properties > 0)
+    if (n_properties > 0)
       ar& boost::serialization::make_array(properties, n_properties);
   }
 } // namespace Particles

@@ -39,14 +39,14 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
   // copy the .pvtu and .vtu files
   // into the logstream
   int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       cat_file((std::string(filename) + ".pvtu").c_str());
       cat_file((std::string(filename) + "_0000.vtu").c_str());
     }
-  else if(myid == 1)
+  else if (myid == 1)
     cat_file((std::string(filename) + "_0001.vtu").c_str());
-  else if(myid == 2)
+  else if (myid == 2)
     cat_file((std::string(filename) + "_0002.vtu").c_str());
   else
     AssertThrow(false, ExcNotImplemented());
@@ -77,7 +77,7 @@ test(std::ostream& /*out*/)
   DataOut<dim, DoFHandler<dim, spacedim>> data_out;
   data_out.attach_triangulation(tr);
   Vector<float> subdomain(tr.n_active_cells());
-  for(unsigned int i = 0; i < subdomain.size(); ++i)
+  for (unsigned int i = 0; i < subdomain.size(); ++i)
     subdomain(i) = tr.locally_owned_subdomain();
   data_out.add_data_vector(subdomain, "subdomain");
 

@@ -22,9 +22,9 @@ void
 test(const unsigned int chunk_size)
 {
   ChunkSparsityPattern sp(5, 5, 3, chunk_size);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < 5; ++i)
+    for (unsigned int j = 0; j < 5; ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         sp.add(i, j);
   sp.compress();
 
@@ -33,9 +33,9 @@ test(const unsigned int chunk_size)
   // first set a few entries. count how many
   // entries we have
   double norm = 0;
-  for(unsigned int i = 0; i < m.m(); ++i)
-    for(unsigned int j = 0; j < m.n(); ++j)
-      if((i + 2 * j + 1) % 3 == 0)
+  for (unsigned int i = 0; i < m.m(); ++i)
+    for (unsigned int j = 0; j < m.n(); ++j)
+      if ((i + 2 * j + 1) % 3 == 0)
         {
           m.set(i, j, i * j * .5 + .5);
           norm += (i * j * .5 + .5) * (i * j * .5 + .5);
@@ -59,11 +59,11 @@ main()
   try
     {
       const unsigned int chunk_sizes[] = {1, 2, 4, 5, 7};
-      for(unsigned int i = 0; i < sizeof(chunk_sizes) / sizeof(chunk_sizes[0]);
-          ++i)
+      for (unsigned int i = 0; i < sizeof(chunk_sizes) / sizeof(chunk_sizes[0]);
+           ++i)
         test(chunk_sizes[i]);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -77,7 +77,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

@@ -66,7 +66,7 @@ check_boundary(const hp::DoFHandler<dim>&        dof,
   function_map[0] = &coefficient;
 
   hp::QCollection<dim - 1> face_quadrature;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for (unsigned int i = 1; i < 7 - dim; ++i)
     face_quadrature.push_back(QGauss<dim - 1>(3 + i));
 
   std::vector<types::global_dof_index> dof_to_boundary_mapping;
@@ -113,7 +113,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
@@ -121,23 +121,23 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
   // of one Q1 and one Q2 element
   hp::FECollection<dim> element;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for (unsigned int i = 1; i < 7 - dim; ++i)
     element.push_back(
       FESystem<dim>(FE_Q<dim>(QIterated<1>(QTrapez<1>(), i)),
                     1,
                     FE_Q<dim>(QIterated<1>(QTrapez<1>(), i + 1)),
                     1));
   hp::DoFHandler<dim> dof(tr);
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % element.size());
 
   dof.distribute_dofs(element);
@@ -147,11 +147,11 @@ check()
   // formula suited to the elements
   // we have here
   hp::MappingCollection<dim> mapping;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for (unsigned int i = 1; i < 7 - dim; ++i)
     mapping.push_back(MappingQ<dim>(i + 1));
 
   hp::QCollection<dim> quadrature;
-  for(unsigned int i = 1; i < 7 - dim; ++i)
+  for (unsigned int i = 1; i < 7 - dim; ++i)
     quadrature.push_back(QGauss<dim>(3 + i));
 
   // create sparsity pattern. note
@@ -175,10 +175,10 @@ check()
   typename FunctionMap<dim>::type function_map;
   function_map[0] = &coefficient;
 
-  for(unsigned int test = 0; test < 2; ++test)
+  for (unsigned int test = 0; test < 2; ++test)
     {
       matrix.reinit(sparsity);
-      switch(test)
+      switch (test)
         {
           case 0:
             MatrixTools::create_mass_matrix(
@@ -199,13 +199,13 @@ check()
       // range of 1 or below,
       // multiply matrix by 100 to
       // make test more sensitive
-      for(SparseMatrix<double>::const_iterator p = matrix.begin();
-          p != matrix.end();
-          ++p)
+      for (SparseMatrix<double>::const_iterator p = matrix.begin();
+           p != matrix.end();
+           ++p)
         deallog.get_file_stream() << p->value() * 100 << std::endl;
     };
 
-  if(dim > 1)
+  if (dim > 1)
     check_boundary(dof, mapping);
 }
 

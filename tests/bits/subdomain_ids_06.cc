@@ -47,11 +47,11 @@ test()
   // (octant)
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       unsigned int subdomain = 0;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()(d) > 0)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()(d) > 0)
           subdomain |= (1 << d);
       AssertThrow(subdomain < (1 << dim), ExcInternalError());
 
@@ -60,7 +60,7 @@ test()
 
   std::vector<types::subdomain_id> subdomain_association(tria.n_active_cells());
   GridTools::get_subdomain_association(tria, subdomain_association);
-  for(unsigned int subdomain = 0; subdomain < (1 << dim); ++subdomain)
+  for (unsigned int subdomain = 0; subdomain < (1 << dim); ++subdomain)
     {
       // check that the number of cells
       // associated is also what the respective

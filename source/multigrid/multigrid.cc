@@ -53,7 +53,7 @@ MGTransferBlock<number>::MGTransferBlock()
 template <typename number>
 MGTransferBlock<number>::~MGTransferBlock()
 {
-  if(memory != nullptr)
+  if (memory != nullptr)
     memory = nullptr;
 }
 
@@ -82,9 +82,9 @@ MGTransferBlock<number>::prolongate(const unsigned int         to_level,
   // Multiplicate with prolongation
   // matrix, but only those blocks
   // selected.
-  for(unsigned int b = 0; b < this->mg_block.size(); ++b)
+  for (unsigned int b = 0; b < this->mg_block.size(); ++b)
     {
-      if(this->selected[b])
+      if (this->selected[b])
         prolongation_matrices[to_level - 1]->block(b, b).vmult(
           dst.block(this->mg_block[b]), src.block(this->mg_block[b]));
     }
@@ -103,11 +103,11 @@ MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
   Assert(dst.n_blocks() == this->n_mg_blocks,
          ExcDimensionMismatch(dst.n_blocks(), this->n_mg_blocks));
 
-  for(unsigned int b = 0; b < this->mg_block.size(); ++b)
+  for (unsigned int b = 0; b < this->mg_block.size(); ++b)
     {
-      if(this->selected[b])
+      if (this->selected[b])
         {
-          if(factors.size() != 0)
+          if (factors.size() != 0)
             {
               Assert(memory != nullptr, ExcNotInitialized());
               Vector<number>* aux = memory->alloc();

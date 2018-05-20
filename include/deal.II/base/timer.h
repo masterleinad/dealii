@@ -993,7 +993,7 @@ inline TimerOutput::Scope::Scope(dealii::TimerOutput& timer_,
 inline void
 TimerOutput::Scope::stop()
 {
-  if(!in)
+  if (!in)
     return;
   in = false;
 

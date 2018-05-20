@@ -1922,7 +1922,7 @@ namespace TrilinosWrappers
     // structure is not reset.
     int ierr;
 
-    if(!preconditioner->UseTranspose())
+    if (!preconditioner->UseTranspose())
       {
         ierr = preconditioner->SetUseTranspose(true);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));

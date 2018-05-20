@@ -27,28 +27,28 @@ test(const unsigned int chunk_size)
   // empty lines (not even diagonals, since
   // not quadratic)
   ChunkSparsityPattern sp(5, 5, 3, chunk_size);
-  for(unsigned int i = 0; i < 5; ++i)
-    for(unsigned int j = 0; j < 5; ++j)
-      if(((i + 2 * j + 1) % 3 == 0) || (i == j))
+  for (unsigned int i = 0; i < 5; ++i)
+    for (unsigned int j = 0; j < 5; ++j)
+      if (((i + 2 * j + 1) % 3 == 0) || (i == j))
         sp.add(i, j);
   sp.compress();
 
   // attach a sparse matrix to it
   ChunkSparseMatrix<double> m(sp);
 
-  for(unsigned int row = 0; row < sp.n_rows(); ++row)
+  for (unsigned int row = 0; row < sp.n_rows(); ++row)
     AssertThrow(m.begin(row) - m.begin(row) == 0, ExcInternalError());
 
-  for(unsigned int row = 0; row < sp.n_rows(); ++row)
+  for (unsigned int row = 0; row < sp.n_rows(); ++row)
     AssertThrow(m.end(row) - m.begin(row) == (int) sp.row_length(row),
                 ExcInternalError());
-  for(unsigned int row = 0; row < sp.n_rows(); ++row)
+  for (unsigned int row = 0; row < sp.n_rows(); ++row)
     AssertThrow(m.begin(row) - m.end(row) == -(int) sp.row_length(row),
                 ExcInternalError());
 
   {
     unsigned int counter = 0;
-    for(unsigned int row = 0; row < sp.n_rows(); ++row)
+    for (unsigned int row = 0; row < sp.n_rows(); ++row)
       {
         AssertThrow(m.begin(row) - m.begin(0) == (int) counter,
                     ExcInternalError());
@@ -82,7 +82,7 @@ main()
       test(4);
       test(7);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -96,7 +96,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

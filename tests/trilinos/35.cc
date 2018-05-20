@@ -26,10 +26,10 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 {
   // set only certain elements of each
   // vector
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       v(i) = i;
-      if(i % 3 == 0)
+      if (i % 3 == 0)
         w(i) = i + 1.;
     }
 
@@ -39,9 +39,9 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
   v += w;
 
   // make sure we get the expected result
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
-      if(i % 3 == 0)
+      if (i % 3 == 0)
         {
           AssertThrow(w(i) == i + 1., ExcInternalError());
           AssertThrow(v(i) == i + i + 1., ExcInternalError());
@@ -74,7 +74,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -88,7 +88,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

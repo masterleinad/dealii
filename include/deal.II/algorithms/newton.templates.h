@@ -98,7 +98,7 @@ namespace Algorithms
 
     VectorType& u = *out.entry<VectorType*>(0);
 
-    if(debug > 2)
+    if (debug > 2)
       deallog << "u: " << u.l2_norm() << std::endl;
 
     GrowingVectorMemory<VectorType>            mem;
@@ -124,7 +124,7 @@ namespace Algorithms
     double resnorm      = res->l2_norm();
     double old_residual = 0.;
 
-    if(debug_vectors)
+    if (debug_vectors)
       {
         AnyData     tmp;
         VectorType* p = &u;
@@ -137,10 +137,10 @@ namespace Algorithms
         *data_out << tmp;
       }
 
-    while(control.check(step++, resnorm) == SolverControl::iterate)
+    while (control.check(step++, resnorm) == SolverControl::iterate)
       {
         // assemble (Df(u), v)
-        if((step > 1) && (resnorm / old_residual >= assemble_threshold))
+        if ((step > 1) && (resnorm / old_residual >= assemble_threshold))
           inverse_derivative->notify(Events::bad_derivative);
 
         Du->reinit(u);
@@ -148,13 +148,13 @@ namespace Algorithms
           {
             (*inverse_derivative)(out2, src2);
           }
-        catch(SolverControl::NoConvergence& e)
+        catch (SolverControl::NoConvergence& e)
           {
             deallog << "Inner iteration failed after " << e.last_step
                     << " steps with residual " << e.last_residual << std::endl;
           }
 
-        if(debug_vectors)
+        if (debug_vectors)
           {
             AnyData     tmp;
             VectorType* p = &u;
@@ -174,15 +174,15 @@ namespace Algorithms
 
         // Step size control
         unsigned int step_size = 0;
-        while(resnorm >= old_residual)
+        while (resnorm >= old_residual)
           {
             ++step_size;
-            if(step_size > n_stepsize_iterations)
+            if (step_size > n_stepsize_iterations)
               {
                 deallog << "No smaller stepsize allowed!";
                 break;
               }
-            if(control.log_history())
+            if (control.log_history())
               deallog << "Trying step size: 1/" << (1 << step_size)
                       << " since residual was " << resnorm << std::endl;
             u.add(1. / (1 << step_size), *Du);
@@ -192,7 +192,7 @@ namespace Algorithms
       }
 
     // in case of failure: throw exception
-    if(control.last_check() != SolverControl::success)
+    if (control.last_check() != SolverControl::success)
       AssertThrow(false,
                   SolverControl::NoConvergence(control.last_step(),
                                                control.last_value()));

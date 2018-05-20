@@ -131,7 +131,7 @@ namespace DerivativeApproximation
       const InputVector&             solution,
       const unsigned int             component)
     {
-      if(fe_values.get_fe().n_components() == 1)
+      if (fe_values.get_fe().n_components() == 1)
         {
           std::vector<typename InputVector::value_type> values(1);
           fe_values.get_function_values(solution, values);
@@ -153,7 +153,7 @@ namespace DerivativeApproximation
     Gradient<dim>::derivative_norm(const Derivative& d)
     {
       double s = 0;
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         s += d[i] * d[i];
       return std::sqrt(s);
     }
@@ -241,7 +241,7 @@ namespace DerivativeApproximation
       const InputVector&             solution,
       const unsigned int             component)
     {
-      if(fe_values.get_fe().n_components() == 1)
+      if (fe_values.get_fe().n_components() == 1)
         {
           std::vector<Tensor<1, dim, typename InputVector::value_type>> values(
             1);
@@ -406,7 +406,7 @@ namespace DerivativeApproximation
 
       // s := d - trace(d) I
       Tensor<2, 3> s = d;
-      for(unsigned int i = 0; i < 3; ++i)
+      for (unsigned int i = 0; i < 3; ++i)
         s[i][i] -= am;
 
       const double ss01 = s[0][1] * s[0][1], ss12 = s[1][2] * s[1][2],
@@ -430,7 +430,7 @@ namespace DerivativeApproximation
       // degenerate case with three
       // identical eigenvalues. check
       // this first
-      if(R <= 1e-14 * std::fabs(am))
+      if (R <= 1e-14 * std::fabs(am))
         EE[0] = EE[1] = EE[2] = am;
       else
         {
@@ -442,7 +442,7 @@ namespace DerivativeApproximation
 
           Assert(YY > -1e-14, ExcInternalError());
 
-          if(YY < 0)
+          if (YY < 0)
             {
               // two roots are equal
               const double a = (XX > 0 ? -1. : 1.) * R / 2;
@@ -488,8 +488,8 @@ namespace DerivativeApproximation
     SecondDerivative<dim>::symmetrize(Derivative& d)
     {
       // symmetrize non-diagonal entries
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i + 1; j < dim; ++j)
+      for (unsigned int i = 0; i < dim; ++i)
+        for (unsigned int j = i + 1; j < dim; ++j)
           {
             const double s = (d[i][j] + d[j][i]) / 2;
             d[i][j] = d[j][i] = s;
@@ -565,7 +565,7 @@ namespace DerivativeApproximation
       const InputVector&             solution,
       const unsigned int             component)
     {
-      if(fe_values.get_fe().n_components() == 1)
+      if (fe_values.get_fe().n_components() == 1)
         {
           std::vector<Tensor<2, dim, typename InputVector::value_type>> values(
             1);
@@ -610,9 +610,9 @@ namespace DerivativeApproximation
       // first do it in the case, that i,j,k are
       // pairwise different (which can onlky happen
       // in dim >= 3)
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i + 1; j < dim; ++j)
-          for(unsigned int k = j + 1; k < dim; ++k)
+      for (unsigned int i = 0; i < dim; ++i)
+        for (unsigned int j = i + 1; j < dim; ++j)
+          for (unsigned int k = j + 1; k < dim; ++k)
             {
               const double s = (d[i][j][k] + d[i][k][j] + d[j][i][k]
                                 + d[j][k][i] + d[k][i][j] + d[k][j][i])
@@ -622,8 +622,8 @@ namespace DerivativeApproximation
             }
       // now do the case, where two indices are
       // equal
-      for(unsigned int i = 0; i < dim; ++i)
-        for(unsigned int j = i + 1; j < dim; ++j)
+      for (unsigned int i = 0; i < dim; ++i)
+        for (unsigned int j = i + 1; j < dim; ++j)
           {
             // case 1: index i (lower one) is
             // double
@@ -794,7 +794,7 @@ namespace DerivativeApproximation
         dealii::DoFCellAccessor<DoFHandlerType<dim, spacedim>, false>>>::
         const_iterator neighbor_ptr
         = active_neighbors.begin();
-      for(; neighbor_ptr != active_neighbors.end(); ++neighbor_ptr)
+      for (; neighbor_ptr != active_neighbors.end(); ++neighbor_ptr)
         {
           const TriaActiveIterator<
             dealii::DoFCellAccessor<DoFHandlerType<dim, spacedim>, false>>
@@ -836,8 +836,8 @@ namespace DerivativeApproximation
           // add up the
           // contribution of
           // this cell to Y
-          for(unsigned int i = 0; i < dim; ++i)
-            for(unsigned int j = 0; j < dim; ++j)
+          for (unsigned int i = 0; i < dim; ++i)
+            for (unsigned int j = 0; j < dim; ++j)
               Y[i][j] += y[i] * y[j];
 
           // then update the sum
@@ -893,7 +893,7 @@ namespace DerivativeApproximation
       const unsigned int                   component)
     {
       // if the cell is not locally owned, then there is nothing to do
-      if(std::get<0>(*cell)->is_locally_owned() == false)
+      if (std::get<0>(*cell)->is_locally_owned() == false)
         *std::get<1>(*cell) = 0;
       else
         {

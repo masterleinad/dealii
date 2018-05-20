@@ -90,7 +90,7 @@ SystemTest<dim>::shape_to_components()
   // (i.e. the first component of the FESystem)
   // 1 for yes, 0 for no.
 
-  for(unsigned int i = 0; i < fe.dofs_per_cell; i++)
+  for (unsigned int i = 0; i < fe.dofs_per_cell; i++)
     deallog << "  shapefunction " << i
             << " is Nedelec:  " << (fe.is_primitive(i) ? "false" : "true")
             << std::endl;
@@ -105,10 +105,10 @@ SystemTest<dim>::check_numbering()
     endc = dof_handler.end();
   std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; i++)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; i++)
         deallog << "  DoF " << local_dof_indices[i]
                 << " belongs to base element "
                 << fe.system_to_base_index(i).first.first << ", instance "
@@ -121,17 +121,17 @@ SystemTest<dim>::check_numbering()
   deallog << "  Now we renumber the DoFs anti-component-wise:" << std::endl;
   deallog << "  *********************************************" << std::endl;
   std::vector<unsigned int> comp(fe.n_components());
-  for(unsigned int i = 0; i < comp.size(); ++i)
+  for (unsigned int i = 0; i < comp.size(); ++i)
     comp[i] = comp.size() - i - 1;
   DoFRenumbering::component_wise(dof_handler, comp);
 
   cell = dof_handler.begin_active();
   endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell->get_dof_indices(local_dof_indices);
-      for(unsigned int i = 0; i < fe.dofs_per_cell; i++)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; i++)
         deallog << "  DoF " << local_dof_indices[i] << " belongs to base "
                 << fe.system_to_base_index(i).first.first << ", instance "
                 << fe.system_to_base_index(i).first.second << std::endl;

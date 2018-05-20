@@ -34,7 +34,7 @@ test()
     Assert(sums[0] == numprocs, ExcInternalError());
     Assert(sums[1] == 2 * numprocs, ExcInternalError());
 
-    if(myid == 0)
+    if (myid == 0)
       deallog << sums[0] << ' ' << sums[1] << std::endl;
   }
 
@@ -47,7 +47,7 @@ test()
     Assert(sums[0] == 1.5 * numprocs, ExcInternalError());
     Assert(sums[1] == 2.5 * numprocs, ExcInternalError());
 
-    if(myid == 0)
+    if (myid == 0)
       deallog << sums[0] << ' ' << sums[1] << std::endl;
   }
 }
@@ -65,7 +65,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

@@ -61,22 +61,22 @@ test()
           << std::endl;
 
   Vector<double> b(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     b(i) = (1. + 1. * i * i) / 3;
 
   // now condense away constraints
   constraints.set_zero(b);
 
   // and output what we have
-  for(Vector<double>::const_iterator i = b.begin(); i != b.end(); ++i)
+  for (Vector<double>::const_iterator i = b.begin(); i != b.end(); ++i)
     deallog << *i << std::endl;
 
   // now also make sure that the elements in
   // constrained rows are zero, and that all
   // the other elements are unchanged
-  for(unsigned int i = 0; i < b.size(); ++i)
+  for (unsigned int i = 0; i < b.size(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         {
           AssertThrow(b(i) == 0, ExcInternalError());
         }
@@ -100,7 +100,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -114,7 +114,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

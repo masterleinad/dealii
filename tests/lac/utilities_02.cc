@@ -132,17 +132,17 @@ test()
     mf_data->initialize_dof_vector(inv_mass_matrix);
     FEEvaluation<dim, fe_degree> fe_eval(*mf_data);
     const unsigned int           n_q_points = fe_eval.n_q_points;
-    for(unsigned int cell = 0; cell < mf_data->n_macro_cells(); ++cell)
+    for (unsigned int cell = 0; cell < mf_data->n_macro_cells(); ++cell)
       {
         fe_eval.reinit(cell);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           fe_eval.submit_value(one, q);
         fe_eval.integrate(true, false);
         fe_eval.distribute_local_to_global(inv_mass_matrix);
       }
     inv_mass_matrix.compress(VectorOperation::add);
-    for(unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
-      if(inv_mass_matrix.local_element(k) > 1e-15)
+    for (unsigned int k = 0; k < inv_mass_matrix.local_size(); ++k)
+      if (inv_mass_matrix.local_element(k) > 1e-15)
         {
           inv_mass_matrix.local_element(k)
             = std::sqrt(1. / inv_mass_matrix.local_element(k));
@@ -163,13 +163,13 @@ test()
   // Do actuall work:
   LinearAlgebra::distributed::Vector<double> init_vector;
   mf_data->initialize_dof_vector(init_vector);
-  for(auto it = init_vector.begin(); it != init_vector.end(); ++it)
+  for (auto it = init_vector.begin(); it != init_vector.end(); ++it)
     *it = random_value<double>();
 
   constraints.set_zero(init_vector);
 
   GrowingVectorMemory<LinearAlgebra::distributed::Vector<double>> vector_memory;
-  for(unsigned int k = 4; k < 10; ++k)
+  for (unsigned int k = 4; k < 10; ++k)
     {
       const double est = Utilities::LinearAlgebra::lanczos_largest_eigenvalue(
         OP, init_vector, k, vector_memory);
@@ -185,7 +185,7 @@ test()
     std::vector<double>                                     eigenvalues;
     eigenfunctions.resize(number_of_eigenvalues);
     eigenvalues.resize(number_of_eigenvalues);
-    for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+    for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
       mf_data->initialize_dof_vector(eigenfunctions[i]);
 
     std::vector<std::complex<double>> lambda(number_of_eigenvalues);
@@ -212,7 +212,7 @@ test()
     {
       LinearAlgebra::distributed::Vector<double> init_vector;
       mf_data->initialize_dof_vector(init_vector);
-      for(auto it = init_vector.begin(); it != init_vector.end(); ++it)
+      for (auto it = init_vector.begin(); it != init_vector.end(); ++it)
         *it = random_value<double>();
 
       constraints.set_zero(init_vector);
@@ -223,10 +223,10 @@ test()
     eigensolver.solve(OP, mass, OP, lambda, eigenfunctions, eigenvalues.size());
     deallog.depth_file(previous_depth);
 
-    for(unsigned int i = 0; i < lambda.size(); i++)
+    for (unsigned int i = 0; i < lambda.size(); i++)
       eigenvalues[i] = lambda[i].real();
 
-    for(unsigned int i = 0; i < eigenvalues.size(); i++)
+    for (unsigned int i = 0; i < eigenvalues.size(); i++)
       deallog << eigenvalues[i] << std::endl;
 
     // make sure that we have eigenvectors and they are mass-orthonormal:
@@ -235,9 +235,9 @@ test()
     {
       const double                               precision = 1e-7;
       LinearAlgebra::distributed::Vector<double> Ax(eigenfunctions[0]);
-      for(unsigned int i = 0; i < eigenfunctions.size(); ++i)
+      for (unsigned int i = 0; i < eigenfunctions.size(); ++i)
         {
-          for(unsigned int j = 0; j < eigenfunctions.size(); j++)
+          for (unsigned int j = 0; j < eigenfunctions.size(); j++)
             {
               const double err
                 = std::abs(eigenfunctions[j] * eigenfunctions[i] - (i == j));
@@ -277,7 +277,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -291,7 +291,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

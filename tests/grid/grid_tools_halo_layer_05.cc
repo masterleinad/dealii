@@ -29,7 +29,7 @@ write_active_fe_index_to_file(const hp::DoFHandler<dim>& dof_handler)
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell, ++count)
+  for (; cell != endc; ++cell, ++count)
     {
       deallog << count << " " << cell->active_fe_index() << std::endl;
     }
@@ -46,7 +46,7 @@ write_vtk(const hp::DoFHandler<dim>& dof_handler, const std::string filename)
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell, ++count)
+  for (; cell != endc; ++cell, ++count)
     {
       active_fe_index[count] = cell->active_fe_index();
     }
@@ -83,19 +83,19 @@ test()
 
   // Mark a small block at the corner of the hypercube
   cell_iterator cell = dof_handler.begin_active(), endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       bool mark = true;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()[d] > 0.5)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()[d] > 0.5)
           {
             mark = false;
             break;
           }
 
-      if(mark == true)
+      if (mark == true)
         {
-          if(cell->center()[0] < 0.25)
+          if (cell->center()[0] < 0.25)
             cell->set_active_fe_index(2);
           else
             cell->set_active_fe_index(3);
@@ -122,10 +122,10 @@ test()
   std::vector<cell_iterator> active_halo_layer
     = GridTools::compute_active_cell_halo_layer(dof_handler, predicate);
   AssertThrow(active_halo_layer.size() > 0, ExcMessage("No halo layer found."));
-  for(typename std::vector<cell_iterator>::iterator it
-      = active_halo_layer.begin();
-      it != active_halo_layer.end();
-      ++it)
+  for (typename std::vector<cell_iterator>::iterator it
+       = active_halo_layer.begin();
+       it != active_halo_layer.end();
+       ++it)
     {
       (*it)->set_active_fe_index(4);
     }

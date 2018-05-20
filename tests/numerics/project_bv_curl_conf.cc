@@ -42,7 +42,7 @@ void
 BoundaryFunction<dim>::vector_value(const Point<dim>&,
                                     Vector<double>& values) const
 {
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     values(d) = d + 1.0;
 }
 

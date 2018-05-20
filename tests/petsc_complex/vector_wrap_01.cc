@@ -25,11 +25,11 @@ void
 test(PETScWrappers::VectorBase& v, PETScWrappers::MPI::Vector& w)
 {
   // set the first vector
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     v(k) = std::complex<double>(k, 0.5 * k);
 
   // copy elements by reference
-  for(unsigned int k = 0; k < v.size(); ++k)
+  for (unsigned int k = 0; k < v.size(); ++k)
     w(k) = v(k);
 
   // check that they're equal
@@ -63,7 +63,7 @@ main(int argc, char** argv)
 
       AssertThrow(ierr == 0, ExcPETScError(ierr));
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -77,7 +77,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

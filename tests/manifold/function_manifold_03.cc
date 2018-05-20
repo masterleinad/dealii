@@ -36,7 +36,7 @@ test(unsigned int ref = 1)
   std::string push_forward_expression;
   std::string pull_back_expression;
 
-  switch(spacedim)
+  switch (spacedim)
     {
       case 2:
         push_forward_expression = "x; x^2";
@@ -63,7 +63,7 @@ test(unsigned int ref = 1)
 
   deallog << "P0: " << p[0] << ", P1: " << p[1] << std::endl;
 
-  for(unsigned int i = 0; i < n_intermediates + 1; ++i)
+  for (unsigned int i = 0; i < n_intermediates + 1; ++i)
     {
       w[0] = 1.0 - (double) i / ((double) n_intermediates);
       w[1] = 1.0 - w[0];

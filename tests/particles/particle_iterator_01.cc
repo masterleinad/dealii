@@ -33,13 +33,13 @@ test()
     Point<dim> position;
     position(0) = 0.3;
 
-    if(dim > 1)
+    if (dim > 1)
       position(1) = 0.5;
 
     Point<dim> reference_position;
     reference_position(0) = 0.2;
 
-    if(dim > 1)
+    if (dim > 1)
       reference_position(1) = 0.4;
 
     const types::particle_index index(7);
@@ -62,7 +62,7 @@ test()
     Particles::ParticleIterator<dim> particle_it(map, map.begin());
     Particles::ParticleIterator<dim> particle_end(map, map.end());
 
-    for(; particle_it != particle_end; ++particle_it)
+    for (; particle_it != particle_end; ++particle_it)
       {
         deallog << "Particle position: " << (*particle_it).get_location()
                 << std::endl

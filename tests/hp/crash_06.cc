@@ -59,10 +59,10 @@ do_check(const Triangulation<dim>&    triangulation,
   hp::DoFHandler<dim> dof_handler(triangulation);
 
   // distribute fe_indices randomly
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % fe.size());
   dof_handler.distribute_dofs(fe);
 
@@ -95,7 +95,7 @@ main()
   deallog.attach(logfile);
 
   hp::FECollection<3> fe;
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     fe.push_back(FE_DGQ<3>(i));
   test_with_wrong_face_orientation(fe);
 }

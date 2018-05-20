@@ -31,7 +31,7 @@ test()
   Assert(maxima[0] == numprocs, ExcInternalError());
   Assert(maxima[1] == 2 * numprocs - 1, ExcInternalError());
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << maxima[0] << ' ' << maxima[1] << std::endl;
 }
 
@@ -48,7 +48,7 @@ main(int argc, char* argv[])
 
 #endif
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       initlog();
 

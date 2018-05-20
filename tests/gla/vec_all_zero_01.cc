@@ -30,7 +30,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   // each processor owns 2 indices and all
@@ -47,14 +47,14 @@ test()
   typename LA::MPI::Vector g(local_active, local_relevant, MPI_COMM_WORLD);
   g = x;
   deallog << "all_zero? " << g.all_zero() << " (should be true)" << std::endl;
-  if(myid == 0)
+  if (myid == 0)
     x(0) = 1.0;
   x.compress(VectorOperation::insert);
   g = x;
   deallog << "all_zero? " << g.all_zero() << " (should be false)" << std::endl;
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -74,6 +74,6 @@ main(int argc, char** argv)
     deallog.pop();
   }
 
-  if(myid == 9999)
+  if (myid == 9999)
     test<LA_Dummy>(); // don't execute
 }

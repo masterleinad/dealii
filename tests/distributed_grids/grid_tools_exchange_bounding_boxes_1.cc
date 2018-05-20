@@ -39,10 +39,10 @@ test_exchange_bbox()
   // The first bbox first coordinate is proc: then use
   // the natural numbers increasingly
   std::vector<BoundingBox<spacedim>> loc_bboxes(n_bboxes[proc % 7]);
-  for(unsigned int b = 0; b < loc_bboxes.size(); ++b)
+  for (unsigned int b = 0; b < loc_bboxes.size(); ++b)
     {
       Point<spacedim> pt1, pt2;
-      for(unsigned int d = 0; d < spacedim; ++d)
+      for (unsigned int d = 0; d < spacedim; ++d)
         {
           pt1[d] = (proc + 2 * b * spacedim + d) * (proc + 1);
           pt2[d] = (proc + (2 * b + 1) * spacedim + d) * (proc + 1);
@@ -56,9 +56,9 @@ test_exchange_bbox()
 
   bool passed = true;
   // First check if the dimensions are correct:
-  for(unsigned int i = 0; i < n_procs; ++i)
+  for (unsigned int i = 0; i < n_procs; ++i)
     {
-      if(global_boxes[i].size() != n_bboxes[i % 7])
+      if (global_boxes[i].size() != n_bboxes[i % 7])
         {
           deallog << "Test FAILED: dimension check failed for process " << i
                   << std::endl;
@@ -71,20 +71,20 @@ test_exchange_bbox()
     }
 
   // Checking if all received data is correct
-  if(passed)
+  if (passed)
     {
-      for(unsigned int p = 0; p < n_procs; ++p)
+      for (unsigned int p = 0; p < n_procs; ++p)
         {
-          for(unsigned int b = 0; b < n_bboxes[p % 7]; ++b)
+          for (unsigned int b = 0; b < n_bboxes[p % 7]; ++b)
             {
               std::vector<Point<spacedim>> boundary_pt(2);
               boundary_pt[0] = global_boxes[p][b].get_boundary_points().first;
               boundary_pt[1] = global_boxes[p][b].get_boundary_points().second;
-              for(unsigned int d = 0; d < spacedim; ++d)
-                for(unsigned int pt = 0; pt < 2; ++pt)
-                  if(std::abs(boundary_pt[pt][d]
-                              - (p + (2 * b + pt) * spacedim + d) * (p + 1))
-                     > 1e-10)
+              for (unsigned int d = 0; d < spacedim; ++d)
+                for (unsigned int pt = 0; pt < 2; ++pt)
+                  if (std::abs(boundary_pt[pt][d]
+                               - (p + (2 * b + pt) * spacedim + d) * (p + 1))
+                      > 1e-10)
                     {
                       passed = false;
                       deallog << "Test FAILED, value not corresponding for:"
@@ -102,21 +102,21 @@ test_exchange_bbox()
             }
         }
     }
-  if(passed)
+  if (passed)
     deallog << "Test passed" << std::endl;
   else
     {
       deallog << "Test failed" << std::endl;
       deallog << "Current proc values" << std::endl;
-      for(auto b : loc_bboxes)
+      for (auto b : loc_bboxes)
         {
           deallog << b.get_boundary_points().first << " and " << std::endl;
           deallog << b.get_boundary_points().second << std::endl;
         }
       deallog << "Received values" << std::endl;
-      for(auto vec_box : global_boxes)
+      for (auto vec_box : global_boxes)
         {
-          for(auto b : vec_box)
+          for (auto b : vec_box)
             {
               deallog << b.get_boundary_points().first << " and " << std::endl;
               deallog << b.get_boundary_points().second << std::endl;

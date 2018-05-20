@@ -99,7 +99,7 @@ namespace Utilities
     void
     Partitioner::set_owned_indices(const IndexSet& locally_owned_indices)
     {
-      if(Utilities::MPI::job_supports_mpi() == true)
+      if (Utilities::MPI::job_supports_mpi() == true)
         {
           my_pid  = Utilities::MPI::this_mpi_process(communicator);
           n_procs = Utilities::MPI::n_mpi_processes(communicator);
@@ -115,7 +115,7 @@ namespace Utilities
              ExcMessage("The index set specified in locally_owned_indices "
                         "is not contiguous."));
       locally_owned_indices.compress();
-      if(locally_owned_indices.n_elements() > 0)
+      if (locally_owned_indices.n_elements() > 0)
         local_range_data
           = std::pair<types::global_dof_index, types::global_dof_index>(
             locally_owned_indices.nth_index_in_set(0),
@@ -148,7 +148,7 @@ namespace Utilities
                                   locally_owned_range_data.size()));
 
       ghost_indices_data = ghost_indices_in;
-      if(ghost_indices_data.size() != locally_owned_range_data.size())
+      if (ghost_indices_data.size() != locally_owned_range_data.size())
         ghost_indices_data.set_size(locally_owned_range_data.size());
       ghost_indices_data.subtract_set(locally_owned_range_data);
       ghost_indices_data.compress();
@@ -172,7 +172,7 @@ namespace Utilities
       // find out the end index for each processor and communicate it (this
       // implies the start index for the next processor)
 #ifdef DEAL_II_WITH_MPI
-      if(n_procs < 2)
+      if (n_procs < 2)
         {
           Assert(ghost_indices_data.n_elements() == 0, ExcInternalError());
           Assert(n_import_indices_data == 0, ExcInternalError());
@@ -201,22 +201,22 @@ namespace Utilities
 
       // fix case when there are some processors without any locally owned
       // indices: then there might be a zero in some entries
-      if(global_size > 0)
+      if (global_size > 0)
         {
           unsigned int first_proc_with_nonzero_dofs = 0;
-          for(unsigned int i = 0; i < n_procs; ++i)
-            if(first_index[i + 1] > 0)
+          for (unsigned int i = 0; i < n_procs; ++i)
+            if (first_index[i + 1] > 0)
               {
                 first_proc_with_nonzero_dofs = i;
                 break;
               }
-          for(unsigned int i = first_proc_with_nonzero_dofs + 1; i < n_procs;
-              ++i)
-            if(first_index[i] == 0)
+          for (unsigned int i = first_proc_with_nonzero_dofs + 1; i < n_procs;
+               ++i)
+            if (first_index[i] == 0)
               first_index[i] = first_index[i - 1];
 
           // correct if our processor has a wrong local range
-          if(first_index[my_pid] != local_range_data.first)
+          if (first_index[my_pid] != local_range_data.first)
             {
               Assert(local_range_data.first == local_range_data.second,
                      ExcInternalError());
@@ -229,7 +229,7 @@ namespace Utilities
       std::vector<types::global_dof_index> expanded_ghost_indices(
         n_ghost_indices_data);
       unsigned int n_ghost_targets = 0;
-      if(n_ghost_indices_data > 0)
+      if (n_ghost_indices_data > 0)
         {
           // Create first a vector of ghost_targets from the list of ghost
           // indices and then push back new values. When we are done, copy the
@@ -239,20 +239,20 @@ namespace Utilities
           unsigned int current_proc = 0;
           ghost_indices_data.fill_index_vector(expanded_ghost_indices);
           types::global_dof_index current_index = expanded_ghost_indices[0];
-          while(current_index >= first_index[current_proc + 1])
+          while (current_index >= first_index[current_proc + 1])
             current_proc++;
           std::vector<std::pair<unsigned int, unsigned int>> ghost_targets_temp(
             1, std::pair<unsigned int, unsigned int>(current_proc, 0));
           n_ghost_targets++;
 
-          for(unsigned int iterator = 1; iterator < n_ghost_indices_data;
-              ++iterator)
+          for (unsigned int iterator = 1; iterator < n_ghost_indices_data;
+               ++iterator)
             {
               current_index = expanded_ghost_indices[iterator];
-              while(current_index >= first_index[current_proc + 1])
+              while (current_index >= first_index[current_proc + 1])
                 current_proc++;
               AssertIndexRange(current_proc, n_procs);
-              if(ghost_targets_temp[n_ghost_targets - 1].first < current_proc)
+              if (ghost_targets_temp[n_ghost_targets - 1].first < current_proc)
                 {
                   ghost_targets_temp[n_ghost_targets - 1].second
                     = iterator - ghost_targets_temp[n_ghost_targets - 1].second;
@@ -269,7 +269,7 @@ namespace Utilities
       {
         std::vector<int> send_buffer(n_procs, 0);
         std::vector<int> receive_buffer(n_procs, 0);
-        for(unsigned int i = 0; i < n_ghost_targets; i++)
+        for (unsigned int i = 0; i < n_ghost_targets; i++)
           send_buffer[ghost_targets_data[i].first]
             = ghost_targets_data[i].second;
 
@@ -285,8 +285,8 @@ namespace Utilities
         // allocate memory for import data
         std::vector<std::pair<unsigned int, unsigned int>> import_targets_temp;
         n_import_indices_data = 0;
-        for(unsigned int i = 0; i < n_procs; i++)
-          if(receive_buffer[i] > 0)
+        for (unsigned int i = 0; i < n_procs; i++)
+          if (receive_buffer[i] > 0)
             {
               n_import_indices_data += receive_buffer[i];
               import_targets_temp.emplace_back(i, receive_buffer[i]);
@@ -302,7 +302,7 @@ namespace Utilities
       {
         unsigned int             current_index_start = 0;
         std::vector<MPI_Request> import_requests(import_targets_data.size());
-        for(unsigned int i = 0; i < import_targets_data.size(); i++)
+        for (unsigned int i = 0; i < import_targets_data.size(); i++)
           {
             const int ierr
               = MPI_Irecv(&expanded_import_indices[current_index_start],
@@ -319,7 +319,7 @@ namespace Utilities
 
         // use blocking send
         current_index_start = 0;
-        for(unsigned int i = 0; i < n_ghost_targets; i++)
+        for (unsigned int i = 0; i < n_ghost_targets; i++)
           {
             const int ierr
               = MPI_Send(&expanded_ghost_indices[current_index_start],
@@ -333,7 +333,7 @@ namespace Utilities
           }
         AssertDimension(current_index_start, n_ghost_indices_data);
 
-        if(import_requests.size() > 0)
+        if (import_requests.size() > 0)
           {
             const int ierr = MPI_Waitall(import_requests.size(),
                                          import_requests.data(),
@@ -350,11 +350,12 @@ namespace Utilities
           std::vector<std::pair<unsigned int, unsigned int>>
                        compressed_import_indices;
           unsigned int shift = 0;
-          for(unsigned int p = 0; p < import_targets_data.size(); ++p)
+          for (unsigned int p = 0; p < import_targets_data.size(); ++p)
             {
               types::global_dof_index last_index
                 = numbers::invalid_dof_index - 1;
-              for(unsigned int ii = 0; ii < import_targets_data[p].second; ++ii)
+              for (unsigned int ii = 0; ii < import_targets_data[p].second;
+                   ++ii)
                 {
                   const unsigned int i = shift + ii;
                   Assert(expanded_import_indices[i] >= local_range_data.first
@@ -367,7 +368,7 @@ namespace Utilities
                     = (expanded_import_indices[i] - local_range_data.first);
                   Assert(new_index < numbers::invalid_unsigned_int,
                          ExcNotImplemented());
-                  if(new_index == last_index + 1)
+                  if (new_index == last_index + 1)
                     compressed_import_indices.back().second++;
                   else
                     compressed_import_indices.emplace_back(new_index,
@@ -384,7 +385,7 @@ namespace Utilities
 #  ifdef DEBUG
           const types::global_dof_index n_local_dofs
             = local_range_data.second - local_range_data.first;
-          for(unsigned int i = 0; i < import_indices_data.size(); ++i)
+          for (unsigned int i = 0; i < import_indices_data.size(); ++i)
             {
               AssertIndexRange(import_indices_data[i].first, n_local_dofs);
               AssertIndexRange(import_indices_data[i].second - 1, n_local_dofs);
@@ -394,7 +395,7 @@ namespace Utilities
       }
 #endif // #ifdef DEAL_II_WITH_MPI
 
-      if(larger_ghost_index_set.size() == 0)
+      if (larger_ghost_index_set.size() == 0)
         {
           ghost_indices_subset_chunks_by_rank_data.clear();
           ghost_indices_subset_data.emplace_back(
@@ -417,9 +418,9 @@ namespace Utilities
           n_ghost_indices_in_larger_set = larger_ghost_index_set.n_elements();
 
           std::vector<unsigned int> expanded_numbering;
-          for(IndexSet::ElementIterator it = ghost_indices_data.begin();
-              it != ghost_indices_data.end();
-              ++it)
+          for (IndexSet::ElementIterator it = ghost_indices_data.begin();
+               it != ghost_indices_data.end();
+               ++it)
             {
               Assert(larger_ghost_index_set.is_element(*it),
                      ExcMessage("The given larger ghost index set must contain"
@@ -434,13 +435,13 @@ namespace Utilities
             ghost_targets_data.size() + 1);
           ghost_indices_subset_chunks_by_rank_data[0] = 0;
           unsigned int shift                          = 0;
-          for(unsigned int p = 0; p < ghost_targets_data.size(); ++p)
+          for (unsigned int p = 0; p < ghost_targets_data.size(); ++p)
             {
               unsigned int last_index = numbers::invalid_unsigned_int - 1;
-              for(unsigned int ii = 0; ii < ghost_targets_data[p].second; ii++)
+              for (unsigned int ii = 0; ii < ghost_targets_data[p].second; ii++)
                 {
                   const unsigned int i = shift + ii;
-                  if(expanded_numbering[i] == last_index + 1)
+                  if (expanded_numbering[i] == last_index + 1)
                     ghost_indices_subset.back().second++;
                   else
                     ghost_indices_subset.emplace_back(
@@ -460,17 +461,17 @@ namespace Utilities
     {
       // if the partitioner points to the same memory location as the calling
       // processor
-      if(&part == this)
+      if (&part == this)
         return true;
 #ifdef DEAL_II_WITH_MPI
-      if(Utilities::MPI::job_supports_mpi())
+      if (Utilities::MPI::job_supports_mpi())
         {
           int       communicators_same = 0;
           const int ierr               = MPI_Comm_compare(
             part.communicator, communicator, &communicators_same);
           AssertThrowMPI(ierr);
-          if(!(communicators_same == MPI_IDENT
-               || communicators_same == MPI_CONGRUENT))
+          if (!(communicators_same == MPI_IDENT
+                || communicators_same == MPI_CONGRUENT))
             return false;
         }
 #endif

@@ -1519,8 +1519,8 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
 
   // initialize the time steps for
   // a round of this loop
-  for(unsigned int step = 0; step < n_timesteps; ++step)
-    switch(direction)
+  for (unsigned int step = 0; step < n_timesteps; ++step)
+    switch (direction)
       {
         case forward:
           init_function((&*timesteps[step]));
@@ -1531,44 +1531,44 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
       };
 
   // wake up the first few time levels
-  for(int step = -timestepping_data.look_ahead; step < 0; ++step)
-    for(int look_ahead = 0;
-        look_ahead <= static_cast<int>(timestepping_data.look_ahead);
-        ++look_ahead)
-      switch(direction)
+  for (int step = -timestepping_data.look_ahead; step < 0; ++step)
+    for (int look_ahead = 0;
+         look_ahead <= static_cast<int>(timestepping_data.look_ahead);
+         ++look_ahead)
+      switch (direction)
         {
           case forward:
-            if(step + look_ahead >= 0)
+            if (step + look_ahead >= 0)
               timesteps[step + look_ahead]->wake_up(look_ahead);
             break;
           case backward:
-            if(n_timesteps - (step + look_ahead) < n_timesteps)
+            if (n_timesteps - (step + look_ahead) < n_timesteps)
               timesteps[n_timesteps - (step + look_ahead)]->wake_up(look_ahead);
             break;
         };
 
-  for(unsigned int step = 0; step < n_timesteps; ++step)
+  for (unsigned int step = 0; step < n_timesteps; ++step)
     {
       // first thing: wake up the
       // timesteps ahead as necessary
-      for(unsigned int look_ahead = 0;
-          look_ahead <= timestepping_data.look_ahead;
-          ++look_ahead)
-        switch(direction)
+      for (unsigned int look_ahead = 0;
+           look_ahead <= timestepping_data.look_ahead;
+           ++look_ahead)
+        switch (direction)
           {
             case forward:
-              if(step + look_ahead < n_timesteps)
+              if (step + look_ahead < n_timesteps)
                 timesteps[step + look_ahead]->wake_up(look_ahead);
               break;
             case backward:
-              if(n_timesteps > (step + look_ahead))
+              if (n_timesteps > (step + look_ahead))
                 timesteps[n_timesteps - (step + look_ahead) - 1]->wake_up(
                   look_ahead);
               break;
           };
 
       // actually do the work
-      switch(direction)
+      switch (direction)
         {
           case forward:
             loop_function((&*timesteps[step]));
@@ -1579,16 +1579,16 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
         };
 
       // let the timesteps behind sleep
-      for(unsigned int look_back = 0; look_back <= timestepping_data.look_back;
-          ++look_back)
-        switch(direction)
+      for (unsigned int look_back = 0; look_back <= timestepping_data.look_back;
+           ++look_back)
+        switch (direction)
           {
             case forward:
-              if(step >= look_back)
+              if (step >= look_back)
                 timesteps[step - look_back]->sleep(look_back);
               break;
             case backward:
-              if(n_timesteps - (step - look_back) <= n_timesteps)
+              if (n_timesteps - (step - look_back) <= n_timesteps)
                 timesteps[n_timesteps - (step - look_back) - 1]->sleep(
                   look_back);
               break;
@@ -1596,22 +1596,22 @@ TimeDependent::do_loop(InitFunctionObject      init_function,
     }
 
   // make the last few timesteps sleep
-  for(int step = n_timesteps;
-      step < static_cast<int>(n_timesteps + timestepping_data.look_back);
-      ++step)
-    for(int look_back = 0;
-        look_back <= static_cast<int>(timestepping_data.look_back);
-        ++look_back)
-      switch(direction)
+  for (int step = n_timesteps;
+       step < static_cast<int>(n_timesteps + timestepping_data.look_back);
+       ++step)
+    for (int look_back = 0;
+         look_back <= static_cast<int>(timestepping_data.look_back);
+         ++look_back)
+      switch (direction)
         {
           case forward:
-            if((step - look_back >= 0)
-               && (step - look_back < static_cast<int>(n_timesteps)))
+            if ((step - look_back >= 0)
+                && (step - look_back < static_cast<int>(n_timesteps)))
               timesteps[step - look_back]->sleep(look_back);
             break;
           case backward:
-            if((step - look_back >= 0)
-               && (step - look_back < static_cast<int>(n_timesteps)))
+            if ((step - look_back >= 0)
+                && (step - look_back < static_cast<int>(n_timesteps)))
               timesteps[n_timesteps - (step - look_back) - 1]->sleep(look_back);
             break;
         };

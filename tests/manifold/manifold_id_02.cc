@@ -37,7 +37,7 @@ test(unsigned int ref = 1)
   Triangulation<dim, spacedim> tria;
   GridGenerator::hyper_cube(tria);
   Point<spacedim> center;
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     center[i] = .25;
 
   // const SphericalManifold<dim,spacedim> boundary(center,center.norm());
@@ -48,11 +48,11 @@ test(unsigned int ref = 1)
   tria.begin_active()->set_all_manifold_ids(1);
   tria.refine_global(ref);
 
-  for(cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (cell = tria.begin_active(); cell != tria.end(); ++cell)
     {
       deallog << "C: " << cell << ", mid: " << (int) cell->manifold_id()
               << std::endl;
-      for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         deallog << "f: " << cell->face(f)
                 << ", mid: " << (int) cell->face(f)->manifold_id() << std::endl;
     }

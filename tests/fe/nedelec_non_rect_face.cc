@@ -108,7 +108,7 @@ namespace Maxwell
            ExcDimensionMismatch(value_list.size(), points.size()));
     const unsigned int n_points = points.size();
 
-    for(unsigned int i = 0; i < n_points; ++i)
+    for (unsigned int i = 0; i < n_points; ++i)
       {
         const Point<dim>& p = points[i];
 
@@ -129,7 +129,7 @@ namespace Maxwell
     const unsigned int n_points = points.size();
 
     double exponent;
-    for(unsigned int i = 0; i < n_points; ++i)
+    for (unsigned int i = 0; i < n_points; ++i)
       {
         const Point<dim>& p = points[i];
         // Real:
@@ -233,7 +233,7 @@ namespace Maxwell
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
 
@@ -249,17 +249,17 @@ namespace Maxwell
         // Calc values of curlE from fe solution:
         cell->get_dof_indices(local_dof_indices);
         // Loop over quad points to calculate solution:
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             // Split exact solution into real/imaginary parts:
-            for(unsigned int component = 0; component < dim; component++)
+            for (unsigned int component = 0; component < dim; component++)
               {
                 exactsol[component]     = exactsol_list[q_point][component];
                 exactcurlsol[component] = exactcurlsol_list[q_point][component];
               }
             // Loop over DoFs to calculate curl of solution @ quad point
             curlsol = 0.0;
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
                 // Construct local curl value @ quad point
                 curlsol += solution(local_dof_indices[i])
@@ -351,7 +351,7 @@ namespace Maxwell
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         cell_matrix = 0;
@@ -362,19 +362,19 @@ namespace Maxwell
                                          rhs_value_list);
 
         // Loop over all element quad points:
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             // store rhs value at this q point & turn into tensor
-            for(unsigned int component = 0; component < dim; component++)
+            for (unsigned int component = 0; component < dim; component++)
               {
                 rhs_value_vector[component]
                   = rhs_value_list[q_point](component);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
                 // Construct local matrix:
-                for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                for (unsigned int j = 0; j < dofs_per_cell; ++j)
                   {
                     cell_matrix(i, j)
                       += ((fe_values[E_re].curl(i, q_point)
@@ -437,9 +437,9 @@ namespace Maxwell
   {
     unsigned int numcycles = (p_order > 1) ? 2 : 3;
 
-    for(unsigned int cycle = 0; cycle < numcycles; ++cycle)
+    for (unsigned int cycle = 0; cycle < numcycles; ++cycle)
       {
-        if(cycle == 0)
+        if (cycle == 0)
           {
             /* Cube mesh */
             GridGenerator::hyper_cube(triangulation, 0, 1);
@@ -482,7 +482,7 @@ main()
 
   initlog();
 
-  for(unsigned int p = 0; p < 3; ++p)
+  for (unsigned int p = 0; p < 3; ++p)
     {
       MaxwellProblem<3>(p).run();
     }

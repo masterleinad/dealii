@@ -27,10 +27,10 @@ check(const SymmetricTensor<4, dim>& A)
   // check left inverse
   deallog << "    checking left inverse" << std::endl;
   const SymmetricTensor<4, dim> T_left = B * A;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           {
             deallog << "      " << A[i][j][k][l] << ' ' << B[i][j][k][l] << ' '
                     << T_left[i][j][k][l] << std::endl;
@@ -44,10 +44,10 @@ check(const SymmetricTensor<4, dim>& A)
   // check left inverse
   deallog << "    checking right inverse" << std::endl;
   const SymmetricTensor<4, dim> T_right = A * B;
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = 0; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = 0; l < dim; ++l)
           {
             deallog << "      " << A[i][j][k][l] << ' ' << B[i][j][k][l] << ' '
                     << T_right[i][j][k][l] << std::endl;
@@ -74,7 +74,7 @@ test()
   // hand
   deallog << "  complicated tensor" << std::endl;
   SymmetricTensor<4, dim> A;
-  switch(dim)
+  switch (dim)
     {
       case 1:
         A[0][0][0][0] = 2;
@@ -95,10 +95,10 @@ test()
       case 3:
         // I'm too lazy to code something
         // up by hand here
-        for(unsigned int i = 0; i < 3; ++i)
-          for(unsigned int j = 0; j < 3; ++j)
-            for(unsigned int k = 0; k < 3; ++k)
-              for(unsigned int l = 0; l < 3; ++l)
+        for (unsigned int i = 0; i < 3; ++i)
+          for (unsigned int j = 0; j < 3; ++j)
+            for (unsigned int k = 0; k < 3; ++k)
+              for (unsigned int l = 0; l < 3; ++l)
                 A[i][j][k][l] = random_value<double>();
         break;
 

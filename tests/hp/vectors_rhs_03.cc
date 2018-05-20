@@ -62,7 +62,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
@@ -70,7 +70,7 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
@@ -78,10 +78,10 @@ check()
   hp::FECollection<dim> element;
   element.push_back(FE_Q<dim>(1));
   hp::DoFHandler<dim> dof(tr);
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     cell->set_active_fe_index(Testing::rand() % element.size());
 
   dof.distribute_dofs(element);
@@ -99,7 +99,7 @@ check()
   Vector<double> rhs(dof.n_dofs());
   VectorTools::create_right_hand_side(
     dof, quadrature, MySquareFunction<dim>(), rhs);
-  for(unsigned int i = 0; i < rhs.size(); ++i)
+  for (unsigned int i = 0; i < rhs.size(); ++i)
     deallog << rhs(i) << std::endl;
 }
 

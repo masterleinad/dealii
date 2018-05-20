@@ -151,7 +151,7 @@ test()
   GridGenerator::hyper_cube(tr);
   tr.refine_global(1);
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  if(myid == 0)
+  if (myid == 0)
     {
       typename parallel::distributed::Triangulation<dim>::active_cell_iterator
         it

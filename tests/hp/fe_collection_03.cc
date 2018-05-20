@@ -39,7 +39,7 @@ test()
   // then not simply be a FESystem but must
   // in fact be an FESystem of FESystem to
   // hide multiple components in one block
-  if(dim > 1)
+  if (dim > 1)
     {
       hp::FECollection<dim> fe_collection;
       fe_collection.push_back(

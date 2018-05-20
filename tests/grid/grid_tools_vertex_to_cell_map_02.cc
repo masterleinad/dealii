@@ -47,11 +47,11 @@ test()
               ExcMessage("Wrong number of vertices"));
 
   std::vector<unsigned int> n_cells;
-  for(unsigned int i = 0; i < vertex_to_cell.size(); ++i)
+  for (unsigned int i = 0; i < vertex_to_cell.size(); ++i)
     n_cells.push_back(vertex_to_cell[i].size());
 
   std::vector<unsigned int> histogram(9, 0);
-  for(unsigned int i = 0; i < n_cells.size(); ++i)
+  for (unsigned int i = 0; i < n_cells.size(); ++i)
     histogram[n_cells[i]] += 1;
 
   AssertThrow(histogram[0] == 0, ExcMessage("Wrong cell distribution"));

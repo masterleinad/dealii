@@ -180,7 +180,7 @@ namespace MeshWorker
     inline void
     Functional<number>::assemble(const DOFINFO& info)
     {
-      for(unsigned int i = 0; i < results.size(); ++i)
+      for (unsigned int i = 0; i < results.size(); ++i)
         results[i] += info.value(i);
     }
 
@@ -189,7 +189,7 @@ namespace MeshWorker
     inline void
     Functional<number>::assemble(const DOFINFO& info1, const DOFINFO& info2)
     {
-      for(unsigned int i = 0; i < results.size(); ++i)
+      for (unsigned int i = 0; i < results.size(); ++i)
         {
           results[i] += info1.value(i);
           results[i] += info2.value(i);
@@ -215,7 +215,7 @@ namespace MeshWorker
     CellsAndFaces<number>::initialize(AnyData& r, bool sep)
     {
       Assert(r.name(0) == "cells", AnyData::ExcNameMismatch(0, "cells"));
-      if(sep)
+      if (sep)
         {
           Assert(r.name(1) == "faces", AnyData::ExcNameMismatch(1, "faces"));
           AssertDimension(r.entry<BlockVector<double>*>(0)->n_blocks(),
@@ -241,12 +241,12 @@ namespace MeshWorker
     CellsAndFaces<number>::assemble(const DOFINFO& info)
     {
       BlockVector<double>* v;
-      if(separate_faces && info.face_number != numbers::invalid_unsigned_int)
+      if (separate_faces && info.face_number != numbers::invalid_unsigned_int)
         v = results.entry<BlockVector<double>*>(1);
       else
         v = results.entry<BlockVector<double>*>(0);
 
-      for(unsigned int i = 0; i < info.n_values(); ++i)
+      for (unsigned int i = 0; i < info.n_values(); ++i)
         v->block(i)(info.cell->user_index()) += info.value(i);
     }
 
@@ -255,14 +255,14 @@ namespace MeshWorker
     inline void
     CellsAndFaces<number>::assemble(const DOFINFO& info1, const DOFINFO& info2)
     {
-      for(unsigned int i = 0; i < info1.n_values(); ++i)
+      for (unsigned int i = 0; i < info1.n_values(); ++i)
         {
-          if(separate_faces)
+          if (separate_faces)
             {
               BlockVector<double>* v1 = results.entry<BlockVector<double>*>(1);
               const double         J  = info1.value(i) + info2.value(i);
               v1->block(i)(info1.face->user_index()) += J;
-              if(info2.face != info1.face)
+              if (info2.face != info1.face)
                 v1->block(i)(info2.face->user_index()) += J;
             }
           else

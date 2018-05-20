@@ -43,14 +43,14 @@ test()
 
   // refine all cells except the one located at
   // [0.25, 0.25, 0.25]
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     {
       Point<dim> diff(0.25, 0.25, 0.25);
       diff -= cell->center();
-      if(diff.norm() > 0.25 && !(cell->is_ghost() || cell->is_artificial()))
+      if (diff.norm() > 0.25 && !(cell->is_ghost() || cell->is_artificial()))
         cell->set_refine_flag();
     }
   tria.execute_coarsening_and_refinement();
@@ -82,9 +82,9 @@ test()
   file << std::endl;
   MPI_Barrier(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
-      for(unsigned int i = 0; i < numproc; ++i)
+      for (unsigned int i = 0; i < numproc; ++i)
         {
           cat_file((std::string("dat.") + Utilities::int_to_string(i)).c_str());
         }
@@ -100,7 +100,7 @@ main(int argc, char** argv)
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

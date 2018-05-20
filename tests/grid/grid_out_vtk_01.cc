@@ -31,7 +31,7 @@ test(std::ostream& logfile)
 {
   Triangulation<dim, spacedim> tria;
   std::vector<unsigned int>    legs(2 * dim, 1);
-  if(dim > 1)
+  if (dim > 1)
     GridGenerator::hyper_cross(tria, legs, true);
   else
     GridGenerator::subdivided_hyper_cube(tria, 2);

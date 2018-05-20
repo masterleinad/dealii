@@ -35,23 +35,23 @@ test_matrix(PETScWrappers::SparseMatrix& m)
   const double i = -1. * dealii::numbers::PI;
 
   // fill up a matrix with some numbers
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for (unsigned int k = 0; k < m.m(); ++k)
+    for (unsigned int l = 0; l < m.n(); ++l)
       m.set(k, l, PetscScalar((k + l) * r, (k + l) * i));
 
   m.compress(VectorOperation::insert);
 
   // Check elements have the correct value
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for (unsigned int k = 0; k < m.m(); ++k)
+    for (unsigned int l = 0; l < m.n(); ++l)
       AssertThrow((m(k, l).real() == (k + l) * dealii::numbers::PI)
                     && (m(k, l).imag() == -1. * (k + l) * dealii::numbers::PI),
                   ExcInternalError());
 
   // Use the conjugate to check elements have equal (and opposite)
   // values.
-  for(unsigned int k = 0; k < m.m(); ++k)
-    for(unsigned int l = 0; l < m.n(); ++l)
+  for (unsigned int k = 0; k < m.m(); ++k)
+    for (unsigned int l = 0; l < m.n(); ++l)
       {
         PetscScalar m_conjugate = PetscConj(m(k, l));
 
@@ -81,7 +81,7 @@ main(int argc, char** argv)
       }
     }
 
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -95,7 +95,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

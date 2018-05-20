@@ -38,18 +38,18 @@ check_derivatives(const std::vector<Polynomial<double>>& p,
           << std::endl;
   std::vector<double> values(n_deriv), values_ref(n_deriv);
   Monomial<double>    zero(0, 0);
-  for(unsigned int j = 0; j < p.size(); ++j)
+  for (unsigned int j = 0; j < p.size(); ++j)
     {
       double x = random_value<double>();
       p[j].value(x, values);
       Polynomial<double> q = p[j];
       q += zero;
       q.value(x, values_ref);
-      for(unsigned int i = 0; i < n_deriv; ++i)
+      for (unsigned int i = 0; i < n_deriv; ++i)
         {
           deallog << ".";
-          if(std::fabs(values[i] - values_ref[i])
-             > std::max(1e-11, 1e-11 * std::fabs(values[i])))
+          if (std::fabs(values[i] - values_ref[i])
+              > std::max(1e-11, 1e-11 * std::fabs(values[i])))
             deallog << "Error deriv" << i << "  lg y="
                     << std::log10(std::fabs(values[i] - values_ref[i]))
                     << ", is: " << values[i] << ", should be: " << values_ref[i]
@@ -65,7 +65,7 @@ check_poly(const Quadrature<1>& q)
   deallog << "Points: " << q.size() << std::endl;
   std::vector<Polynomial<double>> p
     = generate_complete_Lagrange_basis(q.get_points());
-  for(unsigned int i = 1; i < 6; ++i)
+  for (unsigned int i = 1; i < 6; ++i)
     check_derivatives(p, i);
   deallog << std::endl;
 }
@@ -76,7 +76,7 @@ check_lge(unsigned int n)
   deallog << "Points: " << n + 1 << std::endl;
   std::vector<Polynomial<double>> p
     = LagrangeEquidistant::generate_complete_basis(n);
-  for(unsigned int i = 1; i < 6; ++i)
+  for (unsigned int i = 1; i < 6; ++i)
     check_derivatives(p, i);
   deallog << std::endl;
 }
@@ -89,7 +89,7 @@ main()
   deallog.attach(logfile);
 
   deallog.push("LagrangeEquidistant");
-  for(unsigned i = 1; i < 8; i += 2)
+  for (unsigned i = 1; i < 8; i += 2)
     check_lge(i);
   deallog.pop();
   deallog << std::endl;
@@ -98,7 +98,7 @@ main()
   // conditioning, so test to some very high
   // orders
   deallog.push("GaussLobatto");
-  for(unsigned i = 1; i < 8; i += 2)
+  for (unsigned i = 1; i < 8; i += 2)
     check_poly(QGaussLobatto<1>(i + 1));
   deallog.pop();
 }

@@ -23,7 +23,7 @@ template <typename number>
 void
 print(const LinearAlgebra::Vector<number>& v)
 {
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << v(i) << '\t';
   deallog << std::endl;
 }
@@ -37,7 +37,7 @@ check_vectors(LinearAlgebra::Vector<number1>& d1,
   LinearAlgebra::Vector<number1> d3(d1.size());
   print(d3);
 
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       d1(i) = 2. * i;
       d2(i) = .5 * d1(i) * d1(i);
@@ -54,7 +54,7 @@ check_vectors(LinearAlgebra::Vector<number1>& d1,
   d1 = d2;
   print(d1);
 
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     d1[i] = 2.5;
   print(d1);
 
@@ -66,26 +66,26 @@ check_vectors(LinearAlgebra::Vector<number1>& d1,
   deallog << "Extract number" << std::endl;
   // Each line should contain two equal numbers
   double sum = 0.;
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     sum += 4. * i - i * i;
   deallog << d3 * d2 << '\t' << sum << std::endl;
 
   sum = 0.;
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     sum += 4. * i * i;
   sum = std::sqrt(sum);
   deallog << d2.l2_norm() << '\t' << sum << std::endl;
 
   sum = 0.;
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     sum += std::fabs(2. - .5 * i);
   deallog << d3.l1_norm() << '\t' << sum << std::endl;
 
   sum = 0.;
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       double t = std::fabs(2. - .5 * i);
-      if(t > sum)
+      if (t > sum)
         sum = t;
     }
   deallog << d3.linfty_norm() << '\t' << sum << std::endl;

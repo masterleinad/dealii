@@ -36,7 +36,7 @@ check_parallelepiped(std::ostream& logfile)
   // parallelepiped.
   std::array<Tensor<1, dim>, dim> edges;
 
-  switch(dim)
+  switch (dim)
     {
       case 1:
         edges[0][0] = -0.5;
@@ -67,7 +67,7 @@ check_parallelepiped(std::ostream& logfile)
       GridGenerator::subdivided_parallelepiped<dim>(
         triangulation, origin, edges, subdivisions, false);
     }
-  catch(ExceptionBase& exc)
+  catch (ExceptionBase& exc)
     {
       logfile << exc.get_exc_name() << std::endl;
     }

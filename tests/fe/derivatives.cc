@@ -51,15 +51,15 @@ plot_derivatives(Mapping<dim>&       mapping,
   fe.reinit(c);
 
   unsigned int k = 0;
-  for(unsigned int mz = 0; mz <= ((dim > 2) ? div : 0); ++mz)
+  for (unsigned int mz = 0; mz <= ((dim > 2) ? div : 0); ++mz)
     {
-      for(unsigned int my = 0; my <= ((dim > 1) ? div : 0); ++my)
+      for (unsigned int my = 0; my <= ((dim > 1) ? div : 0); ++my)
         {
-          for(unsigned int mx = 0; mx <= div; ++mx)
+          for (unsigned int mx = 0; mx <= div; ++mx)
             {
               deallog << q.point(k) << std::endl;
 
-              for(unsigned int i = 0; i < finel.dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < finel.dofs_per_cell; ++i)
                 {
                   deallog << "\tGrad " << fe.shape_grad(i, k);
                   deallog << "\t2nd " << fe.shape_hessian(i, k);

@@ -1445,7 +1445,7 @@ ChunkSparseMatrix<number>::compute_location(const size_type i,
   const size_type chunk_index
     = cols->sparsity_pattern(i / chunk_size, j / chunk_size);
 
-  if(chunk_index == ChunkSparsityPattern::invalid_entry)
+  if (chunk_index == ChunkSparsityPattern::invalid_entry)
     return ChunkSparsityPattern::invalid_entry;
   else
     {
@@ -1469,7 +1469,7 @@ ChunkSparseMatrix<number>::set(const size_type i,
   Assert((index != SparsityPattern::invalid_entry) || (value == 0.),
          ExcInvalidIndex(i, j));
 
-  if(index != SparsityPattern::invalid_entry)
+  if (index != SparsityPattern::invalid_entry)
     val[index] = value;
 }
 
@@ -1483,7 +1483,7 @@ ChunkSparseMatrix<number>::add(const size_type i,
 
   Assert(cols != nullptr, ExcNotInitialized());
 
-  if(value != 0.)
+  if (value != 0.)
     {
       const size_type index = compute_location(i, j);
       Assert((index != ChunkSparsityPattern::invalid_entry),
@@ -1504,7 +1504,7 @@ ChunkSparseMatrix<number>::add(const size_type  row,
                                const bool /*col_indices_are_sorted*/)
 {
   // TODO: could be done more efficiently...
-  for(size_type col = 0; col < n_cols; ++col)
+  for (size_type col = 0; col < n_cols; ++col)
     add(row, col_indices[col], static_cast<number>(values[col]));
 }
 
@@ -1525,7 +1525,7 @@ ChunkSparseMatrix<number>::operator*=(const number factor)
   const number* const end_ptr
     = val.get()
       + cols->sparsity_pattern.n_nonzero_elements() * chunk_size * chunk_size;
-  while(val_ptr != end_ptr)
+  while (val_ptr != end_ptr)
     *val_ptr++ *= factor;
 
   return *this;
@@ -1552,7 +1552,7 @@ ChunkSparseMatrix<number>::operator/=(const number factor)
     = val.get()
       + cols->sparsity_pattern.n_nonzero_elements() * chunk_size * chunk_size;
 
-  while(val_ptr != end_ptr)
+  while (val_ptr != end_ptr)
     *val_ptr++ *= factor_inv;
 
   return *this;
@@ -1576,7 +1576,7 @@ ChunkSparseMatrix<number>::el(const size_type i, const size_type j) const
   Assert(cols != nullptr, ExcNotInitialized());
   const size_type index = compute_location(i, j);
 
-  if(index != ChunkSparsityPattern::invalid_entry)
+  if (index != ChunkSparsityPattern::invalid_entry)
     return val[index];
   else
     return 0;
@@ -1613,10 +1613,10 @@ ChunkSparseMatrix<number>::copy_from(const ForwardIterator begin,
     typename std::iterator_traits<ForwardIterator>::value_type::const_iterator
             inner_iterator;
   size_type row = 0;
-  for(ForwardIterator i = begin; i != end; ++i, ++row)
+  for (ForwardIterator i = begin; i != end; ++i, ++row)
     {
       const inner_iterator end_of_row = i->end();
-      for(inner_iterator j = i->begin(); j != end_of_row; ++j)
+      for (inner_iterator j = i->begin(); j != end_of_row; ++j)
         // write entries
         set(row, j->first, j->second);
     }
@@ -1860,10 +1860,10 @@ namespace ChunkSparseMatrixIterators
 
     // TODO: can be optimized
     int difference = 0;
-    if(*this < other)
+    if (*this < other)
       {
         Iterator copy = *this;
-        while(copy != other)
+        while (copy != other)
           {
             ++copy;
             --difference;
@@ -1872,7 +1872,7 @@ namespace ChunkSparseMatrixIterators
     else
       {
         Iterator copy = other;
-        while(copy != *this)
+        while (copy != *this)
           {
             ++copy;
             ++difference;
@@ -1886,7 +1886,7 @@ namespace ChunkSparseMatrixIterators
   Iterator<number, Constness>::operator+(const unsigned int n) const
   {
     Iterator x = *this;
-    for(unsigned int i = 0; i < n; ++i)
+    for (unsigned int i = 0; i < n; ++i)
       ++x;
 
     return x;

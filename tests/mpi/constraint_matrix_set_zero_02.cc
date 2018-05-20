@@ -44,7 +44,7 @@ test()
     local_active[1], complete_index_set(2 * numproc), MPI_COMM_WORLD);
   v.collect_sizes();
 
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v(i) = 1.0 + i;
   v.compress(VectorOperation::insert);
 

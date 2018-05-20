@@ -24,10 +24,10 @@ check1()
 {
   ScalarFunctionFromFunctionObject<dim> object(&Point<dim>::norm);
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         p[d] = i + d;
 
       AssertThrow(object.value(p) == p.norm(), ExcInternalError());
@@ -41,16 +41,16 @@ void
 check2()
 {
   Point<dim> q;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     q[d] = d;
 
   ScalarFunctionFromFunctionObject<dim> object(
     std::bind(&Point<dim>::distance, q, std::placeholders::_1));
 
-  for(unsigned int i = 0; i < 10; ++i)
+  for (unsigned int i = 0; i < 10; ++i)
     {
       Point<dim> p;
-      for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int d = 0; d < dim; ++d)
         p[d] = i + d;
 
       AssertThrow(object.value(p) == q.distance(p), ExcInternalError());

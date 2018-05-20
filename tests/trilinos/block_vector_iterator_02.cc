@@ -25,7 +25,7 @@ test()
 {
   TrilinosWrappers::MPI::BlockVector v;
   v.reinit(2);
-  for(unsigned int i = 0; i < v.n_blocks(); ++i)
+  for (unsigned int i = 0; i < v.n_blocks(); ++i)
     v.block(i).reinit(complete_index_set(1), MPI_COMM_WORLD);
   v.collect_sizes();
 
@@ -87,7 +87,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -101,7 +101,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

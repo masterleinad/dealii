@@ -498,13 +498,13 @@ CellDataStorage<CellIteratorType, DataType>::initialize(
   static_assert(std::is_base_of<DataType, T>::value,
                 "User's T class should be derived from user's DataType class");
 
-  if(map.find(cell) == map.end())
+  if (map.find(cell) == map.end())
     {
       map[cell] = std::vector<std::shared_ptr<DataType>>(n_q_points);
       // we need to initialize one-by-one as the std::vector<>(q, T())
       // will end with a single same T object stored in each element of the vector:
       auto it = map.find(cell);
-      for(unsigned int q = 0; q < n_q_points; q++)
+      for (unsigned int q = 0; q < n_q_points; q++)
         it->second[q] = std::make_shared<T>();
     }
 }
@@ -517,8 +517,8 @@ CellDataStorage<CellIteratorType, DataType>::initialize(
   const CellIteratorType& cell_end,
   const unsigned int      number)
 {
-  for(CellIteratorType it = cell_start; it != cell_end; it++)
-    if(it->is_locally_owned())
+  for (CellIteratorType it = cell_start; it != cell_end; it++)
+    if (it->is_locally_owned())
       initialize<T>(it, number);
 }
 
@@ -527,7 +527,7 @@ bool
 CellDataStorage<CellIteratorType, DataType>::erase(const CellIteratorType& cell)
 {
   const auto it = map.find(cell);
-  for(unsigned int i = 0; i < it->second.size(); i++)
+  for (unsigned int i = 0; i < it->second.size(); i++)
     {
       Assert(
         it->second[i].unique(),
@@ -546,10 +546,10 @@ CellDataStorage<CellIteratorType, DataType>::clear()
   // map.clear();
   // as we want to be sure no one uses the stored objects. Loop manually:
   auto it = map.begin();
-  while(it != map.end())
+  while (it != map.end())
     {
       // loop over all objects and see if no one is using them
-      for(unsigned int i = 0; i < it->second.size(); i++)
+      for (unsigned int i = 0; i < it->second.size(); i++)
         {
           Assert(
             it->second[i].unique(),
@@ -577,7 +577,7 @@ CellDataStorage<CellIteratorType, DataType>::get_data(
   // when the enclosing class is also explicitly (i.e fully) specialized.
   // Thus, stick with copying of shared pointers even when the T==DataType:
   std::vector<std::shared_ptr<T>> res(it->second.size());
-  for(unsigned int q = 0; q < res.size(); q++)
+  for (unsigned int q = 0; q < res.size(); q++)
     res[q] = std::dynamic_pointer_cast<T>(it->second[q]);
   return res;
 }
@@ -598,7 +598,7 @@ CellDataStorage<CellIteratorType, DataType>::get_data(
   // T==DataType as we need to return shared_ptr<const T> to make sure the user
   // does not modify the content of QP objects
   std::vector<std::shared_ptr<const T>> res(it->second.size());
-  for(unsigned int q = 0; q < res.size(); q++)
+  for (unsigned int q = 0; q < res.size(); q++)
     res[q] = std::dynamic_pointer_cast<const T>(it->second[q]);
   return res;
 }
@@ -632,13 +632,13 @@ pack_cell_data(const CellIteratorType&                            cell,
   std::vector<double> single_qp_data(n);
   Assert(qpd.size() == matrix_data.m(),
          ExcDimensionMismatch(qpd.size(), matrix_data.m()));
-  for(unsigned int q = 0; q < qpd.size(); q++)
+  for (unsigned int q = 0; q < qpd.size(); q++)
     {
       qpd[q]->pack_values(single_qp_data);
       Assert(single_qp_data.size() == n,
              ExcDimensionMismatch(single_qp_data.size(), n));
 
-      for(unsigned int i = 0; i < n; i++)
+      for (unsigned int i = 0; i < n; i++)
         matrix_data(q, i) = single_qp_data[i];
     }
 }
@@ -664,9 +664,9 @@ unpack_to_cell_data(const CellIteratorType&                      cell,
   Assert(qpd.size() == values_at_qp.m(),
          ExcDimensionMismatch(qpd.size(), values_at_qp.m()));
 
-  for(unsigned int q = 0; q < qpd.size(); q++)
+  for (unsigned int q = 0; q < qpd.size(); q++)
     {
-      for(unsigned int i = 0; i < n; i++)
+      for (unsigned int i = 0; i < n; i++)
         single_qp_data[i] = values_at_qp(q, i);
       qpd[q]->unpack_values(single_qp_data);
     }
@@ -728,12 +728,12 @@ namespace parallel
       unsigned int number_of_values = 0;
       // if triangulation has some active cells locally owned cells on this processor we can expect
       // data to be initialized. Do that to get the number:
-      for(typename parallel::distributed::Triangulation<
-            dim>::active_cell_iterator it
-          = triangulation->begin_active();
-          it != triangulation->end();
-          it++)
-        if(it->is_locally_owned())
+      for (typename parallel::distributed::Triangulation<
+             dim>::active_cell_iterator it
+           = triangulation->begin_active();
+           it != triangulation->end();
+           it++)
+        if (it->is_locally_owned())
           {
             std::vector<std::shared_ptr<DataType>> qpd
               = data_storage->get_data(it);
@@ -817,12 +817,12 @@ namespace parallel
 
       std::memcpy(&matrix_dofs(0, 0), data_store, data_size_in_bytes);
 
-      if(cell->has_children())
+      if (cell->has_children())
         {
           // we need to first use prolongation matrix to get dofvalues on child
           // cells based on dofvalues stored in the parent's data_store
-          for(unsigned int child = 0; child < cell->n_children(); ++child)
-            if(cell->child(child)->is_locally_owned())
+          for (unsigned int child = 0; child < cell->n_children(); ++child)
+            if (cell->child(child)->is_locally_owned())
               {
                 projection_fe
                   ->get_prolongation_matrix(child, cell->refinement_case())

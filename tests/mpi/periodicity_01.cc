@@ -149,7 +149,7 @@ namespace Step40
     constraints.clear();
     constraints.reinit(locally_relevant_dofs);
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
-    for(int i = 1; i < dim; ++i)
+    for (int i = 1; i < dim; ++i)
       DoFTools::make_periodicity_constraints(dof_handler,
                                              /*b_id1*/ 2 * i,
                                              /*b_id2*/ 2 * i + 1,
@@ -197,15 +197,15 @@ namespace Step40
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
-      if(cell->is_locally_owned())
+    for (; cell != endc; ++cell)
+      if (cell->is_locally_owned())
         {
           cell_matrix = PetscScalar();
           cell_rhs    = PetscScalar();
 
           fe_values.reinit(cell);
 
-          for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+          for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
             {
               PetscScalar rhs_value
                 = (std::cos(2 * numbers::PI
@@ -215,15 +215,15 @@ namespace Step40
                               * fe_values.quadrature_point(q_point)[1])
                    * std::exp(-2 * fe_values.quadrature_point(q_point)[1]));
 
-              if(dim == 3)
+              if (dim == 3)
                 rhs_value
                   *= std::cos(2 * numbers::PI
                               * fe_values.quadrature_point(q_point)[2])
                      * std::exp(-3 * fe_values.quadrature_point(q_point)[2]);
 
-              for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
                 {
-                  for(unsigned int j = 0; j < dofs_per_cell; ++j)
+                  for (unsigned int j = 0; j < dofs_per_cell; ++j)
                     cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                           * fe_values.shape_grad(j, q_point)
                                           * fe_values.JxW(q_point));
@@ -306,13 +306,13 @@ namespace Step40
     typename DoFHandler<dim>::active_cell_iterator cell
       = GridTools::find_active_cell_around_point(dof_handler, point);
 
-    if(cell->is_locally_owned())
+    if (cell->is_locally_owned())
       VectorTools::point_value(
         dof_handler, locally_relevant_solution, point, value);
 
     std::vector<double> tmp(value.size());
     std::vector<double> tmp2(value.size());
-    for(unsigned int i = 0; i < value.size(); ++i)
+    for (unsigned int i = 0; i < value.size(); ++i)
       tmp[i] = get_real_assert_zero_imag(value[i]);
 
     MPI_Reduce(&(tmp[0]),
@@ -323,7 +323,7 @@ namespace Step40
                proc,
                mpi_communicator);
 
-    for(unsigned int i = 0; i < value.size(); ++i)
+    for (unsigned int i = 0; i < value.size(); ++i)
       value[i] = tmp2[i];
   }
 
@@ -337,13 +337,13 @@ namespace Step40
   LaplaceProblem<2>::check_periodicity(const unsigned int cycle) const
   {
     unsigned int n_points = 2;
-    for(unsigned int i = 0; i < cycle; i++)
+    for (unsigned int i = 0; i < cycle; i++)
       n_points *= 2;
 
     //don't test exactly at the support points, since point_value is not stable there
     const double eps = 1. / (16. * n_points);
 
-    for(unsigned int i = 1; i < n_points; i++)
+    for (unsigned int i = 1; i < n_points; i++)
       {
         Vector<PetscScalar> value1(1);
         Vector<PetscScalar> value2(1);
@@ -358,9 +358,9 @@ namespace Step40
         get_point_value(point1, 0, value1);
         get_point_value(point2, 0, value2);
 
-        if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+        if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
           {
-            if(std::abs(value2[0] - value1[0]) > 1e-8)
+            if (std::abs(value2[0] - value1[0]) > 1e-8)
               {
                 pcout << point1 << "\t"
                       << "fail" << std::endl;
@@ -382,14 +382,14 @@ namespace Step40
   LaplaceProblem<3>::check_periodicity(const unsigned int cycle) const
   {
     unsigned int n_points = 2;
-    for(unsigned int i = 0; i < cycle; i++)
+    for (unsigned int i = 0; i < cycle; i++)
       n_points *= 2;
 
     //don't test exactly at the support points, since point_value is not stable there
     const double eps = 1. / (16. * n_points);
 
-    for(unsigned int i = 1; i < n_points; i++)
-      for(unsigned int j = 1; j < n_points; j++)
+    for (unsigned int i = 1; i < n_points; i++)
+      for (unsigned int j = 1; j < n_points; j++)
         {
           Vector<PetscScalar> value1(1);
           Vector<PetscScalar> value2(1);
@@ -418,9 +418,9 @@ namespace Step40
           get_point_value(point3, 0, value3);
           get_point_value(point4, 0, value4);
 
-          if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+          if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
             {
-              if(std::abs(value2[0] - value1[0]) > 1e-8)
+              if (std::abs(value2[0] - value1[0]) > 1e-8)
                 {
                   pcout << point1 << "\t fail check 0" << std::endl;
                   std::cout << point1 << "\t" << value1[0] << std::endl;
@@ -430,7 +430,7 @@ namespace Step40
               else
                 pcout << point1 << "\t pass check 0" << std::endl;
 
-              if(std::abs(value4[0] - value3[0]) > 1e-8)
+              if (std::abs(value4[0] - value3[0]) > 1e-8)
                 {
                   pcout << point3 << "\t fail check 1" << std::endl;
                   std::cout << point3 << "\t" << value3[0] << std::endl;
@@ -453,7 +453,7 @@ namespace Step40
     data_out.add_data_vector(locally_relevant_solution, "u");
 
     Vector<float> subdomain(triangulation.n_active_cells());
-    for(unsigned int i = 0; i < subdomain.size(); ++i)
+    for (unsigned int i = 0; i < subdomain.size(); ++i)
       subdomain(i) = triangulation.locally_owned_subdomain();
     data_out.add_data_vector(subdomain, "subdomain");
 
@@ -466,12 +466,12 @@ namespace Step40
     std::ofstream output((filename + ".vtu").c_str());
     data_out.write_vtu(output);
 
-    if(Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+    if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
       {
         std::vector<std::string> filenames;
-        for(unsigned int i = 0;
-            i < Utilities::MPI::n_mpi_processes(mpi_communicator);
-            ++i)
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
+             ++i)
           filenames.push_back("solution-" + Utilities::int_to_string(cycle, 2)
                               + "." + Utilities::int_to_string(i, 4) + ".vtu");
 
@@ -487,21 +487,21 @@ namespace Step40
     pcout << std::endl << "Testing for dim=" << dim << std::endl;
 
     const unsigned int n_cycles = 3;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         pcout << std::endl << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           {
             std::vector<unsigned int> reps;
             reps.push_back(2);
             reps.push_back(2);
-            if(dim == 3)
+            if (dim == 3)
               reps.push_back(2);
 
             Point<dim> p1;
             Point<dim> p2;
-            for(unsigned int i = 0; i < dim; ++i)
+            for (unsigned int i = 0; i < dim; ++i)
               p2(i) = 1.0;
 
             GridGenerator::subdivided_hyper_rectangle(
@@ -512,7 +512,7 @@ namespace Step40
                                             Triangulation<dim>::cell_iterator>>
               periodicity_vector;
 
-            for(int i = 1; i < dim; ++i)
+            for (int i = 1; i < dim; ++i)
               GridTools::collect_periodic_faces(triangulation,
                                                 /*b_id1*/ 2 * i,
                                                 /*b_id2*/ 2 * i + 1,
@@ -548,7 +548,7 @@ main(int argc, char* argv[])
 
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-      if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+      if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
         {
           std::ofstream logfile("output");
           deallog.attach(logfile, false);
@@ -573,7 +573,7 @@ main(int argc, char* argv[])
           }
         }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -587,7 +587,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

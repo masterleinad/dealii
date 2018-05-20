@@ -103,7 +103,7 @@ test()
   tria_1.copy_triangulation(tria_2);
 
   // no longer print anything
-  for(unsigned int i = 0; i < 4; ++i)
+  for (unsigned int i = 0; i < 4; ++i)
     connections_1[i].disconnect();
 
   tria_1.refine_global(2);

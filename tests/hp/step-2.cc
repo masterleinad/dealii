@@ -43,21 +43,21 @@ void make_grid(Triangulation<2>& triangulation)
   static const SphericalManifold<2> boundary_description(center);
   triangulation.set_manifold(0, boundary_description);
 
-  for(unsigned int step = 0; step < 5; ++step)
+  for (unsigned int step = 0; step < 5; ++step)
     {
       Triangulation<2>::active_cell_iterator cell
         = triangulation.begin_active(),
         endc = triangulation.end();
 
-      for(; cell != endc; ++cell)
-        for(unsigned int vertex = 0;
-            vertex < GeometryInfo<2>::vertices_per_cell;
-            ++vertex)
+      for (; cell != endc; ++cell)
+        for (unsigned int vertex = 0;
+             vertex < GeometryInfo<2>::vertices_per_cell;
+             ++vertex)
           {
             const double distance_from_center
               = center.distance(cell->vertex(vertex));
 
-            if(std::fabs(distance_from_center - inner_radius) < 1e-10)
+            if (std::fabs(distance_from_center - inner_radius) < 1e-10)
               {
                 cell->set_refine_flag();
                 break;

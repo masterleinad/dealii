@@ -48,15 +48,15 @@ test()
   AssertThrow(vec.local_size() == 100, ExcInternalError());
   AssertThrow(vec.local_range().first == 100 * myid, ExcInternalError());
   AssertThrow(vec.local_range().second == 100 * myid + 100, ExcInternalError());
-  for(unsigned int i = vec.local_range().first; i < vec.local_range().second;
-      ++i)
+  for (unsigned int i = vec.local_range().first; i < vec.local_range().second;
+       ++i)
     vec(i) = i;
   vec.compress(VectorOperation::insert);
 
   // verify correctness so far
   {
     double exact_l1 = 0;
-    for(unsigned int i = 0; i < vec.size(); ++i)
+    for (unsigned int i = 0; i < vec.size(); ++i)
       exact_l1 += i;
     AssertThrow(vec.l1_norm() == exact_l1, ExcInternalError());
   }
@@ -77,16 +77,16 @@ test()
   // note that we tell each processor about all constraints, but most
   // of them will throw away this information since it is not for a
   // DoF inside the locally relevant range
-  for(unsigned int p = 0; p < n_processes; ++p)
+  for (unsigned int p = 0; p < n_processes; ++p)
     {
-      if((p != 0) && locally_relevant_range.is_element(p * 100 + 10))
+      if ((p != 0) && locally_relevant_range.is_element(p * 100 + 10))
         {
           cm.add_line(p * 100 + 10);
           cm.add_entry(p * 100 + 10, p * 100 - 25, 1);
         }
 
-      if((p != n_processes - 1)
-         && locally_relevant_range.is_element(p * 100 + 90))
+      if ((p != n_processes - 1)
+          && locally_relevant_range.is_element(p * 100 + 90))
         {
           cm.add_line(p * 100 + 90);
           cm.add_entry(p * 100 + 90, p * 100 + 105, 1);
@@ -98,21 +98,21 @@ test()
   cm.distribute(vec);
 
   // verify correctness
-  if(myid != 0)
+  if (myid != 0)
     AssertThrow(vec(vec.local_range().first + 10)
                   == vec.local_range().first - 25,
                 ExcInternalError());
 
-  if(myid != n_processes - 1)
+  if (myid != n_processes - 1)
     AssertThrow(vec(vec.local_range().first + 90)
                   == vec.local_range().first + 105,
                 ExcInternalError());
 
-  for(unsigned int i = vec.local_range().first; i < vec.local_range().second;
-      ++i)
+  for (unsigned int i = vec.local_range().first; i < vec.local_range().second;
+       ++i)
     {
-      if((i != vec.local_range().first + 10)
-         && (i != vec.local_range().first + 90))
+      if ((i != vec.local_range().first + 10)
+          && (i != vec.local_range().first + 90))
         {
           double val = vec(i);
           AssertThrow(std::fabs(val - i) <= 1e-6, ExcInternalError());
@@ -123,22 +123,22 @@ test()
     double exact_l1 = 0;
 
     // add up original values of vector entries
-    for(unsigned int i = 0; i < vec.size(); ++i)
+    for (unsigned int i = 0; i < vec.size(); ++i)
       exact_l1 += i;
 
     // but then correct for the constrained values
-    for(unsigned int p = 0; p < n_processes; ++p)
+    for (unsigned int p = 0; p < n_processes; ++p)
       {
-        if(p != 0)
+        if (p != 0)
           exact_l1 = exact_l1 - (p * 100 + 10) + (p * 100 - 25);
-        if(p != n_processes - 1)
+        if (p != n_processes - 1)
           exact_l1 = exact_l1 - (p * 100 + 90) + (p * 100 + 105);
       }
 
     const double l1_norm = vec.l1_norm();
     AssertThrow(l1_norm == exact_l1, ExcInternalError());
 
-    if(myid == 0)
+    if (myid == 0)
       deallog << "Norm = " << l1_norm << std::endl;
   }
 }
@@ -152,7 +152,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

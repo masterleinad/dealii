@@ -57,7 +57,7 @@ plot_diff(const Vector<double>& v1,
   AssertDimension(v2.size(), 3);
 
   Tensor<1, 3> p1, p2;
-  for(unsigned int d = 0; d < 3; ++d)
+  for (unsigned int d = 0; d < 3; ++d)
     {
       const unsigned int d1 = (d + 1) % 3;
       const unsigned int d2 = (d + 2) % 3;
@@ -87,7 +87,7 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
   // generate some numbers for the
   // degrees of freedom on this mesh
   Vector<double> values(dof.n_dofs());
-  for(unsigned int i = 0; i < values.size(); ++i)
+  for (unsigned int i = 0; i < values.size(); ++i)
     values(i) = i;
   cm.distribute(values);
 
@@ -121,19 +121,20 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
                                  update_values | update_quadrature_points
                                    | update_normal_vectors);
 
-  for(typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
-      c != dof.end();
-      ++c)
-    for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+  for (typename DoFHandler<dim>::active_cell_iterator c = dof.begin_active();
+       c != dof.end();
+       ++c)
+    for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+         ++face)
       {
         deallog << "cell " << c << " face " << face;
-        if(c->at_boundary(face))
+        if (c->at_boundary(face))
           {
             deallog << " boundary" << std::endl;
             continue;
           }
 
-        if(c->neighbor(face)->has_children())
+        if (c->neighbor(face)->has_children())
           {
             deallog << " neighbor " << c->neighbor(face) << " refined"
                     << std::endl;
@@ -145,7 +146,7 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
         feface.reinit(c, face);
         feface.get_function_values(values, shape_values1);
 
-        if(c->neighbor(face)->level() < c->level())
+        if (c->neighbor(face)->level() < c->level())
           {
             std::pair<unsigned int, unsigned int> neighbor_face
               = c->neighbor_of_coarser_neighbor(face);
@@ -153,7 +154,7 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
             fesubface.reinit(
               c->neighbor(face), neighbor_face.first, neighbor_face.second);
             fesubface.get_function_values(values, shape_values2);
-            for(unsigned int k = 0; k < feface.n_quadrature_points; ++k)
+            for (unsigned int k = 0; k < feface.n_quadrature_points; ++k)
               {
                 deallog << feface.quadrature_point(k);
                 plot_diff(
@@ -164,7 +165,7 @@ plot(const Triangulation<dim>& tr, const unsigned int p)
           {
             feneighbor.reinit(c->neighbor(face), c->neighbor_of_neighbor(face));
             feneighbor.get_function_values(values, shape_values2);
-            for(unsigned int k = 0; k < feface.n_quadrature_points; ++k)
+            for (unsigned int k = 0; k < feface.n_quadrature_points; ++k)
               {
                 deallog << feface.quadrature_point(k);
                 plot_diff(

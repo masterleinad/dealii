@@ -21,6 +21,6 @@ template <int dim>
 void
 test()
 {
-  for(unsigned int p = 0; p < 6 - dim; ++p)
+  for (unsigned int p = 0; p < 6 - dim; ++p)
     test_with_hanging_nodes(FE_DGPMonomial<dim>(p), p);
 }

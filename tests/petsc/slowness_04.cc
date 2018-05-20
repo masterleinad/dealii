@@ -42,10 +42,10 @@ test()
   std::vector<unsigned int> permutation(N);
   {
     std::vector<unsigned int> unused_indices(N);
-    for(unsigned int i = 0; i < N; i++)
+    for (unsigned int i = 0; i < N; i++)
       unused_indices[i] = i;
 
-    for(unsigned int i = 0; i < N; i++)
+    for (unsigned int i = 0; i < N; i++)
       {
         // pick a random element among the
         // unused indices
@@ -62,30 +62,30 @@ test()
   // build the sparse matrix
   PETScWrappers::MPI::SparseMatrix matrix(
     PETSC_COMM_WORLD, N * N, N * N, N * N, N * N, 5);
-  for(unsigned int i_ = 0; i_ < N; i_++)
-    for(unsigned int j_ = 0; j_ < N; j_++)
+  for (unsigned int i_ = 0; i_ < N; i_++)
+    for (unsigned int j_ = 0; j_ < N; j_++)
       {
         const unsigned int i = permutation[i_];
         const unsigned int j = permutation[j_];
 
         const unsigned int global = i * N + j;
         matrix.add(global, global, Testing::rand());
-        if(j > 0)
+        if (j > 0)
           {
             matrix.add(global - 1, global, Testing::rand());
             matrix.add(global, global - 1, Testing::rand());
           }
-        if(j < N - 1)
+        if (j < N - 1)
           {
             matrix.add(global + 1, global, Testing::rand());
             matrix.add(global, global + 1, Testing::rand());
           }
-        if(i > 0)
+        if (i > 0)
           {
             matrix.add(global - N, global, Testing::rand());
             matrix.add(global, global - N, Testing::rand());
           }
-        if(i < N - 1)
+        if (i < N - 1)
           {
             matrix.add(global + N, global, Testing::rand());
             matrix.add(global, global + N, Testing::rand());
@@ -98,7 +98,7 @@ test()
   // of the matrix norm
   PETScWrappers::MPI::Vector v1(PETSC_COMM_WORLD, N * N, N * N);
   PETScWrappers::MPI::Vector v2(PETSC_COMM_WORLD, N * N, N * N);
-  for(unsigned int i = 0; i < N * N; ++i)
+  for (unsigned int i = 0; i < N * N; ++i)
     v1(i) = i;
   matrix.vmult(v2, v1);
 
@@ -117,7 +117,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -131,7 +131,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

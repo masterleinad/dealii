@@ -105,8 +105,8 @@ LaplaceProblem<dim>::setup_system()
 
   mean_value_constraints.clear();
   mean_value_constraints.add_line(first_boundary_dof);
-  for(unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
-    if(boundary_dofs[i] == true)
+  for (unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
+    if (boundary_dofs[i] == true)
       mean_value_constraints.add_entry(first_boundary_dof, i, -1);
   mean_value_constraints.close();
 
@@ -186,8 +186,8 @@ LaplaceProblem<dim>::run()
   static const SphericalManifold<dim> boundary;
   triangulation.set_manifold(0, boundary);
 
-  for(unsigned int cycle = 0; cycle < 6;
-      ++cycle, triangulation.refine_global(1))
+  for (unsigned int cycle = 0; cycle < 6;
+       ++cycle, triangulation.refine_global(1))
     {
       setup_system();
       assemble_and_solve();
@@ -208,7 +208,7 @@ main()
     {
       LaplaceProblem<2>(1).run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -221,7 +221,7 @@ main()
               << std::endl;
       return -1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

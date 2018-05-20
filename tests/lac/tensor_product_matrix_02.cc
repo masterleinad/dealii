@@ -28,23 +28,23 @@ do_test()
   deallog << "Testing dim=" << dim << ", degree=" << size << std::endl;
   FullMatrix<double> mass(size, size);
   FullMatrix<double> laplace(size, size);
-  for(unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < size; ++i)
     {
       mass(i, i) = 2. / 3.;
-      if(i > 0)
+      if (i > 0)
         mass(i, i - 1) = 1. / 6.;
-      if(i < size - 1)
+      if (i < size - 1)
         mass(i, i + 1) = 1. / 6.;
       laplace(i, i) = 2.;
-      if(i > 0)
+      if (i > 0)
         laplace(i, i - 1) = -1.;
-      if(i < size - 1)
+      if (i < size - 1)
         laplace(i, i + 1) = -1.;
     }
   TensorProductMatrixSymmetricSum<dim, double, size> mat;
   mat.reinit(mass, laplace);
   Vector<double> v1(mat.m()), v2(mat.m()), v3(mat.m());
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1(i) = (2 * i + 1) % 23;
 
   const ArrayView<double> view1(v1.begin(), v1.size());
@@ -57,18 +57,18 @@ do_test()
           << std::endl;
 
   FullMatrix<double> full(v1.size(), v1.size());
-  for(unsigned int i = 0, c = 0; i < (dim > 2 ? size : 1); ++i)
-    for(unsigned int j = 0; j < (dim > 1 ? size : 1); ++j)
-      for(unsigned int k = 0; k < size; ++k, ++c)
-        for(unsigned int ii = 0, cc = 0; ii < (dim > 2 ? size : 1); ++ii)
-          for(unsigned int jj = 0; jj < (dim > 1 ? size : 1); ++jj)
-            for(unsigned int kk = 0; kk < size; ++kk, ++cc)
-              if(dim == 1)
+  for (unsigned int i = 0, c = 0; i < (dim > 2 ? size : 1); ++i)
+    for (unsigned int j = 0; j < (dim > 1 ? size : 1); ++j)
+      for (unsigned int k = 0; k < size; ++k, ++c)
+        for (unsigned int ii = 0, cc = 0; ii < (dim > 2 ? size : 1); ++ii)
+          for (unsigned int jj = 0; jj < (dim > 1 ? size : 1); ++jj)
+            for (unsigned int kk = 0; kk < size; ++kk, ++cc)
+              if (dim == 1)
                 full(c, cc) = laplace(k, kk);
-              else if(dim == 2)
+              else if (dim == 2)
                 full(c, cc)
                   = laplace(k, kk) * mass(j, jj) + laplace(j, jj) * mass(k, kk);
-              else if(dim == 3)
+              else if (dim == 3)
                 full(c, cc) = (laplace(k, kk) * mass(j, jj)
                                + laplace(j, jj) * mass(k, kk))
                                 * mass(i, ii)

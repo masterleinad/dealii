@@ -56,10 +56,10 @@ initialize_node_matrix(const FiniteElement<dim>& other,
   // the normal component of the
   // shape function, possibly
   // pointing in negative direction.
-  for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
-    for(unsigned int k = 0; k < other.dofs_per_face; ++k)
+  for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; ++face)
+    for (unsigned int k = 0; k < other.dofs_per_face; ++k)
       {
-        for(unsigned int i = 0; i < n_dofs; ++i)
+        for (unsigned int i = 0; i < n_dofs; ++i)
           N(current, i) = other.shape_value_component(
             i,
             unit_support_points[current],
@@ -69,10 +69,10 @@ initialize_node_matrix(const FiniteElement<dim>& other,
   // Interior degrees of freedom in each direction
   const unsigned int n_cell = (n_dofs - current) / dim;
 
-  for(unsigned int d = 0; d < dim; ++d)
-    for(unsigned int k = 0; k < n_cell; ++k)
+  for (unsigned int d = 0; d < dim; ++d)
+    for (unsigned int k = 0; k < n_cell; ++k)
       {
-        for(unsigned int i = 0; i < n_dofs; ++i)
+        for (unsigned int i = 0; i < n_dofs; ++i)
           N(current, i)
             = other.shape_value_component(i, unit_support_points[current], d);
         ++current;
@@ -93,9 +93,9 @@ compare_shapes(const FiniteElement<dim>& other,
     quadrature.size(), other.dofs_per_cell, dim);
   Table<3, Tensor<1, dim>> nodes_grads(
     quadrature.size(), other.dofs_per_cell, dim);
-  for(unsigned int k = 0; k < quadrature.size(); ++k)
-    for(unsigned int i = 0; i < other.dofs_per_cell; ++i)
-      for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int k = 0; k < quadrature.size(); ++k)
+    for (unsigned int i = 0; i < other.dofs_per_cell; ++i)
+      for (unsigned int d = 0; d < dim; ++d)
         {
           other_values[k][i][d]
             = other.shape_value_component(i, quadrature.point(k), d);
@@ -107,23 +107,23 @@ compare_shapes(const FiniteElement<dim>& other,
             = nodes.shape_grad_component(i, quadrature.point(k), d);
         }
 
-  for(unsigned int k = 0; k < quadrature.size(); ++k)
+  for (unsigned int k = 0; k < quadrature.size(); ++k)
     {
-      for(unsigned int i = 0; i < other.dofs_per_cell; ++i)
-        for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i < other.dofs_per_cell; ++i)
+        for (unsigned int d = 0; d < dim; ++d)
           {
             double         value = other_values[k][i][d];
             Tensor<1, dim> grad  = other_grads[k][i][d];
-            for(unsigned int j = 0; j < other.dofs_per_cell; ++j)
+            for (unsigned int j = 0; j < other.dofs_per_cell; ++j)
               {
                 value -= M(j, i) * nodes_values[k][j][d];
                 grad -= M(j, i) * nodes_grads[k][j][d];
               }
             deallog << '.';
-            if(std::fabs(value) > 1.e-12)
+            if (std::fabs(value) > 1.e-12)
               deallog << "Error value\t" << k << '\t' << i << '\t' << d << '\t'
                       << value << std::endl;
-            if(grad.norm() > 1.e-12)
+            if (grad.norm() > 1.e-12)
               deallog << "Error grad\t" << k << '\t' << i << '\t' << d << '\t'
                       << grad << '\t' << other_grads[k][i][d] << std::endl;
           }

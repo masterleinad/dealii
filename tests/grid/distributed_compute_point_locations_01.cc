@@ -45,7 +45,7 @@ test_compute_pt_loc(unsigned int n_points)
   // Creating the random points
   std::vector<Point<dim>> points;
 
-  for(size_t i = 0; i < n_points; ++i)
+  for (size_t i = 0; i < n_points; ++i)
     points.push_back(random_point<dim>());
 
   // Initializing the cache
@@ -81,7 +81,7 @@ test_compute_pt_loc(unsigned int n_points)
 
   // testing if the result coincides with
   // the serial one
-  for(unsigned int c = 0; c < n_cells; ++c)
+  for (unsigned int c = 0; c < n_cells; ++c)
     {
       auto& cell            = std::get<0>(output_tuple)[c];
       auto& quad            = std::get<1>(output_tuple)[c];
@@ -90,35 +90,35 @@ test_compute_pt_loc(unsigned int n_points)
       auto& ranks           = std::get<4>(output_tuple)[c];
 
       auto pos_cell = std::find(serial_cells.begin(), serial_cells.end(), cell);
-      for(auto r : ranks)
-        if(r != 0)
+      for (auto r : ranks)
+        if (r != 0)
           deallog << "ERROR: rank is not 0 but " << std::to_string(r)
                   << std::endl;
 
-      if(pos_cell == serial_cells.end())
+      if (pos_cell == serial_cells.end())
         deallog << "ERROR: cell not found" << std::endl;
       else
         {
           auto serial_cell_idx = pos_cell - serial_cells.begin();
-          if(original_points.size() != serial_qpoints[serial_cell_idx].size())
+          if (original_points.size() != serial_qpoints[serial_cell_idx].size())
             deallog << "ERROR: in the number of points for cell"
                     << std::to_string(serial_cell_idx) << std::endl;
-          if(quad.size() != serial_qpoints[serial_cell_idx].size())
+          if (quad.size() != serial_qpoints[serial_cell_idx].size())
             deallog << "ERROR: in the number of points for cell"
                     << std::to_string(serial_cell_idx) << std::endl;
 
           unsigned int pt_num = 0;
-          for(const auto& p_idx : local_map)
+          for (const auto& p_idx : local_map)
             {
               auto serial_pt_pos
                 = std::find(local_map.begin(), local_map.end(), p_idx);
               auto serial_pt_idx = serial_pt_pos - local_map.begin();
-              if(serial_pt_pos == local_map.end())
+              if (serial_pt_pos == local_map.end())
                 deallog << "ERROR: point index not found for "
                         << std::to_string(serial_pt_idx) << std::endl;
               else
                 {
-                  if((original_points[pt_num] - points[p_idx]).norm() > 1e-12)
+                  if ((original_points[pt_num] - points[p_idx]).norm() > 1e-12)
                     {
                       deallog
                         << "ERROR: Point in serial : " << points[p_idx]
@@ -126,10 +126,10 @@ test_compute_pt_loc(unsigned int n_points)
                         << std::endl;
                     }
 
-                  if((quad[pt_num]
-                      - serial_qpoints[serial_cell_idx][serial_pt_idx])
-                       .norm()
-                     > 1e-10)
+                  if ((quad[pt_num]
+                       - serial_qpoints[serial_cell_idx][serial_pt_idx])
+                        .norm()
+                      > 1e-10)
                     {
                       deallog
                         << " ERROR: Transformation of qpoint to point is not correct"

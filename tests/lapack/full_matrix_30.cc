@@ -28,8 +28,8 @@ test()
   const unsigned int           n_cols = 9;
   LAPACKFullMatrix<NumberType> A(n_rows, n_cols);
 
-  for(unsigned int i = 0; i < n_rows; ++i)
-    for(unsigned int j = 0; j < n_cols; ++j)
+  for (unsigned int i = 0; i < n_rows; ++i)
+    for (unsigned int j = 0; j < n_cols; ++j)
       A(i, j) = 10 * (i + 1) + (j + 1);
 
   A.remove_row_and_column(2, 7); // <-- 3x and x8 are removed

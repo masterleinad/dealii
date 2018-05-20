@@ -28,7 +28,7 @@ test(TrilinosWrappers::MPI::Vector& v)
   Vector<double> w(v.size());
   Vector<float>  x(v.size());
 
-  for(unsigned int i = 0; i < w.size(); ++i)
+  for (unsigned int i = 0; i < w.size(); ++i)
     {
       w(i) = i;
       x(i) = i + 1;
@@ -41,7 +41,7 @@ test(TrilinosWrappers::MPI::Vector& v)
   // Vector<T> must be different from
   // TrilinosScalar
   v = w;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i, ExcInternalError());
       AssertThrow(v(i) == i, ExcInternalError());
@@ -49,7 +49,7 @@ test(TrilinosWrappers::MPI::Vector& v)
     }
 
   v = x;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i, ExcInternalError());
       AssertThrow(v(i) == i + 1, ExcInternalError());
@@ -75,7 +75,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -89,7 +89,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

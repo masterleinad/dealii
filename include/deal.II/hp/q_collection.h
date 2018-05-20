@@ -147,8 +147,8 @@ namespace hp
            ExcMessage("You can't call this function for an empty collection"));
 
     unsigned int m = 0;
-    for(unsigned int i = 0; i < quadratures.size(); ++i)
-      if(quadratures[i]->size() > m)
+    for (unsigned int i = 0; i < quadratures.size(); ++i)
+      if (quadratures[i]->size() > m)
         m = quadratures[i]->size();
 
     return m;

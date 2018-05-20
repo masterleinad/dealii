@@ -94,7 +94,7 @@ namespace LocalIntegrators
               const Tensor<2, dim>& h2)
     {
       Tensor<1, dim> result;
-      switch(dim)
+      switch (dim)
         {
           case 2:
             result[0] = h1[0][1] - h0[1][1];
@@ -133,7 +133,7 @@ namespace LocalIntegrators
     {
       Tensor<1, dim> result;
 
-      switch(dim)
+      switch (dim)
         {
           case 2:
             result[0] = normal[1] * (g1[0] - g0[1]);
@@ -187,12 +187,12 @@ namespace LocalIntegrators
       // all dimensions
       const unsigned int d_max = (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = factor * fe.JxW(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
+              for (unsigned int d = 0; d < d_max; ++d)
                 {
                   const unsigned int d1 = (d + 1) % dim;
                   const unsigned int d2 = (d + 2) % dim;
@@ -238,12 +238,12 @@ namespace LocalIntegrators
 
       const unsigned int d_max = (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double dx = fe.JxW(k) * factor;
-          for(unsigned int i = 0; i < t_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          for (unsigned int i = 0; i < t_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
+              for (unsigned int d = 0; d < d_max; ++d)
                 {
                   const unsigned int d1 = (d + 1) % dim;
                   const unsigned int d2 = (d + 2) % dim;
@@ -298,16 +298,16 @@ namespace LocalIntegrators
       // over all dimensions
       const unsigned int d_max = (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
           const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              if(fe.get_fe().has_support_on_face(i, face_no)
-                 && fe.get_fe().has_support_on_face(j, face_no))
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
+              if (fe.get_fe().has_support_on_face(i, face_no)
+                  && fe.get_fe().has_support_on_face(j, face_no))
                 {
-                  for(unsigned int d = 0; d < d_max; ++d)
+                  for (unsigned int d = 0; d < d_max; ++d)
                     {
                       const unsigned int d1 = (d + 1) % dim;
                       const unsigned int d2 = (d + 2) % dim;
@@ -362,13 +362,13 @@ namespace LocalIntegrators
       // over all dimensions
       const unsigned int d_max = (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
           const double         dx = factor * fe.JxW(k);
           const Tensor<1, dim> n  = fe.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
+              for (unsigned int d = 0; d < d_max; ++d)
                 {
                   const unsigned int d1 = (d + 1) % dim;
                   const unsigned int d2 = (d + 2) % dim;
@@ -439,13 +439,13 @@ namespace LocalIntegrators
       // over all dimensions
       const unsigned int d_max = (dim == 2) ? 1 : dim;
 
-      for(unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
+      for (unsigned int k = 0; k < fe1.n_quadrature_points; ++k)
         {
           const double         dx = fe1.JxW(k);
           const Tensor<1, dim> n  = fe1.normal_vector(k);
-          for(unsigned int i = 0; i < n_dofs; ++i)
-            for(unsigned int j = 0; j < n_dofs; ++j)
-              for(unsigned int d = 0; d < d_max; ++d)
+          for (unsigned int i = 0; i < n_dofs; ++i)
+            for (unsigned int j = 0; j < n_dofs; ++j)
+              for (unsigned int d = 0; d < d_max; ++d)
                 {
                   const unsigned int d1 = (d + 1) % dim;
                   const unsigned int d2 = (d + 2) % dim;

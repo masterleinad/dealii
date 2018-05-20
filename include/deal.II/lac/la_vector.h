@@ -439,7 +439,7 @@ namespace LinearAlgebra
     ar& static_cast<Subscriptor&>(*this);
     ar & this->stored_elements;
     // If necessary, resize the vector during a read operation
-    if(this->size() != current_size)
+    if (this->size() != current_size)
       this->reinit(this->size());
     ar& boost::serialization::make_array(this->values.get(), this->size());
   }

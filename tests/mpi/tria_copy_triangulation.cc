@@ -58,13 +58,13 @@ test()
 
   typename Triangulation<dim, dim>::active_cell_iterator cell1, cell2;
 
-  for(cell1 = tr.begin_active(), cell2 = new_tr.begin_active();
-      cell1 != tr.end();
-      ++cell1, ++cell2)
+  for (cell1 = tr.begin_active(), cell2 = new_tr.begin_active();
+       cell1 != tr.end();
+       ++cell1, ++cell2)
     {
-      if(cell1->is_locally_owned())
+      if (cell1->is_locally_owned())
         {
-          if(myid == 0)
+          if (myid == 0)
             {
               deallog << "triangulation::cell     " << cell1
                       << ": locally owned, subdomain_id = "
@@ -78,21 +78,21 @@ test()
           Assert(cell1->subdomain_id() == cell2->subdomain_id(),
                  ExcInternalError());
 
-          for(unsigned int vertex = 0;
-              vertex < GeometryInfo<dim>::vertices_per_cell;
-              ++vertex)
+          for (unsigned int vertex = 0;
+               vertex < GeometryInfo<dim>::vertices_per_cell;
+               ++vertex)
             {
               Assert(cell1->vertex(vertex).distance(cell2->vertex(vertex))
                        < 1.e-14,
                      ExcInternalError());
 
-              if(myid == 0)
+              if (myid == 0)
                 deallog << "  vertices " << vertex << " coincide" << std::endl;
             };
         }
-      else if(cell1->is_ghost())
+      else if (cell1->is_ghost())
         {
-          if(myid == 0)
+          if (myid == 0)
             {
               deallog << "triangulation::cell     " << cell1
                       << ": ghost, subdomain_id = " << cell1->subdomain_id()
@@ -104,9 +104,9 @@ test()
 
           Assert(cell2->is_ghost(), ExcInternalError());
         }
-      else if(cell1->is_artificial())
+      else if (cell1->is_artificial())
         {
-          if(myid == 0)
+          if (myid == 0)
             {
               deallog << "triangulation::cell     " << cell1 << ": artificial"
                       << std::endl;
@@ -130,7 +130,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

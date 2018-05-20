@@ -46,8 +46,8 @@ test()
   // (roughly) equal between all processors
   tr.repartition();
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-    for(unsigned int p = 0; p < numproc; ++p)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    for (unsigned int p = 0; p < numproc; ++p)
       deallog << "processor " << p << ": "
               << tr.n_locally_owned_active_cells_per_processor()[p]
               << " locally owned active cells" << std::endl;
@@ -60,7 +60,7 @@ main(int argc, char* argv[])
 
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

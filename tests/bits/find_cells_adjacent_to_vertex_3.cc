@@ -27,7 +27,7 @@
 
 void check(Triangulation<2>& tria)
 {
-  for(unsigned i = 0; i < tria.n_vertices(); i++)
+  for (unsigned i = 0; i < tria.n_vertices(); i++)
     {
       std::vector<Triangulation<2>::active_cell_iterator> cells
         = GridTools::find_cells_adjacent_to_vertex(tria, i);
@@ -35,7 +35,7 @@ void check(Triangulation<2>& tria)
       deallog << "Vertex " << i << " at " << tria.get_vertices()[i] << ": "
               << cells.size() << " cells" << std::endl;
 
-      for(unsigned c = 0; c < cells.size(); c++)
+      for (unsigned c = 0; c < cells.size(); c++)
         deallog << "   " << cells[c] << std::endl;
     }
 }
@@ -55,13 +55,13 @@ main()
       std::vector<Point<dim>> vertices;
       vertices.push_back(Point<dim>());
 
-      for(unsigned int i = 0; i < 16; ++i)
+      for (unsigned int i = 0; i < 16; ++i)
         vertices.push_back(Point<dim>(std::cos(i * 2 * numbers::PI / 16),
                                       std::sin(i * 2 * numbers::PI / 16)));
 
       // now create the 8 cells
       std::vector<CellData<dim>> cells;
-      for(unsigned int c = 0; c < 8; ++c)
+      for (unsigned int c = 0; c < 8; ++c)
         {
           CellData<dim> d;
           d.vertices[0] = 0;
@@ -75,7 +75,7 @@ main()
       coarse_grid.create_triangulation(vertices, cells, SubCellData());
       check(coarse_grid);
     }
-  catch(const std::exception& exc)
+  catch (const std::exception& exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

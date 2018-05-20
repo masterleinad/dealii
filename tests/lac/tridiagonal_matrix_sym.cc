@@ -34,14 +34,14 @@ void
 matrix1(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       M(i, i) = 2.;
       // Set both diagonals, one will
       // override other.
-      if(i > 0)
+      if (i > 0)
         M(i, i - 1) = -1.;
-      if(i < n - 1)
+      if (i < n - 1)
         M(i, i + 1) = -1.;
     }
 }
@@ -52,12 +52,12 @@ void
 matrix4(TridiagonalMatrix<number>& M)
 {
   const unsigned int n = M.n();
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       M(i, i) = 2. + i;
-      if(i > 0)
+      if (i > 0)
         M(i, i - 1) = 0. - i;
-      if(i < n - 1)
+      if (i < n - 1)
         M(i, i + 1) = -1. - i;
     }
 }
@@ -71,18 +71,18 @@ check_vmult(TridiagonalMatrix<number>& M)
   Vector<number>     v(n);
   Vector<number>     w(n);
 
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     u(i) = 1 << i;
 
   deallog << "u     ";
-  for(unsigned int i = 0; i < u.size(); ++i)
+  for (unsigned int i = 0; i < u.size(); ++i)
     deallog << ' ' << std::setw(6) << u(i);
   deallog << std::endl;
 
   M.vmult(v, u);
 
   deallog << "u^TMw ";
-  for(unsigned int i = 0; i < w.size(); ++i)
+  for (unsigned int i = 0; i < w.size(); ++i)
     {
       w    = 0.;
       w(i) = 2.;
@@ -93,25 +93,25 @@ check_vmult(TridiagonalMatrix<number>& M)
   deallog << std::endl;
 
   deallog << "vmult ";
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << std::setw(6) << v(i);
   deallog << std::endl;
 
   M.Tvmult_add(v, u);
   deallog << "+Tvm  ";
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << std::setw(6) << v(i);
   deallog << std::endl;
 
   M.Tvmult(v, u);
   deallog << "Tvmult";
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << std::setw(6) << v(i);
   deallog << std::endl;
 
   M.vmult_add(v, u);
   deallog << "+vm   ";
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     deallog << ' ' << std::setw(6) << v(i);
   deallog << std::endl;
 }

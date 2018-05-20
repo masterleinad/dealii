@@ -587,9 +587,9 @@ BlockMatrixArray<number, BlockVectorType>::print_latex(StreamType& out) const
   typename std::vector<Entry>::const_iterator end = entries.end();
 
   size_type matrix_number = 0;
-  for(; m != end; ++m)
+  for (; m != end; ++m)
     {
-      if(matrix_names.find(m->matrix) == matrix_names.end())
+      if (matrix_names.find(m->matrix) == matrix_names.end())
         {
           std::pair<typename NameMap::iterator, bool> x = matrix_names.insert(
             std::pair<
@@ -603,24 +603,24 @@ BlockMatrixArray<number, BlockVectorType>::print_latex(StreamType& out) const
 
       std::ostringstream stream;
 
-      if(array(m->row, m->col) != "" && m->prefix >= 0)
+      if (array(m->row, m->col) != "" && m->prefix >= 0)
         stream << "+";
-      if(m->prefix != 1.)
+      if (m->prefix != 1.)
         stream << m->prefix << 'x';
       stream << matrix_names.find(m->matrix)->second;
       //      stream << '(' << m->matrix << ')';
-      if(m->transpose)
+      if (m->transpose)
         stream << "^T";
 
       array(m->row, m->col) += stream.str();
     }
-  for(unsigned int i = 0; i < n_block_rows(); ++i)
-    for(unsigned int j = 0; j < n_block_cols(); ++j)
+  for (unsigned int i = 0; i < n_block_rows(); ++i)
+    for (unsigned int j = 0; j < n_block_cols(); ++j)
       {
         out << '\t' << array(i, j);
-        if(j == n_block_cols() - 1)
+        if (j == n_block_cols() - 1)
           {
-            if(i != n_block_rows() - 1)
+            if (i != n_block_rows() - 1)
               out << "\\\\" << std::endl;
             else
               out << std::endl;

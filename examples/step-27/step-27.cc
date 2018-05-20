@@ -152,7 +152,7 @@ namespace Step27
                             const unsigned int /*component*/) const
   {
     double product = 1;
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       product *= (p[d] + 1);
     return product;
   }
@@ -184,7 +184,7 @@ namespace Step27
   resize(Table<dim, T>& coeff, const unsigned int N)
   {
     TableIndices<dim> size;
-    for(unsigned int d = 0; d < dim; d++)
+    for (unsigned int d = 0; d < dim; d++)
       size[d] = N;
     coeff.reinit(size);
   }
@@ -193,7 +193,7 @@ namespace Step27
   LaplaceProblem<dim>::LaplaceProblem()
     : dof_handler(triangulation), max_degree(dim <= 2 ? 7 : 5)
   {
-    for(unsigned int degree = 2; degree <= max_degree; ++degree)
+    for (unsigned int degree = 2; degree <= max_degree; ++degree)
       {
         fe_collection.push_back(FE_Q<dim>(degree));
         quadrature_collection.push_back(QGauss<dim>(degree + 1));
@@ -230,7 +230,7 @@ namespace Step27
     // the term $e^{i{\bf k}\cdot{\bf x}}$:
     QGauss<1>      base_quadrature(2);
     QIterated<dim> quadrature(base_quadrature, N);
-    for(unsigned int i = 0; i < fe_collection.size(); i++)
+    for (unsigned int i = 0; i < fe_collection.size(); i++)
       fourier_q_collection.push_back(quadrature);
 
     // Now we are ready to set-up the FESeries::Fourier object
@@ -326,7 +326,7 @@ namespace Step27
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
 
@@ -343,11 +343,11 @@ namespace Step27
         std::vector<double> rhs_values(fe_values.n_quadrature_points);
         rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
 
-        for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
-            ++q_point)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+             ++q_point)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 cell_matrix(i, j) += (fe_values.shape_grad(i, q_point)
                                       * fe_values.shape_grad(j, q_point)
                                       * fe_values.JxW(q_point));
@@ -433,7 +433,7 @@ namespace Step27
         typename hp::DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active(),
           endc = dof_handler.end();
-        for(; cell != endc; ++cell)
+        for (; cell != endc; ++cell)
           fe_degrees(cell->active_cell_index())
             = fe_collection[cell->active_fe_index()].degree;
       }
@@ -492,8 +492,8 @@ namespace Step27
         typename hp::DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active(),
           endc = dof_handler.end();
-        for(; cell != endc; ++cell)
-          if(cell->refine_flag_set())
+        for (; cell != endc; ++cell)
+          if (cell->refine_flag_set())
             {
               max_smoothness
                 = std::max(max_smoothness,
@@ -517,11 +517,11 @@ namespace Step27
         typename hp::DoFHandler<dim>::active_cell_iterator cell
           = dof_handler.begin_active(),
           endc = dof_handler.end();
-        for(; cell != endc; ++cell)
-          if(cell->refine_flag_set()
-             && (smoothness_indicators(cell->active_cell_index())
-                 > threshold_smoothness)
-             && (cell->active_fe_index() + 1 < fe_collection.size()))
+        for (; cell != endc; ++cell)
+          if (cell->refine_flag_set()
+              && (smoothness_indicators(cell->active_cell_index())
+                  > threshold_smoothness)
+              && (cell->active_fe_index() + 1 < fe_collection.size()))
             {
               cell->clear_refine_flag();
               cell->set_active_fe_index(cell->active_fe_index() + 1);
@@ -589,9 +589,9 @@ namespace Step27
       = sizeof(cell_vertices) / sizeof(cell_vertices[0]);
 
     std::vector<CellData<dim>> cells(n_cells, CellData<dim>());
-    for(unsigned int i = 0; i < n_cells; ++i)
+    for (unsigned int i = 0; i < n_cells; ++i)
       {
-        for(unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
+        for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell; ++j)
           cells[i].vertices[j] = cell_vertices[i][j];
         cells[i].material_id = 0;
       }
@@ -615,11 +615,11 @@ namespace Step27
   void
   LaplaceProblem<dim>::run()
   {
-    for(unsigned int cycle = 0; cycle < 6; ++cycle)
+    for (unsigned int cycle = 0; cycle < 6; ++cycle)
       {
         std::cout << "Cycle " << cycle << ':' << std::endl;
 
-        if(cycle == 0)
+        if (cycle == 0)
           create_coarse_grid();
 
         setup_system();
@@ -656,9 +656,9 @@ namespace Step27
   LaplaceProblem<dim>::predicate(const TableIndices<dim>& ind)
   {
     unsigned int v = 0;
-    for(unsigned int i = 0; i < dim; i++)
+    for (unsigned int i = 0; i < dim; i++)
       v += ind[i] * ind[i];
-    if(v > 0 && v < max_degree * max_degree)
+    if (v > 0 && v < max_degree * max_degree)
       return std::make_pair(true, v);
     else
       return std::make_pair(false, v);
@@ -687,7 +687,7 @@ namespace Step27
     typename hp::DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         // Inside the loop, we first need to get the values of the local
         // degrees of freedom (which we put into the
@@ -726,10 +726,10 @@ namespace Step27
         // vector will be the same for all the cells so we can calculate
         // logarithms of the corresponding Fourier vectors $|{\bf k}|$ only once
         // in the whole hp-refinement cycle:
-        if(ln_k.size() == 0)
+        if (ln_k.size() == 0)
           {
             ln_k.resize(res.first.size(), 0);
-            for(unsigned int f = 0; f < ln_k.size(); f++)
+            for (unsigned int f = 0; f < ln_k.size(); f++)
               ln_k[f]
                 = std::log(2.0 * numbers::PI * std::sqrt(1. * res.first[f]));
           }
@@ -737,7 +737,7 @@ namespace Step27
         // We have to calculate the logarithms of absolute
         // values of coefficients and use it in linear regression fit to
         // obtain $\mu$.
-        for(unsigned int f = 0; f < res.second.size(); f++)
+        for (unsigned int f = 0; f < res.second.size(); f++)
           res.second[f] = std::log(res.second[f]);
 
         std::pair<double, double> fit
@@ -768,7 +768,7 @@ main()
       LaplaceProblem<2> laplace_problem;
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -782,7 +782,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

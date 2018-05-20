@@ -31,9 +31,9 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   // accumulated)
   deallog << std::setprecision(8);
 
-  if(fe1.n_components() != 1)
+  if (fe1.n_components() != 1)
     return;
-  if(fe1.n_components() != fe2.n_components())
+  if (fe1.n_components() != fe2.n_components())
     return;
 
   FullMatrix<double> X(fe2.dofs_per_cell, fe1.dofs_per_cell);

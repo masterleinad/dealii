@@ -49,11 +49,11 @@ write_patches(const std::vector<DataOutBase::Patch<dim, spacedim>>& patches,
   std::vector<std::tuple<unsigned int, unsigned int, std::string>> vectors;
 
   WRITE(dx);
-  if(dim == 2)
+  if (dim == 2)
     WRITE(eps);
   WRITE(gnuplot);
   WRITE(gmv);
-  if(dim == 2 && spacedim == 2)
+  if (dim == 2 && spacedim == 2)
     WRITE(povray);
   WRITE(ucd);
   WRITE(vtk);
@@ -131,26 +131,26 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
 
   patches.resize(ncells);
 
-  for(unsigned int c = 0; c < ncells; ++c)
+  for (unsigned int c = 0; c < ncells; ++c)
     {
       DataOutBase::Patch<dim, spacedim>& p = patches[c];
       p.patch_index                        = c;
       p.n_subdivisions                     = nsub;
 
-      for(unsigned int i = 0; i < ncells; ++i)
-        for(unsigned int j = 0; j < spacedim; ++j)
+      for (unsigned int i = 0; i < ncells; ++i)
+        for (unsigned int j = 0; j < spacedim; ++j)
           p.vertices[i](j)
             = PatchInfo<dim>::vertices[i][j] + PatchInfo<dim>::offsets[c][j];
 
-      for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
         p.neighbors[i] = (unsigned int) PatchInfo<dim>::neighbors[c][i];
 
       unsigned int ndata = 1;
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         ndata *= nsub + 1;
 
       p.data.reinit(2, ndata);
-      for(unsigned int i = 0; i < ndata; ++i)
+      for (unsigned int i = 0; i < ndata; ++i)
         {
           p.data(0, i) = i;
           p.data(1, i) = -(float) i;

@@ -31,7 +31,7 @@ main()
 
   std::string   input;
   std::ifstream in(SOURCE_DIR "/prm/parameter_handler_2_read_from_string.prm");
-  while(in)
+  while (in)
     {
       std::string s;
       std::getline(in, s);

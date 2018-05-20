@@ -98,7 +98,7 @@ test5()
 
   std::vector<Vector<double>> shape_functions;
   std::vector<std::string>    names;
-  for(unsigned int s = 0; s < dof_handler.n_dofs(); s++)
+  for (unsigned int s = 0; s < dof_handler.n_dofs(); s++)
     {
       names.push_back(std::string("N_") + dealii::Utilities::int_to_string(s));
 
@@ -126,15 +126,15 @@ test5()
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
 
         // find out which
         unsigned int local_dof = 0;
         cell->get_dof_indices(local_dof_indices);
-        for(; local_dof < dofs_per_cell; local_dof++)
-          if(local_dof_indices[local_dof] == global_dof)
+        for (; local_dof < dofs_per_cell; local_dof++)
+          if (local_dof_indices[local_dof] == global_dof)
             break;
 
         const std::vector<dealii::Point<dim>>& q_points
@@ -142,14 +142,14 @@ test5()
         fe_values.get_function_values(solution, solution_values);
 
         deallog << " cell=" << cell->center() << std::endl;
-        for(unsigned int q_point = 0; q_point < n_q_points; ++q_point)
+        for (unsigned int q_point = 0; q_point < n_q_points; ++q_point)
           {
             // find non-zero shape_value
             deallog << " qp=" << q_points[q_point]
                     << " f(qp)=" << function.value(q_points[q_point]);
 
             // if the cell contains our global dof:
-            if(local_dof < dofs_per_cell)
+            if (local_dof < dofs_per_cell)
               deallog << " N(" << local_dof
                       << ",qp)=" << fe_values.shape_value(local_dof, q_point);
 
@@ -162,7 +162,7 @@ test5()
   DataOut<dim> data_out;
   data_out.attach_dof_handler(dof_handler);
 
-  for(unsigned int i = 0; i < shape_functions.size(); i++)
+  for (unsigned int i = 0; i < shape_functions.size(); i++)
     data_out.add_data_vector(shape_functions[i], names[i]);
 
   data_out.build_patches(patches);
@@ -189,7 +189,7 @@ main(int argc, char** argv)
     {
       test5<2>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -203,7 +203,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

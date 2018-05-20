@@ -44,8 +44,8 @@ test(const unsigned int size, const unsigned int block_size)
   //create FullMatrix and fill it
   FullMatrix<NumberType> full(size);
   unsigned int           count = 0;
-  for(unsigned int i = 0; i < size; ++i)
-    for(unsigned int j = 0; j < size; ++j, ++count)
+  for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int j = 0; j < size; ++j, ++count)
       full(i, j) = count;
 
   //create 2d process grid
@@ -68,7 +68,7 @@ test(const unsigned int size, const unsigned int block_size)
 
   pcout << size << " " << block_size << std::endl;
 
-  if(copy.frobenius_norm() > 1e-12)
+  if (copy.frobenius_norm() > 1e-12)
     pcout << "norm of difference: " << copy.frobenius_norm() << std::endl;
 
   AssertThrow(copy.frobenius_norm() < 1e-12, ExcInternalError());
@@ -84,11 +84,11 @@ main(int argc, char** argv)
   const std::vector<unsigned int> sizes       = {{100, 200, 300}};
   const std::vector<unsigned int> block_sizes = {{1, 16, 32}};
 
-  for(const auto& s : sizes)
-    for(const auto& b : block_sizes)
+  for (const auto& s : sizes)
+    for (const auto& b : block_sizes)
       test<double>(s, b);
 
-  for(const auto& s : sizes)
-    for(const auto& b : block_sizes)
+  for (const auto& s : sizes)
+    for (const auto& b : block_sizes)
       test<float>(s, b);
 }

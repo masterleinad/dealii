@@ -394,10 +394,10 @@ namespace internal
       // set for this particular fe_index
       const types::global_dof_index  starting_offset = dof_offsets[obj_index];
       const types::global_dof_index* pointer         = &dofs[starting_offset];
-      while(true)
+      while (true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
-          if(*pointer == fe_index)
+          if (*pointer == fe_index)
             return *(pointer + 1 + local_index);
           else
             pointer += static_cast<types::global_dof_index>(
@@ -452,10 +452,10 @@ namespace internal
       // set for this particular fe_index
       const types::global_dof_index starting_offset = dof_offsets[obj_index];
       types::global_dof_index*      pointer         = &dofs[starting_offset];
-      while(true)
+      while (true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
-          if(*pointer == fe_index)
+          if (*pointer == fe_index)
             {
               *(pointer + 1 + local_index) = global_index;
               return;
@@ -480,7 +480,7 @@ namespace internal
       // make sure we are on an
       // object for which DoFs have
       // been allocated at all
-      if(dof_offsets[obj_index] == numbers::invalid_unsigned_int)
+      if (dof_offsets[obj_index] == numbers::invalid_unsigned_int)
         return 0;
 
       Assert(structdim < dim,
@@ -494,9 +494,9 @@ namespace internal
       const unsigned int             starting_offset = dof_offsets[obj_index];
       const types::global_dof_index* pointer         = &dofs[starting_offset];
       unsigned int                   counter         = 0;
-      while(true)
+      while (true)
         {
-          if(*pointer == numbers::invalid_dof_index)
+          if (*pointer == numbers::invalid_dof_index)
             // end of list reached
             return counter;
           else
@@ -543,7 +543,7 @@ namespace internal
       const unsigned int             starting_offset = dof_offsets[obj_index];
       const types::global_dof_index* pointer         = &dofs[starting_offset];
       unsigned int                   counter         = 0;
-      while(true)
+      while (true)
         {
           Assert(*pointer != numbers::invalid_dof_index, ExcInternalError());
 
@@ -552,7 +552,7 @@ namespace internal
           Assert(fe_index < dof_handler.get_fe_collection().size(),
                  ExcInternalError());
 
-          if(counter == n)
+          if (counter == n)
             return fe_index;
 
           ++counter;
@@ -600,12 +600,12 @@ namespace internal
       // set for this particular fe_index
       const types::global_dof_index  starting_offset = dof_offsets[obj_index];
       const types::global_dof_index* pointer         = &dofs[starting_offset];
-      while(true)
+      while (true)
         {
-          if(*pointer == numbers::invalid_dof_index)
+          if (*pointer == numbers::invalid_dof_index)
             // end of list reached
             return false;
-          else if(*pointer == fe_index)
+          else if (*pointer == fe_index)
             return true;
           else
             pointer += static_cast<types::global_dof_index>(

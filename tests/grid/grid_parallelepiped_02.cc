@@ -42,7 +42,7 @@ check_nd_parallelepiped_by_comparison(bool log)
   // same output order as subdivided parallelepiped:
   Point<dim>(corners)[dim];
 
-  switch(dim)
+  switch (dim)
     {
       case 1:
         {
@@ -76,13 +76,13 @@ check_nd_parallelepiped_by_comparison(bool log)
   GridGenerator::subdivided_parallelepiped(
     triangulation_subdivided_parallelepiped, 1, corners, false);
 
-  if(log)
+  if (log)
     {
       logfile << "\ncheck " << dim
               << "d parallelepiped (subdivided_parallelepiped): ";
-      if(GridTools::have_same_coarse_mesh(
-           triangulation_parallelepiped,
-           triangulation_subdivided_parallelepiped))
+      if (GridTools::have_same_coarse_mesh(
+            triangulation_parallelepiped,
+            triangulation_subdivided_parallelepiped))
         logfile << "OK";
 
       else

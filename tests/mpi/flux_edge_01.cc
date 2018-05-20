@@ -126,9 +126,9 @@ namespace Step39
     mg_matrix_dg_down.resize(0, n_levels - 1);
     mg_matrix_dg_down.clear_elements();
 
-    for(unsigned int level = mg_matrix.min_level();
-        level <= mg_matrix.max_level();
-        ++level)
+    for (unsigned int level = mg_matrix.min_level();
+         level <= mg_matrix.max_level();
+         ++level)
       {
         DynamicSparsityPattern c_sparsity(dof_handler.n_dofs(level));
         MGTools::make_flux_sparsity_pattern(dof_handler, c_sparsity, level);
@@ -138,7 +138,7 @@ namespace Step39
                                 MPI_COMM_WORLD,
                                 true);
 
-        if(level > 0)
+        if (level > 0)
           {
             DynamicSparsityPattern ci_sparsity;
             ci_sparsity.reinit(dof_handler.n_dofs(level - 1),
@@ -167,14 +167,14 @@ namespace Step39
   InteriorPenaltyProblem<dim>::run(unsigned int n_steps)
   {
     deallog << "Element: " << fe.get_name() << std::endl;
-    for(unsigned int s = 0; s < n_steps; ++s)
+    for (unsigned int s = 0; s < n_steps; ++s)
       {
         deallog << "Step " << s << std::endl;
-        if(s == 0)
+        if (s == 0)
           triangulation.refine_global(1);
         else
           {
-            if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+            if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
               triangulation.begin_active(triangulation.n_levels() - 1)
                 ->set_refine_flag();
 
@@ -187,7 +187,7 @@ namespace Step39
 
         setup_system();
         deallog << "DoFHandler " << dof_handler.n_dofs() << " dofs, level dofs";
-        for(unsigned int l = 0; l < triangulation.n_levels(); ++l)
+        for (unsigned int l = 0; l < triangulation.n_levels(); ++l)
           deallog << ' ' << dof_handler.n_dofs(l);
         deallog << std::endl;
       }
@@ -210,7 +210,7 @@ main(int argc, char* argv[])
       InteriorPenaltyProblem<2> test1(fe1);
       test1.run(20);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -223,7 +223,7 @@ main(int argc, char* argv[])
                 << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

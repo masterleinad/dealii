@@ -29,7 +29,7 @@ test(int n)
   {
     QSplit<2> quad(QTrianglePolar(n), Point<2>(.3, .4));
 
-    for(auto p : quad.get_points())
+    for (auto p : quad.get_points())
       deallog << p << std::endl;
 
     deallog << std::endl
@@ -39,7 +39,7 @@ test(int n)
             << std::endl
             << std::endl;
 
-    if(quad.size() == n * n * 4)
+    if (quad.size() == n * n * 4)
       deallog << "# Size OK" << std::endl;
     else
       deallog << "# Size NOT OK" << std::endl;
@@ -47,7 +47,7 @@ test(int n)
   {
     QSplit<2> quad(QTrianglePolar(n), Point<2>(0, .2));
 
-    for(auto p : quad.get_points())
+    for (auto p : quad.get_points())
       deallog << p << std::endl;
 
     deallog << std::endl
@@ -56,7 +56,7 @@ test(int n)
                  quad.get_weights().begin(), quad.get_weights().end(), 0.0)
             << std::endl
             << std::endl;
-    if(quad.size() == n * n * 3)
+    if (quad.size() == n * n * 3)
       deallog << "# Size OK" << std::endl;
     else
       deallog << "# Size NOT OK" << std::endl;
@@ -64,7 +64,7 @@ test(int n)
   {
     QSplit<2> quad(QTrianglePolar(n), Point<2>(1, 0));
 
-    for(auto p : quad.get_points())
+    for (auto p : quad.get_points())
       deallog << p << std::endl;
 
     deallog << std::endl
@@ -73,7 +73,7 @@ test(int n)
                  quad.get_weights().begin(), quad.get_weights().end(), 0.0)
             << std::endl
             << std::endl;
-    if(quad.size() == n * n * 2)
+    if (quad.size() == n * n * 2)
       deallog << "# Size OK" << std::endl;
     else
       deallog << "# Size NOT OK" << std::endl;

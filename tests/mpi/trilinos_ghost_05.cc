@@ -29,7 +29,7 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   unsigned int ghostel = (numproc > 1) ? 2 : 1;
@@ -65,13 +65,13 @@ test()
   Assert(v(myid * 2 + 1) == myid * 4.0 + 2.0, ExcInternalError());
   Assert(v(ghostel) == 2.0 * ghostel, ExcInternalError());
 
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << myid * 2 << ":" << v(myid * 2) << std::endl;
       deallog << myid * 2 + 1 << ":" << v(myid * 2 + 1) << std::endl;
     }
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -84,7 +84,7 @@ main(int argc, char** argv)
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
       deallog << std::setprecision(4);

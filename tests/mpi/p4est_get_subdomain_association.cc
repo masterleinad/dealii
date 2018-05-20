@@ -39,7 +39,7 @@ test()
 {
   unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 1)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 1)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -51,7 +51,7 @@ test()
   static const FE_Q<dim> fe(2);
   dofh.distribute_dofs(fe);
 
-  if(myid == 1)
+  if (myid == 1)
     {
       deallog << "dofh.n_dofs() " << dofh.n_locally_owned_dofs_per_processor()
               << std::endl;
@@ -62,7 +62,7 @@ test()
         dofh, tr.locally_owned_subdomain());
 
       deallog << set.n_elements() << std::endl;
-      for(unsigned int i = 0; i < set.n_elements(); ++i)
+      for (unsigned int i = 0; i < set.n_elements(); ++i)
         deallog << "   " << set.nth_index_in_set(i) << std::endl;
     }
 }
@@ -76,7 +76,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 1)
+  if (myid == 1)
     {
       initlog();
 

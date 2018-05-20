@@ -36,16 +36,16 @@ test()
 
   IndexSet locally_owned(n_rows);
 
-  if(n_procs == 1)
+  if (n_procs == 1)
     {
       locally_owned.add_range(0, n_rows);
     }
-  else if(n_procs == 2)
+  else if (n_procs == 2)
     {
       // should be { [0, 2), [2, n_rows) }
-      if(my_id == 0)
+      if (my_id == 0)
         locally_owned.add_range(0, 2);
-      else if(my_id == 1)
+      else if (my_id == 1)
         locally_owned.add_range(2, n_rows);
     }
   else
@@ -53,12 +53,12 @@ test()
 
   TrilinosWrappers::SparsityPattern sp(
     locally_owned, locally_owned, MPI_COMM_WORLD);
-  if(my_id == 0)
+  if (my_id == 0)
     {
       sp.add(0, 0);
       sp.add(0, 2);
     }
-  if((n_procs == 1) || (my_id == 1))
+  if ((n_procs == 1) || (my_id == 1))
     sp.add(2, 3);
   sp.compress();
 
@@ -69,7 +69,7 @@ test()
 
   A.add(0, 0, 0.1);
   A.add(0, 2, 0.2);
-  if((n_procs == 1) || (my_id == 1))
+  if ((n_procs == 1) || (my_id == 1))
     A.add(2, 3, 0.3);
 
   double l1a = (n_procs == 1) ? 0.3 : 0.4;
@@ -86,7 +86,7 @@ test()
   deallog << "2: " << A.l1_norm() << " " << B.l1_norm() << " (should be " << l1a
           << " " << l1a << ")" << std::endl;
 
-  if(my_id == 0)
+  if (my_id == 0)
     {
       deallog << "A(0,0)=" << A(0, 0) << std::endl;
       deallog << "B(0,0)=" << B(0, 0) << std::endl;
@@ -100,13 +100,13 @@ test()
   deallog << "3: " << A.l1_norm() << " " << B.l1_norm() << " (should be " << l1b
           << " " << l1a << ")" << std::endl;
 
-  if(my_id == 0)
+  if (my_id == 0)
     {
       deallog << "A(0,0)=" << A(0, 0) << std::endl;
       deallog << "B(0,0)=" << B(0, 0) << std::endl;
     }
 
-  if(my_id == 0)
+  if (my_id == 0)
     deallog << "OK" << std::endl;
 }
 

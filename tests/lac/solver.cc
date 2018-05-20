@@ -45,7 +45,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch (dealii::SolverControl::NoConvergence& e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -68,7 +68,7 @@ check_Tsolve(SolverType&         solver,
     {
       solver.Tsolve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch (dealii::SolverControl::NoConvergence& e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -96,7 +96,7 @@ main()
   SolverQMRS<>                  qmrs(control, mem);
   SolverFIRE<>                  fire(control, mem);
 
-  for(unsigned int size = 4; size <= 30; size *= 3)
+  for (unsigned int size = 4; size <= 30; size *= 3)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -125,16 +125,16 @@ main()
       // backwards and every second
       // block backwards
       unsigned int k = 0;
-      for(unsigned int i = 0; i < size - 1; ++i)
-        for(unsigned int j = 0; j < size - 1; ++j)
+      for (unsigned int i = 0; i < size - 1; ++i)
+        for (unsigned int j = 0; j < size - 1; ++j)
           {
-            if(i % 2)
+            if (i % 2)
               permutation[k++] = (size - i - 2) * (size - 1) + j;
             else
               permutation[k++] = (size - i - 2) * (size - 1) + size - j - 2;
           }
 
-      for(unsigned int i = 0; i < dim; ++i)
+      for (unsigned int i = 0; i < dim; ++i)
         inverse_permutation[permutation[i]] = i;
 
       PreconditionPSOR<> prec_psor;
@@ -239,14 +239,14 @@ main()
 
           deallog.pop();
         }
-      catch(std::exception& e)
+      catch (std::exception& e)
         {
           std::cerr << "Exception: " << e.what() << std::endl;
         }
     };
 
   // Solve advection problem
-  for(unsigned int size = 4; size <= 3; size *= 3)
+  for (unsigned int size = 4; size <= 3; size *= 3)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -270,20 +270,20 @@ main()
       // backwards and every second
       // block backwards
       unsigned int k = 0;
-      for(unsigned int i = 0; i < size - 1; ++i)
-        for(unsigned int j = 0; j < size - 1; ++j)
+      for (unsigned int i = 0; i < size - 1; ++i)
+        for (unsigned int j = 0; j < size - 1; ++j)
           {
             permutation[k++] = i * (size - 1) + size - j - 2;
           }
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
+      for (unsigned int i = 0; i < permutation.size(); ++i)
         std::cerr << ' ' << permutation[i];
       std::cerr << std::endl;
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
+      for (unsigned int i = 0; i < permutation.size(); ++i)
         inverse_permutation[permutation[i]] = i;
 
-      for(unsigned int i = 0; i < permutation.size(); ++i)
+      for (unsigned int i = 0; i < permutation.size(); ++i)
         std::cerr << ' ' << inverse_permutation[i];
       std::cerr << std::endl;
 

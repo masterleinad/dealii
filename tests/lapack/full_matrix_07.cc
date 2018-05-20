@@ -60,11 +60,11 @@ main()
   LA.compute_eigenvalues_symmetric(
     0.5, 2.5, 2.0 * DBL_MIN, eigenvalues, eigenvectors);
 
-  for(unsigned int i = 0; i < eigenvalues.size(); ++i)
+  for (unsigned int i = 0; i < eigenvalues.size(); ++i)
     {
       deallog << "eigenvalue " << std::scientific << eigenvalues(i) << std::endl
               << "eigenvector ";
-      for(unsigned int j = 0; j < A.m(); ++j)
+      for (unsigned int j = 0; j < A.m(); ++j)
         {
           deallog << std::scientific << eigenvectors(j, i) / eigenvectors(0, i)
                   << '\t';

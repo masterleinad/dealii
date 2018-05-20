@@ -31,14 +31,14 @@ checkVmult_Add(FullMatrix<number>& A,
   F.add_constraint(0, 1);
 
   Vector<number> O(A.m());
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     {
       O(i) = 1;
     }
 
   F.vmult_add(O, V);
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }

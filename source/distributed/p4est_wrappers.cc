@@ -23,7 +23,7 @@ namespace internal
         dealii::types::global_dof_index dealii_index
           = triangulation->get_p4est_tree_to_coarse_cell_permutation()[treeidx];
 
-        for(i = 0; i < l; i++)
+        for (i = 0; i < l; i++)
           {
             typename dealii::Triangulation<dim, spacedim>::cell_iterator cell(
               triangulation, i, dealii_index);
@@ -85,9 +85,9 @@ namespace internal
           = fg->vertices_with_ghost_neighbors;
 
         subids->elem_count = 0;
-        for(i = 0; i < nsides; i++)
+        for (i = 0; i < nsides; i++)
           {
-            if(sides[i].is_ghost)
+            if (sides[i].is_ghost)
               {
                 typename dealii::parallel::distributed::
                   Triangulation<dim, spacedim>::cell_iterator cell
@@ -102,7 +102,7 @@ namespace internal
               }
           }
 
-        if(!subids->elem_count)
+        if (!subids->elem_count)
           {
             return;
           }
@@ -110,9 +110,9 @@ namespace internal
         nsubs         = (int) subids->elem_count;
         subdomain_ids = (dealii::types::subdomain_id*) (subids->array);
 
-        for(i = 0; i < nsides; i++)
+        for (i = 0; i < nsides; i++)
           {
-            if(!sides[i].is_ghost)
+            if (!sides[i].is_ghost)
               {
                 typename dealii::parallel::distributed::
                   Triangulation<dim, spacedim>::cell_iterator cell
@@ -122,7 +122,7 @@ namespace internal
                 Assert(!cell->is_ghost(),
                        ExcMessage("local quad found ghost cell"));
 
-                for(j = 0; j < nsubs; j++)
+                for (j = 0; j < nsubs; j++)
                   {
                     (*vertices_with_ghost_neighbors)[cell->vertex_index(
                                                        sides[i].corner)]
@@ -161,13 +161,13 @@ namespace internal
           = fg->vertices_with_ghost_neighbors;
 
         subids->elem_count = 0;
-        for(i = 0; i < nsides; i++)
+        for (i = 0; i < nsides; i++)
           {
-            if(sides[i].is_hanging)
+            if (sides[i].is_hanging)
               {
-                for(j = 0; j < 2; j++)
+                for (j = 0; j < 2; j++)
                   {
-                    if(sides[i].is.hanging.is_ghost[j])
+                    if (sides[i].is.hanging.is_ghost[j])
                       {
                         typename dealii::parallel::distributed::
                           Triangulation<dim, spacedim>::cell_iterator cell
@@ -183,7 +183,7 @@ namespace internal
               }
           }
 
-        if(!subids->elem_count)
+        if (!subids->elem_count)
           {
             return;
           }
@@ -191,13 +191,13 @@ namespace internal
         nsubs         = (int) subids->elem_count;
         subdomain_ids = (dealii::types::subdomain_id*) (subids->array);
 
-        for(i = 0; i < nsides; i++)
+        for (i = 0; i < nsides; i++)
           {
-            if(sides[i].is_hanging)
+            if (sides[i].is_hanging)
               {
-                for(j = 0; j < 2; j++)
+                for (j = 0; j < 2; j++)
                   {
-                    if(!sides[i].is.hanging.is_ghost[j])
+                    if (!sides[i].is.hanging.is_ghost[j])
                       {
                         typename dealii::parallel::distributed::
                           Triangulation<dim, spacedim>::cell_iterator cell
@@ -205,7 +205,7 @@ namespace internal
                                            sides[i].treeid,
                                            *(sides[i].is.hanging.quad[j]));
 
-                        for(k = 0; k < nsubs; k++)
+                        for (k = 0; k < nsubs; k++)
                           {
                             (*vertices_with_ghost_neighbors)
                               [cell->vertex_index(
@@ -248,13 +248,13 @@ namespace internal
         int limit = (dim == 2) ? 2 : 4;
 
         subids->elem_count = 0;
-        for(i = 0; i < nsides; i++)
+        for (i = 0; i < nsides; i++)
           {
-            if(sides[i].is_hanging)
+            if (sides[i].is_hanging)
               {
-                for(j = 0; j < limit; j++)
+                for (j = 0; j < limit; j++)
                   {
-                    if(sides[i].is.hanging.is_ghost[j])
+                    if (sides[i].is.hanging.is_ghost[j])
                       {
                         typename dealii::parallel::distributed::
                           Triangulation<dim, spacedim>::cell_iterator cell
@@ -270,7 +270,7 @@ namespace internal
               }
           }
 
-        if(!subids->elem_count)
+        if (!subids->elem_count)
           {
             return;
           }
@@ -278,13 +278,13 @@ namespace internal
         nsubs         = (int) subids->elem_count;
         subdomain_ids = (dealii::types::subdomain_id*) (subids->array);
 
-        for(i = 0; i < nsides; i++)
+        for (i = 0; i < nsides; i++)
           {
-            if(sides[i].is_hanging)
+            if (sides[i].is_hanging)
               {
-                for(j = 0; j < limit; j++)
+                for (j = 0; j < limit; j++)
                   {
-                    if(!sides[i].is.hanging.is_ghost[j])
+                    if (!sides[i].is.hanging.is_ghost[j])
                       {
                         typename dealii::parallel::distributed::
                           Triangulation<dim, spacedim>::cell_iterator cell
@@ -292,9 +292,9 @@ namespace internal
                                            sides[i].treeid,
                                            *(sides[i].is.hanging.quad[j]));
 
-                        for(k = 0; k < nsubs; k++)
+                        for (k = 0; k < nsubs; k++)
                           {
-                            if(dim == 2)
+                            if (dim == 2)
                               {
                                 (*vertices_with_ghost_neighbors)
                                   [cell->vertex_index(
@@ -520,7 +520,7 @@ namespace internal
       fg.triangulation = &tria;
       fg.vertices_with_ghost_neighbors = &vertices_with_ghost_neighbors;
 
-      switch(dim)
+      switch (dim)
         {
           case 2:
             p4est_iterate(
@@ -753,10 +753,10 @@ namespace internal
       typename types<dim>::quadrant (
         &p4est_children)[dealii::GeometryInfo<dim>::max_children_per_cell])
     {
-      for(unsigned int c = 0;
-          c < dealii::GeometryInfo<dim>::max_children_per_cell;
-          ++c)
-        switch(dim)
+      for (unsigned int c = 0;
+           c < dealii::GeometryInfo<dim>::max_children_per_cell;
+           ++c)
+        switch (dim)
           {
             case 2:
               P4EST_QUADRANT_INIT(&p4est_children[c]);
@@ -775,7 +775,7 @@ namespace internal
     void
     init_coarse_quadrant(typename types<dim>::quadrant& quad)
     {
-      switch(dim)
+      switch (dim)
         {
           case 2:
             P4EST_QUADRANT_INIT(&quad);

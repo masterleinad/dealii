@@ -64,7 +64,7 @@ test()
     deallog << "Cell worker on : " << cell << " ghost? " << cell->is_ghost()
             << std::endl;
     ++c.n_cells;
-    if(cell->is_ghost())
+    if (cell->is_ghost())
       ++c.n_ghost_cells;
     else
       ++c.n_own_cells;

@@ -75,21 +75,21 @@ test()
   // bogus matrix entries
   std::vector<types::global_dof_index> local_dofs(fe.dofs_per_cell);
   FullMatrix<double> local_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
-  for(typename DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       cell->get_dof_indices(local_dofs);
       local_matrix = 0;
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
           local_matrix(i, j)
             = (i + 1.) * (j + 1.) * (local_dofs[i] + 1.) * (local_dofs[j] + 1.);
 
       // copy local to global
-      for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+        for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
           A.add(local_dofs[i], local_dofs[j], local_matrix(i, j));
     }
 
@@ -97,7 +97,7 @@ test()
   constraints.condense(A);
 
   // and output what we have
-  for(SparseMatrix<double>::const_iterator i = A.begin(); i != A.end(); ++i)
+  for (SparseMatrix<double>::const_iterator i = A.begin(); i != A.end(); ++i)
     deallog << i->row() << ' ' << i->column() << ' ' << i->value() << std::endl;
 }
 
@@ -112,7 +112,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -126,7 +126,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

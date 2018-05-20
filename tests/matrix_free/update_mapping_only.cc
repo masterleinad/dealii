@@ -50,9 +50,9 @@ test()
   Vector<double> solution(dof.n_dofs());
 
   // create vector with random entries
-  for(unsigned int i = 0; i < dof.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      if(constraints.is_constrained(i))
+      if (constraints.is_constrained(i))
         continue;
       const double entry = random_value<double>();
       solution(i)        = entry;
@@ -66,9 +66,9 @@ test()
 
   MatrixFree<dim, double> mf_data;
   Vector<double>          shift(dofh_eulerian.n_dofs());
-  for(unsigned int i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     {
-      if(i == 1)
+      if (i == 1)
         {
           shift(0) = 0.121;
           shift(1) = -0.005;
@@ -81,7 +81,7 @@ test()
         data.tasks_parallel_scheme
           = MatrixFree<dim, double>::AdditionalData::none;
         data.mapping_update_flags = update_gradients | update_hessians;
-        if(i == 1)
+        if (i == 1)
           data.initialize_indices = false;
         mf_data.reinit(mapping, dof, constraints, quad, data);
       }

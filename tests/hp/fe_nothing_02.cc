@@ -54,10 +54,10 @@ test()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; cell++)
+  for (; cell != endc; cell++)
     {
       Point<dim> center = cell->center();
-      if(std::sqrt(center.square()) < 0.25)
+      if (std::sqrt(center.square()) < 0.25)
         cell->set_active_fe_index(1);
       else
         cell->set_active_fe_index(0);
@@ -84,13 +84,13 @@ test()
 
   cell = dof_handler.begin_active();
 
-  for(; cell != endc; cell++)
+  for (; cell != endc; cell++)
     {
       deallog << "This is a "
               << (cell->active_fe_index() == 1 ? "FE_Nothing" : "FE_Q")
               << " cell" << std::endl;
 
-      if(cell->get_fe().dofs_per_cell == 0)
+      if (cell->get_fe().dofs_per_cell == 0)
         continue;
 
       // attempt to reinit hp_fe_values object
@@ -99,10 +99,10 @@ test()
       const unsigned int   dofs_per_cell = cell->get_fe().dofs_per_cell;
       const FEValues<dim>& fe_values     = hp_fe_values.get_present_fe_values();
 
-      for(unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
-          ++q_point)
+      for (unsigned int q_point = 0; q_point < fe_values.n_quadrature_points;
+           ++q_point)
         {
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               deallog << fe_values.shape_value(i, q_point) << std::endl;
               deallog << fe_values.shape_grad(i, q_point) << std::endl;

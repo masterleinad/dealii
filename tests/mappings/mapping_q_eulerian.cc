@@ -133,10 +133,10 @@ MappingTest<dim>::compute_area()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values.reinit(cell);
-      for(unsigned int q = 0; q < n_q_points; ++q)
+      for (unsigned int q = 0; q < n_q_points; ++q)
         area += fe_values.JxW(q);
     }
 
@@ -153,8 +153,8 @@ MappingTest<dim>::run_test()
 
   ConvergenceTable table;
 
-  for(unsigned int ref_level = 0; ref_level < (degree < 4 ? 5 : 3);
-      ++ref_level, triangulation.refine_global(1))
+  for (unsigned int ref_level = 0; ref_level < (degree < 4 ? 5 : 3);
+       ++ref_level, triangulation.refine_global(1))
     {
       dof_handler.distribute_dofs(fe);
       displacements.reinit(dof_handler.n_dofs());
@@ -196,15 +196,15 @@ MappingTest<dim>::explicitly_move_mesh()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; cell++)
+  for (; cell != endc; cell++)
     {
-      for(unsigned int v = 0; v < vpc; v++)
+      for (unsigned int v = 0; v < vpc; v++)
         {
-          if(moved[cell->vertex_index(v)] == false)
+          if (moved[cell->vertex_index(v)] == false)
             {
               moved[cell->vertex_index(v)] = true;
               Point<dim> vertex_disp;
-              for(unsigned int d = 0; d < dim; d++)
+              for (unsigned int d = 0; d < dim; d++)
                 {
                   vertex_disp[d] = displacements(cell->vertex_dof_index(v, d));
                 }
@@ -244,7 +244,7 @@ main()
 
   // convergence studies
 
-  for(unsigned int degree = 1; degree <= 4; ++degree)
+  for (unsigned int degree = 1; degree <= 4; ++degree)
     {
       deallog << ".... Q" << degree << " Mapping ...." << std::endl;
       MappingTest<2> test_one(degree);

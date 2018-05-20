@@ -44,7 +44,7 @@ testit(parallel::distributed::Triangulation<dim>& tr)
 
   typename parallel::distributed::Triangulation<dim>::active_cell_iterator it
     = tr.begin_active();
-  for(; it != tr.end(); ++it)
+  for (; it != tr.end(); ++it)
     {
       deallog << it->center() << ", ";
     }

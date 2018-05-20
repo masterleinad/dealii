@@ -24,14 +24,14 @@ void
 test()
 {
   std::vector<bool> v1(12);
-  for(unsigned int i = 0; i < v1.size(); ++i)
+  for (unsigned int i = 0; i < v1.size(); ++i)
     v1[i] = (i % 3 == 0);
   std::vector<bool> v2(12);
-  for(unsigned int i = 0; i < v2.size(); ++i)
+  for (unsigned int i = 0; i < v2.size(); ++i)
     v2[i] = (i % 4 == 0);
 
   std::vector<bool> v(12);
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     v[i] = (v1[i] || v2[i]);
 
   BlockMask m1(v1);

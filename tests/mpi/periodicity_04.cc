@@ -42,11 +42,11 @@ set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
   typename Triangulation<dim>::face_iterator face_2;
 
   // Look for the two outermost faces:
-  for(unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<dim>::faces_per_cell; ++j)
     {
-      if(cell_1->face(j)->center()(dim - 1) > 2.9)
+      if (cell_1->face(j)->center()(dim - 1) > 2.9)
         face_1 = cell_1->face(j);
-      if(cell_2->face(j)->center()(dim - 1) < -2.9)
+      if (cell_2->face(j)->center()(dim - 1) < -2.9)
         face_2 = cell_2->face(j);
     }
   face_1->set_boundary_id(42);
@@ -56,7 +56,7 @@ set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
     typename parallel::distributed::Triangulation<dim>::cell_iterator>>
     periodicity_vector;
 
-  if(reverse)
+  if (reverse)
     GridTools::collect_periodic_faces(
       triangulation, 43, 42, dim - 1, periodicity_vector);
   else
@@ -95,7 +95,7 @@ void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
     {7, 6, 5, 4},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<2>::vertices_per_cell; ++j)
     {
       cells[0].vertices[j] = cell_vertices_0[j];
       cells[1].vertices[j] = cell_vertices_1[orientation][j];
@@ -146,7 +146,7 @@ void generate_grid(parallel::distributed::Triangulation<3>& triangulation,
     {15, 13, 14, 12, 11, 9, 10, 8},
   };
 
-  for(unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
+  for (unsigned int j = 0; j < GeometryInfo<3>::vertices_per_cell; ++j)
     {
       cells[0].vertices[j] = cell_vertices_0[j];
       cells[1].vertices[j] = cell_vertices_1[orientation][j];
@@ -202,10 +202,10 @@ check(const unsigned int orientation, bool reverse)
     MappingQGeneric<dim>(1), dof_handler, support_points);
   IndexSet constraints_lines = constraints.get_local_lines();
 
-  for(unsigned int i = 0; i < constraints_lines.n_elements(); ++i)
+  for (unsigned int i = 0; i < constraints_lines.n_elements(); ++i)
     {
       const unsigned int line = constraints_lines.nth_index_in_set(i);
-      if(constraints.is_constrained(line))
+      if (constraints.is_constrained(line))
         {
           const std::vector<std::pair<types::global_dof_index, double>>* entries
             = constraints.get_constraint_entries(line);
@@ -215,7 +215,7 @@ check(const unsigned int orientation, bool reverse)
           Tensor<1, dim>   difference = point1 - point2;
           difference[dim - 1]         = 0.;
           AssertThrow(difference.norm() < 1.e-9, ExcInternalError());
-          if(locally_owned_dofs.is_element(line))
+          if (locally_owned_dofs.is_element(line))
             ++n_local_constraints;
         }
     }
@@ -223,7 +223,7 @@ check(const unsigned int orientation, bool reverse)
     = Utilities::MPI::sum(n_local_constraints, MPI_COMM_WORLD);
   const unsigned int n_expected_constraints
     = Utilities::fixed_int_power<9, dim - 1>::value;
-  if(myid == 0)
+  if (myid == 0)
     deallog << "n_constraints: " << n_constraints
             << " n_expected_constraints: " << n_expected_constraints
             << std::endl;
@@ -232,8 +232,8 @@ check(const unsigned int orientation, bool reverse)
 
   //now refine and check if the neighboring faces are correctly found
   typename Triangulation<dim>::active_cell_iterator cell;
-  for(cell = triangulation.begin_active(); cell != triangulation.end(); ++cell)
-    if(cell->is_locally_owned() && cell->center()(dim - 1) > 0)
+  for (cell = triangulation.begin_active(); cell != triangulation.end(); ++cell)
+    if (cell->is_locally_owned() && cell->center()(dim - 1) > 0)
       cell->set_refine_flag();
 
   triangulation.execute_coarsening_and_refinement();
@@ -254,7 +254,7 @@ check(const unsigned int orientation, bool reverse)
                 MPI_SUM,
                 triangulation.get_communicator());
   Assert(sum_of_pairs_global > 0, ExcInternalError());
-  for(it = face_map.begin(); it != face_map.end(); ++it)
+  for (it = face_map.begin(); it != face_map.end(); ++it)
     {
       const typename Triangulation<dim>::cell_iterator cell_1 = it->first.first;
       const unsigned int face_no_1 = it->first.second;
@@ -271,17 +271,17 @@ check(const unsigned int orientation, bool reverse)
                       std::abs(face_center_2(dim - 1) + 3.))
                < 1.e-8,
              ExcInternalError());
-      if(cell_1->level() == cell_2->level())
-        for(unsigned int c = 0; c < dim - 1; ++c)
-          if(std::abs(face_center_1(c) - face_center_2(c)) > 1.e-8)
+      if (cell_1->level() == cell_2->level())
+        for (unsigned int c = 0; c < dim - 1; ++c)
+          if (std::abs(face_center_1(c) - face_center_2(c)) > 1.e-8)
             {
               std::cout << "face_center_1: " << face_center_1 << std::endl;
               std::cout << "face_center_2: " << face_center_2 << std::endl;
               typename std::map<CellFace, std::pair<CellFace, std::bitset<3>>>::
                 const_iterator it;
-              for(it = triangulation.get_periodic_face_map().begin();
-                  it != triangulation.get_periodic_face_map().end();
-                  ++it)
+              for (it = triangulation.get_periodic_face_map().begin();
+                   it != triangulation.get_periodic_face_map().end();
+                   ++it)
                 {
                   std::cout << "The cell with center "
                             << it->first.first->center() << " has on face "
@@ -308,7 +308,7 @@ main(int argc, char* argv[])
 
       {
         deallog << "Test for 2D" << std::endl << std::endl;
-        for(int i = 0; i < 2; ++i)
+        for (int i = 0; i < 2; ++i)
           {
             deallog << "Triangulation: " << i << std::endl;
             check<2>(i, false);
@@ -316,7 +316,7 @@ main(int argc, char* argv[])
           }
 
         deallog << "Test for 3D" << std::endl << std::endl;
-        for(int i = 0; i < 8; ++i)
+        for (int i = 0; i < 8; ++i)
           {
             // Generate a triangulation and match:
             deallog << "Triangulation: " << i << std::endl;
@@ -325,7 +325,7 @@ main(int argc, char* argv[])
           }
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -339,7 +339,7 @@ main(int argc, char* argv[])
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

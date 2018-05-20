@@ -88,7 +88,7 @@ main()
   triangulation.execute_coarsening_and_refinement();
   // Assign FE_Q_ to all cells
   cell = dof_handler.begin_active();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       cell->set_active_fe_index(0);
     }

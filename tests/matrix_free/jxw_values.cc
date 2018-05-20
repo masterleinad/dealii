@@ -38,14 +38,14 @@ test()
   tria.refine_global(4 - dim);
 
   // refine a few cells
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
         endc               = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -73,14 +73,14 @@ test()
   FEValues<dim>                          fe_values(fe, quad, update_JxW_values);
   FEEvaluation<dim, 1>                   fe_eval(mf_data);
   AlignedVector<VectorizedArray<double>> jxw_values_manual(fe_eval.n_q_points);
-  for(unsigned int cell = 0; cell < mf_data.n_macro_cells(); ++cell)
+  for (unsigned int cell = 0; cell < mf_data.n_macro_cells(); ++cell)
     {
       fe_eval.reinit(cell);
       fe_eval.fill_JxW_values(jxw_values_manual);
-      for(unsigned int v = 0; v < mf_data.n_components_filled(cell); ++v)
+      for (unsigned int v = 0; v < mf_data.n_components_filled(cell); ++v)
         {
           fe_values.reinit(mf_data.get_cell_iterator(cell, v));
-          for(unsigned int q = 0; q < quad.size(); ++q)
+          for (unsigned int q = 0; q < quad.size(); ++q)
             {
               abs += fe_values.JxW(q);
               error += std::abs(fe_values.JxW(q) - fe_eval.JxW(q)[v]);

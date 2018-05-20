@@ -105,7 +105,7 @@ namespace PETScWrappers
     void
     SparseMatrix::reinit(const SparseMatrix& other)
     {
-      if(&other == this)
+      if (&other == this)
         return;
 
       this->communicator = other.communicator;
@@ -127,7 +127,7 @@ namespace PETScWrappers
     void
     SparseMatrix::copy_from(const SparseMatrix& other)
     {
-      if(&other == this)
+      if (&other == this)
         return;
 
       this->communicator = other.communicator;
@@ -255,7 +255,7 @@ namespace PETScWrappers
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // set symmetric flag, if so requested
-      if(is_symmetric == true)
+      if (is_symmetric == true)
         {
           set_matrix_option(matrix, MAT_SYMMETRIC, PETSC_TRUE);
         }
@@ -281,7 +281,7 @@ namespace PETScWrappers
       // MatCreateMPIAIJ throws an
       // error. In this case use a
       // PETScWrappers::SparseMatrix
-      for(size_type i = 0; i < row_lengths.size(); ++i)
+      for (size_type i = 0; i < row_lengths.size(); ++i)
         Assert(row_lengths[i] <= local_columns,
                ExcIndexRange(row_lengths[i], 1, local_columns + 1));
 
@@ -316,7 +316,7 @@ namespace PETScWrappers
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // set symmetric flag, if so requested
-      if(is_symmetric == true)
+      if (is_symmetric == true)
         {
           set_matrix_option(matrix, MAT_SYMMETRIC, PETSC_TRUE);
         }
@@ -393,7 +393,7 @@ namespace PETScWrappers
       // read the documentation of this
       // class.
       //if (preset_nonzero_locations == true)
-      if(local_rows.n_elements() > 0)
+      if (local_rows.n_elements() > 0)
         {
           Assert(local_columns.n_elements() > 0, ExcInternalError());
           // MatMPIAIJSetPreallocationCSR
@@ -416,7 +416,7 @@ namespace PETScWrappers
             colnums_in_window;
           {
             unsigned int n_cols = 0;
-            for(PetscInt i = local_row_start; i < local_row_end; ++i)
+            for (PetscInt i = local_row_start; i < local_row_end; ++i)
               {
                 const PetscInt row_length = sparsity_pattern.row_length(i);
                 rowstart_in_window[i + 1 - local_row_start]
@@ -430,11 +430,11 @@ namespace PETScWrappers
           // from the sparsity pattern.
           {
             PetscInt* ptr = &colnums_in_window[0];
-            for(PetscInt i = local_row_start; i < local_row_end; ++i)
-              for(typename SparsityPatternType::iterator p
-                  = sparsity_pattern.begin(i);
-                  p != sparsity_pattern.end(i);
-                  ++p, ++ptr)
+            for (PetscInt i = local_row_start; i < local_row_end; ++i)
+              for (typename SparsityPatternType::iterator p
+                   = sparsity_pattern.begin(i);
+                   p != sparsity_pattern.end(i);
+                   ++p, ++ptr)
                 *ptr = p->column();
           }
 
@@ -485,7 +485,7 @@ namespace PETScWrappers
       // ours
       size_type local_row_start = 0;
       size_type local_col_start = 0;
-      for(unsigned int p = 0; p < this_process; ++p)
+      for (unsigned int p = 0; p < this_process; ++p)
         {
           local_row_start += local_rows_per_process[p];
           local_col_start += local_columns_per_process[p];
@@ -522,7 +522,7 @@ namespace PETScWrappers
       // for the usefulness of this option
       // read the documentation of this
       // class.
-      if(preset_nonzero_locations == true)
+      if (preset_nonzero_locations == true)
         {
           // MatMPIAIJSetPreallocationCSR
           // can be used to allocate the sparsity
@@ -541,7 +541,7 @@ namespace PETScWrappers
             colnums_in_window;
           {
             size_type n_cols = 0;
-            for(size_type i = local_row_start; i < local_row_end; ++i)
+            for (size_type i = local_row_start; i < local_row_end; ++i)
               {
                 const size_type row_length = sparsity_pattern.row_length(i);
                 rowstart_in_window[i + 1 - local_row_start]
@@ -555,11 +555,11 @@ namespace PETScWrappers
           // from the sparsity pattern.
           {
             PetscInt* ptr = &colnums_in_window[0];
-            for(size_type i = local_row_start; i < local_row_end; ++i)
-              for(typename SparsityPatternType::iterator p
-                  = sparsity_pattern.begin(i);
-                  p != sparsity_pattern.end(i);
-                  ++p, ++ptr)
+            for (size_type i = local_row_start; i < local_row_end; ++i)
+              for (typename SparsityPatternType::iterator p
+                   = sparsity_pattern.begin(i);
+                   p != sparsity_pattern.end(i);
+                   ++p, ++ptr)
                 *ptr = p->column();
           }
 

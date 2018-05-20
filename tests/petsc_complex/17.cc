@@ -25,7 +25,7 @@ test(PETScWrappers::MPI::Vector& v)
 {
   // set some elements of the vector
   double norm = 0;
-  for(unsigned int k = 0; k < v.size(); k += 1 + k)
+  for (unsigned int k = 0; k < v.size(); k += 1 + k)
     {
       const PetscScalar s(1. * k, 2. * k);
       v(k) = s;
@@ -57,7 +57,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -71,7 +71,7 @@ main(int argc, char** argv)
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

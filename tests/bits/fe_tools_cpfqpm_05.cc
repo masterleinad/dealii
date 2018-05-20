@@ -55,17 +55,17 @@
 void
 output_matrix(const FullMatrix<double>& m)
 {
-  if((m.m() == 0) || (m.n() == 0))
+  if ((m.m() == 0) || (m.n() == 0))
     {
       deallog << "(Empty matrix)" << std::endl;
       return;
     }
 
   deallog << m.l1_norm() << ' ' << m.linfty_norm() << std::endl;
-  if(m.m() == m.n())
+  if (m.m() == m.n())
     deallog << m.frobenius_norm() << std::endl;
 
-  for(unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
+  for (unsigned int i = 0; i < std::min(m.m(), m.n()); ++i)
     deallog << m(i, i) << ' ' << m(i, std::min(m.m(), m.n()) - i - 1) << ' ';
   deallog << std::endl;
 }
@@ -79,13 +79,13 @@ check_this(const FiniteElement<dim, spacedim>& fe,
   // support points. otherwise,
   // interpolation doesn't really
   // work
-  if(fe.n_components() != 1)
+  if (fe.n_components() != 1)
     return;
 
   // ignore this check if this fe has already
   // been treated
   static std::set<std::string> already_checked;
-  if(already_checked.find(fe.get_name()) != already_checked.end())
+  if (already_checked.find(fe.get_name()) != already_checked.end())
     return;
   already_checked.insert(fe.get_name());
 
@@ -99,7 +99,7 @@ check_this(const FiniteElement<dim, spacedim>& fe,
   // at least as many degrees of freedom in
   // the finite element as there are
   // quadrature points
-  if(fe.dofs_per_cell < q_rhs.size())
+  if (fe.dofs_per_cell < q_rhs.size())
     return;
 
   deallog << "dofs_per_cell=" << fe.dofs_per_cell
@@ -122,7 +122,7 @@ check_this(const FiniteElement<dim, spacedim>& fe,
   // the product should be the identity
   // matrix now. make sure that this is
   // indeed the case
-  for(unsigned int i = 0; i < product.m(); ++i)
+  for (unsigned int i = 0; i < product.m(); ++i)
     product(i, i) -= 1;
 
   output_matrix(product);
@@ -198,7 +198,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -211,7 +211,7 @@ main()
               << std::endl;
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

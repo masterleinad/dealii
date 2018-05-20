@@ -60,27 +60,27 @@ test()
       << "set terminal aqua " << dim + spacedim << std::endl
       << (spacedim == 3 ? "s" : "") << "plot '-' w l" << std::endl;
 
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         const double xc = cell->face(f)->center()[0] - 1.5;
         const double yc = cell->face(f)->center()[1] - 2.5;
         const double rc = xc * xc + yc * yc;
 
-        if(cell->face(f)->at_boundary() && rc > 0.1)
+        if (cell->face(f)->at_boundary() && rc > 0.1)
           {
             fe_v.reinit(cell, f);
             const std::vector<Point<spacedim>>& qps
               = fe_v.get_quadrature_points();
             const std::vector<Tensor<1, spacedim>>& nps
               = fe_v.get_normal_vectors();
-            for(unsigned int i = 0; i < qps.size(); ++i)
+            for (unsigned int i = 0; i < qps.size(); ++i)
               {
                 out << qps[i] << std::endl;
-                if(std::abs(qps[i].distance(center) - radius) > 1e-10)
+                if (std::abs(qps[i].distance(center) - radius) > 1e-10)
                   out << "# Error! This should be on the sphere, but it's not!"
                       << std::endl;
               }
@@ -94,27 +94,27 @@ test()
       << "set terminal aqua " << 2 * (dim + spacedim) + 1 << std::endl
       << (spacedim == 3 ? "s" : "") << "plot '-' with vectors" << std::endl;
 
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       {
         const double xc = cell->face(f)->center()[0] - 1.5;
         const double yc = cell->face(f)->center()[1] - 2.5;
         const double rc = xc * xc + yc * yc;
 
-        if(cell->face(f)->at_boundary() && rc > 0.1)
+        if (cell->face(f)->at_boundary() && rc > 0.1)
           {
             fe_v.reinit(cell, f);
             const std::vector<Point<spacedim>>& qps
               = fe_v.get_quadrature_points();
             const std::vector<Tensor<1, spacedim>>& nps
               = fe_v.get_normal_vectors();
-            for(unsigned int i = 0; i < qps.size(); ++i)
+            for (unsigned int i = 0; i < qps.size(); ++i)
               {
                 out << qps[i] << " " << nps[i] << std::endl;
-                if(std::abs((center + nps[i] - qps[i]).norm()) > 1e-10)
+                if (std::abs((center + nps[i] - qps[i]).norm()) > 1e-10)
                   out << "# Error! The normal vector should be radial! "
                       << std::endl
                       << "# Got " << center + nps[i] << " instead of " << qps[i]

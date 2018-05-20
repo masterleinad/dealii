@@ -36,7 +36,7 @@ check()
     {
       foo.parse_input_from_string(input.c_str());
     }
-  catch(...)
+  catch (...)
     {
       deallog << "Exception caught, but none should happen here!!!"
               << std::endl;

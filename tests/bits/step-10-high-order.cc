@@ -62,10 +62,10 @@ compute_pi_by_area()
   FEValues<dim> x_fe_values(mapping, dummy_fe, quadrature, update_JxW_values);
 
   // in 3D, we obtain many digits only on a finer mesh
-  if(dim == 3)
+  if (dim == 3)
     triangulation.refine_global(1);
-  for(int refinement = 0; refinement < 4 - dim;
-      ++refinement, triangulation.refine_global(1))
+  for (int refinement = 0; refinement < 4 - dim;
+       ++refinement, triangulation.refine_global(1))
     {
       dof_handler.distribute_dofs(dummy_fe);
 
@@ -74,11 +74,11 @@ compute_pi_by_area()
       typename DoFHandler<dim>::active_cell_iterator cell
         = dof_handler.begin_active(),
         endc = dof_handler.end();
-      for(; cell != endc; ++cell)
+      for (; cell != endc; ++cell)
         {
           x_fe_values.reinit(cell);
           const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
-          for(unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
+          for (unsigned int i = 0; i < fe_values.n_quadrature_points; ++i)
             area += fe_values.JxW(i);
         };
 
@@ -87,7 +87,7 @@ compute_pi_by_area()
       // not make sense as it is not necessarily stable between
       // systems. Rather, check that we have at least 14 digits of pi correct
       // on any level.
-      if(dim == 2)
+      if (dim == 2)
         {
           deallog << "Evaluation of pi on " << triangulation.n_active_cells()
                   << " cells: " << area << std::endl;
@@ -131,8 +131,8 @@ compute_pi_by_perimeter()
 
   FEFaceValues<dim> x_fe_face_values(
     mapping, fe, quadrature, update_JxW_values);
-  for(unsigned int refinement = 0; refinement < 2;
-      ++refinement, triangulation.refine_global(1))
+  for (unsigned int refinement = 0; refinement < 2;
+       ++refinement, triangulation.refine_global(1))
     {
       dof_handler.distribute_dofs(fe);
 
@@ -140,18 +140,18 @@ compute_pi_by_perimeter()
         = dof_handler.begin_active(),
         endc                = dof_handler.end();
       long double perimeter = 0;
-      for(; cell != endc; ++cell)
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<dim>::faces_per_cell;
-            ++face_no)
-          if(cell->face(face_no)->at_boundary())
+      for (; cell != endc; ++cell)
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
+          if (cell->face(face_no)->at_boundary())
             {
               x_fe_face_values.reinit(cell, face_no);
               const FEFaceValues<dim>& fe_face_values
                 = x_fe_face_values.get_present_fe_values();
 
-              for(unsigned int i = 0; i < fe_face_values.n_quadrature_points;
-                  ++i)
+              for (unsigned int i = 0; i < fe_face_values.n_quadrature_points;
+                   ++i)
                 perimeter += fe_face_values.JxW(i);
             };
       deallog << "Evaluation of pi on " << triangulation.n_active_cells()

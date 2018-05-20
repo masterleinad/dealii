@@ -45,7 +45,7 @@ main()
   // initializing
   std::string concatenated = "cos(pi*y)";
   // Now test each possibility
-  for(unsigned int i = 1; i <= expressions.size(); ++i)
+  for (unsigned int i = 1; i <= expressions.size(); ++i)
     {
       try
         {
@@ -57,7 +57,7 @@ main()
                     << variables << " as variables." << std::endl;
           }
         }
-      catch(...)
+      catch (...)
         {
           deallog << "Initialize Failed with dim = 2, " << i << " components, "
                   << expressions.size() << " expressions, " << variables
@@ -74,7 +74,7 @@ main()
                     << variables << " as variables." << std::endl;
           }
         }
-      catch(...)
+      catch (...)
         {
           deallog << "Initialize Failed with dim = 2, " << i << " components, "
                   << concatenated << " as function and " << variables

@@ -206,7 +206,7 @@ namespace Step21
   SaturationBoundaryValues<dim>::value(const Point<dim>& p,
                                        const unsigned int /*component*/) const
   {
-    if(p[0] == 0)
+    if (p[0] == 0)
       return 1;
     else
       return 0;
@@ -291,7 +291,7 @@ namespace Step21
       Assert(points.size() == values.size(),
              ExcDimensionMismatch(points.size(), values.size()));
 
-      for(unsigned int p = 0; p < points.size(); ++p)
+      for (unsigned int p = 0; p < points.size(); ++p)
         {
           values[p].clear();
 
@@ -303,7 +303,7 @@ namespace Step21
                                 / (0.1 * 0.1)),
                        0.01);
 
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             values[p][d][d] = 1. / permeability;
         }
     }
@@ -373,8 +373,8 @@ namespace Step21
         = (dim == 2 ? 40 : (dim == 3 ? 100 : throw ExcNotImplemented()));
 
       std::vector<Point<dim>> centers_list(N);
-      for(unsigned int i = 0; i < N; ++i)
-        for(unsigned int d = 0; d < dim; ++d)
+      for (unsigned int i = 0; i < N; ++i)
+        for (unsigned int d = 0; d < dim; ++d)
           centers_list[i][d] = static_cast<double>(rand()) / RAND_MAX;
 
       return centers_list;
@@ -388,19 +388,19 @@ namespace Step21
       Assert(points.size() == values.size(),
              ExcDimensionMismatch(points.size(), values.size()));
 
-      for(unsigned int p = 0; p < points.size(); ++p)
+      for (unsigned int p = 0; p < points.size(); ++p)
         {
           values[p].clear();
 
           double permeability = 0;
-          for(unsigned int i = 0; i < centers.size(); ++i)
+          for (unsigned int i = 0; i < centers.size(); ++i)
             permeability += std::exp(-(points[p] - centers[i]).norm_square()
                                      / (0.05 * 0.05));
 
           const double normalized_permeability
             = std::min(std::max(permeability, 0.01), 4.);
 
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             values[p][d][d] = 1. / normalized_permeability;
         }
     }
@@ -691,7 +691,7 @@ namespace Step21
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
@@ -721,8 +721,8 @@ namespace Step21
         // individual terms in the contributions should be self-explanatory
         // given the explicit form of the bilinear form stated in the
         // introduction:
-        for(unsigned int q = 0; q < n_q_points; ++q)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               const double old_s = old_solution_values[q](dim + 1);
 
@@ -731,7 +731,7 @@ namespace Step21
               const double phi_i_p     = fe_values[pressure].value(i, q);
               const double phi_i_s     = fe_values[saturation].value(i, q);
 
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
                   const Tensor<1, dim> phi_j_u
                     = fe_values[velocities].value(j, q);
@@ -754,18 +754,18 @@ namespace Step21
 
         // Next, we also have to deal with the pressure boundary values. This,
         // again is as in step-20:
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<dim>::faces_per_cell;
-            ++face_no)
-          if(cell->at_boundary(face_no))
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
+          if (cell->at_boundary(face_no))
             {
               fe_face_values.reinit(cell, face_no);
 
               pressure_boundary_values.value_list(
                 fe_face_values.get_quadrature_points(), boundary_values);
 
-              for(unsigned int q = 0; q < n_face_q_points; ++q)
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int q = 0; q < n_face_q_points; ++q)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   {
                     const Tensor<1, dim> phi_i_u
                       = fe_face_values[velocities].value(i, q);
@@ -779,12 +779,12 @@ namespace Step21
         // The final step in the loop over all cells is to transfer local
         // contributions into the global matrix and right hand side vector:
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           system_rhs(local_dof_indices[i]) += local_rhs(i);
       }
   }
@@ -843,7 +843,7 @@ namespace Step21
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         local_rhs = 0;
         fe_values.reinit(cell);
@@ -855,12 +855,12 @@ namespace Step21
         // introduction, $(S^n,\sigma)-(F(S^n) \mathbf{v}^{n+1},\nabla
         // \sigma)$, where $\sigma$ is the saturation component of the test
         // function:
-        for(unsigned int q = 0; q < n_q_points; ++q)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               const double   old_s = old_solution_values[q](dim + 1);
               Tensor<1, dim> present_u;
-              for(unsigned int d = 0; d < dim; ++d)
+              for (unsigned int d = 0; d < dim; ++d)
                 present_u[d] = present_solution_values[q](d);
 
               const double         phi_i_s = fe_values[saturation].value(i, q);
@@ -882,9 +882,9 @@ namespace Step21
         //
         // All this is a bit tricky, but has been explained in some detail
         // already in step-9. Take a look there how this is supposed to work!
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<dim>::faces_per_cell;
-            ++face_no)
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
           {
             fe_face_values.reinit(cell, face_no);
 
@@ -893,7 +893,7 @@ namespace Step21
             fe_face_values.get_function_values(solution,
                                                present_solution_values_face);
 
-            if(cell->at_boundary(face_no))
+            if (cell->at_boundary(face_no))
               saturation_boundary_values.value_list(
                 fe_face_values.get_quadrature_points(), neighbor_saturation);
             else
@@ -908,15 +908,15 @@ namespace Step21
                 fe_face_values_neighbor.get_function_values(
                   old_solution, old_solution_values_face_neighbor);
 
-                for(unsigned int q = 0; q < n_face_q_points; ++q)
+                for (unsigned int q = 0; q < n_face_q_points; ++q)
                   neighbor_saturation[q]
                     = old_solution_values_face_neighbor[q](dim + 1);
               }
 
-            for(unsigned int q = 0; q < n_face_q_points; ++q)
+            for (unsigned int q = 0; q < n_face_q_points; ++q)
               {
                 Tensor<1, dim> present_u_face;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   present_u_face[d] = present_solution_values_face[q](d);
 
                 const double normal_flux
@@ -924,7 +924,7 @@ namespace Step21
 
                 const bool is_outflow_q_point = (normal_flux >= 0);
 
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   local_rhs(i) -= time_step * normal_flux
                                   * fractional_flow(
                                       (is_outflow_q_point == true ?
@@ -937,7 +937,7 @@ namespace Step21
           }
 
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           system_rhs(local_dof_indices[i]) += local_rhs(i);
       }
   }
@@ -1042,11 +1042,11 @@ namespace Step21
   void
   TwoPhaseFlowProblem<dim>::output_results() const
   {
-    if(timestep_number % 5 != 0)
+    if (timestep_number % 5 != 0)
       return;
 
     std::vector<std::string> solution_names;
-    switch(dim)
+    switch (dim)
       {
         case 2:
           solution_names.emplace_back("u");
@@ -1100,10 +1100,10 @@ namespace Step21
   void
   TwoPhaseFlowProblem<dim>::project_back_saturation()
   {
-    for(unsigned int i = 0; i < solution.block(2).size(); ++i)
-      if(solution.block(2)(i) < 0)
+    for (unsigned int i = 0; i < solution.block(2).size(); ++i)
+      if (solution.block(2)(i) < 0)
         solution.block(2)(i) = 0;
-      else if(solution.block(2)(i) > 1)
+      else if (solution.block(2)(i) > 1)
         solution.block(2)(i) = 1;
   }
 
@@ -1127,15 +1127,15 @@ namespace Step21
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         fe_values.get_function_values(solution, solution_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
             Tensor<1, dim> velocity;
-            for(unsigned int i = 0; i < dim; ++i)
+            for (unsigned int i = 0; i < dim; ++i)
               velocity[i] = solution_values[q](i);
 
             max_velocity = std::max(max_velocity, velocity.norm());
@@ -1205,7 +1205,7 @@ namespace Step21
                   << std::endl
                   << std::endl;
       }
-    while(time <= 1.);
+    while (time <= 1.);
   }
 } // namespace Step21
 
@@ -1226,7 +1226,7 @@ main()
       TwoPhaseFlowProblem<2> two_phase_flow_problem(0);
       two_phase_flow_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1240,7 +1240,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

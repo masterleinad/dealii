@@ -66,13 +66,13 @@ public:
     FEEvaluation<dim, degree, degree + 1, dim, Number> phi(data);
     vector_t coeff = make_vectorized_array(global_coefficient);
 
-    for(unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
       {
         phi.reinit(cell);
         phi.read_dof_values(src);
         phi.evaluate(false, true, false);
 
-        for(unsigned int q = 0; q < phi.n_q_points; ++q)
+        for (unsigned int q = 0; q < phi.n_q_points; ++q)
           phi.submit_curl(coeff * phi.get_curl(q), q);
 
         phi.integrate(false, true);
@@ -101,22 +101,22 @@ test()
   GridGenerator::hyper_ball(tria);
   typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
                                                     endc = tria.end();
-  for(; cell != endc; ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (; cell != endc; ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
   tria.set_manifold(0, manifold);
   tria.refine_global(4 - dim);
 
   // refine a few cells
-  for(unsigned int i = 0; i < 10 - 3 * dim; ++i)
+  for (unsigned int i = 0; i < 10 - 3 * dim; ++i)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tria.begin_active(),
         endc               = tria.end();
       unsigned int counter = 0;
-      for(; cell != endc; ++cell, ++counter)
-        if(counter % (7 - i) == 0)
+      for (; cell != endc; ++cell, ++counter)
+        if (counter % (7 - i) == 0)
           cell->set_refine_flag();
       tria.execute_coarsening_and_refinement();
     }
@@ -146,8 +146,8 @@ test()
   const unsigned int dofs_per_block = dof_handler_sca.n_dofs();
   {
     BlockDynamicSparsityPattern csp(dim, dim);
-    for(unsigned int d = 0; d < dim; ++d)
-      for(unsigned int e = 0; e < dim; ++e)
+    for (unsigned int d = 0; d < dim; ++d)
+      for (unsigned int e = 0; e < dim; ++e)
         csp.block(d, e).reinit(dofs_per_block, dofs_per_block);
 
     csp.collect_sizes();
@@ -159,7 +159,7 @@ test()
   system_matrix.reinit(sparsity_pattern);
 
   solution.reinit(dim);
-  for(unsigned int i = 0; i < dim; ++i)
+  for (unsigned int i = 0; i < dim; ++i)
     solution.block(i).reinit(dofs_per_block);
   solution.collect_sizes();
 
@@ -190,17 +190,17 @@ test()
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 const Tensor<2, dim> phi_grad = fe_values[sc].gradient(k, q);
-                if(dim == 2)
+                if (dim == 2)
                   phi_curl[k][0] = phi_grad[1][0] - phi_grad[0][1];
                 else
                   {
@@ -210,9 +210,9 @@ test()
                   }
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for (unsigned int j = 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (phi_curl[i] * phi_curl[j] * global_coefficient)
@@ -220,8 +220,8 @@ test()
                   }
               }
           }
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             local_matrix(i, j) = local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
@@ -231,8 +231,8 @@ test()
   }
 
   // first system_rhs with random numbers
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < system_rhs.block(i).size(); ++j)
       {
         const double val       = -1. + 2. * random_value<double>();
         system_rhs.block(i)(j) = val;

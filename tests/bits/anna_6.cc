@@ -168,8 +168,8 @@ ImposeBC<dim>::test_extract_boundary_DoFs()
   DoFTools::extract_boundary_dofs(
     dof_handler, bc_component_select, ned_boundary_dofs, boundary_ids);
 
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-    if(ned_boundary_dofs[i] == true)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+    if (ned_boundary_dofs[i] == true)
       boundary_values[i] = 0.;
 }
 
@@ -198,7 +198,7 @@ ImposeBC<dim>::test_interpolate_BC()
   boundary_ids.insert(0);
   DoFTools::extract_boundary_dofs(
     dof_handler, bc_component_select, p_boundary_dofs, boundary_ids);
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     {
       // error: pressure boundary DoF
       // i has not been set to the
@@ -255,7 +255,7 @@ main()
       ImposeBC<2>().run();
       ImposeBC<3>().run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -269,7 +269,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

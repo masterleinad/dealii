@@ -27,7 +27,7 @@ namespace NonMatching
   {
     AssertDimension(weights.size(), points.size());
     AssertDimension(normals.size(), points.size());
-    for(auto normal : normals)
+    for (auto normal : normals)
       {
         (void) normal;
         Assert(std::abs(normal.norm() - 1.0) < 1e-9,

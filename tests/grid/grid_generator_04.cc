@@ -48,9 +48,9 @@ test(std::ostream& out)
   Nzs.push_back(3);
   Nzs.push_back(4);
 
-  for(unsigned int i = 0; i < radii.size(); ++i)
-    for(unsigned int k = 0; k < (dim == 2 ? 1 : Ls.size()); ++k)
-      for(unsigned int l = 0; l < (dim == 2 ? 1 : Ls.size()); ++l)
+  for (unsigned int i = 0; i < radii.size(); ++i)
+    for (unsigned int k = 0; k < (dim == 2 ? 1 : Ls.size()); ++k)
+      for (unsigned int l = 0; l < (dim == 2 ? 1 : Ls.size()); ++l)
         {
           out << "               ====================" << std::endl
               << "Inner radius = " << radii[i] << std::endl
@@ -65,11 +65,11 @@ test(std::ostream& out)
               GridGenerator::hyper_cube_with_cylindrical_hole(
                 tr, radii[i], radiiext[i], Ls[k], Nzs[l], false);
             }
-          catch(...)
+          catch (...)
             {
               out << "Generation failed." << std::endl;
             }
-          if(tr.n_cells() > 0)
+          if (tr.n_cells() > 0)
             go.write_ucd(tr, out);
 
           tr.clear();
@@ -80,11 +80,11 @@ test(std::ostream& out)
               GridGenerator::hyper_cube_with_cylindrical_hole(
                 tr, radii[i], radiiext[i], Ls[k], Nzs[l], true);
             }
-          catch(...)
+          catch (...)
             {
               out << "Generation failed." << std::endl;
             }
-          if(tr.n_cells() > 0)
+          if (tr.n_cells() > 0)
             go.write_ucd(tr, out);
           tr.clear();
 

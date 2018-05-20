@@ -104,23 +104,23 @@ test_view(const Vector<double>&             solution,
                                                 qp_third_deriv_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for (unsigned int q = 0; q < n_q_points; ++q)
     {
-      if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
+      if (value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
 
-      if(gradient_type(qp_grads_local[q]) != gradient_type(qp_grads_global[q]))
+      if (gradient_type(qp_grads_local[q]) != gradient_type(qp_grads_global[q]))
         deallog << "NOT OK: Grad @ " << q << std::endl;
 
-      if(hessian_type(qp_hess_local[q]) != hessian_type(qp_hess_global[q]))
+      if (hessian_type(qp_hess_local[q]) != hessian_type(qp_hess_global[q]))
         deallog << "NOT OK: Hess @ " << q << std::endl;
 
-      if(laplacian_type(qp_laplace_local[q])
-         != laplacian_type(qp_laplace_global[q]))
+      if (laplacian_type(qp_laplace_local[q])
+          != laplacian_type(qp_laplace_global[q]))
         deallog << "NOT OK: Laplace @ " << q << std::endl;
 
-      if(third_derivative_type(qp_third_deriv_local[q])
-         != third_derivative_type(qp_third_deriv_global[q]))
+      if (third_derivative_type(qp_third_deriv_local[q])
+          != third_derivative_type(qp_third_deriv_global[q]))
         deallog << "NOT OK: 3rd der @ " << q << std::endl;
     }
 }
@@ -219,37 +219,37 @@ test_view(const Vector<double>&             solution,
                                                 qp_third_deriv_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for (unsigned int q = 0; q < n_q_points; ++q)
     {
-      if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
+      if (value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
 
-      if(gradient_type(qp_grads_local[q]) != gradient_type(qp_grads_global[q]))
+      if (gradient_type(qp_grads_local[q]) != gradient_type(qp_grads_global[q]))
         deallog << "NOT OK: Grad @ " << q << std::endl;
 
-      if(gradient_type(qp_symm_grads_local[q])
-         != gradient_type(qp_symm_grads_global[q]))
+      if (gradient_type(qp_symm_grads_local[q])
+          != gradient_type(qp_symm_grads_global[q]))
         deallog << "NOT OK: Symm grad @ " << q << std::endl;
 
-      if(divergence_type(qp_divs_local[q])
-         != divergence_type(qp_divs_global[q]))
+      if (divergence_type(qp_divs_local[q])
+          != divergence_type(qp_divs_global[q]))
         deallog << "NOT OK: Div @ " << q << std::endl;
 
       // Note: FE_Q's are curl free: Should always be zero'd
       // So we are just checking that we don't hit an internal assert
       // when doing the above calls, rather than testing the values
-      if(curl_type(qp_curls_local[q]) != curl_type(qp_curls_global[q]))
+      if (curl_type(qp_curls_local[q]) != curl_type(qp_curls_global[q]))
         deallog << "NOT OK: Curl @ " << q << std::endl;
 
-      if(hessian_type(qp_hess_local[q]) != hessian_type(qp_hess_global[q]))
+      if (hessian_type(qp_hess_local[q]) != hessian_type(qp_hess_global[q]))
         deallog << "NOT OK: Hess @ " << q << std::endl;
 
-      if(laplacian_type(qp_laplace_local[q])
-         != laplacian_type(qp_laplace_global[q]))
+      if (laplacian_type(qp_laplace_local[q])
+          != laplacian_type(qp_laplace_global[q]))
         deallog << "NOT OK: Laplace @ " << q << std::endl;
 
-      if(third_derivative_type(qp_third_deriv_local[q])
-         != third_derivative_type(qp_third_deriv_global[q]))
+      if (third_derivative_type(qp_third_deriv_local[q])
+          != third_derivative_type(qp_third_deriv_global[q]))
         deallog << "NOT OK: 3rd der @ " << q << std::endl;
     }
 }
@@ -289,13 +289,13 @@ test_view(const Vector<double>&                         solution,
   fe_values_view.get_function_divergences(solution, qp_divs_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for (unsigned int q = 0; q < n_q_points; ++q)
     {
-      if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
+      if (value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
 
-      if(divergence_type(qp_divs_local[q])
-         != divergence_type(qp_divs_global[q]))
+      if (divergence_type(qp_divs_local[q])
+          != divergence_type(qp_divs_global[q]))
         deallog << "NOT OK: Div @ " << q << std::endl;
     }
 }
@@ -344,16 +344,16 @@ test_view(const Vector<double>&                solution,
   fe_values_view.get_function_gradients(solution, qp_grads_global);
 
   // Output
-  for(unsigned int q = 0; q < n_q_points; ++q)
+  for (unsigned int q = 0; q < n_q_points; ++q)
     {
-      if(value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
+      if (value_type(qp_values_local[q]) != value_type(qp_values_global[q]))
         deallog << "NOT OK: Value @ " << q << std::endl;
 
-      if(divergence_type(qp_divs_local[q])
-         != divergence_type(qp_divs_global[q]))
+      if (divergence_type(qp_divs_local[q])
+          != divergence_type(qp_divs_global[q]))
         deallog << "NOT OK: Div @ " << q << std::endl;
 
-      if(gradient_type(qp_grads_local[q]) != gradient_type(qp_grads_global[q]))
+      if (gradient_type(qp_grads_local[q]) != gradient_type(qp_grads_global[q]))
         deallog << "NOT OK: Grad @ " << q << std::endl;
     }
 }
@@ -375,7 +375,7 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
   solution.reinit(dof_handler.n_dofs());
 
   // Populate with non-trivial values
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     {
       solution(i) = i + 1;
     }
@@ -399,7 +399,7 @@ test_extractor(const FEType& fe, const ExtractorType& extractor)
     // Convert the DoF values so that they are potentially of
     // a different number type
     std::vector<NumberType> local_dof_values_other(fe.dofs_per_cell);
-    for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
       local_dof_values_other[i] = local_dof_values[i];
 
     test_view(solution,

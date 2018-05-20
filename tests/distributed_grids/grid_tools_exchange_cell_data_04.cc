@@ -52,7 +52,7 @@ test()
       tria,
       [&](const cell_iterator& cell) -> boost::optional<DT> {
         ++counter;
-        if(counter % 2 == 0)
+        if (counter % 2 == 0)
           {
             DT value = counter;
 
@@ -74,7 +74,7 @@ test()
       });
 
   // sort the output because it will come in in random order
-  for(auto& it : output)
+  for (auto& it : output)
     deallog << it << std::endl;
 }
 

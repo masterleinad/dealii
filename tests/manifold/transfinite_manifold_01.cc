@@ -27,24 +27,24 @@ template <int dim, int spacedim>
 void
 do_test(const Triangulation<dim, spacedim>& tria)
 {
-  for(typename Triangulation<dim, spacedim>::cell_iterator cell = tria.begin();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::cell_iterator cell = tria.begin();
+       cell != tria.end();
+       ++cell)
     {
       deallog << "Lines on cell with center: " << cell->center() << std::endl;
-      for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
-          ++line)
+      for (unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+           ++line)
         deallog << cell->line(line)->center(/*respect_manifold=*/true)
                 << std::endl;
       deallog << "Faces on cell with center: " << cell->center() << std::endl;
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
         deallog << cell->face(face)->center(/*respect_manifold=*/true)
                 << std::endl;
       deallog << "Center with manifold: " << cell->center(true) << std::endl;
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        if(cell->at_boundary(face))
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        if (cell->at_boundary(face))
           {
             std::vector<Point<spacedim>> points;
             points.push_back(cell->face(face)->vertex(0));
@@ -132,23 +132,23 @@ test_cylinder(unsigned int ref = 1)
   GridGenerator::cylinder(tria);
   tria.set_all_manifold_ids(1);
 
-  for(typename Triangulation<dim, spacedim>::active_cell_iterator cell
-      = tria.begin_active();
-      cell != tria.end();
-      ++cell)
+  for (typename Triangulation<dim, spacedim>::active_cell_iterator cell
+       = tria.begin_active();
+       cell != tria.end();
+       ++cell)
     {
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        if(cell->at_boundary(face))
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        if (cell->at_boundary(face))
           {
             bool cell_at_surfaces = true;
-            for(unsigned int i = 1; i < GeometryInfo<dim>::vertices_per_face;
-                ++i)
-              if(std::abs(cell->face(face)->vertex(i)[0]
-                          - cell->face(face)->vertex(0)[0])
-                 > 1e-10)
+            for (unsigned int i = 1; i < GeometryInfo<dim>::vertices_per_face;
+                 ++i)
+              if (std::abs(cell->face(face)->vertex(i)[0]
+                           - cell->face(face)->vertex(0)[0])
+                  > 1e-10)
                 cell_at_surfaces = false;
-            if(cell_at_surfaces == false)
+            if (cell_at_surfaces == false)
               cell->face(face)->set_all_manifold_ids(0);
           }
     }

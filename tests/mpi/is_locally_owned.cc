@@ -32,7 +32,7 @@ test()
   unsigned int myid     = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numprocs = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "hyper_cube" << std::endl;
 
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
@@ -41,25 +41,25 @@ test()
 
   typename Triangulation<dim, dim>::active_cell_iterator cell;
 
-  for(cell = tr.begin_active(); cell != tr.end(); ++cell)
+  for (cell = tr.begin_active(); cell != tr.end(); ++cell)
     {
-      if(cell->is_locally_owned())
+      if (cell->is_locally_owned())
         {
-          if(myid == 0)
+          if (myid == 0)
             deallog << cell << ": locally owned" << std::endl;
           Assert(!cell->is_ghost() && !cell->is_artificial(),
                  ExcInternalError());
         }
-      else if(cell->is_ghost())
+      else if (cell->is_ghost())
         {
-          if(myid == 0)
+          if (myid == 0)
             deallog << cell << ": ghost" << std::endl;
           Assert(!cell->is_locally_owned() && !cell->is_artificial(),
                  ExcInternalError());
         }
-      else if(cell->is_artificial())
+      else if (cell->is_artificial())
         {
-          if(myid == 0)
+          if (myid == 0)
             deallog << cell << ": artificial" << std::endl;
           Assert(!cell->is_locally_owned() && !cell->is_ghost(),
                  ExcInternalError());
@@ -78,7 +78,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

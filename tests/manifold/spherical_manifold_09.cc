@@ -38,11 +38,11 @@ main()
   tria.set_all_manifold_ids(0);
   tria.set_manifold(0, spherical);
 
-  for(auto cell : tria.active_cell_iterators())
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (auto cell : tria.active_cell_iterators())
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         {
-          if(std::abs(cell->face(f)->vertex(1).norm() - 1.) < 1e-1)
+          if (std::abs(cell->face(f)->vertex(1).norm() - 1.) < 1e-1)
             {
               // at outer boundary, the normal should point outwards and be
               // aligned with the point down to roundoff. Check this for the
@@ -59,7 +59,7 @@ main()
                                   cell->face(f), cell->face(f)->center(true)))
                       << std::endl;
             }
-          else if(std::abs(cell->face(f)->vertex(1).norm() - 0.5) < 1e-1)
+          else if (std::abs(cell->face(f)->vertex(1).norm() - 0.5) < 1e-1)
             {
               // at inner boundary, the normal should point inwards and be
               // aligned with the point down to roundoff. Check this for the
@@ -77,9 +77,9 @@ main()
                       << std::endl;
             }
         }
-  for(auto cell : tria.active_cell_iterators())
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->at_boundary(f))
+  for (auto cell : tria.active_cell_iterators())
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->at_boundary(f))
         {
           // the first choice will contain perturbations in the normal because
           // the center without respecting the manifold is not on the face to

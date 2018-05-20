@@ -117,15 +117,15 @@ test()
     FullMatrix<double> cell_matrix(fe.dofs_per_cell, fe.dofs_per_cell);
     ConstraintMatrix   constraints;
 
-    for(auto cell : dh.active_cell_iterators())
-      if(cell->is_locally_owned())
+    for (auto cell : dh.active_cell_iterators())
+      if (cell->is_locally_owned())
         {
           cell_matrix = 0;
           fev.reinit(cell);
           cell->get_dof_indices(dofs);
-          for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-            for(unsigned int j = 0; j < fe.dofs_per_cell; ++j)
-              for(unsigned int q = 0; q < quad.size(); ++q)
+          for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+            for (unsigned int j = 0; j < fe.dofs_per_cell; ++j)
+              for (unsigned int q = 0; q < quad.size(); ++q)
                 cell_matrix(i, j)
                   += fev.shape_value(i, q) * fev.shape_value(j, q) * fev.JxW(q);
           constraints.distribute_local_to_global(

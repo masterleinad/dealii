@@ -249,11 +249,11 @@ namespace Step20
     Assert(points.size() == values.size(),
            ExcDimensionMismatch(points.size(), values.size()));
 
-    for(unsigned int p = 0; p < points.size(); ++p)
+    for (unsigned int p = 0; p < points.size(); ++p)
       {
         values[p].clear();
 
-        for(unsigned int d = 0; d < dim; ++d)
+        for (unsigned int d = 0; d < dim; ++d)
           values[p][d][d] = 1.;
       }
   }
@@ -472,7 +472,7 @@ namespace Step20
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
@@ -483,14 +483,14 @@ namespace Step20
         k_inverse.value_list(fe_values.get_quadrature_points(),
                              k_inverse_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
-          for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int q = 0; q < n_q_points; ++q)
+          for (unsigned int i = 0; i < dofs_per_cell; ++i)
             {
               const Tensor<1, dim> phi_i_u = fe_values[velocities].value(i, q);
               const double div_phi_i_u = fe_values[velocities].divergence(i, q);
               const double phi_i_p     = fe_values[pressure].value(i, q);
 
-              for(unsigned int j = 0; j < dofs_per_cell; ++j)
+              for (unsigned int j = 0; j < dofs_per_cell; ++j)
                 {
                   const Tensor<1, dim> phi_j_u
                     = fe_values[velocities].value(j, q);
@@ -507,17 +507,18 @@ namespace Step20
               local_rhs(i) += -phi_i_p * rhs_values[q] * fe_values.JxW(q);
             }
 
-        for(unsigned int face_n = 0; face_n < GeometryInfo<dim>::faces_per_cell;
-            ++face_n)
-          if(cell->at_boundary(face_n))
+        for (unsigned int face_n = 0;
+             face_n < GeometryInfo<dim>::faces_per_cell;
+             ++face_n)
+          if (cell->at_boundary(face_n))
             {
               fe_face_values.reinit(cell, face_n);
 
               pressure_boundary_values.value_list(
                 fe_face_values.get_quadrature_points(), boundary_values);
 
-              for(unsigned int q = 0; q < n_face_q_points; ++q)
-                for(unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int q = 0; q < n_face_q_points; ++q)
+                for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   local_rhs(i)
                     += -(fe_face_values[velocities].value(i, q)
                          * fe_face_values.normal_vector(q) * boundary_values[q]
@@ -532,11 +533,11 @@ namespace Step20
         // objects have the same interface as matrices and vectors, but they
         // additionally allow to access individual blocks.
         cell->get_dof_indices(local_dof_indices);
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
             system_matrix.add(
               local_dof_indices[i], local_dof_indices[j], local_matrix(i, j));
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
           system_rhs(local_dof_indices[i]) += local_rhs(i);
       }
   }
@@ -898,7 +899,7 @@ main()
       MixedLaplaceProblem<2> mixed_laplace_problem(0);
       mixed_laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -912,7 +913,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

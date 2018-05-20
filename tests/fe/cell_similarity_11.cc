@@ -51,36 +51,36 @@ test(const Triangulation<dim>& tr)
   dof.distribute_dofs(fe);
 
   std::vector<Point<dim>> points(2);
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     points[0][d] = 0.1;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     points[1][d] = 0.85;
 
   const Quadrature<dim> quadrature(points);
   FEValues<dim>         fe_values(
     mapping, fe, quadrature, update_gradients | update_jacobians);
 
-  for(typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
-      cell != dof.end();
-      ++cell)
+  for (typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
+       cell != dof.end();
+       ++cell)
     {
       fe_values.reinit(cell);
 
       deallog << "Jacobians: ";
-      for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+      for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
         {
           deallog << "[ ";
-          for(unsigned int d = 0; d < dim; ++d)
-            for(unsigned int e = 0; e < dim; ++e)
+          for (unsigned int d = 0; d < dim; ++d)
+            for (unsigned int e = 0; e < dim; ++e)
               deallog << fe_values.jacobian(q)[d][e] << " ";
           deallog << " ] ";
         }
       deallog << std::endl;
       deallog << "Derivatives of shape function: ";
-      for(unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
+      for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)
         {
           deallog << "[ ";
-          for(unsigned int d = 0; d < dim; ++d)
+          for (unsigned int d = 0; d < dim; ++d)
             deallog << fe_values.shape_grad(fe.dofs_per_cell / 2, q)[d] << " ";
           deallog << " ] ";
         }
@@ -99,12 +99,12 @@ test()
   Triangulation<dim> tr;
   GridGenerator::subdivided_hyper_cube(tr, 3, -1, 1);
 
-  for(Triangulation<dim>::cell_iterator cell = tr.begin(); cell != tr.end();
-      ++cell)
-    for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if(cell->face(f)->at_boundary()
-         && std::abs(cell->face(f)->center()[0] + 1.) < 1e-12
-         && std::abs(cell->face(f)->center()[1]) < 1e-12)
+  for (Triangulation<dim>::cell_iterator cell = tr.begin(); cell != tr.end();
+       ++cell)
+    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
+      if (cell->face(f)->at_boundary()
+          && std::abs(cell->face(f)->center()[0] + 1.) < 1e-12
+          && std::abs(cell->face(f)->center()[1]) < 1e-12)
         cell->face(f)->set_manifold_id(1);
 
   static const SphericalManifold<dim> boundary;

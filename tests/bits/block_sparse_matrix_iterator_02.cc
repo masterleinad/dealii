@@ -59,8 +59,8 @@ test()
   block_sizes[1] = dof_handler.n_dofs() - block_sizes[0];
 
   BlockSparsityPattern sparsity(2, 2);
-  for(unsigned int i = 0; i < 2; ++i)
-    for(unsigned int j = 0; j < 2; ++j)
+  for (unsigned int i = 0; i < 2; ++i)
+    for (unsigned int j = 0; j < 2; ++j)
       sparsity.block(i, j).reinit(block_sizes[i],
                                   block_sizes[j],
                                   dof_handler.max_couplings_between_dofs());
@@ -90,7 +90,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -104,7 +104,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

@@ -94,7 +94,7 @@ test()
   double norm
     = VectorTools::compute_global_error(tr, error, VectorTools::L2_norm);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << dofh.n_locally_owned_dofs() << ' ' << dofh.n_dofs() << std::endl
             << "Error of interpolated component: " << norm << std::endl;
 
@@ -112,7 +112,7 @@ test()
 
   norm = VectorTools::compute_global_error(tr, error, VectorTools::L2_norm);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "Error of not interpolated component: " << norm << std::endl;
 }
 
@@ -132,7 +132,7 @@ main(int argc, char* argv[])
 
   deallog.push(Utilities::int_to_string(myid));
 
-  if(myid == 0)
+  if (myid == 0)
     {
       initlog();
 

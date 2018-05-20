@@ -77,7 +77,7 @@ test()
 
   // start N threads with mutices locked
   Threads::ThreadGroup<> tg;
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     {
       m[i].acquire();
       tg += Threads::new_thread(execute, m[i]);
@@ -89,7 +89,7 @@ test()
   // then reset the thread local object and release the mutices so the
   // threads can actually run to an end
   tls_data.clear();
-  for(unsigned int i = 0; i < N; ++i)
+  for (unsigned int i = 0; i < N; ++i)
     m[i].release();
 
   // now make sure the threads all finish

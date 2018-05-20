@@ -53,11 +53,11 @@ test_boundary(const FiniteElement<dim>& fe, bool diff = false)
 
   typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active();
   cell->get_dof_indices(indices);
-  for(unsigned i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+  for (unsigned i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
     {
       fev.reinit(cell, i);
       nitsche_tangential_matrix(M, fev, 10.);
-      if(diff)
+      if (diff)
         nitsche_matrix(M, fev, 10., -1.);
       constraints.distribute_local_to_global(M, indices, indices, Mglobal);
     }
@@ -106,7 +106,7 @@ test_face(const FiniteElement<dim>& fe, bool diff = false)
   fev2.reinit(cell2, 0);
   ip_tangential_matrix(M11, M12, M21, M22, fev1, fev2, 10);
 
-  if(diff)
+  if (diff)
     ip_matrix(M11, M12, M21, M22, fev1, fev2, 10, -1.);
 
   constraints.distribute_local_to_global(M11, indices1, indices1, Mglobal);

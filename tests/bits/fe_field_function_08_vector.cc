@@ -45,7 +45,7 @@ public:
   vector_value(const Point<dim>& p, Vector<double>& v) const
   {
     v = 0;
-    for(unsigned int i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       v[0] += p[i] * p[i] * p[i] * p[i];
   }
 

@@ -33,7 +33,7 @@ checkVmult_add(FullMatrix<number>& A,
   deallog << "Result vector set to all ones and to be added with result"
           << std::endl;
   Vector<number> O(V.size());
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     O(i) = 1;
 
   P.vmult_add(O, V);
@@ -44,7 +44,7 @@ checkVmult_add(FullMatrix<number>& A,
 
   // Verifying results with Method 2: O=O+A*V
   Vector<number> O_(V.size());
-  for(unsigned int i = 0; i < O_.size(); ++i)
+  for (unsigned int i = 0; i < O_.size(); ++i)
     O_(i) = 1;
 
   A.vmult_add(O_, V);
@@ -52,7 +52,7 @@ checkVmult_add(FullMatrix<number>& A,
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }

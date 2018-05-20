@@ -48,28 +48,28 @@ test()
   tr.refine_global(2);
 
   hp::FECollection<dim> fe;
-  for(unsigned int i = 1; i < 5; ++i)
+  for (unsigned int i = 1; i < 5; ++i)
     fe.push_back(FE_Q<dim>(i));
 
   hp::DoFHandler<dim> dof_handler(tr);
-  for(typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
-      cell != dof_handler.end();
-      ++cell)
-    if(cell->has_children() == false)
+  for (typename hp::DoFHandler<dim>::cell_iterator cell = dof_handler.begin();
+       cell != dof_handler.end();
+       ++cell)
+    if (cell->has_children() == false)
       cell->set_active_fe_index(cell->index() % fe.size());
 
   dof_handler.distribute_dofs(fe);
 
   // create a mostly arbitrary FE field
   Vector<double> solution(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < solution.size(); ++i)
+  for (unsigned int i = 0; i < solution.size(); ++i)
     solution(i) = i;
 
   // do the test
-  for(typename hp::DoFHandler<dim>::active_cell_iterator cell
-      = dof_handler.begin_active();
-      cell != dof_handler.end();
-      ++cell)
+  for (typename hp::DoFHandler<dim>::active_cell_iterator cell
+       = dof_handler.begin_active();
+       cell != dof_handler.end();
+       ++cell)
     {
       // get values without specifying an explicit fe_index
       Vector<double> local1(cell->get_fe().dofs_per_cell);
@@ -89,7 +89,7 @@ test()
 
       // also for the second test. note that vertex dofs always come first in
       // local1, so we can easily compare
-      for(unsigned int i = 0; i < fe[0].dofs_per_cell; ++i)
+      for (unsigned int i = 0; i < fe[0].dofs_per_cell; ++i)
         AssertThrow(std::abs(local1[i] - local3[i])
                       < 1e-15 * dof_handler.n_dofs(),
                     ExcInternalError("Got difference "

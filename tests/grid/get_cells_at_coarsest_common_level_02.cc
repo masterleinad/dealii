@@ -35,10 +35,10 @@ test()
 
   // now extract patches and print every fifth of them
   unsigned int index = 0;
-  for(typename Triangulation<dim>::active_cell_iterator cell
-      = triangulation.begin_active();
-      cell != triangulation.end();
-      ++cell, ++index)
+  for (typename Triangulation<dim>::active_cell_iterator cell
+       = triangulation.begin_active();
+       cell != triangulation.end();
+       ++cell, ++index)
     {
       std::vector<typename Triangulation<dim>::active_cell_iterator> patch_cells
         = GridTools::get_patch_around_cell<Triangulation<dim>>(cell);
@@ -55,11 +55,11 @@ test()
       std::sort(patch_cells.begin(), patch_cells.end());
       std::sort(coarse_cells.begin(), coarse_cells.end());
 
-      for(unsigned int i = 0; i < patch_cells.size(); ++i)
+      for (unsigned int i = 0; i < patch_cells.size(); ++i)
         Assert(patch_cells[i] == coarse_cells[i], ExcInternalError());
 
       deallog << "coarse_ cells " << cell << ": ";
-      for(unsigned int i = 0; i < coarse_cells.size(); ++i)
+      for (unsigned int i = 0; i < coarse_cells.size(); ++i)
         deallog << coarse_cells[i] << ' ';
       deallog << std::endl;
     }

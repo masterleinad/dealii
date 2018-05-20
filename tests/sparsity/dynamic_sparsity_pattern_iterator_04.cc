@@ -45,18 +45,18 @@ void
 iterate(DynamicSparsityPattern& sp)
 {
   DynamicSparsityPattern::const_iterator i = sp.begin();
-  for(; i != sp.end(); ++i)
+  for (; i != sp.end(); ++i)
     deallog << i->row() << ' ' << i->column() << std::endl;
 
   deallog << "OK" << std::endl;
 
   {
-    for(unsigned int row = 0; row < sp.n_rows(); ++row)
+    for (unsigned int row = 0; row < sp.n_rows(); ++row)
       {
         DynamicSparsityPattern::iterator col     = sp.begin(row),
                                          end_col = sp.end(row);
         deallog << "row " << row << ":" << std::endl;
-        for(; col != end_col; ++col)
+        for (; col != end_col; ++col)
           {
             deallog << "row= " << col->row() << ", col= " << col->column()
                     << ", index= " << col->index() << std::endl;
@@ -100,7 +100,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -114,7 +114,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

@@ -42,7 +42,7 @@ main(int argc, char** argv)
 
       throw Timer07Exception();
     }
-  catch(const Timer07Exception& exc)
+  catch (const Timer07Exception& exc)
     {}
 
   // The Scope should still exit correctly
@@ -57,7 +57,7 @@ main(int argc, char** argv)
 
       throw Timer07Exception();
     }
-  catch(const Timer07Exception& exc)
+  catch (const Timer07Exception& exc)
     {}
 
   // Test that no errors are printed for MPI_COMM_SELF since no communication occurs
@@ -70,7 +70,7 @@ main(int argc, char** argv)
 
       throw Timer07Exception();
     }
-  catch(const Timer07Exception& exc)
+  catch (const Timer07Exception& exc)
     {}
 
   // convert numbers to xs to avoid printing time data
@@ -78,7 +78,7 @@ main(int argc, char** argv)
   std::string output   = captured_cerr.str();
   std::string::iterator next_number
     = std::find_if(output.begin(), output.end(), is_digit);
-  while(next_number != output.end())
+  while (next_number != output.end())
     {
       // convert everything between the |s to xs so that we have consistent output.
       const std::string::iterator start_pipe

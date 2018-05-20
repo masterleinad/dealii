@@ -107,7 +107,7 @@ void
 check()
 {
   Triangulation<dim> tr;
-  if(dim == 2)
+  if (dim == 2)
     GridGenerator::hyper_ball(tr, Point<dim>(), 1);
   else
     GridGenerator::hyper_cube(tr, -1, 1);
@@ -115,7 +115,7 @@ check()
   tr.refine_global(1);
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
-  if(dim == 1)
+  if (dim == 1)
     tr.refine_global(2);
 
   // create a system element composed
@@ -152,10 +152,10 @@ check()
   typename FunctionMap<dim>::type function_map;
   function_map[0] = &coefficient;
 
-  for(unsigned int test = 0; test < 2; ++test)
+  for (unsigned int test = 0; test < 2; ++test)
     {
       matrix.reinit(sparsity);
-      switch(test)
+      switch (test)
         {
           case 0:
             MatrixTools::create_mass_matrix(
@@ -176,13 +176,13 @@ check()
       // range of 1 or below,
       // multiply matrix by 100 to
       // make test more sensitive
-      for(SparseMatrix<double>::const_iterator p = matrix.begin();
-          p != matrix.end();
-          ++p)
+      for (SparseMatrix<double>::const_iterator p = matrix.begin();
+           p != matrix.end();
+           ++p)
         deallog.get_file_stream() << p->value() * 100 << std::endl;
     };
 
-  if(dim > 1)
+  if (dim > 1)
     check_boundary(dof, mapping);
 }
 

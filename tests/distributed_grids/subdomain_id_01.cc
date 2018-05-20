@@ -33,14 +33,14 @@ check(TRIA& tr)
 {
   typename TRIA::cell_iterator cell = tr.begin(), endc = tr.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       deallog << cell->level_subdomain_id() << " ";
       try
         {
           deallog << cell->subdomain_id();
         }
-      catch(...)
+      catch (...)
         {
           deallog << ".";
         }

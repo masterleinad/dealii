@@ -25,11 +25,11 @@ template <typename number>
 void
 fill_matrix_invertible(FullMatrix<number>& A)
 {
-  for(unsigned int i = 0; i < A.m(); i++)
-    for(unsigned int j = 0; j < A.n(); j++)
+  for (unsigned int i = 0; i < A.m(); i++)
+    for (unsigned int j = 0; j < A.n(); j++)
       {
         A(i, j) = number(i * j);
-        if(i == j)
+        if (i == j)
           A(i, i) += i + A.m();
       }
 }
@@ -43,7 +43,7 @@ calculate(const FullMatrix<number> A, bool disp = true)
   const number tol = 1000 * std::numeric_limits<number>::epsilon();
 
   // Test left invert
-  if(A.m() >= A.n())
+  if (A.m() >= A.n())
     {
       FullMatrix<number> A_l_inv(A.n(), A.m());
       FullMatrix<number> identity(A.n(), A.n());
@@ -52,7 +52,7 @@ calculate(const FullMatrix<number> A, bool disp = true)
 
       FullMatrix<double> M(IdentityMatrix(identity.n()));
       M.add(-1, identity);
-      if(disp || M.linfty_norm() > tol)
+      if (disp || M.linfty_norm() > tol)
         {
           // deallog << "A matrix" << std::endl;
           // display_matrix(A);
@@ -65,7 +65,7 @@ calculate(const FullMatrix<number> A, bool disp = true)
     }
 
   // Test right invert
-  if(A.m() <= A.n())
+  if (A.m() <= A.n())
     {
       FullMatrix<number> A_r_inv(A.n(), A.m());
       FullMatrix<number> identity(A.m(), A.m());
@@ -74,7 +74,7 @@ calculate(const FullMatrix<number> A, bool disp = true)
 
       FullMatrix<double> M(IdentityMatrix(identity.n()));
       M.add(-1, identity);
-      if(disp || M.linfty_norm() > tol)
+      if (disp || M.linfty_norm() > tol)
         {
           // deallog << "A matrix"<< std::endl;
           // display_matrix(A);
@@ -96,20 +96,20 @@ check()
 {
   int nFails = 0;
   int maxDim = 10;
-  for(unsigned int i = 1; i <= maxDim; ++i)
+  for (unsigned int i = 1; i <= maxDim; ++i)
     {
-      for(unsigned int j = 1; j <= maxDim; ++j)
+      for (unsigned int j = 1; j <= maxDim; ++j)
         {
           FullMatrix<number> A(i, j);
           fill_matrix_invertible(A);
-          if(!calculate(A, false))
+          if (!calculate(A, false))
             {
               nFails++;
             }
         }
     }
 
-  if(nFails > 0)
+  if (nFails > 0)
     deallog << nFails << " out of " << maxDim * maxDim
             << " calls with wrong result" << std::endl;
   else

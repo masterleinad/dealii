@@ -32,21 +32,21 @@ test()
   unsigned int myid    = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
   unsigned int numproc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
 
-  if(myid == 0)
+  if (myid == 0)
     deallog << "numproc=" << numproc << std::endl;
 
   IndexSet local_active(10);
-  if(myid == 0)
+  if (myid == 0)
     local_active.add_range(0, 10);
   IndexSet local_relevant = local_active;
-  if(myid == 1)
+  if (myid == 1)
     local_relevant.add_range(5, 10);
   local_relevant.add_range(0, 1);
 
   DynamicSparsityPattern csp(local_relevant);
 
-  for(unsigned int i = 0; i < 10; ++i)
-    if(local_relevant.is_element(i))
+  for (unsigned int i = 0; i < 10; ++i)
+    if (local_relevant.is_element(i))
       csp.add(i, i);
 
   csp.add(0, 1);
@@ -69,14 +69,14 @@ test()
   mat.compress(VectorOperation::add);
 
   // check local values
-  if(myid == 0)
+  if (myid == 0)
     {
       deallog << "1,1 : " << get_real_assert_zero_imag(mat(1, 1)) << std::endl;
       deallog << "0,1 : " << get_real_assert_zero_imag(mat(0, 1)) << std::endl;
     }
 
   // done
-  if(myid == 0)
+  if (myid == 0)
     deallog << "OK" << std::endl;
 }
 

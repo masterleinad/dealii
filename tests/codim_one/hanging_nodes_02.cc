@@ -59,20 +59,20 @@ main()
 
   Triangulation<dim, spacedim>::active_cell_iterator cell
     = boundary_mesh.begin_active();
-  for(; cell != boundary_mesh.end(); ++cell)
+  for (; cell != boundary_mesh.end(); ++cell)
     {
       deallog << "Cell = " << cell << std::endl;
       deallog << "  direction_flag = " << cell->direction_flag() << std::endl;
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
         {
           deallog << "  face = " << face
                   << "  (neighbor = " << cell->neighbor(face) << ")"
                   << std::endl;
 
-          if(cell->face(face)->has_children())
-            for(unsigned int c = 0; c < cell->face(face)->n_children(); ++c)
+          if (cell->face(face)->has_children())
+            for (unsigned int c = 0; c < cell->face(face)->n_children(); ++c)
               {
                 deallog << "    subface = " << c << std::endl;
                 deallog << "              "

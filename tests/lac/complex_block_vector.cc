@@ -38,9 +38,9 @@ test()
   BlockIndices i3;
   // no output expected here
   deallog.push("empty constructor");
-  for(unsigned int i = 0; i < i3.size(); ++i)
+  for (unsigned int i = 0; i < i3.size(); ++i)
     deallog << i << '\t' << i3.local_to_global(i, 0) << std::endl;
-  for(unsigned int i = 0; i < i3.total_size(); ++i)
+  for (unsigned int i = 0; i < i3.total_size(); ++i)
     deallog << i << '\t' << i3.global_to_local(i).first << '\t'
             << i3.global_to_local(i).second << std::endl;
   deallog.pop();
@@ -50,7 +50,7 @@ test()
   deallog.push("global->local");
 
   unsigned int n = i1.total_size();
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       deallog << i << '\t' << i1.global_to_local(i).first << '\t'
               << i1.global_to_local(i).second << '\t'
@@ -63,8 +63,8 @@ test()
   deallog.pop();
 
   deallog.push("local->global");
-  for(unsigned int i = 0; i < i1.size(); ++i)
-    for(unsigned int j = 0; j < ivector[i]; ++j)
+  for (unsigned int i = 0; i < i1.size(); ++i)
+    for (unsigned int j = 0; j < ivector[i]; ++j)
       deallog << i << '\t' << j << '\t' << i1.local_to_global(i, j)
               << std::endl;
 
@@ -75,7 +75,7 @@ test()
   ivector.insert(ivector.begin(), 5);
   i1.reinit(ivector);
   n = i1.total_size();
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       deallog << i << '\t' << i1.global_to_local(i).first << '\t'
               << i1.global_to_local(i).second << std::endl;
@@ -87,7 +87,7 @@ test()
   ivector.erase(ivector.begin());
   i1.reinit(ivector);
   n = i1.total_size();
-  for(unsigned int i = 0; i < n; ++i)
+  for (unsigned int i = 0; i < n; ++i)
     {
       deallog << i << '\t' << i1.global_to_local(i).first << '\t'
               << i1.global_to_local(i).second << std::endl;
@@ -104,7 +104,7 @@ test()
     deallog.push("Constructor with iterators");
     double                            array[] = {0, 1, 2, 3, 4, 5};
     BlockVector<std::complex<double>> v1(vector_indices, &array[0], &array[6]);
-    for(unsigned int i = 0; i < v1.size(); ++i)
+    for (unsigned int i = 0; i < v1.size(); ++i)
       deallog << v1(i) << ' ';
     deallog << std::endl;
 
@@ -113,8 +113,8 @@ test()
     // std::list iterators.
     std::list<double>                 l(&array[0], &array[6]);
     BlockVector<std::complex<double>> v2(vector_indices, l.begin(), l.end());
-    for(unsigned int i = 0; i < v2.n_blocks(); ++i)
-      for(unsigned int j = 0; j < v2.block(i).size(); ++j)
+    for (unsigned int i = 0; i < v2.n_blocks(); ++i)
+      for (unsigned int j = 0; j < v2.block(i).size(); ++j)
         deallog << i << '\t' << j << '\t' << v2.block(i)(j) << std::endl;
 
     deallog.pop();
@@ -122,7 +122,7 @@ test()
     deallog.push("reinit block");
     v2.block(1).reinit(5);
     v2.collect_sizes();
-    for(unsigned int i = 0; i < v2.size(); ++i)
+    for (unsigned int i = 0; i < v2.size(); ++i)
       deallog << v2(i) << ' ';
     deallog << std::endl;
     deallog.pop();
@@ -139,7 +139,7 @@ test()
                                     std::complex<double>(4, 5),
                                     std::complex<double>(5, 6)};
     BlockVector<std::complex<double>> v1(vector_indices, &array[0], &array[6]);
-    for(unsigned int i = 0; i < v1.size(); ++i)
+    for (unsigned int i = 0; i < v1.size(); ++i)
       deallog << v1(i) << ' ';
     deallog << std::endl;
 
@@ -148,8 +148,8 @@ test()
     // std::list iterators.
     std::list<std::complex<double>>   l(&array[0], &array[6]);
     BlockVector<std::complex<double>> v2(vector_indices, l.begin(), l.end());
-    for(unsigned int i = 0; i < v2.n_blocks(); ++i)
-      for(unsigned int j = 0; j < v2.block(i).size(); ++j)
+    for (unsigned int i = 0; i < v2.n_blocks(); ++i)
+      for (unsigned int j = 0; j < v2.block(i).size(); ++j)
         deallog << i << '\t' << j << '\t' << v2.block(i)(j) << std::endl;
 
     deallog.pop();
@@ -157,7 +157,7 @@ test()
     deallog.push("reinit block");
     v2.block(1).reinit(5);
     v2.collect_sizes();
-    for(unsigned int i = 0; i < v2.size(); ++i)
+    for (unsigned int i = 0; i < v2.size(); ++i)
       deallog << v2(i) << ' ';
     deallog << std::endl;
     deallog.pop();
@@ -187,7 +187,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch (std::exception& e)
     {
       std::cerr << std::endl
                 << std::endl
@@ -200,7 +200,7 @@ main()
       // abort
       return 0;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

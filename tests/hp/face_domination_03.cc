@@ -73,10 +73,10 @@ MixedFECollection<dim>::run()
   typename hp::DoFHandler<dim>::active_cell_iterator cell
     = dof_handler.begin_active(),
     endc = dof_handler.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       //          if (cell == dof_handler.begin_active()) // this works
-      if(cell->center().norm() < 0.5) // this doesn't
+      if (cell->center().norm() < 0.5) // this doesn't
         {
           cell->set_active_fe_index(cell->active_fe_index() + 1);
         }

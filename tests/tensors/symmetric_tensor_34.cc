@@ -21,18 +21,18 @@
 template <int dim>
 void initialize(SymmetricTensor<2, dim>& st)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = i; j < dim; ++j)
       st[i][j] = (i + 1) * dim + (j - i);
 }
 
 template <int dim>
 void initialize(SymmetricTensor<4, dim>& st)
 {
-  for(unsigned int i = 0; i < dim; ++i)
-    for(unsigned int j = i; j < dim; ++j)
-      for(unsigned int k = 0; k < dim; ++k)
-        for(unsigned int l = k; l < dim; ++l)
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = i; j < dim; ++j)
+      for (unsigned int k = 0; k < dim; ++k)
+        for (unsigned int l = k; l < dim; ++l)
           st[i][j][k][l] = (i + 1) * dim + (j - i) + (k + 1) * dim + (l - k);
 }
 

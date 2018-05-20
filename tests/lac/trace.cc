@@ -30,11 +30,11 @@ main()
   FullMatrix<double> m(N, N);
 
   double tr = 0;
-  for(unsigned int i = 0; i < N; ++i)
-    for(unsigned int j = 0; j < N; ++j)
+  for (unsigned int i = 0; i < N; ++i)
+    for (unsigned int j = 0; j < N; ++j)
       {
         m(i, j) = i + j;
-        if(i == j)
+        if (i == j)
           tr += i + j;
       }
 

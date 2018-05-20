@@ -124,11 +124,11 @@ namespace Step56
     const double x = p(0);
     const double y = p(1);
 
-    if(component == 0)
+    if (component == 0)
       return sin(PI * x);
-    if(component == 1)
+    if (component == 1)
       return -PI * y * cos(PI * x);
-    if(component == 2)
+    if (component == 2)
       return sin(PI * x) * cos(PI * y);
 
     return 0;
@@ -145,13 +145,13 @@ namespace Step56
     const double y = p(1);
     const double z = p(2);
 
-    if(component == 0)
+    if (component == 0)
       return 2.0 * sin(PI * x);
-    if(component == 1)
+    if (component == 1)
       return -PI * y * cos(PI * x);
-    if(component == 2)
+    if (component == 2)
       return -PI * z * cos(PI * x);
-    if(component == 3)
+    if (component == 3)
       return sin(PI * x) * cos(PI * y) * sin(PI * z);
 
     return 0;
@@ -169,17 +169,17 @@ namespace Step56
     const double y = p(1);
 
     Tensor<1, 2> return_value;
-    if(component == 0)
+    if (component == 0)
       {
         return_value[0] = PI * cos(PI * x);
         return_value[1] = 0.0;
       }
-    else if(component == 1)
+    else if (component == 1)
       {
         return_value[0] = y * PI * PI * sin(PI * x);
         return_value[1] = -PI * cos(PI * x);
       }
-    else if(component == 2)
+    else if (component == 2)
       {
         return_value[0] = PI * cos(PI * x) * cos(PI * y);
         return_value[1] = -PI * sin(PI * x) * sin(PI * y);
@@ -200,25 +200,25 @@ namespace Step56
     const double z = p(2);
 
     Tensor<1, 3> return_value;
-    if(component == 0)
+    if (component == 0)
       {
         return_value[0] = 2 * PI * cos(PI * x);
         return_value[1] = 0.0;
         return_value[2] = 0.0;
       }
-    else if(component == 1)
+    else if (component == 1)
       {
         return_value[0] = y * PI * PI * sin(PI * x);
         return_value[1] = -PI * cos(PI * x);
         return_value[2] = 0.0;
       }
-    else if(component == 2)
+    else if (component == 2)
       {
         return_value[0] = z * PI * PI * sin(PI * x);
         return_value[1] = 0.0;
         return_value[2] = -PI * cos(PI * x);
       }
-    else if(component == 3)
+    else if (component == 3)
       {
         return_value[0] = PI * cos(PI * x) * cos(PI * y) * sin(PI * z);
         return_value[1] = -PI * sin(PI * x) * sin(PI * y) * sin(PI * z);
@@ -249,11 +249,11 @@ namespace Step56
     using numbers::PI;
     double x = p(0);
     double y = p(1);
-    if(component == 0)
+    if (component == 0)
       return PI * PI * sin(PI * x) + PI * cos(PI * x) * cos(PI * y);
-    if(component == 1)
+    if (component == 1)
       return -PI * PI * PI * y * cos(PI * x) - PI * sin(PI * y) * sin(PI * x);
-    if(component == 2)
+    if (component == 2)
       return 0;
 
     return 0;
@@ -269,16 +269,16 @@ namespace Step56
     double x = p(0);
     double y = p(1);
     double z = p(2);
-    if(component == 0)
+    if (component == 0)
       return 2 * PI * PI * sin(PI * x)
              + PI * cos(PI * x) * cos(PI * y) * sin(PI * z);
-    if(component == 1)
+    if (component == 1)
       return -PI * PI * PI * y * cos(PI * x)
              + PI * (-1) * sin(PI * y) * sin(PI * x) * sin(PI * z);
-    if(component == 2)
+    if (component == 2)
       return -PI * PI * PI * z * cos(PI * x)
              + PI * cos(PI * z) * sin(PI * x) * cos(PI * y);
-    if(component == 3)
+    if (component == 3)
       return 0;
 
     return 0;
@@ -378,7 +378,7 @@ namespace Step56
 
     // Finally, either solve with the top left block
     // or just apply one preconditioner sweep
-    if(do_solve_A == true)
+    if (do_solve_A == true)
       {
         SolverControl solver_control(10000, utmp.l2_norm() * 1e-4);
         SolverCG<>    cg(solver_control);
@@ -493,7 +493,7 @@ namespace Step56
 
     // ILU behaves better if we apply a reordering to reduce fillin. There
     // is no advantage in doing this for the other solvers.
-    if(solver_type == SolverType::FGMRES_ILU)
+    if (solver_type == SolverType::FGMRES_ILU)
       {
         TimerOutput::Scope ilu_specific(computing_timer, "(ILU specific)");
         DoFRenumbering::Cuthill_McKee(dof_handler);
@@ -505,7 +505,7 @@ namespace Step56
     // dof_handler and velocity_dof_handler.
     DoFRenumbering::block_wise(dof_handler);
 
-    if(solver_type == SolverType::FGMRES_GMG)
+    if (solver_type == SolverType::FGMRES_GMG)
       {
         TimerOutput::Scope multigrid_specific(computing_timer,
                                               "(Multigrid specific)");
@@ -536,7 +536,7 @@ namespace Step56
         mg_matrices.resize(0, n_levels - 1);
         mg_sparsity_patterns.resize(0, n_levels - 1);
 
-        for(unsigned int level = 0; level < n_levels; ++level)
+        for (unsigned int level = 0; level < n_levels; ++level)
           {
             DynamicSparsityPattern csp(velocity_dof_handler.n_dofs(level),
                                        velocity_dof_handler.n_dofs(level));
@@ -569,7 +569,7 @@ namespace Step56
       // of the pressure variable to ensure solvability of the problem. We do this
       // here by marking the first pressure dof, which has index n_u as a
       // constrained dof.
-      if(solver_type == SolverType::UMFPACK)
+      if (solver_type == SolverType::UMFPACK)
         constraints.add_line(n_u);
 
       constraints.close();
@@ -637,7 +637,7 @@ namespace Step56
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
@@ -646,9 +646,9 @@ namespace Step56
         right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                           rhs_values);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
@@ -656,9 +656,9 @@ namespace Step56
                 phi_p[k]     = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for (unsigned int j = 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (2 * (symgrad_phi_u[i] * symgrad_phi_u[j])
@@ -676,8 +676,8 @@ namespace Step56
               }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             local_matrix(i, j) = local_matrix(j, i);
 
         cell->get_dof_indices(local_dof_indices);
@@ -688,7 +688,7 @@ namespace Step56
                                                system_rhs);
       }
 
-    if(solver_type != SolverType::UMFPACK)
+    if (solver_type != SolverType::UMFPACK)
       {
         pressure_mass_matrix.reinit(sparsity_pattern.block(1, 1));
         pressure_mass_matrix.copy_from(system_matrix.block(1, 1));
@@ -733,7 +733,7 @@ namespace Step56
       triangulation.n_levels());
     std::vector<ConstraintMatrix> boundary_interface_constraints(
       triangulation.n_levels());
-    for(unsigned int level = 0; level < triangulation.n_levels(); ++level)
+    for (unsigned int level = 0; level < triangulation.n_levels(); ++level)
       {
         boundary_constraints[level].add_lines(
           mg_constrained_dofs.get_refinement_edge_indices(level));
@@ -752,26 +752,26 @@ namespace Step56
     typename DoFHandler<dim>::cell_iterator cell = velocity_dof_handler.begin(),
                                             endc = velocity_dof_handler.end();
 
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         cell_matrix = 0;
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               symgrad_phi_u[k] = fe_values[velocities].symmetric_gradient(k, q);
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
-              for(unsigned int j = 0; j <= i; ++j)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              for (unsigned int j = 0; j <= i; ++j)
                 {
                   cell_matrix(i, j)
                     += (symgrad_phi_u[i] * symgrad_phi_u[j]) * fe_values.JxW(q);
                 }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             cell_matrix(i, j) = cell_matrix(j, i);
 
         cell->get_mg_dof_indices(local_dof_indices);
@@ -779,12 +779,12 @@ namespace Step56
         boundary_constraints[cell->level()].distribute_local_to_global(
           cell_matrix, local_dof_indices, mg_matrices[cell->level()]);
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = 0; j < dofs_per_cell; ++j)
-            if(!mg_constrained_dofs.at_refinement_edge(cell->level(),
-                                                       local_dof_indices[i])
-               || mg_constrained_dofs.at_refinement_edge(cell->level(),
-                                                         local_dof_indices[j]))
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = 0; j < dofs_per_cell; ++j)
+            if (!mg_constrained_dofs.at_refinement_edge(cell->level(),
+                                                        local_dof_indices[i])
+                || mg_constrained_dofs.at_refinement_edge(cell->level(),
+                                                          local_dof_indices[j]))
               cell_matrix(i, j) = 0;
 
         boundary_interface_constraints[cell->level()]
@@ -808,7 +808,7 @@ namespace Step56
     TimerOutput::Scope solve(computing_timer, "Solve");
     constraints.set_zero(solution);
 
-    if(solver_type == SolverType::UMFPACK)
+    if (solver_type == SolverType::UMFPACK)
       {
         computing_timer.enter_subsection("(UMFPACK specific)");
         computing_timer.enter_subsection("Solve - Initialize");
@@ -843,7 +843,7 @@ namespace Step56
 
     SolverFGMRES<BlockVector<double>> solver(solver_control);
 
-    if(solver_type == SolverType::FGMRES_ILU)
+    if (solver_type == SolverType::FGMRES_ILU)
       {
         computing_timer.enter_subsection("(ILU specific)");
         computing_timer.enter_subsection("Solve - Set-up Preconditioner");
@@ -1054,19 +1054,19 @@ namespace Step56
     GridGenerator::hyper_cube(triangulation);
     triangulation.refine_global(6 - dim);
 
-    if(solver_type == SolverType::FGMRES_ILU)
+    if (solver_type == SolverType::FGMRES_ILU)
       std::cout << "Now running with ILU" << std::endl;
-    else if(solver_type == SolverType::FGMRES_GMG)
+    else if (solver_type == SolverType::FGMRES_GMG)
       std::cout << "Now running with Multigrid" << std::endl;
     else
       std::cout << "Now running with UMFPACK" << std::endl;
 
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 3;
-        ++refinement_cycle)
+    for (unsigned int refinement_cycle = 0; refinement_cycle < 3;
+         ++refinement_cycle)
       {
         std::cout << "Refinement cycle " << refinement_cycle << std::endl;
 
-        if(refinement_cycle > 0)
+        if (refinement_cycle > 0)
           triangulation.refine_global(1);
 
         std::cout << "   Set-up..." << std::endl;
@@ -1075,7 +1075,7 @@ namespace Step56
         std::cout << "   Assembling..." << std::endl;
         assemble_system();
 
-        if(solver_type == SolverType::FGMRES_GMG)
+        if (solver_type == SolverType::FGMRES_GMG)
           {
             std::cout << "   Assembling Multigrid..." << std::endl;
 
@@ -1115,7 +1115,7 @@ main()
 
       flow_problem.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -1129,7 +1129,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

@@ -52,8 +52,8 @@ test()
     = dof_handler.begin_active(),
     endc = dof_handler.end();
 
-  for(; cell != endc; cell++)
-    if(cell->center()[0] > 0)
+  for (; cell != endc; cell++)
+    if (cell->center()[0] > 0)
       cell->set_active_fe_index(1);
     else
       cell->set_active_fe_index(0);
@@ -64,9 +64,9 @@ test()
   std::map<types::global_dof_index, double> bv;
   VectorTools::interpolate_boundary_values(
     dof_handler, 0, Functions::ZeroFunction<dim>(4), bv);
-  for(std::map<types::global_dof_index, double>::iterator p = bv.begin();
-      p != bv.end();
-      ++p)
+  for (std::map<types::global_dof_index, double>::iterator p = bv.begin();
+       p != bv.end();
+       ++p)
     deallog << p->first << ' ' << p->second << std::endl;
 }
 

@@ -68,9 +68,9 @@ TimestepControl::parse_parameters(ParameterHandler& param)
   tolerance(param.get_double("Tolerance"));
   print_step              = param.get_double("Print step");
   const std::string strat = param.get("Strategy");
-  if(strat == std::string("uniform"))
+  if (strat == std::string("uniform"))
     strategy_val = uniform;
-  else if(strat == std::string("doubling"))
+  else if (strat == std::string("doubling"))
     strategy_val = doubling;
 }
 
@@ -82,11 +82,11 @@ TimestepControl::advance()
 
   // Do time step control, but not in
   // first step.
-  if(now_val != start())
+  if (now_val != start())
     {
-      if(strategy_val == doubling && 2 * s <= tolerance_val)
+      if (strategy_val == doubling && 2 * s <= tolerance_val)
         s *= 2;
-      if(s > max_step_val)
+      if (s > max_step_val)
         s = max_step_val;
     }
 
@@ -104,7 +104,7 @@ TimestepControl::advance()
   // it so we hit the final time
   // exactly.
   double s1 = .01 * s;
-  if(h > final_val - s1)
+  if (h > final_val - s1)
     {
       current_step_val = final_val - now_val;
       h                = final_val;
@@ -118,17 +118,17 @@ TimestepControl::advance()
 bool
 TimestepControl::print()
 {
-  if(print_step == 0.)
+  if (print_step == 0.)
     return false;
-  if(print_step < 0.)
+  if (print_step < 0.)
     return true;
 
   bool result = (now_val >= next_print_val);
 
-  if(result)
+  if (result)
     {
       next_print_val += print_step;
-      if(next_print_val > final_val)
+      if (next_print_val > final_val)
         next_print_val = final_val;
     }
   return result;

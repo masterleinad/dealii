@@ -269,7 +269,7 @@ VectorView<Number>::reinit(const size_type N, const bool omit_zeroing_entries)
 {
   this->vec_size     = N;
   this->max_vec_size = N;
-  if(omit_zeroing_entries == false)
+  if (omit_zeroing_entries == false)
     Vector<Number>::operator=(static_cast<Number>(0));
 }
 

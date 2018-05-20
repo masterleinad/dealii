@@ -36,8 +36,8 @@ double
 value(const Point<dim>& p)
 {
   double val = 0;
-  for(unsigned int d = 0; d < dim; ++d)
-    for(unsigned int i = 0; i <= 1; ++i)
+  for (unsigned int d = 0; d < dim; ++d)
+    for (unsigned int i = 0; i <= 1; ++i)
       val += std::pow(p[d], 1. * i);
   return val;
 }
@@ -84,7 +84,7 @@ zero_subrange(const unsigned int   begin,
               const unsigned int   end,
               std::vector<double>& dst)
 {
-  for(unsigned int i = begin; i < end; ++i)
+  for (unsigned int i = begin; i < end; ++i)
     dst[i] = 0;
 }
 
@@ -146,7 +146,7 @@ do_project()
   FE_Nothing<dim> fe;
   QMidpoint<dim>  q;
 
-  for(unsigned int i = 0; i < 12; ++i)
+  for (unsigned int i = 0; i < 12; ++i)
     {
       std::vector<double> tmp;
 

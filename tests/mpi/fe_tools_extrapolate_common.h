@@ -49,7 +49,7 @@ public:
   value(const Point<dim>& p, const unsigned int component = 0) const
   {
     double return_value = 0.;
-    for(unsigned int d = 0; d < dim; ++d)
+    for (unsigned int d = 0; d < dim; ++d)
       return_value += std::pow(std::abs(.5 - p(d)), degree);
 
     return return_value;
@@ -68,12 +68,12 @@ make_tria()
   typename parallel::distributed::Triangulation<dim>::active_cell_iterator cell;
   GridGenerator::hyper_cube(*tria, 0., 1.);
   tria->refine_global(2);
-  for(int i = 0; i < 2; ++i)
+  for (int i = 0; i < 2; ++i)
     {
       cell = tria->begin_active();
       cell->set_refine_flag();
       ++cell;
-      if(cell != tria->end())
+      if (cell != tria->end())
         cell->set_refine_flag();
 
       tria->execute_coarsening_and_refinement();
@@ -153,17 +153,17 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 
   // only check if both elements have support points.
   // otherwise, interpolation doesn't really work
-  if((fe1.get_unit_support_points().size() == 0)
-     || (fe2.get_unit_support_points().size() == 0))
+  if ((fe1.get_unit_support_points().size() == 0)
+      || (fe2.get_unit_support_points().size() == 0))
     return;
   //  likewise for non-primitive elements
-  if(!fe1.is_primitive() || !fe2.is_primitive())
+  if (!fe1.is_primitive() || !fe2.is_primitive())
     return;
   // we need to have dof_constraints for this test
-  if(!fe2.constraints_are_implemented())
+  if (!fe2.constraints_are_implemented())
     return;
   // we need prolongation matrices in fe2
-  if(!fe2.isotropic_restriction_is_implemented())
+  if (!fe2.isotropic_restriction_is_implemented())
     return;
 
   std::unique_ptr<parallel::distributed::Triangulation<dim>> tria(
@@ -223,7 +223,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     const double l1_norm     = in_distributed.l1_norm();
     const double l2_norm     = in_distributed.l2_norm();
     const double linfty_norm = in_distributed.linfty_norm();
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
 
@@ -242,7 +242,7 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     const double l1_norm     = out_distributed.l1_norm();
     const double l2_norm     = out_distributed.l2_norm();
     const double linfty_norm = out_distributed.linfty_norm();
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
 
@@ -257,21 +257,21 @@ check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   const double global_error_after = std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_after, 2.), MPI_COMM_WORLD));
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog << "global_error_before: " << global_error_before << std::endl;
       deallog << "global_error_after: " << global_error_after << std::endl;
     }
-  if(fe2.degree == fe1.degree)
+  if (fe2.degree == fe1.degree)
     {
       out_distributed -= in_distributed;
       AssertThrow(out_distributed.l2_norm() < 1.e-8, ExcInternalError());
     }
-  if(fe2.degree > fe1.degree)
+  if (fe2.degree > fe1.degree)
     {
       AssertThrow(global_error_after < global_error_before, ExcInternalError());
     }
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }
 
@@ -283,17 +283,17 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
 
   // only check if both elements have support points.
   // otherwise, interpolation doesn't really work
-  if((fe1.get_unit_support_points().size() == 0)
-     || (fe2.get_unit_support_points().size() == 0))
+  if ((fe1.get_unit_support_points().size() == 0)
+      || (fe2.get_unit_support_points().size() == 0))
     return;
   //  likewise for non-primitive elements
-  if(!fe1.is_primitive() || !fe2.is_primitive())
+  if (!fe1.is_primitive() || !fe2.is_primitive())
     return;
   // we need to have dof_constraints for this test
-  if(!fe2.constraints_are_implemented())
+  if (!fe2.constraints_are_implemented())
     return;
   // we need prolongation matrices in fe2
-  if(!fe2.isotropic_restriction_is_implemented())
+  if (!fe2.isotropic_restriction_is_implemented())
     return;
 
   std::unique_ptr<parallel::distributed::Triangulation<dim>> tria(
@@ -352,7 +352,7 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     const double l1_norm     = in_ghosted.l1_norm();
     const double l2_norm     = in_ghosted.l2_norm();
     const double linfty_norm = in_ghosted.linfty_norm();
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
 
@@ -370,7 +370,7 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
     const double l1_norm     = out_ghosted.l1_norm();
     const double l2_norm     = out_ghosted.l2_norm();
     const double linfty_norm = out_ghosted.linfty_norm();
-    if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+    if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
       deallog << l1_norm << ' ' << l2_norm << ' ' << linfty_norm << std::endl;
   }
 
@@ -385,20 +385,20 @@ check_this_dealii(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
   const double global_error_after = std::sqrt(
     Utilities::MPI::sum(std::pow(local_error_after, 2.), MPI_COMM_WORLD));
 
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     {
       deallog << "global_error_before: " << global_error_before << std::endl;
       deallog << "global_error_after: " << global_error_after << std::endl;
     }
-  if(fe2.degree == fe1.degree)
+  if (fe2.degree == fe1.degree)
     {
       out_ghosted -= in_ghosted;
       AssertThrow(out_ghosted.l2_norm() < 1.e-8, ExcInternalError());
     }
-  if(fe2.degree > fe1.degree)
+  if (fe2.degree > fe1.degree)
     {
       AssertThrow(global_error_after < global_error_before, ExcInternalError());
     }
-  if(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+  if (Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     deallog << "OK" << std::endl;
 }

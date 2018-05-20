@@ -327,7 +327,7 @@ template <typename ElementType>
 inline typename ArrayView<ElementType>::value_type*
 ArrayView<ElementType>::data() const noexcept
 {
-  if(n_elements == 0)
+  if (n_elements == 0)
     return nullptr;
   else
     return starting_element;
@@ -400,9 +400,9 @@ namespace internal
     is_contiguous(const Iterator& first, const Iterator& last)
     {
       const auto n = std::distance(first, last);
-      for(typename std::decay<decltype(n)>::type i = 0; i < n; ++i)
-        if(std::addressof(*(std::next(first, i)))
-           != std::next(std::addressof(*first), i))
+      for (typename std::decay<decltype(n)>::type i = 0; i < n; ++i)
+        if (std::addressof(*(std::next(first, i)))
+            != std::next(std::addressof(*first), i))
           return false;
       return true;
     }

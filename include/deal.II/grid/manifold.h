@@ -1197,7 +1197,7 @@ namespace Manifolds
     // distortion of the four new quads from the optimal shape; their
     // derivation and values is copied over from the
     // interpolation function in the mapping
-    switch(dim)
+    switch (dim)
       {
         case 1:
           Assert(points_weights.first.size() == 2, ExcInternalError());
@@ -1211,7 +1211,7 @@ namespace Manifolds
           Assert(points_weights.first.size() == 8, ExcInternalError());
           Assert(points_weights.second.size() == 8, ExcInternalError());
 
-          for(unsigned int i = 0; i < 4; ++i)
+          for (unsigned int i = 0; i < 4; ++i)
             {
               points_weights.first[i] = iterator->vertex(i);
               points_weights.first[4 + i]
@@ -1221,7 +1221,7 @@ namespace Manifolds
                        iterator->line(i)));
             }
 
-          if(with_interpolation)
+          if (with_interpolation)
             {
               std::fill(points_weights.second.begin(),
                         points_weights.second.begin() + 4,
@@ -1256,17 +1256,17 @@ namespace Manifolds
             // transfinite interpolation from the faces and vertices, see
             // TransfiniteInterpolationManifold for a deeper explanation of the
             // mechanisms
-            if(with_interpolation)
+            if (with_interpolation)
               {
-                for(unsigned int i = 0;
-                    i < GeometryInfo<dim>::vertices_per_cell;
-                    ++i, ++j)
+                for (unsigned int i = 0;
+                     i < GeometryInfo<dim>::vertices_per_cell;
+                     ++i, ++j)
                   {
                     (*sp3)[j]                = hex->vertex(i);
                     points_weights.second[j] = 1.0 / 8.0;
                   }
-                for(unsigned int i = 0; i < GeometryInfo<dim>::lines_per_cell;
-                    ++i, ++j)
+                for (unsigned int i = 0; i < GeometryInfo<dim>::lines_per_cell;
+                     ++i, ++j)
                   {
                     (*sp3)[j]
                       = (hex->line(i)->has_children() ?
@@ -1275,8 +1275,8 @@ namespace Manifolds
                              hex->line(i)));
                     points_weights.second[j] = -1.0 / 4.0;
                   }
-                for(unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell;
-                    ++i, ++j)
+                for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell;
+                     ++i, ++j)
                   {
                     (*sp3)[j]
                       = (hex->quad(i)->has_children() ?

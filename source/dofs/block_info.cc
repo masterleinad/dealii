@@ -28,7 +28,7 @@ BlockInfo::initialize(const DoFHandler<dim, spacedim>& dof,
                       bool                             levels_only,
                       bool                             active_only)
 {
-  if(!levels_only && dof.has_active_dofs())
+  if (!levels_only && dof.has_active_dofs())
     {
       const FiniteElement<dim, spacedim>&  fe = dof.get_fe();
       std::vector<types::global_dof_index> sizes(fe.n_blocks());
@@ -36,18 +36,18 @@ BlockInfo::initialize(const DoFHandler<dim, spacedim>& dof,
       bi_global.reinit(sizes);
     }
 
-  if(!active_only && dof.has_level_dofs())
+  if (!active_only && dof.has_level_dofs())
     {
       std::vector<std::vector<types::global_dof_index>> sizes(
         dof.get_triangulation().n_levels());
 
-      for(unsigned int i = 0; i < sizes.size(); ++i)
+      for (unsigned int i = 0; i < sizes.size(); ++i)
         sizes[i].resize(dof.get_fe().n_blocks());
 
       MGTools::count_dofs_per_block(dof, sizes);
       levels.resize(sizes.size());
 
-      for(unsigned int i = 0; i < sizes.size(); ++i)
+      for (unsigned int i = 0; i < sizes.size(); ++i)
         levels[i].reinit(sizes[i]);
     }
 }
@@ -61,7 +61,7 @@ BlockInfo::initialize_local(const DoFHandler<dim, spacedim>& dof)
 
   base_elements.resize(fe.n_blocks());
 
-  for(unsigned int i = 0; i < base_elements.size(); ++i)
+  for (unsigned int i = 0; i < base_elements.size(); ++i)
     base_elements[i] = fe.block_to_base_index(i).first;
 
   local_renumbering.resize(fe.n_dofs_per_cell());

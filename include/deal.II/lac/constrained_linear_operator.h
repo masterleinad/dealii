@@ -74,14 +74,14 @@ distribute_constraints_linear_operator(
     v += u;
 
     const auto& locally_owned_elements = v.locally_owned_elements();
-    for(const auto& line : constraint_matrix.get_lines())
+    for (const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
-        if(locally_owned_elements.is_element(i))
+        if (locally_owned_elements.is_element(i))
           {
             v(i) -= u(i);
             const auto& entries = line.entries;
-            for(types::global_dof_index j = 0; j < entries.size(); ++j)
+            for (types::global_dof_index j = 0; j < entries.size(); ++j)
               {
                 const auto pos = entries[j].first;
                 v(i) += u(pos) * entries[j].second;
@@ -102,20 +102,20 @@ distribute_constraints_linear_operator(
     v += u;
 
     const auto& locally_owned_elements = v.locally_owned_elements();
-    for(const auto& line : constraint_matrix.get_lines())
+    for (const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
 
-        if(locally_owned_elements.is_element(i))
+        if (locally_owned_elements.is_element(i))
           {
             v(i) -= u(i);
           }
 
         const auto& entries = line.entries;
-        for(types::global_dof_index j = 0; j < entries.size(); ++j)
+        for (types::global_dof_index j = 0; j < entries.size(); ++j)
           {
             const auto pos = entries[j].first;
-            if(locally_owned_elements.is_element(pos))
+            if (locally_owned_elements.is_element(pos))
               v(pos) += u(i) * entries[j].second;
           }
       }
@@ -161,10 +161,10 @@ project_to_constrained_linear_operator(
 
   return_op.vmult_add = [&constraint_matrix](Range& v, const Domain& u) {
     const auto& locally_owned_elements = v.locally_owned_elements();
-    for(const auto& line : constraint_matrix.get_lines())
+    for (const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
-        if(locally_owned_elements.is_element(i))
+        if (locally_owned_elements.is_element(i))
           {
             v(i) += u(i);
           }
@@ -175,10 +175,10 @@ project_to_constrained_linear_operator(
 
   return_op.Tvmult_add = [&constraint_matrix](Domain& v, const Range& u) {
     const auto& locally_owned_elements = v.locally_owned_elements();
-    for(const auto& line : constraint_matrix.get_lines())
+    for (const auto& line : constraint_matrix.get_lines())
       {
         const auto i = line.index;
-        if(locally_owned_elements.is_element(i))
+        if (locally_owned_elements.is_element(i))
           {
             v(i) += u(i);
           }

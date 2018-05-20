@@ -38,7 +38,7 @@ write_mat_id_to_file(const Triangulation<dim>& tria)
   int                                               count = 0;
   typename Triangulation<dim>::active_cell_iterator cell  = tria.begin_active(),
                                                     endc  = tria.end();
-  for(; cell != endc; ++cell, ++count)
+  for (; cell != endc; ++cell, ++count)
     {
       deallog << count << " " << static_cast<int>(cell->material_id())
               << std::endl;
@@ -60,17 +60,17 @@ test()
 
   // Mark a small block at the corner of the hypercube
   cell_iterator cell = tria.begin_active(), endc = tria.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       bool mark = true;
-      for(unsigned int d = 0; d < dim; ++d)
-        if(cell->center()[d] > 0.5)
+      for (unsigned int d = 0; d < dim; ++d)
+        if (cell->center()[d] > 0.5)
           {
             mark = false;
             break;
           }
 
-      if(mark == true)
+      if (mark == true)
         cell->set_material_id(2);
       else
         cell->set_material_id(1);
@@ -94,10 +94,10 @@ test()
       tria, predicate, 0.); // General predicate
 
   AssertThrow(active_halo_layer.size() > 0, ExcMessage("No halo layer found."));
-  for(typename std::vector<cell_iterator>::const_iterator it
-      = active_halo_layer.begin();
-      it != active_halo_layer.end();
-      ++it)
+  for (typename std::vector<cell_iterator>::const_iterator it
+       = active_halo_layer.begin();
+       it != active_halo_layer.end();
+       ++it)
     {
       (*it)->set_material_id(3);
     }

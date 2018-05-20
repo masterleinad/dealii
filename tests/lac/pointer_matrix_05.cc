@@ -41,7 +41,7 @@ checkVmult(FullMatrix<number>& A, Vector<number>& V, char* name = "Test Matrix")
   Assert(O == O_, ExcInternalError());
   deallog << "Result vector data verified" << std::endl;
 
-  for(unsigned int i = 0; i < O.size(); ++i)
+  for (unsigned int i = 0; i < O.size(); ++i)
     deallog << O(i) << '\t';
   deallog << std::endl;
 }

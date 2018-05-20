@@ -102,7 +102,7 @@ FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
 #endif
   FullMatrix<double> face_embeddings[GeometryInfo<dim>::max_children_per_face];
 
-  for(unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<dim>::max_children_per_face; ++i)
     face_embeddings[i].reinit(this->dofs_per_face, this->dofs_per_face);
 
   FETools::compute_face_embedding_matrices<dim, double>(
@@ -112,7 +112,7 @@ FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
     0,
     internal::FE_Nedelec::get_embedding_computation_tolerance(order));
 
-  switch(dim)
+  switch (dim)
     {
       case 1:
         {
@@ -125,10 +125,10 @@ FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
           this->interface_constraints.reinit(2 * this->dofs_per_face,
                                              this->dofs_per_face);
 
-          for(unsigned int i = 0; i < GeometryInfo<2>::max_children_per_face;
-              ++i)
-            for(unsigned int j = 0; j < this->dofs_per_face; ++j)
-              for(unsigned int k = 0; k < this->dofs_per_face; ++k)
+          for (unsigned int i = 0; i < GeometryInfo<2>::max_children_per_face;
+               ++i)
+            for (unsigned int j = 0; j < this->dofs_per_face; ++j)
+              for (unsigned int k = 0; k < this->dofs_per_face; ++k)
                 this->interface_constraints(i * this->dofs_per_face + j, k)
                   = face_embeddings[i](j, k);
 
@@ -142,44 +142,46 @@ FE_Nedelec<dim>::FE_Nedelec(const unsigned int order)
 
           unsigned int target_row = 0;
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = this->degree; j < 2 * this->degree;
-                ++j, ++target_row)
-              for(unsigned int k = 0; k < this->dofs_per_face; ++k)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = this->degree; j < 2 * this->degree;
+                 ++j, ++target_row)
+              for (unsigned int k = 0; k < this->dofs_per_face; ++k)
                 this->interface_constraints(target_row, k)
                   = face_embeddings[2 * i](j, k);
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 3 * this->degree;
-                j < GeometryInfo<3>::lines_per_face * this->degree;
-                ++j, ++target_row)
-              for(unsigned int k = 0; k < this->dofs_per_face; ++k)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 3 * this->degree;
+                 j < GeometryInfo<3>::lines_per_face * this->degree;
+                 ++j, ++target_row)
+              for (unsigned int k = 0; k < this->dofs_per_face; ++k)
                 this->interface_constraints(target_row, k)
                   = face_embeddings[i](j, k);
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 0; j < 2; ++j)
-              for(unsigned int k = i * this->degree; k < (i + 1) * this->degree;
-                  ++k, ++target_row)
-                for(unsigned int l = 0; l < this->dofs_per_face; ++l)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 0; j < 2; ++j)
+              for (unsigned int k = i * this->degree;
+                   k < (i + 1) * this->degree;
+                   ++k, ++target_row)
+                for (unsigned int l = 0; l < this->dofs_per_face; ++l)
                   this->interface_constraints(target_row, l)
                     = face_embeddings[i + 2 * j](k, l);
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 0; j < 2; ++j)
-              for(unsigned int k = (i + 2) * this->degree;
-                  k < (i + 3) * this->degree;
-                  ++k, ++target_row)
-                for(unsigned int l = 0; l < this->dofs_per_face; ++l)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 0; j < 2; ++j)
+              for (unsigned int k = (i + 2) * this->degree;
+                   k < (i + 3) * this->degree;
+                   ++k, ++target_row)
+                for (unsigned int l = 0; l < this->dofs_per_face; ++l)
                   this->interface_constraints(target_row, l)
                     = face_embeddings[2 * i + j](k, l);
 
-          for(unsigned int i = 0; i < GeometryInfo<3>::max_children_per_face;
-              ++i)
-            for(unsigned int j = GeometryInfo<3>::lines_per_face * this->degree;
-                j < this->dofs_per_face;
-                ++j, ++target_row)
-              for(unsigned int k = 0; k < this->dofs_per_face; ++k)
+          for (unsigned int i = 0; i < GeometryInfo<3>::max_children_per_face;
+               ++i)
+            for (unsigned int j
+                 = GeometryInfo<3>::lines_per_face * this->degree;
+                 j < this->dofs_per_face;
+                 ++j, ++target_row)
+              for (unsigned int k = 0; k < this->dofs_per_face; ++k)
                 this->interface_constraints(target_row, k)
                   = face_embeddings[i](j, k);
 
@@ -244,7 +246,7 @@ FE_Nedelec<2>::initialize_support_points(const unsigned int order)
   std::vector<Polynomials::Polynomial<double>> lobatto_polynomials_grad(order
                                                                         + 1);
 
-  for(unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
+  for (unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
     lobatto_polynomials_grad[i] = lobatto_polynomials[i + 1].derivative();
 
   // Initialize quadratures to obtain
@@ -259,11 +261,11 @@ FE_Nedelec<2>::initialize_support_points(const unsigned int order)
   this->generalized_face_support_points.resize(n_edge_points);
 
   // Create face support points.
-  for(unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
+  for (unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
     this->generalized_face_support_points[q_point]
       = reference_edge_quadrature.point(q_point);
 
-  if(order > 0)
+  if (order > 0)
     {
       // If the polynomial degree is positive
       // we have support points on the faces
@@ -275,23 +277,23 @@ FE_Nedelec<2>::initialize_support_points(const unsigned int order)
                                               + n_interior_points);
       boundary_weights.reinit(n_edge_points, order);
 
-      for(unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
         {
-          for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
-              ++line)
+          for (unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+               ++line)
             this->generalized_support_points[line * n_edge_points + q_point]
               = edge_quadrature.point(QProjector<dim>::DataSetDescriptor::face(
                                         line, true, false, false, n_edge_points)
                                       + q_point);
 
-          for(unsigned int i = 0; i < order; ++i)
+          for (unsigned int i = 0; i < order; ++i)
             boundary_weights(q_point, i)
               = reference_edge_quadrature.weight(q_point)
                 * lobatto_polynomials_grad[i + 1].value(
                     this->generalized_face_support_points[q_point](0));
         }
 
-      for(unsigned int q_point = 0; q_point < n_interior_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_interior_points; ++q_point)
         this->generalized_support_points[q_point + n_boundary_points]
           = quadrature.point(q_point);
     }
@@ -302,9 +304,9 @@ FE_Nedelec<2>::initialize_support_points(const unsigned int order)
       // on the faces of a cell.
       this->generalized_support_points.resize(n_boundary_points);
 
-      for(unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
-          ++line)
-        for(unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
+      for (unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+           ++line)
+        for (unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
           this->generalized_support_points[line * n_edge_points + q_point]
             = edge_quadrature.point(QProjector<dim>::DataSetDescriptor::face(
                                       line, true, false, false, n_edge_points)
@@ -324,7 +326,7 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
   std::vector<Polynomials::Polynomial<double>> lobatto_polynomials_grad(order
                                                                         + 1);
 
-  for(unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
+  for (unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
     lobatto_polynomials_grad[i] = lobatto_polynomials[i + 1].derivative();
 
   // Initialize quadratures to obtain
@@ -334,7 +336,7 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
   const Quadrature<dim - 1>& edge_quadrature
     = QProjector<dim - 1>::project_to_all_faces(reference_edge_quadrature);
 
-  if(order > 0)
+  if (order > 0)
     {
       // If the polynomial order is positive
       // we have support points on the edges,
@@ -355,11 +357,11 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
                                               + n_interior_points);
 
       // Create support points on edges.
-      for(unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
         {
-          for(unsigned int line = 0;
-              line < GeometryInfo<dim - 1>::lines_per_cell;
-              ++line)
+          for (unsigned int line = 0;
+               line < GeometryInfo<dim - 1>::lines_per_cell;
+               ++line)
             this
               ->generalized_face_support_points[line * n_edge_points + q_point]
               = edge_quadrature.point(
@@ -367,8 +369,8 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
                   line, true, false, false, n_edge_points)
                 + q_point);
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 0; j < 2; ++j)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 0; j < 2; ++j)
               {
                 this->generalized_support_points[q_point
                                                  + (i + 4 * j) * n_edge_points]
@@ -386,7 +388,7 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
                     i, j, reference_edge_quadrature.point(q_point)(0));
               }
 
-          for(unsigned int i = 0; i < order; ++i)
+          for (unsigned int i = 0; i < order; ++i)
             boundary_weights(q_point, i)
               = reference_edge_quadrature.weight(q_point)
                 * lobatto_polynomials_grad[i + 1].value(
@@ -394,13 +396,13 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
         }
 
       // Create support points on faces.
-      for(unsigned int q_point = 0; q_point < n_face_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_face_points; ++q_point)
         {
           this->generalized_face_support_points[q_point + 4 * n_edge_points]
             = reference_face_quadrature.point(q_point);
 
-          for(unsigned int i = 0; i <= order; ++i)
-            for(unsigned int j = 0; j < order; ++j)
+          for (unsigned int i = 0; i <= order; ++i)
+            for (unsigned int j = 0; j < order; ++j)
               {
                 boundary_weights(q_point + n_edge_points, 2 * (i * order + j))
                   = reference_face_quadrature.weight(q_point)
@@ -425,9 +427,9 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
       const Quadrature<dim>& face_quadrature
         = QProjector<dim>::project_to_all_faces(reference_face_quadrature);
 
-      for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
-          ++face)
-        for(unsigned int q_point = 0; q_point < n_face_points; ++q_point)
+      for (unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell;
+           ++face)
+        for (unsigned int q_point = 0; q_point < n_face_points; ++q_point)
           {
             this->generalized_support_points[face * n_face_points + q_point
                                              + GeometryInfo<dim>::lines_per_cell
@@ -438,7 +440,7 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
           }
 
       // Create support points in the interior.
-      for(unsigned int q_point = 0; q_point < n_interior_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_interior_points; ++q_point)
         this->generalized_support_points[q_point + n_boundary_points]
           = quadrature.point(q_point);
     }
@@ -449,11 +451,11 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
       this->generalized_support_points.resize(GeometryInfo<dim>::lines_per_cell
                                               * n_edge_points);
 
-      for(unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
+      for (unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
         {
-          for(unsigned int line = 0;
-              line < GeometryInfo<dim - 1>::lines_per_cell;
-              ++line)
+          for (unsigned int line = 0;
+               line < GeometryInfo<dim - 1>::lines_per_cell;
+               ++line)
             this
               ->generalized_face_support_points[line * n_edge_points + q_point]
               = edge_quadrature.point(
@@ -461,8 +463,8 @@ FE_Nedelec<3>::initialize_support_points(const unsigned int order)
                   line, true, false, false, n_edge_points)
                 + q_point);
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 0; j < 2; ++j)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 0; j < 2; ++j)
               {
                 this->generalized_support_points[q_point
                                                  + (i + 4 * j) * n_edge_points]
@@ -490,7 +492,7 @@ FE_Nedelec<1>::initialize_restriction()
 {
   // there is only one refinement case in 1d,
   // which is the isotropic one
-  for(unsigned int i = 0; i < GeometryInfo<1>::max_children_per_cell; ++i)
+  for (unsigned int i = 0; i < GeometryInfo<1>::max_children_per_cell; ++i)
     this->restriction[0][i].reinit(0, 0);
 }
 
@@ -511,7 +513,7 @@ FE_Nedelec<dim>::initialize_restriction()
   const unsigned int& n_edge_quadrature_points = edge_quadrature.size();
   const unsigned int  index = RefinementCase<dim>::isotropic_refinement - 1;
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
@@ -519,13 +521,13 @@ FE_Nedelec<dim>::initialize_restriction()
           // functions of the child cells
           // to the lowest order shape
           // functions of the parent cell.
-          for(unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
-            for(unsigned int q_point = 0; q_point < n_edge_quadrature_points;
-                ++q_point)
+          for (unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
+            for (unsigned int q_point = 0; q_point < n_edge_quadrature_points;
+                 ++q_point)
               {
                 const double weight = 2.0 * edge_quadrature.weight(q_point);
 
-                if(edge_quadrature_points[q_point](0) < 0.5)
+                if (edge_quadrature_points[q_point](0) < 0.5)
                   {
                     Point<dim> quadrature_point(
                       0.0, 2.0 * edge_quadrature_points[q_point](0));
@@ -584,7 +586,7 @@ FE_Nedelec<dim>::initialize_restriction()
           // of the child cells to the higher
           // order shape functions of the
           // parent cell.
-          if(this->degree > 1)
+          if (this->degree > 1)
             {
               const unsigned int deg = this->degree - 1;
               const std::vector<Polynomials::Polynomial<double>>&
@@ -596,14 +598,14 @@ FE_Nedelec<dim>::initialize_restriction()
                 FullMatrix<double> assembling_matrix(deg,
                                                      n_edge_quadrature_points);
 
-                for(unsigned int q_point = 0;
-                    q_point < n_edge_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0;
+                     q_point < n_edge_quadrature_points;
+                     ++q_point)
                   {
                     const double weight
                       = std::sqrt(edge_quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i < deg; ++i)
+                    for (unsigned int i = 0; i < deg; ++i)
                       assembling_matrix(i, q_point)
                         = weight
                           * legendre_polynomials[i + 1].value(
@@ -620,14 +622,14 @@ FE_Nedelec<dim>::initialize_restriction()
               FullMatrix<double> system_rhs(this->degree - 1, 4);
               Vector<double>     tmp(4);
 
-              for(unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
-                for(unsigned int i = 0; i < 2; ++i)
+              for (unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
+                for (unsigned int i = 0; i < 2; ++i)
                   {
                     system_rhs = 0.0;
 
-                    for(unsigned int q_point = 0;
-                        q_point < n_edge_quadrature_points;
-                        ++q_point)
+                    for (unsigned int q_point = 0;
+                         q_point < n_edge_quadrature_points;
+                         ++q_point)
                       {
                         const double weight = edge_quadrature.weight(q_point);
                         const Point<dim> quadrature_point_0(
@@ -635,7 +637,7 @@ FE_Nedelec<dim>::initialize_restriction()
                         const Point<dim> quadrature_point_1(
                           edge_quadrature_points[q_point](0), i);
 
-                        if(edge_quadrature_points[q_point](0) < 0.5)
+                        if (edge_quadrature_points[q_point](0) < 0.5)
                           {
                             Point<dim> quadrature_point_2(
                               i, 2.0 * edge_quadrature_points[q_point](0));
@@ -722,28 +724,28 @@ FE_Nedelec<dim>::initialize_restriction()
                                                 0));
                           }
 
-                        for(unsigned int j = 0; j < this->degree - 1; ++j)
+                        for (unsigned int j = 0; j < this->degree - 1; ++j)
                           {
                             const double L_j
                               = legendre_polynomials[j + 1].value(
                                 edge_quadrature_points[q_point](0));
 
-                            for(unsigned int k = 0; k < tmp.size(); ++k)
+                            for (unsigned int k = 0; k < tmp.size(); ++k)
                               system_rhs(j, k) += tmp(k) * L_j;
                           }
                       }
 
                     system_matrix_inv.mmult(solution, system_rhs);
 
-                    for(unsigned int j = 0; j < this->degree - 1; ++j)
-                      for(unsigned int k = 0; k < 2; ++k)
+                    for (unsigned int j = 0; j < this->degree - 1; ++j)
+                      for (unsigned int k = 0; k < 2; ++k)
                         {
-                          if(std::abs(solution(j, k)) > 1e-14)
+                          if (std::abs(solution(j, k)) > 1e-14)
                             this->restriction[index][i + 2 * k](
                               i * this->degree + j + 1, dof)
                               = solution(j, k);
 
-                          if(std::abs(solution(j, k + 2)) > 1e-14)
+                          if (std::abs(solution(j, k + 2)) > 1e-14)
                             this->restriction[index][2 * i + k](
                               (i + 2) * this->degree + j + 1, dof)
                               = solution(j, k + 2);
@@ -764,18 +766,18 @@ FE_Nedelec<dim>::initialize_restriction()
                 FullMatrix<double> assembling_matrix(
                   (this->degree - 1) * this->degree, n_quadrature_points);
 
-                for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                     ++q_point)
                   {
                     const double weight = std::sqrt(quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i < this->degree; ++i)
+                    for (unsigned int i = 0; i < this->degree; ++i)
                       {
                         const double L_i = weight
                                            * legendre_polynomials[i].value(
                                                quadrature_points[q_point](0));
 
-                        for(unsigned int j = 0; j < this->degree - 1; ++j)
+                        for (unsigned int j = 0; j < this->degree - 1; ++j)
                           assembling_matrix(i * (this->degree - 1) + j, q_point)
                             = L_i
                               * lobatto_polynomials[j + 2].value(
@@ -795,18 +797,18 @@ FE_Nedelec<dim>::initialize_restriction()
               system_rhs.reinit(system_matrix_inv.m(), 8);
               tmp.reinit(8);
 
-              for(unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
+              for (unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
                 {
                   system_rhs = 0.0;
 
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     {
                       tmp = 0.0;
 
-                      if(quadrature_points[q_point](0) < 0.5)
+                      if (quadrature_points[q_point](0) < 0.5)
                         {
-                          if(quadrature_points[q_point](1) < 0.5)
+                          if (quadrature_points[q_point](1) < 0.5)
                             {
                               const Point<dim> quadrature_point(
                                 2.0 * quadrature_points[q_point](0),
@@ -835,7 +837,7 @@ FE_Nedelec<dim>::initialize_restriction()
                             }
                         }
 
-                      else if(quadrature_points[q_point](1) < 0.5)
+                      else if (quadrature_points[q_point](1) < 0.5)
                         {
                           const Point<dim> quadrature_point(
                             2.0 * quadrature_points[q_point](0) - 1.0,
@@ -863,8 +865,8 @@ FE_Nedelec<dim>::initialize_restriction()
                                         dof, quadrature_point, 1);
                         }
 
-                      for(unsigned int i = 0; i < 2; ++i)
-                        for(unsigned int j = 0; j < this->degree; ++j)
+                      for (unsigned int i = 0; i < 2; ++i)
+                        for (unsigned int j = 0; j < this->degree; ++j)
                           {
                             tmp(2 * i) -= this->restriction[index][i](
                                             j + 2 * this->degree, dof)
@@ -894,14 +896,14 @@ FE_Nedelec<dim>::initialize_restriction()
 
                       tmp *= quadrature.weight(q_point);
 
-                      for(unsigned int i = 0; i < this->degree; ++i)
+                      for (unsigned int i = 0; i < this->degree; ++i)
                         {
                           const double L_i_0 = legendre_polynomials[i].value(
                             quadrature_points[q_point](0));
                           const double L_i_1 = legendre_polynomials[i].value(
                             quadrature_points[q_point](1));
 
-                          for(unsigned int j = 0; j < this->degree - 1; ++j)
+                          for (unsigned int j = 0; j < this->degree - 1; ++j)
                             {
                               const double l_j_0
                                 = L_i_0
@@ -912,7 +914,7 @@ FE_Nedelec<dim>::initialize_restriction()
                                   * lobatto_polynomials[j + 2].value(
                                       quadrature_points[q_point](0));
 
-                              for(unsigned int k = 0; k < 4; ++k)
+                              for (unsigned int k = 0; k < 4; ++k)
                                 {
                                   system_rhs(i * (this->degree - 1) + j, 2 * k)
                                     += tmp(2 * k) * l_j_0;
@@ -926,20 +928,20 @@ FE_Nedelec<dim>::initialize_restriction()
 
                   system_matrix_inv.mmult(solution, system_rhs);
 
-                  for(unsigned int i = 0; i < this->degree; ++i)
-                    for(unsigned int j = 0; j < this->degree - 1; ++j)
-                      for(unsigned int k = 0; k < 4; ++k)
+                  for (unsigned int i = 0; i < this->degree; ++i)
+                    for (unsigned int j = 0; j < this->degree - 1; ++j)
+                      for (unsigned int k = 0; k < 4; ++k)
                         {
-                          if(std::abs(
-                               solution(i * (this->degree - 1) + j, 2 * k))
-                             > 1e-14)
+                          if (std::abs(
+                                solution(i * (this->degree - 1) + j, 2 * k))
+                              > 1e-14)
                             this->restriction[index][k](
                               i * (this->degree - 1) + j + n_boundary_dofs, dof)
                               = solution(i * (this->degree - 1) + j, 2 * k);
 
-                          if(std::abs(
-                               solution(i * (this->degree - 1) + j, 2 * k + 1))
-                             > 1e-14)
+                          if (std::abs(
+                                solution(i * (this->degree - 1) + j, 2 * k + 1))
+                              > 1e-14)
                             this->restriction[index][k](
                               i + (this->degree - 1 + j) * this->degree
                                 + n_boundary_dofs,
@@ -958,15 +960,15 @@ FE_Nedelec<dim>::initialize_restriction()
           // functions of the child cells
           // to the lowest order shape
           // functions of the parent cell.
-          for(unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
-            for(unsigned int q_point = 0; q_point < n_edge_quadrature_points;
-                ++q_point)
+          for (unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
+            for (unsigned int q_point = 0; q_point < n_edge_quadrature_points;
+                 ++q_point)
               {
                 const double weight = 2.0 * edge_quadrature.weight(q_point);
 
-                if(edge_quadrature_points[q_point](0) < 0.5)
-                  for(unsigned int i = 0; i < 2; ++i)
-                    for(unsigned int j = 0; j < 2; ++j)
+                if (edge_quadrature_points[q_point](0) < 0.5)
+                  for (unsigned int i = 0; i < 2; ++i)
+                    for (unsigned int j = 0; j < 2; ++j)
                       {
                         Point<dim> quadrature_point(
                           i, 2.0 * edge_quadrature_points[q_point](0), j);
@@ -993,8 +995,8 @@ FE_Nedelec<dim>::initialize_restriction()
                       }
 
                 else
-                  for(unsigned int i = 0; i < 2; ++i)
-                    for(unsigned int j = 0; j < 2; ++j)
+                  for (unsigned int i = 0; i < 2; ++i)
+                    for (unsigned int j = 0; j < 2; ++j)
                       {
                         Point<dim> quadrature_point(
                           i, 2.0 * edge_quadrature_points[q_point](0) - 1.0, j);
@@ -1025,7 +1027,7 @@ FE_Nedelec<dim>::initialize_restriction()
           // of the child cells to the higher
           // order shape functions of the
           // parent cell.
-          if(this->degree > 1)
+          if (this->degree > 1)
             {
               const unsigned int deg = this->degree - 1;
               const std::vector<Polynomials::Polynomial<double>>&
@@ -1037,14 +1039,14 @@ FE_Nedelec<dim>::initialize_restriction()
                 FullMatrix<double> assembling_matrix(deg,
                                                      n_edge_quadrature_points);
 
-                for(unsigned int q_point = 0;
-                    q_point < n_edge_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0;
+                     q_point < n_edge_quadrature_points;
+                     ++q_point)
                   {
                     const double weight
                       = std::sqrt(edge_quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i < deg; ++i)
+                    for (unsigned int i = 0; i < deg; ++i)
                       assembling_matrix(i, q_point)
                         = weight
                           * legendre_polynomials[i + 1].value(
@@ -1061,15 +1063,15 @@ FE_Nedelec<dim>::initialize_restriction()
               FullMatrix<double> system_rhs(deg, 6);
               Vector<double>     tmp(6);
 
-              for(unsigned int i = 0; i < 2; ++i)
-                for(unsigned int j = 0; j < 2; ++j)
-                  for(unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
+              for (unsigned int i = 0; i < 2; ++i)
+                for (unsigned int j = 0; j < 2; ++j)
+                  for (unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
                     {
                       system_rhs = 0.0;
 
-                      for(unsigned int q_point = 0;
-                          q_point < n_edge_quadrature_points;
-                          ++q_point)
+                      for (unsigned int q_point = 0;
+                           q_point < n_edge_quadrature_points;
+                           ++q_point)
                         {
                           const double weight = edge_quadrature.weight(q_point);
                           const Point<dim> quadrature_point_0(
@@ -1079,7 +1081,7 @@ FE_Nedelec<dim>::initialize_restriction()
                           const Point<dim> quadrature_point_2(
                             i, j, edge_quadrature_points[q_point](0));
 
-                          if(edge_quadrature_points[q_point](0) < 0.5)
+                          if (edge_quadrature_points[q_point](0) < 0.5)
                             {
                               Point<dim> quadrature_point_3(
                                 i, 2.0 * edge_quadrature_points[q_point](0), j);
@@ -1224,33 +1226,33 @@ FE_Nedelec<dim>::initialize_restriction()
                                              2));
                             }
 
-                          for(unsigned int k = 0; k < deg; ++k)
+                          for (unsigned int k = 0; k < deg; ++k)
                             {
                               const double L_k
                                 = legendre_polynomials[k + 1].value(
                                   edge_quadrature_points[q_point](0));
 
-                              for(unsigned int l = 0; l < tmp.size(); ++l)
+                              for (unsigned int l = 0; l < tmp.size(); ++l)
                                 system_rhs(k, l) += tmp(l) * L_k;
                             }
                         }
 
                       system_matrix_inv.mmult(solution, system_rhs);
 
-                      for(unsigned int k = 0; k < 2; ++k)
-                        for(unsigned int l = 0; l < deg; ++l)
+                      for (unsigned int k = 0; k < 2; ++k)
+                        for (unsigned int l = 0; l < deg; ++l)
                           {
-                            if(std::abs(solution(l, k)) > 1e-14)
+                            if (std::abs(solution(l, k)) > 1e-14)
                               this->restriction[index][i + 2 * (2 * j + k)](
                                 (i + 4 * j) * this->degree + l + 1, dof)
                                 = solution(l, k);
 
-                            if(std::abs(solution(l, k + 2)) > 1e-14)
+                            if (std::abs(solution(l, k + 2)) > 1e-14)
                               this->restriction[index][2 * (i + 2 * j) + k](
                                 (i + 4 * j + 2) * this->degree + l + 1, dof)
                                 = solution(l, k + 2);
 
-                            if(std::abs(solution(l, k + 4)) > 1e-14)
+                            if (std::abs(solution(l, k + 4)) > 1e-14)
                               this->restriction[index][i + 2 * (j + 2 * k)](
                                 (i + 2 * (j + 4)) * this->degree + l + 1, dof)
                                 = solution(l, k + 4);
@@ -1272,21 +1274,21 @@ FE_Nedelec<dim>::initialize_restriction()
                 FullMatrix<double> assembling_matrix(deg * this->degree,
                                                      n_face_quadrature_points);
 
-                for(unsigned int q_point = 0;
-                    q_point < n_face_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0;
+                     q_point < n_face_quadrature_points;
+                     ++q_point)
                   {
                     const double weight
                       = std::sqrt(face_quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int i = 0; i <= deg; ++i)
                       {
                         const double L_i
                           = weight
                             * legendre_polynomials[i].value(
                                 face_quadrature_points[q_point](0));
 
-                        for(unsigned int j = 0; j < deg; ++j)
+                        for (unsigned int j = 0; j < deg; ++j)
                           assembling_matrix(i * deg + j, q_point)
                             = L_i
                               * lobatto_polynomials[j + 2].value(
@@ -1306,20 +1308,20 @@ FE_Nedelec<dim>::initialize_restriction()
               system_rhs.reinit(system_matrix_inv.m(), 24);
               tmp.reinit(24);
 
-              for(unsigned int i = 0; i < 2; ++i)
-                for(unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
+              for (unsigned int i = 0; i < 2; ++i)
+                for (unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
                   {
                     system_rhs = 0.0;
 
-                    for(unsigned int q_point = 0;
-                        q_point < n_face_quadrature_points;
-                        ++q_point)
+                    for (unsigned int q_point = 0;
+                         q_point < n_face_quadrature_points;
+                         ++q_point)
                       {
                         tmp = 0.0;
 
-                        if(face_quadrature_points[q_point](0) < 0.5)
+                        if (face_quadrature_points[q_point](0) < 0.5)
                           {
-                            if(face_quadrature_points[q_point](1) < 0.5)
+                            if (face_quadrature_points[q_point](1) < 0.5)
                               {
                                 Point<dim> quadrature_point_0(
                                   i,
@@ -1393,7 +1395,7 @@ FE_Nedelec<dim>::initialize_restriction()
                               }
                           }
 
-                        else if(face_quadrature_points[q_point](1) < 0.5)
+                        else if (face_quadrature_points[q_point](1) < 0.5)
                           {
                             Point<dim> quadrature_point_0(
                               i,
@@ -1476,9 +1478,9 @@ FE_Nedelec<dim>::initialize_restriction()
                           face_quadrature_points[q_point](1),
                           i);
 
-                        for(unsigned int j = 0; j < 2; ++j)
-                          for(unsigned int k = 0; k < 2; ++k)
-                            for(unsigned int l = 0; l <= deg; ++l)
+                        for (unsigned int j = 0; j < 2; ++j)
+                          for (unsigned int k = 0; k < 2; ++k)
+                            for (unsigned int l = 0; l <= deg; ++l)
                               {
                                 tmp(2 * (j + 2 * k))
                                   -= this->restriction[index]
@@ -1539,14 +1541,14 @@ FE_Nedelec<dim>::initialize_restriction()
 
                         tmp *= face_quadrature.weight(q_point);
 
-                        for(unsigned int j = 0; j <= deg; ++j)
+                        for (unsigned int j = 0; j <= deg; ++j)
                           {
                             const double L_j_0 = legendre_polynomials[j].value(
                               face_quadrature_points[q_point](0));
                             const double L_j_1 = legendre_polynomials[j].value(
                               face_quadrature_points[q_point](1));
 
-                            for(unsigned int k = 0; k < deg; ++k)
+                            for (unsigned int k = 0; k < deg; ++k)
                               {
                                 const double l_k_0
                                   = L_j_0
@@ -1557,7 +1559,7 @@ FE_Nedelec<dim>::initialize_restriction()
                                     * lobatto_polynomials[k + 2].value(
                                         face_quadrature_points[q_point](0));
 
-                                for(unsigned int l = 0; l < 4; ++l)
+                                for (unsigned int l = 0; l < 4; ++l)
                                   {
                                     system_rhs(j * deg + k, 2 * l)
                                       += tmp(2 * l) * l_k_0;
@@ -1578,32 +1580,32 @@ FE_Nedelec<dim>::initialize_restriction()
 
                     system_matrix_inv.mmult(solution, system_rhs);
 
-                    for(unsigned int j = 0; j < 2; ++j)
-                      for(unsigned int k = 0; k < 2; ++k)
-                        for(unsigned int l = 0; l <= deg; ++l)
-                          for(unsigned int m = 0; m < deg; ++m)
+                    for (unsigned int j = 0; j < 2; ++j)
+                      for (unsigned int k = 0; k < 2; ++k)
+                        for (unsigned int l = 0; l <= deg; ++l)
+                          for (unsigned int m = 0; m < deg; ++m)
                             {
-                              if(std::abs(
-                                   solution(l * deg + m, 2 * (j + 2 * k)))
-                                 > 1e-14)
+                              if (std::abs(
+                                    solution(l * deg + m, 2 * (j + 2 * k)))
+                                  > 1e-14)
                                 this->restriction[index][i + 2 * (2 * j + k)](
                                   (2 * i * this->degree + l) * deg + m
                                     + n_edge_dofs,
                                   dof)
                                   = solution(l * deg + m, 2 * (j + 2 * k));
 
-                              if(std::abs(
-                                   solution(l * deg + m, 2 * (j + 2 * k) + 1))
-                                 > 1e-14)
+                              if (std::abs(
+                                    solution(l * deg + m, 2 * (j + 2 * k) + 1))
+                                  > 1e-14)
                                 this->restriction[index][i + 2 * (2 * j + k)](
                                   ((2 * i + 1) * deg + m) * this->degree + l
                                     + n_edge_dofs,
                                   dof)
                                   = solution(l * deg + m, 2 * (j + 2 * k) + 1);
 
-                              if(std::abs(
-                                   solution(l * deg + m, 2 * (j + 2 * (k + 2))))
-                                 > 1e-14)
+                              if (std::abs(solution(l * deg + m,
+                                                    2 * (j + 2 * (k + 2))))
+                                  > 1e-14)
                                 this->restriction[index][2 * (i + 2 * j) + k](
                                   (2 * (i + 2) * this->degree + l) * deg + m
                                     + n_edge_dofs,
@@ -1611,18 +1613,18 @@ FE_Nedelec<dim>::initialize_restriction()
                                   = solution(l * deg + m,
                                              2 * (j + 2 * (k + 2)));
 
-                              if(std::abs(
-                                   solution(l * deg + m, 2 * (j + 2 * k) + 9))
-                                 > 1e-14)
+                              if (std::abs(
+                                    solution(l * deg + m, 2 * (j + 2 * k) + 9))
+                                  > 1e-14)
                                 this->restriction[index][2 * (i + 2 * j) + k](
                                   ((2 * i + 5) * deg + m) * this->degree + l
                                     + n_edge_dofs,
                                   dof)
                                   = solution(l * deg + m, 2 * (j + 2 * k) + 9);
 
-                              if(std::abs(
-                                   solution(l * deg + m, 2 * (j + 2 * (k + 4))))
-                                 > 1e-14)
+                              if (std::abs(solution(l * deg + m,
+                                                    2 * (j + 2 * (k + 4))))
+                                  > 1e-14)
                                 this->restriction[index][2 * (2 * i + j) + k](
                                   (2 * (i + 4) * this->degree + l) * deg + m
                                     + n_edge_dofs,
@@ -1630,9 +1632,9 @@ FE_Nedelec<dim>::initialize_restriction()
                                   = solution(l * deg + m,
                                              2 * (j + 2 * (k + 4)));
 
-                              if(std::abs(
-                                   solution(l * deg + m, 2 * (j + 2 * k) + 17))
-                                 > 1e-14)
+                              if (std::abs(
+                                    solution(l * deg + m, 2 * (j + 2 * k) + 17))
+                                  > 1e-14)
                                 this->restriction[index][2 * (2 * i + j) + k](
                                   ((2 * i + 9) * deg + m) * this->degree + l
                                     + n_edge_dofs,
@@ -1653,25 +1655,25 @@ FE_Nedelec<dim>::initialize_restriction()
                 FullMatrix<double> assembling_matrix(deg * deg * this->degree,
                                                      n_quadrature_points);
 
-                for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                     ++q_point)
                   {
                     const double weight = std::sqrt(quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int i = 0; i <= deg; ++i)
                       {
                         const double L_i = weight
                                            * legendre_polynomials[i].value(
                                                quadrature_points[q_point](0));
 
-                        for(unsigned int j = 0; j < deg; ++j)
+                        for (unsigned int j = 0; j < deg; ++j)
                           {
                             const double l_j
                               = L_i
                                 * lobatto_polynomials[j + 2].value(
                                     quadrature_points[q_point](1));
 
-                            for(unsigned int k = 0; k < deg; ++k)
+                            for (unsigned int k = 0; k < deg; ++k)
                               assembling_matrix((i * deg + j) * deg + k,
                                                 q_point)
                                 = l_j
@@ -1693,20 +1695,20 @@ FE_Nedelec<dim>::initialize_restriction()
               system_rhs.reinit(system_matrix_inv.m(), 24);
               tmp.reinit(24);
 
-              for(unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
+              for (unsigned int dof = 0; dof < this->dofs_per_cell; ++dof)
                 {
                   system_rhs = 0.0;
 
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     {
                       tmp = 0.0;
 
-                      if(quadrature_points[q_point](0) < 0.5)
+                      if (quadrature_points[q_point](0) < 0.5)
                         {
-                          if(quadrature_points[q_point](1) < 0.5)
+                          if (quadrature_points[q_point](1) < 0.5)
                             {
-                              if(quadrature_points[q_point](2) < 0.5)
+                              if (quadrature_points[q_point](2) < 0.5)
                                 {
                                   const Point<dim> quadrature_point(
                                     2.0 * quadrature_points[q_point](0),
@@ -1743,7 +1745,7 @@ FE_Nedelec<dim>::initialize_restriction()
                                 }
                             }
 
-                          else if(quadrature_points[q_point](2) < 0.5)
+                          else if (quadrature_points[q_point](2) < 0.5)
                             {
                               const Point<dim> quadrature_point(
                                 2.0 * quadrature_points[q_point](0),
@@ -1780,9 +1782,9 @@ FE_Nedelec<dim>::initialize_restriction()
                             }
                         }
 
-                      else if(quadrature_points[q_point](1) < 0.5)
+                      else if (quadrature_points[q_point](1) < 0.5)
                         {
-                          if(quadrature_points[q_point](2) < 0.5)
+                          if (quadrature_points[q_point](2) < 0.5)
                             {
                               const Point<dim> quadrature_point(
                                 2.0 * quadrature_points[q_point](0) - 1.0,
@@ -1819,7 +1821,7 @@ FE_Nedelec<dim>::initialize_restriction()
                             }
                         }
 
-                      else if(quadrature_points[q_point](2) < 0.5)
+                      else if (quadrature_points[q_point](2) < 0.5)
                         {
                           const Point<dim> quadrature_point(
                             2.0 * quadrature_points[q_point](0) - 1.0,
@@ -1855,10 +1857,10 @@ FE_Nedelec<dim>::initialize_restriction()
                                          dof, quadrature_point, 2);
                         }
 
-                      for(unsigned int i = 0; i < 2; ++i)
-                        for(unsigned int j = 0; j < 2; ++j)
-                          for(unsigned int k = 0; k < 2; ++k)
-                            for(unsigned int l = 0; l <= deg; ++l)
+                      for (unsigned int i = 0; i < 2; ++i)
+                        for (unsigned int j = 0; j < 2; ++j)
+                          for (unsigned int k = 0; k < 2; ++k)
+                            for (unsigned int l = 0; l <= deg; ++l)
                               {
                                 tmp(3 * (i + 2 * (j + 2 * k)))
                                   -= this->restriction[index][2 * (2 * i + j)
@@ -1886,7 +1888,7 @@ FE_Nedelec<dim>::initialize_restriction()
                                          quadrature_points[q_point],
                                          2);
 
-                                for(unsigned int m = 0; m < deg; ++m)
+                                for (unsigned int m = 0; m < deg; ++m)
                                   {
                                     tmp(3 * (i + 2 * (j + 2 * k)))
                                       -= this->restriction[index]
@@ -1977,7 +1979,7 @@ FE_Nedelec<dim>::initialize_restriction()
 
                       tmp *= quadrature.weight(q_point);
 
-                      for(unsigned int i = 0; i <= deg; ++i)
+                      for (unsigned int i = 0; i <= deg; ++i)
                         {
                           const double L_i_0 = legendre_polynomials[i].value(
                             quadrature_points[q_point](0));
@@ -1986,7 +1988,7 @@ FE_Nedelec<dim>::initialize_restriction()
                           const double L_i_2 = legendre_polynomials[i].value(
                             quadrature_points[q_point](2));
 
-                          for(unsigned int j = 0; j < deg; ++j)
+                          for (unsigned int j = 0; j < deg; ++j)
                             {
                               const double l_j_0
                                 = L_i_0
@@ -2001,7 +2003,7 @@ FE_Nedelec<dim>::initialize_restriction()
                                   * lobatto_polynomials[j + 2].value(
                                       quadrature_points[q_point](0));
 
-                              for(unsigned int k = 0; k < deg; ++k)
+                              for (unsigned int k = 0; k < deg; ++k)
                                 {
                                   const double l_k_0
                                     = l_j_0
@@ -2016,7 +2018,7 @@ FE_Nedelec<dim>::initialize_restriction()
                                       * lobatto_polynomials[k + 2].value(
                                           quadrature_points[q_point](1));
 
-                                  for(unsigned int l = 0; l < 8; ++l)
+                                  for (unsigned int l = 0; l < 8; ++l)
                                     {
                                       system_rhs((i * deg + j) * deg + k, 3 * l)
                                         += tmp(3 * l) * l_k_0;
@@ -2034,26 +2036,27 @@ FE_Nedelec<dim>::initialize_restriction()
 
                   system_matrix_inv.mmult(solution, system_rhs);
 
-                  for(unsigned int i = 0; i < 2; ++i)
-                    for(unsigned int j = 0; j < 2; ++j)
-                      for(unsigned int k = 0; k < 2; ++k)
-                        for(unsigned int l = 0; l <= deg; ++l)
-                          for(unsigned int m = 0; m < deg; ++m)
-                            for(unsigned int n = 0; n < deg; ++n)
+                  for (unsigned int i = 0; i < 2; ++i)
+                    for (unsigned int j = 0; j < 2; ++j)
+                      for (unsigned int k = 0; k < 2; ++k)
+                        for (unsigned int l = 0; l <= deg; ++l)
+                          for (unsigned int m = 0; m < deg; ++m)
+                            for (unsigned int n = 0; n < deg; ++n)
                               {
-                                if(std::abs(solution((l * deg + m) * deg + n,
-                                                     3 * (i + 2 * (j + 2 * k))))
-                                   > 1e-14)
+                                if (std::abs(
+                                      solution((l * deg + m) * deg + n,
+                                               3 * (i + 2 * (j + 2 * k))))
+                                    > 1e-14)
                                   this->restriction[index][2 * (2 * i + j) + k](
                                     (l * deg + m) * deg + n + n_boundary_dofs,
                                     dof)
                                     = solution((l * deg + m) * deg + n,
                                                3 * (i + 2 * (j + 2 * k)));
 
-                                if(std::abs(
-                                     solution((l * deg + m) * deg + n,
-                                              3 * (i + 2 * (j + 2 * k)) + 1))
-                                   > 1e-14)
+                                if (std::abs(
+                                      solution((l * deg + m) * deg + n,
+                                               3 * (i + 2 * (j + 2 * k)) + 1))
+                                    > 1e-14)
                                   this->restriction[index][2 * (2 * i + j) + k](
                                     (l + (m + deg) * this->degree) * deg + n
                                       + n_boundary_dofs,
@@ -2061,10 +2064,10 @@ FE_Nedelec<dim>::initialize_restriction()
                                     = solution((l * deg + m) * deg + n,
                                                3 * (i + 2 * (j + 2 * k)) + 1);
 
-                                if(std::abs(
-                                     solution((l * deg + m) * deg + n,
-                                              3 * (i + 2 * (j + 2 * k)) + 2))
-                                   > 1e-14)
+                                if (std::abs(
+                                      solution((l * deg + m) * deg + n,
+                                               3 * (i + 2 * (j + 2 * k)) + 2))
+                                    > 1e-14)
                                   this->restriction[index][2 * (2 * i + j) + k](
                                     l + ((m + 2 * deg) * deg + n) * this->degree
                                       + n_boundary_dofs,
@@ -2089,7 +2092,7 @@ FE_Nedelec<dim>::get_dpo_vector(const unsigned int degree, bool dg)
 {
   std::vector<unsigned int> dpo(dim + 1);
 
-  if(dg)
+  if (dg)
     {
       dpo[dim] = PolynomialsNedelec<dim>::compute_n_pols(degree);
     }
@@ -2099,7 +2102,7 @@ FE_Nedelec<dim>::get_dpo_vector(const unsigned int degree, bool dg)
       dpo[1] = degree + 1;
       dpo[2] = 2 * degree * (degree + 1);
 
-      if(dim == 3)
+      if (dim == 3)
         dpo[3] = 3 * degree * degree * (degree + 1);
     }
 
@@ -2130,37 +2133,37 @@ FE_Nedelec<dim>::has_support_on_face(const unsigned int shape_index,
          ExcIndexRange(face_index, 0, GeometryInfo<dim>::faces_per_cell));
 
   const unsigned int deg = this->degree - 1;
-  switch(dim)
+  switch (dim)
     {
       case 2:
-        switch(face_index)
+        switch (face_index)
           {
             case 0:
-              if(!((shape_index > deg) && (shape_index < 2 * this->degree)))
+              if (!((shape_index > deg) && (shape_index < 2 * this->degree)))
                 return true;
 
               else
                 return false;
 
             case 1:
-              if((shape_index > deg)
-                 && (shape_index
-                     < GeometryInfo<2>::lines_per_cell * this->degree))
+              if ((shape_index > deg)
+                  && (shape_index
+                      < GeometryInfo<2>::lines_per_cell * this->degree))
                 return true;
 
               else
                 return false;
 
             case 2:
-              if(shape_index < 3 * this->degree)
+              if (shape_index < 3 * this->degree)
                 return true;
 
               else
                 return false;
 
             case 3:
-              if(!((shape_index >= 2 * this->degree)
-                   && (shape_index < 3 * this->degree)))
+              if (!((shape_index >= 2 * this->degree)
+                    && (shape_index < 3 * this->degree)))
                 return true;
 
               else
@@ -2174,195 +2177,211 @@ FE_Nedelec<dim>::has_support_on_face(const unsigned int shape_index,
           }
 
       case 3:
-        switch(face_index)
+        switch (face_index)
           {
             case 0:
-              if(((shape_index > deg) && (shape_index < 2 * this->degree))
-                 || ((shape_index >= 5 * this->degree)
-                     && (shape_index < 6 * this->degree))
-                 || ((shape_index >= 9 * this->degree)
-                     && (shape_index < 10 * this->degree))
-                 || ((shape_index >= 11 * this->degree)
-                     && (shape_index
-                         < GeometryInfo<3>::lines_per_cell * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 4 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 5 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 6 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 7 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 9 * deg)
-                             * this->degree))
-                 || ((shape_index
-                      >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
-                           * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 11 * deg)
-                             * this->degree)))
+              if (((shape_index > deg) && (shape_index < 2 * this->degree))
+                  || ((shape_index >= 5 * this->degree)
+                      && (shape_index < 6 * this->degree))
+                  || ((shape_index >= 9 * this->degree)
+                      && (shape_index < 10 * this->degree))
+                  || ((shape_index >= 11 * this->degree)
+                      && (shape_index
+                          < GeometryInfo<3>::lines_per_cell * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 4 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 5 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 6 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 7 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 9 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 11 * deg)
+                              * this->degree)))
                 return false;
 
               else
                 return true;
 
             case 1:
-              if(((shape_index > deg) && (shape_index < 4 * this->degree))
-                 || ((shape_index >= 5 * this->degree)
-                     && (shape_index < 8 * this->degree))
-                 || ((shape_index >= 9 * this->degree)
-                     && (shape_index < 10 * this->degree))
-                 || ((shape_index >= 11 * this->degree)
-                     && (shape_index
-                         < GeometryInfo<3>::lines_per_cell * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 5 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 6 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 7 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 9 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 10 * deg)
-                             * this->degree))
-                 || ((shape_index
-                      >= (GeometryInfo<3>::lines_per_cell + 11 * deg)
-                           * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 12 * deg)
-                             * this->degree)))
+              if (((shape_index > deg) && (shape_index < 4 * this->degree))
+                  || ((shape_index >= 5 * this->degree)
+                      && (shape_index < 8 * this->degree))
+                  || ((shape_index >= 9 * this->degree)
+                      && (shape_index < 10 * this->degree))
+                  || ((shape_index >= 11 * this->degree)
+                      && (shape_index
+                          < GeometryInfo<3>::lines_per_cell * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 5 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 6 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 7 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 9 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 10 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 11 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 12 * deg)
+                              * this->degree)))
                 return true;
 
               else
                 return false;
 
             case 2:
-              if((shape_index < 3 * this->degree)
-                 || ((shape_index >= 4 * this->degree)
-                     && (shape_index < 7 * this->degree))
-                 || ((shape_index >= 8 * this->degree)
-                     && (shape_index < 10 * this->degree))
-                 || ((shape_index
-                      >= (GeometryInfo<3>::lines_per_cell + deg) * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 2 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 3 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 6 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 8 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 9 * deg)
-                             * this->degree))
-                 || ((shape_index
-                      >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
-                           * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 11 * deg)
-                             * this->degree)))
+              if ((shape_index < 3 * this->degree)
+                  || ((shape_index >= 4 * this->degree)
+                      && (shape_index < 7 * this->degree))
+                  || ((shape_index >= 8 * this->degree)
+                      && (shape_index < 10 * this->degree))
+                  || ((shape_index >= (GeometryInfo<3>::lines_per_cell + deg)
+                                        * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 2 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 3 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 6 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 8 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 9 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 11 * deg)
+                              * this->degree)))
                 return true;
 
               else
                 return false;
 
             case 3:
-              if((shape_index < 2 * this->degree)
-                 || ((shape_index >= 3 * this->degree)
-                     && (shape_index < 6 * this->degree))
-                 || ((shape_index >= 7 * this->degree)
-                     && (shape_index < 8 * this->degree))
-                 || ((shape_index >= 10 * this->degree)
-                     && (shape_index
-                         < GeometryInfo<3>::lines_per_cell * this->degree))
-                 || ((shape_index
-                      >= (GeometryInfo<3>::lines_per_cell + deg) * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 2 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 3 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 4 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 6 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 9 * deg)
-                             * this->degree))
-                 || ((shape_index
-                      >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
-                           * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 11 * deg)
-                             * this->degree)))
+              if ((shape_index < 2 * this->degree)
+                  || ((shape_index >= 3 * this->degree)
+                      && (shape_index < 6 * this->degree))
+                  || ((shape_index >= 7 * this->degree)
+                      && (shape_index < 8 * this->degree))
+                  || ((shape_index >= 10 * this->degree)
+                      && (shape_index
+                          < GeometryInfo<3>::lines_per_cell * this->degree))
+                  || ((shape_index >= (GeometryInfo<3>::lines_per_cell + deg)
+                                        * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 2 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 3 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 4 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 6 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 9 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 11 * deg)
+                              * this->degree)))
                 return true;
 
               else
                 return false;
 
             case 4:
-              if((shape_index < 4 * this->degree)
-                 || ((shape_index >= 8 * this->degree)
-                     && (shape_index < (GeometryInfo<3>::lines_per_cell + deg)
-                                         * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 3 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 5 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 6 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 7 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 10 * deg)
-                             * this->degree)))
+              if ((shape_index < 4 * this->degree)
+                  || ((shape_index >= 8 * this->degree)
+                      && (shape_index < (GeometryInfo<3>::lines_per_cell + deg)
+                                          * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 3 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 5 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 6 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 7 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 10 * deg)
+                              * this->degree)))
                 return true;
 
               else
                 return false;
 
             case 5:
-              if(((shape_index >= 4 * this->degree)
-                  && (shape_index
-                      < (GeometryInfo<3>::lines_per_cell + deg) * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 3 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 5 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 6 * deg)
-                             * this->degree))
-                 || ((shape_index >= (GeometryInfo<3>::lines_per_cell + 7 * deg)
-                                       * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 8 * deg)
-                             * this->degree))
-                 || ((shape_index
-                      >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
-                           * this->degree)
-                     && (shape_index
-                         < (GeometryInfo<3>::lines_per_cell + 12 * deg)
-                             * this->degree)))
+              if (((shape_index >= 4 * this->degree)
+                   && (shape_index < (GeometryInfo<3>::lines_per_cell + deg)
+                                       * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 2 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 3 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 5 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 6 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 7 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 8 * deg)
+                              * this->degree))
+                  || ((shape_index
+                       >= (GeometryInfo<3>::lines_per_cell + 10 * deg)
+                            * this->degree)
+                      && (shape_index
+                          < (GeometryInfo<3>::lines_per_cell + 12 * deg)
+                              * this->degree)))
                 return true;
 
               else
@@ -2388,18 +2407,18 @@ FiniteElementDomination::Domination
 FE_Nedelec<dim>::compare_for_face_domination(
   const FiniteElement<dim>& fe_other) const
 {
-  if(const FE_Nedelec<dim>* fe_nedelec_other
-     = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
+  if (const FE_Nedelec<dim>* fe_nedelec_other
+      = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
     {
-      if(this->degree < fe_nedelec_other->degree)
+      if (this->degree < fe_nedelec_other->degree)
         return FiniteElementDomination::this_element_dominates;
-      else if(this->degree == fe_nedelec_other->degree)
+      else if (this->degree == fe_nedelec_other->degree)
         return FiniteElementDomination::either_element_can_dominate;
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if (const FE_Nothing<dim>* fe_nothing
+           = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
     {
       // TODO: ???
       // the FE_Nothing has no
@@ -2413,7 +2432,7 @@ FE_Nedelec<dim>::compare_for_face_domination(
       // function to be discontinuous
       // along the interface
       //      return FiniteElementDomination::other_element_dominates;
-      if(fe_nothing->is_dominating())
+      if (fe_nothing->is_dominating())
         {
           return FiniteElementDomination::other_element_dominates;
         }
@@ -2454,8 +2473,8 @@ FE_Nedelec<dim>::hp_line_dof_identities(
   // identities if both FEs are
   // FE_Nedelec or if the other one is an
   // FE_Nothing
-  if(const FE_Nedelec<dim>* fe_nedelec_other
-     = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
+  if (const FE_Nedelec<dim>* fe_nedelec_other
+      = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
     {
       // dofs are located on lines, so
       // two dofs are identical, if their
@@ -2463,15 +2482,15 @@ FE_Nedelec<dim>::hp_line_dof_identities(
       // same polynomial degree.
       std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-      for(unsigned int i = 0;
-          i < std::min(fe_nedelec_other->degree, this->degree);
-          ++i)
+      for (unsigned int i = 0;
+           i < std::min(fe_nedelec_other->degree, this->degree);
+           ++i)
         identities.emplace_back(i, i);
 
       return identities;
     }
 
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -2496,8 +2515,8 @@ FE_Nedelec<dim>::hp_quad_dof_identities(
   // these identities if both FEs are
   // FE_Nedelec or if the other one is an
   // FE_Nothing
-  if(const FE_Nedelec<dim>* fe_nedelec_other
-     = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
+  if (const FE_Nedelec<dim>* fe_nedelec_other
+      = dynamic_cast<const FE_Nedelec<dim>*>(&fe_other))
     {
       // dofs are located on the interior
       // of faces, so two dofs are identical,
@@ -2508,8 +2527,8 @@ FE_Nedelec<dim>::hp_quad_dof_identities(
       const unsigned int p_min = std::min(p, q);
       std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-      for(unsigned int i = 0; i < p_min; ++i)
-        for(unsigned int j = 0; j < p_min - 1; ++j)
+      for (unsigned int i = 0; i < p_min; ++i)
+        for (unsigned int j = 0; j < p_min - 1; ++j)
           {
             identities.emplace_back(i * (q - 1) + j, i * (p - 1) + j);
             identities.emplace_back(i + (j + q - 1) * q, i + (j + p - 1) * p);
@@ -2518,7 +2537,7 @@ FE_Nedelec<dim>::hp_quad_dof_identities(
       return identities;
     }
 
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if (dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -2580,7 +2599,7 @@ FE_Nedelec<dim>::get_face_interpolation_matrix(
 
   // On lines we can just identify
   // all degrees of freedom.
-  for(unsigned int i = 0; i < this->degree; ++i)
+  for (unsigned int i = 0; i < this->degree; ++i)
     interpolation_matrix(i, i) = 1.0;
 
   // In 3d we have some lines more
@@ -2589,17 +2608,17 @@ FE_Nedelec<dim>::get_face_interpolation_matrix(
   // to take a bit more care of the
   // indices of the degrees of
   // freedom.
-  if(dim == 3)
+  if (dim == 3)
     {
       const unsigned int p = source_fe.degree;
       const unsigned int q = this->degree;
 
-      for(unsigned int i = 0; i < q; ++i)
+      for (unsigned int i = 0; i < q; ++i)
         {
-          for(int j = 1; j < (int) GeometryInfo<dim>::lines_per_face; ++j)
+          for (int j = 1; j < (int) GeometryInfo<dim>::lines_per_face; ++j)
             interpolation_matrix(j * p + i, j * q + i) = 1.0;
 
-          for(unsigned int j = 0; j < q - 1; ++j)
+          for (unsigned int j = 0; j < q - 1; ++j)
             {
               interpolation_matrix(
                 GeometryInfo<dim>::lines_per_face * p + i * (p - 1) + j,
@@ -2683,13 +2702,13 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
     = edge_quadrature.get_points();
   const unsigned int& n_edge_quadrature_points = edge_quadrature.size();
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
-          for(unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
-            for(unsigned int q_point = 0; q_point < n_edge_quadrature_points;
-                ++q_point)
+          for (unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
+            for (unsigned int q_point = 0; q_point < n_edge_quadrature_points;
+                 ++q_point)
               {
                 const Point<dim> quadrature_point(
                   0.0, 0.5 * (edge_quadrature_points[q_point](0) + subface));
@@ -2699,7 +2718,7 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                      * this->shape_value_component(dof, quadrature_point, 1);
               }
 
-          if(source_fe.degree > 1)
+          if (source_fe.degree > 1)
             {
               const std::vector<Polynomials::Polynomial<double>>&
                 legendre_polynomials
@@ -2712,14 +2731,14 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                 FullMatrix<double> assembling_matrix(source_fe.degree - 1,
                                                      n_edge_quadrature_points);
 
-                for(unsigned int q_point = 0;
-                    q_point < n_edge_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0;
+                     q_point < n_edge_quadrature_points;
+                     ++q_point)
                   {
                     const double weight
                       = std::sqrt(edge_quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i < source_fe.degree - 1; ++i)
+                    for (unsigned int i = 0; i < source_fe.degree - 1; ++i)
                       assembling_matrix(i, q_point)
                         = weight
                           * legendre_polynomials[i + 1].value(
@@ -2736,13 +2755,13 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
               Vector<double> solution(source_fe.degree - 1);
               Vector<double> system_rhs(source_fe.degree - 1);
 
-              for(unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
+              for (unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
                 {
                   system_rhs = 0.0;
 
-                  for(unsigned int q_point = 0;
-                      q_point < n_edge_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0;
+                       q_point < n_edge_quadrature_points;
+                       ++q_point)
                     {
                       const Point<dim> quadrature_point_0(
                         0.0,
@@ -2758,7 +2777,7 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                                  * source_fe.shape_value_component(
                                      0, quadrature_point_1, 1));
 
-                      for(unsigned int i = 0; i < source_fe.degree - 1; ++i)
+                      for (unsigned int i = 0; i < source_fe.degree - 1; ++i)
                         system_rhs(i)
                           += tmp
                              * legendre_polynomials[i + 1].value(
@@ -2767,8 +2786,8 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 
                   system_matrix_inv.vmult(solution, system_rhs);
 
-                  for(unsigned int i = 0; i < source_fe.degree - 1; ++i)
-                    if(std::abs(solution(i)) > 1e-14)
+                  for (unsigned int i = 0; i < source_fe.degree - 1; ++i)
+                    if (std::abs(solution(i)) > 1e-14)
                       interpolation_matrix(i + 1, dof) = solution(i);
                 }
             }
@@ -2781,13 +2800,13 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
           const double shifts[4][2]
             = {{0.0, 0.0}, {1.0, 0.0}, {0.0, 1.0}, {1.0, 1.0}};
 
-          for(unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
-            for(unsigned int q_point = 0; q_point < n_edge_quadrature_points;
-                ++q_point)
+          for (unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
+            for (unsigned int q_point = 0; q_point < n_edge_quadrature_points;
+                 ++q_point)
               {
                 const double weight = 0.5 * edge_quadrature.weight(q_point);
 
-                for(unsigned int i = 0; i < 2; ++i)
+                for (unsigned int i = 0; i < 2; ++i)
                   {
                     Point<dim> quadrature_point(
                       0.5 * (i + shifts[subface][0]),
@@ -2817,7 +2836,7 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                   }
               }
 
-          if(source_fe.degree > 1)
+          if (source_fe.degree > 1)
             {
               const std::vector<Polynomials::Polynomial<double>>&
                 legendre_polynomials
@@ -2830,14 +2849,14 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                 FullMatrix<double> assembling_matrix(source_fe.degree - 1,
                                                      n_edge_quadrature_points);
 
-                for(unsigned int q_point = 0;
-                    q_point < n_edge_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0;
+                     q_point < n_edge_quadrature_points;
+                     ++q_point)
                   {
                     const double weight
                       = std::sqrt(edge_quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i < source_fe.degree - 1; ++i)
+                    for (unsigned int i = 0; i < source_fe.degree - 1; ++i)
                       assembling_matrix(i, q_point)
                         = weight
                           * legendre_polynomials[i + 1].value(
@@ -2857,17 +2876,17 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                                             GeometryInfo<dim>::lines_per_face);
               Vector<double>     tmp(GeometryInfo<dim>::lines_per_face);
 
-              for(unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
+              for (unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
                 {
                   system_rhs = 0.0;
 
-                  for(unsigned int q_point = 0;
-                      q_point < n_edge_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0;
+                       q_point < n_edge_quadrature_points;
+                       ++q_point)
                     {
                       const double weight = edge_quadrature.weight(q_point);
 
-                      for(unsigned int i = 0; i < 2; ++i)
+                      for (unsigned int i = 0; i < 2; ++i)
                         {
                           Point<dim> quadrature_point_0(
                             0.5 * (i + shifts[subface][0]),
@@ -2913,24 +2932,25 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                                          0));
                         }
 
-                      for(unsigned int i = 0; i < source_fe.degree - 1; ++i)
+                      for (unsigned int i = 0; i < source_fe.degree - 1; ++i)
                         {
                           const double L_i = legendre_polynomials[i + 1].value(
                             edge_quadrature_points[q_point](0));
 
-                          for(unsigned int j = 0;
-                              j < GeometryInfo<dim>::lines_per_face;
-                              ++j)
+                          for (unsigned int j = 0;
+                               j < GeometryInfo<dim>::lines_per_face;
+                               ++j)
                             system_rhs(i, j) += tmp(j) * L_i;
                         }
                     }
 
                   system_matrix_inv.mmult(solution, system_rhs);
 
-                  for(unsigned int i = 0; i < GeometryInfo<dim>::lines_per_face;
-                      ++i)
-                    for(unsigned int j = 0; j < source_fe.degree - 1; ++j)
-                      if(std::abs(solution(j, i)) > 1e-14)
+                  for (unsigned int i = 0;
+                       i < GeometryInfo<dim>::lines_per_face;
+                       ++i)
+                    for (unsigned int j = 0; j < source_fe.degree - 1; ++j)
+                      if (std::abs(solution(j, i)) > 1e-14)
                         interpolation_matrix(i * source_fe.degree + j + 1, dof)
                           = solution(j, i);
                 }
@@ -2951,18 +2971,18 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                                                        * (source_fe.degree - 1),
                                                      n_quadrature_points);
 
-                for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                    ++q_point)
+                for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                     ++q_point)
                   {
                     const double weight = std::sqrt(quadrature.weight(q_point));
 
-                    for(unsigned int i = 0; i < source_fe.degree; ++i)
+                    for (unsigned int i = 0; i < source_fe.degree; ++i)
                       {
                         const double L_i = weight
                                            * legendre_polynomials[i].value(
                                                quadrature_points[q_point](0));
 
-                        for(unsigned int j = 0; j < source_fe.degree - 1; ++j)
+                        for (unsigned int j = 0; j < source_fe.degree - 1; ++j)
                           assembling_matrix(i * (source_fe.degree - 1) + j,
                                             q_point)
                             = L_i
@@ -2983,12 +3003,12 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
               system_rhs.reinit(system_matrix_inv.m(), 2);
               tmp.reinit(2);
 
-              for(unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
+              for (unsigned int dof = 0; dof < this->dofs_per_face; ++dof)
                 {
                   system_rhs = 0.0;
 
-                  for(unsigned int q_point = 0; q_point < n_quadrature_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_quadrature_points;
+                       ++q_point)
                     {
                       Point<dim> quadrature_point(
                         0.5
@@ -3013,8 +3033,8 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
                                      quadrature_points[q_point](1),
                                      0.0);
 
-                      for(unsigned int i = 0; i < 2; ++i)
-                        for(unsigned int j = 0; j < source_fe.degree; ++j)
+                      for (unsigned int i = 0; i < 2; ++i)
+                        for (unsigned int j = 0; j < source_fe.degree; ++j)
                           {
                             tmp(0) -= interpolation_matrix(
                                         (i + 2) * source_fe.degree + j, dof)
@@ -3032,14 +3052,15 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 
                       tmp *= quadrature.weight(q_point);
 
-                      for(unsigned int i = 0; i < source_fe.degree; ++i)
+                      for (unsigned int i = 0; i < source_fe.degree; ++i)
                         {
                           const double L_i_0 = legendre_polynomials[i].value(
                             quadrature_points[q_point](0));
                           const double L_i_1 = legendre_polynomials[i].value(
                             quadrature_points[q_point](1));
 
-                          for(unsigned int j = 0; j < source_fe.degree - 1; ++j)
+                          for (unsigned int j = 0; j < source_fe.degree - 1;
+                               ++j)
                             {
                               system_rhs(i * (source_fe.degree - 1) + j, 0)
                                 += tmp(0) * L_i_0
@@ -3055,18 +3076,20 @@ FE_Nedelec<dim>::get_subface_interpolation_matrix(
 
                   system_matrix_inv.mmult(solution, system_rhs);
 
-                  for(unsigned int i = 0; i < source_fe.degree; ++i)
-                    for(unsigned int j = 0; j < source_fe.degree - 1; ++j)
+                  for (unsigned int i = 0; i < source_fe.degree; ++i)
+                    for (unsigned int j = 0; j < source_fe.degree - 1; ++j)
                       {
-                        if(std::abs(solution(i * (source_fe.degree - 1) + j, 0))
-                           > 1e-14)
+                        if (std::abs(
+                              solution(i * (source_fe.degree - 1) + j, 0))
+                            > 1e-14)
                           interpolation_matrix(i * (source_fe.degree - 1) + j
                                                  + n_boundary_dofs,
                                                dof)
                             = solution(i * (source_fe.degree - 1) + j, 0);
 
-                        if(std::abs(solution(i * (source_fe.degree - 1) + j, 1))
-                           > 1e-14)
+                        if (std::abs(
+                              solution(i * (source_fe.degree - 1) + j, 1))
+                            > 1e-14)
                           interpolation_matrix(
                             i + (j + source_fe.degree - 1) * source_fe.degree
                               + n_boundary_dofs,
@@ -3101,13 +3124,13 @@ FE_Nedelec<dim>::get_prolongation_matrix(
     ExcIndexRange(child, 0, GeometryInfo<dim>::n_children(refinement_case)));
 
   // initialization upon first request
-  if(this->prolongation[refinement_case - 1][child].n() == 0)
+  if (this->prolongation[refinement_case - 1][child].n() == 0)
     {
       Threads::Mutex::ScopedLock lock(this->mutex);
 
       // if matrix got updated while waiting for the lock
-      if(this->prolongation[refinement_case - 1][child].n()
-         == this->dofs_per_cell)
+      if (this->prolongation[refinement_case - 1][child].n()
+          == this->dofs_per_cell)
         return this->prolongation[refinement_case - 1][child];
 
       // now do the work. need to get a non-const version of data in order to
@@ -3162,13 +3185,13 @@ FE_Nedelec<dim>::get_restriction_matrix(
       GeometryInfo<dim>::n_children(RefinementCase<dim>(refinement_case))));
 
   // initialization upon first request
-  if(this->restriction[refinement_case - 1][child].n() == 0)
+  if (this->restriction[refinement_case - 1][child].n() == 0)
     {
       Threads::Mutex::ScopedLock lock(this->mutex);
 
       // if matrix got updated while waiting for the lock...
-      if(this->restriction[refinement_case - 1][child].n()
-         == this->dofs_per_cell)
+      if (this->restriction[refinement_case - 1][child].n()
+          == this->dofs_per_cell)
         return this->restriction[refinement_case - 1][child];
 
       // now do the work. need to get a non-const version of data in order to
@@ -3226,7 +3249,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
          ExcDimensionMismatch(nodal_values.size(), this->dofs_per_cell));
   std::fill(nodal_values.begin(), nodal_values.end(), 0.0);
 
-  switch(dim)
+  switch (dim)
     {
       case 2:
         {
@@ -3235,11 +3258,11 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
           const QGauss<dim - 1> reference_edge_quadrature(this->degree);
           const unsigned int& n_edge_points = reference_edge_quadrature.size();
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 0; j < 2; ++j)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 0; j < 2; ++j)
               {
-                for(unsigned int q_point = 0; q_point < n_edge_points;
-                    ++q_point)
+                for (unsigned int q_point = 0; q_point < n_edge_points;
+                     ++q_point)
                   nodal_values[(i + 2 * j) * this->degree]
                     += reference_edge_quadrature.weight(q_point)
                        * support_point_values[q_point
@@ -3249,7 +3272,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                 // Add the computed support_point_values to the resulting vector
                 // only, if they are not
                 // too small.
-                if(std::abs(nodal_values[(i + 2 * j) * this->degree]) < 1e-14)
+                if (std::abs(nodal_values[(i + 2 * j) * this->degree]) < 1e-14)
                   nodal_values[(i + 2 * j) * this->degree] = 0.0;
               }
 
@@ -3263,7 +3286,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
           // are obtained by solving
           // a linear system of
           // equations.
-          if(this->degree - 1 > 1)
+          if (this->degree - 1 > 1)
             {
               // We start with projection
               // on the higher order edge
@@ -3276,17 +3299,17 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               std::vector<Polynomials::Polynomial<double>>
                 lobatto_polynomials_grad(this->degree);
 
-              for(unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
+              for (unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
                 lobatto_polynomials_grad[i]
                   = lobatto_polynomials[i + 1].derivative();
 
               // Set up the system matrix.
               // This can be used for all
               // edges.
-              for(unsigned int i = 0; i < system_matrix.m(); ++i)
-                for(unsigned int j = 0; j < system_matrix.n(); ++j)
-                  for(unsigned int q_point = 0; q_point < n_edge_points;
-                      ++q_point)
+              for (unsigned int i = 0; i < system_matrix.m(); ++i)
+                for (unsigned int j = 0; j < system_matrix.n(); ++j)
+                  for (unsigned int q_point = 0; q_point < n_edge_points;
+                       ++q_point)
                     system_matrix(i, j)
                       += boundary_weights(q_point, j)
                          * lobatto_polynomials_grad[i + 1].value(
@@ -3303,15 +3326,15 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               Vector<double> system_rhs(system_matrix.m());
               Vector<double> solution(system_rhs.size());
 
-              for(unsigned int line = 0;
-                  line < GeometryInfo<dim>::lines_per_cell;
-                  ++line)
+              for (unsigned int line = 0;
+                   line < GeometryInfo<dim>::lines_per_cell;
+                   ++line)
                 {
                   // Set up the right hand side.
                   system_rhs = 0;
 
-                  for(unsigned int q_point = 0; q_point < n_edge_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_edge_points;
+                       ++q_point)
                     {
                       const double tmp
                         = support_point_values[line * n_edge_points + q_point]
@@ -3323,7 +3346,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                     [line * n_edge_points + q_point],
                                   line_coordinate[line]);
 
-                      for(unsigned int i = 0; i < system_rhs.size(); ++i)
+                      for (unsigned int i = 0; i < system_rhs.size(); ++i)
                         system_rhs(i) += boundary_weights(q_point, i) * tmp;
                     }
 
@@ -3333,8 +3356,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                   // to the resulting vector
                   // only, if they are not
                   // too small.
-                  for(unsigned int i = 0; i < solution.size(); ++i)
-                    if(std::abs(solution(i)) > 1e-14)
+                  for (unsigned int i = 0; i < solution.size(); ++i)
+                    if (std::abs(solution(i)) > 1e-14)
                       nodal_values[line * this->degree + i + 1] = solution(i);
                 }
 
@@ -3359,12 +3382,13 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                    (this->degree - 1) * this->degree);
               system_matrix = 0;
 
-              for(unsigned int i = 0; i < this->degree; ++i)
-                for(unsigned int j = 0; j < this->degree - 1; ++j)
-                  for(unsigned int k = 0; k < this->degree; ++k)
-                    for(unsigned int l = 0; l < this->degree - 1; ++l)
-                      for(unsigned int q_point = 0; q_point < n_interior_points;
-                          ++q_point)
+              for (unsigned int i = 0; i < this->degree; ++i)
+                for (unsigned int j = 0; j < this->degree - 1; ++j)
+                  for (unsigned int k = 0; k < this->degree; ++k)
+                    for (unsigned int l = 0; l < this->degree - 1; ++l)
+                      for (unsigned int q_point = 0;
+                           q_point < n_interior_points;
+                           ++q_point)
                         system_matrix(i * (this->degree - 1) + j,
                                       k * (this->degree - 1) + l)
                           += reference_quadrature.weight(q_point)
@@ -3397,16 +3421,16 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               system_rhs.reinit(system_matrix_inv.m());
               system_rhs = 0;
 
-              for(unsigned int q_point = 0; q_point < n_interior_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_interior_points;
+                   ++q_point)
                 {
                   double tmp
                     = support_point_values[q_point
                                            + GeometryInfo<dim>::lines_per_cell
                                                * n_edge_points][0];
 
-                  for(unsigned int i = 0; i < 2; ++i)
-                    for(unsigned int j = 0; j <= deg; ++j)
+                  for (unsigned int i = 0; i < 2; ++i)
+                    for (unsigned int j = 0; j <= deg; ++j)
                       tmp -= nodal_values[(i + 2) * this->degree + j]
                              * this->shape_value_component(
                                  (i + 2) * this->degree + j,
@@ -3416,8 +3440,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                         * n_edge_points],
                                  0);
 
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < deg; ++j)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < deg; ++j)
                       system_rhs(i * deg + j)
                         += reference_quadrature.weight(q_point) * tmp
                            * lobatto_polynomials_grad[i].value(
@@ -3439,9 +3463,9 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // to the resulting vector
               // only, if they are not
               // too small.
-              for(unsigned int i = 0; i <= deg; ++i)
-                for(unsigned int j = 0; j < deg; ++j)
-                  if(std::abs(solution(i * deg + j)) > 1e-14)
+              for (unsigned int i = 0; i <= deg; ++i)
+                for (unsigned int j = 0; j < deg; ++j)
+                  if (std::abs(solution(i * deg + j)) > 1e-14)
                     nodal_values[(i + GeometryInfo<dim>::lines_per_cell) * deg
                                  + j + GeometryInfo<dim>::lines_per_cell]
                       = solution(i * deg + j);
@@ -3451,16 +3475,16 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // for the vertical shape
               // functions.
 
-              for(unsigned int q_point = 0; q_point < n_interior_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_interior_points;
+                   ++q_point)
                 {
                   double tmp
                     = support_point_values[q_point
                                            + GeometryInfo<dim>::lines_per_cell
                                                * n_edge_points][1];
 
-                  for(unsigned int i = 0; i < 2; ++i)
-                    for(unsigned int j = 0; j <= deg; ++j)
+                  for (unsigned int i = 0; i < 2; ++i)
+                    for (unsigned int j = 0; j <= deg; ++j)
                       tmp -= nodal_values[i * this->degree + j]
                              * this->shape_value_component(
                                  i * this->degree + j,
@@ -3470,8 +3494,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                         * n_edge_points],
                                  1);
 
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < deg; ++j)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < deg; ++j)
                       system_rhs(i * deg + j)
                         += reference_quadrature.weight(q_point) * tmp
                            * lobatto_polynomials_grad[i].value(
@@ -3492,9 +3516,9 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // to the resulting vector
               // only, if they are not
               // too small.
-              for(unsigned int i = 0; i <= deg; ++i)
-                for(unsigned int j = 0; j < deg; ++j)
-                  if(std::abs(solution(i * deg + j)) > 1e-14)
+              for (unsigned int i = 0; i <= deg; ++i)
+                for (unsigned int j = 0; j < deg; ++j)
+                  if (std::abs(solution(i * deg + j)) > 1e-14)
                     nodal_values[i
                                  + (j + GeometryInfo<dim>::lines_per_cell + deg)
                                      * this->degree]
@@ -3511,17 +3535,17 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
           const QGauss<1>     reference_edge_quadrature(this->degree);
           const unsigned int& n_edge_points = reference_edge_quadrature.size();
 
-          for(unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
+          for (unsigned int q_point = 0; q_point < n_edge_points; ++q_point)
             {
-              for(unsigned int i = 0; i < 4; ++i)
+              for (unsigned int i = 0; i < 4; ++i)
                 nodal_values[(i + 8) * this->degree]
                   += reference_edge_quadrature.weight(q_point)
                      * support_point_values[q_point + (i + 8) * n_edge_points]
                                            [2];
 
-              for(unsigned int i = 0; i < 2; ++i)
-                for(unsigned int j = 0; j < 2; ++j)
-                  for(unsigned int k = 0; k < 2; ++k)
+              for (unsigned int i = 0; i < 2; ++i)
+                for (unsigned int j = 0; j < 2; ++j)
+                  for (unsigned int k = 0; k < 2; ++k)
                     nodal_values[(i + 2 * (2 * j + k)) * this->degree]
                       += reference_edge_quadrature.weight(q_point)
                          * support_point_values[q_point
@@ -3533,15 +3557,15 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
           // to the resulting vector
           // only, if they are not
           // too small.
-          for(unsigned int i = 0; i < 4; ++i)
-            if(std::abs(nodal_values[(i + 8) * this->degree]) < 1e-14)
+          for (unsigned int i = 0; i < 4; ++i)
+            if (std::abs(nodal_values[(i + 8) * this->degree]) < 1e-14)
               nodal_values[(i + 8) * this->degree] = 0.0;
 
-          for(unsigned int i = 0; i < 2; ++i)
-            for(unsigned int j = 0; j < 2; ++j)
-              for(unsigned int k = 0; k < 2; ++k)
-                if(std::abs(nodal_values[(i + 2 * (2 * j + k)) * this->degree])
-                   < 1e-14)
+          for (unsigned int i = 0; i < 2; ++i)
+            for (unsigned int j = 0; j < 2; ++j)
+              for (unsigned int k = 0; k < 2; ++k)
+                if (std::abs(nodal_values[(i + 2 * (2 * j + k)) * this->degree])
+                    < 1e-14)
                   nodal_values[(i + 2 * (2 * j + k)) * this->degree] = 0.0;
 
           // If the degree is greater
@@ -3553,7 +3577,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
           // are obtained by solving
           // a linear system of
           // equations.
-          if(this->degree > 1)
+          if (this->degree > 1)
             {
               // We start with projection
               // on the higher order edge
@@ -3566,17 +3590,17 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               std::vector<Polynomials::Polynomial<double>>
                 lobatto_polynomials_grad(this->degree);
 
-              for(unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
+              for (unsigned int i = 0; i < lobatto_polynomials_grad.size(); ++i)
                 lobatto_polynomials_grad[i]
                   = lobatto_polynomials[i + 1].derivative();
 
               // Set up the system matrix.
               // This can be used for all
               // edges.
-              for(unsigned int i = 0; i < system_matrix.m(); ++i)
-                for(unsigned int j = 0; j < system_matrix.n(); ++j)
-                  for(unsigned int q_point = 0; q_point < n_edge_points;
-                      ++q_point)
+              for (unsigned int i = 0; i < system_matrix.m(); ++i)
+                for (unsigned int j = 0; j < system_matrix.n(); ++j)
+                  for (unsigned int q_point = 0; q_point < n_edge_points;
+                       ++q_point)
                     system_matrix(i, j)
                       += boundary_weights(q_point, j)
                          * lobatto_polynomials_grad[i + 1].value(
@@ -3593,15 +3617,15 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               Vector<double> system_rhs(system_matrix.m());
               Vector<double> solution(system_rhs.size());
 
-              for(unsigned int line = 0;
-                  line < GeometryInfo<dim>::lines_per_cell;
-                  ++line)
+              for (unsigned int line = 0;
+                   line < GeometryInfo<dim>::lines_per_cell;
+                   ++line)
                 {
                   // Set up the right hand side.
                   system_rhs = 0;
 
-                  for(unsigned int q_point = 0; q_point < this->degree;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < this->degree;
+                       ++q_point)
                     {
                       const double tmp
                         = support_point_values[line * this->degree + q_point]
@@ -3613,7 +3637,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                     [line * this->degree + q_point],
                                   line_coordinate[line]);
 
-                      for(unsigned int i = 0; i < system_rhs.size(); ++i)
+                      for (unsigned int i = 0; i < system_rhs.size(); ++i)
                         system_rhs(i) += boundary_weights(q_point, i) * tmp;
                     }
 
@@ -3623,8 +3647,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                   // to the resulting vector
                   // only, if they are not
                   // too small.
-                  for(unsigned int i = 0; i < solution.size(); ++i)
-                    if(std::abs(solution(i)) > 1e-14)
+                  for (unsigned int i = 0; i < solution.size(); ++i)
+                    if (std::abs(solution(i)) > 1e-14)
                       nodal_values[line * this->degree + i + 1] = solution(i);
                 }
 
@@ -3646,12 +3670,12 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                    (this->degree - 1) * this->degree);
               system_matrix = 0;
 
-              for(unsigned int i = 0; i < this->degree; ++i)
-                for(unsigned int j = 0; j < this->degree - 1; ++j)
-                  for(unsigned int k = 0; k < this->degree; ++k)
-                    for(unsigned int l = 0; l < this->degree - 1; ++l)
-                      for(unsigned int q_point = 0; q_point < n_face_points;
-                          ++q_point)
+              for (unsigned int i = 0; i < this->degree; ++i)
+                for (unsigned int j = 0; j < this->degree - 1; ++j)
+                  for (unsigned int k = 0; k < this->degree; ++k)
+                    for (unsigned int l = 0; l < this->degree - 1; ++l)
+                      for (unsigned int q_point = 0; q_point < n_face_points;
+                           ++q_point)
                         system_matrix(i * (this->degree - 1) + j,
                                       k * (this->degree - 1) + l)
                           += boundary_weights(q_point + n_edge_points,
@@ -3680,25 +3704,25 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                    {2, 3, 0, 1},
                    {6, 7, 4, 5}};
 
-              for(unsigned int face = 0;
-                  face < GeometryInfo<dim>::faces_per_cell;
-                  ++face)
+              for (unsigned int face = 0;
+                   face < GeometryInfo<dim>::faces_per_cell;
+                   ++face)
                 {
                   // Set up the right hand side
                   // for the horizontal shape
                   // functions.
                   system_rhs = 0;
 
-                  for(unsigned int q_point = 0; q_point < n_face_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_face_points;
+                       ++q_point)
                     {
                       double tmp = support_point_values
                         [q_point
                          + GeometryInfo<dim>::lines_per_cell * n_edge_points]
                         [face_coordinates[face][0]];
 
-                      for(unsigned int i = 0; i < 2; ++i)
-                        for(unsigned int j = 0; j <= deg; ++j)
+                      for (unsigned int i = 0; i < 2; ++i)
+                        for (unsigned int j = 0; j <= deg; ++j)
                           tmp
                             -= nodal_values[edge_indices[face][i] * this->degree
                                             + j]
@@ -3710,8 +3734,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                           * n_edge_points],
                                    face_coordinates[face][0]);
 
-                      for(unsigned int i = 0; i <= deg; ++i)
-                        for(unsigned int j = 0; j < deg; ++j)
+                      for (unsigned int i = 0; i <= deg; ++i)
+                        for (unsigned int j = 0; j < deg; ++j)
                           system_rhs(i * deg + j)
                             += boundary_weights(q_point + n_edge_points,
                                                 2 * (i * deg + j))
@@ -3724,9 +3748,9 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                   // to the resulting vector
                   // only, if they are not
                   // too small.
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < deg; ++j)
-                      if(std::abs(solution(i * deg + j)) > 1e-14)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < deg; ++j)
+                      if (std::abs(solution(i * deg + j)) > 1e-14)
                         nodal_values[(2 * face * this->degree + i
                                       + GeometryInfo<dim>::lines_per_cell)
                                        * deg
@@ -3738,18 +3762,18 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                   // functions.
                   system_rhs = 0;
 
-                  for(unsigned int q_point = 0; q_point < n_face_points;
-                      ++q_point)
+                  for (unsigned int q_point = 0; q_point < n_face_points;
+                       ++q_point)
                     {
                       double tmp = support_point_values
                         [q_point
                          + GeometryInfo<dim>::lines_per_cell * n_edge_points]
                         [face_coordinates[face][1]];
 
-                      for(int i = 2;
-                          i < (int) GeometryInfo<dim>::lines_per_face;
-                          ++i)
-                        for(unsigned int j = 0; j <= deg; ++j)
+                      for (int i = 2;
+                           i < (int) GeometryInfo<dim>::lines_per_face;
+                           ++i)
+                        for (unsigned int j = 0; j <= deg; ++j)
                           tmp
                             -= nodal_values[edge_indices[face][i] * this->degree
                                             + j]
@@ -3761,8 +3785,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                           * n_edge_points],
                                    face_coordinates[face][1]);
 
-                      for(unsigned int i = 0; i <= deg; ++i)
-                        for(unsigned int j = 0; j < deg; ++j)
+                      for (unsigned int i = 0; i <= deg; ++i)
+                        for (unsigned int j = 0; j < deg; ++j)
                           system_rhs(i * deg + j)
                             += boundary_weights(q_point + n_edge_points,
                                                 2 * (i * deg + j) + 1)
@@ -3775,9 +3799,9 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                   // to the resulting vector
                   // only, if they are not
                   // too small.
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < deg; ++j)
-                      if(std::abs(solution(i * deg + j)) > 1e-14)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < deg; ++j)
+                      if (std::abs(solution(i * deg + j)) > 1e-14)
                         nodal_values[((2 * face + 1) * deg + j
                                       + GeometryInfo<dim>::lines_per_cell)
                                        * this->degree
@@ -3800,15 +3824,15 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                    this->degree * deg * deg);
               system_matrix = 0;
 
-              for(unsigned int i = 0; i <= deg; ++i)
-                for(unsigned int j = 0; j < deg; ++j)
-                  for(unsigned int k = 0; k < deg; ++k)
-                    for(unsigned int l = 0; l <= deg; ++l)
-                      for(unsigned int m = 0; m < deg; ++m)
-                        for(unsigned int n = 0; n < deg; ++n)
-                          for(unsigned int q_point = 0;
-                              q_point < n_interior_points;
-                              ++q_point)
+              for (unsigned int i = 0; i <= deg; ++i)
+                for (unsigned int j = 0; j < deg; ++j)
+                  for (unsigned int k = 0; k < deg; ++k)
+                    for (unsigned int l = 0; l <= deg; ++l)
+                      for (unsigned int m = 0; m < deg; ++m)
+                        for (unsigned int n = 0; n < deg; ++n)
+                          for (unsigned int q_point = 0;
+                               q_point < n_interior_points;
+                               ++q_point)
                             system_matrix((i * deg + j) * deg + k,
                                           (l * deg + m) * deg + n)
                               += reference_quadrature.weight(q_point)
@@ -3861,17 +3885,17 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               system_rhs.reinit(system_matrix.m());
               system_rhs = 0;
 
-              for(unsigned int q_point = 0; q_point < n_interior_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_interior_points;
+                   ++q_point)
                 {
                   double tmp = support_point_values
                     [q_point + GeometryInfo<dim>::lines_per_cell * n_edge_points
                      + GeometryInfo<dim>::faces_per_cell * n_face_points][0];
 
-                  for(unsigned int i = 0; i <= deg; ++i)
+                  for (unsigned int i = 0; i <= deg; ++i)
                     {
-                      for(unsigned int j = 0; j < 2; ++j)
-                        for(unsigned int k = 0; k < 2; ++k)
+                      for (unsigned int j = 0; j < 2; ++j)
+                        for (unsigned int k = 0; k < 2; ++k)
                           tmp
                             -= nodal_values[i + (j + 4 * k + 2) * this->degree]
                                * this->shape_value_component(
@@ -3884,8 +3908,8 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                           * n_face_points],
                                    0);
 
-                      for(unsigned int j = 0; j < deg; ++j)
-                        for(unsigned int k = 0; k < 4; ++k)
+                      for (unsigned int j = 0; j < deg; ++j)
+                        for (unsigned int k = 0; k < 4; ++k)
                           tmp -= nodal_values
                                    [(i + 2 * (k + 2) * this->degree
                                      + GeometryInfo<dim>::lines_per_cell)
@@ -3905,9 +3929,9 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                      0);
                     }
 
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < deg; ++j)
-                      for(unsigned int k = 0; k < deg; ++k)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < deg; ++j)
+                      for (unsigned int k = 0; k < deg; ++k)
                         system_rhs((i * deg + j) * deg + k)
                           += reference_quadrature.weight(q_point) * tmp
                              * lobatto_polynomials_grad[i].value(
@@ -3940,10 +3964,10 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // to the resulting vector
               // only, if they are not
               // too small.
-              for(unsigned int i = 0; i <= deg; ++i)
-                for(unsigned int j = 0; j < deg; ++j)
-                  for(unsigned int k = 0; k < deg; ++k)
-                    if(std::abs(solution((i * deg + j) * deg + k)) > 1e-14)
+              for (unsigned int i = 0; i <= deg; ++i)
+                for (unsigned int j = 0; j < deg; ++j)
+                  for (unsigned int k = 0; k < deg; ++k)
+                    if (std::abs(solution((i * deg + j) * deg + k)) > 1e-14)
                       nodal_values[((i + 2 * GeometryInfo<dim>::faces_per_cell)
                                       * deg
                                     + j + GeometryInfo<dim>::lines_per_cell
@@ -3955,17 +3979,17 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // Set up the right hand side.
               system_rhs = 0;
 
-              for(unsigned int q_point = 0; q_point < n_interior_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_interior_points;
+                   ++q_point)
                 {
                   double tmp = support_point_values
                     [q_point + GeometryInfo<dim>::lines_per_cell * n_edge_points
                      + GeometryInfo<dim>::faces_per_cell * n_face_points][1];
 
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < 2; ++j)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < 2; ++j)
                       {
-                        for(unsigned int k = 0; k < 2; ++k)
+                        for (unsigned int k = 0; k < 2; ++k)
                           tmp -= nodal_values[i + (4 * j + k) * this->degree]
                                  * this->shape_value_component(
                                      i + (4 * j + k) * this->degree,
@@ -3977,7 +4001,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                             * n_face_points],
                                      1);
 
-                        for(unsigned int k = 0; k < deg; ++k)
+                        for (unsigned int k = 0; k < deg; ++k)
                           tmp
                             -= nodal_values
                                    [(i + 2 * j * this->degree
@@ -4015,9 +4039,9 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                        1);
                       }
 
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < deg; ++j)
-                      for(unsigned int k = 0; k < deg; ++k)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < deg; ++j)
+                      for (unsigned int k = 0; k < deg; ++k)
                         system_rhs((i * deg + j) * deg + k)
                           += reference_quadrature.weight(q_point) * tmp
                              * lobatto_polynomials_grad[i].value(
@@ -4049,10 +4073,10 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // to the resulting vector
               // only, if they are not
               // too small.
-              for(unsigned int i = 0; i <= deg; ++i)
-                for(unsigned int j = 0; j < deg; ++j)
-                  for(unsigned int k = 0; k < deg; ++k)
-                    if(std::abs(solution((i * deg + j) * deg + k)) > 1e-14)
+              for (unsigned int i = 0; i <= deg; ++i)
+                for (unsigned int j = 0; j < deg; ++j)
+                  for (unsigned int k = 0; k < deg; ++k)
+                    if (std::abs(solution((i * deg + j) * deg + k)) > 1e-14)
                       nodal_values[((i + this->degree
                                      + 2 * GeometryInfo<dim>::faces_per_cell)
                                       * deg
@@ -4065,15 +4089,15 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // Set up the right hand side.
               system_rhs = 0;
 
-              for(unsigned int q_point = 0; q_point < n_interior_points;
-                  ++q_point)
+              for (unsigned int q_point = 0; q_point < n_interior_points;
+                   ++q_point)
                 {
                   double tmp = support_point_values
                     [q_point + GeometryInfo<dim>::lines_per_cell * n_edge_points
                      + GeometryInfo<dim>::faces_per_cell * n_face_points][2];
 
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < 4; ++j)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < 4; ++j)
                       {
                         tmp -= nodal_values[i + (j + 8) * this->degree]
                                * this->shape_value_component(
@@ -4086,7 +4110,7 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                           * n_face_points],
                                    2);
 
-                        for(unsigned int k = 0; k < deg; ++k)
+                        for (unsigned int k = 0; k < deg; ++k)
                           tmp -= nodal_values
                                    [i
                                     + ((2 * j + 1) * deg + k
@@ -4106,9 +4130,9 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
                                      2);
                       }
 
-                  for(unsigned int i = 0; i <= deg; ++i)
-                    for(unsigned int j = 0; j < deg; ++j)
-                      for(unsigned int k = 0; k < deg; ++k)
+                  for (unsigned int i = 0; i <= deg; ++i)
+                    for (unsigned int j = 0; j < deg; ++j)
+                      for (unsigned int k = 0; k < deg; ++k)
                         system_rhs((i * deg + j) * deg + k)
                           += reference_quadrature.weight(q_point) * tmp
                              * lobatto_polynomials_grad[i].value(
@@ -4140,10 +4164,10 @@ FE_Nedelec<dim>::convert_generalized_support_point_values_to_dof_values(
               // to the resulting vector
               // only, if they are not
               // too small.
-              for(unsigned int i = 0; i <= deg; ++i)
-                for(unsigned int j = 0; j < deg; ++j)
-                  for(unsigned int k = 0; k < deg; ++k)
-                    if(std::abs(solution((i * deg + j) * deg + k)) > 1e-14)
+              for (unsigned int i = 0; i <= deg; ++i)
+                for (unsigned int j = 0; j < deg; ++j)
+                  for (unsigned int k = 0; k < deg; ++k)
+                    if (std::abs(solution((i * deg + j) * deg + k)) > 1e-14)
                       nodal_values
                         [i
                          + ((j + 2 * (deg + GeometryInfo<dim>::faces_per_cell))
@@ -4166,11 +4190,11 @@ std::pair<Table<2, bool>, std::vector<unsigned int>>
 FE_Nedelec<dim>::get_constant_modes() const
 {
   Table<2, bool> constant_modes(dim, this->dofs_per_cell);
-  for(unsigned int d = 0; d < dim; ++d)
-    for(unsigned int i = 0; i < this->dofs_per_cell; ++i)
+  for (unsigned int d = 0; d < dim; ++d)
+    for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
       constant_modes(d, i) = true;
   std::vector<unsigned int> components;
-  for(unsigned int d = 0; d < dim; ++d)
+  for (unsigned int d = 0; d < dim; ++d)
     components.push_back(d);
   return std::pair<Table<2, bool>, std::vector<unsigned int>>(constant_modes,
                                                               components);

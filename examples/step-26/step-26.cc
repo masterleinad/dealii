@@ -149,16 +149,16 @@ namespace Step26
     const double point_within_period
       = (time / period - std::floor(time / period));
 
-    if((point_within_period >= 0.0) && (point_within_period <= 0.2))
+    if ((point_within_period >= 0.0) && (point_within_period <= 0.2))
       {
-        if((p[0] > 0.5) && (p[1] > -0.5))
+        if ((p[0] > 0.5) && (p[1] > -0.5))
           return 1;
         else
           return 0;
       }
-    else if((point_within_period >= 0.5) && (point_within_period <= 0.7))
+    else if ((point_within_period >= 0.5) && (point_within_period <= 0.7))
       {
-        if((p[0] > -0.5) && (p[1] > 0.5))
+        if ((p[0] > -0.5) && (p[1] > 0.5))
           return 1;
         else
           return 0;
@@ -335,16 +335,16 @@ namespace Step26
     GridRefinement::refine_and_coarsen_fixed_fraction(
       triangulation, estimated_error_per_cell, 0.6, 0.4);
 
-    if(triangulation.n_levels() > max_grid_level)
-      for(typename Triangulation<dim>::active_cell_iterator cell
-          = triangulation.begin_active(max_grid_level);
-          cell != triangulation.end();
-          ++cell)
+    if (triangulation.n_levels() > max_grid_level)
+      for (typename Triangulation<dim>::active_cell_iterator cell
+           = triangulation.begin_active(max_grid_level);
+           cell != triangulation.end();
+           ++cell)
         cell->clear_refine_flag();
-    for(typename Triangulation<dim>::active_cell_iterator cell
-        = triangulation.begin_active(min_grid_level);
-        cell != triangulation.end_active(min_grid_level);
-        ++cell)
+    for (typename Triangulation<dim>::active_cell_iterator cell
+         = triangulation.begin_active(min_grid_level);
+         cell != triangulation.end_active(min_grid_level);
+         ++cell)
       cell->clear_coarsen_flag();
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
@@ -456,7 +456,7 @@ namespace Step26
     // Recall that it contains the term $MU^{n-1}-(1-\theta)k_n AU^{n-1}$.
     // We put these terms into the variable system_rhs, with the
     // help of a temporary vector:
-    while(time <= 0.5)
+    while (time <= 0.5)
       {
         time += time_step;
         ++timestep_number;
@@ -535,8 +535,8 @@ namespace Step26
         // The time loop and, indeed, the main part of the program ends
         // with starting into the next time step by setting old_solution
         // to the solution we have just computed.
-        if((timestep_number == 1)
-           && (pre_refinement_step < n_adaptive_pre_refinement_steps))
+        if ((timestep_number == 1)
+            && (pre_refinement_step < n_adaptive_pre_refinement_steps))
           {
             refine_mesh(initial_global_refinement,
                         initial_global_refinement
@@ -550,7 +550,7 @@ namespace Step26
 
             goto start_time_iteration;
           }
-        else if((timestep_number > 0) && (timestep_number % 5 == 0))
+        else if ((timestep_number > 0) && (timestep_number % 5 == 0))
           {
             refine_mesh(initial_global_refinement,
                         initial_global_refinement
@@ -639,7 +639,7 @@ main()
       HeatEquation<2> heat_equation_solver;
       heat_equation_solver.run();
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -653,7 +653,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

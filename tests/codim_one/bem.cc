@@ -105,7 +105,7 @@ BEM<spacedim>::run()
 
   ConvergenceTable table;
 
-  if(spacedim == 2)
+  if (spacedim == 2)
     {
       read_grid(SOURCE_DIR "/grids/circle_R10.inp");
 
@@ -114,7 +114,7 @@ BEM<spacedim>::run()
       tria.set_manifold(1, boundary);
 
       // works up to cycle<9, but for testin purpose, we stop at 4
-      for(unsigned int cycle = 0; cycle < 4; ++cycle)
+      for (unsigned int cycle = 0; cycle < 4; ++cycle)
         {
           tria.set_manifold(1, boundary);
           tria.refine_global(1);
@@ -134,7 +134,7 @@ BEM<spacedim>::run()
 
           tria.reset_manifold(1);
 
-          for(unsigned int i = 0; i < dof_handler_q.n_dofs(); ++i)
+          for (unsigned int i = 0; i < dof_handler_q.n_dofs(); ++i)
             global_error += pow(fabs(error(i)), 2) * side_length;
 
           table.add_value("L^2 norm error", global_error);
@@ -199,7 +199,7 @@ BEM<spacedim>::assemble_system()
     cell_j = dof_handler.begin_active(), endc = dof_handler.end();
 
   // cycle on i index
-  for(; cell_i != endc; ++cell_i)
+  for (; cell_i != endc; ++cell_i)
     {
       fe_values_i.reinit(cell_i);
       cell_normals_i = fe_values_i.get_all_normal_vectors();
@@ -234,31 +234,31 @@ BEM<spacedim>::assemble_system()
         += constant_factor * (log(A.distance(B)) + 8. * qlog.weight(0));
       // A Gauss integration is performed to compute the integrals on K_i X
       // K_j in the case when i!=j. cycle on j index
-      for(cell_j = dof_handler.begin_active(); cell_j != endc; ++cell_j)
+      for (cell_j = dof_handler.begin_active(); cell_j != endc; ++cell_j)
         {
           fe_values_j.reinit(cell_j);
           cell_normals_j = fe_values_j.get_all_normal_vectors();
           cell_j->get_dof_indices(local_dof_indices_j);
 
-          if(cell_j != cell_i)
+          if (cell_j != cell_i)
             {
               // The mass matrix has only diagonal elements.
               mass_matrix(cell_i->index(), cell_j->index()) = 0.;
 
               // with constant elements there is only 1 dof per cell, so
               // there is no real cycle over cell dofs
-              for(unsigned int a = 0; a < dofs_per_cell; ++a)
-                for(unsigned int q_point_i = 0; q_point_i < n_q_points;
-                    q_point_i++)
-                  for(unsigned int q_point_j = 0; q_point_j < n_q_points;
-                      q_point_j++)
+              for (unsigned int a = 0; a < dofs_per_cell; ++a)
+                for (unsigned int q_point_i = 0; q_point_i < n_q_points;
+                     q_point_i++)
+                  for (unsigned int q_point_j = 0; q_point_j < n_q_points;
+                       q_point_j++)
                     {
                       // If the integration is performed on two different
                       // elements there are no singularities in the domain
                       // of integration, so usual gauss formulas can be
                       // used.
 
-                      for(unsigned int b = 0; b < dofs_per_cell; ++b)
+                      for (unsigned int b = 0; b < dofs_per_cell; ++b)
                         {
                           // assembling of double layer potential
 
@@ -284,8 +284,8 @@ BEM<spacedim>::assemble_system()
                            * fe_values_i.JxW(q_point_i)
                            * fe_values_j.JxW(q_point_j);
                     }
-              for(unsigned int a = 0; a < dofs_per_cell; ++a)
-                for(unsigned int b = 0; b < dofs_per_cell; ++b)
+              for (unsigned int a = 0; a < dofs_per_cell; ++a)
+                for (unsigned int b = 0; b < dofs_per_cell; ++b)
                   DLP_matrix(local_dof_indices_i[a], local_dof_indices_j[b])
                     += cell_DLP_matrix(a, b);
             }
@@ -293,7 +293,7 @@ BEM<spacedim>::assemble_system()
             {
               // The mass matrix is simply a diagonal matrix with the area
               // of each element as entries.
-              for(unsigned q_point_i = 0; q_point_i < n_q_points; ++q_point_i)
+              for (unsigned q_point_i = 0; q_point_i < n_q_points; ++q_point_i)
                 mass_matrix(cell_i->index(), cell_i->index())
                   += fe_values_i.JxW(q_point_i);
 
@@ -309,7 +309,7 @@ BEM<spacedim>::assemble_system()
           cell_DLP_matrix = 0.;
         }
 
-      for(unsigned int a = 0; a < dofs_per_cell; ++a)
+      for (unsigned int a = 0; a < dofs_per_cell; ++a)
         system_rhs(local_dof_indices_i[a]) += cell_rhs(a);
 
       // end of assembling of the right hand side
@@ -353,13 +353,13 @@ BEM<spacedim>::solve()
   typename DoFHandler<spacedim - 1, spacedim>::active_cell_iterator cell
     = dof_handler_q.begin_active(),
     endc = dof_handler_q.end();
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
       fe_values_q.reinit(cell);
       cell->get_dof_indices(local_dof_indices);
 
       cell_normals = fe_values_q.get_all_normal_vectors();
-      for(unsigned int i = 0; i < q_iterated.size(); ++i)
+      for (unsigned int i = 0; i < q_iterated.size(); ++i)
         {
           cell_tangentials[i][0] = cell_normals[i][1];
           cell_tangentials[i][1] = -cell_normals[i][0];
@@ -369,12 +369,12 @@ BEM<spacedim>::solve()
       // Notice that the first factor (smooth_solution..) is taken so that
       // it is the coefficient of the fun_th shape function of the cell.
       std::vector<Tensor<1, spacedim>> gradient(q_iterated.size());
-      for(unsigned int pnt = 0; pnt < q_iterated.size(); ++pnt)
-        for(unsigned int fun = 0; fun < fe_q.dofs_per_cell; ++fun)
+      for (unsigned int pnt = 0; pnt < q_iterated.size(); ++pnt)
+        for (unsigned int fun = 0; fun < fe_q.dofs_per_cell; ++fun)
           gradient[pnt] += smooth_solution(local_dof_indices[fun])
                            * fe_values_q.shape_grad(fun, pnt);
 
-      for(unsigned int pnt = 0; pnt < q_iterated.size(); ++pnt)
+      for (unsigned int pnt = 0; pnt < q_iterated.size(); ++pnt)
         {
           tangential_derivative(cell->index())
             = gradient[pnt] * cell_tangentials[pnt]
@@ -420,7 +420,7 @@ BEM<spacedim>::read_grid(std::string filename)
   std::ifstream in(filename.c_str());
   gi.read_ucd(in);
 
-  for(auto cell = tria.begin_active(); cell != tria.end(); ++cell)
+  for (auto cell = tria.begin_active(); cell != tria.end(); ++cell)
     cell->set_all_manifold_ids(1);
 }
 

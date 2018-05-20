@@ -148,7 +148,7 @@ namespace Step22
     double x = p[0];
     double y = p[1];
 
-    switch(component)
+    switch (component)
       {
         //velocity
         case 0:
@@ -184,7 +184,7 @@ namespace Step22
 
     Tensor<1, dim> gradient;
 
-    switch(component)
+    switch (component)
       {
         //velocity
         case 0:
@@ -236,7 +236,7 @@ namespace Step22
     double x = p[0];
     double y = p[1];
 
-    switch(component)
+    switch (component)
       {
         //velocity
         case 0:
@@ -276,9 +276,9 @@ namespace Step22
     double x = p[0];
     double y = p[1];
     //discontinuous
-    if(std::abs(x - .5) > 1e-10)
+    if (std::abs(x - .5) > 1e-10)
       return 0;
-    if(normal[0] > 0)
+    if (normal[0] > 0)
       return -1;
     return 1;
     //continuous
@@ -305,7 +305,7 @@ namespace Step22
   {
     Assert(component < this->n_components,
            ExcIndexRange(component, 0, this->n_components));
-    if(component == dim)
+    if (component == dim)
       return 0;
     //grad p -laplace u
     return solution.gradient(p, dim)[component]
@@ -544,7 +544,7 @@ namespace Step22
     typename DoFHandler<dim>::active_cell_iterator cell
       = dof_handler.begin_active(),
       endc = dof_handler.end();
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_values.reinit(cell);
         local_matrix = 0;
@@ -552,9 +552,9 @@ namespace Step22
 
         right_hand_side.vector_value_list(fe_values.get_quadrature_points(),
                                           rhs_values);
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
-            for(unsigned int k = 0; k < dofs_per_cell; ++k)
+            for (unsigned int k = 0; k < dofs_per_cell; ++k)
               {
                 symgrad_phi_u[k]
                   = fe_values[velocities].symmetric_gradient(k, q);
@@ -562,9 +562,9 @@ namespace Step22
                 phi_p[k]     = fe_values[pressure].value(k, q);
               }
 
-            for(unsigned int i = 0; i < dofs_per_cell; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
               {
-                for(unsigned int j = 0; j <= i; ++j)
+                for (unsigned int j = 0; j <= i; ++j)
                   {
                     local_matrix(i, j)
                       += (2 * symgrad_phi_u[i] * symgrad_phi_u[j]
@@ -580,20 +580,20 @@ namespace Step22
               }
           }
 
-        for(unsigned int i = 0; i < dofs_per_cell; ++i)
-          for(unsigned int j = i + 1; j < dofs_per_cell; ++j)
+        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+          for (unsigned int j = i + 1; j < dofs_per_cell; ++j)
             local_matrix(i, j) = local_matrix(j, i);
 
-        for(unsigned int face_no = 0;
-            face_no < GeometryInfo<dim>::faces_per_cell;
-            ++face_no)
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
           {
             typename DoFHandler<dim>::face_iterator face = cell->face(face_no);
-            if(face->at_boundary() == false)
+            if (face->at_boundary() == false)
               {
                 typename DoFHandler<dim>::cell_iterator neighbor
                   = cell->neighbor(face_no);
-                if(neighbor->index() > cell->index())
+                if (neighbor->index() > cell->index())
                   {
                     fe_v_face.reinit(cell, face_no);
 
@@ -602,15 +602,15 @@ namespace Step22
                     const std::vector<Point<dim>>& quad_points
                       = fe_v_face.get_quadrature_points();
 
-                    for(unsigned int q = 0; q < n_q_face; ++q)
+                    for (unsigned int q = 0; q < n_q_face; ++q)
                       {
                         double jump
                           = jumpfunction.jump(quad_points[q], normals[q]);
-                        for(unsigned int i = 0; i < dofs_per_cell; ++i)
+                        for (unsigned int i = 0; i < dofs_per_cell; ++i)
                           {
                             const unsigned int component_i
                               = fe.system_to_component_index(i).first;
-                            if(component_i < dim)
+                            if (component_i < dim)
                               local_rhs(i) += fe_v_face.shape_value(i, q) * jump
                                               * normals[q][component_i]
                                               * fe_v_face.JxW(q);
@@ -825,12 +825,12 @@ namespace Step22
     GridGenerator::hyper_cube(triangulation);
     triangulation.refine_global(1);
 
-    for(unsigned int refinement_cycle = 0; refinement_cycle < 5;
-        ++refinement_cycle)
+    for (unsigned int refinement_cycle = 0; refinement_cycle < 5;
+         ++refinement_cycle)
       {
         deallog << "Refinement cycle " << refinement_cycle << std::endl;
 
-        if(refinement_cycle > 0)
+        if (refinement_cycle > 0)
           triangulation.refine_global(1);
 
         setup_dofs();
@@ -924,23 +924,23 @@ namespace Step22
       endc = dof_handler.end();
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-    for(; cell != endc; ++cell)
+    for (; cell != endc; ++cell)
       {
         fe_v.reinit(cell);
         cell->get_dof_indices(local_dof_indices);
 
-        for(unsigned int q = 0; q < n_q_points; ++q)
+        for (unsigned int q = 0; q < n_q_points; ++q)
           {
             double div = 0;
-            for(unsigned int i = 0; i < dofs_per_cell - 1; ++i)
+            for (unsigned int i = 0; i < dofs_per_cell - 1; ++i)
               {
                 double tmp = 0;
-                for(unsigned int d = 0; d < dim; ++d)
+                for (unsigned int d = 0; d < dim; ++d)
                   tmp += fe_v.shape_grad_component(i, q, d)[d];
 
                 div += tmp * calc_solution(local_dof_indices[i]);
               }
-            if(norm)
+            if (norm)
               output_vector(cell->index())
                 += div * div * fe_v.JxW(q); //L^2-Norm
             else

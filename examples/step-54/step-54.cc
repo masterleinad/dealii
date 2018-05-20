@@ -233,7 +233,7 @@ namespace Step54
     Triangulation<2, 3>::active_cell_iterator cell = tria.begin_active();
     cell->set_manifold_id(1);
 
-    for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+    for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
       cell->face(f)->set_manifold_id(2);
 
     // Once both the CAD geometry and the initial mesh have been
@@ -270,7 +270,7 @@ namespace Step54
     // normal direction.  The NormalProjectionBoundary constructor
     // only needs a shape and a tolerance, and we then assign it to
     // the triangulation for use with all parts that manifold having id 1:
-    switch(surface_projection_kind)
+    switch (surface_projection_kind)
       {
         case NormalProjection:
           {
@@ -368,7 +368,7 @@ namespace Step54
     read_domain();
 
     const unsigned int n_cycles = 5;
-    for(unsigned int cycle = 0; cycle < n_cycles; ++cycle)
+    for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         refine_mesh();
         output_results(cycle + 1);
@@ -442,7 +442,7 @@ main()
       cout << endl;
       cout << endl;
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       std::cerr << std::endl
                 << std::endl
@@ -456,7 +456,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << std::endl
                 << std::endl

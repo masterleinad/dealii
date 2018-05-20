@@ -61,14 +61,14 @@ test()
   tr.set_manifold(1, boundary);
 
   tr.refine_global(1);
-  for(unsigned int step = 0; step < 20; ++step)
+  for (unsigned int step = 0; step < 20; ++step)
     {
       typename Triangulation<dim>::active_cell_iterator cell
         = tr.begin_active(),
         endc = tr.end();
 
-      for(; cell != endc; ++cell)
-        if(Testing::rand() % 42 == 1)
+      for (; cell != endc; ++cell)
+        if (Testing::rand() % 42 == 1)
           cell->set_refine_flag();
 
       tr.execute_coarsening_and_refinement();
@@ -119,7 +119,7 @@ test()
   x_dub.reinit(complete_index_set(dof_set.size()));
   x_dub.reinit(x_rel, false, true);
 
-  if(myid == 0)
+  if (myid == 0)
     x_dub.print(deallog.get_file_stream(), 8, true, false);
 
   tr.reset_manifold(0);

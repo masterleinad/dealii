@@ -27,10 +27,10 @@ test(Vector<std::complex<double>>& v, Vector<std::complex<double>>& w)
   // vector, and record the expected scalar
   // product
   std::complex<double> product = 0;
-  for(unsigned int i = 0; i < v.size(); ++i)
+  for (unsigned int i = 0; i < v.size(); ++i)
     {
       v(i) = i;
-      if(i % 3 == 0)
+      if (i % 3 == 0)
         {
           w(i) = std::complex<double>(i + 1., i + 2.);
           product += 1. * i * std::conj(std::complex<double>(i + 1., i + 2.));
@@ -63,7 +63,7 @@ main()
       Vector<std::complex<double>> w(100);
       test(v, w);
     }
-  catch(std::exception& exc)
+  catch (std::exception& exc)
     {
       deallog << std::endl
               << std::endl
@@ -77,7 +77,7 @@ main()
 
       return 1;
     }
-  catch(...)
+  catch (...)
     {
       deallog << std::endl
               << std::endl

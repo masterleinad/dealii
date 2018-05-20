@@ -93,13 +93,13 @@ LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
                          MeshWorker::IntegrationInfo<dim>& info1,
                          MeshWorker::IntegrationInfo<dim>& info2) const
 {
-  if(info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::H1))
+  if (info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::H1))
     return;
 
   const unsigned int deg = info1.fe_values(0).get_fe().tensor_degree();
 
-  if(info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::Hdiv)
-     && !info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::Hcurl))
+  if (info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::Hdiv)
+      && !info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::Hcurl))
     Laplace::ip_tangential_matrix(
       dinfo1.matrix(0, false).matrix,
       dinfo1.matrix(0, true).matrix,
@@ -153,10 +153,10 @@ assemble_mg_matrix(DoFHandler<dim>&                    dof_handler,
                                          assembler);
 
   const unsigned int nlevels = dof_handler.get_triangulation().n_levels();
-  for(unsigned int level = 0; level < nlevels; ++level)
+  for (unsigned int level = 0; level < nlevels; ++level)
     {
-      for(unsigned int i = 0; i < dof_handler.n_dofs(level); ++i)
-        if(mg.matrix[level].diag_element(i) == 0)
+      for (unsigned int i = 0; i < dof_handler.n_dofs(level); ++i)
+        if (mg.matrix[level].diag_element(i) == 0)
           mg.matrix[level].set(i, i, 1.);
     }
 }
@@ -191,7 +191,7 @@ test(FiniteElement<dim>& fe)
   mg.reinit(dof);
   assemble_mg_matrix(dof, matrix_integrator, mg);
 
-  for(unsigned int level = 0; level < tr.n_levels(); ++level)
+  for (unsigned int level = 0; level < tr.n_levels(); ++level)
     {
       const unsigned int prec = 3;
       const unsigned int wd   = 2;
@@ -199,7 +199,7 @@ test(FiniteElement<dim>& fe)
       deallog << "Level " << level << std::endl << "mg" << std::endl;
       mg.matrix[level].print_formatted(
         deallog.get_file_stream(), prec, false, wd, "0.");
-      if(level > 0)
+      if (level > 0)
         {
           deallog << "in" << std::endl;
           mg.matrix_in[level].print_formatted(

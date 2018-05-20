@@ -54,11 +54,11 @@ public:
   double
   value(const Point<dim>& p, const unsigned int c) const
   {
-    if(c == 0)
+    if (c == 0)
       return p[0] + p[1] + ((dim == 3) ? p[2] : 0.0);
-    if(c == 1)
+    if (c == 1)
       return p[0] * p[0] + p[1] * p[1];
-    if(c == 2)
+    if (c == 2)
       return p[2] + p[0] * p[1];
     return 0.0;
   }
@@ -83,8 +83,8 @@ test(VectorTools::NormType norm, double value, double exp = 2.0)
   hp::DoFHandler<dim> dofh(tria);
 
   // assign FEs mostly randomly to each cell
-  for(auto cell : dofh.active_cell_iterators())
-    if(cell->is_locally_owned())
+  for (auto cell : dofh.active_cell_iterators())
+    if (cell->is_locally_owned())
       cell->set_active_fe_index(cell->active_cell_index() % fe.size());
   dofh.distribute_dofs(fe);
 

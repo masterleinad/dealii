@@ -66,7 +66,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch (dealii::SolverControl::NoConvergence& e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -89,7 +89,7 @@ main()
   boost::signals2::connection cg_c1 = cg.connect(&monitor_norm);
   boost::signals2::connection cg_c2 = cg.connect(&monitor_mean);
 
-  for(unsigned int size = 4; size <= 12; size *= 3)
+  for (unsigned int size = 4; size <= 12; size *= 3)
     {
       unsigned int dim = (size - 1) * (size - 1);
 
@@ -125,7 +125,7 @@ main()
         {
           check_solve(cg, A, u, f, prec_ssor);
         }
-      catch(std::exception& e)
+      catch (std::exception& e)
         {
           std::cerr << "Exception: " << e.what() << std::endl;
         }

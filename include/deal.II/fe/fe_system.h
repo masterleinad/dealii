@@ -1282,7 +1282,7 @@ FESystem<dim, spacedim>::FESystem(
         multiplicities.push_back(fe_system.second);
       };
 
-  for(const auto& p : fe_systems)
+  for (const auto& p : fe_systems)
     extract(p);
 
   initialize(fes, multiplicities);

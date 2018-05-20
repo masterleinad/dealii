@@ -80,29 +80,29 @@ template <typename SP>
 inline void
 FDMatrix::five_point_structure(SP& structure) const
 {
-  for(unsigned int i = 0; i <= ny - 2; i++)
+  for (unsigned int i = 0; i <= ny - 2; i++)
     {
-      for(unsigned int j = 0; j <= nx - 2; j++)
+      for (unsigned int j = 0; j <= nx - 2; j++)
         {
           // Number of the row to be entered
           unsigned int row = j + (nx - 1) * i;
           structure.add(row, row);
-          if(j > 0)
+          if (j > 0)
             {
               structure.add(row - 1, row);
               structure.add(row, row - 1);
             }
-          if(j < nx - 2)
+          if (j < nx - 2)
             {
               structure.add(row + 1, row);
               structure.add(row, row + 1);
             }
-          if(i > 0)
+          if (i > 0)
             {
               structure.add(row - (nx - 1), row);
               structure.add(row, row - (nx - 1));
             }
-          if(i < ny - 2)
+          if (i < ny - 2)
             {
               structure.add(row + (nx - 1), row);
               structure.add(row, row + (nx - 1));
@@ -115,49 +115,49 @@ template <typename SP>
 inline void
 FDMatrix::nine_point_structure(SP& structure) const
 {
-  for(unsigned int i = 0; i <= ny - 2; i++)
+  for (unsigned int i = 0; i <= ny - 2; i++)
     {
-      for(unsigned int j = 0; j <= nx - 2; j++)
+      for (unsigned int j = 0; j <= nx - 2; j++)
         {
           // Number of the row to be entered
           unsigned int row = j + (nx - 1) * i;
           structure.add(row, row);
-          if(j > 0)
+          if (j > 0)
             {
               structure.add(row - 1, row);
               structure.add(row, row - 1);
-              if(i > 0)
+              if (i > 0)
                 {
                   structure.add(row - 1, row - (nx - 1));
                   structure.add(row - (nx - 1), row - 1);
                 }
-              if(i < ny - 2)
+              if (i < ny - 2)
                 {
                   structure.add(row - 1, row + (nx - 1));
                   structure.add(row + (nx - 1), row - 1);
                 }
             }
-          if(j < nx - 2)
+          if (j < nx - 2)
             {
               structure.add(row + 1, row);
               structure.add(row, row + 1);
-              if(i > 0)
+              if (i > 0)
                 {
                   structure.add(row + 1, row - (nx - 1));
                   structure.add(row - (nx - 1), row + 1);
                 }
-              if(i < ny - 2)
+              if (i < ny - 2)
                 {
                   structure.add(row + 1, row + (nx - 1));
                   structure.add(row + (nx - 1), row + 1);
                 }
             }
-          if(i > 0)
+          if (i > 0)
             {
               structure.add(row - (nx - 1), row);
               structure.add(row, row - (nx - 1));
             }
-          if(i < ny - 2)
+          if (i < ny - 2)
             {
               structure.add(row + (nx - 1), row);
               structure.add(row, row + (nx - 1));
@@ -170,50 +170,50 @@ template <typename MatrixType>
 void
 FDMatrix::nine_point(MatrixType& A, bool) const
 {
-  for(unsigned int i = 0; i <= ny - 2; i++)
+  for (unsigned int i = 0; i <= ny - 2; i++)
     {
-      for(unsigned int j = 0; j <= nx - 2; j++)
+      for (unsigned int j = 0; j <= nx - 2; j++)
         {
           // Number of the row to be entered
           unsigned int row = j + (nx - 1) * i;
 
           A.set(row, row, 20.);
-          if(j > 0)
+          if (j > 0)
             {
               A.set(row - 1, row, -4.);
               A.set(row, row - 1, -4.);
-              if(i > 0)
+              if (i > 0)
                 {
                   A.set(row - 1, row - (nx - 1), -1.);
                   A.set(row - (nx - 1), row - 1, -1.);
                 }
-              if(i < ny - 2)
+              if (i < ny - 2)
                 {
                   A.set(row - 1, row + (nx - 1), -1.);
                   A.set(row + (nx - 1), row - 1, -1.);
                 }
             }
-          if(j < nx - 2)
+          if (j < nx - 2)
             {
               A.set(row + 1, row, -4.);
               A.set(row, row + 1, -4.);
-              if(i > 0)
+              if (i > 0)
                 {
                   A.set(row + 1, row - (nx - 1), -1.);
                   A.set(row - (nx - 1), row + 1, -1.);
                 }
-              if(i < ny - 2)
+              if (i < ny - 2)
                 {
                   A.set(row + 1, row + (nx - 1), -1.);
                   A.set(row + (nx - 1), row + 1, -1.);
                 }
             }
-          if(i > 0)
+          if (i > 0)
             {
               A.set(row - (nx - 1), row, -4.);
               A.set(row, row - (nx - 1), -4.);
             }
-          if(i < ny - 2)
+          if (i < ny - 2)
             {
               A.set(row + (nx - 1), row, -4.);
               A.set(row, row + (nx - 1), -4.);
@@ -226,35 +226,35 @@ template <typename MatrixType>
 inline void
 FDMatrix::five_point(MatrixType& A, bool nonsymmetric) const
 {
-  for(unsigned int i = 0; i <= ny - 2; i++)
+  for (unsigned int i = 0; i <= ny - 2; i++)
     {
-      for(unsigned int j = 0; j <= nx - 2; j++)
+      for (unsigned int j = 0; j <= nx - 2; j++)
         {
           // Number of the row to be entered
           unsigned int row = j + (nx - 1) * i;
-          if(nonsymmetric)
+          if (nonsymmetric)
             A.set(row, row, 5.);
           else
             A.set(row, row, 4.);
-          if(j > 0)
+          if (j > 0)
             {
-              if(nonsymmetric)
+              if (nonsymmetric)
                 A.set(row - 1, row, -2.);
               else
                 A.set(row - 1, row, -1.);
               A.set(row, row - 1, -1.);
             }
-          if(j < nx - 2)
+          if (j < nx - 2)
             {
               A.set(row + 1, row, -1.);
               A.set(row, row + 1, -1.);
             }
-          if(i > 0)
+          if (i > 0)
             {
               A.set(row - (nx - 1), row, -1.);
               A.set(row, row - (nx - 1), -1.);
             }
-          if(i < ny - 2)
+          if (i < ny - 2)
             {
               A.set(row + (nx - 1), row, -1.);
               A.set(row, row + (nx - 1), -1.);
@@ -267,18 +267,18 @@ template <typename MatrixType>
 inline void
 FDMatrix::upwind(MatrixType& A, bool back) const
 {
-  for(unsigned int i = 0; i <= ny - 2; i++)
+  for (unsigned int i = 0; i <= ny - 2; i++)
     {
-      for(unsigned int j = 0; j <= nx - 2; j++)
+      for (unsigned int j = 0; j <= nx - 2; j++)
         {
           // Number of the row to be entered
           unsigned int row = j + (nx - 1) * i;
           A.set(row, row, 3.);
 
-          if(j > 0 && !back)
+          if (j > 0 && !back)
             A.set(row, row - 1, -1.);
 
-          if(j < nx - 2 && back)
+          if (j < nx - 2 && back)
             A.set(row, row + 1, -1.);
         }
     }
@@ -288,9 +288,9 @@ template <typename number>
 inline void
 FDMatrix::gnuplot_print(std::ostream& s, const Vector<number>& V) const
 {
-  for(unsigned int i = 0; i <= ny - 2; i++)
+  for (unsigned int i = 0; i <= ny - 2; i++)
     {
-      for(unsigned int j = 0; j <= nx - 2; j++)
+      for (unsigned int j = 0; j <= nx - 2; j++)
         {
           // Number of the row to be entered
           unsigned int row = j + (nx - 1) * i;

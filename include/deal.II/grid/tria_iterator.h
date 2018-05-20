@@ -1012,9 +1012,9 @@ operator<(const TriaRawIterator<Accessor>& other) const
          ExcInvalidComparison());
 
   // Deal with iterators past end
-  if(state() == IteratorState::past_the_end)
+  if (state() == IteratorState::past_the_end)
     return false;
-  if(other.state() == IteratorState::past_the_end)
+  if (other.state() == IteratorState::past_the_end)
     return true;
 
   return ((**this) < (*other));
@@ -1053,7 +1053,7 @@ template <class StreamType>
 inline void
 TriaRawIterator<Accessor>::print(StreamType& out) const
 {
-  if(Accessor::structure_dimension == Accessor::dimension)
+  if (Accessor::structure_dimension == Accessor::dimension)
     out << accessor.level() << "." << accessor.index();
   else
     out << accessor.index();
@@ -1093,7 +1093,7 @@ inline TriaIterator<Accessor>::TriaIterator(
   // used() is called anyway, even if
   // state==IteratorState::past_the_end, and will then
   // throw the exception!
-  if(this->state() != IteratorState::past_the_end)
+  if (this->state() != IteratorState::past_the_end)
     Assert(this->accessor.used(), ExcAssignmentOfUnusedObject());
 #  endif
 }
@@ -1110,7 +1110,7 @@ TriaIterator<Accessor>::TriaIterator(const OtherAccessor& a)
   // used() is called anyway, even if
   // state==IteratorState::past_the_end, and will then
   // throw the exception!
-  if(this->state() != IteratorState::past_the_end)
+  if (this->state() != IteratorState::past_the_end)
     Assert(this->accessor.used(), ExcAssignmentOfUnusedObject());
 #  endif
 }
@@ -1135,7 +1135,7 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
   // has_children() is called anyway, even if
   // state==IteratorState::past_the_end, and will then
   // throw the exception!
-  if(this->state() != IteratorState::past_the_end)
+  if (this->state() != IteratorState::past_the_end)
     Assert(this->accessor.has_children() == false,
            ExcAssignmentOfInactiveObject());
 #  endif

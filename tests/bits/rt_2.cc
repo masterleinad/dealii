@@ -71,11 +71,11 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
   DoFHandler<2>::active_cell_iterator cell = dof_handler.begin_active(),
                                       endc = dof_handler.end();
 
-  for(; cell != endc; ++cell)
+  for (; cell != endc; ++cell)
     {
-      for(unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
+      for (unsigned int f = 0; f < GeometryInfo<2>::faces_per_cell; ++f)
         {
-          if(!cell->face(f)->at_boundary())
+          if (!cell->face(f)->at_boundary())
             {
               deallog << "cell=" << cell << ", face=" << f << std::endl;
 
@@ -96,7 +96,7 @@ void evaluate_normal(DoFHandler<2>& dof_handler, Vector<double>& solution)
                 n_q_face, Vector<double>(n_components));
               fe_v_face_n.get_function_values(solution, this_value_n);
 
-              for(unsigned int q_point = 0; q_point < n_q_face; ++q_point)
+              for (unsigned int q_point = 0; q_point < n_q_face; ++q_point)
                 {
                   Tensor<1, 2> vn = fe_v_face.normal_vector(q_point);
                   double       nx = vn[0];
@@ -142,7 +142,7 @@ main()
   // Fill solution vector with random
   // values between 0 and 1.
   Vector<double> solution(dof_handler.n_dofs());
-  for(unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
+  for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
     solution(i) = random_value<double>();
 
   // Now check if the function is

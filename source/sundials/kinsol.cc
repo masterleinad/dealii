@@ -67,9 +67,9 @@ namespace SUNDIALS
       copy(*src_yy, yy);
 
       int err = 0;
-      if(solver.residual)
+      if (solver.residual)
         err = solver.residual(*src_yy, *dst_FF);
-      else if(solver.iteration_function)
+      else if (solver.iteration_function)
         err = solver.iteration_function(*src_yy, *dst_FF);
       else
         Assert(false, ExcInternalError());
@@ -159,10 +159,10 @@ namespace SUNDIALS
   template <typename VectorType>
   KINSOL<VectorType>::~KINSOL()
   {
-    if(kinsol_mem)
+    if (kinsol_mem)
       KINFree(&kinsol_mem);
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const int ierr = MPI_Comm_free(&communicator);
         (void) ierr;
@@ -181,7 +181,7 @@ namespace SUNDIALS
     // solution. Here we take only a
     // view of it.
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         const IndexSet is = initial_guess_and_solution.locally_owned_elements();
         const unsigned int local_system_size = is.n_elements();
@@ -208,15 +208,15 @@ namespace SUNDIALS
         N_VConst_Serial(1.e0, f_scale);
       }
 
-    if(get_solution_scaling)
+    if (get_solution_scaling)
       copy(u_scale, get_solution_scaling());
 
-    if(get_function_scaling)
+    if (get_function_scaling)
       copy(f_scale, get_function_scaling());
 
     copy(solution, initial_guess_and_solution);
 
-    if(kinsol_mem)
+    if (kinsol_mem)
       KINFree(&kinsol_mem);
 
     kinsol_mem = KINCreate();
@@ -260,11 +260,11 @@ namespace SUNDIALS
     SUNLinearSolver LS = nullptr;
 #  endif
 
-    if(solve_jacobian_system)
+    if (solve_jacobian_system)
       {
         KINMem KIN_mem      = (KINMem) kinsol_mem;
         KIN_mem->kin_lsolve = t_kinsol_solve_jacobian<VectorType>;
-        if(setup_jacobian)
+        if (setup_jacobian)
           {
             KIN_mem->kin_lsetup = t_kinsol_setup_jacobian<VectorType>;
 #  if DEAL_II_SUNDIALS_VERSION_LT(3, 0, 0)
@@ -284,12 +284,12 @@ namespace SUNDIALS
         AssertKINSOL(status);
       }
 
-    if(data.strategy == AdditionalData::newton
-       || data.strategy == AdditionalData::linesearch)
+    if (data.strategy == AdditionalData::newton
+        || data.strategy == AdditionalData::linesearch)
       Assert(residual, ExcFunctionNotProvided("residual"));
 
-    if(data.strategy == AdditionalData::fixed_point
-       || data.strategy == AdditionalData::picard)
+    if (data.strategy == AdditionalData::fixed_point
+        || data.strategy == AdditionalData::picard)
       Assert(iteration_function, ExcFunctionNotProvided("iteration_function"));
 
     // call to KINSol
@@ -301,7 +301,7 @@ namespace SUNDIALS
 
     // Free the vectors which are no longer used.
 #  ifdef DEAL_II_WITH_MPI
-    if(is_serial_vector<VectorType>::value == false)
+    if (is_serial_vector<VectorType>::value == false)
       {
         N_VDestroy_Parallel(solution);
         N_VDestroy_Parallel(u_scale);
