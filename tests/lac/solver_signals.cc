@@ -29,7 +29,7 @@
 #include <string>
 
 void
-output_double_number(double input, const std::string& text)
+output_double_number(double input, const std::string &text)
 {
   deallog << text << input << std::endl;
 }
@@ -42,8 +42,8 @@ output_coefficients(double alpha, double beta)
 
 template <class NUMBER>
 void
-output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
-                   const std::string&         text)
+output_eigenvalues(const std::vector<NUMBER> &eigenvalues,
+                   const std::string &        text)
 {
   deallog << text;
   for(unsigned int j = 0; j < eigenvalues.size(); ++j)
@@ -55,7 +55,7 @@ output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
 
 template <class NUMBER>
 void
-output_hessenberg_matrix(const FullMatrix<NUMBER>& H, const std::string& text)
+output_hessenberg_matrix(const FullMatrix<NUMBER> &H, const std::string &text)
 {
   deallog << text << std::endl;
   for(unsigned int i = 0; i < H.m(); ++i)
@@ -69,9 +69,9 @@ output_hessenberg_matrix(const FullMatrix<NUMBER>& H, const std::string& text)
 template <class NUMBER>
 void
 output_arnoldi_vectors_norms(
-  const internal::SolverGMRESImplementation::TmpVectors<Vector<NUMBER>>&
-                     tmp_vector,
-  const std::string& text)
+  const internal::SolverGMRESImplementation::TmpVectors<Vector<NUMBER>>
+    &                tmp_vector,
+  const std::string &text)
 {
   deallog << text << std::endl;
   for(unsigned int i = 0; i < tmp_vector.size(); ++i)
@@ -83,11 +83,11 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
-            const PRECONDITION& P)
+check_solve(SolverType &        solver,
+            const MatrixType &  A,
+            VectorType &        u,
+            VectorType &        f,
+            const PRECONDITION &P)
 {
   u = 0.;
   f = 1.;
@@ -95,7 +95,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch(dealii::SolverControl::NoConvergence &e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -178,7 +178,7 @@ main()
                   "Arnoldi vectors norms: "));
       solver_gmres.solve(A, u, f, PreconditionIdentity());
     }
-  catch(std::exception& e)
+  catch(std::exception &e)
     {
       std::cerr << "Exception: " << e.what() << std::endl;
     }

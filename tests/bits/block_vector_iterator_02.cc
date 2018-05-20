@@ -37,7 +37,7 @@ test()
   // way
   {
     BlockVector<double>::const_iterator i
-      = const_cast<const BlockVector<double>&>(v).begin();
+      = const_cast<const BlockVector<double> &>(v).begin();
     AssertThrow(i[0] == 1, ExcInternalError());
     AssertThrow(i[1] == 2, ExcInternalError());
   }
@@ -75,7 +75,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

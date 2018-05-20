@@ -35,7 +35,7 @@
 
 template <int dim>
 void
-check(parallel::distributed::Triangulation<dim>& tria)
+check(parallel::distributed::Triangulation<dim> &tria)
 {
   MPILogInitAll all;
 
@@ -142,7 +142,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

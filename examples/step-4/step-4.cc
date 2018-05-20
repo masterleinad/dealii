@@ -142,7 +142,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const override;
+  value(const Point<dim> &p, const unsigned int component = 0) const override;
 };
 
 template <int dim>
@@ -153,7 +153,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const override;
+  value(const Point<dim> &p, const unsigned int component = 0) const override;
 };
 
 // For this example, we choose as right hand side function to function
@@ -178,7 +178,7 @@ public:
 // C and C++.
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> &p,
                           const unsigned int /*component*/) const
 {
   double return_value = 0.0;
@@ -194,7 +194,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
 // dimension. So that is what we return:
 template <int dim>
 double
-BoundaryValues<dim>::value(const Point<dim>& p,
+BoundaryValues<dim>::value(const Point<dim> &p,
                            const unsigned int /*component*/) const
 {
   return p.square();
@@ -341,7 +341,7 @@ Step4<dim>::assemble_system()
   // depending on the dimension we are in, but to the outside world they look
   // alike and you will probably never see a difference. In any case, the real
   // type is hidden by using `auto`:
-  for(const auto& cell : dof_handler.active_cell_iterators())
+  for(const auto &cell : dof_handler.active_cell_iterators())
     {
       fe_values.reinit(cell);
       cell_matrix = 0;

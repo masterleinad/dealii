@@ -65,7 +65,7 @@ namespace Step39
   public:
     typedef MeshWorker::IntegrationInfo<dim> CellInfo;
 
-    InteriorPenaltyProblem(const FiniteElement<dim>& fe);
+    InteriorPenaltyProblem(const FiniteElement<dim> &fe);
 
     void
     run(unsigned int n_steps);
@@ -76,7 +76,7 @@ namespace Step39
 
     parallel::distributed::Triangulation<dim> triangulation;
     const MappingQGeneric<dim>                mapping;
-    const FiniteElement<dim>&                 fe;
+    const FiniteElement<dim> &                fe;
     DoFHandler<dim>                           dof_handler;
 
     IndexSet locally_relevant_set;
@@ -91,7 +91,7 @@ namespace Step39
 
   template <int dim>
   InteriorPenaltyProblem<dim>::InteriorPenaltyProblem(
-    const FiniteElement<dim>& fe)
+    const FiniteElement<dim> &fe)
     : triangulation(MPI_COMM_WORLD,
                     Triangulation<dim>::limit_level_difference_at_vertices,
                     parallel::distributed::Triangulation<
@@ -195,7 +195,7 @@ namespace Step39
 } // namespace Step39
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   using namespace dealii;
   using namespace Step39;
@@ -210,7 +210,7 @@ main(int argc, char* argv[])
       InteriorPenaltyProblem<2> test1(fe1);
       test1.run(20);
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

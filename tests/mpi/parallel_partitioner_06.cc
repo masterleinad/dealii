@@ -88,7 +88,7 @@ test()
   std::vector<unsigned int> locally_owned_data_field(local_size);
   for(unsigned int i = 0; i < local_size; ++i)
     locally_owned_data_field[i] = my_start + i;
-  const std::vector<unsigned int>& locally_owned_data(locally_owned_data_field);
+  const std::vector<unsigned int> &locally_owned_data(locally_owned_data_field);
 
   // set up a ghost array
   std::vector<unsigned int> ghosts(v.n_ghost_indices());
@@ -168,7 +168,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv);
   MPILogInitAll                    log;

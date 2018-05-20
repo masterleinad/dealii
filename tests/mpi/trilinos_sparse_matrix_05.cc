@@ -92,7 +92,7 @@ test()
 
   A.compress(VectorOperation::insert);
 
-  const TrilinosWrappers::SparseMatrix& B = A;
+  const TrilinosWrappers::SparseMatrix &B = A;
 
   // now access elements by iterator. ensure that we can iterate over
   // all rows but that iterators into rows not stored locally just
@@ -116,7 +116,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

@@ -26,7 +26,7 @@
 #include <vector>
 
 void
-test(TrilinosWrappers::MPI::BlockVector& v)
+test(TrilinosWrappers::MPI::BlockVector &v)
 {
   std::vector<types::global_dof_index> sizes(2, 3);
   dealii::BlockVector<TrilinosScalar>  w(sizes);
@@ -55,7 +55,7 @@ test(TrilinosWrappers::MPI::BlockVector& v)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -72,7 +72,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

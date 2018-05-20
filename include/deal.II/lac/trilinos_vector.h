@@ -92,7 +92,7 @@ namespace TrilinosWrappers
        * Constructor. It is made private so as to only allow the actual vector
        * class to create it.
        */
-      VectorReference(MPI::Vector& vector, const size_type index);
+      VectorReference(MPI::Vector &vector, const size_type index);
 
     public:
       /**
@@ -106,44 +106,44 @@ namespace TrilinosWrappers
        * this operation. Note also that this allows us to make the assignment
        * operator const.
        */
-      const VectorReference&
-      operator=(const VectorReference& r) const;
+      const VectorReference &
+      operator=(const VectorReference &r) const;
 
       /**
        * Same as above but for non-const reference objects.
        */
-      VectorReference&
-      operator=(const VectorReference& r);
+      VectorReference &
+      operator=(const VectorReference &r);
 
       /**
        * Set the referenced element of the vector to <tt>s</tt>.
        */
-      const VectorReference&
-      operator=(const TrilinosScalar& s) const;
+      const VectorReference &
+      operator=(const TrilinosScalar &s) const;
 
       /**
        * Add <tt>s</tt> to the referenced element of the vector->
        */
-      const VectorReference&
-      operator+=(const TrilinosScalar& s) const;
+      const VectorReference &
+      operator+=(const TrilinosScalar &s) const;
 
       /**
        * Subtract <tt>s</tt> from the referenced element of the vector->
        */
-      const VectorReference&
-      operator-=(const TrilinosScalar& s) const;
+      const VectorReference &
+      operator-=(const TrilinosScalar &s) const;
 
       /**
        * Multiply the referenced element of the vector by <tt>s</tt>.
        */
-      const VectorReference&
-      operator*=(const TrilinosScalar& s) const;
+      const VectorReference &
+      operator*=(const TrilinosScalar &s) const;
 
       /**
        * Divide the referenced element of the vector by <tt>s</tt>.
        */
-      const VectorReference&
-      operator/=(const TrilinosScalar& s) const;
+      const VectorReference &
+      operator/=(const TrilinosScalar &s) const;
 
       /**
        * Convert the reference to an actual value, i.e. return the value of
@@ -163,7 +163,7 @@ namespace TrilinosWrappers
       /**
        * Point to the vector we are referencing.
        */
-      MPI::Vector& vector;
+      MPI::Vector &vector;
 
       /**
        * Index of the referenced element of the vector.
@@ -188,7 +188,7 @@ namespace TrilinosWrappers
     // an Epetra_BlockMap object  by calling either the 32- or 64-bit
     // function necessary.
     inline int
-    gid(const Epetra_BlockMap& map, int i)
+    gid(const Epetra_BlockMap &map, int i)
     {
       return map.GID(i);
     }
@@ -197,7 +197,7 @@ namespace TrilinosWrappers
     // an Epetra_BlockMap object  by calling either the 32- or 64-bit
     // function necessary.
     inline long long int
-    gid(const Epetra_BlockMap& map, int i)
+    gid(const Epetra_BlockMap &map, int i)
     {
       return map.GID64(i);
     }
@@ -401,8 +401,8 @@ namespace TrilinosWrappers
       typedef TrilinosScalar                  value_type;
       typedef TrilinosScalar                  real_type;
       typedef dealii::types::global_dof_index size_type;
-      typedef value_type*                     iterator;
-      typedef const value_type*               const_iterator;
+      typedef value_type *                    iterator;
+      typedef const value_type *              const_iterator;
       typedef internal::VectorReference       reference;
       typedef const internal::VectorReference const_reference;
 
@@ -420,7 +420,7 @@ namespace TrilinosWrappers
       /**
        * Copy constructor using the given vector.
        */
-      Vector(const Vector& v);
+      Vector(const Vector &v);
 
       /**
        * This constructor takes an IndexSet that defines how to distribute the
@@ -440,8 +440,8 @@ namespace TrilinosWrappers
        * @see
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
-      explicit Vector(const IndexSet& parallel_partitioning,
-                      const MPI_Comm& communicator = MPI_COMM_WORLD);
+      explicit Vector(const IndexSet &parallel_partitioning,
+                      const MPI_Comm &communicator = MPI_COMM_WORLD);
 
       /**
        * Creates a ghosted parallel vector.
@@ -454,9 +454,9 @@ namespace TrilinosWrappers
        * @see
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
-      Vector(const IndexSet& local,
-             const IndexSet& ghost,
-             const MPI_Comm& communicator = MPI_COMM_WORLD);
+      Vector(const IndexSet &local,
+             const IndexSet &ghost,
+             const MPI_Comm &communicator = MPI_COMM_WORLD);
 
       /**
        * Copy constructor from the TrilinosWrappers vector class. Since a
@@ -472,9 +472,9 @@ namespace TrilinosWrappers
        * @see
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
-      Vector(const IndexSet& parallel_partitioning,
-             const Vector&   v,
-             const MPI_Comm& communicator = MPI_COMM_WORLD);
+      Vector(const IndexSet &parallel_partitioning,
+             const Vector &  v,
+             const MPI_Comm &communicator = MPI_COMM_WORLD);
 
       /**
        * Copy-constructor from deal.II vectors. Sets the dimension to that of
@@ -489,15 +489,15 @@ namespace TrilinosWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       template <typename Number>
-      Vector(const IndexSet&               parallel_partitioning,
-             const dealii::Vector<Number>& v,
-             const MPI_Comm&               communicator = MPI_COMM_WORLD);
+      Vector(const IndexSet &              parallel_partitioning,
+             const dealii::Vector<Number> &v,
+             const MPI_Comm &              communicator = MPI_COMM_WORLD);
 
       /**
        * Move constructor. Creates a new vector by stealing the internal data
        * of the vector @p v.
        */
-      Vector(Vector&& v) noexcept;
+      Vector(Vector &&v) noexcept;
 
       /**
        * Destructor.
@@ -535,7 +535,7 @@ namespace TrilinosWrappers
        * parallelized vectors without touching the elements.
        */
       void
-      reinit(const Vector& v,
+      reinit(const Vector &v,
              const bool    omit_zeroing_entries = false,
              const bool    allow_different_maps = false);
 
@@ -562,8 +562,8 @@ namespace TrilinosWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       void
-      reinit(const IndexSet& parallel_partitioning,
-             const MPI_Comm& communicator         = MPI_COMM_WORLD,
+      reinit(const IndexSet &parallel_partitioning,
+             const MPI_Comm &communicator         = MPI_COMM_WORLD,
              const bool      omit_zeroing_entries = false);
 
       /**
@@ -592,16 +592,16 @@ namespace TrilinosWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       void
-      reinit(const IndexSet& locally_owned_entries,
-             const IndexSet& ghost_entries,
-             const MPI_Comm& communicator    = MPI_COMM_WORLD,
+      reinit(const IndexSet &locally_owned_entries,
+             const IndexSet &ghost_entries,
+             const MPI_Comm &communicator    = MPI_COMM_WORLD,
              const bool      vector_writable = false);
 
       /**
        * Create vector by merging components from a block vector.
        */
       void
-      reinit(const BlockVector& v, const bool import_data = false);
+      reinit(const BlockVector &v, const bool import_data = false);
 
       /**
        * Compress the underlying representation of the Trilinos object, i.e.
@@ -634,7 +634,7 @@ namespace TrilinosWrappers
        * to set the entire vector to zero. This allows the intuitive notation
        * <tt>v=0</tt>.
        */
-      Vector&
+      Vector &
       operator=(const TrilinosScalar s);
 
       /**
@@ -642,15 +642,15 @@ namespace TrilinosWrappers
        * this case, also the Epetra_Map that designs the parallel partitioning
        * is taken from the input vector.
        */
-      Vector&
-      operator=(const Vector& v);
+      Vector &
+      operator=(const Vector &v);
 
       /**
        * Move the given vector. This operator replaces the present vector with
        * @p v by efficiently swapping the internal data structures.
        */
-      Vector&
-      operator=(Vector&& v) noexcept;
+      Vector &
+      operator=(Vector &&v) noexcept;
 
       /**
        * Another copy function. This one takes a deal.II vector and copies it
@@ -660,8 +660,8 @@ namespace TrilinosWrappers
        * same as the size of the input vector.
        */
       template <typename Number>
-      Vector&
-      operator=(const ::dealii::Vector<Number>& v);
+      Vector &
+      operator=(const ::dealii::Vector<Number> &v);
 
       /**
        * This reinit function is meant to be used for parallel calculations
@@ -682,8 +682,8 @@ namespace TrilinosWrappers
        */
       void
       import_nonlocal_data_for_fe(
-        const dealii::TrilinosWrappers::SparseMatrix& matrix,
-        const Vector&                                 vector);
+        const dealii::TrilinosWrappers::SparseMatrix &matrix,
+        const Vector &                                vector);
 
       /**
        * Test for equality. This function assumes that the present vector and
@@ -691,7 +691,7 @@ namespace TrilinosWrappers
        * vectors of different sizes makes not much sense anyway.
        */
       bool
-      operator==(const Vector& v) const;
+      operator==(const Vector &v) const;
 
       /**
        * Test for inequality. This function assumes that the present vector and
@@ -699,7 +699,7 @@ namespace TrilinosWrappers
        * vectors of different sizes makes not much sense anyway.
        */
       bool
-      operator!=(const Vector& v) const;
+      operator!=(const Vector &v) const;
 
       /**
        * Return the global dimension of the vector.
@@ -794,7 +794,7 @@ namespace TrilinosWrappers
        * Return the scalar (inner) product of two vectors. The vectors must have
        * the same size.
        */
-      TrilinosScalar operator*(const Vector& vec) const;
+      TrilinosScalar operator*(const Vector &vec) const;
 
       /**
        * Return the square of the $l_2$-norm.
@@ -865,7 +865,7 @@ namespace TrilinosWrappers
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       TrilinosScalar
-      add_and_dot(const TrilinosScalar a, const Vector& V, const Vector& W);
+      add_and_dot(const TrilinosScalar a, const Vector &V, const Vector &W);
 
       /**
        * Return whether the vector contains only elements with value zero. This
@@ -939,8 +939,8 @@ namespace TrilinosWrappers
        * @pre The sizes of the @p indices and @p values arrays must be identical.
        */
       void
-      extract_subvector_to(const std::vector<size_type>& indices,
-                           std::vector<TrilinosScalar>&  values) const;
+      extract_subvector_to(const std::vector<size_type> &indices,
+                           std::vector<TrilinosScalar> & values) const;
 
       /**
        * Instead of getting individual elements of a vector via operator(),
@@ -1023,16 +1023,16 @@ namespace TrilinosWrappers
        * the corresponding values in the second.
        */
       void
-      set(const std::vector<size_type>&      indices,
-          const std::vector<TrilinosScalar>& values);
+      set(const std::vector<size_type> &     indices,
+          const std::vector<TrilinosScalar> &values);
 
       /**
        * This is a second collective set operation. As a difference, this
        * function takes a deal.II vector of values.
        */
       void
-      set(const std::vector<size_type>&           indices,
-          const ::dealii::Vector<TrilinosScalar>& values);
+      set(const std::vector<size_type> &          indices,
+          const ::dealii::Vector<TrilinosScalar> &values);
 
       /**
        * This collective set operation is of lower level and can handle anything
@@ -1041,24 +1041,24 @@ namespace TrilinosWrappers
        */
       void
       set(const size_type       n_elements,
-          const size_type*      indices,
-          const TrilinosScalar* values);
+          const size_type *     indices,
+          const TrilinosScalar *values);
 
       /**
        * A collective add operation: This function adds a whole set of values
        * stored in @p values to the vector components specified by @p indices.
        */
       void
-      add(const std::vector<size_type>&      indices,
-          const std::vector<TrilinosScalar>& values);
+      add(const std::vector<size_type> &     indices,
+          const std::vector<TrilinosScalar> &values);
 
       /**
        * This is a second collective add operation. As a difference, this
        * function takes a deal.II vector of values.
        */
       void
-      add(const std::vector<size_type>&           indices,
-          const ::dealii::Vector<TrilinosScalar>& values);
+      add(const std::vector<size_type> &          indices,
+          const ::dealii::Vector<TrilinosScalar> &values);
 
       /**
        * Take an address where <tt>n_elements</tt> are stored contiguously and
@@ -1067,32 +1067,32 @@ namespace TrilinosWrappers
        */
       void
       add(const size_type       n_elements,
-          const size_type*      indices,
-          const TrilinosScalar* values);
+          const size_type *     indices,
+          const TrilinosScalar *values);
 
       /**
        * Multiply the entire vector by a fixed factor.
        */
-      Vector&
+      Vector &
       operator*=(const TrilinosScalar factor);
 
       /**
        * Divide the entire vector by a fixed factor.
        */
-      Vector&
+      Vector &
       operator/=(const TrilinosScalar factor);
 
       /**
        * Add the given vector to the present one.
        */
-      Vector&
-      operator+=(const Vector& V);
+      Vector &
+      operator+=(const Vector &V);
 
       /**
        * Subtract the given vector from the present one.
        */
-      Vector&
-      operator-=(const Vector& V);
+      Vector &
+      operator-=(const Vector &V);
 
       /**
        * Addition of @p s to all components. Note that @p s is a scalar and not
@@ -1114,35 +1114,35 @@ namespace TrilinosWrappers
        * same map.
        */
       void
-      add(const Vector& V, const bool allow_different_maps = false);
+      add(const Vector &V, const bool allow_different_maps = false);
 
       /**
        * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
        */
       void
-      add(const TrilinosScalar a, const Vector& V);
+      add(const TrilinosScalar a, const Vector &V);
 
       /**
        * Multiple addition of scaled vectors, i.e. <tt>*this += a*V + b*W</tt>.
        */
       void
       add(const TrilinosScalar a,
-          const Vector&        V,
+          const Vector &       V,
           const TrilinosScalar b,
-          const Vector&        W);
+          const Vector &       W);
 
       /**
        * Scaling and simple vector addition, i.e.  <tt>*this = s*(*this) +
        * V</tt>.
        */
       void
-      sadd(const TrilinosScalar s, const Vector& V);
+      sadd(const TrilinosScalar s, const Vector &V);
 
       /**
        * Scaling and simple addition, i.e.  <tt>*this = s*(*this) + a*V</tt>.
        */
       void
-      sadd(const TrilinosScalar s, const TrilinosScalar a, const Vector& V);
+      sadd(const TrilinosScalar s, const TrilinosScalar a, const Vector &V);
 
       /**
        * Scale each element of this vector by the corresponding element in the
@@ -1150,13 +1150,13 @@ namespace TrilinosWrappers
        * immediate re-assignment) by a diagonal scaling matrix.
        */
       void
-      scale(const Vector& scaling_factors);
+      scale(const Vector &scaling_factors);
 
       /**
        * Assignment <tt>*this = a*V</tt>.
        */
       void
-      equ(const TrilinosScalar a, const Vector& V);
+      equ(const TrilinosScalar a, const Vector &V);
       //@}
 
       /**
@@ -1168,21 +1168,21 @@ namespace TrilinosWrappers
        * Return a const reference to the underlying Trilinos Epetra_MultiVector
        * class.
        */
-      const Epetra_MultiVector&
+      const Epetra_MultiVector &
       trilinos_vector() const;
 
       /**
        * Return a (modifyable) reference to the underlying Trilinos
        * Epetra_FEVector class.
        */
-      Epetra_FEVector&
+      Epetra_FEVector &
       trilinos_vector();
 
       /**
        * Return a const reference to the underlying Trilinos Epetra_Map that
        * sets the parallel partitioning of the vector.
        */
-      const Epetra_Map&
+      const Epetra_Map &
       vector_partitioner() const;
 
       /**
@@ -1193,7 +1193,7 @@ namespace TrilinosWrappers
        * separate line each.
        */
       void
-      print(std::ostream&      out,
+      print(std::ostream &     out,
             const unsigned int precision  = 3,
             const bool         scientific = true,
             const bool         across     = true) const;
@@ -1212,7 +1212,7 @@ namespace TrilinosWrappers
        * analogy to standard functions.
        */
       void
-      swap(Vector& v);
+      swap(Vector &v);
 
       /**
        * Estimate for the memory consumption in bytes.
@@ -1224,7 +1224,7 @@ namespace TrilinosWrappers
        * Return a reference to the MPI communicator object in use with this
        * object.
        */
-      const MPI_Comm&
+      const MPI_Comm &
       get_mpi_communicator() const;
       //@}
 
@@ -1322,7 +1322,7 @@ namespace TrilinosWrappers
      * @author Martin Kronbichler, Wolfgang Bangerth, 2008
      */
     inline void
-    swap(Vector& u, Vector& v)
+    swap(Vector &u, Vector &v)
     {
       u.swap(v);
     }
@@ -1332,13 +1332,13 @@ namespace TrilinosWrappers
 
   namespace internal
   {
-    inline VectorReference::VectorReference(MPI::Vector&    vector,
+    inline VectorReference::VectorReference(MPI::Vector &   vector,
                                             const size_type index)
       : vector(vector), index(index)
     {}
 
-    inline const VectorReference&
-    VectorReference::operator=(const VectorReference& r) const
+    inline const VectorReference &
+    VectorReference::operator=(const VectorReference &r) const
     {
       // as explained in the class
       // documentation, this is not the copy
@@ -1349,8 +1349,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
-    inline VectorReference&
-    VectorReference::operator=(const VectorReference& r)
+    inline VectorReference &
+    VectorReference::operator=(const VectorReference &r)
     {
       // as above
       *this = static_cast<TrilinosScalar>(r);
@@ -1358,38 +1358,38 @@ namespace TrilinosWrappers
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator=(const TrilinosScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator=(const TrilinosScalar &value) const
     {
       vector.set(1, &index, &value);
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator+=(const TrilinosScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator+=(const TrilinosScalar &value) const
     {
       vector.add(1, &index, &value);
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator-=(const TrilinosScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator-=(const TrilinosScalar &value) const
     {
       TrilinosScalar new_value = -value;
       vector.add(1, &index, &new_value);
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator*=(const TrilinosScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator*=(const TrilinosScalar &value) const
     {
       TrilinosScalar new_value = static_cast<TrilinosScalar>(*this) * value;
       vector.set(1, &index, &new_value);
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator/=(const TrilinosScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator/=(const TrilinosScalar &value) const
     {
       TrilinosScalar new_value = static_cast<TrilinosScalar>(*this) / value;
       vector.set(1, &index, &new_value);
@@ -1445,8 +1445,8 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::extract_subvector_to(const std::vector<size_type>& indices,
-                                 std::vector<TrilinosScalar>&  values) const
+    Vector::extract_subvector_to(const std::vector<size_type> &indices,
+                                 std::vector<TrilinosScalar> & values) const
     {
       for(size_type i = 0; i < indices.size(); ++i)
         values[i] = operator()(indices[i]);
@@ -1491,8 +1491,8 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::set(const std::vector<size_type>&      indices,
-                const std::vector<TrilinosScalar>& values)
+    Vector::set(const std::vector<size_type> &     indices,
+                const std::vector<TrilinosScalar> &values)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1505,8 +1505,8 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::set(const std::vector<size_type>&           indices,
-                const ::dealii::Vector<TrilinosScalar>& values)
+    Vector::set(const std::vector<size_type> &          indices,
+                const ::dealii::Vector<TrilinosScalar> &values)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1520,8 +1520,8 @@ namespace TrilinosWrappers
 
     inline void
     Vector::set(const size_type       n_elements,
-                const size_type*      indices,
-                const TrilinosScalar* values)
+                const size_type *     indices,
+                const TrilinosScalar *values)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1547,7 +1547,7 @@ namespace TrilinosWrappers
             {
               const int ierr = vector->ReplaceGlobalValues(
                 1,
-                (const TrilinosWrappers::types::int_type*) (&row),
+                (const TrilinosWrappers::types::int_type *) (&row),
                 &values[i]);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
               compressed = false;
@@ -1561,8 +1561,8 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::add(const std::vector<size_type>&      indices,
-                const std::vector<TrilinosScalar>& values)
+    Vector::add(const std::vector<size_type> &     indices,
+                const std::vector<TrilinosScalar> &values)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1574,8 +1574,8 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::add(const std::vector<size_type>&           indices,
-                const ::dealii::Vector<TrilinosScalar>& values)
+    Vector::add(const std::vector<size_type> &          indices,
+                const ::dealii::Vector<TrilinosScalar> &values)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1588,8 +1588,8 @@ namespace TrilinosWrappers
 
     inline void
     Vector::add(const size_type       n_elements,
-                const size_type*      indices,
-                const TrilinosScalar* values)
+                const size_type *     indices,
+                const TrilinosScalar *values)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1616,7 +1616,7 @@ namespace TrilinosWrappers
             {
               const int ierr = vector->SumIntoGlobalValues(
                 1,
-                (const TrilinosWrappers::types::int_type*) (&row),
+                (const TrilinosWrappers::types::int_type *) (&row),
                 &values[i]);
               AssertThrow(ierr == 0, ExcTrilinosError(ierr));
               compressed = false;
@@ -1681,7 +1681,7 @@ namespace TrilinosWrappers
       return std::make_pair(begin, end);
     }
 
-    inline TrilinosScalar Vector::operator*(const Vector& vec) const
+    inline TrilinosScalar Vector::operator*(const Vector &vec) const
     {
       Assert(vector->Map().SameAs(vec.vector->Map()),
              ExcDifferentParallelPartitioning());
@@ -1794,8 +1794,8 @@ namespace TrilinosWrappers
 
     inline TrilinosScalar
     Vector::add_and_dot(const TrilinosScalar a,
-                        const Vector&        V,
-                        const Vector&        W)
+                        const Vector &       V,
+                        const Vector &       W)
     {
       this->add(a, V);
       return *this * W;
@@ -1806,7 +1806,7 @@ namespace TrilinosWrappers
     // representable by a single Trilinos
     // call. This reduces the overhead of the
     // wrapper class.
-    inline Vector&
+    inline Vector &
     Vector::operator*=(const TrilinosScalar a)
     {
       AssertIsFinite(a);
@@ -1817,7 +1817,7 @@ namespace TrilinosWrappers
       return *this;
     }
 
-    inline Vector&
+    inline Vector &
     Vector::operator/=(const TrilinosScalar a)
     {
       AssertIsFinite(a);
@@ -1832,8 +1832,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
-    inline Vector&
-    Vector::operator+=(const Vector& v)
+    inline Vector &
+    Vector::operator+=(const Vector &v)
     {
       Assert(size() == v.size(), ExcDimensionMismatch(size(), v.size()));
       Assert(vector->Map().SameAs(v.vector->Map()),
@@ -1845,8 +1845,8 @@ namespace TrilinosWrappers
       return *this;
     }
 
-    inline Vector&
-    Vector::operator-=(const Vector& v)
+    inline Vector &
+    Vector::operator-=(const Vector &v)
     {
       Assert(size() == v.size(), ExcDimensionMismatch(size(), v.size()));
       Assert(vector->Map().SameAs(v.vector->Map()),
@@ -1872,7 +1872,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::add(const TrilinosScalar a, const Vector& v)
+    Vector::add(const TrilinosScalar a, const Vector &v)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1888,9 +1888,9 @@ namespace TrilinosWrappers
 
     inline void
     Vector::add(const TrilinosScalar a,
-                const Vector&        v,
+                const Vector &       v,
                 const TrilinosScalar b,
-                const Vector&        w)
+                const Vector &       w)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1909,7 +1909,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::sadd(const TrilinosScalar s, const Vector& v)
+    Vector::sadd(const TrilinosScalar s, const Vector &v)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1937,7 +1937,7 @@ namespace TrilinosWrappers
     inline void
     Vector::sadd(const TrilinosScalar s,
                  const TrilinosScalar a,
-                 const Vector&        v)
+                 const Vector &       v)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1965,7 +1965,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::scale(const Vector& factors)
+    Vector::scale(const Vector &factors)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -1978,7 +1978,7 @@ namespace TrilinosWrappers
     }
 
     inline void
-    Vector::equ(const TrilinosScalar a, const Vector& v)
+    Vector::equ(const TrilinosScalar a, const Vector &v)
     {
       // if we have ghost values, do not allow
       // writing to this vector at all.
@@ -2000,33 +2000,33 @@ namespace TrilinosWrappers
         }
     }
 
-    inline const Epetra_MultiVector&
+    inline const Epetra_MultiVector &
     Vector::trilinos_vector() const
     {
-      return static_cast<const Epetra_MultiVector&>(*vector);
+      return static_cast<const Epetra_MultiVector &>(*vector);
     }
 
-    inline Epetra_FEVector&
+    inline Epetra_FEVector &
     Vector::trilinos_vector()
     {
       return *vector;
     }
 
-    inline const Epetra_Map&
+    inline const Epetra_Map &
     Vector::vector_partitioner() const
     {
-      return static_cast<const Epetra_Map&>(vector->Map());
+      return static_cast<const Epetra_Map &>(vector->Map());
     }
 
-    inline const MPI_Comm&
+    inline const MPI_Comm &
     Vector::get_mpi_communicator() const
     {
       static MPI_Comm comm;
 
 #    ifdef DEAL_II_WITH_MPI
 
-      const Epetra_MpiComm* mpi_comm
-        = dynamic_cast<const Epetra_MpiComm*>(&vector->Map().Comm());
+      const Epetra_MpiComm *mpi_comm
+        = dynamic_cast<const Epetra_MpiComm *>(&vector->Map().Comm());
       comm = mpi_comm->Comm();
 
 #    else
@@ -2039,16 +2039,16 @@ namespace TrilinosWrappers
     }
 
     template <typename number>
-    Vector::Vector(const IndexSet&               parallel_partitioner,
-                   const dealii::Vector<number>& v,
-                   const MPI_Comm&               communicator)
+    Vector::Vector(const IndexSet &              parallel_partitioner,
+                   const dealii::Vector<number> &v,
+                   const MPI_Comm &              communicator)
     {
       *this
         = Vector(parallel_partitioner.make_trilinos_map(communicator, true), v);
       owned_elements = parallel_partitioner;
     }
 
-    inline Vector&
+    inline Vector &
     Vector::operator=(const TrilinosScalar s)
     {
       AssertIsFinite(s);
@@ -2089,8 +2089,8 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&                  matrix,
-                          TrilinosWrappers::MPI::Vector& v,
+      reinit_range_vector(const Matrix &                 matrix,
+                          TrilinosWrappers::MPI::Vector &v,
                           bool                           omit_zeroing_entries)
       {
         v.reinit(matrix.locally_owned_range_indices(),
@@ -2100,8 +2100,8 @@ namespace internal
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&                  matrix,
-                           TrilinosWrappers::MPI::Vector& v,
+      reinit_domain_vector(const Matrix &                 matrix,
+                           TrilinosWrappers::MPI::Vector &v,
                            bool                           omit_zeroing_entries)
       {
         v.reinit(matrix.locally_owned_domain_indices(),

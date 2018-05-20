@@ -27,7 +27,7 @@
 
 template <typename MatrixType>
 void
-test(MatrixType& m)
+test(MatrixType &m)
 {
   m.add(0, 0, 1);
   m.compress(VectorOperation::add);
@@ -39,7 +39,7 @@ test(MatrixType& m)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -66,7 +66,7 @@ main(int argc, char** argv)
         test(v2);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

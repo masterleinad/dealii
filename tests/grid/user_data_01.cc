@@ -29,10 +29,10 @@
  */
 template <int dim>
 void
-check_user_pointers(Triangulation<dim>& tr)
+check_user_pointers(Triangulation<dim> &tr)
 {
   // Check if values are the same as below
-  Triangulation<dim>* p = &tr;
+  Triangulation<dim> *p = &tr;
   for(typename Triangulation<dim>::cell_iterator it = tr.begin();
       it != tr.end();
       ++it)
@@ -81,7 +81,7 @@ check_user_pointers(Triangulation<dim>& tr)
  */
 template <int dim>
 void
-check_user_indices(Triangulation<dim>& tr)
+check_user_indices(Triangulation<dim> &tr)
 {
   // Check if values are the same as below
   unsigned int p = 1;
@@ -130,13 +130,13 @@ check_user_indices(Triangulation<dim>& tr)
 
 template <int dim>
 void
-user_pointers(Triangulation<dim>& tr)
+user_pointers(Triangulation<dim> &tr)
 {
   deallog << "Pointers" << dim << 'D' << std::endl;
 
   // Fill user pointers with some
   // nonsense. clear them first
-  Triangulation<dim>* p = &tr;
+  Triangulation<dim> *p = &tr;
   tr.clear_user_data();
   for(typename Triangulation<dim>::cell_iterator it = tr.begin();
       it != tr.end();
@@ -181,7 +181,7 @@ user_pointers(Triangulation<dim>& tr)
   tr.begin()->user_pointer();
 
   // Check if save and load work
-  std::vector<void*> cell_pointers(tr.n_cells());
+  std::vector<void *> cell_pointers(tr.n_cells());
   deallog << "Save" << dim << 'D' << std::endl;
   tr.save_user_pointers(cell_pointers);
   tr.clear_user_data();
@@ -192,7 +192,7 @@ user_pointers(Triangulation<dim>& tr)
 
 template <int dim>
 void
-user_indices(Triangulation<dim>& tr)
+user_indices(Triangulation<dim> &tr)
 {
   deallog << "Indices" << dim << 'D' << std::endl;
 
@@ -253,7 +253,7 @@ user_indices(Triangulation<dim>& tr)
     {
       tr.begin()->user_pointer();
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

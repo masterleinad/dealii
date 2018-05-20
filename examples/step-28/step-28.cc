@@ -406,9 +406,9 @@ namespace Step28
     // DoF handler member variables private, and do not have to grant external
     // use to it, enhancing encapsulation:
     EnergyGroup(const unsigned int        group,
-                const MaterialData&       material_data,
-                const Triangulation<dim>& coarse_grid,
-                const FiniteElement<dim>& fe);
+                const MaterialData &      material_data,
+                const Triangulation<dim> &coarse_grid,
+                const FiniteElement<dim> &fe);
 
     void
     setup_linear_system();
@@ -434,9 +434,9 @@ namespace Step28
     void
     assemble_system_matrix();
     void
-    assemble_ingroup_rhs(const Function<dim>& extraneous_source);
+    assemble_ingroup_rhs(const Function<dim> &extraneous_source);
     void
-    assemble_cross_group_rhs(const EnergyGroup<dim>& g_prime);
+    assemble_cross_group_rhs(const EnergyGroup<dim> &g_prime);
 
     // Next we need a set of functions that actually compute the solution of a
     // linear system, and do something with it (such as computing the fission
@@ -457,10 +457,10 @@ namespace Step28
     output_results(const unsigned int cycle) const;
 
     void
-    estimate_errors(Vector<float>& error_indicators) const;
+    estimate_errors(Vector<float> &error_indicators) const;
 
     void
-    refine_grid(const Vector<float>& error_indicators,
+    refine_grid(const Vector<float> &error_indicators,
                 const double         refine_threshold,
                 const double         coarsen_threshold);
 
@@ -491,10 +491,10 @@ namespace Step28
     // along with all the other data of this class:
   private:
     const unsigned int  group;
-    const MaterialData& material_data;
+    const MaterialData &material_data;
 
     Triangulation<dim>        triangulation;
-    const FiniteElement<dim>& fe;
+    const FiniteElement<dim> &fe;
     DoFHandler<dim>           dof_handler;
 
     SparsityPattern      sparsity_pattern;
@@ -519,9 +519,9 @@ namespace Step28
   private:
     void
     assemble_cross_group_rhs_recursive(
-      const EnergyGroup<dim>&                        g_prime,
-      const typename DoFHandler<dim>::cell_iterator& cell_g,
-      const typename DoFHandler<dim>::cell_iterator& cell_g_prime,
+      const EnergyGroup<dim> &                       g_prime,
+      const typename DoFHandler<dim>::cell_iterator &cell_g,
+      const typename DoFHandler<dim>::cell_iterator &cell_g_prime,
       const FullMatrix<double>                       prolongation_matrix);
   };
 
@@ -534,9 +534,9 @@ namespace Step28
   // members, thereby enabling us to make these data members private.
   template <int dim>
   EnergyGroup<dim>::EnergyGroup(const unsigned int        group,
-                                const MaterialData&       material_data,
-                                const Triangulation<dim>& coarse_grid,
-                                const FiniteElement<dim>& fe)
+                                const MaterialData &      material_data,
+                                const Triangulation<dim> &coarse_grid,
+                                const FiniteElement<dim> &fe)
     : group(group),
       material_data(material_data),
       fe(fe),
@@ -719,7 +719,7 @@ namespace Step28
   // terms that simply add to the right hand side vector.
   template <int dim>
   void
-  EnergyGroup<dim>::assemble_ingroup_rhs(const Function<dim>& extraneous_source)
+  EnergyGroup<dim>::assemble_ingroup_rhs(const Function<dim> &extraneous_source)
   {
     system_rhs.reinit(dof_handler.n_dofs());
 
@@ -787,7 +787,7 @@ namespace Step28
   // function early if $g=g'$.
   template <int dim>
   void
-  EnergyGroup<dim>::assemble_cross_group_rhs(const EnergyGroup<dim>& g_prime)
+  EnergyGroup<dim>::assemble_cross_group_rhs(const EnergyGroup<dim> &g_prime)
   {
     if(group == g_prime.group)
       return;
@@ -838,9 +838,9 @@ namespace Step28
   template <int dim>
   void
   EnergyGroup<dim>::assemble_cross_group_rhs_recursive(
-    const EnergyGroup<dim>&                        g_prime,
-    const typename DoFHandler<dim>::cell_iterator& cell_g,
-    const typename DoFHandler<dim>::cell_iterator& cell_g_prime,
+    const EnergyGroup<dim> &                       g_prime,
+    const typename DoFHandler<dim>::cell_iterator &cell_g,
+    const typename DoFHandler<dim>::cell_iterator &cell_g_prime,
     const FullMatrix<double>                       prolongation_matrix)
   {
     // The first case is that both cells are no further refined. In that case,
@@ -1032,7 +1032,7 @@ namespace Step28
   // thresholds for refining and coarsening cells.
   template <int dim>
   void
-  EnergyGroup<dim>::estimate_errors(Vector<float>& error_indicators) const
+  EnergyGroup<dim>::estimate_errors(Vector<float> &error_indicators) const
   {
     KellyErrorEstimator<dim>::estimate(dof_handler,
                                        QGauss<dim - 1>(fe.degree + 1),
@@ -1055,7 +1055,7 @@ namespace Step28
   // described in detail in the documentation of that class:
   template <int dim>
   void
-  EnergyGroup<dim>::refine_grid(const Vector<float>& error_indicators,
+  EnergyGroup<dim>::refine_grid(const Vector<float> &error_indicators,
                                 const double         refine_threshold,
                                 const double         coarsen_threshold)
   {
@@ -1151,9 +1151,9 @@ namespace Step28
       Parameters();
 
       static void
-      declare_parameters(ParameterHandler& prm);
+      declare_parameters(ParameterHandler &prm);
       void
-      get_parameters(ParameterHandler& prm);
+      get_parameters(ParameterHandler &prm);
 
       unsigned int n_groups;
       unsigned int n_refinement_cycles;
@@ -1163,7 +1163,7 @@ namespace Step28
       double convergence_tolerance;
     };
 
-    NeutronDiffusionProblem(const Parameters& parameters);
+    NeutronDiffusionProblem(const Parameters &parameters);
     ~NeutronDiffusionProblem();
 
     void
@@ -1193,7 +1193,7 @@ namespace Step28
     // describing the material parameters for the number of energy groups
     // requested in the input file, and (iii) the finite element to be used by
     // all energy groups:
-    const Parameters&  parameters;
+    const Parameters & parameters;
     const MaterialData material_data;
     FE_Q<dim>          fe;
 
@@ -1208,7 +1208,7 @@ namespace Step28
     // Finally, (v), we have an array of pointers to the energy group
     // objects. The length of this array is, of course, equal to the number of
     // energy groups specified in the parameter file.
-    std::vector<EnergyGroup<dim>*> energy_groups;
+    std::vector<EnergyGroup<dim> *> energy_groups;
   };
 
   // @sect4{Implementation of the <code>NeutronDiffusionProblem::Parameters</code> class}
@@ -1229,7 +1229,7 @@ namespace Step28
   template <int dim>
   void
   NeutronDiffusionProblem<dim>::Parameters::declare_parameters(
-    ParameterHandler& prm)
+    ParameterHandler &prm)
   {
     prm.declare_entry("Number of energy groups",
                       "2",
@@ -1254,7 +1254,7 @@ namespace Step28
   template <int dim>
   void
   NeutronDiffusionProblem<dim>::Parameters::get_parameters(
-    ParameterHandler& prm)
+    ParameterHandler &prm)
   {
     n_groups              = prm.get_integer("Number of energy groups");
     n_refinement_cycles   = prm.get_integer("Refinement cycles");
@@ -1268,7 +1268,7 @@ namespace Step28
   // and destructor have nothing of much interest:
   template <int dim>
   NeutronDiffusionProblem<dim>::NeutronDiffusionProblem(
-    const Parameters& parameters)
+    const Parameters &parameters)
     : parameters(parameters),
       material_data(parameters.n_groups),
       fe(parameters.fe_degree),
@@ -1682,7 +1682,7 @@ namespace Step28
 // off to an object of type <code>NeutronDiffusionProblem</code> for
 // computation of the eigenvalue:
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   try
     {
@@ -1709,7 +1709,7 @@ main(int argc, char** argv)
       NeutronDiffusionProblem<dim> neutron_diffusion_problem(parameters);
       neutron_diffusion_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

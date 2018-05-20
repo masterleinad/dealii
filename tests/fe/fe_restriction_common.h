@@ -41,7 +41,7 @@
 
 template <typename number>
 void
-print_formatted(const FullMatrix<number>& A,
+print_formatted(const FullMatrix<number> &A,
                 const unsigned int        precision,
                 const unsigned int        width)
 {
@@ -59,7 +59,7 @@ print_formatted(const FullMatrix<number>& A,
 
 template <int dim>
 inline void
-check_restriction(FiniteElement<dim>& fe, const char* name)
+check_restriction(FiniteElement<dim> &fe, const char *name)
 {
   deallog << name << '<' << dim << '>' << " constraint " << std::endl;
   print_formatted(fe.constraints(), 7, 10);

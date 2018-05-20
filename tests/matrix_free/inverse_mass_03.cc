@@ -42,14 +42,14 @@ template <int dim,
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
 
   void
   local_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
-    const std::pair<unsigned int, unsigned int>& cell_range) const
+    const MatrixFree<dim, Number> &              data,
+    VectorType &                                 dst,
+    const VectorType &                           src,
+    const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 3, Number> fe_eval(data);
     const unsigned int n_q_points = fe_eval.n_q_points;
@@ -74,10 +74,10 @@ public:
 
   void
   local_inverse_mass_operator(
-    const MatrixFree<dim, Number>&               data,
-    VectorType&                                  dst,
-    const VectorType&                            src,
-    const std::pair<unsigned int, unsigned int>& cell_range) const
+    const MatrixFree<dim, Number> &              data,
+    VectorType &                                 dst,
+    const VectorType &                           src,
+    const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 3, Number> fe_eval(data);
     MatrixFreeOperators::CellwiseInverseMassMatrix<dim, fe_degree, 3, Number>
@@ -107,7 +107,7 @@ public:
   }
 
   void
-  vmult(VectorType& dst, const VectorType& src) const
+  vmult(VectorType &dst, const VectorType &src) const
   {
     dst = 0;
     data.cell_loop(
@@ -118,7 +118,7 @@ public:
   };
 
   void
-  apply_inverse(VectorType& dst, const VectorType& src) const
+  apply_inverse(VectorType &dst, const VectorType &src) const
   {
     dst = 0;
     data.cell_loop(&MatrixFreeTest<dim, fe_degree, Number, VectorType>::
@@ -129,12 +129,12 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
+  const MatrixFree<dim, Number> &data;
 };
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim>& dof)
+do_test(const DoFHandler<dim> &dof)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
 

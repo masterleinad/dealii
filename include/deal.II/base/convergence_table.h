@@ -128,8 +128,8 @@ public:
    * fill, you will have to re-enable it after calling this function.
    */
   void
-  evaluate_convergence_rates(const std::string& data_column_key,
-                             const std::string& reference_column_key,
+  evaluate_convergence_rates(const std::string &data_column_key,
+                             const std::string &reference_column_key,
                              const RateMode     rate_mode,
                              const unsigned int dim = 2);
 
@@ -150,7 +150,7 @@ public:
    * fill, you will have to re-enable it after calling this function.
    */
   void
-  evaluate_convergence_rates(const std::string& data_column_key,
+  evaluate_convergence_rates(const std::string &data_column_key,
                              const RateMode     rate_mode);
 
   /**
@@ -161,7 +161,7 @@ public:
    * rate evaluation.
    */
   void
-  omit_column_from_convergence_rate_evaluation(const std::string& key);
+  omit_column_from_convergence_rate_evaluation(const std::string &key);
 
   /**
    * Evaluate convergence rates due to the <tt>rate_mode</tt> in relation to
@@ -178,7 +178,7 @@ public:
    * omit_column_from_convergence_rate_evaluation().
    */
   void
-  evaluate_all_convergence_rates(const std::string& reference_column_key,
+  evaluate_all_convergence_rates(const std::string &reference_column_key,
                                  const RateMode     rate_mode);
 
   /**

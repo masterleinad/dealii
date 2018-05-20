@@ -63,7 +63,7 @@ main()
       test<2>();
       test<3>();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

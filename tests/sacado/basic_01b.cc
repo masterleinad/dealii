@@ -29,50 +29,50 @@
 // The functions to differentiate
 template <typename NumberType>
 NumberType
-f(const NumberType& x, const NumberType& y, const NumberType& z)
+f(const NumberType &x, const NumberType &y, const NumberType &z)
 {
   return z * (x + z * y + x * y);
 }
 template <typename NumberType>
 NumberType
-g(const NumberType& x, const NumberType& y, const NumberType& z)
+g(const NumberType &x, const NumberType &y, const NumberType &z)
 {
   return std::sin(x * z) * std::cos(y / z);
 }
 template <typename NumberType>
 NumberType
-h(const NumberType& x, const NumberType& y, const NumberType& z)
+h(const NumberType &x, const NumberType &y, const NumberType &z)
 {
   return x * y * z;
 }
 
 // The analytic derivative of the functions with respect to x and y
 void
-df(const double& x,
-   const double& y,
-   const double& z,
-   double&       df_dx,
-   double&       df_dy)
+df(const double &x,
+   const double &y,
+   const double &z,
+   double &      df_dx,
+   double &      df_dy)
 {
   df_dx = z * (1.0 + y);
   df_dy = z * (z + x);
 }
 void
-dg(const double& x,
-   const double& y,
-   const double& z,
-   double&       dg_dx,
-   double&       dg_dy)
+dg(const double &x,
+   const double &y,
+   const double &z,
+   double &      dg_dx,
+   double &      dg_dy)
 {
   dg_dx = z * std::cos(x * z) * std::cos(y / z);
   dg_dy = -(1.0 / z) * std::sin(x * z) * std::sin(y / z);
 }
 void
-dh(const double& x,
-   const double& y,
-   const double& z,
-   double&       dh_dx,
-   double&       dh_dy)
+dh(const double &x,
+   const double &y,
+   const double &z,
+   double &      dh_dx,
+   double &      dh_dy)
 {
   dh_dx = y * z;
   dh_dy = x * z;

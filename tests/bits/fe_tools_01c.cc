@@ -33,7 +33,7 @@
 
 template <int dim>
 void
-check(const FE_Q<dim>& fe, const std::string& name)
+check(const FE_Q<dim> &fe, const std::string &name)
 {
   deallog << "Checking " << name << " in " << dim << "d:" << std::endl;
 
@@ -84,7 +84,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

@@ -72,8 +72,8 @@ namespace GridTools
    * @ref CacheUpdateFlags
    */
   template <class StreamType>
-  inline StreamType&
-  operator<<(StreamType& s, const CacheUpdateFlags u)
+  inline StreamType &
+  operator<<(StreamType &s, const CacheUpdateFlags u)
   {
     s << " CacheUpdateFlags";
     if(u & update_vertex_to_cell_map)
@@ -125,8 +125,8 @@ namespace GridTools
    *
    * @ref CacheUpdateFlags
    */
-  inline CacheUpdateFlags&
-  operator|=(CacheUpdateFlags& f1, const CacheUpdateFlags f2)
+  inline CacheUpdateFlags &
+  operator|=(CacheUpdateFlags &f1, const CacheUpdateFlags f2)
   {
     f1 = f1 | f2;
     return f1;
@@ -154,8 +154,8 @@ namespace GridTools
    *
    * @ref CacheUpdateFlags
    */
-  inline CacheUpdateFlags&
-  operator&=(CacheUpdateFlags& f1, const CacheUpdateFlags f2)
+  inline CacheUpdateFlags &
+  operator&=(CacheUpdateFlags &f1, const CacheUpdateFlags f2)
   {
     f1 = f1 & f2;
     return f1;

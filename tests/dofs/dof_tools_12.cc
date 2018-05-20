@@ -21,7 +21,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> &dof_handler)
 {
   std::vector<bool> selected_dofs(dof_handler.n_dofs());
   std::vector<bool> mask(dof_handler.get_fe().n_components(), false);

@@ -42,7 +42,7 @@ using namespace std;
 
 template <int dim>
 void
-setup_tria(parallel::distributed::Triangulation<dim>& tr)
+setup_tria(parallel::distributed::Triangulation<dim> &tr)
 {
   GridGenerator::hyper_cube(tr);
   tr.refine_global(2);
@@ -85,7 +85,7 @@ setup_tria(parallel::distributed::Triangulation<dim>& tr)
 
 template <int dim>
 void
-check_fe(FiniteElement<dim>& fe)
+check_fe(FiniteElement<dim> &fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -180,7 +180,7 @@ check()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

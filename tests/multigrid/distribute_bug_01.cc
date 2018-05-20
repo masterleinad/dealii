@@ -32,7 +32,7 @@ using namespace dealii;
 
 template <int dim>
 void
-print(parallel::distributed::Triangulation<dim>& tr)
+print(parallel::distributed::Triangulation<dim> &tr)
 {
   deallog << "*****" << std::endl;
   for(typename parallel::distributed::Triangulation<dim>::cell_iterator cell
@@ -95,7 +95,7 @@ do_test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv, 1);
   MPILogInitAll                    log;

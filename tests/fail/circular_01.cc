@@ -78,7 +78,7 @@ private:
   void
   refine_grid();
   void
-  estimate_smoothness(Vector<float>& smoothness_indicators) const;
+  estimate_smoothness(Vector<float> &smoothness_indicators) const;
   void
   output_results(const unsigned int cycle) const;
 
@@ -108,12 +108,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> &p, const unsigned int component) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> &p,
                           const unsigned int /*component*/) const
 {
   double product = 1;
@@ -217,7 +217,7 @@ LaplaceProblem<dim>::assemble_system()
 
       hp_fe_values.reinit(cell);
 
-      const FEValues<dim>& fe_values = hp_fe_values.get_present_fe_values();
+      const FEValues<dim> &fe_values = hp_fe_values.get_present_fe_values();
 
       std::vector<double> rhs_values(fe_values.n_quadrature_points);
       rhs_function.value_list(fe_values.get_quadrature_points(), rhs_values);
@@ -284,7 +284,7 @@ int_pow(const unsigned int x, const unsigned int n)
 template <int dim>
 void
 LaplaceProblem<dim>::estimate_smoothness(
-  Vector<float>& smoothness_indicators) const
+  Vector<float> &smoothness_indicators) const
 {
   const unsigned int N = (dim == 2 ? 7 : 4);
 
@@ -786,7 +786,7 @@ main()
       LaplaceProblem<3> laplace_problem;
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

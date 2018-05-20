@@ -57,7 +57,7 @@ test_compute_pt_loc(unsigned int n_points)
     = GridTools::compute_mesh_predicate_bounding_box(
       cache.get_triangulation(),
       std::function<bool(
-        const typename Triangulation<dim>::active_cell_iterator&)>(
+        const typename Triangulation<dim>::active_cell_iterator &)>(
         locally_owned_cell_predicate),
       1,
       true,
@@ -73,8 +73,8 @@ test_compute_pt_loc(unsigned int n_points)
   // Testing in serial against the serial version
   auto cell_qpoint_map = GridTools::compute_point_locations(cache, points);
 
-  auto&  serial_cells   = std::get<0>(cell_qpoint_map);
-  auto&  serial_qpoints = std::get<1>(cell_qpoint_map);
+  auto & serial_cells   = std::get<0>(cell_qpoint_map);
+  auto & serial_qpoints = std::get<1>(cell_qpoint_map);
   size_t n_cells        = std::get<0>(output_tuple).size();
 
   deallog << "Points found in " << n_cells << " cells" << std::endl;
@@ -83,11 +83,11 @@ test_compute_pt_loc(unsigned int n_points)
   // the serial one
   for(unsigned int c = 0; c < n_cells; ++c)
     {
-      auto& cell            = std::get<0>(output_tuple)[c];
-      auto& quad            = std::get<1>(output_tuple)[c];
-      auto& local_map       = std::get<2>(output_tuple)[c];
-      auto& original_points = std::get<3>(output_tuple)[c];
-      auto& ranks           = std::get<4>(output_tuple)[c];
+      auto &cell            = std::get<0>(output_tuple)[c];
+      auto &quad            = std::get<1>(output_tuple)[c];
+      auto &local_map       = std::get<2>(output_tuple)[c];
+      auto &original_points = std::get<3>(output_tuple)[c];
+      auto &ranks           = std::get<4>(output_tuple)[c];
 
       auto pos_cell = std::find(serial_cells.begin(), serial_cells.end(), cell);
       for(auto r : ranks)
@@ -108,7 +108,7 @@ test_compute_pt_loc(unsigned int n_points)
                     << std::to_string(serial_cell_idx) << std::endl;
 
           unsigned int pt_num = 0;
-          for(const auto& p_idx : local_map)
+          for(const auto &p_idx : local_map)
             {
               auto serial_pt_pos
                 = std::find(local_map.begin(), local_map.end(), p_idx);
@@ -149,7 +149,7 @@ test_compute_pt_loc(unsigned int n_points)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

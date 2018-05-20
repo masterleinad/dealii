@@ -39,7 +39,7 @@ class Ball : public FlatManifold<dim>
 public:
   virtual Point<dim>
   get_new_point_on_line(
-    const typename Triangulation<dim>::line_iterator& line) const
+    const typename Triangulation<dim>::line_iterator &line) const
   {
     Point<dim> middle = FlatManifold<dim>::get_new_point_on_line(line);
 
@@ -55,7 +55,7 @@ public:
 
   virtual Point<dim>
   get_new_point_on_quad(
-    const typename Triangulation<dim>::quad_iterator& quad) const
+    const typename Triangulation<dim>::quad_iterator &quad) const
   {
     Point<dim> middle = FlatManifold<dim>::get_new_point_on_quad(quad);
 
@@ -76,17 +76,17 @@ class CurvedLine : public FlatManifold<dim>
 public:
   virtual Point<dim>
   get_new_point_on_line(
-    const typename Triangulation<dim>::line_iterator& line) const;
+    const typename Triangulation<dim>::line_iterator &line) const;
 
   virtual Point<dim>
   get_new_point_on_quad(
-    const typename Triangulation<dim>::quad_iterator& quad) const;
+    const typename Triangulation<dim>::quad_iterator &quad) const;
 };
 
 template <int dim>
 Point<dim>
 CurvedLine<dim>::get_new_point_on_line(
-  const typename Triangulation<dim>::line_iterator& line) const
+  const typename Triangulation<dim>::line_iterator &line) const
 {
   Point<dim> middle = FlatManifold<dim>::get_new_point_on_line(line);
 
@@ -132,7 +132,7 @@ CurvedLine<dim>::get_new_point_on_line(
 template <int dim>
 Point<dim>
 CurvedLine<dim>::get_new_point_on_quad(
-  const typename Triangulation<dim>::quad_iterator& quad) const
+  const typename Triangulation<dim>::quad_iterator &quad) const
 {
   Point<dim> middle = FlatManifold<dim>::get_new_point_on_quad(quad);
 
@@ -174,8 +174,8 @@ public:
   run(const unsigned int testcase);
 
 private:
-  Triangulation<dim>* tria;
-  DoFHandler<dim>*    dof;
+  Triangulation<dim> *tria;
+  DoFHandler<dim> *   dof;
   CurvedLine<dim>     curved_line;
   Ball<dim>           ball;
 };
@@ -255,8 +255,9 @@ TestCases<dim>::run(const unsigned int test_case)
 
           // set the boundary function
           tria->set_manifold(1,
-                             (test_case == 2) ? ((Manifold<dim>&) ball) :
-                                                ((Manifold<dim>&) curved_line));
+                             (test_case == 2) ?
+                               ((Manifold<dim> &) ball) :
+                               ((Manifold<dim> &) curved_line));
 
           // refine once
           tria->begin_active()->set_refine_flag();

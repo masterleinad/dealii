@@ -27,15 +27,15 @@
 #include <iostream>
 
 void
-output_double_number(double input, const std::string& text)
+output_double_number(double input, const std::string &text)
 {
   deallog << text << input << std::endl;
 }
 
 template <class NUMBER>
 void
-output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
-                   const std::string&         text)
+output_eigenvalues(const std::vector<NUMBER> &eigenvalues,
+                   const std::string &        text)
 {
   deallog << text;
   for(unsigned int j = 0; j < eigenvalues.size(); ++j)
@@ -50,11 +50,11 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
-            const PRECONDITION& P)
+check_solve(SolverType &        solver,
+            const MatrixType &  A,
+            VectorType &        u,
+            VectorType &        f,
+            const PRECONDITION &P)
 {
   u = 0.;
   f = 1.;
@@ -62,7 +62,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch(dealii::SolverControl::NoConvergence &e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -73,11 +73,11 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 void
-check_Tsolve(SolverType&         solver,
-             const MatrixType&   A,
-             VectorType&         u,
-             VectorType&         f,
-             const PRECONDITION& P)
+check_Tsolve(SolverType &        solver,
+             const MatrixType &  A,
+             VectorType &        u,
+             VectorType &        f,
+             const PRECONDITION &P)
 {
   u = 0.;
   f = 1.;
@@ -85,7 +85,7 @@ check_Tsolve(SolverType&         solver,
     {
       solver.Tsolve(A, u, f, P);
     }
-  catch(dealii::SolverControl::NoConvergence& e)
+  catch(dealii::SolverControl::NoConvergence &e)
     {
       deallog << "Exception: " << e.get_exc_name() << std::endl;
     }
@@ -160,7 +160,7 @@ main()
           check_solve(cg, A, u, f, prec_ssor);
           deallog.pop();
         }
-      catch(std::exception& e)
+      catch(std::exception &e)
         {
           std::cerr << "Exception: " << e.what() << std::endl;
         }

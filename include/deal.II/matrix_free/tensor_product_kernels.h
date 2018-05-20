@@ -134,9 +134,9 @@ namespace internal
     /**
      * Constructor, taking the data from ShapeInfo
      */
-    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
-                           const AlignedVector<Number2>& shape_gradients,
-                           const AlignedVector<Number2>& shape_hessians,
+    EvaluatorTensorProduct(const AlignedVector<Number2> &shape_values,
+                           const AlignedVector<Number2> &shape_gradients,
+                           const AlignedVector<Number2> &shape_hessians,
                            const unsigned int            dummy1 = 0,
                            const unsigned int            dummy2 = 0)
       : shape_values(shape_values.begin()),
@@ -235,9 +235,9 @@ namespace internal
               bool add,
               bool one_line = false>
     static void
-    apply(const Number2* DEAL_II_RESTRICT shape_data,
-          const Number*                   in,
-          Number*                         out);
+    apply(const Number2 *DEAL_II_RESTRICT shape_data,
+          const Number *                  in,
+          Number *                        out);
 
     /**
      * This function applies the tensor product operation to produce face values
@@ -273,12 +273,12 @@ namespace internal
               bool add,
               int  max_derivative>
     void
-    apply_face(const Number* DEAL_II_RESTRICT in,
-               Number* DEAL_II_RESTRICT out) const;
+    apply_face(const Number *DEAL_II_RESTRICT in,
+               Number *DEAL_II_RESTRICT out) const;
 
-    const Number2* shape_values;
-    const Number2* shape_gradients;
-    const Number2* shape_hessians;
+    const Number2 *shape_values;
+    const Number2 *shape_gradients;
+    const Number2 *shape_hessians;
   };
 
   template <int dim,
@@ -293,10 +293,10 @@ namespace internal
                          n_rows,
                          n_columns,
                          Number,
-                         Number2>::apply(const Number2* DEAL_II_RESTRICT
+                         Number2>::apply(const Number2 *DEAL_II_RESTRICT
                                                         shape_data,
-                                         const Number*  in,
-                                         Number*        out)
+                                         const Number * in,
+                                         Number *       out)
   {
     static_assert(one_line == false || direction == dim - 1,
                   "Single-line evaluation only works for direction=dim-1.");
@@ -374,8 +374,8 @@ namespace internal
                          n_rows,
                          n_columns,
                          Number,
-                         Number2>::apply_face(const Number* DEAL_II_RESTRICT in,
-                                              Number* DEAL_II_RESTRICT
+                         Number2>::apply_face(const Number *DEAL_II_RESTRICT in,
+                                              Number *DEAL_II_RESTRICT
                                                       out) const
   {
     static_assert(dim > 0 && dim < 4, "Only dim=1,2,3 supported");
@@ -391,7 +391,7 @@ namespace internal
     AssertIndexRange(face_direction, dim);
     constexpr int stride     = Utilities::pow(n_rows, face_direction);
     constexpr int out_stride = Utilities::pow(n_rows, dim - 1);
-    const Number* DEAL_II_RESTRICT shape_values = this->shape_values;
+    const Number *DEAL_II_RESTRICT shape_values = this->shape_values;
 
     for(int i2 = 0; i2 < n_blocks2; ++i2)
       {
@@ -531,9 +531,9 @@ namespace internal
     /**
      * Constructor, taking the data from ShapeInfo
      */
-    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
-                           const AlignedVector<Number2>& shape_gradients,
-                           const AlignedVector<Number2>& shape_hessians,
+    EvaluatorTensorProduct(const AlignedVector<Number2> &shape_values,
+                           const AlignedVector<Number2> &shape_gradients,
+                           const AlignedVector<Number2> &shape_hessians,
                            const unsigned int            n_rows,
                            const unsigned int            n_columns)
       : shape_values(shape_values.begin()),
@@ -560,21 +560,21 @@ namespace internal
 
     template <int direction, bool contract_over_rows, bool add>
     void
-    values(const Number* in, Number* out) const
+    values(const Number *in, Number *out) const
     {
       apply<direction, contract_over_rows, add>(shape_values, in, out);
     }
 
     template <int direction, bool contract_over_rows, bool add>
     void
-    gradients(const Number* in, Number* out) const
+    gradients(const Number *in, Number *out) const
     {
       apply<direction, contract_over_rows, add>(shape_gradients, in, out);
     }
 
     template <int direction, bool contract_over_rows, bool add>
     void
-    hessians(const Number* in, Number* out) const
+    hessians(const Number *in, Number *out) const
     {
       apply<direction, contract_over_rows, add>(shape_hessians, in, out);
     }
@@ -608,21 +608,21 @@ namespace internal
               bool add,
               bool one_line = false>
     void
-    apply(const Number2* DEAL_II_RESTRICT shape_data,
-          const Number*                   in,
-          Number*                         out) const;
+    apply(const Number2 *DEAL_II_RESTRICT shape_data,
+          const Number *                  in,
+          Number *                        out) const;
 
     template <int  face_direction,
               bool contract_onto_face,
               bool add,
               int  max_derivative>
     void
-    apply_face(const Number* DEAL_II_RESTRICT in,
-               Number* DEAL_II_RESTRICT out) const;
+    apply_face(const Number *DEAL_II_RESTRICT in,
+               Number *DEAL_II_RESTRICT out) const;
 
-    const Number2*     shape_values;
-    const Number2*     shape_gradients;
-    const Number2*     shape_hessians;
+    const Number2 *    shape_values;
+    const Number2 *    shape_gradients;
+    const Number2 *    shape_hessians;
     const unsigned int n_rows;
     const unsigned int n_columns;
   };
@@ -631,9 +631,9 @@ namespace internal
   template <int direction, bool contract_over_rows, bool add, bool one_line>
   inline void
   EvaluatorTensorProduct<evaluate_general, dim, 0, 0, Number, Number2>::apply(
-    const Number2* DEAL_II_RESTRICT shape_data,
-    const Number*                   in,
-    Number*                         out) const
+    const Number2 *DEAL_II_RESTRICT shape_data,
+    const Number *                  in,
+    Number *                        out) const
   {
     static_assert(one_line == false || direction == dim - 1,
                   "Single-line evaluation only works for direction=dim-1.");
@@ -706,8 +706,8 @@ namespace internal
             int  max_derivative>
   inline void
   EvaluatorTensorProduct<evaluate_general, dim, 0, 0, Number, Number2>::
-    apply_face(const Number* DEAL_II_RESTRICT in,
-               Number* DEAL_II_RESTRICT out) const
+    apply_face(const Number *DEAL_II_RESTRICT in,
+               Number *DEAL_II_RESTRICT out) const
   {
     Assert(
       shape_values != nullptr,
@@ -864,9 +864,9 @@ namespace internal
     /**
      * Constructor, taking the data from ShapeInfo
      */
-    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
-                           const AlignedVector<Number2>& shape_gradients,
-                           const AlignedVector<Number2>& shape_hessians,
+    EvaluatorTensorProduct(const AlignedVector<Number2> &shape_values,
+                           const AlignedVector<Number2> &shape_gradients,
+                           const AlignedVector<Number2> &shape_hessians,
                            const unsigned int            dummy1 = 0,
                            const unsigned int            dummy2 = 0)
       : shape_values(shape_values.begin()),
@@ -898,9 +898,9 @@ namespace internal
     void
     hessians(const Number in[], Number out[]) const;
 
-    const Number2* shape_values;
-    const Number2* shape_gradients;
-    const Number2* shape_hessians;
+    const Number2 *shape_values;
+    const Number2 *shape_gradients;
+    const Number2 *shape_hessians;
   };
 
   // In this case, the 1D shape values read (sorted lexicographically, rows
@@ -1449,7 +1449,7 @@ namespace internal
      * Constructor, taking the data from ShapeInfo (using the even-odd
      * variants stored there)
      */
-    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values)
+    EvaluatorTensorProduct(const AlignedVector<Number2> &shape_values)
       : shape_values(shape_values.begin()),
         shape_gradients(nullptr),
         shape_hessians(nullptr)
@@ -1461,9 +1461,9 @@ namespace internal
      * Constructor, taking the data from ShapeInfo (using the even-odd
      * variants stored there)
      */
-    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
-                           const AlignedVector<Number2>& shape_gradients,
-                           const AlignedVector<Number2>& shape_hessians,
+    EvaluatorTensorProduct(const AlignedVector<Number2> &shape_values,
+                           const AlignedVector<Number2> &shape_gradients,
+                           const AlignedVector<Number2> &shape_hessians,
                            const unsigned int            dummy1 = 0,
                            const unsigned int            dummy2 = 0)
       : shape_values(shape_values.begin()),
@@ -1566,13 +1566,13 @@ namespace internal
               int  type,
               bool one_line = false>
     static void
-    apply(const Number2* DEAL_II_RESTRICT shape_data,
-          const Number*                   in,
-          Number*                         out);
+    apply(const Number2 *DEAL_II_RESTRICT shape_data,
+          const Number *                  in,
+          Number *                        out);
 
-    const Number2* shape_values;
-    const Number2* shape_gradients;
-    const Number2* shape_hessians;
+    const Number2 *shape_values;
+    const Number2 *shape_gradients;
+    const Number2 *shape_hessians;
   };
 
   template <int dim,
@@ -1591,9 +1591,9 @@ namespace internal
                          n_rows,
                          n_columns,
                          Number,
-                         Number2>::apply(const Number2* DEAL_II_RESTRICT shapes,
-                                         const Number*                   in,
-                                         Number*                         out)
+                         Number2>::apply(const Number2 *DEAL_II_RESTRICT shapes,
+                                         const Number *                  in,
+                                         Number *                        out)
   {
     static_assert(type < 3, "Only three variants type=0,1,2 implemented");
     static_assert(one_line == false || direction == dim - 1,
@@ -1830,7 +1830,7 @@ namespace internal
      * Constructor, taking the data from ShapeInfo (using the even-odd
      * variants stored there)
      */
-    EvaluatorTensorProduct(const AlignedVector<Number>& shape_values)
+    EvaluatorTensorProduct(const AlignedVector<Number> &shape_values)
       : shape_values(shape_values.begin()),
         shape_gradients(nullptr),
         shape_hessians(nullptr)
@@ -1840,9 +1840,9 @@ namespace internal
      * Constructor, taking the data from ShapeInfo (using the even-odd
      * variants stored there)
      */
-    EvaluatorTensorProduct(const AlignedVector<Number2>& shape_values,
-                           const AlignedVector<Number2>& shape_gradients,
-                           const AlignedVector<Number2>& shape_hessians,
+    EvaluatorTensorProduct(const AlignedVector<Number2> &shape_values,
+                           const AlignedVector<Number2> &shape_gradients,
+                           const AlignedVector<Number2> &shape_hessians,
                            const unsigned int            dummy1 = 0,
                            const unsigned int            dummy2 = 0)
       : shape_values(shape_values.begin()),
@@ -1936,13 +1936,13 @@ namespace internal
               int  type,
               bool one_line = false>
     static void
-    apply(const Number2* DEAL_II_RESTRICT shape_data,
-          const Number*                   in,
-          Number*                         out);
+    apply(const Number2 *DEAL_II_RESTRICT shape_data,
+          const Number *                  in,
+          Number *                        out);
 
-    const Number2* shape_values;
-    const Number2* shape_gradients;
-    const Number2* shape_hessians;
+    const Number2 *shape_values;
+    const Number2 *shape_gradients;
+    const Number2 *shape_hessians;
   };
 
   template <int dim,
@@ -1961,9 +1961,9 @@ namespace internal
                          n_rows,
                          n_columns,
                          Number,
-                         Number2>::apply(const Number2* DEAL_II_RESTRICT shapes,
-                                         const Number*                   in,
-                                         Number*                         out)
+                         Number2>::apply(const Number2 *DEAL_II_RESTRICT shapes,
+                                         const Number *                  in,
+                                         Number *                        out)
   {
     static_assert(one_line == false || direction == dim - 1,
                   "Single-line evaluation only works for direction=dim-1.");

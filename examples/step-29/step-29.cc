@@ -100,17 +100,17 @@ namespace Step29
     DirichletBoundaryValues() : Function<dim>(2){};
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& values) const override;
+    vector_value(const Point<dim> &p, Vector<double> &values) const override;
 
     virtual void
-    vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   value_list) const override;
+    vector_value_list(const std::vector<Point<dim>> &points,
+                      std::vector<Vector<double>> &  value_list) const override;
   };
 
   template <int dim>
   inline void
-  DirichletBoundaryValues<dim>::vector_value(const Point<dim>& /*p*/,
-                                             Vector<double>& values) const
+  DirichletBoundaryValues<dim>::vector_value(const Point<dim> & /*p*/,
+                                             Vector<double> &values) const
   {
     Assert(values.size() == 2, ExcDimensionMismatch(values.size(), 2));
 
@@ -121,8 +121,8 @@ namespace Step29
   template <int dim>
   void
   DirichletBoundaryValues<dim>::vector_value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   value_list) const
+    const std::vector<Point<dim>> &points,
+    std::vector<Vector<double>> &  value_list) const
   {
     Assert(value_list.size() == points.size(),
            ExcDimensionMismatch(value_list.size(), points.size()));
@@ -141,19 +141,19 @@ namespace Step29
   class ParameterReader : public Subscriptor
   {
   public:
-    ParameterReader(ParameterHandler&);
+    ParameterReader(ParameterHandler &);
     void
-    read_parameters(const std::string&);
+    read_parameters(const std::string &);
 
   private:
     void
                       declare_parameters();
-    ParameterHandler& prm;
+    ParameterHandler &prm;
   };
 
   // The constructor stores a reference to the ParameterHandler object that is
   // passed to it:
-  ParameterReader::ParameterReader(ParameterHandler& paramhandler)
+  ParameterReader::ParameterReader(ParameterHandler &paramhandler)
     : prm(paramhandler)
   {}
 
@@ -249,7 +249,7 @@ namespace Step29
   // to this function is complete, the <code>prm</code> object can be used to
   // retrieve the values of the parameters read in from the file:
   void
-  ParameterReader::read_parameters(const std::string& parameter_file)
+  ParameterReader::read_parameters(const std::string &parameter_file)
   {
     declare_parameters();
 
@@ -298,8 +298,8 @@ namespace Step29
 
     virtual void
     evaluate_vector_field(
-      const DataPostprocessorInputs::Vector<dim>& inputs,
-      std::vector<Vector<double>>& computed_quantities) const override;
+      const DataPostprocessorInputs::Vector<dim> &inputs,
+      std::vector<Vector<double>> &computed_quantities) const override;
   };
 
   // In the constructor, we need to call the constructor of the base class
@@ -336,8 +336,8 @@ namespace Step29
   template <int dim>
   void
   ComputeIntensity<dim>::evaluate_vector_field(
-    const DataPostprocessorInputs::Vector<dim>& inputs,
-    std::vector<Vector<double>>&                computed_quantities) const
+    const DataPostprocessorInputs::Vector<dim> &inputs,
+    std::vector<Vector<double>> &               computed_quantities) const
   {
     Assert(computed_quantities.size() == inputs.solution_values.size(),
            ExcDimensionMismatch(computed_quantities.size(),
@@ -372,7 +372,7 @@ namespace Step29
   class UltrasoundProblem
   {
   public:
-    UltrasoundProblem(ParameterHandler&);
+    UltrasoundProblem(ParameterHandler &);
     ~UltrasoundProblem();
     void
     run();
@@ -389,7 +389,7 @@ namespace Step29
     void
     output_results() const;
 
-    ParameterHandler& prm;
+    ParameterHandler &prm;
 
     Triangulation<dim> triangulation;
     DoFHandler<dim>    dof_handler;
@@ -405,7 +405,7 @@ namespace Step29
   // system, which consists of two copies of the scalar Q1 field, one for $v$
   // and one for $w$:
   template <int dim>
-  UltrasoundProblem<dim>::UltrasoundProblem(ParameterHandler& param)
+  UltrasoundProblem<dim>::UltrasoundProblem(ParameterHandler &param)
     : prm(param), dof_handler(triangulation), fe(FE_Q<dim>(1), 2)
   {}
 
@@ -893,7 +893,7 @@ main()
       UltrasoundProblem<2> ultrasound_problem(prm);
       ultrasound_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

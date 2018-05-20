@@ -316,7 +316,7 @@ namespace Physics
        */
       template <typename Number>
       Vector<Number>
-      to_vector(const Number& s);
+      to_vector(const Number &s);
 
       /**
        * Convert a rank-0 tensor to its compressed vector equivalent.
@@ -325,7 +325,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const Tensor<0, dim, Number>& s);
+      to_vector(const Tensor<0, dim, Number> &s);
 
       /**
        * Convert a rank-1 tensor to its compressed vector equivalent.
@@ -334,7 +334,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const Tensor<1, dim, Number>& v);
+      to_vector(const Tensor<1, dim, Number> &v);
 
       /**
        * Convert a rank-2 tensor to its compressed vector equivalent.
@@ -343,7 +343,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const Tensor<2, dim, Number>& t);
+      to_vector(const Tensor<2, dim, Number> &t);
 
       /**
        * Convert a rank-2 symmetric tensor to its compressed vector equivalent.
@@ -353,7 +353,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const SymmetricTensor<2, dim, Number>& st);
+      to_vector(const SymmetricTensor<2, dim, Number> &st);
 
       /**
        * Convert a scalar value to its compressed matrix equivalent.
@@ -362,7 +362,7 @@ namespace Physics
        */
       template <typename Number>
       FullMatrix<Number>
-      to_matrix(const Number& s);
+      to_matrix(const Number &s);
 
       /**
        * Convert a rank-0 tensor to its compressed matrix equivalent.
@@ -371,7 +371,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<0, dim, Number>& s);
+      to_matrix(const Tensor<0, dim, Number> &s);
 
       /**
        * Convert a rank-1 tensor to its compressed matrix equivalent.
@@ -380,7 +380,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<1, dim, Number>& v);
+      to_matrix(const Tensor<1, dim, Number> &v);
 
       /**
        * Convert a rank-2 tensor to its compressed matrix equivalent.
@@ -389,7 +389,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<2, dim, Number>& t);
+      to_matrix(const Tensor<2, dim, Number> &t);
 
       /**
        * Convert a rank-2 symmetric tensor to its compressed matrix equivalent.
@@ -402,7 +402,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const SymmetricTensor<2, dim, Number>& st);
+      to_matrix(const SymmetricTensor<2, dim, Number> &st);
 
       /**
        * Convert a rank-3 tensor to its compressed matrix equivalent.
@@ -435,7 +435,7 @@ namespace Physics
                 typename SubTensor2 = Tensor<1, dim>,
                 typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<3, dim, Number>& t);
+      to_matrix(const Tensor<3, dim, Number> &t);
 
       /**
        * Convert a rank-4 tensor to its compressed matrix equivalent.
@@ -445,7 +445,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<4, dim, Number>& t);
+      to_matrix(const Tensor<4, dim, Number> &t);
 
       /**
        * Convert a rank-4 symmetric tensor to its compressed matrix equivalent.
@@ -455,7 +455,7 @@ namespace Physics
        */
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const SymmetricTensor<4, dim, Number>& st);
+      to_matrix(const SymmetricTensor<4, dim, Number> &st);
 
       //@}
 
@@ -469,71 +469,71 @@ namespace Physics
        */
       template <typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Number& s);
+      to_tensor(const Vector<Number> &vec, Number &s);
 
       /**
        * Convert a compressed vector to its equivalent rank-0 tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Tensor<0, dim, Number>& s);
+      to_tensor(const Vector<Number> &vec, Tensor<0, dim, Number> &s);
 
       /**
        * Convert a compressed vector to its equivalent rank-1 tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Tensor<1, dim, Number>& v);
+      to_tensor(const Vector<Number> &vec, Tensor<1, dim, Number> &v);
 
       /**
        * Convert a compressed vector to its equivalent rank-2 tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Tensor<2, dim, Number>& t);
+      to_tensor(const Vector<Number> &vec, Tensor<2, dim, Number> &t);
 
       /**
        * Convert a compressed vector to its equivalent rank-2 symmetric tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, SymmetricTensor<2, dim, Number>& st);
+      to_tensor(const Vector<Number> &vec, SymmetricTensor<2, dim, Number> &st);
 
       /**
        * Convert a compressed matrix to its equivalent scalar value.
        */
       template <typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Number& s);
+      to_tensor(const FullMatrix<Number> &mtrx, Number &s);
 
       /**
        * Convert a compressed matrix to its equivalent rank-0 tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<0, dim, Number>& s);
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<0, dim, Number> &s);
 
       /**
        * Convert a compressed matrix to its equivalent rank-1 tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<1, dim, Number>& v);
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<1, dim, Number> &v);
 
       /**
        * Convert a compressed matrix to its equivalent rank-2 tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<2, dim, Number>& t);
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<2, dim, Number> &t);
 
       /**
        * Convert a compressed matrix to its equivalent rank-2 symmetric tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
-                SymmetricTensor<2, dim, Number>& st);
+      to_tensor(const FullMatrix<Number> &       mtrx,
+                SymmetricTensor<2, dim, Number> &st);
 
       /**
        * Convert a compressed matrix to its equivalent rank-3 tensor.
@@ -546,22 +546,22 @@ namespace Physics
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<3, dim, Number>& t);
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<3, dim, Number> &t);
 
       /**
        * Convert a compressed matrix to its equivalent rank-4 tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<4, dim, Number>& t);
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<4, dim, Number> &t);
 
       /**
        * Convert a compressed matrix to its equivalent rank-4 symmetric tensor.
        */
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
-                SymmetricTensor<4, dim, Number>& st);
+      to_tensor(const FullMatrix<Number> &       mtrx,
+                SymmetricTensor<4, dim, Number> &st);
 
       /**
        * A generic helper function that will convert a compressed vector
@@ -569,7 +569,7 @@ namespace Physics
        */
       template <typename TensorType, typename Number>
       TensorType
-      to_tensor(const Vector<Number>& vec);
+      to_tensor(const Vector<Number> &vec);
 
       /**
        * A generic helper function that will convert a compressed matrix
@@ -577,7 +577,7 @@ namespace Physics
        */
       template <typename TensorType, typename Number>
       TensorType
-      to_tensor(const FullMatrix<Number>& vec);
+      to_tensor(const FullMatrix<Number> &vec);
       //@}
 
     } // namespace Kelvin
@@ -730,7 +730,7 @@ namespace Physics
 
       template <typename Number>
       Vector<Number>
-      to_vector(const Number& s)
+      to_vector(const Number &s)
       {
         Vector<Number>     out(1);
         const unsigned int n_rows = out.size();
@@ -741,14 +741,14 @@ namespace Physics
 
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const Tensor<0, dim, Number>& s)
+      to_vector(const Tensor<0, dim, Number> &s)
       {
-        return to_vector(s.operator const Number&());
+        return to_vector(s.operator const Number &());
       }
 
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const Tensor<1, dim, Number>& v)
+      to_vector(const Tensor<1, dim, Number> &v)
       {
         Vector<Number>     out(v.n_independent_components);
         const unsigned int n_rows = out.size();
@@ -765,7 +765,7 @@ namespace Physics
 
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const Tensor<2, dim, Number>& t)
+      to_vector(const Tensor<2, dim, Number> &t)
       {
         Vector<Number>     out(t.n_independent_components);
         const unsigned int n_rows = out.size();
@@ -784,7 +784,7 @@ namespace Physics
 
       template <int dim, typename Number>
       Vector<Number>
-      to_vector(const SymmetricTensor<2, dim, Number>& st)
+      to_vector(const SymmetricTensor<2, dim, Number> &st)
       {
         Vector<Number>     out(st.n_independent_components);
         const unsigned int n_rows = out.size();
@@ -808,7 +808,7 @@ namespace Physics
 
       template <typename Number>
       FullMatrix<Number>
-      to_matrix(const Number& s)
+      to_matrix(const Number &s)
       {
         FullMatrix<Number> out(1, 1);
         out(0, 0) = s;
@@ -817,14 +817,14 @@ namespace Physics
 
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<0, dim, Number>& s)
+      to_matrix(const Tensor<0, dim, Number> &s)
       {
-        return to_matrix(s.operator const Number&());
+        return to_matrix(s.operator const Number &());
       }
 
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<1, dim, Number>& v)
+      to_matrix(const Tensor<1, dim, Number> &v)
       {
         FullMatrix<Number> out(v.n_independent_components, 1);
         const unsigned int n_rows = out.m();
@@ -847,7 +847,7 @@ namespace Physics
 
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<2, dim, Number>& t)
+      to_matrix(const Tensor<2, dim, Number> &t)
       {
         FullMatrix<Number> out(dim, dim);
         const unsigned int n_rows = out.m();
@@ -876,7 +876,7 @@ namespace Physics
 
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const SymmetricTensor<2, dim, Number>& st)
+      to_matrix(const SymmetricTensor<2, dim, Number> &st)
       {
         return to_matrix(Tensor<2, dim, Number>(st));
       }
@@ -901,7 +901,7 @@ namespace Physics
                 typename SubTensor2,
                 typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<3, dim, Number>& t)
+      to_matrix(const Tensor<3, dim, Number> &t)
       {
         static_assert(
           (SubTensor1::dimension == dim && SubTensor2::dimension == dim),
@@ -1003,7 +1003,7 @@ namespace Physics
 
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const Tensor<4, dim, Number>& t)
+      to_matrix(const Tensor<4, dim, Number> &t)
       {
         FullMatrix<Number> out(
           Tensor<2, dim, Number>::n_independent_components,
@@ -1036,7 +1036,7 @@ namespace Physics
 
       template <int dim, typename Number>
       FullMatrix<Number>
-      to_matrix(const SymmetricTensor<4, dim, Number>& st)
+      to_matrix(const SymmetricTensor<4, dim, Number> &st)
       {
         FullMatrix<Number> out(
           SymmetricTensor<2, dim, Number>::n_independent_components,
@@ -1075,7 +1075,7 @@ namespace Physics
 
       template <typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Number& s)
+      to_tensor(const Vector<Number> &vec, Number &s)
       {
         Assert(vec.size() == 1, ExcDimensionMismatch(vec.size(), 1));
         s = vec(0);
@@ -1083,14 +1083,14 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Tensor<0, dim, Number>& s)
+      to_tensor(const Vector<Number> &vec, Tensor<0, dim, Number> &s)
       {
-        return to_tensor(vec, s.operator Number&());
+        return to_tensor(vec, s.operator Number &());
       }
 
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Tensor<1, dim, Number>& v)
+      to_tensor(const Vector<Number> &vec, Tensor<1, dim, Number> &v)
       {
         Assert(vec.size() == v.n_independent_components,
                ExcDimensionMismatch(vec.size(), v.n_independent_components));
@@ -1107,7 +1107,7 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, Tensor<2, dim, Number>& t)
+      to_tensor(const Vector<Number> &vec, Tensor<2, dim, Number> &t)
       {
         Assert(vec.size() == t.n_independent_components,
                ExcDimensionMismatch(vec.size(), t.n_independent_components));
@@ -1126,7 +1126,7 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const Vector<Number>& vec, SymmetricTensor<2, dim, Number>& st)
+      to_tensor(const Vector<Number> &vec, SymmetricTensor<2, dim, Number> &st)
       {
         Assert(vec.size() == st.n_independent_components,
                ExcDimensionMismatch(vec.size(), st.n_independent_components));
@@ -1150,7 +1150,7 @@ namespace Physics
 
       template <typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Number& s)
+      to_tensor(const FullMatrix<Number> &mtrx, Number &s)
       {
         Assert(mtrx.m() == 1, ExcDimensionMismatch(mtrx.m(), 1));
         Assert(mtrx.n() == 1, ExcDimensionMismatch(mtrx.n(), 1));
@@ -1161,14 +1161,14 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<0, dim, Number>& s)
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<0, dim, Number> &s)
       {
-        return to_tensor(mtrx, s.operator Number&());
+        return to_tensor(mtrx, s.operator Number &());
       }
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<1, dim, Number>& v)
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<1, dim, Number> &v)
       {
         Assert(mtrx.m() == dim, ExcDimensionMismatch(mtrx.m(), dim));
         Assert(mtrx.n() == 1, ExcDimensionMismatch(mtrx.n(), 1));
@@ -1196,7 +1196,7 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<2, dim, Number>& t)
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<2, dim, Number> &t)
       {
         Assert(mtrx.m() == dim, ExcDimensionMismatch(mtrx.m(), dim));
         Assert(mtrx.n() == dim, ExcDimensionMismatch(mtrx.n(), dim));
@@ -1229,8 +1229,8 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
-                SymmetricTensor<2, dim, Number>& st)
+      to_tensor(const FullMatrix<Number> &       mtrx,
+                SymmetricTensor<2, dim, Number> &st)
       {
         // Its impossible to fit the (dim^2 + dim)/2 entries into a square matrix
         // We therefore assume that its been converted to a standard tensor format
@@ -1253,7 +1253,7 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<3, dim, Number>& t)
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<3, dim, Number> &t)
       {
         Assert(
           (mtrx.m() == Tensor<1, dim, Number>::n_independent_components)
@@ -1391,7 +1391,7 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>& mtrx, Tensor<4, dim, Number>& t)
+      to_tensor(const FullMatrix<Number> &mtrx, Tensor<4, dim, Number> &t)
       {
         Assert((mtrx.m() == Tensor<2, dim, Number>::n_independent_components),
                ExcDimensionMismatch(
@@ -1430,8 +1430,8 @@ namespace Physics
 
       template <int dim, typename Number>
       void
-      to_tensor(const FullMatrix<Number>&        mtrx,
-                SymmetricTensor<4, dim, Number>& st)
+      to_tensor(const FullMatrix<Number> &       mtrx,
+                SymmetricTensor<4, dim, Number> &st)
       {
         Assert((mtrx.m()
                 == SymmetricTensor<2, dim, Number>::n_independent_components),
@@ -1477,7 +1477,7 @@ namespace Physics
 
       template <typename TensorType, typename Number>
       inline TensorType
-      to_tensor(const Vector<Number>& vec)
+      to_tensor(const Vector<Number> &vec)
       {
         TensorType out;
         to_tensor(vec, out);
@@ -1486,7 +1486,7 @@ namespace Physics
 
       template <typename TensorType, typename Number>
       inline TensorType
-      to_tensor(const FullMatrix<Number>& mtrx)
+      to_tensor(const FullMatrix<Number> &mtrx)
       {
         TensorType out;
         to_tensor(mtrx, out);

@@ -22,7 +22,7 @@
 #include <vector>
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   deallog.attach(logfile);
@@ -45,7 +45,7 @@ main(int argc, char** argv)
         v.print(logfile, 3, false, true);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -76,7 +76,7 @@ namespace MeshWorker
        * with this function, data goes to @p deallog.
        */
       void
-      initialize_stream(std::ostream& stream);
+      initialize_stream(std::ostream &stream);
 
       /**
        * Initialize the local data in the DoFInfo object used later for
@@ -87,21 +87,21 @@ namespace MeshWorker
        */
       template <int dim>
       void
-      initialize_info(DoFInfo<dim>& info, bool face);
+      initialize_info(DoFInfo<dim> &info, bool face);
 
       /**
        * Write the patch to the output stream.
        */
       template <int dim>
       void
-      assemble(const DoFInfo<dim>& info);
+      assemble(const DoFInfo<dim> &info);
 
       /**
        * @warning Not implemented yet
        */
       template <int dim>
       void
-      assemble(const DoFInfo<dim>& info1, const DoFInfo<dim>& info2);
+      assemble(const DoFInfo<dim> &info1, const DoFInfo<dim> &info2);
 
     private:
       /**
@@ -110,7 +110,7 @@ namespace MeshWorker
        */
       template <typename T>
       void
-      write(const T& t) const;
+      write(const T &t) const;
 
       /**
        * Write an end-of-line marker either to the stream #os, if
@@ -132,14 +132,14 @@ namespace MeshWorker
       /**
        * Stream to which output is to be written. Set by initialize_stream().
        */
-      std::ostream* os;
+      std::ostream *os;
     };
 
     //----------------------------------------------------------------------//
 
     template <typename T>
     inline void
-    GnuplotPatch::write(const T& d) const
+    GnuplotPatch::write(const T &d) const
     {
       if(os == nullptr)
         deallog << d;
@@ -170,14 +170,14 @@ namespace MeshWorker
     }
 
     inline void
-    GnuplotPatch::initialize_stream(std::ostream& stream)
+    GnuplotPatch::initialize_stream(std::ostream &stream)
     {
       os = &stream;
     }
 
     template <int dim>
     inline void
-    GnuplotPatch::initialize_info(DoFInfo<dim>& info, bool face)
+    GnuplotPatch::initialize_info(DoFInfo<dim> &info, bool face)
     {
       if(face)
         info.initialize_quadrature(Utilities::fixed_power<dim - 1>(n_points),
@@ -189,7 +189,7 @@ namespace MeshWorker
 
     template <int dim>
     inline void
-    GnuplotPatch::assemble(const DoFInfo<dim>& info)
+    GnuplotPatch::assemble(const DoFInfo<dim> &info)
     {
       const unsigned int np = info.n_quadrature_points();
       const unsigned int nv = info.n_quadrature_values();
@@ -223,7 +223,7 @@ namespace MeshWorker
 
     template <int dim>
     inline void
-    GnuplotPatch::assemble(const DoFInfo<dim>& info1, const DoFInfo<dim>& info2)
+    GnuplotPatch::assemble(const DoFInfo<dim> &info1, const DoFInfo<dim> &info2)
     {
       assemble(info1);
       assemble(info2);

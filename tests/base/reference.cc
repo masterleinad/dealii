@@ -30,10 +30,10 @@ int               next = 0;
 
 class Test : public Subscriptor
 {
-  const char* name;
+  const char *name;
 
 public:
-  Test(const char* n) : name(n)
+  Test(const char *n) : name(n)
   {
     deallog << "Construct " << name << std::endl;
   }
@@ -61,12 +61,12 @@ main()
   initlog();
 
   Test        a("A");
-  const Test& b("B");
+  const Test &b("B");
 
   SmartPointer<Test, Test>       r(&a, "Test R");
   SmartPointer<const Test, Test> s(&a, "const Test S");
   //  SmartPointer<Test,Test>       t=&b;    // this one should not work
-  SmartPointer<Test, Test>       t(const_cast<Test*>(&b), "Test T");
+  SmartPointer<Test, Test>       t(const_cast<Test *>(&b), "Test T");
   SmartPointer<const Test, Test> u(&b, "const Test");
 
   deallog << "a ";

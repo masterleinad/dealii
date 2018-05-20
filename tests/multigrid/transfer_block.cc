@@ -37,10 +37,10 @@ using namespace std;
 template <int dim, typename number, int spacedim>
 void
 reinit_vector_by_blocks(
-  const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-  MGLevelObject<BlockVector<number>>&                v,
-  const std::vector<bool>&                           sel,
-  std::vector<std::vector<types::global_dof_index>>& ndofs)
+  const dealii::DoFHandler<dim, spacedim> &          mg_dof,
+  MGLevelObject<BlockVector<number>> &               v,
+  const std::vector<bool> &                          sel,
+  std::vector<std::vector<types::global_dof_index>> &ndofs)
 {
   std::vector<bool> selected = sel;
   // Compute the number of blocks needed
@@ -74,9 +74,9 @@ reinit_vector_by_blocks(
 
 template <int dim>
 void
-check_block(const FiniteElement<dim>& fe,
-            const vector<bool>&       selected,
-            const vector<double>&     factors)
+check_block(const FiniteElement<dim> &fe,
+            const vector<bool> &      selected,
+            const vector<double> &    factors)
 {
   deallog << fe.get_name() << std::endl << "selected ";
   for(unsigned int i = 0; i < selected.size(); ++i)
@@ -89,7 +89,7 @@ check_block(const FiniteElement<dim>& fe,
   tr.refine_global(2);
 
   DoFHandler<dim>  mgdof(tr);
-  DoFHandler<dim>& dof = mgdof;
+  DoFHandler<dim> &dof = mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
   DoFRenumbering::component_wise(mgdof);

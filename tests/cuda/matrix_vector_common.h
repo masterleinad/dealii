@@ -47,7 +47,7 @@ test();
 
 template <int dim, int fe_degree, typename Number, int n_q_points_1d>
 void
-do_test(const DoFHandler<dim>& dof, const ConstraintMatrix& constraints)
+do_test(const DoFHandler<dim> &dof, const ConstraintMatrix &constraints)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
 

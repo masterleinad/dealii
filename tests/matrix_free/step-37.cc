@@ -61,22 +61,22 @@ namespace Step37
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const;
+    value(const Point<dim> &p, const unsigned int component = 0) const;
 
     template <typename number>
     number
-    value(const Point<dim, number>& p, const unsigned int component = 0) const;
+    value(const Point<dim, number> &p, const unsigned int component = 0) const;
 
     virtual void
-    value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
+    value_list(const std::vector<Point<dim>> &points,
+               std::vector<double> &          values,
                const unsigned int             component = 0) const;
   };
 
   template <int dim>
   template <typename number>
   number
-  Coefficient<dim>::value(const Point<dim, number>& p,
+  Coefficient<dim>::value(const Point<dim, number> &p,
                           const unsigned int /*component*/) const
   {
     return 1. / (0.05 + 2. * p.square());
@@ -84,7 +84,7 @@ namespace Step37
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim>&  p,
+  Coefficient<dim>::value(const Point<dim> & p,
                           const unsigned int component) const
   {
     return value<double>(p, component);
@@ -92,8 +92,8 @@ namespace Step37
 
   template <int dim>
   void
-  Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
+  Coefficient<dim>::value_list(const std::vector<Point<dim>> &points,
+                               std::vector<double> &          values,
                                const unsigned int             component) const
   {
     Assert(values.size() == points.size(),
@@ -115,8 +115,8 @@ namespace Step37
     clear();
 
     void
-    reinit(const DoFHandler<dim>&  dof_handler,
-           const ConstraintMatrix& constraints,
+    reinit(const DoFHandler<dim> & dof_handler,
+           const ConstraintMatrix &constraints,
            const unsigned int      level = numbers::invalid_unsigned_int);
 
     unsigned int
@@ -125,28 +125,28 @@ namespace Step37
     n() const;
 
     void
-    vmult(Vector<double>& dst, const Vector<double>& src) const;
+    vmult(Vector<double> &dst, const Vector<double> &src) const;
     void
-    Tvmult(Vector<double>& dst, const Vector<double>& src) const;
+    Tvmult(Vector<double> &dst, const Vector<double> &src) const;
     void
-    vmult_add(Vector<double>& dst, const Vector<double>& src) const;
+    vmult_add(Vector<double> &dst, const Vector<double> &src) const;
     void
-    Tvmult_add(Vector<double>& dst, const Vector<double>& src) const;
+    Tvmult_add(Vector<double> &dst, const Vector<double> &src) const;
 
     number
     el(const unsigned int row, const unsigned int col) const;
     void
-    set_diagonal(const Vector<number>& diagonal);
+    set_diagonal(const Vector<number> &diagonal);
 
   private:
     void
-    local_apply(const MatrixFree<dim, number>&               data,
-                Vector<double>&                              dst,
-                const Vector<double>&                        src,
-                const std::pair<unsigned int, unsigned int>& cell_range) const;
+    local_apply(const MatrixFree<dim, number> &              data,
+                Vector<double> &                             dst,
+                const Vector<double> &                       src,
+                const std::pair<unsigned int, unsigned int> &cell_range) const;
 
     void
-    evaluate_coefficient(const Coefficient<dim>& function);
+    evaluate_coefficient(const Coefficient<dim> &function);
 
     MatrixFree<dim, number>                data;
     AlignedVector<VectorizedArray<number>> coefficient;
@@ -185,8 +185,8 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::reinit(
-    const DoFHandler<dim>&  dof_handler,
-    const ConstraintMatrix& constraints,
+    const DoFHandler<dim> & dof_handler,
+    const ConstraintMatrix &constraints,
     const unsigned int      level)
   {
     typename MatrixFree<dim, number>::AdditionalData additional_data;
@@ -203,7 +203,7 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::evaluate_coefficient(
-    const Coefficient<dim>& coefficient_function)
+    const Coefficient<dim> &coefficient_function)
   {
     const unsigned int n_cells = data.n_macro_cells();
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
@@ -220,10 +220,10 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::local_apply(
-    const MatrixFree<dim, number>&               data,
-    Vector<double>&                              dst,
-    const Vector<double>&                        src,
-    const std::pair<unsigned int, unsigned int>& cell_range) const
+    const MatrixFree<dim, number> &              data,
+    Vector<double> &                             dst,
+    const Vector<double> &                       src,
+    const std::pair<unsigned int, unsigned int> &cell_range) const
   {
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, number> phi(data);
     AssertDimension(coefficient.size(), data.n_macro_cells() * phi.n_q_points);
@@ -244,8 +244,8 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::vmult(
-    Vector<double>&       dst,
-    const Vector<double>& src) const
+    Vector<double> &      dst,
+    const Vector<double> &src) const
   {
     dst = 0;
     vmult_add(dst, src);
@@ -254,8 +254,8 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::Tvmult(
-    Vector<double>&       dst,
-    const Vector<double>& src) const
+    Vector<double> &      dst,
+    const Vector<double> &src) const
   {
     dst = 0;
     vmult_add(dst, src);
@@ -264,8 +264,8 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::Tvmult_add(
-    Vector<double>&       dst,
-    const Vector<double>& src) const
+    Vector<double> &      dst,
+    const Vector<double> &src) const
   {
     vmult_add(dst, src);
   }
@@ -273,12 +273,12 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::vmult_add(
-    Vector<double>&       dst,
-    const Vector<double>& src) const
+    Vector<double> &      dst,
+    const Vector<double> &src) const
   {
     data.cell_loop(&LaplaceOperator::local_apply, this, dst, src);
 
-    const std::vector<unsigned int>& constrained_dofs
+    const std::vector<unsigned int> &constrained_dofs
       = data.get_constrained_dofs();
     for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
       dst(constrained_dofs[i]) += src(constrained_dofs[i]);
@@ -297,13 +297,13 @@ namespace Step37
   template <int dim, int fe_degree, typename number>
   void
   LaplaceOperator<dim, fe_degree, number>::set_diagonal(
-    const Vector<number>& diagonal)
+    const Vector<number> &diagonal)
   {
     AssertDimension(m(), diagonal.size());
 
     diagonal_values = diagonal;
 
-    const std::vector<unsigned int>& constrained_dofs
+    const std::vector<unsigned int> &constrained_dofs
       = data.get_constrained_dofs();
     for(unsigned int i = 0; i < constrained_dofs.size(); ++i)
       diagonal_values(constrained_dofs[i]) = 1.0;

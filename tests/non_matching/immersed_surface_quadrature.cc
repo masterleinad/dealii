@@ -25,7 +25,7 @@ using namespace dealii;
 
 template <int dim>
 void
-print_quadrature(const NonMatching::ImmersedSurfaceQuadrature<dim>& quadrature)
+print_quadrature(const NonMatching::ImmersedSurfaceQuadrature<dim> &quadrature)
 {
   for(unsigned int i = 0; i < quadrature.size(); ++i)
     {
@@ -38,10 +38,10 @@ print_quadrature(const NonMatching::ImmersedSurfaceQuadrature<dim>& quadrature)
 //points and weights.
 template <int dim>
 void
-check_get_normals(const NonMatching::ImmersedSurfaceQuadrature<dim>& quadrature)
+check_get_normals(const NonMatching::ImmersedSurfaceQuadrature<dim> &quadrature)
 {
-  const std::vector<Point<dim>>&     points  = quadrature.get_points();
-  const std::vector<Tensor<1, dim>>& normals = quadrature.get_normal_vectors();
+  const std::vector<Point<dim>> &    points  = quadrature.get_points();
+  const std::vector<Tensor<1, dim>> &normals = quadrature.get_normal_vectors();
   AssertThrow(points.size() == normals.size(), ExcInternalError())
 }
 

@@ -45,13 +45,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> &p, const unsigned int component) const
   {
     return (component + 1) * p.square();
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const
+  vector_value(const Point<dim> &p, Vector<double> &values) const
   {
     values(0) = value(p, 0);
     values(1) = value(p, 1);
@@ -60,8 +60,8 @@ public:
 
 template <int dim>
 void
-check_boundary(const hp::DoFHandler<dim>&        dof,
-               const hp::MappingCollection<dim>& mapping)
+check_boundary(const hp::DoFHandler<dim> &       dof,
+               const hp::MappingCollection<dim> &mapping)
 {
   MySquareFunction<dim>           coefficient;
   typename FunctionMap<dim>::type function_map;
@@ -106,7 +106,7 @@ check_boundary(const hp::DoFHandler<dim>&        dof,
 }
 
 void
-check_boundary(const hp::DoFHandler<1>&, const hp::MappingCollection<1>&)
+check_boundary(const hp::DoFHandler<1> &, const hp::MappingCollection<1> &)
 {}
 
 template <int dim>

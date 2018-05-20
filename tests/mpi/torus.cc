@@ -64,7 +64,7 @@ DeclException1(ExcMissingCell,
                << " but it doesn't appear to be in the list");
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   using namespace dealii;
   Utilities::MPI::MPI_InitFinalize mpi_initialization(

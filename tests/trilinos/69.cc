@@ -24,7 +24,7 @@
 #include <vector>
 
 void
-test(TrilinosWrappers::SparseMatrix& m)
+test(TrilinosWrappers::SparseMatrix &m)
 {
   Assert(m.m() != 0, ExcInternalError());
   Assert(m.n() != 0, ExcInternalError());
@@ -100,7 +100,7 @@ test(TrilinosWrappers::SparseMatrix& m)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -114,7 +114,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

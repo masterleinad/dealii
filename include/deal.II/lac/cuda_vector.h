@@ -63,7 +63,7 @@ namespace LinearAlgebra
       /**
        * Copy constructor.
        */
-      Vector(const Vector<Number>& V);
+      Vector(const Vector<Number> &V);
 
       /**
        * Constructor. Set dimension to @p n and initialize all elements with
@@ -95,7 +95,7 @@ namespace LinearAlgebra
        * copied.
        */
       virtual void
-      reinit(const VectorSpaceVector<Number>& V,
+      reinit(const VectorSpaceVector<Number> &V,
              const bool omit_zeroing_entries = false) override;
 
       /**
@@ -108,7 +108,7 @@ namespace LinearAlgebra
        */
       virtual void
       import(
-        const ReadWriteVector<Number>&                  V,
+        const ReadWriteVector<Number> &                 V,
         VectorOperation::values                         operation,
         std::shared_ptr<const CommunicationPatternBase> communication_pattern
         = std::shared_ptr<const CommunicationPatternBase>()) override;
@@ -117,38 +117,38 @@ namespace LinearAlgebra
        * Sets all elements of the vector to the scalar @p s. This operation is
        * only allowed if @p s is equal to zero.
        */
-      virtual Vector<Number>&
+      virtual Vector<Number> &
       operator=(const Number s) override;
 
       /**
        * Multiply the entive vector by a fixed factor.
        */
-      virtual Vector<Number>&
+      virtual Vector<Number> &
       operator*=(const Number factor) override;
 
       /**
        * Divide the entire vector by a fixed factor.
        */
-      virtual Vector<Number>&
+      virtual Vector<Number> &
       operator/=(const Number factor) override;
 
       /**
        * Add the vector @p V to the present one.
        */
-      virtual Vector<Number>&
-      operator+=(const VectorSpaceVector<Number>& V) override;
+      virtual Vector<Number> &
+      operator+=(const VectorSpaceVector<Number> &V) override;
 
       /**
        * Subtract the vector @p V from the present one.
        */
-      virtual Vector<Number>&
-      operator-=(const VectorSpaceVector<Number>& V) override;
+      virtual Vector<Number> &
+      operator-=(const VectorSpaceVector<Number> &V) override;
 
       /**
        * Return the scalar product of two vectors.
        */
       virtual Number
-      operator*(const VectorSpaceVector<Number>& V) const override;
+      operator*(const VectorSpaceVector<Number> &V) const override;
 
       /**
        * Add @p to all components. Note that @p a is a scalar not a vector.
@@ -160,16 +160,16 @@ namespace LinearAlgebra
        * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
        */
       virtual void
-      add(const Number a, const VectorSpaceVector<Number>& V) override;
+      add(const Number a, const VectorSpaceVector<Number> &V) override;
 
       /**
        * Multiple addition of scaled vectors, i.e. <tt>*this += a*V</tt>.
        */
       virtual void
       add(const Number                     a,
-          const VectorSpaceVector<Number>& V,
+          const VectorSpaceVector<Number> &V,
           const Number                     b,
-          const VectorSpaceVector<Number>& W) override;
+          const VectorSpaceVector<Number> &W) override;
 
       /**
        * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this
@@ -178,7 +178,7 @@ namespace LinearAlgebra
       virtual void
       sadd(const Number                     s,
            const Number                     a,
-           const VectorSpaceVector<Number>& V) override;
+           const VectorSpaceVector<Number> &V) override;
 
       /**
        * Scale each element of this vector by the corresponding element in the
@@ -186,13 +186,13 @@ namespace LinearAlgebra
        * (and immediate re-assignment) by a diagonal scaling matrix.
        */
       virtual void
-      scale(const VectorSpaceVector<Number>& scaling_factors) override;
+      scale(const VectorSpaceVector<Number> &scaling_factors) override;
 
       /**
        * Assignment <tt>*this = a*V</tt>.
        */
       virtual void
-      equ(const Number a, const VectorSpaceVector<Number>& V) override;
+      equ(const Number a, const VectorSpaceVector<Number> &V) override;
 
       /**
        * Return whether the vector contains only elements with value zero.
@@ -248,13 +248,13 @@ namespace LinearAlgebra
        */
       virtual Number
       add_and_dot(const Number                     a,
-                  const VectorSpaceVector<Number>& V,
-                  const VectorSpaceVector<Number>& W) override;
+                  const VectorSpaceVector<Number> &V,
+                  const VectorSpaceVector<Number> &W) override;
 
       /**
        * Return the pointer to the underlying array.
        */
-      Number*
+      Number *
       get_values() const;
 
       /**
@@ -274,7 +274,7 @@ namespace LinearAlgebra
        * Print the vector to the output stream @p out.
        */
       virtual void
-      print(std::ostream&      out,
+      print(std::ostream &     out,
             const unsigned int precision  = 2,
             const bool         scientific = true,
             const bool         across     = true) const override;
@@ -296,7 +296,7 @@ namespace LinearAlgebra
       /**
        * Pointer to the array of elements of this vector.
        */
-      Number* val;
+      Number *val;
 
       /**
        * Number of elements in the vector.
@@ -306,7 +306,7 @@ namespace LinearAlgebra
 
     // ------------------------------ Inline functions -----------------------------
     template <typename Number>
-    inline Number*
+    inline Number *
     Vector<Number>::get_values() const
     {
       return val;

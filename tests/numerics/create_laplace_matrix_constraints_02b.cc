@@ -90,7 +90,7 @@ check()
   MatrixTools::create_laplace_matrix(mapping, dof, quadrature, matrix_ref);
   constraints.condense(matrix_ref);
 
-  const Function<dim>* const dummy = nullptr;
+  const Function<dim> *const dummy = nullptr;
   MatrixTools::create_laplace_matrix(
     mapping, dof, quadrature, matrix, dummy, constraints);
 

@@ -35,22 +35,22 @@
 template <int dim>
 struct ManifoldWrapper
 {
-  Manifold<dim>*
-  operator()(const Tensor<1, dim>& direction, const Point<dim>& center) const;
+  Manifold<dim> *
+  operator()(const Tensor<1, dim> &direction, const Point<dim> &center) const;
 };
 
 template <>
-Manifold<2>*
-ManifoldWrapper<2>::operator()(const Tensor<1, 2>& /*direction*/,
-                               const Point<2>& center) const
+Manifold<2> *
+ManifoldWrapper<2>::operator()(const Tensor<1, 2> & /*direction*/,
+                               const Point<2> &center) const
 {
   return new SphericalManifold<2>(center);
 }
 
 template <>
-Manifold<3>*
-ManifoldWrapper<3>::operator()(const Tensor<1, 3>& direction,
-                               const Point<3>&     center) const
+Manifold<3> *
+ManifoldWrapper<3>::operator()(const Tensor<1, 3> &direction,
+                               const Point<3> &    center) const
 {
   return new CylindricalManifold<3>(direction, center);
 }

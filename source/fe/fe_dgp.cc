@@ -92,8 +92,8 @@ FE_DGP<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 template <int dim, int spacedim>
 void
 FE_DGP<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> &x_source_fe,
+  FullMatrix<double> &                interpolation_matrix) const
 {
   // this is only implemented, if the source FE is also a DGP element. in that
   // case, both elements have no dofs on their faces and the face
@@ -103,7 +103,7 @@ FE_DGP<dim, spacedim>::get_face_interpolation_matrix(
   typedef FiniteElement<dim, spacedim> FE;
   typedef FE_DGP<dim, spacedim>        FEDGP;
   AssertThrow((x_source_fe.get_name().find("FE_DGP<") == 0)
-                || (dynamic_cast<const FEDGP*>(&x_source_fe) != nullptr),
+                || (dynamic_cast<const FEDGP *>(&x_source_fe) != nullptr),
               typename FE::ExcInterpolationNotImplemented());
 
   Assert(interpolation_matrix.m() == 0,
@@ -115,9 +115,9 @@ FE_DGP<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_DGP<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
+  const FiniteElement<dim, spacedim> &x_source_fe,
   const unsigned int,
-  FullMatrix<double>& interpolation_matrix) const
+  FullMatrix<double> &interpolation_matrix) const
 {
   // this is only implemented, if the source FE is also a DGP element. in that
   // case, both elements have no dofs on their faces and the face
@@ -127,7 +127,7 @@ FE_DGP<dim, spacedim>::get_subface_interpolation_matrix(
   typedef FiniteElement<dim, spacedim> FE;
   typedef FE_DGP<dim, spacedim>        FEDGP;
   AssertThrow((x_source_fe.get_name().find("FE_DGP<") == 0)
-                || (dynamic_cast<const FEDGP*>(&x_source_fe) != nullptr),
+                || (dynamic_cast<const FEDGP *>(&x_source_fe) != nullptr),
               typename FE::ExcInterpolationNotImplemented());
 
   Assert(interpolation_matrix.m() == 0,
@@ -146,10 +146,10 @@ FE_DGP<dim, spacedim>::hp_constraints_are_implemented() const
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGP<dim, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
   // there are no such constraints for DGP elements at all
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGP<dim, spacedim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -161,10 +161,10 @@ FE_DGP<dim, spacedim>::hp_vertex_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGP<dim, spacedim>::hp_line_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
   // there are no such constraints for DGP elements at all
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGP<dim, spacedim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -176,10 +176,10 @@ FE_DGP<dim, spacedim>::hp_line_dof_identities(
 template <int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_DGP<dim, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
   // there are no such constraints for DGP elements at all
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGP<dim, spacedim> *>(&fe_other) != nullptr)
     return std::vector<std::pair<unsigned int, unsigned int>>();
   else
     {
@@ -191,11 +191,11 @@ FE_DGP<dim, spacedim>::hp_quad_dof_identities(
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_DGP<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
   // check whether both are discontinuous elements, see the description of
   // FiniteElementDomination::Domination
-  if(dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_DGP<dim, spacedim> *>(&fe_other) != nullptr)
     return FiniteElementDomination::no_requirements;
 
   Assert(false, ExcNotImplemented());

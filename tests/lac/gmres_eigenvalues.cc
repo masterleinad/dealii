@@ -23,8 +23,8 @@
 
 template <class NUMBER>
 void
-output_eigenvalues(const std::vector<NUMBER>& eigenvalues,
-                   const std::string&         text)
+output_eigenvalues(const std::vector<NUMBER> &eigenvalues,
+                   const std::string &        text)
 {
   deallog << text;
   for(unsigned int j = 0; j < eigenvalues.size(); ++j)

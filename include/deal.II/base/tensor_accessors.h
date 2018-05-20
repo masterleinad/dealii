@@ -184,7 +184,7 @@ namespace TensorAccessors
    */
   template <int index, int rank, typename T>
   inline DEAL_II_ALWAYS_INLINE internal::ReorderedIndexView<index, rank, T>
-                               reordered_index_view(T& t)
+                               reordered_index_view(T &t)
   {
     static_assert(0 <= index && index < rank,
                   "The specified index must lie within the range [0,rank)");
@@ -215,8 +215,8 @@ namespace TensorAccessors
    * @author Matthias Maier, 2015
    */
   template <int rank, typename T, typename ArrayType>
-  typename ReturnType<rank, T>::value_type&
-  extract(T& t, const ArrayType& indices)
+  typename ReturnType<rank, T>::value_type &
+  extract(T &t, const ArrayType &indices)
   {
     return internal::ExtractHelper<0, rank>::template extract<T, ArrayType>(
       t, indices);
@@ -268,7 +268,7 @@ namespace TensorAccessors
             typename T2,
             typename T3>
   inline DEAL_II_ALWAYS_INLINE void
-  contract(T1& result, const T2& left, const T3& right)
+  contract(T1 &result, const T2 &left, const T3 &right)
   {
     static_assert(rank_1 >= no_contr,
                   "The rank of the left tensor must be "
@@ -319,7 +319,7 @@ namespace TensorAccessors
             typename T3,
             typename T4>
   T1
-  contract3(const T2& left, const T3& middle, const T4& right)
+  contract3(const T2 &left, const T3 &middle, const T4 &right)
   {
     return internal::Contract3<rank_1, rank_2, dim>::
       template contract3<T1, T2, T3, T4>(left, middle, right);
@@ -350,7 +350,7 @@ namespace TensorAccessors
     template <typename T>
     struct ReferenceType
     {
-      typedef T& type;
+      typedef T &type;
     };
 
     template <int rank, typename S>
@@ -541,7 +541,7 @@ namespace TensorAccessors
         typename ValueType<typename S::return_type>::value_type return_type;
       typedef return_type                                       value_type;
 
-      inline DEAL_II_ALWAYS_INLINE return_type& operator[](unsigned int j) const
+      inline DEAL_II_ALWAYS_INLINE return_type &operator[](unsigned int j) const
       {
         return s_.apply(j)[i_];
       }
@@ -562,8 +562,8 @@ namespace TensorAccessors
     struct ExtractHelper
     {
       template <typename T, typename ArrayType>
-      inline static typename ReturnType<rank - position, T>::value_type&
-      extract(T& t, const ArrayType& indices)
+      inline static typename ReturnType<rank - position, T>::value_type &
+      extract(T &t, const ArrayType &indices)
       {
         return ExtractHelper<position + 1, rank>::
           template extract<typename ValueType<T>::value_type, ArrayType>(
@@ -577,8 +577,8 @@ namespace TensorAccessors
     struct ExtractHelper<rank, rank>
     {
       template <typename T, typename ArrayType>
-      inline static T&
-      extract(T& t, const ArrayType&)
+      inline static T &
+      extract(T &t, const ArrayType &)
       {
         return t;
       }
@@ -605,7 +605,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3>
       inline DEAL_II_ALWAYS_INLINE static void
-      contract(T1& result, const T2& left, const T3& right)
+      contract(T1 &result, const T2 &left, const T3 &right)
       {
         for(unsigned int i = 0; i < dim; ++i)
           Contract<no_contr, rank_1 - 1, rank_2, dim>::contract(
@@ -633,7 +633,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3>
       inline DEAL_II_ALWAYS_INLINE static void
-      contract(T1& result, const T2& left, const T3& right)
+      contract(T1 &result, const T2 &left, const T3 &right)
       {
         for(unsigned int i = 0; i < dim; ++i)
           Contract<no_contr, no_contr, rank_2 - 1, dim>::contract(
@@ -661,7 +661,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3>
       inline DEAL_II_ALWAYS_INLINE static void
-      contract(T1& result, const T2& left, const T3& right)
+      contract(T1 &result, const T2 &left, const T3 &right)
       {
         result = Contract2<no_contr, dim>::template contract2<T1>(left, right);
       }
@@ -677,7 +677,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3>
       inline DEAL_II_ALWAYS_INLINE static T1
-      contract2(const T2& left, const T3& right)
+      contract2(const T2 &left, const T3 &right)
       {
         // Some auto-differentiable numbers need explicit
         // zero initialization.
@@ -698,7 +698,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3>
       inline DEAL_II_ALWAYS_INLINE static T1
-      contract2(const T2& left, const T3& right)
+      contract2(const T2 &left, const T3 &right)
       {
         return left * right;
       }
@@ -724,7 +724,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3, typename T4>
       static inline T1
-      contract3(const T2& left, const T3& middle, const T4& right)
+      contract3(const T2 &left, const T3 &middle, const T4 &right)
       {
         // Some auto-differentiable numbers need explicit
         // zero initialization.
@@ -753,7 +753,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3, typename T4>
       static inline T1
-      contract3(const T2& left, const T3& middle, const T4& right)
+      contract3(const T2 &left, const T3 &middle, const T4 &right)
       {
         // Some auto-differentiable numbers need explicit
         // zero initialization.
@@ -774,7 +774,7 @@ namespace TensorAccessors
     public:
       template <typename T1, typename T2, typename T3, typename T4>
       static inline T1
-      contract3(const T2& left, const T3& middle, const T4& right)
+      contract3(const T2 &left, const T3 &middle, const T4 &right)
       {
         return left * middle * right;
       }

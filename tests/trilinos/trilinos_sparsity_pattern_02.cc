@@ -138,7 +138,7 @@ namespace Step22
 } // namespace Step22
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   try
     {
@@ -162,7 +162,7 @@ main(int argc, char* argv[])
           flow_problem.run();
         }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

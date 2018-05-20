@@ -22,7 +22,7 @@
 
 template <int dim>
 void
-gmsh_grid(const char* name)
+gmsh_grid(const char *name)
 {
   Triangulation<dim> tria;
   GridIn<dim>        grid_in;

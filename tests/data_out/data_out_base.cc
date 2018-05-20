@@ -30,8 +30,8 @@
 
 template <int dim, int spacedim>
 void
-write_patches(const std::vector<DataOutBase::Patch<dim, spacedim>>& patches,
-              std::ostream&                                         out)
+write_patches(const std::vector<DataOutBase::Patch<dim, spacedim>> &patches,
+              std::ostream &                                        out)
 {
   std::vector<std::string> names(2);
   names[0] = std::string("first name");
@@ -124,7 +124,7 @@ double PatchInfo<3>::offsets[8][3] = {{0, 0, 0},
 
 template <int dim, int spacedim>
 void
-create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
+create_patches(std::vector<DataOutBase::Patch<dim, spacedim>> &patches)
 {
   const unsigned int ncells = GeometryInfo<dim>::vertices_per_cell;
   const unsigned int nsub   = 3;
@@ -133,7 +133,7 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
 
   for(unsigned int c = 0; c < ncells; ++c)
     {
-      DataOutBase::Patch<dim, spacedim>& p = patches[c];
+      DataOutBase::Patch<dim, spacedim> &p = patches[c];
       p.patch_index                        = c;
       p.n_subdivisions                     = nsub;
 
@@ -160,7 +160,7 @@ create_patches(std::vector<DataOutBase::Patch<dim, spacedim>>& patches)
 
 template <int dim, int spacedim>
 void
-test(std::ostream& out)
+test(std::ostream &out)
 {
   std::vector<DataOutBase::Patch<dim, spacedim>> patches;
   create_patches(patches);
@@ -171,7 +171,7 @@ int
 main()
 {
   initlog();
-  auto& logfile = deallog.get_file_stream();
+  auto &logfile = deallog.get_file_stream();
 
   test<1, 2>(logfile);
   test<2, 2>(logfile);

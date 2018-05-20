@@ -85,7 +85,7 @@ namespace internal
        * @return A pointer to the first DoF index for the current cell. The
        * next dofs_per_cell indices are for the current cell.
        */
-      const types::global_dof_index*
+      const types::global_dof_index *
       get_cell_cache_start(const unsigned int obj_index,
                            const unsigned int dofs_per_cell) const;
 
@@ -102,11 +102,11 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive &ar, const unsigned int version);
     };
 
     template <int dim>
-    inline const types::global_dof_index*
+    inline const types::global_dof_index *
     DoFLevel<dim>::get_cell_cache_start(const unsigned int obj_index,
                                         const unsigned int dofs_per_cell) const
     {
@@ -128,10 +128,10 @@ namespace internal
     template <int dim>
     template <class Archive>
     inline void
-    DoFLevel<dim>::serialize(Archive& ar, const unsigned int)
+    DoFLevel<dim>::serialize(Archive &ar, const unsigned int)
     {
-      ar& cell_dof_indices_cache;
-      ar& dof_object;
+      ar &cell_dof_indices_cache;
+      ar &dof_object;
     }
   } // namespace DoFHandlerImplementation
 } // namespace internal

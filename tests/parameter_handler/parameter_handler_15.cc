@@ -21,7 +21,7 @@
 #include <deal.II/base/parameter_handler.h>
 
 void
-check(const char* content, double& v1, double& v2)
+check(const char *content, double &v1, double &v2)
 {
   ParameterHandler foo;
   foo.enter_subsection("bar");

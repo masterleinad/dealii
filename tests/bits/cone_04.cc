@@ -28,7 +28,7 @@ check()
   Triangulation<dim> triangulation;
   GridGenerator::truncated_cone(triangulation);
   GridTools::transform(
-    [](const Point<3>& p) { return Point<3>(-p[1], p[0], p[2]); },
+    [](const Point<3> &p) { return Point<3>(-p[1], p[0], p[2]); },
     triangulation);
   static const CylindricalManifold<dim> boundary(1);
   triangulation.set_manifold(0, boundary);

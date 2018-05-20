@@ -43,10 +43,10 @@
 
 template <int dim, typename MatrixType, typename VectorType>
 void
-assemble_laplace(MatrixType&         B,
-                 VectorType&         bb,
-                 DoFHandler<dim>&    dof_handler,
-                 FiniteElement<dim>& fe)
+assemble_laplace(MatrixType &        B,
+                 VectorType &        bb,
+                 DoFHandler<dim> &   dof_handler,
+                 FiniteElement<dim> &fe)
 {
   QGauss<dim>   quadrature_formula(2);
   FEValues<dim> fe_values(fe,

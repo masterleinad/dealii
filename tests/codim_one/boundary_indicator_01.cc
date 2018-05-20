@@ -37,7 +37,7 @@ using namespace std;
 
 template <int dim, int spacedim>
 void
-save_mesh(const Triangulation<dim, spacedim>& tria)
+save_mesh(const Triangulation<dim, spacedim> &tria)
 {
   GridOut grid_out;
   grid_out.write_gnuplot(tria, deallog.get_file_stream());

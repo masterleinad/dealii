@@ -43,9 +43,9 @@ struct X
   }
 
 private:
-  X(const X&);
-  X&
-  operator=(const X&);
+  X(const X &);
+  X &
+  operator=(const X &);
 };
 
 void
@@ -76,9 +76,9 @@ struct Y
   }
 
 private:
-  Y(const Y&);
-  Y&
-  operator=(const Y&);
+  Y(const Y &);
+  Y &
+  operator=(const Y &);
 };
 
 void

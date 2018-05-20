@@ -56,7 +56,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const
+  value(const Point<dim> &p, const unsigned int component = 0) const
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
@@ -67,7 +67,7 @@ public:
   }
 
   VectorizedArray<double>
-  value(const Point<dim, VectorizedArray<double>>& p_vec) const
+  value(const Point<dim, VectorizedArray<double>> &p_vec) const
   {
     VectorizedArray<double> res = make_vectorized_array(0.);
     Point<dim>              p;
@@ -90,8 +90,8 @@ private:
  */
 template <int fe_degree, int n_q_points_1d, int dim>
 void
-do_project(const parallel::distributed::Triangulation<dim>& triangulation,
-           const std::vector<const FiniteElement<dim>*>&    fes,
+do_project(const parallel::distributed::Triangulation<dim> &triangulation,
+           const std::vector<const FiniteElement<dim> *> &  fes,
            const unsigned int                               p,
            const unsigned int                               fe_index = 0)
 {
@@ -104,8 +104,8 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
   std::vector<IndexSet>         locally_relevant_dofs(fes.size());
   std::vector<ConstraintMatrix> constraints(fes.size());
 
-  std::vector<const DoFHandler<dim>*>  dof_handlers_mf(fes.size());
-  std::vector<const ConstraintMatrix*> constraints_mf(fes.size());
+  std::vector<const DoFHandler<dim> *>  dof_handlers_mf(fes.size());
+  std::vector<const ConstraintMatrix *> constraints_mf(fes.size());
   for(unsigned int i = 0; i < fes.size(); ++i)
     {
       dof_handlers[i] = std::make_shared<DoFHandler<dim>>(triangulation);
@@ -222,7 +222,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
 // can only represent polynomials of degree p-1 exactly. the gap is then 1.
 template <int fe_degree, int n_q_points_1d, int dim>
 void
-test_no_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
+test_no_hanging_nodes(const FiniteElement<dim> &fe, const unsigned int p)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
@@ -234,7 +234,7 @@ test_no_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
 // same test as above, but this time with a mesh that has hanging nodes
 template <int fe_degree, int n_q_points_1d, int dim>
 void
-test_with_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
+test_with_hanging_nodes(const FiniteElement<dim> &fe, const unsigned int p)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
@@ -250,9 +250,9 @@ test_with_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
 // same as above but for multiple fes
 template <int fe_degree, int n_q_points_1d, int dim>
 void
-test_with_hanging_nodes(const std::vector<const FiniteElement<dim>*>& fes,
-                        const unsigned int                            p,
-                        const unsigned int                            fe_index)
+test_with_hanging_nodes(const std::vector<const FiniteElement<dim> *> &fes,
+                        const unsigned int                             p,
+                        const unsigned int                             fe_index)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);

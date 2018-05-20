@@ -60,14 +60,14 @@ namespace Assembly
     template <int dim>
     struct Data
     {
-      Data(const FiniteElement<dim>& fe, const Quadrature<dim>& quadrature)
+      Data(const FiniteElement<dim> &fe, const Quadrature<dim> &quadrature)
         : fe_values(fe,
                     quadrature,
                     update_values | update_gradients | update_quadrature_points
                       | update_JxW_values)
       {}
 
-      Data(const Data& data)
+      Data(const Data &data)
         : fe_values(data.fe_values.get_mapping(),
                     data.fe_values.get_fe(),
                     data.fe_values.get_quadrature(),
@@ -120,17 +120,18 @@ private:
   postprocess();
 
   void
-  local_assemble(const FilteredIterator<
-                   typename DoFHandler<dim>::active_cell_iterator>& cell,
-                 Assembly::Scratch::Data<dim>&                      scratch,
-                 Assembly::Copy::Data&                              data);
+  local_assemble(
+    const FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>
+      &                           cell,
+    Assembly::Scratch::Data<dim> &scratch,
+    Assembly::Copy::Data &        data);
   void
-  copy_local_to_global(const Assembly::Copy::Data& data);
+  copy_local_to_global(const Assembly::Copy::Data &data);
 
   std::vector<types::global_dof_index>
   get_conflict_indices(
-    FilteredIterator<typename DoFHandler<dim>::active_cell_iterator> const&
-      cell) const;
+    FilteredIterator<typename DoFHandler<dim>::active_cell_iterator> const
+      &cell) const;
 
   parallel::distributed::Triangulation<dim> triangulation;
 
@@ -159,12 +160,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> &p, const unsigned int component) const;
 };
 
 template <int dim>
 double
-BoundaryValues<dim>::value(const Point<dim>& p,
+BoundaryValues<dim>::value(const Point<dim> &p,
                            const unsigned int /*component*/) const
 {
   double sum = 0;
@@ -181,12 +182,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> &p, const unsigned int component) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> &p,
                           const unsigned int /*component*/) const
 {
   double product = 1;
@@ -212,7 +213,7 @@ LaplaceProblem<dim>::~LaplaceProblem()
 template <int dim>
 std::vector<types::global_dof_index>
 LaplaceProblem<dim>::get_conflict_indices(
-  FilteredIterator<typename DoFHandler<dim>::active_cell_iterator> const& cell)
+  FilteredIterator<typename DoFHandler<dim>::active_cell_iterator> const &cell)
   const
 {
   std::vector<types::global_dof_index> local_dof_indices(
@@ -252,11 +253,10 @@ LaplaceProblem<dim>::setup_system()
     begin,
     end,
     static_cast<std::function<std::vector<types::global_dof_index>(
-      FilteredIterator<
-        typename DoFHandler<dim>::active_cell_iterator> const&)>>(
-      std::bind(&LaplaceProblem<dim>::get_conflict_indices,
-                this,
-                std::placeholders::_1)));
+      FilteredIterator<typename DoFHandler<dim>::active_cell_iterator> const
+        &)>>(std::bind(&LaplaceProblem<dim>::get_conflict_indices,
+                       this,
+                       std::placeholders::_1)));
 
   IndexSet locally_owned = dof_handler.locally_owned_dofs();
   {
@@ -281,9 +281,9 @@ LaplaceProblem<dim>::setup_system()
 template <int dim>
 void
 LaplaceProblem<dim>::local_assemble(
-  const FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>& cell,
-  Assembly::Scratch::Data<dim>& scratch,
-  Assembly::Copy::Data&         data)
+  const FilteredIterator<typename DoFHandler<dim>::active_cell_iterator> &cell,
+  Assembly::Scratch::Data<dim> &scratch,
+  Assembly::Copy::Data &        data)
 {
   const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
 
@@ -295,7 +295,7 @@ LaplaceProblem<dim>::local_assemble(
 
   scratch.fe_values.reinit(cell);
 
-  const FEValues<dim>& fe_values = scratch.fe_values;
+  const FEValues<dim> &fe_values = scratch.fe_values;
 
   const RightHandSide<dim> rhs_function;
 
@@ -322,7 +322,7 @@ LaplaceProblem<dim>::local_assemble(
 
 template <int dim>
 void
-LaplaceProblem<dim>::copy_local_to_global(const Assembly::Copy::Data& data)
+LaplaceProblem<dim>::copy_local_to_global(const Assembly::Copy::Data &data)
 {
   if(data.assemble_reference)
     constraints.distribute_local_to_global(data.local_matrix,
@@ -429,7 +429,7 @@ LaplaceProblem<dim>::run()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   deallog << std::setprecision(2);
   logfile << std::setprecision(2);

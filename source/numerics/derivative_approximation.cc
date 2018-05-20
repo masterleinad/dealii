@@ -97,8 +97,8 @@ namespace DerivativeApproximation
        */
       template <class InputVector, int spacedim>
       static ProjectedDerivative
-      get_projected_derivative(const FEValues<dim, spacedim>& fe_values,
-                               const InputVector&             solution,
+      get_projected_derivative(const FEValues<dim, spacedim> &fe_values,
+                               const InputVector &            solution,
                                const unsigned int             component);
 
       /**
@@ -106,7 +106,7 @@ namespace DerivativeApproximation
        * choose the Euclidean norm of the gradient vector.
        */
       static double
-      derivative_norm(const Derivative& d);
+      derivative_norm(const Derivative &d);
 
       /**
        * If for the present derivative order, symmetrization of the derivative
@@ -116,7 +116,7 @@ namespace DerivativeApproximation
        * is a no-op.
        */
       static void
-      symmetrize(Derivative& derivative_tensor);
+      symmetrize(Derivative &derivative_tensor);
     };
 
     // static variables
@@ -127,8 +127,8 @@ namespace DerivativeApproximation
     template <class InputVector, int spacedim>
     inline typename Gradient<dim>::ProjectedDerivative
     Gradient<dim>::get_projected_derivative(
-      const FEValues<dim, spacedim>& fe_values,
-      const InputVector&             solution,
+      const FEValues<dim, spacedim> &fe_values,
+      const InputVector &            solution,
       const unsigned int             component)
     {
       if(fe_values.get_fe().n_components() == 1)
@@ -150,7 +150,7 @@ namespace DerivativeApproximation
 
     template <int dim>
     inline double
-    Gradient<dim>::derivative_norm(const Derivative& d)
+    Gradient<dim>::derivative_norm(const Derivative &d)
     {
       double s = 0;
       for(unsigned int i = 0; i < dim; ++i)
@@ -160,7 +160,7 @@ namespace DerivativeApproximation
 
     template <int dim>
     inline void
-    Gradient<dim>::symmetrize(Derivative&)
+    Gradient<dim>::symmetrize(Derivative &)
     {
       // nothing to do here
     }
@@ -203,8 +203,8 @@ namespace DerivativeApproximation
        */
       template <class InputVector, int spacedim>
       static ProjectedDerivative
-      get_projected_derivative(const FEValues<dim, spacedim>& fe_values,
-                               const InputVector&             solution,
+      get_projected_derivative(const FEValues<dim, spacedim> &fe_values,
+                               const InputVector &            solution,
                                const unsigned int             component);
 
       /**
@@ -215,7 +215,7 @@ namespace DerivativeApproximation
        * solution.
        */
       static double
-      derivative_norm(const Derivative& d);
+      derivative_norm(const Derivative &d);
 
       /**
        * If for the present derivative order, symmetrization of the derivative
@@ -227,7 +227,7 @@ namespace DerivativeApproximation
        * Note that this function actually modifies its argument.
        */
       static void
-      symmetrize(Derivative& derivative_tensor);
+      symmetrize(Derivative &derivative_tensor);
     };
 
     template <int dim>
@@ -237,8 +237,8 @@ namespace DerivativeApproximation
     template <class InputVector, int spacedim>
     inline typename SecondDerivative<dim>::ProjectedDerivative
     SecondDerivative<dim>::get_projected_derivative(
-      const FEValues<dim, spacedim>& fe_values,
-      const InputVector&             solution,
+      const FEValues<dim, spacedim> &fe_values,
+      const InputVector &            solution,
       const unsigned int             component)
     {
       if(fe_values.get_fe().n_components() == 1)
@@ -263,14 +263,14 @@ namespace DerivativeApproximation
 
     template <>
     inline double
-    SecondDerivative<1>::derivative_norm(const Derivative& d)
+    SecondDerivative<1>::derivative_norm(const Derivative &d)
     {
       return std::fabs(d[0][0]);
     }
 
     template <>
     inline double
-    SecondDerivative<2>::derivative_norm(const Derivative& d)
+    SecondDerivative<2>::derivative_norm(const Derivative &d)
     {
       // note that d should be a
       // symmetric 2x2 tensor, so the
@@ -291,7 +291,7 @@ namespace DerivativeApproximation
 
     template <>
     inline double
-    SecondDerivative<3>::derivative_norm(const Derivative& d)
+    SecondDerivative<3>::derivative_norm(const Derivative &d)
     {
       /*
       compute the three eigenvalues of the tensor @p{d} and take the
@@ -464,7 +464,7 @@ namespace DerivativeApproximation
 
     template <int dim>
     inline double
-    SecondDerivative<dim>::derivative_norm(const Derivative&)
+    SecondDerivative<dim>::derivative_norm(const Derivative &)
     {
       // computing the spectral norm is
       // not so simple in general. it is
@@ -485,7 +485,7 @@ namespace DerivativeApproximation
 
     template <int dim>
     inline void
-    SecondDerivative<dim>::symmetrize(Derivative& d)
+    SecondDerivative<dim>::symmetrize(Derivative &d)
     {
       // symmetrize non-diagonal entries
       for(unsigned int i = 0; i < dim; ++i)
@@ -527,8 +527,8 @@ namespace DerivativeApproximation
        */
       template <class InputVector, int spacedim>
       static ProjectedDerivative
-      get_projected_derivative(const FEValues<dim, spacedim>& fe_values,
-                               const InputVector&             solution,
+      get_projected_derivative(const FEValues<dim, spacedim> &fe_values,
+                               const InputVector &            solution,
                                const unsigned int             component);
 
       /**
@@ -539,7 +539,7 @@ namespace DerivativeApproximation
        * solution.
        */
       static double
-      derivative_norm(const Derivative& d);
+      derivative_norm(const Derivative &d);
 
       /**
        * If for the present derivative order, symmetrization of the derivative
@@ -551,7 +551,7 @@ namespace DerivativeApproximation
        * Note that this function actually modifies its argument.
        */
       static void
-      symmetrize(Derivative& derivative_tensor);
+      symmetrize(Derivative &derivative_tensor);
     };
 
     template <int dim>
@@ -561,8 +561,8 @@ namespace DerivativeApproximation
     template <class InputVector, int spacedim>
     inline typename ThirdDerivative<dim>::ProjectedDerivative
     ThirdDerivative<dim>::get_projected_derivative(
-      const FEValues<dim, spacedim>& fe_values,
-      const InputVector&             solution,
+      const FEValues<dim, spacedim> &fe_values,
+      const InputVector &            solution,
       const unsigned int             component)
     {
       if(fe_values.get_fe().n_components() == 1)
@@ -587,14 +587,14 @@ namespace DerivativeApproximation
 
     template <>
     inline double
-    ThirdDerivative<1>::derivative_norm(const Derivative& d)
+    ThirdDerivative<1>::derivative_norm(const Derivative &d)
     {
       return std::fabs(d[0][0][0]);
     }
 
     template <int dim>
     inline double
-    ThirdDerivative<dim>::derivative_norm(const Derivative& d)
+    ThirdDerivative<dim>::derivative_norm(const Derivative &d)
     {
       // return the Frobenius-norm. this is a
       // member function of Tensor<rank_,dim>
@@ -603,7 +603,7 @@ namespace DerivativeApproximation
 
     template <int dim>
     inline void
-    ThirdDerivative<dim>::symmetrize(Derivative& d)
+    ThirdDerivative<dim>::symmetrize(Derivative &d)
     {
       // symmetrize non-diagonal entries
 
@@ -710,13 +710,13 @@ namespace DerivativeApproximation
               int spacedim>
     void
     approximate_cell(
-      const Mapping<dim, spacedim>&        mapping,
-      const DoFHandlerType<dim, spacedim>& dof_handler,
-      const InputVector&                   solution,
+      const Mapping<dim, spacedim> &       mapping,
+      const DoFHandlerType<dim, spacedim> &dof_handler,
+      const InputVector &                  solution,
       const unsigned int                   component,
       const TriaActiveIterator<
-        dealii::DoFCellAccessor<DoFHandlerType<dim, spacedim>, false>>& cell,
-      typename DerivativeDescription::Derivative& derivative)
+        dealii::DoFCellAccessor<DoFHandlerType<dim, spacedim>, false>> &cell,
+      typename DerivativeDescription::Derivative &derivative)
     {
       QMidpoint<dim> midpoint_rule;
 
@@ -728,7 +728,7 @@ namespace DerivativeApproximation
       // collection of which we do a
       // shallow copy instead
       const hp::QCollection<dim>   q_collection(midpoint_rule);
-      const hp::FECollection<dim>& fe_collection
+      const hp::FECollection<dim> &fe_collection
         = dof_handler.get_fe_collection();
       const hp::MappingCollection<dim> mapping_collection(mapping);
 
@@ -760,7 +760,7 @@ namespace DerivativeApproximation
 
       // reinit fe values object...
       x_fe_midpoint_value.reinit(cell);
-      const FEValues<dim>& fe_midpoint_value
+      const FEValues<dim> &fe_midpoint_value
         = x_fe_midpoint_value.get_present_fe_values();
 
       // ...and get the value of the
@@ -802,7 +802,7 @@ namespace DerivativeApproximation
 
           // reinit fe values object...
           x_fe_midpoint_value.reinit(neighbor);
-          const FEValues<dim>& neighbor_fe_midpoint_value
+          const FEValues<dim> &neighbor_fe_midpoint_value
             = x_fe_midpoint_value.get_present_fe_values();
 
           // ...and get the value of the
@@ -886,10 +886,10 @@ namespace DerivativeApproximation
       SynchronousIterators<std::tuple<
         TriaActiveIterator<
           dealii::DoFCellAccessor<DoFHandlerType<dim, spacedim>, false>>,
-        Vector<float>::iterator>> const&   cell,
-      const Mapping<dim, spacedim>&        mapping,
-      const DoFHandlerType<dim, spacedim>& dof_handler,
-      const InputVector&                   solution,
+        Vector<float>::iterator>> const &  cell,
+      const Mapping<dim, spacedim> &       mapping,
+      const DoFHandlerType<dim, spacedim> &dof_handler,
+      const InputVector &                  solution,
       const unsigned int                   component)
     {
       // if the cell is not locally owned, then there is nothing to do
@@ -934,11 +934,11 @@ namespace DerivativeApproximation
               class InputVector,
               int spacedim>
     void
-    approximate_derivative(const Mapping<dim, spacedim>&        mapping,
-                           const DoFHandlerType<dim, spacedim>& dof_handler,
-                           const InputVector&                   solution,
+    approximate_derivative(const Mapping<dim, spacedim> &       mapping,
+                           const DoFHandlerType<dim, spacedim> &dof_handler,
+                           const InputVector &                  solution,
                            const unsigned int                   component,
-                           Vector<float>&                       derivative_norm)
+                           Vector<float> &                      derivative_norm)
     {
       Assert(derivative_norm.size()
                == dof_handler.get_triangulation().n_active_cells(),
@@ -962,9 +962,9 @@ namespace DerivativeApproximation
       WorkStream::run(
         begin,
         end,
-        static_cast<std::function<void(SynchronousIterators<Iterators> const&,
-                                       Assembler::Scratch const&,
-                                       Assembler::CopyData&)>>(
+        static_cast<std::function<void(SynchronousIterators<Iterators> const &,
+                                       Assembler::Scratch const &,
+                                       Assembler::CopyData &)>>(
           std::bind(&approximate<DerivativeDescription,
                                  dim,
                                  DoFHandlerType,
@@ -975,7 +975,7 @@ namespace DerivativeApproximation
                     std::cref(dof_handler),
                     std::cref(solution),
                     component)),
-        std::function<void(internal::Assembler::CopyData const&)>(),
+        std::function<void(internal::Assembler::CopyData const &)>(),
         internal::Assembler::Scratch(),
         internal::Assembler::CopyData());
     }
@@ -993,10 +993,10 @@ namespace DerivativeApproximation
             class InputVector,
             int spacedim>
   void
-  approximate_gradient(const Mapping<dim, spacedim>&        mapping,
-                       const DoFHandlerType<dim, spacedim>& dof_handler,
-                       const InputVector&                   solution,
-                       Vector<float>&                       derivative_norm,
+  approximate_gradient(const Mapping<dim, spacedim> &       mapping,
+                       const DoFHandlerType<dim, spacedim> &dof_handler,
+                       const InputVector &                  solution,
+                       Vector<float> &                      derivative_norm,
                        const unsigned int                   component)
   {
     internal::approximate_derivative<internal::Gradient<dim>, dim>(
@@ -1008,9 +1008,9 @@ namespace DerivativeApproximation
             class InputVector,
             int spacedim>
   void
-  approximate_gradient(const DoFHandlerType<dim, spacedim>& dof_handler,
-                       const InputVector&                   solution,
-                       Vector<float>&                       derivative_norm,
+  approximate_gradient(const DoFHandlerType<dim, spacedim> &dof_handler,
+                       const InputVector &                  solution,
+                       Vector<float> &                      derivative_norm,
                        const unsigned int                   component)
   {
     internal::approximate_derivative<internal::Gradient<dim>, dim>(
@@ -1027,10 +1027,10 @@ namespace DerivativeApproximation
             int spacedim>
   void
   approximate_second_derivative(
-    const Mapping<dim, spacedim>&        mapping,
-    const DoFHandlerType<dim, spacedim>& dof_handler,
-    const InputVector&                   solution,
-    Vector<float>&                       derivative_norm,
+    const Mapping<dim, spacedim> &       mapping,
+    const DoFHandlerType<dim, spacedim> &dof_handler,
+    const InputVector &                  solution,
+    Vector<float> &                      derivative_norm,
     const unsigned int                   component)
   {
     internal::approximate_derivative<internal::SecondDerivative<dim>, dim>(
@@ -1043,9 +1043,9 @@ namespace DerivativeApproximation
             int spacedim>
   void
   approximate_second_derivative(
-    const DoFHandlerType<dim, spacedim>& dof_handler,
-    const InputVector&                   solution,
-    Vector<float>&                       derivative_norm,
+    const DoFHandlerType<dim, spacedim> &dof_handler,
+    const InputVector &                  solution,
+    Vector<float> &                      derivative_norm,
     const unsigned int                   component)
   {
     internal::approximate_derivative<internal::SecondDerivative<dim>, dim>(
@@ -1059,17 +1059,17 @@ namespace DerivativeApproximation
   template <typename DoFHandlerType, class InputVector, int order>
   void
   approximate_derivative_tensor(
-    const Mapping<DoFHandlerType::dimension, DoFHandlerType::space_dimension>&
-                          mapping,
-    const DoFHandlerType& dof,
-    const InputVector&    solution,
+    const Mapping<DoFHandlerType::dimension, DoFHandlerType::space_dimension>
+      &                   mapping,
+    const DoFHandlerType &dof,
+    const InputVector &   solution,
 #ifndef _MSC_VER
-    const typename DoFHandlerType::active_cell_iterator& cell,
+    const typename DoFHandlerType::active_cell_iterator &cell,
 #else
-    const TriaActiveIterator<dealii::DoFCellAccessor<DoFHandlerType, false>>&
-      cell,
+    const TriaActiveIterator<dealii::DoFCellAccessor<DoFHandlerType, false>>
+      &cell,
 #endif
-    Tensor<order, DoFHandlerType::dimension>& derivative,
+    Tensor<order, DoFHandlerType::dimension> &derivative,
     const unsigned int                        component)
   {
     internal::approximate_cell<
@@ -1080,15 +1080,15 @@ namespace DerivativeApproximation
   template <typename DoFHandlerType, class InputVector, int order>
   void
   approximate_derivative_tensor(
-    const DoFHandlerType& dof,
-    const InputVector&    solution,
+    const DoFHandlerType &dof,
+    const InputVector &   solution,
 #ifndef _MSC_VER
-    const typename DoFHandlerType::active_cell_iterator& cell,
+    const typename DoFHandlerType::active_cell_iterator &cell,
 #else
-    const TriaActiveIterator<dealii::DoFCellAccessor<DoFHandlerType, false>>&
-      cell,
+    const TriaActiveIterator<dealii::DoFCellAccessor<DoFHandlerType, false>>
+      &cell,
 #endif
-    Tensor<order, DoFHandlerType::dimension>& derivative,
+    Tensor<order, DoFHandlerType::dimension> &derivative,
     const unsigned int                        component)
   {
     // just call the respective function with Q1 mapping
@@ -1104,7 +1104,7 @@ namespace DerivativeApproximation
 
   template <int dim, int order>
   double
-  derivative_norm(const Tensor<order, dim>& derivative)
+  derivative_norm(const Tensor<order, dim> &derivative)
   {
     return internal::DerivativeSelector<order, dim>::DerivDescr::
       derivative_norm(derivative);

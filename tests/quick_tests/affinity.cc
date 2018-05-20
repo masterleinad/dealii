@@ -28,7 +28,7 @@
 #endif
 
 bool
-getaffinity(unsigned int& bits_set, unsigned int& mask)
+getaffinity(unsigned int &bits_set, unsigned int &mask)
 {
   bits_set = 0;
   mask     = 0x00;
@@ -48,7 +48,7 @@ getaffinity(unsigned int& bits_set, unsigned int& mask)
   for(int i = 0; i < CPU_SETSIZE; ++i)
     bits_set += CPU_ISSET(i, &my_set);
 
-  mask = *(int*) (&my_set);
+  mask = *(int *) (&my_set);
 #else
   // sadly we don't have an implementation
   // for mac/windows
@@ -59,7 +59,7 @@ getaffinity(unsigned int& bits_set, unsigned int& mask)
 int
 get_num_thread_env()
 {
-  const char* penv = getenv("DEAL_II_NUM_THREADS");
+  const char *penv = getenv("DEAL_II_NUM_THREADS");
   if(penv != nullptr)
     {
       int max_threads_env = -1;

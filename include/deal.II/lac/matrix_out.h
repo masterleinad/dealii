@@ -134,8 +134,8 @@ public:
    */
   template <class Matrix>
   void
-  build_patches(const Matrix&      matrix,
-                const std::string& name,
+  build_patches(const Matrix &     matrix,
+                const std::string &name,
                 const Options      options = Options(false, 1, false));
 
 private:
@@ -161,7 +161,7 @@ private:
    * Function by which the base class's functions get to know what patches
    * they shall write to a file.
    */
-  virtual const std::vector<Patch>&
+  virtual const std::vector<Patch> &
   get_patches() const override;
 
   /**
@@ -180,10 +180,10 @@ private:
    */
   template <class Matrix>
   static double
-  get_gridpoint_value(const Matrix&   matrix,
+  get_gridpoint_value(const Matrix &  matrix,
                       const size_type i,
                       const size_type j,
-                      const Options&  options);
+                      const Options & options);
 };
 
 /* ---------------------- Template and inline functions ------------- */
@@ -199,7 +199,7 @@ namespace internal
        */
       template <typename number>
       double
-      get_element(const dealii::SparseMatrix<number>& matrix,
+      get_element(const dealii::SparseMatrix<number> &matrix,
                   const types::global_dof_index       i,
                   const types::global_dof_index       j)
       {
@@ -211,7 +211,7 @@ namespace internal
        */
       template <typename number>
       double
-      get_element(const dealii::BlockSparseMatrix<number>& matrix,
+      get_element(const dealii::BlockSparseMatrix<number> &matrix,
                   const types::global_dof_index            i,
                   const types::global_dof_index            j)
       {
@@ -223,7 +223,7 @@ namespace internal
        * Return the element with given indices of a Trilinos sparse matrix.
        */
       inline double
-      get_element(const TrilinosWrappers::SparseMatrix& matrix,
+      get_element(const TrilinosWrappers::SparseMatrix &matrix,
                   const types::global_dof_index         i,
                   const types::global_dof_index         j)
       {
@@ -235,7 +235,7 @@ namespace internal
        * matrix.
        */
       inline double
-      get_element(const TrilinosWrappers::BlockSparseMatrix& matrix,
+      get_element(const TrilinosWrappers::BlockSparseMatrix &matrix,
                   const types::global_dof_index              i,
                   const types::global_dof_index              j)
       {
@@ -256,7 +256,7 @@ namespace internal
        */
       template <class Matrix>
       double
-      get_element(const Matrix&                 matrix,
+      get_element(const Matrix &                matrix,
                   const types::global_dof_index i,
                   const types::global_dof_index j)
       {
@@ -268,10 +268,10 @@ namespace internal
 
 template <class Matrix>
 inline double
-MatrixOut::get_gridpoint_value(const Matrix&   matrix,
+MatrixOut::get_gridpoint_value(const Matrix &  matrix,
                                const size_type i,
                                const size_type j,
-                               const Options&  options)
+                               const Options & options)
 {
   // special case if block size is
   // one since we then don't need all
@@ -309,8 +309,8 @@ MatrixOut::get_gridpoint_value(const Matrix&   matrix,
 
 template <class Matrix>
 void
-MatrixOut::build_patches(const Matrix&      matrix,
-                         const std::string& name,
+MatrixOut::build_patches(const Matrix &     matrix,
+                         const std::string &name,
                          const Options      options)
 {
   size_type gridpoints_x = (matrix.n() / options.block_size

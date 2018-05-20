@@ -25,7 +25,7 @@
 #include <algorithm>
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   initlog();
   deal_II_exceptions::disable_abort_on_exception();
@@ -40,7 +40,7 @@ main(int argc, char* argv[])
     {
       mg_dofs.initialize(dh);
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

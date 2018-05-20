@@ -70,7 +70,7 @@ using namespace dealii;
  * The filtered stream is returned in @p out.
  */
 void
-filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
+filter_out_xml_key(std::istream &in, const std::string &key, std::ostream &out)
 {
   std::string       line;
   bool              found   = false;
@@ -112,7 +112,7 @@ filter_out_xml_key(std::istream& in, const std::string& key, std::ostream& out)
 #ifdef DEAL_II_WITH_PETSC
 #  include <deal.II/lac/petsc_vector_base.h>
 PetscReal
-get_real_assert_zero_imag(const PETScWrappers::internal::VectorReference& a)
+get_real_assert_zero_imag(const PETScWrappers::internal::VectorReference &a)
 {
   Assert(a.imag() == 0.0, ExcInternalError());
   return a.real();
@@ -121,7 +121,7 @@ get_real_assert_zero_imag(const PETScWrappers::internal::VectorReference& a)
 
 template <typename number>
 number
-get_real_assert_zero_imag(const std::complex<number>& a)
+get_real_assert_zero_imag(const std::complex<number> &a)
 {
   Assert(a.imag() == 0.0, ExcInternalError());
   return a.real();
@@ -129,7 +129,7 @@ get_real_assert_zero_imag(const std::complex<number>& a)
 
 template <typename number>
 number
-get_real_assert_zero_imag(const number& a)
+get_real_assert_zero_imag(const number &a)
 {
   return a;
 }
@@ -229,7 +229,7 @@ namespace Testing
 // Get a uniformly distributed random value between min and max
 template <typename T = double>
 T
-random_value(const T& min = static_cast<T>(0), const T& max = static_cast<T>(1))
+random_value(const T &min = static_cast<T>(0), const T &max = static_cast<T>(1))
 {
   return min
          + (max - min)
@@ -240,7 +240,7 @@ random_value(const T& min = static_cast<T>(0), const T& max = static_cast<T>(1))
 // between min and max
 template <int dim>
 inline Point<dim>
-random_point(const double& min = 0.0, const double& max = 1.0)
+random_point(const double &min = 0.0, const double &max = 1.0)
 {
   Assert(max >= min, ExcMessage("Make sure max>=min"));
   Point<dim> p;
@@ -252,7 +252,7 @@ random_point(const double& min = 0.0, const double& max = 1.0)
 // given the name of a file, copy it to deallog
 // and then delete it
 void
-cat_file(const char* filename)
+cat_file(const char *filename)
 {
   std::ifstream in(filename);
   Assert(in, dealii::ExcIO());
@@ -277,7 +277,7 @@ cat_file(const char* filename)
  * to this should be closed when calling this function.
  */
 void
-sort_file_contents(const std::string& filename)
+sort_file_contents(const std::string &filename)
 {
   int error = std::system(
     (std::string("LC_ALL=C sort ") + filename + " -o " + filename).c_str());
@@ -289,7 +289,7 @@ sort_file_contents(const std::string& filename)
  */
 template <class IT>
 unsigned int
-checksum(const IT& begin, const IT& end)
+checksum(const IT &begin, const IT &end)
 {
   AssertThrow(sizeof(unsigned int) == 4, ExcInternalError());
   AssertThrow(sizeof(*begin) == 1, ExcInternalError());
@@ -317,7 +317,7 @@ checksum(const IT& begin, const IT& end)
  * Intel's ICC does not do that, so filter that out as well.
  */
 std::string
-unify_pretty_function(const std::string& text)
+unify_pretty_function(const std::string &text)
 {
   std::string t = text;
   t             = Utilities::replace_in_string(t, " &", " & ");
@@ -573,10 +573,10 @@ namespace deal_II_exceptions
 DEAL_II_NAMESPACE_CLOSE
 
 void
-new_tbb_assertion_handler(const char* file,
+new_tbb_assertion_handler(const char *file,
                           int         line,
-                          const char* expr,
-                          const char* comment)
+                          const char *expr,
+                          const char *comment)
 {
   // Print out the original assertion message
   std::cerr << "TBB assertion:" << std::endl;
@@ -666,24 +666,24 @@ DEAL_II_NAMESPACE_CLOSE
  *
  * - Maier 2013
  */
-LogStream&
-operator<<(LogStream& out, const std::vector<unsigned int>& v)
+LogStream &
+operator<<(LogStream &out, const std::vector<unsigned int> &v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }
 
-LogStream&
-operator<<(LogStream& out, const std::vector<long long unsigned int>& v)
+LogStream &
+operator<<(LogStream &out, const std::vector<long long unsigned int> &v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");
   return out;
 }
 
-LogStream&
-operator<<(LogStream& out, const std::vector<double>& v)
+LogStream &
+operator<<(LogStream &out, const std::vector<double> &v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     out << v[i] << (i == v.size() - 1 ? "" : " ");

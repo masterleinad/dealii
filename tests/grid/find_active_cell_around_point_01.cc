@@ -52,9 +52,9 @@ test(unsigned int n_ref, unsigned int n_points)
   auto v_to_c   = GridTools::vertex_to_cell_map(tria);
   auto v_to_c_d = GridTools::vertex_to_cell_centers_directions(tria, v_to_c);
 
-  auto& mapping = StaticMappingQ1<dim, spacedim>::mapping;
+  auto &mapping = StaticMappingQ1<dim, spacedim>::mapping;
   auto  cell    = tria.begin_active();
-  for(auto& p : points)
+  for(auto &p : points)
     {
       auto c_and_p = GridTools::find_active_cell_around_point(
         mapping, tria, p, v_to_c, v_to_c_d);

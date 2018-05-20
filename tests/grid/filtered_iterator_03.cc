@@ -67,7 +67,7 @@ test()
       cell->set_subdomain_id(subdomain);
     };
 
-  std::ostream& logfile = deallog.get_file_stream();
+  std::ostream &logfile = deallog.get_file_stream();
 
   // check 1: count number of cells
   // on some level

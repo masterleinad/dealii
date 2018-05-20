@@ -19,7 +19,7 @@
 DEAL_II_NAMESPACE_OPEN
 
 void
-NamedSelection::initialize(const AnyData& data)
+NamedSelection::initialize(const AnyData &data)
 {
   indices.resize(names.size());
   for(unsigned int i = 0; i < names.size(); ++i)

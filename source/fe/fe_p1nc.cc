@@ -74,7 +74,7 @@ FE_P1NC::get_dpo_vector()
 
 std::array<std::array<double, 3>, 4>
 FE_P1NC::get_linear_shape_coefficients(
-  const Triangulation<2, 2>::cell_iterator& cell)
+  const Triangulation<2, 2>::cell_iterator &cell)
 {
   // edge midpoints
   const Point<2> mpt[4] = {(cell->vertex(0) + cell->vertex(2)) / 2,
@@ -127,10 +127,10 @@ FE_P1NC::get_linear_shape_coefficients(
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_data(
   const UpdateFlags update_flags,
-  const Mapping<2, 2>&,
-  const Quadrature<2>& quadrature,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
-    output_data) const
+  const Mapping<2, 2> &,
+  const Quadrature<2> &quadrature,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>
+    &output_data) const
 {
   auto data = std_cxx14::make_unique<FiniteElement<2, 2>::InternalDataBase>();
 
@@ -149,10 +149,10 @@ FE_P1NC::get_data(
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_face_data(
   const UpdateFlags update_flags,
-  const Mapping<2, 2>&,
-  const Quadrature<1>& quadrature,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
-    output_data) const
+  const Mapping<2, 2> &,
+  const Quadrature<1> &quadrature,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>
+    &output_data) const
 {
   auto data = std_cxx14::make_unique<FiniteElement<2, 2>::InternalDataBase>();
 
@@ -171,10 +171,10 @@ FE_P1NC::get_face_data(
 std::unique_ptr<FiniteElement<2, 2>::InternalDataBase>
 FE_P1NC::get_subface_data(
   const UpdateFlags update_flags,
-  const Mapping<2, 2>&,
-  const Quadrature<1>& quadrature,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
-    output_data) const
+  const Mapping<2, 2> &,
+  const Quadrature<1> &quadrature,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>
+    &output_data) const
 {
   auto data = std_cxx14::make_unique<FiniteElement<2, 2>::InternalDataBase>();
 
@@ -192,15 +192,15 @@ FE_P1NC::get_subface_data(
 
 void
 FE_P1NC::fill_fe_values(
-  const Triangulation<2, 2>::cell_iterator& cell,
+  const Triangulation<2, 2>::cell_iterator &cell,
   const CellSimilarity::Similarity,
-  const Quadrature<2>&,
-  const Mapping<2, 2>&,
-  const Mapping<2, 2>::InternalDataBase&,
-  const internal::FEValuesImplementation::MappingRelatedData<2, 2>&
-                                                                    mapping_data,
-  const FiniteElement<2, 2>::InternalDataBase&                      fe_internal,
-  internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>& output_data)
+  const Quadrature<2> &,
+  const Mapping<2, 2> &,
+  const Mapping<2, 2>::InternalDataBase &,
+  const internal::FEValuesImplementation::MappingRelatedData<2, 2>
+    &                                          mapping_data,
+  const FiniteElement<2, 2>::InternalDataBase &fe_internal,
+  internal::FEValuesImplementation::FiniteElementRelatedData<2, 2> &output_data)
   const
 {
   const UpdateFlags flags(fe_internal.update_each);
@@ -229,15 +229,15 @@ FE_P1NC::fill_fe_values(
 
 void
 FE_P1NC::fill_fe_face_values(
-  const Triangulation<2, 2>::cell_iterator& cell,
+  const Triangulation<2, 2>::cell_iterator &cell,
   const unsigned int                        face_no,
-  const Quadrature<1>&                      quadrature,
-  const Mapping<2, 2>&                      mapping,
-  const Mapping<2, 2>::InternalDataBase&,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2>&,
-  const InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
-    output_data) const
+  const Quadrature<1> &                     quadrature,
+  const Mapping<2, 2> &                     mapping,
+  const Mapping<2, 2>::InternalDataBase &,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2> &,
+  const InternalDataBase &fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>
+    &output_data) const
 {
   const UpdateFlags flags(fe_internal.update_each);
 
@@ -270,16 +270,16 @@ FE_P1NC::fill_fe_face_values(
 
 void
 FE_P1NC::fill_fe_subface_values(
-  const Triangulation<2, 2>::cell_iterator& cell,
+  const Triangulation<2, 2>::cell_iterator &cell,
   const unsigned int                        face_no,
   const unsigned int                        sub_no,
-  const Quadrature<1>&                      quadrature,
-  const Mapping<2, 2>&                      mapping,
-  const Mapping<2, 2>::InternalDataBase&,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2>&,
-  const InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>&
-    output_data) const
+  const Quadrature<1> &                     quadrature,
+  const Mapping<2, 2> &                     mapping,
+  const Mapping<2, 2>::InternalDataBase &,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<2, 2> &,
+  const InternalDataBase &fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<2, 2>
+    &output_data) const
 {
   const UpdateFlags flags(fe_internal.update_each);
 

@@ -74,7 +74,7 @@ test()
     {
       m.add(0, m.m(), &indices[0], &values[0], false, true);
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -83,7 +83,7 @@ test()
     {
       m.add(m.m() - 1, m.m(), &indices[0], &values[0], false, true);
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -102,7 +102,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

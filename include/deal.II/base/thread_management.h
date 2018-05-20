@@ -94,7 +94,7 @@ namespace Threads
        * Constructor. Lock the mutex. Since this is a dummy mutex class, this
        * of course does nothing.
        */
-      ScopedLock(DummyThreadMutex&)
+      ScopedLock(DummyThreadMutex &)
       {}
 
       /**
@@ -169,7 +169,7 @@ namespace Threads
      * function of course does nothing, but returns immediately.
      */
     inline void
-    wait(DummyThreadMutex&) const
+    wait(DummyThreadMutex &) const
     {}
   };
 
@@ -197,8 +197,8 @@ namespace Threads
      * raises an exception if the <code>count</code> argument is one.
      */
     DummyBarrier(const unsigned int count,
-                 const char*        name = nullptr,
-                 void*              arg  = nullptr);
+                 const char *       name = nullptr,
+                 void *             arg  = nullptr);
 
     /**
      * Wait for all threads to reach this point. Since there may only be one
@@ -275,7 +275,7 @@ namespace Threads
       /**
        * Constructor. Lock the mutex.
        */
-      ScopedLock(Mutex& m) : mutex(m)
+      ScopedLock(Mutex &m) : mutex(m)
       {
         mutex.acquire();
       }
@@ -293,7 +293,7 @@ namespace Threads
       /**
        * Store the address of the mutex object.
        */
-      Mutex& mutex;
+      Mutex &mutex;
     };
 
     /**
@@ -305,15 +305,15 @@ namespace Threads
      * Copy constructor. As discussed in this class's documentation, no state
      * is copied from the object given as argument.
      */
-    Mutex(const Mutex&) : mutex()
+    Mutex(const Mutex &) : mutex()
     {}
 
     /**
      * Copy operators. As discussed in this class's documentation, no state
      * is copied from the object given as argument.
      */
-    Mutex&
-    operator=(const Mutex&)
+    Mutex &
+    operator=(const Mutex &)
     {
       return *this;
     }
@@ -388,7 +388,7 @@ namespace Threads
      * upon exit.
      */
     inline void
-    wait(Mutex& mutex)
+    wait(Mutex &mutex)
     {
       std::unique_lock<std::mutex> lock(mutex.mutex, std::adopt_lock);
       condition_variable.wait(lock);
@@ -423,8 +423,8 @@ namespace Threads
      * Constructor. Initialize the underlying POSIX barrier data structure.
      */
     PosixThreadBarrier(const unsigned int count,
-                       const char*        name = nullptr,
-                       void*              arg  = nullptr);
+                       const char *       name = nullptr,
+                       void *             arg  = nullptr);
 
     /**
      * Destructor. Release all resources.
@@ -547,8 +547,8 @@ namespace Threads
    */
   template <typename ForwardIterator>
   std::vector<std::pair<ForwardIterator, ForwardIterator>>
-  split_range(const ForwardIterator& begin,
-              const ForwardIterator& end,
+  split_range(const ForwardIterator &begin,
+              const ForwardIterator &end,
               const unsigned int     n_intervals);
 
   /**
@@ -593,7 +593,7 @@ namespace Threads
      * function, which will then provide some output.
      */
     [[noreturn]] void
-    handle_std_exception(const std::exception& exc);
+    handle_std_exception(const std::exception &exc);
 
     /**
      * @internal
@@ -638,8 +638,8 @@ namespace Threads
 {
   template <typename ForwardIterator>
   std::vector<std::pair<ForwardIterator, ForwardIterator>>
-  split_range(const ForwardIterator& begin,
-              const ForwardIterator& end,
+  split_range(const ForwardIterator &begin,
+              const ForwardIterator &end,
               const unsigned int     n_intervals)
   {
     typedef std::pair<ForwardIterator, ForwardIterator> IteratorPair;
@@ -705,7 +705,7 @@ namespace Threads
       RT value;
 
     public:
-      typedef RT& reference_type;
+      typedef RT &reference_type;
 
       inline return_value() : value()
       {}
@@ -717,7 +717,7 @@ namespace Threads
       }
 
       inline void
-      set(RT&& v)
+      set(RT &&v)
       {
         value = std::move(v);
       }
@@ -733,13 +733,13 @@ namespace Threads
      * referenced.
      */
     template <typename RT>
-    struct return_value<RT&>
+    struct return_value<RT &>
     {
     private:
-      RT* value;
+      RT *value;
 
     public:
-      typedef RT& reference_type;
+      typedef RT &reference_type;
 
       inline return_value() : value(nullptr)
       {}
@@ -751,7 +751,7 @@ namespace Threads
       }
 
       inline void
-      set(RT& v)
+      set(RT &v)
       {
         value = &v;
       }
@@ -780,14 +780,14 @@ namespace Threads
   {
     template <typename RT>
     inline void
-    call(const std::function<RT()>&  function,
-         internal::return_value<RT>& ret_val)
+    call(const std::function<RT()> & function,
+         internal::return_value<RT> &ret_val)
     {
       ret_val.set(function());
     }
 
     inline void
-    call(const std::function<void()>& function, internal::return_value<void>&)
+    call(const std::function<void()> &function, internal::return_value<void> &)
     {
       function();
     }
@@ -882,7 +882,7 @@ namespace Threads
        * object.
        */
       void
-      start(const std::function<RT()>& function)
+      start(const std::function<RT()> &function)
       {
         thread_is_active = true;
         ret_val          = std::make_shared<return_value<RT>>();
@@ -915,7 +915,7 @@ namespace Threads
        * The function that runs on the thread.
        */
       static void
-      thread_entry_point(const std::function<RT()>&        function,
+      thread_entry_point(const std::function<RT()> &       function,
                          std::shared_ptr<return_value<RT>> ret_val)
       {
         // call the function in question. since an exception that is
@@ -928,7 +928,7 @@ namespace Threads
           {
             call(function, *ret_val);
           }
-        catch(const std::exception& exc)
+        catch(const std::exception &exc)
           {
             internal::handle_std_exception(exc);
           }
@@ -963,7 +963,7 @@ namespace Threads
        * object.
        */
       void
-      start(const std::function<RT()>& function)
+      start(const std::function<RT()> &function)
       {
         ret_val = std::make_shared<return_value<RT>>();
         call(function, *ret_val);
@@ -1009,7 +1009,7 @@ namespace Threads
     /**
      * Construct a thread object with a function object.
      */
-    Thread(const std::function<RT()>& function)
+    Thread(const std::function<RT()> &function)
       : thread_descriptor(new internal::ThreadDescriptor<RT>())
     {
       // in a second step, start the thread.
@@ -1026,7 +1026,7 @@ namespace Threads
     /**
      * Copy constructor.
      */
-    Thread(const Thread<RT>& t) : thread_descriptor(t.thread_descriptor)
+    Thread(const Thread<RT> &t) : thread_descriptor(t.thread_descriptor)
     {}
 
     /**
@@ -1103,7 +1103,7 @@ namespace Threads
      * thread, the check is simply to compare these pointers.
      */
     bool
-    operator==(const Thread& t) const
+    operator==(const Thread &t) const
     {
       return thread_descriptor == t.thread_descriptor;
     }
@@ -1130,7 +1130,7 @@ namespace Threads
     struct maybe_make_ref
     {
       static T
-      act(T& t)
+      act(T &t)
       {
         return t;
       }
@@ -1144,10 +1144,10 @@ namespace Threads
      * specialization.
      */
     template <typename T>
-    struct maybe_make_ref<T&>
+    struct maybe_make_ref<T &>
     {
       static std::reference_wrapper<T>
-      act(T& t)
+      act(T &t)
       {
         return std::ref(t);
       }
@@ -1166,7 +1166,7 @@ namespace Threads
    */
   template <typename RT>
   inline Thread<RT>
-  new_thread(const std::function<RT()>& function)
+  new_thread(const std::function<RT()> &function)
   {
     return Thread<RT>(function);
   }
@@ -1265,7 +1265,7 @@ namespace Threads
   template <typename RT, typename C, typename... Args>
   inline Thread<RT>
   new_thread(RT (C::*fun_ptr)(Args...),
-             typename identity<C>::type& c,
+             typename identity<C>::type &c,
              typename identity<Args>::type... args)
   {
     return new_thread(std::function<RT()>(std::bind(
@@ -1281,7 +1281,7 @@ namespace Threads
   template <typename RT, typename C, typename... Args>
   inline Thread<RT>
   new_thread(RT (C::*fun_ptr)(Args...) const,
-             typename identity<const C>::type& c,
+             typename identity<const C>::type &c,
              typename identity<Args>::type... args)
   {
     return new_thread(std::function<RT()>(std::bind(
@@ -1306,8 +1306,8 @@ namespace Threads
     /**
      * Add another thread object to the collection.
      */
-    ThreadGroup&
-    operator+=(const Thread<RT>& t)
+    ThreadGroup &
+    operator+=(const Thread<RT> &t)
     {
       threads.push_back(t);
       return *this;
@@ -1351,11 +1351,11 @@ namespace Threads
     template <typename RT>
     struct TaskEntryPoint : public tbb::task
     {
-      TaskEntryPoint(TaskDescriptor<RT>& task_descriptor)
+      TaskEntryPoint(TaskDescriptor<RT> &task_descriptor)
         : task_descriptor(task_descriptor)
       {}
 
-      virtual tbb::task*
+      virtual tbb::task *
       execute() override
       {
         // call the function object and put the return value into the
@@ -1364,7 +1364,7 @@ namespace Threads
           {
             call(task_descriptor.function, task_descriptor.ret_val);
           }
-        catch(const std::exception& exc)
+        catch(const std::exception &exc)
           {
             internal::handle_std_exception(exc);
           }
@@ -1378,7 +1378,7 @@ namespace Threads
       /**
        * A reference to the descriptor object of this task.
        */
-      TaskDescriptor<RT>& task_descriptor;
+      TaskDescriptor<RT> &task_descriptor;
     };
 
     /**
@@ -1419,7 +1419,7 @@ namespace Threads
        * to this task_description object go out of scope then no action is
        * needed on our behalf.
        */
-      tbb::task* task;
+      tbb::task *task;
 
       /**
        * A place where the task will deposit its return value.
@@ -1435,7 +1435,7 @@ namespace Threads
       /**
        * Constructor. Take the function to be run on this task as argument.
        */
-      TaskDescriptor(const std::function<RT()>& function);
+      TaskDescriptor(const std::function<RT()> &function);
 
       /**
        * Default constructor. Throws an exception since we want to queue a
@@ -1448,7 +1448,7 @@ namespace Threads
        * Copy constructor. Throws an exception since we want to make sure that
        * each TaskDescriptor object corresponds to exactly one task.
        */
-      TaskDescriptor(const TaskDescriptor&);
+      TaskDescriptor(const TaskDescriptor &);
 
       /**
        * Destructor.
@@ -1459,8 +1459,8 @@ namespace Threads
        * Copy operator. Throws an exception since we want to make sure that
        * each TaskDescriptor object corresponds to exactly one task.
        */
-      TaskDescriptor&
-      operator=(const TaskDescriptor&);
+      TaskDescriptor &
+      operator=(const TaskDescriptor &);
 
       /**
        * Queue up the task to the scheduler. We need to do this in a separate
@@ -1486,7 +1486,7 @@ namespace Threads
 
     template <typename RT>
     inline TaskDescriptor<RT>::TaskDescriptor(
-      const std::function<RT()>& function)
+      const std::function<RT()> &function)
       : function(function), task(nullptr), task_is_done(false)
     {}
 
@@ -1499,7 +1499,7 @@ namespace Threads
       task = new(tbb::task::allocate_root()) tbb::empty_task;
       task->set_ref_count(2);
 
-      tbb::task* worker = new(task->allocate_child()) TaskEntryPoint<RT>(*this);
+      tbb::task *worker = new(task->allocate_child()) TaskEntryPoint<RT>(*this);
 
       // in earlier versions of the TBB, task::spawn was a regular
       // member function; however, in later versions, it was converted
@@ -1520,7 +1520,7 @@ namespace Threads
     }
 
     template <typename RT>
-    TaskDescriptor<RT>::TaskDescriptor(const TaskDescriptor&)
+    TaskDescriptor<RT>::TaskDescriptor(const TaskDescriptor &)
       : task_is_done(false)
     {
       // we shouldn't be getting here -- task descriptors
@@ -1550,8 +1550,8 @@ namespace Threads
     }
 
     template <typename RT>
-    TaskDescriptor<RT>&
-    TaskDescriptor<RT>::operator=(const TaskDescriptor&)
+    TaskDescriptor<RT> &
+    TaskDescriptor<RT>::operator=(const TaskDescriptor &)
     {
       // we shouldn't be getting here -- task descriptors
       // can't be copied
@@ -1598,7 +1598,7 @@ namespace Threads
        * Constructor. Call the given function and emplace the return value
        * into the slot reserved for this purpose.
        */
-      TaskDescriptor(const std::function<RT()>& function)
+      TaskDescriptor(const std::function<RT()> &function)
       {
         call(function, ret_val);
       }
@@ -1645,7 +1645,7 @@ namespace Threads
      * @post Using this constructor automatically makes the task object
      * joinable().
      */
-    Task(const std::function<RT()>& function_object)
+    Task(const std::function<RT()> &function_object)
     {
       // create a task descriptor and tell it to queue itself up with
       // the scheduling system
@@ -1660,7 +1660,7 @@ namespace Threads
      * @post Using this constructor automatically makes the task object
      * joinable().
      */
-    Task(const Task<RT>& t) : task_descriptor(t.task_descriptor)
+    Task(const Task<RT> &t) : task_descriptor(t.task_descriptor)
     {}
 
     /**
@@ -1766,7 +1766,7 @@ namespace Threads
      * task, the check is simply to compare these pointers.
      */
     bool
-    operator==(const Task& t) const
+    operator==(const Task &t) const
     {
       AssertThrow(joinable(), ExcNoTask());
       return task_descriptor == t.task_descriptor;
@@ -1803,7 +1803,7 @@ namespace Threads
    */
   template <typename RT>
   inline Task<RT>
-  new_task(const std::function<RT()>& function)
+  new_task(const std::function<RT()> &function)
   {
     return Task<RT>(function);
   }
@@ -1903,7 +1903,7 @@ namespace Threads
   template <typename RT, typename C, typename... Args>
   inline Task<RT>
   new_task(RT (C::*fun_ptr)(Args...),
-           typename identity<C>::type& c,
+           typename identity<C>::type &c,
            typename identity<Args>::type... args)
   {
     return new_task(std::function<RT()>(std::bind(
@@ -1919,7 +1919,7 @@ namespace Threads
   template <typename RT, typename C, typename... Args>
   inline Task<RT>
   new_task(RT (C::*fun_ptr)(Args...) const,
-           typename identity<const C>::type& c,
+           typename identity<const C>::type &c,
            typename identity<Args>::type... args)
   {
     return new_task(std::function<RT()>(std::bind(
@@ -1949,8 +1949,8 @@ namespace Threads
     /**
      * Add another task object to the collection.
      */
-    TaskGroup&
-    operator+=(const Task<RT>& t)
+    TaskGroup &
+    operator+=(const Task<RT> &t)
     {
       tasks.push_back(t);
       return *this;

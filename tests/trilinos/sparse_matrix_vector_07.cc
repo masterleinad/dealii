@@ -23,9 +23,9 @@
 #include <vector>
 
 void
-test(TrilinosWrappers::MPI::Vector& v,
-     TrilinosWrappers::MPI::Vector& w,
-     TrilinosWrappers::MPI::Vector& x)
+test(TrilinosWrappers::MPI::Vector &v,
+     TrilinosWrappers::MPI::Vector &w,
+     TrilinosWrappers::MPI::Vector &x)
 {
   TrilinosWrappers::SparseMatrix m(v.size(), v.size(), v.size());
   for(unsigned int i = 0; i < m.m(); ++i)
@@ -64,7 +64,7 @@ test(TrilinosWrappers::MPI::Vector& v,
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -83,7 +83,7 @@ main(int argc, char** argv)
         test(v, w, x);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

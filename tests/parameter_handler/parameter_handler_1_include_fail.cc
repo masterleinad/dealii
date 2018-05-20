@@ -20,7 +20,7 @@
 #include <deal.II/base/parameter_handler.h>
 
 void
-check(const char* p)
+check(const char *p)
 {
   ParameterHandler prm;
   prm.declare_entry(
@@ -31,7 +31,7 @@ check(const char* p)
     {
       prm.parse_input(in);
     }
-  catch(ParameterHandler::ExcCannotOpenIncludeStatementFile& exc)
+  catch(ParameterHandler::ExcCannotOpenIncludeStatementFile &exc)
     {
       deallog << exc.get_exc_name() << std::endl;
       exc.print_info(deallog.get_file_stream());

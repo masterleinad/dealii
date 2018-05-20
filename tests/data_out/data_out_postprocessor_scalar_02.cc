@@ -43,8 +43,8 @@ public:
   {}
 
   virtual void
-  evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim>& input_data,
-                        std::vector<Vector<double>>& computed_quantities) const
+  evaluate_scalar_field(const DataPostprocessorInputs::Scalar<dim> &input_data,
+                        std::vector<Vector<double>> &computed_quantities) const
   {
     for(unsigned int q = 0; q < input_data.solution_values.size(); ++q)
       {

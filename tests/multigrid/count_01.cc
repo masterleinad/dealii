@@ -33,7 +33,7 @@
 using namespace std;
 
 void
-log_vector(const std::vector<std::vector<types::global_dof_index>>& count)
+log_vector(const std::vector<std::vector<types::global_dof_index>> &count)
 {
   for(unsigned int l = 0; l < count.size(); ++l)
     {
@@ -46,7 +46,7 @@ log_vector(const std::vector<std::vector<types::global_dof_index>>& count)
 
 template <int dim>
 void
-check_fe(FiniteElement<dim>& fe)
+check_fe(FiniteElement<dim> &fe)
 {
   deallog << fe.get_name() << std::endl;
 

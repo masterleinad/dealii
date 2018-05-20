@@ -29,7 +29,7 @@ template <int dim, int spacedim>
 void
 test()
 {
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream &out = deallog.get_file_stream();
 
   out << "# dim=" << dim << ", spacedim=" << spacedim << std::endl;
 

@@ -31,14 +31,14 @@ namespace LACExceptions
   {}
 
   void
-  ExcPETScError::print_info(std::ostream& out) const
+  ExcPETScError::print_info(std::ostream &out) const
   {
     out << "deal.II encountered an error while calling a PETSc function."
         << std::endl;
 #ifdef DEAL_II_WITH_PETSC
     // PetscErrorMessage changes the value in a pointer to refer to a
     // statically allocated description of the current error message.
-    const char*          petsc_message;
+    const char *         petsc_message;
     const PetscErrorCode ierr = PetscErrorMessage(error_code,
                                                   &petsc_message,
                                                   /*specific=*/nullptr);

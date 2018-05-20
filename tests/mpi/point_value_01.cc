@@ -89,7 +89,7 @@ test()
           if(std::abs(value[0] - 1.) > 1e-8)
             ExcInternalError();
         }
-      catch(const VectorTools::ExcPointNotAvailableHere&)
+      catch(const VectorTools::ExcPointNotAvailableHere &)
         {}
 
       MPI_Barrier(MPI_COMM_WORLD);
@@ -100,7 +100,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

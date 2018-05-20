@@ -37,10 +37,10 @@ using namespace std;
 template <int dim, typename number, int spacedim>
 void
 reinit_vector_by_blocks(
-  const dealii::DoFHandler<dim, spacedim>&           mg_dof,
-  MGLevelObject<dealii::Vector<number>>&             v,
+  const dealii::DoFHandler<dim, spacedim> &          mg_dof,
+  MGLevelObject<dealii::Vector<number>> &            v,
   const unsigned int                                 selected_block,
-  std::vector<std::vector<types::global_dof_index>>& ndofs)
+  std::vector<std::vector<types::global_dof_index>> &ndofs)
 {
   const unsigned int n_blocks = mg_dof.get_fe().n_blocks();
   Assert(selected_block < n_blocks, ExcIndexRange(selected_block, 0, n_blocks));
@@ -65,7 +65,7 @@ reinit_vector_by_blocks(
 
 template <int dim>
 void
-check_select(const FiniteElement<dim>& fe, unsigned int selected)
+check_select(const FiniteElement<dim> &fe, unsigned int selected)
 {
   deallog << fe.get_name() << " select " << selected << std::endl;
 
@@ -74,7 +74,7 @@ check_select(const FiniteElement<dim>& fe, unsigned int selected)
   tr.refine_global(2);
 
   DoFHandler<dim>  mgdof(tr);
-  DoFHandler<dim>& dof = mgdof;
+  DoFHandler<dim> &dof = mgdof;
   mgdof.distribute_dofs(fe);
   mgdof.distribute_mg_dofs(fe);
   DoFRenumbering::component_wise(mgdof);

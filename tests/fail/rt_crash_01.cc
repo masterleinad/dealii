@@ -29,7 +29,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> &dof_handler)
 {
   // there's presently a crash in the
   // Raviart-Thomas element. only

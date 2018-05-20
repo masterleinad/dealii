@@ -88,7 +88,7 @@ namespace MeshWorker
     /**
      * Copy constructor, creating a clone to be used by WorkStream::run().
      */
-    IntegrationInfo(const IntegrationInfo<dim, spacedim>& other);
+    IntegrationInfo(const IntegrationInfo<dim, spacedim> &other);
 
     /**
      * Build all internal structures, in particular the FEValuesBase objects
@@ -110,17 +110,17 @@ namespace MeshWorker
      */
     template <class FEVALUES>
     void
-    initialize(const FiniteElement<dim, spacedim>&             el,
-               const Mapping<dim, spacedim>&                   mapping,
-               const Quadrature<FEVALUES::integral_dimension>& quadrature,
+    initialize(const FiniteElement<dim, spacedim> &            el,
+               const Mapping<dim, spacedim> &                  mapping,
+               const Quadrature<FEVALUES::integral_dimension> &quadrature,
                const UpdateFlags                               flags,
-               const BlockInfo* local_block_info = nullptr);
+               const BlockInfo *local_block_info = nullptr);
 
     /**
      * Initialize the data vector and cache the selector.
      */
     void
-    initialize_data(const std::shared_ptr<VectorDataBase<dim, spacedim>>& data);
+    initialize_data(const std::shared_ptr<VectorDataBase<dim, spacedim>> &data);
 
     /**
      * Delete the data created by initialize().
@@ -132,7 +132,7 @@ namespace MeshWorker
      * Return a reference to the FiniteElement that was used to initialize
      * this object.
      */
-    const FiniteElement<dim, spacedim>&
+    const FiniteElement<dim, spacedim> &
     finite_element() const;
 
     /// This is true if we are assembling for multigrid
@@ -143,7 +143,7 @@ namespace MeshWorker
      * element was used (without the BlockInfo argument). It throws an
      * exception, if applied to a vector of elements.
      */
-    const FEValuesBase<dim, spacedim>&
+    const FEValuesBase<dim, spacedim> &
     fe_values() const;
 
     /// Access to finite elements
@@ -151,7 +151,7 @@ namespace MeshWorker
      * This access function must be used if the initialize() for a group of
      * elements was used (with a valid BlockInfo object).
      */
-    const FEValuesBase<dim, spacedim>&
+    const FEValuesBase<dim, spacedim> &
     fe_values(const unsigned int i) const;
 
     /**
@@ -189,7 +189,7 @@ namespace MeshWorker
      */
     template <typename number>
     void
-    reinit(const DoFInfo<dim, spacedim, number>& i);
+    reinit(const DoFInfo<dim, spacedim, number> &i);
 
     /**
      * Use the finite element functions in #global_data and fill the vectors
@@ -197,7 +197,7 @@ namespace MeshWorker
      */
     template <typename number>
     void
-    fill_local_data(const DoFInfo<dim, spacedim, number>& info,
+    fill_local_data(const DoFInfo<dim, spacedim, number> &info,
                     bool                                  split_fevalues);
 
     /**
@@ -227,8 +227,8 @@ namespace MeshWorker
      */
     template <typename TYPE>
     void
-    fill_local_data(std::vector<std::vector<std::vector<TYPE>>>& data,
-                    VectorSelector&                              selector,
+    fill_local_data(std::vector<std::vector<std::vector<TYPE>>> &data,
+                    VectorSelector &                             selector,
                     bool split_fevalues) const;
     /**
      * Cache the number of components of the system element.
@@ -312,9 +312,9 @@ namespace MeshWorker
      * integrate polynomial bilinear forms exactly.
      */
     void
-    initialize(const FiniteElement<dim, spacedim>& el,
-               const Mapping<dim, spacedim>&       mapping,
-               const BlockInfo*                    block_info = nullptr);
+    initialize(const FiniteElement<dim, spacedim> &el,
+               const Mapping<dim, spacedim> &      mapping,
+               const BlockInfo *                   block_info = nullptr);
 
     /**
      * Initialize the IntegrationInfo objects contained.
@@ -325,11 +325,11 @@ namespace MeshWorker
      */
     template <typename VectorType>
     void
-    initialize(const FiniteElement<dim, spacedim>& el,
-               const Mapping<dim, spacedim>&       mapping,
-               const AnyData&                      data,
-               const VectorType&                   dummy,
-               const BlockInfo*                    block_info = nullptr);
+    initialize(const FiniteElement<dim, spacedim> &el,
+               const Mapping<dim, spacedim> &      mapping,
+               const AnyData &                     data,
+               const VectorType &                  dummy,
+               const BlockInfo *                   block_info = nullptr);
     /**
      * Initialize the IntegrationInfo objects contained.
      *
@@ -339,11 +339,11 @@ namespace MeshWorker
      */
     template <typename VectorType>
     void
-    initialize(const FiniteElement<dim, spacedim>& el,
-               const Mapping<dim, spacedim>&       mapping,
-               const AnyData&                      data,
-               const MGLevelObject<VectorType>&    dummy,
-               const BlockInfo*                    block_info = nullptr);
+    initialize(const FiniteElement<dim, spacedim> &el,
+               const Mapping<dim, spacedim> &      mapping,
+               const AnyData &                     data,
+               const MGLevelObject<VectorType> &   dummy,
+               const BlockInfo *                   block_info = nullptr);
     /**
      * @name FEValues setup
      */
@@ -525,7 +525,7 @@ namespace MeshWorker
      */
     template <class DOFINFO>
     void
-    post_cell(const DoFInfoBox<dim, DOFINFO>&);
+    post_cell(const DoFInfoBox<dim, DOFINFO> &);
 
     /**
      * A callback function which is called in the loop over all cells, after
@@ -545,7 +545,7 @@ namespace MeshWorker
      */
     template <class DOFINFO>
     void
-    post_faces(const DoFInfoBox<dim, DOFINFO>&);
+    post_faces(const DoFInfoBox<dim, DOFINFO> &);
 
     /**
      * The @p info object for a cell.
@@ -584,7 +584,7 @@ namespace MeshWorker
 
   template <int dim, int sdim>
   inline IntegrationInfo<dim, sdim>::IntegrationInfo(
-    const IntegrationInfo<dim, sdim>& other)
+    const IntegrationInfo<dim, sdim> &other)
     : multigrid(other.multigrid),
       values(other.values),
       gradients(other.gradients),
@@ -596,13 +596,13 @@ namespace MeshWorker
     fevalv.resize(other.fevalv.size());
     for(unsigned int i = 0; i < other.fevalv.size(); ++i)
       {
-        const FEValuesBase<dim, sdim>& p = *other.fevalv[i];
-        const FEValues<dim, sdim>*     pc
-          = dynamic_cast<const FEValues<dim, sdim>*>(&p);
-        const FEFaceValues<dim, sdim>* pf
-          = dynamic_cast<const FEFaceValues<dim, sdim>*>(&p);
-        const FESubfaceValues<dim, sdim>* ps
-          = dynamic_cast<const FESubfaceValues<dim, sdim>*>(&p);
+        const FEValuesBase<dim, sdim> &p = *other.fevalv[i];
+        const FEValues<dim, sdim> *    pc
+          = dynamic_cast<const FEValues<dim, sdim> *>(&p);
+        const FEFaceValues<dim, sdim> *pf
+          = dynamic_cast<const FEFaceValues<dim, sdim> *>(&p);
+        const FESubfaceValues<dim, sdim> *ps
+          = dynamic_cast<const FESubfaceValues<dim, sdim> *>(&p);
 
         if(pc != nullptr)
           fevalv[i]
@@ -631,11 +631,11 @@ namespace MeshWorker
   template <class FEVALUES>
   inline void
   IntegrationInfo<dim, sdim>::initialize(
-    const FiniteElement<dim, sdim>&                 el,
-    const Mapping<dim, sdim>&                       mapping,
-    const Quadrature<FEVALUES::integral_dimension>& quadrature,
+    const FiniteElement<dim, sdim> &                el,
+    const Mapping<dim, sdim> &                      mapping,
+    const Quadrature<FEVALUES::integral_dimension> &quadrature,
     const UpdateFlags                               flags,
-    const BlockInfo*                                block_info)
+    const BlockInfo *                               block_info)
   {
     fe_pointer = &el;
     if(block_info == nullptr || block_info->local().size() == 0)
@@ -654,7 +654,7 @@ namespace MeshWorker
   }
 
   template <int dim, int spacedim>
-  inline const FiniteElement<dim, spacedim>&
+  inline const FiniteElement<dim, spacedim> &
   IntegrationInfo<dim, spacedim>::finite_element() const
   {
     Assert(fe_pointer != nullptr, ExcNotInitialized());
@@ -662,7 +662,7 @@ namespace MeshWorker
   }
 
   template <int dim, int spacedim>
-  inline const FEValuesBase<dim, spacedim>&
+  inline const FEValuesBase<dim, spacedim> &
   IntegrationInfo<dim, spacedim>::fe_values() const
   {
     AssertDimension(fevalv.size(), 1);
@@ -670,7 +670,7 @@ namespace MeshWorker
   }
 
   template <int dim, int spacedim>
-  inline const FEValuesBase<dim, spacedim>&
+  inline const FEValuesBase<dim, spacedim> &
   IntegrationInfo<dim, spacedim>::fe_values(unsigned int i) const
   {
     Assert(i < fevalv.size(), ExcIndexRange(i, 0, fevalv.size()));
@@ -681,30 +681,30 @@ namespace MeshWorker
   template <typename number>
   inline void
   IntegrationInfo<dim, spacedim>::reinit(
-    const DoFInfo<dim, spacedim, number>& info)
+    const DoFInfo<dim, spacedim, number> &info)
   {
     for(unsigned int i = 0; i < fevalv.size(); ++i)
       {
-        FEValuesBase<dim, spacedim>& febase = *fevalv[i];
+        FEValuesBase<dim, spacedim> &febase = *fevalv[i];
         if(info.sub_number != numbers::invalid_unsigned_int)
           {
             // This is a subface
-            FESubfaceValues<dim, spacedim>& fe
-              = dynamic_cast<FESubfaceValues<dim, spacedim>&>(febase);
+            FESubfaceValues<dim, spacedim> &fe
+              = dynamic_cast<FESubfaceValues<dim, spacedim> &>(febase);
             fe.reinit(info.cell, info.face_number, info.sub_number);
           }
         else if(info.face_number != numbers::invalid_unsigned_int)
           {
             // This is a face
-            FEFaceValues<dim, spacedim>& fe
-              = dynamic_cast<FEFaceValues<dim, spacedim>&>(febase);
+            FEFaceValues<dim, spacedim> &fe
+              = dynamic_cast<FEFaceValues<dim, spacedim> &>(febase);
             fe.reinit(info.cell, info.face_number);
           }
         else
           {
             // This is a cell
-            FEValues<dim, spacedim>& fe
-              = dynamic_cast<FEValues<dim, spacedim>&>(febase);
+            FEValues<dim, spacedim> &fe
+              = dynamic_cast<FEValues<dim, spacedim> &>(febase);
             fe.reinit(info.cell);
           }
       }
@@ -762,9 +762,9 @@ namespace MeshWorker
 
   template <int dim, int sdim>
   inline void
-  IntegrationInfoBox<dim, sdim>::initialize(const FiniteElement<dim, sdim>& el,
-                                            const Mapping<dim, sdim>& mapping,
-                                            const BlockInfo* block_info)
+  IntegrationInfoBox<dim, sdim>::initialize(const FiniteElement<dim, sdim> &el,
+                                            const Mapping<dim, sdim> &mapping,
+                                            const BlockInfo *block_info)
   {
     initialize_update_flags();
     initialize_gauss_quadrature(
@@ -791,15 +791,15 @@ namespace MeshWorker
   template <int dim, int sdim>
   template <typename VectorType>
   void
-  IntegrationInfoBox<dim, sdim>::initialize(const FiniteElement<dim, sdim>& el,
-                                            const Mapping<dim, sdim>& mapping,
-                                            const AnyData&            data,
-                                            const VectorType&,
-                                            const BlockInfo* block_info)
+  IntegrationInfoBox<dim, sdim>::initialize(const FiniteElement<dim, sdim> &el,
+                                            const Mapping<dim, sdim> &mapping,
+                                            const AnyData &           data,
+                                            const VectorType &,
+                                            const BlockInfo *block_info)
   {
     initialize(el, mapping, block_info);
     std::shared_ptr<VectorData<VectorType, dim, sdim>> p;
-    VectorDataBase<dim, sdim>*                         pp;
+    VectorDataBase<dim, sdim> *                        pp;
 
     p = std::make_shared<VectorData<VectorType, dim, sdim>>(cell_selector);
     // Public member function of parent class was not found without
@@ -827,15 +827,15 @@ namespace MeshWorker
   template <int dim, int sdim>
   template <typename VectorType>
   void
-  IntegrationInfoBox<dim, sdim>::initialize(const FiniteElement<dim, sdim>& el,
-                                            const Mapping<dim, sdim>& mapping,
-                                            const AnyData&            data,
-                                            const MGLevelObject<VectorType>&,
-                                            const BlockInfo* block_info)
+  IntegrationInfoBox<dim, sdim>::initialize(const FiniteElement<dim, sdim> &el,
+                                            const Mapping<dim, sdim> &mapping,
+                                            const AnyData &           data,
+                                            const MGLevelObject<VectorType> &,
+                                            const BlockInfo *block_info)
   {
     initialize(el, mapping, block_info);
     std::shared_ptr<MGVectorData<VectorType, dim, sdim>> p;
-    VectorDataBase<dim, sdim>*                           pp;
+    VectorDataBase<dim, sdim> *                          pp;
 
     p = std::make_shared<MGVectorData<VectorType, dim, sdim>>(cell_selector);
     // Public member function of parent class was not found without
@@ -864,13 +864,13 @@ namespace MeshWorker
   template <int dim, int sdim>
   template <class DOFINFO>
   void
-  IntegrationInfoBox<dim, sdim>::post_cell(const DoFInfoBox<dim, DOFINFO>&)
+  IntegrationInfoBox<dim, sdim>::post_cell(const DoFInfoBox<dim, DOFINFO> &)
   {}
 
   template <int dim, int sdim>
   template <class DOFINFO>
   void
-  IntegrationInfoBox<dim, sdim>::post_faces(const DoFInfoBox<dim, DOFINFO>&)
+  IntegrationInfoBox<dim, sdim>::post_faces(const DoFInfoBox<dim, DOFINFO> &)
   {}
 
 } // namespace MeshWorker

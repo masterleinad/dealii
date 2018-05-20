@@ -93,7 +93,7 @@ test2cellsFESystem(const unsigned int p_feq = 2, const unsigned int p_feen = 1)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -105,7 +105,7 @@ main(int argc, char** argv)
     {
       test2cellsFESystem<2>(1, 2); // 1+0 vs 2+1
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

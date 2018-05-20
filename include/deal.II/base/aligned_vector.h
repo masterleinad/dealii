@@ -61,12 +61,12 @@ public:
    * in the <tt>C++</tt> standard libraries <tt>vector<...></tt> class.
    */
   typedef T                 value_type;
-  typedef value_type*       pointer;
-  typedef const value_type* const_pointer;
-  typedef value_type*       iterator;
-  typedef const value_type* const_iterator;
-  typedef value_type&       reference;
-  typedef const value_type& const_reference;
+  typedef value_type *      pointer;
+  typedef const value_type *const_pointer;
+  typedef value_type *      iterator;
+  typedef const value_type *const_iterator;
+  typedef value_type &      reference;
+  typedef const value_type &const_reference;
   typedef std::size_t       size_type;
 
   /**
@@ -80,7 +80,7 @@ public:
    *
    * @dealiiOperationIsMultithreaded
    */
-  AlignedVector(const size_type size, const T& init = T());
+  AlignedVector(const size_type size, const T &init = T());
 
   /**
    * Destructor.
@@ -92,27 +92,27 @@ public:
    *
    * @dealiiOperationIsMultithreaded
    */
-  AlignedVector(const AlignedVector<T>& vec);
+  AlignedVector(const AlignedVector<T> &vec);
 
   /**
    * Move constructor. Create a new aligned vector by stealing the contents of
    * @p vec.
    */
-  AlignedVector(AlignedVector<T>&& vec) noexcept;
+  AlignedVector(AlignedVector<T> &&vec) noexcept;
 
   /**
    * Assignment to the input vector @p vec.
    *
    * @dealiiOperationIsMultithreaded
    */
-  AlignedVector&
-  operator=(const AlignedVector<T>& vec);
+  AlignedVector &
+  operator=(const AlignedVector<T> &vec);
 
   /**
    * Move assignment operator.
    */
-  AlignedVector&
-  operator=(AlignedVector<T>&& vec) noexcept;
+  AlignedVector &
+  operator=(AlignedVector<T> &&vec) noexcept;
 
   /**
    * Change the size of the vector. It keeps old elements previously available
@@ -156,7 +156,7 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  resize(const size_type size_in, const T& init);
+  resize(const size_type size_in, const T &init);
 
   /**
    * Reserve memory space for @p size elements. If the argument @p size is set
@@ -225,13 +225,13 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  fill(const T& element);
+  fill(const T &element);
 
   /**
    * Swaps the given vector with the calling vector.
    */
   void
-  swap(AlignedVector<T>& vec);
+  swap(AlignedVector<T> &vec);
 
   /**
    * Return whether the vector is empty, i.e., its size is zero.
@@ -300,7 +300,7 @@ public:
    */
   template <class Archive>
   void
-  save(Archive& ar, const unsigned int version) const;
+  save(Archive &ar, const unsigned int version) const;
 
   /**
    * Read the data of this object from a stream for the purpose of
@@ -308,7 +308,7 @@ public:
    */
   template <class Archive>
   void
-  load(Archive& ar, const unsigned int version);
+  load(Archive &ar, const unsigned int version);
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 
@@ -316,17 +316,17 @@ private:
   /**
    * Pointer to actual class data.
    */
-  T* _data;
+  T *_data;
 
   /**
    * Pointer to the end of valid data fields.
    */
-  T* _end_data;
+  T *_end_data;
 
   /**
    * Pointer to the end of the allocated memory.
    */
-  T* _end_allocated;
+  T *_end_allocated;
 };
 
 // ------------------------------- inline functions --------------------------
@@ -369,9 +369,9 @@ namespace internal
      * The elements from the source array are simply copied via the placement
      * new copy constructor.
      */
-    AlignedVectorCopy(const T* const source_begin,
-                      const T* const source_end,
-                      T* const       destination)
+    AlignedVectorCopy(const T *const source_begin,
+                      const T *const source_end,
+                      T *const       destination)
       : source_(source_begin), destination_(destination)
     {
       Assert(source_end >= source_begin, ExcInternalError());
@@ -400,8 +400,8 @@ namespace internal
       // never arrive here because they are non-trivial).
 
       if(std::is_trivial<T>::value == true)
-        std::memcpy((void*) (destination_ + begin),
-                    (void*) (source_ + begin),
+        std::memcpy((void *) (destination_ + begin),
+                    (void *) (source_ + begin),
                     (end - begin) * sizeof(T));
       else
         for(std::size_t i = begin; i < end; ++i)
@@ -409,8 +409,8 @@ namespace internal
     }
 
   private:
-    const T* const source_;
-    T* const       destination_;
+    const T *const source_;
+    T *const       destination_;
   };
 
   /**
@@ -434,9 +434,9 @@ namespace internal
      * The data is moved between the two arrays by invoking the destructor on
      * the source range (preparing for a subsequent call to free).
      */
-    AlignedVectorMove(T* const source_begin,
-                      T* const source_end,
-                      T* const destination)
+    AlignedVectorMove(T *const source_begin,
+                      T *const source_end,
+                      T *const destination)
       : source_(source_begin), destination_(destination)
     {
       Assert(source_end >= source_begin, ExcInternalError());
@@ -465,8 +465,8 @@ namespace internal
       // never arrive here because they are non-trivial).
 
       if(std::is_trivial<T>::value == true)
-        std::memcpy((void*) (destination_ + begin),
-                    (void*) (source_ + begin),
+        std::memcpy((void *) (destination_ + begin),
+                    (void *) (source_ + begin),
                     (end - begin) * sizeof(T));
       else
         for(std::size_t i = begin; i < end; ++i)
@@ -479,8 +479,8 @@ namespace internal
     }
 
   private:
-    T* const source_;
-    T* const destination_;
+    T *const source_;
+    T *const destination_;
   };
 
   /**
@@ -506,8 +506,8 @@ namespace internal
      * elements, otherwise work in serial.
      */
     AlignedVectorSet(const std::size_t size,
-                     const T&          element,
-                     T* const          destination)
+                     const T &         element,
+                     T *const          destination)
       : element_(element), destination_(destination), trivial_element(false)
     {
       if(size == 0)
@@ -524,7 +524,7 @@ namespace internal
           // cast element to (void*) to silence compiler warning for virtual
           // classes (they will never arrive here because they are
           // non-trivial).
-          if(std::memcmp(zero, (void*) &element, sizeof(T)) == 0)
+          if(std::memcmp(zero, (void *) &element, sizeof(T)) == 0)
             trivial_element = true;
         }
       if(size < minimum_parallel_grain_size)
@@ -546,15 +546,15 @@ namespace internal
       // non-trivial).
       if(std::is_trivial<T>::value == true && trivial_element)
         std::memset(
-          (void*) (destination_ + begin), 0, (end - begin) * sizeof(T));
+          (void *) (destination_ + begin), 0, (end - begin) * sizeof(T));
       else
         copy_construct_or_assign(
           begin, end, std::integral_constant<bool, initialize_memory>());
     }
 
   private:
-    const T&   element_;
-    mutable T* destination_;
+    const T &  element_;
+    mutable T *destination_;
     bool       trivial_element;
 
     // copy assignment operation
@@ -600,7 +600,7 @@ namespace internal
      * Constructor. Issues a parallel call if there are sufficiently many
      * elements, otherwise work in serial.
      */
-    AlignedVectorDefaultInitialize(const std::size_t size, T* const destination)
+    AlignedVectorDefaultInitialize(const std::size_t size, T *const destination)
       : destination_(destination)
     {
       if(size == 0)
@@ -626,14 +626,14 @@ namespace internal
       // non-trivial).
       if(std::is_trivial<T>::value == true)
         std::memset(
-          (void*) (destination_ + begin), 0, (end - begin) * sizeof(T));
+          (void *) (destination_ + begin), 0, (end - begin) * sizeof(T));
       else
         default_construct_or_assign(
           begin, end, std::integral_constant<bool, initialize_memory>());
     }
 
   private:
-    mutable T* destination_;
+    mutable T *destination_;
 
     // copy assignment operation
     void
@@ -666,7 +666,7 @@ inline AlignedVector<T>::AlignedVector()
 {}
 
 template <class T>
-inline AlignedVector<T>::AlignedVector(const size_type size, const T& init)
+inline AlignedVector<T>::AlignedVector(const size_type size, const T &init)
   : _data(nullptr), _end_data(nullptr), _end_allocated(nullptr)
 {
   if(size > 0)
@@ -680,7 +680,7 @@ inline AlignedVector<T>::~AlignedVector()
 }
 
 template <class T>
-inline AlignedVector<T>::AlignedVector(const AlignedVector<T>& vec)
+inline AlignedVector<T>::AlignedVector(const AlignedVector<T> &vec)
   : _data(nullptr), _end_data(nullptr), _end_allocated(nullptr)
 {
   // copy the data from vec
@@ -690,7 +690,7 @@ inline AlignedVector<T>::AlignedVector(const AlignedVector<T>& vec)
 }
 
 template <class T>
-inline AlignedVector<T>::AlignedVector(AlignedVector<T>&& vec) noexcept
+inline AlignedVector<T>::AlignedVector(AlignedVector<T> &&vec) noexcept
   : _data(vec._data),
     _end_data(vec._end_data),
     _end_allocated(vec._end_allocated)
@@ -701,8 +701,8 @@ inline AlignedVector<T>::AlignedVector(AlignedVector<T>&& vec) noexcept
 }
 
 template <class T>
-inline AlignedVector<T>&
-AlignedVector<T>::operator=(const AlignedVector<T>& vec)
+inline AlignedVector<T> &
+AlignedVector<T>::operator=(const AlignedVector<T> &vec)
 {
   resize(0);
   resize_fast(vec._end_data - vec._data);
@@ -711,8 +711,8 @@ AlignedVector<T>::operator=(const AlignedVector<T>& vec)
 }
 
 template <class T>
-inline AlignedVector<T>&
-AlignedVector<T>::operator=(AlignedVector<T>&& vec) noexcept
+inline AlignedVector<T> &
+AlignedVector<T>::operator=(AlignedVector<T> &&vec) noexcept
 {
   clear();
 
@@ -774,7 +774,7 @@ AlignedVector<T>::resize(const size_type size_in)
 
 template <class T>
 inline void
-AlignedVector<T>::resize(const size_type size_in, const T& init)
+AlignedVector<T>::resize(const size_type size_in, const T &init)
 {
   const size_type old_size = size();
   if(std::is_trivial<T>::value == false && size_in < old_size)
@@ -813,9 +813,9 @@ AlignedVector<T>::reserve(const size_type size_alloc)
 
       // allocate and align along 64-byte boundaries (this is enough for all
       // levels of vectorization currently supported by deal.II)
-      T* new_data;
+      T *new_data;
       Utilities::System::posix_memalign(
-        (void**) &new_data, 64, size_actual_allocate);
+        (void **) &new_data, 64, size_actual_allocate);
 
       // copy data in case there was some content before and release the old
       // memory with the function corresponding to the one used for allocating
@@ -870,7 +870,7 @@ inline typename AlignedVector<T>::reference
 AlignedVector<T>::back()
 {
   AssertIndexRange(0, size());
-  T* field = _end_data - 1;
+  T *field = _end_data - 1;
   return *field;
 }
 
@@ -879,7 +879,7 @@ inline typename AlignedVector<T>::const_reference
 AlignedVector<T>::back() const
 {
   AssertIndexRange(0, size());
-  const T* field = _end_data - 1;
+  const T *field = _end_data - 1;
   return *field;
 }
 
@@ -907,14 +907,14 @@ AlignedVector<T>::fill()
 
 template <class T>
 inline void
-AlignedVector<T>::fill(const T& value)
+AlignedVector<T>::fill(const T &value)
 {
   dealii::internal::AlignedVectorSet<T, false>(size(), value, _data);
 }
 
 template <class T>
 inline void
-AlignedVector<T>::swap(AlignedVector<T>& vec)
+AlignedVector<T>::swap(AlignedVector<T> &vec)
 {
   std::swap(_data, vec._data);
   std::swap(_end_data, vec._end_data);
@@ -989,26 +989,26 @@ AlignedVector<T>::end() const
 template <class T>
 template <class Archive>
 inline void
-AlignedVector<T>::save(Archive& ar, const unsigned int) const
+AlignedVector<T>::save(Archive &ar, const unsigned int) const
 {
   size_type vec_size(size());
-  ar&       vec_size;
+  ar &      vec_size;
   if(vec_size > 0)
-    ar& boost::serialization::make_array(_data, vec_size);
+    ar &boost::serialization::make_array(_data, vec_size);
 }
 
 template <class T>
 template <class Archive>
 inline void
-AlignedVector<T>::load(Archive& ar, const unsigned int)
+AlignedVector<T>::load(Archive &ar, const unsigned int)
 {
   size_type vec_size = 0;
-  ar&       vec_size;
+  ar &      vec_size;
 
   if(vec_size > 0)
     {
       reserve(vec_size);
-      ar& boost::serialization::make_array(_data, vec_size);
+      ar &boost::serialization::make_array(_data, vec_size);
       _end_data = _data + vec_size;
     }
 }
@@ -1018,7 +1018,7 @@ inline typename AlignedVector<T>::size_type
 AlignedVector<T>::memory_consumption() const
 {
   size_type memory = sizeof(*this);
-  for(const T* t = _data; t != _end_data; ++t)
+  for(const T *t = _data; t != _end_data; ++t)
     memory += dealii::MemoryConsumption::memory_consumption(*t);
   memory += sizeof(T) * (_end_allocated - _end_data);
   return memory;
@@ -1033,7 +1033,7 @@ AlignedVector<T>::memory_consumption() const
  */
 template <class T>
 bool
-operator==(const AlignedVector<T>& lhs, const AlignedVector<T>& rhs)
+operator==(const AlignedVector<T> &lhs, const AlignedVector<T> &rhs)
 {
   if(lhs.size() != rhs.size())
     return false;
@@ -1053,7 +1053,7 @@ operator==(const AlignedVector<T>& lhs, const AlignedVector<T>& rhs)
  */
 template <class T>
 bool
-operator!=(const AlignedVector<T>& lhs, const AlignedVector<T>& rhs)
+operator!=(const AlignedVector<T> &lhs, const AlignedVector<T> &rhs)
 {
   return !(operator==(lhs, rhs));
 }

@@ -106,7 +106,7 @@ public:
    *
    * <tt>SubQuadrature<dim>::type</tt> expands to <tt>Quadrature<dim-1></tt>.
    */
-  Quadrature(const SubQuadrature&, const Quadrature<1>&);
+  Quadrature(const SubQuadrature &, const Quadrature<1> &);
 
   /**
    * Build this quadrature formula as the <tt>dim</tt>-fold tensor product of
@@ -124,26 +124,26 @@ public:
    * exactly. Therefore, it is appropriate if the one-dimensional formula
    * is defined with respect to a weighting function.
    */
-  explicit Quadrature(const Quadrature<dim != 1 ? 1 : 0>& quadrature_1d);
+  explicit Quadrature(const Quadrature<dim != 1 ? 1 : 0> &quadrature_1d);
 
   /**
    * Copy constructor.
    */
-  Quadrature(const Quadrature<dim>& q);
+  Quadrature(const Quadrature<dim> &q);
 
   /**
    * Move constructor. Construct a new quadrature object by transferring the
    * internal data of another quadrature object.
    */
-  Quadrature(Quadrature<dim>&&) noexcept = default;
+  Quadrature(Quadrature<dim> &&) noexcept = default;
 
   /**
    * Construct a quadrature formula from given vectors of quadrature points
    * (which should really be in the unit cell) and the corresponding weights.
    * You will want to have the weights sum up to one, but this is not checked.
    */
-  Quadrature(const std::vector<Point<dim>>& points,
-             const std::vector<double>&     weights);
+  Quadrature(const std::vector<Point<dim>> &points,
+             const std::vector<double> &    weights);
 
   /**
    * Construct a dummy quadrature formula from a list of points, with weights
@@ -152,13 +152,13 @@ public:
    * order to find the position of some points (the quadrature points in this
    * object) on the transformed cell in real space.
    */
-  Quadrature(const std::vector<Point<dim>>& points);
+  Quadrature(const std::vector<Point<dim>> &points);
 
   /**
    * Constructor for a one-point quadrature. Sets the weight of this point to
    * one.
    */
-  Quadrature(const Point<dim>& point);
+  Quadrature(const Point<dim> &point);
 
   /**
    * Virtual destructor.
@@ -169,30 +169,30 @@ public:
    * Assignment operator. Copies contents of #weights and #quadrature_points
    * as well as size.
    */
-  Quadrature&
-  operator=(const Quadrature<dim>&);
+  Quadrature &
+  operator=(const Quadrature<dim> &);
 
   /**
    * Move assignment operator. Moves all data from another quadrature object
    * to this object.
    */
-  Quadrature&
-  operator=(Quadrature<dim>&&)
+  Quadrature &
+  operator=(Quadrature<dim> &&)
     = default; // NOLINT
 
   /**
    * Test for equality of two quadratures.
    */
   bool
-  operator==(const Quadrature<dim>& p) const;
+  operator==(const Quadrature<dim> &p) const;
 
   /**
    * Set the quadrature points and weights to the values provided in the
    * arguments.
    */
   void
-  initialize(const std::vector<Point<dim>>& points,
-             const std::vector<double>&     weights);
+  initialize(const std::vector<Point<dim>> &points,
+             const std::vector<double> &    weights);
 
   /**
    * Number of quadrature points.
@@ -203,13 +203,13 @@ public:
   /**
    * Return the <tt>i</tt>th quadrature point.
    */
-  const Point<dim>&
+  const Point<dim> &
   point(const unsigned int i) const;
 
   /**
    * Return a reference to the whole array of quadrature points.
    */
-  const std::vector<Point<dim>>&
+  const std::vector<Point<dim>> &
   get_points() const;
 
   /**
@@ -221,7 +221,7 @@ public:
   /**
    * Return a reference to the whole array of weights.
    */
-  const std::vector<double>&
+  const std::vector<double> &
   get_weights() const;
 
   /**
@@ -237,7 +237,7 @@ public:
    */
   template <class Archive>
   void
-  serialize(Archive& ar, const unsigned int version);
+  serialize(Archive &ar, const unsigned int version);
 
   /**
    * This function returns true if the quadrature object is a tensor product
@@ -254,7 +254,7 @@ public:
    */
   typename std::conditional<dim == 1,
                             std::array<Quadrature<1>, dim>,
-                            const std::array<Quadrature<1>, dim>&>::type
+                            const std::array<Quadrature<1>, dim> &>::type
   get_tensor_basis() const;
 
 protected:
@@ -304,19 +304,19 @@ public:
    * Constructor for a one-dimensional formula. This one just copies the given
    * quadrature rule.
    */
-  QAnisotropic(const Quadrature<1>& qx);
+  QAnisotropic(const Quadrature<1> &qx);
 
   /**
    * Constructor for a two-dimensional formula.
    */
-  QAnisotropic(const Quadrature<1>& qx, const Quadrature<1>& qy);
+  QAnisotropic(const Quadrature<1> &qx, const Quadrature<1> &qy);
 
   /**
    * Constructor for a three-dimensional formula.
    */
-  QAnisotropic(const Quadrature<1>& qx,
-               const Quadrature<1>& qy,
-               const Quadrature<1>& qz);
+  QAnisotropic(const Quadrature<1> &qx,
+               const Quadrature<1> &qy,
+               const Quadrature<1> &qz);
 };
 
 /**
@@ -352,7 +352,7 @@ public:
    * Constructor. Iterate the given quadrature formula <tt>n_copies</tt> times
    * in each direction.
    */
-  QIterated(const Quadrature<1>& base_quadrature, const unsigned int n_copies);
+  QIterated(const Quadrature<1> &base_quadrature, const unsigned int n_copies);
 
   /**
    * Exception
@@ -376,7 +376,7 @@ Quadrature<dim>::size() const
 }
 
 template <int dim>
-inline const Point<dim>&
+inline const Point<dim> &
 Quadrature<dim>::point(const unsigned int i) const
 {
   AssertIndexRange(i, size());
@@ -392,14 +392,14 @@ Quadrature<dim>::weight(const unsigned int i) const
 }
 
 template <int dim>
-inline const std::vector<Point<dim>>&
+inline const std::vector<Point<dim>> &
 Quadrature<dim>::get_points() const
 {
   return quadrature_points;
 }
 
 template <int dim>
-inline const std::vector<double>&
+inline const std::vector<double> &
 Quadrature<dim>::get_weights() const
 {
   return weights;
@@ -415,13 +415,13 @@ Quadrature<dim>::is_tensor_product() const
 template <int dim>
 template <class Archive>
 inline void
-Quadrature<dim>::serialize(Archive& ar, const unsigned int)
+Quadrature<dim>::serialize(Archive &ar, const unsigned int)
 {
   // forward to serialization
   // function in the base class.
-  ar& static_cast<Subscriptor&>(*this);
+  ar &static_cast<Subscriptor &>(*this);
 
-  ar& quadrature_points& weights;
+  ar &quadrature_points &weights;
 }
 
 /* -------------- declaration of explicit specializations ------------- */
@@ -429,15 +429,15 @@ Quadrature<dim>::serialize(Archive& ar, const unsigned int)
 template <>
 Quadrature<0>::Quadrature(const unsigned int);
 template <>
-Quadrature<0>::Quadrature(const Quadrature<-1>&, const Quadrature<1>&);
+Quadrature<0>::Quadrature(const Quadrature<-1> &, const Quadrature<1> &);
 template <>
-Quadrature<0>::Quadrature(const Quadrature<1>&);
+Quadrature<0>::Quadrature(const Quadrature<1> &);
 
 template <>
-Quadrature<1>::Quadrature(const Quadrature<0>&, const Quadrature<1>&);
+Quadrature<1>::Quadrature(const Quadrature<0> &, const Quadrature<1> &);
 
 template <>
-Quadrature<1>::Quadrature(const Quadrature<0>&);
+Quadrature<1>::Quadrature(const Quadrature<0> &);
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

@@ -22,8 +22,8 @@ DEAL_II_NAMESPACE_OPEN
 template <int dim>
 void
 DataPostprocessor<dim>::evaluate_scalar_field(
-  const DataPostprocessorInputs::Scalar<dim>&,
-  std::vector<Vector<double>>&) const
+  const DataPostprocessorInputs::Scalar<dim> &,
+  std::vector<Vector<double>> &) const
 {
   AssertThrow(false, ExcPureFunctionCalled());
 }
@@ -31,8 +31,8 @@ DataPostprocessor<dim>::evaluate_scalar_field(
 template <int dim>
 void
 DataPostprocessor<dim>::evaluate_vector_field(
-  const DataPostprocessorInputs::Vector<dim>&,
-  std::vector<Vector<double>>&) const
+  const DataPostprocessorInputs::Vector<dim> &,
+  std::vector<Vector<double>> &) const
 {
   AssertThrow(false, ExcPureFunctionCalled());
 }
@@ -51,7 +51,7 @@ DataPostprocessor<dim>::get_data_component_interpretation() const
 
 template <int dim>
 DataPostprocessorScalar<dim>::DataPostprocessorScalar(
-  const std::string& name,
+  const std::string &name,
   const UpdateFlags  update_flags)
   : name(name), update_flags(update_flags)
 {}
@@ -82,7 +82,7 @@ DataPostprocessorScalar<dim>::get_needed_update_flags() const
 
 template <int dim>
 DataPostprocessorVector<dim>::DataPostprocessorVector(
-  const std::string& name,
+  const std::string &name,
   const UpdateFlags  update_flags)
   : name(name), update_flags(update_flags)
 {}
@@ -113,7 +113,7 @@ DataPostprocessorVector<dim>::get_needed_update_flags() const
 
 template <int dim>
 DataPostprocessorTensor<dim>::DataPostprocessorTensor(
-  const std::string& name,
+  const std::string &name,
   const UpdateFlags  update_flags)
   : name(name), update_flags(update_flags)
 {}

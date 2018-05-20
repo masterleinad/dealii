@@ -36,7 +36,7 @@ public:
   F() : Function<dim>(2)
   {}
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& v) const
+  vector_value(const Point<dim> &p, Vector<double> &v) const
   {
     v    = 0;
     v[0] = p.square();

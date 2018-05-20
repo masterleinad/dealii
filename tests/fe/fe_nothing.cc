@@ -60,7 +60,7 @@ test2cells(const unsigned int p1 = 2, const unsigned int p2 = 1)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -73,7 +73,7 @@ main(int argc, char** argv)
       test2cells<2>();
       test2cells<3>();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

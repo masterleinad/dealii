@@ -22,7 +22,7 @@ static unsigned int counter = 0;
 
 template <typename Number>
 void
-fill(Vector<Number>& v)
+fill(Vector<Number> &v)
 {
   v = 0;
   for(unsigned int i = 0; i < v.size(); i++)
@@ -33,7 +33,7 @@ fill(Vector<Number>& v)
 
 template <typename Number>
 void
-test(const std::vector<unsigned int>& size_sequence)
+test(const std::vector<unsigned int> &size_sequence)
 {
   Vector<Number> v, v_old;
   for(unsigned int j = 0; j < size_sequence.size(); ++j)

@@ -25,9 +25,9 @@ DEAL_II_NAMESPACE_OPEN
 
 template <class PolynomialType, int dim, int spacedim>
 FE_PolyFace<PolynomialType, dim, spacedim>::FE_PolyFace(
-  const PolynomialType&         poly_space,
-  const FiniteElementData<dim>& fe_data,
-  const std::vector<bool>&      restriction_is_additive_flags)
+  const PolynomialType &        poly_space,
+  const FiniteElementData<dim> &fe_data,
+  const std::vector<bool> &     restriction_is_additive_flags)
   : FiniteElement<dim, spacedim>(
       fe_data,
       restriction_is_additive_flags,
@@ -70,17 +70,18 @@ FE_PolyFace<PolynomialType, dim, spacedim>::requires_update_flags(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator&,
+  const typename Triangulation<dim, spacedim>::cell_iterator &,
   const CellSimilarity::Similarity,
-  const Quadrature<dim>&,
-  const Mapping<dim, spacedim>&,
-  const typename Mapping<dim, spacedim>::InternalDataBase&,
+  const Quadrature<dim> &,
+  const Mapping<dim, spacedim> &,
+  const typename Mapping<dim, spacedim>::InternalDataBase &,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>&,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase&,
+                                                                     spacedim>
+    &,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase &,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>&)
-  const
+                                                                     spacedim>
+    &) const
 {
   // Do nothing, since we do not have values in the interior. Since
   // FEValues initializes the output variables for this function
@@ -98,25 +99,26 @@ FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_values(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_face_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator&,
+  const typename Triangulation<dim, spacedim>::cell_iterator &,
   const unsigned int         face_no,
-  const Quadrature<dim - 1>& quadrature,
-  const Mapping<dim, spacedim>&,
-  const typename Mapping<dim, spacedim>::InternalDataBase&,
+  const Quadrature<dim - 1> &quadrature,
+  const Mapping<dim, spacedim> &,
+  const typename Mapping<dim, spacedim>::InternalDataBase &,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>&,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+                                                                     spacedim>
+    &,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>&
-    output_data) const
+                                                                     spacedim>
+    &output_data) const
 {
   // convert data object to internal
   // data for this class. fails with
   // an exception if that is not
   // possible
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   if(fe_data.update_each & update_values)
     for(unsigned int i = 0; i < quadrature.size(); ++i)
@@ -187,26 +189,27 @@ FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_face_values(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_subface_values(
-  const typename Triangulation<dim, spacedim>::cell_iterator&,
+  const typename Triangulation<dim, spacedim>::cell_iterator &,
   const unsigned int         face_no,
   const unsigned int         sub_no,
-  const Quadrature<dim - 1>& quadrature,
-  const Mapping<dim, spacedim>&,
-  const typename Mapping<dim, spacedim>::InternalDataBase&,
+  const Quadrature<dim - 1> &quadrature,
+  const Mapping<dim, spacedim> &,
+  const typename Mapping<dim, spacedim>::InternalDataBase &,
   const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>&,
-  const typename FiniteElement<dim, spacedim>::InternalDataBase& fe_internal,
+                                                                     spacedim>
+    &,
+  const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
-                                                                     spacedim>&
-    output_data) const
+                                                                     spacedim>
+    &output_data) const
 {
   // convert data object to internal
   // data for this class. fails with
   // an exception if that is not
   // possible
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != nullptr,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   const unsigned int foffset = fe_data.shape_values.size() * face_no;
   const unsigned int offset  = sub_no * quadrature.size();

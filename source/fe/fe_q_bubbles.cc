@@ -44,8 +44,8 @@ namespace internal
       template <int dim, int spacedim>
       inline void
       compute_embedding_matrices(
-        const dealii::FE_Q_Bubbles<dim, spacedim>&    fe,
-        std::vector<std::vector<FullMatrix<double>>>& matrices,
+        const dealii::FE_Q_Bubbles<dim, spacedim> &   fe,
+        std::vector<std::vector<FullMatrix<double>>> &matrices,
         const bool                                    isotropic_only)
       {
         const unsigned int dpc    = fe.dofs_per_cell;
@@ -212,7 +212,7 @@ FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const unsigned int q_degree)
 }
 
 template <int dim, int spacedim>
-FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const Quadrature<1>& points)
+FE_Q_Bubbles<dim, spacedim>::FE_Q_Bubbles(const Quadrature<1> &points)
   : FE_Q_Base<TensorProductPolynomialsBubbles<dim>, dim, spacedim>(
       TensorProductPolynomialsBubbles<dim>(
         Polynomials::generate_complete_Lagrange_basis(points.get_points())),
@@ -260,7 +260,7 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
   const unsigned int             n_points = this->degree;
   std::vector<double>            points(n_points);
   const unsigned int             dofs_per_cell = this->dofs_per_cell;
-  const std::vector<Point<dim>>& unit_support_points
+  const std::vector<Point<dim>> &unit_support_points
     = this->unit_support_points;
   unsigned int index = 0;
 
@@ -334,8 +334,8 @@ template <int dim, int spacedim>
 void
 FE_Q_Bubbles<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const
+    const std::vector<Vector<double>> &support_point_values,
+    std::vector<double> &              nodal_values) const
 {
   Assert(support_point_values.size() == this->unit_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),
@@ -361,8 +361,8 @@ FE_Q_Bubbles<dim, spacedim>::
 template <int dim, int spacedim>
 void
 FE_Q_Bubbles<dim, spacedim>::get_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> &x_source_fe,
+  FullMatrix<double> &                interpolation_matrix) const
 {
   // We don't know how to do this properly, yet.
   // However, for SolutionTransfer to work we need to provide an implementation
@@ -371,7 +371,7 @@ FE_Q_Bubbles<dim, spacedim>::get_interpolation_matrix(
 
   AssertThrow(
     (x_source_fe.get_name().find("FE_Q_Bubbles<") == 0)
-      || (dynamic_cast<const FEQBUBBLES*>(&x_source_fe) != nullptr),
+      || (dynamic_cast<const FEQBUBBLES *>(&x_source_fe) != nullptr),
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
   Assert(interpolation_matrix.m() == this->dofs_per_cell,
          ExcDimensionMismatch(interpolation_matrix.m(), this->dofs_per_cell));
@@ -380,7 +380,7 @@ FE_Q_Bubbles<dim, spacedim>::get_interpolation_matrix(
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_cell));
 
   //Provide a short cut in case we are just inquiring the identity
-  auto casted_fe = dynamic_cast<const FEQBUBBLES*>(&x_source_fe);
+  auto casted_fe = dynamic_cast<const FEQBUBBLES *>(&x_source_fe);
   if(casted_fe != nullptr && casted_fe->degree == this->degree)
     for(unsigned int i = 0; i < interpolation_matrix.m(); ++i)
       interpolation_matrix.set(i, i, 1.);
@@ -429,10 +429,10 @@ FE_Q_Bubbles<dim, spacedim>::has_support_on_face(
 }
 
 template <int dim, int spacedim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Q_Bubbles<dim, spacedim>::get_prolongation_matrix(
   const unsigned int         child,
-  const RefinementCase<dim>& refinement_case) const
+  const RefinementCase<dim> &refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -451,10 +451,10 @@ FE_Q_Bubbles<dim, spacedim>::get_prolongation_matrix(
 }
 
 template <int dim, int spacedim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Q_Bubbles<dim, spacedim>::get_restriction_matrix(
   const unsigned int         child,
-  const RefinementCase<dim>& refinement_case) const
+  const RefinementCase<dim> &refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(

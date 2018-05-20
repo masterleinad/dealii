@@ -158,7 +158,7 @@ public:
    * #DifferenceFormula.
    */
   virtual Tensor<1, dim>
-  gradient(const Point<dim>&  p,
+  gradient(const Point<dim> & p,
            const unsigned int component = 0) const override;
 
   /**
@@ -168,8 +168,8 @@ public:
    * #DifferenceFormula.
    */
   virtual void
-  vector_gradient(const Point<dim>&            p,
-                  std::vector<Tensor<1, dim>>& gradients) const override;
+  vector_gradient(const Point<dim> &           p,
+                  std::vector<Tensor<1, dim>> &gradients) const override;
 
   /**
    * Set <tt>gradients</tt> to the gradients of the specified component of the
@@ -181,8 +181,8 @@ public:
    * #DifferenceFormula.
    */
   virtual void
-  gradient_list(const std::vector<Point<dim>>& points,
-                std::vector<Tensor<1, dim>>&   gradients,
+  gradient_list(const std::vector<Point<dim>> &points,
+                std::vector<Tensor<1, dim>> &  gradients,
                 const unsigned int             component = 0) const override;
 
   /**
@@ -199,8 +199,8 @@ public:
    */
   virtual void
   vector_gradient_list(
-    const std::vector<Point<dim>>&            points,
-    std::vector<std::vector<Tensor<1, dim>>>& gradients) const override;
+    const std::vector<Point<dim>> &           points,
+    std::vector<std::vector<Tensor<1, dim>>> &gradients) const override;
 
   /**
    * Return a #DifferenceFormula of the order <tt>ord</tt> at minimum.

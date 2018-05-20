@@ -107,8 +107,8 @@ namespace Step16
   public:
     LaplaceIntegrator();
     virtual void
-    cell(MeshWorker::DoFInfo<dim>&         dinfo,
-         MeshWorker::IntegrationInfo<dim>& info) const override;
+    cell(MeshWorker::DoFInfo<dim> &        dinfo,
+         MeshWorker::IntegrationInfo<dim> &info) const override;
   };
 
   template <int dim>
@@ -148,8 +148,8 @@ namespace Step16
   // we enter the information into block zero of vector zero.
   template <int dim>
   void
-  LaplaceIntegrator<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
-                               MeshWorker::IntegrationInfo<dim>& info) const
+  LaplaceIntegrator<dim>::cell(MeshWorker::DoFInfo<dim> &        dinfo,
+                               MeshWorker::IntegrationInfo<dim> &info) const
   {
     AssertDimension(dinfo.n_matrices(), 1);
     const double coefficient = (dinfo.cell->center()(0) > 0.) ? .1 : 1.;
@@ -285,7 +285,7 @@ namespace Step16
     const typename FunctionMap<dim>::type dirichlet_boundary_functions
       = {{types::boundary_id(0), &homogeneous_dirichlet_bc}};
     VectorTools::interpolate_boundary_values(
-      static_cast<const DoFHandler<dim>&>(dof_handler),
+      static_cast<const DoFHandler<dim> &>(dof_handler),
       dirichlet_boundary_functions,
       constraints);
     constraints.close();
@@ -647,7 +647,7 @@ main()
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

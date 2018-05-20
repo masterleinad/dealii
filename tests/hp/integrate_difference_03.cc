@@ -36,7 +36,7 @@
 
 template <int dim>
 double
-f(const Point<dim>& p)
+f(const Point<dim> &p)
 {
   return p[0];
 }

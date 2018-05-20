@@ -36,7 +36,7 @@ using namespace dealii;
  */
 
 /* The 2D case */
-void generate_grid(Triangulation<2>& triangulation, int orientation)
+void generate_grid(Triangulation<2> &triangulation, int orientation)
 {
   Point<2> vertices_1[] = {
     Point<2>(-1., -3.),
@@ -91,7 +91,7 @@ void generate_grid(Triangulation<2>& triangulation, int orientation)
 }
 
 /* The 3D case */
-void generate_grid(Triangulation<3>& triangulation, int orientation)
+void generate_grid(Triangulation<3> &triangulation, int orientation)
 {
   Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
                            Point<3>(+1., -1., -3.),
@@ -163,9 +163,9 @@ void generate_grid(Triangulation<3>& triangulation, int orientation)
  */
 template <typename FaceIterator>
 void
-print_match(const FaceIterator&   face_1,
-            const FaceIterator&   face_2,
-            const std::bitset<3>& orientation)
+print_match(const FaceIterator &  face_1,
+            const FaceIterator &  face_2,
+            const std::bitset<3> &orientation)
 {
   static const int dim = FaceIterator::AccessorType::dimension;
 

@@ -30,9 +30,9 @@ using namespace Algorithms;
 class Explicit : public OperatorBase
 {
 public:
-  Explicit(const FullMatrix<double>& matrix);
+  Explicit(const FullMatrix<double> &matrix);
   void
-  operator()(AnyData& out, const AnyData& in);
+  operator()(AnyData &out, const AnyData &in);
 
 private:
   SmartPointer<const FullMatrix<double>, Explicit> matrix;
@@ -42,9 +42,9 @@ private:
 class Implicit : public OperatorBase
 {
 public:
-  Implicit(const FullMatrix<double>& matrix);
+  Implicit(const FullMatrix<double> &matrix);
   void
-  operator()(AnyData& out, const AnyData& in);
+  operator()(AnyData &out, const AnyData &in);
 
 private:
   SmartPointer<const FullMatrix<double>, Implicit> matrix;
@@ -80,13 +80,13 @@ main()
   solver(outdata, indata);
 }
 
-Explicit::Explicit(const FullMatrix<double>& M) : matrix(&M)
+Explicit::Explicit(const FullMatrix<double> &M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
 
 void
-Explicit::operator()(AnyData& out, const AnyData& in)
+Explicit::operator()(AnyData &out, const AnyData &in)
 {
   const double timestep = *in.read_ptr<double>("Timestep");
   if(this->notifications.test(Events::initial)
@@ -97,17 +97,17 @@ Explicit::operator()(AnyData& out, const AnyData& in)
         m(i, i) += 1.;
     }
   this->notifications.clear();
-  m.vmult(*out.entry<Vector<double>*>(0),
+  m.vmult(*out.entry<Vector<double> *>(0),
           *in.read_ptr<Vector<double>>("Previous iterate"));
 }
 
-Implicit::Implicit(const FullMatrix<double>& M) : matrix(&M)
+Implicit::Implicit(const FullMatrix<double> &M) : matrix(&M)
 {
   m.reinit(M.m(), M.n());
 }
 
 void
-Implicit::operator()(AnyData& out, const AnyData& in)
+Implicit::operator()(AnyData &out, const AnyData &in)
 {
   const double timestep = *in.read_ptr<double>("Timestep");
   if(this->notifications.test(Events::initial)
@@ -119,6 +119,6 @@ Implicit::operator()(AnyData& out, const AnyData& in)
       m.gauss_jordan();
     }
   this->notifications.clear();
-  m.vmult(*out.entry<Vector<double>*>(0),
+  m.vmult(*out.entry<Vector<double> *>(0),
           *in.read_ptr<Vector<double>>("Previous time"));
 }

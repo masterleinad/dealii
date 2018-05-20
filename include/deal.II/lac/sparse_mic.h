@@ -95,8 +95,8 @@ public:
    */
   template <typename somenumber>
   void
-  initialize(const SparseMatrix<somenumber>& matrix,
-             const AdditionalData&           parameters = AdditionalData());
+  initialize(const SparseMatrix<somenumber> &matrix,
+             const AdditionalData &          parameters = AdditionalData());
 
   /**
    * Apply the incomplete decomposition, i.e. do one forward-backward step
@@ -106,7 +106,7 @@ public:
    */
   template <typename somenumber>
   void
-  vmult(Vector<somenumber>& dst, const Vector<somenumber>& src) const;
+  vmult(Vector<somenumber> &dst, const Vector<somenumber> &src) const;
 
   /**
    * Apply the transpose of the incomplete decomposition, i.e. do one forward-
@@ -119,7 +119,7 @@ public:
    */
   template <typename somenumber>
   void
-  Tvmult(Vector<somenumber>& dst, const Vector<somenumber>& src) const;
+  Tvmult(Vector<somenumber> &dst, const Vector<somenumber> &src) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this

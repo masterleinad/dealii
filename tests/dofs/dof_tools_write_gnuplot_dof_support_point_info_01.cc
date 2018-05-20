@@ -34,7 +34,7 @@ template <int dim>
 void
 test()
 {
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream &out = deallog.get_file_stream();
 
   Triangulation<dim> triangulation;
   const int          velocity_degree = 2;

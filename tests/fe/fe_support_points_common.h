@@ -41,7 +41,7 @@
 
 template <int dim>
 inline void
-check_support(const FiniteElement<dim>& finel, const char* name)
+check_support(const FiniteElement<dim> &finel, const char *name)
 {
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr, 0., 1.);
@@ -50,12 +50,12 @@ check_support(const FiniteElement<dim>& finel, const char* name)
 
   deallog << name << '<' << dim << '>' << " cell support points" << std::endl;
 
-  const std::vector<Point<dim>>& cell_points = finel.get_unit_support_points();
+  const std::vector<Point<dim>> &cell_points = finel.get_unit_support_points();
 
   for(unsigned int k = 0; k < cell_points.size(); ++k)
     deallog << std::setprecision(3) << cell_points[k] << std::endl;
 
-  const std::vector<Point<dim - 1>>& face_points
+  const std::vector<Point<dim - 1>> &face_points
     = finel.get_unit_face_support_points();
   const std::vector<double> dummy_weights(face_points.size());
 
@@ -76,13 +76,13 @@ check_support(const FiniteElement<dim>& finel, const char* name)
   deallog << name << '<' << dim << '>' << " cell generalized support points"
           << std::endl;
 
-  const std::vector<Point<dim>>& cell_g_points
+  const std::vector<Point<dim>> &cell_g_points
     = finel.get_generalized_support_points();
 
   for(unsigned int k = 0; k < cell_g_points.size(); ++k)
     deallog << std::setprecision(3) << cell_g_points[k] << std::endl;
 
-  const std::vector<Point<dim - 1>>& face_g_points
+  const std::vector<Point<dim - 1>> &face_g_points
     = finel.get_generalized_face_support_points();
   const std::vector<double> dummy_g_weights(face_g_points.size());
 

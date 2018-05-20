@@ -127,7 +127,7 @@ public:
    *   same kind of service that <code>std::unique</code> provides
    *   for arbitrary memory allocated on the heap.
    */
-  virtual VectorType*
+  virtual VectorType *
   alloc()
     = 0;
 
@@ -146,7 +146,7 @@ public:
    *   for arbitrary memory allocated on the heap.
    */
   virtual void
-  free(const VectorType* const)
+  free(const VectorType *const)
     = 0;
 
   /**
@@ -187,7 +187,7 @@ public:
    * @author Guido Kanschat, 2009; Wolfgang Bangerth, 2017.
    */
   class Pointer
-    : public std::unique_ptr<VectorType, std::function<void(VectorType*)>>
+    : public std::unique_ptr<VectorType, std::function<void(VectorType *)>>
   {
   public:
     /**
@@ -203,21 +203,21 @@ public:
      * Move constructor: this creates a new Pointer by stealing the internal
      * data owned by @p p.
      */
-    Pointer(Pointer&& p) noexcept = default;
+    Pointer(Pointer &&p) noexcept = default;
 
     /**
      * Move operator: this releases the vector owned by the current Pointer
      * and then steals the internal data owned by @p p.
      */
-    Pointer&
-    operator=(Pointer&& p) noexcept
+    Pointer &
+    operator=(Pointer &&p) noexcept
       = default;
 
     /**
      * Constructor. This constructor automatically allocates a vector from
      * the given vector memory object @p mem.
      */
-    Pointer(VectorMemory<VectorType>& mem);
+    Pointer(VectorMemory<VectorType> &mem);
 
     /**
      * Destructor, automatically releasing the vector from the memory #pool.
@@ -259,7 +259,7 @@ public:
    *   same kind of service that <code>std::unique</code> provides
    *   for arbitrary memory allocated on the heap.
    */
-  virtual VectorType*
+  virtual VectorType *
   alloc() override;
 
   /**
@@ -280,7 +280,7 @@ public:
    *   for arbitrary memory allocated on the heap.
    */
   virtual void
-  free(const VectorType* const v) override;
+  free(const VectorType *const v) override;
 };
 
 /**
@@ -352,7 +352,7 @@ public:
    *   same kind of service that <code>std::unique</code> provides
    *   for arbitrary memory allocated on the heap.
    */
-  virtual VectorType*
+  virtual VectorType *
   alloc() override;
 
   /**
@@ -373,7 +373,7 @@ public:
    *   for arbitrary memory allocated on the heap.
    */
   virtual void
-  free(const VectorType* const) override;
+  free(const VectorType *const) override;
 
   /**
    * Release all vectors that are not currently in use.
@@ -426,7 +426,7 @@ private:
     /**
      * Pointer to the storage object
      */
-    std::vector<entry_type>* data;
+    std::vector<entry_type> *data;
   };
 
   /**
@@ -473,14 +473,14 @@ namespace internal
 /* --------------------- inline functions ---------------------- */
 
 template <typename VectorType>
-inline VectorMemory<VectorType>::Pointer::Pointer(VectorMemory<VectorType>& mem)
-  : std::unique_ptr<VectorType, std::function<void(VectorType*)>>(
+inline VectorMemory<VectorType>::Pointer::Pointer(VectorMemory<VectorType> &mem)
+  : std::unique_ptr<VectorType, std::function<void(VectorType *)>>(
       mem.alloc(),
-      [&mem](VectorType* v) { mem.free(v); })
+      [&mem](VectorType *v) { mem.free(v); })
 {}
 
 template <typename VectorType>
-VectorType*
+VectorType *
 PrimitiveVectorMemory<VectorType>::alloc()
 {
   return new VectorType();
@@ -488,7 +488,7 @@ PrimitiveVectorMemory<VectorType>::alloc()
 
 template <typename VectorType>
 void
-PrimitiveVectorMemory<VectorType>::free(const VectorType* const v)
+PrimitiveVectorMemory<VectorType>::free(const VectorType *const v)
 {
   delete v;
 }

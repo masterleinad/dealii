@@ -22,7 +22,7 @@
 
 template <int dim>
 void
-check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
+check_this(const FiniteElement<dim> &fe1, const FiniteElement<dim> &fe2)
 {
   // check that the name of the fe
   // and the name of the fe that we

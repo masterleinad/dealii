@@ -51,7 +51,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -64,7 +64,7 @@ main(int argc, char** argv)
         deallog << "OK" << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -36,10 +36,10 @@
 #include <vector>
 
 void
-solve_filtered(std::map<types::global_dof_index, double>& bv,
-               SparseMatrix<double>&                      A,
-               Vector<double>&                            u,
-               Vector<double>&                            f)
+solve_filtered(std::map<types::global_dof_index, double> &bv,
+               SparseMatrix<double> &                     A,
+               Vector<double> &                           u,
+               Vector<double> &                           f)
 {
   FilteredMatrix<Vector<double>> A1(A);
   A1.add_constraints(bv);
@@ -66,10 +66,10 @@ solve_filtered(std::map<types::global_dof_index, double>& bv,
 
 template <int dim>
 void
-solve_eliminated(std::map<types::global_dof_index, double>& bv,
-                 SparseMatrix<double>&                      A,
-                 Vector<double>&                            u,
-                 Vector<double>&                            f)
+solve_eliminated(std::map<types::global_dof_index, double> &bv,
+                 SparseMatrix<double> &                     A,
+                 Vector<double> &                           u,
+                 Vector<double> &                           f)
 {
   MatrixTools::apply_boundary_values(bv, A, u, f);
 

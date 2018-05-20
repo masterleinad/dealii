@@ -51,15 +51,15 @@ namespace LinearAlgebra
      * ReadWriteVector object.
      */
     virtual void
-    reinit(const IndexSet& vector_space_vector_index_set,
-           const IndexSet& read_write_vector_index_set,
-           const MPI_Comm& communicator)
+    reinit(const IndexSet &vector_space_vector_index_set,
+           const IndexSet &read_write_vector_index_set,
+           const MPI_Comm &communicator)
       = 0;
 
     /**
      * Return a constant reference to the underlying mpi communicator.
      */
-    virtual const MPI_Comm&
+    virtual const MPI_Comm &
     get_mpi_communicator() const = 0;
   };
 

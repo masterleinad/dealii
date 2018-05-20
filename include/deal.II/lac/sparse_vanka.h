@@ -172,8 +172,8 @@ public:
    * parallel when building the inverses of the diagonal blocks. This
    * parameter is ignored if not in multithreaded mode.
    */
-  SparseVanka(const SparseMatrix<number>& M,
-              const std::vector<bool>&    selected,
+  SparseVanka(const SparseMatrix<number> &M,
+              const std::vector<bool> &   selected,
               const bool                  conserve_memory = false,
               const unsigned int n_threads = MultithreadInfo::n_threads());
 
@@ -191,14 +191,14 @@ public:
     /**
      * Constructor. For the parameters' description, see below.
      */
-    AdditionalData(const std::vector<bool>& selected,
+    AdditionalData(const std::vector<bool> &selected,
                    const bool               conserve_memory = false,
                    const unsigned int n_threads = MultithreadInfo::n_threads());
 
     /**
      * Indices of those degrees of freedom that we shall work on.
      */
-    const std::vector<bool>& selected;
+    const std::vector<bool> &selected;
 
     /**
      * Conserve memory flag.
@@ -223,8 +223,8 @@ public:
    * (using the <code>vmult</code> function of derived classes).
    */
   void
-  initialize(const SparseMatrix<number>& M,
-             const AdditionalData&       additional_data);
+  initialize(const SparseMatrix<number> &M,
+             const AdditionalData &      additional_data);
 
   /**
    * Do the preconditioning. This function takes the residual in @p src and
@@ -232,7 +232,7 @@ public:
    */
   template <typename number2>
   void
-  vmult(Vector<number2>& dst, const Vector<number2>& src) const;
+  vmult(Vector<number2> &dst, const Vector<number2> &src) const;
 
   /**
    * Apply transpose preconditioner. This function takes the residual in @p
@@ -240,7 +240,7 @@ public:
    */
   template <typename number2>
   void
-  Tvmult(Vector<number2>& dst, const Vector<number2>& src) const;
+  Tvmult(Vector<number2> &dst, const Vector<number2> &src) const;
 
   /**
    * Return the dimension of the codomain (or range) space. Note that the
@@ -286,9 +286,9 @@ protected:
    */
   template <typename number2>
   void
-  apply_preconditioner(Vector<number2>&               dst,
-                       const Vector<number2>&         src,
-                       const std::vector<bool>* const dof_mask = nullptr) const;
+  apply_preconditioner(Vector<number2> &              dst,
+                       const Vector<number2> &        src,
+                       const std::vector<bool> *const dof_mask = nullptr) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -311,7 +311,7 @@ private:
   /**
    * Indices of those degrees of freedom that we shall work on.
    */
-  const std::vector<bool>* selected;
+  const std::vector<bool> *selected;
 
   /**
    * Number of threads to be used when building the inverses. Only relevant in
@@ -359,7 +359,7 @@ private:
    * this function re-creates it each time.
    */
   void
-  compute_inverse(const size_type row, std::vector<size_type>& local_indices);
+  compute_inverse(const size_type row, std::vector<size_type> &local_indices);
 
   /**
    * Make the derived class a friend. This seems silly, but is actually
@@ -538,8 +538,8 @@ public:
   /**
    * Constructor. Pass all arguments except for @p n_blocks to the base class.
    */
-  SparseBlockVanka(const SparseMatrix<number>& M,
-                   const std::vector<bool>&    selected,
+  SparseBlockVanka(const SparseMatrix<number> &M,
+                   const std::vector<bool> &   selected,
                    const unsigned int          n_blocks,
                    const BlockingStrategy      blocking_strategy,
                    const bool                  conserve_memory = false,
@@ -550,7 +550,7 @@ public:
    */
   template <typename number2>
   void
-  vmult(Vector<number2>& dst, const Vector<number2>& src) const;
+  vmult(Vector<number2> &dst, const Vector<number2> &src) const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -579,8 +579,8 @@ private:
    * from the constructor.
    */
   void
-  compute_dof_masks(const SparseMatrix<number>& M,
-                    const std::vector<bool>&    selected,
+  compute_dof_masks(const SparseMatrix<number> &M,
+                    const std::vector<bool> &   selected,
                     const BlockingStrategy      blocking_strategy);
 };
 
@@ -608,8 +608,8 @@ SparseVanka<number>::n() const
 template <typename number>
 template <typename number2>
 inline void
-SparseVanka<number>::Tvmult(Vector<number2>& /*dst*/,
-                            const Vector<number2>& /*src*/) const
+SparseVanka<number>::Tvmult(Vector<number2> & /*dst*/,
+                            const Vector<number2> & /*src*/) const
 {
   AssertThrow(false, ExcNotImplemented());
 }

@@ -21,8 +21,8 @@ DEAL_II_NAMESPACE_OPEN
 namespace GridTools
 {
   template <int dim, int spacedim>
-  Cache<dim, spacedim>::Cache(const Triangulation<dim, spacedim>& tria,
-                              const Mapping<dim, spacedim>&       mapping)
+  Cache<dim, spacedim>::Cache(const Triangulation<dim, spacedim> &tria,
+                              const Mapping<dim, spacedim> &      mapping)
     : update_flags(update_all), tria(&tria), mapping(&mapping)
   {
     tria_signal
@@ -40,14 +40,14 @@ namespace GridTools
 
   template <int dim, int spacedim>
   void
-  Cache<dim, spacedim>::mark_for_update(const CacheUpdateFlags& flags)
+  Cache<dim, spacedim>::mark_for_update(const CacheUpdateFlags &flags)
   {
     update_flags |= flags;
   }
 
   template <int dim, int spacedim>
   const std::vector<
-    std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>>&
+    std::set<typename Triangulation<dim, spacedim>::active_cell_iterator>> &
   Cache<dim, spacedim>::get_vertex_to_cell_map() const
   {
     if(update_flags & update_vertex_to_cell_map)
@@ -59,7 +59,7 @@ namespace GridTools
   }
 
   template <int dim, int spacedim>
-  const std::vector<std::vector<Tensor<1, spacedim>>>&
+  const std::vector<std::vector<Tensor<1, spacedim>>> &
   Cache<dim, spacedim>::get_vertex_to_cell_centers_directions() const
   {
     if(update_flags & update_vertex_to_cell_centers_directions)
@@ -72,7 +72,7 @@ namespace GridTools
   }
 
   template <int dim, int spacedim>
-  const std::map<unsigned int, Point<spacedim>>&
+  const std::map<unsigned int, Point<spacedim>> &
   Cache<dim, spacedim>::get_used_vertices() const
   {
     if(update_flags & update_used_vertices)
@@ -85,7 +85,7 @@ namespace GridTools
 
 #ifdef DEAL_II_WITH_NANOFLANN
   template <int dim, int spacedim>
-  const KDTree<spacedim>&
+  const KDTree<spacedim> &
   Cache<dim, spacedim>::get_vertex_kdtree() const
   {
     if(update_flags & update_vertex_kdtree)

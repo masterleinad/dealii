@@ -21,7 +21,7 @@
 #include <vector>
 
 void
-test(PETScWrappers::MPI::Vector& v)
+test(PETScWrappers::MPI::Vector &v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     v(i) = i;
@@ -38,7 +38,7 @@ test(PETScWrappers::MPI::Vector& v)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   initlog();
 
@@ -52,7 +52,7 @@ main(int argc, char** argv)
         test(v);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

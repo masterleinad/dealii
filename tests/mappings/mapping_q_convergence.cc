@@ -53,7 +53,7 @@ using namespace dealii;
 // Like FESeries::linear_regression. Included here so that this test can also
 // be run with older versions of deal.II.
 double
-regression_slope(const std::vector<double>& x, const std::vector<double>& y)
+regression_slope(const std::vector<double> &x, const std::vector<double> &y)
 {
   FullMatrix<double> K(2, 2), invK(2, 2);
   Vector<double>     X(2), B(2);
@@ -102,16 +102,16 @@ class Geometry : public ChartManifold<dim>
 {
 public:
   virtual Point<dim>
-  pull_back(const Point<dim>& space_point) const override;
+  pull_back(const Point<dim> &space_point) const override;
   virtual Point<dim>
-  push_forward(const Point<dim>& chart_point) const override;
+  push_forward(const Point<dim> &chart_point) const override;
   virtual std::unique_ptr<Manifold<dim>>
   clone() const override;
 };
 
 template <int dim>
 Point<dim>
-Geometry<dim>::pull_back(const Point<dim>& space_point) const
+Geometry<dim>::pull_back(const Point<dim> &space_point) const
 {
   const double d = space_point[dim - 1];
   const double z = zvalue(space_point[0], dim == 3 ? space_point[1] : 0);
@@ -132,7 +132,7 @@ Geometry<dim>::pull_back(const Point<dim>& space_point) const
 
 template <int dim>
 Point<dim>
-Geometry<dim>::push_forward(const Point<dim>& chart_point) const
+Geometry<dim>::push_forward(const Point<dim> &chart_point) const
 {
   const double d_hat = chart_point[dim - 1];
   const double z     = zvalue(chart_point[0], dim == 3 ? chart_point[1] : 0);
@@ -163,7 +163,7 @@ class TranscendentalManufacturedSolution : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim>& p, const unsigned int /*component*/) const
+  value(const Point<dim> &p, const unsigned int /*component*/) const
   {
     return std::cos(p[0]) + 2.0 * std::sin(2 * p[1]);
   }
@@ -171,7 +171,7 @@ public:
 
 template <int dim>
 void
-create_tria(Triangulation<dim>& triangulation, const Geometry<dim>& geometry)
+create_tria(Triangulation<dim> &triangulation, const Geometry<dim> &geometry)
 {
   GridGenerator::hyper_cube(triangulation, -1.0, 1.0);
   GridTools::transform(std::bind(&Geometry<dim>::push_forward,
@@ -189,7 +189,7 @@ create_tria(Triangulation<dim>& triangulation, const Geometry<dim>& geometry)
 
 template <int dim>
 void
-test(const FiniteElement<dim>& fe)
+test(const FiniteElement<dim> &fe)
 {
   Geometry<dim>                           geometry;
   TranscendentalManufacturedSolution<dim> fe_function;

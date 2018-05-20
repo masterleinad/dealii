@@ -53,7 +53,7 @@ namespace Functions
      * quantities -- not as the components of a vector that will be
      * re-interpreted in a different coordinate system.
      */
-    Spherical(const Point<dim>&  center       = Point<dim>(),
+    Spherical(const Point<dim> & center       = Point<dim>(),
               const unsigned int n_components = 1);
 
     /**
@@ -63,7 +63,7 @@ namespace Functions
      * calls svalue() with it, and returns the result.
      */
     virtual double
-    value(const Point<dim>&  point,
+    value(const Point<dim> & point,
           const unsigned int component = 0) const override;
 
     /**
@@ -74,7 +74,7 @@ namespace Functions
      * coordinates.
      */
     virtual Tensor<1, dim>
-    gradient(const Point<dim>&  p,
+    gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
     /**
@@ -85,7 +85,7 @@ namespace Functions
      * Cartesian coordinates.
      */
     virtual SymmetricTensor<2, dim>
-    hessian(const Point<dim>&  p,
+    hessian(const Point<dim> & p,
             const unsigned int component = 0) const override;
 
     std::size_t
@@ -97,7 +97,7 @@ namespace Functions
      * coordinates.
      */
     virtual double
-    svalue(const std::array<double, dim>& sp,
+    svalue(const std::array<double, dim> &sp,
            const unsigned int             component) const;
 
     /**
@@ -107,7 +107,7 @@ namespace Functions
      * $\{ f_{,r},\, f_{,\theta},\, f_{,\phi}\}$.
      */
     virtual std::array<double, dim>
-    sgradient(const std::array<double, dim>& sp,
+    sgradient(const std::array<double, dim> &sp,
               const unsigned int             component) const;
 
     /**
@@ -117,7 +117,7 @@ namespace Functions
      * $\{ f_{,rr},\, f_{,\theta\theta},\, f_{,\phi\phi},\, f_{,r\theta},\, f_{,r\phi},\, f_{,\theta\phi}\}$.
      */
     virtual std::array<double, 6>
-    shessian(const std::array<double, dim>& sp,
+    shessian(const std::array<double, dim> &sp,
              const unsigned int             component) const;
 
     /**

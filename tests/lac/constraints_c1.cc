@@ -35,11 +35,11 @@ using namespace dealii;
 
 template <int dim>
 void
-setup_constraints(const DoFHandler<dim>& dof_handler)
+setup_constraints(const DoFHandler<dim> &dof_handler)
 {
   ConstraintMatrix constraints;
   constraints.clear();
-  const FiniteElement<dim>& fe = dof_handler.get_fe();
+  const FiniteElement<dim> &fe = dof_handler.get_fe();
 
   // Set up derivative constraints to
   // make element C1
@@ -153,7 +153,7 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
     {
       constraints.close();
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase &e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
@@ -162,7 +162,7 @@ setup_constraints(const DoFHandler<dim>& dof_handler)
 
 template <int dim>
 void
-run(const FiniteElement<dim>& fe)
+run(const FiniteElement<dim> &fe)
 {
   deallog << "Element: " << fe.get_name() << std::endl;
 

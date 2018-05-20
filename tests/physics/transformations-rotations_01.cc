@@ -51,7 +51,7 @@ test_rotation_matrix_3d_z_axis(const double angle)
 }
 
 void
-test_rotation_matrix_3d(const Point<3>& axis, const double angle)
+test_rotation_matrix_3d(const Point<3> &axis, const double angle)
 {
   // http://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
   // http://en.wikipedia.org/wiki/Rotation_matrix
@@ -81,7 +81,7 @@ test_rotation_matrix_3d(const Point<3>& axis, const double angle)
 }
 
 Point<3>
-normalise(const Point<3>& p)
+normalise(const Point<3> &p)
 {
   Assert(p.norm() > 0.0, ExcMessage("Point vector has zero norm"));
   return p / p.norm();

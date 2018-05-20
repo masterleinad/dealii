@@ -27,14 +27,14 @@ DEAL_II_NAMESPACE_OPEN
 
 template <typename Number>
 std::array<Number, 1>
-eigenvalues(const SymmetricTensor<2, 1, Number>& T)
+eigenvalues(const SymmetricTensor<2, 1, Number> &T)
 {
   return {{T[0][0]}};
 }
 
 template <typename Number>
 std::array<Number, 2>
-eigenvalues(const SymmetricTensor<2, 2, Number>& T)
+eigenvalues(const SymmetricTensor<2, 2, Number> &T)
 {
   const Number upp_tri_sq = T[0][1] * T[0][1];
   if(upp_tri_sq == internal::NumberType<Number>::value(0.0))
@@ -68,7 +68,7 @@ eigenvalues(const SymmetricTensor<2, 2, Number>& T)
 
 template <typename Number>
 std::array<Number, 3>
-eigenvalues(const SymmetricTensor<2, 3, Number>& T)
+eigenvalues(const SymmetricTensor<2, 3, Number> &T)
 {
   const Number upp_tri_sq
     = T[0][1] * T[0][1] + T[0][2] * T[0][2] + T[1][2] * T[1][2];
@@ -139,10 +139,10 @@ namespace internal
   {
     template <int dim, typename Number>
     void
-    tridiagonalize(const dealii::SymmetricTensor<2, dim, Number>& A,
-                   dealii::Tensor<2, dim, Number>&                Q,
-                   std::array<Number, dim>&                       d,
-                   std::array<Number, dim - 1>&                   e)
+    tridiagonalize(const dealii::SymmetricTensor<2, dim, Number> &A,
+                   dealii::Tensor<2, dim, Number> &               Q,
+                   std::array<Number, dim> &                      d,
+                   std::array<Number, dim - 1> &                  e)
     {
       // Create some intermediate storage
       Number h, g, omega_inv, K, f;
@@ -222,7 +222,7 @@ namespace internal
 
     template <int dim, typename Number>
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
-    ql_implicit_shifts(const dealii::SymmetricTensor<2, dim, Number>& A)
+    ql_implicit_shifts(const dealii::SymmetricTensor<2, dim, Number> &A)
     {
       static_assert(
         numbers::NumberTraits<Number>::is_complex == false,
@@ -520,7 +520,7 @@ namespace internal
 
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 2, Number>>, 2>
-    hybrid(const dealii::SymmetricTensor<2, 2, Number>& A)
+    hybrid(const dealii::SymmetricTensor<2, 2, Number> &A)
     {
       static_assert(numbers::NumberTraits<Number>::is_complex == false,
                     "This implementation of the 2d Hybrid algorithm does "
@@ -595,7 +595,7 @@ namespace internal
 
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 3, Number>>, 3>
-    hybrid(const dealii::SymmetricTensor<2, 3, Number>& A)
+    hybrid(const dealii::SymmetricTensor<2, 3, Number> &A)
     {
       static_assert(numbers::NumberTraits<Number>::is_complex == false,
                     "This implementation of the 3d Hybrid algorithm does "
@@ -701,7 +701,7 @@ namespace internal
 
     template <typename Number>
     Tensor<2, 1, Number>
-    dediagonalize_tensor(const dealii::SymmetricTensor<2, 1, Number>& T,
+    dediagonalize_tensor(const dealii::SymmetricTensor<2, 1, Number> &T,
                          const double /*rotation_angle*/,
                          const unsigned int /*axis*/ = 0)
     {
@@ -711,7 +711,7 @@ namespace internal
 
     template <typename Number>
     Tensor<2, 2, Number>
-    dediagonalize_tensor(const dealii::SymmetricTensor<2, 2, Number>& T,
+    dediagonalize_tensor(const dealii::SymmetricTensor<2, 2, Number> &T,
                          const double rotation_angle,
                          const unsigned int /*axis*/ = 0)
     {
@@ -723,7 +723,7 @@ namespace internal
 
     template <typename Number>
     Tensor<2, 3, Number>
-    dediagonalize_tensor(const dealii::SymmetricTensor<2, 3, Number>& T,
+    dediagonalize_tensor(const dealii::SymmetricTensor<2, 3, Number> &T,
                          const double       rotation_angle,
                          const unsigned int axis = 0)
     {
@@ -754,7 +754,7 @@ namespace internal
     template <typename Number>
     std::array<std::pair<Number, Tensor<1, 1, Number>>, 1>
     perform_eigenvector_decomposition(
-      const SymmetricTensor<2, 1, Number>& T,
+      const SymmetricTensor<2, 1, Number> &T,
       const SymmetricTensorEigenvectorMethod /*method*/)
     {
       return {{std::make_pair(T[0][0], Tensor<1, 1, Number>({1.0}))}};
@@ -763,7 +763,7 @@ namespace internal
     template <int dim, typename Number>
     std::array<std::pair<Number, Tensor<1, dim, Number>>, dim>
     perform_eigenvector_decomposition(
-      const SymmetricTensor<2, dim, Number>& T,
+      const SymmetricTensor<2, dim, Number> &T,
       const SymmetricTensorEigenvectorMethod method)
     {
       switch(method)
@@ -792,7 +792,7 @@ namespace internal
 template <int dim, typename Number>
 std::array<std::pair<Number, Tensor<1, dim, Number>>,
            std::integral_constant<int, dim>::value>
-eigenvectors(const SymmetricTensor<2, dim, Number>& T,
+eigenvectors(const SymmetricTensor<2, dim, Number> &T,
              const SymmetricTensorEigenvectorMethod method)
 {
   // Not much to do when there's only a single entry
@@ -983,7 +983,7 @@ namespace internal
     struct Inverse<4, 3, adouble>
     {
       static dealii::SymmetricTensor<4, 3, adouble>
-      value(const dealii::SymmetricTensor<4, 3, adouble>& /*t*/)
+      value(const dealii::SymmetricTensor<4, 3, adouble> & /*t*/)
       {
         AssertThrow(false, ExcADOLCAdvancedBranching());
         return dealii::SymmetricTensor<4, 3, adouble>();
@@ -994,7 +994,7 @@ namespace internal
 
 template <>
 std::array<adouble, 1>
-eigenvalues(const SymmetricTensor<2, 1, adouble>& /*T*/)
+eigenvalues(const SymmetricTensor<2, 1, adouble> & /*T*/)
 {
   AssertThrow(false, ExcADOLCAdvancedBranching());
   return std::array<adouble, 1>();
@@ -1002,7 +1002,7 @@ eigenvalues(const SymmetricTensor<2, 1, adouble>& /*T*/)
 
 template <>
 std::array<adouble, 2>
-eigenvalues(const SymmetricTensor<2, 2, adouble>& /*T*/)
+eigenvalues(const SymmetricTensor<2, 2, adouble> & /*T*/)
 {
   AssertThrow(false, ExcADOLCAdvancedBranching());
   return std::array<adouble, 2>();
@@ -1010,7 +1010,7 @@ eigenvalues(const SymmetricTensor<2, 2, adouble>& /*T*/)
 
 template <>
 std::array<adouble, 3>
-eigenvalues(const SymmetricTensor<2, 3, adouble>& /*T*/)
+eigenvalues(const SymmetricTensor<2, 3, adouble> & /*T*/)
 {
   AssertThrow(false, ExcADOLCAdvancedBranching());
   return std::array<adouble, 3>();
@@ -1019,7 +1019,7 @@ eigenvalues(const SymmetricTensor<2, 3, adouble>& /*T*/)
 template <int dim>
 std::array<std::pair<adouble, Tensor<1, dim, adouble>>,
            std::integral_constant<int, dim>::value>
-eigenvectors(const SymmetricTensor<2, dim, adouble>& /*T*/,
+eigenvectors(const SymmetricTensor<2, dim, adouble> & /*T*/,
              const SymmetricTensorEigenvectorMethod /*method*/)
 {
   AssertThrow(false, ExcADOLCAdvancedBranching());

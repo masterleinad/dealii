@@ -55,8 +55,8 @@ const bool debugging = false;
 
 template <int dim>
 void
-cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
-            typename MeshWorker::IntegrationInfo<dim, dim>& info)
+cell_matrix(MeshWorker::DoFInfo<dim> &                      dinfo,
+            typename MeshWorker::IntegrationInfo<dim, dim> &info)
 {
   unsigned int dm = 0; // Matrix index
   unsigned int de = 0; // Element index
@@ -92,7 +92,7 @@ cell_matrix(MeshWorker::DoFInfo<dim>&                       dinfo,
 
 template <int dim>
 void
-test_cochain(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+test_cochain(const Triangulation<dim> &tr, const FiniteElement<dim> &fe)
 {
   MappingQGeneric<dim> mapping(1);
   // Initialize DofHandler for a

@@ -43,13 +43,13 @@ template <int dim,
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const DoFHandler<dim>&  dof_handler,
-                 const ConstraintMatrix& constraints)
+  MatrixFreeTest(const DoFHandler<dim> & dof_handler,
+                 const ConstraintMatrix &constraints)
     : dof_handler(dof_handler), constraints(constraints)
   {}
 
   void
-  vmult(VectorType& dst, const VectorType& src) const
+  vmult(VectorType &dst, const VectorType &src) const
   {
     VectorType src_cpy = src;
     constraints.distribute(src_cpy);
@@ -79,14 +79,14 @@ public:
   };
 
 private:
-  const DoFHandler<dim>&  dof_handler;
-  const ConstraintMatrix& constraints;
+  const DoFHandler<dim> & dof_handler;
+  const ConstraintMatrix &constraints;
 };
 
 template <int dim, int fe_degree, typename number>
 void
-do_test(const DoFHandler<dim>&  dof,
-        const ConstraintMatrix& constraints,
+do_test(const DoFHandler<dim> & dof,
+        const ConstraintMatrix &constraints,
         const unsigned int      parallel_option = 0)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;

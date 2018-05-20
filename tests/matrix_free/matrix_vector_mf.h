@@ -28,10 +28,10 @@
 
 template <int dim, int fe_degree, typename VectorType, int n_q_points_1d>
 void
-helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type>& data,
-                   VectorType&                                             dst,
-                   const VectorType&                                       src,
-                   const std::pair<unsigned int, unsigned int>& cell_range)
+helmholtz_operator(const MatrixFree<dim, typename VectorType::value_type> &data,
+                   VectorType &                                            dst,
+                   const VectorType &                                      src,
+                   const std::pair<unsigned int, unsigned int> &cell_range)
 {
   typedef typename VectorType::value_type                Number;
   FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number> fe_eval(data);
@@ -62,21 +62,21 @@ class MatrixFreeTest
 public:
   typedef VectorizedArray<Number> vector_t;
 
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
 
   void
-  vmult(VectorType& dst, const VectorType& src) const
+  vmult(VectorType &dst, const VectorType &src) const
   {
     dst = 0;
     const std::function<void(
-      const MatrixFree<dim, typename VectorType::value_type>&,
-      VectorType&,
-      const VectorType&,
-      const std::pair<unsigned int, unsigned int>&)>
+      const MatrixFree<dim, typename VectorType::value_type> &,
+      VectorType &,
+      const VectorType &,
+      const std::pair<unsigned int, unsigned int> &)>
       wrap = helmholtz_operator<dim, fe_degree, VectorType, n_q_points_1d>;
     data.cell_loop(wrap, dst, src);
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
+  const MatrixFree<dim, Number> &data;
 };

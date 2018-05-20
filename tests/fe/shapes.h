@@ -28,9 +28,9 @@ char fname[50];
 ////////////////////////////////////////////////////////////////////////////
 template <int dim>
 inline void
-plot_shape_functions(Mapping<dim>&       mapping,
-                     FiniteElement<dim>& finel,
-                     const char*         name)
+plot_shape_functions(Mapping<dim> &      mapping,
+                     FiniteElement<dim> &finel,
+                     const char *        name)
 {
   Triangulation<dim> tr;
   DoFHandler<dim>    dof(tr);
@@ -108,9 +108,9 @@ plot_shape_functions(Mapping<dim>&       mapping,
 
 template <int dim>
 inline void
-plot_face_shape_functions(Mapping<dim>&       mapping,
-                          FiniteElement<dim>& finel,
-                          const char*         name,
+plot_face_shape_functions(Mapping<dim> &      mapping,
+                          FiniteElement<dim> &finel,
+                          const char *        name,
                           UpdateFlags         uflags
                           = UpdateFlags(update_values | update_gradients
                                         | update_hessians))
@@ -310,9 +310,9 @@ plot_face_shape_functions(Mapping<dim>&       mapping,
 }
 
 template <>
-void plot_face_shape_functions(Mapping<1>&,
-                               FiniteElement<1>&,
-                               const char*,
+void plot_face_shape_functions(Mapping<1> &,
+                               FiniteElement<1> &,
+                               const char *,
                                UpdateFlags)
 {}
 
@@ -322,9 +322,9 @@ void plot_face_shape_functions(Mapping<1>&,
 // for the unit cell
 template <int dim>
 void
-check_values_and_derivatives(const FiniteElement<dim>& fe,
-                             const FEValuesBase<dim>&  fe_values,
-                             const Quadrature<dim>&    q)
+check_values_and_derivatives(const FiniteElement<dim> &fe,
+                             const FEValuesBase<dim> & fe_values,
+                             const Quadrature<dim> &   q)
 {
   // check values
   for(unsigned int x = 0; x < q.size(); ++x)
@@ -413,9 +413,9 @@ check_values_and_derivatives(const FiniteElement<dim>& fe,
 
 template <int dim>
 void
-test_compute_functions(const Mapping<dim>&       mapping,
-                       const FiniteElement<dim>& fe,
-                       const char*)
+test_compute_functions(const Mapping<dim> &      mapping,
+                       const FiniteElement<dim> &fe,
+                       const char *)
 {
   // generate a grid with only one
   // cell, which furthermore has the

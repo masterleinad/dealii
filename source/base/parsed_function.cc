@@ -31,7 +31,7 @@ namespace Functions
 
   template <int dim>
   void
-  ParsedFunction<dim>::declare_parameters(ParameterHandler&  prm,
+  ParsedFunction<dim>::declare_parameters(ParameterHandler & prm,
                                           const unsigned int n_components)
   {
     Assert(n_components > 0, ExcZero());
@@ -108,7 +108,7 @@ namespace Functions
 
   template <int dim>
   void
-  ParsedFunction<dim>::parse_parameters(ParameterHandler& prm)
+  ParsedFunction<dim>::parse_parameters(ParameterHandler &prm)
   {
     std::string vnames         = prm.get("Variable names");
     std::string expression     = prm.get("Function expression");
@@ -158,15 +158,15 @@ namespace Functions
 
   template <int dim>
   void
-  ParsedFunction<dim>::vector_value(const Point<dim>& p,
-                                    Vector<double>&   values) const
+  ParsedFunction<dim>::vector_value(const Point<dim> &p,
+                                    Vector<double> &  values) const
   {
     function_object.vector_value(p, values);
   }
 
   template <int dim>
   double
-  ParsedFunction<dim>::value(const Point<dim>& p, unsigned int comp) const
+  ParsedFunction<dim>::value(const Point<dim> &p, unsigned int comp) const
   {
     return function_object.value(p, comp);
   }

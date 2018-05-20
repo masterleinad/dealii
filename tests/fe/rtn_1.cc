@@ -28,11 +28,11 @@
 
 template <int dim>
 void
-check_support_points(const FiniteElement<dim>& fe)
+check_support_points(const FiniteElement<dim> &fe)
 {
   deallog << fe.get_name() << std::endl;
 
-  const std::vector<Point<dim>>& points = fe.get_generalized_support_points();
+  const std::vector<Point<dim>> &points = fe.get_generalized_support_points();
   std::vector<double>            weights(points.size());
 
   Triangulation<dim> tr;
@@ -49,7 +49,7 @@ check_support_points(const FiniteElement<dim>& fe)
 
   for(unsigned int k = 0; k < points.size(); ++k)
     {
-      const Point<dim>& p = points[k];
+      const Point<dim> &p = points[k];
       deallog << p;
       for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
         {
@@ -76,11 +76,11 @@ check_support_points(const FiniteElement<dim>& fe)
 
 template <int dim>
 void
-check_face_support_points(const FiniteElement<dim>& fe)
+check_face_support_points(const FiniteElement<dim> &fe)
 {
   deallog << "Face " << fe.get_name() << std::endl;
 
-  const std::vector<Point<dim - 1>>& sub_points
+  const std::vector<Point<dim - 1>> &sub_points
     = fe.get_generalized_face_support_points();
   std::vector<double>     weights(sub_points.size());
   Quadrature<dim - 1>     sub_quadrature(sub_points, weights);
@@ -103,7 +103,7 @@ check_face_support_points(const FiniteElement<dim>& fe)
 
       for(unsigned int k = 0; k < points.size(); ++k)
         {
-          const Point<dim>& p = points[k];
+          const Point<dim> &p = points[k];
           deallog << p;
           for(unsigned int i = 0; i < fe.dofs_per_cell; ++i)
             {

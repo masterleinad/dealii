@@ -26,7 +26,7 @@
 using namespace Polynomials;
 
 double
-scalar_product(const Polynomial<double>& p1, const Polynomial<double>& p2)
+scalar_product(const Polynomial<double> &p1, const Polynomial<double> &p2)
 {
   unsigned int degree = (p1.degree() + p2.degree()) / 2 + 1;
   QGauss<1>    gauss(degree);

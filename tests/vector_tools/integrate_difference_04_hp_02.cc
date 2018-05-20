@@ -52,7 +52,7 @@ public:
   {}
 
   double
-  value(const Point<dim>& p, const unsigned int c) const
+  value(const Point<dim> &p, const unsigned int c) const
   {
     if(c == 0)
       return p[0] + p[1] + ((dim == 3) ? p[2] : 0.0);
@@ -104,7 +104,7 @@ test(VectorTools::NormType norm, double value, double exp = 2.0)
   quadrature.push_back(QIterated<dim>(QTrapez<1>(), 6));
   quadrature.push_back(QIterated<dim>(QTrapez<1>(), 7));
 
-  const dealii::Function<dim, double>* w = nullptr;
+  const dealii::Function<dim, double> *w = nullptr;
   VectorTools::integrate_difference(dofh,
                                     solution,
                                     Functions::ZeroFunction<dim>(dim),
@@ -169,7 +169,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

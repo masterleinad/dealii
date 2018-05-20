@@ -119,15 +119,15 @@ public:
   /**
    * Constructor.
    */
-  SolverFIRE(SolverControl&            solver_control,
-             VectorMemory<VectorType>& vector_memory,
-             const AdditionalData&     data = AdditionalData());
+  SolverFIRE(SolverControl &           solver_control,
+             VectorMemory<VectorType> &vector_memory,
+             const AdditionalData &    data = AdditionalData());
 
   /**
    * Constructor. Use an object of type GrowingVectorMemory as a default to
    * allocate memory.
    */
-  SolverFIRE(SolverControl& solver_control, const AdditionalData& data);
+  SolverFIRE(SolverControl &solver_control, const AdditionalData &data);
 
   /**
    * Virtual destructor.
@@ -145,9 +145,9 @@ public:
    */
   template <typename PreconditionerType = DiagonalMatrix<VectorType>>
   void
-  solve(const std::function<double(VectorType&, const VectorType&)>& compute,
-        VectorType&                                                  x,
-        const PreconditionerType& inverse_mass_matrix);
+  solve(const std::function<double(VectorType &, const VectorType &)> &compute,
+        VectorType &                                                   x,
+        const PreconditionerType &inverse_mass_matrix);
 
   /**
    * Solve for x that minimizes $E(\mathbf x)$ for the <EM>special case</EM>
@@ -156,10 +156,10 @@ public:
    */
   template <typename MatrixType, typename PreconditionerType>
   void
-  solve(const MatrixType&         A,
-        VectorType&               x,
-        const VectorType&         b,
-        const PreconditionerType& preconditioner);
+  solve(const MatrixType &        A,
+        VectorType &              x,
+        const VectorType &        b,
+        const PreconditionerType &preconditioner);
 
 protected:
   /**
@@ -170,9 +170,9 @@ protected:
    */
   virtual void
   print_vectors(const unsigned int,
-                const VectorType& x,
-                const VectorType& v,
-                const VectorType& g) const;
+                const VectorType &x,
+                const VectorType &v,
+                const VectorType &g) const;
 
   /**
    * Additional data to the solver.
@@ -203,15 +203,15 @@ SolverFIRE<VectorType>::AdditionalData::AdditionalData(
 }
 
 template <typename VectorType>
-SolverFIRE<VectorType>::SolverFIRE(SolverControl&            solver_control,
-                                   VectorMemory<VectorType>& vector_memory,
-                                   const AdditionalData&     data)
+SolverFIRE<VectorType>::SolverFIRE(SolverControl &           solver_control,
+                                   VectorMemory<VectorType> &vector_memory,
+                                   const AdditionalData &    data)
   : Solver<VectorType>(solver_control, vector_memory), additional_data(data)
 {}
 
 template <typename VectorType>
-SolverFIRE<VectorType>::SolverFIRE(SolverControl&        solver_control,
-                                   const AdditionalData& data)
+SolverFIRE<VectorType>::SolverFIRE(SolverControl &       solver_control,
+                                   const AdditionalData &data)
   : Solver<VectorType>(solver_control), additional_data(data)
 {}
 
@@ -223,9 +223,9 @@ template <typename VectorType>
 template <typename PreconditionerType>
 void
 SolverFIRE<VectorType>::solve(
-  const std::function<double(VectorType&, const VectorType&)>& compute,
-  VectorType&                                                  x,
-  const PreconditionerType& inverse_mass_matrix)
+  const std::function<double(VectorType &, const VectorType &)> &compute,
+  VectorType &                                                   x,
+  const PreconditionerType &inverse_mass_matrix)
 {
   LogStream::Prefix prefix("FIRE");
 
@@ -247,8 +247,8 @@ SolverFIRE<VectorType>::solve(
   g->reinit(x, true);
 
   // Refer to v and g with some readable names.
-  VectorType& velocities = *v;
-  VectorType& gradients  = *g;
+  VectorType &velocities = *v;
+  VectorType &gradients  = *g;
 
   // Update gradients for the new x.
   compute(gradients, x);
@@ -261,7 +261,7 @@ SolverFIRE<VectorType>::solve(
     return;
 
   // Refer to additional data members with some readable names.
-  const auto& maximum_timestep = additional_data.maximum_timestep;
+  const auto &maximum_timestep = additional_data.maximum_timestep;
   double      timestep         = additional_data.initial_timestep;
 
   // First scaling factor.
@@ -343,13 +343,13 @@ SolverFIRE<VectorType>::solve(
 template <typename VectorType>
 template <typename MatrixType, typename PreconditionerType>
 void
-SolverFIRE<VectorType>::solve(const MatrixType&         A,
-                              VectorType&               x,
-                              const VectorType&         b,
-                              const PreconditionerType& preconditioner)
+SolverFIRE<VectorType>::solve(const MatrixType &        A,
+                              VectorType &              x,
+                              const VectorType &        b,
+                              const PreconditionerType &preconditioner)
 {
-  std::function<double(VectorType&, const VectorType&)> compute_func
-    = [&](VectorType& g, const VectorType& x) -> double {
+  std::function<double(VectorType &, const VectorType &)> compute_func
+    = [&](VectorType &g, const VectorType &x) -> double {
     // Residual of the quadratic form $ \frac{1}{2} xAx - xb $.
     // G = b - Ax
     A.residual(g, x, b);
@@ -367,9 +367,9 @@ SolverFIRE<VectorType>::solve(const MatrixType&         A,
 template <typename VectorType>
 void
 SolverFIRE<VectorType>::print_vectors(const unsigned int,
-                                      const VectorType&,
-                                      const VectorType&,
-                                      const VectorType&) const
+                                      const VectorType &,
+                                      const VectorType &,
+                                      const VectorType &) const
 {}
 
 #endif // DOXYGEN

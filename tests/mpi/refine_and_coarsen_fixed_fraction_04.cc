@@ -38,7 +38,7 @@ test()
 
   parallel::distributed::Triangulation<2> tr(MPI_COMM_WORLD);
 
-  GridGenerator::hyper_cube(static_cast<Triangulation<2>&>(tr));
+  GridGenerator::hyper_cube(static_cast<Triangulation<2> &>(tr));
   tr.refine_global(4);
 
   Vector<float> indicators(tr.n_active_cells());
@@ -125,7 +125,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

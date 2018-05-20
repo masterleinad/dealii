@@ -181,7 +181,7 @@ namespace PETScWrappers
        * <tt>v=Vector@<number@>(0);</tt>, i.e. the vector is replaced by one
        * of length zero.
        */
-      explicit Vector(const MPI_Comm& communicator,
+      explicit Vector(const MPI_Comm &communicator,
                       const size_type n,
                       const size_type local_size);
 
@@ -196,8 +196,8 @@ namespace PETScWrappers
        * different parts of the vector shall communicate
        */
       template <typename Number>
-      explicit Vector(const MPI_Comm&               communicator,
-                      const dealii::Vector<Number>& v,
+      explicit Vector(const MPI_Comm &              communicator,
+                      const dealii::Vector<Number> &v,
                       const size_type               local_size);
 
       /**
@@ -213,8 +213,8 @@ namespace PETScWrappers
        * is deprecated: use PETScWrappers::MPI::Vector instead.
        */
       DEAL_II_DEPRECATED
-      explicit Vector(const MPI_Comm&   communicator,
-                      const VectorBase& v,
+      explicit Vector(const MPI_Comm &  communicator,
+                      const VectorBase &v,
                       const size_type   local_size);
 
       /**
@@ -240,9 +240,9 @@ namespace PETScWrappers
        * @see
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
-      Vector(const IndexSet& local,
-             const IndexSet& ghost,
-             const MPI_Comm& communicator);
+      Vector(const IndexSet &local,
+             const IndexSet &ghost,
+             const MPI_Comm &communicator);
 
       /**
        * Construct a new parallel PETSc vector without ghost elements from an
@@ -255,7 +255,7 @@ namespace PETScWrappers
        * not reordered by component (use a PETScWrappers::BlockVector
        * otherwise).
        */
-      explicit Vector(const IndexSet& local, const MPI_Comm& communicator);
+      explicit Vector(const IndexSet &local, const MPI_Comm &communicator);
 
       /**
        * Release all memory and return to a state just like after having
@@ -268,8 +268,8 @@ namespace PETScWrappers
        * Copy the given vector. Resize the present vector if necessary. Also
        * take over the MPI communicator of @p v.
        */
-      Vector&
-      operator=(const Vector& v);
+      Vector &
+      operator=(const Vector &v);
 
       /**
        * Set all components of the vector to the given number @p s. Simply
@@ -277,7 +277,7 @@ namespace PETScWrappers
        * function to make the example given in the discussion about making the
        * constructor explicit work.
        */
-      Vector&
+      Vector &
       operator=(const PetscScalar s);
 
       /**
@@ -290,8 +290,8 @@ namespace PETScWrappers
        * can't get from the source vector.
        */
       template <typename number>
-      Vector&
-      operator=(const dealii::Vector<number>& v);
+      Vector &
+      operator=(const dealii::Vector<number> &v);
 
       /**
        * Change the dimension of the vector to @p N. It is unspecified how
@@ -310,7 +310,7 @@ namespace PETScWrappers
        * Otherwise, the elements are left an unspecified state.
        */
       void
-      reinit(const MPI_Comm& communicator,
+      reinit(const MPI_Comm &communicator,
              const size_type N,
              const size_type local_size,
              const bool      omit_zeroing_entries = false);
@@ -325,7 +325,7 @@ namespace PETScWrappers
        * omit_zeroing_entries)</tt>.
        */
       void
-      reinit(const Vector& v, const bool omit_zeroing_entries = false);
+      reinit(const Vector &v, const bool omit_zeroing_entries = false);
 
       /**
        * Reinit as a vector with ghost elements. See the constructor with
@@ -335,9 +335,9 @@ namespace PETScWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       void
-      reinit(const IndexSet& local,
-             const IndexSet& ghost,
-             const MPI_Comm& communicator);
+      reinit(const IndexSet &local,
+             const IndexSet &ghost,
+             const MPI_Comm &communicator);
 
       /**
        * Reinit as a vector without ghost elements. See constructor with same
@@ -347,13 +347,13 @@ namespace PETScWrappers
        * @ref GlossGhostedVector "vectors with ghost elements"
        */
       void
-      reinit(const IndexSet& local, const MPI_Comm& communicator);
+      reinit(const IndexSet &local, const MPI_Comm &communicator);
 
       /**
        * Return a reference to the MPI communicator object in use with this
        * vector.
        */
-      const MPI_Comm&
+      const MPI_Comm &
       get_mpi_communicator() const override;
 
       /**
@@ -368,7 +368,7 @@ namespace PETScWrappers
        * distributed across processors.
        */
       void
-      print(std::ostream&      out,
+      print(std::ostream &     out,
             const unsigned int precision  = 3,
             const bool         scientific = true,
             const bool         across     = true) const;
@@ -400,7 +400,7 @@ namespace PETScWrappers
       virtual void
       create_vector(const size_type n,
                     const size_type local_size,
-                    const IndexSet& ghostnodes);
+                    const IndexSet &ghostnodes);
 
     private:
       /**
@@ -420,7 +420,7 @@ namespace PETScWrappers
      * @author Wolfgang Bangerth, 2004
      */
     inline void
-    swap(Vector& u, Vector& v)
+    swap(Vector &u, Vector &v)
     {
       u.swap(v);
     }
@@ -428,8 +428,8 @@ namespace PETScWrappers
 #    ifndef DOXYGEN
 
     template <typename number>
-    Vector::Vector(const MPI_Comm&               communicator,
-                   const dealii::Vector<number>& v,
+    Vector::Vector(const MPI_Comm &              communicator,
+                   const dealii::Vector<number> &v,
                    const size_type               local_size)
       : communicator(communicator)
     {
@@ -438,7 +438,7 @@ namespace PETScWrappers
       *this = v;
     }
 
-    inline Vector&
+    inline Vector &
     Vector::operator=(const PetscScalar s)
     {
       VectorBase::operator=(s);
@@ -447,8 +447,8 @@ namespace PETScWrappers
     }
 
     template <typename number>
-    inline Vector&
-    Vector::operator=(const dealii::Vector<number>& v)
+    inline Vector &
+    Vector::operator=(const dealii::Vector<number> &v)
     {
       Assert(size() == v.size(), ExcDimensionMismatch(size(), v.size()));
 
@@ -486,7 +486,7 @@ namespace PETScWrappers
       return *this;
     }
 
-    inline const MPI_Comm&
+    inline const MPI_Comm &
     Vector::get_mpi_communicator() const
     {
       return communicator;
@@ -513,8 +513,8 @@ namespace internal
     public:
       template <typename Matrix>
       static void
-      reinit_range_vector(const Matrix&               matrix,
-                          PETScWrappers::MPI::Vector& v,
+      reinit_range_vector(const Matrix &              matrix,
+                          PETScWrappers::MPI::Vector &v,
                           bool /*omit_zeroing_entries*/)
       {
         v.reinit(matrix.locally_owned_range_indices(),
@@ -523,8 +523,8 @@ namespace internal
 
       template <typename Matrix>
       static void
-      reinit_domain_vector(const Matrix&               matrix,
-                           PETScWrappers::MPI::Vector& v,
+      reinit_domain_vector(const Matrix &              matrix,
+                           PETScWrappers::MPI::Vector &v,
                            bool /*omit_zeroing_entries*/)
       {
         v.reinit(matrix.locally_owned_domain_indices(),

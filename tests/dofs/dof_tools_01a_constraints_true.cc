@@ -26,7 +26,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> &dof_handler)
 {
   ConstraintMatrix cm;
   DoFTools::make_hanging_node_constraints(dof_handler, cm);

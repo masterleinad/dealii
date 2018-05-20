@@ -27,8 +27,8 @@
 
 template <typename number>
 bool
-operator==(const TrilinosWrappers::MPI::BlockVector& v1,
-           const TrilinosWrappers::MPI::BlockVector& v2)
+operator==(const TrilinosWrappers::MPI::BlockVector &v1,
+           const TrilinosWrappers::MPI::BlockVector &v2)
 {
   if(v1.size() != v2.size())
     return false;
@@ -228,7 +228,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   logfile.setf(std::ios::fixed);
@@ -244,7 +244,7 @@ main(int argc, char** argv)
         test();
       }
     }
-  catch(std::exception& e)
+  catch(std::exception &e)
     {
       std::cerr << std::endl
                 << std::endl

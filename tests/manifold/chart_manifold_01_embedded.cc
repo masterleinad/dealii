@@ -40,7 +40,7 @@ public:
   }
 
   virtual Point<spacedim + 1>
-  pull_back(const Point<spacedim>& space_point) const override
+  pull_back(const Point<spacedim> &space_point) const override
   {
     Point<spacedim + 1> p;
     for(unsigned int d = 0; d < spacedim; ++d)
@@ -49,7 +49,7 @@ public:
   }
 
   virtual Point<spacedim>
-  push_forward(const Point<spacedim + 1>& chart_point) const override
+  push_forward(const Point<spacedim + 1> &chart_point) const override
   {
     Point<spacedim> p;
     for(unsigned int d = 0; d < spacedim; ++d)
@@ -58,7 +58,7 @@ public:
   }
 
   virtual DerivativeForm<1, spacedim + 1, spacedim>
-  push_forward_gradient(const Point<spacedim + 1>& chart_point) const override
+  push_forward_gradient(const Point<spacedim + 1> &chart_point) const override
   {
     DerivativeForm<1, spacedim + 1, spacedim> x;
     for(unsigned int d = 0; d < spacedim; ++d)

@@ -50,16 +50,16 @@ class LaplaceMatrix : public MeshWorker::LocalIntegrator<dim>
 public:
   LaplaceMatrix();
   virtual void
-  cell(MeshWorker::DoFInfo<dim>&         dinfo,
-       MeshWorker::IntegrationInfo<dim>& info) const;
+  cell(MeshWorker::DoFInfo<dim> &        dinfo,
+       MeshWorker::IntegrationInfo<dim> &info) const;
   virtual void
-  boundary(MeshWorker::DoFInfo<dim>&         dinfo,
-           MeshWorker::IntegrationInfo<dim>& info) const;
+  boundary(MeshWorker::DoFInfo<dim> &        dinfo,
+           MeshWorker::IntegrationInfo<dim> &info) const;
   virtual void
-  face(MeshWorker::DoFInfo<dim>&         dinfo1,
-       MeshWorker::DoFInfo<dim>&         dinfo2,
-       MeshWorker::IntegrationInfo<dim>& info1,
-       MeshWorker::IntegrationInfo<dim>& info2) const;
+  face(MeshWorker::DoFInfo<dim> &        dinfo1,
+       MeshWorker::DoFInfo<dim> &        dinfo2,
+       MeshWorker::IntegrationInfo<dim> &info1,
+       MeshWorker::IntegrationInfo<dim> &info2) const;
 };
 
 template <int dim>
@@ -68,8 +68,8 @@ LaplaceMatrix<dim>::LaplaceMatrix()
 
 template <int dim>
 void
-LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
-                         MeshWorker::IntegrationInfo<dim>& info) const
+LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim> &        dinfo,
+                         MeshWorker::IntegrationInfo<dim> &info) const
 {
   Laplace::cell_matrix(dinfo.matrix(0, false).matrix, info.fe_values(0));
 }
@@ -77,8 +77,8 @@ LaplaceMatrix<dim>::cell(MeshWorker::DoFInfo<dim>&         dinfo,
 template <int dim>
 void
 LaplaceMatrix<dim>::boundary(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
-  typename MeshWorker::IntegrationInfo<dim>& info) const
+  MeshWorker::DoFInfo<dim> &                 dinfo,
+  typename MeshWorker::IntegrationInfo<dim> &info) const
 {
   const unsigned int deg = info.fe_values(0).get_fe().tensor_degree();
   Laplace::nitsche_matrix(dinfo.matrix(0, false).matrix,
@@ -88,10 +88,10 @@ LaplaceMatrix<dim>::boundary(
 
 template <int dim>
 void
-LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
-                         MeshWorker::DoFInfo<dim>&         dinfo2,
-                         MeshWorker::IntegrationInfo<dim>& info1,
-                         MeshWorker::IntegrationInfo<dim>& info2) const
+LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim> &        dinfo1,
+                         MeshWorker::DoFInfo<dim> &        dinfo2,
+                         MeshWorker::IntegrationInfo<dim> &info1,
+                         MeshWorker::IntegrationInfo<dim> &info2) const
 {
   if(info1.fe_values(0).get_fe().conforms(FiniteElementData<dim>::H1))
     return;
@@ -120,9 +120,9 @@ LaplaceMatrix<dim>::face(MeshWorker::DoFInfo<dim>&         dinfo1,
 
 template <int dim>
 void
-assemble_mg_matrix(DoFHandler<dim>&                    dof_handler,
-                   MeshWorker::LocalIntegrator<dim>&   matrix_integrator,
-                   mg::SparseMatrixCollection<double>& mg)
+assemble_mg_matrix(DoFHandler<dim> &                   dof_handler,
+                   MeshWorker::LocalIntegrator<dim> &  matrix_integrator,
+                   mg::SparseMatrixCollection<double> &mg)
 {
   MGConstrainedDoFs mg_constraints;
   mg_constraints.clear();
@@ -163,7 +163,7 @@ assemble_mg_matrix(DoFHandler<dim>&                    dof_handler,
 
 template <int dim>
 void
-test(FiniteElement<dim>& fe)
+test(FiniteElement<dim> &fe)
 {
   deallog << fe.get_name() << std::endl;
 

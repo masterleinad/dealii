@@ -33,7 +33,7 @@ using namespace dealii;
 
 template <int dim>
 void
-set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
+set_periodicity(parallel::distributed::Triangulation<dim> &triangulation,
                 bool                                       reverse)
 {
   typename Triangulation<dim>::cell_iterator cell_1 = triangulation.begin();
@@ -69,7 +69,7 @@ set_periodicity(parallel::distributed::Triangulation<dim>& triangulation,
 }
 
 /* The 2D case */
-void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
+void generate_grid(parallel::distributed::Triangulation<2> &triangulation,
                    int                                      orientation)
 {
   Point<2> vertices_1[] = {
@@ -107,7 +107,7 @@ void generate_grid(parallel::distributed::Triangulation<2>& triangulation,
 }
 
 /* The 3D case */
-void generate_grid(parallel::distributed::Triangulation<3>& triangulation,
+void generate_grid(parallel::distributed::Triangulation<3> &triangulation,
                    int                                      orientation)
 {
   Point<3>              vertices_1[] = {Point<3>(-1., -1., -3.),
@@ -207,7 +207,7 @@ check(const unsigned int orientation, bool reverse)
       const unsigned int line = constraints_lines.nth_index_in_set(i);
       if(constraints.is_constrained(line))
         {
-          const std::vector<std::pair<types::global_dof_index, double>>* entries
+          const std::vector<std::pair<types::global_dof_index, double>> *entries
             = constraints.get_constraint_entries(line);
           Assert(entries->size() == 1, ExcInternalError());
           const Point<dim> point1     = support_points[line];
@@ -240,9 +240,8 @@ check(const unsigned int orientation, bool reverse)
 
   typedef std::pair<typename Triangulation<dim>::cell_iterator, unsigned int>
     CellFace;
-  const typename std::map<CellFace, std::pair<CellFace, std::bitset<3>>>&
-    face_map
-    = triangulation.get_periodic_face_map();
+  const typename std::map<CellFace, std::pair<CellFace, std::bitset<3>>>
+    &face_map = triangulation.get_periodic_face_map();
   typename std::map<CellFace,
                     std::pair<CellFace, std::bitset<3>>>::const_iterator it;
   int sum_of_pairs_local = face_map.size();
@@ -296,7 +295,7 @@ check(const unsigned int orientation, bool reverse)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   try
     {
@@ -325,7 +324,7 @@ main(int argc, char* argv[])
           }
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

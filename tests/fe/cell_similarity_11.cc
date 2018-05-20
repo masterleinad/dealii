@@ -39,7 +39,7 @@
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr)
+test(const Triangulation<dim> &tr)
 {
   FE_Q<dim> fe(2);
   deallog << "FE=" << fe.get_name() << std::endl;

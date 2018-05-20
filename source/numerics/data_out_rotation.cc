@@ -49,11 +49,11 @@ namespace internal
       const unsigned int               n_datasets,
       const unsigned int               n_subdivisions,
       const unsigned int               n_patches_per_circle,
-      const std::vector<unsigned int>& n_postprocessor_outputs,
-      const Mapping<dim, spacedim>&    mapping,
+      const std::vector<unsigned int> &n_postprocessor_outputs,
+      const Mapping<dim, spacedim> &   mapping,
       const std::vector<
-        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
-                        finite_elements,
+        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
+        &               finite_elements,
       const UpdateFlags update_flags)
       : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
           n_datasets,
@@ -73,8 +73,8 @@ namespace internal
     template <int dim, int spacedim>
     void
     append_patch_to_list(
-      const std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>>& new_patches,
-      std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>>&       patches)
+      const std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>> &new_patches,
+      std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>> &      patches)
     {
       for(unsigned int i = 0; i < new_patches.size(); ++i)
         {
@@ -88,11 +88,11 @@ namespace internal
 template <int dim, typename DoFHandlerType>
 void
 DataOutRotation<dim, DoFHandlerType>::build_one_patch(
-  const cell_iterator*                                                    cell,
+  const cell_iterator *                                                   cell,
   internal::DataOutRotationImplementation::ParallelData<dimension,
-                                                        space_dimension>& data,
-  std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>&
-    my_patches)
+                                                        space_dimension> &data,
+  std::vector<DataOutBase::Patch<dimension + 1, space_dimension + 1>>
+    &my_patches)
 {
   if(dim == 3)
     {
@@ -187,11 +187,11 @@ DataOutRotation<dim, DoFHandlerType>::build_one_patch(
           for(unsigned int dataset = 0; dataset < this->dof_data.size();
               ++dataset)
             {
-              const FEValuesBase<dimension>& fe_patch_values
+              const FEValuesBase<dimension> &fe_patch_values
                 = data.get_present_fe_values(dataset);
               const unsigned int n_components
                 = fe_patch_values.get_fe().n_components();
-              const DataPostprocessor<dim>* postprocessor
+              const DataPostprocessor<dim> *postprocessor
                 = this->dof_data[dataset]->postprocessor;
               if(postprocessor != nullptr)
                 {
@@ -542,7 +542,7 @@ DataOutRotation<dim, DoFHandlerType>::first_cell()
 
 template <int dim, typename DoFHandlerType>
 typename DataOutRotation<dim, DoFHandlerType>::cell_iterator
-DataOutRotation<dim, DoFHandlerType>::next_cell(const cell_iterator& cell)
+DataOutRotation<dim, DoFHandlerType>::next_cell(const cell_iterator &cell)
 {
   // convert the iterator to an
   // active_iterator and advance

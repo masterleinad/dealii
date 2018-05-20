@@ -39,7 +39,7 @@ using namespace std;
 
 template <int dim>
 void
-check_fe(FiniteElement<dim>& fe, ComponentMask& component_mask)
+check_fe(FiniteElement<dim> &fe, ComponentMask &component_mask)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -107,7 +107,7 @@ check()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   initlog();
 

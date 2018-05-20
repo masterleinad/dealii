@@ -25,7 +25,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-void check(Triangulation<2>& tria)
+void check(Triangulation<2> &tria)
 {
   for(unsigned i = 0; i < tria.n_vertices(); i++)
     {
@@ -75,7 +75,7 @@ main()
       coarse_grid.create_triangulation(vertices, cells, SubCellData());
       check(coarse_grid);
     }
-  catch(const std::exception& exc)
+  catch(const std::exception &exc)
     {
       // we shouldn't get here...
       deallog << "Caught an error..." << std::endl;

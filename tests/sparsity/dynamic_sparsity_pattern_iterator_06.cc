@@ -48,7 +48,7 @@ main()
       test(false);
       test(true);
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       deallog << std::endl
               << std::endl

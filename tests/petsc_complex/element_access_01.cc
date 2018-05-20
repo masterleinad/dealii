@@ -26,7 +26,7 @@
 
 // sparse matrix elements
 void
-test_matrix(PETScWrappers::SparseMatrix& m)
+test_matrix(PETScWrappers::SparseMatrix &m)
 {
   deallog << "Check 01 matrix access" << std::endl;
 
@@ -55,7 +55,7 @@ test_matrix(PETScWrappers::SparseMatrix& m)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   std::ofstream logfile("output");
   dealii::deallog.attach(logfile);
@@ -73,7 +73,7 @@ main(int argc, char** argv)
       }
     }
 
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

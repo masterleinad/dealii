@@ -117,7 +117,7 @@ public:
    * into account if adding up is used for matrix assembling in order not to
    * obtain doubled entries.
    */
-  number&
+  number &
   operator()(size_type i, size_type j);
 
   //@}
@@ -135,8 +135,8 @@ public:
    * Source and destination must not be the same vector.
    */
   void
-  vmult(Vector<number>&       w,
-        const Vector<number>& v,
+  vmult(Vector<number> &      w,
+        const Vector<number> &v,
         const bool            adding = false) const;
 
   /**
@@ -146,7 +146,7 @@ public:
    * Source and destination must not be the same vector.
    */
   void
-  vmult_add(Vector<number>& w, const Vector<number>& v) const;
+  vmult_add(Vector<number> &w, const Vector<number> &v) const;
 
   /**
    * Transpose matrix-vector-multiplication. Multiplies <tt>v<sup>T</sup></tt>
@@ -158,8 +158,8 @@ public:
    * Source and destination must not be the same vector.
    */
   void
-  Tvmult(Vector<number>&       w,
-         const Vector<number>& v,
+  Tvmult(Vector<number> &      w,
+         const Vector<number> &v,
          const bool            adding = false) const;
 
   /**
@@ -170,7 +170,7 @@ public:
    * Source and destination must not be the same vector.
    */
   void
-  Tvmult_add(Vector<number>& w, const Vector<number>& v) const;
+  Tvmult_add(Vector<number> &w, const Vector<number> &v) const;
 
   /**
    * Build the matrix scalar product <tt>u^T M v</tt>. This function is mostly
@@ -178,7 +178,7 @@ public:
    * finite element context.
    */
   number
-  matrix_scalar_product(const Vector<number>& u, const Vector<number>& v) const;
+  matrix_scalar_product(const Vector<number> &u, const Vector<number> &v) const;
 
   /**
    * Return the square of the norm of the vector <tt>v</tt> with respect to
@@ -190,7 +190,7 @@ public:
    * Obviously, the matrix needs to be quadratic for this operation.
    */
   number
-  matrix_norm_square(const Vector<number>& v) const;
+  matrix_norm_square(const Vector<number> &v) const;
 
   //@}
 
@@ -218,7 +218,7 @@ public:
    */
   template <class OutputStream>
   void
-  print(OutputStream&      s,
+  print(OutputStream &     s,
         const unsigned int width     = 5,
         const unsigned int precision = 2) const;
   //@}
@@ -306,7 +306,7 @@ TridiagonalMatrix<number>::operator()(size_type i, size_type j) const
 }
 
 template <typename number>
-inline number&
+inline number &
 TridiagonalMatrix<number>::operator()(size_type i, size_type j)
 {
   Assert(i < n(), ExcIndexRange(i, 0, n()));
@@ -334,7 +334,7 @@ TridiagonalMatrix<number>::operator()(size_type i, size_type j)
 template <typename number>
 template <class OutputStream>
 void
-TridiagonalMatrix<number>::print(OutputStream&      s,
+TridiagonalMatrix<number>::print(OutputStream &     s,
                                  const unsigned int width,
                                  const unsigned int) const
 {

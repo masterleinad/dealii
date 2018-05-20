@@ -43,7 +43,7 @@ test()
           gi.read_xda(in);
         }
       catch(
-        const typename Triangulation<dim>::DistortedCellList& distorted_cells)
+        const typename Triangulation<dim>::DistortedCellList &distorted_cells)
         {
           // ignore distorted cells
           deallog << distorted_cells.distorted_cells.size()
@@ -79,7 +79,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

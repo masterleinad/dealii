@@ -29,7 +29,7 @@ using namespace std;
 
 template <int dim>
 void
-print_dof_numbers(const DoFHandler<dim>& dof)
+print_dof_numbers(const DoFHandler<dim> &dof)
 {
   std::vector<types::global_dof_index> dof_indices(dof.get_fe().dofs_per_cell);
   deallog << "DoF numbers on active cells" << std::endl;
@@ -118,7 +118,7 @@ check()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char **argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi(argc, argv);
   MPILogInitAll                    log;

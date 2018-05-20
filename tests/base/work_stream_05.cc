@@ -32,13 +32,15 @@ struct CopyData
 };
 
 void
-worker(const std::vector<unsigned int>::iterator& i, ScratchData&, CopyData& ad)
+worker(const std::vector<unsigned int>::iterator &i,
+       ScratchData &,
+       CopyData &ad)
 {
   ad.computed = *i * 2;
 }
 
 void
-copier(const CopyData& ad)
+copier(const CopyData &ad)
 {
   // write into the five elements of 'result' starting at ad.computed%result.size()
   for(unsigned int j = 0; j < 5; ++j)

@@ -26,7 +26,7 @@
 void
 test()
 {
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream &out = deallog.get_file_stream();
 
   FunctionManifold<1, 1> F("x", "x");
   PolarManifold<2, 2>    G;

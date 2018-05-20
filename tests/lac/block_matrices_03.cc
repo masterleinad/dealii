@@ -30,7 +30,7 @@
 #include <deal.II/lac/block_vector.h>
 
 void
-do_add(const bool even_or_odd, BlockSparseMatrix<double>& bsm)
+do_add(const bool even_or_odd, BlockSparseMatrix<double> &bsm)
 {
   BlockSparseMatrix<double>::size_type col_indices[5];
   for(unsigned int i = 0; i < 5; ++i)
@@ -93,7 +93,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch(std::exception &e)
     {
       std::cerr << std::endl
                 << std::endl

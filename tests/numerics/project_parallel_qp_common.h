@@ -54,7 +54,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const
+  value(const Point<dim> &p, const unsigned int component = 0) const
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
@@ -65,7 +65,7 @@ public:
   }
 
   VectorizedArray<double>
-  value(const Point<dim, VectorizedArray<double>>& p_vec) const
+  value(const Point<dim, VectorizedArray<double>> &p_vec) const
   {
     VectorizedArray<double> res = make_vectorized_array(0.);
     Point<dim>              p;
@@ -89,8 +89,8 @@ struct QData
 
 template <typename VectorType, int dim>
 void
-do_project(const parallel::distributed::Triangulation<dim>& triangulation,
-           const FiniteElement<dim>&                        fe,
+do_project(const parallel::distributed::Triangulation<dim> &triangulation,
+           const FiniteElement<dim> &                       fe,
            const unsigned int                               p)
 {
   AssertThrow(fe.n_components() == 1, ExcNotImplemented());
@@ -148,7 +148,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
           dof_handler,
           constraints,
           quadrature_formula,
-          [=](const typename DoFHandler<dim>::active_cell_iterator& cell,
+          [=](const typename DoFHandler<dim>::active_cell_iterator &cell,
               const unsigned int q) -> double {
             return qp_manager.get_data(cell)[q]->density;
           },
@@ -212,7 +212,7 @@ do_project(const parallel::distributed::Triangulation<dim>& triangulation,
 // can only represent polynomials of degree p-1 exactly. the gap is then 1.
 template <typename VectorType, int dim>
 void
-test_no_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
+test_no_hanging_nodes(const FiniteElement<dim> &fe, const unsigned int p)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);
@@ -224,7 +224,7 @@ test_no_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
 // same test as above, but this time with a mesh that has hanging nodes
 template <typename VectorType, int dim>
 void
-test_with_hanging_nodes(const FiniteElement<dim>& fe, const unsigned int p)
+test_with_hanging_nodes(const FiniteElement<dim> &fe, const unsigned int p)
 {
   parallel::distributed::Triangulation<dim> triangulation(MPI_COMM_WORLD);
   GridGenerator::hyper_cube(triangulation);

@@ -25,7 +25,7 @@
 
 template <int dim>
 void
-check(const FiniteElement<dim>& fe)
+check(const FiniteElement<dim> &fe)
 {
   const unsigned int dofs_per_cell = fe.dofs_per_cell;
 

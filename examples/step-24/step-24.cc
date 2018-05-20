@@ -146,12 +146,12 @@ namespace Step24
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
 
   private:
     struct Source
     {
-      Source(const Point<dim>& l, const double r) : location(l), radius(r)
+      Source(const Point<dim> &l, const double r) : location(l), radius(r)
       {}
 
       const Point<dim> location;
@@ -161,7 +161,7 @@ namespace Step24
 
   template <int dim>
   double
-  InitialValuesP<dim>::value(const Point<dim>& p,
+  InitialValuesP<dim>::value(const Point<dim> &p,
                              const unsigned int /*component*/) const
   {
     static const Source       sources[] = {Source(Point<dim>(0, 0), 0.025),
@@ -538,7 +538,7 @@ main()
       TATForwardProblem<2> forward_problem_solver;
       forward_problem_solver.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

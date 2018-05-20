@@ -38,17 +38,17 @@ namespace internal
     template <int dim, int spacedim>
     void
     fill_copy_indices(
-      const dealii::DoFHandler<dim, spacedim>& mg_dof,
-      const MGConstrainedDoFs*                 mg_constrained_dofs,
+      const dealii::DoFHandler<dim, spacedim> &mg_dof,
+      const MGConstrainedDoFs *                mg_constrained_dofs,
       std::vector<std::vector<
-        std::pair<types::global_dof_index, types::global_dof_index>>>&
-        copy_indices,
+        std::pair<types::global_dof_index, types::global_dof_index>>>
+        &copy_indices,
       std::vector<std::vector<
-        std::pair<types::global_dof_index, types::global_dof_index>>>&
-        copy_indices_global_mine,
+        std::pair<types::global_dof_index, types::global_dof_index>>>
+        &copy_indices_global_mine,
       std::vector<std::vector<
-        std::pair<types::global_dof_index, types::global_dof_index>>>&
-                 copy_indices_level_mine,
+        std::pair<types::global_dof_index, types::global_dof_index>>>
+        &        copy_indices_level_mine,
       const bool skip_interface_dofs = true);
 
     /**
@@ -114,19 +114,19 @@ namespace internal
     template <int dim, typename Number>
     void
     setup_transfer(
-      const dealii::DoFHandler<dim>&          mg_dof,
-      const MGConstrainedDoFs*                mg_constrained_dofs,
-      ElementInfo<Number>&                    elem_info,
-      std::vector<std::vector<unsigned int>>& level_dof_indices,
-      std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
-                                 parent_child_connect,
-      std::vector<unsigned int>& n_owned_level_cells,
-      std::vector<std::vector<std::vector<unsigned short>>>& dirichlet_indices,
-      std::vector<std::vector<Number>>&                      weights_on_refined,
-      std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
-        copy_indices_global_mine,
-      MGLevelObject<LinearAlgebra::distributed::Vector<Number>>&
-        ghosted_level_vector);
+      const dealii::DoFHandler<dim> &         mg_dof,
+      const MGConstrainedDoFs *               mg_constrained_dofs,
+      ElementInfo<Number> &                   elem_info,
+      std::vector<std::vector<unsigned int>> &level_dof_indices,
+      std::vector<std::vector<std::pair<unsigned int, unsigned int>>>
+        &                        parent_child_connect,
+      std::vector<unsigned int> &n_owned_level_cells,
+      std::vector<std::vector<std::vector<unsigned short>>> &dirichlet_indices,
+      std::vector<std::vector<Number>> &                     weights_on_refined,
+      std::vector<std::vector<std::pair<unsigned int, unsigned int>>>
+        &copy_indices_global_mine,
+      MGLevelObject<LinearAlgebra::distributed::Vector<Number>>
+        &ghosted_level_vector);
 
   } // namespace MGTransfer
 } // namespace internal

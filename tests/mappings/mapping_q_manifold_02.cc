@@ -98,7 +98,7 @@ public:
   virtual ~PushForward(){};
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> &p, const unsigned int component = 0) const;
 
 private:
   const double h;
@@ -113,7 +113,7 @@ private:
 
 template <int dim>
 double
-PushForward<dim>::value(const Point<dim>& p, const unsigned int component) const
+PushForward<dim>::value(const Point<dim> &p, const unsigned int component) const
 {
   double result = 0;
 
@@ -154,7 +154,7 @@ public:
   virtual ~PullBack(){};
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> &p, const unsigned int component = 0) const;
 
 private:
   const double h;
@@ -168,7 +168,7 @@ private:
 
 template <int dim>
 double
-PullBack<dim>::value(const Point<dim>& p, const unsigned int component) const
+PullBack<dim>::value(const Point<dim> &p, const unsigned int component) const
 {
   double result = 0;
 
@@ -196,7 +196,7 @@ PullBack<dim>::value(const Point<dim>& p, const unsigned int component) const
 
 template <int dim>
 void
-create_tria(Triangulation<dim>& triangulation, const Manifold<dim>& manifold)
+create_tria(Triangulation<dim> &triangulation, const Manifold<dim> &manifold)
 {
   const double              h = 0.028;
   std::vector<unsigned int> refinements(dim, 1);

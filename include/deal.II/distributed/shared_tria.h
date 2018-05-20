@@ -258,9 +258,9 @@ namespace parallel
        * communicator provided to the constructor.
        */
       virtual void
-      create_triangulation(const std::vector<Point<spacedim>>& vertices,
-                           const std::vector<CellData<dim>>&   cells,
-                           const SubCellData& subcelldata) override;
+      create_triangulation(const std::vector<Point<spacedim>> &vertices,
+                           const std::vector<CellData<dim>> &  cells,
+                           const SubCellData &subcelldata) override;
 
       /**
        * Copy @p other_tria to this triangulation.
@@ -274,7 +274,7 @@ namespace parallel
        */
       virtual void
       copy_triangulation(
-        const dealii::Triangulation<dim, spacedim>& other_tria) override;
+        const dealii::Triangulation<dim, spacedim> &other_tria) override;
 
       /**
        * Read the data of this object from a stream for the purpose of
@@ -286,7 +286,7 @@ namespace parallel
        */
       template <class Archive>
       void
-      load(Archive& ar, const unsigned int version);
+      load(Archive &ar, const unsigned int version);
 
       /**
        * Return a vector of length Triangulation::n_active_cells() where each
@@ -296,7 +296,7 @@ namespace parallel
        * artificial cells that do not store who the owner of the cell is in
        * their subdomain_id field.
        */
-      const std::vector<types::subdomain_id>&
+      const std::vector<types::subdomain_id> &
       get_true_subdomain_ids_of_cells() const;
 
       /**
@@ -307,7 +307,7 @@ namespace parallel
        * artificial cells that do not store who the owner of the cell is in
        * their level_subdomain_id field.
        */
-      const std::vector<types::subdomain_id>&
+      const std::vector<types::subdomain_id> &
       get_true_level_subdomain_ids_of_cells(const unsigned int level) const;
 
       /**
@@ -372,7 +372,7 @@ namespace parallel
     template <int dim, int spacedim>
     template <class Archive>
     void
-    Triangulation<dim, spacedim>::load(Archive& ar, const unsigned int version)
+    Triangulation<dim, spacedim>::load(Archive &ar, const unsigned int version)
     {
       dealii::Triangulation<dim, spacedim>::load(ar, version);
       partition();
@@ -407,13 +407,13 @@ namespace parallel
       /**
        * A dummy function to return empty vector.
        */
-      const std::vector<types::subdomain_id>&
+      const std::vector<types::subdomain_id> &
       get_true_subdomain_ids_of_cells() const;
 
       /**
        * A dummy function to return empty vector.
        */
-      const std::vector<types::subdomain_id>&
+      const std::vector<types::subdomain_id> &
       get_true_level_subdomain_ids_of_cells(const unsigned int level) const;
 
       /**

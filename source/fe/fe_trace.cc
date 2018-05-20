@@ -120,8 +120,8 @@ template <int dim, int spacedim>
 void
 FE_TraceQ<dim, spacedim>::
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const
+    const std::vector<Vector<double>> &support_point_values,
+    std::vector<double> &              nodal_values) const
 {
   AssertDimension(support_point_values.size(),
                   this->get_unit_support_points().size());
@@ -162,10 +162,10 @@ FE_TraceQ<dim, spacedim>::hp_constraints_are_implemented() const
 template <int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_TraceQ<dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> &fe_other) const
 {
-  if(const FE_TraceQ<dim, spacedim>* fe_q_other
-     = dynamic_cast<const FE_TraceQ<dim, spacedim>*>(&fe_other))
+  if(const FE_TraceQ<dim, spacedim> *fe_q_other
+     = dynamic_cast<const FE_TraceQ<dim, spacedim> *>(&fe_other))
     {
       if(this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
@@ -174,8 +174,8 @@ FE_TraceQ<dim, spacedim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if(const FE_Nothing<dim> *fe_nothing
+          = dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if(fe_nothing->is_dominating())
         {
@@ -196,8 +196,8 @@ FE_TraceQ<dim, spacedim>::compare_for_face_domination(
 template <int dim, int spacedim>
 void
 FE_TraceQ<dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> &source_fe,
+  FullMatrix<double> &                interpolation_matrix) const
 {
   get_subface_interpolation_matrix(
     source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
@@ -206,9 +206,9 @@ FE_TraceQ<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 void
 FE_TraceQ<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
+  const FiniteElement<dim, spacedim> &x_source_fe,
   const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  FullMatrix<double> &                interpolation_matrix) const
 {
   // this is the code from FE_FaceQ
   Assert(interpolation_matrix.n() == this->dofs_per_face,
@@ -218,13 +218,13 @@ FE_TraceQ<dim, spacedim>::get_subface_interpolation_matrix(
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_face));
 
   // see if source is a FaceQ element
-  if(const FE_TraceQ<dim, spacedim>* source_fe
-     = dynamic_cast<const FE_TraceQ<dim, spacedim>*>(&x_source_fe))
+  if(const FE_TraceQ<dim, spacedim> *source_fe
+     = dynamic_cast<const FE_TraceQ<dim, spacedim> *>(&x_source_fe))
     {
       fe_q.get_subface_interpolation_matrix(
         source_fe->fe_q, subface, interpolation_matrix);
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&x_source_fe) != nullptr)
     {
       // nothing to do here, the FE_Nothing has no degrees of freedom anyway
     }

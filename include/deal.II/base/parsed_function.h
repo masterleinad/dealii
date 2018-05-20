@@ -105,7 +105,7 @@ namespace Functions
      *
      */
     static void
-    declare_parameters(ParameterHandler&  prm,
+    declare_parameters(ParameterHandler & prm,
                        const unsigned int n_components = 1);
 
     /**
@@ -178,14 +178,14 @@ namespace Functions
      * FunctionTime base class.
      */
     void
-    parse_parameters(ParameterHandler& prm);
+    parse_parameters(ParameterHandler &prm);
 
     /**
      * Return all components of a vector-valued function at the given point @p
      * p.
      */
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& values) const override;
+    vector_value(const Point<dim> &p, Vector<double> &values) const override;
 
     /**
      * Return the value of the function at the given point. Unless there is
@@ -194,7 +194,7 @@ namespace Functions
      * first component.
      */
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
      * Set the time to a specific value for time-dependent functions.

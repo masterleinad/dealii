@@ -36,7 +36,7 @@ namespace internal
        * A function which maps  in[i] to i,i.e. output[in[i]] = i;
        */
       inline std::vector<unsigned int>
-      invert_numbering(const std::vector<unsigned int>& in)
+      invert_numbering(const std::vector<unsigned int> &in)
       {
         std::vector<unsigned int> out(in.size());
         for(unsigned int i = 0; i < in.size(); ++i)
@@ -135,12 +135,12 @@ FE_Q_Hierarchical<dim>::clone() const
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::get_interpolation_matrix(
-  const FiniteElement<dim>& source,
-  FullMatrix<double>&       matrix) const
+  const FiniteElement<dim> &source,
+  FullMatrix<double> &      matrix) const
 {
   // support interpolation between FE_Q_Hierarchical only.
-  if(const FE_Q_Hierarchical<dim>* source_fe
-     = dynamic_cast<const FE_Q_Hierarchical<dim>*>(&source))
+  if(const FE_Q_Hierarchical<dim> *source_fe
+     = dynamic_cast<const FE_Q_Hierarchical<dim> *>(&source))
     {
       // ok, source is a Q_Hierarchical element, so we will be able to do the work
       Assert(matrix.m() == this->dofs_per_cell,
@@ -183,10 +183,10 @@ FE_Q_Hierarchical<dim>::get_interpolation_matrix(
 }
 
 template <int dim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Q_Hierarchical<dim>::get_prolongation_matrix(
   const unsigned int         child,
-  const RefinementCase<dim>& refinement_case) const
+  const RefinementCase<dim> &refinement_case) const
 {
   Assert(
     refinement_case == RefinementCase<dim>::isotropic_refinement,
@@ -210,7 +210,7 @@ FE_Q_Hierarchical<dim>::hp_constraints_are_implemented() const
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Q_Hierarchical<dim>::hp_vertex_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
   // we can presently only compute
   // these identities if both FEs are
@@ -220,12 +220,12 @@ FE_Q_Hierarchical<dim>::hp_vertex_dof_identities(
   // single DoF of each FE at a
   // vertex, and they should have
   // identical value
-  if(dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_Q_Hierarchical<dim> *>(&fe_other) != nullptr)
     {
       return std::vector<std::pair<unsigned int, unsigned int>>(
         1, std::make_pair(0U, 0U));
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -243,16 +243,16 @@ FE_Q_Hierarchical<dim>::hp_vertex_dof_identities(
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Q_Hierarchical<dim>::hp_line_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
   // we can presently only compute
   // these identities if both FEs are
   // FE_Q_Hierarchicals or if the other
   // one is an FE_Nothing.
-  if(dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_Q_Hierarchical<dim> *>(&fe_other) != nullptr)
     {
-      const unsigned int& this_dpl  = this->dofs_per_line;
-      const unsigned int& other_dpl = fe_other.dofs_per_line;
+      const unsigned int &this_dpl  = this->dofs_per_line;
+      const unsigned int &other_dpl = fe_other.dofs_per_line;
 
       // we deal with hierarchical 1d polynomials where dofs are enumerated increasingly.
       // Thus we return a vector of pairs
@@ -264,7 +264,7 @@ FE_Q_Hierarchical<dim>::hp_line_dof_identities(
 
       return res;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -282,16 +282,16 @@ FE_Q_Hierarchical<dim>::hp_line_dof_identities(
 template <int dim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Q_Hierarchical<dim>::hp_quad_dof_identities(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
   // we can presently only compute
   // these identities if both FEs are
   // FE_Q_Hierarchicals or if the other
   // one is an FE_Nothing.
-  if(dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other) != nullptr)
+  if(dynamic_cast<const FE_Q_Hierarchical<dim> *>(&fe_other) != nullptr)
     {
-      const unsigned int& this_dpq  = this->dofs_per_quad;
-      const unsigned int& other_dpq = fe_other.dofs_per_quad;
+      const unsigned int &this_dpq  = this->dofs_per_quad;
+      const unsigned int &other_dpq = fe_other.dofs_per_quad;
 
       // we deal with hierarchical 1d polynomials where dofs are enumerated increasingly.
       // Thus we return a vector of pairs
@@ -303,7 +303,7 @@ FE_Q_Hierarchical<dim>::hp_quad_dof_identities(
 
       return res;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no
       // degrees of freedom, so there
@@ -321,10 +321,10 @@ FE_Q_Hierarchical<dim>::hp_quad_dof_identities(
 template <int dim>
 FiniteElementDomination::Domination
 FE_Q_Hierarchical<dim>::compare_for_face_domination(
-  const FiniteElement<dim>& fe_other) const
+  const FiniteElement<dim> &fe_other) const
 {
-  if(const FE_Q_Hierarchical<dim>* fe_q_other
-     = dynamic_cast<const FE_Q_Hierarchical<dim>*>(&fe_other))
+  if(const FE_Q_Hierarchical<dim> *fe_q_other
+     = dynamic_cast<const FE_Q_Hierarchical<dim> *>(&fe_other))
     {
       // the element with lowest polynomial degree
       // dominates the other.
@@ -335,8 +335,8 @@ FE_Q_Hierarchical<dim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim>*>(&fe_other))
+  else if(const FE_Nothing<dim> *fe_nothing
+          = dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if(fe_nothing->is_dominating())
         {
@@ -361,8 +361,8 @@ FE_Q_Hierarchical<dim>::compare_for_face_domination(
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::build_dofs_cell(
-  std::vector<FullMatrix<double>>& dofs_cell,
-  std::vector<FullMatrix<double>>& dofs_subcell) const
+  std::vector<FullMatrix<double>> &dofs_cell,
+  std::vector<FullMatrix<double>> &dofs_subcell) const
 {
   const unsigned int dofs_1d = 2 * this->dofs_per_vertex + this->dofs_per_line;
 
@@ -472,7 +472,7 @@ FE_Q_Hierarchical<dim>::build_dofs_cell(
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::initialize_constraints(
-  const std::vector<FullMatrix<double>>& dofs_subcell)
+  const std::vector<FullMatrix<double>> &dofs_subcell)
 {
   const unsigned int dofs_1d = 2 * this->dofs_per_vertex + this->dofs_per_line;
 
@@ -638,13 +638,13 @@ FE_Q_Hierarchical<dim>::initialize_constraints(
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::initialize_embedding_and_restriction(
-  const std::vector<FullMatrix<double>>& dofs_cell,
-  const std::vector<FullMatrix<double>>& dofs_subcell)
+  const std::vector<FullMatrix<double>> &dofs_cell,
+  const std::vector<FullMatrix<double>> &dofs_subcell)
 {
   unsigned int iso = RefinementCase<dim>::isotropic_refinement - 1;
 
   const unsigned int dofs_1d = 2 * this->dofs_per_vertex + this->dofs_per_line;
-  const std::vector<unsigned int>& renumber = this->poly_space.get_numbering();
+  const std::vector<unsigned int> &renumber = this->poly_space.get_numbering();
 
   for(unsigned int c = 0; c < GeometryInfo<dim>::max_children_per_cell; ++c)
     {
@@ -780,7 +780,7 @@ FE_Q_Hierarchical<dim>::initialize_generalized_support_points()
 
   this->generalized_support_points.resize(n);
 
-  const std::vector<unsigned int>& index_map_inverse
+  const std::vector<unsigned int> &index_map_inverse
     = this->poly_space.get_numbering_inverse();
 
   Point<dim> p;
@@ -854,8 +854,8 @@ FE_Q_Hierarchical<1>::initialize_generalized_face_support_points()
 template <>
 void
 FE_Q_Hierarchical<1>::get_face_interpolation_matrix(
-  const FiniteElement<1, 1>& /*x_source_fe*/,
-  FullMatrix<double>& /*interpolation_matrix*/) const
+  const FiniteElement<1, 1> & /*x_source_fe*/,
+  FullMatrix<double> & /*interpolation_matrix*/) const
 {
   Assert(false, ExcImpossibleInDim(1));
 }
@@ -863,9 +863,9 @@ FE_Q_Hierarchical<1>::get_face_interpolation_matrix(
 template <>
 void
 FE_Q_Hierarchical<1>::get_subface_interpolation_matrix(
-  const FiniteElement<1, 1>& /*x_source_fe*/,
+  const FiniteElement<1, 1> & /*x_source_fe*/,
   const unsigned int /*subface*/,
-  FullMatrix<double>& /*interpolation_matrix*/) const
+  FullMatrix<double> & /*interpolation_matrix*/) const
 {
   Assert(false, ExcImpossibleInDim(1));
 }
@@ -873,8 +873,8 @@ FE_Q_Hierarchical<1>::get_subface_interpolation_matrix(
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
-  const FiniteElement<dim>& x_source_fe,
-  FullMatrix<double>&       interpolation_matrix) const
+  const FiniteElement<dim> &x_source_fe,
+  FullMatrix<double> &      interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
@@ -882,7 +882,7 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
   typedef FE_Q_Hierarchical<dim> FEQHierarchical;
   AssertThrow(
     (x_source_fe.get_name().find("FE_Q_Hierarchical<") == 0)
-      || (dynamic_cast<const FEQHierarchical*>(&x_source_fe) != nullptr),
+      || (dynamic_cast<const FEQHierarchical *>(&x_source_fe) != nullptr),
     (typename FiniteElement<dim>::ExcInterpolationNotImplemented()));
 
   Assert(interpolation_matrix.n() == this->dofs_per_face,
@@ -893,8 +893,8 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
 
   // ok, source is a Q_Hierarchical element, so
   // we will be able to do the work
-  const FE_Q_Hierarchical<dim>& source_fe
-    = dynamic_cast<const FE_Q_Hierarchical<dim>&>(x_source_fe);
+  const FE_Q_Hierarchical<dim> &source_fe
+    = dynamic_cast<const FE_Q_Hierarchical<dim> &>(x_source_fe);
   (void) source_fe;
 
   // Make sure, that the element,
@@ -958,9 +958,9 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
 template <int dim>
 void
 FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim>& x_source_fe,
+  const FiniteElement<dim> &x_source_fe,
   const unsigned int        subface,
-  FullMatrix<double>&       interpolation_matrix) const
+  FullMatrix<double> &      interpolation_matrix) const
 {
   // this is only implemented, if the
   // source FE is also a
@@ -968,7 +968,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
   typedef FE_Q_Hierarchical<dim> FEQHierarchical;
   AssertThrow(
     (x_source_fe.get_name().find("FE_Q_Hierarchical<") == 0)
-      || (dynamic_cast<const FEQHierarchical*>(&x_source_fe) != nullptr),
+      || (dynamic_cast<const FEQHierarchical *>(&x_source_fe) != nullptr),
     (typename FiniteElement<dim>::ExcInterpolationNotImplemented()));
 
   Assert(interpolation_matrix.n() == this->dofs_per_face,
@@ -979,8 +979,8 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
   // ok, source is a Q_Hierarchical element, so
   // we will be able to do the work
-  const FE_Q_Hierarchical<dim>& source_fe
-    = dynamic_cast<const FE_Q_Hierarchical<dim>&>(x_source_fe);
+  const FE_Q_Hierarchical<dim> &source_fe
+    = dynamic_cast<const FE_Q_Hierarchical<dim> &>(x_source_fe);
 
   // Make sure, that the element,
   // for which the DoFs should be
@@ -1941,7 +1941,7 @@ FE_Q_Hierarchical<dim>::get_dpo_vector(const unsigned int deg)
 template <int dim>
 std::vector<unsigned int>
 FE_Q_Hierarchical<dim>::hierarchic_to_fe_q_hierarchical_numbering(
-  const FiniteElementData<dim>& fe)
+  const FiniteElementData<dim> &fe)
 {
   Assert(fe.n_components() == 1, ExcInternalError());
   std::vector<unsigned int> h2l(fe.dofs_per_cell);

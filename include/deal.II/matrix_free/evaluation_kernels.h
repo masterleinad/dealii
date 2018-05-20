@@ -102,22 +102,22 @@ namespace internal
   struct FEEvaluationImpl
   {
     static void
-    evaluate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-             const Number*                                 values_dofs_actual,
-             Number*                                       values_quad,
-             Number*                                       gradients_quad,
-             Number*                                       hessians_quad,
-             Number*                                       scratch_data,
+    evaluate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+             const Number *                                values_dofs_actual,
+             Number *                                      values_quad,
+             Number *                                      gradients_quad,
+             Number *                                      hessians_quad,
+             Number *                                      scratch_data,
              const bool                                    evaluate_values,
              const bool                                    evaluate_gradients,
              const bool                                    evaluate_hessians);
 
     static void
-    integrate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-              Number*                                       values_dofs_actual,
-              Number*                                       values_quad,
-              Number*                                       gradients_quad,
-              Number*                                       scratch_data,
+    integrate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+              Number *                                      values_dofs_actual,
+              Number *                                      values_quad,
+              Number *                                      gradients_quad,
+              Number *                                      scratch_data,
               const bool                                    integrate_values,
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
@@ -131,12 +131,12 @@ namespace internal
             typename Number>
   inline void
   FEEvaluationImpl<type, dim, fe_degree, n_q_points_1d, n_components, Number>::
-    evaluate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-             const Number*                                 values_dofs_actual,
-             Number*                                       values_quad,
-             Number*                                       gradients_quad,
-             Number*                                       hessians_quad,
-             Number*                                       scratch_data,
+    evaluate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+             const Number *                                values_dofs_actual,
+             Number *                                      values_quad,
+             Number *                                      gradients_quad,
+             Number *                                      hessians_quad,
+             Number *                                      scratch_data,
              const bool                                    evaluate_values,
              const bool                                    evaluate_gradients,
              const bool                                    evaluate_hessians)
@@ -168,8 +168,8 @@ namespace internal
           (Eval::n_rows_of_product > Eval::n_columns_of_product ?
              Eval::n_rows_of_product :
              Eval::n_columns_of_product);
-    Number* temp1;
-    Number* temp2;
+    Number *temp1;
+    Number *temp2;
     if(temp_size == 0)
       {
         temp1 = scratch_data;
@@ -190,10 +190,10 @@ namespace internal
       = (type == MatrixFreeFunctions::truncated_tensor) ?
           Utilities::fixed_power<dim>(shape_info.fe_degree + 1) :
           shape_info.dofs_per_component_on_cell;
-    const Number* values_dofs = values_dofs_actual;
+    const Number *values_dofs = values_dofs_actual;
     if(type == MatrixFreeFunctions::truncated_tensor)
       {
-        Number* values_dofs_tmp
+        Number *values_dofs_tmp
           = scratch_data
             + 2
                 * (std::max(shape_info.dofs_per_component_on_cell,
@@ -398,11 +398,11 @@ namespace internal
             typename Number>
   inline void
   FEEvaluationImpl<type, dim, fe_degree, n_q_points_1d, n_components, Number>::
-    integrate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-              Number*                                       values_dofs_actual,
-              Number*                                       values_quad,
-              Number*                                       gradients_quad,
-              Number*                                       scratch_data,
+    integrate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+              Number *                                      values_dofs_actual,
+              Number *                                      values_quad,
+              Number *                                      gradients_quad,
+              Number *                                      scratch_data,
               const bool                                    integrate_values,
               const bool                                    integrate_gradients,
               const bool add_into_values_array)
@@ -430,8 +430,8 @@ namespace internal
           (Eval::n_rows_of_product > Eval::n_columns_of_product ?
              Eval::n_rows_of_product :
              Eval::n_columns_of_product);
-    Number* temp1;
-    Number* temp2;
+    Number *temp1;
+    Number *temp2;
     if(temp_size == 0)
       {
         temp1 = scratch_data;
@@ -453,7 +453,7 @@ namespace internal
           Utilities::fixed_power<dim>(shape_info.fe_degree + 1) :
           shape_info.dofs_per_component_on_cell;
     // expand dof_values to tensor product for truncated tensor products
-    Number* values_dofs
+    Number *values_dofs
       = (type == MatrixFreeFunctions::truncated_tensor) ?
           scratch_data
             + 2
@@ -664,9 +664,9 @@ namespace internal
     DEAL_II_ALWAYS_INLINE
 #endif
     static void
-    do_forward(const AlignedVector<Number2>& transformation_matrix,
-               const Number*                 values_in,
-               Number*                       values_out,
+    do_forward(const AlignedVector<Number2> &transformation_matrix,
+               const Number *                values_in,
+               Number *                      values_out,
                const unsigned int            basis_size_1_variable
                = numbers::invalid_unsigned_int,
                const unsigned int basis_size_2_variable
@@ -782,10 +782,10 @@ namespace internal
     DEAL_II_ALWAYS_INLINE
 #endif
     static void
-    do_backward(const AlignedVector<Number2>& transformation_matrix,
+    do_backward(const AlignedVector<Number2> &transformation_matrix,
                 const bool                    add_into_result,
-                Number*                       values_in,
-                Number*                       values_out,
+                Number *                      values_in,
+                Number *                      values_out,
                 const unsigned int            basis_size_1_variable
                 = numbers::invalid_unsigned_int,
                 const unsigned int basis_size_2_variable
@@ -888,14 +888,14 @@ namespace internal
      *                     the values_in array.
      */
     static void
-    do_mass(const AlignedVector<Number2>& transformation_matrix,
-            const AlignedVector<Number>&  coefficients,
-            const Number*                 values_in,
-            Number*                       scratch_data,
-            Number*                       values_out)
+    do_mass(const AlignedVector<Number2> &transformation_matrix,
+            const AlignedVector<Number> & coefficients,
+            const Number *                values_in,
+            Number *                      scratch_data,
+            Number *                      values_out)
     {
       constexpr int next_dim = dim > 1 ? dim - 1 : dim;
-      Number*       my_scratch
+      Number *      my_scratch
         = basis_size_1 != basis_size_2 ? scratch_data : values_out;
       for(unsigned int q = basis_size_1; q != 0; --q)
         FEEvaluationImplBasisChange<variant,
@@ -967,22 +967,22 @@ namespace internal
   struct FEEvaluationImplCollocation
   {
     static void
-    evaluate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-             const Number*                                 values_dofs,
-             Number*                                       values_quad,
-             Number*                                       gradients_quad,
-             Number*                                       hessians_quad,
-             Number*                                       scratch_data,
+    evaluate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+             const Number *                                values_dofs,
+             Number *                                      values_quad,
+             Number *                                      gradients_quad,
+             Number *                                      hessians_quad,
+             Number *                                      scratch_data,
              const bool                                    evaluate_values,
              const bool                                    evaluate_gradients,
              const bool                                    evaluate_hessians);
 
     static void
-    integrate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-              Number*                                       values_dofs,
-              Number*                                       values_quad,
-              Number*                                       gradients_quad,
-              Number*                                       scratch_data,
+    integrate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+              Number *                                      values_dofs,
+              Number *                                      values_quad,
+              Number *                                      gradients_quad,
+              Number *                                      scratch_data,
               const bool                                    integrate_values,
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
@@ -991,12 +991,12 @@ namespace internal
   template <int dim, int fe_degree, int n_components, typename Number>
   inline void
   FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>::evaluate(
-    const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-    const Number*                                 values_dofs,
-    Number*                                       values_quad,
-    Number*                                       gradients_quad,
-    Number*                                       hessians_quad,
-    Number*,
+    const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    const Number *                                values_dofs,
+    Number *                                      values_quad,
+    Number *                                      gradients_quad,
+    Number *                                      hessians_quad,
+    Number *,
     const bool evaluate_values,
     const bool evaluate_gradients,
     const bool evaluate_hessians)
@@ -1060,11 +1060,11 @@ namespace internal
   template <int dim, int fe_degree, int n_components, typename Number>
   inline void
   FEEvaluationImplCollocation<dim, fe_degree, n_components, Number>::integrate(
-    const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-    Number*                                       values_dofs,
-    Number*                                       values_quad,
-    Number*                                       gradients_quad,
-    Number*,
+    const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+    Number *                                      values_dofs,
+    Number *                                      values_quad,
+    Number *                                      gradients_quad,
+    Number *,
     const bool integrate_values,
     const bool integrate_gradients,
     const bool add_into_values_array)
@@ -1131,22 +1131,22 @@ namespace internal
   struct FEEvaluationImplTransformToCollocation
   {
     static void
-    evaluate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-             const Number*                                 values_dofs,
-             Number*                                       values_quad,
-             Number*                                       gradients_quad,
-             Number*                                       hessians_quad,
-             Number*                                       scratch_data,
+    evaluate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+             const Number *                                values_dofs,
+             Number *                                      values_quad,
+             Number *                                      gradients_quad,
+             Number *                                      hessians_quad,
+             Number *                                      scratch_data,
              const bool                                    evaluate_values,
              const bool                                    evaluate_gradients,
              const bool                                    evaluate_hessians);
 
     static void
-    integrate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-              Number*                                       values_dofs,
-              Number*                                       values_quad,
-              Number*                                       gradients_quad,
-              Number*                                       scratch_data,
+    integrate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+              Number *                                      values_dofs,
+              Number *                                      values_quad,
+              Number *                                      gradients_quad,
+              Number *                                      scratch_data,
               const bool                                    integrate_values,
               const bool                                    integrate_gradients,
               const bool add_into_values_array);
@@ -1163,12 +1163,12 @@ namespace internal
     fe_degree,
     n_q_points_1d,
     n_components,
-    Number>::evaluate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-                      const Number*                                 values_dofs,
-                      Number*                                       values_quad,
-                      Number* gradients_quad,
-                      Number* hessians_quad,
-                      Number*,
+    Number>::evaluate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+                      const Number *                                values_dofs,
+                      Number *                                      values_quad,
+                      Number *gradients_quad,
+                      Number *hessians_quad,
+                      Number *,
                       const bool,
                       const bool evaluate_gradients,
                       const bool evaluate_hessians)
@@ -1224,11 +1224,11 @@ namespace internal
     fe_degree,
     n_q_points_1d,
     n_components,
-    Number>::integrate(const MatrixFreeFunctions::ShapeInfo<Number>& shape_info,
-                       Number* values_dofs,
-                       Number* values_quad,
-                       Number* gradients_quad,
-                       Number*,
+    Number>::integrate(const MatrixFreeFunctions::ShapeInfo<Number> &shape_info,
+                       Number *values_dofs,
+                       Number *values_quad,
+                       Number *gradients_quad,
+                       Number *,
                        const bool integrate_values,
                        const bool integrate_gradients,
                        const bool add_into_values_array)
@@ -1283,35 +1283,35 @@ namespace internal
   struct FEFaceEvaluationImpl
   {
     static void
-    evaluate_in_face(const MatrixFreeFunctions::ShapeInfo<Number>& data,
-                     Number*                                       values_dofs,
-                     Number*                                       values_quad,
-                     Number*            gradients_quad,
-                     Number*            scratch_data,
+    evaluate_in_face(const MatrixFreeFunctions::ShapeInfo<Number> &data,
+                     Number *                                      values_dofs,
+                     Number *                                      values_quad,
+                     Number *           gradients_quad,
+                     Number *           scratch_data,
                      const bool         evaluate_val,
                      const bool         evaluate_grad,
                      const unsigned int subface_index)
     {
-      const AlignedVector<Number>& val1
+      const AlignedVector<Number> &val1
         = symmetric_evaluate ?
             data.shape_values_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
                data.shape_values :
                data.values_within_subface[subface_index % 2]);
-      const AlignedVector<Number>& val2
+      const AlignedVector<Number> &val2
         = symmetric_evaluate ?
             data.shape_values_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
                data.shape_values :
                data.values_within_subface[subface_index / 2]);
 
-      const AlignedVector<Number>& grad1
+      const AlignedVector<Number> &grad1
         = symmetric_evaluate ?
             data.shape_gradients_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
                data.shape_gradients :
                data.gradients_within_subface[subface_index % 2]);
-      const AlignedVector<Number>& grad2
+      const AlignedVector<Number> &grad2
         = symmetric_evaluate ?
             data.shape_gradients_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
@@ -1442,35 +1442,35 @@ namespace internal
     }
 
     static void
-    integrate_in_face(const MatrixFreeFunctions::ShapeInfo<Number>& data,
-                      Number*                                       values_dofs,
-                      Number*                                       values_quad,
-                      Number*            gradients_quad,
-                      Number*            scratch_data,
+    integrate_in_face(const MatrixFreeFunctions::ShapeInfo<Number> &data,
+                      Number *                                      values_dofs,
+                      Number *                                      values_quad,
+                      Number *           gradients_quad,
+                      Number *           scratch_data,
                       const bool         integrate_val,
                       const bool         integrate_grad,
                       const unsigned int subface_index)
     {
-      const AlignedVector<Number>& val1
+      const AlignedVector<Number> &val1
         = symmetric_evaluate ?
             data.shape_values_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
                data.shape_values :
                data.values_within_subface[subface_index % 2]);
-      const AlignedVector<Number>& val2
+      const AlignedVector<Number> &val2
         = symmetric_evaluate ?
             data.shape_values_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
                data.shape_values :
                data.values_within_subface[subface_index / 2]);
 
-      const AlignedVector<Number>& grad1
+      const AlignedVector<Number> &grad1
         = symmetric_evaluate ?
             data.shape_gradients_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
                data.shape_gradients :
                data.gradients_within_subface[subface_index % 2]);
-      const AlignedVector<Number>& grad2
+      const AlignedVector<Number> &grad2
         = symmetric_evaluate ?
             data.shape_gradients_eo :
             (subface_index >= GeometryInfo<dim>::max_children_per_cell ?
@@ -1606,9 +1606,9 @@ namespace internal
   {
     template <bool do_evaluate, bool add_into_output>
     static void
-    interpolate(const MatrixFreeFunctions::ShapeInfo<Number>& data,
-                const Number*                                 input,
-                Number*                                       output,
+    interpolate(const MatrixFreeFunctions::ShapeInfo<Number> &data,
+                const Number *                                input,
+                Number *                                      output,
                 const bool                                    do_gradients,
                 const unsigned int                            face_no)
     {

@@ -44,22 +44,22 @@ class MatrixFreeTest
 public:
   typedef Vector<Number> VectorType;
 
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number> &data_in) : data(data_in){};
 
   void
-  operator()(const MatrixFree<dim, Number>&               data,
-             VectorType&                                  dst,
-             const VectorType&                            src,
-             const std::pair<unsigned int, unsigned int>& cell_range) const;
+  operator()(const MatrixFree<dim, Number> &              data,
+             VectorType &                                 dst,
+             const VectorType &                           src,
+             const std::pair<unsigned int, unsigned int> &cell_range) const;
 
   void
-  test_functions(const VectorType& src) const
+  test_functions(const VectorType &src) const
   {
     for(unsigned int i = 0; i < 5; ++i)
       errors[i] = 0;
     data.cell_loop(&MatrixFreeTest<dim, fe_degree, Number>::operator(),
                    this,
-                   const_cast<VectorType&>(src),
+                   const_cast<VectorType &>(src),
                    src);
 
     deallog << "Error val, function values alone: " << errors[0] << std::endl;
@@ -74,17 +74,17 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
+  const MatrixFree<dim, Number> &data;
   mutable double                 errors[5];
 };
 
 template <int dim, int fe_degree, typename Number>
 void
 MatrixFreeTest<dim, fe_degree, Number>::
-operator()(const MatrixFree<dim, Number>& data,
-           VectorType&,
-           const VectorType&                            src,
-           const std::pair<unsigned int, unsigned int>& cell_range) const
+operator()(const MatrixFree<dim, Number> &data,
+           VectorType &,
+           const VectorType &                           src,
+           const std::pair<unsigned int, unsigned int> &cell_range) const
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
   FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval2(data);

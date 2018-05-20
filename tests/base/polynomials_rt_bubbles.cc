@@ -24,7 +24,7 @@
 
 template <int dim>
 void
-plot(const PolynomialsRT_Bubbles<dim>& poly)
+plot(const PolynomialsRT_Bubbles<dim> &poly)
 {
   QTrapez<1>                  base_quadrature;
   QIterated<dim>              quadrature(base_quadrature, poly.degree() + 2);

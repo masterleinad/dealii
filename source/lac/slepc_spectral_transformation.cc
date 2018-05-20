@@ -29,7 +29,7 @@ DEAL_II_NAMESPACE_OPEN
 
 namespace SLEPcWrappers
 {
-  TransformationBase::TransformationBase(const MPI_Comm& mpi_communicator)
+  TransformationBase::TransformationBase(const MPI_Comm &mpi_communicator)
   {
     const PetscErrorCode ierr = STCreate(mpi_communicator, &st);
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
@@ -53,7 +53,7 @@ namespace SLEPcWrappers
   }
 
   void
-  TransformationBase::set_solver(const PETScWrappers::SolverBase& solver)
+  TransformationBase::set_solver(const PETScWrappers::SolverBase &solver)
   {
     PetscErrorCode ierr = STSetKSP(st, solver.solver_data->ksp);
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
@@ -66,11 +66,11 @@ namespace SLEPcWrappers
     : shift_parameter(shift_parameter)
   {}
 
-  TransformationShift::TransformationShift(const MPI_Comm& mpi_communicator,
-                                           const AdditionalData& data)
+  TransformationShift::TransformationShift(const MPI_Comm &mpi_communicator,
+                                           const AdditionalData &data)
     : TransformationBase(mpi_communicator), additional_data(data)
   {
-    PetscErrorCode ierr = STSetType(st, const_cast<char*>(STSHIFT));
+    PetscErrorCode ierr = STSetType(st, const_cast<char *>(STSHIFT));
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
 
     ierr = STSetShift(st, additional_data.shift_parameter);
@@ -85,11 +85,11 @@ namespace SLEPcWrappers
   {}
 
   TransformationShiftInvert::TransformationShiftInvert(
-    const MPI_Comm&       mpi_communicator,
-    const AdditionalData& data)
+    const MPI_Comm &      mpi_communicator,
+    const AdditionalData &data)
     : TransformationBase(mpi_communicator), additional_data(data)
   {
-    PetscErrorCode ierr = STSetType(st, const_cast<char*>(STSINVERT));
+    PetscErrorCode ierr = STSetType(st, const_cast<char *>(STSINVERT));
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
 
     ierr = STSetShift(st, additional_data.shift_parameter);
@@ -104,12 +104,12 @@ namespace SLEPcWrappers
   {}
 
   TransformationSpectrumFolding::TransformationSpectrumFolding(
-    const MPI_Comm&       mpi_communicator,
-    const AdditionalData& data)
+    const MPI_Comm &      mpi_communicator,
+    const AdditionalData &data)
     : TransformationBase(mpi_communicator), additional_data(data)
   {
 #  if DEAL_II_PETSC_VERSION_LT(3, 5, 0)
-    PetscErrorCode ierr = STSetType(st, const_cast<char*>(STFOLD));
+    PetscErrorCode ierr = STSetType(st, const_cast<char *>(STFOLD));
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
 
     ierr = STSetShift(st, additional_data.shift_parameter);
@@ -132,11 +132,11 @@ namespace SLEPcWrappers
     : shift_parameter(shift_parameter), antishift_parameter(antishift_parameter)
   {}
 
-  TransformationCayley::TransformationCayley(const MPI_Comm& mpi_communicator,
-                                             const AdditionalData& data)
+  TransformationCayley::TransformationCayley(const MPI_Comm &mpi_communicator,
+                                             const AdditionalData &data)
     : TransformationBase(mpi_communicator), additional_data(data)
   {
-    PetscErrorCode ierr = STSetType(st, const_cast<char*>(STCAYLEY));
+    PetscErrorCode ierr = STSetType(st, const_cast<char *>(STCAYLEY));
     AssertThrow(ierr == 0, SolverBase::ExcSLEPcError(ierr));
 
     ierr = STSetShift(st, additional_data.shift_parameter);

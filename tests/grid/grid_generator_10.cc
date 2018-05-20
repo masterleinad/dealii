@@ -21,7 +21,7 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_iterator.h>
 
-void my_cylinder(Triangulation<3>& tria,
+void my_cylinder(Triangulation<3> &tria,
                  const double      radius,
                  const double      half_length)
 {

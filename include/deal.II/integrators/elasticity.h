@@ -45,8 +45,8 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    cell_matrix(FullMatrix<double>&      M,
-                const FEValuesBase<dim>& fe,
+    cell_matrix(FullMatrix<double> &     M,
+                const FEValuesBase<dim> &fe,
                 const double             factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
@@ -78,9 +78,9 @@ namespace LocalIntegrators
     template <int dim, typename number>
     inline void
     cell_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& input,
+      Vector<number> &                                                   result,
+      const FEValuesBase<dim> &                                          fe,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &input,
       double factor = 1.)
     {
       const unsigned int nq     = fe.n_quadrature_points;
@@ -113,8 +113,8 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    nitsche_matrix(FullMatrix<double>&      M,
-                   const FEValuesBase<dim>& fe,
+    nitsche_matrix(FullMatrix<double> &     M,
+                   const FEValuesBase<dim> &fe,
                    double                   penalty,
                    double                   factor = 1.)
     {
@@ -162,8 +162,8 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    nitsche_tangential_matrix(FullMatrix<double>&      M,
-                              const FEValuesBase<dim>& fe,
+    nitsche_tangential_matrix(FullMatrix<double> &     M,
+                              const FEValuesBase<dim> &fe,
                               double                   penalty,
                               double                   factor = 1.)
     {
@@ -244,11 +244,11 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     nitsche_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
-      const VectorSlice<const std::vector<std::vector<double>>>&         data,
+      Vector<number> &                                                   result,
+      const FEValuesBase<dim> &                                          fe,
+      const VectorSlice<const std::vector<std::vector<double>>> &        input,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &Dinput,
+      const VectorSlice<const std::vector<std::vector<double>>> &        data,
       double penalty,
       double factor = 1.)
     {
@@ -297,11 +297,11 @@ namespace LocalIntegrators
     template <int dim, typename number>
     inline void
     nitsche_tangential_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
-      const VectorSlice<const std::vector<std::vector<double>>>&         data,
+      Vector<number> &                                                   result,
+      const FEValuesBase<dim> &                                          fe,
+      const VectorSlice<const std::vector<std::vector<double>>> &        input,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &Dinput,
+      const VectorSlice<const std::vector<std::vector<double>>> &        data,
       double penalty,
       double factor = 1.)
     {
@@ -377,10 +377,10 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     nitsche_residual_homogeneous(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
+      Vector<number> &                                                   result,
+      const FEValuesBase<dim> &                                          fe,
+      const VectorSlice<const std::vector<std::vector<double>>> &        input,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &Dinput,
       double penalty,
       double factor = 1.)
     {
@@ -423,12 +423,12 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    ip_matrix(FullMatrix<double>&      M11,
-              FullMatrix<double>&      M12,
-              FullMatrix<double>&      M21,
-              FullMatrix<double>&      M22,
-              const FEValuesBase<dim>& fe1,
-              const FEValuesBase<dim>& fe2,
+    ip_matrix(FullMatrix<double> &     M11,
+              FullMatrix<double> &     M12,
+              FullMatrix<double> &     M21,
+              FullMatrix<double> &     M22,
+              const FEValuesBase<dim> &fe1,
+              const FEValuesBase<dim> &fe2,
               const double             pen,
               const double             int_factor = 1.,
               const double             ext_factor = -1.)
@@ -535,16 +535,16 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     ip_residual(
-      Vector<number>&                                            result1,
-      Vector<number>&                                            result2,
-      const FEValuesBase<dim>&                                   fe1,
-      const FEValuesBase<dim>&                                   fe2,
-      const VectorSlice<const std::vector<std::vector<double>>>& input1,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-                                                                 Dinput1,
-      const VectorSlice<const std::vector<std::vector<double>>>& input2,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-             Dinput2,
+      Vector<number> &                                           result1,
+      Vector<number> &                                           result2,
+      const FEValuesBase<dim> &                                  fe1,
+      const FEValuesBase<dim> &                                  fe2,
+      const VectorSlice<const std::vector<std::vector<double>>> &input1,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>
+        &                                                        Dinput1,
+      const VectorSlice<const std::vector<std::vector<double>>> &input2,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>
+        &    Dinput2,
       double pen,
       double int_factor = 1.,
       double ext_factor = -1.)

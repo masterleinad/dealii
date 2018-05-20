@@ -88,15 +88,15 @@ namespace Step52
     assemble_system();
 
     double
-    get_source(const double time, const Point<2>& point) const;
+    get_source(const double time, const Point<2> &point) const;
 
     Vector<double>
-    evaluate_diffusion(const double time, const Vector<double>& y) const;
+    evaluate_diffusion(const double time, const Vector<double> &y) const;
 
     Vector<double>
     id_minus_tau_J_inverse(const double          time,
                            const double          tau,
-                           const Vector<double>& y);
+                           const Vector<double> &y);
 
     void
     output_results(const unsigned int               time_step,
@@ -255,7 +255,7 @@ namespace Step52
   // In this function, the source term of the equation for a given time and a
   // given point is computed.
   double
-  Diffusion::get_source(const double time, const Point<2>& point) const
+  Diffusion::get_source(const double time, const Point<2> &point) const
   {
     const double intensity = 10.;
     const double frequency = numbers::PI / 10.;
@@ -283,7 +283,7 @@ namespace Step52
   // parallel.) The result is then multiplied by $M^{-1}$.
   Vector<double>
   Diffusion::evaluate_diffusion(const double          time,
-                                const Vector<double>& y) const
+                                const Vector<double> &y) const
   {
     Vector<double> tmp(dof_handler.n_dofs());
     tmp = 0.;
@@ -345,7 +345,7 @@ namespace Step52
   Vector<double>
   Diffusion::id_minus_tau_J_inverse(const double          time,
                                     const double          tau,
-                                    const Vector<double>& y)
+                                    const Vector<double> &y)
   {
     (void) time;
     SparseDirectUMFPACK inverse_mass_minus_tau_Jacobian;
@@ -730,7 +730,7 @@ main()
       Step52::Diffusion diffusion;
       diffusion.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception &exc)
     {
       std::cerr << std::endl
                 << std::endl

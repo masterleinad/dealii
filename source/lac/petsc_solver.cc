@@ -37,15 +37,15 @@ namespace PETScWrappers
     destroy_krylov_solver(ksp);
   }
 
-  SolverBase::SolverBase(SolverControl& cn, const MPI_Comm& mpi_communicator)
+  SolverBase::SolverBase(SolverControl &cn, const MPI_Comm &mpi_communicator)
     : solver_control(cn), mpi_communicator(mpi_communicator)
   {}
 
   void
-  SolverBase::solve(const MatrixBase&         A,
-                    VectorBase&               x,
-                    const VectorBase&         b,
-                    const PreconditionerBase& preconditioner)
+  SolverBase::solve(const MatrixBase &        A,
+                    VectorBase &              x,
+                    const VectorBase &        b,
+                    const PreconditionerBase &preconditioner)
   {
     /*
       TODO: PETSc duplicates communicators, so this does not work (you put MPI_COMM_SELF in, but get something other out when you ask PETSc for the communicator. This mainly fails due to the MatrixFree classes, that can not ask PETSc for a communicator. //Timo Heister
@@ -97,7 +97,7 @@ namespace PETScWrappers
         // convergence
         ierr = KSPSetConvergenceTest(solver_data->ksp,
                                      &convergence_test,
-                                     reinterpret_cast<void*>(&solver_control),
+                                     reinterpret_cast<void *>(&solver_control),
                                      nullptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
       }
@@ -134,7 +134,7 @@ namespace PETScWrappers
   }
 
   void
-  SolverBase::set_prefix(const std::string& prefix)
+  SolverBase::set_prefix(const std::string &prefix)
   {
     prefix_name = prefix;
   }
@@ -145,7 +145,7 @@ namespace PETScWrappers
     solver_data.reset();
   }
 
-  SolverControl&
+  SolverControl &
   SolverBase::control() const
   {
     return solver_control;
@@ -155,11 +155,11 @@ namespace PETScWrappers
   SolverBase::convergence_test(KSP /*ksp*/,
                                const PetscInt      iteration,
                                const PetscReal     residual_norm,
-                               KSPConvergedReason* reason,
-                               void*               solver_control_x)
+                               KSPConvergedReason *reason,
+                               void *              solver_control_x)
   {
-    SolverControl& solver_control
-      = *reinterpret_cast<SolverControl*>(solver_control_x);
+    SolverControl &solver_control
+      = *reinterpret_cast<SolverControl *>(solver_control_x);
 
     const SolverControl::State state
       = solver_control.check(iteration, residual_norm);
@@ -190,7 +190,7 @@ namespace PETScWrappers
   }
 
   void
-  SolverBase::initialize(const PreconditionerBase& preconditioner)
+  SolverBase::initialize(const PreconditionerBase &preconditioner)
   {
     PetscErrorCode ierr;
 
@@ -215,7 +215,7 @@ namespace PETScWrappers
     // convergence
     ierr = KSPSetConvergenceTest(solver_data->ksp,
                                  &convergence_test,
-                                 reinterpret_cast<void*>(&solver_control),
+                                 reinterpret_cast<void *>(&solver_control),
                                  nullptr);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -231,14 +231,14 @@ namespace PETScWrappers
     : omega(omega)
   {}
 
-  SolverRichardson::SolverRichardson(SolverControl&        cn,
-                                     const MPI_Comm&       mpi_communicator,
-                                     const AdditionalData& data)
+  SolverRichardson::SolverRichardson(SolverControl &       cn,
+                                     const MPI_Comm &      mpi_communicator,
+                                     const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverRichardson::set_solver_type(KSP& ksp) const
+  SolverRichardson::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPRICHARDSON);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -276,14 +276,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverChebychev ------------------------ */
 
-  SolverChebychev::SolverChebychev(SolverControl&        cn,
-                                   const MPI_Comm&       mpi_communicator,
-                                   const AdditionalData& data)
+  SolverChebychev::SolverChebychev(SolverControl &       cn,
+                                   const MPI_Comm &      mpi_communicator,
+                                   const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverChebychev::set_solver_type(KSP& ksp) const
+  SolverChebychev::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPCHEBYSHEV);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -297,14 +297,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverCG ------------------------ */
 
-  SolverCG::SolverCG(SolverControl&        cn,
-                     const MPI_Comm&       mpi_communicator,
-                     const AdditionalData& data)
+  SolverCG::SolverCG(SolverControl &       cn,
+                     const MPI_Comm &      mpi_communicator,
+                     const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverCG::set_solver_type(KSP& ksp) const
+  SolverCG::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPCG);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -318,14 +318,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverBiCG ------------------------ */
 
-  SolverBiCG::SolverBiCG(SolverControl&        cn,
-                         const MPI_Comm&       mpi_communicator,
-                         const AdditionalData& data)
+  SolverBiCG::SolverBiCG(SolverControl &       cn,
+                         const MPI_Comm &      mpi_communicator,
+                         const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverBiCG::set_solver_type(KSP& ksp) const
+  SolverBiCG::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPBICG);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -346,14 +346,14 @@ namespace PETScWrappers
       right_preconditioning(right_preconditioning)
   {}
 
-  SolverGMRES::SolverGMRES(SolverControl&        cn,
-                           const MPI_Comm&       mpi_communicator,
-                           const AdditionalData& data)
+  SolverGMRES::SolverGMRES(SolverControl &       cn,
+                           const MPI_Comm &      mpi_communicator,
+                           const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverGMRES::set_solver_type(KSP& ksp) const
+  SolverGMRES::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPGMRES);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -403,14 +403,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverBicgstab ------------------------ */
 
-  SolverBicgstab::SolverBicgstab(SolverControl&        cn,
-                                 const MPI_Comm&       mpi_communicator,
-                                 const AdditionalData& data)
+  SolverBicgstab::SolverBicgstab(SolverControl &       cn,
+                                 const MPI_Comm &      mpi_communicator,
+                                 const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverBicgstab::set_solver_type(KSP& ksp) const
+  SolverBicgstab::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPBCGS);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -424,14 +424,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverCGS ------------------------ */
 
-  SolverCGS::SolverCGS(SolverControl&        cn,
-                       const MPI_Comm&       mpi_communicator,
-                       const AdditionalData& data)
+  SolverCGS::SolverCGS(SolverControl &       cn,
+                       const MPI_Comm &      mpi_communicator,
+                       const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverCGS::set_solver_type(KSP& ksp) const
+  SolverCGS::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPCGS);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -445,14 +445,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverTFQMR ------------------------ */
 
-  SolverTFQMR::SolverTFQMR(SolverControl&        cn,
-                           const MPI_Comm&       mpi_communicator,
-                           const AdditionalData& data)
+  SolverTFQMR::SolverTFQMR(SolverControl &       cn,
+                           const MPI_Comm &      mpi_communicator,
+                           const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverTFQMR::set_solver_type(KSP& ksp) const
+  SolverTFQMR::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPTFQMR);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -466,14 +466,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverTCQMR ------------------------ */
 
-  SolverTCQMR::SolverTCQMR(SolverControl&        cn,
-                           const MPI_Comm&       mpi_communicator,
-                           const AdditionalData& data)
+  SolverTCQMR::SolverTCQMR(SolverControl &       cn,
+                           const MPI_Comm &      mpi_communicator,
+                           const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverTCQMR::set_solver_type(KSP& ksp) const
+  SolverTCQMR::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPTCQMR);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -487,14 +487,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverCR ------------------------ */
 
-  SolverCR::SolverCR(SolverControl&        cn,
-                     const MPI_Comm&       mpi_communicator,
-                     const AdditionalData& data)
+  SolverCR::SolverCR(SolverControl &       cn,
+                     const MPI_Comm &      mpi_communicator,
+                     const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverCR::set_solver_type(KSP& ksp) const
+  SolverCR::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPCR);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -508,14 +508,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverLSQR ------------------------ */
 
-  SolverLSQR::SolverLSQR(SolverControl&        cn,
-                         const MPI_Comm&       mpi_communicator,
-                         const AdditionalData& data)
+  SolverLSQR::SolverLSQR(SolverControl &       cn,
+                         const MPI_Comm &      mpi_communicator,
+                         const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverLSQR::set_solver_type(KSP& ksp) const
+  SolverLSQR::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPLSQR);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -529,14 +529,14 @@ namespace PETScWrappers
 
   /* ---------------------- SolverPreOnly ------------------------ */
 
-  SolverPreOnly::SolverPreOnly(SolverControl&        cn,
-                               const MPI_Comm&       mpi_communicator,
-                               const AdditionalData& data)
+  SolverPreOnly::SolverPreOnly(SolverControl &       cn,
+                               const MPI_Comm &      mpi_communicator,
+                               const AdditionalData &data)
     : SolverBase(cn, mpi_communicator), additional_data(data)
   {}
 
   void
-  SolverPreOnly::set_solver_type(KSP& ksp) const
+  SolverPreOnly::set_solver_type(KSP &ksp) const
   {
     PetscErrorCode ierr = KSPSetType(ksp, KSPPREONLY);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -567,16 +567,16 @@ namespace PETScWrappers
     // does not have to be destroyed explicitly here
   }
 
-  SparseDirectMUMPS::SparseDirectMUMPS(SolverControl&        cn,
-                                       const MPI_Comm&       mpi_communicator,
-                                       const AdditionalData& data)
+  SparseDirectMUMPS::SparseDirectMUMPS(SolverControl &       cn,
+                                       const MPI_Comm &      mpi_communicator,
+                                       const AdditionalData &data)
     : SolverBase(cn, mpi_communicator),
       additional_data(data),
       symmetric_mode(false)
   {}
 
   void
-  SparseDirectMUMPS::set_solver_type(KSP& ksp) const
+  SparseDirectMUMPS::set_solver_type(KSP &ksp) const
   {
     /**
     * KSPPREONLY implements a stub method that applies only the
@@ -603,9 +603,9 @@ namespace PETScWrappers
   }
 
   void
-  SparseDirectMUMPS::solve(const MatrixBase& A,
-                           VectorBase&       x,
-                           const VectorBase& b)
+  SparseDirectMUMPS::solve(const MatrixBase &A,
+                           VectorBase &      x,
+                           const VectorBase &b)
   {
 #  ifdef DEAL_II_PETSC_WITH_MUMPS
     /**
@@ -681,7 +681,7 @@ namespace PETScWrappers
          */
         ierr = KSPSetConvergenceTest(solver_data->ksp,
                                      &convergence_test,
-                                     reinterpret_cast<void*>(&solver_control),
+                                     reinterpret_cast<void *>(&solver_control),
                                      PETSC_NULL);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -782,11 +782,11 @@ namespace PETScWrappers
   SparseDirectMUMPS::convergence_test(KSP /*ksp*/,
                                       const PetscInt      iteration,
                                       const PetscReal     residual_norm,
-                                      KSPConvergedReason* reason,
-                                      void*               solver_control_x)
+                                      KSPConvergedReason *reason,
+                                      void *              solver_control_x)
   {
-    SolverControl& solver_control
-      = *reinterpret_cast<SolverControl*>(solver_control_x);
+    SolverControl &solver_control
+      = *reinterpret_cast<SolverControl *>(solver_control_x);
 
     const SolverControl::State state
       = solver_control.check(iteration, residual_norm);

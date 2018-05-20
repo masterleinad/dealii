@@ -117,59 +117,59 @@ public:
    */
   template <class Matrix, class Preconditioner>
   void
-  solve(const Matrix&         A,
-        VectorType&           x,
-        const VectorType&     b,
-        const Preconditioner& precond) const;
+  solve(const Matrix &        A,
+        VectorType &          x,
+        const VectorType &    b,
+        const Preconditioner &precond) const;
 
   /**
    * Select a new solver. Note that all solver names used in this class are
    * all lower case.
    */
   void
-  select(const std::string& name);
+  select(const std::string &name);
 
   /**
    * Set a new SolverControl. This needs to be set before solving.
    */
   void
-  set_control(SolverControl& ctrl);
+  set_control(SolverControl &ctrl);
 
   /**
    * Set the additional data. For more information see the @p Solver class.
    */
   void
-  set_data(const typename SolverRichardson<VectorType>::AdditionalData& data);
+  set_data(const typename SolverRichardson<VectorType>::AdditionalData &data);
 
   /**
    * Set the additional data. For more information see the @p Solver class.
    */
   void
-  set_data(const typename SolverCG<VectorType>::AdditionalData& data);
+  set_data(const typename SolverCG<VectorType>::AdditionalData &data);
 
   /**
    * Set the additional data. For more information see the @p Solver class.
    */
   void
-  set_data(const typename SolverMinRes<VectorType>::AdditionalData& data);
+  set_data(const typename SolverMinRes<VectorType>::AdditionalData &data);
 
   /**
    * Set the additional data. For more information see the @p Solver class.
    */
   void
-  set_data(const typename SolverBicgstab<VectorType>::AdditionalData& data);
+  set_data(const typename SolverBicgstab<VectorType>::AdditionalData &data);
 
   /**
    * Set the additional data. For more information see the @p Solver class.
    */
   void
-  set_data(const typename SolverGMRES<VectorType>::AdditionalData& data);
+  set_data(const typename SolverGMRES<VectorType>::AdditionalData &data);
 
   /**
    * Set the additional data. For more information see the @p Solver class.
    */
   void
-  set_data(const typename SolverFGMRES<VectorType>::AdditionalData& data);
+  set_data(const typename SolverFGMRES<VectorType>::AdditionalData &data);
 
   /**
    * Get the names of all implemented solvers. The list of possible
@@ -248,7 +248,7 @@ SolverSelector<VectorType>::~SolverSelector()
 
 template <typename VectorType>
 void
-SolverSelector<VectorType>::select(const std::string& name)
+SolverSelector<VectorType>::select(const std::string &name)
 {
   solver_name = name;
 }
@@ -256,10 +256,10 @@ SolverSelector<VectorType>::select(const std::string& name)
 template <typename VectorType>
 template <class Matrix, class Preconditioner>
 void
-SolverSelector<VectorType>::solve(const Matrix&         A,
-                                  VectorType&           x,
-                                  const VectorType&     b,
-                                  const Preconditioner& precond) const
+SolverSelector<VectorType>::solve(const Matrix &        A,
+                                  VectorType &          x,
+                                  const VectorType &    b,
+                                  const Preconditioner &precond) const
 {
   if(solver_name == "richardson")
     {
@@ -297,7 +297,7 @@ SolverSelector<VectorType>::solve(const Matrix&         A,
 
 template <typename VectorType>
 void
-SolverSelector<VectorType>::set_control(SolverControl& ctrl)
+SolverSelector<VectorType>::set_control(SolverControl &ctrl)
 {
   control = &ctrl;
 }
@@ -312,7 +312,7 @@ SolverSelector<VectorType>::get_solver_names()
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
-  const typename SolverGMRES<VectorType>::AdditionalData& data)
+  const typename SolverGMRES<VectorType>::AdditionalData &data)
 {
   gmres_data = data;
 }
@@ -320,7 +320,7 @@ SolverSelector<VectorType>::set_data(
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
-  const typename SolverFGMRES<VectorType>::AdditionalData& data)
+  const typename SolverFGMRES<VectorType>::AdditionalData &data)
 {
   fgmres_data = data;
 }
@@ -328,7 +328,7 @@ SolverSelector<VectorType>::set_data(
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
-  const typename SolverRichardson<VectorType>::AdditionalData& data)
+  const typename SolverRichardson<VectorType>::AdditionalData &data)
 {
   richardson_data = data;
 }
@@ -336,7 +336,7 @@ SolverSelector<VectorType>::set_data(
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
-  const typename SolverCG<VectorType>::AdditionalData& data)
+  const typename SolverCG<VectorType>::AdditionalData &data)
 {
   cg_data = data;
 }
@@ -344,7 +344,7 @@ SolverSelector<VectorType>::set_data(
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
-  const typename SolverMinRes<VectorType>::AdditionalData& data)
+  const typename SolverMinRes<VectorType>::AdditionalData &data)
 {
   minres_data = data;
 }
@@ -352,7 +352,7 @@ SolverSelector<VectorType>::set_data(
 template <typename VectorType>
 void
 SolverSelector<VectorType>::set_data(
-  const typename SolverBicgstab<VectorType>::AdditionalData& data)
+  const typename SolverBicgstab<VectorType>::AdditionalData &data)
 {
   bicgstab_data = data;
 }

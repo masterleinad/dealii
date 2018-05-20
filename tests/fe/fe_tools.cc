@@ -28,7 +28,7 @@
 
 template <typename number>
 void
-print_formatted(const FullMatrix<number>& A,
+print_formatted(const FullMatrix<number> &A,
                 const unsigned int        precision,
                 const unsigned int        width)
 {
@@ -49,7 +49,7 @@ print_formatted(const FullMatrix<number>& A,
 
 template <int dim>
 void
-test_embedding(const FiniteElement<dim>& fe)
+test_embedding(const FiniteElement<dim> &fe)
 {
   const unsigned int n  = fe.dofs_per_cell;
   const unsigned int nc = GeometryInfo<dim>::max_children_per_cell;
@@ -80,9 +80,9 @@ test_embedding(const FiniteElement<dim>& fe)
 
 template <int dim>
 void
-test_projection(const FiniteElement<dim>& fe1,
-                const FiniteElement<dim>& fe2,
-                std::ostream&             out)
+test_projection(const FiniteElement<dim> &fe1,
+                const FiniteElement<dim> &fe2,
+                std::ostream &            out)
 {
   out << fe1.get_name() << " -> " << fe2.get_name() << std::endl;
 
@@ -101,7 +101,7 @@ test_projection(const FiniteElement<dim>& fe1,
 
 template <int dim>
 void
-test_projection(std::ostream& out)
+test_projection(std::ostream &out)
 {
   FE_DGQ<dim> q0(0);
   FE_DGQ<dim> q1(1);
@@ -146,7 +146,7 @@ test_projection(std::ostream& out)
 
 template <int dim>
 void
-test_renumbering(const FiniteElement<dim>& fe)
+test_renumbering(const FiniteElement<dim> &fe)
 {
   std::vector<unsigned int>              v(fe.dofs_per_cell);
   std::vector<std::vector<unsigned int>> start;

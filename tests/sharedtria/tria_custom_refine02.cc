@@ -27,7 +27,7 @@
 
 template <int dim>
 void
-mypartition(parallel::shared::Triangulation<dim>& tria)
+mypartition(parallel::shared::Triangulation<dim> &tria)
 {
   std::vector<unsigned int> assignment
     = {0, 0, 1, 2, 0, 0, 2, 1, 0, 2, 2, 1, 2, 2, 0, 0};
@@ -96,7 +96,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    all;

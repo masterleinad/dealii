@@ -299,22 +299,22 @@ namespace SUNDIALS
        * @param maximum_non_linear_iterations_ic Initial condition Newton max iterations
        */
       AdditionalData( // Initial parameters
-        const double& initial_time      = 0.0,
-        const double& final_time        = 1.0,
-        const double& initial_step_size = 1e-2,
-        const double& output_period     = 1e-1,
+        const double &initial_time      = 0.0,
+        const double &final_time        = 1.0,
+        const double &initial_step_size = 1e-2,
+        const double &output_period     = 1e-1,
         // Running parameters
-        const double&       minimum_step_size             = 1e-6,
-        const unsigned int& maximum_order                 = 5,
-        const unsigned int& maximum_non_linear_iterations = 10,
+        const double &      minimum_step_size             = 1e-6,
+        const unsigned int &maximum_order                 = 5,
+        const unsigned int &maximum_non_linear_iterations = 10,
         // Error parameters
-        const double& absolute_tolerance                = 1e-6,
-        const double& relative_tolerance                = 1e-5,
-        const bool&   ignore_algebraic_terms_for_errors = true,
+        const double &absolute_tolerance                = 1e-6,
+        const double &relative_tolerance                = 1e-5,
+        const bool &  ignore_algebraic_terms_for_errors = true,
         // Initial conditions parameters
-        const InitialConditionCorrection& ic_type    = use_y_diff,
-        const InitialConditionCorrection& reset_type = use_y_diff,
-        const unsigned int&               maximum_non_linear_iterations_ic = 5)
+        const InitialConditionCorrection &ic_type    = use_y_diff,
+        const InitialConditionCorrection &reset_type = use_y_diff,
+        const unsigned int &              maximum_non_linear_iterations_ic = 5)
         : initial_time(initial_time),
           final_time(final_time),
           initial_step_size(initial_step_size),
@@ -372,7 +372,7 @@ namespace SUNDIALS
        * using `prm`.
        */
       void
-      add_parameters(ParameterHandler& prm)
+      add_parameters(ParameterHandler &prm)
       {
         prm.add_parameter("Initial time", initial_time);
         prm.add_parameter("Final time", final_time);
@@ -411,7 +411,7 @@ namespace SUNDIALS
           " use_y_dot: compute all components of y, given y_dot.",
           Patterns::Selection("none|use_y_diff|use_y_dot"));
         prm.add_action("Correction type at initial time",
-                       [&](const std::string& value) {
+                       [&](const std::string &value) {
                          if(value == "use_y_diff")
                            ic_type = use_y_diff;
                          else if(value == "use_y_dot")
@@ -436,7 +436,7 @@ namespace SUNDIALS
           " use_y_dot: compute all components of y, given y_dot.",
           Patterns::Selection("none|use_y_diff|use_y_dot"));
         prm.add_action("Correction type after restart",
-                       [&](const std::string& value) {
+                       [&](const std::string &value) {
                          if(value == "use_y_diff")
                            reset_type = use_y_diff;
                          else if(value == "use_y_dot")
@@ -570,7 +570,7 @@ namespace SUNDIALS
      * @param data IDA configuration data
      * @param mpi_comm MPI communicator
      */
-    IDA(const AdditionalData& data     = AdditionalData(),
+    IDA(const AdditionalData &data     = AdditionalData(),
         const MPI_Comm        mpi_comm = MPI_COMM_WORLD);
 
     /**
@@ -583,7 +583,7 @@ namespace SUNDIALS
      * final number of computed steps.
      */
     unsigned int
-    solve_dae(VectorType& solution, VectorType& solution_dot);
+    solve_dae(VectorType &solution, VectorType &solution_dot);
 
     /**
      * Clear internal memory and start with clean objects. This function is
@@ -607,12 +607,12 @@ namespace SUNDIALS
      * @param[in,out] yp  The new (tentative) initial solution_dot
      */
     void
-    reset(const double& t, const double& h, VectorType& y, VectorType& yp);
+    reset(const double &t, const double &h, VectorType &y, VectorType &yp);
 
     /**
      * Reinit vector to have the right size, MPI communicator, etc.
      */
-    std::function<void(VectorType&)> reinit_vector;
+    std::function<void(VectorType &)> reinit_vector;
 
     /**
      * Compute residual. Return $F(t, y, \dot y)$.
@@ -625,9 +625,9 @@ namespace SUNDIALS
      *       will be thrown.
      */
     std::function<int(const double      t,
-                      const VectorType& y,
-                      const VectorType& y_dot,
-                      VectorType&       res)>
+                      const VectorType &y,
+                      const VectorType &y_dot,
+                      VectorType &      res)>
       residual;
 
     /**
@@ -661,8 +661,8 @@ namespace SUNDIALS
      *       will be thrown.
      */
     std::function<int(const double      t,
-                      const VectorType& y,
-                      const VectorType& y_dot,
+                      const VectorType &y,
+                      const VectorType &y_dot,
                       const double      alpha)>
       setup_jacobian;
 
@@ -694,7 +694,7 @@ namespace SUNDIALS
      * - <0: Unrecoverable error the computation will be aborted and an assertion
      *       will be thrown.
      */
-    std::function<int(const VectorType& rhs, VectorType& dst)>
+    std::function<int(const VectorType &rhs, VectorType &dst)>
       solve_jacobian_system;
 
     /**
@@ -712,8 +712,8 @@ namespace SUNDIALS
      * computed.
      */
     std::function<void(const double       t,
-                       const VectorType&  sol,
-                       const VectorType&  sol_dot,
+                       const VectorType & sol,
+                       const VectorType & sol_dot,
                        const unsigned int step_number)>
       output_step;
 
@@ -733,7 +733,7 @@ namespace SUNDIALS
      * The default implementation simply returns `false`, i.e., no restart is
      * performed during the evolution.
      */
-    std::function<bool(const double t, VectorType& sol, VectorType& sol_dot)>
+    std::function<bool(const double t, VectorType &sol, VectorType &sol_dot)>
       solver_should_restart;
 
     /**
@@ -752,7 +752,7 @@ namespace SUNDIALS
      * user does not provide an implementation, the weights are assumed to be all
      * ones.
      */
-    std::function<VectorType&()> get_local_tolerances;
+    std::function<VectorType &()> get_local_tolerances;
 
     /**
      * Handle IDA exceptions.
@@ -788,7 +788,7 @@ namespace SUNDIALS
     /**
      * IDA memory object.
      */
-    void* ida_mem;
+    void *ida_mem;
 
     /**
      * IDA solution vector.

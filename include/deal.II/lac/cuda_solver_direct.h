@@ -47,7 +47,7 @@ namespace CUDAWrappers
       /**
        * Set the additional data field to the desired solver.
        */
-      explicit AdditionalData(const std::string& solver_type = "LU_dense");
+      explicit AdditionalData(const std::string &solver_type = "LU_dense");
 
       /**
        * Set the solver type. Possibilities are:
@@ -64,9 +64,9 @@ namespace CUDAWrappers
     /**
      * Constructor. Takes the solver control object and creates the solver.
      */
-    SolverDirect(const Utilities::CUDA::Handle& handle,
-                 SolverControl&                 cn,
-                 const AdditionalData&          data = AdditionalData());
+    SolverDirect(const Utilities::CUDA::Handle &handle,
+                 SolverControl &                cn,
+                 const AdditionalData &         data = AdditionalData());
 
     /**
      * Destructor.
@@ -77,21 +77,21 @@ namespace CUDAWrappers
      * Solve the linear system <tt>Ax=b</tt>.
      */
     void
-    solve(const SparseMatrix<Number>&                        A,
-          LinearAlgebra::CUDAWrappers::Vector<Number>&       x,
-          const LinearAlgebra::CUDAWrappers::Vector<Number>& b);
+    solve(const SparseMatrix<Number> &                       A,
+          LinearAlgebra::CUDAWrappers::Vector<Number> &      x,
+          const LinearAlgebra::CUDAWrappers::Vector<Number> &b);
 
     /**
      * Access to object that controls convergence.
      */
-    SolverControl&
+    SolverControl &
     control() const;
 
   private:
     /**
      * Handle
      */
-    const Utilities::CUDA::Handle& cuda_handle;
+    const Utilities::CUDA::Handle &cuda_handle;
 
     /**
      * Reference to the object that controls convergence of the iterative
@@ -99,7 +99,7 @@ namespace CUDAWrappers
      * but we copy the data from this object before starting the solution
      * process, and copy the data back into it afterwards.
      */
-    SolverControl& solver_control;
+    SolverControl &solver_control;
 
     /**
      * Store a copy of the flags for this particular solver.

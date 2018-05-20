@@ -51,8 +51,8 @@ class Postprocess : public DataPostprocessor<dim>
 {
 public:
   void
-  evaluate_vector_field(const DataPostprocessorInputs::Vector<dim>& inputs,
-                        std::vector<Vector<double>>& computed_quantities) const;
+  evaluate_vector_field(const DataPostprocessorInputs::Vector<dim> &inputs,
+                        std::vector<Vector<double>> &computed_quantities) const;
 
   std::vector<std::string>
   get_names() const;
@@ -91,8 +91,8 @@ Postprocess<dim>::n_output_variables() const
 template <int dim>
 void
 Postprocess<dim>::evaluate_vector_field(
-  const DataPostprocessorInputs::Vector<dim>& inputs,
-  std::vector<Vector<double>>&                computed_quantities) const
+  const DataPostprocessorInputs::Vector<dim> &inputs,
+  std::vector<Vector<double>> &               computed_quantities) const
 {
   Assert(computed_quantities.size() == inputs.solution_values.size(),
          ExcDimensionMismatch(computed_quantities.size(),

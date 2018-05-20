@@ -100,7 +100,7 @@ public:
    *
    * The debug argument determines the verbosity of this class.
    */
-  PathSearch(const std::string& cls, const unsigned int debug = 0);
+  PathSearch(const std::string &cls, const unsigned int debug = 0);
 
   /**
    * Find a file in the class specified by the constructor and return its
@@ -119,7 +119,7 @@ public:
    * @param open_mode The mode handed over to the @p fopen function.
    */
   std::string
-  find(const std::string& filename, const char* open_mode = "r");
+  find(const std::string &filename, const char *open_mode = "r");
 
   /**
    * Find a file in the class specified by the constructor and return its
@@ -140,36 +140,36 @@ public:
    * @param open_mode The mode handed over to the @p fopen function.
    */
   std::string
-  find(const std::string& filename,
-       const std::string& suffix,
-       const char*        open_mode = "r");
+  find(const std::string &filename,
+       const std::string &suffix,
+       const char *       open_mode = "r");
 
   /**
    * Show the paths and suffixes used for this object.
    */
   template <class StreamType>
   void
-  show(StreamType& stream) const;
+  show(StreamType &stream) const;
 
   /**
    * Add a new class.
    */
   static void
-  add_class(const std::string& cls);
+  add_class(const std::string &cls);
 
   /**
    * Add a path to the current class. See PathSearch::Position for possible
    * position arguments.
    */
   void
-  add_path(const std::string& path, Position pos = back);
+  add_path(const std::string &path, Position pos = back);
 
   /**
    * Add a path to the current class. See PathSearch::Position for possible
    * position arguments.
    */
   void
-  add_suffix(const std::string& suffix, Position pos = back);
+  add_suffix(const std::string &suffix, Position pos = back);
 
   /**
    * This class was not registered in the path search mechanism.
@@ -206,15 +206,15 @@ private:
    * Get path list for a certain class. Used to set up #my_path_list in
    * constructor.
    */
-  static std::vector<std::string>&
-  get_path_list(const std::string& cls);
+  static std::vector<std::string> &
+  get_path_list(const std::string &cls);
 
   /**
    * Get suffix list for a certain class. Used to set up #my_suffix_list in
    * constructor.
    */
-  static std::vector<std::string>&
-  get_suffix_list(const std::string& cls);
+  static std::vector<std::string> &
+  get_suffix_list(const std::string &cls);
 
   /**
    * The file class handled by this object.
@@ -234,12 +234,12 @@ private:
   /**
    * Path list for the class this object belongs to.
    */
-  std::vector<std::string>& my_path_list;
+  std::vector<std::string> &my_path_list;
 
   /**
    * Suffix list for the class this object belongs to.
    */
-  std::vector<std::string>& my_suffix_list;
+  std::vector<std::string> &my_suffix_list;
 
   /**
    * Debug flag. No output if zero.
@@ -256,7 +256,7 @@ private:
 
 template <class StreamType>
 inline void
-PathSearch::show(StreamType& out) const
+PathSearch::show(StreamType &out) const
 {
   out << "DEAL_II_" << cls << "PATH=\"";
   bool first = true;

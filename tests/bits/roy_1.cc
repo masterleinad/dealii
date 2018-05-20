@@ -27,7 +27,7 @@
 
 template <int dim>
 void
-check(const FiniteElement<dim>& fe)
+check(const FiniteElement<dim> &fe)
 {
   for(unsigned int face = 0; face < GeometryInfo<dim>::faces_per_cell; face++)
     for(unsigned int i = 0; i < fe.dofs_per_cell; i++)

@@ -26,7 +26,7 @@ int
 main()
 {
   initlog();
-  std::ostream& out = deallog.get_file_stream();
+  std::ostream &out = deallog.get_file_stream();
 
   const int dim = 2, spacedim = 2;
 

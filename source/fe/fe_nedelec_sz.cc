@@ -50,7 +50,7 @@ FE_NedelecSZ<dim>::FE_NedelecSZ(const unsigned int degree)
 template <int dim>
 double
 FE_NedelecSZ<dim>::shape_value(const unsigned int /*i*/,
-                               const Point<dim>& /*p*/) const
+                               const Point<dim> & /*p*/) const
 {
   typedef FiniteElement<dim, dim> FEE;
   Assert(false, typename FEE::ExcFENotPrimitive());
@@ -60,7 +60,7 @@ FE_NedelecSZ<dim>::shape_value(const unsigned int /*i*/,
 template <int dim>
 double
 FE_NedelecSZ<dim>::shape_value_component(const unsigned int /*i*/,
-                                         const Point<dim>& /*p*/,
+                                         const Point<dim> & /*p*/,
                                          const unsigned int /*component*/) const
 {
   // Not implemented yet:
@@ -71,7 +71,7 @@ FE_NedelecSZ<dim>::shape_value_component(const unsigned int /*i*/,
 template <int dim>
 Tensor<1, dim>
 FE_NedelecSZ<dim>::shape_grad(const unsigned int /*i*/,
-                              const Point<dim>& /*p*/) const
+                              const Point<dim> & /*p*/) const
 {
   typedef FiniteElement<dim, dim> FEE;
   Assert(false, typename FEE::ExcFENotPrimitive());
@@ -81,7 +81,7 @@ FE_NedelecSZ<dim>::shape_grad(const unsigned int /*i*/,
 template <int dim>
 Tensor<1, dim>
 FE_NedelecSZ<dim>::shape_grad_component(const unsigned int /*i*/,
-                                        const Point<dim>& /*p*/,
+                                        const Point<dim> & /*p*/,
                                         const unsigned int /*component*/) const
 {
   Assert(false, ExcNotImplemented());
@@ -91,7 +91,7 @@ FE_NedelecSZ<dim>::shape_grad_component(const unsigned int /*i*/,
 template <int dim>
 Tensor<2, dim>
 FE_NedelecSZ<dim>::shape_grad_grad(const unsigned int /*i*/,
-                                   const Point<dim>& /*p*/) const
+                                   const Point<dim> & /*p*/) const
 {
   typedef FiniteElement<dim, dim> FEE;
   Assert(false, typename FEE::ExcFENotPrimitive());
@@ -102,7 +102,7 @@ template <int dim>
 Tensor<2, dim>
 FE_NedelecSZ<dim>::shape_grad_grad_component(
   const unsigned int /*i*/,
-  const Point<dim>& /*p*/,
+  const Point<dim> & /*p*/,
   const unsigned int /*component*/) const
 {
   Assert(false, ExcNotImplemented());
@@ -113,10 +113,10 @@ template <int dim>
 std::unique_ptr<typename FiniteElement<dim, dim>::InternalDataBase>
 FE_NedelecSZ<dim>::get_data(
   const UpdateFlags update_flags,
-  const Mapping<dim, dim>& /*mapping*/,
-  const Quadrature<dim>& quadrature,
-  dealii::internal::FEValuesImplementation::
-    FiniteElementRelatedData<dim, dim>& /*output_data*/) const
+  const Mapping<dim, dim> & /*mapping*/,
+  const Quadrature<dim> &quadrature,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>
+    & /*output_data*/) const
 {
   std::unique_ptr<InternalData> data(new InternalData);
   data->update_each = update_each(update_flags) | update_once(update_flags);
@@ -1059,9 +1059,9 @@ FE_NedelecSZ<dim>::get_data(
 template <int dim>
 void
 FE_NedelecSZ<dim>::fill_edge_values(
-  const typename Triangulation<dim, dim>::cell_iterator& cell,
-  const Quadrature<dim>&                                 quadrature,
-  const InternalData&                                    fe_data) const
+  const typename Triangulation<dim, dim>::cell_iterator &cell,
+  const Quadrature<dim> &                                quadrature,
+  const InternalData &                                   fe_data) const
 {
   // This function handles the cell-dependent construction of the EDGE-based shape functions.
   //
@@ -1464,9 +1464,9 @@ FE_NedelecSZ<dim>::fill_edge_values(
 template <int dim>
 void
 FE_NedelecSZ<dim>::fill_face_values(
-  const typename Triangulation<dim, dim>::cell_iterator& cell,
-  const Quadrature<dim>&                                 quadrature,
-  const InternalData&                                    fe_data) const
+  const typename Triangulation<dim, dim>::cell_iterator &cell,
+  const Quadrature<dim> &                                quadrature,
+  const InternalData &                                   fe_data) const
 {
   // This function handles the cell-dependent construction of the FACE-based shape functions.
   //
@@ -1826,21 +1826,21 @@ FE_NedelecSZ<dim>::fill_face_values(
 template <int dim>
 void
 FE_NedelecSZ<dim>::fill_fe_values(
-  const typename Triangulation<dim, dim>::cell_iterator& cell,
+  const typename Triangulation<dim, dim>::cell_iterator &cell,
   const CellSimilarity::Similarity /*cell_similarity*/,
-  const Quadrature<dim>&                              quadrature,
-  const Mapping<dim, dim>&                            mapping,
-  const typename Mapping<dim, dim>::InternalDataBase& mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim, dim>&
-                                                            mapping_data,
-  const typename FiniteElement<dim, dim>::InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>&
-    data) const
+  const Quadrature<dim> &                             quadrature,
+  const Mapping<dim, dim> &                           mapping,
+  const typename Mapping<dim, dim>::InternalDataBase &mapping_internal,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim, dim>
+    &                                                       mapping_data,
+  const typename FiniteElement<dim, dim>::InternalDataBase &fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>
+    &data) const
 {
   // Convert to the correct internal data class for this FE class.
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != 0,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != 0,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // Now update the edge-based DoFs, which depend on the cell.
   // This will fill in the missing items in the InternalData (fe_internal/fe_data)
@@ -1941,16 +1941,16 @@ FE_NedelecSZ<dim>::fill_fe_values(
 template <int dim>
 void
 FE_NedelecSZ<dim>::fill_fe_face_values(
-  const typename Triangulation<dim, dim>::cell_iterator& cell,
+  const typename Triangulation<dim, dim>::cell_iterator &cell,
   const unsigned int                                     face_no,
-  const Quadrature<dim - 1>&                             quadrature,
-  const Mapping<dim, dim>&                               mapping,
-  const typename Mapping<dim, dim>::InternalDataBase&    mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim, dim>&
-                                                            mapping_data,
-  const typename FiniteElement<dim, dim>::InternalDataBase& fe_internal,
-  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>&
-    data) const
+  const Quadrature<dim - 1> &                            quadrature,
+  const Mapping<dim, dim> &                              mapping,
+  const typename Mapping<dim, dim>::InternalDataBase &   mapping_internal,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim, dim>
+    &                                                       mapping_data,
+  const typename FiniteElement<dim, dim>::InternalDataBase &fe_internal,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>
+    &data) const
 {
   // Note for future improvement:
   // We don't have the full quadrature - should use QProjector to create the 2D quadrature.
@@ -1964,9 +1964,9 @@ FE_NedelecSZ<dim>::fill_fe_face_values(
   // data for this class. fails with
   // an exception if that is not
   // possible
-  Assert(dynamic_cast<const InternalData*>(&fe_internal) != 0,
+  Assert(dynamic_cast<const InternalData *>(&fe_internal) != 0,
          ExcInternalError());
-  const InternalData& fe_data = static_cast<const InternalData&>(fe_internal);
+  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // Now update the edge-based DoFs, which depend on the cell.
   // This will fill in the missing items in the InternalData (fe_internal/fe_data)
@@ -2065,17 +2065,17 @@ FE_NedelecSZ<dim>::fill_fe_face_values(
 template <int dim>
 void
 FE_NedelecSZ<dim>::fill_fe_subface_values(
-  const typename Triangulation<dim, dim>::cell_iterator& /*cell*/,
+  const typename Triangulation<dim, dim>::cell_iterator & /*cell*/,
   const unsigned int /*face_no*/,
   const unsigned int /*sub_no*/,
-  const Quadrature<dim - 1>& /*quadrature*/,
-  const Mapping<dim, dim>& /*mapping*/,
-  const typename Mapping<dim, dim>::InternalDataBase& /*mapping_internal*/,
-  const dealii::internal::FEValuesImplementation::
-    MappingRelatedData<dim, dim>& /*mapping_data*/,
-  const typename FiniteElement<dim, dim>::InternalDataBase& /*fe_internal*/,
-  dealii::internal::FEValuesImplementation::
-    FiniteElementRelatedData<dim, dim>& /*data*/) const
+  const Quadrature<dim - 1> & /*quadrature*/,
+  const Mapping<dim, dim> & /*mapping*/,
+  const typename Mapping<dim, dim>::InternalDataBase & /*mapping_internal*/,
+  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim, dim>
+    & /*mapping_data*/,
+  const typename FiniteElement<dim, dim>::InternalDataBase & /*fe_internal*/,
+  dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim, dim>
+    & /*data*/) const
 {
   Assert(false, ExcNotImplemented());
 }

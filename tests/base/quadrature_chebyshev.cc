@@ -25,9 +25,9 @@ using namespace dealii;
 
 template <typename quadrature_type, unsigned short startn>
 void
-check_quadrature(double*);
+check_quadrature(double *);
 void
-check_GRC_right(double*);
+check_GRC_right(double *);
 
 int
 main()
@@ -88,13 +88,13 @@ main()
 
 template <typename quadrature_type, unsigned short startn>
 void
-check_quadrature(double* exact_monomials)
+check_quadrature(double *exact_monomials)
 {
   for(unsigned int n = startn; n < 18; ++n)
     {
       quadrature_type              quadrature(n);
-      const std::vector<Point<1>>& points  = quadrature.get_points();
-      const std::vector<double>&   weights = quadrature.get_weights();
+      const std::vector<Point<1>> &points  = quadrature.get_points();
+      const std::vector<double> &  weights = quadrature.get_weights();
 
       for(unsigned int i = 0; i < 32; ++i)
         {
@@ -122,13 +122,13 @@ check_quadrature(double* exact_monomials)
 }
 
 void
-check_GRC_right(double* exact_monomials)
+check_GRC_right(double *exact_monomials)
 {
   for(unsigned int n = 1; n < 18; ++n)
     {
       QGaussRadauChebyshev<1> quadrature(n, QGaussRadauChebyshev<1>::right);
-      const std::vector<Point<1>>& points  = quadrature.get_points();
-      const std::vector<double>&   weights = quadrature.get_weights();
+      const std::vector<Point<1>> &points  = quadrature.get_points();
+      const std::vector<double> &  weights = quadrature.get_weights();
 
       for(unsigned int i = 0; i < 32; ++i)
         {

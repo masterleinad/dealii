@@ -41,7 +41,7 @@ public:
   MyFunction() : Function<dim>(){};
 
   virtual double
-  value(const Point<dim>& p, const unsigned int) const
+  value(const Point<dim> &p, const unsigned int) const
   {
     double f = p[0] * 2.0 + 1.0;
     if(dim > 1)
@@ -54,7 +54,7 @@ public:
 
 template <int dim>
 void
-test(std::ostream& /*out*/)
+test(std::ostream & /*out*/)
 {
   MyFunction<dim>                           func;
   MappingQGeneric<dim>                      mapping(1);
@@ -104,7 +104,7 @@ test(std::ostream& /*out*/)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
 #ifdef DEAL_II_WITH_MPI
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);

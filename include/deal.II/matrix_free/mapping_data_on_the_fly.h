@@ -61,8 +61,8 @@ namespace internal
        * element, FE_Nothing, is used internally for the underlying FEValues
        * object.
        */
-      MappingDataOnTheFly(const Mapping<dim>&  mapping,
-                          const Quadrature<1>& quadrature,
+      MappingDataOnTheFly(const Mapping<dim> & mapping,
+                          const Quadrature<1> &quadrature,
                           const UpdateFlags    update_flags);
 
       /**
@@ -70,7 +70,7 @@ namespace internal
        * that it makes the object use a $Q_1$ mapping (i.e., an object of type
        * MappingQGeneric(1)) implicitly.
        */
-      MappingDataOnTheFly(const Quadrature<1>& quadrature,
+      MappingDataOnTheFly(const Quadrature<1> &quadrature,
                           const UpdateFlags    update_flags);
 
       /**
@@ -98,7 +98,7 @@ namespace internal
        * mapped quadrature points are accessible, as no finite element data is
        * actually used).
        */
-      const dealii::FEValues<dim>&
+      const dealii::FEValues<dim> &
       get_fe_values() const;
 
       /**
@@ -107,13 +107,13 @@ namespace internal
        * MappingInfo. This ensures compatibility with the precomputed data
        * fields in the MappingInfo class.
        */
-      const MappingInfoStorage<dim, dim, Number>&
+      const MappingInfoStorage<dim, dim, Number> &
       get_data_storage() const;
 
       /**
        * Return a reference to 1D quadrature underlying this object.
        */
-      const Quadrature<1>&
+      const Quadrature<1> &
       get_quadrature() const;
 
     private:
@@ -150,8 +150,8 @@ namespace internal
 
     template <int dim, typename Number>
     inline MappingDataOnTheFly<dim, Number>::MappingDataOnTheFly(
-      const Mapping<dim>&  mapping,
-      const Quadrature<1>& quadrature,
+      const Mapping<dim> & mapping,
+      const Quadrature<1> &quadrature,
       const UpdateFlags    update_flags)
       : fe_values(mapping,
                   fe_dummy,
@@ -183,7 +183,7 @@ namespace internal
 
     template <int dim, typename Number>
     inline MappingDataOnTheFly<dim, Number>::MappingDataOnTheFly(
-      const Quadrature<1>& quadrature,
+      const Quadrature<1> &quadrature,
       const UpdateFlags    update_flags)
       : MappingDataOnTheFly(::dealii::StaticMappingQ1<dim, dim>::mapping,
                             quadrature,
@@ -243,21 +243,21 @@ namespace internal
     }
 
     template <int dim, typename Number>
-    inline const dealii::FEValues<dim>&
+    inline const dealii::FEValues<dim> &
     MappingDataOnTheFly<dim, Number>::get_fe_values() const
     {
       return fe_values;
     }
 
     template <int dim, typename Number>
-    inline const MappingInfoStorage<dim, dim, Number>&
+    inline const MappingInfoStorage<dim, dim, Number> &
     MappingDataOnTheFly<dim, Number>::get_data_storage() const
     {
       return mapping_info_storage;
     }
 
     template <int dim, typename Number>
-    inline const Quadrature<1>&
+    inline const Quadrature<1> &
     MappingDataOnTheFly<dim, Number>::get_quadrature() const
     {
       return quadrature_1d;
