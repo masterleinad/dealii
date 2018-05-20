@@ -26,7 +26,7 @@
 #include <vector>
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
@@ -45,7 +45,7 @@ main(int argc, char** argv)
         {
           throw ExcPETScError(petsc_error_codes[i]);
         }
-      catch(const ExceptionBase& exc)
+      catch(const ExceptionBase & exc)
         {
           deallog << exc.get_exc_name() << std::endl;
           exc.print_info(deallog.get_file_stream());

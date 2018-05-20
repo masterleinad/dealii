@@ -28,7 +28,7 @@ using namespace LocalIntegrators::Laplace;
 
 template <int dim>
 void
-test_cell(const FEValuesBase<dim>& fev)
+test_cell(const FEValuesBase<dim> & fev)
 {
   const unsigned int n = fev.dofs_per_cell;
   unsigned int       d = fev.get_fe().n_components();
@@ -77,7 +77,7 @@ test_cell(const FEValuesBase<dim>& fev)
 
 template <int dim>
 void
-test_boundary(const FEValuesBase<dim>& fev)
+test_boundary(const FEValuesBase<dim> & fev)
 {
   const unsigned int n = fev.dofs_per_cell;
   unsigned int       d = fev.get_fe().n_components();
@@ -139,7 +139,7 @@ test_boundary(const FEValuesBase<dim>& fev)
 
 template <int dim>
 void
-test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
+test_face(const FEValuesBase<dim> & fev1, const FEValuesBase<dim> & fev2)
 {
   const unsigned int n1 = fev1.dofs_per_cell;
   const unsigned int n2 = fev1.dofs_per_cell;
@@ -291,7 +291,7 @@ test_face(const FEValuesBase<dim>& fev1, const FEValuesBase<dim>& fev2)
 
 template <int dim>
 void
-test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
+test_fe(Triangulation<dim> & tr, FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl << "cell matrix" << std::endl;
   QGauss<dim>   quadrature(fe.tensor_degree());
@@ -326,7 +326,7 @@ test_fe(Triangulation<dim>& tr, FiniteElement<dim>& fe)
 
 template <int dim>
 void
-test(Triangulation<dim>& tr)
+test(Triangulation<dim> & tr)
 {
   FE_DGQ<dim> q1(1);
   test_fe(tr, q1);

@@ -20,7 +20,7 @@
 #include <memory>
 
 void
-test(const Patterns::PatternBase& p)
+test(const Patterns::PatternBase & p)
 {
   // Print description
   auto desc = p.description();

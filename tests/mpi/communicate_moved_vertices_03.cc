@@ -85,7 +85,7 @@ test()
           non_artificial_vertices_new[cell->vertex_index(vertex_no)] = point;
         }
 
-  for(const auto& pair : non_artificial_vertices_new)
+  for(const auto & pair : non_artificial_vertices_new)
     if((non_artificial_vertices_old[pair.first] - pair.second).norm_square()
        > 1.e-6)
       {
@@ -105,7 +105,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);
   MPILogInitAll                    log;

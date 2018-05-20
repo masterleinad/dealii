@@ -41,9 +41,9 @@ using namespace dealii;
 
 template <int dim, int spacedim>
 void
-check(const FiniteElement<dim, spacedim>& fe,
-      const bool                          isotropic_only = false,
-      unsigned int                        nested_size    = 0)
+check(const FiniteElement<dim, spacedim> & fe,
+      const bool                           isotropic_only = false,
+      unsigned int                         nested_size    = 0)
 {
   deallog << fe.get_name() << std::endl;
   const unsigned int dpc = fe.dofs_per_cell;

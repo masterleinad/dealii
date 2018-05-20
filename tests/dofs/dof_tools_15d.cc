@@ -25,7 +25,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> & dof_handler)
 {
   // test doesn't make much sense if
   // no boundary dofs exist
@@ -81,7 +81,7 @@ check_this(const DoFHandler<dim>& dof_handler)
   for(unsigned int r = 0; r < n_blocks; ++r)
     for(unsigned int c = 0; c < n_blocks; ++c)
       {
-        const DynamicSparsityPattern& x = sp.block(r, c);
+        const DynamicSparsityPattern & x = sp.block(r, c);
         deallog << x.bandwidth() << std::endl
                 << x.max_entries_per_row() << std::endl
                 << x.n_nonzero_elements() << std::endl;

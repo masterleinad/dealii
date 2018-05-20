@@ -120,7 +120,7 @@ public:
    * The coarse grid must persist until the end of this object, since it will
    * be used upon reconstruction of the grid.
    */
-  PersistentTriangulation(const Triangulation<dim, spacedim>& coarse_grid);
+  PersistentTriangulation(const Triangulation<dim, spacedim> & coarse_grid);
 
   /**
    * Copy constructor. This operation is only allowed, if the triangulation
@@ -128,7 +128,7 @@ public:
    * as well as the pointer to the coarse grid are copied, however.
    */
   PersistentTriangulation(
-    const PersistentTriangulation<dim, spacedim>& old_tria);
+    const PersistentTriangulation<dim, spacedim> & old_tria);
 
   /**
    * Destructor.
@@ -187,16 +187,16 @@ public:
    * be used upon reconstruction of the grid.
    */
   virtual void
-  copy_triangulation(const Triangulation<dim, spacedim>& tria) override;
+  copy_triangulation(const Triangulation<dim, spacedim> & tria) override;
 
   /**
    * Throw an error, since this function is not useful in the context of this
    * class.
    */
   virtual void
-  create_triangulation(const std::vector<Point<spacedim>>& vertices,
-                       const std::vector<CellData<dim>>&   cells,
-                       const SubCellData& subcelldata) override;
+  create_triangulation(const std::vector<Point<spacedim>> & vertices,
+                       const std::vector<CellData<dim>> &   cells,
+                       const SubCellData & subcelldata) override;
 
   /**
    * An overload of the respective function of the base class.
@@ -206,15 +206,15 @@ public:
    */
   virtual void
   create_triangulation_compatibility(
-    const std::vector<Point<spacedim>>& vertices,
-    const std::vector<CellData<dim>>&   cells,
-    const SubCellData&                  subcelldata) override;
+    const std::vector<Point<spacedim>> & vertices,
+    const std::vector<CellData<dim>> &   cells,
+    const SubCellData &                  subcelldata) override;
 
   /**
    * Write all refine and coarsen flags to the ostream @p out.
    */
   virtual void
-  write_flags(std::ostream& out) const;
+  write_flags(std::ostream & out) const;
 
   /**
    * Reads all refine and coarsen flags that previously were written by
@@ -222,7 +222,7 @@ public:
    * triangulation after the end or breakdown of a program and its restart.
    */
   virtual void
-  read_flags(std::istream& in);
+  read_flags(std::istream & in);
 
   /**
    * Clear all flags. Retains the same coarse grid.

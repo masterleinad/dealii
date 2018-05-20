@@ -28,7 +28,7 @@ using namespace dealii;
 
 template <int dim>
 void
-test(const MPI_Comm& mpi_communicator)
+test(const MPI_Comm & mpi_communicator)
 {
   parallel::shared::Triangulation<dim> triangulation(
     mpi_communicator, Triangulation<dim>::limit_level_difference_at_vertices);
@@ -42,7 +42,7 @@ test(const MPI_Comm& mpi_communicator)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   try
     {
@@ -53,7 +53,7 @@ main(int argc, char* argv[])
       test<2>(MPI_COMM_WORLD);
       test<3>(MPI_COMM_WORLD);
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

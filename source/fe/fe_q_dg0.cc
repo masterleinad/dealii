@@ -54,7 +54,7 @@ FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const unsigned int degree)
 }
 
 template <int dim, int spacedim>
-FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const Quadrature<1>& points)
+FE_Q_DG0<dim, spacedim>::FE_Q_DG0(const Quadrature<1> & points)
   : FE_Q_Base<TensorProductPolynomialsConst<dim>, dim, spacedim>(
       TensorProductPolynomialsConst<dim>(
         Polynomials::generate_complete_Lagrange_basis(points.get_points())),
@@ -89,12 +89,12 @@ FE_Q_DG0<dim, spacedim>::get_name() const
   // particular format of the string this function returns, so they have to be
   // kept in synch
 
-  std::ostringstream             namebuf;
-  bool                           type     = true;
-  const unsigned int             n_points = this->degree + 1;
-  std::vector<double>            points(n_points);
-  const unsigned int             dofs_per_cell = this->dofs_per_cell;
-  const std::vector<Point<dim>>& unit_support_points
+  std::ostringstream              namebuf;
+  bool                            type     = true;
+  const unsigned int              n_points = this->degree + 1;
+  std::vector<double>             points(n_points);
+  const unsigned int              dofs_per_cell = this->dofs_per_cell;
+  const std::vector<Point<dim>> & unit_support_points
     = this->unit_support_points;
   unsigned int index = 0;
 
@@ -168,8 +168,8 @@ FE_Q_DG0<dim, spacedim>::clone() const
 template <int dim, int spacedim>
 void
 FE_Q_DG0<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
-  const std::vector<Vector<double>>& support_point_values,
-  std::vector<double>&               nodal_dofs) const
+  const std::vector<Vector<double>> & support_point_values,
+  std::vector<double> &               nodal_dofs) const
 {
   Assert(support_point_values.size() == this->unit_support_points.size(),
          ExcDimensionMismatch(support_point_values.size(),
@@ -194,15 +194,15 @@ FE_Q_DG0<dim, spacedim>::convert_generalized_support_point_values_to_dof_values(
 template <int dim, int spacedim>
 void
 FE_Q_DG0<dim, spacedim>::get_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> & x_source_fe,
+  FullMatrix<double> &                 interpolation_matrix) const
 {
   // this is only implemented, if the source FE is also a Q_DG0 element
   typedef FE_Q_DG0<dim, spacedim> FEQDG0;
 
   AssertThrow(
     (x_source_fe.get_name().find("FE_Q_DG0<") == 0)
-      || (dynamic_cast<const FEQDG0*>(&x_source_fe) != nullptr),
+      || (dynamic_cast<const FEQDG0 *>(&x_source_fe) != nullptr),
     (typename FiniteElement<dim, spacedim>::ExcInterpolationNotImplemented()));
 
   Assert(interpolation_matrix.m() == this->dofs_per_cell,

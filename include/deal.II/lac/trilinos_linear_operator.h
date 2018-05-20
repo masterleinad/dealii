@@ -71,8 +71,8 @@ namespace TrilinosWrappers
     Range,
     Domain,
     TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload>
-  linear_operator(const TrilinosWrappers::SparseMatrix& operator_exemplar,
-                  const Matrix&                         matrix)
+  linear_operator(const TrilinosWrappers::SparseMatrix & operator_exemplar,
+                  const Matrix &                         matrix)
   {
     typedef TrilinosWrappers::SparseMatrix OperatorExemplar;
     typedef TrilinosWrappers::internal::LinearOperatorImplementation::
@@ -101,7 +101,7 @@ namespace TrilinosWrappers
     Range,
     Domain,
     TrilinosWrappers::internal::LinearOperatorImplementation::TrilinosPayload>
-  linear_operator(const TrilinosWrappers::SparseMatrix& matrix)
+  linear_operator(const TrilinosWrappers::SparseMatrix & matrix)
   {
     typedef TrilinosWrappers::SparseMatrix Matrix;
     typedef TrilinosWrappers::internal::LinearOperatorImplementation::
@@ -136,7 +136,7 @@ namespace TrilinosWrappers
     TrilinosWrappers::internal::BlockLinearOperatorImplementation::
       TrilinosBlockPayload<TrilinosWrappers::internal::
                              LinearOperatorImplementation::TrilinosPayload>>
-  block_operator(const TrilinosWrappers::BlockSparseMatrix& block_matrix)
+  block_operator(const TrilinosWrappers::BlockSparseMatrix & block_matrix)
   {
     typedef TrilinosWrappers::BlockSparseMatrix BlockMatrix;
     typedef TrilinosWrappers::internal::LinearOperatorImplementation::
@@ -178,7 +178,7 @@ namespace TrilinosWrappers
                        TrilinosWrappers::internal::
                          LinearOperatorImplementation::TrilinosPayload>,
         n>,
-      m>& ops)
+      m> & ops)
   {
     typedef TrilinosWrappers::internal::LinearOperatorImplementation::
       TrilinosPayload PayloadBlockType;
@@ -213,7 +213,7 @@ namespace TrilinosWrappers
       TrilinosBlockPayload<TrilinosWrappers::internal::
                              LinearOperatorImplementation::TrilinosPayload>>
   block_diagonal_operator(
-    const TrilinosWrappers::BlockSparseMatrix& block_matrix)
+    const TrilinosWrappers::BlockSparseMatrix & block_matrix)
   {
     typedef TrilinosWrappers::BlockSparseMatrix BlockMatrix;
     typedef TrilinosWrappers::internal::LinearOperatorImplementation::
@@ -254,7 +254,7 @@ namespace TrilinosWrappers
                      typename Domain::BlockType,
                      TrilinosWrappers::internal::LinearOperatorImplementation::
                        TrilinosPayload>,
-      m>& ops)
+      m> & ops)
   {
     typedef TrilinosWrappers::internal::LinearOperatorImplementation::
       TrilinosPayload PayloadBlockType;

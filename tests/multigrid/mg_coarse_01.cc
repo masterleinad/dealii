@@ -95,7 +95,7 @@ namespace Step50
     void
     assemble_multigrid();
     void
-    vcycle(const MGCoarseGridBase<vector_t>& coarse_grid_solver);
+    vcycle(const MGCoarseGridBase<vector_t> & coarse_grid_solver);
 
     void
     solve();
@@ -135,12 +135,12 @@ namespace Step50
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const;
+    value(const Point<dim> & p, const unsigned int component = 0) const;
 
     virtual void
-    value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const;
+    value_list(const std::vector<Point<dim>> & points,
+               std::vector<double> &           values,
+               const unsigned int              component = 0) const;
 
   private:
     int K;
@@ -148,7 +148,7 @@ namespace Step50
 
   template <int dim>
   double
-  Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
+  Coefficient<dim>::value(const Point<dim> & p, const unsigned int) const
   {
     return 1.0;
 
@@ -161,9 +161,9 @@ namespace Step50
 
   template <int dim>
   void
-  Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                               std::vector<double>&           values,
-                               const unsigned int             component) const
+  Coefficient<dim>::value_list(const std::vector<Point<dim>> & points,
+                               std::vector<double> &           values,
+                               const unsigned int              component) const
   {
     const unsigned int n_points = points.size();
 
@@ -371,7 +371,7 @@ namespace Step50
 
           boundary_constraints[cell->level()].distribute_local_to_global(
             cell_matrix, local_dof_indices, mg_matrices[cell->level()]);
-          const IndexSet& interface_dofs_on_level
+          const IndexSet & interface_dofs_on_level
             = mg_constrained_dofs.get_refinement_edge_indices(cell->level());
           const unsigned int lvl = cell->level();
 
@@ -419,7 +419,7 @@ namespace Step50
   class MGCoarseAMG : public MGCoarseGridBase<VECTOR>
   {
   public:
-    MGCoarseAMG(const LA::MPI::SparseMatrix&                   coarse_matrix,
+    MGCoarseAMG(const LA::MPI::SparseMatrix &                  coarse_matrix,
                 const LA::MPI::PreconditionAMG::AdditionalData additional_data)
       : count(0)
     {
@@ -427,7 +427,7 @@ namespace Step50
     }
 
     virtual void
-    operator()(const unsigned int, VECTOR& dst, const VECTOR& src) const
+    operator()(const unsigned int, VECTOR & dst, const VECTOR & src) const
     {
       ++count;
       precondition_amg.vmult(dst, src);
@@ -442,7 +442,7 @@ namespace Step50
   template <int dim>
   void
   LaplaceProblem<dim>::vcycle(
-    const MGCoarseGridBase<vector_t>& coarse_grid_solver)
+    const MGCoarseGridBase<vector_t> & coarse_grid_solver)
   {
     MGTransferPrebuilt<vector_t> mg_transfer(mg_constrained_dofs);
     mg_transfer.build_matrices(mg_dof_handler);
@@ -491,7 +491,7 @@ namespace Step50
   void
   LaplaceProblem<dim>::solve()
   {
-    matrix_t&          coarse_matrix = mg_matrices[0];
+    matrix_t &         coarse_matrix = mg_matrices[0];
     SolverControl      coarse_solver_control(1000, 1e-8, false, false);
     SolverCG<vector_t> coarse_solver(coarse_solver_control);
 
@@ -570,7 +570,7 @@ namespace Step50
     temp_solution = solution;
 
     KellyErrorEstimator<dim>::estimate(
-      static_cast<DoFHandler<dim>&>(mg_dof_handler),
+      static_cast<DoFHandler<dim> &>(mg_dof_handler),
       QGauss<dim - 1>(degree + 1),
       typename FunctionMap<dim>::type(),
       temp_solution,
@@ -625,7 +625,7 @@ namespace Step50
 } // namespace Step50
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   dealii::Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   mpi_initlog(true);
@@ -640,7 +640,7 @@ main(int argc, char* argv[])
       LaplaceProblem<2> laplace_problem(3 /*degree*/);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

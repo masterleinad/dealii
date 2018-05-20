@@ -41,14 +41,14 @@ public:
   typedef MeshWorker::IntegrationInfo<dim> CellInfo;
 
   void
-  cell(MeshWorker::DoFInfo<dim>& dinfo, CellInfo& info) const;
+  cell(MeshWorker::DoFInfo<dim> & dinfo, CellInfo & info) const;
   void
-  bdry(MeshWorker::DoFInfo<dim>& dinfo, CellInfo& info) const;
+  bdry(MeshWorker::DoFInfo<dim> & dinfo, CellInfo & info) const;
   void
-  face(MeshWorker::DoFInfo<dim>& dinfo1,
-       MeshWorker::DoFInfo<dim>& dinfo2,
-       CellInfo&                 info1,
-       CellInfo&                 info2) const;
+  face(MeshWorker::DoFInfo<dim> & dinfo1,
+       MeshWorker::DoFInfo<dim> & dinfo2,
+       CellInfo &                 info1,
+       CellInfo &                 info2) const;
 
   bool cells;
   bool faces;
@@ -67,7 +67,7 @@ public:
 
 template <int dim>
 void
-Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
+Local<dim>::cell(MeshWorker::DoFInfo<dim> & info, CellInfo &) const
 {
   if(!cells)
     return;
@@ -84,9 +84,9 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 
   for(unsigned int k = 0; k < info.n_matrices(); ++k)
     {
-      const unsigned int  block_row = info.matrix(k).row;
-      const unsigned int  block_col = info.matrix(k).column;
-      FullMatrix<double>& M1        = info.matrix(k).matrix;
+      const unsigned int   block_row = info.matrix(k).row;
+      const unsigned int   block_col = info.matrix(k).column;
+      FullMatrix<double> & M1        = info.matrix(k).matrix;
       for(unsigned int i = 0; i < M1.m(); ++i)
         for(unsigned int j = 0; j < M1.n(); ++j)
           {
@@ -99,27 +99,27 @@ Local<dim>::cell(MeshWorker::DoFInfo<dim>& info, CellInfo&) const
 
 template <int dim>
 void
-Local<dim>::bdry(MeshWorker::DoFInfo<dim>&, CellInfo&) const
+Local<dim>::bdry(MeshWorker::DoFInfo<dim> &, CellInfo &) const
 {}
 
 template <int dim>
 void
-Local<dim>::face(MeshWorker::DoFInfo<dim>&,
-                 MeshWorker::DoFInfo<dim>&,
-                 CellInfo&,
-                 CellInfo&) const
+Local<dim>::face(MeshWorker::DoFInfo<dim> &,
+                 MeshWorker::DoFInfo<dim> &,
+                 CellInfo &,
+                 CellInfo &) const
 {}
 
 template <int dim>
 void
-test_simple(DoFHandler<dim>& mgdofs)
+test_simple(DoFHandler<dim> & mgdofs)
 {
   SparsityPattern      pattern;
   SparseMatrix<double> matrix;
   Vector<double>       v;
 
-  const DoFHandler<dim>&    dofs = mgdofs;
-  const FiniteElement<dim>& fe   = dofs.get_fe();
+  const DoFHandler<dim> &    dofs = mgdofs;
+  const FiniteElement<dim> & fe   = dofs.get_fe();
   pattern.reinit(dofs.n_dofs(),
                  dofs.n_dofs(),
                  (GeometryInfo<dim>::faces_per_cell
@@ -182,7 +182,7 @@ test_simple(DoFHandler<dim>& mgdofs)
 
 template <int dim>
 void
-test(const FiniteElement<dim>& fe)
+test(const FiniteElement<dim> & fe)
 {
   Triangulation<dim> tr(Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_cube(tr);

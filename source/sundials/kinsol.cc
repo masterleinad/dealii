@@ -53,9 +53,10 @@ namespace SUNDIALS
   {
     template <typename VectorType>
     int
-    t_kinsol_function(N_Vector yy, N_Vector FF, void* user_data)
+    t_kinsol_function(N_Vector yy, N_Vector FF, void * user_data)
     {
-      KINSOL<VectorType>& solver = *static_cast<KINSOL<VectorType>*>(user_data);
+      KINSOL<VectorType> & solver
+        = *static_cast<KINSOL<VectorType> *>(user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -83,8 +84,8 @@ namespace SUNDIALS
     int
     t_kinsol_setup_jacobian(KINMem kinsol_mem)
     {
-      KINSOL<VectorType>& solver
-        = *static_cast<KINSOL<VectorType>*>(kinsol_mem->kin_user_data);
+      KINSOL<VectorType> & solver
+        = *static_cast<KINSOL<VectorType> *>(kinsol_mem->kin_user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_ycur(mem);
@@ -102,14 +103,14 @@ namespace SUNDIALS
 
     template <typename VectorType>
     int
-    t_kinsol_solve_jacobian(KINMem    kinsol_mem,
-                            N_Vector  x,
-                            N_Vector  b,
-                            realtype* sJpnorm,
-                            realtype* sFdotJp)
+    t_kinsol_solve_jacobian(KINMem     kinsol_mem,
+                            N_Vector   x,
+                            N_Vector   b,
+                            realtype * sJpnorm,
+                            realtype * sFdotJp)
     {
-      KINSOL<VectorType>& solver
-        = *static_cast<KINSOL<VectorType>*>(kinsol_mem->kin_user_data);
+      KINSOL<VectorType> & solver
+        = *static_cast<KINSOL<VectorType> *>(kinsol_mem->kin_user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_ycur(mem);
@@ -142,8 +143,8 @@ namespace SUNDIALS
   } // namespace
 
   template <typename VectorType>
-  KINSOL<VectorType>::KINSOL(const AdditionalData& data,
-                             const MPI_Comm        mpi_comm)
+  KINSOL<VectorType>::KINSOL(const AdditionalData & data,
+                             const MPI_Comm         mpi_comm)
     : data(data),
       kinsol_mem(nullptr),
       solution(nullptr),
@@ -173,7 +174,7 @@ namespace SUNDIALS
 
   template <typename VectorType>
   unsigned int
-  KINSOL<VectorType>::solve(VectorType& initial_guess_and_solution)
+  KINSOL<VectorType>::solve(VectorType & initial_guess_and_solution)
   {
     unsigned int system_size = initial_guess_and_solution.size();
 
@@ -225,7 +226,7 @@ namespace SUNDIALS
     (void) status;
     AssertKINSOL(status);
 
-    status = KINSetUserData(kinsol_mem, (void*) this);
+    status = KINSetUserData(kinsol_mem, (void *) this);
     AssertKINSOL(status);
 
     status = KINSetNumMaxIters(kinsol_mem, data.maximum_non_linear_iterations);
@@ -332,7 +333,7 @@ namespace SUNDIALS
   void
   KINSOL<VectorType>::set_functions_to_trigger_an_assert()
   {
-    reinit_vector = [](VectorType&) {
+    reinit_vector = [](VectorType &) {
       AssertThrow(false, ExcFunctionNotProvided("reinit_vector"));
     };
   }

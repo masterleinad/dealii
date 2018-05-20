@@ -54,9 +54,9 @@ namespace FETools
 
       template <class InVector>
       void
-      extrapolate_parallel(const InVector& /*u2_relevant*/,
-                           const DoFHandler<dim, spacedim>& /*dof2*/,
-                           OutVector& /*u2*/)
+      extrapolate_parallel(const InVector & /*u2_relevant*/,
+                           const DoFHandler<dim, spacedim> & /*dof2*/,
+                           OutVector & /*u2*/)
       {
         Assert(false, ExcNotImplemented())
       }
@@ -72,9 +72,9 @@ namespace FETools
 
       template <class InVector>
       void
-      extrapolate_parallel(const InVector&                  u2_relevant,
-                           const DoFHandler<dim, spacedim>& dof2,
-                           OutVector&                       u2);
+      extrapolate_parallel(const InVector &                  u2_relevant,
+                           const DoFHandler<dim, spacedim> & dof2,
+                           OutVector &                       u2);
 
     private:
       // A shortcut for the type of the OutVector
@@ -91,12 +91,13 @@ namespace FETools
         const typename dealii::internal::p4est::types<dim>::quadrant p4est_cell;
 
         WorkPackage(
-          const typename dealii::internal::p4est::types<dim>::forest& forest_,
-          const typename dealii::internal::p4est::types<dim>::tree&   tree_,
-          const typename dealii::internal::p4est::types<dim>::locidx&
-                                                                   tree_index_,
-          const typename DoFHandler<dim, spacedim>::cell_iterator& dealii_cell_,
-          const typename dealii::internal::p4est::types<dim>::quadrant&
+          const typename dealii::internal::p4est::types<dim>::forest & forest_,
+          const typename dealii::internal::p4est::types<dim>::tree &   tree_,
+          const typename dealii::internal::p4est::types<dim>::locidx &
+            tree_index_,
+          const typename DoFHandler<dim, spacedim>::cell_iterator &
+            dealii_cell_,
+          const typename dealii::internal::p4est::types<dim>::quadrant &
             p4est_cell_)
           : forest(forest_),
             tree(tree_),
@@ -124,7 +125,7 @@ namespace FETools
         int receiver;
 
         bool
-        operator<(const CellData& rhs) const
+        operator<(const CellData & rhs) const
         {
           if(dealii::internal::p4est::functions<dim>::quadrant_compare(
                &quadrant, &rhs.quadrant)
@@ -145,11 +146,11 @@ namespace FETools
         }
 
         void
-        pack_data(std::vector<char>& buffer) const
+        pack_data(std::vector<char> & buffer) const
         {
           buffer.resize(bytes_for_buffer());
 
-          char* ptr = buffer.data();
+          char * ptr = buffer.data();
 
           unsigned int n_dofs = dof_values.size();
           std::memcpy(ptr, &n_dofs, sizeof(unsigned int));
@@ -171,9 +172,9 @@ namespace FETools
         }
 
         void
-        unpack_data(const std::vector<char>& buffer)
+        unpack_data(const std::vector<char> & buffer)
         {
-          const char*  ptr = buffer.data();
+          const char * ptr = buffer.data();
           unsigned int n_dofs;
           memcpy(&n_dofs, ptr, sizeof(unsigned int));
           ptr += sizeof(unsigned int);
@@ -245,8 +246,8 @@ namespace FETools
       // different processes
       template <class InVector>
       void
-      compute_all_non_local_data(const DoFHandler<dim, spacedim>& dof2,
-                                 const InVector&                  u);
+      compute_all_non_local_data(const DoFHandler<dim, spacedim> & dof2,
+                                 const InVector &                  u);
 
       // traverse recursively over
       // the cells of this tree and
@@ -255,14 +256,14 @@ namespace FETools
       template <class InVector>
       void
       interpolate_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                        p4est_cell,
-        const InVector& u1,
-        OutVector&      u2);
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                         p4est_cell,
+        const InVector & u1,
+        OutVector &      u2);
 
       // get dof values for this
       // cell by interpolation
@@ -272,46 +273,46 @@ namespace FETools
       template <class InVector>
       void
       get_interpolated_dof_values(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        const InVector&        u,
-        Vector<value_type>&    interpolated_values,
-        std::vector<CellData>& new_needs);
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        const InVector &        u,
+        Vector<value_type> &    interpolated_values,
+        std::vector<CellData> & new_needs);
 
       // set dof values for this
       // cell by interpolation
       void
       set_dof_values_by_interpolation(
-        const typename DoFHandler<dim, spacedim>::cell_iterator& dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                                  p4est_cell,
-        const Vector<value_type>& interpolated_values,
-        OutVector&                u);
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                   p4est_cell,
+        const Vector<value_type> & interpolated_values,
+        OutVector &                u);
 
       // compute all cell_data
       // needed from other processes
       // to interpolate the part of
       // this process
       void
-      compute_needs(const DoFHandler<dim, spacedim>& dof2,
-                    std::vector<CellData>&           new_needs);
+      compute_needs(const DoFHandler<dim, spacedim> & dof2,
+                    std::vector<CellData> &           new_needs);
 
       // traverse over the tree
       // and look for patches this
       // process has to work on
       void
       traverse_tree_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        std::vector<CellData>& new_needs);
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        std::vector<CellData> & new_needs);
 
       // traverse recursively
       // over a patch and look
@@ -319,13 +320,13 @@ namespace FETools
       // other processes for interpolation
       void
       traverse_patch_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        std::vector<CellData>& new_needs);
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        std::vector<CellData> & new_needs);
 
       // compute dof values of all
       // cells collected in cells_to_compute
@@ -338,61 +339,61 @@ namespace FETools
       // are stored in new_needs
       template <class InVector>
       void
-      compute_cells(const DoFHandler<dim, spacedim>& dof2,
-                    const InVector&                  u,
-                    std::vector<CellData>&           cells_to_compute,
-                    std::vector<CellData>&           computed_cells,
-                    std::vector<CellData>&           new_needs);
+      compute_cells(const DoFHandler<dim, spacedim> & dof2,
+                    const InVector &                  u,
+                    std::vector<CellData> &           cells_to_compute,
+                    std::vector<CellData> &           computed_cells,
+                    std::vector<CellData> &           new_needs);
 
       // traverse over the tree
       // and compute cells
       template <class InVector>
       void
       compute_cells_in_tree_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        const InVector&        u,
-        std::vector<CellData>& cells_to_compute,
-        std::vector<CellData>& computed_cells,
-        std::vector<CellData>& new_needs);
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        const InVector &        u,
+        std::vector<CellData> & cells_to_compute,
+        std::vector<CellData> & computed_cells,
+        std::vector<CellData> & new_needs);
 
       // send all cell_data in the vector
       // cells_to_send to their receivers
       // and receives a vector of cell_data
       void
-      send_cells(const std::vector<CellData>& cells_to_send,
-                 std::vector<CellData>&       received_cells) const;
+      send_cells(const std::vector<CellData> & cells_to_send,
+                 std::vector<CellData> &       received_cells) const;
 
       // add new cell_data to
       // the ordered list new_needs
       // uses cell_data_insert
       static void
       add_new_need(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        std::vector<CellData>& new_needs);
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        std::vector<CellData> & new_needs);
 
       // binary search in cells_list
       // assume that cells_list
       // is ordered
       static int
-      cell_data_search(const CellData&              cell_data,
-                       const std::vector<CellData>& cells_list);
+      cell_data_search(const CellData &              cell_data,
+                       const std::vector<CellData> & cells_list);
 
       // insert cell_data into a sorted
       // vector cells_list at the correct
       // position if cell_data
       // not exists already in cells_list
       static void
-      cell_data_insert(const CellData&        cell_data,
-                       std::vector<CellData>& cells_list);
+      cell_data_insert(const CellData &        cell_data,
+                       std::vector<CellData> & cells_list);
 
       MPI_Comm communicator;
 
@@ -419,9 +420,9 @@ namespace FETools
 
       template <class InVector>
       void
-      extrapolate_parallel(const InVector& /*u2_relevant*/,
-                           const DoFHandler<1, 1>& /*dof2*/,
-                           OutVector& /*u2*/)
+      extrapolate_parallel(const InVector & /*u2_relevant*/,
+                           const DoFHandler<1, 1> & /*dof2*/,
+                           OutVector & /*u2*/)
       {}
     };
 
@@ -436,9 +437,9 @@ namespace FETools
 
       template <class InVector>
       void
-      extrapolate_parallel(const InVector& /*u2_relevant*/,
-                           const DoFHandler<1, 2>& /*dof2*/,
-                           OutVector& /*u2*/)
+      extrapolate_parallel(const InVector & /*u2_relevant*/,
+                           const DoFHandler<1, 2> & /*dof2*/,
+                           OutVector & /*u2*/)
       {}
     };
 
@@ -453,9 +454,9 @@ namespace FETools
 
       template <class InVector>
       void
-      extrapolate_parallel(const InVector& /*u2_relevant*/,
-                           const DoFHandler<1, 3>& /*dof2*/,
-                           OutVector& /*u2*/)
+      extrapolate_parallel(const InVector & /*u2_relevant*/,
+                           const DoFHandler<1, 3> & /*dof2*/,
+                           OutVector & /*u2*/)
       {}
     };
 
@@ -483,25 +484,25 @@ namespace FETools
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       interpolate_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                        p4est_cell,
-        const InVector& u1,
-        OutVector&      u2)
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                         p4est_cell,
+        const InVector & u1,
+        OutVector &      u2)
     {
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(
-        const_cast<sc_array_t*>(&tree.quadrants),
+        const_cast<sc_array_t *>(&tree.quadrants),
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
       // if neither this cell nor one of it's children belongs to us, don't do anything
       if(idx == -1
          && (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
-               const_cast<typename dealii::internal::p4est::types<dim>::tree*>(
+               const_cast<typename dealii::internal::p4est::types<dim>::tree *>(
                  &tree),
                &p4est_cell)
              == false))
@@ -527,7 +528,7 @@ namespace FETools
 
       if(locally_owned_children)
         {
-          const FiniteElement<dim, spacedim>& fe
+          const FiniteElement<dim, spacedim> & fe
             = dealii_cell->get_dof_handler().get_fe();
           const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
@@ -559,15 +560,15 @@ namespace FETools
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       get_interpolated_dof_values(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        const InVector&        u,
-        Vector<value_type>&    interpolated_values,
-        std::vector<CellData>& new_needs)
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        const InVector &        u,
+        Vector<value_type> &    interpolated_values,
+        std::vector<CellData> & new_needs)
     {
       if(!dealii_cell->has_children())
         {
@@ -585,7 +586,7 @@ namespace FETools
         }
       else
         {
-          const FiniteElement<dim, spacedim>& fe
+          const FiniteElement<dim, spacedim> & fe
             = dealii_cell->get_dof_handler().get_fe();
           const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
@@ -617,7 +618,7 @@ namespace FETools
               if(dealii::internal::p4est::functions<dim>::
                    quadrant_overlaps_tree(
                      const_cast<
-                       typename dealii::internal::p4est::types<dim>::tree*>(
+                       typename dealii::internal::p4est::types<dim>::tree *>(
                        &tree),
                      &p4est_child[c])
                  == false)
@@ -698,13 +699,13 @@ namespace FETools
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       set_dof_values_by_interpolation(
-        const typename DoFHandler<dim, spacedim>::cell_iterator& dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                                  p4est_cell,
-        const Vector<value_type>& local_values,
-        OutVector&                u)
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                   p4est_cell,
+        const Vector<value_type> & local_values,
+        OutVector &                u)
     {
-      const FiniteElement<dim, spacedim>& fe
+      const FiniteElement<dim, spacedim> & fe
         = dealii_cell->get_dof_handler().get_fe();
       const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
@@ -760,12 +761,12 @@ namespace FETools
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::compute_needs(
-      const DoFHandler<dim, spacedim>& dof2,
-      std::vector<CellData>&           new_needs)
+      const DoFHandler<dim, spacedim> & dof2,
+      std::vector<CellData> &           new_needs)
     {
-      const parallel::distributed::Triangulation<dim, spacedim>* tr
+      const parallel::distributed::Triangulation<dim, spacedim> * tr
         = (dynamic_cast<
-           const parallel::distributed::Triangulation<dim, spacedim>*>(
+           const parallel::distributed::Triangulation<dim, spacedim> *>(
           &dof2.get_triangulation()));
 
       Assert(tr != nullptr, ExcInternalError());
@@ -784,7 +785,7 @@ namespace FETools
                              p4est_coarse_cell;
           const unsigned int tree_index
             = tr->coarse_cell_to_p4est_tree_permutation[cell->index()];
-          typename dealii::internal::p4est::types<dim>::tree* tree
+          typename dealii::internal::p4est::types<dim>::tree * tree
             = tr->init_tree(cell->index());
 
           dealii::internal::p4est::init_coarse_quadrant<dim>(p4est_coarse_cell);
@@ -796,7 +797,7 @@ namespace FETools
           // generate a bogus result
           {
             int idx = sc_array_bsearch(
-              const_cast<sc_array_t*>(&tree->quadrants),
+              const_cast<sc_array_t *>(&tree->quadrants),
               &p4est_coarse_cell,
               dealii::internal::p4est::functions<dim>::quadrant_compare);
 
@@ -816,24 +817,24 @@ namespace FETools
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       traverse_tree_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        std::vector<CellData>& new_needs)
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        std::vector<CellData> & new_needs)
     {
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(
-        const_cast<sc_array_t*>(&tree.quadrants),
+        const_cast<sc_array_t *>(&tree.quadrants),
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
       // if neither this cell nor one of it's children belongs to us, don't do anything
       if(idx == -1
          && (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
-               const_cast<typename dealii::internal::p4est::types<dim>::tree*>(
+               const_cast<typename dealii::internal::p4est::types<dim>::tree *>(
                  &tree),
                &p4est_cell)
              == false))
@@ -895,13 +896,13 @@ namespace FETools
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       traverse_patch_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        std::vector<CellData>& new_needs)
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        std::vector<CellData> & new_needs)
     {
       if(dealii_cell->has_children())
         {
@@ -922,7 +923,7 @@ namespace FETools
               if(dealii::internal::p4est::functions<dim>::
                    quadrant_overlaps_tree(
                      const_cast<
-                       typename dealii::internal::p4est::types<dim>::tree*>(
+                       typename dealii::internal::p4est::types<dim>::tree *>(
                        &tree),
                      &p4est_child[c])
                  == false)
@@ -956,15 +957,15 @@ namespace FETools
     template <class InVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::compute_cells(
-      const DoFHandler<dim, spacedim>& dof2,
-      const InVector&                  u,
-      std::vector<CellData>&           cells_to_compute,
-      std::vector<CellData>&           computed_cells,
-      std::vector<CellData>&           new_needs)
+      const DoFHandler<dim, spacedim> & dof2,
+      const InVector &                  u,
+      std::vector<CellData> &           cells_to_compute,
+      std::vector<CellData> &           computed_cells,
+      std::vector<CellData> &           new_needs)
     {
-      const parallel::distributed::Triangulation<dim, spacedim>* tr
+      const parallel::distributed::Triangulation<dim, spacedim> * tr
         = (dynamic_cast<
-           const parallel::distributed::Triangulation<dim, spacedim>*>(
+           const parallel::distributed::Triangulation<dim, spacedim> *>(
           &dof2.get_triangulation()));
 
       Assert(tr != nullptr, ExcInternalError());
@@ -994,8 +995,8 @@ namespace FETools
             continue;
 
           typename dealii::internal::p4est::types<dim>::quadrant
-                                                              p4est_coarse_cell;
-          typename dealii::internal::p4est::types<dim>::tree* tree
+                                                               p4est_coarse_cell;
+          typename dealii::internal::p4est::types<dim>::tree * tree
             = tr->init_tree(cell->index());
 
           dealii::internal::p4est::init_coarse_quadrant<dim>(p4est_coarse_cell);
@@ -1017,30 +1018,30 @@ namespace FETools
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
       compute_cells_in_tree_recursively(
-        const typename dealii::internal::p4est::types<dim>::forest& forest,
-        const typename dealii::internal::p4est::types<dim>::tree&   tree,
-        const typename dealii::internal::p4est::types<dim>::locidx& tree_index,
-        const typename DoFHandler<dim, spacedim>::cell_iterator&    dealii_cell,
-        const typename dealii::internal::p4est::types<dim>::quadrant&
-                               p4est_cell,
-        const InVector&        u,
-        std::vector<CellData>& cells_to_compute,
-        std::vector<CellData>& computed_cells,
-        std::vector<CellData>& new_needs)
+        const typename dealii::internal::p4est::types<dim>::forest & forest,
+        const typename dealii::internal::p4est::types<dim>::tree &   tree,
+        const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+        const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell,
+        const typename dealii::internal::p4est::types<dim>::quadrant &
+                                p4est_cell,
+        const InVector &        u,
+        std::vector<CellData> & cells_to_compute,
+        std::vector<CellData> & computed_cells,
+        std::vector<CellData> & new_needs)
     {
       if(cells_to_compute.size() == 0)
         return;
 
       // check if this cell exists in the local p4est
       int idx = sc_array_bsearch(
-        const_cast<sc_array_t*>(&tree.quadrants),
+        const_cast<sc_array_t *>(&tree.quadrants),
         &p4est_cell,
         dealii::internal::p4est::functions<dim>::quadrant_compare);
 
       // if neither this cell nor one of it's children belongs to us, don't do anything
       if(idx == -1
          && (dealii::internal::p4est::functions<dim>::quadrant_overlaps_tree(
-               const_cast<typename dealii::internal::p4est::types<dim>::tree*>(
+               const_cast<typename dealii::internal::p4est::types<dim>::tree *>(
                  &tree),
                &p4est_cell)
              == false))
@@ -1109,8 +1110,8 @@ namespace FETools
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::send_cells(
-      const std::vector<CellData>& cells_to_send,
-      std::vector<CellData>&       received_cells) const
+      const std::vector<CellData> & cells_to_send,
+      std::vector<CellData> &       received_cells) const
     {
       std::vector<std::vector<char>> sendbuffers(cells_to_send.size());
       std::vector<std::vector<char>>::iterator buffer = sendbuffers.begin();
@@ -1156,8 +1157,8 @@ namespace FETools
           AssertThrowMPI(ierr);
           receive.resize(len);
 
-          char* buf = receive.data();
-          ierr      = MPI_Recv(buf,
+          char * buf = receive.data();
+          ierr       = MPI_Recv(buf,
                           len,
                           MPI_BYTE,
                           status.MPI_SOURCE,
@@ -1190,13 +1191,13 @@ namespace FETools
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::add_new_need(
-      const typename dealii::internal::p4est::types<dim>::forest&   forest,
-      const typename dealii::internal::p4est::types<dim>::locidx&   tree_index,
-      const typename DoFHandler<dim, spacedim>::cell_iterator&      dealii_cell,
-      const typename dealii::internal::p4est::types<dim>::quadrant& p4est_cell,
-      std::vector<CellData>&                                        new_needs)
+      const typename dealii::internal::p4est::types<dim>::forest & forest,
+      const typename dealii::internal::p4est::types<dim>::locidx & tree_index,
+      const typename DoFHandler<dim, spacedim>::cell_iterator &    dealii_cell,
+      const typename dealii::internal::p4est::types<dim>::quadrant & p4est_cell,
+      std::vector<CellData> &                                        new_needs)
     {
-      const FiniteElement<dim, spacedim>& fe
+      const FiniteElement<dim, spacedim> & fe
         = dealii_cell->get_dof_handler().get_fe();
       const unsigned int dofs_per_cell = fe.dofs_per_cell;
 
@@ -1205,7 +1206,7 @@ namespace FETools
       cell_data.tree_index = tree_index;
       cell_data.receiver
         = dealii::internal::p4est::functions<dim>::comm_find_owner(
-          const_cast<typename dealii::internal::p4est::types<dim>::forest*>(
+          const_cast<typename dealii::internal::p4est::types<dim>::forest *>(
             &forest),
           tree_index,
           &p4est_cell,
@@ -1217,8 +1218,8 @@ namespace FETools
     template <int dim, int spacedim, class OutVector>
     int
     ExtrapolateImplementation<dim, spacedim, OutVector>::cell_data_search(
-      const CellData&              cell_data,
-      const std::vector<CellData>& cells_list)
+      const CellData &              cell_data,
+      const std::vector<CellData> & cells_list)
     {
       typename std::vector<CellData>::const_iterator bound
         = std::lower_bound(cells_list.begin(), cells_list.end(), cell_data);
@@ -1232,8 +1233,8 @@ namespace FETools
     template <int dim, int spacedim, class OutVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::cell_data_insert(
-      const CellData&        cell_data,
-      std::vector<CellData>& cells_list)
+      const CellData &        cell_data,
+      std::vector<CellData> & cells_list)
     {
       typename std::vector<CellData>::iterator bound
         = std::lower_bound(cells_list.begin(), cells_list.end(), cell_data);
@@ -1246,8 +1247,8 @@ namespace FETools
     template <class InVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::
-      compute_all_non_local_data(const DoFHandler<dim, spacedim>& dof2,
-                                 const InVector&                  u)
+      compute_all_non_local_data(const DoFHandler<dim, spacedim> & dof2,
+                                 const InVector &                  u)
     {
       std::vector<CellData> cells_we_need, cells_to_compute, received_cells,
         received_needs, new_needs, computed_cells, cells_to_send;
@@ -1341,13 +1342,13 @@ namespace FETools
     template <class InVector>
     void
     ExtrapolateImplementation<dim, spacedim, OutVector>::extrapolate_parallel(
-      const InVector&                  u2_relevant,
-      const DoFHandler<dim, spacedim>& dof2,
-      OutVector&                       u2)
+      const InVector &                  u2_relevant,
+      const DoFHandler<dim, spacedim> & dof2,
+      OutVector &                       u2)
     {
-      const parallel::distributed::Triangulation<dim, spacedim>* tr
+      const parallel::distributed::Triangulation<dim, spacedim> * tr
         = (dynamic_cast<
-           const parallel::distributed::Triangulation<dim, spacedim>*>(
+           const parallel::distributed::Triangulation<dim, spacedim> *>(
           &dof2.get_triangulation()));
 
       Assert(
@@ -1360,8 +1361,8 @@ namespace FETools
       compute_all_non_local_data(dof2, u2_relevant);
 
       // exclude dofs on more refined ghosted cells
-      const FiniteElement<dim, spacedim>& fe            = dof2.get_fe();
-      const unsigned int                  dofs_per_face = fe.dofs_per_face;
+      const FiniteElement<dim, spacedim> & fe            = dof2.get_fe();
+      const unsigned int                   dofs_per_face = fe.dofs_per_face;
       if(dofs_per_face > 0)
         {
           const unsigned int                   dofs_per_cell = fe.dofs_per_cell;
@@ -1423,7 +1424,7 @@ namespace FETools
                                p4est_coarse_cell;
             const unsigned int tree_index
               = tr->coarse_cell_to_p4est_tree_permutation[cell->index()];
-            typename dealii::internal::p4est::types<dim>::tree* tree
+            typename dealii::internal::p4est::types<dim>::tree * tree
               = tr->init_tree(cell->index());
 
             dealii::internal::p4est::init_coarse_quadrant<dim>(
@@ -1438,17 +1439,18 @@ namespace FETools
 
       while(!queue.empty())
         {
-          const WorkPackage& data = queue.front();
+          const WorkPackage & data = queue.front();
 
-          const typename dealii::internal::p4est::types<dim>::forest& forest
+          const typename dealii::internal::p4est::types<dim>::forest & forest
             = data.forest;
-          const typename dealii::internal::p4est::types<dim>::tree& tree
+          const typename dealii::internal::p4est::types<dim>::tree & tree
             = data.tree;
-          const typename dealii::internal::p4est::types<dim>::locidx& tree_index
+          const typename dealii::internal::p4est::types<dim>::locidx &
+            tree_index
             = data.tree_index;
-          const typename DoFHandler<dim, spacedim>::cell_iterator& dealii_cell
+          const typename DoFHandler<dim, spacedim>::cell_iterator & dealii_cell
             = data.dealii_cell;
-          const typename dealii::internal::p4est::types<dim>::quadrant&
+          const typename dealii::internal::p4est::types<dim>::quadrant &
             p4est_cell
             = data.p4est_cell;
 
@@ -1502,7 +1504,7 @@ namespace FETools
 
       template <class VectorType, class DH>
       void
-      reinit_distributed(const DH& dh, VectorType& vector)
+      reinit_distributed(const DH & dh, VectorType & vector)
       {
         vector.reinit(dh.n_dofs());
       }
@@ -1510,16 +1512,17 @@ namespace FETools
 #ifdef DEAL_II_WITH_PETSC
       template <int dim, int spacedim>
       void
-      reinit_distributed(const DoFHandler<dim, spacedim>& dh,
-                         PETScWrappers::MPI::Vector&      vector)
+      reinit_distributed(const DoFHandler<dim, spacedim> & dh,
+                         PETScWrappers::MPI::Vector &      vector)
       {
-        const parallel::distributed::Triangulation<dim, spacedim>* parallel_tria
+        const parallel::distributed::Triangulation<dim, spacedim> *
+          parallel_tria
           = dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(
+            const parallel::distributed::Triangulation<dim, spacedim> *>(
             &dh.get_triangulation());
         Assert(parallel_tria != nullptr, ExcNotImplemented());
 
-        const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
+        const IndexSet & locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
 #endif //DEAL_II_WITH_PETSC
@@ -1527,32 +1530,34 @@ namespace FETools
 #ifdef DEAL_II_WITH_TRILINOS
       template <int dim, int spacedim>
       void
-      reinit_distributed(const DoFHandler<dim, spacedim>& dh,
-                         TrilinosWrappers::MPI::Vector&   vector)
+      reinit_distributed(const DoFHandler<dim, spacedim> & dh,
+                         TrilinosWrappers::MPI::Vector &   vector)
       {
-        const parallel::distributed::Triangulation<dim, spacedim>* parallel_tria
+        const parallel::distributed::Triangulation<dim, spacedim> *
+          parallel_tria
           = dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(
+            const parallel::distributed::Triangulation<dim, spacedim> *>(
             &dh.get_triangulation());
         Assert(parallel_tria != nullptr, ExcNotImplemented());
 
-        const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
+        const IndexSet & locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
 
 #  ifdef DEAL_II_WITH_MPI
       template <int dim, int spacedim>
       void
-      reinit_distributed(const DoFHandler<dim, spacedim>&       dh,
-                         LinearAlgebra::EpetraWrappers::Vector& vector)
+      reinit_distributed(const DoFHandler<dim, spacedim> &       dh,
+                         LinearAlgebra::EpetraWrappers::Vector & vector)
       {
-        const parallel::distributed::Triangulation<dim, spacedim>* parallel_tria
+        const parallel::distributed::Triangulation<dim, spacedim> *
+          parallel_tria
           = dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(
+            const parallel::distributed::Triangulation<dim, spacedim> *>(
             &dh.get_triangulation());
         Assert(parallel_tria != nullptr, ExcNotImplemented());
 
-        const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
+        const IndexSet & locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
 #  endif
@@ -1560,22 +1565,23 @@ namespace FETools
 
       template <int dim, int spacedim, typename Number>
       void
-      reinit_distributed(const DoFHandler<dim, spacedim>&            dh,
-                         LinearAlgebra::distributed::Vector<Number>& vector)
+      reinit_distributed(const DoFHandler<dim, spacedim> &            dh,
+                         LinearAlgebra::distributed::Vector<Number> & vector)
       {
-        const parallel::distributed::Triangulation<dim, spacedim>* parallel_tria
+        const parallel::distributed::Triangulation<dim, spacedim> *
+          parallel_tria
           = dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(
+            const parallel::distributed::Triangulation<dim, spacedim> *>(
             &dh.get_triangulation());
         Assert(parallel_tria != nullptr, ExcNotImplemented());
 
-        const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
+        const IndexSet & locally_owned_dofs = dh.locally_owned_dofs();
         vector.reinit(locally_owned_dofs, parallel_tria->get_communicator());
       }
 
       template <class VectorType, class DH>
       void
-      reinit_ghosted(const DH& /*dh*/, VectorType& /*vector*/)
+      reinit_ghosted(const DH & /*dh*/, VectorType & /*vector*/)
       {
         Assert(false, ExcNotImplemented());
       }
@@ -1583,16 +1589,17 @@ namespace FETools
 #ifdef DEAL_II_WITH_PETSC
       template <int dim, int spacedim>
       void
-      reinit_ghosted(const DoFHandler<dim, spacedim>& dh,
-                     PETScWrappers::MPI::Vector&      vector)
+      reinit_ghosted(const DoFHandler<dim, spacedim> & dh,
+                     PETScWrappers::MPI::Vector &      vector)
       {
-        const parallel::distributed::Triangulation<dim, spacedim>* parallel_tria
+        const parallel::distributed::Triangulation<dim, spacedim> *
+          parallel_tria
           = dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(
+            const parallel::distributed::Triangulation<dim, spacedim> *>(
             &dh.get_triangulation());
         Assert(parallel_tria != nullptr, ExcNotImplemented());
-        const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
-        IndexSet        locally_relevant_dofs;
+        const IndexSet & locally_owned_dofs = dh.locally_owned_dofs();
+        IndexSet         locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
         vector.reinit(locally_owned_dofs,
                       locally_relevant_dofs,
@@ -1603,16 +1610,17 @@ namespace FETools
 #ifdef DEAL_II_WITH_TRILINOS
       template <int dim, int spacedim>
       void
-      reinit_ghosted(const DoFHandler<dim, spacedim>& dh,
-                     TrilinosWrappers::MPI::Vector&   vector)
+      reinit_ghosted(const DoFHandler<dim, spacedim> & dh,
+                     TrilinosWrappers::MPI::Vector &   vector)
       {
-        const parallel::distributed::Triangulation<dim, spacedim>* parallel_tria
+        const parallel::distributed::Triangulation<dim, spacedim> *
+          parallel_tria
           = dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(
+            const parallel::distributed::Triangulation<dim, spacedim> *>(
             &dh.get_triangulation());
         Assert(parallel_tria != nullptr, ExcNotImplemented());
-        const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
-        IndexSet        locally_relevant_dofs;
+        const IndexSet & locally_owned_dofs = dh.locally_owned_dofs();
+        IndexSet         locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
         vector.reinit(locally_owned_dofs,
                       locally_relevant_dofs,
@@ -1622,16 +1630,17 @@ namespace FETools
 
       template <int dim, int spacedim, typename Number>
       void
-      reinit_ghosted(const DoFHandler<dim, spacedim>&            dh,
-                     LinearAlgebra::distributed::Vector<Number>& vector)
+      reinit_ghosted(const DoFHandler<dim, spacedim> &            dh,
+                     LinearAlgebra::distributed::Vector<Number> & vector)
       {
-        const parallel::distributed::Triangulation<dim, spacedim>* parallel_tria
+        const parallel::distributed::Triangulation<dim, spacedim> *
+          parallel_tria
           = dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim>*>(
+            const parallel::distributed::Triangulation<dim, spacedim> *>(
             &dh.get_triangulation());
         Assert(parallel_tria != nullptr, ExcNotImplemented());
-        const IndexSet& locally_owned_dofs = dh.locally_owned_dofs();
-        IndexSet        locally_relevant_dofs;
+        const IndexSet & locally_owned_dofs = dh.locally_owned_dofs();
+        IndexSet         locally_relevant_dofs;
         DoFTools::extract_locally_relevant_dofs(dh, locally_relevant_dofs);
         vector.reinit(locally_owned_dofs,
                       locally_relevant_dofs,
@@ -1640,9 +1649,9 @@ namespace FETools
 
       template <int dim, class InVector, class OutVector, int spacedim>
       void
-      extrapolate_serial(const InVector&                  u3,
-                         const DoFHandler<dim, spacedim>& dof2,
-                         OutVector&                       u2)
+      extrapolate_serial(const InVector &                  u3,
+                         const DoFHandler<dim, spacedim> & dof2,
+                         OutVector &                       u2)
       {
         const unsigned int dofs_per_cell = dof2.get_fe().dofs_per_cell;
         Vector<typename OutVector::value_type> dof_values(dofs_per_cell);
@@ -1691,10 +1700,10 @@ namespace FETools
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  extrapolate(const DoFHandler<dim, spacedim>& dof1,
-              const InVector&                  u1,
-              const DoFHandler<dim, spacedim>& dof2,
-              OutVector&                       u2)
+  extrapolate(const DoFHandler<dim, spacedim> & dof1,
+              const InVector &                  u1,
+              const DoFHandler<dim, spacedim> & dof2,
+              OutVector &                       u2)
   {
     ConstraintMatrix dummy;
     dummy.close();
@@ -1703,11 +1712,11 @@ namespace FETools
 
   template <int dim, class InVector, class OutVector, int spacedim>
   void
-  extrapolate(const DoFHandler<dim, spacedim>& dof1,
-              const InVector&                  u1,
-              const DoFHandler<dim, spacedim>& dof2,
-              const ConstraintMatrix&          constraints,
-              OutVector&                       u2)
+  extrapolate(const DoFHandler<dim, spacedim> & dof1,
+              const InVector &                  u1,
+              const DoFHandler<dim, spacedim> & dof2,
+              const ConstraintMatrix &          constraints,
+              OutVector &                       u2)
   {
     Assert(dof1.get_fe(0).n_components() == dof2.get_fe(0).n_components(),
            ExcDimensionMismatch(dof1.get_fe(0).n_components(),
@@ -1731,7 +1740,8 @@ namespace FETools
 
     internal::BlockType<OutVector> u3;
     internal::reinit_distributed(dof2, u3);
-    if(dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>*>(
+    if(dynamic_cast<
+         const parallel::distributed::Triangulation<dim, spacedim> *>(
          &dof2.get_triangulation())
        != nullptr)
       {

@@ -25,8 +25,8 @@
 #include <vector>
 
 void
-check(const unsigned int                                myid,
-      const LinearAlgebra::distributed::Vector<double>& v)
+check(const unsigned int                                 myid,
+      const LinearAlgebra::distributed::Vector<double> & v)
 {
   if(myid == 0)
     {
@@ -102,7 +102,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

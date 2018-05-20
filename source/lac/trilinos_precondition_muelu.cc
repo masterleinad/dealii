@@ -39,16 +39,16 @@ DEAL_II_NAMESPACE_OPEN
 namespace TrilinosWrappers
 {
   PreconditionAMGMueLu::AdditionalData::AdditionalData(
-    const bool                            elliptic,
-    const unsigned int                    n_cycles,
-    const bool                            w_cycle,
-    const double                          aggregation_threshold,
-    const std::vector<std::vector<bool>>& constant_modes,
-    const unsigned int                    smoother_sweeps,
-    const unsigned int                    smoother_overlap,
-    const bool                            output_details,
-    const char*                           smoother_type,
-    const char*                           coarse_type)
+    const bool                             elliptic,
+    const unsigned int                     n_cycles,
+    const bool                             w_cycle,
+    const double                           aggregation_threshold,
+    const std::vector<std::vector<bool>> & constant_modes,
+    const unsigned int                     smoother_sweeps,
+    const unsigned int                     smoother_overlap,
+    const bool                             output_details,
+    const char *                           smoother_type,
+    const char *                           coarse_type)
     : elliptic(elliptic),
       n_cycles(n_cycles),
       w_cycle(w_cycle),
@@ -77,15 +77,15 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMGMueLu::initialize(const SparseMatrix&   matrix,
-                                   const AdditionalData& additional_data)
+  PreconditionAMGMueLu::initialize(const SparseMatrix &   matrix,
+                                   const AdditionalData & additional_data)
   {
     initialize(matrix.trilinos_matrix(), additional_data);
   }
 
   void
-  PreconditionAMGMueLu::initialize(const Epetra_CrsMatrix& matrix,
-                                   const AdditionalData&   additional_data)
+  PreconditionAMGMueLu::initialize(const Epetra_CrsMatrix & matrix,
+                                   const AdditionalData &   additional_data)
   {
     // Build the AMG preconditioner.
     Teuchos::ParameterList parameter_list;
@@ -126,7 +126,7 @@ namespace TrilinosWrappers
     else
       parameter_list.set("ML output", 0);
 
-    const Epetra_Map& domain_map = matrix.OperatorDomainMap();
+    const Epetra_Map & domain_map = matrix.OperatorDomainMap();
 
     const size_type constant_modes_dimension
       = additional_data.constant_modes.size();
@@ -186,15 +186,15 @@ namespace TrilinosWrappers
   }
 
   void
-  PreconditionAMGMueLu::initialize(const SparseMatrix&     matrix,
-                                   Teuchos::ParameterList& muelu_parameters)
+  PreconditionAMGMueLu::initialize(const SparseMatrix &     matrix,
+                                   Teuchos::ParameterList & muelu_parameters)
   {
     initialize(matrix.trilinos_matrix(), muelu_parameters);
   }
 
   void
-  PreconditionAMGMueLu::initialize(const Epetra_CrsMatrix& matrix,
-                                   Teuchos::ParameterList& muelu_parameters)
+  PreconditionAMGMueLu::initialize(const Epetra_CrsMatrix & matrix,
+                                   Teuchos::ParameterList & muelu_parameters)
   {
     // We cannot use MueLu::CreateEpetraOperator directly because, we cannot
     // transfer ownership of MueLu::EpetraOperator from Teuchos::RCP to
@@ -207,7 +207,7 @@ namespace TrilinosWrappers
     // Cast matrix into a MueLu::Matrix. The constness needs to be cast away.
     // MueLu uses Teuchos::RCP which are Trilinos version of std::shared_ptr.
     Teuchos::RCP<Epetra_CrsMatrix> rcp_matrix
-      = Teuchos::rcpFromRef(*(const_cast<Epetra_CrsMatrix*>(&matrix)));
+      = Teuchos::rcpFromRef(*(const_cast<Epetra_CrsMatrix *>(&matrix)));
     Teuchos::RCP<Xpetra::CrsMatrix<double, int, int, node>> muelu_crs_matrix
       = Teuchos::rcp(new Xpetra::EpetraCrsMatrix(rcp_matrix));
     Teuchos::RCP<Xpetra::Matrix<double, int, int, node>> muelu_matrix
@@ -233,10 +233,10 @@ namespace TrilinosWrappers
   template <typename number>
   void
   PreconditionAMGMueLu::initialize(
-    const ::dealii::SparseMatrix<number>& deal_ii_sparse_matrix,
-    const AdditionalData&                 additional_data,
-    const double                          drop_tolerance,
-    const ::dealii::SparsityPattern*      use_this_sparsity)
+    const ::dealii::SparseMatrix<number> & deal_ii_sparse_matrix,
+    const AdditionalData &                 additional_data,
+    const double                           drop_tolerance,
+    const ::dealii::SparsityPattern *      use_this_sparsity)
   {
     preconditioner.reset();
     const size_type n_rows = deal_ii_sparse_matrix.m();
@@ -282,15 +282,15 @@ namespace TrilinosWrappers
 
   // explicit instantiations
   template void
-  PreconditionAMGMueLu::initialize(const ::dealii::SparseMatrix<double>&,
-                                   const AdditionalData&,
+  PreconditionAMGMueLu::initialize(const ::dealii::SparseMatrix<double> &,
+                                   const AdditionalData &,
                                    const double,
-                                   const ::dealii::SparsityPattern*);
+                                   const ::dealii::SparsityPattern *);
   template void
-  PreconditionAMGMueLu::initialize(const ::dealii::SparseMatrix<float>&,
-                                   const AdditionalData&,
+  PreconditionAMGMueLu::initialize(const ::dealii::SparseMatrix<float> &,
+                                   const AdditionalData &,
                                    const double,
-                                   const ::dealii::SparsityPattern*);
+                                   const ::dealii::SparsityPattern *);
 
 } // namespace TrilinosWrappers
 

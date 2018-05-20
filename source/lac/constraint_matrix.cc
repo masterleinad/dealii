@@ -50,7 +50,7 @@ DEAL_II_NAMESPACE_OPEN
 const Table<2, bool> ConstraintMatrix::default_empty_table = Table<2, bool>();
 
 void
-ConstraintMatrix::copy_from(const ConstraintMatrix& other)
+ConstraintMatrix::copy_from(const ConstraintMatrix & other)
 {
   lines       = other.lines;
   lines_cache = other.lines_cache;
@@ -59,19 +59,19 @@ ConstraintMatrix::copy_from(const ConstraintMatrix& other)
 }
 
 bool
-ConstraintMatrix::check_zero_weight(const std::pair<size_type, double>& p)
+ConstraintMatrix::check_zero_weight(const std::pair<size_type, double> & p)
 {
   return (p.second == 0);
 }
 
 bool
-ConstraintMatrix::ConstraintLine::operator<(const ConstraintLine& a) const
+ConstraintMatrix::ConstraintLine::operator<(const ConstraintLine & a) const
 {
   return index < a.index;
 }
 
 bool
-ConstraintMatrix::ConstraintLine::operator==(const ConstraintLine& a) const
+ConstraintMatrix::ConstraintLine::operator==(const ConstraintLine & a) const
 {
   return index == a.index;
 }
@@ -92,10 +92,10 @@ ConstraintMatrix::get_lines() const
 
 bool
 ConstraintMatrix::is_consistent_in_parallel(
-  const std::vector<IndexSet>& locally_owned_dofs,
-  const IndexSet&              locally_active_dofs,
-  const MPI_Comm               mpi_communicator,
-  const bool                   verbose) const
+  const std::vector<IndexSet> & locally_owned_dofs,
+  const IndexSet &              locally_active_dofs,
+  const MPI_Comm                mpi_communicator,
+  const bool                    verbose) const
 {
   ConstraintLine empty;
   empty.inhomogeneity = 0.0;
@@ -103,7 +103,7 @@ ConstraintMatrix::is_consistent_in_parallel(
   // Helper to return a reference to the ConstraintLine object that belongs to row @p row.
   // We don't want to make copies but to return a reference, we need an empty object that
   // we store above.
-  auto get_line = [&](const size_type row) -> const ConstraintLine& {
+  auto get_line = [&](const size_type row) -> const ConstraintLine & {
     const size_type line_index = calculate_line_index(row);
     if(line_index >= lines_cache.size()
        || lines_cache[line_index] == numbers::invalid_size_type)
@@ -131,7 +131,7 @@ ConstraintMatrix::is_consistent_in_parallel(
     {
       // find all lines to send to @p owner
       IndexSet indices_to_send = non_owned & locally_owned_dofs[owner];
-      for(const auto& row_idx : indices_to_send)
+      for(const auto & row_idx : indices_to_send)
         {
           to_send[owner].push_back(get_line(row_idx));
         }
@@ -143,12 +143,12 @@ ConstraintMatrix::is_consistent_in_parallel(
   unsigned int inconsistent = 0;
 
   // from each processor:
-  for(const auto& kv : received)
+  for(const auto & kv : received)
     {
       // for each incoming line:
-      for(auto& lineit : kv.second)
+      for(auto & lineit : kv.second)
         {
-          const ConstraintLine& reference = get_line(lineit.index);
+          const ConstraintLine & reference = get_line(lineit.index);
 
           if(lineit.inhomogeneity != reference.inhomogeneity)
             {
@@ -179,7 +179,7 @@ ConstraintMatrix::is_consistent_in_parallel(
 }
 
 void
-ConstraintMatrix::add_lines(const std::set<size_type>& lines)
+ConstraintMatrix::add_lines(const std::set<size_type> & lines)
 {
   for(std::set<size_type>::const_iterator i = lines.begin(); i != lines.end();
       ++i)
@@ -187,7 +187,7 @@ ConstraintMatrix::add_lines(const std::set<size_type>& lines)
 }
 
 void
-ConstraintMatrix::add_lines(const std::vector<bool>& lines)
+ConstraintMatrix::add_lines(const std::vector<bool> & lines)
 {
   for(size_type i = 0; i < lines.size(); ++i)
     if(lines[i] == true)
@@ -195,7 +195,7 @@ ConstraintMatrix::add_lines(const std::vector<bool>& lines)
 }
 
 void
-ConstraintMatrix::add_lines(const IndexSet& lines)
+ConstraintMatrix::add_lines(const IndexSet & lines)
 {
   for(size_type i = 0; i < lines.n_elements(); ++i)
     add_line(lines.nth_index_in_set(i));
@@ -203,13 +203,13 @@ ConstraintMatrix::add_lines(const IndexSet& lines)
 
 void
 ConstraintMatrix::add_entries(
-  const size_type                                  line,
-  const std::vector<std::pair<size_type, double>>& col_val_pairs)
+  const size_type                                   line,
+  const std::vector<std::pair<size_type, double>> & col_val_pairs)
 {
   Assert(sorted == false, ExcMatrixIsClosed());
   Assert(is_constrained(line), ExcLineInexistant(line));
 
-  ConstraintLine* line_ptr = &lines[lines_cache[calculate_line_index(line)]];
+  ConstraintLine * line_ptr = &lines[lines_cache[calculate_line_index(line)]];
   Assert(line_ptr->index == line, ExcInternalError());
 
   // if in debug mode, check whether an entry for this column already
@@ -243,8 +243,8 @@ ConstraintMatrix::add_entries(
 }
 
 void
-ConstraintMatrix::add_selected_constraints(const ConstraintMatrix& constraints,
-                                           const IndexSet&         filter)
+ConstraintMatrix::add_selected_constraints(const ConstraintMatrix & constraints,
+                                           const IndexSet &         filter)
 {
   if(constraints.n_constraints() == 0)
     return;
@@ -377,7 +377,7 @@ ConstraintMatrix::close()
                 Assert(dof_index != line->index,
                        ExcMessage("Cycle in constraints detected!"));
 
-                const ConstraintLine* constrained_line
+                const ConstraintLine * constrained_line
                   = &lines[lines_cache[calculate_line_index(dof_index)]];
                 Assert(constrained_line->index == dof_index,
                        ExcInternalError());
@@ -559,7 +559,7 @@ ConstraintMatrix::close()
 }
 
 void
-ConstraintMatrix::merge(const ConstraintMatrix&     other_constraints,
+ConstraintMatrix::merge(const ConstraintMatrix &    other_constraints,
                         const MergeConflictBehavior merge_conflict_behavior,
                         const bool                  allow_different_local_lines)
 {
@@ -606,7 +606,7 @@ ConstraintMatrix::merge(const ConstraintMatrix&     other_constraints,
             // entry by a sequence of new entries taken from the other
             // object, but with multiplied weights
             {
-              const ConstraintLine::Entries* other_line
+              const ConstraintLine::Entries * other_line
                 = other_constraints.get_constraint_entries(
                   line->entries[i].first);
               Assert(other_line != nullptr, ExcInternalError());
@@ -757,7 +757,7 @@ ConstraintMatrix::clear()
 }
 
 void
-ConstraintMatrix::reinit(const IndexSet& local_constraints)
+ConstraintMatrix::reinit(const IndexSet & local_constraints)
 {
   local_lines = local_constraints;
 
@@ -770,7 +770,7 @@ ConstraintMatrix::reinit(const IndexSet& local_constraints)
 }
 
 void
-ConstraintMatrix::condense(SparsityPattern& sparsity) const
+ConstraintMatrix::condense(SparsityPattern & sparsity) const
 {
   Assert(sorted == true, ExcMatrixNotClosed());
   Assert(sparsity.is_compressed() == false, ExcMatrixIsClosed());
@@ -853,7 +853,7 @@ ConstraintMatrix::condense(SparsityPattern& sparsity) const
 }
 
 void
-ConstraintMatrix::condense(DynamicSparsityPattern& sparsity) const
+ConstraintMatrix::condense(DynamicSparsityPattern & sparsity) const
 {
   Assert(sorted == true, ExcMatrixNotClosed());
   Assert(sparsity.n_rows() == sparsity.n_cols(), ExcNotQuadratic());
@@ -944,7 +944,7 @@ ConstraintMatrix::condense(DynamicSparsityPattern& sparsity) const
 }
 
 void
-ConstraintMatrix::condense(BlockSparsityPattern& sparsity) const
+ConstraintMatrix::condense(BlockSparsityPattern & sparsity) const
 {
   Assert(sorted == true, ExcMatrixNotClosed());
   Assert(sparsity.is_compressed() == false, ExcMatrixIsClosed());
@@ -953,7 +953,7 @@ ConstraintMatrix::condense(BlockSparsityPattern& sparsity) const
   Assert(sparsity.get_column_indices() == sparsity.get_row_indices(),
          ExcNotQuadratic());
 
-  const BlockIndices& index_mapping = sparsity.get_column_indices();
+  const BlockIndices & index_mapping = sparsity.get_column_indices();
 
   const size_type n_blocks = sparsity.n_block_rows();
 
@@ -983,7 +983,7 @@ ConstraintMatrix::condense(BlockSparsityPattern& sparsity) const
           // blocks in this blockrow and the corresponding row therein
           for(size_type block_col = 0; block_col < n_blocks; ++block_col)
             {
-              const SparsityPattern& block_sparsity
+              const SparsityPattern & block_sparsity
                 = sparsity.block(block_row, block_col);
 
               for(SparsityPattern::const_iterator entry
@@ -1014,7 +1014,7 @@ ConstraintMatrix::condense(BlockSparsityPattern& sparsity) const
           // defined by the blocks
           for(size_type block_col = 0; block_col < n_blocks; ++block_col)
             {
-              const SparsityPattern& block_sparsity
+              const SparsityPattern & block_sparsity
                 = sparsity.block(block_row, block_col);
 
               for(SparsityPattern::const_iterator entry
@@ -1059,7 +1059,7 @@ ConstraintMatrix::condense(BlockSparsityPattern& sparsity) const
 }
 
 void
-ConstraintMatrix::condense(BlockDynamicSparsityPattern& sparsity) const
+ConstraintMatrix::condense(BlockDynamicSparsityPattern & sparsity) const
 {
   Assert(sorted == true, ExcMatrixNotClosed());
   Assert(sparsity.n_rows() == sparsity.n_cols(), ExcNotQuadratic());
@@ -1067,7 +1067,7 @@ ConstraintMatrix::condense(BlockDynamicSparsityPattern& sparsity) const
   Assert(sparsity.get_column_indices() == sparsity.get_row_indices(),
          ExcNotQuadratic());
 
-  const BlockIndices& index_mapping = sparsity.get_column_indices();
+  const BlockIndices & index_mapping = sparsity.get_column_indices();
 
   const size_type n_blocks = sparsity.n_block_rows();
 
@@ -1104,7 +1104,7 @@ ConstraintMatrix::condense(BlockDynamicSparsityPattern& sparsity) const
           // blocks in this blockrow and the corresponding row therein
           for(size_type block_col = 0; block_col < n_blocks; ++block_col)
             {
-              const DynamicSparsityPattern& block_sparsity
+              const DynamicSparsityPattern & block_sparsity
                 = sparsity.block(block_row, block_col);
 
               for(size_type j = 0; j < block_sparsity.row_length(local_row);
@@ -1132,7 +1132,7 @@ ConstraintMatrix::condense(BlockDynamicSparsityPattern& sparsity) const
           // defined by the blocks
           for(size_type block_col = 0; block_col < n_blocks; ++block_col)
             {
-              const DynamicSparsityPattern& block_sparsity
+              const DynamicSparsityPattern & block_sparsity
                 = sparsity.block(block_row, block_col);
 
               for(size_type j = 0; j < block_sparsity.row_length(local_row);
@@ -1177,7 +1177,7 @@ ConstraintMatrix::is_identity_constrained(const size_type index) const
   if(is_constrained(index) == false)
     return false;
 
-  const ConstraintLine& p = lines[lines_cache[calculate_line_index(index)]];
+  const ConstraintLine & p = lines[lines_cache[calculate_line_index(index)]];
   Assert(p.index == index, ExcInternalError());
 
   // return if an entry for this line was found and if it has only one
@@ -1191,7 +1191,7 @@ ConstraintMatrix::are_identity_constrained(const size_type index1,
 {
   if(is_constrained(index1) == true)
     {
-      const ConstraintLine& p
+      const ConstraintLine & p
         = lines[lines_cache[calculate_line_index(index1)]];
       Assert(p.index == index1, ExcInternalError());
 
@@ -1202,7 +1202,7 @@ ConstraintMatrix::are_identity_constrained(const size_type index1,
     }
   else if(is_constrained(index2) == true)
     {
-      const ConstraintLine& p
+      const ConstraintLine & p
         = lines[lines_cache[calculate_line_index(index2)]];
       Assert(p.index == index2, ExcInternalError());
 
@@ -1243,7 +1243,7 @@ ConstraintMatrix::has_inhomogeneities() const
 }
 
 void
-ConstraintMatrix::print(std::ostream& out) const
+ConstraintMatrix::print(std::ostream & out) const
 {
   for(size_type i = 0; i != lines.size(); ++i)
     {
@@ -1276,7 +1276,7 @@ ConstraintMatrix::print(std::ostream& out) const
 }
 
 void
-ConstraintMatrix::write_dot(std::ostream& out) const
+ConstraintMatrix::write_dot(std::ostream & out) const
 {
   out << "digraph constraints {" << std::endl;
   for(size_type i = 0; i != lines.size(); ++i)
@@ -1303,10 +1303,10 @@ ConstraintMatrix::memory_consumption() const
 
 void
 ConstraintMatrix::resolve_indices(
-  std::vector<types::global_dof_index>& indices) const
+  std::vector<types::global_dof_index> & indices) const
 {
   const unsigned int indices_size = indices.size();
-  const std::vector<std::pair<types::global_dof_index, double>>* line_ptr;
+  const std::vector<std::pair<types::global_dof_index, double>> * line_ptr;
   for(unsigned int i = 0; i < indices_size; ++i)
     {
       line_ptr = get_constraint_entries(indices[i]);
@@ -1339,34 +1339,34 @@ ConstraintMatrix::resolve_indices(
 
 #define VECTOR_FUNCTIONS(VectorType)                                      \
   template void ConstraintMatrix::condense<VectorType>(                   \
-    const VectorType& uncondensed, VectorType& condensed) const;          \
+    const VectorType & uncondensed, VectorType & condensed) const;        \
   template void ConstraintMatrix::condense<VectorType>(VectorType & vec)  \
     const;                                                                \
   template void ConstraintMatrix::distribute_local_to_global<VectorType>( \
-    const Vector<VectorType::value_type>&,                                \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    VectorType&,                                                          \
-    const FullMatrix<VectorType::value_type>&) const;                     \
+    const Vector<VectorType::value_type> &,                               \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    VectorType &,                                                         \
+    const FullMatrix<VectorType::value_type> &) const;                    \
   template void ConstraintMatrix::distribute_local_to_global<VectorType>( \
-    const Vector<VectorType::value_type>&,                                \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    VectorType&,                                                          \
-    const FullMatrix<VectorType::value_type>&,                            \
+    const Vector<VectorType::value_type> &,                               \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    VectorType &,                                                         \
+    const FullMatrix<VectorType::value_type> &,                           \
     bool) const
 
 #define PARALLEL_VECTOR_FUNCTIONS(VectorType)                             \
   template void ConstraintMatrix::distribute_local_to_global<VectorType>( \
-    const Vector<VectorType::value_type>&,                                \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    VectorType&,                                                          \
-    const FullMatrix<VectorType::value_type>&) const;                     \
+    const Vector<VectorType::value_type> &,                               \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    VectorType &,                                                         \
+    const FullMatrix<VectorType::value_type> &) const;                    \
   template void ConstraintMatrix::distribute_local_to_global<VectorType>( \
-    const Vector<VectorType::value_type>&,                                \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    VectorType&,                                                          \
-    const FullMatrix<VectorType::value_type>&,                            \
+    const Vector<VectorType::value_type> &,                               \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    VectorType &,                                                         \
+    const FullMatrix<VectorType::value_type> &,                           \
     bool) const
 
 #ifdef DEAL_II_WITH_PETSC
@@ -1382,42 +1382,42 @@ PARALLEL_VECTOR_FUNCTIONS(TrilinosWrappers::MPI::BlockVector);
 #define MATRIX_VECTOR_FUNCTIONS(MatrixType, VectorType)                 \
   template void                                                         \
   ConstraintMatrix::distribute_local_to_global<MatrixType, VectorType>( \
-    const FullMatrix<MatrixType::value_type>&,                          \
-    const Vector<VectorType::value_type>&,                              \
-    const std::vector<ConstraintMatrix::size_type>&,                    \
-    MatrixType&,                                                        \
-    VectorType&,                                                        \
+    const FullMatrix<MatrixType::value_type> &,                         \
+    const Vector<VectorType::value_type> &,                             \
+    const std::vector<ConstraintMatrix::size_type> &,                   \
+    MatrixType &,                                                       \
+    VectorType &,                                                       \
     bool,                                                               \
     std::integral_constant<bool, false>) const
 #define MATRIX_FUNCTIONS(MatrixType, VectorScalar)                    \
   template void                                                       \
   ConstraintMatrix::distribute_local_to_global<MatrixType,            \
                                                Vector<VectorScalar>>( \
-    const FullMatrix<MatrixType::value_type>&,                        \
-    const Vector<VectorScalar>&,                                      \
-    const std::vector<ConstraintMatrix::size_type>&,                  \
-    MatrixType&,                                                      \
-    Vector<VectorScalar>&,                                            \
+    const FullMatrix<MatrixType::value_type> &,                       \
+    const Vector<VectorScalar> &,                                     \
+    const std::vector<ConstraintMatrix::size_type> &,                 \
+    MatrixType &,                                                     \
+    Vector<VectorScalar> &,                                           \
     bool,                                                             \
     std::integral_constant<bool, false>) const
 #define BLOCK_MATRIX_VECTOR_FUNCTIONS(MatrixType, VectorType)           \
   template void                                                         \
   ConstraintMatrix::distribute_local_to_global<MatrixType, VectorType>( \
-    const FullMatrix<MatrixType::value_type>&,                          \
-    const Vector<VectorType::value_type>&,                              \
-    const std::vector<ConstraintMatrix::size_type>&,                    \
-    MatrixType&,                                                        \
-    VectorType&,                                                        \
+    const FullMatrix<MatrixType::value_type> &,                         \
+    const Vector<VectorType::value_type> &,                             \
+    const std::vector<ConstraintMatrix::size_type> &,                   \
+    MatrixType &,                                                       \
+    VectorType &,                                                       \
     bool,                                                               \
     std::integral_constant<bool, true>) const
 #define BLOCK_MATRIX_FUNCTIONS(MatrixType)                                  \
   template void ConstraintMatrix::                                          \
     distribute_local_to_global<MatrixType, Vector<MatrixType::value_type>>( \
-      const FullMatrix<MatrixType::value_type>&,                            \
-      const Vector<MatrixType::value_type>&,                                \
-      const std::vector<ConstraintMatrix::size_type>&,                      \
-      MatrixType&,                                                          \
-      Vector<MatrixType::value_type>&,                                      \
+      const FullMatrix<MatrixType::value_type> &,                           \
+      const Vector<MatrixType::value_type> &,                               \
+      const std::vector<ConstraintMatrix::size_type> &,                     \
+      MatrixType &,                                                         \
+      Vector<MatrixType::value_type> &,                                     \
       bool,                                                                 \
       std::integral_constant<bool, true>) const
 
@@ -1470,33 +1470,33 @@ BLOCK_MATRIX_VECTOR_FUNCTIONS(TrilinosWrappers::BlockSparseMatrix,
 #define SPARSITY_FUNCTIONS(SparsityPatternType)                       \
   template void                                                       \
   ConstraintMatrix::add_entries_local_to_global<SparsityPatternType>( \
-    const std::vector<ConstraintMatrix::size_type>&,                  \
-    SparsityPatternType&,                                             \
+    const std::vector<ConstraintMatrix::size_type> &,                 \
+    SparsityPatternType &,                                            \
     const bool,                                                       \
-    const Table<2, bool>&,                                            \
+    const Table<2, bool> &,                                           \
     std::integral_constant<bool, false>) const;                       \
   template void                                                       \
   ConstraintMatrix::add_entries_local_to_global<SparsityPatternType>( \
-    const std::vector<ConstraintMatrix::size_type>&,                  \
-    const std::vector<ConstraintMatrix::size_type>&,                  \
-    SparsityPatternType&,                                             \
+    const std::vector<ConstraintMatrix::size_type> &,                 \
+    const std::vector<ConstraintMatrix::size_type> &,                 \
+    SparsityPatternType &,                                            \
     const bool,                                                       \
-    const Table<2, bool>&) const
+    const Table<2, bool> &) const
 #define BLOCK_SPARSITY_FUNCTIONS(SparsityPatternType)                 \
   template void                                                       \
   ConstraintMatrix::add_entries_local_to_global<SparsityPatternType>( \
-    const std::vector<ConstraintMatrix::size_type>&,                  \
-    SparsityPatternType&,                                             \
+    const std::vector<ConstraintMatrix::size_type> &,                 \
+    SparsityPatternType &,                                            \
     const bool,                                                       \
-    const Table<2, bool>&,                                            \
+    const Table<2, bool> &,                                           \
     std::integral_constant<bool, true>) const;                        \
   template void                                                       \
   ConstraintMatrix::add_entries_local_to_global<SparsityPatternType>( \
-    const std::vector<ConstraintMatrix::size_type>&,                  \
-    const std::vector<ConstraintMatrix::size_type>&,                  \
-    SparsityPatternType&,                                             \
+    const std::vector<ConstraintMatrix::size_type> &,                 \
+    const std::vector<ConstraintMatrix::size_type> &,                 \
+    SparsityPatternType &,                                            \
     const bool,                                                       \
-    const Table<2, bool>&) const
+    const Table<2, bool> &) const
 
 SPARSITY_FUNCTIONS(SparsityPattern);
 SPARSITY_FUNCTIONS(DynamicSparsityPattern);
@@ -1510,16 +1510,16 @@ BLOCK_SPARSITY_FUNCTIONS(TrilinosWrappers::BlockSparsityPattern);
 
 #define ONLY_MATRIX_FUNCTIONS(MatrixType)                                 \
   template void ConstraintMatrix::distribute_local_to_global<MatrixType>( \
-    const FullMatrix<MatrixType::value_type>&,                            \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    MatrixType&) const;                                                   \
+    const FullMatrix<MatrixType::value_type> &,                           \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    MatrixType &) const;                                                  \
   template void ConstraintMatrix::distribute_local_to_global<MatrixType>( \
-    const FullMatrix<MatrixType::value_type>&,                            \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    const ConstraintMatrix&,                                              \
-    const std::vector<ConstraintMatrix::size_type>&,                      \
-    MatrixType&) const
+    const FullMatrix<MatrixType::value_type> &,                           \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    const ConstraintMatrix &,                                             \
+    const std::vector<ConstraintMatrix::size_type> &,                     \
+    MatrixType &) const
 
 ONLY_MATRIX_FUNCTIONS(FullMatrix<float>);
 ONLY_MATRIX_FUNCTIONS(FullMatrix<double>);

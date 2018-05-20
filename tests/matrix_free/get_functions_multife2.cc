@@ -49,7 +49,7 @@ class MatrixFreeTest
 public:
   typedef std::vector<Vector<Number>> VectorType;
 
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in)
+  MatrixFreeTest(const MatrixFree<dim, Number> & data_in)
     : data(data_in),
       fe_val0(data.get_dof_handler(0).get_fe(),
               Quadrature<dim>(data.get_quadrature(0)),
@@ -62,10 +62,10 @@ public:
               update_values | update_gradients | update_hessians){};
 
   void
-  operator()(const MatrixFree<dim, Number>& data,
-             VectorType&,
-             const VectorType&                            src,
-             const std::pair<unsigned int, unsigned int>& cell_range) const
+  operator()(const MatrixFree<dim, Number> & data,
+             VectorType &,
+             const VectorType &                            src,
+             const std::pair<unsigned int, unsigned int> & cell_range) const
   {
     FEEvaluation<dim, 0, 1, 1, Number>                     fe_eval0(data, 0, 0);
     FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval1(data, 1, 1);
@@ -165,7 +165,7 @@ public:
   }
 
   void
-  test_functions(const VectorType& src) const
+  test_functions(const VectorType & src) const
   {
     for(unsigned int i = 0; i < 3 * 3; ++i)
       {
@@ -225,11 +225,11 @@ public:
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
-  mutable FEValues<dim>          fe_val0;
-  mutable FEValues<dim>          fe_val1;
-  mutable FEValues<dim>          fe_val2;
-  mutable double                 errors[9], total[9];
+  const MatrixFree<dim, Number> & data;
+  mutable FEValues<dim>           fe_val0;
+  mutable FEValues<dim>           fe_val1;
+  mutable FEValues<dim>           fe_val2;
+  mutable double                  errors[9], total[9];
 };
 
 template <int dim, int fe_degree>
@@ -261,7 +261,7 @@ test()
   DoFHandler<dim> dof2(tria);
   dof2.distribute_dofs(fe2);
 
-  std::vector<const DoFHandler<dim>*> dof(3);
+  std::vector<const DoFHandler<dim> *> dof(3);
   dof[0] = &dof0;
   dof[1] = &dof1;
   dof[2] = &dof2;
@@ -274,8 +274,8 @@ test()
   for(unsigned int i = 0; i < dof.size(); ++i)
     src[i].reinit(dof[i]->n_dofs());
 
-  std::vector<const ConstraintMatrix*> constraints(3);
-  ConstraintMatrix                     constraint0;
+  std::vector<const ConstraintMatrix *> constraints(3);
+  ConstraintMatrix                      constraint0;
   DoFTools::make_hanging_node_constraints(*dof[0], constraint0);
   constraint0.close();
   constraints[0] = &constraint0;

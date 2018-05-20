@@ -60,7 +60,7 @@ namespace Utilities
   {
 #ifdef DEAL_II_WITH_MPI
     unsigned int
-    n_mpi_processes(const MPI_Comm& mpi_communicator)
+    n_mpi_processes(const MPI_Comm & mpi_communicator)
     {
       int       n_jobs = 1;
       const int ierr   = MPI_Comm_size(mpi_communicator, &n_jobs);
@@ -70,7 +70,7 @@ namespace Utilities
     }
 
     unsigned int
-    this_mpi_process(const MPI_Comm& mpi_communicator)
+    this_mpi_process(const MPI_Comm & mpi_communicator)
     {
       int       rank = 0;
       const int ierr = MPI_Comm_rank(mpi_communicator, &rank);
@@ -80,7 +80,7 @@ namespace Utilities
     }
 
     MPI_Comm
-    duplicate_communicator(const MPI_Comm& mpi_communicator)
+    duplicate_communicator(const MPI_Comm & mpi_communicator)
     {
       MPI_Comm  new_communicator;
       const int ierr = MPI_Comm_dup(mpi_communicator, &new_communicator);
@@ -89,10 +89,10 @@ namespace Utilities
     }
 
     int
-    create_group(const MPI_Comm&  comm,
-                 const MPI_Group& group,
-                 const int        tag,
-                 MPI_Comm*        new_comm)
+    create_group(const MPI_Comm &  comm,
+                 const MPI_Group & group,
+                 const int         tag,
+                 MPI_Comm *        new_comm)
     {
 #  if DEAL_II_MPI_VERSION_GTE(3, 0)
       return MPI_Comm_create_group(comm, group, tag, new_comm);
@@ -170,8 +170,8 @@ namespace Utilities
 
     std::vector<unsigned int>
     compute_point_to_point_communication_pattern(
-      const MPI_Comm&                  mpi_comm,
-      const std::vector<unsigned int>& destinations)
+      const MPI_Comm &                  mpi_comm,
+      const std::vector<unsigned int> & destinations)
     {
       const unsigned int myid    = Utilities::MPI::this_mpi_process(mpi_comm);
       const unsigned int n_procs = Utilities::MPI::n_mpi_processes(mpi_comm);
@@ -234,11 +234,14 @@ namespace Utilities
     {
       // custom MIP_Op for calculate_collective_mpi_min_max_avg
       void
-      max_reduce(const void* in_lhs_, void* inout_rhs_, int* len, MPI_Datatype*)
+      max_reduce(const void * in_lhs_,
+                 void *       inout_rhs_,
+                 int *        len,
+                 MPI_Datatype *)
       {
         (void) len;
-        const MinMaxAvg* in_lhs    = static_cast<const MinMaxAvg*>(in_lhs_);
-        MinMaxAvg*       inout_rhs = static_cast<MinMaxAvg*>(inout_rhs_);
+        const MinMaxAvg * in_lhs    = static_cast<const MinMaxAvg *>(in_lhs_);
+        MinMaxAvg *       inout_rhs = static_cast<MinMaxAvg *>(inout_rhs_);
 
         Assert(*len == 1, ExcInternalError());
 
@@ -270,7 +273,7 @@ namespace Utilities
     } // namespace
 
     MinMaxAvg
-    min_max_avg(const double my_value, const MPI_Comm& mpi_communicator)
+    min_max_avg(const double my_value, const MPI_Comm & mpi_communicator)
     {
       // If MPI was not started, we have a serial computation and cannot run
       // the other MPI commands
@@ -302,7 +305,7 @@ namespace Utilities
         = dealii::Utilities::MPI::n_mpi_processes(mpi_communicator);
 
       MPI_Op op;
-      int    ierr = MPI_Op_create((MPI_User_function*) &max_reduce, true, &op);
+      int    ierr = MPI_Op_create((MPI_User_function *) &max_reduce, true, &op);
       AssertThrowMPI(ierr);
 
       MinMaxAvg in;
@@ -336,25 +339,25 @@ namespace Utilities
 #else
 
     unsigned int
-    n_mpi_processes(const MPI_Comm&)
+    n_mpi_processes(const MPI_Comm &)
     {
       return 1;
     }
 
     unsigned int
-    this_mpi_process(const MPI_Comm&)
+    this_mpi_process(const MPI_Comm &)
     {
       return 0;
     }
 
     MPI_Comm
-    duplicate_communicator(const MPI_Comm& mpi_communicator)
+    duplicate_communicator(const MPI_Comm & mpi_communicator)
     {
       return mpi_communicator;
     }
 
     MinMaxAvg
-    min_max_avg(const double my_value, const MPI_Comm&)
+    min_max_avg(const double my_value, const MPI_Comm &)
     {
       MinMaxAvg result;
 
@@ -370,8 +373,8 @@ namespace Utilities
 
 #endif
 
-    MPI_InitFinalize::MPI_InitFinalize(int&               argc,
-                                       char**&            argv,
+    MPI_InitFinalize::MPI_InitFinalize(int &              argc,
+                                       char **&           argv,
                                        const unsigned int max_num_threads)
     {
       static bool constructor_has_already_run = false;

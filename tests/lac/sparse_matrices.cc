@@ -42,9 +42,9 @@
 
 template <typename MatrixType>
 void
-check_vmult_quadratic(std::vector<double>& residuals,
-                      const MatrixType&    A,
-                      const char*          prefix)
+check_vmult_quadratic(std::vector<double> & residuals,
+                      const MatrixType &    A,
+                      const char *          prefix)
 {
   deallog.push(prefix);
 
@@ -119,9 +119,9 @@ check_vmult_quadratic(std::vector<double>& residuals,
 }
 
 void
-check_vmult_quadratic(std::vector<double>&             residuals,
-                      const BlockSparseMatrix<double>& A,
-                      const char*                      prefix)
+check_vmult_quadratic(std::vector<double> &             residuals,
+                      const BlockSparseMatrix<double> & A,
+                      const char *                      prefix)
 {
   deallog.push(prefix);
 
@@ -163,7 +163,7 @@ check_vmult_quadratic(std::vector<double>&             residuals,
 
 template <typename MatrixType>
 void
-check_iterator(const MatrixType& A)
+check_iterator(const MatrixType & A)
 {
   //  deallog.push("it");
 
@@ -224,7 +224,7 @@ check_ez_iterator()
 }
 
 void
-check_conjugate(std::ostream& out)
+check_conjugate(std::ostream & out)
 {
   SparseMatrixEZ<double> B(3, 2);
   SparseMatrixEZ<float>  A1(2, 2);

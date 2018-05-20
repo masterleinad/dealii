@@ -35,8 +35,8 @@ InterGridMap<MeshType>::InterGridMap()
 
 template <class MeshType>
 void
-InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
-                                     const MeshType& destination_grid)
+InterGridMap<MeshType>::make_mapping(const MeshType & source_grid,
+                                     const MeshType & destination_grid)
 {
   // first delete all contents
   clear();
@@ -89,8 +89,8 @@ InterGridMap<MeshType>::make_mapping(const MeshType& source_grid,
 
 template <class MeshType>
 void
-InterGridMap<MeshType>::set_mapping(const cell_iterator& src_cell,
-                                    const cell_iterator& dst_cell)
+InterGridMap<MeshType>::set_mapping(const cell_iterator & src_cell,
+                                    const cell_iterator & dst_cell)
 {
   // first set the map for this cell
   mapping[src_cell->level()][src_cell->index()] = dst_cell;
@@ -126,8 +126,8 @@ InterGridMap<MeshType>::set_mapping(const cell_iterator& src_cell,
 
 template <class MeshType>
 void
-InterGridMap<MeshType>::set_entries_to_cell(const cell_iterator& src_cell,
-                                            const cell_iterator& dst_cell)
+InterGridMap<MeshType>::set_entries_to_cell(const cell_iterator & src_cell,
+                                            const cell_iterator & dst_cell)
 {
   // first set the map for this cell
   mapping[src_cell->level()][src_cell->index()] = dst_cell;
@@ -141,7 +141,7 @@ InterGridMap<MeshType>::set_entries_to_cell(const cell_iterator& src_cell,
 
 template <class MeshType>
 typename InterGridMap<MeshType>::cell_iterator InterGridMap<MeshType>::
-                                               operator[](const cell_iterator& source_cell) const
+                                               operator[](const cell_iterator & source_cell) const
 {
   Assert(source_cell.state() == IteratorState::valid,
          ExcInvalidKey(source_cell));
@@ -164,14 +164,14 @@ InterGridMap<MeshType>::clear()
 }
 
 template <class MeshType>
-const MeshType&
+const MeshType &
 InterGridMap<MeshType>::get_source_grid() const
 {
   return *source_grid;
 }
 
 template <class MeshType>
-const MeshType&
+const MeshType &
 InterGridMap<MeshType>::get_destination_grid() const
 {
   return *destination_grid;

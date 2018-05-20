@@ -85,7 +85,7 @@ namespace PETScWrappers
        * Constructor. It is made private so as to only allow the actual vector
        * class to create it.
        */
-      VectorReference(const VectorBase& vector, const size_type index);
+      VectorReference(const VectorBase & vector, const size_type index);
 
     public:
       /**
@@ -99,46 +99,46 @@ namespace PETScWrappers
        * this operation. Note also that this allows us to make the assignment
        * operator const.
        */
-      const VectorReference&
-      operator=(const VectorReference& r) const;
+      const VectorReference &
+      operator=(const VectorReference & r) const;
 
       /**
        * The same function as above, but for non-const reference objects. The
        * function is needed since the compiler might otherwise automatically
        * generate a copy operator for non-const objects.
        */
-      VectorReference&
-      operator=(const VectorReference& r);
+      VectorReference &
+      operator=(const VectorReference & r);
 
       /**
        * Set the referenced element of the vector to <tt>s</tt>.
        */
-      const VectorReference&
-      operator=(const PetscScalar& s) const;
+      const VectorReference &
+      operator=(const PetscScalar & s) const;
 
       /**
        * Add <tt>s</tt> to the referenced element of the vector.
        */
-      const VectorReference&
-      operator+=(const PetscScalar& s) const;
+      const VectorReference &
+      operator+=(const PetscScalar & s) const;
 
       /**
        * Subtract <tt>s</tt> from the referenced element of the vector.
        */
-      const VectorReference&
-      operator-=(const PetscScalar& s) const;
+      const VectorReference &
+      operator-=(const PetscScalar & s) const;
 
       /**
        * Multiply the referenced element of the vector by <tt>s</tt>.
        */
-      const VectorReference&
-      operator*=(const PetscScalar& s) const;
+      const VectorReference &
+      operator*=(const PetscScalar & s) const;
 
       /**
        * Divide the referenced element of the vector by <tt>s</tt>.
        */
-      const VectorReference&
-      operator/=(const PetscScalar& s) const;
+      const VectorReference &
+      operator/=(const PetscScalar & s) const;
 
       /**
        * Return the real part of the value of the referenced element.
@@ -187,7 +187,7 @@ namespace PETScWrappers
       /**
        * Point to the vector we are referencing.
        */
-      const VectorBase& vector;
+      const VectorBase & vector;
 
       /**
        * Index of the referenced element of the vector.
@@ -255,14 +255,14 @@ namespace PETScWrappers
      * Copy constructor. Sets the dimension to that of the given vector, and
      * copies all elements.
      */
-    VectorBase(const VectorBase& v);
+    VectorBase(const VectorBase & v);
 
     /**
      * Initialize a Vector from a PETSc Vec object. Note that we do not copy
      * the vector and we do not obtain ownership, so we do not destroy the
      * PETSc object in the destructor.
      */
-    explicit VectorBase(const Vec& v);
+    explicit VectorBase(const Vec & v);
 
     /**
      * Destructor
@@ -302,7 +302,7 @@ namespace PETScWrappers
      * <tt>v=0</tt>. Assigning other values is deprecated and may be
      * disallowed in the future.
      */
-    VectorBase&
+    VectorBase &
     operator=(const PetscScalar s);
 
     /**
@@ -311,7 +311,7 @@ namespace PETScWrappers
      * vectors of different sizes makes not much sense anyway.
      */
     bool
-    operator==(const VectorBase& v) const;
+    operator==(const VectorBase & v) const;
 
     /**
      * Test for inequality. This function assumes that the present vector and
@@ -319,7 +319,7 @@ namespace PETScWrappers
      * vectors of different sizes makes not much sense anyway.
      */
     bool
-    operator!=(const VectorBase& v) const;
+    operator!=(const VectorBase & v) const;
 
     /**
      * Return the global dimension of the vector.
@@ -423,8 +423,8 @@ namespace PETScWrappers
      * the corresponding values in the second.
      */
     void
-    set(const std::vector<size_type>&   indices,
-        const std::vector<PetscScalar>& values);
+    set(const std::vector<size_type> &   indices,
+        const std::vector<PetscScalar> & values);
 
     /**
      * Instead of getting individual elements of a vector via operator(),
@@ -442,8 +442,8 @@ namespace PETScWrappers
      * @pre The sizes of the @p indices and @p values arrays must be identical.
      */
     void
-    extract_subvector_to(const std::vector<size_type>& indices,
-                         std::vector<PetscScalar>&     values) const;
+    extract_subvector_to(const std::vector<size_type> & indices,
+                         std::vector<PetscScalar> &     values) const;
 
     /**
      * Instead of getting individual elements of a vector via operator(),
@@ -483,16 +483,16 @@ namespace PETScWrappers
      * stored in @p values to the vector components specified by @p indices.
      */
     void
-    add(const std::vector<size_type>&   indices,
-        const std::vector<PetscScalar>& values);
+    add(const std::vector<size_type> &   indices,
+        const std::vector<PetscScalar> & values);
 
     /**
      * This is a second collective add operation. As a difference, this
      * function takes a deal.II vector of values.
      */
     void
-    add(const std::vector<size_type>&        indices,
-        const ::dealii::Vector<PetscScalar>& values);
+    add(const std::vector<size_type> &        indices,
+        const ::dealii::Vector<PetscScalar> & values);
 
     /**
      * Take an address where <tt>n_elements</tt> are stored contiguously and
@@ -500,9 +500,9 @@ namespace PETScWrappers
      * the other two <tt>add()</tt> functions above.
      */
     void
-    add(const size_type    n_elements,
-        const size_type*   indices,
-        const PetscScalar* values);
+    add(const size_type     n_elements,
+        const size_type *   indices,
+        const PetscScalar * values);
 
     /**
      * Return the scalar product of two vectors. The vectors must have the
@@ -510,7 +510,7 @@ namespace PETScWrappers
      *
      * For complex valued vector, this gives$\left(v^\ast,vec\right)$.
      */
-    PetscScalar operator*(const VectorBase& vec) const;
+    PetscScalar operator*(const VectorBase & vec) const;
 
     /**
      * Return the square of the $l_2$-norm.
@@ -574,7 +574,9 @@ namespace PETScWrappers
      * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
      */
     PetscScalar
-    add_and_dot(const PetscScalar a, const VectorBase& V, const VectorBase& W);
+    add_and_dot(const PetscScalar  a,
+                const VectorBase & V,
+                const VectorBase & W);
 
     /**
      * Return the value of the vector element with the largest negative value.
@@ -607,26 +609,26 @@ namespace PETScWrappers
     /**
      * Multiply the entire vector by a fixed factor.
      */
-    VectorBase&
+    VectorBase &
     operator*=(const PetscScalar factor);
 
     /**
      * Divide the entire vector by a fixed factor.
      */
-    VectorBase&
+    VectorBase &
     operator/=(const PetscScalar factor);
 
     /**
      * Add the given vector to the present one.
      */
-    VectorBase&
-    operator+=(const VectorBase& V);
+    VectorBase &
+    operator+=(const VectorBase & V);
 
     /**
      * Subtract the given vector from the present one.
      */
-    VectorBase&
-    operator-=(const VectorBase& V);
+    VectorBase &
+    operator-=(const VectorBase & V);
 
     /**
      * Addition of @p s to all components. Note that @p s is a scalar and not
@@ -639,28 +641,28 @@ namespace PETScWrappers
      * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
      */
     void
-    add(const PetscScalar a, const VectorBase& V);
+    add(const PetscScalar a, const VectorBase & V);
 
     /**
      * Multiple addition of scaled vectors, i.e. <tt>*this += a*V+b*W</tt>.
      */
     void
-    add(const PetscScalar a,
-        const VectorBase& V,
-        const PetscScalar b,
-        const VectorBase& W);
+    add(const PetscScalar  a,
+        const VectorBase & V,
+        const PetscScalar  b,
+        const VectorBase & W);
 
     /**
      * Scaling and simple vector addition, i.e. <tt>*this = s*(*this)+V</tt>.
      */
     void
-    sadd(const PetscScalar s, const VectorBase& V);
+    sadd(const PetscScalar s, const VectorBase & V);
 
     /**
      * Scaling and simple addition, i.e. <tt>*this = s*(*this)+a*V</tt>.
      */
     void
-    sadd(const PetscScalar s, const PetscScalar a, const VectorBase& V);
+    sadd(const PetscScalar s, const PetscScalar a, const VectorBase & V);
 
     /**
      * Scale each element of this vector by the corresponding element in the
@@ -668,13 +670,13 @@ namespace PETScWrappers
      * immediate re-assignment) by a diagonal scaling matrix.
      */
     void
-    scale(const VectorBase& scaling_factors);
+    scale(const VectorBase & scaling_factors);
 
     /**
      * Assignment <tt>*this = a*V</tt>.
      */
     void
-    equ(const PetscScalar a, const VectorBase& V);
+    equ(const PetscScalar a, const VectorBase & V);
 
     /**
      * Compute the elementwise ratio of the two given vectors, that is let
@@ -688,7 +690,7 @@ namespace PETScWrappers
      */
     DEAL_II_DEPRECATED
     void
-    ratio(const VectorBase& a, const VectorBase& b);
+    ratio(const VectorBase & a, const VectorBase & b);
 
     /**
      * Prints the PETSc vector object values using PETSc internal vector
@@ -708,7 +710,7 @@ namespace PETScWrappers
      * separate line each.
      */
     void
-    print(std::ostream&      out,
+    print(std::ostream &     out,
           const unsigned int precision  = 3,
           const bool         scientific = true,
           const bool         across     = true) const;
@@ -726,7 +728,7 @@ namespace PETScWrappers
      * analogy to standard functions.
      */
     void
-    swap(VectorBase& v);
+    swap(VectorBase & v);
 
     /**
      * Conversion operator to gain access to the underlying PETSc type. If you
@@ -735,7 +737,7 @@ namespace PETScWrappers
      * particular, it should only be used for read-only operations into the
      * vector.
      */
-    operator const Vec&() const;
+    operator const Vec &() const;
 
     /**
      * Estimate for the memory consumption (not implemented for this class).
@@ -747,7 +749,7 @@ namespace PETScWrappers
      * Return a reference to the MPI communicator object in use with this
      * object.
      */
-    virtual const MPI_Comm&
+    virtual const MPI_Comm &
     get_mpi_communicator() const;
 
   protected:
@@ -796,10 +798,10 @@ namespace PETScWrappers
      * corresponding value.
      */
     void
-    do_set_add_operation(const size_type    n_elements,
-                         const size_type*   indices,
-                         const PetscScalar* values,
-                         const bool         add_values);
+    do_set_add_operation(const size_type     n_elements,
+                         const size_type *   indices,
+                         const PetscScalar * values,
+                         const bool          add_values);
 
   private:
     /**
@@ -807,8 +809,8 @@ namespace PETScWrappers
      * deliberately left as private (and undefined) to prevent accidental
      * usage.
      */
-    VectorBase&
-    operator=(const VectorBase&)
+    VectorBase &
+    operator=(const VectorBase &)
       = delete;
   };
 
@@ -823,7 +825,7 @@ namespace PETScWrappers
    * @author Wolfgang Bangerth, 2004
    */
   inline void
-  swap(VectorBase& u, VectorBase& v)
+  swap(VectorBase & u, VectorBase & v)
   {
     u.swap(v);
   }
@@ -831,13 +833,13 @@ namespace PETScWrappers
 #    ifndef DOXYGEN
   namespace internal
   {
-    inline VectorReference::VectorReference(const VectorBase& vector,
-                                            const size_type   index)
+    inline VectorReference::VectorReference(const VectorBase & vector,
+                                            const size_type    index)
       : vector(vector), index(index)
     {}
 
-    inline const VectorReference&
-    VectorReference::operator=(const VectorReference& r) const
+    inline const VectorReference &
+    VectorReference::operator=(const VectorReference & r) const
     {
       // as explained in the class
       // documentation, this is not the copy
@@ -848,8 +850,8 @@ namespace PETScWrappers
       return *this;
     }
 
-    inline VectorReference&
-    VectorReference::operator=(const VectorReference& r)
+    inline VectorReference &
+    VectorReference::operator=(const VectorReference & r)
     {
       // as explained in the class
       // documentation, this is not the copy
@@ -860,8 +862,8 @@ namespace PETScWrappers
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator=(const PetscScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator=(const PetscScalar & value) const
     {
       Assert((vector.last_action == VectorOperation::insert)
                || (vector.last_action == VectorOperation::unknown),
@@ -880,8 +882,8 @@ namespace PETScWrappers
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator+=(const PetscScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator+=(const PetscScalar & value) const
     {
       Assert((vector.last_action == VectorOperation::add)
                || (vector.last_action == VectorOperation::unknown),
@@ -910,8 +912,8 @@ namespace PETScWrappers
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator-=(const PetscScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator-=(const PetscScalar & value) const
     {
       Assert((vector.last_action == VectorOperation::add)
                || (vector.last_action == VectorOperation::unknown),
@@ -942,8 +944,8 @@ namespace PETScWrappers
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator*=(const PetscScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator*=(const PetscScalar & value) const
     {
       Assert((vector.last_action == VectorOperation::insert)
                || (vector.last_action == VectorOperation::unknown),
@@ -973,8 +975,8 @@ namespace PETScWrappers
       return *this;
     }
 
-    inline const VectorReference&
-    VectorReference::operator/=(const PetscScalar& value) const
+    inline const VectorReference &
+    VectorReference::operator/=(const PetscScalar & value) const
     {
       Assert((vector.last_action == VectorOperation::insert)
                || (vector.last_action == VectorOperation::unknown),
@@ -1031,7 +1033,7 @@ namespace PETScWrappers
   {
     PetscInt             begin, end;
     const PetscErrorCode ierr
-      = VecGetOwnershipRange(static_cast<const Vec&>(vector), &begin, &end);
+      = VecGetOwnershipRange(static_cast<const Vec &>(vector), &begin, &end);
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     return ((index >= static_cast<size_type>(begin))
@@ -1081,7 +1083,7 @@ namespace PETScWrappers
     return operator()(index);
   }
 
-  inline const MPI_Comm&
+  inline const MPI_Comm &
   VectorBase::get_mpi_communicator() const
   {
     static MPI_Comm comm;
@@ -1090,8 +1092,8 @@ namespace PETScWrappers
   }
 
   inline void
-  VectorBase::extract_subvector_to(const std::vector<size_type>& indices,
-                                   std::vector<PetscScalar>&     values) const
+  VectorBase::extract_subvector_to(const std::vector<size_type> & indices,
+                                   std::vector<PetscScalar> &     values) const
   {
     extract_subvector_to(
       &(indices[0]), &(indices[0]) + indices.size(), &(values[0]));
@@ -1140,7 +1142,7 @@ namespace PETScWrappers
         ierr = VecGetSize(locally_stored_elements, &lsize);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        PetscScalar* ptr;
+        PetscScalar * ptr;
         ierr = VecGetArray(locally_stored_elements, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
@@ -1180,7 +1182,7 @@ namespace PETScWrappers
         PetscErrorCode ierr = VecGetOwnershipRange(vector, &begin, &end);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        PetscScalar* ptr;
+        PetscScalar * ptr;
         ierr = VecGetArray(vector, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 

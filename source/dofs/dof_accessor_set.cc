@@ -40,14 +40,14 @@ template <typename DoFHandlerType, bool lda>
 template <class OutputVector, typename number>
 void
 DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
-  const Vector<number>& local_values,
-  OutputVector&         values,
-  const unsigned int    fe_index) const
+  const Vector<number> & local_values,
+  OutputVector &         values,
+  const unsigned int     fe_index) const
 {
   if(!this->has_children() && !this->is_artificial())
     {
       if((dynamic_cast<DoFHandler<DoFHandlerType::dimension,
-                                  DoFHandlerType::space_dimension>*>(
+                                  DoFHandlerType::space_dimension> *>(
             this->dof_handler)
           != nullptr)
          ||
@@ -87,7 +87,7 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
     {
       Assert(
         (dynamic_cast<DoFHandler<DoFHandlerType::dimension,
-                                 DoFHandlerType::space_dimension>*>(
+                                 DoFHandlerType::space_dimension> *>(
            this->dof_handler)
          != nullptr)
           || (fe_index != DoFHandlerType::default_fe_index),
@@ -98,7 +98,7 @@ DoFCellAccessor<DoFHandlerType, lda>::set_dof_values_by_interpolation(
                    "of freedom are only distributed on active cells for which "
                    "the active_fe_index has been set."));
 
-      const FiniteElement<dim, spacedim>& fe
+      const FiniteElement<dim, spacedim> & fe
         = this->get_dof_handler().get_fe(fe_index);
       const unsigned int dofs_per_cell = fe.dofs_per_cell;
 

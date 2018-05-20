@@ -65,7 +65,7 @@ using namespace dealii;
 // This is the function that produced the circular grid in the previous step-1
 // example program with fewer refinements steps. The sole difference is that it
 // returns the grid it produces via its argument.
-void make_grid(Triangulation<2>& triangulation)
+void make_grid(Triangulation<2> & triangulation)
 {
   const Point<2> center(1, 0);
   const double   inner_radius = 0.5, outer_radius = 1.0;
@@ -128,7 +128,7 @@ void make_grid(Triangulation<2>& triangulation)
 // destruction. (However, the library would warn us if we forgot about this
 // and abort the program if that occurred. You can check this, if you want, by
 // removing the 'static' declaration.)
-void distribute_dofs(DoFHandler<2>& dof_handler)
+void distribute_dofs(DoFHandler<2> & dof_handler)
 {
   // As described above, let us first create a finite element object, and then
   // use it to allocate degrees of freedom on the triangulation with which the
@@ -235,7 +235,7 @@ void distribute_dofs(DoFHandler<2>& dof_handler)
 // more localized around the diagonal. The only interesting part of the
 // function is the first call to <code>DoFRenumbering::Cuthill_McKee</code>,
 // the rest is essentially as before:
-void renumber_dofs(DoFHandler<2>& dof_handler)
+void renumber_dofs(DoFHandler<2> & dof_handler)
 {
   DoFRenumbering::Cuthill_McKee(dof_handler);
 

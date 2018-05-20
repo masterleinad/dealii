@@ -47,8 +47,8 @@ MappingC1<dim, spacedim>::MappingC1() : MappingQ<dim, spacedim>(3)
 template <>
 void
 MappingC1<1>::MappingC1Generic::add_line_support_points(
-  const Triangulation<1>::cell_iterator&,
-  std::vector<Point<1>>&) const
+  const Triangulation<1>::cell_iterator &,
+  std::vector<Point<1>> &) const
 {
   const unsigned int dim = 1;
   (void) dim;
@@ -58,8 +58,8 @@ MappingC1<1>::MappingC1Generic::add_line_support_points(
 template <>
 void
 MappingC1<2>::MappingC1Generic::add_line_support_points(
-  const Triangulation<2>::cell_iterator& cell,
-  std::vector<Point<2>>&                 a) const
+  const Triangulation<2>::cell_iterator & cell,
+  std::vector<Point<2>> &                 a) const
 {
   const unsigned int          dim = 2;
   const std::array<double, 2> interior_gl_points{
@@ -77,7 +77,7 @@ MappingC1<2>::MappingC1Generic::add_line_support_points(
         {
           // first get the normal vectors at the two vertices of this line
           // from the boundary description
-          const Manifold<dim>& manifold = line->get_manifold();
+          const Manifold<dim> & manifold = line->get_manifold();
 
           Manifold<dim>::FaceVertexNormals face_vertex_normals;
           manifold.get_normals_at_vertices(line, face_vertex_normals);
@@ -162,8 +162,8 @@ MappingC1<2>::MappingC1Generic::add_line_support_points(
 template <int dim, int spacedim>
 void
 MappingC1<dim, spacedim>::MappingC1Generic::add_line_support_points(
-  const typename Triangulation<dim>::cell_iterator&,
-  std::vector<Point<dim>>&) const
+  const typename Triangulation<dim>::cell_iterator &,
+  std::vector<Point<dim>> &) const
 {
   Assert(false, ExcNotImplemented());
 }
@@ -171,8 +171,8 @@ MappingC1<dim, spacedim>::MappingC1Generic::add_line_support_points(
 template <>
 void
 MappingC1<1>::MappingC1Generic::add_quad_support_points(
-  const Triangulation<1>::cell_iterator&,
-  std::vector<Point<1>>&) const
+  const Triangulation<1>::cell_iterator &,
+  std::vector<Point<1>> &) const
 {
   const unsigned int dim = 1;
   (void) dim;
@@ -182,8 +182,8 @@ MappingC1<1>::MappingC1Generic::add_quad_support_points(
 template <>
 void
 MappingC1<2>::MappingC1Generic::add_quad_support_points(
-  const Triangulation<2>::cell_iterator&,
-  std::vector<Point<2>>&) const
+  const Triangulation<2>::cell_iterator &,
+  std::vector<Point<2>> &) const
 {
   const unsigned int dim = 2;
   (void) dim;
@@ -193,8 +193,8 @@ MappingC1<2>::MappingC1Generic::add_quad_support_points(
 template <int dim, int spacedim>
 void
 MappingC1<dim, spacedim>::MappingC1Generic::add_quad_support_points(
-  const typename Triangulation<dim>::cell_iterator&,
-  std::vector<Point<dim>>&) const
+  const typename Triangulation<dim>::cell_iterator &,
+  std::vector<Point<dim>> &) const
 {
   Assert(false, ExcNotImplemented());
 }

@@ -53,8 +53,8 @@ test();
 
 template <int dim>
 void
-do_check(const Triangulation<dim>&    triangulation,
-         const hp::FECollection<dim>& fe)
+do_check(const Triangulation<dim> &    triangulation,
+         const hp::FECollection<dim> & fe)
 {
   hp::DoFHandler<dim> dof_handler(triangulation);
 
@@ -76,7 +76,7 @@ do_check(const Triangulation<dim>&    triangulation,
 }
 
 void
-test_with_wrong_face_orientation(const hp::FECollection<3>& fe)
+test_with_wrong_face_orientation(const hp::FECollection<3> & fe)
 {
   Triangulation<3> triangulation;
   GridGenerator::hyper_ball(triangulation);

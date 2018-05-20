@@ -202,7 +202,7 @@ namespace Physics
        */
       template <typename Number>
       static SymmetricTensor<4, dim, Number>
-      Dev_P(const Tensor<2, dim, Number>& F);
+      Dev_P(const Tensor<2, dim, Number> & F);
 
       /**
        * Return the transpose of the fourth-order referential deviatoric tensor,
@@ -216,7 +216,7 @@ namespace Physics
        */
       template <typename Number>
       static SymmetricTensor<4, dim, Number>
-      Dev_P_T(const Tensor<2, dim, Number>& F);
+      Dev_P_T(const Tensor<2, dim, Number> & F);
 
       //@}
 
@@ -243,7 +243,7 @@ namespace Physics
        */
       template <typename Number>
       static SymmetricTensor<2, dim, Number>
-      ddet_F_dC(const Tensor<2, dim, Number>& F);
+      ddet_F_dC(const Tensor<2, dim, Number> & F);
 
       //@}
 
@@ -267,7 +267,7 @@ namespace Physics
        */
       template <typename Number>
       static SymmetricTensor<4, dim, Number>
-      dC_inv_dC(const Tensor<2, dim, Number>& F);
+      dC_inv_dC(const Tensor<2, dim, Number> & F);
 
       //@}
     };
@@ -283,7 +283,7 @@ template <int dim>
 template <typename Number>
 inline SymmetricTensor<4, dim, Number>
 Physics::Elasticity::StandardTensors<dim>::Dev_P(
-  const Tensor<2, dim, Number>& F)
+  const Tensor<2, dim, Number> & F)
 {
   const Number det_F = determinant(F);
   Assert(numbers::value_is_greater_than(det_F, 0.0),
@@ -307,7 +307,7 @@ template <int dim>
 template <typename Number>
 inline SymmetricTensor<4, dim, Number>
 Physics::Elasticity::StandardTensors<dim>::Dev_P_T(
-  const Tensor<2, dim, Number>& F)
+  const Tensor<2, dim, Number> & F)
 {
   const Number det_F = determinant(F);
   Assert(numbers::value_is_greater_than(det_F, 0.0),
@@ -331,7 +331,7 @@ template <int dim>
 template <typename Number>
 inline SymmetricTensor<2, dim, Number>
 Physics::Elasticity::StandardTensors<dim>::ddet_F_dC(
-  const Tensor<2, dim, Number>& F)
+  const Tensor<2, dim, Number> & F)
 {
   return Number(0.5) * determinant(F) * symmetrize(invert(transpose(F) * F));
 }
@@ -340,7 +340,7 @@ template <int dim>
 template <typename Number>
 inline SymmetricTensor<4, dim, Number>
 Physics::Elasticity::StandardTensors<dim>::dC_inv_dC(
-  const Tensor<2, dim, Number>& F)
+  const Tensor<2, dim, Number> & F)
 {
   const SymmetricTensor<2, dim, Number> C_inv
     = symmetrize(invert(transpose(F) * F));

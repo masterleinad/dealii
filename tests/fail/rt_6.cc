@@ -54,7 +54,7 @@ transform(const Point<dim> p)
 
 template <int dim>
 void
-check_element(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+check_element(const Triangulation<dim> & tr, const FiniteElement<dim> & fe)
 {
   DoFHandler<dim> dof_handler(tr);
   dof_handler.distribute_dofs(fe);
@@ -136,9 +136,9 @@ test()
   // elements, for which we want to
   // test. we happily waste tons of
   // memory here, but who cares...
-  const FiniteElement<dim>* fe_list[] = {new FE_RaviartThomas<dim>(0),
-                                         new FE_RaviartThomas<dim>(1),
-                                         new FE_RaviartThomas<dim>(2)};
+  const FiniteElement<dim> * fe_list[] = {new FE_RaviartThomas<dim>(0),
+                                          new FE_RaviartThomas<dim>(1),
+                                          new FE_RaviartThomas<dim>(2)};
 
   for(unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)
     if(fe_list[i] != nullptr)

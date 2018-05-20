@@ -53,13 +53,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& point, const unsigned int component = 0) const
+  value(const Point<dim> & point, const unsigned int component = 0) const
   {
     return std::exp(-point.norm());
   }
 
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& point, const unsigned int component = 0) const
+  gradient(const Point<dim> & point, const unsigned int component = 0) const
   {
     Tensor<1, dim> res = point;
     Assert(point.norm() > 0,
@@ -83,7 +83,7 @@ test_base()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   std::ofstream logfile("output");
   deallog << std::setprecision(4);
@@ -95,7 +95,7 @@ main(int argc, char** argv)
     {
       test_base<3>();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

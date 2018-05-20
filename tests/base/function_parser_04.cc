@@ -36,9 +36,9 @@ struct copy_data
 };
 
 void
-assemble(const std::vector<int>::iterator& it,
-         scratch_data&                     scratch,
-         copy_data&                        data)
+assemble(const std::vector<int>::iterator & it,
+         scratch_data &                     scratch,
+         copy_data &                        data)
 {
   double s     = *it;
   double value = fp.value(Point<2>(s, 2.5));
@@ -49,7 +49,7 @@ assemble(const std::vector<int>::iterator& it,
 }
 
 void
-copy(int& value, const copy_data& data)
+copy(int & value, const copy_data & data)
 {
   value += data.value;
 }

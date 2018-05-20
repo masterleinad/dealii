@@ -26,7 +26,7 @@ main()
   // This might not work on Windows; always pass if we don't have getenv
   // available
 #ifdef _POSIX_C_SOURCE
-  const char* omp_env_variable = getenv("OMP_NUM_THREADS");
+  const char * omp_env_variable = getenv("OMP_NUM_THREADS");
   AssertThrow(omp_env_variable != nullptr,
               ExcMessage("The environment variable OMP_NUM_THREADS should be "
                          "defined when running the test suite."));

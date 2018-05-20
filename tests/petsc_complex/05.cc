@@ -21,7 +21,7 @@
 #include <iostream>
 
 void
-test(PETScWrappers::SparseMatrix& m)
+test(PETScWrappers::SparseMatrix & m)
 {
   // first set a few entries. count how many entries we have
   unsigned int counter = 0;
@@ -42,7 +42,7 @@ test(PETScWrappers::SparseMatrix& m)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
   deallog.depth_console(0);
@@ -57,7 +57,7 @@ main(int argc, char** argv)
         deallog << "OK" << std::endl;
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -28,7 +28,7 @@
  *
  */
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
@@ -56,15 +56,15 @@ main(int argc, char** argv)
 
   SUNDIALS::KINSOL<VectorType> kinsol(data);
 
-  kinsol.reinit_vector = [N](VectorType& v) { v.reinit(N); };
+  kinsol.reinit_vector = [N](VectorType & v) { v.reinit(N); };
 
-  kinsol.residual = [](const VectorType& u, VectorType& F) -> int {
+  kinsol.residual = [](const VectorType & u, VectorType & F) -> int {
     for(unsigned int i = 0; i < u.size(); ++i)
       F[i] = u[i] * u[i] - (i + 1) * (i + 1);
     return 0;
   };
 
-  kinsol.iteration_function = [](const VectorType& u, VectorType& F) -> int {
+  kinsol.iteration_function = [](const VectorType & u, VectorType & F) -> int {
     for(unsigned int i = 0; i < u.size(); ++i)
       F[i] = u[i] * u[i] - i * i - u[i];
     return 0;

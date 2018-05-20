@@ -38,8 +38,8 @@ using namespace std;
 
 template <int dim, typename number, int spacedim>
 void
-reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
-              MGLevelObject<dealii::Vector<number>>&   v)
+reinit_vector(const dealii::DoFHandler<dim, spacedim> & mg_dof,
+              MGLevelObject<dealii::Vector<number>> &   v)
 {
   for(unsigned int level = v.min_level(); level <= v.max_leve(); ++level)
     {
@@ -50,9 +50,9 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
 
 template <typename Transfer>
 void
-make_matrix(const Transfer&     transfer,
-            const unsigned int  high_level,
-            FullMatrix<double>& matrix)
+make_matrix(const Transfer &     transfer,
+            const unsigned int   high_level,
+            FullMatrix<double> & matrix)
 {
   Vector<double> src(matrix.n());
   Vector<double> dst(matrix.m());
@@ -67,7 +67,7 @@ make_matrix(const Transfer&     transfer,
 }
 
 void
-print_matrix(const FullMatrix<double>& m)
+print_matrix(const FullMatrix<double> & m)
 {
   for(unsigned int i = 0; i < m.m(); ++i)
     {
@@ -79,7 +79,7 @@ print_matrix(const FullMatrix<double>& m)
 
 template <int dim>
 void
-refine_mesh(Triangulation<dim>& triangulation)
+refine_mesh(Triangulation<dim> & triangulation)
 {
   bool cell_refined = false;
   for(typename Triangulation<dim>::active_cell_iterator cell
@@ -106,7 +106,7 @@ refine_mesh(Triangulation<dim>& triangulation)
 
 template <int dim>
 void
-check(const FiniteElement<dim>& fe)
+check(const FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl;
 

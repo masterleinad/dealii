@@ -33,12 +33,12 @@ namespace
 // The standard log object of deal.II:
 LogStream deallog;
 
-LogStream::Prefix::Prefix(const std::string& text) : stream(&deallog)
+LogStream::Prefix::Prefix(const std::string & text) : stream(&deallog)
 {
   stream->push(text);
 }
 
-LogStream::Prefix::Prefix(const std::string& text, LogStream& s) : stream(&s)
+LogStream::Prefix::Prefix(const std::string & text, LogStream & s) : stream(&s)
 {
   stream->push(text);
 }
@@ -105,10 +105,10 @@ LogStream::~LogStream()
   }
 }
 
-LogStream&
-LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
+LogStream &
+LogStream::operator<<(std::ostream & (*p)(std::ostream &) )
 {
-  std::ostringstream& stream = get_stream();
+  std::ostringstream & stream = get_stream();
 
   // Print to the internal stringstream:
   stream << p;
@@ -195,7 +195,7 @@ LogStream::operator<<(std::ostream& (*p)(std::ostream&) )
 }
 
 void
-LogStream::attach(std::ostream& o, const bool print_job_id)
+LogStream::attach(std::ostream & o, const bool print_job_id)
 {
   Threads::Mutex::ScopedLock lock(log_lock);
   file = &o;
@@ -211,13 +211,13 @@ LogStream::detach()
   file = nullptr;
 }
 
-std::ostream&
+std::ostream &
 LogStream::get_console()
 {
   return *std_out;
 }
 
-std::ostringstream&
+std::ostringstream &
 LogStream::get_stream()
 {
   // see if we have already created this stream. if not, do so and
@@ -238,7 +238,7 @@ LogStream::get_stream()
   return *outstreams.get();
 }
 
-std::ostream&
+std::ostream &
 LogStream::get_file_stream()
 {
   Assert(file,
@@ -253,7 +253,7 @@ LogStream::has_file() const
   return (file != nullptr);
 }
 
-const std::string&
+const std::string &
 LogStream::get_prefix() const
 {
   static std::string empty_string;
@@ -265,7 +265,7 @@ LogStream::get_prefix() const
 }
 
 void
-LogStream::push(const std::string& text)
+LogStream::push(const std::string & text)
 {
   std::string pre;
   if(get_prefixes().size() > 0)
@@ -328,18 +328,18 @@ LogStream::log_thread_id(const bool flag)
   return h;
 }
 
-std::stack<std::string>&
+std::stack<std::string> &
 LogStream::get_prefixes() const
 {
 #ifdef DEAL_II_WITH_THREADS
-  bool                     exists         = false;
-  std::stack<std::string>& local_prefixes = prefixes.get(exists);
+  bool                      exists         = false;
+  std::stack<std::string> & local_prefixes = prefixes.get(exists);
 
   // If this is a new locally stored stack, copy the "blessed" prefixes
   // from the initial thread that created logstream.
   if(!exists)
     {
-      const tbb::enumerable_thread_specific<std::stack<std::string>>& impl
+      const tbb::enumerable_thread_specific<std::stack<std::string>> & impl
         = prefixes.get_implementation();
 
       // The thread that created this LogStream object should be the first
@@ -364,8 +364,8 @@ LogStream::get_prefixes() const
 void
 LogStream::print_line_head()
 {
-  const std::string& head   = get_prefix();
-  const unsigned int thread = Threads::this_thread_id();
+  const std::string & head   = get_prefix();
+  const unsigned int  thread = Threads::this_thread_id();
 
   if(get_prefixes().size() <= std_depth)
     {

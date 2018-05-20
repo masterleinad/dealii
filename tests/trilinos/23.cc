@@ -23,7 +23,7 @@
 #include <vector>
 
 void
-test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
+test(TrilinosWrappers::MPI::Vector & v, TrilinosWrappers::MPI::Vector & w)
 {
   // set only certain elements of each
   // vector, and record the expected scalar
@@ -49,7 +49,7 @@ test(TrilinosWrappers::MPI::Vector& v, TrilinosWrappers::MPI::Vector& w)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
@@ -66,7 +66,7 @@ main(int argc, char** argv)
         test(v, w);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

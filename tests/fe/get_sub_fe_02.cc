@@ -38,9 +38,9 @@ check()
   FESystem<2> fe(fe_velocity, 1, fe_pressure, 1, fe_dg, 2, fe_nonprim, 1);
 
   // same using component masks to copy over:
-  auto run = [&](const unsigned int first,
-                 const unsigned int n,
-                 const std::string& desc) {
+  auto run = [&](const unsigned int  first,
+                 const unsigned int  n,
+                 const std::string & desc) {
     const unsigned int n_components = fe.n_components();
 
     ComponentMask mask(n_components, false);

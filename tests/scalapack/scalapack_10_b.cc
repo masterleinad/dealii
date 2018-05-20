@@ -32,9 +32,9 @@
 
 template <typename NumberType>
 void
-test(const std::pair<unsigned int, unsigned int>& size,
-     const unsigned int                           block_size,
-     const std::pair<unsigned int, unsigned int>& chunk_size)
+test(const std::pair<unsigned int, unsigned int> & size,
+     const unsigned int                            block_size,
+     const std::pair<unsigned int, unsigned int> & chunk_size)
 {
   const std::string filename("scalapack_10_b_test.h5");
 
@@ -73,7 +73,7 @@ test(const std::pair<unsigned int, unsigned int>& size,
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, numbers::invalid_unsigned_int);

@@ -25,7 +25,7 @@
 #include <iostream>
 
 void
-test(TrilinosWrappers::SparseMatrix& m)
+test(TrilinosWrappers::SparseMatrix & m)
 {
   TrilinosWrappers::SparseMatrix m2(m.m(), m.n(), 3U);
 
@@ -83,7 +83,7 @@ test(TrilinosWrappers::SparseMatrix& m)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
@@ -97,7 +97,7 @@ main(int argc, char** argv)
         test(m);
       }
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

@@ -63,7 +63,7 @@ namespace LinearAlgebra
        * Copy constructor. Sets the dimension and the partitioning to that of
        * the given vector and copies all elements.
        */
-      Vector(const Vector& V);
+      Vector(const Vector & V);
 
       /**
        * This constructor takes an IndexSet that defines how to distribute the
@@ -71,8 +71,8 @@ namespace LinearAlgebra
        * includes information about the size of the vector, this is all we
        * need to generate a %parallel vector.
        */
-      explicit Vector(const IndexSet& parallel_partitioner,
-                      const MPI_Comm& communicator);
+      explicit Vector(const IndexSet & parallel_partitioner,
+                      const MPI_Comm & communicator);
 
       /**
        * Reinit functionality. This function destroys the old vector content
@@ -81,16 +81,16 @@ namespace LinearAlgebra
        * filled with zero (false) or left untouched (true).
        */
       void
-      reinit(const IndexSet& parallel_partitioner,
-             const MPI_Comm& communicator,
-             const bool      omit_zeroing_entries = false);
+      reinit(const IndexSet & parallel_partitioner,
+             const MPI_Comm & communicator,
+             const bool       omit_zeroing_entries = false);
 
       /**
        * Change the dimension to that of the vector V. The elements of V are not
        * copied.
        */
       virtual void
-      reinit(const VectorSpaceVector<double>& V,
+      reinit(const VectorSpaceVector<double> & V,
              const bool omit_zeroing_entries = false) override;
 
       /**
@@ -98,14 +98,14 @@ namespace LinearAlgebra
        * elements. The Vector will have the same parallel distribution as @p
        * V.
        */
-      Vector&
-      operator=(const Vector& V);
+      Vector &
+      operator=(const Vector & V);
 
       /**
        * Sets all elements of the vector to the scalar @p s. This operation is
        * only allowed if @p s is equal to zero.
        */
-      virtual Vector&
+      virtual Vector &
       operator=(const double s) override;
 
       /**
@@ -118,7 +118,7 @@ namespace LinearAlgebra
        */
       virtual void
       import(
-        const ReadWriteVector<double>&                  V,
+        const ReadWriteVector<double> &                 V,
         VectorOperation::values                         operation,
         std::shared_ptr<const CommunicationPatternBase> communication_pattern
         = std::shared_ptr<const CommunicationPatternBase>()) override;
@@ -126,33 +126,33 @@ namespace LinearAlgebra
       /**
        * Multiply the entire vector by a fixed factor.
        */
-      virtual Vector&
+      virtual Vector &
       operator*=(const double factor) override;
 
       /**
        * Divide the entire vector by a fixed factor.
        */
-      virtual Vector&
+      virtual Vector &
       operator/=(const double factor) override;
 
       /**
        * Add the vector @p V to the present one.
        */
-      virtual Vector&
-      operator+=(const VectorSpaceVector<double>& V) override;
+      virtual Vector &
+      operator+=(const VectorSpaceVector<double> & V) override;
 
       /**
        * Subtract the vector @p V from the present one.
        */
-      virtual Vector&
-      operator-=(const VectorSpaceVector<double>& V) override;
+      virtual Vector &
+      operator-=(const VectorSpaceVector<double> & V) override;
 
       /**
        * Return the scalar product of two vectors. The vectors need to have the
        * same layout.
        */
       virtual double
-      operator*(const VectorSpaceVector<double>& V) const override;
+      operator*(const VectorSpaceVector<double> & V) const override;
 
       /**
        * Add @p a to all components. Note that @p is a scalar not a vector.
@@ -165,26 +165,26 @@ namespace LinearAlgebra
        * a*V</tt>. The vectors need to have the same layout.
        */
       virtual void
-      add(const double a, const VectorSpaceVector<double>& V) override;
+      add(const double a, const VectorSpaceVector<double> & V) override;
 
       /**
        * Multiple addition of multiple of a vector, i.e. <tt>*this> +=
        * a*V+b*W</tt>. The vectors need to have the same layout.
        */
       virtual void
-      add(const double                     a,
-          const VectorSpaceVector<double>& V,
-          const double                     b,
-          const VectorSpaceVector<double>& W) override;
+      add(const double                      a,
+          const VectorSpaceVector<double> & V,
+          const double                      b,
+          const VectorSpaceVector<double> & W) override;
 
       /**
        * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this
        * = s*(*this)+a*V</tt>.
        */
       virtual void
-      sadd(const double                     s,
-           const double                     a,
-           const VectorSpaceVector<double>& V) override;
+      sadd(const double                      s,
+           const double                      a,
+           const VectorSpaceVector<double> & V) override;
 
       /**
        * Scale each element of this vector by the corresponding element in the
@@ -193,13 +193,13 @@ namespace LinearAlgebra
        * vectors need to have the same layout.
        */
       virtual void
-      scale(const VectorSpaceVector<double>& scaling_factors) override;
+      scale(const VectorSpaceVector<double> & scaling_factors) override;
 
       /**
        * Assignment <tt>*this = a*V</tt>.
        */
       virtual void
-      equ(const double a, const VectorSpaceVector<double>& V) override;
+      equ(const double a, const VectorSpaceVector<double> & V) override;
 
       /**
        * Return whether the vector contains only elements with value zero.
@@ -256,9 +256,9 @@ namespace LinearAlgebra
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       virtual double
-      add_and_dot(const double                     a,
-                  const VectorSpaceVector<double>& V,
-                  const VectorSpaceVector<double>& W) override;
+      add_and_dot(const double                      a,
+                  const VectorSpaceVector<double> & V,
+                  const VectorSpaceVector<double> & W) override;
       /**
        * This function always returns false and is present only for backward
        * compatibility.
@@ -296,21 +296,21 @@ namespace LinearAlgebra
        * Return a const reference to the underlying Trilinos
        * Epetra_FEVector class.
        */
-      const Epetra_FEVector&
+      const Epetra_FEVector &
       trilinos_vector() const;
 
       /**
        * Return a (modifyable) reference to the underlying Trilinos
        * Epetra_FEVector class.
        */
-      Epetra_FEVector&
+      Epetra_FEVector &
       trilinos_vector();
 
       /**
        * Prints the vector to the output stream @p out.
        */
       virtual void
-      print(std::ostream&      out,
+      print(std::ostream &     out,
             const unsigned int precision  = 3,
             const bool         scientific = true,
             const bool         across     = true) const override;
@@ -351,8 +351,8 @@ namespace LinearAlgebra
        * on the communicator @p mpi_comm.
        */
       void
-      create_epetra_comm_pattern(const IndexSet& source_index_set,
-                                 const MPI_Comm& mpi_comm);
+      create_epetra_comm_pattern(const IndexSet & source_index_set,
+                                 const MPI_Comm & mpi_comm);
 
       /**
        * Pointer to the actual Epetra vector object.

@@ -43,7 +43,7 @@ namespace deal_II_exceptions
   std::string additional_assert_output;
 
   void
-  set_additional_assert_output(const char* const p)
+  set_additional_assert_output(const char * const p)
   {
     additional_assert_output = p;
   }
@@ -84,7 +84,7 @@ ExceptionBase::ExceptionBase()
 #endif
 }
 
-ExceptionBase::ExceptionBase(const ExceptionBase& exc)
+ExceptionBase::ExceptionBase(const ExceptionBase & exc)
   : file(exc.file),
     line(exc.line),
     function(exc.function),
@@ -111,11 +111,11 @@ ExceptionBase::~ExceptionBase() noexcept
 }
 
 void
-ExceptionBase::set_fields(const char* f,
-                          const int   l,
-                          const char* func,
-                          const char* c,
-                          const char* e)
+ExceptionBase::set_fields(const char * f,
+                          const int    l,
+                          const char * func,
+                          const char * c,
+                          const char * e)
 {
   file     = f;
   line     = l;
@@ -133,7 +133,7 @@ ExceptionBase::set_fields(const char* f,
 #endif
 }
 
-const char*
+const char *
 ExceptionBase::what() const noexcept
 {
   // If no error c_string was generated so far, do it now:
@@ -155,14 +155,14 @@ ExceptionBase::what() const noexcept
   return what_str.c_str();
 }
 
-const char*
+const char *
 ExceptionBase::get_exc_name() const
 {
   return exc;
 }
 
 void
-ExceptionBase::print_exc_data(std::ostream& out) const
+ExceptionBase::print_exc_data(std::ostream & out) const
 {
   // print a header for the exception
   out << "An error occurred in line <" << line << "> of file <" << file
@@ -192,13 +192,13 @@ ExceptionBase::print_exc_data(std::ostream& out) const
 }
 
 void
-ExceptionBase::print_info(std::ostream& out) const
+ExceptionBase::print_info(std::ostream & out) const
 {
   out << "    (none)" << std::endl;
 }
 
 void
-ExceptionBase::print_stack_trace(std::ostream& out) const
+ExceptionBase::print_stack_trace(std::ostream & out) const
 {
   if(n_stacktrace_frames == 0)
     return;
@@ -245,8 +245,8 @@ ExceptionBase::print_stack_trace(std::ostream& out) const
       // differently, since it is apparently demangled as "unsigned int"
       // for unknown reasons :-) if we can, demangle the function name
 #ifdef DEAL_II_HAVE_LIBSTDCXX_DEMANGLER
-      int   status;
-      char* p
+      int    status;
+      char * p
         = abi::__cxa_demangle(functionname.c_str(), nullptr, nullptr, &status);
 
       if((status == 0) && (functionname != "main"))
@@ -331,7 +331,7 @@ namespace StandardExceptions
   {}
 
   void
-  ExcMPI::print_info(std::ostream& out) const
+  ExcMPI::print_info(std::ostream & out) const
   {
     char error_name[MPI_MAX_ERROR_STRING];
     error_name[0]        = '\0';
@@ -379,7 +379,7 @@ namespace StandardExceptions
 namespace
 {
   [[noreturn]] void
-  internal_abort(const ExceptionBase& exc) noexcept
+  internal_abort(const ExceptionBase & exc) noexcept
   {
     // first print the error
     std::cerr << exc.what() << std::endl;
@@ -429,7 +429,7 @@ namespace deal_II_exceptions
   namespace internals
   {
     void
-    do_issue_error_nothrow(const ExceptionBase& exc) noexcept
+    do_issue_error_nothrow(const ExceptionBase & exc) noexcept
     {
       if(dealii::deal_II_exceptions::abort_on_exception)
         internal_abort(exc);
@@ -443,7 +443,7 @@ namespace deal_II_exceptions
     }
 
     [[noreturn]] void
-    abort(const ExceptionBase& exc) {
+    abort(const ExceptionBase & exc) {
       if(dealii::deal_II_exceptions::abort_on_exception)
         internal_abort(exc);
       else

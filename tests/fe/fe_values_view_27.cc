@@ -29,13 +29,13 @@
 #include <deal.II/lac/vector.h>
 
 Tensor<1, 1>
-curl(const Tensor<2, 2>& grads)
+curl(const Tensor<2, 2> & grads)
 {
   return Point<1>(grads[1][0] - grads[0][1]);
 }
 
 Tensor<1, 3>
-curl(const Tensor<2, 3>& grads)
+curl(const Tensor<2, 3> & grads)
 {
   return Point<3>(grads[2][1] - grads[1][2],
                   grads[0][2] - grads[2][0],
@@ -44,7 +44,7 @@ curl(const Tensor<2, 3>& grads)
 
 template <int dim>
 void
-test(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+test(const Triangulation<dim> & tr, const FiniteElement<dim> & fe)
 {
   deallog << "FE=" << fe.get_name() << std::endl;
 

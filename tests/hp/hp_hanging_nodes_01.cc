@@ -52,7 +52,7 @@
 
 template <int dim>
 int
-generate_grid(Triangulation<dim>& tria)
+generate_grid(Triangulation<dim> & tria)
 {
   Point<dim>                p1, p2;
   std::vector<unsigned int> sub_div;
@@ -75,7 +75,7 @@ generate_grid(Triangulation<dim>& tria)
 
 template <int dim>
 void
-test_constraints(hp::FECollection<dim>& fe_coll)
+test_constraints(hp::FECollection<dim> & fe_coll)
 {
   Triangulation<dim> tria;
 
@@ -117,7 +117,7 @@ test_constraints(hp::FECollection<dim>& fe_coll)
 
 template <int dim>
 void
-test_constraints_old(FiniteElement<dim>& fe)
+test_constraints_old(FiniteElement<dim> & fe)
 {
   Triangulation<dim> tria;
 

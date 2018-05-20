@@ -56,10 +56,10 @@ check()
   // note that presently dq2 elements
   // are not implemented in 3d, so
   // take special measures
-  const FE_DGQ<dim>  fe_constant(0);
-  const FE_Q<dim>    fe_quadratic(2);
-  const FE_DGQ<dim>  fe_dq_linear(1);
-  const FE_DGQ<dim>* fe_dq_quadratic
+  const FE_DGQ<dim>   fe_constant(0);
+  const FE_Q<dim>     fe_quadratic(2);
+  const FE_DGQ<dim>   fe_dq_linear(1);
+  const FE_DGQ<dim> * fe_dq_quadratic
     = (dim != 3 ? new FE_DGQ<dim>(2) : nullptr);
 
   // define composed finite
@@ -67,12 +67,12 @@ check()
   // consumption in 3d to reasonable
   // values, use simpler finite
   // elements there
-  const FESystem<dim>* fe_1
+  const FESystem<dim> * fe_1
     = (dim != 3 ? new FESystem<dim>(
                     fe_quadratic, 4, *fe_dq_quadratic, 2, fe_constant, 12) :
                   new FESystem<dim>(fe_dq_linear, 1, fe_constant, 1));
 
-  const FESystem<dim>* fe_2
+  const FESystem<dim> * fe_2
     = (dim != 3 ? new FESystem<dim>(
                     fe_constant, 1, *fe_dq_quadratic, 2, fe_quadratic, 5) :
                   new FESystem<dim>(fe_constant, 1, fe_dq_linear, 1));

@@ -24,8 +24,8 @@
 using namespace Polynomials;
 
 void
-check_derivatives(const std::vector<Polynomial<double>>& p,
-                  const unsigned int                     n_deriv)
+check_derivatives(const std::vector<Polynomial<double>> & p,
+                  const unsigned int                      n_deriv)
 {
   // check whether the values and derivatives
   // are evaluated correctly some randomly
@@ -60,7 +60,7 @@ check_derivatives(const std::vector<Polynomial<double>>& p,
 }
 
 void
-check_poly(const Quadrature<1>& q)
+check_poly(const Quadrature<1> & q)
 {
   deallog << "Points: " << q.size() << std::endl;
   std::vector<Polynomial<double>> p

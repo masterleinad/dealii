@@ -39,12 +39,12 @@ using namespace dealii;
 
 template <typename number>
 void
-fill_matrices(MeshWorker::LocalResults<number>& results, bool face)
+fill_matrices(MeshWorker::LocalResults<number> & results, bool face)
 {
   for(unsigned int k = 0; k < results.n_matrices(); ++k)
     {
-      FullMatrix<number>& M    = results.matrix(k, false).matrix;
-      double              base = 1000 * (results.matrix(k).row + 1)
+      FullMatrix<number> & M    = results.matrix(k, false).matrix;
+      double               base = 1000 * (results.matrix(k).row + 1)
                     + 100 * (results.matrix(k).column + 1);
       for(unsigned int i = 0; i < M.m(); ++i)
         for(unsigned int j = 0; j < M.n(); ++j)
@@ -58,7 +58,7 @@ fill_matrices(MeshWorker::LocalResults<number>& results, bool face)
 
 template <int dim>
 void
-test(FiniteElement<dim>& fe)
+test(FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -108,7 +108,7 @@ test(FiniteElement<dim>& fe)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

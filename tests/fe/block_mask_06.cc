@@ -41,7 +41,7 @@ test()
       Assert(BlockMask(12, true).n_selected_blocks(13) == 12,
              ExcInternalError());
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

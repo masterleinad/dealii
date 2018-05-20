@@ -19,14 +19,14 @@
 #include <deal.II/base/parameter_handler.h>
 
 void
-check(const char* p)
+check(const char * p)
 {
   std::string parameter_set_by_action;
 
   ParameterHandler prm;
   prm.declare_entry(
     "test_1", "-1,0", Patterns::List(Patterns::Integer(-1, 1), 2, 3));
-  prm.add_action("test_1", [&](const std::string& s) {
+  prm.add_action("test_1", [&](const std::string & s) {
     deallog << "In action:" << s << std::endl;
     parameter_set_by_action = s;
     return true;

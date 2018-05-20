@@ -31,7 +31,7 @@ namespace LinearAlgebra
   // is declared separately)
 
 #  define TEMPL_COPY_CONSTRUCTOR(S1, S2) \
-    template Vector<S1>& Vector<S1>::operator=<S2>(const Vector<S2>&)
+    template Vector<S1> & Vector<S1>::operator=<S2>(const Vector<S2> &)
 
   TEMPL_COPY_CONSTRUCTOR(double, float);
   TEMPL_COPY_CONSTRUCTOR(float, double);

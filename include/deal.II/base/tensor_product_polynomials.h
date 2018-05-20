@@ -76,31 +76,31 @@ public:
    * element into a private variable.
    */
   template <class Pol>
-  TensorProductPolynomials(const std::vector<Pol>& pols);
+  TensorProductPolynomials(const std::vector<Pol> & pols);
 
   /**
    * Print the list of the indices to <tt>out</tt>.
    */
   void
-  output_indices(std::ostream& out) const;
+  output_indices(std::ostream & out) const;
 
   /**
    * Set the ordering of the polynomials. Requires
    * <tt>renumber.size()==n()</tt>.  Stores a copy of <tt>renumber</tt>.
    */
   void
-  set_numbering(const std::vector<unsigned int>& renumber);
+  set_numbering(const std::vector<unsigned int> & renumber);
 
   /**
    * Give read access to the renumber vector.
    */
-  const std::vector<unsigned int>&
+  const std::vector<unsigned int> &
   get_numbering() const;
 
   /**
    * Give read access to the inverse renumber vector.
    */
-  const std::vector<unsigned int>&
+  const std::vector<unsigned int> &
   get_numbering_inverse() const;
 
   /**
@@ -116,12 +116,12 @@ public:
    * over all tensor product polynomials.
    */
   void
-  compute(const Point<dim>&            unit_point,
-          std::vector<double>&         values,
-          std::vector<Tensor<1, dim>>& grads,
-          std::vector<Tensor<2, dim>>& grad_grads,
-          std::vector<Tensor<3, dim>>& third_derivatives,
-          std::vector<Tensor<4, dim>>& fourth_derivatives) const;
+  compute(const Point<dim> &            unit_point,
+          std::vector<double> &         values,
+          std::vector<Tensor<1, dim>> & grads,
+          std::vector<Tensor<2, dim>> & grad_grads,
+          std::vector<Tensor<3, dim>> & third_derivatives,
+          std::vector<Tensor<4, dim>> & fourth_derivatives) const;
 
   /**
    * Compute the value of the <tt>i</tt>th tensor product polynomial at
@@ -136,7 +136,7 @@ public:
    * polynomials all at once and in a much more efficient way.
    */
   double
-  compute_value(const unsigned int i, const Point<dim>& p) const;
+  compute_value(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Compute the <tt>order</tt>th derivative of the <tt>i</tt>th tensor
@@ -154,7 +154,7 @@ public:
    */
   template <int order>
   Tensor<order, dim>
-  compute_derivative(const unsigned int i, const Point<dim>& p) const;
+  compute_derivative(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -169,7 +169,7 @@ public:
    * polynomials all at once and in a much more efficient way.
    */
   Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim>& p) const;
+  compute_grad(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th tensor
@@ -184,7 +184,7 @@ public:
    * polynomials all at once and in a much more efficient way.
    */
   Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim>& p) const;
+  compute_grad_grad(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Return the number of tensor product polynomials. For <i>n</i> 1d
@@ -270,7 +270,7 @@ public:
    * different, and may also vary in number.
    */
   AnisotropicPolynomials(
-    const std::vector<std::vector<Polynomials::Polynomial<double>>>&
+    const std::vector<std::vector<Polynomials::Polynomial<double>>> &
       base_polynomials);
 
   /**
@@ -287,12 +287,12 @@ public:
    * in a loop over all tensor product polynomials.
    */
   void
-  compute(const Point<dim>&            unit_point,
-          std::vector<double>&         values,
-          std::vector<Tensor<1, dim>>& grads,
-          std::vector<Tensor<2, dim>>& grad_grads,
-          std::vector<Tensor<3, dim>>& third_derivatives,
-          std::vector<Tensor<4, dim>>& fourth_derivatives) const;
+  compute(const Point<dim> &            unit_point,
+          std::vector<double> &         values,
+          std::vector<Tensor<1, dim>> & grads,
+          std::vector<Tensor<2, dim>> & grad_grads,
+          std::vector<Tensor<3, dim>> & third_derivatives,
+          std::vector<Tensor<4, dim>> & fourth_derivatives) const;
 
   /**
    * Compute the value of the <tt>i</tt>th tensor product polynomial at
@@ -307,7 +307,7 @@ public:
    * tensor polynomials all at once and in a much more efficient way.
    */
   double
-  compute_value(const unsigned int i, const Point<dim>& p) const;
+  compute_value(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Compute the <tt>order</tt>th derivative of the <tt>i</tt>th tensor
@@ -325,7 +325,7 @@ public:
    */
   template <int order>
   Tensor<order, dim>
-  compute_derivative(const unsigned int i, const Point<dim>& p) const;
+  compute_derivative(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -340,7 +340,7 @@ public:
    * tensor polynomials all at once and in a much more efficient way.
    */
   Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim>& p) const;
+  compute_grad(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th tensor
@@ -355,7 +355,7 @@ public:
    * all tensor polynomials all at once and in a much more efficient way.
    */
   Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim>& p) const;
+  compute_grad_grad(const unsigned int i, const Point<dim> & p) const;
 
   /**
    * Return the number of tensor product polynomials. It is the product of
@@ -390,7 +390,7 @@ private:
    */
   static unsigned int
   get_n_tensor_pols(
-    const std::vector<std::vector<Polynomials::Polynomial<double>>>& pols);
+    const std::vector<std::vector<Polynomials::Polynomial<double>>> & pols);
 };
 
 /** @} */
@@ -402,7 +402,7 @@ private:
 template <int dim, typename PolynomialType>
 template <class Pol>
 inline TensorProductPolynomials<dim, PolynomialType>::TensorProductPolynomials(
-  const std::vector<Pol>& pols)
+  const std::vector<Pol> & pols)
   : polynomials(pols.begin(), pols.end()),
     n_tensor_pols(Utilities::fixed_power<dim>(pols.size())),
     index_map(n_tensor_pols),
@@ -428,14 +428,14 @@ TensorProductPolynomials<dim, PolynomialType>::n() const
 }
 
 template <int dim, typename PolynomialType>
-inline const std::vector<unsigned int>&
+inline const std::vector<unsigned int> &
 TensorProductPolynomials<dim, PolynomialType>::get_numbering() const
 {
   return index_map;
 }
 
 template <int dim, typename PolynomialType>
-inline const std::vector<unsigned int>&
+inline const std::vector<unsigned int> &
 TensorProductPolynomials<dim, PolynomialType>::get_numbering_inverse() const
 {
   return index_map_inverse;
@@ -446,7 +446,7 @@ template <int order>
 Tensor<order, dim>
 TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
   const unsigned int i,
-  const Point<dim>&  p) const
+  const Point<dim> & p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -470,8 +470,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
     {
       case 1:
         {
-          Tensor<1, dim>& derivative_1
-            = *reinterpret_cast<Tensor<1, dim>*>(&derivative);
+          Tensor<1, dim> & derivative_1
+            = *reinterpret_cast<Tensor<1, dim> *>(&derivative);
           for(unsigned int d = 0; d < dim; ++d)
             {
               derivative_1[d] = 1.;
@@ -489,8 +489,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
         }
       case 2:
         {
-          Tensor<2, dim>& derivative_2
-            = *reinterpret_cast<Tensor<2, dim>*>(&derivative);
+          Tensor<2, dim> & derivative_2
+            = *reinterpret_cast<Tensor<2, dim> *>(&derivative);
           for(unsigned int d1 = 0; d1 < dim; ++d1)
             for(unsigned int d2 = 0; d2 < dim; ++d2)
               {
@@ -511,8 +511,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
         }
       case 3:
         {
-          Tensor<3, dim>& derivative_3
-            = *reinterpret_cast<Tensor<3, dim>*>(&derivative);
+          Tensor<3, dim> & derivative_3
+            = *reinterpret_cast<Tensor<3, dim> *>(&derivative);
           for(unsigned int d1 = 0; d1 < dim; ++d1)
             for(unsigned int d2 = 0; d2 < dim; ++d2)
               for(unsigned int d3 = 0; d3 < dim; ++d3)
@@ -536,8 +536,8 @@ TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
         }
       case 4:
         {
-          Tensor<4, dim>& derivative_4
-            = *reinterpret_cast<Tensor<4, dim>*>(&derivative);
+          Tensor<4, dim> & derivative_4
+            = *reinterpret_cast<Tensor<4, dim> *>(&derivative);
           for(unsigned int d1 = 0; d1 < dim; ++d1)
             for(unsigned int d2 = 0; d2 < dim; ++d2)
               for(unsigned int d3 = 0; d3 < dim; ++d3)
@@ -574,7 +574,7 @@ template <int dim>
 template <int order>
 Tensor<order, dim>
 AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
-                                                const Point<dim>&  p) const
+                                                const Point<dim> & p) const
 {
   unsigned int indices[dim];
   compute_index(i, indices);
@@ -588,8 +588,8 @@ AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
     {
       case 1:
         {
-          Tensor<1, dim>& derivative_1
-            = *reinterpret_cast<Tensor<1, dim>*>(&derivative);
+          Tensor<1, dim> & derivative_1
+            = *reinterpret_cast<Tensor<1, dim> *>(&derivative);
           for(unsigned int d = 0; d < dim; ++d)
             {
               derivative_1[d] = 1.;
@@ -607,8 +607,8 @@ AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
         }
       case 2:
         {
-          Tensor<2, dim>& derivative_2
-            = *reinterpret_cast<Tensor<2, dim>*>(&derivative);
+          Tensor<2, dim> & derivative_2
+            = *reinterpret_cast<Tensor<2, dim> *>(&derivative);
           for(unsigned int d1 = 0; d1 < dim; ++d1)
             for(unsigned int d2 = 0; d2 < dim; ++d2)
               {
@@ -629,8 +629,8 @@ AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
         }
       case 3:
         {
-          Tensor<3, dim>& derivative_3
-            = *reinterpret_cast<Tensor<3, dim>*>(&derivative);
+          Tensor<3, dim> & derivative_3
+            = *reinterpret_cast<Tensor<3, dim> *>(&derivative);
           for(unsigned int d1 = 0; d1 < dim; ++d1)
             for(unsigned int d2 = 0; d2 < dim; ++d2)
               for(unsigned int d3 = 0; d3 < dim; ++d3)
@@ -654,8 +654,8 @@ AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
         }
       case 4:
         {
-          Tensor<4, dim>& derivative_4
-            = *reinterpret_cast<Tensor<4, dim>*>(&derivative);
+          Tensor<4, dim> & derivative_4
+            = *reinterpret_cast<Tensor<4, dim> *>(&derivative);
           for(unsigned int d1 = 0; d1 < dim; ++d1)
             for(unsigned int d2 = 0; d2 < dim; ++d2)
               for(unsigned int d3 = 0; d3 < dim; ++d3)

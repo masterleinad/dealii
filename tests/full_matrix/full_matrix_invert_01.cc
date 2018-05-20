@@ -23,7 +23,7 @@ using namespace dealii;
 
 template <typename number>
 void
-fill_matrix_invertible(FullMatrix<number>& A)
+fill_matrix_invertible(FullMatrix<number> & A)
 {
   for(unsigned int i = 0; i < A.m(); i++)
     for(unsigned int j = 0; j < A.n(); j++)

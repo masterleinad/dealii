@@ -216,7 +216,7 @@ DynamicSparsityPattern::DynamicSparsityPattern()
   : have_entries(false), rows(0), cols(0), rowset(0)
 {}
 
-DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
+DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern & s)
   : Subscriptor(), have_entries(false), rows(0), cols(0), rowset(0)
 {
   (void) s;
@@ -227,15 +227,15 @@ DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern& s)
            "not be used to copy-construct a non-empty sparsity pattern."));
 }
 
-DynamicSparsityPattern::DynamicSparsityPattern(const size_type m,
-                                               const size_type n,
-                                               const IndexSet& rowset_)
+DynamicSparsityPattern::DynamicSparsityPattern(const size_type  m,
+                                               const size_type  n,
+                                               const IndexSet & rowset_)
   : have_entries(false), rows(0), cols(0), rowset(0)
 {
   reinit(m, n, rowset_);
 }
 
-DynamicSparsityPattern::DynamicSparsityPattern(const IndexSet& rowset_)
+DynamicSparsityPattern::DynamicSparsityPattern(const IndexSet & rowset_)
   : have_entries(false), rows(0), cols(0), rowset(0)
 {
   reinit(rowset_.size(), rowset_.size(), rowset_);
@@ -247,8 +247,8 @@ DynamicSparsityPattern::DynamicSparsityPattern(const size_type n)
   reinit(n, n);
 }
 
-DynamicSparsityPattern&
-DynamicSparsityPattern::operator=(const DynamicSparsityPattern& s)
+DynamicSparsityPattern &
+DynamicSparsityPattern::operator=(const DynamicSparsityPattern & s)
 {
   (void) s;
   Assert(
@@ -265,9 +265,9 @@ DynamicSparsityPattern::operator=(const DynamicSparsityPattern& s)
 }
 
 void
-DynamicSparsityPattern::reinit(const size_type m,
-                               const size_type n,
-                               const IndexSet& rowset_)
+DynamicSparsityPattern::reinit(const size_type  m,
+                               const size_type  n,
+                               const IndexSet & rowset_)
 {
   have_entries = false;
   rows         = m;
@@ -363,8 +363,8 @@ DynamicSparsityPattern::symmetrize()
 template <typename SparsityPatternTypeLeft, typename SparsityPatternTypeRight>
 void
 DynamicSparsityPattern::compute_mmult_pattern(
-  const SparsityPatternTypeLeft&  left,
-  const SparsityPatternTypeRight& right)
+  const SparsityPatternTypeLeft &  left,
+  const SparsityPatternTypeRight & right)
 {
   Assert(left.n_cols() == right.n_rows(),
          ExcDimensionMismatch(left.n_cols(), right.n_rows()));
@@ -388,7 +388,7 @@ DynamicSparsityPattern::compute_mmult_pattern(
 }
 
 void
-DynamicSparsityPattern::print(std::ostream& out) const
+DynamicSparsityPattern::print(std::ostream & out) const
 {
   for(size_type row = 0; row < lines.size(); ++row)
     {
@@ -406,7 +406,7 @@ DynamicSparsityPattern::print(std::ostream& out) const
 }
 
 void
-DynamicSparsityPattern::print_gnuplot(std::ostream& out) const
+DynamicSparsityPattern::print_gnuplot(std::ostream & out) const
 {
   for(size_type row = 0; row < lines.size(); ++row)
     {
@@ -477,10 +477,10 @@ DynamicSparsityPattern::memory_consumption() const
 
 // explicit instantiations
 template void
-DynamicSparsityPattern::Line::add_entries(size_type*, size_type*, const bool);
+DynamicSparsityPattern::Line::add_entries(size_type *, size_type *, const bool);
 template void
-DynamicSparsityPattern::Line::add_entries(const size_type*,
-                                          const size_type*,
+DynamicSparsityPattern::Line::add_entries(const size_type *,
+                                          const size_type *,
                                           const bool);
 #ifndef DEAL_II_VECTOR_ITERATOR_IS_POINTER
 template void
@@ -490,16 +490,16 @@ DynamicSparsityPattern::Line::add_entries(std::vector<size_type>::iterator,
 #endif
 
 template void
-DynamicSparsityPattern::compute_mmult_pattern(const DynamicSparsityPattern&,
-                                              const DynamicSparsityPattern&);
+DynamicSparsityPattern::compute_mmult_pattern(const DynamicSparsityPattern &,
+                                              const DynamicSparsityPattern &);
 template void
-DynamicSparsityPattern::compute_mmult_pattern(const DynamicSparsityPattern&,
-                                              const SparsityPattern&);
+DynamicSparsityPattern::compute_mmult_pattern(const DynamicSparsityPattern &,
+                                              const SparsityPattern &);
 template void
-DynamicSparsityPattern::compute_mmult_pattern(const SparsityPattern&,
-                                              const DynamicSparsityPattern&);
+DynamicSparsityPattern::compute_mmult_pattern(const SparsityPattern &,
+                                              const DynamicSparsityPattern &);
 template void
-DynamicSparsityPattern::compute_mmult_pattern(const SparsityPattern&,
-                                              const SparsityPattern&);
+DynamicSparsityPattern::compute_mmult_pattern(const SparsityPattern &,
+                                              const SparsityPattern &);
 
 DEAL_II_NAMESPACE_CLOSE

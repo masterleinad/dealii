@@ -47,7 +47,7 @@ const unsigned int max_cells = 50000;
 
 template <int dim>
 void
-test_isotropic(int type, std::ostream* logfile)
+test_isotropic(int type, std::ostream * logfile)
 {
   const RefinementCase<dim> ref_cases[7]
     = {RefinementCase<dim>::cut_x,
@@ -117,7 +117,7 @@ test_isotropic(int type, std::ostream* logfile)
 int
 main()
 {
-  std::ostream* logfile;
+  std::ostream * logfile;
 
   if(single_file)
     logfile = new std::ofstream("output");

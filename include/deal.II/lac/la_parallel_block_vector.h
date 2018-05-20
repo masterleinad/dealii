@@ -136,7 +136,7 @@ namespace LinearAlgebra
        * Copy-Constructor. Dimension set to that of V, all components are
        * copied from V
        */
-      BlockVector(const BlockVector<Number>& V);
+      BlockVector(const BlockVector<Number> & V);
 
       /**
        * Copy constructor taking a BlockVector of another data type. This will
@@ -151,55 +151,55 @@ namespace LinearAlgebra
        * disabled if we have detected a broken compiler during configuration.
        */
       template <typename OtherNumber>
-      explicit BlockVector(const BlockVector<OtherNumber>& v);
+      explicit BlockVector(const BlockVector<OtherNumber> & v);
 
       /**
        * Constructor. Set the number of blocks to <tt>block_sizes.size()</tt>
        * and initialize each block with <tt>block_sizes[i]</tt> zero elements.
        */
-      BlockVector(const std::vector<size_type>& block_sizes);
+      BlockVector(const std::vector<size_type> & block_sizes);
 
       /**
        * Construct a block vector with an IndexSet for the local range and
        * ghost entries for each block.
        */
-      BlockVector(const std::vector<IndexSet>& local_ranges,
-                  const std::vector<IndexSet>& ghost_indices,
-                  const MPI_Comm               communicator);
+      BlockVector(const std::vector<IndexSet> & local_ranges,
+                  const std::vector<IndexSet> & ghost_indices,
+                  const MPI_Comm                communicator);
 
       /**
        * Same as above but the ghost indices are assumed to be empty.
        */
-      BlockVector(const std::vector<IndexSet>& local_ranges,
-                  const MPI_Comm               communicator);
+      BlockVector(const std::vector<IndexSet> & local_ranges,
+                  const MPI_Comm                communicator);
 
       /**
        * Copy operator: fill all components of the vector with the given
        * scalar value.
        */
-      virtual BlockVector&
+      virtual BlockVector &
       operator=(const value_type s) override;
 
       /**
        * Copy operator for arguments of the same type. Resize the present
        * vector if necessary.
        */
-      BlockVector&
-      operator=(const BlockVector& V);
+      BlockVector &
+      operator=(const BlockVector & V);
 
       /**
        * Copy operator for template arguments of different types. Resize the
        * present vector if necessary.
        */
       template <class Number2>
-      BlockVector&
-      operator=(const BlockVector<Number2>& V);
+      BlockVector &
+      operator=(const BlockVector<Number2> & V);
 
       /**
        * Copy a regular vector into a block vector.
        */
-      BlockVector&
-      operator=(const Vector<Number>& V);
+      BlockVector &
+      operator=(const Vector<Number> & V);
 
 #ifdef DEAL_II_WITH_PETSC
       /**
@@ -209,8 +209,8 @@ namespace LinearAlgebra
        *
        * This operator is only available if deal.II was configured with PETSc.
        */
-      BlockVector<Number>&
-      operator=(const PETScWrappers::MPI::BlockVector& petsc_vec);
+      BlockVector<Number> &
+      operator=(const PETScWrappers::MPI::BlockVector & petsc_vec);
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -222,8 +222,8 @@ namespace LinearAlgebra
        * This operator is only available if deal.II was configured with
        * Trilinos.
        */
-      BlockVector<Number>&
-      operator=(const TrilinosWrappers::MPI::BlockVector& trilinos_vec);
+      BlockVector<Number> &
+      operator=(const TrilinosWrappers::MPI::BlockVector & trilinos_vec);
 #endif
 
       /**
@@ -264,8 +264,8 @@ namespace LinearAlgebra
        * be routed to the wrong block.
        */
       void
-      reinit(const std::vector<size_type>& N,
-             const bool                    omit_zeroing_entries = false);
+      reinit(const std::vector<size_type> & N,
+             const bool                     omit_zeroing_entries = false);
 
       /**
        * Change the dimension to that of the vector <tt>V</tt>. The same
@@ -283,8 +283,8 @@ namespace LinearAlgebra
        */
       template <typename Number2>
       void
-      reinit(const BlockVector<Number2>& V,
-             const bool                  omit_zeroing_entries = false);
+      reinit(const BlockVector<Number2> & V,
+             const bool                   omit_zeroing_entries = false);
 
       /**
        * This function copies the data that has accumulated in the data buffer
@@ -347,15 +347,15 @@ namespace LinearAlgebra
        */
       template <typename OtherNumber>
       void
-      add(const std::vector<size_type>&        indices,
-          const ::dealii::Vector<OtherNumber>& values);
+      add(const std::vector<size_type> &        indices,
+          const ::dealii::Vector<OtherNumber> & values);
 
       /**
        * Scaling and simple vector addition, i.e.  <tt>*this =
        * s*(*this)+V</tt>.
        */
       void
-      sadd(const Number s, const BlockVector<Number>& V);
+      sadd(const Number s, const BlockVector<Number> & V);
 
       /**
        * Assignment <tt>*this = a*u + b*v</tt>.
@@ -364,10 +364,10 @@ namespace LinearAlgebra
        */
       DEAL_II_DEPRECATED
       void
-      equ(const Number               a,
-          const BlockVector<Number>& u,
-          const Number               b,
-          const BlockVector<Number>& v);
+      equ(const Number                a,
+          const BlockVector<Number> & u,
+          const Number                b,
+          const BlockVector<Number> & v);
 
       /**
        * Scaling and multiple addition.
@@ -376,11 +376,11 @@ namespace LinearAlgebra
        */
       DEAL_II_DEPRECATED
       void
-      sadd(const Number               s,
-           const Number               a,
-           const BlockVector<Number>& V,
-           const Number               b,
-           const BlockVector<Number>& W);
+      sadd(const Number                s,
+           const Number                a,
+           const BlockVector<Number> & V,
+           const Number                b,
+           const BlockVector<Number> & W);
 
       /**
        * Return whether the vector contains only elements with value zero.
@@ -421,7 +421,7 @@ namespace LinearAlgebra
        * functions.
        */
       void
-      swap(BlockVector<Number>& v);
+      swap(BlockVector<Number> & v);
       //@}
 
       /**
@@ -434,32 +434,32 @@ namespace LinearAlgebra
        * copied.
        */
       virtual void
-      reinit(const VectorSpaceVector<Number>& V,
+      reinit(const VectorSpaceVector<Number> & V,
              const bool omit_zeroing_entries = false) override;
 
       /**
        * Multiply the entire vector by a fixed factor.
        */
-      virtual BlockVector<Number>&
+      virtual BlockVector<Number> &
       operator*=(const Number factor) override;
 
       /**
        * Divide the entire vector by a fixed factor.
        */
-      virtual BlockVector<Number>&
+      virtual BlockVector<Number> &
       operator/=(const Number factor) override;
 
       /**
        * Add the vector @p V to the present one.
        */
-      virtual BlockVector<Number>&
-      operator+=(const VectorSpaceVector<Number>& V) override;
+      virtual BlockVector<Number> &
+      operator+=(const VectorSpaceVector<Number> & V) override;
 
       /**
        * Subtract the vector @p V from the present one.
        */
-      virtual BlockVector<Number>&
-      operator-=(const VectorSpaceVector<Number>& V) override;
+      virtual BlockVector<Number> &
+      operator-=(const VectorSpaceVector<Number> & V) override;
 
       /**
        * Import all the elements present in the vector's IndexSet from the input
@@ -471,7 +471,7 @@ namespace LinearAlgebra
        */
       virtual void
       import(
-        const LinearAlgebra::ReadWriteVector<Number>&   V,
+        const LinearAlgebra::ReadWriteVector<Number> &  V,
         VectorOperation::values                         operation,
         std::shared_ptr<const CommunicationPatternBase> communication_pattern
         = std::shared_ptr<const CommunicationPatternBase>()) override;
@@ -480,7 +480,7 @@ namespace LinearAlgebra
        * Return the scalar product of two vectors.
        */
       virtual Number
-      operator*(const VectorSpaceVector<Number>& V) const override;
+      operator*(const VectorSpaceVector<Number> & V) const override;
 
       /**
        * Calculate the scalar product between each block of this vector and @p V
@@ -499,8 +499,8 @@ namespace LinearAlgebra
        */
       template <typename FullMatrixType>
       void
-      multivector_inner_product(FullMatrixType&            matrix,
-                                const BlockVector<Number>& V,
+      multivector_inner_product(FullMatrixType &            matrix,
+                                const BlockVector<Number> & V,
                                 const bool symmetric = false) const;
 
       /**
@@ -520,8 +520,8 @@ namespace LinearAlgebra
        */
       template <typename FullMatrixType>
       Number
-      multivector_inner_product_with_metric(const FullMatrixType&      matrix,
-                                            const BlockVector<Number>& V,
+      multivector_inner_product_with_metric(const FullMatrixType &      matrix,
+                                            const BlockVector<Number> & V,
                                             const bool symmetric = false) const;
 
       /**
@@ -535,10 +535,10 @@ namespace LinearAlgebra
        */
       template <typename FullMatrixType>
       void
-      mmult(BlockVector<Number>&  V,
-            const FullMatrixType& matrix,
-            const Number          s = Number(0.),
-            const Number          b = Number(1.)) const;
+      mmult(BlockVector<Number> &  V,
+            const FullMatrixType & matrix,
+            const Number           s = Number(0.),
+            const Number           b = Number(1.)) const;
 
       /**
        * Add @p a to all components. Note that @p a is a scalar not a vector.
@@ -550,33 +550,33 @@ namespace LinearAlgebra
        * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
        */
       virtual void
-      add(const Number a, const VectorSpaceVector<Number>& V) override;
+      add(const Number a, const VectorSpaceVector<Number> & V) override;
 
       /**
        * Multiple addition of scaled vectors, i.e. <tt>*this += a*V+b*W</tt>.
        */
       virtual void
-      add(const Number                     a,
-          const VectorSpaceVector<Number>& V,
-          const Number                     b,
-          const VectorSpaceVector<Number>& W) override;
+      add(const Number                      a,
+          const VectorSpaceVector<Number> & V,
+          const Number                      b,
+          const VectorSpaceVector<Number> & W) override;
 
       /**
        * A collective add operation: This function adds a whole set of values
        * stored in @p values to the vector components specified by @p indices.
        */
       virtual void
-      add(const std::vector<size_type>& indices,
-          const std::vector<Number>&    values);
+      add(const std::vector<size_type> & indices,
+          const std::vector<Number> &    values);
 
       /**
        * Scaling and simple addition of a multiple of a vector, i.e. <tt>*this =
        * s*(*this)+a*V</tt>.
        */
       virtual void
-      sadd(const Number                     s,
-           const Number                     a,
-           const VectorSpaceVector<Number>& V) override;
+      sadd(const Number                      s,
+           const Number                      a,
+           const VectorSpaceVector<Number> & V) override;
 
       /**
        * Scale each element of this vector by the corresponding element in the
@@ -584,13 +584,13 @@ namespace LinearAlgebra
        * immediate re-assignment) by a diagonal scaling matrix.
        */
       virtual void
-      scale(const VectorSpaceVector<Number>& scaling_factors) override;
+      scale(const VectorSpaceVector<Number> & scaling_factors) override;
 
       /**
        * Assignment <tt>*this = a*V</tt>.
        */
       virtual void
-      equ(const Number a, const VectorSpaceVector<Number>& V) override;
+      equ(const Number a, const VectorSpaceVector<Number> & V) override;
 
       /**
        * Return the l<sub>1</sub> norm of the vector (i.e., the sum of the
@@ -639,9 +639,9 @@ namespace LinearAlgebra
        * $\left<v,w\right>=\sum_i v_i \bar{w_i}$.
        */
       virtual Number
-      add_and_dot(const Number                     a,
-                  const VectorSpaceVector<Number>& V,
-                  const VectorSpaceVector<Number>& W) override;
+      add_and_dot(const Number                      a,
+                  const VectorSpaceVector<Number> & V,
+                  const VectorSpaceVector<Number> & W) override;
 
       /**
        * Return the global size of the vector, equal to the sum of the number of
@@ -668,7 +668,7 @@ namespace LinearAlgebra
        * Print the vector to the output stream @p out.
        */
       virtual void
-      print(std::ostream&      out,
+      print(std::ostream &     out,
             const unsigned int precision  = 3,
             const bool         scientific = true,
             const bool         across     = true) const override;
@@ -715,8 +715,8 @@ namespace LinearAlgebra
  */
 template <typename Number>
 inline void
-swap(LinearAlgebra::distributed::BlockVector<Number>& u,
-     LinearAlgebra::distributed::BlockVector<Number>& v)
+swap(LinearAlgebra::distributed::BlockVector<Number> & u,
+     LinearAlgebra::distributed::BlockVector<Number> & v)
 {
   u.swap(v);
 }

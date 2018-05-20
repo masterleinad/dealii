@@ -31,11 +31,11 @@ template <typename SolverType,
           typename VectorType,
           class PRECONDITION>
 double
-check_solve(SolverType&         solver,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
-            const PRECONDITION& P)
+check_solve(SolverType &         solver,
+            const MatrixType &   A,
+            VectorType &         u,
+            VectorType &         f,
+            const PRECONDITION & P)
 {
   double result = 0.;
   u             = 0.;
@@ -44,7 +44,7 @@ check_solve(SolverType&         solver,
     {
       solver.solve(A, u, f, P);
     }
-  catch(SolverControl::NoConvergence& e)
+  catch(SolverControl::NoConvergence & e)
     {
       result = e.last_residual;
     }
@@ -114,7 +114,7 @@ main()
           r2 = check_solve(relax, A, u, f, prec_ssor2);
           deallog << "SSOR1.2 diff " << std::fabs(r1 - r2) / r1 << std::endl;
         }
-      catch(std::exception& e)
+      catch(std::exception & e)
         {
           std::cerr << "Exception: " << e.what() << std::endl;
         }

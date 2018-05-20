@@ -43,9 +43,9 @@ main()
     //               0  1  2  3  5  6  7  8  4
     deallog << foo[0][1][2][0][2][0][1][2][1] << std::endl;
 
-    int  temp = foo[0][1][2][0][2][0][1][2][1];
-    int& ref  = foo[0][1][2][0][2][0][1][2][1];
-    ref       = temp;
+    int   temp = foo[0][1][2][0][2][0][1][2][1];
+    int & ref  = foo[0][1][2][0][2][0][1][2][1];
+    ref        = temp;
 
     foo[0][1][2][0][2][0][1][2][1] = temp + ref;
 
@@ -54,7 +54,7 @@ main()
 
   // test read-only access:
   {
-    const Tensor<9, 3, int>& t_ref = t;
+    const Tensor<9, 3, int> & t_ref = t;
 
     TensorAccessors::internal::
       ReorderedIndexView<4, 9, const Tensor<9, 3, int>> // auto ...
@@ -64,8 +64,8 @@ main()
     //                     0  1  2  3  5  6  7  8  4
     deallog << const_foo[0][1][2][0][2][0][1][2][1] << std::endl;
 
-    int& tmp = foo[0][1][2][0][2][0][1][2][1];
-    tmp      = const_foo[0][1][2][0][2][0][1][2][1] / 2;
+    int & tmp = foo[0][1][2][0][2][0][1][2][1];
+    tmp       = const_foo[0][1][2][0][2][0][1][2][1] / 2;
     deallog << const_foo[0][1][2][0][2][0][1][2][1] << std::endl;
   }
 

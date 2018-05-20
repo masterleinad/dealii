@@ -45,9 +45,9 @@ namespace MGTools
   // specializations for 1D
   template <>
   void
-  compute_row_length_vector(const DoFHandler<1, 1>&,
+  compute_row_length_vector(const DoFHandler<1, 1> &,
                             const unsigned int,
-                            std::vector<unsigned int>&,
+                            std::vector<unsigned int> &,
                             const DoFTools::Coupling)
   {
     Assert(false, ExcNotImplemented());
@@ -55,20 +55,20 @@ namespace MGTools
 
   template <>
   void
-  compute_row_length_vector(const DoFHandler<1, 1>&,
+  compute_row_length_vector(const DoFHandler<1, 1> &,
                             const unsigned int,
-                            std::vector<unsigned int>&,
-                            const Table<2, DoFTools::Coupling>&,
-                            const Table<2, DoFTools::Coupling>&)
+                            std::vector<unsigned int> &,
+                            const Table<2, DoFTools::Coupling> &,
+                            const Table<2, DoFTools::Coupling> &)
   {
     Assert(false, ExcNotImplemented());
   }
 
   template <>
   void
-  compute_row_length_vector(const DoFHandler<1, 2>&,
+  compute_row_length_vector(const DoFHandler<1, 2> &,
                             const unsigned int,
-                            std::vector<unsigned int>&,
+                            std::vector<unsigned int> &,
                             const DoFTools::Coupling)
   {
     Assert(false, ExcNotImplemented());
@@ -76,11 +76,11 @@ namespace MGTools
 
   template <>
   void
-  compute_row_length_vector(const DoFHandler<1, 2>&,
+  compute_row_length_vector(const DoFHandler<1, 2> &,
                             const unsigned int,
-                            std::vector<unsigned int>&,
-                            const Table<2, DoFTools::Coupling>&,
-                            const Table<2, DoFTools::Coupling>&)
+                            std::vector<unsigned int> &,
+                            const Table<2, DoFTools::Coupling> &,
+                            const Table<2, DoFTools::Coupling> &)
   {
     Assert(false, ExcNotImplemented());
   }
@@ -88,10 +88,10 @@ namespace MGTools
   // Template for 2D and 3D. For 1D see specialization above
   template <int dim, int spacedim>
   void
-  compute_row_length_vector(const DoFHandler<dim, spacedim>& dofs,
-                            const unsigned int               level,
-                            std::vector<unsigned int>&       row_lengths,
-                            const DoFTools::Coupling         flux_coupling)
+  compute_row_length_vector(const DoFHandler<dim, spacedim> & dofs,
+                            const unsigned int                level,
+                            std::vector<unsigned int> &       row_lengths,
+                            const DoFTools::Coupling          flux_coupling)
   {
     Assert(row_lengths.size() == dofs.n_dofs(),
            ExcDimensionMismatch(row_lengths.size(), dofs.n_dofs()));
@@ -106,8 +106,8 @@ namespace MGTools
     // triangulation for the user
     // flags. Since we restore them in
     // the end, this cast is safe.
-    Triangulation<dim, spacedim>& user_flags_triangulation
-      = const_cast<Triangulation<dim, spacedim>&>(dofs.get_triangulation());
+    Triangulation<dim, spacedim> & user_flags_triangulation
+      = const_cast<Triangulation<dim, spacedim> &>(dofs.get_triangulation());
     user_flags_triangulation.save_user_flags(old_flags);
     user_flags_triangulation.clear_user_flags();
 
@@ -126,7 +126,7 @@ namespace MGTools
     // smaller than dim-1.
     for(cell = dofs.begin(level); cell != end; ++cell)
       {
-        const FiniteElement<dim>& fe = cell->get_fe();
+        const FiniteElement<dim> & fe = cell->get_fe();
         cell_indices.resize(fe.dofs_per_cell);
         cell->get_mg_dof_indices(cell_indices);
         unsigned int i = 0;
@@ -216,7 +216,7 @@ namespace MGTools
                 continue;
               }
 
-            const FiniteElement<dim>& nfe = neighbor->get_fe();
+            const FiniteElement<dim> & nfe = neighbor->get_fe();
             typename DoFHandler<dim, spacedim>::face_iterator face
               = cell->face(iface);
 
@@ -270,11 +270,11 @@ namespace MGTools
   // This is the template for 2D and 3D. See version for 1D above
   template <int dim, int spacedim>
   void
-  compute_row_length_vector(const DoFHandler<dim, spacedim>&    dofs,
-                            const unsigned int                  level,
-                            std::vector<unsigned int>&          row_lengths,
-                            const Table<2, DoFTools::Coupling>& couplings,
-                            const Table<2, DoFTools::Coupling>& flux_couplings)
+  compute_row_length_vector(const DoFHandler<dim, spacedim> &    dofs,
+                            const unsigned int                   level,
+                            std::vector<unsigned int> &          row_lengths,
+                            const Table<2, DoFTools::Coupling> & couplings,
+                            const Table<2, DoFTools::Coupling> & flux_couplings)
   {
     Assert(row_lengths.size() == dofs.n_dofs(),
            ExcDimensionMismatch(row_lengths.size(), dofs.n_dofs()));
@@ -289,8 +289,8 @@ namespace MGTools
     // triangulation for the user
     // flags. Since we restore them in
     // the end, this cast is safe.
-    Triangulation<dim, spacedim>& user_flags_triangulation
-      = const_cast<Triangulation<dim, spacedim>&>(dofs.get_triangulation());
+    Triangulation<dim, spacedim> & user_flags_triangulation
+      = const_cast<Triangulation<dim, spacedim> &>(dofs.get_triangulation());
     user_flags_triangulation.save_user_flags(old_flags);
     user_flags_triangulation.clear_user_flags();
 
@@ -318,8 +318,8 @@ namespace MGTools
     // smaller than dim-1.
     for(cell = dofs.begin_active(); cell != end; ++cell)
       {
-        const FiniteElement<dim>& fe       = cell->get_fe();
-        const unsigned int        fe_index = cell->active_fe_index();
+        const FiniteElement<dim> & fe       = cell->get_fe();
+        const unsigned int         fe_index = cell->active_fe_index();
 
         Assert(couplings.n_rows() == fe.n_components(),
                ExcDimensionMismatch(couplings.n_rows(), fe.n_components()));
@@ -470,7 +470,7 @@ namespace MGTools
                 continue;
               }
 
-            const FiniteElement<dim>& nfe = neighbor->get_fe();
+            const FiniteElement<dim> & nfe = neighbor->get_fe();
             typename DoFHandler<dim, spacedim>::face_iterator face
               = cell->face(iface);
 
@@ -555,9 +555,9 @@ namespace MGTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_sparsity_pattern(const DoFHandlerType& dof,
-                        SparsityPatternType&  sparsity,
-                        const unsigned int    level)
+  make_sparsity_pattern(const DoFHandlerType & dof,
+                        SparsityPatternType &  sparsity,
+                        const unsigned int     level)
   {
     const types::global_dof_index n_dofs = dof.n_dofs(level);
     (void) n_dofs;
@@ -587,9 +587,9 @@ namespace MGTools
 
   template <int dim, typename SparsityPatternType, int spacedim>
   void
-  make_flux_sparsity_pattern(const DoFHandler<dim, spacedim>& dof,
-                             SparsityPatternType&             sparsity,
-                             const unsigned int               level)
+  make_flux_sparsity_pattern(const DoFHandler<dim, spacedim> & dof,
+                             SparsityPatternType &             sparsity,
+                             const unsigned int                level)
   {
     const types::global_dof_index n_dofs = dof.n_dofs(level);
     (void) n_dofs;
@@ -662,9 +662,9 @@ namespace MGTools
 
   template <int dim, typename SparsityPatternType, int spacedim>
   void
-  make_flux_sparsity_pattern_edge(const DoFHandler<dim, spacedim>& dof,
-                                  SparsityPatternType&             sparsity,
-                                  const unsigned int               level)
+  make_flux_sparsity_pattern_edge(const DoFHandler<dim, spacedim> & dof,
+                                  SparsityPatternType &             sparsity,
+                                  const unsigned int                level)
   {
     Assert((level >= 1) && (level < dof.get_triangulation().n_global_levels()),
            ExcIndexRange(level, 1, dof.get_triangulation().n_global_levels()));
@@ -731,13 +731,13 @@ namespace MGTools
 
   template <int dim, typename SparsityPatternType, int spacedim>
   void
-  make_flux_sparsity_pattern(const DoFHandler<dim, spacedim>&    dof,
-                             SparsityPatternType&                sparsity,
-                             const unsigned int                  level,
-                             const Table<2, DoFTools::Coupling>& int_mask,
-                             const Table<2, DoFTools::Coupling>& flux_mask)
+  make_flux_sparsity_pattern(const DoFHandler<dim, spacedim> &    dof,
+                             SparsityPatternType &                sparsity,
+                             const unsigned int                   level,
+                             const Table<2, DoFTools::Coupling> & int_mask,
+                             const Table<2, DoFTools::Coupling> & flux_mask)
   {
-    const FiniteElement<dim>&     fe     = dof.get_fe();
+    const FiniteElement<dim> &    fe     = dof.get_fe();
     const types::global_dof_index n_dofs = dof.n_dofs(level);
     const unsigned int            n_comp = fe.n_components();
     (void) n_dofs;
@@ -784,7 +784,7 @@ namespace MGTools
     // beginning of this function.
     std::vector<bool> user_flags;
     dof.get_triangulation().save_user_flags(user_flags);
-    const_cast<Triangulation<dim, spacedim>&>(dof.get_triangulation())
+    const_cast<Triangulation<dim, spacedim> &>(dof.get_triangulation())
       .clear_user_flags();
 
     for(; cell != endc; ++cell)
@@ -911,19 +911,20 @@ namespace MGTools
       }
 
     // finally restore the user flags
-    const_cast<Triangulation<dim, spacedim>&>(dof.get_triangulation())
+    const_cast<Triangulation<dim, spacedim> &>(dof.get_triangulation())
       .load_user_flags(user_flags);
   }
 
   template <int dim, typename SparsityPatternType, int spacedim>
   void
-  make_flux_sparsity_pattern_edge(const DoFHandler<dim, spacedim>&    dof,
-                                  SparsityPatternType&                sparsity,
-                                  const unsigned int                  level,
-                                  const Table<2, DoFTools::Coupling>& flux_mask)
+  make_flux_sparsity_pattern_edge(
+    const DoFHandler<dim, spacedim> &    dof,
+    SparsityPatternType &                sparsity,
+    const unsigned int                   level,
+    const Table<2, DoFTools::Coupling> & flux_mask)
   {
-    const FiniteElement<dim>& fe     = dof.get_fe();
-    const unsigned int        n_comp = fe.n_components();
+    const FiniteElement<dim> & fe     = dof.get_fe();
+    const unsigned int         n_comp = fe.n_components();
     (void) n_comp;
 
     Assert((level >= 1) && (level < dof.get_triangulation().n_global_levels()),
@@ -1009,10 +1010,10 @@ namespace MGTools
 
   template <typename DoFHandlerType, typename SparsityPatternType>
   void
-  make_interface_sparsity_pattern(const DoFHandlerType&    dof,
-                                  const MGConstrainedDoFs& mg_constrained_dofs,
-                                  SparsityPatternType&     sparsity,
-                                  const unsigned int       level)
+  make_interface_sparsity_pattern(const DoFHandlerType &    dof,
+                                  const MGConstrainedDoFs & mg_constrained_dofs,
+                                  SparsityPatternType &     sparsity,
+                                  const unsigned int        level)
   {
     const types::global_dof_index n_dofs = dof.n_dofs(level);
     (void) n_dofs;
@@ -1041,14 +1042,14 @@ namespace MGTools
   template <int dim, int spacedim>
   void
   count_dofs_per_component(
-    const DoFHandler<dim, spacedim>&                   dof_handler,
-    std::vector<std::vector<types::global_dof_index>>& result,
-    bool                                               only_once,
-    std::vector<unsigned int>                          target_component)
+    const DoFHandler<dim, spacedim> &                   dof_handler,
+    std::vector<std::vector<types::global_dof_index>> & result,
+    bool                                                only_once,
+    std::vector<unsigned int>                           target_component)
   {
-    const FiniteElement<dim>& fe           = dof_handler.get_fe();
-    const unsigned int        n_components = fe.n_components();
-    const unsigned int        nlevels
+    const FiniteElement<dim> & fe           = dof_handler.get_fe();
+    const unsigned int         n_components = fe.n_components();
+    const unsigned int         nlevels
       = dof_handler.get_triangulation().n_global_levels();
 
     Assert(result.size() == nlevels,
@@ -1089,9 +1090,9 @@ namespace MGTools
             for(unsigned int i = 0; i < n_components; ++i)
               {
                 void (*fun_ptr)(const unsigned int level,
-                                const DoFHandler<dim, spacedim>&,
-                                const ComponentMask&,
-                                std::vector<bool>&)
+                                const DoFHandler<dim, spacedim> &,
+                                const ComponentMask &,
+                                std::vector<bool> &)
                   = &DoFTools::extract_level_dofs<DoFHandler<dim, spacedim>>;
 
                 std::vector<bool> tmp(n_components, false);
@@ -1110,7 +1111,7 @@ namespace MGTools
             unsigned int component = 0;
             for(unsigned int b = 0; b < fe.n_base_elements(); ++b)
               {
-                const FiniteElement<dim>& base = fe.base_element(b);
+                const FiniteElement<dim> & base = fe.base_element(b);
                 // Dimension of base element
                 unsigned int d = base.n_components();
 
@@ -1141,12 +1142,12 @@ namespace MGTools
   template <typename DoFHandlerType>
   void
   count_dofs_per_block(
-    const DoFHandlerType&                              dof_handler,
-    std::vector<std::vector<types::global_dof_index>>& dofs_per_block,
-    std::vector<unsigned int>                          target_block)
+    const DoFHandlerType &                              dof_handler,
+    std::vector<std::vector<types::global_dof_index>> & dofs_per_block,
+    std::vector<unsigned int>                           target_block)
   {
     const FiniteElement<DoFHandlerType::dimension,
-                        DoFHandlerType::space_dimension>& fe
+                        DoFHandlerType::space_dimension> & fe
       = dof_handler.get_fe();
     const unsigned int n_blocks = fe.n_blocks();
     const unsigned int n_levels
@@ -1198,9 +1199,9 @@ namespace MGTools
         for(unsigned int i = 0; i < n_blocks; ++i)
           {
             void (*fun_ptr)(const unsigned int level,
-                            const DoFHandlerType&,
-                            const BlockMask&,
-                            std::vector<bool>&)
+                            const DoFHandlerType &,
+                            const BlockMask &,
+                            std::vector<bool> &)
               = &DoFTools::extract_level_dofs<DoFHandlerType>;
 
             std::vector<bool> tmp(n_blocks, false);
@@ -1222,17 +1223,17 @@ namespace MGTools
   template <int dim, int spacedim>
   void
   make_boundary_list(
-    const DoFHandler<dim, spacedim>&                dof,
-    const typename FunctionMap<dim>::type&          function_map,
-    std::vector<std::set<types::global_dof_index>>& boundary_indices,
-    const ComponentMask&                            component_mask)
+    const DoFHandler<dim, spacedim> &                dof,
+    const typename FunctionMap<dim>::type &          function_map,
+    std::vector<std::set<types::global_dof_index>> & boundary_indices,
+    const ComponentMask &                            component_mask)
   {
     Assert(boundary_indices.size() == dof.get_triangulation().n_global_levels(),
            ExcDimensionMismatch(boundary_indices.size(),
                                 dof.get_triangulation().n_global_levels()));
 
     std::set<types::boundary_id> boundary_ids;
-    typename std::map<types::boundary_id, const Function<dim>*>::const_iterator
+    typename std::map<types::boundary_id, const Function<dim> *>::const_iterator
       it
       = function_map.begin();
     for(; it != function_map.end(); ++it)
@@ -1247,17 +1248,17 @@ namespace MGTools
 
   template <int dim, int spacedim>
   void
-  make_boundary_list(const DoFHandler<dim, spacedim>&       dof,
-                     const typename FunctionMap<dim>::type& function_map,
-                     std::vector<IndexSet>&                 boundary_indices,
-                     const ComponentMask&                   component_mask)
+  make_boundary_list(const DoFHandler<dim, spacedim> &       dof,
+                     const typename FunctionMap<dim>::type & function_map,
+                     std::vector<IndexSet> &                 boundary_indices,
+                     const ComponentMask &                   component_mask)
   {
     Assert(boundary_indices.size() == dof.get_triangulation().n_global_levels(),
            ExcDimensionMismatch(boundary_indices.size(),
                                 dof.get_triangulation().n_global_levels()));
 
     std::set<types::boundary_id> boundary_ids;
-    typename std::map<types::boundary_id, const Function<dim>*>::const_iterator
+    typename std::map<types::boundary_id, const Function<dim> *>::const_iterator
       it
       = function_map.begin();
     for(; it != function_map.end(); ++it)
@@ -1268,10 +1269,10 @@ namespace MGTools
 
   template <int dim, int spacedim>
   void
-  make_boundary_list(const DoFHandler<dim, spacedim>&    dof,
-                     const std::set<types::boundary_id>& boundary_ids,
-                     std::vector<IndexSet>&              boundary_indices,
-                     const ComponentMask&                component_mask)
+  make_boundary_list(const DoFHandler<dim, spacedim> &    dof,
+                     const std::set<types::boundary_id> & boundary_ids,
+                     std::vector<IndexSet> &              boundary_indices,
+                     const ComponentMask &                component_mask)
   {
     boundary_indices.resize(dof.get_triangulation().n_global_levels());
 
@@ -1302,8 +1303,8 @@ namespace MGTools
                && cell->level_subdomain_id()
                     == numbers::artificial_subdomain_id)
               continue;
-            const FiniteElement<dim>& fe    = cell->get_fe();
-            const unsigned int        level = cell->level();
+            const FiniteElement<dim> & fe    = cell->get_fe();
+            const unsigned int         level = cell->level();
             local_dofs.resize(fe.dofs_per_face);
 
             for(unsigned int face_no = 0;
@@ -1343,8 +1344,8 @@ namespace MGTools
                 if(cell->at_boundary(face_no) == false)
                   continue;
 
-                const FiniteElement<dim>& fe    = cell->get_fe();
-                const unsigned int        level = cell->level();
+                const FiniteElement<dim> & fe    = cell->get_fe();
+                const unsigned int         level = cell->level();
 
                 typename DoFHandler<dim, spacedim>::face_iterator face
                   = cell->face(face_no);
@@ -1356,7 +1357,7 @@ namespace MGTools
                     for(unsigned int i = 0; i < cell->get_fe().dofs_per_cell;
                         ++i)
                       {
-                        const ComponentMask& nonzero_component_array
+                        const ComponentMask & nonzero_component_array
                           = cell->get_fe().get_nonzero_components(i);
                         // if we want to constrain one of the nonzero components,
                         // we have to constrain all of them
@@ -1396,7 +1397,7 @@ namespace MGTools
                                 // Just pick the first of the components
                                 // We already know that either all or none
                                 // of the components are selected
-                                const ComponentMask& nonzero_component_array
+                                const ComponentMask & nonzero_component_array
                                   = cell->get_fe().get_nonzero_components(i);
                                 for(unsigned int c = 0; c < n_components; ++c)
                                   if(nonzero_component_array[c] == true)
@@ -1422,8 +1423,8 @@ namespace MGTools
   template <int dim, int spacedim>
   void
   extract_non_interface_dofs(
-    const DoFHandler<dim, spacedim>&                mg_dof_handler,
-    std::vector<std::set<types::global_dof_index>>& non_interface_dofs)
+    const DoFHandler<dim, spacedim> &                mg_dof_handler,
+    std::vector<std::set<types::global_dof_index>> & non_interface_dofs)
   {
     Assert(non_interface_dofs.size()
              == mg_dof_handler.get_triangulation().n_global_levels(),
@@ -1431,7 +1432,7 @@ namespace MGTools
              non_interface_dofs.size(),
              mg_dof_handler.get_triangulation().n_global_levels()));
 
-    const FiniteElement<dim, spacedim>& fe = mg_dof_handler.get_fe();
+    const FiniteElement<dim, spacedim> & fe = mg_dof_handler.get_fe();
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int dofs_per_face = fe.dofs_per_face;
@@ -1498,8 +1499,8 @@ namespace MGTools
 
   template <int dim, int spacedim>
   void
-  extract_inner_interface_dofs(const DoFHandler<dim, spacedim>& mg_dof_handler,
-                               std::vector<IndexSet>&           interface_dofs)
+  extract_inner_interface_dofs(const DoFHandler<dim, spacedim> & mg_dof_handler,
+                               std::vector<IndexSet> &           interface_dofs)
   {
     Assert(interface_dofs.size()
              == mg_dof_handler.get_triangulation().n_global_levels(),
@@ -1510,7 +1511,7 @@ namespace MGTools
     std::vector<std::vector<types::global_dof_index>> tmp_interface_dofs(
       interface_dofs.size());
 
-    const FiniteElement<dim, spacedim>& fe = mg_dof_handler.get_fe();
+    const FiniteElement<dim, spacedim> & fe = mg_dof_handler.get_fe();
 
     const unsigned int dofs_per_cell = fe.dofs_per_cell;
     const unsigned int dofs_per_face = fe.dofs_per_face;
@@ -1593,7 +1594,7 @@ namespace MGTools
 
   template <int dim, int spacedim>
   unsigned int
-  max_level_for_coarse_mesh(const Triangulation<dim, spacedim>& tria)
+  max_level_for_coarse_mesh(const Triangulation<dim, spacedim> & tria)
   {
     // Find minimum level for an active cell in
     // this locally owned subdomain
@@ -1614,8 +1615,8 @@ namespace MGTools
     unsigned int global_min = min_level;
     // If necessary, communicate to find minimum
     // level for an active cell over all subdomains
-    if(const parallel::Triangulation<dim, spacedim>* tr
-       = dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(&tria))
+    if(const parallel::Triangulation<dim, spacedim> * tr
+       = dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(&tria))
       global_min = Utilities::MPI::min(min_level, tr->get_communicator());
 
     AssertIndexRange(global_min, tria.n_global_levels());

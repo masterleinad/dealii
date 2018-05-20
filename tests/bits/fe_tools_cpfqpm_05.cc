@@ -53,7 +53,7 @@
 // entire matrix since this would blow up our output files beyond
 // reasonable limits
 void
-output_matrix(const FullMatrix<double>& m)
+output_matrix(const FullMatrix<double> & m)
 {
   if((m.m() == 0) || (m.n() == 0))
     {
@@ -72,8 +72,8 @@ output_matrix(const FullMatrix<double>& m)
 
 template <int dim, int spacedim>
 void
-check_this(const FiniteElement<dim, spacedim>& fe,
-           const FiniteElement<dim, spacedim>& /*fe2*/)
+check_this(const FiniteElement<dim, spacedim> & fe,
+           const FiniteElement<dim, spacedim> & /*fe2*/)
 {
   // only check if both elements have
   // support points. otherwise,
@@ -131,9 +131,9 @@ check_this(const FiniteElement<dim, spacedim>& fe,
 
 template <int dim, int spacedim>
 void
-check(const FiniteElement<dim, spacedim>& fe1,
-      const FiniteElement<dim, spacedim>& fe2,
-      const std::string&                  name)
+check(const FiniteElement<dim, spacedim> & fe1,
+      const FiniteElement<dim, spacedim> & fe2,
+      const std::string &                  name)
 {
   deallog << "Checking " << name << " in " << dim << "d and spacedim "
           << spacedim << std::endl;
@@ -198,7 +198,7 @@ main()
 
       return 0;
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

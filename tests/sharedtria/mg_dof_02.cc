@@ -35,7 +35,7 @@
 
 template <int dim>
 void
-write_dof_data(DoFHandler<dim>& dof_handler)
+write_dof_data(DoFHandler<dim> & dof_handler)
 {
   FE_Q<dim> fe(2);
 
@@ -116,7 +116,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    all;

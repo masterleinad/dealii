@@ -27,7 +27,7 @@ namespace MeshWorker
   template <int dim, int sdim>
   void
   IntegrationInfo<dim, sdim>::initialize_data(
-    const std::shared_ptr<VectorDataBase<dim, sdim>>& data)
+    const std::shared_ptr<VectorDataBase<dim, sdim>> & data)
   {
     global_data            = data;
     const unsigned int nqp = fevalv[0]->n_quadrature_points;
@@ -83,8 +83,8 @@ namespace MeshWorker
   template <typename number>
   void
   IntegrationInfo<dim, sdim>::fill_local_data(
-    const DoFInfo<dim, sdim, number>& info,
-    bool                              split_fevalues)
+    const DoFInfo<dim, sdim, number> & info,
+    bool                               split_fevalues)
   {
     if(split_fevalues)
       {
@@ -93,9 +93,9 @@ namespace MeshWorker
         for(unsigned int b = 0; b < info.block_info->local().size(); ++b)
           {
             const unsigned int fe_no = info.block_info->base_element(b);
-            const FEValuesBase<dim, sdim>& fe     = this->fe_values(fe_no);
-            const unsigned int             n_comp = fe.get_fe().n_components();
-            const unsigned int             block_start
+            const FEValuesBase<dim, sdim> & fe     = this->fe_values(fe_no);
+            const unsigned int              n_comp = fe.get_fe().n_components();
+            const unsigned int              block_start
               = info.block_info->local().block_start(b);
             const unsigned int block_size
               = info.block_info->local().block_size(b);
@@ -126,8 +126,8 @@ namespace MeshWorker
       }
     else
       {
-        const FEValuesBase<dim, sdim>& fe     = this->fe_values(0);
-        const unsigned int             n_comp = fe.get_fe().n_components();
+        const FEValuesBase<dim, sdim> & fe     = this->fe_values(0);
+        const unsigned int              n_comp = fe.get_fe().n_components();
         if(info.level_cell)
           this->global_data->mg_fill(values,
                                      gradients,

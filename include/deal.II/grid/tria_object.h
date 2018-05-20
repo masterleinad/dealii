@@ -99,7 +99,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
 
     protected:
       /**
@@ -184,9 +184,9 @@ namespace internal
     template <int structdim>
     template <class Archive>
     void
-    TriaObject<structdim>::serialize(Archive& ar, const unsigned int)
+    TriaObject<structdim>::serialize(Archive & ar, const unsigned int)
     {
-      ar& faces;
+      ar & faces;
     }
 
   } // namespace TriangulationImplementation

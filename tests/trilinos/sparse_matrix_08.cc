@@ -23,7 +23,7 @@
 #include <iostream>
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 

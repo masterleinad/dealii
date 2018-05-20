@@ -23,7 +23,7 @@
 #include <deal.II/base/graph_coloring.h>
 
 void
-fill_graph(DynamicSparsityPattern& graph)
+fill_graph(DynamicSparsityPattern & graph)
 {
   //Edges in only one direction
   graph.add(0, 0);
@@ -34,7 +34,7 @@ fill_graph(DynamicSparsityPattern& graph)
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   //Initialize MPI and Zoltan
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);

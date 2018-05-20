@@ -84,7 +84,7 @@ namespace internals
      */
     template <typename value>
     size_type
-    get_column_index_from_iterator(const std::pair<size_type, value>& i);
+    get_column_index_from_iterator(const std::pair<size_type, value> & i);
 
     /**
      * Likewise, but sometimes needed for certain types of containers that
@@ -93,7 +93,7 @@ namespace internals
      */
     template <typename value>
     size_type
-    get_column_index_from_iterator(const std::pair<const size_type, value>& i);
+    get_column_index_from_iterator(const std::pair<const size_type, value> & i);
 
   } // namespace SparsityPatternTools
 } // namespace internals
@@ -130,13 +130,13 @@ namespace SparsityPatternIterators
     /**
      * Constructor.
      */
-    Accessor(const SparsityPattern* matrix,
-             const std::size_t      index_within_sparsity);
+    Accessor(const SparsityPattern * matrix,
+             const std::size_t       index_within_sparsity);
 
     /**
      * Constructor. Construct the end accessor for the given sparsity pattern.
      */
-    Accessor(const SparsityPattern* matrix);
+    Accessor(const SparsityPattern * matrix);
 
     /**
      * Row number of the element represented by this object. This function can
@@ -188,7 +188,7 @@ namespace SparsityPatternIterators
      * Comparison. True, if both iterators point to the same matrix position.
      */
     bool
-    operator==(const Accessor&) const;
+    operator==(const Accessor &) const;
 
     /**
      * Comparison operator. Result is true if either the first row number is
@@ -198,13 +198,13 @@ namespace SparsityPatternIterators
      * sparsity pattern.
      */
     bool
-    operator<(const Accessor&) const;
+    operator<(const Accessor &) const;
 
   protected:
     /**
      * The sparsity pattern we operate on accessed.
      */
-    const SparsityPattern* sparsity_pattern;
+    const SparsityPattern * sparsity_pattern;
 
     /**
      * Index in global sparsity pattern. This index represents the location
@@ -264,13 +264,13 @@ namespace SparsityPatternIterators
      * given global index (i.e., the index of the given element counting from
      * the zeroth row).
      */
-    Iterator(const SparsityPattern* sp,
-             const std::size_t      index_within_sparsity);
+    Iterator(const SparsityPattern * sp,
+             const std::size_t       index_within_sparsity);
 
     /**
      * Prefix increment.
      */
-    Iterator&
+    Iterator &
     operator++();
 
     /**
@@ -282,24 +282,24 @@ namespace SparsityPatternIterators
     /**
      * Dereferencing operator.
      */
-    const Accessor& operator*() const;
+    const Accessor & operator*() const;
 
     /**
      * Dereferencing operator.
      */
-    const Accessor* operator->() const;
+    const Accessor * operator->() const;
 
     /**
      * Comparison. True, if both iterators point to the same matrix position.
      */
     bool
-    operator==(const Iterator&) const;
+    operator==(const Iterator &) const;
 
     /**
      * Inverse of <tt>==</tt>.
      */
     bool
-    operator!=(const Iterator&) const;
+    operator!=(const Iterator &) const;
 
     /**
      * Comparison operator. Result is true if either the first row number is
@@ -309,7 +309,7 @@ namespace SparsityPatternIterators
      * matrix.
      */
     bool
-    operator<(const Iterator&) const;
+    operator<(const Iterator &) const;
 
     /**
      * Return the distance between the current iterator and the argument. The
@@ -318,7 +318,7 @@ namespace SparsityPatternIterators
      * operator-- (for a negative return value).
      */
     int
-    operator-(const Iterator& p) const;
+    operator-(const Iterator & p) const;
 
   private:
     /**
@@ -428,7 +428,7 @@ public:
    * matrices can use the same sparsity structure, copies are only allowed for
    * empty objects, as described above.
    */
-  SparsityPattern(const SparsityPattern&);
+  SparsityPattern(const SparsityPattern &);
 
   /**
    * Initialize a rectangular pattern of size <tt>m x n</tt>.
@@ -449,9 +449,9 @@ public:
    * @param[in] row_lengths Possible number of nonzero entries for each row.
    * This vector must have one entry for each row.
    */
-  SparsityPattern(const size_type                  m,
-                  const size_type                  n,
-                  const std::vector<unsigned int>& row_lengths);
+  SparsityPattern(const size_type                   m,
+                  const size_type                   n,
+                  const std::vector<unsigned int> & row_lengths);
 
   /**
    * Initialize a quadratic pattern of dimension <tt>m</tt> with at most
@@ -470,8 +470,8 @@ public:
    * @param[in] row_lengths Maximum number of nonzero entries for each row.
    * This vector must have one entry for each row.
    */
-  SparsityPattern(const size_type                  m,
-                  const std::vector<unsigned int>& row_lengths);
+  SparsityPattern(const size_type                   m,
+                  const std::vector<unsigned int> & row_lengths);
 
   /**
    * Make a copy with extra off-diagonals.
@@ -495,9 +495,9 @@ public:
    * matrix structure.  It must be compressed. The matrix structure is not
    * compressed after this function finishes.
    */
-  SparsityPattern(const SparsityPattern& original,
-                  const unsigned int     max_per_row,
-                  const size_type        extra_off_diagonals);
+  SparsityPattern(const SparsityPattern & original,
+                  const unsigned int      max_per_row,
+                  const size_type         extra_off_diagonals);
 
   /**
    * Destructor.
@@ -509,8 +509,8 @@ public:
    * declared, defined and fine to be called, but the latter only for empty
    * objects.
    */
-  SparsityPattern&
-  operator=(const SparsityPattern&);
+  SparsityPattern &
+  operator=(const SparsityPattern &);
 
   /**
    * Reallocate memory and set up data structures for a new matrix with @p m
@@ -538,17 +538,17 @@ public:
    * optimized access in relaxation methods of SparseMatrix.
    */
   void
-  reinit(const size_type                  m,
-         const size_type                  n,
-         const std::vector<unsigned int>& row_lengths);
+  reinit(const size_type                   m,
+         const size_type                   n,
+         const std::vector<unsigned int> & row_lengths);
 
   /**
    * Same as above, but with a VectorSlice argument instead.
    */
   void
-  reinit(const size_type                                     m,
-         const size_type                                     n,
-         const VectorSlice<const std::vector<unsigned int>>& row_lengths);
+  reinit(const size_type                                      m,
+         const size_type                                      n,
+         const VectorSlice<const std::vector<unsigned int>> & row_lengths);
 
   /**
    * This function compresses the sparsity structure that this object
@@ -653,14 +653,14 @@ public:
    * is lost, and the sparsity pattern is in compressed mode afterwards.
    */
   void
-  copy_from(const DynamicSparsityPattern& dsp);
+  copy_from(const DynamicSparsityPattern & dsp);
 
   /**
    * Copy data from a SparsityPattern. Previous content of this object is
    * lost, and the sparsity pattern is in compressed mode afterwards.
    */
   void
-  copy_from(const SparsityPattern& sp);
+  copy_from(const SparsityPattern & sp);
 
   /**
    * Take a full matrix and use its nonzero entries to generate a sparse
@@ -671,7 +671,7 @@ public:
    */
   template <typename number>
   void
-  copy_from(const FullMatrix<number>& matrix);
+  copy_from(const FullMatrix<number> & matrix);
 
   /**
    * Make the sparsity pattern symmetric by adding the sparsity pattern of the
@@ -763,7 +763,7 @@ public:
    * Test for equality of two SparsityPatterns.
    */
   bool
-  operator==(const SparsityPattern&) const;
+  operator==(const SparsityPattern &) const;
 
   /**
    * Return whether the object is empty. It is empty if no memory is
@@ -940,7 +940,7 @@ public:
    * runs of the program.
    */
   void
-  block_write(std::ostream& out) const;
+  block_write(std::ostream & out) const;
 
   /**
    * Read data that has previously been written by block_write() from a file.
@@ -956,7 +956,7 @@ public:
    * file, but not more.
    */
   void
-  block_read(std::istream& in);
+  block_read(std::istream & in);
 
   /**
    * Print the sparsity of the matrix. The output consists of one line per row
@@ -964,7 +964,7 @@ public:
    * <i>jn</i> are the allocated columns in this row.
    */
   void
-  print(std::ostream& out) const;
+  print(std::ostream & out) const;
 
   /**
    * Print the sparsity of the matrix in a format that <tt>gnuplot</tt>
@@ -980,7 +980,7 @@ public:
    * or points and use the <tt>plot</tt> command.
    */
   void
-  print_gnuplot(std::ostream& out) const;
+  print_gnuplot(std::ostream & out) const;
 
   /**
    * Prints the sparsity of the matrix in a .svg file which can be opened in a
@@ -990,7 +990,7 @@ public:
    * matrix correspond with a white square.
    */
   void
-  print_svg(std::ostream& out) const;
+  print_svg(std::ostream & out) const;
 
   /**
    * Write the data of this object to a stream for the purpose of
@@ -998,7 +998,7 @@ public:
    */
   template <class Archive>
   void
-  save(Archive& ar, const unsigned int version) const;
+  save(Archive & ar, const unsigned int version) const;
 
   /**
    * Read the data of this object from a stream for the purpose of
@@ -1006,7 +1006,7 @@ public:
    */
   template <class Archive>
   void
-  load(Archive& ar, const unsigned int version);
+  load(Archive & ar, const unsigned int version);
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 
@@ -1172,12 +1172,12 @@ private:
 
 namespace SparsityPatternIterators
 {
-  inline Accessor::Accessor(const SparsityPattern* sparsity_pattern,
-                            const std::size_t      i)
+  inline Accessor::Accessor(const SparsityPattern * sparsity_pattern,
+                            const std::size_t       i)
     : sparsity_pattern(sparsity_pattern), index_within_sparsity(i)
   {}
 
-  inline Accessor::Accessor(const SparsityPattern* sparsity_pattern)
+  inline Accessor::Accessor(const SparsityPattern * sparsity_pattern)
     : sparsity_pattern(sparsity_pattern),
       index_within_sparsity(sparsity_pattern->rowstart[sparsity_pattern->rows])
   {}
@@ -1196,7 +1196,7 @@ namespace SparsityPatternIterators
   {
     Assert(is_valid_entry() == true, ExcInvalidIterator());
 
-    const std::size_t* insert_point = std::upper_bound(
+    const std::size_t * insert_point = std::upper_bound(
       sparsity_pattern->rowstart.get(),
       sparsity_pattern->rowstart.get() + sparsity_pattern->rows + 1,
       index_within_sparsity);
@@ -1228,14 +1228,14 @@ namespace SparsityPatternIterators
   }
 
   inline bool
-  Accessor::operator==(const Accessor& other) const
+  Accessor::operator==(const Accessor & other) const
   {
     return (sparsity_pattern == other.sparsity_pattern
             && index_within_sparsity == other.index_within_sparsity);
   }
 
   inline bool
-  Accessor::operator<(const Accessor& other) const
+  Accessor::operator<(const Accessor & other) const
   {
     Assert(sparsity_pattern == other.sparsity_pattern, ExcInternalError());
 
@@ -1251,12 +1251,12 @@ namespace SparsityPatternIterators
     ++index_within_sparsity;
   }
 
-  inline Iterator::Iterator(const SparsityPattern* sparsity_pattern,
-                            const std::size_t      i)
+  inline Iterator::Iterator(const SparsityPattern * sparsity_pattern,
+                            const std::size_t       i)
     : accessor(sparsity_pattern, i)
   {}
 
-  inline Iterator&
+  inline Iterator &
   Iterator::operator++()
   {
     accessor.advance();
@@ -1271,36 +1271,36 @@ namespace SparsityPatternIterators
     return iter;
   }
 
-  inline const Accessor& Iterator::operator*() const
+  inline const Accessor & Iterator::operator*() const
   {
     return accessor;
   }
 
-  inline const Accessor* Iterator::operator->() const
+  inline const Accessor * Iterator::operator->() const
   {
     return &accessor;
   }
 
   inline bool
-  Iterator::operator==(const Iterator& other) const
+  Iterator::operator==(const Iterator & other) const
   {
     return (accessor == other.accessor);
   }
 
   inline bool
-  Iterator::operator!=(const Iterator& other) const
+  Iterator::operator!=(const Iterator & other) const
   {
     return !(*this == other);
   }
 
   inline bool
-  Iterator::operator<(const Iterator& other) const
+  Iterator::operator<(const Iterator & other) const
   {
     return accessor < other.accessor;
   }
 
   inline int
-  Iterator::operator-(const Iterator& other) const
+  Iterator::operator-(const Iterator & other) const
   {
     Assert(accessor.sparsity_pattern == other.accessor.sparsity_pattern,
            ExcInternalError());
@@ -1392,37 +1392,37 @@ SparsityPattern::n_nonzero_elements() const
 
 template <class Archive>
 inline void
-SparsityPattern::save(Archive& ar, const unsigned int) const
+SparsityPattern::save(Archive & ar, const unsigned int) const
 {
   // forward to serialization function in the base class.
-  ar& static_cast<const Subscriptor&>(*this);
+  ar & static_cast<const Subscriptor &>(*this);
 
-  ar& max_dim& rows& cols& max_vec_len& max_row_length& compressed&
-                                                        store_diagonal_first_in_row;
+  ar & max_dim & rows & cols & max_vec_len & max_row_length & compressed &
+                                                              store_diagonal_first_in_row;
 
-  ar& boost::serialization::make_array(rowstart.get(), max_dim + 1);
-  ar& boost::serialization::make_array(colnums.get(), max_vec_len);
+  ar & boost::serialization::make_array(rowstart.get(), max_dim + 1);
+  ar & boost::serialization::make_array(colnums.get(), max_vec_len);
 }
 
 template <class Archive>
 inline void
-SparsityPattern::load(Archive& ar, const unsigned int)
+SparsityPattern::load(Archive & ar, const unsigned int)
 {
   // forward to serialization function in the base class.
-  ar& static_cast<Subscriptor&>(*this);
+  ar & static_cast<Subscriptor &>(*this);
 
-  ar& max_dim& rows& cols& max_vec_len& max_row_length& compressed&
-                                                        store_diagonal_first_in_row;
+  ar & max_dim & rows & cols & max_vec_len & max_row_length & compressed &
+                                                              store_diagonal_first_in_row;
 
   rowstart = std_cxx14::make_unique<std::size_t[]>(max_dim + 1);
   colnums  = std_cxx14::make_unique<size_type[]>(max_vec_len);
 
-  ar& boost::serialization::make_array(rowstart.get(), max_dim + 1);
-  ar& boost::serialization::make_array(colnums.get(), max_vec_len);
+  ar & boost::serialization::make_array(rowstart.get(), max_dim + 1);
+  ar & boost::serialization::make_array(colnums.get(), max_vec_len);
 }
 
 inline bool
-SparsityPattern::operator==(const SparsityPattern& sp2) const
+SparsityPattern::operator==(const SparsityPattern & sp2) const
 {
   // it isn't quite necessary to compare *all* member variables. by only
   // comparing the essential ones, we can say that two sparsity patterns are
@@ -1460,14 +1460,14 @@ namespace internal
 
     template <typename value>
     inline size_type
-    get_column_index_from_iterator(const std::pair<size_type, value>& i)
+    get_column_index_from_iterator(const std::pair<size_type, value> & i)
     {
       return i.first;
     }
 
     template <typename value>
     inline size_type
-    get_column_index_from_iterator(const std::pair<const size_type, value>& i)
+    get_column_index_from_iterator(const std::pair<const size_type, value> & i)
     {
       return i.first;
     }
@@ -1507,7 +1507,7 @@ SparsityPattern::copy_from(const size_type       n_rows,
       inner_iterator;
   for(ForwardIterator i = begin; i != end; ++i, ++row)
     {
-      size_type*           cols = &colnums[rowstart[row]] + (is_square ? 1 : 0);
+      size_type *          cols = &colnums[rowstart[row]] + (is_square ? 1 : 0);
       const inner_iterator end_of_row = i->end();
       for(inner_iterator j = i->begin(); j != end_of_row; ++j)
         {

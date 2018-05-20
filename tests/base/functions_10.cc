@@ -22,7 +22,7 @@
 // (bi/tri)linear and so we can later know what the correct value is that the
 // function should provide
 Table<1, double>
-fill(const std::array<std::vector<double>, 1>& coordinates)
+fill(const std::array<std::vector<double>, 1> & coordinates)
 {
   Table<1, double> data(coordinates[0].size());
   for(unsigned int i = 0; i < coordinates[0].size(); ++i)
@@ -31,7 +31,7 @@ fill(const std::array<std::vector<double>, 1>& coordinates)
 }
 
 Table<2, double>
-fill(const std::array<std::vector<double>, 2>& coordinates)
+fill(const std::array<std::vector<double>, 2> & coordinates)
 {
   Table<2, double> data(coordinates[0].size(), coordinates[1].size());
   for(unsigned int i = 0; i < coordinates[0].size(); ++i)
@@ -41,7 +41,7 @@ fill(const std::array<std::vector<double>, 2>& coordinates)
 }
 
 Table<3, double>
-fill(const std::array<std::vector<double>, 3>& coordinates)
+fill(const std::array<std::vector<double>, 3> & coordinates)
 {
   Table<3, double> data(
     coordinates[0].size(), coordinates[1].size(), coordinates[2].size());

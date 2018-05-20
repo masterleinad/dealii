@@ -42,7 +42,7 @@ template <typename VectorType>
 template <int dim, int spacedim>
 void
 MGLevelGlobalTransfer<VectorType>::fill_and_communicate_copy_indices(
-  const DoFHandler<dim, spacedim>& mg_dof)
+  const DoFHandler<dim, spacedim> & mg_dof)
 {
   internal::MGTransfer::fill_copy_indices(mg_dof,
                                           mg_constrained_dofs,
@@ -77,8 +77,8 @@ MGLevelGlobalTransfer<VectorType>::fill_and_communicate_copy_indices(
 
   // now do a global reduction over all processors to see what operation
   // they can agree upon
-  if(const parallel::Triangulation<dim, spacedim>* ptria
-     = dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
+  if(const parallel::Triangulation<dim, spacedim> * ptria
+     = dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
        &mg_dof.get_triangulation()))
     perform_plain_copy = (Utilities::MPI::min(my_perform_plain_copy ? 1 : 0,
                                               ptria->get_communicator())
@@ -102,7 +102,7 @@ MGLevelGlobalTransfer<VectorType>::clear()
 
 template <typename VectorType>
 void
-MGLevelGlobalTransfer<VectorType>::print_indices(std::ostream& os) const
+MGLevelGlobalTransfer<VectorType>::print_indices(std::ostream & os) const
 {
   for(unsigned int level = 0; level < copy_indices.size(); ++level)
     {
@@ -147,21 +147,21 @@ namespace
   template <int dim, int spacedim, typename Number>
   void
   fill_internal(
-    const DoFHandler<dim, spacedim>& mg_dof,
+    const DoFHandler<dim, spacedim> & mg_dof,
     SmartPointer<
       const MGConstrainedDoFs,
       MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>>
                    mg_constrained_dofs,
     const MPI_Comm mpi_communicator,
     const bool     transfer_solution_vectors,
-    std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
+    std::vector<std::vector<std::pair<unsigned int, unsigned int>>> &
       copy_indices,
-    std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
+    std::vector<std::vector<std::pair<unsigned int, unsigned int>>> &
       copy_indices_global_mine,
-    std::vector<std::vector<std::pair<unsigned int, unsigned int>>>&
-                                                copy_indices_level_mine,
-    LinearAlgebra::distributed::Vector<Number>& ghosted_global_vector,
-    MGLevelObject<LinearAlgebra::distributed::Vector<Number>>&
+    std::vector<std::vector<std::pair<unsigned int, unsigned int>>> &
+                                                 copy_indices_level_mine,
+    LinearAlgebra::distributed::Vector<Number> & ghosted_global_vector,
+    MGLevelObject<LinearAlgebra::distributed::Vector<Number>> &
       ghosted_level_vector)
   {
     // first go to the usual routine...
@@ -233,9 +233,9 @@ namespace
         level < mg_dof.get_triangulation().n_global_levels();
         ++level)
       {
-        const Utilities::MPI::Partitioner& global_partitioner
+        const Utilities::MPI::Partitioner & global_partitioner
           = *ghosted_global_vector.get_partitioner();
-        const Utilities::MPI::Partitioner& level_partitioner
+        const Utilities::MPI::Partitioner & level_partitioner
           = *ghosted_level_vector[level].get_partitioner();
         // owned-owned case: the locally owned indices are going to control
         // the local index
@@ -279,10 +279,10 @@ template <typename Number>
 template <int dim, int spacedim>
 void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
-  fill_and_communicate_copy_indices(const DoFHandler<dim, spacedim>& mg_dof)
+  fill_and_communicate_copy_indices(const DoFHandler<dim, spacedim> & mg_dof)
 {
-  const parallel::Triangulation<dim, spacedim>* ptria
-    = dynamic_cast<const parallel::Triangulation<dim, spacedim>*>(
+  const parallel::Triangulation<dim, spacedim> * ptria
+    = dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
       &mg_dof.get_triangulation());
   const MPI_Comm mpi_communicator
     = ptria != nullptr ? ptria->get_communicator() : MPI_COMM_SELF;
@@ -365,7 +365,7 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::clear()
 template <typename Number>
 void
 MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
-  print_indices(std::ostream& os) const
+  print_indices(std::ostream & os) const
 {
   for(unsigned int level = 0; level < copy_indices.size(); ++level)
     {

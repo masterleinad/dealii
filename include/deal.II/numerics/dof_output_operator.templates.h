@@ -24,8 +24,8 @@ namespace Algorithms
 {
   template <typename VectorType, int dim, int spacedim>
   DoFOutputOperator<VectorType, dim, spacedim>::DoFOutputOperator(
-    const std::string& filename_base,
-    const unsigned int digits)
+    const std::string & filename_base,
+    const unsigned int  digits)
     : filename_base(filename_base), digits(digits)
   {
     out.set_default_format(DataOutBase::gnuplot);
@@ -34,20 +34,20 @@ namespace Algorithms
   template <typename VectorType, int dim, int spacedim>
   void
   DoFOutputOperator<VectorType, dim, spacedim>::parse_parameters(
-    ParameterHandler& param)
+    ParameterHandler & param)
   {
     out.parse_parameters(param);
   }
 
   template <typename VectorType, int dim, int spacedim>
-  OutputOperator<VectorType>&
-  DoFOutputOperator<VectorType, dim, spacedim>::operator<<(const AnyData& data)
+  OutputOperator<VectorType> &
+  DoFOutputOperator<VectorType, dim, spacedim>::operator<<(const AnyData & data)
   {
     Assert((dof != nullptr), ExcNotInitialized());
     out.attach_dof_handler(*dof);
     for(unsigned int i = 0; i < data.size(); ++i)
       {
-        const VectorType* p = data.try_read_ptr<VectorType>(i);
+        const VectorType * p = data.try_read_ptr<VectorType>(i);
         if(p != nullptr)
           {
             out.add_data_vector(*p, data.name(i));

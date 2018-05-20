@@ -32,19 +32,19 @@ BlockVector<Number>::BlockVector(const unsigned int n_blocks,
 }
 
 template <typename Number>
-BlockVector<Number>::BlockVector(const std::vector<size_type>& block_sizes)
+BlockVector<Number>::BlockVector(const std::vector<size_type> & block_sizes)
 {
   reinit(block_sizes, false);
 }
 
 template <typename Number>
-BlockVector<Number>::BlockVector(const BlockIndices& n)
+BlockVector<Number>::BlockVector(const BlockIndices & n)
 {
   reinit(n, false);
 }
 
 template <typename Number>
-BlockVector<Number>::BlockVector(const BlockVector<Number>& v)
+BlockVector<Number>::BlockVector(const BlockVector<Number> & v)
   : BlockVectorBase<Vector<Number>>()
 {
   this->components.resize(v.n_blocks());
@@ -56,7 +56,7 @@ BlockVector<Number>::BlockVector(const BlockVector<Number>& v)
 
 template <typename Number>
 template <typename OtherNumber>
-BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
+BlockVector<Number>::BlockVector(const BlockVector<OtherNumber> & v)
 {
   reinit(v, true);
   *this = v;
@@ -65,7 +65,7 @@ BlockVector<Number>::BlockVector(const BlockVector<OtherNumber>& v)
 #ifdef DEAL_II_WITH_TRILINOS
 
 template <typename Number>
-BlockVector<Number>::BlockVector(const TrilinosWrappers::MPI::BlockVector& v)
+BlockVector<Number>::BlockVector(const TrilinosWrappers::MPI::BlockVector & v)
 {
   this->block_indices = v.get_block_indices();
   this->components.resize(this->n_blocks());
@@ -90,8 +90,8 @@ BlockVector<Number>::reinit(const unsigned int n_blocks,
 
 template <typename Number>
 void
-BlockVector<Number>::reinit(const std::vector<size_type>& block_sizes,
-                            const bool                    omit_zeroing_entries)
+BlockVector<Number>::reinit(const std::vector<size_type> & block_sizes,
+                            const bool                     omit_zeroing_entries)
 {
   this->block_indices.reinit(block_sizes);
   if(this->components.size() != this->n_blocks())
@@ -103,8 +103,8 @@ BlockVector<Number>::reinit(const std::vector<size_type>& block_sizes,
 
 template <typename Number>
 void
-BlockVector<Number>::reinit(const BlockIndices& n,
-                            const bool          omit_zeroing_entries)
+BlockVector<Number>::reinit(const BlockIndices & n,
+                            const bool           omit_zeroing_entries)
 {
   this->block_indices = n;
   if(this->components.size() != this->n_blocks())
@@ -117,8 +117,8 @@ BlockVector<Number>::reinit(const BlockIndices& n,
 template <typename Number>
 template <typename Number2>
 void
-BlockVector<Number>::reinit(const BlockVector<Number2>& v,
-                            const bool                  omit_zeroing_entries)
+BlockVector<Number>::reinit(const BlockVector<Number2> & v,
+                            const bool                   omit_zeroing_entries)
 {
   this->block_indices = v.get_block_indices();
   if(this->components.size() != this->n_blocks())
@@ -130,8 +130,8 @@ BlockVector<Number>::reinit(const BlockVector<Number2>& v,
 
 #ifdef DEAL_II_WITH_TRILINOS
 template <typename Number>
-inline BlockVector<Number>&
-BlockVector<Number>::operator=(const TrilinosWrappers::MPI::BlockVector& v)
+inline BlockVector<Number> &
+BlockVector<Number>::operator=(const TrilinosWrappers::MPI::BlockVector & v)
 {
   BaseClass::operator=(v);
   return *this;
@@ -140,7 +140,7 @@ BlockVector<Number>::operator=(const TrilinosWrappers::MPI::BlockVector& v)
 
 template <typename Number>
 void
-BlockVector<Number>::swap(BlockVector<Number>& v)
+BlockVector<Number>::swap(BlockVector<Number> & v)
 {
   std::swap(this->components, v.components);
 
@@ -149,7 +149,7 @@ BlockVector<Number>::swap(BlockVector<Number>& v)
 
 template <typename Number>
 void
-BlockVector<Number>::print(std::ostream&      out,
+BlockVector<Number>::print(std::ostream &     out,
                            const unsigned int precision,
                            const bool         scientific,
                            const bool         across) const
@@ -166,7 +166,7 @@ BlockVector<Number>::print(std::ostream&      out,
 
 template <typename Number>
 void
-BlockVector<Number>::block_write(std::ostream& out) const
+BlockVector<Number>::block_write(std::ostream & out) const
 {
   for(size_type i = 0; i < this->n_blocks(); ++i)
     this->components[i].block_write(out);
@@ -174,7 +174,7 @@ BlockVector<Number>::block_write(std::ostream& out) const
 
 template <typename Number>
 void
-BlockVector<Number>::block_read(std::istream& in)
+BlockVector<Number>::block_read(std::istream & in)
 {
   for(size_type i = 0; i < this->n_blocks(); ++i)
     this->components[i].block_read(in);

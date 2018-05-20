@@ -42,7 +42,7 @@ test_cpu()
   deallog.pop();
 }
 
-__global__ void init_kernel(Tensor<2, 3>* t, const unsigned int N)
+__global__ void init_kernel(Tensor<2, 3> * t, const unsigned int N)
 {
   const unsigned int i = threadIdx.y;
   const unsigned int j = threadIdx.x;
@@ -50,7 +50,7 @@ __global__ void init_kernel(Tensor<2, 3>* t, const unsigned int N)
     (*t)[i][j] = j + i * N + 1.;
 }
 
-__global__ void norm_kernel(Tensor<2, 3>* t, double* norm)
+__global__ void norm_kernel(Tensor<2, 3> * t, double * norm)
 {
   if(threadIdx.x == 0)
     *norm = t->norm_square();
@@ -60,9 +60,9 @@ void
 test_gpu()
 {
   const unsigned int dim = 3;
-  double*            norm_dev;
+  double *           norm_dev;
   double             norm_host;
-  Tensor<2, dim>*    t_dev;
+  Tensor<2, dim> *   t_dev;
 
   // Allocate objects on the device
   cudaError_t cuda_error = cudaMalloc(&t_dev, sizeof(Tensor<2, dim>));

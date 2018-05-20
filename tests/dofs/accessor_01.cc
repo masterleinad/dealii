@@ -25,8 +25,8 @@
 #include <deal.II/grid/tria_iterator.h>
 
 template <class ACCESSOR>
-LogStream&
-operator<<(LogStream& log, const TriaIterator<ACCESSOR>& i)
+LogStream &
+operator<<(LogStream & log, const TriaIterator<ACCESSOR> & i)
 {
   log << ACCESSOR::dimension << ' ' << ACCESSOR::structure_dimension << ' '
       << ACCESSOR::space_dimension << ' ';
@@ -36,7 +36,7 @@ operator<<(LogStream& log, const TriaIterator<ACCESSOR>& i)
 
 template <typename DoFHandlerType>
 void
-test_in_dim(const DoFHandlerType& d1, const DoFHandlerType& d2)
+test_in_dim(const DoFHandlerType & d1, const DoFHandlerType & d2)
 {
   typename DoFHandlerType::active_cell_iterator a = d1.begin_active();
   typename DoFHandlerType::cell_iterator        l
@@ -47,7 +47,7 @@ test_in_dim(const DoFHandlerType& d1, const DoFHandlerType& d2)
 
 template <int dim>
 void
-init_tria(Triangulation<dim>& tr)
+init_tria(Triangulation<dim> & tr)
 {
   GridGenerator::hyper_cube(tr);
   tr.refine_global(4 - dim);
@@ -55,9 +55,9 @@ init_tria(Triangulation<dim>& tr)
 
 template <int dim>
 void
-init_dofs(DoFHandler<dim>&          dof,
-          const Triangulation<dim>& tr,
-          const FiniteElement<dim>& fe)
+init_dofs(DoFHandler<dim> &          dof,
+          const Triangulation<dim> & tr,
+          const FiniteElement<dim> & fe)
 {
   dof.initialize(tr, fe);
 }

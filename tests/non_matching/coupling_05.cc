@@ -56,7 +56,7 @@ test()
 {
   deallog << "dim: " << dim << ", spacedim: " << spacedim << std::endl;
 
-  const auto& comm = MPI_COMM_WORLD;
+  const auto & comm = MPI_COMM_WORLD;
 
   parallel::shared::Triangulation<dim, spacedim>           tria(comm);
   parallel::distributed::Triangulation<spacedim, spacedim> space_tria(comm);
@@ -158,7 +158,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   auto          init = Utilities::MPI::MPI_InitFinalize(argc, argv, 1);
   MPILogInitAll log(true);

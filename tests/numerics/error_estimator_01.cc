@@ -50,7 +50,7 @@ check()
   MappingQ<dim, spacedim> mapping(3);
   QGauss<dim - 1>         q_face(4);
 
-  std::map<types::boundary_id, const Function<spacedim>*> neumann_bc;
+  std::map<types::boundary_id, const Function<spacedim> *> neumann_bc;
   neumann_bc[0] = &function;
 
   Vector<double> v(dof.n_dofs());

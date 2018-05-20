@@ -49,7 +49,7 @@ using namespace dealii;
 
 template <int dim>
 bool
-cell_is_patch_level_1(const typename Triangulation<dim>::cell_iterator& cell)
+cell_is_patch_level_1(const typename Triangulation<dim>::cell_iterator & cell)
 {
   Assert(cell->active() == false, ExcInternalError());
 
@@ -127,7 +127,7 @@ main()
     {
       test();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

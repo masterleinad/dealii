@@ -30,12 +30,12 @@
 
 template <typename MatrixType, typename VectorType, class PRECONDITION>
 void
-check_solve(SolverControl&      solver_control,
-            const MatrixType&   A,
-            VectorType&         u,
-            VectorType&         f,
-            const PRECONDITION& P,
-            const bool          expected_result)
+check_solve(SolverControl &      solver_control,
+            const MatrixType &   A,
+            VectorType &         u,
+            VectorType &         f,
+            const PRECONDITION & P,
+            const bool           expected_result)
 {
   SolverCG<VectorType> solver(solver_control);
 
@@ -48,7 +48,7 @@ check_solve(SolverControl&      solver_control,
       deallog << "Success. ";
       success = true;
     }
-  catch(std::exception& e)
+  catch(std::exception & e)
     {
       deallog << "Failure. ";
     }
@@ -59,7 +59,7 @@ check_solve(SolverControl&      solver_control,
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   std::ofstream logfile("output");
   logfile.precision(4);

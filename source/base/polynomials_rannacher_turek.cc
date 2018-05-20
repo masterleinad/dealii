@@ -27,7 +27,7 @@ PolynomialsRannacherTurek<dim>::PolynomialsRannacherTurek()
 template <int dim>
 double
 PolynomialsRannacherTurek<dim>::compute_value(const unsigned int i,
-                                              const Point<dim>&  p) const
+                                              const Point<dim> & p) const
 {
   Assert(dim == 2, ExcNotImplemented());
   if(i == 0)
@@ -58,7 +58,7 @@ PolynomialsRannacherTurek<dim>::compute_value(const unsigned int i,
 template <int dim>
 Tensor<1, dim>
 PolynomialsRannacherTurek<dim>::compute_grad(const unsigned int i,
-                                             const Point<dim>&  p) const
+                                             const Point<dim> & p) const
 {
   Assert(dim == 2, ExcNotImplemented());
   Tensor<1, dim> grad;
@@ -92,8 +92,9 @@ PolynomialsRannacherTurek<dim>::compute_grad(const unsigned int i,
 
 template <int dim>
 Tensor<2, dim>
-PolynomialsRannacherTurek<dim>::compute_grad_grad(const unsigned int i,
-                                                  const Point<dim>& /*p*/) const
+PolynomialsRannacherTurek<dim>::compute_grad_grad(
+  const unsigned int i,
+  const Point<dim> & /*p*/) const
 {
   Assert(dim == 2, ExcNotImplemented());
   Tensor<2, dim> grad_grad;
@@ -131,12 +132,12 @@ PolynomialsRannacherTurek<dim>::compute_grad_grad(const unsigned int i,
 template <int dim>
 void
 PolynomialsRannacherTurek<dim>::compute(
-  const Point<dim>&            unit_point,
-  std::vector<double>&         values,
-  std::vector<Tensor<1, dim>>& grads,
-  std::vector<Tensor<2, dim>>& grad_grads,
-  std::vector<Tensor<3, dim>>& third_derivatives,
-  std::vector<Tensor<4, dim>>& fourth_derivatives) const
+  const Point<dim> &            unit_point,
+  std::vector<double> &         values,
+  std::vector<Tensor<1, dim>> & grads,
+  std::vector<Tensor<2, dim>> & grad_grads,
+  std::vector<Tensor<3, dim>> & third_derivatives,
+  std::vector<Tensor<4, dim>> & fourth_derivatives) const
 {
   const unsigned int n_pols = dealii::GeometryInfo<dim>::faces_per_cell;
   Assert(values.size() == n_pols || values.size() == 0,

@@ -31,7 +31,7 @@ template <int dim>
 void
 test()
 {
-  const auto print = [](const FiniteElement<dim>& fe) {
+  const auto print = [](const FiniteElement<dim> & fe) {
     deallog << fe.get_name() << std::endl;
     for(auto it : fe.get_generalized_support_points())
       {

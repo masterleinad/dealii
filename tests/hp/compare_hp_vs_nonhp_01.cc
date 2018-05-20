@@ -53,12 +53,12 @@ class ExactSolution : public Function<dim>
 public:
   ExactSolution();
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 };
 
 template <int dim>
 double
-ExactSolution<dim>::value(const Point<dim>& p, const unsigned int) const
+ExactSolution<dim>::value(const Point<dim> & p, const unsigned int) const
 {
   return p(0) * p(0);
 }
@@ -76,7 +76,7 @@ namespace with_hp
     LaplaceProblem<dim>();
 
     void
-    run(Vector<double>& sol);
+    run(Vector<double> & sol);
 
   private:
     const ExactSolution<dim> exact_solution;
@@ -208,7 +208,7 @@ namespace with_hp
 
   template <int dim>
   void
-  LaplaceProblem<dim>::run(Vector<double>& sol)
+  LaplaceProblem<dim>::run(Vector<double> & sol)
   {
     make_grid_and_dofs();
     assemble_system();
@@ -227,7 +227,7 @@ namespace without_hp
     LaplaceProblem<dim>();
 
     void
-    run(Vector<double>& sol);
+    run(Vector<double> & sol);
 
   private:
     const ExactSolution<dim> exact_solution;
@@ -352,7 +352,7 @@ namespace without_hp
 
   template <int dim>
   void
-  LaplaceProblem<dim>::run(Vector<double>& sol)
+  LaplaceProblem<dim>::run(Vector<double> & sol)
   {
     make_grid_and_dofs();
     assemble_system();

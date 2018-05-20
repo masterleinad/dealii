@@ -29,7 +29,7 @@
 #include <deal.II/grid/tria.h>
 
 void
-test(std::ostream& out)
+test(std::ostream & out)
 {
   Triangulation<2> tr;
   GridGenerator::hyper_cube(tr);

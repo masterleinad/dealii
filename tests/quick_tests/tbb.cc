@@ -23,7 +23,7 @@
 using namespace dealii;
 
 void
-add_one(unsigned int& var)
+add_one(unsigned int & var)
 {
   var += 1;
 }
@@ -47,15 +47,15 @@ struct copy_data
 };
 
 void
-assemble(const std::vector<int>::iterator& it,
-         scratch_data&                     scratch,
-         copy_data&                        data)
+assemble(const std::vector<int>::iterator & it,
+         scratch_data &                     scratch,
+         copy_data &                        data)
 {
   data.value = (*it);
 }
 
 void
-copy(int& value, const copy_data& data)
+copy(int & value, const copy_data & data)
 {
   value += data.value;
 }

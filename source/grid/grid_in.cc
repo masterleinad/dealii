@@ -55,8 +55,8 @@ namespace
   template <int spacedim>
   void
   assign_1d_boundary_ids(
-    const std::map<unsigned int, types::boundary_id>& boundary_ids,
-    Triangulation<1, spacedim>&                       triangulation)
+    const std::map<unsigned int, types::boundary_id> & boundary_ids,
+    Triangulation<1, spacedim> &                       triangulation)
   {
     if(boundary_ids.size() > 0)
       for(typename Triangulation<1, spacedim>::active_cell_iterator cell
@@ -79,8 +79,8 @@ namespace
 
   template <int dim, int spacedim>
   void
-  assign_1d_boundary_ids(const std::map<unsigned int, types::boundary_id>&,
-                         Triangulation<dim, spacedim>&)
+  assign_1d_boundary_ids(const std::map<unsigned int, types::boundary_id> &,
+                         Triangulation<dim, spacedim> &)
   {
     // we shouldn't get here since boundary ids are not assigned to
     // vertices except in 1d
@@ -95,14 +95,14 @@ GridIn<dim, spacedim>::GridIn()
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::attach_triangulation(Triangulation<dim, spacedim>& t)
+GridIn<dim, spacedim>::attach_triangulation(Triangulation<dim, spacedim> & t)
 {
   tria = &t;
 }
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_vtk(std::istream& in)
+GridIn<dim, spacedim>::read_vtk(std::istream & in)
 {
   Assert((dim == 2) || (dim == 3), ExcNotImplemented());
   std::string line;
@@ -401,7 +401,7 @@ GridIn<dim, spacedim>::read_vtk(std::istream& in)
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_unv(std::istream& in)
+GridIn<dim, spacedim>::read_unv(std::istream & in)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   Assert((dim == 2) || (dim == 3), ExcNotImplemented());
@@ -646,8 +646,8 @@ GridIn<dim, spacedim>::read_unv(std::istream& in)
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_ucd(std::istream& in,
-                                const bool    apply_all_indicators_to_manifolds)
+GridIn<dim, spacedim>::read_ucd(std::istream & in,
+                                const bool apply_all_indicators_to_manifolds)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   AssertThrow(in, ExcIO());
@@ -869,9 +869,9 @@ namespace
     Abaqus_to_UCD();
 
     void
-    read_in_abaqus(std::istream& in);
+    read_in_abaqus(std::istream & in);
     void
-    write_out_avs_ucd(std::ostream& out) const;
+    write_out_avs_ucd(std::ostream & out) const;
 
   private:
     const double tolerance;
@@ -893,7 +893,7 @@ namespace
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_abaqus(std::istream& in,
+GridIn<dim, spacedim>::read_abaqus(std::istream & in,
                                    const bool apply_all_indicators_to_manifolds)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
@@ -916,7 +916,7 @@ GridIn<dim, spacedim>::read_abaqus(std::istream& in,
     {
       read_ucd(in_ucd, apply_all_indicators_to_manifolds);
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << "Exception on processing internal UCD data: " << std::endl
                 << exc.what() << std::endl;
@@ -942,7 +942,7 @@ GridIn<dim, spacedim>::read_abaqus(std::istream& in,
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
+GridIn<dim, spacedim>::read_dbmesh(std::istream & in)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   Assert(dim == 2, ExcNotImplemented());
@@ -1101,14 +1101,14 @@ GridIn<dim, spacedim>::read_dbmesh(std::istream& in)
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_xda(std::istream&)
+GridIn<dim, spacedim>::read_xda(std::istream &)
 {
   Assert(false, ExcNotImplemented());
 }
 
 template <>
 void
-GridIn<2>::read_xda(std::istream& in)
+GridIn<2>::read_xda(std::istream & in)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   AssertThrow(in, ExcIO());
@@ -1174,7 +1174,7 @@ GridIn<2>::read_xda(std::istream& in)
 
 template <>
 void
-GridIn<3>::read_xda(std::istream& in)
+GridIn<3>::read_xda(std::istream & in)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   AssertThrow(in, ExcIO());
@@ -1247,7 +1247,7 @@ GridIn<3>::read_xda(std::istream& in)
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_msh(std::istream& in)
+GridIn<dim, spacedim>::read_msh(std::istream & in)
 {
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   AssertThrow(in, ExcIO());
@@ -1631,35 +1631,35 @@ GridIn<dim, spacedim>::read_msh(std::istream& in)
 
 template <>
 void
-GridIn<1>::read_netcdf(const std::string&)
+GridIn<1>::read_netcdf(const std::string &)
 {
   AssertThrow(false, ExcImpossibleInDim(1));
 }
 
 template <>
 void
-GridIn<1, 2>::read_netcdf(const std::string&)
+GridIn<1, 2>::read_netcdf(const std::string &)
 {
   AssertThrow(false, ExcImpossibleInDim(1));
 }
 
 template <>
 void
-GridIn<1, 3>::read_netcdf(const std::string&)
+GridIn<1, 3>::read_netcdf(const std::string &)
 {
   AssertThrow(false, ExcImpossibleInDim(1));
 }
 
 template <>
 void
-GridIn<2, 3>::read_netcdf(const std::string&)
+GridIn<2, 3>::read_netcdf(const std::string &)
 {
   Assert(false, ExcNotImplemented());
 }
 
 template <>
 void
-GridIn<2>::read_netcdf(const std::string& filename)
+GridIn<2>::read_netcdf(const std::string & filename)
 {
 #ifndef DEAL_II_WITH_NETCDF
   (void) filename;
@@ -1710,17 +1710,17 @@ GridIn<2>::read_netcdf(const std::string& filename)
   AssertThrow(nc.is_valid(), ExcIO());
 
   // then read n_cells
-  NcDim* elements_dim = nc.get_dim("no_of_elements");
+  NcDim * elements_dim = nc.get_dim("no_of_elements");
   AssertThrow(elements_dim->is_valid(), ExcIO());
   const unsigned int n_cells = elements_dim->size();
 
   // then we read
   //   int marker(no_of_markers)
-  NcDim* marker_dim = nc.get_dim("no_of_markers");
+  NcDim * marker_dim = nc.get_dim("no_of_markers");
   AssertThrow(marker_dim->is_valid(), ExcIO());
   const unsigned int n_markers = marker_dim->size();
 
-  NcVar* marker_var = nc.get_var("marker");
+  NcVar * marker_var = nc.get_var("marker");
   AssertThrow(marker_var->is_valid(), ExcIO());
   AssertThrow(marker_var->num_dims() == 1, ExcIO());
   AssertThrow(static_cast<unsigned int>(marker_var->get_dim(0)->size())
@@ -1735,11 +1735,11 @@ GridIn<2>::read_netcdf(const std::string& filename)
   // next we read
   // int boundarymarker_of_surfaces(
   //   no_of_surfaceelements)
-  NcDim* bquads_dim = nc.get_dim("no_of_surfacequadrilaterals");
+  NcDim * bquads_dim = nc.get_dim("no_of_surfacequadrilaterals");
   AssertThrow(bquads_dim->is_valid(), ExcIO());
   const unsigned int n_bquads = bquads_dim->size();
 
-  NcVar* bmarker_var = nc.get_var("boundarymarker_of_surfaces");
+  NcVar * bmarker_var = nc.get_var("boundarymarker_of_surfaces");
   AssertThrow(bmarker_var->is_valid(), ExcIO());
   AssertThrow(bmarker_var->num_dims() == 1, ExcIO());
   AssertThrow(static_cast<unsigned int>(bmarker_var->get_dim(0)->size())
@@ -1781,13 +1781,13 @@ GridIn<2>::read_netcdf(const std::string& filename)
   // int points_of_surfacequadrilaterals(
   //   no_of_surfacequadrilaterals,
   //   points_per_surfacequadrilateral)
-  NcDim* quad_vertices_dim = nc.get_dim("points_per_surfacequadrilateral");
+  NcDim * quad_vertices_dim = nc.get_dim("points_per_surfacequadrilateral");
   AssertThrow(quad_vertices_dim->is_valid(), ExcIO());
   const unsigned int vertices_per_quad = quad_vertices_dim->size();
   AssertThrow(vertices_per_quad == GeometryInfo<dim>::vertices_per_cell,
               ExcIO());
 
-  NcVar* vertex_indices_var = nc.get_var("points_of_surfacequadrilaterals");
+  NcVar * vertex_indices_var = nc.get_var("points_of_surfacequadrilaterals");
   AssertThrow(vertex_indices_var->is_valid(), ExcIO());
   AssertThrow(vertex_indices_var->num_dims() == 2, ExcIO());
   AssertThrow(static_cast<unsigned int>(vertex_indices_var->get_dim(0)->size())
@@ -1808,13 +1808,13 @@ GridIn<2>::read_netcdf(const std::string& filename)
   //   double points_xc(no_of_points)
   //   double points_yc(no_of_points)
   //   double points_zc(no_of_points)
-  NcDim* vertices_dim = nc.get_dim("no_of_points");
+  NcDim * vertices_dim = nc.get_dim("no_of_points");
   AssertThrow(vertices_dim->is_valid(), ExcIO());
   const unsigned int n_vertices = vertices_dim->size();
 
-  NcVar* points_xc = nc.get_var("points_xc");
-  NcVar* points_yc = nc.get_var("points_yc");
-  NcVar* points_zc = nc.get_var("points_zc");
+  NcVar * points_xc = nc.get_var("points_xc");
+  NcVar * points_yc = nc.get_var("points_yc");
+  NcVar * points_zc = nc.get_var("points_zc");
   AssertThrow(points_xc->is_valid(), ExcIO());
   AssertThrow(points_yc->is_valid(), ExcIO());
   AssertThrow(points_zc->is_valid(), ExcIO());
@@ -1906,7 +1906,7 @@ GridIn<2>::read_netcdf(const std::string& filename)
 
 template <>
 void
-GridIn<3>::read_netcdf(const std::string& filename)
+GridIn<3>::read_netcdf(const std::string & filename)
 {
 #ifndef DEAL_II_WITH_NETCDF
   // do something with the function argument
@@ -1926,11 +1926,11 @@ GridIn<3>::read_netcdf(const std::string& filename)
   AssertThrow(nc.is_valid(), ExcIO());
 
   // then read n_cells
-  NcDim* elements_dim = nc.get_dim("no_of_elements");
+  NcDim * elements_dim = nc.get_dim("no_of_elements");
   AssertThrow(elements_dim->is_valid(), ExcIO());
   const unsigned int n_cells = elements_dim->size();
   // and n_hexes
-  NcDim* hexes_dim = nc.get_dim("no_of_hexaeders");
+  NcDim * hexes_dim = nc.get_dim("no_of_hexaeders");
   AssertThrow(hexes_dim->is_valid(), ExcIO());
   const unsigned int n_hexes = hexes_dim->size();
   AssertThrow(n_hexes == n_cells,
@@ -1940,13 +1940,13 @@ GridIn<3>::read_netcdf(const std::string& filename)
   // int points_of_hexaeders(
   //   no_of_hexaeders,
   //   points_per_hexaeder)
-  NcDim* hex_vertices_dim = nc.get_dim("points_per_hexaeder");
+  NcDim * hex_vertices_dim = nc.get_dim("points_per_hexaeder");
   AssertThrow(hex_vertices_dim->is_valid(), ExcIO());
   const unsigned int vertices_per_hex = hex_vertices_dim->size();
   AssertThrow(vertices_per_hex == GeometryInfo<dim>::vertices_per_cell,
               ExcIO());
 
-  NcVar* vertex_indices_var = nc.get_var("points_of_hexaeders");
+  NcVar * vertex_indices_var = nc.get_var("points_of_hexaeders");
   AssertThrow(vertex_indices_var->is_valid(), ExcIO());
   AssertThrow(vertex_indices_var->num_dims() == 2, ExcIO());
   AssertThrow(static_cast<unsigned int>(vertex_indices_var->get_dim(0)->size())
@@ -1968,13 +1968,13 @@ GridIn<3>::read_netcdf(const std::string& filename)
   //   double points_xc(no_of_points)
   //   double points_yc(no_of_points)
   //   double points_zc(no_of_points)
-  NcDim* vertices_dim = nc.get_dim("no_of_points");
+  NcDim * vertices_dim = nc.get_dim("no_of_points");
   AssertThrow(vertices_dim->is_valid(), ExcIO());
   const unsigned int n_vertices = vertices_dim->size();
 
-  NcVar* points_xc = nc.get_var("points_xc");
-  NcVar* points_yc = nc.get_var("points_yc");
-  NcVar* points_zc = nc.get_var("points_zc");
+  NcVar * points_xc = nc.get_var("points_xc");
+  NcVar * points_yc = nc.get_var("points_yc");
+  NcVar * points_zc = nc.get_var("points_zc");
   AssertThrow(points_xc->is_valid(), ExcIO());
   AssertThrow(points_yc->is_valid(), ExcIO());
   AssertThrow(points_zc->is_valid(), ExcIO());
@@ -2017,13 +2017,13 @@ GridIn<3>::read_netcdf(const std::string& filename)
   // int points_of_surfacequadrilaterals(
   //   no_of_surfacequadrilaterals,
   //   points_per_surfacequadrilateral)
-  NcDim* quad_vertices_dim = nc.get_dim("points_per_surfacequadrilateral");
+  NcDim * quad_vertices_dim = nc.get_dim("points_per_surfacequadrilateral");
   AssertThrow(quad_vertices_dim->is_valid(), ExcIO());
   const unsigned int vertices_per_quad = quad_vertices_dim->size();
   AssertThrow(vertices_per_quad == GeometryInfo<dim>::vertices_per_face,
               ExcIO());
 
-  NcVar* bvertex_indices_var = nc.get_var("points_of_surfacequadrilaterals");
+  NcVar * bvertex_indices_var = nc.get_var("points_of_surfacequadrilaterals");
   AssertThrow(bvertex_indices_var->is_valid(), ExcIO());
   AssertThrow(bvertex_indices_var->num_dims() == 2, ExcIO());
   const unsigned int n_bquads = bvertex_indices_var->get_dim(0)->size();
@@ -2038,12 +2038,12 @@ GridIn<3>::read_netcdf(const std::string& filename)
   // next we read
   // int boundarymarker_of_surfaces(
   //   no_of_surfaceelements)
-  NcDim* bquads_dim = nc.get_dim("no_of_surfacequadrilaterals");
+  NcDim * bquads_dim = nc.get_dim("no_of_surfacequadrilaterals");
   AssertThrow(bquads_dim->is_valid(), ExcIO());
   AssertThrow(static_cast<unsigned int>(bquads_dim->size()) == n_bquads,
               ExcIO());
 
-  NcVar* bmarker_var = nc.get_var("boundarymarker_of_surfaces");
+  NcVar * bmarker_var = nc.get_var("boundarymarker_of_surfaces");
   AssertThrow(bmarker_var->is_valid(), ExcIO());
   AssertThrow(bmarker_var->num_dims() == 1, ExcIO());
   AssertThrow(static_cast<unsigned int>(bmarker_var->get_dim(0)->size())
@@ -2087,14 +2087,14 @@ GridIn<3>::read_netcdf(const std::string& filename)
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::parse_tecplot_header(
-  std::string&               header,
-  std::vector<unsigned int>& tecplot2deal,
-  unsigned int&              n_vars,
-  unsigned int&              n_vertices,
-  unsigned int&              n_cells,
-  std::vector<unsigned int>& IJK,
-  bool&                      structured,
-  bool&                      blocked)
+  std::string &               header,
+  std::vector<unsigned int> & tecplot2deal,
+  unsigned int &              n_vars,
+  unsigned int &              n_vertices,
+  unsigned int &              n_cells,
+  std::vector<unsigned int> & IJK,
+  bool &                      structured,
+  bool &                      blocked)
 {
   Assert(tecplot2deal.size() == dim, ExcInternalError());
   Assert(IJK.size() == dim, ExcInternalError());
@@ -2313,7 +2313,7 @@ GridIn<dim, spacedim>::parse_tecplot_header(
 
 template <>
 void
-GridIn<2>::read_tecplot(std::istream& in)
+GridIn<2>::read_tecplot(std::istream & in)
 {
   const unsigned int dim      = 2;
   const unsigned int spacedim = 2;
@@ -2392,7 +2392,7 @@ GridIn<2>::read_tecplot(std::istream& in)
           // line, so extract it
           std::vector<std::string> first_var
             = Utilities::break_text_into_lines(line, 1);
-          char* endptr;
+          char * endptr;
           for(unsigned int i = 1; i < first_var.size() + 1; ++i)
             vertices[i](0) = std::strtod(first_var[i - 1].c_str(), &endptr);
 
@@ -2449,7 +2449,7 @@ GridIn<2>::read_tecplot(std::istream& in)
       // containing the first vertex
       std::vector<std::string> first_vertex
         = Utilities::break_text_into_lines(line, 1);
-      char* endptr;
+      char * endptr;
       for(unsigned int d = 0; d < dim; ++d)
         vertices[1](d)
           = std::strtod(first_vertex[tecplot2deal[d]].c_str(), &endptr);
@@ -2550,18 +2550,18 @@ GridIn<2>::read_tecplot(std::istream& in)
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_tecplot(std::istream&)
+GridIn<dim, spacedim>::read_tecplot(std::istream &)
 {
   Assert(false, ExcNotImplemented());
 }
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read_assimp(const std::string& filename,
-                                   const unsigned int mesh_index,
-                                   const bool         remove_duplicates,
-                                   const double       tol,
-                                   const bool         ignore_unsupported_types)
+GridIn<dim, spacedim>::read_assimp(const std::string & filename,
+                                   const unsigned int  mesh_index,
+                                   const bool          remove_duplicates,
+                                   const double        tol,
+                                   const bool          ignore_unsupported_types)
 {
 #ifdef DEAL_II_WITH_ASSIMP
   // Only good for surface grids.
@@ -2571,7 +2571,7 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
   Assimp::Importer importer;
 
   // And have it read the given file with some  postprocessing
-  const aiScene* scene = importer.ReadFile(
+  const aiScene * scene = importer.ReadFile(
     filename.c_str(),
     aiProcess_RemoveComponent | aiProcess_JoinIdenticalVertices
       | aiProcess_ImproveCacheLocality | aiProcess_SortByPType
@@ -2605,7 +2605,7 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
   // The index of the mesh will be used as a material index.
   for(unsigned int m = start_mesh; m < end_mesh; ++m)
     {
-      const aiMesh* mesh = scene->mMeshes[m];
+      const aiMesh * mesh = scene->mMeshes[m];
 
       // Check that we know what to do with this mesh, otherwise just
       // ignore it
@@ -2625,11 +2625,11 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
         }
       // Vertices
       const unsigned int n_vertices = mesh->mNumVertices;
-      const aiVector3D*  mVertices  = mesh->mVertices;
+      const aiVector3D * mVertices  = mesh->mVertices;
 
       // Faces
       const unsigned int n_faces = mesh->mNumFaces;
-      const aiFace*      mFaces  = mesh->mFaces;
+      const aiFace *     mFaces  = mesh->mFaces;
 
       vertices.resize(v_offset + n_vertices);
       cells.resize(c_offset + n_faces);
@@ -2713,7 +2713,7 @@ GridIn<dim, spacedim>::read_assimp(const std::string& filename,
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::skip_empty_lines(std::istream& in)
+GridIn<dim, spacedim>::skip_empty_lines(std::istream & in)
 {
   std::string line;
   while(in)
@@ -2743,8 +2743,8 @@ GridIn<dim, spacedim>::skip_empty_lines(std::istream& in)
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::skip_comment_lines(std::istream& in,
-                                          const char    comment_start)
+GridIn<dim, spacedim>::skip_comment_lines(std::istream & in,
+                                          const char     comment_start)
 {
   char c;
   // loop over the following comment
@@ -2767,18 +2767,18 @@ GridIn<dim, spacedim>::skip_comment_lines(std::istream& in,
 template <int dim, int spacedim>
 void
 GridIn<dim, spacedim>::debug_output_grid(
-  const std::vector<CellData<dim>>& /*cells*/,
-  const std::vector<Point<spacedim>>& /*vertices*/,
-  std::ostream& /*out*/)
+  const std::vector<CellData<dim>> & /*cells*/,
+  const std::vector<Point<spacedim>> & /*vertices*/,
+  std::ostream & /*out*/)
 {
   Assert(false, ExcNotImplemented());
 }
 
 template <>
 void
-GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
-                             const std::vector<Point<2>>&    vertices,
-                             std::ostream&                   out)
+GridIn<2>::debug_output_grid(const std::vector<CellData<2>> & cells,
+                             const std::vector<Point<2>> &    vertices,
+                             std::ostream &                   out)
 {
   double min_x = vertices[cells[0].vertices[0]](0),
          max_x = vertices[cells[0].vertices[0]](0),
@@ -2789,7 +2789,7 @@ GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
     {
       for(unsigned int v = 0; v < 4; ++v)
         {
-          const Point<2>& p = vertices[cells[i].vertices[v]];
+          const Point<2> & p = vertices[cells[i].vertices[v]];
 
           if(p(0) < min_x)
             min_x = p(0);
@@ -2834,9 +2834,9 @@ GridIn<2>::debug_output_grid(const std::vector<CellData<2>>& cells,
 
 template <>
 void
-GridIn<3>::debug_output_grid(const std::vector<CellData<3>>& cells,
-                             const std::vector<Point<3>>&    vertices,
-                             std::ostream&                   out)
+GridIn<3>::debug_output_grid(const std::vector<CellData<3>> & cells,
+                             const std::vector<Point<3>> &    vertices,
+                             std::ostream &                   out)
 {
   for(unsigned int cell = 0; cell < cells.size(); ++cell)
     {
@@ -2905,7 +2905,7 @@ GridIn<3>::debug_output_grid(const std::vector<CellData<3>>& cells,
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read(const std::string& filename, Format format)
+GridIn<dim, spacedim>::read(const std::string & filename, Format format)
 {
   // Search file class for meshes
   PathSearch  search("MESH");
@@ -2937,7 +2937,7 @@ GridIn<dim, spacedim>::read(const std::string& filename, Format format)
 
 template <int dim, int spacedim>
 void
-GridIn<dim, spacedim>::read(std::istream& in, Format format)
+GridIn<dim, spacedim>::read(std::istream & in, Format format)
 {
   if(format == Default)
     format = default_format;
@@ -3028,7 +3028,7 @@ GridIn<dim, spacedim>::default_suffix(const Format format)
 
 template <int dim, int spacedim>
 typename GridIn<dim, spacedim>::Format
-GridIn<dim, spacedim>::parse_format(const std::string& format_name)
+GridIn<dim, spacedim>::parse_format(const std::string & format_name)
 {
   if(format_name == "dbmesh")
     return dbmesh;
@@ -3102,7 +3102,9 @@ namespace
   // Reference: http://www.codeguru.com/forum/showthread.php?t=231054
   template <class T>
   bool
-  from_string(T& t, const std::string& s, std::ios_base& (*f)(std::ios_base&) )
+  from_string(T &                 t,
+              const std::string & s,
+              std::ios_base & (*f)(std::ios_base &) )
   {
     std::istringstream iss(s);
     return !(iss >> f >> t).fail();
@@ -3110,7 +3112,7 @@ namespace
 
   // Extract an integer from a string
   int
-  extract_int(const std::string& s)
+  extract_int(const std::string & s)
   {
     std::string tmp;
     for(unsigned int i = 0; i < s.size(); ++i)
@@ -3128,7 +3130,7 @@ namespace
 
   template <int dim>
   void
-  Abaqus_to_UCD<dim>::read_in_abaqus(std::istream& input_stream)
+  Abaqus_to_UCD<dim>::read_in_abaqus(std::istream & input_stream)
   {
     // References:
     // http://www.egr.msu.edu/software/abaqus/Documentation/docs/v6.7/books/usb/default.htm?startat=pt01ch02.html
@@ -3417,7 +3419,7 @@ namespace
               material_id, line.substr(material_id_start + 1), std::dec);
 
             // Assign material id to cells
-            const std::vector<int>& elset_cells = elsets_list[elset_name];
+            const std::vector<int> & elset_cells = elsets_list[elset_name];
             for(unsigned int i = 0; i < elset_cells.size(); ++i)
               {
                 const int cell_id     = elset_cells[i] - 1;
@@ -3532,7 +3534,7 @@ namespace
 
   template <int dim>
   void
-  Abaqus_to_UCD<dim>::write_out_avs_ucd(std::ostream& output) const
+  Abaqus_to_UCD<dim>::write_out_avs_ucd(std::ostream & output) const
   {
     // References:
     // http://www.dealii.org/developer/doxygen/deal.II/structGeometryInfo.html

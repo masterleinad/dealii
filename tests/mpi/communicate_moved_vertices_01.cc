@@ -59,7 +59,7 @@ test()
       {
         // maybe not the most elegant way to do it, but it works for the purpose
         // of the test...
-        const_cast<Point<dim>&>(tr.get_vertices()[v]) += shift;
+        const_cast<Point<dim> &>(tr.get_vertices()[v]) += shift;
         ++n_vertices_moved;
       }
   Assert(Utilities::MPI::sum(n_vertices_moved, MPI_COMM_WORLD)
@@ -99,7 +99,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
   MPILogInitAll                    log;

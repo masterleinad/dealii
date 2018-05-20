@@ -21,7 +21,7 @@
 
 template <typename number>
 void
-checkReadWriteConstructor(Vector<number>& V)
+checkReadWriteConstructor(Vector<number> & V)
 {
   deallog << "Read-write constructor" << std::endl;
   VectorView<number> VV(V.size(), V.begin());

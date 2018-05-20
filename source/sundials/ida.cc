@@ -54,9 +54,9 @@ namespace SUNDIALS
                    N_Vector yy,
                    N_Vector yp,
                    N_Vector rr,
-                   void*    user_data)
+                   void *   user_data)
     {
-      IDA<VectorType>& solver = *static_cast<IDA<VectorType>*>(user_data);
+      IDA<VectorType> & solver = *static_cast<IDA<VectorType> *>(user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -92,8 +92,8 @@ namespace SUNDIALS
       (void) tmp2;
       (void) tmp3;
       (void) resp;
-      IDA<VectorType>& solver
-        = *static_cast<IDA<VectorType>*>(IDA_mem->ida_user_data);
+      IDA<VectorType> & solver
+        = *static_cast<IDA<VectorType> *>(IDA_mem->ida_user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src_yy(mem);
@@ -124,8 +124,8 @@ namespace SUNDIALS
       (void) yy;
       (void) yp;
       (void) resp;
-      IDA<VectorType>& solver
-        = *static_cast<IDA<VectorType>*>(IDA_mem->ida_user_data);
+      IDA<VectorType> & solver
+        = *static_cast<IDA<VectorType> *>(IDA_mem->ida_user_data);
       GrowingVectorMemory<VectorType> mem;
 
       typename VectorMemory<VectorType>::Pointer src(mem);
@@ -145,7 +145,7 @@ namespace SUNDIALS
   } // namespace
 
   template <typename VectorType>
-  IDA<VectorType>::IDA(const AdditionalData& data, const MPI_Comm mpi_comm)
+  IDA<VectorType>::IDA(const AdditionalData & data, const MPI_Comm mpi_comm)
     : data(data),
       ida_mem(nullptr),
       yy(nullptr),
@@ -176,7 +176,7 @@ namespace SUNDIALS
 
   template <typename VectorType>
   unsigned int
-  IDA<VectorType>::solve_dae(VectorType& solution, VectorType& solution_dot)
+  IDA<VectorType>::solve_dae(VectorType & solution, VectorType & solution_dot)
   {
     unsigned int system_size = solution.size();
 
@@ -266,10 +266,10 @@ namespace SUNDIALS
 
   template <typename VectorType>
   void
-  IDA<VectorType>::reset(const double& current_time,
-                         const double& current_time_step,
-                         VectorType&   solution,
-                         VectorType&   solution_dot)
+  IDA<VectorType>::reset(const double & current_time,
+                         const double & current_time_step,
+                         VectorType &   solution,
+                         VectorType &   solution_dot)
   {
     unsigned int system_size;
     bool         first_step = (current_time == data.initial_time);
@@ -349,7 +349,7 @@ namespace SUNDIALS
     status = IDASetInitStep(ida_mem, current_time_step);
     AssertIDA(status);
 
-    status = IDASetUserData(ida_mem, (void*) this);
+    status = IDASetUserData(ida_mem, (void *) this);
     AssertIDA(status);
 
     if(data.ic_type == AdditionalData::use_y_diff
@@ -431,41 +431,41 @@ namespace SUNDIALS
   void
   IDA<VectorType>::set_functions_to_trigger_an_assert()
   {
-    reinit_vector = [](VectorType&) {
+    reinit_vector = [](VectorType &) {
       AssertThrow(false, ExcFunctionNotProvided("reinit_vector"));
     };
 
     residual = [](const double,
-                  const VectorType&,
-                  const VectorType&,
-                  VectorType&) -> int {
+                  const VectorType &,
+                  const VectorType &,
+                  VectorType &) -> int {
       int ret = 0;
       AssertThrow(false, ExcFunctionNotProvided("residual"));
       return ret;
     };
 
     setup_jacobian = [](const double,
-                        const VectorType&,
-                        const VectorType&,
+                        const VectorType &,
+                        const VectorType &,
                         const double) -> int {
       int ret = 0;
       AssertThrow(false, ExcFunctionNotProvided("setup_jacobian"));
       return ret;
     };
 
-    solve_jacobian_system = [](const VectorType&, VectorType&) -> int {
+    solve_jacobian_system = [](const VectorType &, VectorType &) -> int {
       int ret = 0;
       AssertThrow(false, ExcFunctionNotProvided("solve_jacobian_system"));
       return ret;
     };
 
     output_step = [](const double,
-                     const VectorType&,
-                     const VectorType&,
+                     const VectorType &,
+                     const VectorType &,
                      const unsigned int) { return; };
 
     solver_should_restart
-      = [](const double, VectorType&, VectorType&) -> bool { return false; };
+      = [](const double, VectorType &, VectorType &) -> bool { return false; };
 
     differential_components = [&]() -> IndexSet {
       GrowingVectorMemory<VectorType>            mem;

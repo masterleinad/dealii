@@ -36,26 +36,26 @@ unsigned int chunk_size = 1;
 
 // reinitialize sparsity patterns for 5-point star
 void
-do_reinit(SparsityPattern& sp)
+do_reinit(SparsityPattern & sp)
 {
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1), 5);
 }
 
 void
-do_reinit(ChunkSparsityPattern& sp)
+do_reinit(ChunkSparsityPattern & sp)
 {
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1), 5, chunk_size);
 }
 
 void
-do_reinit(DynamicSparsityPattern& sp, const IndexSet& index_set = IndexSet())
+do_reinit(DynamicSparsityPattern & sp, const IndexSet & index_set = IndexSet())
 {
   sp.reinit((N - 1) * (N - 1), (N - 1) * (N - 1), index_set);
 }
 
 template <typename SP>
 void
-build_sparsity(SP& sparsity_pattern)
+build_sparsity(SP & sparsity_pattern)
 {
   // generate usual 5-point sparsity pattern
   do_reinit(sparsity_pattern);
@@ -120,7 +120,7 @@ print()
 
 template <typename SP>
 void
-copy_with_offdiagonals_check(SP& sp2)
+copy_with_offdiagonals_check(SP & sp2)
 {
   deallog << sp2.n_rows() << " " << sp2.n_cols() << " " << sp2.bandwidth()
           << " " << sp2.n_nonzero_elements() << std::endl;
@@ -205,18 +205,18 @@ copy_with_offdiagonals_2<DynamicSparsityPattern>()
 }
 
 void
-do_copy_from(
-  const std::list<std::set<unsigned int, std::greater<unsigned int>>>& sparsity,
-  SparsityPattern&                                                     sp4)
+do_copy_from(const std::list<
+               std::set<unsigned int, std::greater<unsigned int>>> & sparsity,
+             SparsityPattern &                                       sp4)
 {
   sp4.copy_from(
     (N - 1) * (N - 1), (N - 1) * (N - 1), sparsity.begin(), sparsity.end());
 }
 
 void
-do_copy_from(
-  const std::list<std::set<unsigned int, std::greater<unsigned int>>>& sparsity,
-  ChunkSparsityPattern&                                                sp4)
+do_copy_from(const std::list<
+               std::set<unsigned int, std::greater<unsigned int>>> & sparsity,
+             ChunkSparsityPattern &                                  sp4)
 {
   sp4.copy_from((N - 1) * (N - 1),
                 (N - 1) * (N - 1),
@@ -227,7 +227,7 @@ do_copy_from(
 
 template <typename SP>
 void
-do_copy_from(const DynamicSparsityPattern& sparsity, SP& sp4)
+do_copy_from(const DynamicSparsityPattern & sparsity, SP & sp4)
 {
   std::list<std::set<unsigned int, std::greater<unsigned int>>> sparsity_x;
   for(unsigned int i = 0; i < sparsity.n_rows(); ++i)
@@ -245,13 +245,13 @@ do_copy_from(const DynamicSparsityPattern& sparsity, SP& sp4)
 
 template <typename SP>
 void
-do_copy_from(const FullMatrix<double>& sparsity, SP& sp4)
+do_copy_from(const FullMatrix<double> & sparsity, SP & sp4)
 {
   sp4.copy_from(sparsity);
 }
 
 void
-do_copy_from(const FullMatrix<double>& sparsity, ChunkSparsityPattern& sp4)
+do_copy_from(const FullMatrix<double> & sparsity, ChunkSparsityPattern & sp4)
 {
   sp4.copy_from(sparsity, chunk_size);
 }

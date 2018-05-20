@@ -35,9 +35,9 @@
 // points is computed.
 template <int dim>
 void
-initialize_node_matrix(const FiniteElement<dim>& other,
-                       const FiniteElement<dim>& nodes,
-                       FullMatrix<double>&       N)
+initialize_node_matrix(const FiniteElement<dim> & other,
+                       const FiniteElement<dim> & nodes,
+                       FullMatrix<double> &       N)
 {
   const unsigned int n_dofs = other.dofs_per_cell;
   Assert(n_dofs == nodes.dofs_per_cell,
@@ -45,7 +45,7 @@ initialize_node_matrix(const FiniteElement<dim>& other,
 
   N.reinit(n_dofs, n_dofs);
 
-  const std::vector<Point<dim>>& unit_support_points
+  const std::vector<Point<dim>> & unit_support_points
     = nodes.get_generalized_support_points();
 
   // The current node functional index
@@ -82,9 +82,9 @@ initialize_node_matrix(const FiniteElement<dim>& other,
 
 template <int dim>
 void
-compare_shapes(const FiniteElement<dim>& other,
-               const FiniteElement<dim>& nodes,
-               FullMatrix<double>&       M)
+compare_shapes(const FiniteElement<dim> & other,
+               const FiniteElement<dim> & nodes,
+               FullMatrix<double> &       M)
 {
   QGauss<dim>      quadrature(other.degree + 1);
   Table<3, double> other_values(quadrature.size(), other.dofs_per_cell, dim);

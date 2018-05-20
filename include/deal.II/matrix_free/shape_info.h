@@ -94,9 +94,9 @@ namespace internal
        * Constructor that initializes the data fields using the reinit method.
        */
       template <int dim>
-      ShapeInfo(const Quadrature<1>&      quad,
-                const FiniteElement<dim>& fe,
-                const unsigned int        base_element = 0);
+      ShapeInfo(const Quadrature<1> &      quad,
+                const FiniteElement<dim> & fe,
+                const unsigned int         base_element = 0);
 
       /**
        * Initializes the data fields. Takes a one-dimensional quadrature
@@ -108,9 +108,9 @@ namespace internal
        */
       template <int dim>
       void
-      reinit(const Quadrature<1>&      quad,
-             const FiniteElement<dim>& fe_dim,
-             const unsigned int        base_element = 0);
+      reinit(const Quadrature<1> &      quad,
+             const FiniteElement<dim> & fe_dim,
+             const unsigned int         base_element = 0);
 
       /**
        * Return the memory consumption of this class in bytes.
@@ -357,8 +357,8 @@ namespace internal
 
     template <typename Number>
     template <int dim>
-    inline ShapeInfo<Number>::ShapeInfo(const Quadrature<1>&      quad,
-                                        const FiniteElement<dim>& fe_in,
+    inline ShapeInfo<Number>::ShapeInfo(const Quadrature<1> &      quad,
+                                        const FiniteElement<dim> & fe_in,
                                         const unsigned int base_element_number)
       : element_type(tensor_general),
         fe_degree(0),

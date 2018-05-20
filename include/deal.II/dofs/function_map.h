@@ -77,7 +77,7 @@ struct FunctionMap
    * (as that would ambiguate a possible constructor of this class), name it
    * in the fashion of the standard container local typedefs.
    */
-  typedef std::map<types::boundary_id, const Function<dim, Number>*> type;
+  typedef std::map<types::boundary_id, const Function<dim, Number> *> type;
 };
 
 DEAL_II_NAMESPACE_CLOSE

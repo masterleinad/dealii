@@ -38,19 +38,19 @@ namespace Functions
             const double       wave_number,
             const Point<dim>   center = Point<dim>());
     virtual double
-    value(const Point<dim>&  points,
+    value(const Point<dim> & points,
           const unsigned int component) const override;
     virtual void
-    value_list(const std::vector<Point<dim>>& points,
-               std::vector<double>&           values,
-               const unsigned int             component = 0) const override;
+    value_list(const std::vector<Point<dim>> & points,
+               std::vector<double> &           values,
+               const unsigned int              component = 0) const override;
     virtual Tensor<1, dim>
-    gradient(const Point<dim>&  p,
+    gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
     virtual void
-    gradient_list(const std::vector<Point<dim>>& points,
-                  std::vector<Tensor<1, dim>>&   gradients,
-                  const unsigned int             component = 0) const override;
+    gradient_list(const std::vector<Point<dim>> & points,
+                  std::vector<Tensor<1, dim>> &   gradients,
+                  const unsigned int              component = 0) const override;
 
   private:
     unsigned int order;

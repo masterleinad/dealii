@@ -25,7 +25,7 @@
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
 
-void do_refine(Triangulation<1>& tria)
+void do_refine(Triangulation<1> & tria)
 {
   const int dim = 1;
 
@@ -34,7 +34,7 @@ void do_refine(Triangulation<1>& tria)
   tria.execute_coarsening_and_refinement();
 }
 
-void do_refine(Triangulation<2>& tria)
+void do_refine(Triangulation<2> & tria)
 {
   const int dim = 2;
 
@@ -47,7 +47,7 @@ void do_refine(Triangulation<2>& tria)
   tria.execute_coarsening_and_refinement();
 }
 
-void do_refine(Triangulation<3>& tria)
+void do_refine(Triangulation<3> & tria)
 {
   const int dim = 3;
 

@@ -127,14 +127,14 @@ namespace CUDAWrappers
      */
     struct Data
     {
-      point_type*   q_points;
-      unsigned int* local_to_global;
-      Number*       inv_jacobian;
-      Number*       JxW;
-      unsigned int  n_cells;
-      unsigned int  padding_length;
-      unsigned int  row_start;
-      unsigned int* constraint_mask;
+      point_type *   q_points;
+      unsigned int * local_to_global;
+      Number *       inv_jacobian;
+      Number *       JxW;
+      unsigned int   n_cells;
+      unsigned int   padding_length;
+      unsigned int   row_start;
+      unsigned int * constraint_mask;
     };
 
     /**
@@ -153,20 +153,20 @@ namespace CUDAWrappers
      * together with the quadrature formula describe the local operations.
      */
     void
-    reinit(const Mapping<dim>&     mapping,
-           const DoFHandler<dim>&  dof_handler,
-           const ConstraintMatrix& constraints,
-           const Quadrature<1>&    quad,
-           const AdditionalData    additional_data = AdditionalData());
+    reinit(const Mapping<dim> &     mapping,
+           const DoFHandler<dim> &  dof_handler,
+           const ConstraintMatrix & constraints,
+           const Quadrature<1> &    quad,
+           const AdditionalData     additional_data = AdditionalData());
 
     /**
      * Initializes the data structures. Same as above but using a Q1 mapping.
      */
     void
-    reinit(const DoFHandler<dim>&  dof_handler,
-           const ConstraintMatrix& constraints,
-           const Quadrature<1>&    quad,
-           const AdditionalData    AdditionalData = AdditionalData());
+    reinit(const DoFHandler<dim> &  dof_handler,
+           const ConstraintMatrix & constraints,
+           const Quadrature<1> &    quad,
+           const AdditionalData     AdditionalData = AdditionalData());
 
     /**
      * Return the Data structure associated with @p color.
@@ -180,16 +180,16 @@ namespace CUDAWrappers
      */
     template <typename functor>
     void
-    cell_loop(const functor&            func,
-              const CUDAVector<Number>& src,
-              CUDAVector<Number>&       dst) const;
+    cell_loop(const functor &            func,
+              const CUDAVector<Number> & src,
+              CUDAVector<Number> &       dst) const;
 
     void
-    copy_constrained_values(const CUDAVector<Number>& src,
-                            CUDAVector<Number>&       dst) const;
+    copy_constrained_values(const CUDAVector<Number> & src,
+                            CUDAVector<Number> &       dst) const;
 
     void
-    set_constrained_values(const Number val, CUDAVector<Number>& dst) const;
+    set_constrained_values(const Number val, CUDAVector<Number> & dst) const;
 
     /**
      * Free all the memory allocated.
@@ -237,26 +237,26 @@ namespace CUDAWrappers
      * Vector of pointers to the quadrature points associated to the cells of
      * each color.
      */
-    std::vector<point_type*> q_points;
+    std::vector<point_type *> q_points;
     /**
      * Map the position in the local vector to the position in the global
      * vector.
      */
-    std::vector<unsigned int*> local_to_global;
+    std::vector<unsigned int *> local_to_global;
     /**
      * Vector of pointer to the inverse Jacobian associated to the cells of each
      * color.
      */
-    std::vector<Number*> inv_jacobian;
+    std::vector<Number *> inv_jacobian;
     /**
      * Vector of pointer to the Jacobian time the weights associated to the
      * cells of each color.
      */
-    std::vector<Number*> JxW;
+    std::vector<Number *> JxW;
 
     // Constraints
-    unsigned int*              constrained_dofs;
-    std::vector<unsigned int*> constraint_mask;
+    unsigned int *              constrained_dofs;
+    std::vector<unsigned int *> constraint_mask;
     /**
      * Grid dimensions associated to the different colors. The grid dimensions
      * are used to launch the CUDA kernels.
@@ -285,15 +285,15 @@ namespace CUDAWrappers
   struct SharedData
   {
     __device__
-    SharedData(Number* vd, Number* gq[dim])
+    SharedData(Number * vd, Number * gq[dim])
       : values(vd)
     {
       for(int d = 0; d < dim; ++d)
         gradients[d] = gq[d];
     }
 
-    Number* values;
-    Number* gradients[dim];
+    Number * values;
+    Number * gradients[dim];
   };
 
   // This function determines the number of cells per block, possibly at compile

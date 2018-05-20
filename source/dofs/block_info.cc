@@ -24,13 +24,13 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
 void
-BlockInfo::initialize(const DoFHandler<dim, spacedim>& dof,
-                      bool                             levels_only,
-                      bool                             active_only)
+BlockInfo::initialize(const DoFHandler<dim, spacedim> & dof,
+                      bool                              levels_only,
+                      bool                              active_only)
 {
   if(!levels_only && dof.has_active_dofs())
     {
-      const FiniteElement<dim, spacedim>&  fe = dof.get_fe();
+      const FiniteElement<dim, spacedim> & fe = dof.get_fe();
       std::vector<types::global_dof_index> sizes(fe.n_blocks());
       DoFTools::count_dofs_per_block(dof, sizes);
       bi_global.reinit(sizes);
@@ -54,9 +54,9 @@ BlockInfo::initialize(const DoFHandler<dim, spacedim>& dof,
 
 template <int dim, int spacedim>
 void
-BlockInfo::initialize_local(const DoFHandler<dim, spacedim>& dof)
+BlockInfo::initialize_local(const DoFHandler<dim, spacedim> & dof)
 {
-  const FiniteElement<dim, spacedim>&  fe = dof.get_fe();
+  const FiniteElement<dim, spacedim> & fe = dof.get_fe();
   std::vector<types::global_dof_index> sizes(fe.n_blocks());
 
   base_elements.resize(fe.n_blocks());

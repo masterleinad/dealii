@@ -59,7 +59,7 @@ main()
   deallog.attach(logfile);
 
   const std::vector<unsigned int> sizes = {{17, 391}};
-  for(const auto& s : sizes)
+  for(const auto & s : sizes)
     {
       deallog << "size=" << s << std::endl;
       test<double>(s);

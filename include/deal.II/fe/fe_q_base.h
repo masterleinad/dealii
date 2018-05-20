@@ -44,9 +44,9 @@ public:
   /**
    * Constructor.
    */
-  FE_Q_Base(const PolynomialType&         poly_space,
-            const FiniteElementData<dim>& fe_data,
-            const std::vector<bool>&      restriction_is_additive_flags);
+  FE_Q_Base(const PolynomialType &         poly_space,
+            const FiniteElementData<dim> & fe_data,
+            const std::vector<bool> &      restriction_is_additive_flags);
 
   /**
    * Return the matrix interpolating from the given finite element to the
@@ -58,8 +58,8 @@ public:
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
   virtual void
-  get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                           FullMatrix<double>& matrix) const override;
+  get_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                           FullMatrix<double> & matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -71,8 +71,8 @@ public:
    * thrown.
    */
   virtual void
-  get_face_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                FullMatrix<double>& matrix) const override;
+  get_face_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                                FullMatrix<double> & matrix) const override;
 
   /**
    * Return the matrix interpolating from a face of one element to the face
@@ -84,9 +84,9 @@ public:
    * thrown.
    */
   virtual void
-  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                                   const unsigned int                  subface,
-                                   FullMatrix<double>& matrix) const override;
+  get_subface_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                                   const unsigned int                   subface,
+                                   FullMatrix<double> & matrix) const override;
 
   /**
    * This function returns @p true, if the shape function @p shape_index has
@@ -118,10 +118,10 @@ public:
    * this is the case by calling the restriction_is_implemented() or the
    * isotropic_restriction_is_implemented() function.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_restriction_matrix(
-    const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const unsigned int          child,
+    const RefinementCase<dim> & refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -150,10 +150,10 @@ public:
    * this is the case by calling the prolongation_is_implemented() or the
    * isotropic_prolongation_is_implemented() function.
    */
-  virtual const FullMatrix<double>&
+  virtual const FullMatrix<double> &
   get_prolongation_matrix(
-    const unsigned int         child,
-    const RefinementCase<dim>& refinement_case
+    const unsigned int          child,
+    const RefinementCase<dim> & refinement_case
     = RefinementCase<dim>::isotropic_refinement) const override;
 
   /**
@@ -241,7 +241,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_vertex_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -249,7 +249,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_line_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
 
   /**
    * Same as hp_vertex_dof_indices(), except that the function treats degrees
@@ -257,7 +257,7 @@ public:
    */
   virtual std::vector<std::pair<unsigned int, unsigned int>>
   hp_quad_dof_identities(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
 
   /**
    * Return whether this element dominates the one given as argument when they
@@ -270,7 +270,7 @@ public:
    */
   virtual FiniteElementDomination::Domination
   compare_for_face_domination(
-    const FiniteElement<dim, spacedim>& fe_other) const override;
+    const FiniteElement<dim, spacedim> & fe_other) const override;
   //@}
 
   /**
@@ -300,28 +300,28 @@ protected:
    * constraints as well as restriction and prolongation matrices.
    */
   void
-  initialize(const std::vector<Point<1>>& support_points_1d);
+  initialize(const std::vector<Point<1>> & support_points_1d);
 
   /**
    * Initialize the hanging node constraints matrices. Called from
    * initialize().
    */
   void
-  initialize_constraints(const std::vector<Point<1>>& points);
+  initialize_constraints(const std::vector<Point<1>> & points);
 
   /**
    * Initialize the @p unit_support_points field of the FiniteElement class.
    * Called from initialize().
    */
   void
-  initialize_unit_support_points(const std::vector<Point<1>>& points);
+  initialize_unit_support_points(const std::vector<Point<1>> & points);
 
   /**
    * Initialize the @p unit_face_support_points field of the FiniteElement
    * class. Called from initialize().
    */
   void
-  initialize_unit_face_support_points(const std::vector<Point<1>>& points);
+  initialize_unit_face_support_points(const std::vector<Point<1>> & points);
 
   /**
    * Initialize the @p adjust_quad_dof_index_for_face_orientation_table field

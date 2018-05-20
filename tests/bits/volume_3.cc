@@ -34,7 +34,7 @@
 
 template <int dim>
 void
-check(const Triangulation<dim>& tria)
+check(const Triangulation<dim> & tria)
 {
   MappingC1<dim>  mapping;
   FE_Q<dim>       fe(1);

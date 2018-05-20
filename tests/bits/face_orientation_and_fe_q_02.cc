@@ -53,7 +53,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> & p, const unsigned int component) const
   {
     Assert((component == 0) && (this->n_components == 1), ExcInternalError());
     double val = 0;
@@ -64,7 +64,7 @@ public:
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& v) const
+  vector_value(const Point<dim> & p, Vector<double> & v) const
   {
     for(unsigned int c = 0; c < v.size(); ++c)
       {
@@ -86,10 +86,10 @@ DeclException1(ExcFailedProjection,
 
 template <int dim>
 void
-do_project(const Triangulation<dim>& triangulation,
-           const FiniteElement<dim>& fe,
-           const unsigned int        p,
-           const unsigned int        order_difference)
+do_project(const Triangulation<dim> & triangulation,
+           const FiniteElement<dim> & fe,
+           const unsigned int         p,
+           const unsigned int         order_difference)
 {
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
@@ -146,9 +146,9 @@ do_project(const Triangulation<dim>& triangulation,
 // face_flip (the standard case in which evereything is as usual is left out)
 template <int dim>
 void
-test_with_wrong_face_orientation(const FiniteElement<dim>& fe,
-                                 const unsigned int        p,
-                                 const unsigned int        order_difference = 0)
+test_with_wrong_face_orientation(const FiniteElement<dim> & fe,
+                                 const unsigned int         p,
+                                 const unsigned int order_difference = 0)
 {
   if(dim != 3)
     return;

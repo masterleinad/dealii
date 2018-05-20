@@ -47,17 +47,17 @@ private:
 
 template <int dim>
 void
-do_rotate(Triangulation<dim>& tria)
+do_rotate(Triangulation<dim> & tria)
 {
   GridTools::transform(Rotate2d(numbers::PI / 4), tria);
 }
 
-void do_rotate(Triangulation<1>&)
+void do_rotate(Triangulation<1> &)
 {}
 
 template <int dim>
 void
-create_triangulation(const bool rotate, Triangulation<dim>& tria)
+create_triangulation(const bool rotate, Triangulation<dim> & tria)
 {
   GridGenerator::hyper_cube(tria, 1., 3.);
 

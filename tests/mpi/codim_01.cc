@@ -29,8 +29,8 @@
 
 template <int dim, int spacedim>
 void
-write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
-          const char*                                                filename)
+write_vtk(const parallel::distributed::Triangulation<dim, spacedim> & tria,
+          const char *                                                filename)
 {
   deallog << "Checksum: " << tria.get_checksum() << std::endl;
 
@@ -54,7 +54,7 @@ write_vtk(const parallel::distributed::Triangulation<dim, spacedim>& tria,
 
 template <int dim, int spacedim>
 void
-test(std::ostream& /*out*/)
+test(std::ostream & /*out*/)
 {
   parallel::distributed::Triangulation<dim, spacedim> tr(MPI_COMM_WORLD);
 
@@ -93,7 +93,7 @@ test(std::ostream& /*out*/)
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

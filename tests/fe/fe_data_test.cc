@@ -38,7 +38,7 @@
 
 template <int dim>
 void
-test_2d_3d(std::vector<FiniteElement<dim>*>& fe_datas)
+test_2d_3d(std::vector<FiniteElement<dim> *> & fe_datas)
 {
   // Vector DG elements
   fe_datas.push_back(new FE_DGRaviartThomas<dim>(0));
@@ -55,11 +55,11 @@ test_2d_3d(std::vector<FiniteElement<dim>*>& fe_datas)
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
   // Hdiv elements
-  FE_RaviartThomas<dim>* rt0 = new FE_RaviartThomas<dim>(0);
+  FE_RaviartThomas<dim> * rt0 = new FE_RaviartThomas<dim>(0);
   fe_datas.push_back(rt0);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
-  FE_RaviartThomas<dim>* rt1 = new FE_RaviartThomas<dim>(1);
+  FE_RaviartThomas<dim> * rt1 = new FE_RaviartThomas<dim>(1);
   fe_datas.push_back(rt1);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
@@ -74,22 +74,22 @@ test_2d_3d(std::vector<FiniteElement<dim>*>& fe_datas)
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
   // Hcurl elements
-  FE_Nedelec<dim>* ned0 = new FE_Nedelec<dim>(0);
+  FE_Nedelec<dim> * ned0 = new FE_Nedelec<dim>(0);
   fe_datas.push_back(ned0);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
-  FE_Nedelec<dim>* ned1 = new FE_Nedelec<dim>(1);
+  FE_Nedelec<dim> * ned1 = new FE_Nedelec<dim>(1);
   fe_datas.push_back(ned1);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 }
 
-void test_2d_3d(std::vector<FiniteElement<1>*>& fe_datas)
+void test_2d_3d(std::vector<FiniteElement<1> *> & fe_datas)
 {}
 
 template <int dim>
 void
 test_fe_datas()
 {
-  std::vector<FiniteElement<dim>*> fe_datas;
+  std::vector<FiniteElement<dim> *> fe_datas;
   fe_datas.push_back(new FE_Q<dim>(1));
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
   fe_datas.push_back(new FE_Q<dim>(2));
@@ -155,8 +155,8 @@ test_fe_datas()
     }
   if(dim > 1)
     {
-      FE_RaviartThomasNodal<dim>* rt0 = new FE_RaviartThomasNodal<dim>(0);
-      FE_RaviartThomasNodal<dim>* rt1 = new FE_RaviartThomasNodal<dim>(1);
+      FE_RaviartThomasNodal<dim> * rt0 = new FE_RaviartThomasNodal<dim>(0);
+      FE_RaviartThomasNodal<dim> * rt1 = new FE_RaviartThomasNodal<dim>(1);
       fe_datas.push_back(rt0);
       deallog << (*fe_datas.rbegin())->get_name() << std::endl;
       fe_datas.push_back(rt1);
@@ -206,7 +206,7 @@ test_fe_datas()
   deallog << std::endl << "dim=" << dim << std::endl;
   for(unsigned int n = 0; n < fe_datas.size(); ++n)
     {
-      FiniteElement<dim>* fe_data = fe_datas[n];
+      FiniteElement<dim> * fe_data = fe_datas[n];
       deallog << "fe_data[" << n << "]:" << fe_data->get_name() << std::endl;
       deallog << "dofs_per_vertex=" << fe_data->dofs_per_vertex << std::endl;
       deallog << "dofs_per_line=" << fe_data->dofs_per_line << std::endl;

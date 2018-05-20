@@ -40,7 +40,7 @@ class LinearFunction : public Function<dim>
 {
 public:
   double
-  value(const Point<dim>& p, const unsigned int) const
+  value(const Point<dim> & p, const unsigned int) const
   {
     return p[0] + 2;
   }
@@ -92,7 +92,7 @@ test()
                    < 1e-8 * std::fabs(value + (p[0] + 2)),
                  ExcInternalError());
         }
-      catch(typename VectorTools::ExcPointNotAvailableHere&)
+      catch(typename VectorTools::ExcPointNotAvailableHere &)
         {
           point_found = false;
         }
@@ -108,7 +108,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 

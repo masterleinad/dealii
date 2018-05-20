@@ -26,7 +26,7 @@
 #include <iostream>
 
 void
-dim_2(std::ostream& os)
+dim_2(std::ostream & os)
 {
   const unsigned int d = 2;
   const Point<d>     center(0, 0);
@@ -48,7 +48,7 @@ dim_2(std::ostream& os)
 }
 
 void
-dim_3(std::ostream& os)
+dim_3(std::ostream & os)
 {
   const unsigned int d = 3;
 
@@ -73,7 +73,7 @@ int
 main()
 {
   initlog(true);
-  std::ostream& logfile = deallog.get_file_stream();
+  std::ostream & logfile = deallog.get_file_stream();
   dim_2(logfile);
   dim_3(logfile);
 }

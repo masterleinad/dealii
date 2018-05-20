@@ -34,7 +34,7 @@ const unsigned int degree_p = 1;
 
 template <int dim>
 void
-do_test(const DoFHandler<dim>& dof)
+do_test(const DoFHandler<dim> & dof)
 {
   deallog << "Testing " << dof.get_fe().get_name() << std::endl;
 

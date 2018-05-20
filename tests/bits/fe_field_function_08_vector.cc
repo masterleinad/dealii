@@ -42,7 +42,7 @@ public:
   {}
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& v) const
+  vector_value(const Point<dim> & p, Vector<double> & v) const
   {
     v = 0;
     for(unsigned int i = 0; i < dim; ++i)
@@ -50,7 +50,7 @@ public:
   }
 
   virtual void
-  vector_laplacian(const Point<dim>& p, Vector<double>& v) const
+  vector_laplacian(const Point<dim> & p, Vector<double> & v) const
   {
     v    = 0;
     v[0] = p.square() * 4 * 3 * dim;

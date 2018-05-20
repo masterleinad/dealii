@@ -42,23 +42,23 @@ class MatrixIntegrator : public MeshWorker::LocalIntegrator<dim>
 {
 public:
   void
-  cell(MeshWorker::DoFInfo<dim>&                  dinfo,
-       typename MeshWorker::IntegrationInfo<dim>& info) const;
+  cell(MeshWorker::DoFInfo<dim> &                  dinfo,
+       typename MeshWorker::IntegrationInfo<dim> & info) const;
   void
-  boundary(MeshWorker::DoFInfo<dim>&                  dinfo,
-           typename MeshWorker::IntegrationInfo<dim>& info) const;
+  boundary(MeshWorker::DoFInfo<dim> &                  dinfo,
+           typename MeshWorker::IntegrationInfo<dim> & info) const;
   void
-  face(MeshWorker::DoFInfo<dim>&                  dinfo1,
-       MeshWorker::DoFInfo<dim>&                  dinfo2,
-       typename MeshWorker::IntegrationInfo<dim>& info1,
-       typename MeshWorker::IntegrationInfo<dim>& info2) const;
+  face(MeshWorker::DoFInfo<dim> &                  dinfo1,
+       MeshWorker::DoFInfo<dim> &                  dinfo2,
+       typename MeshWorker::IntegrationInfo<dim> & info1,
+       typename MeshWorker::IntegrationInfo<dim> & info2) const;
 };
 
 template <int dim>
 void
 MatrixIntegrator<dim>::cell(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
-  typename MeshWorker::IntegrationInfo<dim>& info) const
+  MeshWorker::DoFInfo<dim> &                  dinfo,
+  typename MeshWorker::IntegrationInfo<dim> & info) const
 {
   LocalIntegrators::Laplace::cell_matrix(dinfo.matrix(0, false).matrix,
                                          info.fe_values());
@@ -67,8 +67,8 @@ MatrixIntegrator<dim>::cell(
 template <int dim>
 void
 MatrixIntegrator<dim>::boundary(
-  MeshWorker::DoFInfo<dim>&                  dinfo,
-  typename MeshWorker::IntegrationInfo<dim>& info) const
+  MeshWorker::DoFInfo<dim> &                  dinfo,
+  typename MeshWorker::IntegrationInfo<dim> & info) const
 {
   const unsigned int deg = info.fe_values(0).get_fe().degree;
   LocalIntegrators::Laplace ::nitsche_matrix(
@@ -80,10 +80,10 @@ MatrixIntegrator<dim>::boundary(
 template <int dim>
 void
 MatrixIntegrator<dim>::face(
-  MeshWorker::DoFInfo<dim>&                  dinfo1,
-  MeshWorker::DoFInfo<dim>&                  dinfo2,
-  typename MeshWorker::IntegrationInfo<dim>& info1,
-  typename MeshWorker::IntegrationInfo<dim>& info2) const
+  MeshWorker::DoFInfo<dim> &                  dinfo1,
+  MeshWorker::DoFInfo<dim> &                  dinfo2,
+  typename MeshWorker::IntegrationInfo<dim> & info1,
+  typename MeshWorker::IntegrationInfo<dim> & info2) const
 {
   const unsigned int deg = info1.fe_values(0).get_fe().degree;
   LocalIntegrators::Laplace ::ip_matrix(
@@ -207,7 +207,7 @@ Step4<dim>::run()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
@@ -219,7 +219,7 @@ main(int argc, char** argv)
       Step4<2> test;
       test.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << std::endl
               << std::endl

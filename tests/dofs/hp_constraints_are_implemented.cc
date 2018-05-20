@@ -23,7 +23,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> & dof_handler)
 {
   deallog << dof_handler.get_fe().get_name() << ": "
           << (dof_handler.get_fe().hp_constraints_are_implemented() ? "true" :

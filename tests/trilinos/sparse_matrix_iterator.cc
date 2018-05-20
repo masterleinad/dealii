@@ -18,7 +18,7 @@
 #include <deal.II/lac/trilinos_sparsity_pattern.h>
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 

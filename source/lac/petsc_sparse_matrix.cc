@@ -43,22 +43,22 @@ namespace PETScWrappers
     do_reinit(m, n, n_nonzero_per_row, is_symmetric);
   }
 
-  SparseMatrix::SparseMatrix(const size_type               m,
-                             const size_type               n,
-                             const std::vector<size_type>& row_lengths,
-                             const bool                    is_symmetric)
+  SparseMatrix::SparseMatrix(const size_type                m,
+                             const size_type                n,
+                             const std::vector<size_type> & row_lengths,
+                             const bool                     is_symmetric)
   {
     do_reinit(m, n, row_lengths, is_symmetric);
   }
 
   template <typename SparsityPatternType>
-  SparseMatrix::SparseMatrix(const SparsityPatternType& sparsity_pattern,
+  SparseMatrix::SparseMatrix(const SparsityPatternType & sparsity_pattern,
                              const bool preset_nonzero_locations)
   {
     do_reinit(sparsity_pattern, preset_nonzero_locations);
   }
 
-  SparseMatrix&
+  SparseMatrix &
   SparseMatrix::operator=(const double d)
   {
     MatrixBase::operator=(d);
@@ -80,10 +80,10 @@ namespace PETScWrappers
   }
 
   void
-  SparseMatrix::reinit(const size_type               m,
-                       const size_type               n,
-                       const std::vector<size_type>& row_lengths,
-                       const bool                    is_symmetric)
+  SparseMatrix::reinit(const size_type                m,
+                       const size_type                n,
+                       const std::vector<size_type> & row_lengths,
+                       const bool                     is_symmetric)
   {
     // get rid of old matrix and generate a
     // new one
@@ -95,8 +95,8 @@ namespace PETScWrappers
 
   template <typename SparsityPatternType>
   void
-  SparseMatrix::reinit(const SparsityPatternType& sparsity_pattern,
-                       const bool                 preset_nonzero_locations)
+  SparseMatrix::reinit(const SparsityPatternType & sparsity_pattern,
+                       const bool                  preset_nonzero_locations)
   {
     // get rid of old matrix and generate a
     // new one
@@ -106,7 +106,7 @@ namespace PETScWrappers
     do_reinit(sparsity_pattern, preset_nonzero_locations);
   }
 
-  const MPI_Comm&
+  const MPI_Comm &
   SparseMatrix::get_mpi_communicator() const
   {
     static MPI_Comm      comm;
@@ -136,10 +136,10 @@ namespace PETScWrappers
   }
 
   void
-  SparseMatrix::do_reinit(const size_type               m,
-                          const size_type               n,
-                          const std::vector<size_type>& row_lengths,
-                          const bool                    is_symmetric)
+  SparseMatrix::do_reinit(const size_type                m,
+                          const size_type                n,
+                          const std::vector<size_type> & row_lengths,
+                          const bool                     is_symmetric)
   {
     Assert(row_lengths.size() == m,
            ExcDimensionMismatch(row_lengths.size(), m));
@@ -168,8 +168,8 @@ namespace PETScWrappers
 
   template <typename SparsityPatternType>
   void
-  SparseMatrix::do_reinit(const SparsityPatternType& sparsity_pattern,
-                          const bool                 preset_nonzero_locations)
+  SparseMatrix::do_reinit(const SparsityPatternType & sparsity_pattern,
+                          const bool                  preset_nonzero_locations)
   {
     std::vector<size_type> row_lengths(sparsity_pattern.n_rows());
     for(size_type i = 0; i < sparsity_pattern.n_rows(); ++i)
@@ -240,9 +240,9 @@ namespace PETScWrappers
   }
 
   void
-  SparseMatrix::mmult(SparseMatrix&       C,
-                      const SparseMatrix& B,
-                      const MPI::Vector&  V) const
+  SparseMatrix::mmult(SparseMatrix &       C,
+                      const SparseMatrix & B,
+                      const MPI::Vector &  V) const
   {
     // Simply forward to the protected member function of the base class
     // that takes abstract matrix and vector arguments (to which the compiler
@@ -251,9 +251,9 @@ namespace PETScWrappers
   }
 
   void
-  SparseMatrix::Tmmult(SparseMatrix&       C,
-                       const SparseMatrix& B,
-                       const MPI::Vector&  V) const
+  SparseMatrix::Tmmult(SparseMatrix &       C,
+                       const SparseMatrix & B,
+                       const MPI::Vector &  V) const
   {
     // Simply forward to the protected member function of the base class
     // that takes abstract matrix and vector arguments (to which the compiler
@@ -263,19 +263,19 @@ namespace PETScWrappers
 
   // Explicit instantiations
   //
-  template SparseMatrix::SparseMatrix(const SparsityPattern&, const bool);
-  template SparseMatrix::SparseMatrix(const DynamicSparsityPattern&,
+  template SparseMatrix::SparseMatrix(const SparsityPattern &, const bool);
+  template SparseMatrix::SparseMatrix(const DynamicSparsityPattern &,
                                       const bool);
 
   template void
-  SparseMatrix::reinit(const SparsityPattern&, const bool);
+  SparseMatrix::reinit(const SparsityPattern &, const bool);
   template void
-  SparseMatrix::reinit(const DynamicSparsityPattern&, const bool);
+  SparseMatrix::reinit(const DynamicSparsityPattern &, const bool);
 
   template void
-  SparseMatrix::do_reinit(const SparsityPattern&, const bool);
+  SparseMatrix::do_reinit(const SparsityPattern &, const bool);
   template void
-  SparseMatrix::do_reinit(const DynamicSparsityPattern&, const bool);
+  SparseMatrix::do_reinit(const DynamicSparsityPattern &, const bool);
 } // namespace PETScWrappers
 
 DEAL_II_NAMESPACE_CLOSE

@@ -81,7 +81,7 @@ test()
     mf;
   mf.initialize(mf_data);
   mf.compute_diagonal();
-  const LinearAlgebra::distributed::Vector<double>& diagonal
+  const LinearAlgebra::distributed::Vector<double> & diagonal
     = mf.get_matrix_diagonal_inverse()->get_vector();
 
   LinearAlgebra::distributed::Vector<number> in, out, ref;
@@ -175,7 +175,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

@@ -399,7 +399,7 @@ Step3::assemble_system()
   // triangulation by flagging them with refinement indicators. Here we're only
   // examining the cells without modifying them, so it's good practice to
   // declare `cell` as `const` in order to enforce this invariant.
-  for(const auto& cell : dof_handler.active_cell_iterators())
+  for(const auto & cell : dof_handler.active_cell_iterators())
     {
       // We are now sitting on one cell, and we would like the values and
       // gradients of the shape functions be computed, as well as the

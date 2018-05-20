@@ -41,61 +41,61 @@ namespace Utilities
        * Return the corresponding MPI data type id for the argument given.
        */
       inline MPI_Datatype
-      mpi_type_id(const int*)
+      mpi_type_id(const int *)
       {
         return MPI_INT;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const long int*)
+      mpi_type_id(const long int *)
       {
         return MPI_LONG;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const unsigned int*)
+      mpi_type_id(const unsigned int *)
       {
         return MPI_UNSIGNED;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const unsigned long int*)
+      mpi_type_id(const unsigned long int *)
       {
         return MPI_UNSIGNED_LONG;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const unsigned long long int*)
+      mpi_type_id(const unsigned long long int *)
       {
         return MPI_UNSIGNED_LONG_LONG;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const float*)
+      mpi_type_id(const float *)
       {
         return MPI_FLOAT;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const double*)
+      mpi_type_id(const double *)
       {
         return MPI_DOUBLE;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const long double*)
+      mpi_type_id(const long double *)
       {
         return MPI_LONG_DOUBLE;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const std::complex<float>*)
+      mpi_type_id(const std::complex<float> *)
       {
         return MPI_COMPLEX;
       }
 
       inline MPI_Datatype
-      mpi_type_id(const std::complex<double>*)
+      mpi_type_id(const std::complex<double> *)
       {
         return MPI_DOUBLE_COMPLEX;
       }
@@ -103,10 +103,10 @@ namespace Utilities
 
       template <typename T>
       void
-      all_reduce(const MPI_Op&             mpi_op,
-                 const ArrayView<const T>& values,
-                 const MPI_Comm&           mpi_communicator,
-                 const ArrayView<T>&       output)
+      all_reduce(const MPI_Op &             mpi_op,
+                 const ArrayView<const T> & values,
+                 const MPI_Comm &           mpi_communicator,
+                 const ArrayView<T> &       output)
       {
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
@@ -148,9 +148,9 @@ namespace Utilities
                 // implementations of MPI-2. It is not needed as
                 // of MPI-3 and we should remove it at some
                 // point in the future.
-                const_cast<void*>(static_cast<const void*>(values.data())) :
+                const_cast<void *>(static_cast<const void *>(values.data())) :
                 MPI_IN_PLACE,
-              static_cast<void*>(output.data()),
+              static_cast<void *>(output.data()),
               static_cast<int>(values.size()),
               internal::mpi_type_id(values.data()),
               mpi_op,
@@ -169,10 +169,10 @@ namespace Utilities
 
       template <typename T>
       void
-      all_reduce(const MPI_Op&                           mpi_op,
-                 const ArrayView<const std::complex<T>>& values,
-                 const MPI_Comm&                         mpi_communicator,
-                 const ArrayView<std::complex<T>>&       output)
+      all_reduce(const MPI_Op &                           mpi_op,
+                 const ArrayView<const std::complex<T>> & values,
+                 const MPI_Comm &                         mpi_communicator,
+                 const ArrayView<std::complex<T>> &       output)
       {
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
@@ -185,11 +185,11 @@ namespace Utilities
                 // implementations of MPI-2. It is not needed as
                 // of MPI-3 and we should remove it at some
                 // point in the future.
-                const_cast<void*>(static_cast<const void*>(values.data())) :
+                const_cast<void *>(static_cast<const void *>(values.data())) :
                 MPI_IN_PLACE,
-              static_cast<void*>(output.data()),
+              static_cast<void *>(output.data()),
               static_cast<int>(values.size() * 2),
-              internal::mpi_type_id(static_cast<T*>(nullptr)),
+              internal::mpi_type_id(static_cast<T *>(nullptr)),
               mpi_op,
               mpi_communicator);
             AssertThrowMPI(ierr);
@@ -207,7 +207,7 @@ namespace Utilities
 
     template <typename T>
     T
-    sum(const T& t, const MPI_Comm& mpi_communicator)
+    sum(const T & t, const MPI_Comm & mpi_communicator)
     {
       T return_value;
       internal::all_reduce(MPI_SUM,
@@ -219,7 +219,7 @@ namespace Utilities
 
     template <typename T, typename U>
     void
-    sum(const T& values, const MPI_Comm& mpi_communicator, U& sums)
+    sum(const T & values, const MPI_Comm & mpi_communicator, U & sums)
     {
       static_assert(std::is_same<typename std::decay<T>::type,
                                  typename std::decay<U>::type>::value,
@@ -234,17 +234,17 @@ namespace Utilities
 
     template <typename T>
     void
-    sum(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       sums)
+    sum(const ArrayView<const T> & values,
+        const MPI_Comm &           mpi_communicator,
+        const ArrayView<T> &       sums)
     {
       internal::all_reduce(MPI_SUM, values, mpi_communicator, sums);
     }
 
     template <int rank, int dim, typename Number>
     Tensor<rank, dim, Number>
-    sum(const Tensor<rank, dim, Number>& local,
-        const MPI_Comm&                  mpi_communicator)
+    sum(const Tensor<rank, dim, Number> & local,
+        const MPI_Comm &                  mpi_communicator)
     {
       Tensor<rank, dim, Number> sums;
       sum(local, mpi_communicator, sums);
@@ -253,8 +253,8 @@ namespace Utilities
 
     template <int rank, int dim, typename Number>
     SymmetricTensor<rank, dim, Number>
-    sum(const SymmetricTensor<rank, dim, Number>& local,
-        const MPI_Comm&                           mpi_communicator)
+    sum(const SymmetricTensor<rank, dim, Number> & local,
+        const MPI_Comm &                           mpi_communicator)
     {
       const unsigned int n_entries
         = SymmetricTensor<rank, dim, Number>::n_independent_components;
@@ -277,9 +277,9 @@ namespace Utilities
 
     template <typename Number>
     void
-    sum(const SparseMatrix<Number>& local,
-        const MPI_Comm&             mpi_communicator,
-        SparseMatrix<Number>&       global)
+    sum(const SparseMatrix<Number> & local,
+        const MPI_Comm &             mpi_communicator,
+        SparseMatrix<Number> &       global)
     {
       Assert(
         local.get_sparsity_pattern() == global.get_sparsity_pattern(),
@@ -300,7 +300,7 @@ namespace Utilities
 
     template <typename T>
     T
-    max(const T& t, const MPI_Comm& mpi_communicator)
+    max(const T & t, const MPI_Comm & mpi_communicator)
     {
       T return_value;
       internal::all_reduce(MPI_MAX,
@@ -312,7 +312,7 @@ namespace Utilities
 
     template <typename T, typename U>
     void
-    max(const T& values, const MPI_Comm& mpi_communicator, U& maxima)
+    max(const T & values, const MPI_Comm & mpi_communicator, U & maxima)
     {
       static_assert(std::is_same<typename std::decay<T>::type,
                                  typename std::decay<U>::type>::value,
@@ -327,16 +327,16 @@ namespace Utilities
 
     template <typename T>
     void
-    max(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       maxima)
+    max(const ArrayView<const T> & values,
+        const MPI_Comm &           mpi_communicator,
+        const ArrayView<T> &       maxima)
     {
       internal::all_reduce(MPI_MAX, values, mpi_communicator, maxima);
     }
 
     template <typename T>
     T
-    min(const T& t, const MPI_Comm& mpi_communicator)
+    min(const T & t, const MPI_Comm & mpi_communicator)
     {
       T return_value;
       internal::all_reduce(MPI_MIN,
@@ -348,7 +348,7 @@ namespace Utilities
 
     template <typename T, typename U>
     void
-    min(const T& values, const MPI_Comm& mpi_communicator, U& minima)
+    min(const T & values, const MPI_Comm & mpi_communicator, U & minima)
     {
       static_assert(std::is_same<typename std::decay<T>::type,
                                  typename std::decay<U>::type>::value,
@@ -363,9 +363,9 @@ namespace Utilities
 
     template <typename T>
     void
-    min(const ArrayView<const T>& values,
-        const MPI_Comm&           mpi_communicator,
-        const ArrayView<T>&       minima)
+    min(const ArrayView<const T> & values,
+        const MPI_Comm &           mpi_communicator,
+        const ArrayView<T> &       minima)
     {
       internal::all_reduce(MPI_MIN, values, mpi_communicator, minima);
     }

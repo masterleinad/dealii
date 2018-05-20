@@ -61,7 +61,7 @@ check(const unsigned int testcase)
     {
       coarse_grid.create_triangulation(vertices, cells, SubCellData());
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch(typename Triangulation<dim>::DistortedCellList & dcv)
     {
       flag = true;
     }
@@ -77,7 +77,7 @@ check(const unsigned int testcase)
     {
       fe_values.reinit(coarse_grid.begin());
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
     }

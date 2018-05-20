@@ -44,7 +44,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int) const
+  value(const Point<dim> & p, const unsigned int) const
   {
     return sin(p[0] * a) * cos(p[1] * b);
   }
@@ -52,7 +52,7 @@ public:
 
 template <int dim>
 void
-exact_gradient(Point<dim>& p, Tensor<1, dim>& grad)
+exact_gradient(Point<dim> & p, Tensor<1, dim> & grad)
 {
   double x = p[0], y = p[1];
 
@@ -62,7 +62,7 @@ exact_gradient(Point<dim>& p, Tensor<1, dim>& grad)
 
 template <int dim>
 void
-exact_second(Point<dim>& p, Tensor<2, dim>& sec)
+exact_second(Point<dim> & p, Tensor<2, dim> & sec)
 {
   double x = p[0], y = p[1];
 
@@ -74,7 +74,7 @@ exact_second(Point<dim>& p, Tensor<2, dim>& sec)
 
 template <int dim>
 void
-exact_third(Point<dim>& p, Tensor<3, dim>& third)
+exact_third(Point<dim> & p, Tensor<3, dim> & third)
 {
   double x = p[0], y = p[1];
   // array of function and its derivatives

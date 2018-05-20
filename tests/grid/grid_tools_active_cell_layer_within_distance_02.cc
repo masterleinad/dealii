@@ -33,14 +33,14 @@
 
 template <int dim>
 bool
-pred_mat_id(const typename Triangulation<dim>::active_cell_iterator& cell)
+pred_mat_id(const typename Triangulation<dim>::active_cell_iterator & cell)
 {
   return cell->material_id() == 2;
 }
 
 template <int dim>
 void
-write_mat_id_to_file(const Triangulation<dim>& tria)
+write_mat_id_to_file(const Triangulation<dim> & tria)
 {
   int                                               count = 0;
   typename Triangulation<dim>::active_cell_iterator cell  = tria.begin_active(),
@@ -113,7 +113,7 @@ test()
   }
 #endif
 
-  std::function<bool(const cell_iterator&)> predicate = pred_mat_id<dim>;
+  std::function<bool(const cell_iterator &)> predicate = pred_mat_id<dim>;
 
   // Compute a halo layer around material id 2 and set it to material id 3
   const std::vector<cell_iterator> cells_within_skin

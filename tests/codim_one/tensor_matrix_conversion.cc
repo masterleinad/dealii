@@ -26,7 +26,7 @@ std::ofstream logfile("output");
 
 template <typename number>
 void
-fill_matrix(FullMatrix<number>& A)
+fill_matrix(FullMatrix<number> & A)
 {
   for(unsigned int i = 0; i < A.m(); i++)
     for(unsigned int j = 0; j < A.n(); j++)
@@ -47,7 +47,7 @@ display_matrix(FullMatrix<number> M)
 }
 
 template <int b>
-void fill_tensor_2(Tensor<2, b>& T)
+void fill_tensor_2(Tensor<2, b> & T)
 {
   for(unsigned int i = 0; i < b; i++)
     for(unsigned int j = 0; j < b; j++)
@@ -55,7 +55,7 @@ void fill_tensor_2(Tensor<2, b>& T)
 }
 
 template <int b>
-void display_tensor_2(Tensor<2, b>& T)
+void display_tensor_2(Tensor<2, b> & T)
 {
   deallog << b << "x" << b << " tensor" << std::endl;
   for(unsigned int i = 0; i < b; i++)

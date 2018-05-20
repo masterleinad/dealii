@@ -30,7 +30,7 @@
 #include <algorithm>
 
 void
-print_patches(const SparsityPattern& bl)
+print_patches(const SparsityPattern & bl)
 {
   for(unsigned int i = 0; i < bl.n_rows(); ++i)
     {
@@ -49,7 +49,7 @@ print_patches(const SparsityPattern& bl)
 
 template <int dim>
 void
-test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
+test_block_list(const Triangulation<dim> & tr, const FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl;
 
@@ -138,8 +138,8 @@ test_block_list(const Triangulation<dim>& tr, const FiniteElement<dim>& fe)
 
 template <int dim>
 void
-test_global_refinement(void (*test_block_list)(const Triangulation<dim>& tr,
-                                               const FiniteElement<dim>& fe))
+test_global_refinement(void (*test_block_list)(const Triangulation<dim> & tr,
+                                               const FiniteElement<dim> & fe))
 {
   Triangulation<dim> trc(
     Triangulation<dim>::limit_level_difference_at_vertices);

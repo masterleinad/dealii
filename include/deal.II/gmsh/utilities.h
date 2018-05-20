@@ -52,14 +52,14 @@ namespace Gmsh
     /**
      * Set all additional parameters to their default values.
      */
-    AdditionalParameters(const double       characteristic_length = 1.0,
-                         const std::string& output_base_name      = "");
+    AdditionalParameters(const double        characteristic_length = 1.0,
+                         const std::string & output_base_name      = "");
 
     /**
      * Call prm.add_parameter for each member of the AdditionalParameters class.
      */
     void
-    add_parameters(ParameterHandler& prm);
+    add_parameters(ParameterHandler & prm);
 
     /**
      * The characteristic length used for the definition of the Gmsh grid.
@@ -89,9 +89,9 @@ namespace Gmsh
    */
   template <int spacedim>
   void
-  create_triangulation_from_boundary_curve(const TopoDS_Edge&          boundary,
-                                           Triangulation<2, spacedim>& tria,
-                                           const AdditionalParameters& prm
+  create_triangulation_from_boundary_curve(const TopoDS_Edge & boundary,
+                                           Triangulation<2, spacedim> & tria,
+                                           const AdditionalParameters & prm
                                            = AdditionalParameters());
 #  endif
 } // namespace Gmsh

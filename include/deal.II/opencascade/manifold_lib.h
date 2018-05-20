@@ -71,8 +71,8 @@ namespace OpenCASCADE
      * The TopoDS_Shape can be arbitrary, i.e., a collection of shapes, faces,
      * edges or a single face or edge.
      */
-    NormalProjectionManifold(const TopoDS_Shape& sh,
-                             const double        tolerance = 1e-7);
+    NormalProjectionManifold(const TopoDS_Shape & sh,
+                             const double         tolerance = 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -91,8 +91,8 @@ namespace OpenCASCADE
      */
     virtual Point<spacedim>
     project_to_manifold(
-      const ArrayView<const Point<spacedim>>& surrounding_points,
-      const Point<spacedim>&                  candidate) const override;
+      const ArrayView<const Point<spacedim>> & surrounding_points,
+      const Point<spacedim> &                  candidate) const override;
 
   protected:
     /**
@@ -138,9 +138,9 @@ namespace OpenCASCADE
      * Construct a Manifold object which will project points on the
      * TopoDS_Shape @p sh, along the given @p direction.
      */
-    DirectionalProjectionManifold(const TopoDS_Shape&        sh,
-                                  const Tensor<1, spacedim>& direction,
-                                  const double               tolerance = 1e-7);
+    DirectionalProjectionManifold(const TopoDS_Shape &        sh,
+                                  const Tensor<1, spacedim> & direction,
+                                  const double                tolerance = 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -159,8 +159,8 @@ namespace OpenCASCADE
      */
     virtual Point<spacedim>
     project_to_manifold(
-      const ArrayView<const Point<spacedim>>& surrounding_points,
-      const Point<spacedim>&                  candidate) const override;
+      const ArrayView<const Point<spacedim>> & surrounding_points,
+      const Point<spacedim> &                  candidate) const override;
 
   protected:
     /**
@@ -235,8 +235,8 @@ namespace OpenCASCADE
      * TopoDS_Shape @p sh, along a direction which is approximately normal to
      * the mesh cell.
      */
-    NormalToMeshProjectionManifold(const TopoDS_Shape& sh,
-                                   const double        tolerance = 1e-7);
+    NormalToMeshProjectionManifold(const TopoDS_Shape & sh,
+                                   const double         tolerance = 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -252,8 +252,8 @@ namespace OpenCASCADE
      */
     virtual Point<spacedim>
     project_to_manifold(
-      const ArrayView<const Point<spacedim>>& surrounding_points,
-      const Point<spacedim>&                  candidate) const override;
+      const ArrayView<const Point<spacedim>> & surrounding_points,
+      const Point<spacedim> &                  candidate) const override;
 
   protected:
     /**
@@ -296,8 +296,8 @@ namespace OpenCASCADE
     /**
      * Default constructor with a TopoDS_Edge.
      */
-    ArclengthProjectionLineManifold(const TopoDS_Shape& sh,
-                                    const double        tolerance = 1e-7);
+    ArclengthProjectionLineManifold(const TopoDS_Shape & sh,
+                                    const double         tolerance = 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -311,13 +311,13 @@ namespace OpenCASCADE
      * construction time.
      */
     virtual Point<1>
-    pull_back(const Point<spacedim>& space_point) const override;
+    pull_back(const Point<spacedim> & space_point) const override;
 
     /**
      * Given an arclength parameter, find its image in real space.
      */
     virtual Point<spacedim>
-    push_forward(const Point<1>& chart_point) const override;
+    push_forward(const Point<1> & chart_point) const override;
 
   protected:
     /**
@@ -359,7 +359,7 @@ namespace OpenCASCADE
      * @p tolerance. This class uses the interval OpenCASCADE variables @var u,
      * @var v to descrive the manifold.
      */
-    NURBSPatchManifold(const TopoDS_Face& face, const double tolerance = 1e-7);
+    NURBSPatchManifold(const TopoDS_Face & face, const double tolerance = 1e-7);
 
     /**
      * Clone the current Manifold.
@@ -372,14 +372,14 @@ namespace OpenCASCADE
      * coordinates associated with the point @p space_point.
      */
     virtual Point<2>
-    pull_back(const Point<spacedim>& space_point) const override;
+    pull_back(const Point<spacedim> & space_point) const override;
 
     /**
      * Given a @p chart_point in the uv coordinate system, this method returns the
      * Euclidean coordinates associated.
      */
     virtual Point<spacedim>
-    push_forward(const Point<2>& chart_point) const override;
+    push_forward(const Point<2> & chart_point) const override;
 
     /**
      * Given a point in the spacedim dimensional Euclidean space, this
@@ -394,7 +394,7 @@ namespace OpenCASCADE
      * Refer to the general documentation of this class for more information.
      */
     virtual DerivativeForm<1, 2, spacedim>
-    push_forward_gradient(const Point<2>& chart_point) const override;
+    push_forward_gradient(const Point<2> & chart_point) const override;
 
   protected:
     /**

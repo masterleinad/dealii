@@ -248,7 +248,7 @@ public:
    * formula. The degree of the finite element is <tt>points.size()-1</tt>.
    * Note that the first point has to be 0 and the last one 1.
    */
-  FE_Q_DG0(const Quadrature<1>& points);
+  FE_Q_DG0(const Quadrature<1> & points);
 
   /**
    * Return a string that uniquely identifies a finite element. This class
@@ -261,8 +261,8 @@ public:
   // documentation inherited from the base class
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    const std::vector<Vector<double>> & support_point_values,
+    std::vector<double> &               nodal_values) const override;
 
   /**
    * Return the matrix interpolating from the given finite element to the
@@ -274,8 +274,8 @@ public:
    * FiniteElement<dim,spacedim>::ExcInterpolationNotImplemented is thrown.
    */
   virtual void
-  get_interpolation_matrix(const FiniteElement<dim, spacedim>& source,
-                           FullMatrix<double>& matrix) const override;
+  get_interpolation_matrix(const FiniteElement<dim, spacedim> & source,
+                           FullMatrix<double> & matrix) const override;
 
   /**
    * This function returns @p true, if the shape function @p shape_index has

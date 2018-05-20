@@ -49,9 +49,9 @@ namespace LocalIntegrators
      */
     template <int dim>
     void
-    cell_matrix(FullMatrix<double>&      M,
-                const FEValuesBase<dim>& fe,
-                double                   factor = 1.)
+    cell_matrix(FullMatrix<double> &      M,
+                const FEValuesBase<dim> & fe,
+                double                    factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -87,9 +87,9 @@ namespace LocalIntegrators
     template <int dim, typename number>
     void
     cell_residual(
-      Vector<number>&                                                    result,
-      const FEValuesBase<dim>&                                           fetest,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& input,
+      Vector<number> &          result,
+      const FEValuesBase<dim> & fetest,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> & input,
       const double factor = 1.)
     {
       const unsigned int n_dofs = fetest.dofs_per_cell;
@@ -122,10 +122,10 @@ namespace LocalIntegrators
      */
     template <int dim>
     inline void
-    nitsche_matrix(FullMatrix<double>&      M,
-                   const FEValuesBase<dim>& fe,
-                   double                   penalty,
-                   double                   factor = 1.)
+    nitsche_matrix(FullMatrix<double> &      M,
+                   const FEValuesBase<dim> & fe,
+                   double                    penalty,
+                   double                    factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
 
@@ -178,13 +178,14 @@ namespace LocalIntegrators
     template <int dim>
     void
     nitsche_residual(
-      Vector<double>&                                                    result,
-      const FEValuesBase<dim>&                                           fe,
-      const VectorSlice<const std::vector<std::vector<double>>>&         input,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>& Dinput,
-      const VectorSlice<const std::vector<std::vector<double>>>&         data,
-      double penalty,
-      double factor = 1.)
+      Vector<double> &                                            result,
+      const FEValuesBase<dim> &                                   fe,
+      const VectorSlice<const std::vector<std::vector<double>>> & input,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &
+                                                                  Dinput,
+      const VectorSlice<const std::vector<std::vector<double>>> & data,
+      double                                                      penalty,
+      double                                                      factor = 1.)
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
       AssertDimension(fe.get_fe().n_components(), dim)
@@ -229,15 +230,15 @@ namespace LocalIntegrators
 
     template <int dim>
     void
-    ip_matrix(FullMatrix<double>&      M11,
-              FullMatrix<double>&      M12,
-              FullMatrix<double>&      M21,
-              FullMatrix<double>&      M22,
-              const FEValuesBase<dim>& fe1,
-              const FEValuesBase<dim>& fe2,
-              double                   penalty,
-              double                   factor1 = 1.,
-              double                   factor2 = -1.)
+    ip_matrix(FullMatrix<double> &      M11,
+              FullMatrix<double> &      M12,
+              FullMatrix<double> &      M21,
+              FullMatrix<double> &      M22,
+              const FEValuesBase<dim> & fe1,
+              const FEValuesBase<dim> & fe2,
+              double                    penalty,
+              double                    factor1 = 1.,
+              double                    factor2 = -1.)
     {
       const unsigned int n_dofs = fe1.dofs_per_cell;
       AssertDimension(M11.n(), n_dofs);
@@ -313,15 +314,15 @@ namespace LocalIntegrators
     template <int dim>
     void
     ip_residual(
-      Vector<double>&                                            result1,
-      Vector<double>&                                            result2,
-      const FEValuesBase<dim>&                                   fe1,
-      const FEValuesBase<dim>&                                   fe2,
-      const VectorSlice<const std::vector<std::vector<double>>>& input1,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
-                                                                 Dinput1,
-      const VectorSlice<const std::vector<std::vector<double>>>& input2,
-      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>>&
+      Vector<double> &                                            result1,
+      Vector<double> &                                            result2,
+      const FEValuesBase<dim> &                                   fe1,
+      const FEValuesBase<dim> &                                   fe2,
+      const VectorSlice<const std::vector<std::vector<double>>> & input1,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &
+                                                                  Dinput1,
+      const VectorSlice<const std::vector<std::vector<double>>> & input2,
+      const VectorSlice<const std::vector<std::vector<Tensor<1, dim>>>> &
              Dinput2,
       double pen,
       double int_factor = 1.,

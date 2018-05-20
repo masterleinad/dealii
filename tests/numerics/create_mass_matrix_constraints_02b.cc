@@ -94,7 +94,7 @@ check()
                                   dof,
                                   quadrature,
                                   matrix,
-                                  (const Function<dim>* const) nullptr,
+                                  (const Function<dim> * const) nullptr,
                                   constraints);
 
   // compute reference: need to cancel constrained entries as these will in

@@ -23,7 +23,7 @@
 struct Functor
 {
   void
-  operator()(double& value) const
+  operator()(double & value) const
   {
     value *= 2.;
   }

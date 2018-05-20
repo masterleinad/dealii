@@ -96,7 +96,7 @@ namespace
     } base64_encodestate;
 
     void
-    base64_init_encodestate(base64_encodestate* state_in)
+    base64_init_encodestate(base64_encodestate * state_in)
     {
       state_in->step   = step_A;
       state_in->result = 0;
@@ -105,7 +105,7 @@ namespace
     inline char
     base64_encode_value(char value_in)
     {
-      static const char* encoding
+      static const char * encoding
         = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
       if(value_in > 63)
         return '=';
@@ -113,15 +113,15 @@ namespace
     }
 
     int
-    base64_encode_block(const char*         plaintext_in,
-                        int                 length_in,
-                        char*               code_out,
-                        base64_encodestate* state_in)
+    base64_encode_block(const char *         plaintext_in,
+                        int                  length_in,
+                        char *               code_out,
+                        base64_encodestate * state_in)
     {
-      const char*       plainchar    = plaintext_in;
-      const char* const plaintextend = plaintext_in + length_in;
-      char*             codechar     = code_out;
-      char              result;
+      const char *       plainchar    = plaintext_in;
+      const char * const plaintextend = plaintext_in + length_in;
+      char *             codechar     = code_out;
+      char               result;
 
       result = state_in->result;
 
@@ -179,9 +179,9 @@ namespace
     }
 
     int
-    base64_encode_blockend(char* code_out, base64_encodestate* state_in)
+    base64_encode_blockend(char * code_out, base64_encodestate * state_in)
     {
-      char* codechar = code_out;
+      char * codechar = code_out;
 
       switch(state_in->step)
         {
@@ -211,13 +211,13 @@ namespace
    * it. The calling function must release
    * this memory again.
    */
-  char*
-  encode_block(const char* data, const int data_size)
+  char *
+  encode_block(const char * data, const int data_size)
   {
     base64::base64_encodestate state;
     base64::base64_init_encodestate(&state);
 
-    char* encoded_data = new char[2 * data_size + 1];
+    char * encoded_data = new char[2 * data_size + 1];
 
     const int encoded_length_data
       = base64::base64_encode_block(data, data_size, encoded_data, &state);
@@ -258,20 +258,20 @@ namespace
    */
   template <typename T>
   void
-  write_compressed_block(const std::vector<T>&        data,
-                         const DataOutBase::VtkFlags& flags,
-                         std::ostream&                output_stream)
+  write_compressed_block(const std::vector<T> &        data,
+                         const DataOutBase::VtkFlags & flags,
+                         std::ostream &                output_stream)
   {
     if(data.size() != 0)
       {
         // allocate a buffer for compressing
         // data and do so
         uLongf compressed_data_length = compressBound(data.size() * sizeof(T));
-        char*  compressed_data        = new char[compressed_data_length];
+        char * compressed_data        = new char[compressed_data_length];
         int    err
-          = compress2((Bytef*) compressed_data,
+          = compress2((Bytef *) compressed_data,
                       &compressed_data_length,
-                      (const Bytef*) data.data(),
+                      (const Bytef *) data.data(),
                       data.size() * sizeof(T),
                       get_zlib_compression_level(flags.compression_level));
         (void) err;
@@ -285,15 +285,15 @@ namespace
              (uint32_t)
                compressed_data_length}; /* list of compressed sizes of blocks */
 
-        char* encoded_header
-          = encode_block(reinterpret_cast<const char*>(&compression_header[0]),
+        char * encoded_header
+          = encode_block(reinterpret_cast<const char *>(&compression_header[0]),
                          4 * sizeof(compression_header[0]));
         output_stream << encoded_header;
         delete[] encoded_header;
 
         // next do the compressed
         // data encoding in base64
-        char* encoded_data
+        char * encoded_data
           = encode_block(compressed_data, compressed_data_length);
         delete[] compressed_data;
 
@@ -344,11 +344,11 @@ namespace DataOutBase
        * Comparison operator for sorting.
        */
       bool
-      operator<(const SvgCell&) const;
+      operator<(const SvgCell &) const;
     };
 
     bool
-    SvgCell::operator<(const SvgCell& e) const
+    SvgCell::operator<(const SvgCell & e) const
     {
       // note the "wrong" order in
       // which we sort the elements
@@ -385,7 +385,7 @@ namespace DataOutBase
        * Comparison operator for sorting.
        */
       bool
-      operator<(const EpsCell2d&) const;
+      operator<(const EpsCell2d &) const;
     };
 
     /**
@@ -401,8 +401,8 @@ namespace DataOutBase
     template <int dim, int spacedim, typename Number = double>
     void
     write_gmv_reorder_data_vectors(
-      const std::vector<Patch<dim, spacedim>>& patches,
-      Table<2, Number>&                        data_vectors)
+      const std::vector<Patch<dim, spacedim>> & patches,
+      Table<2, Number> &                        data_vectors)
     {
       // unlike in the main function, we
       // don't have here the data_names
@@ -461,7 +461,7 @@ namespace DataOutBase
       vertices_per_cell(numbers::invalid_unsigned_int)
   {}
 
-  DataOutFilter::DataOutFilter(const DataOutBase::DataOutFilterFlags& flags)
+  DataOutFilter::DataOutFilter(const DataOutBase::DataOutFilterFlags & flags)
     : flags(flags),
       node_dim(numbers::invalid_unsigned_int),
       vertices_per_cell(numbers::invalid_unsigned_int)
@@ -469,7 +469,7 @@ namespace DataOutBase
 
   template <int dim>
   void
-  DataOutFilter::write_point(const unsigned int index, const Point<dim>& p)
+  DataOutFilter::write_point(const unsigned int index, const Point<dim> & p)
   {
     node_dim = dim;
 
@@ -502,7 +502,7 @@ namespace DataOutBase
   }
 
   void
-  DataOutFilter::fill_node_data(std::vector<double>& node_data) const
+  DataOutFilter::fill_node_data(std::vector<double> & node_data) const
   {
     node_data.resize(existing_points.size() * node_dim);
 
@@ -516,8 +516,8 @@ namespace DataOutBase
   }
 
   void
-  DataOutFilter::fill_cell_data(const unsigned int         local_node_offset,
-                                std::vector<unsigned int>& cell_data) const
+  DataOutFilter::fill_cell_data(const unsigned int          local_node_offset,
+                                std::vector<unsigned int> & cell_data) const
   {
     cell_data.resize(filtered_cells.size());
 
@@ -542,7 +542,7 @@ namespace DataOutBase
     return data_set_dims.at(set_num);
   }
 
-  const double*
+  const double *
   DataOutFilter::get_data_set(const unsigned int set_num) const
   {
     return &data_sets[set_num][0];
@@ -605,10 +605,10 @@ namespace DataOutBase
   }
 
   void
-  DataOutFilter::write_data_set(const std::string&      name,
-                                const unsigned int      dimension,
-                                const unsigned int      set_num,
-                                const Table<2, double>& data_vectors)
+  DataOutFilter::write_data_set(const std::string &      name,
+                                const unsigned int       dimension,
+                                const unsigned int       set_num,
+                                const Table<2, double> & data_vectors)
   {
     unsigned int new_dim;
 
@@ -645,11 +645,11 @@ namespace DataOutBase
 
 namespace
 {
-  const char* gmv_cell_type[4] = {"", "line 2", "quad 4", "hex 8"};
+  const char * gmv_cell_type[4] = {"", "line 2", "quad 4", "hex 8"};
 
-  const char* ucd_cell_type[4] = {"pt", "line", "quad", "hex"};
+  const char * ucd_cell_type[4] = {"pt", "line", "quad", "hex"};
 
-  const char* tecplot_cell_type[4] = {"", "lineseg", "quadrilateral", "brick"};
+  const char * tecplot_cell_type[4] = {"", "lineseg", "quadrilateral", "brick"};
 
 #ifdef DEAL_II_HAVE_TECPLOT
   const unsigned int tecplot_binary_cell_type[4] = {0, 0, 1, 3};
@@ -674,12 +674,12 @@ namespace
   // as first argument; take a reference for 'patch', not a pointer
   template <int dim, int spacedim>
   inline void
-  compute_node(Point<spacedim>&                         node,
-               const DataOutBase::Patch<dim, spacedim>* patch,
-               const unsigned int                       xstep,
-               const unsigned int                       ystep,
-               const unsigned int                       zstep,
-               const unsigned int                       n_subdivisions)
+  compute_node(Point<spacedim> &                         node,
+               const DataOutBase::Patch<dim, spacedim> * patch,
+               const unsigned int                        xstep,
+               const unsigned int                        ystep,
+               const unsigned int                        zstep,
+               const unsigned int                        n_subdivisions)
   {
     if(patch->points_are_available)
       {
@@ -749,9 +749,9 @@ namespace
 
   template <int dim, int spacedim>
   static void
-  compute_sizes(const std::vector<DataOutBase::Patch<dim, spacedim>>& patches,
-                unsigned int&                                         n_nodes,
-                unsigned int&                                         n_cells)
+  compute_sizes(const std::vector<DataOutBase::Patch<dim, spacedim>> & patches,
+                unsigned int &                                         n_nodes,
+                unsigned int &                                         n_cells)
   {
     n_nodes = 0;
     n_cells = 0;
@@ -778,7 +778,7 @@ namespace
     /*
      * Constructor. Stores a reference to the output stream for immediate use.
      */
-    StreamBase(std::ostream& stream, const FlagsType& flags)
+    StreamBase(std::ostream & stream, const FlagsType & flags)
       : selected_component(numbers::invalid_unsigned_int),
         stream(stream),
         flags(flags)
@@ -790,7 +790,7 @@ namespace
      */
     template <int dim>
     void
-    write_point(const unsigned int, const Point<dim>&)
+    write_point(const unsigned int, const Point<dim> &)
     {
       Assert(false,
              ExcMessage("The derived class you are using needs to "
@@ -841,8 +841,8 @@ namespace
      * reimplemented if inheriting classes use zlib.
      */
     template <typename T>
-    std::ostream&
-    operator<<(const T& t)
+    std::ostream &
+    operator<<(const T & t)
     {
       stream << t;
       return stream;
@@ -861,7 +861,7 @@ namespace
      * The ostream to use. Since the life span of these objects is small, we use
      * a very simple storage technique.
      */
-    std::ostream& stream;
+    std::ostream & stream;
 
     /**
      * The flags controlling the output.
@@ -878,11 +878,11 @@ namespace
   class DXStream : public StreamBase<DataOutBase::DXFlags>
   {
   public:
-    DXStream(std::ostream& stream, const DataOutBase::DXFlags& flags);
+    DXStream(std::ostream & stream, const DataOutBase::DXFlags & flags);
 
     template <int dim>
     void
-    write_point(const unsigned int index, const Point<dim>&);
+    write_point(const unsigned int index, const Point<dim> &);
 
     /**
      * The order of vertices for
@@ -914,7 +914,7 @@ namespace
      */
     template <typename data>
     void
-    write_dataset(const unsigned int index, const std::vector<data>& values);
+    write_dataset(const unsigned int index, const std::vector<data> & values);
   };
 
   /**
@@ -926,11 +926,11 @@ namespace
   class GmvStream : public StreamBase<DataOutBase::GmvFlags>
   {
   public:
-    GmvStream(std::ostream& stream, const DataOutBase::GmvFlags& flags);
+    GmvStream(std::ostream & stream, const DataOutBase::GmvFlags & flags);
 
     template <int dim>
     void
-    write_point(const unsigned int index, const Point<dim>&);
+    write_point(const unsigned int index, const Point<dim> &);
 
     /**
      * The order of vertices for
@@ -960,11 +960,12 @@ namespace
   class TecplotStream : public StreamBase<DataOutBase::TecplotFlags>
   {
   public:
-    TecplotStream(std::ostream& stream, const DataOutBase::TecplotFlags& flags);
+    TecplotStream(std::ostream &                    stream,
+                  const DataOutBase::TecplotFlags & flags);
 
     template <int dim>
     void
-    write_point(const unsigned int index, const Point<dim>&);
+    write_point(const unsigned int index, const Point<dim> &);
 
     /**
      * The order of vertices for
@@ -994,11 +995,11 @@ namespace
   class UcdStream : public StreamBase<DataOutBase::UcdFlags>
   {
   public:
-    UcdStream(std::ostream& stream, const DataOutBase::UcdFlags& flags);
+    UcdStream(std::ostream & stream, const DataOutBase::UcdFlags & flags);
 
     template <int dim>
     void
-    write_point(const unsigned int index, const Point<dim>&);
+    write_point(const unsigned int index, const Point<dim> &);
 
     /**
      * The additional offset 1 is
@@ -1034,7 +1035,7 @@ namespace
      */
     template <typename data>
     void
-    write_dataset(const unsigned int index, const std::vector<data>& values);
+    write_dataset(const unsigned int index, const std::vector<data> & values);
   };
 
   /**
@@ -1046,11 +1047,11 @@ namespace
   class VtkStream : public StreamBase<DataOutBase::VtkFlags>
   {
   public:
-    VtkStream(std::ostream& stream, const DataOutBase::VtkFlags& flags);
+    VtkStream(std::ostream & stream, const DataOutBase::VtkFlags & flags);
 
     template <int dim>
     void
-    write_point(const unsigned int index, const Point<dim>&);
+    write_point(const unsigned int index, const Point<dim> &);
 
     /**
      * The order of vertices for
@@ -1074,11 +1075,11 @@ namespace
   class VtuStream : public StreamBase<DataOutBase::VtkFlags>
   {
   public:
-    VtuStream(std::ostream& stream, const DataOutBase::VtkFlags& flags);
+    VtuStream(std::ostream & stream, const DataOutBase::VtkFlags & flags);
 
     template <int dim>
     void
-    write_point(const unsigned int index, const Point<dim>&);
+    write_point(const unsigned int index, const Point<dim> &);
 
     void
     flush_points();
@@ -1105,8 +1106,8 @@ namespace
     flush_cells();
 
     template <typename T>
-    std::ostream&
-    operator<<(const T&);
+    std::ostream &
+    operator<<(const T &);
 
     /**
      * Forwarding of output stream.
@@ -1120,8 +1121,8 @@ namespace
      * element.
      */
     template <typename T>
-    std::ostream&
-    operator<<(const std::vector<T>&);
+    std::ostream &
+    operator<<(const std::vector<T> &);
 
   private:
     /**
@@ -1142,20 +1143,20 @@ namespace
 
   //----------------------------------------------------------------------//
 
-  DXStream::DXStream(std::ostream& out, const DataOutBase::DXFlags& f)
+  DXStream::DXStream(std::ostream & out, const DataOutBase::DXFlags & f)
     : StreamBase<DataOutBase::DXFlags>(out, f)
   {}
 
   template <int dim>
   void
-  DXStream::write_point(const unsigned int, const Point<dim>& p)
+  DXStream::write_point(const unsigned int, const Point<dim> & p)
   {
     if(flags.coordinates_binary)
       {
         float data[dim];
         for(unsigned int d = 0; d < dim; ++d)
           data[d] = p(d);
-        stream.write(reinterpret_cast<const char*>(data), dim * sizeof(*data));
+        stream.write(reinterpret_cast<const char *>(data), dim * sizeof(*data));
       }
     else
       {
@@ -1195,7 +1196,7 @@ namespace
       }
 
     if(flags.int_binary)
-      stream.write(reinterpret_cast<const char*>(nodes),
+      stream.write(reinterpret_cast<const char *>(nodes),
                    (1 << dim) * sizeof(*nodes));
     else
       {
@@ -1208,11 +1209,11 @@ namespace
 
   template <typename data>
   inline void
-  DXStream::write_dataset(const unsigned int, const std::vector<data>& values)
+  DXStream::write_dataset(const unsigned int, const std::vector<data> & values)
   {
     if(flags.data_binary)
       {
-        stream.write(reinterpret_cast<const char*>(values.data()),
+        stream.write(reinterpret_cast<const char *>(values.data()),
                      values.size() * sizeof(data));
       }
     else
@@ -1225,13 +1226,13 @@ namespace
 
   //----------------------------------------------------------------------//
 
-  GmvStream::GmvStream(std::ostream& out, const DataOutBase::GmvFlags& f)
+  GmvStream::GmvStream(std::ostream & out, const DataOutBase::GmvFlags & f)
     : StreamBase<DataOutBase::GmvFlags>(out, f)
   {}
 
   template <int dim>
   void
-  GmvStream::write_point(const unsigned int, const Point<dim>& p)
+  GmvStream::write_point(const unsigned int, const Point<dim> & p)
   {
     Assert(selected_component != numbers::invalid_unsigned_int,
            ExcNotInitialized());
@@ -1268,14 +1269,14 @@ namespace
     stream << '\n';
   }
 
-  TecplotStream::TecplotStream(std::ostream&                    out,
-                               const DataOutBase::TecplotFlags& f)
+  TecplotStream::TecplotStream(std::ostream &                    out,
+                               const DataOutBase::TecplotFlags & f)
     : StreamBase<DataOutBase::TecplotFlags>(out, f)
   {}
 
   template <int dim>
   void
-  TecplotStream::write_point(const unsigned int, const Point<dim>& p)
+  TecplotStream::write_point(const unsigned int, const Point<dim> & p)
   {
     Assert(selected_component != numbers::invalid_unsigned_int,
            ExcNotInitialized());
@@ -1309,13 +1310,13 @@ namespace
     stream << '\n';
   }
 
-  UcdStream::UcdStream(std::ostream& out, const DataOutBase::UcdFlags& f)
+  UcdStream::UcdStream(std::ostream & out, const DataOutBase::UcdFlags & f)
     : StreamBase<DataOutBase::UcdFlags>(out, f)
   {}
 
   template <int dim>
   void
-  UcdStream::write_point(const unsigned int index, const Point<dim>& p)
+  UcdStream::write_point(const unsigned int index, const Point<dim> & p)
   {
     stream << index + 1 << "   ";
     // write out coordinates
@@ -1368,8 +1369,8 @@ namespace
 
   template <typename data>
   inline void
-  UcdStream::write_dataset(const unsigned int       index,
-                           const std::vector<data>& values)
+  UcdStream::write_dataset(const unsigned int        index,
+                           const std::vector<data> & values)
   {
     stream << index + 1;
     for(unsigned int i = 0; i < values.size(); ++i)
@@ -1379,13 +1380,13 @@ namespace
 
   //----------------------------------------------------------------------//
 
-  VtkStream::VtkStream(std::ostream& out, const DataOutBase::VtkFlags& f)
+  VtkStream::VtkStream(std::ostream & out, const DataOutBase::VtkFlags & f)
     : StreamBase<DataOutBase::VtkFlags>(out, f)
   {}
 
   template <int dim>
   void
-  VtkStream::write_point(const unsigned int, const Point<dim>& p)
+  VtkStream::write_point(const unsigned int, const Point<dim> & p)
   {
     // write out coordinates
     stream << p;
@@ -1420,13 +1421,13 @@ namespace
     stream << '\n';
   }
 
-  VtuStream::VtuStream(std::ostream& out, const DataOutBase::VtkFlags& f)
+  VtuStream::VtuStream(std::ostream & out, const DataOutBase::VtkFlags & f)
     : StreamBase<DataOutBase::VtkFlags>(out, f)
   {}
 
   template <int dim>
   void
-  VtuStream::write_point(const unsigned int, const Point<dim>& p)
+  VtuStream::write_point(const unsigned int, const Point<dim> & p)
   {
 #if !defined(DEAL_II_WITH_ZLIB)
     // write out coordinates
@@ -1516,8 +1517,8 @@ namespace
   }
 
   template <typename T>
-  std::ostream&
-  VtuStream::operator<<(const std::vector<T>& data)
+  std::ostream &
+  VtuStream::operator<<(const std::vector<T> & data)
   {
 #ifdef DEAL_II_WITH_ZLIB
     // compress the data we have in
@@ -1558,7 +1559,7 @@ namespace DataOutBase
 
   template <int dim, int spacedim>
   bool
-  Patch<dim, spacedim>::operator==(const Patch& patch) const
+  Patch<dim, spacedim>::operator==(const Patch & patch) const
   {
     //TODO: make tolerance relative
     const double epsilon = 3e-16;
@@ -1609,7 +1610,7 @@ namespace DataOutBase
 
   template <int dim, int spacedim>
   void
-  Patch<dim, spacedim>::swap(Patch<dim, spacedim>& other_patch)
+  Patch<dim, spacedim>::swap(Patch<dim, spacedim> & other_patch)
   {
     std::swap(vertices, other_patch.vertices);
     std::swap(neighbors, other_patch.neighbors);
@@ -1641,7 +1642,7 @@ namespace DataOutBase
 
   template <int spacedim>
   bool
-  Patch<0, spacedim>::operator==(const Patch& patch) const
+  Patch<0, spacedim>::operator==(const Patch & patch) const
   {
     const unsigned int dim = 0;
 
@@ -1682,7 +1683,7 @@ namespace DataOutBase
   }
 
   template <int spacedim>
-  void Patch<0, spacedim>::swap(Patch<0, spacedim>& other_patch)
+  void Patch<0, spacedim>::swap(Patch<0, spacedim> & other_patch)
   {
     std::swap(vertices, other_patch.vertices);
     std::swap(patch_index, other_patch.patch_index);
@@ -1700,7 +1701,7 @@ namespace DataOutBase
     space_dimension_labels.emplace_back("z");
   }
 
-  GnuplotFlags::GnuplotFlags(const std::vector<std::string>& labels)
+  GnuplotFlags::GnuplotFlags(const std::vector<std::string> & labels)
     : space_dimension_labels(labels)
   {}
 
@@ -1723,7 +1724,7 @@ namespace DataOutBase
   {}
 
   void
-  DataOutFilterFlags::declare_parameters(ParameterHandler& prm)
+  DataOutFilterFlags::declare_parameters(ParameterHandler & prm)
   {
     prm.declare_entry(
       "Filter duplicate vertices",
@@ -1759,7 +1760,7 @@ namespace DataOutBase
   }
 
   void
-  DataOutFilterFlags::parse_parameters(const ParameterHandler& prm)
+  DataOutFilterFlags::parse_parameters(const ParameterHandler & prm)
   {
     filter_duplicate_vertices = prm.get_bool("Filter duplicate vertices");
     xdmf_hdf5_output          = prm.get_bool("XDMF HDF5 output");
@@ -1777,7 +1778,7 @@ namespace DataOutBase
   {}
 
   void
-  DXFlags::declare_parameters(ParameterHandler& prm)
+  DXFlags::declare_parameters(ParameterHandler & prm)
   {
     prm.declare_entry("Write neighbors",
                       "true",
@@ -1806,14 +1807,14 @@ namespace DataOutBase
   }
 
   void
-  DXFlags::parse_parameters(const ParameterHandler& prm)
+  DXFlags::parse_parameters(const ParameterHandler & prm)
   {
     write_neighbors = prm.get_bool("Write neighbors");
     //TODO:[GK] Read the new  parameters
   }
 
   void
-  UcdFlags::declare_parameters(ParameterHandler& prm)
+  UcdFlags::declare_parameters(ParameterHandler & prm)
   {
     prm.declare_entry("Write preamble",
                       "true",
@@ -1825,7 +1826,7 @@ namespace DataOutBase
   }
 
   void
-  UcdFlags::parse_parameters(const ParameterHandler& prm)
+  UcdFlags::parse_parameters(const ParameterHandler & prm)
   {
     write_preamble = prm.get_bool("Write preamble");
   }
@@ -1847,7 +1848,7 @@ namespace DataOutBase
   {}
 
   void
-  PovrayFlags::declare_parameters(ParameterHandler& prm)
+  PovrayFlags::declare_parameters(ParameterHandler & prm)
   {
     prm.declare_entry("Use smooth triangles",
                       "false",
@@ -1867,7 +1868,7 @@ namespace DataOutBase
   }
 
   void
-  PovrayFlags::parse_parameters(const ParameterHandler& prm)
+  PovrayFlags::parse_parameters(const ParameterHandler & prm)
   {
     smooth        = prm.get_bool("Use smooth triangles");
     bicubic_patch = prm.get_bool("Use bicubic patches");
@@ -2009,7 +2010,7 @@ namespace DataOutBase
   }
 
   bool
-  EpsCell2d::operator<(const EpsCell2d& e) const
+  EpsCell2d::operator<(const EpsCell2d & e) const
   {
     // note the "wrong" order in
     // which we sort the elements
@@ -2017,7 +2018,7 @@ namespace DataOutBase
   }
 
   void
-  EpsFlags::declare_parameters(ParameterHandler& prm)
+  EpsFlags::declare_parameters(ParameterHandler & prm)
   {
     prm.declare_entry("Index of vector for height",
                       "0",
@@ -2082,7 +2083,7 @@ namespace DataOutBase
   }
 
   void
-  EpsFlags::parse_parameters(const ParameterHandler& prm)
+  EpsFlags::parse_parameters(const ParameterHandler & prm)
   {
     height_vector = prm.get_integer("Index of vector for height");
     color_vector  = prm.get_integer("Index of vector for color");
@@ -2112,8 +2113,8 @@ namespace DataOutBase
       Assert(false, ExcInternalError());
   }
 
-  TecplotFlags::TecplotFlags(const char*  tecplot_binary_file_name,
-                             const char*  zone_name,
+  TecplotFlags::TecplotFlags(const char * tecplot_binary_file_name,
+                             const char * zone_name,
                              const double solution_time)
     : tecplot_binary_file_name(tecplot_binary_file_name),
       zone_name(zone_name),
@@ -2139,7 +2140,7 @@ namespace DataOutBase
   {}
 
   OutputFormat
-  parse_output_format(const std::string& format_name)
+  parse_output_format(const std::string & format_name)
   {
     if(format_name == "none")
       return none;
@@ -2237,7 +2238,8 @@ namespace DataOutBase
 
   template <int dim, int spacedim, typename StreamType>
   void
-  write_nodes(const std::vector<Patch<dim, spacedim>>& patches, StreamType& out)
+  write_nodes(const std::vector<Patch<dim, spacedim>> & patches,
+              StreamType &                              out)
   {
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count = 0;
@@ -2274,7 +2276,8 @@ namespace DataOutBase
 
   template <int dim, int spacedim, typename StreamType>
   void
-  write_cells(const std::vector<Patch<dim, spacedim>>& patches, StreamType& out)
+  write_cells(const std::vector<Patch<dim, spacedim>> & patches,
+              StreamType &                              out)
   {
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count                 = 0;
@@ -2317,10 +2320,10 @@ namespace DataOutBase
 
   template <int dim, int spacedim, class StreamType>
   void
-  write_data(const std::vector<Patch<dim, spacedim>>& patches,
-             unsigned int                             n_data_sets,
-             const bool                               double_precision,
-             StreamType&                              out)
+  write_data(const std::vector<Patch<dim, spacedim>> & patches,
+             unsigned int                              n_data_sets,
+             const bool                                double_precision,
+             StreamType &                              out)
   {
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count = 0;
@@ -2660,11 +2663,11 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_ucd(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const UcdFlags& flags,
-    std::ostream&   out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const UcdFlags & flags,
+    std::ostream &   out)
   {
     // Note that while in theory dim==0 should be implemented,
     // this is not tested, therefore currently not allowed.
@@ -2755,11 +2758,11 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_dx(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const DXFlags& flags,
-    std::ostream&  out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const DXFlags & flags,
+    std::ostream &  out)
   {
     // Point output is currently not implemented.
     AssertThrow(dim > 0, ExcNotImplemented());
@@ -3051,11 +3054,11 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_gnuplot(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const GnuplotFlags& flags,
-    std::ostream&       out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const GnuplotFlags & flags,
+    std::ostream &       out)
   {
     AssertThrow(out, ExcIO());
 
@@ -3279,11 +3282,11 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_povray(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const PovrayFlags& flags,
-    std::ostream&      out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const PovrayFlags & flags,
+    std::ostream &      out)
   {
     AssertThrow(out, ExcIO());
 
@@ -3624,11 +3627,11 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_eps(
-    const std::vector<Patch<dim, spacedim>>& /*patches*/,
-    const std::vector<std::string>& /*data_names*/,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const EpsFlags& /*flags*/,
-    std::ostream& /*out*/)
+    const std::vector<Patch<dim, spacedim>> & /*patches*/,
+    const std::vector<std::string> & /*data_names*/,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const EpsFlags & /*flags*/,
+    std::ostream & /*out*/)
   {
     // not implemented, see the documentation of the function
     AssertThrow(dim == 2, ExcNotImplemented());
@@ -3637,11 +3640,11 @@ namespace DataOutBase
   template <int spacedim>
   void
   write_eps(
-    const std::vector<Patch<2, spacedim>>& patches,
-    const std::vector<std::string>& /*data_names*/,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const EpsFlags& flags,
-    std::ostream&   out)
+    const std::vector<Patch<2, spacedim>> & patches,
+    const std::vector<std::string> & /*data_names*/,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const EpsFlags & flags,
+    std::ostream &   out)
   {
     AssertThrow(out, ExcIO());
 
@@ -4002,11 +4005,11 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_gmv(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const GmvFlags& flags,
-    std::ostream&   out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const GmvFlags & flags,
+    std::ostream &   out)
   {
     // The gmv format does not support cells that only consist
     // of a single point. It does support the output of point data
@@ -4084,7 +4087,8 @@ namespace DataOutBase
     // to write out the data, we wait
     // for that task to finish
     Table<2, double> data_vectors(n_data_sets, n_nodes);
-    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>>&, Table<2, double>&)
+    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
+                    Table<2, double> &)
       = &write_gmv_reorder_data_vectors<dim, spacedim>;
     Threads::Task<> reorder_task
       = Threads::new_task(fun_ptr, patches, data_vectors);
@@ -4157,11 +4161,11 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_tecplot(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const TecplotFlags& flags,
-    std::ostream&       out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const TecplotFlags & flags,
+    std::ostream &       out)
   {
     AssertThrow(out, ExcIO());
 
@@ -4281,7 +4285,8 @@ namespace DataOutBase
 
     Table<2, double> data_vectors(n_data_sets, n_nodes);
 
-    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>>&, Table<2, double>&)
+    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
+                    Table<2, double> &)
       = &write_gmv_reorder_data_vectors<dim, spacedim>;
     Threads::Task<> reorder_task
       = Threads::new_task(fun_ptr, patches, data_vectors);
@@ -4340,9 +4345,9 @@ namespace DataOutBase
                     const unsigned int n_cells = 0,
                     const unsigned int n_vert  = 0);
       ~TecplotMacros();
-      float&
+      float &
       nd(const unsigned int i, const unsigned int j);
-      int&
+      int &
                          cd(const unsigned int i, const unsigned int j);
       std::vector<float> nodalData;
       std::vector<int>   connData;
@@ -4367,13 +4372,13 @@ namespace DataOutBase
     inline TecplotMacros::~TecplotMacros()
     {}
 
-    inline float&
+    inline float &
     TecplotMacros::nd(const unsigned int i, const unsigned int j)
     {
       return nodalData[i * n_nodes + j];
     }
 
-    inline int&
+    inline int &
     TecplotMacros::cd(const unsigned int i, const unsigned int j)
     {
       return connData[i + j * n_vert];
@@ -4387,12 +4392,12 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_tecplot_binary(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&
-                        vector_data_ranges,
-    const TecplotFlags& flags,
-    std::ostream&       out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &
+                         vector_data_ranges,
+    const TecplotFlags & flags,
+    std::ostream &       out)
   {
     // The FEBLOCK or FEPOINT formats of tecplot only allows full elements
     // (e.g. triangles), not single points. Other tecplot format allow
@@ -4422,7 +4427,7 @@ namespace DataOutBase
     // ASCII function and use the
     // ostream @p{out} instead of doing
     // something silly later
-    char* file_name = (char*) flags.tecplot_binary_file_name;
+    char * file_name = (char *) flags.tecplot_binary_file_name;
 
     if(file_name == NULL)
       {
@@ -4528,7 +4533,8 @@ namespace DataOutBase
     // for that task to finish
     Table<2, double> data_vectors(n_data_sets, n_nodes);
 
-    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>>&, Table<2, double>&)
+    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
+                    Table<2, double> &)
       = &write_gmv_reorder_data_vectors<dim, spacedim>;
     Threads::Task<> reorder_task
       = Threads::new_task(fun_ptr, patches, data_vectors);
@@ -4710,7 +4716,7 @@ namespace DataOutBase
       // anything else with
       // tec_var_names following
       // const_cast is ok
-      char* var_names = const_cast<char*>(tec_var_names.c_str());
+      char * var_names = const_cast<char *>(tec_var_names.c_str());
       ierr = TECINI(NULL, var_names, file_name, dot, &tec_debug, &is_double);
 
       Assert(ierr == 0, ExcErrorOpeningTecplotFile(file_name));
@@ -4740,12 +4746,12 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_vtk(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&
-                    vector_data_ranges,
-    const VtkFlags& flags,
-    std::ostream&   out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &
+                     vector_data_ranges,
+    const VtkFlags & flags,
+    std::ostream &   out)
   {
     AssertThrow(out, ExcIO());
 
@@ -4848,7 +4854,8 @@ namespace DataOutBase
     // for that task to finish
     Table<2, double> data_vectors(n_data_sets, n_nodes);
 
-    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>>&, Table<2, double>&)
+    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
+                    Table<2, double> &)
       = &write_gmv_reorder_data_vectors<dim, spacedim>;
     Threads::Task<> reorder_task
       = Threads::new_task(fun_ptr, patches, data_vectors);
@@ -5009,7 +5016,7 @@ namespace DataOutBase
   }
 
   void
-  write_vtu_header(std::ostream& out, const VtkFlags& flags)
+  write_vtu_header(std::ostream & out, const VtkFlags & flags)
   {
     AssertThrow(out, ExcIO());
     out << "<?xml version=\"1.0\" ?> \n";
@@ -5040,7 +5047,7 @@ namespace DataOutBase
   }
 
   void
-  write_vtu_footer(std::ostream& out)
+  write_vtu_footer(std::ostream & out)
   {
     AssertThrow(out, ExcIO());
     out << " </UnstructuredGrid>\n";
@@ -5050,12 +5057,12 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_vtu(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&
-                    vector_data_ranges,
-    const VtkFlags& flags,
-    std::ostream&   out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &
+                     vector_data_ranges,
+    const VtkFlags & flags,
+    std::ostream &   out)
   {
     write_vtu_header(out, flags);
     write_vtu_main(patches, data_names, vector_data_ranges, flags, out);
@@ -5067,12 +5074,12 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_vtu_main(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&
-                    vector_data_ranges,
-    const VtkFlags& flags,
-    std::ostream&   out)
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &
+                     vector_data_ranges,
+    const VtkFlags & flags,
+    std::ostream &   out)
   {
     AssertThrow(out, ExcIO());
 
@@ -5198,9 +5205,9 @@ namespace DataOutBase
       }
 
 #ifdef DEAL_II_WITH_ZLIB
-    const char* ascii_or_binary = "binary";
+    const char * ascii_or_binary = "binary";
 #else
-    const char* ascii_or_binary = "ascii";
+    const char * ascii_or_binary = "ascii";
 #endif
 
     // first count the number of cells
@@ -5231,7 +5238,8 @@ namespace DataOutBase
     // for that task to finish
     Table<2, float> data_vectors(n_data_sets, n_nodes);
 
-    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>>&, Table<2, float>&)
+    void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &,
+                    Table<2, float> &)
       = &write_gmv_reorder_data_vectors<dim, spacedim, float>;
     Threads::Task<> reorder_task
       = Threads::new_task(fun_ptr, patches, data_vectors);
@@ -5442,10 +5450,10 @@ namespace DataOutBase
 
   void
   write_pvtu_record(
-    std::ostream&                   out,
-    const std::vector<std::string>& piece_names,
-    const std::vector<std::string>& data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&
+    std::ostream &                   out,
+    const std::vector<std::string> & piece_names,
+    const std::vector<std::string> & data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &
       vector_data_ranges)
   {
     AssertThrow(out, ExcIO());
@@ -5541,8 +5549,8 @@ namespace DataOutBase
 
   void
   write_pvd_record(
-    std::ostream&                                      out,
-    const std::vector<std::pair<double, std::string>>& times_and_names)
+    std::ostream &                                      out,
+    const std::vector<std::pair<double, std::string>> & times_and_names)
   {
     AssertThrow(out, ExcIO());
 
@@ -5575,8 +5583,8 @@ namespace DataOutBase
   }
 
   void
-  write_visit_record(std::ostream&                   out,
-                     const std::vector<std::string>& piece_names)
+  write_visit_record(std::ostream &                   out,
+                     const std::vector<std::string> & piece_names)
   {
     out << "!NBLOCKS " << piece_names.size() << '\n';
     for(unsigned int i = 0; i < piece_names.size(); ++i)
@@ -5586,8 +5594,8 @@ namespace DataOutBase
   }
 
   void
-  write_visit_record(std::ostream&                                out,
-                     const std::vector<std::vector<std::string>>& piece_names)
+  write_visit_record(std::ostream &                                out,
+                     const std::vector<std::vector<std::string>> & piece_names)
   {
     AssertThrow(out, ExcIO());
 
@@ -5629,8 +5637,8 @@ namespace DataOutBase
 
   void
   write_visit_record(
-    std::ostream& out,
-    const std::vector<std::pair<double, std::vector<std::string>>>&
+    std::ostream & out,
+    const std::vector<std::pair<double, std::vector<std::string>>> &
       times_and_piece_names)
   {
     AssertThrow(out, ExcIO());
@@ -5685,24 +5693,24 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_svg(
-    const std::vector<Patch<dim, spacedim>>&,
-    const std::vector<std::string>&,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&,
-    const SvgFlags&,
-    std::ostream&)
+    const std::vector<Patch<dim, spacedim>> &,
+    const std::vector<std::string> &,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &,
+    const SvgFlags &,
+    std::ostream &)
   {
     Assert(false, ExcNotImplemented());
   }
 
   template <int spacedim>
   void
-  write_svg(const std::vector<Patch<2, spacedim>>& patches,
-            const std::vector<std::string>& /*data_names*/,
+  write_svg(const std::vector<Patch<2, spacedim>> & patches,
+            const std::vector<std::string> & /*data_names*/,
             const std::vector<std::tuple<unsigned int,
                                          unsigned int,
-                                         std::string>>& /*vector_data_ranges*/,
-            const SvgFlags& flags,
-            std::ostream&   out)
+                                         std::string>> & /*vector_data_ranges*/,
+            const SvgFlags & flags,
+            std::ostream &   out)
   {
     const int          dim    = 2;
     const unsigned int height = flags.height;
@@ -6658,12 +6666,12 @@ namespace DataOutBase
   template <int dim, int spacedim>
   void
   write_deal_II_intermediate(
-    const std::vector<Patch<dim, spacedim>>& patches,
-    const std::vector<std::string>&          data_names,
-    const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&
+    const std::vector<Patch<dim, spacedim>> & patches,
+    const std::vector<std::string> &          data_names,
+    const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &
       vector_data_ranges,
-    const Deal_II_IntermediateFlags& /*flags*/,
-    std::ostream& out)
+    const Deal_II_IntermediateFlags & /*flags*/,
+    std::ostream & out)
   {
     AssertThrow(out, ExcIO());
 
@@ -6702,7 +6710,7 @@ namespace DataOutBase
   }
 
   std::pair<unsigned int, unsigned int>
-  determine_intermediate_format_dimensions(std::istream& input)
+  determine_intermediate_format_dimensions(std::istream & input)
   {
     AssertThrow(input, ExcIO());
 
@@ -6722,7 +6730,7 @@ DataOutInterface<dim, spacedim>::DataOutInterface()
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_dx(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_dx(std::ostream & out) const
 {
   DataOutBase::write_dx(get_patches(),
                         get_dataset_names(),
@@ -6733,7 +6741,7 @@ DataOutInterface<dim, spacedim>::write_dx(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_ucd(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_ucd(std::ostream & out) const
 {
   DataOutBase::write_ucd(get_patches(),
                          get_dataset_names(),
@@ -6744,7 +6752,7 @@ DataOutInterface<dim, spacedim>::write_ucd(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_gnuplot(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_gnuplot(std::ostream & out) const
 {
   DataOutBase::write_gnuplot(get_patches(),
                              get_dataset_names(),
@@ -6755,7 +6763,7 @@ DataOutInterface<dim, spacedim>::write_gnuplot(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_povray(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_povray(std::ostream & out) const
 {
   DataOutBase::write_povray(get_patches(),
                             get_dataset_names(),
@@ -6766,7 +6774,7 @@ DataOutInterface<dim, spacedim>::write_povray(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_eps(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_eps(std::ostream & out) const
 {
   DataOutBase::write_eps(get_patches(),
                          get_dataset_names(),
@@ -6777,7 +6785,7 @@ DataOutInterface<dim, spacedim>::write_eps(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_gmv(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_gmv(std::ostream & out) const
 {
   DataOutBase::write_gmv(get_patches(),
                          get_dataset_names(),
@@ -6788,7 +6796,7 @@ DataOutInterface<dim, spacedim>::write_gmv(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_tecplot(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_tecplot(std::ostream & out) const
 {
   DataOutBase::write_tecplot(get_patches(),
                              get_dataset_names(),
@@ -6799,7 +6807,7 @@ DataOutInterface<dim, spacedim>::write_tecplot(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_tecplot_binary(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_tecplot_binary(std::ostream & out) const
 {
   DataOutBase::write_tecplot_binary(get_patches(),
                                     get_dataset_names(),
@@ -6810,7 +6818,7 @@ DataOutInterface<dim, spacedim>::write_tecplot_binary(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_vtk(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_vtk(std::ostream & out) const
 {
   DataOutBase::write_vtk(get_patches(),
                          get_dataset_names(),
@@ -6821,7 +6829,7 @@ DataOutInterface<dim, spacedim>::write_vtk(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_vtu(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_vtu(std::ostream & out) const
 {
   DataOutBase::write_vtu(get_patches(),
                          get_dataset_names(),
@@ -6832,7 +6840,7 @@ DataOutInterface<dim, spacedim>::write_vtu(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_svg(std::ostream& out) const
+DataOutInterface<dim, spacedim>::write_svg(std::ostream & out) const
 {
   DataOutBase::write_svg(get_patches(),
                          get_dataset_names(),
@@ -6843,8 +6851,8 @@ DataOutInterface<dim, spacedim>::write_svg(std::ostream& out) const
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char* filename,
-                                                       MPI_Comm    comm) const
+DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char * filename,
+                                                       MPI_Comm     comm) const
 {
 #ifndef DEAL_II_WITH_MPI
   //without MPI fall back to the normal way to write a vtu file:
@@ -6865,7 +6873,7 @@ DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char* filename,
   AssertThrowMPI(ierr);
   MPI_File fh;
   ierr = MPI_File_open(comm,
-                       const_cast<char*>(filename),
+                       const_cast<char *>(filename),
                        MPI_MODE_CREATE | MPI_MODE_WRONLY,
                        info,
                        &fh);
@@ -6889,7 +6897,7 @@ DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char* filename,
       DataOutBase::write_vtu_header(ss, vtk_flags);
       header_size = ss.str().size();
       ierr = MPI_File_write(fh,
-                            const_cast<char*>(ss.str().c_str()),
+                            const_cast<char *>(ss.str().c_str()),
                             header_size,
                             MPI_CHAR,
                             MPI_STATUS_IGNORE);
@@ -6909,7 +6917,7 @@ DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char* filename,
                                 vtk_flags,
                                 ss);
     ierr = MPI_File_write_ordered(fh,
-                                  const_cast<char*>(ss.str().c_str()),
+                                  const_cast<char *>(ss.str().c_str()),
                                   ss.str().size(),
                                   MPI_CHAR,
                                   MPI_STATUS_IGNORE);
@@ -6923,7 +6931,7 @@ DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char* filename,
       DataOutBase::write_vtu_footer(ss);
       unsigned int footer_size = ss.str().size();
       ierr = MPI_File_write_shared(fh,
-                                   const_cast<char*>(ss.str().c_str()),
+                                   const_cast<char *>(ss.str().c_str()),
                                    footer_size,
                                    MPI_CHAR,
                                    MPI_STATUS_IGNORE);
@@ -6937,8 +6945,8 @@ DataOutInterface<dim, spacedim>::write_vtu_in_parallel(const char* filename,
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_pvtu_record(
-  std::ostream&                   out,
-  const std::vector<std::string>& piece_names) const
+  std::ostream &                   out,
+  const std::vector<std::string> & piece_names) const
 {
   DataOutBase::write_pvtu_record(
     out, piece_names, get_dataset_names(), get_vector_data_ranges());
@@ -6947,7 +6955,7 @@ DataOutInterface<dim, spacedim>::write_pvtu_record(
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_deal_II_intermediate(
-  std::ostream& out) const
+  std::ostream & out) const
 {
   DataOutBase::write_deal_II_intermediate(get_patches(),
                                           get_dataset_names(),
@@ -6959,10 +6967,10 @@ DataOutInterface<dim, spacedim>::write_deal_II_intermediate(
 template <int dim, int spacedim>
 XDMFEntry
 DataOutInterface<dim, spacedim>::create_xdmf_entry(
-  const DataOutBase::DataOutFilter& data_filter,
-  const std::string&                h5_filename,
-  const double                      cur_time,
-  MPI_Comm                          comm) const
+  const DataOutBase::DataOutFilter & data_filter,
+  const std::string &                h5_filename,
+  const double                       cur_time,
+  MPI_Comm                           comm) const
 {
   return create_xdmf_entry(
     data_filter, h5_filename, h5_filename, cur_time, comm);
@@ -6971,11 +6979,11 @@ DataOutInterface<dim, spacedim>::create_xdmf_entry(
 template <int dim, int spacedim>
 XDMFEntry
 DataOutInterface<dim, spacedim>::create_xdmf_entry(
-  const DataOutBase::DataOutFilter& data_filter,
-  const std::string&                h5_mesh_filename,
-  const std::string&                h5_solution_filename,
-  const double                      cur_time,
-  MPI_Comm                          comm) const
+  const DataOutBase::DataOutFilter & data_filter,
+  const std::string &                h5_mesh_filename,
+  const std::string &                h5_solution_filename,
+  const double                       cur_time,
+  MPI_Comm                           comm) const
 {
   unsigned int local_node_cell_count[2], global_node_cell_count[2];
   int          myrank;
@@ -7046,9 +7054,9 @@ DataOutInterface<dim, spacedim>::create_xdmf_entry(
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_xdmf_file(
-  const std::vector<XDMFEntry>& entries,
-  const std::string&            filename,
-  MPI_Comm                      comm) const
+  const std::vector<XDMFEntry> & entries,
+  const std::string &            filename,
+  MPI_Comm                       comm) const
 {
   int myrank;
 
@@ -7092,7 +7100,7 @@ DataOutInterface<dim, spacedim>::write_xdmf_file(
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_filtered_data(
-  DataOutBase::DataOutFilter& filtered_data) const
+  DataOutBase::DataOutFilter & filtered_data) const
 {
   DataOutBase::write_filtered_data(get_patches(),
                                    get_dataset_names(),
@@ -7103,11 +7111,11 @@ DataOutInterface<dim, spacedim>::write_filtered_data(
 template <int dim, int spacedim>
 void
 DataOutBase::write_filtered_data(
-  const std::vector<Patch<dim, spacedim>>& patches,
-  const std::vector<std::string>&          data_names,
-  const std::vector<std::tuple<unsigned int, unsigned int, std::string>>&
-                              vector_data_ranges,
-  DataOutBase::DataOutFilter& filtered_data)
+  const std::vector<Patch<dim, spacedim>> & patches,
+  const std::vector<std::string> &          data_names,
+  const std::vector<std::tuple<unsigned int, unsigned int, std::string>> &
+                               vector_data_ranges,
+  DataOutBase::DataOutFilter & filtered_data)
 {
   const unsigned int n_data_sets = data_names.size();
   unsigned int       n_node, n_cell;
@@ -7134,7 +7142,7 @@ DataOutBase::write_filtered_data(
   compute_sizes<dim, spacedim>(patches, n_node, n_cell);
 
   data_vectors = Table<2, double>(n_data_sets, n_node);
-  void (*fun_ptr)(const std::vector<Patch<dim, spacedim>>&, Table<2, double>&)
+  void (*fun_ptr)(const std::vector<Patch<dim, spacedim>> &, Table<2, double> &)
     = &DataOutBase::template write_gmv_reorder_data_vectors<dim, spacedim>;
   reorder_task = Threads::new_task(fun_ptr, patches, data_vectors);
 
@@ -7217,9 +7225,9 @@ DataOutBase::write_filtered_data(
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_hdf5_parallel(
-  const DataOutBase::DataOutFilter& data_filter,
-  const std::string&                filename,
-  MPI_Comm                          comm) const
+  const DataOutBase::DataOutFilter & data_filter,
+  const std::string &                filename,
+  MPI_Comm                           comm) const
 {
   DataOutBase::write_hdf5_parallel(get_patches(), data_filter, filename, comm);
 }
@@ -7227,11 +7235,11 @@ DataOutInterface<dim, spacedim>::write_hdf5_parallel(
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write_hdf5_parallel(
-  const DataOutBase::DataOutFilter& data_filter,
-  const bool                        write_mesh_file,
-  const std::string&                mesh_filename,
-  const std::string&                solution_filename,
-  MPI_Comm                          comm) const
+  const DataOutBase::DataOutFilter & data_filter,
+  const bool                         write_mesh_file,
+  const std::string &                mesh_filename,
+  const std::string &                solution_filename,
+  MPI_Comm                           comm) const
 {
   DataOutBase::write_hdf5_parallel(get_patches(),
                                    data_filter,
@@ -7244,10 +7252,10 @@ DataOutInterface<dim, spacedim>::write_hdf5_parallel(
 template <int dim, int spacedim>
 void
 DataOutBase::write_hdf5_parallel(
-  const std::vector<Patch<dim, spacedim>>& patches,
-  const DataOutBase::DataOutFilter&        data_filter,
-  const std::string&                       filename,
-  MPI_Comm                                 comm)
+  const std::vector<Patch<dim, spacedim>> & patches,
+  const DataOutBase::DataOutFilter &        data_filter,
+  const std::string &                       filename,
+  MPI_Comm                                  comm)
 {
   write_hdf5_parallel(patches, data_filter, true, filename, filename, comm);
 }
@@ -7255,12 +7263,12 @@ DataOutBase::write_hdf5_parallel(
 template <int dim, int spacedim>
 void
 DataOutBase::write_hdf5_parallel(
-  const std::vector<Patch<dim, spacedim>>& /*patches*/,
-  const DataOutBase::DataOutFilter& data_filter,
-  const bool                        write_mesh_file,
-  const std::string&                mesh_filename,
-  const std::string&                solution_filename,
-  MPI_Comm                          comm)
+  const std::vector<Patch<dim, spacedim>> & /*patches*/,
+  const DataOutBase::DataOutFilter & data_filter,
+  const bool                         write_mesh_file,
+  const std::string &                mesh_filename,
+  const std::string &                solution_filename,
+  MPI_Comm                           comm)
 {
   AssertThrow(
     spacedim >= 2,
@@ -7610,7 +7618,7 @@ DataOutBase::write_hdf5_parallel(
 template <int dim, int spacedim>
 void
 DataOutInterface<dim, spacedim>::write(
-  std::ostream&                   out,
+  std::ostream &                  out,
   const DataOutBase::OutputFormat output_format_) const
 {
   DataOutBase::OutputFormat output_format = output_format_;
@@ -7687,31 +7695,33 @@ DataOutInterface<dim, spacedim>::set_default_format(
 template <int dim, int spacedim>
 template <typename FlagType>
 void
-DataOutInterface<dim, spacedim>::set_flags(const FlagType& flags)
+DataOutInterface<dim, spacedim>::set_flags(const FlagType & flags)
 {
   // The price for not writing ten duplicates of this function is some loss in
   // type safety.
   if(typeid(flags) == typeid(dx_flags))
-    dx_flags = *reinterpret_cast<const DataOutBase::DXFlags*>(&flags);
+    dx_flags = *reinterpret_cast<const DataOutBase::DXFlags *>(&flags);
   else if(typeid(flags) == typeid(ucd_flags))
-    ucd_flags = *reinterpret_cast<const DataOutBase::UcdFlags*>(&flags);
+    ucd_flags = *reinterpret_cast<const DataOutBase::UcdFlags *>(&flags);
   else if(typeid(flags) == typeid(povray_flags))
-    povray_flags = *reinterpret_cast<const DataOutBase::PovrayFlags*>(&flags);
+    povray_flags = *reinterpret_cast<const DataOutBase::PovrayFlags *>(&flags);
   else if(typeid(flags) == typeid(eps_flags))
-    eps_flags = *reinterpret_cast<const DataOutBase::EpsFlags*>(&flags);
+    eps_flags = *reinterpret_cast<const DataOutBase::EpsFlags *>(&flags);
   else if(typeid(flags) == typeid(gmv_flags))
-    gmv_flags = *reinterpret_cast<const DataOutBase::GmvFlags*>(&flags);
+    gmv_flags = *reinterpret_cast<const DataOutBase::GmvFlags *>(&flags);
   else if(typeid(flags) == typeid(tecplot_flags))
-    tecplot_flags = *reinterpret_cast<const DataOutBase::TecplotFlags*>(&flags);
+    tecplot_flags
+      = *reinterpret_cast<const DataOutBase::TecplotFlags *>(&flags);
   else if(typeid(flags) == typeid(vtk_flags))
-    vtk_flags = *reinterpret_cast<const DataOutBase::VtkFlags*>(&flags);
+    vtk_flags = *reinterpret_cast<const DataOutBase::VtkFlags *>(&flags);
   else if(typeid(flags) == typeid(svg_flags))
-    svg_flags = *reinterpret_cast<const DataOutBase::SvgFlags*>(&flags);
+    svg_flags = *reinterpret_cast<const DataOutBase::SvgFlags *>(&flags);
   else if(typeid(flags) == typeid(gnuplot_flags))
-    gnuplot_flags = *reinterpret_cast<const DataOutBase::GnuplotFlags*>(&flags);
+    gnuplot_flags
+      = *reinterpret_cast<const DataOutBase::GnuplotFlags *>(&flags);
   else if(typeid(flags) == typeid(deal_II_intermediate_flags))
     deal_II_intermediate_flags
-      = *reinterpret_cast<const DataOutBase::Deal_II_IntermediateFlags*>(
+      = *reinterpret_cast<const DataOutBase::Deal_II_IntermediateFlags *>(
         &flags);
   else
     Assert(false, ExcNotImplemented());
@@ -7730,7 +7740,7 @@ DataOutInterface<dim, spacedim>::default_suffix(
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::declare_parameters(ParameterHandler& prm)
+DataOutInterface<dim, spacedim>::declare_parameters(ParameterHandler & prm)
 {
   prm.declare_entry("Output format",
                     "gnuplot",
@@ -7780,9 +7790,9 @@ DataOutInterface<dim, spacedim>::declare_parameters(ParameterHandler& prm)
 
 template <int dim, int spacedim>
 void
-DataOutInterface<dim, spacedim>::parse_parameters(ParameterHandler& prm)
+DataOutInterface<dim, spacedim>::parse_parameters(ParameterHandler & prm)
 {
-  const std::string& output_name = prm.get("Output format");
+  const std::string & output_name = prm.get("Output format");
   default_fmt          = DataOutBase::parse_output_format(output_name);
   default_subdivisions = prm.get_integer("Subdivisions");
 
@@ -7865,7 +7875,7 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
     for(unsigned int n_th_vector = 0; n_th_vector < ranges.size();
         ++n_th_vector)
       {
-        const std::string& name = std::get<2>(ranges[n_th_vector]);
+        const std::string & name = std::get<2>(ranges[n_th_vector]);
         if(name != "")
           {
             Assert(
@@ -7884,7 +7894,7 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
     for(unsigned int data_set = 0; data_set < n_data_sets; ++data_set)
       if(data_set_written[data_set] == false)
         {
-          const std::string& name = data_names[data_set];
+          const std::string & name = data_names[data_set];
           Assert(
             all_names.find(name) == all_names.end(),
             ExcMessage("Error: names of fields in DataOut need to be unique, "
@@ -7900,7 +7910,7 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
 
 template <int dim, int spacedim>
 void
-DataOutReader<dim, spacedim>::read(std::istream& in)
+DataOutReader<dim, spacedim>::read(std::istream & in)
 {
   AssertThrow(in, ExcIO());
 
@@ -8013,11 +8023,11 @@ DataOutReader<dim, spacedim>::read(std::istream& in)
 
 template <int dim, int spacedim>
 void
-DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim>& source)
+DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim> & source)
 {
   typedef typename dealii::DataOutBase::Patch<dim, spacedim> Patch;
 
-  const std::vector<Patch>& source_patches = source.get_patches();
+  const std::vector<Patch> & source_patches = source.get_patches();
   Assert(patches.size() != 0, DataOutBase::ExcNoPatches());
   Assert(source_patches.size() != 0, DataOutBase::ExcNoPatches());
   // check equality of component
@@ -8075,7 +8085,7 @@ DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim>& source)
 }
 
 template <int dim, int spacedim>
-const std::vector<typename dealii::DataOutBase::Patch<dim, spacedim>>&
+const std::vector<typename dealii::DataOutBase::Patch<dim, spacedim>> &
 DataOutReader<dim, spacedim>::get_patches() const
 {
   return patches;
@@ -8108,30 +8118,30 @@ XDMFEntry::XDMFEntry()
     space_dimension(numbers::invalid_unsigned_int)
 {}
 
-XDMFEntry::XDMFEntry(const std::string& filename,
-                     const double       time,
-                     const unsigned int nodes,
-                     const unsigned int cells,
-                     const unsigned int dim)
+XDMFEntry::XDMFEntry(const std::string & filename,
+                     const double        time,
+                     const unsigned int  nodes,
+                     const unsigned int  cells,
+                     const unsigned int  dim)
   : XDMFEntry(filename, filename, time, nodes, cells, dim, dim)
 {}
 
-XDMFEntry::XDMFEntry(const std::string& mesh_filename,
-                     const std::string& solution_filename,
-                     const double       time,
-                     const unsigned int nodes,
-                     const unsigned int cells,
-                     const unsigned int dim)
+XDMFEntry::XDMFEntry(const std::string & mesh_filename,
+                     const std::string & solution_filename,
+                     const double        time,
+                     const unsigned int  nodes,
+                     const unsigned int  cells,
+                     const unsigned int  dim)
   : XDMFEntry(mesh_filename, solution_filename, time, nodes, cells, dim, dim)
 {}
 
-XDMFEntry::XDMFEntry(const std::string& mesh_filename,
-                     const std::string& solution_filename,
-                     const double       time,
-                     const unsigned int nodes,
-                     const unsigned int cells,
-                     const unsigned int dim,
-                     const unsigned int spacedim)
+XDMFEntry::XDMFEntry(const std::string & mesh_filename,
+                     const std::string & solution_filename,
+                     const double        time,
+                     const unsigned int  nodes,
+                     const unsigned int  cells,
+                     const unsigned int  dim,
+                     const unsigned int  spacedim)
   : valid(true),
     h5_sol_filename(solution_filename),
     h5_mesh_filename(mesh_filename),
@@ -8143,8 +8153,8 @@ XDMFEntry::XDMFEntry(const std::string& mesh_filename,
 {}
 
 void
-XDMFEntry::add_attribute(const std::string& attr_name,
-                         const unsigned int dimension)
+XDMFEntry::add_attribute(const std::string & attr_name,
+                         const unsigned int  dimension)
 {
   attribute_dims[attr_name] = dimension;
 }
@@ -8246,8 +8256,8 @@ XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
 namespace DataOutBase
 {
   template <int dim, int spacedim>
-  std::ostream&
-  operator<<(std::ostream& out, const Patch<dim, spacedim>& patch)
+  std::ostream &
+  operator<<(std::ostream & out, const Patch<dim, spacedim> & patch)
   {
     // write a header line
     out << "[deal.II intermediate Patch<" << dim << ',' << spacedim << ">]"
@@ -8278,8 +8288,8 @@ namespace DataOutBase
   }
 
   template <int dim, int spacedim>
-  std::istream&
-  operator>>(std::istream& in, Patch<dim, spacedim>& patch)
+  std::istream &
+  operator>>(std::istream & in, Patch<dim, spacedim> & patch)
   {
     AssertThrow(in, ExcIO());
 

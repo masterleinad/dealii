@@ -43,7 +43,7 @@
  * eps in right hand side of the third equation).
  */
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   std::ofstream out("output");
 
@@ -68,7 +68,7 @@ main(int argc, char** argv)
 
   SUNDIALS::ARKode<VectorType> ode(data);
 
-  ode.reinit_vector = [&](VectorType& v) {
+  ode.reinit_vector = [&](VectorType & v) {
     // Three independent variables
     v.reinit(3);
   };
@@ -79,7 +79,7 @@ main(int argc, char** argv)
   FullMatrix<double> J(3, 3);
 
   ode.implicit_function
-    = [&](double, const VectorType& y, VectorType& ydot) -> int {
+    = [&](double, const VectorType & y, VectorType & ydot) -> int {
     ydot[0] = 0;
     ydot[1] = 0;
     ydot[2] = (b - y[2]) / eps;
@@ -87,7 +87,7 @@ main(int argc, char** argv)
   };
 
   ode.explicit_function
-    = [&](double, const VectorType& y, VectorType& ydot) -> int {
+    = [&](double, const VectorType & y, VectorType & ydot) -> int {
     ydot[0] = a - (y[2] + 1) * y[0] + y[1] * y[0] * y[0];
     ydot[1] = y[2] * y[0] - y[1] * y[0] * y[0];
     ydot[2] = -y[2] * y[0];
@@ -97,9 +97,9 @@ main(int argc, char** argv)
   ode.setup_jacobian = [&](const int,
                            const double,
                            const double gamma,
-                           const VectorType&,
-                           const VectorType&,
-                           bool& j_is_current) -> int {
+                           const VectorType &,
+                           const VectorType &,
+                           bool & j_is_current) -> int {
     J       = 0;
     J(0, 0) = 1;
     J(1, 1) = 1;
@@ -111,16 +111,16 @@ main(int argc, char** argv)
 
   ode.solve_jacobian_system = [&](const double t,
                                   const double gamma,
-                                  const VectorType&,
-                                  const VectorType&,
-                                  const VectorType& src,
-                                  VectorType&       dst) -> int {
+                                  const VectorType &,
+                                  const VectorType &,
+                                  const VectorType & src,
+                                  VectorType &       dst) -> int {
     J.vmult(dst, src);
     return 0;
   };
 
   ode.output_step = [&](const double       t,
-                        const VectorType&  sol,
+                        const VectorType & sol,
                         const unsigned int step_number) -> int {
     out << t << " " << sol[0] << " " << sol[1] << " " << sol[2] << std::endl;
     return 0;

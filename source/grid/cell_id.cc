@@ -32,24 +32,24 @@ CellId::CellId()
     child_indices[i] = std::numeric_limits<char>::max();
 }
 
-CellId::CellId(const unsigned int               coarse_cell_id,
-               const std::vector<std::uint8_t>& id)
+CellId::CellId(const unsigned int                coarse_cell_id,
+               const std::vector<std::uint8_t> & id)
   : coarse_cell_id(coarse_cell_id), n_child_indices(id.size())
 {
   Assert(n_child_indices < child_indices.size(), ExcInternalError());
   std::copy(id.begin(), id.end(), child_indices.begin());
 }
 
-CellId::CellId(const unsigned int  coarse_cell_id,
-               const unsigned int  n_child_indices,
-               const std::uint8_t* id)
+CellId::CellId(const unsigned int   coarse_cell_id,
+               const unsigned int   n_child_indices,
+               const std::uint8_t * id)
   : coarse_cell_id(coarse_cell_id), n_child_indices(n_child_indices)
 {
   Assert(n_child_indices < child_indices.size(), ExcInternalError());
   memcpy(&(child_indices[0]), id, n_child_indices);
 }
 
-CellId::CellId(const CellId::binary_type& binary_representation)
+CellId::CellId(const CellId::binary_type & binary_representation)
 {
   // The first entry stores the coarse cell id
   coarse_cell_id = binary_representation[0];
@@ -140,7 +140,7 @@ CellId::to_string() const
 
 template <int dim, int spacedim>
 typename Triangulation<dim, spacedim>::cell_iterator
-CellId::to_cell(const Triangulation<dim, spacedim>& tria) const
+CellId::to_cell(const Triangulation<dim, spacedim> & tria) const
 {
   typename Triangulation<dim, spacedim>::cell_iterator cell(
     &tria, 0, coarse_cell_id);

@@ -26,7 +26,7 @@
 using namespace dealii;
 
 int
-main(int argc, const char* argv[])
+main(int argc, const char * argv[])
 {
   initlog();
 

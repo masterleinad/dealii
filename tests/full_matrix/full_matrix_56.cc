@@ -36,7 +36,7 @@ const double entries3[9] = {1.808621732261680,
 // Create a positive definite random matrix
 
 void
-random_matrix(FullMatrix<double>& A)
+random_matrix(FullMatrix<double> & A)
 {
   for(unsigned int i = 0; i < A.m(); ++i)
     for(unsigned int j = 0; j < A.n(); ++j)

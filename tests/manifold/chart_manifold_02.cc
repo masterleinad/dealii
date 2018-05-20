@@ -39,19 +39,19 @@ public:
   }
 
   virtual Point<spacedim>
-  pull_back(const Point<spacedim>& space_point) const override
+  pull_back(const Point<spacedim> & space_point) const override
   {
     return space_point;
   }
 
   virtual Point<spacedim>
-  push_forward(const Point<spacedim>& chart_point) const override
+  push_forward(const Point<spacedim> & chart_point) const override
   {
     return chart_point;
   }
 
   virtual DerivativeForm<1, spacedim, spacedim>
-  push_forward_gradient(const Point<spacedim>& chart_point) const override
+  push_forward_gradient(const Point<spacedim> & chart_point) const override
   {
     DerivativeForm<1, spacedim, spacedim> x;
     for(unsigned int d = 0; d < spacedim; ++d)
@@ -83,7 +83,7 @@ test(unsigned int ref = 1)
       deallog << "Cell: " << cell << std::endl;
       for(unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
         {
-          const typename Triangulation<dim, spacedim>::face_iterator& face
+          const typename Triangulation<dim, spacedim>::face_iterator & face
             = cell->face(f);
           if(face->get_manifold().get_new_point_on_face(face).distance(
                face->center())

@@ -79,14 +79,14 @@ test_compute_pt_loc(unsigned int n_points)
   // are the same as std::get<2>(cell_qpoint_map)[i]
   for(unsigned int i = 0; i < std::get<0>(cell_qpoint_map).size(); ++i)
     {
-      auto& cell      = std::get<0>(cell_qpoint_map)[i];
-      auto& quad      = std::get<1>(cell_qpoint_map)[i];
-      auto& local_map = std::get<2>(cell_qpoint_map)[i];
+      auto & cell      = std::get<0>(cell_qpoint_map)[i];
+      auto & quad      = std::get<1>(cell_qpoint_map)[i];
+      auto & local_map = std::get<2>(cell_qpoint_map)[i];
 
       // Given the std::get<1>(cell_qpoint_map) of the current cell, compute the real points
       FEValues<dim> fev(fe, quad, update_quadrature_points);
       fev.reinit(cell);
-      const auto& real_quad = fev.get_quadrature_points();
+      const auto & real_quad = fev.get_quadrature_points();
 
       for(unsigned int q = 0; q < real_quad.size(); ++q)
         {

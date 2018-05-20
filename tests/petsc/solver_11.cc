@@ -24,7 +24,7 @@
 #include <deal.II/lac/petsc_sparse_matrix.h>
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 

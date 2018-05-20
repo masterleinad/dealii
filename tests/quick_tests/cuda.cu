@@ -21,7 +21,7 @@
 using namespace dealii;
 
 __global__ void
-double_value(double* x, double* y)
+double_value(double * x, double * y)
 {
   y[threadIdx.x] = 2. * x[threadIdx.x];
 }
@@ -36,8 +36,8 @@ main()
   std::array<double, n> host_y{};
 
   // Copy input data to device.
-  double*     device_x;
-  double*     device_y;
+  double *    device_x;
+  double *    device_y;
   cudaError_t cuda_error = cudaMalloc(&device_x, n * sizeof(double));
   AssertCuda(cuda_error);
   cuda_error = cudaMalloc(&device_y, n * sizeof(double));

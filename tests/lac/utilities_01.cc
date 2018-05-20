@@ -31,7 +31,7 @@
 #include <typeinfo>
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
   deallog << std::setprecision(6);
@@ -76,7 +76,7 @@ main(int argc, char** argv)
           std::vector<double>                  estimated_eigenvalues;
           SolverCG<PETScWrappers::MPI::Vector> solver(control);
           solver.connect_eigenvalues_slot(
-            [&estimated_eigenvalues](const std::vector<double>& ev) -> void {
+            [&estimated_eigenvalues](const std::vector<double> & ev) -> void {
               estimated_eigenvalues = ev;
             });
           y = v0;
@@ -85,7 +85,7 @@ main(int argc, char** argv)
             {
               solver.solve(A, x, y, preconditioner);
             }
-          catch(SolverControl::NoConvergence&)
+          catch(SolverControl::NoConvergence &)
             {}
 
           deallog << "CG " << estimated_eigenvalues.back() << std::endl;

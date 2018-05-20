@@ -35,7 +35,7 @@ template <int dim, int spacedim>
 class SignalListener
 {
 public:
-  SignalListener(Triangulation<dim, spacedim>& tria_in)
+  SignalListener(Triangulation<dim, spacedim> & tria_in)
     : n_active_cells(tria_in.n_active_cells()), tria(tria_in)
   {
     tria_in.signals.post_refinement_on_cell.connect(
@@ -58,7 +58,7 @@ public:
 private:
   void
   count_on_refine(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell)
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell)
   {
     n_active_cells += cell->n_children();
     --n_active_cells;
@@ -68,7 +68,7 @@ private:
 
   void
   count_on_coarsen(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell)
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell)
   {
     ++n_active_cells;
     n_active_cells -= cell->n_children();
@@ -76,8 +76,8 @@ private:
     return;
   }
 
-  int                                 n_active_cells;
-  const Triangulation<dim, spacedim>& tria;
+  int                                  n_active_cells;
+  const Triangulation<dim, spacedim> & tria;
 };
 
 template <int dim, int spacedim>
@@ -173,7 +173,7 @@ test()
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, /* int max_num_threads */ 1);

@@ -22,7 +22,7 @@
 typedef AlignedVector<unsigned int> VEC;
 typedef AlignedVector<VEC>          VECVEC;
 void
-print_vec(VECVEC& v)
+print_vec(VECVEC & v)
 {
   for(unsigned int i = 0; i < v.size(); ++i)
     {

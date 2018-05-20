@@ -30,7 +30,7 @@ class CompareFunction : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim>& p, const unsigned int) const
+  value(const Point<dim> & p, const unsigned int) const
   {
     double value = 1.;
     for(unsigned int d = 0; d < dim; ++d)
@@ -40,7 +40,7 @@ public:
     return value;
   }
   virtual Tensor<1, dim>
-  gradient(const Point<dim>& p, const unsigned int) const
+  gradient(const Point<dim> & p, const unsigned int) const
   {
     Tensor<1, dim> grad;
     for(unsigned int d = 0; d < dim; ++d)
@@ -54,7 +54,7 @@ public:
     return grad;
   }
   virtual SymmetricTensor<2, dim>
-  hessian(const Point<dim>& p, const unsigned int) const
+  hessian(const Point<dim> & p, const unsigned int) const
   {
     SymmetricTensor<2, dim> hess;
     for(unsigned int d = 0; d < dim; ++d)

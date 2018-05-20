@@ -37,7 +37,7 @@ public:
             << std::endl;
   }
 
-  C(const C&)
+  C(const C &)
   {
     object_number = ::object_number++;
     deallog << "copy constructor. Object number " << object_number << std::endl;
@@ -50,14 +50,14 @@ public:
 
   template <typename Archive>
   void
-  serialize(Archive& ar, const unsigned int version)
+  serialize(Archive & ar, const unsigned int version)
   {
     deallog << "Serializing object number " << object_number << " via "
             << typeid(Archive).name() << std::endl;
   }
 
   bool
-  operator==(const C&) const
+  operator==(const C &) const
   {
     return true;
   }
@@ -68,7 +68,7 @@ private:
 
 template <typename T>
 bool
-compare(const std::pair<T*, T*>& t1, const std::pair<T*, T*>& t2)
+compare(const std::pair<T *, T *> & t1, const std::pair<T *, T *> & t2)
 {
   return (*t1.first == *t2.first) && (*t1.second == *t2.second);
 }
@@ -77,9 +77,9 @@ void
 test()
 {
   {
-    C                 c;
-    std::pair<C*, C*> pair_1(&c, &c);
-    std::pair<C*, C*> pair_2;
+    C                   c;
+    std::pair<C *, C *> pair_1(&c, &c);
+    std::pair<C *, C *> pair_2;
 
     verify(pair_1, pair_2);
 

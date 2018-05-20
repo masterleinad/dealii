@@ -23,7 +23,7 @@
 using namespace dealii;
 
 std::pair<bool, unsigned int>
-pred_ind(const TableIndices<2>& ind)
+pred_ind(const TableIndices<2> & ind)
 {
   return std::make_pair(true, ind[0] + ind[1]);
 }

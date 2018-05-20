@@ -78,7 +78,7 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 };
 
 template <int dim>
@@ -89,12 +89,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> & p,
                           const unsigned int /*component*/) const
 {
   double return_value = 0;
@@ -106,7 +106,7 @@ RightHandSide<dim>::value(const Point<dim>& p,
 
 template <int dim>
 double
-BoundaryValues<dim>::value(const Point<dim>& p,
+BoundaryValues<dim>::value(const Point<dim> & p,
                            const unsigned int /*component*/) const
 {
   return p.square();
@@ -173,7 +173,7 @@ LaplaceProblem<dim>::assemble_system()
     {
       x_fe_values.reinit(cell);
 
-      const FEValues<dim>& fe_values = x_fe_values.get_present_fe_values();
+      const FEValues<dim> & fe_values = x_fe_values.get_present_fe_values();
 
       cell_matrix = 0;
       cell_rhs    = 0;

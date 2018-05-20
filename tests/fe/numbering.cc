@@ -22,7 +22,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 void
-check(const FE_Q<dim>& fe)
+check(const FE_Q<dim> & fe)
 {
   Assert(fe.n_components() == 1, ExcInternalError());
 

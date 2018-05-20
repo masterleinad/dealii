@@ -92,12 +92,12 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const;
+  value(const Point<dim> & p, const unsigned int component) const;
 };
 
 template <int dim>
 double
-RightHandSide<dim>::value(const Point<dim>& p,
+RightHandSide<dim>::value(const Point<dim> & p,
                           const unsigned int /*component*/) const
 {
   double product = 1;
@@ -180,7 +180,7 @@ AdvectionProblem<dim>::test_equality()
   // entries in constrained lines because
   // the diagonal is set differently
 
-  const BlockIndices& index_mapping = sparsity_pattern.get_column_indices();
+  const BlockIndices & index_mapping = sparsity_pattern.get_column_indices();
 
   for(unsigned int i = 0; i < reference_matrix.m(); ++i)
     {

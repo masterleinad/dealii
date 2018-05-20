@@ -74,7 +74,7 @@ namespace Step36
   class EigenvalueProblem
   {
   public:
-    EigenvalueProblem(const std::string& prm_file);
+    EigenvalueProblem(const std::string & prm_file);
     void
     run();
 
@@ -122,7 +122,7 @@ namespace Step36
   // their values from the input file whose name is specified as an argument
   // to this function:
   template <int dim>
-  EigenvalueProblem<dim>::EigenvalueProblem(const std::string& prm_file)
+  EigenvalueProblem<dim>::EigenvalueProblem(const std::string & prm_file)
     : fe(1), dof_handler(triangulation)
   {
     //TODO investigate why the minimum number of refinement steps required to obtain the correct eigenvalue degeneracies is 6
@@ -469,7 +469,7 @@ namespace Step36
 
 // @sect3{The <code>main</code> function}
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   try
     {
@@ -489,7 +489,7 @@ main(int argc, char** argv)
 
   // All the while, we are watching out if any exceptions should have been
   // generated. If that is so, we panic...
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

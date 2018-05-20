@@ -31,7 +31,7 @@ std::ofstream logfile("output");
 
 template <int dim>
 void
-output(const Triangulation<dim>& tria)
+output(const Triangulation<dim> & tria)
 {
   deallog << "  " << tria.n_active_cells() << std::endl;
   deallog << "  " << tria.n_cells() << std::endl;
@@ -68,7 +68,7 @@ output(const Triangulation<dim>& tria)
 
 template <int dim>
 void
-test(const char* filename)
+test(const char * filename)
 {
   Triangulation<dim> tria(Triangulation<dim>::none, true);
   GridIn<dim>        gi;
@@ -79,7 +79,7 @@ test(const char* filename)
     {
       gi.read_xda(in);
     }
-  catch(typename Triangulation<dim>::DistortedCellList& dcv)
+  catch(typename Triangulation<dim>::DistortedCellList & dcv)
     {
       // ignore the exception that we
       // get because the mesh has
@@ -87,7 +87,7 @@ test(const char* filename)
       deallog << dcv.distorted_cells.size() << " cells are distorted."
               << std::endl;
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       deallog << "  caught exception:" << std::endl << exc.what() << std::endl;
       return;

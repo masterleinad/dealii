@@ -145,7 +145,7 @@ namespace internal
          */
         template <class Archive>
         void
-        serialize(Archive& ar, const unsigned int version);
+        serialize(Archive & ar, const unsigned int version);
       };
 
       /**
@@ -197,7 +197,8 @@ namespace internal
        */
       template <int dim, int spacedim>
       dealii::TriaRawIterator<dealii::TriaAccessor<G::dimension, dim, spacedim>>
-      next_free_single_object(const dealii::Triangulation<dim, spacedim>& tria);
+      next_free_single_object(
+        const dealii::Triangulation<dim, spacedim> & tria);
 
       /**
        * Return an iterator to the next free slot for a pair of objects. This
@@ -212,7 +213,7 @@ namespace internal
        */
       template <int dim, int spacedim>
       dealii::TriaRawIterator<dealii::TriaAccessor<G::dimension, dim, spacedim>>
-      next_free_pair_object(const dealii::Triangulation<dim, spacedim>& tria);
+      next_free_pair_object(const dealii::Triangulation<dim, spacedim> & tria);
 
       /**
        * Return an iterator to the next free slot for a pair of hexes. Only
@@ -220,8 +221,8 @@ namespace internal
        */
       template <int dim, int spacedim>
       typename dealii::Triangulation<dim, spacedim>::raw_hex_iterator
-      next_free_hex(const dealii::Triangulation<dim, spacedim>& tria,
-                    const unsigned int                          level);
+      next_free_hex(const dealii::Triangulation<dim, spacedim> & tria,
+                    const unsigned int                           level);
 
       /**
        * Clear all the data contained in this object.
@@ -249,19 +250,19 @@ namespace internal
       /**
        * Access to user pointers.
        */
-      void*&
+      void *&
       user_pointer(const unsigned int i);
 
       /**
        * Read-only access to user pointers.
        */
-      const void*
+      const void *
       user_pointer(const unsigned int i) const;
 
       /**
        * Access to user indices.
        */
-      unsigned int&
+      unsigned int &
       user_index(const unsigned int i);
 
       /**
@@ -310,7 +311,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
 
       /**
        * Exception
@@ -356,7 +357,7 @@ namespace internal
         {
           /// The entry used as user
           /// pointer.
-          void* p;
+          void * p;
           /// The entry used as user
           /// index.
           unsigned int i;
@@ -376,7 +377,7 @@ namespace internal
          */
         template <class Archive>
         void
-        serialize(Archive& ar, const unsigned int version);
+        serialize(Archive & ar, const unsigned int version);
       };
 
       /**
@@ -495,7 +496,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
 
     /**
@@ -561,7 +562,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
     };
 
     //----------------------------------------------------------------------//
@@ -583,7 +584,7 @@ namespace internal
     template <class Archive>
     void
     TriaObjects<G>::BoundaryOrMaterialId::serialize(
-      Archive& ar,
+      Archive & ar,
       const unsigned int /*version*/)
     {
       // serialize this
@@ -595,9 +596,9 @@ namespace internal
       // sure we get all
       // bits
       if(sizeof(material_id) > sizeof(boundary_id))
-        ar& material_id;
+        ar & material_id;
       else
-        ar& boundary_id;
+        ar & boundary_id;
     }
 
     template <typename G>
@@ -609,7 +610,7 @@ namespace internal
     }
 
     template <typename G>
-    inline void*&
+    inline void *&
     TriaObjects<G>::user_pointer(const unsigned int i)
     {
       Assert(user_data_type == data_unknown || user_data_type == data_pointer,
@@ -621,7 +622,7 @@ namespace internal
     }
 
     template <typename G>
-    inline const void*
+    inline const void *
     TriaObjects<G>::user_pointer(const unsigned int i) const
     {
       Assert(user_data_type == data_unknown || user_data_type == data_pointer,
@@ -633,7 +634,7 @@ namespace internal
     }
 
     template <typename G>
-    inline unsigned int&
+    inline unsigned int &
     TriaObjects<G>::user_index(const unsigned int i)
     {
       Assert(user_data_type == data_unknown || user_data_type == data_index,
@@ -691,43 +692,43 @@ namespace internal
     template <typename G>
     template <class Archive>
     void
-    TriaObjects<G>::UserData::serialize(Archive& ar, const unsigned int)
+    TriaObjects<G>::UserData::serialize(Archive & ar, const unsigned int)
     {
       // serialize this as an integer
-      ar& i;
+      ar & i;
     }
 
     template <typename G>
     template <class Archive>
     void
-    TriaObjects<G>::serialize(Archive& ar, const unsigned int)
+    TriaObjects<G>::serialize(Archive & ar, const unsigned int)
     {
-      ar& cells& children;
-      ar&        refinement_cases;
-      ar&        used;
-      ar&        user_flags;
-      ar&        boundary_or_material_id;
-      ar&        manifold_id;
-      ar& next_free_single& next_free_pair& reverse_order_next_free_single;
-      ar& user_data& user_data_type;
+      ar & cells & children;
+      ar &         refinement_cases;
+      ar &         used;
+      ar &         user_flags;
+      ar &         boundary_or_material_id;
+      ar &         manifold_id;
+      ar & next_free_single & next_free_pair & reverse_order_next_free_single;
+      ar & user_data & user_data_type;
     }
 
     template <class Archive>
     void
-    TriaObjectsHex::serialize(Archive& ar, const unsigned int version)
+    TriaObjectsHex::serialize(Archive & ar, const unsigned int version)
     {
       this->TriaObjects<TriaObject<3>>::serialize(ar, version);
 
-      ar& face_orientations& face_flips& face_rotations;
+      ar & face_orientations & face_flips & face_rotations;
     }
 
     template <class Archive>
     void
-    TriaObjectsQuad3D::serialize(Archive& ar, const unsigned int version)
+    TriaObjectsQuad3D::serialize(Archive & ar, const unsigned int version)
     {
       this->TriaObjects<TriaObject<2>>::serialize(ar, version);
 
-      ar& line_orientations;
+      ar & line_orientations;
     }
 
     //----------------------------------------------------------------------//
@@ -761,7 +762,7 @@ namespace internal
     template <int dim, int spacedim>
     dealii::TriaRawIterator<dealii::TriaAccessor<G::dimension, dim, spacedim>>
     TriaObjects<G>::next_free_single_object(
-      const dealii::Triangulation<dim, spacedim>& tria)
+      const dealii::Triangulation<dim, spacedim> & tria)
     {
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 
@@ -811,7 +812,7 @@ namespace internal
     template <int dim, int spacedim>
     dealii::TriaRawIterator<dealii::TriaAccessor<G::dimension, dim, spacedim>>
     TriaObjects<G>::next_free_pair_object(
-      const dealii::Triangulation<dim, spacedim>& tria)
+      const dealii::Triangulation<dim, spacedim> & tria)
     {
       // TODO: Think of a way to ensure that we are using the correct triangulation, i.e. the one containing *this.
 

@@ -25,7 +25,7 @@
 
 template <int dim>
 void
-check_this(const DoFHandler<dim>& dof_handler)
+check_this(const DoFHandler<dim> & dof_handler)
 {
   // use a higher output accuracy for this
   // test. the reason is that many of the

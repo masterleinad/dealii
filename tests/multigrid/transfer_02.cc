@@ -41,8 +41,8 @@ using namespace std;
 
 template <int dim, typename number, int spacedim>
 void
-reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
-              MGLevelObject<dealii::Vector<number>>&   v)
+reinit_vector(const dealii::DoFHandler<dim, spacedim> & mg_dof,
+              MGLevelObject<dealii::Vector<number>> &   v)
 {
   for(unsigned int level = v.min_level(); level <= v.max_level(); ++level)
     {
@@ -53,7 +53,7 @@ reinit_vector(const dealii::DoFHandler<dim, spacedim>& mg_dof,
 
 template <int dim>
 void
-refine_mesh(Triangulation<dim>& triangulation)
+refine_mesh(Triangulation<dim> & triangulation)
 {
   bool cell_refined = false;
   for(typename Triangulation<dim>::active_cell_iterator cell
@@ -80,7 +80,7 @@ refine_mesh(Triangulation<dim>& triangulation)
 
 template <int dim>
 void
-check_simple(const FiniteElement<dim>& fe)
+check_simple(const FiniteElement<dim> & fe)
 {
   deallog << fe.get_name() << std::endl;
 

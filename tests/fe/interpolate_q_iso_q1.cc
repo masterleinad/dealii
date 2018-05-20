@@ -22,7 +22,7 @@
 
 template <int dim>
 void
-check(const Function<dim>& f, const unsigned int degree)
+check(const Function<dim> & f, const unsigned int degree)
 {
   FE_Q_iso_Q1<dim> fe(degree);
   deallog << fe.get_name() << ' ';

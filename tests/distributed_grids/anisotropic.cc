@@ -27,7 +27,7 @@
 
 template <int dim>
 void
-test(std::ostream& /*out*/)
+test(std::ostream & /*out*/)
 {
   parallel::distributed::Triangulation<dim> tr(MPI_COMM_WORLD);
 
@@ -38,14 +38,14 @@ test(std::ostream& /*out*/)
     {
       tr.execute_coarsening_and_refinement();
     }
-  catch(ExceptionBase& e)
+  catch(ExceptionBase & e)
     {
       deallog << e.get_exc_name() << std::endl;
     }
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   deal_II_exceptions::disable_abort_on_exception();
 

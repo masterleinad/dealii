@@ -53,9 +53,9 @@ namespace Utilities
       ghost_indices_data.set_size(size);
     }
 
-    Partitioner::Partitioner(const IndexSet& locally_owned_indices,
-                             const IndexSet& ghost_indices_in,
-                             const MPI_Comm  communicator_in)
+    Partitioner::Partitioner(const IndexSet & locally_owned_indices,
+                             const IndexSet & ghost_indices_in,
+                             const MPI_Comm   communicator_in)
       : global_size(
           static_cast<types::global_dof_index>(locally_owned_indices.size())),
         n_ghost_indices_data(0),
@@ -70,8 +70,8 @@ namespace Utilities
       set_ghost_indices(ghost_indices_in);
     }
 
-    Partitioner::Partitioner(const IndexSet& locally_owned_indices,
-                             const MPI_Comm  communicator_in)
+    Partitioner::Partitioner(const IndexSet & locally_owned_indices,
+                             const MPI_Comm   communicator_in)
       : global_size(
           static_cast<types::global_dof_index>(locally_owned_indices.size())),
         n_ghost_indices_data(0),
@@ -86,9 +86,9 @@ namespace Utilities
     }
 
     void
-    Partitioner::reinit(const IndexSet& vector_space_vector_index_set,
-                        const IndexSet& read_write_vector_index_set,
-                        const MPI_Comm& communicator_in)
+    Partitioner::reinit(const IndexSet & vector_space_vector_index_set,
+                        const IndexSet & read_write_vector_index_set,
+                        const MPI_Comm & communicator_in)
     {
       have_ghost_indices = false;
       communicator       = communicator_in;
@@ -97,7 +97,7 @@ namespace Utilities
     }
 
     void
-    Partitioner::set_owned_indices(const IndexSet& locally_owned_indices)
+    Partitioner::set_owned_indices(const IndexSet & locally_owned_indices)
     {
       if(Utilities::MPI::job_supports_mpi() == true)
         {
@@ -136,8 +136,8 @@ namespace Utilities
     }
 
     void
-    Partitioner::set_ghost_indices(const IndexSet& ghost_indices_in,
-                                   const IndexSet& larger_ghost_index_set)
+    Partitioner::set_ghost_indices(const IndexSet & ghost_indices_in,
+                                   const IndexSet & larger_ghost_index_set)
     {
       // Set ghost indices from input. To be sure that no entries from the
       // locally owned range are present, subtract the locally owned indices
@@ -456,7 +456,7 @@ namespace Utilities
     }
 
     bool
-    Partitioner::is_compatible(const Partitioner& part) const
+    Partitioner::is_compatible(const Partitioner & part) const
     {
       // if the partitioner points to the same memory location as the calling
       // processor
@@ -480,7 +480,7 @@ namespace Utilities
     }
 
     bool
-    Partitioner::is_globally_compatible(const Partitioner& part) const
+    Partitioner::is_globally_compatible(const Partitioner & part) const
     {
       return Utilities::MPI::min(static_cast<int>(is_compatible(part)),
                                  communicator)

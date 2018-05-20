@@ -80,25 +80,25 @@ namespace polytest
     SimplePolynomial() : Function<dim>(2)
     {}
     void
-    vector_value_list(const std::vector<Point<dim>>& points,
-                      std::vector<Vector<double>>&   values) const;
+    vector_value_list(const std::vector<Point<dim>> & points,
+                      std::vector<Vector<double>> &   values) const;
 
     void
-    rhs_value_list(const std::vector<Point<dim>>& points,
-                   std::vector<Vector<double>>&   values) const;
+    rhs_value_list(const std::vector<Point<dim>> & points,
+                   std::vector<Vector<double>> &   values) const;
   };
   template <int dim>
   void
   SimplePolynomial<dim>::vector_value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    const std::vector<Point<dim>> & points,
+    std::vector<Vector<double>> &   values) const
   {
     Assert(dim == 2, ExcNotImplemented());
     Assert(values.size() == points.size(),
            ExcDimensionMismatch(values.size(), points.size()));
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p = points[i];
+        const Point<dim> & p = points[i];
         // non-zero curl-curl:
         values[i][0] = 0.0;
         values[i][1] = p[0] * p[0];
@@ -108,8 +108,8 @@ namespace polytest
   template <int dim>
   void
   SimplePolynomial<dim>::rhs_value_list(
-    const std::vector<Point<dim>>& points,
-    std::vector<Vector<double>>&   values) const
+    const std::vector<Point<dim>> & points,
+    std::vector<Vector<double>> &   values) const
   {
     Assert(dim == 2, ExcNotImplemented());
     Assert(values.size() == points.size(),
@@ -117,7 +117,7 @@ namespace polytest
 
     for(unsigned int i = 0; i < points.size(); ++i)
       {
-        const Point<dim>& p = points[i];
+        const Point<dim> & p = points[i];
         // non-zero curl-curl:
         values[i][0] = 0.0;
         values[i][1] = -2.0 + p[0] * p[0];

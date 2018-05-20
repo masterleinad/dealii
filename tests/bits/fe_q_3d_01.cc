@@ -59,7 +59,7 @@ namespace FE_Q_3d
 
 namespace Matrices
 {
-  const double* const constraint_matrices[]
+  const double * const constraint_matrices[]
     = {FE_Q_3d::constraint_q1, FE_Q_3d::constraint_q2};
 
   const unsigned int n_constraint_matrices

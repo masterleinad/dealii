@@ -41,10 +41,10 @@
 
 template <int dim, int fe_degree, typename Number>
 void
-helmholtz_operator(const MatrixFree<dim, Number>&                         data,
-                   LinearAlgebra::distributed::BlockVector<Number>&       dst,
-                   const LinearAlgebra::distributed::BlockVector<Number>& src,
-                   const std::pair<unsigned int, unsigned int>& cell_range)
+helmholtz_operator(const MatrixFree<dim, Number> &                         data,
+                   LinearAlgebra::distributed::BlockVector<Number> &       dst,
+                   const LinearAlgebra::distributed::BlockVector<Number> & src,
+                   const std::pair<unsigned int, unsigned int> & cell_range)
 {
   FEEvaluation<dim, fe_degree, fe_degree + 1, 2, Number> fe_eval(data);
   const unsigned int n_q_points = fe_eval.n_q_points;
@@ -74,24 +74,24 @@ public:
   static const std::size_t        n_vectors
     = VectorizedArray<Number>::n_array_elements;
 
-  MatrixFreeTest(const MatrixFree<dim, Number>& data_in) : data(data_in){};
+  MatrixFreeTest(const MatrixFree<dim, Number> & data_in) : data(data_in){};
 
   void
-  vmult(LinearAlgebra::distributed::BlockVector<Number>&       dst,
-        const LinearAlgebra::distributed::BlockVector<Number>& src) const
+  vmult(LinearAlgebra::distributed::BlockVector<Number> &       dst,
+        const LinearAlgebra::distributed::BlockVector<Number> & src) const
   {
     dst = 0;
     const std::function<void(
-      const MatrixFree<dim, Number>&,
-      LinearAlgebra::distributed::BlockVector<Number>&,
-      const LinearAlgebra::distributed::BlockVector<Number>&,
-      const std::pair<unsigned int, unsigned int>&)>
+      const MatrixFree<dim, Number> &,
+      LinearAlgebra::distributed::BlockVector<Number> &,
+      const LinearAlgebra::distributed::BlockVector<Number> &,
+      const std::pair<unsigned int, unsigned int> &)>
       wrap = helmholtz_operator<dim, fe_degree, Number>;
     data.cell_loop(wrap, dst, src);
   };
 
 private:
-  const MatrixFree<dim, Number>& data;
+  const MatrixFree<dim, Number> & data;
 };
 
 template <int dim, int fe_degree>
@@ -247,7 +247,7 @@ test()
 }
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   Utilities::MPI::MPI_InitFinalize mpi_initialization(
     argc, argv, testing_max_num_threads());

@@ -27,18 +27,18 @@
 // The function to differentiate
 template <typename NumberType>
 NumberType
-f(const NumberType& x, const NumberType& y, const NumberType& z)
+f(const NumberType & x, const NumberType & y, const NumberType & z)
 {
   return z * (x + z * y + x * y);
 }
 
 // The analytic derivative of f(x,y,z) with respect to x and y
 void
-df(const double& x,
-   const double& y,
-   const double& z,
-   double&       df_dx,
-   double&       df_dy)
+df(const double & x,
+   const double & y,
+   const double & z,
+   double &       df_dx,
+   double &       df_dy)
 {
   df_dx = z * (1.0 + y);
   df_dy = z * (z + x);

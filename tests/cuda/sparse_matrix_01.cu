@@ -25,13 +25,13 @@
 #include <deal.II/lac/vector.h>
 
 void
-check_matrix(SparseMatrix<double> const&         A,
-             CUDAWrappers::SparseMatrix<double>& A_dev)
+check_matrix(SparseMatrix<double> const &         A,
+             CUDAWrappers::SparseMatrix<double> & A_dev)
 {
   cudaError_t cuda_error_code;
-  double*     val_dev          = nullptr;
-  int*        column_index_dev = nullptr;
-  int*        row_ptr_dev      = nullptr;
+  double *    val_dev          = nullptr;
+  int *       column_index_dev = nullptr;
+  int *       row_ptr_dev      = nullptr;
   std::tie(val_dev, column_index_dev, row_ptr_dev, std::ignore)
     = A_dev.get_cusparse_matrix();
 
@@ -63,8 +63,8 @@ check_matrix(SparseMatrix<double> const&         A,
 }
 
 void
-check_vector(Vector<double> const&                         a,
-             LinearAlgebra::ReadWriteVector<double> const& b)
+check_vector(Vector<double> const &                         a,
+             LinearAlgebra::ReadWriteVector<double> const & b)
 {
   unsigned int size = a.size();
   for(unsigned int i = 0; i < size; ++i)
@@ -72,7 +72,7 @@ check_vector(Vector<double> const&                         a,
 }
 
 void
-test(Utilities::CUDA::Handle& cuda_handle)
+test(Utilities::CUDA::Handle & cuda_handle)
 {
   // Build the sparse matrix on the host
   const unsigned int   size = 10;

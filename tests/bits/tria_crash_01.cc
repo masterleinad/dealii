@@ -24,7 +24,7 @@
 #include <deal.II/grid/tria_accessor.h>
 
 bool
-predicate(const Point<3>& p, const double diameter)
+predicate(const Point<3> & p, const double diameter)
 {
   return ((p[0] - .2) * (p[0] - .2) + (p[2] - p[1] / 4) * (p[2] - p[1] / 4)
           < diameter * diameter);

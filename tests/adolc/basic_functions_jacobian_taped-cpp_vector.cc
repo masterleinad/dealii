@@ -62,7 +62,7 @@ test_reset_vector_values(const bool reset_values, const int tape_index)
       xp[i] = (i + 1.0) / (2.0 + i);
 
   // --- Functions ---
-  double* f = new double[m];
+  double * f = new double[m];
   function(tape_index, m, n, xp.data(), f);
 
   deallog << "Evaluation points:" << std::endl;
@@ -76,7 +76,7 @@ test_reset_vector_values(const bool reset_values, const int tape_index)
 
   // --- Jacobian ---
 
-  double** J = new double*[m];
+  double ** J = new double *[m];
   for(unsigned int j = 0; j < m; ++j)
     J[j] = new double[n];
 

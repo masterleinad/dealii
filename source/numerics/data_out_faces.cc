@@ -35,12 +35,12 @@ namespace internal
   {
     template <int dim, int spacedim>
     ParallelData<dim, spacedim>::ParallelData(
-      const unsigned int               n_datasets,
-      const unsigned int               n_subdivisions,
-      const std::vector<unsigned int>& n_postprocessor_outputs,
-      const Mapping<dim, spacedim>&    mapping,
+      const unsigned int                n_datasets,
+      const unsigned int                n_subdivisions,
+      const std::vector<unsigned int> & n_postprocessor_outputs,
+      const Mapping<dim, spacedim> &    mapping,
       const std::vector<
-        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>&
+        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>> &
                         finite_elements,
       const UpdateFlags update_flags)
       : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
@@ -60,8 +60,8 @@ namespace internal
     template <int dim, int spacedim>
     void
     append_patch_to_list(
-      const DataOutBase::Patch<dim - 1, spacedim>&        patch,
-      std::vector<DataOutBase::Patch<dim - 1, spacedim>>& patches)
+      const DataOutBase::Patch<dim - 1, spacedim> &        patch,
+      std::vector<DataOutBase::Patch<dim - 1, spacedim>> & patches)
     {
       patches.push_back(patch);
       patches.back().patch_index = patches.size() - 1;
@@ -79,10 +79,10 @@ DataOutFaces<dim, DoFHandlerType>::DataOutFaces(const bool so)
 template <int dim, typename DoFHandlerType>
 void
 DataOutFaces<dim, DoFHandlerType>::build_one_patch(
-  const FaceDescriptor* cell_and_face,
-  internal::DataOutFacesImplementation::ParallelData<dimension, dimension>&
-                                                      data,
-  DataOutBase::Patch<dimension - 1, space_dimension>& patch)
+  const FaceDescriptor * cell_and_face,
+  internal::DataOutFacesImplementation::ParallelData<dimension, dimension> &
+                                                       data,
+  DataOutBase::Patch<dimension - 1, space_dimension> & patch)
 {
   Assert(cell_and_face->first->is_locally_owned(), ExcNotImplemented());
 
@@ -108,14 +108,14 @@ DataOutFaces<dim, DoFHandlerType>::build_one_patch(
     {
       data.reinit_all_fe_values(
         this->dof_data, cell_and_face->first, cell_and_face->second);
-      const FEValuesBase<dimension>& fe_patch_values
+      const FEValuesBase<dimension> & fe_patch_values
         = data.get_present_fe_values(0);
 
       const unsigned int n_q_points = fe_patch_values.n_quadrature_points;
 
       // store the intermediate points
       Assert(patch.space_dim == dimension, ExcInternalError());
-      const std::vector<Point<dimension>>& q_points
+      const std::vector<Point<dimension>> & q_points
         = fe_patch_values.get_quadrature_points();
       // resize the patch.data member in order to have enough memory for the
       // quadrature points as well
@@ -134,11 +134,11 @@ DataOutFaces<dim, DoFHandlerType>::build_one_patch(
       // first fill dof_data
       for(unsigned int dataset = 0; dataset < this->dof_data.size(); ++dataset)
         {
-          const FEValuesBase<dimension>& this_fe_patch_values
+          const FEValuesBase<dimension> & this_fe_patch_values
             = data.get_present_fe_values(dataset);
           const unsigned int n_components
             = this_fe_patch_values.get_fe().n_components();
-          const DataPostprocessor<dim>* postprocessor
+          const DataPostprocessor<dim> * postprocessor
             = this->dof_data[dataset]->postprocessor;
           if(postprocessor != nullptr)
             {
@@ -310,8 +310,8 @@ DataOutFaces<dim, DoFHandlerType>::build_patches(
 template <int dim, typename DoFHandlerType>
 void
 DataOutFaces<dim, DoFHandlerType>::build_patches(
-  const Mapping<dimension>& mapping,
-  const unsigned int        n_subdivisions_)
+  const Mapping<dimension> & mapping,
+  const unsigned int         n_subdivisions_)
 {
   // Check consistency of redundant template parameter
   Assert(dim == dimension, ExcDimensionMismatch(dim, dimension));
@@ -412,7 +412,7 @@ DataOutFaces<dim, DoFHandlerType>::first_face()
 
 template <int dim, typename DoFHandlerType>
 typename DataOutFaces<dim, DoFHandlerType>::FaceDescriptor
-DataOutFaces<dim, DoFHandlerType>::next_face(const FaceDescriptor& old_face)
+DataOutFaces<dim, DoFHandlerType>::next_face(const FaceDescriptor & old_face)
 {
   FaceDescriptor face = old_face;
 

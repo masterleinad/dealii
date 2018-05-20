@@ -26,12 +26,12 @@ namespace internal
 
     template <int dim, int q_dim, class FEValuesType>
     FEValuesBase<dim, q_dim, FEValuesType>::FEValuesBase(
-      const dealii::hp::MappingCollection<dim, FEValuesType::space_dimension>&
+      const dealii::hp::MappingCollection<dim, FEValuesType::space_dimension> &
         mapping_collection,
-      const dealii::hp::FECollection<dim, FEValuesType::space_dimension>&
-                                            fe_collection,
-      const dealii::hp::QCollection<q_dim>& q_collection,
-      const UpdateFlags                     update_flags)
+      const dealii::hp::FECollection<dim, FEValuesType::space_dimension> &
+                                             fe_collection,
+      const dealii::hp::QCollection<q_dim> & q_collection,
+      const UpdateFlags                      update_flags)
       : fe_collection(&fe_collection),
         mapping_collection(&mapping_collection),
         q_collection(q_collection),
@@ -46,10 +46,10 @@ namespace internal
 
     template <int dim, int q_dim, class FEValuesType>
     FEValuesBase<dim, q_dim, FEValuesType>::FEValuesBase(
-      const dealii::hp::FECollection<dim, FEValuesType::space_dimension>&
-                                            fe_collection,
-      const dealii::hp::QCollection<q_dim>& q_collection,
-      const UpdateFlags                     update_flags)
+      const dealii::hp::FECollection<dim, FEValuesType::space_dimension> &
+                                             fe_collection,
+      const dealii::hp::QCollection<q_dim> & q_collection,
+      const UpdateFlags                      update_flags)
       : fe_collection(&fe_collection),
         mapping_collection(
           &dealii::hp::StaticMappingQ1<dim, FEValuesType::space_dimension>::
@@ -63,7 +63,7 @@ namespace internal
     {}
 
     template <int dim, int q_dim, class FEValuesType>
-    FEValuesType&
+    FEValuesType &
     FEValuesBase<dim, q_dim, FEValuesType>::select_fe_values(
       const unsigned int fe_index,
       const unsigned int mapping_index,
@@ -104,10 +104,10 @@ namespace hp
 
   template <int dim, int spacedim>
   FEValues<dim, spacedim>::FEValues(
-    const hp::MappingCollection<dim, spacedim>& mapping,
-    const hp::FECollection<dim, spacedim>&      fe_collection,
-    const hp::QCollection<dim>&                 q_collection,
-    const UpdateFlags                           update_flags)
+    const hp::MappingCollection<dim, spacedim> & mapping,
+    const hp::FECollection<dim, spacedim> &      fe_collection,
+    const hp::QCollection<dim> &                 q_collection,
+    const UpdateFlags                            update_flags)
     : internal::hp::FEValuesBase<dim, dim, dealii::FEValues<dim, spacedim>>(
         mapping,
         fe_collection,
@@ -117,9 +117,9 @@ namespace hp
 
   template <int dim, int spacedim>
   FEValues<dim, spacedim>::FEValues(
-    const hp::FECollection<dim, spacedim>& fe_collection,
-    const hp::QCollection<dim>&            q_collection,
-    const UpdateFlags                      update_flags)
+    const hp::FECollection<dim, spacedim> & fe_collection,
+    const hp::QCollection<dim> &            q_collection,
+    const UpdateFlags                       update_flags)
     : internal::hp::FEValuesBase<dim, dim, dealii::FEValues<dim, spacedim>>(
         fe_collection,
         q_collection,
@@ -178,10 +178,10 @@ namespace hp
   template <int dim, int spacedim>
   void
   FEValues<dim, spacedim>::reinit(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          q_index,
-    const unsigned int                                          mapping_index,
-    const unsigned int                                          fe_index)
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const unsigned int                                           q_index,
+    const unsigned int                                           mapping_index,
+    const unsigned int                                           fe_index)
   {
     // determine which indices we
     // should actually use
@@ -217,10 +217,10 @@ namespace hp
 
   template <int dim, int spacedim>
   FEFaceValues<dim, spacedim>::FEFaceValues(
-    const hp::MappingCollection<dim, spacedim>& mapping,
-    const hp::FECollection<dim, spacedim>&      fe_collection,
-    const hp::QCollection<dim - 1>&             q_collection,
-    const UpdateFlags                           update_flags)
+    const hp::MappingCollection<dim, spacedim> & mapping,
+    const hp::FECollection<dim, spacedim> &      fe_collection,
+    const hp::QCollection<dim - 1> &             q_collection,
+    const UpdateFlags                            update_flags)
     : internal::hp::
         FEValuesBase<dim, dim - 1, dealii::FEFaceValues<dim, spacedim>>(
           mapping,
@@ -231,9 +231,9 @@ namespace hp
 
   template <int dim, int spacedim>
   FEFaceValues<dim, spacedim>::FEFaceValues(
-    const hp::FECollection<dim, spacedim>& fe_collection,
-    const hp::QCollection<dim - 1>&        q_collection,
-    const UpdateFlags                      update_flags)
+    const hp::FECollection<dim, spacedim> & fe_collection,
+    const hp::QCollection<dim - 1> &        q_collection,
+    const UpdateFlags                       update_flags)
     : internal::hp::
         FEValuesBase<dim, dim - 1, dealii::FEFaceValues<dim, spacedim>>(
           fe_collection,
@@ -294,11 +294,11 @@ namespace hp
   template <int dim, int spacedim>
   void
   FEFaceValues<dim, spacedim>::reinit(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          q_index,
-    const unsigned int                                          mapping_index,
-    const unsigned int                                          fe_index)
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const unsigned int                                           face_no,
+    const unsigned int                                           q_index,
+    const unsigned int                                           mapping_index,
+    const unsigned int                                           fe_index)
   {
     // determine which indices we
     // should actually use
@@ -334,10 +334,10 @@ namespace hp
 
   template <int dim, int spacedim>
   FESubfaceValues<dim, spacedim>::FESubfaceValues(
-    const hp::MappingCollection<dim, spacedim>& mapping,
-    const hp::FECollection<dim, spacedim>&      fe_collection,
-    const hp::QCollection<dim - 1>&             q_collection,
-    const UpdateFlags                           update_flags)
+    const hp::MappingCollection<dim, spacedim> & mapping,
+    const hp::FECollection<dim, spacedim> &      fe_collection,
+    const hp::QCollection<dim - 1> &             q_collection,
+    const UpdateFlags                            update_flags)
     : internal::hp::
         FEValuesBase<dim, dim - 1, dealii::FESubfaceValues<dim, spacedim>>(
           mapping,
@@ -348,9 +348,9 @@ namespace hp
 
   template <int dim, int spacedim>
   FESubfaceValues<dim, spacedim>::FESubfaceValues(
-    const hp::FECollection<dim, spacedim>& fe_collection,
-    const hp::QCollection<dim - 1>&        q_collection,
-    const UpdateFlags                      update_flags)
+    const hp::FECollection<dim, spacedim> & fe_collection,
+    const hp::QCollection<dim - 1> &        q_collection,
+    const UpdateFlags                       update_flags)
     : internal::hp::
         FEValuesBase<dim, dim - 1, dealii::FESubfaceValues<dim, spacedim>>(
           fe_collection,
@@ -412,12 +412,12 @@ namespace hp
   template <int dim, int spacedim>
   void
   FESubfaceValues<dim, spacedim>::reinit(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const unsigned int                                          face_no,
-    const unsigned int                                          subface_no,
-    const unsigned int                                          q_index,
-    const unsigned int                                          mapping_index,
-    const unsigned int                                          fe_index)
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const unsigned int                                           face_no,
+    const unsigned int                                           subface_no,
+    const unsigned int                                           q_index,
+    const unsigned int                                           mapping_index,
+    const unsigned int                                           fe_index)
   {
     // determine which indices we
     // should actually use

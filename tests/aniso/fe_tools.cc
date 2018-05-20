@@ -29,9 +29,9 @@
 
 template <typename number>
 void
-print_formatted(const FullMatrix<number>& A,
-                const unsigned int        precision,
-                const unsigned int        width)
+print_formatted(const FullMatrix<number> & A,
+                const unsigned int         precision,
+                const unsigned int         width)
 {
   for(unsigned int i = 0; i < A.m(); ++i)
     {
@@ -50,7 +50,7 @@ print_formatted(const FullMatrix<number>& A,
 
 template <int dim>
 void
-test_embedding(const FiniteElement<dim>& fe)
+test_embedding(const FiniteElement<dim> & fe)
 {
   const std::string refine_case_names[8] = {"no_refinement",
                                             "cut_x",
@@ -90,9 +90,9 @@ test_embedding(const FiniteElement<dim>& fe)
 
 template <int dim>
 void
-test_projection(const FiniteElement<dim>& fe1,
-                const FiniteElement<dim>& fe2,
-                std::ostream&             out)
+test_projection(const FiniteElement<dim> & fe1,
+                const FiniteElement<dim> & fe2,
+                std::ostream &             out)
 {
   out << fe1.get_name() << " -> " << fe2.get_name() << std::endl;
 
@@ -111,7 +111,7 @@ test_projection(const FiniteElement<dim>& fe1,
 
 template <int dim>
 void
-test_projection(std::ostream& out)
+test_projection(std::ostream & out)
 {
   FE_DGQ<dim>               q0(0);
   FE_DGQ<dim>               q1(1);

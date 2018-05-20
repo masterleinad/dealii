@@ -49,17 +49,17 @@ public:
   {}
 
   virtual double
-  value(const Point<2>& p, const unsigned int component) const;
+  value(const Point<2> & p, const unsigned int component) const;
 };
 
 double
-TestFunction::value(const Point<2>& p, const unsigned int component) const
+TestFunction::value(const Point<2> & p, const unsigned int component) const
 {
   Assert(component == 0, ExcInternalError());
   return std::sin(pi * p(0)) * std::cos(pi * p(1));
 }
 
-void make_grid(Triangulation<2>& triangulation)
+void make_grid(Triangulation<2> & triangulation)
 {
   GridGenerator::hyper_cube(triangulation);
 
@@ -86,13 +86,13 @@ void make_grid(Triangulation<2>& triangulation)
 
 template <int dim>
 void
-test(const Triangulation<dim>& tria,
-     const Mapping<dim>&       mapping,
-     const FiniteElement<dim>& fe1,
-     const std::string&        fe_string1,
-     const FiniteElement<dim>& fe2,
-     const std::string&        fe_string2,
-     const unsigned int        testcase)
+test(const Triangulation<dim> & tria,
+     const Mapping<dim> &       mapping,
+     const FiniteElement<dim> & fe1,
+     const std::string &        fe_string1,
+     const FiniteElement<dim> & fe2,
+     const std::string &        fe_string2,
+     const unsigned int         testcase)
 {
   DoFHandler<dim> dof_handler1(tria);
   DoFHandler<dim> dof_handler2(tria);

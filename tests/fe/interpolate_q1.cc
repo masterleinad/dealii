@@ -24,7 +24,7 @@
 
 template <int dim>
 void
-check(const Function<dim>& f, const unsigned int degree)
+check(const Function<dim> & f, const unsigned int degree)
 {
   FE_Q<dim> fe(degree);
   deallog << fe.get_name() << ' ';
@@ -40,7 +40,7 @@ check(const Function<dim>& f, const unsigned int degree)
 
 template <int dim>
 void
-check_dg(const Function<dim>& f, const unsigned int degree)
+check_dg(const Function<dim> & f, const unsigned int degree)
 {
   FE_DGQ<dim> fe(degree);
   deallog << fe.get_name() << ' ';
@@ -56,7 +56,7 @@ check_dg(const Function<dim>& f, const unsigned int degree)
 
 template <int dim>
 void
-check_dg_lobatto(const Function<dim>& f, const unsigned int degree)
+check_dg_lobatto(const Function<dim> & f, const unsigned int degree)
 {
   QGaussLobatto<1>          fe_quadrature(degree);
   FE_DGQArbitraryNodes<dim> fe(fe_quadrature);

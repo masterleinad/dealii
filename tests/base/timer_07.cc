@@ -21,13 +21,13 @@
 DeclException0(Timer07Exception);
 
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   initlog();
 
   // capture cerr for testing purposes
   std::stringstream captured_cerr;
-  std::streambuf*   old_cerr = std::cerr.rdbuf(captured_cerr.rdbuf());
+  std::streambuf *  old_cerr = std::cerr.rdbuf(captured_cerr.rdbuf());
 
   Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv);
   // Test printing from TimerOutput
@@ -42,7 +42,7 @@ main(int argc, char** argv)
 
       throw Timer07Exception();
     }
-  catch(const Timer07Exception& exc)
+  catch(const Timer07Exception & exc)
     {}
 
   // The Scope should still exit correctly
@@ -57,7 +57,7 @@ main(int argc, char** argv)
 
       throw Timer07Exception();
     }
-  catch(const Timer07Exception& exc)
+  catch(const Timer07Exception & exc)
     {}
 
   // Test that no errors are printed for MPI_COMM_SELF since no communication occurs
@@ -70,7 +70,7 @@ main(int argc, char** argv)
 
       throw Timer07Exception();
     }
-  catch(const Timer07Exception& exc)
+  catch(const Timer07Exception & exc)
     {}
 
   // convert numbers to xs to avoid printing time data

@@ -69,14 +69,14 @@ namespace ChunkSparseMatrixIterators
     /**
      * Value of this matrix entry.
      */
-    number&
+    number &
     value();
 
     /**
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a constant reference.
      */
-    const ChunkSparseMatrix<number>&
+    const ChunkSparseMatrix<number> &
     get_matrix() const;
   };
 
@@ -99,17 +99,17 @@ namespace ChunkSparseMatrixIterators
     /**
      * Constructor.
      */
-    Accessor(MatrixType* matrix, const unsigned int row);
+    Accessor(MatrixType * matrix, const unsigned int row);
 
     /**
      * Constructor. Construct the end accessor for the given matrix.
      */
-    Accessor(MatrixType* matrix);
+    Accessor(MatrixType * matrix);
 
     /**
      * Copy constructor to get from a non-const accessor to a const accessor.
      */
-    Accessor(const ChunkSparseMatrixIterators::Accessor<number, false>& a);
+    Accessor(const ChunkSparseMatrixIterators::Accessor<number, false> & a);
 
     /**
      * Value of this matrix entry.
@@ -121,14 +121,14 @@ namespace ChunkSparseMatrixIterators
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a constant reference.
      */
-    const MatrixType&
+    const MatrixType &
     get_matrix() const;
 
   private:
     /**
      * Pointer to the matrix we use.
      */
-    MatrixType* matrix;
+    MatrixType * matrix;
 
     /**
      * Make the advance function of the base class available.
@@ -181,7 +181,7 @@ namespace ChunkSparseMatrixIterators
        * Constructor. For the second argument, see the general class
        * documentation.
        */
-      Reference(const Accessor* accessor, const bool dummy);
+      Reference(const Accessor * accessor, const bool dummy);
 
       /**
        * Conversion operator to the data type of the matrix.
@@ -191,31 +191,31 @@ namespace ChunkSparseMatrixIterators
       /**
        * Set the element of the matrix we presently point to to @p n.
        */
-      const Reference&
+      const Reference &
       operator=(const number n) const;
 
       /**
        * Add @p n to the element of the matrix we presently point to.
        */
-      const Reference&
+      const Reference &
       operator+=(const number n) const;
 
       /**
        * Subtract @p n from the element of the matrix we presently point to.
        */
-      const Reference&
+      const Reference &
       operator-=(const number n) const;
 
       /**
        * Multiply the element of the matrix we presently point to by @p n.
        */
-      const Reference&
+      const Reference &
       operator*=(const number n) const;
 
       /**
        * Divide the element of the matrix we presently point to by @p n.
        */
-      const Reference&
+      const Reference &
       operator/=(const number n) const;
 
     private:
@@ -223,7 +223,7 @@ namespace ChunkSparseMatrixIterators
        * Pointer to the accessor that denotes which element we presently point
        * to.
        */
-      const Accessor* accessor;
+      const Accessor * accessor;
     };
 
   public:
@@ -236,12 +236,12 @@ namespace ChunkSparseMatrixIterators
     /**
      * Constructor.
      */
-    Accessor(MatrixType* matrix, const unsigned int row);
+    Accessor(MatrixType * matrix, const unsigned int row);
 
     /**
      * Constructor. Construct the end accessor for the given matrix.
      */
-    Accessor(MatrixType* matrix);
+    Accessor(MatrixType * matrix);
 
     /**
      * Value of this matrix entry, returned as a read- and writable reference.
@@ -253,14 +253,14 @@ namespace ChunkSparseMatrixIterators
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a non-constant reference.
      */
-    MatrixType&
+    MatrixType &
     get_matrix() const;
 
   private:
     /**
      * Pointer to the matrix we use.
      */
-    MatrixType* matrix;
+    MatrixType * matrix;
 
     /**
      * Make the advance function of the base class available.
@@ -297,29 +297,29 @@ namespace ChunkSparseMatrixIterators
      * A typedef for the type you get when you dereference an iterator of the
      * current kind.
      */
-    typedef const Accessor<number, Constness>& value_type;
+    typedef const Accessor<number, Constness> & value_type;
 
     /**
      * Constructor. Create an iterator into the matrix @p matrix for the given
      * row and the index within it.
      */
-    Iterator(MatrixType* matrix, const unsigned int row);
+    Iterator(MatrixType * matrix, const unsigned int row);
 
     /**
      * Constructor. Create the end iterator for the given matrix.
      */
-    Iterator(MatrixType* matrix);
+    Iterator(MatrixType * matrix);
 
     /**
      * Conversion constructor to get from a non-const iterator to a const
      * iterator.
      */
-    Iterator(const ChunkSparseMatrixIterators::Iterator<number, false>& i);
+    Iterator(const ChunkSparseMatrixIterators::Iterator<number, false> & i);
 
     /**
      * Prefix increment.
      */
-    Iterator&
+    Iterator &
     operator++();
 
     /**
@@ -331,24 +331,24 @@ namespace ChunkSparseMatrixIterators
     /**
      * Dereferencing operator.
      */
-    const Accessor<number, Constness>& operator*() const;
+    const Accessor<number, Constness> & operator*() const;
 
     /**
      * Dereferencing operator.
      */
-    const Accessor<number, Constness>* operator->() const;
+    const Accessor<number, Constness> * operator->() const;
 
     /**
      * Comparison. True, if both iterators point to the same matrix position.
      */
     bool
-    operator==(const Iterator&) const;
+    operator==(const Iterator &) const;
 
     /**
      * Inverse of <tt>==</tt>.
      */
     bool
-    operator!=(const Iterator&) const;
+    operator!=(const Iterator &) const;
 
     /**
      * Comparison operator. Result is true if either the first row number is
@@ -358,14 +358,14 @@ namespace ChunkSparseMatrixIterators
      * matrix.
      */
     bool
-    operator<(const Iterator&) const;
+    operator<(const Iterator &) const;
 
     /**
      * Comparison operator. Works in the same way as above operator, just the
      * other way round.
      */
     bool
-    operator>(const Iterator&) const;
+    operator>(const Iterator &) const;
 
     /**
      * Return the distance between the current iterator and the argument. The
@@ -374,7 +374,7 @@ namespace ChunkSparseMatrixIterators
      * operator-- (for a negative return value).
      */
     int
-    operator-(const Iterator& p) const;
+    operator-(const Iterator & p) const;
 
     /**
      * Return an iterator that is @p n ahead of the current one.
@@ -488,7 +488,7 @@ public:
    * If you really want to copy a whole matrix, you can do so by using the
    * copy_from() function.
    */
-  ChunkSparseMatrix(const ChunkSparseMatrix&);
+  ChunkSparseMatrix(const ChunkSparseMatrix &);
 
   /**
    * Constructor. Takes the given matrix sparsity structure to represent the
@@ -503,7 +503,7 @@ public:
    * a sparsity pattern in place of a sparse matrix to some function, where an
    * empty matrix would be generated then.
    */
-  explicit ChunkSparseMatrix(const ChunkSparsityPattern& sparsity);
+  explicit ChunkSparseMatrix(const ChunkSparsityPattern & sparsity);
 
   /**
    * Copy constructor: initialize the matrix with the identity matrix. This
@@ -511,8 +511,8 @@ public:
    * and the identity matrix do not coincide, or if the sparsity pattern does
    * not provide for nonzero entries on the entire diagonal.
    */
-  ChunkSparseMatrix(const ChunkSparsityPattern& sparsity,
-                    const IdentityMatrix&       id);
+  ChunkSparseMatrix(const ChunkSparsityPattern & sparsity,
+                    const IdentityMatrix &       id);
 
   /**
    * Destructor. Free all memory, but do not release the memory of the
@@ -529,8 +529,8 @@ public:
    * one can create a vector (which needs the ability to copy objects) of
    * empty matrices that are then later filled with something useful.
    */
-  ChunkSparseMatrix<number>&
-  operator=(const ChunkSparseMatrix<number>&);
+  ChunkSparseMatrix<number> &
+  operator=(const ChunkSparseMatrix<number> &);
 
   /**
    * Copy operator: initialize the matrix with the identity matrix. This
@@ -538,8 +538,8 @@ public:
    * the identity matrix do not coincide, or if the sparsity pattern does not
    * provide for nonzero entries on the entire diagonal.
    */
-  ChunkSparseMatrix<number>&
-  operator=(const IdentityMatrix& id);
+  ChunkSparseMatrix<number> &
+  operator=(const IdentityMatrix & id);
 
   /**
    * This operator assigns a scalar to a matrix. Since this does usually not
@@ -550,7 +550,7 @@ public:
    * all elements of the matrix to zero, but keep the sparsity pattern
    * previously used.
    */
-  ChunkSparseMatrix&
+  ChunkSparseMatrix &
   operator=(const double d);
 
   /**
@@ -567,7 +567,7 @@ public:
    * The elements of the matrix are set to zero by this function.
    */
   virtual void
-  reinit(const ChunkSparsityPattern& sparsity);
+  reinit(const ChunkSparsityPattern & sparsity);
 
   /**
    * Release all memory and return to a state just like after having called
@@ -628,7 +628,7 @@ public:
    * that it may change if you call any nonconstant function of objects which
    * operate on it.
    */
-  const ChunkSparsityPattern&
+  const ChunkSparsityPattern &
   get_sparsity_pattern() const;
 
   /**
@@ -670,23 +670,23 @@ public:
    */
   template <typename number2>
   void
-  add(const size_type  row,
-      const size_type  n_cols,
-      const size_type* col_indices,
-      const number2*   values,
-      const bool       elide_zero_values      = true,
-      const bool       col_indices_are_sorted = false);
+  add(const size_type   row,
+      const size_type   n_cols,
+      const size_type * col_indices,
+      const number2 *   values,
+      const bool        elide_zero_values      = true,
+      const bool        col_indices_are_sorted = false);
 
   /**
    * Multiply the entire matrix by a fixed factor.
    */
-  ChunkSparseMatrix&
+  ChunkSparseMatrix &
   operator*=(const number factor);
 
   /**
    * Divide the entire matrix by a fixed factor.
    */
-  ChunkSparseMatrix&
+  ChunkSparseMatrix &
   operator/=(const number factor);
 
   /**
@@ -721,8 +721,8 @@ public:
    * The function returns a reference to <tt>*this</tt>.
    */
   template <typename somenumber>
-  ChunkSparseMatrix<number>&
-  copy_from(const ChunkSparseMatrix<somenumber>& source);
+  ChunkSparseMatrix<number> &
+  copy_from(const ChunkSparseMatrix<somenumber> & source);
 
   /**
    * This function is complete analogous to the
@@ -752,7 +752,7 @@ public:
    */
   template <typename somenumber>
   void
-  copy_from(const FullMatrix<somenumber>& matrix);
+  copy_from(const FullMatrix<somenumber> & matrix);
 
   /**
    * Add <tt>matrix</tt> scaled by <tt>factor</tt> to this matrix, i.e. the
@@ -767,7 +767,7 @@ public:
    */
   template <typename somenumber>
   void
-  add(const number factor, const ChunkSparseMatrix<somenumber>& matrix);
+  add(const number factor, const ChunkSparseMatrix<somenumber> & matrix);
 
   //@}
   /**
@@ -830,9 +830,9 @@ public:
   void
   extract_row_copy(const size_type row,
                    const size_type array_length,
-                   size_type&      row_length,
-                   size_type*      column_indices,
-                   number*         values) const;
+                   size_type &     row_length,
+                   size_type *     column_indices,
+                   number *        values) const;
 
   //@}
   /**
@@ -855,7 +855,7 @@ public:
    */
   template <class OutVector, class InVector>
   void
-  vmult(OutVector& dst, const InVector& src) const;
+  vmult(OutVector & dst, const InVector & src) const;
 
   /**
    * Matrix-vector multiplication: let <i>dst = M<sup>T</sup>*src</i> with
@@ -874,7 +874,7 @@ public:
    */
   template <class OutVector, class InVector>
   void
-  Tvmult(OutVector& dst, const InVector& src) const;
+  Tvmult(OutVector & dst, const InVector & src) const;
 
   /**
    * Adding Matrix-vector multiplication. Add <i>M*src</i> on <i>dst</i> with
@@ -892,7 +892,7 @@ public:
    */
   template <class OutVector, class InVector>
   void
-  vmult_add(OutVector& dst, const InVector& src) const;
+  vmult_add(OutVector & dst, const InVector & src) const;
 
   /**
    * Adding Matrix-vector multiplication. Add <i>M<sup>T</sup>*src</i> to
@@ -911,7 +911,7 @@ public:
    */
   template <class OutVector, class InVector>
   void
-  Tvmult_add(OutVector& dst, const InVector& src) const;
+  Tvmult_add(OutVector & dst, const InVector & src) const;
 
   /**
    * Return the square of the norm of the vector $v$ with respect to the norm
@@ -930,15 +930,15 @@ public:
    */
   template <typename somenumber>
   somenumber
-  matrix_norm_square(const Vector<somenumber>& v) const;
+  matrix_norm_square(const Vector<somenumber> & v) const;
 
   /**
    * Compute the matrix scalar product $\left(u,Mv\right)$.
    */
   template <typename somenumber>
   somenumber
-  matrix_scalar_product(const Vector<somenumber>& u,
-                        const Vector<somenumber>& v) const;
+  matrix_scalar_product(const Vector<somenumber> & u,
+                        const Vector<somenumber> & v) const;
   /**
    * Compute the residual of an equation <i>Mx=b</i>, where the residual is
    * defined to be <i>r=b-Mx</i>. Write the residual into <tt>dst</tt>. The
@@ -948,9 +948,9 @@ public:
    */
   template <typename somenumber>
   somenumber
-  residual(Vector<somenumber>&       dst,
-           const Vector<somenumber>& x,
-           const Vector<somenumber>& b) const;
+  residual(Vector<somenumber> &       dst,
+           const Vector<somenumber> & x,
+           const Vector<somenumber> & b) const;
 
   //@}
   /**
@@ -997,36 +997,36 @@ public:
    */
   template <typename somenumber>
   void
-  precondition_Jacobi(Vector<somenumber>&       dst,
-                      const Vector<somenumber>& src,
-                      const number              omega = 1.) const;
+  precondition_Jacobi(Vector<somenumber> &       dst,
+                      const Vector<somenumber> & src,
+                      const number               omega = 1.) const;
 
   /**
    * Apply SSOR preconditioning to <tt>src</tt>.
    */
   template <typename somenumber>
   void
-  precondition_SSOR(Vector<somenumber>&       dst,
-                    const Vector<somenumber>& src,
-                    const number              om = 1.) const;
+  precondition_SSOR(Vector<somenumber> &       dst,
+                    const Vector<somenumber> & src,
+                    const number               om = 1.) const;
 
   /**
    * Apply SOR preconditioning matrix to <tt>src</tt>.
    */
   template <typename somenumber>
   void
-  precondition_SOR(Vector<somenumber>&       dst,
-                   const Vector<somenumber>& src,
-                   const number              om = 1.) const;
+  precondition_SOR(Vector<somenumber> &       dst,
+                   const Vector<somenumber> & src,
+                   const number               om = 1.) const;
 
   /**
    * Apply transpose SOR preconditioning matrix to <tt>src</tt>.
    */
   template <typename somenumber>
   void
-  precondition_TSOR(Vector<somenumber>&       dst,
-                    const Vector<somenumber>& src,
-                    const number              om = 1.) const;
+  precondition_TSOR(Vector<somenumber> &       dst,
+                    const Vector<somenumber> & src,
+                    const number               om = 1.) const;
 
   /**
    * Perform SSOR preconditioning in-place.  Apply the preconditioner matrix
@@ -1035,7 +1035,7 @@ public:
    */
   template <typename somenumber>
   void
-  SSOR(Vector<somenumber>& v, const number omega = 1.) const;
+  SSOR(Vector<somenumber> & v, const number omega = 1.) const;
 
   /**
    * Perform an SOR preconditioning in-place.  <tt>omega</tt> is the
@@ -1043,7 +1043,7 @@ public:
    */
   template <typename somenumber>
   void
-  SOR(Vector<somenumber>& v, const number om = 1.) const;
+  SOR(Vector<somenumber> & v, const number om = 1.) const;
 
   /**
    * Perform a transpose SOR preconditioning in-place.  <tt>omega</tt> is the
@@ -1051,7 +1051,7 @@ public:
    */
   template <typename somenumber>
   void
-  TSOR(Vector<somenumber>& v, const number om = 1.) const;
+  TSOR(Vector<somenumber> & v, const number om = 1.) const;
 
   /**
    * Perform a permuted SOR preconditioning in-place.
@@ -1065,10 +1065,10 @@ public:
    */
   template <typename somenumber>
   void
-  PSOR(Vector<somenumber>&           v,
-       const std::vector<size_type>& permutation,
-       const std::vector<size_type>& inverse_permutation,
-       const number                  om = 1.) const;
+  PSOR(Vector<somenumber> &           v,
+       const std::vector<size_type> & permutation,
+       const std::vector<size_type> & inverse_permutation,
+       const number                   om = 1.) const;
 
   /**
    * Perform a transposed permuted SOR preconditioning in-place.
@@ -1082,10 +1082,10 @@ public:
    */
   template <typename somenumber>
   void
-  TPSOR(Vector<somenumber>&           v,
-        const std::vector<size_type>& permutation,
-        const std::vector<size_type>& inverse_permutation,
-        const number                  om = 1.) const;
+  TPSOR(Vector<somenumber> &           v,
+        const std::vector<size_type> & permutation,
+        const std::vector<size_type> & inverse_permutation,
+        const number                   om = 1.) const;
 
   /**
    * Do one SOR step on <tt>v</tt>.  Performs a direct SOR step with right
@@ -1093,9 +1093,9 @@ public:
    */
   template <typename somenumber>
   void
-  SOR_step(Vector<somenumber>&       v,
-           const Vector<somenumber>& b,
-           const number              om = 1.) const;
+  SOR_step(Vector<somenumber> &       v,
+           const Vector<somenumber> & b,
+           const number               om = 1.) const;
 
   /**
    * Do one adjoint SOR step on <tt>v</tt>.  Performs a direct TSOR step with
@@ -1103,9 +1103,9 @@ public:
    */
   template <typename somenumber>
   void
-  TSOR_step(Vector<somenumber>&       v,
-            const Vector<somenumber>& b,
-            const number              om = 1.) const;
+  TSOR_step(Vector<somenumber> &       v,
+            const Vector<somenumber> & b,
+            const number               om = 1.) const;
 
   /**
    * Do one SSOR step on <tt>v</tt>.  Performs a direct SSOR step with right
@@ -1113,9 +1113,9 @@ public:
    */
   template <typename somenumber>
   void
-  SSOR_step(Vector<somenumber>&       v,
-            const Vector<somenumber>& b,
-            const number              om = 1.) const;
+  SSOR_step(Vector<somenumber> &       v,
+            const Vector<somenumber> & b,
+            const number               om = 1.) const;
   //@}
   /**
    * @name Iterators
@@ -1246,7 +1246,7 @@ public:
    * value</tt>, i.e. one nonzero entry of the matrix per line.
    */
   void
-  print(std::ostream& out) const;
+  print(std::ostream & out) const;
 
   /**
    * Print the matrix in the usual format, i.e. as a matrix and not as a list
@@ -1269,11 +1269,11 @@ public:
    * applied to a large matrix!
    */
   void
-  print_formatted(std::ostream&      out,
+  print_formatted(std::ostream &     out,
                   const unsigned int precision   = 3,
                   const bool         scientific  = true,
                   const unsigned int width       = 0,
-                  const char*        zero_string = " ",
+                  const char *       zero_string = " ",
                   const double       denominator = 1.) const;
 
   /**
@@ -1282,7 +1282,7 @@ public:
    * smaller and a '.' for every entry not allocated.
    */
   void
-  print_pattern(std::ostream& out, const double threshold = 0.) const;
+  print_pattern(std::ostream & out, const double threshold = 0.) const;
 
   /**
    * Write the data of this object en bloc to a file. This is done in a binary
@@ -1295,7 +1295,7 @@ public:
    * runs of the program.
    */
   void
-  block_write(std::ostream& out) const;
+  block_write(std::ostream & out) const;
 
   /**
    * Read data that has previously been written by block_write() from a file.
@@ -1314,7 +1314,7 @@ public:
    * file that wasn't actually created that way, but not more.
    */
   void
-  block_read(std::istream& in);
+  block_read(std::istream & in);
   //@}
   /**
    * @addtogroup Exceptions
@@ -1429,7 +1429,7 @@ ChunkSparseMatrix<number>::n() const
 }
 
 template <typename number>
-inline const ChunkSparsityPattern&
+inline const ChunkSparsityPattern &
 ChunkSparseMatrix<number>::get_sparsity_pattern() const
 {
   Assert(cols != nullptr, ExcNotInitialized());
@@ -1496,10 +1496,10 @@ ChunkSparseMatrix<number>::add(const size_type i,
 template <typename number>
 template <typename number2>
 inline void
-ChunkSparseMatrix<number>::add(const size_type  row,
-                               const size_type  n_cols,
-                               const size_type* col_indices,
-                               const number2*   values,
+ChunkSparseMatrix<number>::add(const size_type   row,
+                               const size_type   n_cols,
+                               const size_type * col_indices,
+                               const number2 *   values,
                                const bool /*elide_zero_values*/,
                                const bool /*col_indices_are_sorted*/)
 {
@@ -1509,7 +1509,7 @@ ChunkSparseMatrix<number>::add(const size_type  row,
 }
 
 template <typename number>
-inline ChunkSparseMatrix<number>&
+inline ChunkSparseMatrix<number> &
 ChunkSparseMatrix<number>::operator*=(const number factor)
 {
   Assert(cols != nullptr, ExcNotInitialized());
@@ -1521,8 +1521,8 @@ ChunkSparseMatrix<number>::operator*=(const number factor)
   // the padding elements in chunks that overlap the boundaries of the actual
   // matrix -- but since multiplication with a number does not violate the
   // invariant of keeping these elements at zero nothing can happen
-  number*             val_ptr = val.get();
-  const number* const end_ptr
+  number *             val_ptr = val.get();
+  const number * const end_ptr
     = val.get()
       + cols->sparsity_pattern.n_nonzero_elements() * chunk_size * chunk_size;
   while(val_ptr != end_ptr)
@@ -1532,7 +1532,7 @@ ChunkSparseMatrix<number>::operator*=(const number factor)
 }
 
 template <typename number>
-inline ChunkSparseMatrix<number>&
+inline ChunkSparseMatrix<number> &
 ChunkSparseMatrix<number>::operator/=(const number factor)
 {
   Assert(cols != nullptr, ExcNotInitialized());
@@ -1547,8 +1547,8 @@ ChunkSparseMatrix<number>::operator/=(const number factor)
   // the padding elements in chunks that overlap the boundaries of the actual
   // matrix -- but since multiplication with a number does not violate the
   // invariant of keeping these elements at zero nothing can happen
-  number*             val_ptr = val.get();
-  const number* const end_ptr
+  number *             val_ptr = val.get();
+  const number * const end_ptr
     = val.get()
       + cols->sparsity_pattern.n_nonzero_elements() * chunk_size * chunk_size;
 
@@ -1627,7 +1627,7 @@ ChunkSparseMatrix<number>::copy_from(const ForwardIterator begin,
 namespace ChunkSparseMatrixIterators
 {
   template <typename number>
-  inline Accessor<number, true>::Accessor(const MatrixType*  matrix,
+  inline Accessor<number, true>::Accessor(const MatrixType * matrix,
                                           const unsigned int row)
     : ChunkSparsityPatternIterators::Accessor(&matrix->get_sparsity_pattern(),
                                               row),
@@ -1635,14 +1635,14 @@ namespace ChunkSparseMatrixIterators
   {}
 
   template <typename number>
-  inline Accessor<number, true>::Accessor(const MatrixType* matrix)
+  inline Accessor<number, true>::Accessor(const MatrixType * matrix)
     : ChunkSparsityPatternIterators::Accessor(&matrix->get_sparsity_pattern()),
       matrix(matrix)
   {}
 
   template <typename number>
   inline Accessor<number, true>::Accessor(
-    const ChunkSparseMatrixIterators::Accessor<number, false>& a)
+    const ChunkSparseMatrixIterators::Accessor<number, false> & a)
     : ChunkSparsityPatternIterators::Accessor(a), matrix(&a.get_matrix())
   {}
 
@@ -1657,15 +1657,16 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline const typename Accessor<number, true>::MatrixType&
+  inline const typename Accessor<number, true>::MatrixType &
   Accessor<number, true>::get_matrix() const
   {
     return *matrix;
   }
 
   template <typename number>
-  inline Accessor<number, false>::Reference::Reference(const Accessor* accessor,
-                                                       const bool)
+  inline Accessor<number, false>::Reference::Reference(
+    const Accessor * accessor,
+    const bool)
     : accessor(accessor)
   {}
 
@@ -1680,7 +1681,7 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline const typename Accessor<number, false>::Reference&
+  inline const typename Accessor<number, false>::Reference &
   Accessor<number, false>::Reference::operator=(const number n) const
   {
     const unsigned int chunk_size
@@ -1693,7 +1694,7 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline const typename Accessor<number, false>::Reference&
+  inline const typename Accessor<number, false>::Reference &
   Accessor<number, false>::Reference::operator+=(const number n) const
   {
     const unsigned int chunk_size
@@ -1706,7 +1707,7 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline const typename Accessor<number, false>::Reference&
+  inline const typename Accessor<number, false>::Reference &
   Accessor<number, false>::Reference::operator-=(const number n) const
   {
     const unsigned int chunk_size
@@ -1719,7 +1720,7 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline const typename Accessor<number, false>::Reference&
+  inline const typename Accessor<number, false>::Reference &
   Accessor<number, false>::Reference::operator*=(const number n) const
   {
     const unsigned int chunk_size
@@ -1732,7 +1733,7 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline const typename Accessor<number, false>::Reference&
+  inline const typename Accessor<number, false>::Reference &
   Accessor<number, false>::Reference::operator/=(const number n) const
   {
     const unsigned int chunk_size
@@ -1745,7 +1746,7 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline Accessor<number, false>::Accessor(MatrixType*        matrix,
+  inline Accessor<number, false>::Accessor(MatrixType *       matrix,
                                            const unsigned int row)
     : ChunkSparsityPatternIterators::Accessor(&matrix->get_sparsity_pattern(),
                                               row),
@@ -1753,7 +1754,7 @@ namespace ChunkSparseMatrixIterators
   {}
 
   template <typename number>
-  inline Accessor<number, false>::Accessor(MatrixType* matrix)
+  inline Accessor<number, false>::Accessor(MatrixType * matrix)
     : ChunkSparsityPatternIterators::Accessor(&matrix->get_sparsity_pattern()),
       matrix(matrix)
   {}
@@ -1766,31 +1767,31 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number>
-  inline typename Accessor<number, false>::MatrixType&
+  inline typename Accessor<number, false>::MatrixType &
   Accessor<number, false>::get_matrix() const
   {
     return *matrix;
   }
 
   template <typename number, bool Constness>
-  inline Iterator<number, Constness>::Iterator(MatrixType*        matrix,
+  inline Iterator<number, Constness>::Iterator(MatrixType *       matrix,
                                                const unsigned int row)
     : accessor(matrix, row)
   {}
 
   template <typename number, bool Constness>
-  inline Iterator<number, Constness>::Iterator(MatrixType* matrix)
+  inline Iterator<number, Constness>::Iterator(MatrixType * matrix)
     : accessor(matrix)
   {}
 
   template <typename number, bool Constness>
   inline Iterator<number, Constness>::Iterator(
-    const ChunkSparseMatrixIterators::Iterator<number, false>& i)
+    const ChunkSparseMatrixIterators::Iterator<number, false> & i)
     : accessor(*i)
   {}
 
   template <typename number, bool Constness>
-  inline Iterator<number, Constness>&
+  inline Iterator<number, Constness> &
   Iterator<number, Constness>::operator++()
   {
     accessor.advance();
@@ -1807,36 +1808,36 @@ namespace ChunkSparseMatrixIterators
   }
 
   template <typename number, bool Constness>
-  inline const Accessor<number, Constness>& Iterator<number, Constness>::
-                                            operator*() const
+  inline const Accessor<number, Constness> & Iterator<number, Constness>::
+                                             operator*() const
   {
     return accessor;
   }
 
   template <typename number, bool Constness>
-  inline const Accessor<number, Constness>* Iterator<number, Constness>::
-                                            operator->() const
+  inline const Accessor<number, Constness> * Iterator<number, Constness>::
+                                             operator->() const
   {
     return &accessor;
   }
 
   template <typename number, bool Constness>
   inline bool
-  Iterator<number, Constness>::operator==(const Iterator& other) const
+  Iterator<number, Constness>::operator==(const Iterator & other) const
   {
     return (accessor == other.accessor);
   }
 
   template <typename number, bool Constness>
   inline bool
-  Iterator<number, Constness>::operator!=(const Iterator& other) const
+  Iterator<number, Constness>::operator!=(const Iterator & other) const
   {
     return !(*this == other);
   }
 
   template <typename number, bool Constness>
   inline bool
-  Iterator<number, Constness>::operator<(const Iterator& other) const
+  Iterator<number, Constness>::operator<(const Iterator & other) const
   {
     Assert(&accessor.get_matrix() == &other.accessor.get_matrix(),
            ExcInternalError());
@@ -1846,14 +1847,14 @@ namespace ChunkSparseMatrixIterators
 
   template <typename number, bool Constness>
   inline bool
-  Iterator<number, Constness>::operator>(const Iterator& other) const
+  Iterator<number, Constness>::operator>(const Iterator & other) const
   {
     return (other < *this);
   }
 
   template <typename number, bool Constness>
   inline int
-  Iterator<number, Constness>::operator-(const Iterator& other) const
+  Iterator<number, Constness>::operator-(const Iterator & other) const
   {
     Assert(&accessor.get_matrix() == &other.accessor.get_matrix(),
            ExcInternalError());

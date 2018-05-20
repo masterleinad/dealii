@@ -107,12 +107,12 @@ public:
    * in the <tt>C++</tt> standard libraries <tt>vector<...></tt> class.
    */
   typedef Number                  value_type;
-  typedef value_type*             pointer;
-  typedef const value_type*       const_pointer;
-  typedef value_type*             iterator;
-  typedef const value_type*       const_iterator;
-  typedef value_type&             reference;
-  typedef const value_type&       const_reference;
+  typedef value_type *            pointer;
+  typedef const value_type *      const_pointer;
+  typedef value_type *            iterator;
+  typedef const value_type *      const_iterator;
+  typedef value_type &            reference;
+  typedef const value_type &      const_reference;
   typedef types::global_dof_index size_type;
 
   /**
@@ -143,13 +143,13 @@ public:
    * We would like to make this constructor explicit, but standard containers
    * insist on using it implicitly.
    */
-  Vector(const Vector<Number>& v);
+  Vector(const Vector<Number> & v);
 
   /**
    * Move constructor. Creates a new vector by stealing the internal data of
    * the vector @p v.
    */
-  Vector(Vector<Number>&& v) noexcept;
+  Vector(Vector<Number> && v) noexcept;
 
   /**
    * Copy constructor taking a vector of another data type. This will fail if
@@ -164,7 +164,7 @@ public:
    * a broken compiler during configuration.
    */
   template <typename OtherNumber>
-  explicit Vector(const Vector<OtherNumber>& v);
+  explicit Vector(const Vector<OtherNumber> & v);
 
 #ifdef DEAL_II_WITH_PETSC
   /**
@@ -178,7 +178,7 @@ public:
    * obtain a copy of a parallel vector while the other jobs do something
    * else.
    */
-  explicit Vector(const PETScWrappers::VectorBase& v);
+  explicit Vector(const PETScWrappers::VectorBase & v);
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -196,7 +196,7 @@ public:
    * else. In other words, calling this function is a 'collective operation'
    * that needs to be executed by all MPI processes that jointly share @p v.
    */
-  explicit Vector(const TrilinosWrappers::MPI::Vector& v);
+  explicit Vector(const TrilinosWrappers::MPI::Vector & v);
 #endif
 
   /**
@@ -293,7 +293,7 @@ public:
    */
   template <typename Number2>
   void
-  reinit(const Vector<Number2>& V, const bool omit_zeroing_entries = false);
+  reinit(const Vector<Number2> & V, const bool omit_zeroing_entries = false);
 
   /**
    * Swap the contents of this vector and the other vector @p v. One could do
@@ -311,7 +311,7 @@ public:
    * memory separately.
    */
   virtual void
-  swap(Vector<Number>& v);
+  swap(Vector<Number> & v);
 
   /**
    * Set all components of the vector to the given number @p s. Simply pass
@@ -326,7 +326,7 @@ public:
    *
    * @dealiiOperationIsMultithreaded
    */
-  Vector<Number>&
+  Vector<Number> &
   operator=(const Number s);
 
   /**
@@ -334,16 +334,16 @@ public:
    *
    * @dealiiOperationIsMultithreaded
    */
-  Vector<Number>&
-  operator=(const Vector<Number>& v);
+  Vector<Number> &
+  operator=(const Vector<Number> & v);
 
   /**
    * Move the given vector. This operator replaces the present vector with
    * the internal data of the vector @p v and resets @p v to the state it would
    * have after being newly default-constructed.
    */
-  Vector<Number>&
-  operator=(Vector<Number>&& v) noexcept;
+  Vector<Number> &
+  operator=(Vector<Number> && v) noexcept;
 
   /**
    * Copy the given vector. Resize the present vector if necessary.
@@ -351,14 +351,14 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   template <typename Number2>
-  Vector<Number>&
-  operator=(const Vector<Number2>& v);
+  Vector<Number> &
+  operator=(const Vector<Number2> & v);
 
   /**
    * Copy operator for assigning a block vector to a regular vector.
    */
-  Vector<Number>&
-  operator=(const BlockVector<Number>& v);
+  Vector<Number> &
+  operator=(const BlockVector<Number> & v);
 
 #ifdef DEAL_II_WITH_PETSC
   /**
@@ -372,8 +372,8 @@ public:
    * obtain a copy of a parallel vector while the other jobs do something
    * else.
    */
-  Vector<Number>&
-  operator=(const PETScWrappers::VectorBase& v);
+  Vector<Number> &
+  operator=(const PETScWrappers::VectorBase & v);
 #endif
 
 #ifdef DEAL_II_WITH_TRILINOS
@@ -392,8 +392,8 @@ public:
    * else. In other words, calling this function is a 'collective operation'
    * that needs to be executed by all MPI processes that jointly share @p v.
    */
-  Vector<Number>&
-  operator=(const TrilinosWrappers::MPI::Vector& v);
+  Vector<Number> &
+  operator=(const TrilinosWrappers::MPI::Vector & v);
 #endif
 
   /**
@@ -403,7 +403,7 @@ public:
    */
   template <typename Number2>
   bool
-  operator==(const Vector<Number2>& v) const;
+  operator==(const Vector<Number2> & v) const;
 
   /**
    * Test for inequality. This function assumes that the present vector and
@@ -412,7 +412,7 @@ public:
    */
   template <typename Number2>
   bool
-  operator!=(const Vector<Number2>& v) const;
+  operator!=(const Vector<Number2> & v) const;
 
   //@}
 
@@ -435,7 +435,7 @@ public:
    * repeatable results from one run to another.
    */
   template <typename Number2>
-  Number operator*(const Vector<Number2>& V) const;
+  Number operator*(const Vector<Number2> & V) const;
 
   /**
    * Return the square of the $l_2$-norm.
@@ -519,7 +519,9 @@ public:
    * repeatable results from one run to another.
    */
   Number
-  add_and_dot(const Number a, const Vector<Number>& V, const Vector<Number>& W);
+  add_and_dot(const Number           a,
+              const Vector<Number> & V,
+              const Vector<Number> & W);
 
   //@}
 
@@ -564,7 +566,7 @@ public:
   /**
    * Access the @p ith component as a writeable reference.
    */
-  Number&
+  Number &
   operator()(const size_type i);
 
   /**
@@ -579,7 +581,7 @@ public:
    *
    * Exactly the same as operator().
    */
-  Number& operator[](const size_type i);
+  Number & operator[](const size_type i);
 
   /**
    * Instead of getting individual elements of a vector via operator(),
@@ -598,8 +600,8 @@ public:
    */
   template <typename OtherNumber>
   void
-  extract_subvector_to(const std::vector<size_type>& indices,
-                       std::vector<OtherNumber>&     values) const;
+  extract_subvector_to(const std::vector<size_type> & indices,
+                       std::vector<OtherNumber> &     values) const;
 
   /**
    * Instead of getting individual elements of a vector via operator(),
@@ -645,16 +647,16 @@ public:
    *
    * @dealiiOperationIsMultithreaded
    */
-  Vector<Number>&
-  operator+=(const Vector<Number>& V);
+  Vector<Number> &
+  operator+=(const Vector<Number> & V);
 
   /**
    * Subtract the given vector from the present one.
    *
    * @dealiiOperationIsMultithreaded
    */
-  Vector<Number>&
-  operator-=(const Vector<Number>& V);
+  Vector<Number> &
+  operator-=(const Vector<Number> & V);
 
   /**
    * A collective add operation: This function adds a whole set of values
@@ -662,8 +664,8 @@ public:
    */
   template <typename OtherNumber>
   void
-  add(const std::vector<size_type>&   indices,
-      const std::vector<OtherNumber>& values);
+  add(const std::vector<size_type> &   indices,
+      const std::vector<OtherNumber> & values);
 
   /**
    * This is a second collective add operation. As a difference, this function
@@ -671,7 +673,8 @@ public:
    */
   template <typename OtherNumber>
   void
-  add(const std::vector<size_type>& indices, const Vector<OtherNumber>& values);
+  add(const std::vector<size_type> & indices,
+      const Vector<OtherNumber> &    values);
 
   /**
    * Take an address where <tt>n_elements</tt> are stored contiguously and add
@@ -680,9 +683,9 @@ public:
    */
   template <typename OtherNumber>
   void
-  add(const size_type    n_elements,
-      const size_type*   indices,
-      const OtherNumber* values);
+  add(const size_type     n_elements,
+      const size_type *   indices,
+      const OtherNumber * values);
 
   /**
    * Addition of @p s to all components. Note that @p s is a scalar and not a
@@ -699,10 +702,10 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  add(const Number          a,
-      const Vector<Number>& V,
-      const Number          b,
-      const Vector<Number>& W);
+  add(const Number           a,
+      const Vector<Number> & V,
+      const Number           b,
+      const Vector<Number> & W);
 
   /**
    * Simple addition of a multiple of a vector, i.e. <tt>*this += a*V</tt>.
@@ -710,7 +713,7 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  add(const Number a, const Vector<Number>& V);
+  add(const Number a, const Vector<Number> & V);
 
   /**
    * Scaling and simple vector addition, i.e.  <tt>*this = s*(*this)+V</tt>.
@@ -718,7 +721,7 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  sadd(const Number s, const Vector<Number>& V);
+  sadd(const Number s, const Vector<Number> & V);
 
   /**
    * Scaling and simple addition, i.e.  <tt>*this = s*(*this)+a*V</tt>.
@@ -726,14 +729,14 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  sadd(const Number s, const Number a, const Vector<Number>& V);
+  sadd(const Number s, const Number a, const Vector<Number> & V);
 
   /**
    * Scale each element of the vector by a constant value.
    *
    * @dealiiOperationIsMultithreaded
    */
-  Vector<Number>&
+  Vector<Number> &
   operator*=(const Number factor);
 
   /**
@@ -741,7 +744,7 @@ public:
    *
    * @dealiiOperationIsMultithreaded
    */
-  Vector<Number>&
+  Vector<Number> &
   operator/=(const Number factor);
 
   /**
@@ -752,7 +755,7 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  scale(const Vector<Number>& scaling_factors);
+  scale(const Vector<Number> & scaling_factors);
 
   /**
    * Scale each element of this vector by the corresponding element in the
@@ -761,7 +764,7 @@ public:
    */
   template <typename Number2>
   void
-  scale(const Vector<Number2>& scaling_factors);
+  scale(const Vector<Number2> & scaling_factors);
 
   /**
    * Assignment <tt>*this = a*u</tt>.
@@ -769,14 +772,14 @@ public:
    * @dealiiOperationIsMultithreaded
    */
   void
-  equ(const Number a, const Vector<Number>& u);
+  equ(const Number a, const Vector<Number> & u);
 
   /**
    * Assignment <tt>*this = a*u</tt>.
    */
   template <typename Number2>
   void
-  equ(const Number a, const Vector<Number2>& u);
+  equ(const Number a, const Vector<Number2> & u);
 
   /**
    * Compute the elementwise ratio of the two given vectors, that is let
@@ -792,7 +795,7 @@ public:
    */
   DEAL_II_DEPRECATED
   void
-  ratio(const Vector<Number>& a, const Vector<Number>& b);
+  ratio(const Vector<Number> & a, const Vector<Number> & b);
 
   /**
    * This function does nothing but exists for compatibility with the @p
@@ -814,7 +817,7 @@ public:
    */
   DEAL_II_DEPRECATED
   void
-  print(const char* format = nullptr) const;
+  print(const char * format = nullptr) const;
 
   /**
    * Print to a stream. @p precision denotes the desired precision with which
@@ -823,7 +826,7 @@ public:
    * while if @p false then the elements are printed on a separate line each.
    */
   void
-  print(std::ostream&      out,
+  print(std::ostream &     out,
         const unsigned int precision  = 3,
         const bool         scientific = true,
         const bool         across     = true) const;
@@ -838,7 +841,7 @@ public:
    */
   DEAL_II_DEPRECATED
   void
-  print(LogStream&         out,
+  print(LogStream &        out,
         const unsigned int width  = 6,
         const bool         across = true) const;
 
@@ -848,7 +851,7 @@ public:
    * using a different operating system or number format.
    */
   void
-  block_write(std::ostream& out) const;
+  block_write(std::ostream & out) const;
 
   /**
    * Read a vector en block from a file. This is done using the inverse
@@ -862,7 +865,7 @@ public:
    * file, but not more.
    */
   void
-  block_read(std::istream& in);
+  block_read(std::istream & in);
 
   /**
    * Write the data of this object to a stream for the purpose of
@@ -870,7 +873,7 @@ public:
    */
   template <class Archive>
   void
-  save(Archive& ar, const unsigned int version) const;
+  save(Archive & ar, const unsigned int version) const;
 
   /**
    * Read the data of this object from a stream for the purpose of
@@ -878,7 +881,7 @@ public:
    */
   template <class Archive>
   void
-  load(Archive& ar, const unsigned int version);
+  load(Archive & ar, const unsigned int version);
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
 
@@ -1103,7 +1106,7 @@ Vector<Number>::operator()(const size_type i) const
 }
 
 template <typename Number>
-inline Number&
+inline Number &
 Vector<Number>::operator()(const size_type i)
 {
   Assert(i < vec_size, ExcIndexRangeType<size_type>(i, 0, vec_size));
@@ -1117,7 +1120,7 @@ inline Number Vector<Number>::operator[](const size_type i) const
 }
 
 template <typename Number>
-inline Number& Vector<Number>::operator[](const size_type i)
+inline Number & Vector<Number>::operator[](const size_type i)
 {
   return operator()(i);
 }
@@ -1125,8 +1128,8 @@ inline Number& Vector<Number>::operator[](const size_type i)
 template <typename Number>
 template <typename OtherNumber>
 inline void
-Vector<Number>::extract_subvector_to(const std::vector<size_type>& indices,
-                                     std::vector<OtherNumber>&     values) const
+Vector<Number>::extract_subvector_to(const std::vector<size_type> & indices,
+                                     std::vector<OtherNumber> & values) const
 {
   for(size_type i = 0; i < indices.size(); ++i)
     values[i] = operator()(indices[i]);
@@ -1148,7 +1151,7 @@ Vector<Number>::extract_subvector_to(ForwardIterator       indices_begin,
 }
 
 template <typename Number>
-inline Vector<Number>&
+inline Vector<Number> &
 Vector<Number>::operator/=(const Number factor)
 {
   AssertIsFinite(factor);
@@ -1161,8 +1164,8 @@ Vector<Number>::operator/=(const Number factor)
 template <typename Number>
 template <typename OtherNumber>
 inline void
-Vector<Number>::add(const std::vector<size_type>&   indices,
-                    const std::vector<OtherNumber>& values)
+Vector<Number>::add(const std::vector<size_type> &   indices,
+                    const std::vector<OtherNumber> & values)
 {
   Assert(indices.size() == values.size(),
          ExcDimensionMismatch(indices.size(), values.size()));
@@ -1172,8 +1175,8 @@ Vector<Number>::add(const std::vector<size_type>&   indices,
 template <typename Number>
 template <typename OtherNumber>
 inline void
-Vector<Number>::add(const std::vector<size_type>& indices,
-                    const Vector<OtherNumber>&    values)
+Vector<Number>::add(const std::vector<size_type> & indices,
+                    const Vector<OtherNumber> &    values)
 {
   Assert(indices.size() == values.size(),
          ExcDimensionMismatch(indices.size(), values.size()));
@@ -1183,9 +1186,9 @@ Vector<Number>::add(const std::vector<size_type>& indices,
 template <typename Number>
 template <typename OtherNumber>
 inline void
-Vector<Number>::add(const size_type    n_indices,
-                    const size_type*   indices,
-                    const OtherNumber* values)
+Vector<Number>::add(const size_type     n_indices,
+                    const size_type *   indices,
+                    const OtherNumber * values)
 {
   for(size_type i = 0; i < n_indices; ++i)
     {
@@ -1202,7 +1205,7 @@ Vector<Number>::add(const size_type    n_indices,
 template <typename Number>
 template <typename Number2>
 inline bool
-Vector<Number>::operator!=(const Vector<Number2>& v) const
+Vector<Number>::operator!=(const Vector<Number2> & v) const
 {
   return !(*this == v);
 }
@@ -1221,7 +1224,7 @@ Vector<Number>::update_ghost_values() const
 // swap virtual.
 template <typename Number>
 inline void
-Vector<Number>::swap(Vector<Number>& v)
+Vector<Number>::swap(Vector<Number> & v)
 {
   std::swap(vec_size, v.vec_size);
   std::swap(max_vec_size, v.max_vec_size);
@@ -1231,29 +1234,29 @@ Vector<Number>::swap(Vector<Number>& v)
 template <typename Number>
 template <class Archive>
 inline void
-Vector<Number>::save(Archive& ar, const unsigned int) const
+Vector<Number>::save(Archive & ar, const unsigned int) const
 {
   // forward to serialization function in the base class.
-  ar& static_cast<const Subscriptor&>(*this);
+  ar & static_cast<const Subscriptor &>(*this);
 
-  ar& vec_size& max_vec_size;
-  ar&           boost::serialization::make_array(values.get(), max_vec_size);
+  ar & vec_size & max_vec_size;
+  ar &            boost::serialization::make_array(values.get(), max_vec_size);
 }
 
 template <typename Number>
 template <class Archive>
 inline void
-Vector<Number>::load(Archive& ar, const unsigned int)
+Vector<Number>::load(Archive & ar, const unsigned int)
 {
   // get rid of previous content
   values.reset();
 
   // the load stuff again from the archive
-  ar& static_cast<Subscriptor&>(*this);
-  ar& vec_size& max_vec_size;
+  ar & static_cast<Subscriptor &>(*this);
+  ar & vec_size & max_vec_size;
 
   allocate();
-  ar& boost::serialization::make_array(values.get(), max_vec_size);
+  ar & boost::serialization::make_array(values.get(), max_vec_size);
 }
 
 #endif
@@ -1272,7 +1275,7 @@ Vector<Number>::load(Archive& ar, const unsigned int)
  */
 template <typename Number>
 inline void
-swap(Vector<Number>& u, Vector<Number>& v)
+swap(Vector<Number> & u, Vector<Number> & v)
 {
   u.swap(v);
 }
@@ -1281,8 +1284,8 @@ swap(Vector<Number>& u, Vector<Number>& v)
  * Output operator writing a vector to a stream.
  */
 template <typename number>
-inline std::ostream&
-operator<<(std::ostream& os, const Vector<number>& v)
+inline std::ostream &
+operator<<(std::ostream & os, const Vector<number> & v)
 {
   v.print(os);
   return os;
@@ -1292,8 +1295,8 @@ operator<<(std::ostream& os, const Vector<number>& v)
  * Output operator writing a vector to a LogStream.
  */
 template <typename number>
-inline LogStream&
-operator<<(LogStream& os, const Vector<number>& v)
+inline LogStream &
+operator<<(LogStream & os, const Vector<number> & v)
 {
   v.print(os);
   return os;

@@ -63,10 +63,10 @@ private:
 
   static bool
   cell_is_in_omega1_domain(
-    const typename hp::DoFHandler<dim>::cell_iterator& cell);
+    const typename hp::DoFHandler<dim>::cell_iterator & cell);
   static bool
   cell_is_in_omega2_domain(
-    const typename hp::DoFHandler<dim>::cell_iterator& cell);
+    const typename hp::DoFHandler<dim>::cell_iterator & cell);
   void
   set_active_fe_indices();
   void
@@ -131,7 +131,7 @@ public:
   InitialConditions() : Function<dim>(totalDOF)
   {}
   void
-  vector_value(const Point<dim>& p, Vector<double>& values) const
+  vector_value(const Point<dim> & p, Vector<double> & values) const
   {
     Assert(values.size() == totalDOF,
            ExcDimensionMismatch(values.size(), totalDOF));
@@ -145,14 +145,14 @@ public:
 template <int dim>
 bool
 diffusionMechanics<dim>::cell_is_in_omega1_domain(
-  const typename hp::DoFHandler<dim>::cell_iterator& cell)
+  const typename hp::DoFHandler<dim>::cell_iterator & cell)
 {
   return (cell->material_id() == omega1_domain_id);
 }
 template <int dim>
 bool
 diffusionMechanics<dim>::cell_is_in_omega2_domain(
-  const typename hp::DoFHandler<dim>::cell_iterator& cell)
+  const typename hp::DoFHandler<dim>::cell_iterator & cell)
 {
   return (cell->material_id() == omega2_domain_id);
 }

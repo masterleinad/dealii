@@ -117,15 +117,16 @@ namespace Step45
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> & p,
+          const unsigned int component = 0) const override;
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& value) const override;
+    vector_value(const Point<dim> & p, Vector<double> & value) const override;
   };
 
   template <int dim>
   double
-  BoundaryValues<dim>::value(const Point<dim>& /*p*/,
+  BoundaryValues<dim>::value(const Point<dim> & /*p*/,
                              const unsigned int component) const
   {
     (void) component;
@@ -137,8 +138,8 @@ namespace Step45
 
   template <int dim>
   void
-  BoundaryValues<dim>::vector_value(const Point<dim>& p,
-                                    Vector<double>&   values) const
+  BoundaryValues<dim>::vector_value(const Point<dim> & p,
+                                    Vector<double> &   values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = BoundaryValues<dim>::value(p, c);
@@ -152,15 +153,16 @@ namespace Step45
     {}
 
     virtual double
-    value(const Point<dim>& p, const unsigned int component = 0) const override;
+    value(const Point<dim> & p,
+          const unsigned int component = 0) const override;
 
     virtual void
-    vector_value(const Point<dim>& p, Vector<double>& value) const override;
+    vector_value(const Point<dim> & p, Vector<double> & value) const override;
   };
 
   template <int dim>
   double
-  RightHandSide<dim>::value(const Point<dim>&  p,
+  RightHandSide<dim>::value(const Point<dim> & p,
                             const unsigned int component) const
   {
     const Point<dim> center(0.75, 0.1);
@@ -173,8 +175,8 @@ namespace Step45
 
   template <int dim>
   void
-  RightHandSide<dim>::vector_value(const Point<dim>& p,
-                                   Vector<double>&   values) const
+  RightHandSide<dim>::vector_value(const Point<dim> & p,
+                                   Vector<double> &   values) const
   {
     for(unsigned int c = 0; c < this->n_components; ++c)
       values(c) = RightHandSide<dim>::value(p, c);
@@ -184,29 +186,29 @@ namespace Step45
   class InverseMatrix : public Subscriptor
   {
   public:
-    InverseMatrix(const MatrixType&         m,
-                  const PreconditionerType& preconditioner,
-                  const IndexSet&           locally_owned,
-                  const MPI_Comm&           mpi_communicator);
+    InverseMatrix(const MatrixType &         m,
+                  const PreconditionerType & preconditioner,
+                  const IndexSet &           locally_owned,
+                  const MPI_Comm &           mpi_communicator);
 
     void
-    vmult(TrilinosWrappers::MPI::Vector&       dst,
-          const TrilinosWrappers::MPI::Vector& src) const;
+    vmult(TrilinosWrappers::MPI::Vector &       dst,
+          const TrilinosWrappers::MPI::Vector & src) const;
 
   private:
     const SmartPointer<const MatrixType>         matrix;
     const SmartPointer<const PreconditionerType> preconditioner;
 
-    const MPI_Comm*                       mpi_communicator;
+    const MPI_Comm *                      mpi_communicator;
     mutable TrilinosWrappers::MPI::Vector tmp;
   };
 
   template <class MatrixType, class PreconditionerType>
   InverseMatrix<MatrixType, PreconditionerType>::InverseMatrix(
-    const MatrixType&         m,
-    const PreconditionerType& preconditioner,
-    const IndexSet&           locally_owned,
-    const MPI_Comm&           mpi_communicator)
+    const MatrixType &         m,
+    const PreconditionerType & preconditioner,
+    const IndexSet &           locally_owned,
+    const MPI_Comm &           mpi_communicator)
     : matrix(&m),
       preconditioner(&preconditioner),
       mpi_communicator(&mpi_communicator),
@@ -216,8 +218,8 @@ namespace Step45
   template <class MatrixType, class PreconditionerType>
   void
   InverseMatrix<MatrixType, PreconditionerType>::vmult(
-    TrilinosWrappers::MPI::Vector&       dst,
-    const TrilinosWrappers::MPI::Vector& src) const
+    TrilinosWrappers::MPI::Vector &       dst,
+    const TrilinosWrappers::MPI::Vector & src) const
   {
     SolverControl              solver_control(src.size(), 1e-6 * src.l2_norm());
     TrilinosWrappers::SolverCG cg(solver_control,
@@ -232,15 +234,15 @@ namespace Step45
   class SchurComplement : public TrilinosWrappers::SparseMatrix
   {
   public:
-    SchurComplement(const TrilinosWrappers::BlockSparseMatrix& system_matrix,
+    SchurComplement(const TrilinosWrappers::BlockSparseMatrix & system_matrix,
                     const InverseMatrix<TrilinosWrappers::SparseMatrix,
-                                        PreconditionerType>&   A_inverse,
-                    const IndexSet&                            owned_pres,
-                    const MPI_Comm& mpi_communicator);
+                                        PreconditionerType> &   A_inverse,
+                    const IndexSet &                            owned_pres,
+                    const MPI_Comm & mpi_communicator);
 
     void
-    vmult(TrilinosWrappers::MPI::Vector&       dst,
-          const TrilinosWrappers::MPI::Vector& src) const;
+    vmult(TrilinosWrappers::MPI::Vector &       dst,
+          const TrilinosWrappers::MPI::Vector & src) const;
 
   private:
     const SmartPointer<const TrilinosWrappers::BlockSparseMatrix> system_matrix;
@@ -252,11 +254,11 @@ namespace Step45
 
   template <class PreconditionerType>
   SchurComplement<PreconditionerType>::SchurComplement(
-    const TrilinosWrappers::BlockSparseMatrix& system_matrix,
-    const InverseMatrix<TrilinosWrappers::SparseMatrix, PreconditionerType>&
-                    A_inverse,
-    const IndexSet& owned_vel,
-    const MPI_Comm& mpi_communicator)
+    const TrilinosWrappers::BlockSparseMatrix & system_matrix,
+    const InverseMatrix<TrilinosWrappers::SparseMatrix, PreconditionerType> &
+                     A_inverse,
+    const IndexSet & owned_vel,
+    const MPI_Comm & mpi_communicator)
     : system_matrix(&system_matrix),
       A_inverse(&A_inverse),
       tmp1(owned_vel, mpi_communicator),
@@ -266,8 +268,8 @@ namespace Step45
   template <class PreconditionerType>
   void
   SchurComplement<PreconditionerType>::vmult(
-    TrilinosWrappers::MPI::Vector&       dst,
-    const TrilinosWrappers::MPI::Vector& src) const
+    TrilinosWrappers::MPI::Vector &       dst,
+    const TrilinosWrappers::MPI::Vector & src) const
   {
     system_matrix->block(0, 1).vmult(tmp1, src);
     A_inverse->vmult(tmp2, tmp1);
@@ -738,7 +740,7 @@ namespace Step45
 } // namespace Step45
 
 int
-main(int argc, char* argv[])
+main(int argc, char * argv[])
 {
   try
     {
@@ -749,7 +751,7 @@ main(int argc, char* argv[])
       StokesProblem<2>                 flow_problem(1);
       flow_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

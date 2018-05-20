@@ -68,7 +68,7 @@ namespace Step19
   void
   print_usage_message()
   {
-    static const char* message
+    static const char * message
       = "\n"
         "Converter from deal.II intermediate format to other graphics formats.\n"
         "\n"
@@ -231,7 +231,7 @@ namespace Step19
   // zeroth parameter), <code>argc</code> must therefore be at least 2. If
   // this is not the case, we print an error message and exit:
   void
-  parse_command_line(const int argc, char* const* argv)
+  parse_command_line(const int argc, char * const * argv)
   {
     if(argc < 2)
       {
@@ -491,7 +491,7 @@ namespace Step19
 // exceptions and making sure that appropriate output is generated if one is
 // thrown.
 int
-main(int argc, char** argv)
+main(int argc, char ** argv)
 {
   try
     {
@@ -502,7 +502,7 @@ main(int argc, char** argv)
 
       convert();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

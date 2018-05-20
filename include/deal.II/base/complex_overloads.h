@@ -37,7 +37,7 @@ struct ProductType;
  */
 template <typename T, typename U>
 typename ProductType<std::complex<T>, std::complex<U>>::type inline
-operator*(const std::complex<T>& left, const std::complex<U>& right)
+operator*(const std::complex<T> & left, const std::complex<U> & right)
 {
   typedef
     typename ProductType<std::complex<T>, std::complex<U>>::type result_type;
@@ -55,7 +55,7 @@ operator*(const std::complex<T>& left, const std::complex<U>& right)
 template <typename T, typename U>
 typename ProductType<std::complex<T>,
                      typename EnableIfScalar<U>::type>::type inline
-operator*(const std::complex<T>& left, const U& right)
+operator*(const std::complex<T> & left, const U & right)
 {
   typedef typename ProductType<std::complex<T>, U>::type result_type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);
@@ -72,7 +72,7 @@ operator*(const std::complex<T>& left, const U& right)
 template <typename T, typename U>
 typename ProductType<typename EnableIfScalar<T>::type,
                      std::complex<U>>::type inline
-operator*(const T& left, const std::complex<U>& right)
+operator*(const T & left, const std::complex<U> & right)
 {
   typedef typename ProductType<std::complex<T>, U>::type result_type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);

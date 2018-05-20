@@ -67,7 +67,7 @@ namespace Polynomials
      * is thus the number of elements in the <tt>coefficient</tt> array minus
      * one.
      */
-    Polynomial(const std::vector<number>& coefficients);
+    Polynomial(const std::vector<number> & coefficients);
 
     /**
      * Constructor creating a zero polynomial of degree @p n.
@@ -81,8 +81,8 @@ namespace Polynomials
      * contain all points (including x_j, which will internally not be
      * stored).
      */
-    Polynomial(const std::vector<Point<1>>& lagrange_support_points,
-               const unsigned int           evaluation_point);
+    Polynomial(const std::vector<Point<1>> & lagrange_support_points,
+               const unsigned int            evaluation_point);
 
     /**
      * Default constructor creating an illegal object.
@@ -110,7 +110,7 @@ namespace Polynomials
      * terms involving the roots if that representation is used.
      */
     void
-    value(const number x, std::vector<number>& values) const;
+    value(const number x, std::vector<number> & values) const;
 
     /**
      * Return the values and the derivatives of the Polynomial at point
@@ -126,7 +126,7 @@ namespace Polynomials
     void
     value(const number       x,
           const unsigned int n_derivatives,
-          number*            values) const;
+          number *           values) const;
 
     /**
      * Degree of the polynomial. This is the degree reflected by the number of
@@ -181,38 +181,38 @@ namespace Polynomials
     /**
      * Multiply with a scalar.
      */
-    Polynomial<number>&
+    Polynomial<number> &
     operator*=(const double s);
 
     /**
      * Multiply with another polynomial.
      */
-    Polynomial<number>&
-    operator*=(const Polynomial<number>& p);
+    Polynomial<number> &
+    operator*=(const Polynomial<number> & p);
 
     /**
      * Add a second polynomial.
      */
-    Polynomial<number>&
-    operator+=(const Polynomial<number>& p);
+    Polynomial<number> &
+    operator+=(const Polynomial<number> & p);
 
     /**
      * Subtract a second polynomial.
      */
-    Polynomial<number>&
-    operator-=(const Polynomial<number>& p);
+    Polynomial<number> &
+    operator-=(const Polynomial<number> & p);
 
     /**
      * Test for equality of two polynomials.
      */
     bool
-    operator==(const Polynomial<number>& p) const;
+    operator==(const Polynomial<number> & p) const;
 
     /**
      * Print coefficients.
      */
     void
-    print(std::ostream& out) const;
+    print(std::ostream & out) const;
 
     /**
      * Write or read the data of this object to or from a stream for the
@@ -220,27 +220,27 @@ namespace Polynomials
      */
     template <class Archive>
     void
-    serialize(Archive& ar, const unsigned int version);
+    serialize(Archive & ar, const unsigned int version);
 
   protected:
     /**
      * This function performs the actual scaling.
      */
     static void
-    scale(std::vector<number>& coefficients, const number factor);
+    scale(std::vector<number> & coefficients, const number factor);
 
     /**
      * This function performs the actual shift
      */
     template <typename number2>
     static void
-    shift(std::vector<number>& coefficients, const number2 shift);
+    shift(std::vector<number> & coefficients, const number2 shift);
 
     /**
      * Multiply polynomial by a factor.
      */
     static void
-    multiply(std::vector<number>& coefficients, const number factor);
+    multiply(std::vector<number> & coefficients, const number factor);
 
     /**
      * Transform polynomial form of product of linear factors into standard
@@ -356,9 +356,9 @@ namespace Polynomials
      * function is <tt>static</tt> to allow to be called in the constructor.
      */
     static void
-    compute_coefficients(const unsigned int   n,
-                         const unsigned int   support_point,
-                         std::vector<double>& a);
+    compute_coefficients(const unsigned int    n,
+                         const unsigned int    support_point,
+                         std::vector<double> & a);
   };
 
   /**
@@ -368,7 +368,7 @@ namespace Polynomials
    * one less.
    */
   std::vector<Polynomial<double>>
-  generate_complete_Lagrange_basis(const std::vector<Point<1>>& points);
+  generate_complete_Lagrange_basis(const std::vector<Point<1>> & points);
 
   /**
    * Legendre polynomials of arbitrary degree. Constructing a Legendre
@@ -520,7 +520,7 @@ namespace Polynomials
      * Get coefficients for constructor.  This way, it can use the non-
      * standard constructor of Polynomial.
      */
-    static const std::vector<double>&
+    static const std::vector<double> &
     get_coefficients(const unsigned int p);
 
     /**
@@ -793,14 +793,14 @@ namespace Polynomials
   template <typename number>
   template <class Archive>
   inline void
-  Polynomial<number>::serialize(Archive& ar, const unsigned int)
+  Polynomial<number>::serialize(Archive & ar, const unsigned int)
   {
     // forward to serialization function in the base class.
-    ar& static_cast<Subscriptor&>(*this);
-    ar& coefficients;
-    ar& in_lagrange_product_form;
-    ar& lagrange_support_points;
-    ar& lagrange_weight;
+    ar & static_cast<Subscriptor &>(*this);
+    ar & coefficients;
+    ar & in_lagrange_product_form;
+    ar & lagrange_support_points;
+    ar & lagrange_weight;
   }
 
   template <typename Number>

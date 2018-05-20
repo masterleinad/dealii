@@ -31,11 +31,11 @@ template <int dim, int fe_degree, typename number>
 class MatrixFreeTest
 {
 public:
-  MatrixFreeTest(const MatrixFree<dim, number>& data) : data(data)
+  MatrixFreeTest(const MatrixFree<dim, number> & data) : data(data)
   {}
 
   void
-  action(Vector<number>& src) const
+  action(Vector<number> & src) const
   {
     data.loop(&MatrixFreeTest::dummy,
               &MatrixFreeTest::dummy,
@@ -47,17 +47,17 @@ public:
 
 private:
   void
-  dummy(const MatrixFree<dim, number>&,
-        Vector<number>&,
-        const Vector<number>&,
-        const std::pair<unsigned int, unsigned int>&) const
+  dummy(const MatrixFree<dim, number> &,
+        Vector<number> &,
+        const Vector<number> &,
+        const std::pair<unsigned int, unsigned int> &) const
   {}
   void
   local_apply_boundary_face(
-    const MatrixFree<dim, number>& data,
-    Vector<number>&,
-    const Vector<number>&                        src,
-    const std::pair<unsigned int, unsigned int>& face_range) const
+    const MatrixFree<dim, number> & data,
+    Vector<number> &,
+    const Vector<number> &                        src,
+    const std::pair<unsigned int, unsigned int> & face_range) const
   {
     FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, number> fe_eval(data,
                                                                        true);
@@ -80,7 +80,7 @@ private:
       }
   }
 
-  const MatrixFree<dim, number>& data;
+  const MatrixFree<dim, number> & data;
 };
 
 template <int dim>
@@ -88,7 +88,7 @@ class BoundaryFunction : public Function<dim>
 {
 public:
   virtual double
-  value(const Point<dim>& p, const unsigned int) const
+  value(const Point<dim> & p, const unsigned int) const
   {
     return p[0] + 0.2 * p[1];
   }
@@ -96,7 +96,7 @@ public:
 
 template <int dim>
 Point<dim>
-grid_transform(const Point<dim>& in)
+grid_transform(const Point<dim> & in)
 {
   Point<dim> out;
   for(unsigned int d = 0; d < dim; ++d)

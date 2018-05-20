@@ -109,17 +109,17 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component = 0) const;
+  value(const Point<dim> & p, const unsigned int component = 0) const;
 
   virtual void
-  value_list(const std::vector<Point<dim>>& points,
-             std::vector<double>&           values,
-             const unsigned int             component = 0) const;
+  value_list(const std::vector<Point<dim>> & points,
+             std::vector<double> &           values,
+             const unsigned int              component = 0) const;
 };
 
 template <int dim>
 double
-Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
+Coefficient<dim>::value(const Point<dim> & p, const unsigned int) const
 {
   if(p.square() < 0.5 * 0.5)
     return 5;
@@ -129,9 +129,9 @@ Coefficient<dim>::value(const Point<dim>& p, const unsigned int) const
 
 template <int dim>
 void
-Coefficient<dim>::value_list(const std::vector<Point<dim>>& points,
-                             std::vector<double>&           values,
-                             const unsigned int             component) const
+Coefficient<dim>::value_list(const std::vector<Point<dim>> & points,
+                             std::vector<double> &           values,
+                             const unsigned int              component) const
 {
   const unsigned int n_points = points.size();
 
@@ -163,7 +163,7 @@ LaplaceProblem<dim>::setup_system()
                           mg_dof_handler.n_dofs(),
                           mg_dof_handler.max_couplings_between_dofs());
   DoFTools::make_sparsity_pattern(
-    static_cast<const DoFHandler<dim>&>(mg_dof_handler), sparsity_pattern);
+    static_cast<const DoFHandler<dim> &>(mg_dof_handler), sparsity_pattern);
 
   solution.reinit(mg_dof_handler.n_dofs());
   system_rhs.reinit(mg_dof_handler.n_dofs());
@@ -354,7 +354,7 @@ LaplaceProblem<dim>::solve()
   MGTransferPrebuilt<vector_t> mg_transfer(mg_constrained_dofs);
   mg_transfer.build_matrices(mg_dof_handler);
 
-  matrix_t& coarse_matrix = mg_matrices[0];
+  matrix_t & coarse_matrix = mg_matrices[0];
 
   SolverControl        coarse_solver_control(1000, 1e-10, false, false);
   SolverCG<vector_t>   coarse_solver(coarse_solver_control);
@@ -397,7 +397,7 @@ LaplaceProblem<dim>::refine_grid()
   Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
 
   KellyErrorEstimator<dim>::estimate(
-    static_cast<DoFHandler<dim>&>(mg_dof_handler),
+    static_cast<DoFHandler<dim> &>(mg_dof_handler),
     QGauss<dim - 1>(degree + 1),
     typename FunctionMap<dim>::type(),
     solution,
@@ -454,7 +454,7 @@ main()
       LaplaceProblem<2> laplace_problem(1);
       laplace_problem.run();
     }
-  catch(std::exception& exc)
+  catch(std::exception & exc)
     {
       std::cerr << std::endl
                 << std::endl

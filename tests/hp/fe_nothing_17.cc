@@ -37,7 +37,7 @@
 
 template <int dim>
 void
-transfer(std::ostream& out)
+transfer(std::ostream & out)
 {
   Triangulation<dim> tria;
   GridGenerator::hyper_cube(tria);

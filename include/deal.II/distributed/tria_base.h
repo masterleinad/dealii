@@ -69,7 +69,7 @@ namespace parallel
      */
     virtual void
     copy_triangulation(
-      const dealii::Triangulation<dim, spacedim>& old_tria) override;
+      const dealii::Triangulation<dim, spacedim> & old_tria) override;
 
     /**
      * Return the number of active cells owned by each of the MPI processes
@@ -77,7 +77,7 @@ namespace parallel
      * indexed by locally_owned_subdomain() equals the result of
      * n_locally_owned_active_cells().
      */
-    const std::vector<unsigned int>&
+    const std::vector<unsigned int> &
     n_locally_owned_active_cells_per_processor() const;
 
     /**
@@ -142,7 +142,7 @@ namespace parallel
      * @note: If @p i is contained in the list of processor @p j, then @p j
      * will also be contained in the list of processor @p i.
      */
-    const std::set<types::subdomain_id>&
+    const std::set<types::subdomain_id> &
     ghost_owners() const;
 
     /**
@@ -154,7 +154,7 @@ namespace parallel
      * @note: If @p i is contained in the list of processor @p j, then @p j
      * will also be contained in the list of processor @p i.
      */
-    const std::set<types::subdomain_id>&
+    const std::set<types::subdomain_id> &
     level_ghost_owners() const;
 
     /**

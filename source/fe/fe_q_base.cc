@@ -105,16 +105,16 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
    */
   template <int spacedim>
   static void
-  initialize_constraints(const std::vector<Point<1>>&,
-                         FE_Q_Base<PolynomialType, 1, spacedim>&)
+  initialize_constraints(const std::vector<Point<1>> &,
+                         FE_Q_Base<PolynomialType, 1, spacedim> &)
   {
     // no constraints in 1d
   }
 
   template <int spacedim>
   static void
-  initialize_constraints(const std::vector<Point<1>>& /*points*/,
-                         FE_Q_Base<PolynomialType, 2, spacedim>& fe)
+  initialize_constraints(const std::vector<Point<1>> & /*points*/,
+                         FE_Q_Base<PolynomialType, 2, spacedim> & fe)
   {
     const unsigned int dim = 2;
 
@@ -195,7 +195,7 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
     // use that the element evaluates to 1 at index 0 and along the line at
     // zero
-    const std::vector<unsigned int>& index_map_inverse
+    const std::vector<unsigned int> & index_map_inverse
       = fe.poly_space.get_numbering_inverse();
     const std::vector<unsigned int> face_index_map
       = internal::FE_Q_Base::face_lexicographic_to_hierarchic_numbering<dim>(
@@ -225,8 +225,8 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
   template <int spacedim>
   static void
-  initialize_constraints(const std::vector<Point<1>>& /*points*/,
-                         FE_Q_Base<PolynomialType, 3, spacedim>& fe)
+  initialize_constraints(const std::vector<Point<1>> & /*points*/,
+                         FE_Q_Base<PolynomialType, 3, spacedim> & fe)
   {
     const unsigned int dim = 3;
 
@@ -327,7 +327,7 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
     // use that the element evaluates to 1 at index 0 and along the line at
     // zero
-    const std::vector<unsigned int>& index_map_inverse
+    const std::vector<unsigned int> & index_map_inverse
       = fe.poly_space.get_numbering_inverse();
     const std::vector<unsigned int> face_index_map
       = internal::FE_Q_Base::face_lexicographic_to_hierarchic_numbering<dim>(
@@ -416,9 +416,9 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
 template <class PolynomialType, int dim, int spacedim>
 FE_Q_Base<PolynomialType, dim, spacedim>::FE_Q_Base(
-  const PolynomialType&         poly_space,
-  const FiniteElementData<dim>& fe_data,
-  const std::vector<bool>&      restriction_is_additive_flags)
+  const PolynomialType &         poly_space,
+  const FiniteElementData<dim> & fe_data,
+  const std::vector<bool> &      restriction_is_additive_flags)
   : FE_Poly<PolynomialType, dim, spacedim>(
       poly_space,
       fe_data,
@@ -433,7 +433,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::FE_Q_Base(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::initialize(
-  const std::vector<Point<1>>& points)
+  const std::vector<Point<1>> & points)
 {
   Assert(points[0][0] == 0,
          ExcMessage("The first support point has to be zero."));
@@ -478,12 +478,12 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::get_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> & x_source_fe,
+  FullMatrix<double> &                 interpolation_matrix) const
 {
   // go through the list of elements we can interpolate from
-  if(const FE_Q_Base<PolynomialType, dim, spacedim>* source_fe
-     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim>*>(
+  if(const FE_Q_Base<PolynomialType, dim, spacedim> * source_fe
+     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
        &x_source_fe))
     {
       // ok, source is a Q element, so we will be able to do the work
@@ -548,7 +548,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_interpolation_matrix(
           Assert(std::fabs(sum - 1) < eps, ExcInternalError());
         }
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe))
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&x_source_fe))
     {
       // the element we want to interpolate from is an FE_Nothing. this
       // element represents a function that is constant zero and has no
@@ -574,8 +574,8 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_interpolation_matrix(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::get_face_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& source_fe,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> & source_fe,
+  FullMatrix<double> &                 interpolation_matrix) const
 {
   Assert(dim > 1, ExcImpossibleInDim(1));
   get_subface_interpolation_matrix(
@@ -585,17 +585,17 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_face_interpolation_matrix(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim>& x_source_fe,
-  const unsigned int                  subface,
-  FullMatrix<double>&                 interpolation_matrix) const
+  const FiniteElement<dim, spacedim> & x_source_fe,
+  const unsigned int                   subface,
+  FullMatrix<double> &                 interpolation_matrix) const
 {
   Assert(
     interpolation_matrix.m() == x_source_fe.dofs_per_face,
     ExcDimensionMismatch(interpolation_matrix.m(), x_source_fe.dofs_per_face));
 
   // see if source is a Q element
-  if(const FE_Q_Base<PolynomialType, dim, spacedim>* source_fe
-     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim>*>(
+  if(const FE_Q_Base<PolynomialType, dim, spacedim> * source_fe
+     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
        &x_source_fe))
     {
       // have this test in here since a table of size 2x0 reports its size as
@@ -634,7 +634,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_subface_interpolation_matrix(
             QProjector<dim>::project_to_subface(quad_face_support, 0, subface);
       for(unsigned int i = 0; i < source_fe->dofs_per_face; ++i)
         {
-          const Point<dim>& p = subface_quadrature.point(i);
+          const Point<dim> & p = subface_quadrature.point(i);
 
           for(unsigned int j = 0; j < this->dofs_per_face; ++j)
             {
@@ -665,7 +665,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_subface_interpolation_matrix(
           Assert(std::fabs(sum - 1) < eps, ExcInternalError());
         }
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&x_source_fe) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&x_source_fe) != nullptr)
     {
       // nothing to do here, the FE_Nothing has no degrees of freedom anyway
     }
@@ -686,19 +686,19 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_constraints_are_implemented() const
 template <class PolynomialType, int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Q_Base<PolynomialType, dim, spacedim>::hp_vertex_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> & fe_other) const
 {
   // we can presently only compute these identities if both FEs are FE_Qs or
   // if the other one is an FE_Nothing. in the first case, there should be
   // exactly one single DoF of each FE at a vertex, and they should have
   // identical value
-  if(dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim>*>(&fe_other)
+  if(dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(&fe_other)
      != nullptr)
     {
       return std::vector<std::pair<unsigned int, unsigned int>>(
         1, std::make_pair(0U, 0U));
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -725,12 +725,13 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_vertex_dof_identities(
 template <class PolynomialType, int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Q_Base<PolynomialType, dim, spacedim>::hp_line_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> & fe_other) const
 {
   // we can presently only compute these identities if both FEs are FE_Qs or
   // if the other one is an FE_Nothing
-  if(const FE_Q_Base<PolynomialType, dim, spacedim>* fe_q_other
-     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim>*>(&fe_other))
+  if(const FE_Q_Base<PolynomialType, dim, spacedim> * fe_q_other
+     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
+       &fe_other))
     {
       // dofs are located along lines, so two dofs are identical if they are
       // located at identical positions. if we had only equidistant points, we
@@ -745,9 +746,9 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_line_dof_identities(
 
       std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-      const std::vector<unsigned int>& index_map_inverse
+      const std::vector<unsigned int> & index_map_inverse
         = this->poly_space.get_numbering_inverse();
-      const std::vector<unsigned int>& index_map_inverse_other
+      const std::vector<unsigned int> & index_map_inverse_other
         = fe_q_other->poly_space.get_numbering_inverse();
 
       for(unsigned int i = 0; i < p - 1; ++i)
@@ -761,7 +762,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_line_dof_identities(
 
       return identities;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -788,12 +789,13 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_line_dof_identities(
 template <class PolynomialType, int dim, int spacedim>
 std::vector<std::pair<unsigned int, unsigned int>>
 FE_Q_Base<PolynomialType, dim, spacedim>::hp_quad_dof_identities(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> & fe_other) const
 {
   // we can presently only compute these identities if both FEs are FE_Qs or
   // if the other one is an FE_Nothing
-  if(const FE_Q_Base<PolynomialType, dim, spacedim>* fe_q_other
-     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim>*>(&fe_other))
+  if(const FE_Q_Base<PolynomialType, dim, spacedim> * fe_q_other
+     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
+       &fe_other))
     {
       // this works exactly like the line case above, except that now we have
       // to have two indices i1, i2 and j1, j2 to characterize the dofs on the
@@ -805,9 +807,9 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_quad_dof_identities(
 
       std::vector<std::pair<unsigned int, unsigned int>> identities;
 
-      const std::vector<unsigned int>& index_map_inverse
+      const std::vector<unsigned int> & index_map_inverse
         = this->poly_space.get_numbering_inverse();
-      const std::vector<unsigned int>& index_map_inverse_other
+      const std::vector<unsigned int> & index_map_inverse_other
         = fe_q_other->poly_space.get_numbering_inverse();
 
       for(unsigned int i1 = 0; i1 < p - 1; ++i1)
@@ -829,7 +831,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_quad_dof_identities(
 
       return identities;
     }
-  else if(dynamic_cast<const FE_Nothing<dim>*>(&fe_other) != nullptr)
+  else if(dynamic_cast<const FE_Nothing<dim> *>(&fe_other) != nullptr)
     {
       // the FE_Nothing has no degrees of freedom, so there are no
       // equivalencies to be recorded
@@ -856,10 +858,11 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_quad_dof_identities(
 template <class PolynomialType, int dim, int spacedim>
 FiniteElementDomination::Domination
 FE_Q_Base<PolynomialType, dim, spacedim>::compare_for_face_domination(
-  const FiniteElement<dim, spacedim>& fe_other) const
+  const FiniteElement<dim, spacedim> & fe_other) const
 {
-  if(const FE_Q_Base<PolynomialType, dim, spacedim>* fe_q_other
-     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim>*>(&fe_other))
+  if(const FE_Q_Base<PolynomialType, dim, spacedim> * fe_q_other
+     = dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
+       &fe_other))
     {
       if(this->degree < fe_q_other->degree)
         return FiniteElementDomination::this_element_dominates;
@@ -868,8 +871,8 @@ FE_Q_Base<PolynomialType, dim, spacedim>::compare_for_face_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if(const FE_Nothing<dim, spacedim>* fe_nothing
-          = dynamic_cast<const FE_Nothing<dim, spacedim>*>(&fe_other))
+  else if(const FE_Nothing<dim, spacedim> * fe_nothing
+          = dynamic_cast<const FE_Nothing<dim, spacedim> *>(&fe_other))
     {
       if(fe_nothing->is_dominating())
         {
@@ -882,8 +885,9 @@ FE_Q_Base<PolynomialType, dim, spacedim>::compare_for_face_domination(
           return FiniteElementDomination::no_requirements;
         }
     }
-  else if((dynamic_cast<const FE_DGQ<dim, spacedim>*>(&fe_other) != nullptr)
-          || (dynamic_cast<const FE_DGP<dim, spacedim>*>(&fe_other) != nullptr))
+  else if((dynamic_cast<const FE_DGQ<dim, spacedim> *>(&fe_other) != nullptr)
+          || (dynamic_cast<const FE_DGP<dim, spacedim> *>(&fe_other)
+              != nullptr))
     {
       // there are no requirements between continuous and
       // discontinuous elements
@@ -901,9 +905,9 @@ FE_Q_Base<PolynomialType, dim, spacedim>::compare_for_face_domination(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::initialize_unit_support_points(
-  const std::vector<Point<1>>& points)
+  const std::vector<Point<1>> & points)
 {
-  const std::vector<unsigned int>& index_map_inverse
+  const std::vector<unsigned int> & index_map_inverse
     = this->poly_space.get_numbering_inverse();
 
   // We can compute the support points by computing the tensor
@@ -924,7 +928,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize_unit_support_points(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::initialize_unit_face_support_points(
-  const std::vector<Point<1>>& points)
+  const std::vector<Point<1>> & points)
 {
   // no faces in 1d, so nothing to do
   if(dim == 1)
@@ -1153,16 +1157,16 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_dpo_vector(
 template <class PolynomialType, int dim, int spacedim>
 void
 FE_Q_Base<PolynomialType, dim, spacedim>::initialize_constraints(
-  const std::vector<Point<1>>& points)
+  const std::vector<Point<1>> & points)
 {
   Implementation::initialize_constraints(points, *this);
 }
 
 template <class PolynomialType, int dim, int spacedim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
-  const unsigned int         child,
-  const RefinementCase<dim>& refinement_case) const
+  const unsigned int          child,
+  const RefinementCase<dim> & refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -1233,7 +1237,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
       const unsigned int            dofs1d = q_degree + 1;
       std::vector<Table<2, double>> subcell_evaluations(
         dim, Table<2, double>(dofs1d, dofs1d));
-      const std::vector<unsigned int>& index_map_inverse
+      const std::vector<unsigned int> & index_map_inverse
         = this->poly_space.get_numbering_inverse();
 
       // helper value: step size how to walk through diagonal and how many
@@ -1350,7 +1354,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
 #endif
 
       // swap matrices
-      prolongate.swap(const_cast<FullMatrix<double>&>(
+      prolongate.swap(const_cast<FullMatrix<double> &>(
         this->prolongation[refinement_case - 1][child]));
     }
 
@@ -1359,10 +1363,10 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_prolongation_matrix(
 }
 
 template <class PolynomialType, int dim, int spacedim>
-const FullMatrix<double>&
+const FullMatrix<double> &
 FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
-  const unsigned int         child,
-  const RefinementCase<dim>& refinement_case) const
+  const unsigned int          child,
+  const RefinementCase<dim> & refinement_case) const
 {
   Assert(refinement_case < RefinementCase<dim>::isotropic_refinement + 1,
          ExcIndexRange(
@@ -1408,8 +1412,8 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
       // assumption that whenever a row makes a non-zero contribution to the
       // mother's residual, the correct value is interpolated.
 
-      const double                     eps = 1e-15 * q_degree * dim;
-      const std::vector<unsigned int>& index_map_inverse
+      const double                      eps = 1e-15 * q_degree * dim;
+      const std::vector<unsigned int> & index_map_inverse
         = this->poly_space.get_numbering_inverse();
 
       const unsigned int          dofs1d = q_degree + 1;
@@ -1488,7 +1492,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_restriction_matrix(
 
       // swap the just computed restriction matrix into the
       // element of the vector stored in the base class
-      my_restriction.swap(const_cast<FullMatrix<double>&>(
+      my_restriction.swap(const_cast<FullMatrix<double> &>(
         this->restriction[refinement_case - 1][child]));
     }
 

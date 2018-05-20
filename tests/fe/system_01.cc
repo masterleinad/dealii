@@ -33,7 +33,7 @@
 
 template <int dim>
 void
-check(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
+check(const FiniteElement<dim> & fe1, const FiniteElement<dim> & fe2)
 {
   deallog << fe1.get_name() << " to " << fe2.get_name() << std::endl;
 

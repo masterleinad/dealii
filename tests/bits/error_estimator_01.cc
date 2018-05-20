@@ -38,13 +38,13 @@ public:
   {}
 
   virtual double
-  value(const Point<dim>& p, const unsigned int component) const
+  value(const Point<dim> & p, const unsigned int component) const
   {
     return (component + 1) * p.square();
   }
 
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const
+  vector_value(const Point<dim> & p, Vector<double> & values) const
   {
     values(0) = value(p, 0);
     values(1) = value(p, 1);
@@ -52,8 +52,8 @@ public:
 };
 
 template <int dim>
-Quadrature<dim - 1>&
-get_q_face(Function<dim>&)
+Quadrature<dim - 1> &
+get_q_face(Function<dim> &)
 {
   static QGauss<dim - 1> q(4);
   return q;
@@ -61,7 +61,7 @@ get_q_face(Function<dim>&)
 
 template <int dim>
 void
-make_mesh(Triangulation<dim>& tria)
+make_mesh(Triangulation<dim> & tria)
 {
   GridGenerator::hyper_cube(tria, -1, 1);
 
@@ -112,10 +112,10 @@ check()
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(element);
 
-  MappingQ<dim>        mapping(3);
-  Quadrature<dim - 1>& q_face = get_q_face(function);
+  MappingQ<dim>         mapping(3);
+  Quadrature<dim - 1> & q_face = get_q_face(function);
 
-  std::map<types::boundary_id, const Function<dim>*> neumann_bc;
+  std::map<types::boundary_id, const Function<dim> *> neumann_bc;
   neumann_bc[0] = &function;
 
   Vector<double> v(dof.n_dofs());

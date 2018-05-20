@@ -24,7 +24,7 @@
 
 template <typename Vector1, typename Vector2>
 bool
-operator==(const Vector1& v1, const Vector2& v2)
+operator==(const Vector1 & v1, const Vector2 & v2)
 {
   if(v1.size() != v2.size())
     return false;
@@ -72,7 +72,7 @@ main()
     {
       test();
     }
-  catch(std::exception& e)
+  catch(std::exception & e)
     {
       deallog << std::endl
               << std::endl

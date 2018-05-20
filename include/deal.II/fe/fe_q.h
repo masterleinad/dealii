@@ -568,7 +568,7 @@ public:
    * equidistant nodes at <tt>fe_degree > 2</tt>, construct
    * <tt>FE_Q<dim>(QIterated<1>(QTrapez<1>(),fe_degree))</tt>.
    */
-  FE_Q(const Quadrature<1>& points);
+  FE_Q(const Quadrature<1> & points);
 
   /**
    * Return a string that uniquely identifies a finite element. This class
@@ -590,8 +590,8 @@ public:
    */
   virtual void
   convert_generalized_support_point_values_to_dof_values(
-    const std::vector<Vector<double>>& support_point_values,
-    std::vector<double>&               nodal_values) const override;
+    const std::vector<Vector<double>> & support_point_values,
+    std::vector<double> &               nodal_values) const override;
 };
 
 /*@}*/

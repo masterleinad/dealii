@@ -46,7 +46,7 @@ class VectorBoundaryValues : public Function<dim>
 public:
   VectorBoundaryValues();
   virtual void
-  vector_value(const Point<dim>& p, Vector<double>& values) const;
+  vector_value(const Point<dim> & p, Vector<double> & values) const;
 };
 
 template <int dim>
@@ -55,8 +55,8 @@ VectorBoundaryValues<dim>::VectorBoundaryValues() : Function<dim>(dim + 1)
 
 template <int dim>
 inline void
-VectorBoundaryValues<dim>::vector_value(const Point<dim>&,
-                                        Vector<double>& values) const
+VectorBoundaryValues<dim>::vector_value(const Point<dim> &,
+                                        Vector<double> & values) const
 {
   Assert(values.size() == dim + 1,
          ExcDimensionMismatch(values.size(), dim + 1));

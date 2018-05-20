@@ -71,28 +71,28 @@ public:
    */
   template <typename number>
   void
-  filter(Vector<number>& v) const;
+  filter(Vector<number> & v) const;
 
   /**
    * Subtract mean value from @p v.
    */
   template <typename number>
   void
-  filter(BlockVector<number>& v) const;
+  filter(BlockVector<number> & v) const;
 
   /**
    * Return the source vector with subtracted mean value.
    */
   template <typename number>
   void
-  vmult(Vector<number>& dst, const Vector<number>& src) const;
+  vmult(Vector<number> & dst, const Vector<number> & src) const;
 
   /**
    * Add source vector with subtracted mean value to dest.
    */
   template <typename number>
   void
-  vmult_add(Vector<number>& dst, const Vector<number>& src) const;
+  vmult_add(Vector<number> & dst, const Vector<number> & src) const;
 
   /**
    * Return the source vector with subtracted mean value in selected
@@ -100,7 +100,7 @@ public:
    */
   template <typename number>
   void
-  vmult(BlockVector<number>& dst, const BlockVector<number>& src) const;
+  vmult(BlockVector<number> & dst, const BlockVector<number> & src) const;
 
   /**
    * Add a source to dest, where the mean value in the selected component is
@@ -108,21 +108,21 @@ public:
    */
   template <typename number>
   void
-  vmult_add(BlockVector<number>& dst, const BlockVector<number>& src) const;
+  vmult_add(BlockVector<number> & dst, const BlockVector<number> & src) const;
 
   /**
    * Not implemented.
    */
   template <typename VectorType>
   void
-  Tvmult(VectorType&, const VectorType&) const;
+  Tvmult(VectorType &, const VectorType &) const;
 
   /**
    * Not implemented.
    */
   template <typename VectorType>
   void
-  Tvmult_add(VectorType&, const VectorType&) const;
+  Tvmult_add(VectorType &, const VectorType &) const;
 
 private:
   /**
@@ -136,14 +136,14 @@ private:
 
 template <typename VectorType>
 inline void
-MeanValueFilter::Tvmult(VectorType&, const VectorType&) const
+MeanValueFilter::Tvmult(VectorType &, const VectorType &) const
 {
   Assert(false, ExcNotImplemented());
 }
 
 template <typename VectorType>
 inline void
-MeanValueFilter::Tvmult_add(VectorType&, const VectorType&) const
+MeanValueFilter::Tvmult_add(VectorType &, const VectorType &) const
 {
   Assert(false, ExcNotImplemented());
 }

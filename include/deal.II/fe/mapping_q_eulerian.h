@@ -104,9 +104,9 @@ public:
    * be used. It is mainly used to check if the size of the @p euler_vector
    * is consistent with the @p euler_dof_handler .
    */
-  MappingQEulerian(const unsigned int               degree,
-                   const DoFHandler<dim, spacedim>& euler_dof_handler,
-                   const VectorType&                euler_vector,
+  MappingQEulerian(const unsigned int                degree,
+                   const DoFHandler<dim, spacedim> & euler_dof_handler,
+                   const VectorType &                euler_vector,
                    const unsigned int level = numbers::invalid_unsigned_int);
 
   /**
@@ -116,8 +116,8 @@ public:
    * addition to the geometry of the cell.
    */
   virtual std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
-  get_vertices(const typename Triangulation<dim, spacedim>::cell_iterator& cell)
-    const override;
+  get_vertices(const typename Triangulation<dim, spacedim>::cell_iterator &
+                 cell) const override;
 
   /**
    * Return a pointer to a copy of the present object. The caller of this copy
@@ -151,11 +151,11 @@ protected:
    */
   virtual CellSimilarity::Similarity
   fill_fe_values(
-    const typename Triangulation<dim, spacedim>::cell_iterator& cell,
-    const CellSimilarity::Similarity                            cell_similarity,
-    const Quadrature<dim>&                                      quadrature,
-    const typename Mapping<dim, spacedim>::InternalDataBase&    internal_data,
-    internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>&
+    const typename Triangulation<dim, spacedim>::cell_iterator & cell,
+    const CellSimilarity::Similarity                          cell_similarity,
+    const Quadrature<dim> &                                   quadrature,
+    const typename Mapping<dim, spacedim>::InternalDataBase & internal_data,
+    internal::FEValuesImplementation::MappingRelatedData<dim, spacedim> &
       output_data) const override;
 
   /**
@@ -189,8 +189,8 @@ private:
      * Constructor.
      */
     MappingQEulerianGeneric(
-      const unsigned int                                 degree,
-      const MappingQEulerian<dim, VectorType, spacedim>& mapping_q_eulerian);
+      const unsigned int                                  degree,
+      const MappingQEulerian<dim, VectorType, spacedim> & mapping_q_eulerian);
 
     /**
      * Return the mapped vertices of the cell. For the current class, this
@@ -199,7 +199,7 @@ private:
      * field in addition to the geometry of the cell.
      */
     virtual std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell>
-    get_vertices(const typename Triangulation<dim, spacedim>::cell_iterator&
+    get_vertices(const typename Triangulation<dim, spacedim>::cell_iterator &
                    cell) const override;
 
     /**
@@ -209,7 +209,7 @@ private:
      */
     virtual std::vector<Point<spacedim>>
     compute_mapping_support_points(
-      const typename Triangulation<dim, spacedim>::cell_iterator& cell)
+      const typename Triangulation<dim, spacedim>::cell_iterator & cell)
       const override;
 
     /**
@@ -224,7 +224,7 @@ private:
     /**
      * Reference to the surrounding object off of which we live.
      */
-    const MappingQEulerian<dim, VectorType, spacedim>& mapping_q_eulerian;
+    const MappingQEulerian<dim, VectorType, spacedim> & mapping_q_eulerian;
 
     /**
      * Special quadrature rule used to define the support points in the

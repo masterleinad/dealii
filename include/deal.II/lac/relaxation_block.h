@@ -91,7 +91,7 @@ public:
                      InverseNumberType>::Inversion inversion
                    = PreconditionBlockBase<InverseNumberType>::gauss_jordan,
                    const double threshold         = 0.,
-                   VectorType*  temp_ghost_vector = nullptr);
+                   VectorType * temp_ghost_vector = nullptr);
 
     /**
      * The mapping from indices to blocks. Each row of this pattern enumerates
@@ -179,7 +179,7 @@ public:
      * set of locally active level DoFs. Unused when VectorType is a serial
      * vector type like Vector<double>.
      */
-    mutable VectorType* temp_ghost_vector;
+    mutable VectorType * temp_ghost_vector;
 
     /**
      * Return the memory allocated in this object.
@@ -198,7 +198,7 @@ public:
    * <code>additional_data</code> hast to exceed the lifetime of this object.
    */
   void
-  initialize(const MatrixType& A, const AdditionalData& parameters);
+  initialize(const MatrixType & A, const AdditionalData & parameters);
 
   /**
    * Deletes the inverse diagonal block matrices if existent, sets the
@@ -236,10 +236,10 @@ protected:
    * @p prev after this.
    */
   void
-  do_step(VectorType&       dst,
-          const VectorType& prev,
-          const VectorType& src,
-          const bool        backward) const;
+  do_step(VectorType &       dst,
+          const VectorType & prev,
+          const VectorType & src,
+          const bool         backward) const;
 
   /**
    * Pointer to the matrix. Make sure that the matrix exists as long as this
@@ -340,27 +340,27 @@ public:
    * Perform one step of the Jacobi iteration.
    */
   void
-  step(VectorType& dst, const VectorType& rhs) const;
+  step(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Perform one step of the Jacobi iteration.
    */
   void
-  Tstep(VectorType& dst, const VectorType& rhs) const;
+  Tstep(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Implements a vmult() operation, which for this class first sets the dst()
    * vector to zero before calling the step() method.
    */
   void
-  vmult(VectorType& dst, const VectorType& rhs) const;
+  vmult(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Implements a transpose vmult operation, which for this class first sets
    * the dst() vector to zero before calling the Tstep() method.
    */
   void
-  Tvmult(VectorType& dst, const VectorType& rhs) const;
+  Tvmult(VectorType & dst, const VectorType & rhs) const;
 };
 
 /**
@@ -437,27 +437,27 @@ public:
    * Perform one step of the SOR iteration.
    */
   void
-  step(VectorType& dst, const VectorType& rhs) const;
+  step(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Perform one step of the transposed SOR iteration.
    */
   void
-  Tstep(VectorType& dst, const VectorType& rhs) const;
+  Tstep(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Implements a vmult() operation, which for this class first sets the dst()
    * vector to zero before calling the step() method.
    */
   void
-  vmult(VectorType& dst, const VectorType& rhs) const;
+  vmult(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Implements a transpose vmult operation, which for this class first sets
    * the dst() vector to zero before calling the Tstep() method.
    */
   void
-  Tvmult(VectorType& dst, const VectorType& rhs) const;
+  Tvmult(VectorType & dst, const VectorType & rhs) const;
 };
 
 /**
@@ -529,27 +529,27 @@ public:
    * Perform one step of the SSOR iteration.
    */
   void
-  step(VectorType& dst, const VectorType& rhs) const;
+  step(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Perform one step of the transposed SSOR iteration.
    */
   void
-  Tstep(VectorType& dst, const VectorType& rhs) const;
+  Tstep(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Implements a vmult() operation, which for this class first sets the dst()
    * vector to zero before calling the step() method.
    */
   void
-  vmult(VectorType& dst, const VectorType& rhs) const;
+  vmult(VectorType & dst, const VectorType & rhs) const;
 
   /**
    * Implements a transpose vmult operation, which for this class first sets
    * the dst() vector to zero before calling the Tstep() method.
    */
   void
-  Tvmult(VectorType& dst, const VectorType& rhs) const;
+  Tvmult(VectorType & dst, const VectorType & rhs) const;
 };
 
 DEAL_II_NAMESPACE_CLOSE

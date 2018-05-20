@@ -83,11 +83,11 @@ namespace internal
        */
       template <int dh_dim, int spacedim>
       void
-      set_dof_index(const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-                    const unsigned int                          obj_index,
-                    const unsigned int                          fe_index,
-                    const unsigned int                          local_index,
-                    const types::global_dof_index               global_index);
+      set_dof_index(const dealii::DoFHandler<dh_dim, spacedim> & dof_handler,
+                    const unsigned int                           obj_index,
+                    const unsigned int                           fe_index,
+                    const unsigned int                           local_index,
+                    const types::global_dof_index                global_index);
 
       /**
        * Return the global index of the @p local_index-th degree of freedom
@@ -103,9 +103,9 @@ namespace internal
        */
       template <int dh_dim, int spacedim>
       types::global_dof_index
-      get_dof_index(const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-                    const unsigned int                          obj_index,
-                    const unsigned int                          fe_index,
+      get_dof_index(const dealii::DoFHandler<dh_dim, spacedim> & dof_handler,
+                    const unsigned int                           obj_index,
+                    const unsigned int                           fe_index,
                     const unsigned int local_index) const;
 
       /**
@@ -116,8 +116,8 @@ namespace internal
       template <int dh_dim, int spacedim>
       unsigned int
       n_active_fe_indices(
-        const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-        const types::global_dof_index               index) const;
+        const dealii::DoFHandler<dh_dim, spacedim> & dof_handler,
+        const types::global_dof_index                index) const;
 
       /**
        * Similar to the function above. Assert that the given index is zero,
@@ -126,9 +126,9 @@ namespace internal
       template <int dh_dim, int spacedim>
       bool
       fe_index_is_active(
-        const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-        const types::global_dof_index               index,
-        const unsigned int                          fe_index) const;
+        const dealii::DoFHandler<dh_dim, spacedim> & dof_handler,
+        const types::global_dof_index                index,
+        const unsigned int                           fe_index) const;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
@@ -143,7 +143,7 @@ namespace internal
        */
       template <class Archive>
       void
-      serialize(Archive& ar, const unsigned int version);
+      serialize(Archive & ar, const unsigned int version);
 
       /**
        * Declare the classes that store levels and faces of DoFs friends so
@@ -161,7 +161,7 @@ namespace internal
     template <int dh_dim, int spacedim>
     inline unsigned int
     DoFObjects<dim>::n_active_fe_indices(
-      const dealii::DoFHandler<dh_dim, spacedim>&,
+      const dealii::DoFHandler<dh_dim, spacedim> &,
       const types::global_dof_index) const
     {
       return 1;
@@ -171,7 +171,7 @@ namespace internal
     template <int dh_dim, int spacedim>
     inline bool
     DoFObjects<dim>::fe_index_is_active(
-      const dealii::DoFHandler<dh_dim, spacedim>&,
+      const dealii::DoFHandler<dh_dim, spacedim> &,
       const types::global_dof_index,
       const unsigned int fe_index) const
     {
@@ -186,10 +186,10 @@ namespace internal
     template <int dh_dim, int spacedim>
     inline types::global_dof_index
     DoFObjects<dim>::get_dof_index(
-      const dealii::DoFHandler<dh_dim, spacedim>& dof_handler,
-      const unsigned int                          obj_index,
-      const unsigned int                          fe_index,
-      const unsigned int                          local_index) const
+      const dealii::DoFHandler<dh_dim, spacedim> & dof_handler,
+      const unsigned int                           obj_index,
+      const unsigned int                           fe_index,
+      const unsigned int                           local_index) const
     {
       (void) fe_index;
       Assert(
@@ -214,9 +214,9 @@ namespace internal
     template <int dim>
     template <class Archive>
     void
-    DoFObjects<dim>::serialize(Archive& ar, const unsigned int)
+    DoFObjects<dim>::serialize(Archive & ar, const unsigned int)
     {
-      ar& dofs;
+      ar & dofs;
     }
 
   } // namespace DoFHandlerImplementation

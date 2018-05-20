@@ -24,7 +24,7 @@
 
 template <int dim>
 void
-check_this(const FiniteElement<dim>& fe1, const FiniteElement<dim>& fe2)
+check_this(const FiniteElement<dim> & fe1, const FiniteElement<dim> & fe2)
 {
   // only check if both elements have
   // support points. otherwise,
